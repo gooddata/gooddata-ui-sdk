@@ -7,10 +7,13 @@ import {
     IExecutionResult,
     IPreparedExecution,
     ISecuritySettingsService,
+    IUserWorkspaceSettings,
     IWorkspaceAttributesService,
     IWorkspaceCatalog,
     IWorkspaceCatalogFactory,
     IWorkspaceCatalogFactoryOptions,
+    IWorkspaceSettings,
+    IWorkspaceSettingsService,
     ValidationContext,
 } from "@gooddata/sdk-backend-spi";
 import {
@@ -19,6 +22,7 @@ import {
     decoratedBackend,
     ExecutionDecoratorFactory,
     SecuritySettingsDecoratorFactory,
+    WorkspaceSettingsDecoratorFactory,
 } from "../decoratedBackend";
 import { LRUCache } from "@gooddata/util";
 import { DecoratedSecuritySettingsService } from "../decoratedBackend/securitySettings";
@@ -50,6 +54,7 @@ import {
     IMetadataObject,
 } from "@gooddata/sdk-model";
 import { DecoratedWorkspaceAttributesService } from "../decoratedBackend/attributes";
+import { DecoratedWorkspaceSettingsService } from "../decoratedBackend/workspaceSettings";
 
 //
 // Supporting types
@@ -71,12 +76,18 @@ type AttributeCacheEntry = {
     displayForms: LRUCache<Promise<IAttributeDisplayFormMetadataObject>>;
 };
 
+type WorkspaceSettingsCacheEntry = {
+    userWorkspaceSettings: LRUCache<Promise<IUserWorkspaceSettings>>;
+    workspaceSettings: LRUCache<Promise<IWorkspaceSettings>>;
+};
+
 type CachingContext = {
     caches: {
         execution?: LRUCache<ExecutionCacheEntry>;
         workspaceCatalogs?: LRUCache<CatalogCacheEntry>;
         securitySettings?: LRUCache<SecuritySettingsCacheEntry>;
         workspaceAttributes?: LRUCache<AttributeCacheEntry>;
+        workspaceSettings?: LRUCache<WorkspaceSettingsCacheEntry>;
     };
     config: CachingConfiguration;
     capabilities: IBackendCapabilities;
@@ -337,6 +348,71 @@ class WithSecuritySettingsCaching extends DecoratedSecuritySettingsService {
     };
 }
 
+class WithWorkspaceSettingsCaching extends DecoratedWorkspaceSettingsService {
+    constructor(
+        decorated: IWorkspaceSettingsService,
+        private readonly ctx: CachingContext,
+        private readonly workspace: string,
+    ) {
+        super(decorated);
+    }
+
+    public getSettings = (): Promise<IWorkspaceSettings> => {
+        const cache = this.getOrCreateWorkspaceEntry(this.workspace).workspaceSettings;
+        const cacheKey = this.workspace;
+
+        let workspaceSettings = cache.get(cacheKey);
+
+        if (!workspaceSettings) {
+            workspaceSettings = super.getSettings().catch((e) => {
+                cache.delete(cacheKey);
+                throw e;
+            });
+
+            cache.set(cacheKey, workspaceSettings);
+        }
+
+        return workspaceSettings;
+    };
+
+    public getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings> {
+        const cache = this.getOrCreateWorkspaceEntry(this.workspace).userWorkspaceSettings;
+        const cacheKey = this.workspace; // we assume that the current user does not change over the life span of the backend instance
+
+        let userWorkspaceSettings = cache.get(cacheKey);
+
+        if (!userWorkspaceSettings) {
+            userWorkspaceSettings = super.getSettingsForCurrentUser().catch((e) => {
+                cache.delete(cacheKey);
+                throw e;
+            });
+
+            cache.set(cacheKey, userWorkspaceSettings);
+        }
+
+        return userWorkspaceSettings;
+    }
+
+    private getOrCreateWorkspaceEntry = (workspace: string): WorkspaceSettingsCacheEntry => {
+        const cache = this.ctx.caches.workspaceSettings!;
+        let cacheEntry = cache.get(workspace);
+
+        if (!cacheEntry) {
+            cacheEntry = {
+                userWorkspaceSettings: new LRUCache<Promise<IUserWorkspaceSettings>>({
+                    maxSize: this.ctx.config.maxWorkspaceSettings,
+                }),
+                workspaceSettings: new LRUCache<Promise<IWorkspaceSettings>>({
+                    maxSize: this.ctx.config.maxWorkspaceSettings,
+                }),
+            };
+            cache.set(workspace, cacheEntry);
+        }
+
+        return cacheEntry;
+    };
+}
+
 //
 // Attributes caching
 //
@@ -481,6 +557,10 @@ function cachedSecuritySettings(ctx: CachingContext): SecuritySettingsDecoratorF
     return (original: ISecuritySettingsService) => new WithSecuritySettingsCaching(original, ctx);
 }
 
+function cachedWorkspaceSettings(ctx: CachingContext): WorkspaceSettingsDecoratorFactory {
+    return (original, workspace) => new WithWorkspaceSettingsCaching(original, ctx, workspace);
+}
+
 function cachedAttributes(ctx: CachingContext): AttributesDecoratorFactory {
     return (original, workspace) => new WithAttributesCaching(original, ctx, workspace);
 }
@@ -507,11 +587,16 @@ function cacheControl(ctx: CachingContext): CacheControl {
             ctx.caches.workspaceAttributes?.clear();
         },
 
+        resetWorkspaceSettings: () => {
+            ctx.caches.workspaceSettings?.clear();
+        },
+
         resetAll: () => {
             control.resetExecutions();
             control.resetCatalogs();
             control.resetSecuritySettings();
             control.resetAttributes();
+            control.resetWorkspaceSettings();
         },
     };
 
@@ -551,6 +636,11 @@ export type CacheControl = {
      * Resets all workspace attribute caches.
      */
     resetAttributes: () => void;
+
+    /**
+     * Resets all workspace settings caches.
+     */
+    resetWorkspaceSettings: () => void;
 
     /**
      * Convenience method to reset all caches (calls all the particular resets).
@@ -700,6 +790,19 @@ export type CachingConfiguration = {
      * caching, tweak the `maxAttributeWorkspaces` value.
      */
     maxAttributeDisplayFormsPerWorkspace: number | undefined;
+
+    /**
+     * Maximum number of settings for a workspace and for a user to cache per workspace.
+     *
+     * When limit is reached, cache entries will be evicted using LRU policy.
+     *
+     * When no maximum number is specified, the cache will be unbounded and no evictions will happen. Unbounded
+     * workspace settings cache is dangerous in applications that change query the settings of many different
+     * workspaces - this will cache quite large objects for each workspace and can make the memory usage go up.
+     *
+     * When non-positive number is specified, then no caching of result windows will be done.
+     */
+    maxWorkspaceSettings: number | undefined;
 };
 
 function assertPositiveOrUndefined(value: number | undefined, valueName: string) {
@@ -722,6 +825,7 @@ export const DefaultCachingConfiguration: CachingConfiguration = {
     maxSecuritySettingsOrgUrlsAge: 300_000, // 5 minutes
     maxAttributeWorkspaces: 1,
     maxAttributeDisplayFormsPerWorkspace: 100,
+    maxWorkspaceSettings: 1,
 };
 
 /**
@@ -745,6 +849,7 @@ export function withCaching(
     const catalogCaching = cachingEnabled(config.maxCatalogs);
     const securitySettingsCaching = cachingEnabled(config.maxSecuritySettingsOrgs);
     const attributeCaching = cachingEnabled(config.maxAttributeWorkspaces);
+    const workspaceSettingsCaching = cachingEnabled(config.maxWorkspaceSettings);
 
     const ctx: CachingContext = {
         caches: {
@@ -756,6 +861,9 @@ export function withCaching(
             workspaceAttributes: attributeCaching
                 ? new LRUCache({ maxSize: config.maxAttributeWorkspaces })
                 : undefined,
+            workspaceSettings: workspaceSettingsCaching
+                ? new LRUCache({ maxSize: config.maxWorkspaceSettings })
+                : undefined,
         },
         config,
         capabilities: realBackend.capabilities,
@@ -765,12 +873,19 @@ export function withCaching(
     const catalog = catalogCaching ? cachedCatalog(ctx) : identity;
     const securitySettings = securitySettingsCaching ? cachedSecuritySettings(ctx) : identity;
     const attributes = attributeCaching ? cachedAttributes(ctx) : identity;
+    const workspaceSettings = workspaceSettingsCaching ? cachedWorkspaceSettings(ctx) : identity;
 
     if (config.onCacheReady) {
         config.onCacheReady(cacheControl(ctx));
     }
 
-    return decoratedBackend(realBackend, { execution, catalog, securitySettings, attributes });
+    return decoratedBackend(realBackend, {
+        execution,
+        catalog,
+        securitySettings,
+        attributes,
+        workspaceSettings,
+    });
 }
 
 function skipMissingReferences(

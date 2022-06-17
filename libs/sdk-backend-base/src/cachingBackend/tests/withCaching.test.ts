@@ -31,6 +31,7 @@ function withCachingForTests(
         // set to two as one attribute can take up two places (one for id, one for uri)
         maxAttributeDisplayFormsPerWorkspace: 2,
         maxAttributeWorkspaces: 1,
+        maxWorkspaceSettings: 1,
         onCacheReady,
     });
 }
@@ -330,6 +331,57 @@ describe("withCaching", () => {
                 .organization(ORGANIZATION_ID)
                 .securitySettings()
                 .isUrlValid(URL, "UI_EVENT");
+
+            expect(second).not.toBe(first);
+        });
+    });
+
+    describe("workspace settings", () => {
+        it("caches workspace settings", () => {
+            const backend = withCachingForTests();
+
+            const first = backend.workspace("test").settings().getSettings();
+            const second = backend.workspace("test").settings().getSettings();
+
+            expect(second).toBe(first);
+        });
+
+        it("evicts workspace settings", () => {
+            const backend = withCachingForTests();
+
+            const first = backend.workspace("test").settings().getSettings();
+            backend.workspace("other").settings().getSettings();
+            const second = backend.workspace("test").settings().getSettings();
+
+            expect(second).not.toBe(first);
+        });
+
+        it("caches user workspace settings", () => {
+            const backend = withCachingForTests();
+
+            const first = backend.workspace("test").settings().getSettingsForCurrentUser();
+            const second = backend.workspace("test").settings().getSettingsForCurrentUser();
+
+            expect(second).toBe(first);
+        });
+
+        it("evicts user workspace settings", () => {
+            const backend = withCachingForTests();
+
+            const first = backend.workspace("test").settings().getSettingsForCurrentUser();
+            backend.workspace("other").settings().getSettingsForCurrentUser();
+            const second = backend.workspace("test").settings().getSettingsForCurrentUser();
+
+            expect(second).not.toBe(first);
+        });
+
+        it("resets workspace settings cache", async () => {
+            let cacheControl: CacheControl | undefined;
+
+            const backend = withCachingForTests(defaultBackend, (cc) => (cacheControl = cc));
+            const first = backend.workspace("test").settings().getSettingsForCurrentUser();
+            cacheControl?.resetWorkspaceSettings();
+            const second = backend.workspace("test").settings().getSettingsForCurrentUser();
 
             expect(second).not.toBe(first);
         });
