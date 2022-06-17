@@ -3,21 +3,50 @@
 import { convertState } from "../state";
 
 describe("state convert", () => {
-    it("to true", () => {
-        expect(convertState("ENABLED")).toEqual(true);
-        expect(convertState("enabled")).toEqual(true);
-        expect(convertState("EnABlED")).toEqual(true);
+    it("BOOLEAN to true", () => {
+        expect(convertState("BOOLEAN", [true, false], true)).toEqual(true);
+        expect(convertState("BOOLEAN", [true, false], "ENABLED")).toEqual(true);
+        expect(convertState("BOOLEAN", [true, false], "enabled")).toEqual(true);
+        expect(convertState("BOOLEAN", [true, false], "EnABlED")).toEqual(true);
     });
 
-    it("to false", () => {
-        expect(convertState("DISABLED")).toEqual(false);
-        expect(convertState("disabled")).toEqual(false);
-        expect(convertState("DiSaBLeD")).toEqual(false);
+    it("BOOLEAN to false", () => {
+        expect(convertState("BOOLEAN", [true, false], false)).toEqual(false);
+        expect(convertState("BOOLEAN", [true, false], "DISABLED")).toEqual(false);
+        expect(convertState("BOOLEAN", [true, false], "disabled")).toEqual(false);
+        expect(convertState("BOOLEAN", [true, false], "DiSaBLeD")).toEqual(false);
     });
 
-    it("to undefined", () => {
-        expect(convertState("dfdfdf")).toEqual(undefined);
-        expect(convertState("")).toEqual(undefined);
-        expect(convertState("0")).toEqual(undefined);
+    it("BOOLEAN to undefined", () => {
+        expect(convertState("BOOLEAN", [true, false], "dfdfdf")).toEqual(undefined);
+        expect(convertState("BOOLEAN", [true, false], "")).toEqual(undefined);
+        expect(convertState("BOOLEAN", [true, false], "0")).toEqual(undefined);
+    });
+
+    it("BOOLEAN to true only", () => {
+        expect(convertState("BOOLEAN", [true], "ENABLED")).toEqual(true);
+        expect(convertState("BOOLEAN", [true], true)).toEqual(true);
+        expect(convertState("BOOLEAN", [true], "DISABLED")).toEqual(undefined);
+        expect(convertState("BOOLEAN", [true], false)).toEqual(undefined);
+        expect(convertState("BOOLEAN", [true], "")).toEqual(undefined);
+        expect(convertState("BOOLEAN", [true], "0")).toEqual(undefined);
+    });
+
+    it("STRING as valid option", () => {
+        expect(convertState("STRING", ["Disabled", "BehaveAsA", "BehaveAsB"], "DISABLED")).toEqual(
+            "Disabled",
+        );
+        expect(convertState("STRING", ["Disabled", "BehaveAsA", "BehaveAsB"], "behaveasa")).toEqual(
+            "BehaveAsA",
+        );
+        expect(convertState("STRING", ["Disabled", "BehaveAsA", "BehaveAsB"], "BehaveAsA")).toEqual(
+            "BehaveAsA",
+        );
+    });
+
+    it("STRING as invalid option", () => {
+        expect(convertState("STRING", ["Disabled", "BehaveAsA", "BehaveAsB"], false)).toEqual(undefined);
+        expect(convertState("STRING", ["Disabled", "BehaveAsA", "BehaveAsB"], "test")).toEqual(undefined);
+        expect(convertState("STRING", ["Disabled", "BehaveAsA", "BehaveAsB"], "enabled")).toEqual(undefined);
     });
 });

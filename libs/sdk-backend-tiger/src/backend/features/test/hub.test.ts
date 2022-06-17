@@ -106,7 +106,7 @@ describe("live features", () => {
 
     it("full definition - STRING", async () => {
         mockReturn([
-            createFeature("ADmeasureValueFilterNullAsZeroOption", "STRING", "ENABLED"),
+            createFeature("ADmeasureValueFilterNullAsZeroOption", "STRING", "EnabledUncheckedByDefault"),
             createFeature("dashboardEditModeDevRollout", "STRING", "ENABLED"),
             createFeature("enableKPIDashboardDeleteFilterButton", "STRING", "ENABLED"),
             createFeature("enableMultipleDates", "STRING", "ENABLED"),
@@ -115,7 +115,7 @@ describe("live features", () => {
 
         const results = await getFeatureHubFeatures(createFeatures());
         expect(results).toEqual({
-            ADmeasureValueFilterNullAsZeroOption: true,
+            ADmeasureValueFilterNullAsZeroOption: "EnabledUncheckedByDefault",
             dashboardEditModeDevRollout: true,
             enableKPIDashboardDeleteFilterButton: true,
             enableMultipleDates: true,
