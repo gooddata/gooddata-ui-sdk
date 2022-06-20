@@ -17,15 +17,15 @@ describe("static features", () => {
     it("full definition", async () => {
         const results = await getStaticFeatures(
             createFeatures({
+                [TigerFeaturesNames.ADmeasureValueFilterNullAsZeroOption]: "EnabledUncheckedByDefault",
                 [TigerFeaturesNames.EnableSortingByTotalGroup]: "ENABLED",
-                [TigerFeaturesNames.ADmeasureValueFilterNullAsZeroOption]: "ENABLED",
                 [TigerFeaturesNames.EnableMultipleDates]: "ENABLED",
                 [TigerFeaturesNames.EnableKPIDashboardDeleteFilterButton]: "ENABLED",
                 [TigerFeaturesNames.DashboardEditModeDevRollout]: "ENABLED",
             }),
         );
         expect(results).toEqual({
-            ADmeasureValueFilterNullAsZeroOption: true,
+            ADmeasureValueFilterNullAsZeroOption: "EnabledUncheckedByDefault",
             dashboardEditModeDevRollout: true,
             enableKPIDashboardDeleteFilterButton: true,
             enableMultipleDates: true,
@@ -37,8 +37,8 @@ describe("static features", () => {
         const results = await getStaticFeatures(
             createFeatures(
                 {
+                    [TigerFeaturesNames.ADmeasureValueFilterNullAsZeroOption]: "EnabledUncheckedByDefault",
                     [TigerFeaturesNames.EnableSortingByTotalGroup]: "ENABLED",
-                    [TigerFeaturesNames.ADmeasureValueFilterNullAsZeroOption]: "ENABLED",
                     [TigerFeaturesNames.EnableMultipleDates]: "ENABLED",
                     [TigerFeaturesNames.EnableKPIDashboardDeleteFilterButton]: "ENABLED",
                     [TigerFeaturesNames.DashboardEditModeDevRollout]: "ENABLED",
@@ -47,7 +47,7 @@ describe("static features", () => {
             ),
         );
         expect(results).toEqual({
-            ADmeasureValueFilterNullAsZeroOption: true,
+            ADmeasureValueFilterNullAsZeroOption: "EnabledUncheckedByDefault",
             dashboardEditModeDevRollout: true,
             enableKPIDashboardDeleteFilterButton: true,
             enableMultipleDates: true,

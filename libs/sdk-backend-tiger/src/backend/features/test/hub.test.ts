@@ -106,7 +106,7 @@ describe("live features", () => {
 
     it("full definition - STRING", async () => {
         mockReturn([
-            createFeature("ADmeasureValueFilterNullAsZeroOption", "STRING", "ENABLED"),
+            createFeature("ADmeasureValueFilterNullAsZeroOption", "STRING", "EnabledUncheckedByDefault"),
             createFeature("dashboardEditModeDevRollout", "STRING", "ENABLED"),
             createFeature("enableKPIDashboardDeleteFilterButton", "STRING", "ENABLED"),
             createFeature("enableMultipleDates", "STRING", "ENABLED"),
@@ -115,7 +115,7 @@ describe("live features", () => {
 
         const results = await getFeatureHubFeatures(createFeatures());
         expect(results).toEqual({
-            ADmeasureValueFilterNullAsZeroOption: true,
+            ADmeasureValueFilterNullAsZeroOption: "EnabledUncheckedByDefault",
             dashboardEditModeDevRollout: true,
             enableKPIDashboardDeleteFilterButton: true,
             enableMultipleDates: true,
@@ -185,6 +185,49 @@ describe("live features", () => {
         const results = await getFeatureHubFeatures(createFeatures("beta"));
         expect(results).toEqual({
             dashboardEditModeDevRollout: false,
+        });
+    });
+
+    describe("full definition - BOOLEAN - with more definitions", () => {
+        beforeEach(() => {
+            mockReturn([
+                createFeature("ADmeasureValueFilterNullAsZeroOption", "STRING", "Disabled", [
+                    createStrategy("EnabledCheckedByDefault", [
+                        createAttr("earlyAccess", ["alpha", "beta"], "STRING", "EQUALS"),
+                    ]),
+                    createStrategy("EnabledUncheckedByDefault", [
+                        createAttr("earlyAccess", ["gamma"], "STRING", "EQUALS"),
+                    ]),
+                ]),
+            ]);
+        });
+
+        it("for none", async () => {
+            const results = await getFeatureHubFeatures(createFeatures("none"));
+            expect(results).toEqual({
+                ADmeasureValueFilterNullAsZeroOption: "Disabled",
+            });
+        });
+
+        it("for alpha", async () => {
+            const results = await getFeatureHubFeatures(createFeatures("alpha"));
+            expect(results).toEqual({
+                ADmeasureValueFilterNullAsZeroOption: "EnabledCheckedByDefault",
+            });
+        });
+
+        it("for gamma", async () => {
+            const results = await getFeatureHubFeatures(createFeatures("gamma"));
+            expect(results).toEqual({
+                ADmeasureValueFilterNullAsZeroOption: "EnabledUncheckedByDefault",
+            });
+        });
+
+        it("for omega", async () => {
+            const results = await getFeatureHubFeatures(createFeatures("omega"));
+            expect(results).toEqual({
+                ADmeasureValueFilterNullAsZeroOption: "Disabled",
+            });
         });
     });
 });

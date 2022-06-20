@@ -1,7 +1,7 @@
 // (C) 2020-2022 GoodData Corporation
 
 import { FeatureContext } from "@gooddata/api-client-tiger";
-import { ITigerFeatureFlags, TigerFeaturesNames } from "../uiFeatures";
+import { ITigerFeatureFlags, TigerFeaturesNames, FeatureFlagsValues } from "../uiFeatures";
 import { convertState } from "./state";
 
 export type FeatureDef = {
@@ -48,25 +48,40 @@ export function mapFeatures(features: FeaturesMap, context: FeatureContext): Par
             features,
             TigerFeaturesNames.EnableSortingByTotalGroup,
             "enableSortingByTotalGroup",
+            "BOOLEAN",
+            FeatureFlagsValues.enableSortingByTotalGroup,
             context,
         ),
         ...loadFeature(
             features,
             TigerFeaturesNames.ADmeasureValueFilterNullAsZeroOption,
             "ADmeasureValueFilterNullAsZeroOption",
+            "STRING",
+            FeatureFlagsValues.ADmeasureValueFilterNullAsZeroOption,
             context,
         ),
-        ...loadFeature(features, TigerFeaturesNames.EnableMultipleDates, "enableMultipleDates", context),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableMultipleDates,
+            "enableMultipleDates",
+            "BOOLEAN",
+            FeatureFlagsValues.enableMultipleDates,
+            context,
+        ),
         ...loadFeature(
             features,
             TigerFeaturesNames.EnableKPIDashboardDeleteFilterButton,
             "enableKPIDashboardDeleteFilterButton",
+            "BOOLEAN",
+            FeatureFlagsValues.enableKPIDashboardDeleteFilterButton,
             context,
         ),
         ...loadFeature(
             features,
             TigerFeaturesNames.DashboardEditModeDevRollout,
             "dashboardEditModeDevRollout",
+            "BOOLEAN",
+            FeatureFlagsValues.dashboardEditModeDevRollout,
             context,
         ),
     };
@@ -76,6 +91,8 @@ function loadFeature(
     features: FeaturesMap,
     feature: TigerFeaturesNames,
     name: keyof ITigerFeatureFlags,
+    outputType: "STRING" | "BOOLEAN",
+    possibleValues: readonly any[],
     context: FeatureContext,
 ) {
     const item = features[feature];
@@ -85,20 +102,25 @@ function loadFeature(
     }
 
     let val = getValueByContext(item, context);
-    val = getValueByType(item.type, val);
+    val = getValueByType(item.type, val, outputType, possibleValues);
 
     return val !== undefined ? { [name]: val } : {};
 }
 
-function getValueByType(type: FeatureDef["type"], value: FeatureDef["value"]) {
-    switch (type) {
+function getValueByType(
+    inputType: FeatureDef["type"],
+    value: FeatureDef["value"],
+    outputType: "STRING" | "BOOLEAN",
+    possibleValues: readonly any[],
+) {
+    switch (inputType) {
         case "BOOLEAN":
             if (value !== undefined) {
                 return value;
             }
             break;
         case "STRING": {
-            const state = convertState(value);
+            const state = convertState(outputType, possibleValues, value);
             if (state !== undefined) {
                 return state;
             }
@@ -124,16 +146,25 @@ function getEarlyAccessValue<T>(
     strategies: StrategiesDef[],
     earlyAccessValue: string = "",
 ): T {
-    const earlyAccessStrategy = strategies.find((item) => item.attributes.find(findEarlyAccess));
-    const earlyAccess = earlyAccessStrategy ? earlyAccessStrategy.attributes.find(findEarlyAccess) : null;
+    const earlyAccessStrategies = strategies.filter((item) => item.attributes.find(findEarlyAccess));
 
-    if (earlyAccessStrategy && earlyAccess) {
-        const values = (earlyAccess.values || [earlyAccess.value]).filter(Boolean) as Array<string>;
-        if (earlyAccess.conditional === "EQUALS" && values.includes(earlyAccessValue)) {
-            return earlyAccessStrategy.value;
-        }
-        if (earlyAccess.conditional === "NOT_EQUALS" && !values.includes(earlyAccessValue)) {
-            return earlyAccessStrategy.value;
+    if (earlyAccessStrategies.length > 0) {
+        for (let s = 0; s < earlyAccessStrategies.length; s++) {
+            const earlyAccessStrategy = earlyAccessStrategies[s];
+            const earlyAccesses = earlyAccessStrategy
+                ? earlyAccessStrategy.attributes.filter(findEarlyAccess)
+                : [];
+
+            for (let i = 0; i < earlyAccesses.length; i++) {
+                const earlyAccess = earlyAccesses[i];
+                const values = (earlyAccess.values || [earlyAccess.value]).filter(Boolean) as Array<string>;
+                if (earlyAccess.conditional === "EQUALS" && values.includes(earlyAccessValue)) {
+                    return earlyAccessStrategy.value;
+                }
+                if (earlyAccess.conditional === "NOT_EQUALS" && !values.includes(earlyAccessValue)) {
+                    return earlyAccessStrategy.value;
+                }
+            }
         }
     }
     return defaultValue;
