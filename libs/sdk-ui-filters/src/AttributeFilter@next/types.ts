@@ -10,9 +10,12 @@ export interface EmptyListItem {
     empty: true;
 }
 
+/**
+ * @internal
+ */
 export interface IListItem {
     title: string;
-    uri: string; //TODO rename to ky and check mappings
+    uri: string; //TODO rename to key and check mappings
 }
 
 /**

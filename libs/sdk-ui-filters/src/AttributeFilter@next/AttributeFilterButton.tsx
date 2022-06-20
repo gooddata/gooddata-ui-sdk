@@ -1,6 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 import React, { useEffect, useMemo } from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { useIntl } from "react-intl";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
     filterAttributeElements,
@@ -54,7 +54,7 @@ import AttributeFilterButtonDropdown from "./Components/AttributeFilterButtonDro
 /**
  * @internal
  */
-export interface IAttributeFilterButtonOwnProps {
+export interface IAttributeFilterButtonProps {
     /**
      * Specify an instance of analytical backend instance to work with.
      *
@@ -158,12 +158,9 @@ export interface IAttributeFilterButtonOwnProps {
     renderBody?: (props: IAttributeDropdownBodyExtendedProps) => React.ReactNode;
 }
 
-/**
- * @internal
- */
-export type IAttributeFilterButtonProps = IAttributeFilterButtonOwnProps & WrappedComponentProps;
-
-export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = (props) => {
+// TODO: This is temporally cleaning, and attempt to separate previous logic into the hook
+// this will be refactored and replace by new Attribute filter api.
+const useAttributeFilterButton = (props: IAttributeFilterButtonProps) => {
     invariant(
         !(props.filter && props.connectToPlaceholder),
         "It's not possible to combine 'filter' property with 'connectToPlaceholder' property. Either provide a value, or a placeholder.",
@@ -182,6 +179,8 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
 
     const currentFilterObjRef = useMemo(() => filterRef, [stringify(filterRef)]);
     const backendWithTelemetry = useMemo(() => getBackend(props.backend, props), [props.backend]);
+
+    const intl = useIntl();
 
     const {
         state,
@@ -406,59 +405,118 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         isFullWidth: isMobile,
     });
 
+    const subtitle = getSubtitle({
+        loadingProps: {
+            isElementsLoading: isCancelablePromiseLoading(elementsStatus),
+            isTotalCountLoading: isCancelablePromisePendingOrLoading(totalCountStatus),
+        },
+        ownProps: {
+            isAllFiltered,
+            isElementsByRef,
+            currentFilter,
+            identifier: props.identifier,
+            originalTotalCount,
+            intl: intl,
+        },
+        state: {
+            firstLoad: state.firstLoad,
+            isFiltering: state.isFiltering,
+            isInverted: state.isInverted,
+            selectedFilterOptions: state.selectedFilterOptions,
+            uriToAttributeElementMap: state.uriToAttributeElementMap,
+            searchString: state.searchString,
+        },
+    });
+
+    const title =
+        props.title || !isCancelablePromisePendingOrLoading(attributeStatus)
+            ? attribute.title
+            : getLoadingTitleIntl(intl);
+
+    const isFiltering = state.isFiltering;
+    const isDropdownOpen = state.isDropdownOpen;
+    const isElementsLoading = !state.validOptions?.items && isCancelablePromiseLoading(elementsStatus);
+    const isOriginalTotalCountLoading = isCancelablePromisePendingOrLoading(originalTotalCountStatus);
+    const selectedFilterOptions = state.selectedFilterOptions;
+
+    const isError = () => {
+        return (
+            elementsError ||
+            attributeError ||
+            totalCountError ||
+            parentFilterTitlesError ||
+            originalTotalCountError ||
+            uriToAttributeElementMapError
+        );
+    };
+
+    const getErrorMessage = () => {
+        return (
+            elementsError?.message ??
+            attributeError?.message ??
+            totalCountError?.message ??
+            parentFilterTitlesError?.message ??
+            originalTotalCountError?.message ??
+            uriToAttributeElementMapError?.message ??
+            "Unknown error"
+        );
+    };
+
+    const globalErrorMessage: string = isError() ? getErrorMessage() : undefined;
+
+    return {
+        title,
+        subtitle,
+
+        selectedFilterOptions,
+        globalErrorMessage,
+
+        isFiltering,
+        isDropdownOpen,
+        isElementsLoading,
+        isOriginalTotalCountLoading,
+        isAllFiltered,
+
+        getDropdownBodyProps,
+        hasNoData,
+        onDropdownOpenStateChanged,
+        onApply,
+    };
+};
+
+export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = (props) => {
+    const {
+        title,
+        subtitle,
+        hasNoData,
+
+        selectedFilterOptions,
+        globalErrorMessage,
+
+        isFiltering,
+        isElementsLoading,
+        isDropdownOpen,
+        isOriginalTotalCountLoading,
+        isAllFiltered,
+
+        onApply,
+        getDropdownBodyProps,
+        onDropdownOpenStateChanged,
+    } = useAttributeFilterButton(props);
+
     const { FilterError } = props;
 
-    return elementsError ||
-        attributeError ||
-        totalCountError ||
-        parentFilterTitlesError ||
-        originalTotalCountError ||
-        uriToAttributeElementMapError ? (
-        <FilterError
-            error={
-                elementsError?.message ??
-                attributeError?.message ??
-                totalCountError?.message ??
-                parentFilterTitlesError?.message ??
-                originalTotalCountError?.message ??
-                uriToAttributeElementMapError?.message ??
-                "Unknown error"
-            }
-        />
+    return globalErrorMessage ? (
+        <FilterError error={globalErrorMessage} />
     ) : (
         <AttributeFilterButtonDropdown
-            isFiltering={state.isFiltering}
-            isDropdownOpen={state.isDropdownOpen}
-            isElementsLoading={!state.validOptions?.items && isCancelablePromiseLoading(elementsStatus)}
-            isOriginalTotalCountLoading={isCancelablePromisePendingOrLoading(originalTotalCountStatus)}
-            title={
-                props.title || !isCancelablePromisePendingOrLoading(attributeStatus)
-                    ? attribute.title
-                    : getLoadingTitleIntl(props.intl)
-            }
-            subtitle={getSubtitle({
-                loadingProps: {
-                    isElementsLoading: isCancelablePromiseLoading(elementsStatus),
-                    isTotalCountLoading: isCancelablePromisePendingOrLoading(totalCountStatus),
-                },
-                ownProps: {
-                    isAllFiltered,
-                    isElementsByRef,
-                    currentFilter,
-                    identifier: props.identifier,
-                    originalTotalCount,
-                    intl: props.intl,
-                },
-                state: {
-                    firstLoad: state.firstLoad,
-                    isFiltering: state.isFiltering,
-                    isInverted: state.isInverted,
-                    selectedFilterOptions: state.selectedFilterOptions,
-                    uriToAttributeElementMap: state.uriToAttributeElementMap,
-                    searchString: state.searchString,
-                },
-            })}
-            selectedFilterOptions={state.selectedFilterOptions}
+            isFiltering={isFiltering}
+            isDropdownOpen={isDropdownOpen}
+            isElementsLoading={isElementsLoading}
+            isOriginalTotalCountLoading={isOriginalTotalCountLoading}
+            title={title}
+            subtitle={subtitle}
+            selectedFilterOptions={selectedFilterOptions}
             onDropdownOpenStateChanged={onDropdownOpenStateChanged}
             onApplyButtonClicked={onApply}
             isAllFiltered={isAllFiltered}
@@ -473,12 +531,12 @@ AttributeFilterButtonCore.defaultProps = {
     FilterError: AttributeFilterError,
 };
 
-const IntlAttributeFilterButton = withContexts(injectIntl(AttributeFilterButtonCore));
+const IntlAttributeFilterButton = withContexts(AttributeFilterButtonCore);
 
 /**
  * @internal
  */
-export const AttributeFilterButton: React.FC<IAttributeFilterButtonOwnProps> = (props) => {
+export const AttributeFilterButton: React.FC<IAttributeFilterButtonProps> = (props) => {
     return (
         <IntlWrapper locale={props.locale}>
             <IntlAttributeFilterButton {...props} />
