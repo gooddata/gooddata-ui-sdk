@@ -8063,6 +8063,46 @@ export function MyComponent() {
 "
 `;
 
+exports[`getEmbeddingCode functionality should generate code for BarChart - reversed two measures and two viewBy with stackMeasures 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newAttributeAreaSort, newMeasure } from \\"@gooddata/sdk-model\\";
+import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
+    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
+];
+const viewBy: IAttribute[] = [
+    newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
+    newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
+];
+const sortBy: ISortItem[] = [
+    newAttributeAreaSort(\\"a_label.product.id.name\\", \\"desc\\", \\"sum\\"),
+    newAttributeAreaSort(\\"a_label.owner.region\\", \\"desc\\", \\"sum\\")
+];
+const config: IChartConfig = {
+    stackMeasures: true,
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    legend: {position: \\"auto\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <BarChart
+                measures={measures}
+                viewBy={viewBy}
+                sortBy={sortBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
 exports[`getEmbeddingCode functionality should generate code for BarChart - single axis name customization - high 1`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
@@ -35004,6 +35044,54 @@ export function MyComponent() {
 "
 `;
 
+exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and single grand total and single subtotal sorted by second attribute 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, ITotal, newAttribute, newAttributeSort, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
+import { IPivotTableConfig, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
+    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
+    newAttribute(idRef(\\"label.owner.department\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.department\\"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef(\\"label.opportunitysnapshot.forecastcategory\\", \\"displayForm\\"), a => a.localId(\\"a_label.opportunitysnapshot.forecastcategory\\")),
+    newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
+];
+const sortBy: ISortItem[] = [
+    newAttributeSort(\\"a_label.owner.department\\", \\"desc\\")
+];
+const totals: ITotal[] = [
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.product.id.name\\"),
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.department\\")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                sortBy={sortBy}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
 exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and single grand total for each 1`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, ITotal, newAttribute, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
@@ -35082,6 +35170,53 @@ export function MyComponent() {
                 measures={measures}
                 rows={rows}
                 columns={columns}
+                totals={totals}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for PivotTable - two measures and single grand total sorted by second attribute 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, ITotal, newAttribute, newAttributeSort, newMeasure, newTotal } from \\"@gooddata/sdk-model\\";
+import { IPivotTableConfig, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
+    newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
+];
+const rows: IAttribute[] = [
+    newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
+    newAttribute(idRef(\\"label.owner.department\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.department\\"))
+];
+const columns: IAttribute[] = [
+    newAttribute(idRef(\\"label.opportunitysnapshot.forecastcategory\\", \\"displayForm\\"), a => a.localId(\\"a_label.opportunitysnapshot.forecastcategory\\")),
+    newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
+];
+const sortBy: ISortItem[] = [
+    newAttributeSort(\\"a_label.owner.department\\", \\"desc\\")
+];
+const totals: ITotal[] = [
+    newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.product.id.name\\")
+];
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <PivotTable
+                measures={measures}
+                rows={rows}
+                columns={columns}
+                sortBy={sortBy}
                 totals={totals}
                 config={config}
             />

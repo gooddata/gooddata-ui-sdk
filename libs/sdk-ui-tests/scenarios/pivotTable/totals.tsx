@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
-import { newTotal } from "@gooddata/sdk-model";
+import { newAttributeSort, newTotal } from "@gooddata/sdk-model";
 import { IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
 import { requestPages } from "@gooddata/mock-handling";
 import { scenariosFor } from "../../src";
@@ -89,4 +89,30 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     })
     .addScenario("two measures and grand totals and multiple subtotals", {
         ...PivotTableWithTwoMeasuresGrandTotalsAndSubtotals,
-    });
+    })
+    .addScenario(
+        "two measures and single grand total sorted by second attribute",
+        {
+            ...PivotTableWithTwoMeasuresAndTwoRowsAndCols,
+            totals: [newTotal("sum", ReferenceMd.Amount, ReferenceMd.Product.Name)],
+            sortBy: [newAttributeSort(ReferenceMd.Department, "desc")],
+        },
+        (m) =>
+            m.withCustomDataCapture({
+                windows: [...requestPages([0, 0], [22, 1000], 1), ...requestPages([0, 0], [12, 1000], 1)],
+            }),
+    )
+    .addScenario(
+        "two measures and single grand total and single subtotal sorted by second attribute",
+        // The expected behaviour is that the subtotal will be removed and the scenario will be reduced to
+        // the scenario "two measures and single grand total sorted by second attribute"
+        // The requested windows also get affected so the base scenario requires multiple recorded responses
+        {
+            ...PivotTableWithTwoMeasuresAndTwoRowsAndCols,
+            totals: [
+                newTotal("sum", ReferenceMd.Amount, ReferenceMd.Product.Name),
+                newTotal("sum", ReferenceMd.Amount, ReferenceMd.Department),
+            ],
+            sortBy: [newAttributeSort(ReferenceMd.Department, "desc")],
+        },
+    );

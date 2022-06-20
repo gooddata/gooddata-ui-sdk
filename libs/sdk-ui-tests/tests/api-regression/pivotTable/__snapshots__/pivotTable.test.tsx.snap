@@ -7411,6 +7411,226 @@ Object {
 }
 `;
 
+exports[`PivotTable with two measures and single grand total and single subtotal sorted by second attribute should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.department",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.owner.department",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.opportunitysnapshot.forecastcategory",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.opportunitysnapshot.forecastcategory",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.department",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.owner.department",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+      "totals": Array [
+        Object {
+          "attributeIdentifier": "a_label.product.id.name",
+          "measureIdentifier": "m_aangOxLSeztu",
+          "type": "sum",
+        },
+        Object {
+          "attributeIdentifier": "a_label.owner.department",
+          "measureIdentifier": "m_aangOxLSeztu",
+          "type": "sum",
+        },
+      ],
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.opportunitysnapshot.forecastcategory",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.opportunitysnapshot.forecastcategory",
+          },
+        },
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "columns",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+        "a_label.owner.department",
+      ],
+      "totals": Array [
+        Object {
+          "attributeIdentifier": "a_label.product.id.name",
+          "measureIdentifier": "m_aangOxLSeztu",
+          "type": "sum",
+        },
+        Object {
+          "attributeIdentifier": "a_label.owner.department",
+          "measureIdentifier": "m_aangOxLSeztu",
+          "type": "sum",
+        },
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.opportunitysnapshot.forecastcategory",
+        "a_label.owner.region",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "postProcessing": Object {},
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.owner.department",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`PivotTable with two measures and single grand total and single subtotal sorted by second attribute should create expected props for core chart 1`] = `
+Object {
+  "ErrorComponent": [Function],
+  "LoadingComponent": [Function],
+  "afterRender": [Function],
+  "config": Object {
+    "menu": Object {},
+  },
+  "drillableItems": Array [],
+  "exportTitle": "PivotTable",
+  "locale": "en-US",
+  "onColumnResized": [Function],
+  "onDrill": [Function],
+  "onExportReady": [Function],
+  "onLoadingChanged": [Function],
+  "pageSize": 100,
+  "pushData": [Function],
+}
+`;
+
 exports[`PivotTable with two measures and single grand total for each should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
@@ -7808,6 +8028,216 @@ Object {
 `;
 
 exports[`PivotTable with two measures and single grand total for one should create expected props for core chart 1`] = `
+Object {
+  "ErrorComponent": [Function],
+  "LoadingComponent": [Function],
+  "afterRender": [Function],
+  "config": Object {
+    "menu": Object {},
+  },
+  "drillableItems": Array [],
+  "exportTitle": "PivotTable",
+  "locale": "en-US",
+  "onColumnResized": [Function],
+  "onDrill": [Function],
+  "onExportReady": [Function],
+  "onLoadingChanged": [Function],
+  "pageSize": 100,
+  "pushData": [Function],
+}
+`;
+
+exports[`PivotTable with two measures and single grand total sorted by second attribute should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.department",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.owner.department",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.opportunitysnapshot.forecastcategory",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.opportunitysnapshot.forecastcategory",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.department",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.owner.department",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+      "totals": Array [
+        Object {
+          "attributeIdentifier": "a_label.product.id.name",
+          "measureIdentifier": "m_aangOxLSeztu",
+          "type": "sum",
+        },
+      ],
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.opportunitysnapshot.forecastcategory",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.opportunitysnapshot.forecastcategory",
+          },
+        },
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "columns",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+        "a_label.owner.department",
+      ],
+      "totals": Array [
+        Object {
+          "attributeIdentifier": "a_label.product.id.name",
+          "measureIdentifier": "m_aangOxLSeztu",
+          "type": "sum",
+        },
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.opportunitysnapshot.forecastcategory",
+        "a_label.owner.region",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "postProcessing": Object {},
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.owner.department",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`PivotTable with two measures and single grand total sorted by second attribute should create expected props for core chart 1`] = `
 Object {
   "ErrorComponent": [Function],
   "LoadingComponent": [Function],
