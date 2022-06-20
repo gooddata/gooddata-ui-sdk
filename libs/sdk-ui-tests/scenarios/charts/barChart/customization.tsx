@@ -1,12 +1,16 @@
 // (C) 2007-2019 GoodData Corporation
 import { BarChart, IBarChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
-import { dataLabelCustomizer } from "../_infra/dataLabelVariants";
 import { legendCustomizer } from "../_infra/legendVariants";
-import { BarChartWithTwoMeasuresAndViewBy, BarChartWithLargeLegend } from "./base";
+import {
+    BarChartWithTwoMeasuresAndViewBy,
+    BarChartWithLargeLegend,
+    BarChartWithSingleMeasureAndViewByAndStackMultipleItems,
+} from "./base";
 import { ScenarioGroupNames } from "../_infra/groupNames";
 import { responsiveScenarios } from "../_infra/responsiveScenarios";
 import { legendResponsiveVariants, legendResponsiveSizeVariants } from "../_infra/legendResponsiveVariants";
+import { extendedDataLabelCustomizer } from "../_infra/extendedDataLabelVariants";
 
 const legendScenarios = scenariosFor<IBarChartProps>("BarChart", BarChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
@@ -18,7 +22,11 @@ const dataLabelScenarios = scenariosFor<IBarChartProps>("BarChart", BarChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
     .withVisualTestConfig({ groupUnder: "data labels" })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
-    .addScenarios("data labels", BarChartWithTwoMeasuresAndViewBy, dataLabelCustomizer);
+    .addScenarios(
+        "data labels",
+        BarChartWithSingleMeasureAndViewByAndStackMultipleItems,
+        extendedDataLabelCustomizer,
+    );
 
 const legendResponziveScenarios = responsiveScenarios(
     "BarChart",

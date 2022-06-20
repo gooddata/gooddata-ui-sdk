@@ -8928,9 +8928,18 @@ Object {
 }
 `;
 
-exports[`BarChart with data labels - auto visibility should create expected execution definition 1`] = `
+exports[`BarChart with data labels - data labels and totals with auto visibility should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
     Object {
       "attribute": Object {
         "displayForm": Object {
@@ -8957,21 +8966,22 @@ Object {
             "localIdentifier": "m_aangOxLSeztu",
           },
         },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
         Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "acugFHNJgsBy",
-                  "type": "measure",
-                },
-              },
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+              "type": "displayForm",
             },
-            "localIdentifier": "m_acugFHNJgsBy",
+            "localIdentifier": "a_label.owner.region",
           },
         },
       ],
-      "localIdentifier": "measures",
+      "localIdentifier": "view",
     },
     Object {
       "items": Array [
@@ -8985,22 +8995,19 @@ Object {
           },
         },
       ],
-      "localIdentifier": "view",
-    },
-    Object {
-      "items": Array [],
       "localIdentifier": "stack",
     },
   ],
   "dimensions": Array [
     Object {
       "itemIdentifiers": Array [
-        "measureGroup",
+        "a_label.product.id.name",
       ],
     },
     Object {
       "itemIdentifiers": Array [
-        "a_label.product.id.name",
+        "a_label.owner.region",
+        "measureGroup",
       ],
     },
   ],
@@ -9019,17 +9026,125 @@ Object {
         "localIdentifier": "m_aangOxLSeztu",
       },
     },
+  ],
+  "postProcessing": Object {},
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`BarChart with data labels - data labels and totals with auto visibility should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "dataLabels": Object {
+      "totalsVisible": "auto",
+      "visible": "auto",
+    },
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+  "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+}
+`;
+
+exports[`BarChart with data labels - data labels auto visibility should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.owner.region",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
     Object {
       "measure": Object {
         "definition": Object {
           "measureDefinition": Object {
             "item": Object {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "aangOxLSeztu",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_aangOxLSeztu",
       },
     },
   ],
@@ -9039,11 +9154,372 @@ Object {
 }
 `;
 
-exports[`BarChart with data labels - auto visibility should create expected props for core chart 1`] = `
+exports[`BarChart with data labels - data labels auto visibility should create expected props for core chart 1`] = `
 Object {
   "config": Object {
     "dataLabels": Object {
       "visible": "auto",
+    },
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+  "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+}
+`;
+
+exports[`BarChart with data labels - data labels forced hidden should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.owner.region",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "postProcessing": Object {},
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`BarChart with data labels - data labels forced hidden should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "dataLabels": Object {
+      "visible": false,
+    },
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+  "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+}
+`;
+
+exports[`BarChart with data labels - data labels forced hidden totals forced visible should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.owner.region",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "postProcessing": Object {},
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`BarChart with data labels - data labels forced hidden totals forced visible should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "dataLabels": Object {
+      "totalsVisible": true,
+      "visible": false,
+    },
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+  "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+}
+`;
+
+exports[`BarChart with data labels - data labels forced visible should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.owner.region",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "postProcessing": Object {},
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`BarChart with data labels - data labels forced visible should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "dataLabels": Object {
+      "visible": true,
     },
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
@@ -9060,6 +9536,15 @@ Object {
     Object {
       "attribute": Object {
         "displayForm": Object {
+          "identifier": "label.owner.region",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
           "identifier": "label.product.id.name",
           "type": "displayForm",
         },
@@ -9083,21 +9568,22 @@ Object {
             "localIdentifier": "m_aangOxLSeztu",
           },
         },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
         Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "acugFHNJgsBy",
-                  "type": "measure",
-                },
-              },
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+              "type": "displayForm",
             },
-            "localIdentifier": "m_acugFHNJgsBy",
+            "localIdentifier": "a_label.owner.region",
           },
         },
       ],
-      "localIdentifier": "measures",
+      "localIdentifier": "view",
     },
     Object {
       "items": Array [
@@ -9111,22 +9597,19 @@ Object {
           },
         },
       ],
-      "localIdentifier": "view",
-    },
-    Object {
-      "items": Array [],
       "localIdentifier": "stack",
     },
   ],
   "dimensions": Array [
     Object {
       "itemIdentifiers": Array [
-        "measureGroup",
+        "a_label.product.id.name",
       ],
     },
     Object {
       "itemIdentifiers": Array [
-        "a_label.product.id.name",
+        "a_label.owner.region",
+        "measureGroup",
       ],
     },
   ],
@@ -9143,19 +9626,6 @@ Object {
           },
         },
         "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "acugFHNJgsBy",
-              "type": "measure",
-            },
-          },
-        },
-        "localIdentifier": "m_acugFHNJgsBy",
       },
     },
   ],
@@ -9177,9 +9647,18 @@ Object {
 }
 `;
 
-exports[`BarChart with data labels - forced hidden should create expected execution definition 1`] = `
+exports[`BarChart with data labels - forced dataLabels visible and german separators should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
     Object {
       "attribute": Object {
         "displayForm": Object {
@@ -9206,21 +9685,22 @@ Object {
             "localIdentifier": "m_aangOxLSeztu",
           },
         },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
         Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "acugFHNJgsBy",
-                  "type": "measure",
-                },
-              },
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+              "type": "displayForm",
             },
-            "localIdentifier": "m_acugFHNJgsBy",
+            "localIdentifier": "a_label.owner.region",
           },
         },
       ],
-      "localIdentifier": "measures",
+      "localIdentifier": "view",
     },
     Object {
       "items": Array [
@@ -9234,22 +9714,19 @@ Object {
           },
         },
       ],
-      "localIdentifier": "view",
-    },
-    Object {
-      "items": Array [],
       "localIdentifier": "stack",
     },
   ],
   "dimensions": Array [
     Object {
       "itemIdentifiers": Array [
-        "measureGroup",
+        "a_label.product.id.name",
       ],
     },
     Object {
       "itemIdentifiers": Array [
-        "a_label.product.id.name",
+        "a_label.owner.region",
+        "measureGroup",
       ],
     },
   ],
@@ -9268,19 +9745,6 @@ Object {
         "localIdentifier": "m_aangOxLSeztu",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "acugFHNJgsBy",
-              "type": "measure",
-            },
-          },
-        },
-        "localIdentifier": "m_acugFHNJgsBy",
-      },
-    },
   ],
   "postProcessing": Object {},
   "sortBy": Array [],
@@ -9288,133 +9752,7 @@ Object {
 }
 `;
 
-exports[`BarChart with data labels - forced hidden should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "dataLabels": Object {
-      "visible": false,
-    },
-    "stackMeasures": undefined,
-    "stackMeasuresToPercent": undefined,
-  },
-  "exportTitle": "BarChart",
-  "theme": undefined,
-  "themeIsLoading": undefined,
-}
-`;
-
-exports[`BarChart with data labels - forced visible and german separators should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-          "type": "displayForm",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                  "type": "measure",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "acugFHNJgsBy",
-                  "type": "measure",
-                },
-              },
-            },
-            "localIdentifier": "m_acugFHNJgsBy",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-              "type": "displayForm",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-    Object {
-      "items": Array [],
-      "localIdentifier": "stack",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-              "type": "measure",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "acugFHNJgsBy",
-              "type": "measure",
-            },
-          },
-        },
-        "localIdentifier": "m_acugFHNJgsBy",
-      },
-    },
-  ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
-  "workspace": "reference-workspace",
-}
-`;
-
-exports[`BarChart with data labels - forced visible and german separators should create expected props for core chart 1`] = `
+exports[`BarChart with data labels - forced dataLabels visible and german separators should create expected props for core chart 1`] = `
 Object {
   "config": Object {
     "dataLabels": Object {
@@ -9433,9 +9771,18 @@ Object {
 }
 `;
 
-exports[`BarChart with data labels - forced visible should create expected execution definition 1`] = `
+exports[`BarChart with data labels - labels forced hidden totals auto visibility should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
     Object {
       "attribute": Object {
         "displayForm": Object {
@@ -9462,21 +9809,22 @@ Object {
             "localIdentifier": "m_aangOxLSeztu",
           },
         },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
         Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "acugFHNJgsBy",
-                  "type": "measure",
-                },
-              },
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+              "type": "displayForm",
             },
-            "localIdentifier": "m_acugFHNJgsBy",
+            "localIdentifier": "a_label.owner.region",
           },
         },
       ],
-      "localIdentifier": "measures",
+      "localIdentifier": "view",
     },
     Object {
       "items": Array [
@@ -9490,22 +9838,19 @@ Object {
           },
         },
       ],
-      "localIdentifier": "view",
-    },
-    Object {
-      "items": Array [],
       "localIdentifier": "stack",
     },
   ],
   "dimensions": Array [
     Object {
       "itemIdentifiers": Array [
-        "measureGroup",
+        "a_label.product.id.name",
       ],
     },
     Object {
       "itemIdentifiers": Array [
-        "a_label.product.id.name",
+        "a_label.owner.region",
+        "measureGroup",
       ],
     },
   ],
@@ -9524,19 +9869,6 @@ Object {
         "localIdentifier": "m_aangOxLSeztu",
       },
     },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "acugFHNJgsBy",
-              "type": "measure",
-            },
-          },
-        },
-        "localIdentifier": "m_acugFHNJgsBy",
-      },
-    },
   ],
   "postProcessing": Object {},
   "sortBy": Array [],
@@ -9544,11 +9876,12 @@ Object {
 }
 `;
 
-exports[`BarChart with data labels - forced visible should create expected props for core chart 1`] = `
+exports[`BarChart with data labels - labels forced hidden totals auto visibility should create expected props for core chart 1`] = `
 Object {
   "config": Object {
     "dataLabels": Object {
-      "visible": true,
+      "totalsVisible": "auto",
+      "visible": false,
     },
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,

@@ -197,6 +197,8 @@ export interface IChartConfig {
     enableCompactSize?: boolean;
     enableJoinedAttributeAxisName?: boolean;
     enableReversedStacking?: boolean;
+    // (undocumented)
+    enableSeparateTotalLabels?: boolean;
     forceDisableDrillOnAxes?: boolean;
     grid?: IGridConfig;
     legend?: ILegendConfig;
@@ -280,6 +282,8 @@ export interface ICoreChartProps extends ICommonChartProps {
 
 // @public (undocumented)
 export interface IDataLabelsConfig {
+    // (undocumented)
+    totalsVisible?: IDataLabelsVisible;
     // (undocumented)
     visible?: IDataLabelsVisible;
 }

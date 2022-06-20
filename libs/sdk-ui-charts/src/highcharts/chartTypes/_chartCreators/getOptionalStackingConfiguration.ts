@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import partial from "lodash/partial";
 import merge from "lodash/merge";
 import includes from "lodash/includes";
@@ -6,13 +6,14 @@ import isNil from "lodash/isNil";
 import set from "lodash/set";
 import isArray from "lodash/isArray";
 import { IChartConfig } from "../../../interfaces";
-import { formatAsPercent, getLabelStyle, getLabelsVisibilityConfig } from "./dataLabelsHelpers";
+import { formatAsPercent, getLabelStyle, getTotalsVisibility } from "./dataLabelsHelpers";
 import {
     getPrimaryChartType,
     isInvertedChartType,
     isColumnChart,
     isComboChart,
     isLineChart,
+    isBarChart,
 } from "../_util/common";
 import { IDrillConfig } from "@gooddata/sdk-ui";
 import { canComboChartBeStackedInPercent } from "../comboChart/comboChartOptions";
@@ -182,21 +183,16 @@ export function getYAxisConfiguration(
     }
     const { stackMeasuresToPercent = false } = chartConfig;
 
-    // only support column char
-    // bar chart disables stack labels by default
-    if (!isColumnChart(type)) {
+    // only supports column & bar charts
+    if (!isColumnChart(type) && !isBarChart(type)) {
         return {};
     }
 
-    const labelsVisible = chartConfig.dataLabels?.visible;
-    const { enabled: dataLabelEnabled } = getLabelsVisibilityConfig(labelsVisible);
-
-    // enable by default or follow dataLabels.visible config
-    const stackLabelConfig = isNil(dataLabelEnabled) || dataLabelEnabled;
+    const stackLabelConfig = getTotalsVisibility(type, chartConfig);
 
     const yAxisWithStackLabel = yAxis.map((axis: IHighChartAxis, index: number) => {
         // disable stack labels for primary Y axis when there is 'Stack to 100%' on
-        const stackLabelEnabled = (index !== 0 || !stackMeasuresToPercent) && stackLabelConfig;
+        const stackLabelEnabled = (index !== 0 || !stackMeasuresToPercent) && !!stackLabelConfig;
         return {
             ...axis,
             stackLabels: {

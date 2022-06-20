@@ -59,6 +59,13 @@ export const dataLabelsDropdownItems: IDropdownItem[] = [
     { title: messages.dataLabelsHide.id, value: false },
 ];
 
+export const totalLabelsDropdownItems: IDropdownItem[] = [
+    { title: messages.totalLabelsAuto.id, value: "auto" },
+    { type: "separator" },
+    { title: messages.totalLabelsShow.id, value: true },
+    { title: messages.totalLabelsHide.id, value: false },
+];
+
 export const dataPointsDropdownLabels: IDropdownItem[] = [
     { title: messages.dataPointsAuto.id, value: "auto" },
     { type: "separator" },

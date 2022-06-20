@@ -1,5 +1,6 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import flatMap from "lodash/flatMap";
+import isNil from "lodash/isNil";
 import Highcharts from "../../lib";
 
 import {
@@ -10,8 +11,8 @@ import {
     IAxisRange,
     IAxisRangeForAxes,
 } from "./helpers";
-import { isAreaChart, isOneOfTypes } from "../_util/common";
-import { IDataLabelsVisible } from "../../../interfaces";
+import { isAreaChart, isBarChart, isOneOfTypes } from "../_util/common";
+import { IDataLabelsVisible, IChartConfig } from "../../../interfaces";
 import { BLACK_LABEL, WHITE_LABEL, whiteDataLabelTypes } from "../../constants/label";
 import { StackingType } from "../../constants/stacking";
 
@@ -30,6 +31,9 @@ export function isLabelOverlappingItsShape(point: any): boolean {
 
 export const getDataLabelsGdcVisible = (chart: Highcharts.Chart): boolean | string =>
     (chart?.options?.plotOptions as any)?.gdcOptions?.dataLabels?.visible ?? "auto";
+
+export const getDataLabelsGdcTotalsVisible = (chart: Highcharts.Chart): boolean | string =>
+    (chart?.options?.plotOptions as any)?.gdcOptions?.dataLabels?.totalsVisible ?? "auto";
 
 const isLabelsStackedFromYAxis = (chart: Highcharts.Chart): boolean =>
     (chart?.userOptions?.yAxis?.[0]?.stackLabels?.enabled ?? false) ||
@@ -121,6 +125,10 @@ export const hideAllLabels = ({ series }: { series: Highcharts.Series[] }): void
 export const showAllLabels = ({ series }: { series: Highcharts.Series[] }): void =>
     showDataLabels(flatMap(series, (s) => s.points));
 
+export function setStackVisibilityByOpacity(stackTotalGroup: Highcharts.SVGAttributes, visible: boolean) {
+    stackTotalGroup.attr({ opacity: visible ? 1 : 0 });
+}
+
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function getDataLabelAttributes(point: any): IRectBySize {
     const dataLabel = point?.dataLabel ?? null;
@@ -198,6 +206,22 @@ export function formatAsPercent(unit: number = 100): string {
 
 export function isInPercent(format: string = ""): boolean {
     return format.includes("%");
+}
+
+// returns totalVisible based on the current conditions
+// it returns auto in case of missing chartConfig and not being requested in context of barchart
+export function getTotalsVisibility(chartType: string, chartConfig: IChartConfig): IDataLabelsVisible {
+    const totalsVisibility: IDataLabelsVisible = chartConfig?.dataLabels?.totalsVisible;
+
+    if (!isNil(totalsVisibility)) {
+        return totalsVisibility;
+    }
+
+    if (isBarChart(chartType)) {
+        return false;
+    }
+
+    return isNil(chartConfig?.dataLabels?.visible) ? "auto" : chartConfig?.dataLabels?.visible;
 }
 
 export function getLabelsVisibilityConfig(visible: IDataLabelsVisible): Highcharts.DataLabelsOptions {

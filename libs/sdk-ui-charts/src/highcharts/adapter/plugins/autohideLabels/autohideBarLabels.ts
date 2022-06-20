@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import sortBy from "lodash/sortBy";
 
 import {
@@ -19,7 +19,10 @@ import {
     showDataLabelInAxisRange,
     showStackLabelInAxisRange,
     getShapeVisiblePart,
+    areLabelsStacked,
+    setStackVisibilityByOpacity,
 } from "../../../chartTypes/_chartCreators/dataLabelsHelpers";
+import { areLabelsOverlappingColumns, getStackItems, getStackTotalGroups } from "./autohideColumnLabels";
 
 const toggleStackedChartLabels = (visiblePoints: any[], axisRangeForAxes: IAxisRangeForAxes) => {
     const intersectionFound = visiblePoints.filter(hasDataLabel).some((point) => {
@@ -123,3 +126,51 @@ export const handleBarLabelsOutsideChart = (chart: any): void => {
         }
     });
 };
+
+export const autohideBarTotalLabels = (chart: Highcharts.Chart): void => {
+    // stack labels are total values displayed on top of columns
+    if (areLabelsStacked(chart)) {
+        toggleStackedLabels.call(chart);
+    }
+};
+
+function toggleStackedLabels() {
+    const { yAxis } = this;
+
+    // CL-10676 - Return if yAxis is undefined
+    if (!yAxis || yAxis.length === 0) {
+        return;
+    }
+
+    toggleStackedLabelsForAxis.call(this);
+}
+
+function getStackedLabels(stacks: any): any[] {
+    const labels: any[] = [];
+
+    for (const stackName in stacks) {
+        for (const itemName in stacks[stackName]) {
+            for (const item in stacks[stackName][itemName]) {
+                labels.push(stacks[stackName][itemName][item].label);
+            }
+        }
+    }
+    return labels;
+}
+
+export function toggleStackedLabelsForAxis() {
+    const { yAxis } = this;
+    const stackTotalGroups = getStackTotalGroups(yAxis);
+    const stacks = getStackItems(yAxis);
+
+    if (stacks && stackTotalGroups) {
+        const areOverlapping = areLabelsOverlappingColumns(
+            getStackedLabels(stacks),
+            getDataPointsOfVisibleSeries(this),
+        );
+
+        stackTotalGroups.forEach((stackTotalGroup: Highcharts.SVGAttributes) =>
+            setStackVisibilityByOpacity(stackTotalGroup, !areOverlapping),
+        );
+    }
+}
