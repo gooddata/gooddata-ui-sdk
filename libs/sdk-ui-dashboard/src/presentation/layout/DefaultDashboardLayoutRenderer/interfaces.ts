@@ -1,5 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 import { IDashboardLayout, IDashboardWidget, ScreenSize } from "@gooddata/sdk-model";
+import { RenderMode } from "../../../types";
 import {
     IDashboardLayoutItemFacade,
     IDashboardLayoutSectionFacade,
@@ -60,6 +61,11 @@ export interface IDashboardLayoutSectionRenderProps<TWidget = IDashboardWidget> 
      * Columns rendered by columnRenderer.
      */
     children: React.ReactNode;
+
+    /**
+     * Dashboard render mode
+     */
+    renderMode: RenderMode;
 
     /**
      * Additional section css class name.
@@ -299,6 +305,11 @@ export interface IDashboardLayoutGridRowRenderProps<TWidget = IDashboardWidget> 
      * Current screen type with respect to the set breakpoints.
      */
     screen: ScreenSize;
+
+    /**
+     * Dashboard render mode
+     */
+    renderMode: RenderMode;
 }
 
 /**
@@ -381,6 +392,11 @@ export interface IDashboardLayoutRenderProps<TWidget = IDashboardWidget> {
      * Checks if feature flag enableKDWidgetCustomHeight is enabled
      */
     enableCustomHeight?: boolean;
+
+    /**
+     * Dashboard render mode
+     */
+    renderMode?: RenderMode;
 }
 
 /**

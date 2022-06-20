@@ -1,20 +1,21 @@
 // (C) 2007-2022 GoodData Corporation
-import React from "react";
-import flatMap from "lodash/flatMap";
 import { ScreenSize } from "@gooddata/sdk-model";
+import flatMap from "lodash/flatMap";
+import React from "react";
+import { RenderMode } from "../../../types";
+import { IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/fluidLayout/facade/interfaces";
+import { DashboardLayoutGridRow } from "./DashboardLayoutGridRow";
+import { DashboardLayoutSectionHeaderRenderer } from "./DashboardLayoutSectionHeaderRenderer";
+import { DashboardLayoutSectionRenderer } from "./DashboardLayoutSectionRenderer";
 import {
+    IDashboardLayoutGridRowRenderer,
     IDashboardLayoutItemKeyGetter,
     IDashboardLayoutItemRenderer,
-    IDashboardLayoutWidgetRenderer,
+    IDashboardLayoutSectionHeaderRenderer,
     IDashboardLayoutSectionKeyGetter,
     IDashboardLayoutSectionRenderer,
-    IDashboardLayoutSectionHeaderRenderer,
-    IDashboardLayoutGridRowRenderer,
+    IDashboardLayoutWidgetRenderer,
 } from "./interfaces";
-import { DashboardLayoutItem } from "./DashboardLayoutItem";
-import { DashboardLayoutSectionRenderer } from "./DashboardLayoutSectionRenderer";
-import { IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/fluidLayout/facade/interfaces";
-import { DashboardLayoutSectionHeaderRenderer } from "./DashboardLayoutSectionHeaderRenderer";
 
 /**
  * @alpha
@@ -29,6 +30,7 @@ export interface IDashboardLayoutSectionProps<TWidget> {
     widgetRenderer: IDashboardLayoutWidgetRenderer<TWidget>;
     gridRowRenderer?: IDashboardLayoutGridRowRenderer<TWidget>;
     screen: ScreenSize;
+    renderMode: RenderMode;
 }
 
 export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionProps<TWidget>): JSX.Element {
@@ -36,27 +38,28 @@ export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionPr
         section,
         sectionRenderer = DashboardLayoutSectionRenderer,
         sectionHeaderRenderer = DashboardLayoutSectionHeaderRenderer,
-        itemKeyGetter = ({ item }) => item.index(),
+        itemKeyGetter = ({ item }) => item.index().toString(),
         gridRowRenderer,
         itemRenderer,
         widgetRenderer,
         screen,
+        renderMode,
     } = props;
-    const renderProps = { section, screen };
+    const renderProps = { section, screen, renderMode };
 
     const items = flatMap(section.items().asGridRows(screen), (itemsInRow) => {
-        const rowItems = itemsInRow.map((item) => (
-            <DashboardLayoutItem
-                key={itemKeyGetter({ item, screen })}
-                item={item}
+        return (
+            <DashboardLayoutGridRow
+                screen={screen}
+                section={section}
+                items={itemsInRow}
+                gridRowRenderer={gridRowRenderer}
+                itemKeyGetter={itemKeyGetter}
                 itemRenderer={itemRenderer}
                 widgetRenderer={widgetRenderer}
-                screen={screen}
+                renderMode={renderMode}
             />
-        ));
-        return gridRowRenderer
-            ? gridRowRenderer({ children: rowItems, screen, section, items: itemsInRow })
-            : rowItems;
+        );
     });
 
     return sectionRenderer({
