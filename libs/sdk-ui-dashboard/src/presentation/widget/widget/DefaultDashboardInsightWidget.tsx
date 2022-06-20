@@ -8,6 +8,7 @@ import {
     IInsightWidget,
     widgetTitle,
     ScreenSize,
+    areObjRefsEqual,
 } from "@gooddata/sdk-model";
 import { OnError, OnExportReady, OnLoadingChanged, VisType } from "@gooddata/sdk-ui";
 
@@ -18,6 +19,9 @@ import {
     useDashboardScheduledEmails,
     selectCanExportReport,
     selectIsInEditMode,
+    selectSelectedWidgetRef,
+    useDashboardDispatch,
+    uiActions,
 } from "../../../model";
 import {
     DashboardItem,
@@ -136,7 +140,17 @@ const DefaultDashboardInsightWidgetCore: React.FC<
         [InsightMenuComponentProvider, insight, widget],
     );
 
-    const isEditMode = useDashboardSelector(selectIsInEditMode);
+    const isSelectable = useDashboardSelector(selectIsInEditMode);
+
+    const selectedWidget = useDashboardSelector(selectSelectedWidgetRef);
+    const isSelected = isSelectable && selectedWidget && areObjRefsEqual(selectedWidget, widget.ref);
+
+    const dispatch = useDashboardDispatch();
+    const onSelected = useCallback(() => {
+        if (isSelectable && widget.ref) {
+            dispatch(uiActions.selectWidget(widget.ref));
+        }
+    }, [isSelectable, widget.ref, dispatch]);
 
     return (
         <DashboardItem
@@ -149,8 +163,9 @@ const DefaultDashboardInsightWidgetCore: React.FC<
             screen={screen}
         >
             <DashboardItemVisualization
-                isSelectable={isEditMode}
-                objRef={widget.ref}
+                isSelectable={isSelectable}
+                isSelected={isSelected}
+                onSelected={onSelected}
                 renderHeadline={(clientHeight) =>
                     !widget.configuration?.hideTitle && (
                         <DashboardItemHeadline title={widget.title} clientHeight={clientHeight} />
