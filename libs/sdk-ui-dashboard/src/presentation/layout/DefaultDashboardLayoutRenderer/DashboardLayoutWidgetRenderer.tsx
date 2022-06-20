@@ -1,5 +1,5 @@
 // (C) 2007-2022 GoodData Corporation
-import React, { CSSProperties } from "react";
+import React, { CSSProperties, useMemo } from "react";
 import cx from "classnames";
 import { IDashboardLayoutWidgetRenderProps } from "./interfaces";
 
@@ -19,7 +19,7 @@ export function DashboardLayoutWidgetRenderer(props: IDashboardLayoutWidgetRende
 
     const { heightAsRatio, gridHeight } = item.size()[screen]!;
 
-    const style = React.useMemo(() => {
+    const style = useMemo(() => {
         const computedStyle: CSSProperties = {
             minHeight,
             height,
@@ -43,14 +43,14 @@ export function DashboardLayoutWidgetRenderer(props: IDashboardLayoutWidgetRende
         return computedStyle;
     }, [minHeight, height, allowOverflow, debug, heightAsRatio, isResizedByLayoutSizingStrategy]);
 
-    const getClassNames = () => {
-        return cx("gd-fluidlayout-column-container", className, {
-            "custom-height": !!gridHeight,
-        });
-    };
-
     return (
-        <div ref={contentRef} className={getClassNames()} style={style}>
+        <div
+            ref={contentRef}
+            className={cx("gd-fluidlayout-column-container", className, {
+                "custom-height": !!gridHeight,
+            })}
+            style={style}
+        >
             {children}
         </div>
     );
