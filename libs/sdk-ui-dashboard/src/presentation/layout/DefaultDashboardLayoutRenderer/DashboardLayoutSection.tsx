@@ -37,7 +37,7 @@ export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionPr
         sectionRenderer = DashboardLayoutSectionRenderer,
         sectionHeaderRenderer = DashboardLayoutSectionHeaderRenderer,
         itemKeyGetter = ({ item }) => item.index(),
-        gridRowRenderer = ({ children }) => children,
+        gridRowRenderer,
         itemRenderer,
         widgetRenderer,
         screen,
@@ -64,7 +64,7 @@ export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionPr
         DefaultSectionRenderer: DashboardLayoutSectionRenderer,
         children: (
             <>
-                {sectionHeaderRenderer?.({
+                {sectionHeaderRenderer({
                     section,
                     screen,
                     DefaultSectionHeaderRenderer: DashboardLayoutSectionHeaderRenderer,
