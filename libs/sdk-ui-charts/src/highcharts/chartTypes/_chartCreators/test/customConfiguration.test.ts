@@ -971,15 +971,15 @@ describe("getCustomizedConfiguration", () => {
             ])(
                 "should format data labels to percentage %s",
                 (_state: string, input: number, format: string, expected: string) => {
+                    const chartConfig = { separators: { decimal: ".", thousand: "," } };
                     const dataLabel = {
-                        separators: { decimal: ".", thousand: "," },
                         percentage: input,
                         stackMeasuresToPercent: true,
                         series: {
                             data: [{ format }],
                         },
                     };
-                    const result = percentageDataLabelFormatter.call(dataLabel);
+                    const result = percentageDataLabelFormatter.call(dataLabel, chartConfig);
                     expect(result).toBe(expected);
                 },
             );

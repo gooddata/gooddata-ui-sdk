@@ -389,7 +389,7 @@ export function percentageDataLabelFormatter(config?: IChartConfig): string {
         return percentFormatter(
             this.percentage,
             this.series?.data?.length > 0 && this.series.data[0].format,
-            this.separators,
+            config?.separators,
         );
     }
 
