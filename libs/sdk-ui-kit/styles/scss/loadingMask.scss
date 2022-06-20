@@ -44,7 +44,7 @@
     $step-increment-progress: 1 / $steps;
     $step-increment-deg: 360 / $steps;
 
-    #{0} {
+    0% {
         transform: rotate(0deg) translateZ(-0.1px);
     }
 
