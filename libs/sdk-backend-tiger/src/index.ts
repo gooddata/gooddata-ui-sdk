@@ -68,4 +68,12 @@ export {
     ScanResult,
     PublishPdmResult,
     Entitlement,
+    IDataSourceApiResult,
+    IDataSourceUpsertRequest,
+    IDataSourceTestConnectionRequest,
+    IDataSourceTestConnectionResponse,
+    IDataSourceConnectionInfo,
+    IDataSourceList,
+    IDataSourceType,
+    IDataSourcePermission,
 } from "./backend";
