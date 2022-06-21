@@ -2997,6 +2997,9 @@ export function resultHeaderName(header: IResultHeader): string;
 // @public (undocumented)
 export type RgbType = "rgb";
 
+// @internal
+export function sanitizeBucketTotals(bucket: IBucket, sortItems: ISortItem[]): ITotal[];
+
 // @alpha
 export type ScheduledMailAttachment = IDashboardAttachment | IWidgetAttachment;
 
