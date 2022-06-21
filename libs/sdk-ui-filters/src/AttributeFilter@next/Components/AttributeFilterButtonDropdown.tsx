@@ -1,11 +1,11 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
-import { AttributeFilterButton } from "./AttributeFilterButton";
 import { Dropdown } from "@gooddata/sdk-ui-kit";
 import { AttributeFilterButtonDefaultDropdownBody } from "./AttributeFilterButtonDefaultDropdownBody";
 import { IAttributeDropdownBodyExtendedProps, IAttributeDropdownBodyProps } from "./AttributeDropdownBody";
 import noop from "lodash/noop";
 import { IListItem } from "../types";
+import { useAttributeFilterComponentsContext } from "../Context/AttributeFilterComponentsContext";
 
 const ALIGN_POINTS = [
     { align: "bl tl" },
@@ -59,6 +59,8 @@ const AttributeFilterButtonDropdown: React.FC<IAttributeFilterButtonDropdownProp
         getDropdownBodyProps,
         renderBody,
     } = props;
+
+    const { AttributeFilterButton } = useAttributeFilterComponentsContext();
 
     return (
         <Dropdown
