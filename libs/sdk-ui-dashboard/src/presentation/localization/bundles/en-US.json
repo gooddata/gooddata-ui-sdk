@@ -1278,6 +1278,26 @@
         "translate": false,
         "limit": 0
     },
+    "configurationPanel.drillConfig.selectDashboard": {
+        "value": "Choose dashboard…",
+        "comment": "Hint guiding users that drill target dashboard in select box has to be selected. Use '…' as one character, not 3 dots ('...').",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.drillIntoDashboard.searchPlaceholder": {
+        "value": "Search all dashboards…",
+        "comment": "Use '…' as one character, not 3 dots ('...').",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.forbiddenDashboard.tooltip": {
+        "value": "Dashboard is not shared with you, but other users have access to this dashboard.",
+        "comment": "Tooltip explaining the accessibility of the dashboard.",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.notSharedDashboard.tooltip": {
+        "value": "Dashboard is not shared with you, but all users can access it if they drill to it.",
+        "comment": "Tooltip explaining the accessibility of the dashboard.",
+        "limit": 0
+    },
     "filterBar.filter.drop": {
         "value": "drop to add",
         "comment": "",
