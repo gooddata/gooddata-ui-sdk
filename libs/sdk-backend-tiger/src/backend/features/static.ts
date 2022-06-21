@@ -6,9 +6,9 @@ import { FeatureDef, FeaturesMap, mapFeatures } from "./feature";
 export async function getStaticFeatures(
     features: IStaticFeatures["static"],
 ): Promise<Partial<ITigerFeatureFlags>> {
-    const { items, context } = features;
+    const { items } = features;
 
-    return mapFeatures(remapStaticFeatures(items), context);
+    return mapFeatures(remapStaticFeatures(items));
 }
 
 function remapStaticFeatures(features: IStaticFeatures["static"]["items"]): FeaturesMap {
