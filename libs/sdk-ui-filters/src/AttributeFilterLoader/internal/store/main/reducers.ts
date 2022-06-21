@@ -14,12 +14,16 @@ import {
     isNegativeAttributeFilter,
     IAttributeElement,
 } from "@gooddata/sdk-model";
-import { ILoadAttributeElementsOptions } from "../attributeElements/effects";
+import { ILoadAttributeElementsOptions } from "../attributeElements/types";
 
 /**
  * @internal
  */
-export type InitActionPayload = { attributeFilter: IAttributeFilter; hiddenElements?: string[] };
+export type InitActionPayload = {
+    attributeFilter: IAttributeFilter;
+    hiddenElements?: string[];
+    staticElements?: IAttributeElement[];
+};
 
 const init: AttributeFilterReducer<PayloadAction<InitActionPayload>> = (state, action) => {
     state.displayForm = filterObjRef(action.payload.attributeFilter);
@@ -32,6 +36,7 @@ const init: AttributeFilterReducer<PayloadAction<InitActionPayload>> = (state, a
     state.isCommitedSelectionInverted = isInverted;
     state.isWorkingSelectionInverted = isInverted;
     state.hiddenElements = action.payload.hiddenElements;
+    state.staticElements = action.payload.staticElements;
 };
 
 const initSuccess: AttributeFilterReducer = identity;

@@ -6,6 +6,7 @@ import { selectAttributeFilterDisplayForm, selectHiddenElementsAsAttributeElemen
 import { selectAttribute } from "../attribute/selectors";
 import { cancelableEffect, getAttributeFilterContext } from "../common/sagas";
 import { actions } from "../slice";
+import { selectStaticElements } from "../selectors";
 import { loadAttributeElements } from "./effects";
 
 /**
@@ -28,6 +29,8 @@ function* attributeElementsRequestSaga({
     );
     const attribute: ReturnType<typeof selectAttribute> = yield select(selectAttribute);
 
+    const staticElements: ReturnType<typeof selectStaticElements> = yield select(selectStaticElements);
+
     const cancelableElementsLoad = cancelableEffect({
         effect: () =>
             loadAttributeElements(
@@ -40,6 +43,7 @@ function* attributeElementsRequestSaga({
                     hiddenElements,
                     attribute,
                 },
+                staticElements,
             ),
         isCancelRequest: (a) =>
             actions.attributeElementsCancelRequest.match(a) && a.payload.correlationId === correlationId,
