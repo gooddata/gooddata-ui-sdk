@@ -20,9 +20,9 @@ export async function getFeatureHubFeatures(
 ): Promise<Partial<ITigerFeatureFlags>> {
     const { configuration, context } = features;
     try {
-        const data = await loadHubFeatures(configuration, state);
+        const data = await loadHubFeatures(configuration, context, state);
         const featuresMap = data.reduce((prev, item) => ({ ...prev, [item.key]: item }), {} as FeaturesMap);
-        return mapFeatures(featuresMap, context);
+        return mapFeatures(featuresMap);
     } catch (err) {
         // eslint-disable-next-line no-console
         console.error("Loading features from FeatureHub was not successful. Err: " + err);
@@ -34,6 +34,7 @@ export async function getFeatureHubFeatures(
 // - more info in ticket RAIL-4279
 async function loadHubFeatures(
     configuration: ILiveFeatures["live"]["configuration"],
+    context: ILiveFeatures["live"]["context"],
     state: HubServiceState,
 ): Promise<FeatureHubResponse[number]["features"]> {
     const { host, key } = configuration;
@@ -44,7 +45,7 @@ async function loadHubFeatures(
             reject(new Error(`FeatureHub is not ready, is not available or api key is wrong.`));
         }
 
-        const promise = getFeatureHubData(host, key, state[key]);
+        const promise = getFeatureHubData(host, key, context, state[key]);
         promise.then(({ data, headers, status }) => {
             if (status === 304) {
                 loadFeatures(state[key].data, resolve, callFailed);
@@ -83,6 +84,7 @@ export type FeatureHubResponse = {
 async function getFeatureHubData(
     host: string,
     key: string,
+    context: ILiveFeatures["live"]["context"],
     state?: HubServiceState[string],
 ): Promise<AxiosResponse<FeatureHubResponse>> {
     return axios.get("/features", {
@@ -93,6 +95,14 @@ async function getFeatureHubData(
         },
         headers: {
             "Content-type": "application/json",
+            "X-FeatureHub": Object.keys(context)
+                .reduce((prev, item) => {
+                    return [
+                        ...prev,
+                        `${item}=${encodeURIComponent(context[item as keyof typeof context].toString())}`,
+                    ];
+                }, [] as Array<string>)
+                .join(","),
             ...(state ? { "if-none-match": state.etag } : {}),
         },
         validateStatus: (status) => {
