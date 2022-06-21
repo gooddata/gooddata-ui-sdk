@@ -21,6 +21,13 @@ const renderComponent = async (component: React.ReactElement) => {
 };
 
 describe("ThemeProvider", () => {
+    beforeEach(() => {
+        // Remove global theme styles manually before each test,
+        // so we don't need to call component.unmount() in every test
+        // to remove them.
+        document.getElementById("gdc-theme-properties")?.remove();
+    });
+
     const workspace = "testWorkspace";
     const theme: ITheme = {
         button: {
@@ -238,6 +245,22 @@ describe("ThemeProvider", () => {
             themeIsLoading: false,
             theme: expectedTheme,
         });
+    });
+
+    it("should not remove global theme styles on unmount when removeGlobalStylesOnUnmout is set to false", async () => {
+        const component = await renderComponent(
+            <ThemeProvider
+                workspace={workspace}
+                backend={backend}
+                theme={theme}
+                removeGlobalStylesOnUnmout={false}
+            >
+                <div>Test</div>
+            </ThemeProvider>,
+        );
+
+        component.unmount();
+        expect(document.getElementById("gdc-theme-properties").innerHTML.length > 0).toEqual(true);
     });
 });
 

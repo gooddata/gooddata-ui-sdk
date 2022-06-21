@@ -60,6 +60,13 @@ export interface IThemeProviderProps {
      * Useful for applications not yet fully supporting dark-based themes achievable with the complementary palette.
      */
     enableComplementaryPalette?: boolean;
+
+    /**
+     * Should ThemeProvider remove global styles during the unmount phase?
+     *
+     * Default: true
+     */
+    removeGlobalStylesOnUnmout?: boolean;
 }
 
 /**
@@ -94,6 +101,7 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({
     workspace: workspaceParam,
     modifier = identity,
     enableComplementaryPalette = true,
+    removeGlobalStylesOnUnmout = true,
 }) => {
     const backend = useBackend(backendParam);
     const workspace = useWorkspace(workspaceParam);
@@ -105,17 +113,18 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({
     lastWorkspace.current = workspace;
 
     useEffect(() => {
-        clearCssProperties();
         // no need to load anything if the themeParam is present
         if (themeParam) {
             const preparedTheme = prepareTheme(themeParam, enableComplementaryPalette);
             setTheme(preparedTheme);
+            clearCssProperties();
             setCssProperties(preparedTheme, isDarkTheme(preparedTheme));
             return;
         }
 
         const fetchData = async () => {
             if (!backend || !workspace) {
+                clearCssProperties();
                 return;
             }
 
@@ -127,6 +136,7 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({
                 const preparedTheme = prepareTheme(modifiedTheme, enableComplementaryPalette);
                 setTheme(preparedTheme);
                 setIsLoading(false);
+                clearCssProperties();
                 setCssProperties(preparedTheme, isDarkTheme(preparedTheme));
             }
         };
@@ -136,7 +146,9 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({
 
     useEffect(() => {
         return () => {
-            clearCssProperties();
+            if (removeGlobalStylesOnUnmout) {
+                clearCssProperties();
+            }
         };
     }, []);
 
