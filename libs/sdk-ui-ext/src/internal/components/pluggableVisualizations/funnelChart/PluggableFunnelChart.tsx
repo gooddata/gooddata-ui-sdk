@@ -49,7 +49,9 @@ export class PluggableFunnelChart extends PluggablePieChart {
     }
 
     protected renderConfigurationPanel(): void {
-        if (document.querySelector(this.configPanelElement)) {
+        const configPanelElement = this.getConfigPanelElement();
+
+        if (configPanelElement) {
             const properties = this.visualizationProperties ?? {};
 
             render(
@@ -58,7 +60,7 @@ export class PluggableFunnelChart extends PluggablePieChart {
                     pushData={this.pushData}
                     properties={properties}
                 />,
-                document.querySelector(this.configPanelElement),
+                configPanelElement,
             );
         }
     }

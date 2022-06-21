@@ -14,6 +14,7 @@ import {
     IDrillDownContext,
     EmptyAfmSdkError,
     isEmptyAfm,
+    ElementSelectorFunction,
 } from "../../interfaces/Visualization";
 import { findDerivedBucketItem, hasDerivedBucketItems, isDerivedBucketItem } from "../../utils/bucketHelper";
 import { IInsight, IInsightDefinition, insightHasDataDefined, insightProperties } from "@gooddata/sdk-model";
@@ -44,16 +45,6 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
     private readonly callbacks: IVisCallbacks;
 
     /**
-     * Classname of element where visualization should be mounted
-     */
-    protected readonly element: string;
-
-    /**
-     * Classname of element where config panel should be mounted
-     */
-    protected readonly configPanelElement: string;
-
-    /**
      * Insight that is currently rendered by the pluggable visualization. This field is set during
      * every call to {@link update} and will remain the same until the next update() call.
      */
@@ -61,6 +52,16 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
     protected visualizationProperties: IVisualizationProperties;
     protected supportedPropertiesList: string[];
     protected propertiesMeta: any;
+
+    /**
+     * Classname or a getter function of the element where visualization should be mounted
+     */
+    private readonly element: string | ElementSelectorFunction;
+
+    /**
+     * Classname or a getter of the element where config panel should be mounted
+     */
+    private readonly configPanelElement: string | ElementSelectorFunction;
 
     private hasError: boolean;
     private hasEmptyAfm: boolean;
@@ -77,6 +78,28 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
         this.intl = createInternalIntl(this.locale);
         this.element = props.element;
         this.configPanelElement = props.configPanelElement;
+    }
+
+    /**
+     * Get an element where the visualization should be mounted
+     */
+    protected getElement(): HTMLElement {
+        if (typeof this.element === "function") {
+            return this.element();
+        }
+
+        return document.querySelector(this.element);
+    }
+
+    /**
+     * Get an element where the config panel should be mounted
+     */
+    protected getConfigPanelElement(): HTMLElement {
+        if (typeof this.configPanelElement === "function") {
+            return this.configPanelElement();
+        }
+
+        return document.querySelector(this.configPanelElement);
     }
 
     public abstract unmount(): void;

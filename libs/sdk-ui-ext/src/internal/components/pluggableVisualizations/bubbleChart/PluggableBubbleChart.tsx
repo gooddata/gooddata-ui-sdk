@@ -154,7 +154,9 @@ export class PluggableBubbleChart extends PluggableBaseChart {
     }
 
     protected renderConfigurationPanel(insight: IInsightDefinition): React.ReactNode {
-        if (document.querySelector(this.configPanelElement)) {
+        const configPanelElement = this.getConfigPanelElement();
+
+        if (configPanelElement) {
             render(
                 <BubbleChartConfigurationPanel
                     locale={this.locale}
@@ -169,7 +171,7 @@ export class PluggableBubbleChart extends PluggableBaseChart {
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}
                 />,
-                document.querySelector(this.configPanelElement),
+                configPanelElement,
             );
         }
 

@@ -157,7 +157,9 @@ export class PluggableBulletChart extends PluggableBaseChart {
     }
 
     protected renderConfigurationPanel(insight: IInsightDefinition): React.ReactNode {
-        if (document.querySelector(this.configPanelElement)) {
+        const configPanelElement = this.getConfigPanelElement();
+
+        if (configPanelElement) {
             render(
                 <BulletChartConfigurationPanel
                     locale={this.locale}
@@ -172,7 +174,7 @@ export class PluggableBulletChart extends PluggableBaseChart {
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}
                 />,
-                document.querySelector(this.configPanelElement),
+                configPanelElement,
             );
         }
 

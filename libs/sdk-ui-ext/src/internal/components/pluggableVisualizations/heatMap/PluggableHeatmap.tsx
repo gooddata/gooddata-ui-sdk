@@ -268,7 +268,9 @@ export class PluggableHeatmap extends PluggableBaseChart {
     }
 
     protected renderConfigurationPanel(insight: IInsightDefinition): React.ReactNode {
-        if (document.querySelector(this.configPanelElement)) {
+        const configPanelElement = this.getConfigPanelElement();
+
+        if (configPanelElement) {
             render(
                 <HeatMapConfigurationPanel
                     locale={this.locale}
@@ -283,7 +285,7 @@ export class PluggableHeatmap extends PluggableBaseChart {
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}
                 />,
-                document.querySelector(this.configPanelElement),
+                configPanelElement,
             );
         }
         return null;

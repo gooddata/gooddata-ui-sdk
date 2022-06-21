@@ -1,8 +1,8 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { unmountComponentAtNode } from "react-dom";
 
 export function unmountComponentsAtNodes(
-    elementSelectors: string[] = [],
+    elementSelectors: Array<HTMLElement | string> = [],
     {
         unmount,
         documentInstance,
@@ -14,8 +14,12 @@ export function unmountComponentsAtNodes(
         documentInstance: document,
     },
 ): void {
-    elementSelectors.forEach((elementSelector) => {
-        const element = documentInstance.querySelector(elementSelector);
+    elementSelectors.forEach((elementOrSelector) => {
+        const element =
+            typeof elementOrSelector === "string"
+                ? documentInstance.querySelector(elementOrSelector)
+                : elementOrSelector;
+
         if (element) {
             unmount(element);
         }

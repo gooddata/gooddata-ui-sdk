@@ -96,15 +96,11 @@ const NUMBER_MEASURES_IN_BUCKETS_LIMIT = 2;
  * - |Segment| ≥ 1 ⇒ [attributeSort(Segment[0])]
  */
 export class PluggableGeoPushpinChart extends PluggableBaseChart {
-    private geoPushpinElement: string;
-
     constructor(props: IVisConstruct) {
         super(props);
 
-        const { element, visualizationProperties } = props;
         this.type = VisualizationTypes.PUSHPIN;
-        this.geoPushpinElement = element;
-        this.initializeProperties(visualizationProperties);
+        this.initializeProperties(props.visualizationProperties);
     }
 
     protected checkBeforeRender(insight: IInsightDefinition): boolean {
@@ -205,7 +201,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
     }
 
     protected renderConfigurationPanel(insight: IInsightDefinition): void {
-        const configPanelElement = document.querySelector(this.configPanelElement);
+        const configPanelElement = this.getConfigPanelElement();
 
         // NOTE: using pushData directly; no handlePushData here as in other visualizations.
         if (configPanelElement) {
@@ -277,7 +273,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
     ): void {
         const { dimensions = { height: undefined }, custom = {}, locale, theme } = options;
         const { height } = dimensions;
-        const { geoPushpinElement, intl } = this;
+        const { getElement, intl } = this;
 
         // keep height undef for AD; causes indigo-visualizations to pick default 100%
         const resultingHeight = this.environment === DASHBOARDS_ENVIRONMENT ? height : undefined;
@@ -304,7 +300,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
             theme,
         };
 
-        this.renderFun(<CoreGeoChart {...geoPushpinProps} />, document.querySelector(geoPushpinElement));
+        this.renderFun(<CoreGeoChart {...geoPushpinProps} />, getElement());
     }
 
     private withEmptyAttributeTargets(data: any) {

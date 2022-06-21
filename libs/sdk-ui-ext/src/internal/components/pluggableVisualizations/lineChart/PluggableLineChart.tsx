@@ -224,7 +224,9 @@ export class PluggableLineChart extends PluggableBaseChart {
     }
 
     protected renderConfigurationPanel(insight: IInsightDefinition): void {
-        if (document.querySelector(this.configPanelElement)) {
+        const configPanelElement = this.getConfigPanelElement();
+
+        if (configPanelElement) {
             render(
                 <LineChartBasedConfigurationPanel
                     locale={this.locale}
@@ -240,7 +242,7 @@ export class PluggableLineChart extends PluggableBaseChart {
                     featureFlags={this.featureFlags}
                     axis={this.axis}
                 />,
-                document.querySelector(this.configPanelElement),
+                configPanelElement,
             );
         }
     }

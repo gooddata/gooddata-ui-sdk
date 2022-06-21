@@ -163,7 +163,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
     }
 
     public unmount(): void {
-        unmountComponentsAtNodes([this.element, this.configPanelElement]);
+        unmountComponentsAtNodes([this.getElement(), this.getConfigPanelElement()]);
     }
 
     public getExtendedReferencePoint(
@@ -400,15 +400,17 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                         );
                     }}
                 </ReactMeasure>,
-                document.querySelector(this.element),
+                this.getElement(),
             );
         } else {
-            this.renderFun(<CorePivotTable {...pivotTableProps} />, document.querySelector(this.element));
+            this.renderFun(<CorePivotTable {...pivotTableProps} />, this.getElement());
         }
     }
 
     protected renderConfigurationPanel(insight: IInsightDefinition): void {
-        if (document.querySelector(this.configPanelElement)) {
+        const configPanelElement = this.getConfigPanelElement();
+
+        if (configPanelElement) {
             const properties = this.visualizationProperties ?? {};
 
             // we need to handle cases when attribute previously bearing the default sort is no longer available
@@ -425,7 +427,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                     pushData={this.pushData}
                     properties={sanitizedProperties}
                 />,
-                document.querySelector(this.configPanelElement),
+                configPanelElement,
             );
         }
     }

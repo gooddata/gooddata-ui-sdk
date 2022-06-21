@@ -213,7 +213,9 @@ export class PluggablePieChart extends PluggableBaseChart {
     }
 
     protected renderConfigurationPanel(insight: IInsightDefinition): void {
-        if (document.querySelector(this.configPanelElement)) {
+        const configPanelElement = this.getConfigPanelElement();
+
+        if (configPanelElement) {
             render(
                 <PieChartConfigurationPanel
                     locale={this.locale}
@@ -228,7 +230,7 @@ export class PluggablePieChart extends PluggableBaseChart {
                     featureFlags={this.featureFlags}
                     references={this.references}
                 />,
-                document.querySelector(this.configPanelElement),
+                configPanelElement,
             );
         }
     }

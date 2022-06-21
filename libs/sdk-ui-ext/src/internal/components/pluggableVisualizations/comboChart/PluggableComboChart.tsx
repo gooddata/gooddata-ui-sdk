@@ -352,7 +352,9 @@ export class PluggableComboChart extends PluggableBaseChart {
     }
 
     protected renderConfigurationPanel(insight: IInsightDefinition): void {
-        if (document.querySelector(this.configPanelElement)) {
+        const configPanelElement = this.getConfigPanelElement();
+
+        if (configPanelElement) {
             render(
                 <LineChartBasedConfigurationPanel
                     locale={this.locale}
@@ -372,7 +374,7 @@ export class PluggableComboChart extends PluggableBaseChart {
                     }}
                     dataLabelDefaultValue="auto"
                 />,
-                document.querySelector(this.configPanelElement),
+                configPanelElement,
             );
         }
     }

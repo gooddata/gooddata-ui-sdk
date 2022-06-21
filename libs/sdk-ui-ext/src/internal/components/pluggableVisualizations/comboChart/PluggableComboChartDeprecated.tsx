@@ -103,7 +103,9 @@ export class PluggableComboChartDeprecated extends PluggableBaseChart {
     }
 
     protected renderConfigurationPanel(): React.ReactNode {
-        if (document.querySelector(this.configPanelElement)) {
+        const configPanelElement = this.getConfigPanelElement();
+
+        if (configPanelElement) {
             const properties = this.visualizationProperties ?? {};
 
             render(
@@ -112,7 +114,7 @@ export class PluggableComboChartDeprecated extends PluggableBaseChart {
                     pushData={this.pushData}
                     properties={properties}
                 />,
-                document.querySelector(this.configPanelElement),
+                configPanelElement,
             );
         }
         return null;

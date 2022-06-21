@@ -111,7 +111,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     }
 
     public unmount(): void {
-        unmountComponentsAtNodes([this.element, this.configPanelElement]);
+        unmountComponentsAtNodes([this.getElement(), this.getConfigPanelElement()].filter(Boolean));
     }
 
     public getUiConfig(): IUiConfig {
@@ -276,7 +276,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
                 ErrorComponent={null}
                 theme={theme}
             />,
-            document.querySelector(this.element),
+            this.getElement(),
         );
     }
 
@@ -294,7 +294,9 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     }
 
     protected renderConfigurationPanel(insight: IInsightDefinition): void {
-        if (document.querySelector(this.configPanelElement)) {
+        const configPanelElement = this.getConfigPanelElement();
+
+        if (configPanelElement) {
             render(
                 <BaseChartConfigurationPanel
                     locale={this.locale}
@@ -310,7 +312,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
                     featureFlags={this.featureFlags}
                     axis={this.axis}
                 />,
-                document.querySelector(this.configPanelElement),
+                configPanelElement,
             );
         }
     }
