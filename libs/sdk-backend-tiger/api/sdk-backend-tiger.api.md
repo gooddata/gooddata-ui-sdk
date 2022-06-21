@@ -74,6 +74,91 @@ export interface IDataSource {
 }
 
 // @internal (undocumented)
+export interface IDataSourceApiResult {
+    // (undocumented)
+    data?: IDataSourceConnectionInfo | IDataSourceTestConnectionResponse | IDataSourceList;
+    // (undocumented)
+    errorMessage?: string;
+}
+
+// @internal (undocumented)
+export interface IDataSourceConnectionInfo {
+    // (undocumented)
+    data: {
+        attributes: {
+            name: string;
+            schema: string;
+            type: IDataSourceType;
+            url: string;
+            username: string;
+        };
+        id: string;
+        meta?: {
+            permissions: IDataSourcePermission[];
+        };
+        type: string;
+    };
+    // (undocumented)
+    links?: {
+        self: string;
+    };
+}
+
+// @internal (undocumented)
+export interface IDataSourceList {
+    // (undocumented)
+    data: IDataSourceConnectionInfo[];
+}
+
+// @internal (undocumented)
+export type IDataSourcePermission = "MANAGE" | "USE";
+
+// @internal (undocumented)
+export interface IDataSourceTestConnectionRequest {
+    // (undocumented)
+    password?: string;
+    // (undocumented)
+    schema: string;
+    // (undocumented)
+    token?: string;
+    // (undocumented)
+    type: string;
+    // (undocumented)
+    url: string;
+    // (undocumented)
+    username: string;
+}
+
+// @internal (undocumented)
+export interface IDataSourceTestConnectionResponse {
+    // (undocumented)
+    error?: string;
+    // (undocumented)
+    successful: boolean;
+}
+
+// @internal (undocumented)
+export type IDataSourceType = "POSTGRESQL" | "SNOWFLAKE" | "REDSHIFT" | "VERTICA" | "DREMIO" | "DRILL";
+
+// @internal (undocumented)
+export interface IDataSourceUpsertRequest {
+    // (undocumented)
+    data: {
+        attributes: {
+            name?: string;
+            password?: string;
+            schema: string;
+            token?: string;
+            type: IDataSourceType;
+            url: string;
+            username?: string;
+        };
+        id: string;
+        type: string;
+    };
+}
+
+// @internal (undocumented)
 export interface PublishPdmResult {
     // (undocumented)
     status: string;
@@ -146,6 +231,12 @@ export type TigerSpecificFunctions = {
     getWorkspaceLogicalModel?: (id: string) => Promise<DeclarativeModel>;
     getEntitlements?: () => Promise<Array<Entitlement>>;
     putWorkspaceLayout?: (requestParameters: LayoutApiPutWorkspaceLayoutRequest) => Promise<void>;
+    getAllDataSources?: () => Promise<IDataSourceApiResult>;
+    getDataSourceById?: (id: string) => Promise<IDataSourceApiResult>;
+    createDataSource?: (requestData: IDataSourceUpsertRequest) => Promise<IDataSourceApiResult>;
+    updateDataSource?: (id: string, requestData: IDataSourceUpsertRequest) => Promise<IDataSourceApiResult>;
+    deleteDataSource?: (id: string) => Promise<IDataSourceApiResult>;
+    testDataSourceConnection?: (connectionData: IDataSourceTestConnectionRequest, id?: string) => Promise<IDataSourceTestConnectionResponse>;
 };
 
 // @public

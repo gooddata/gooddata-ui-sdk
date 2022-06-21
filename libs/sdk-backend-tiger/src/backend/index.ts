@@ -180,6 +180,93 @@ export interface Entitlement {
 }
 
 /**
+ * @internal
+ */
+export type IDataSourceType = "POSTGRESQL" | "SNOWFLAKE" | "REDSHIFT" | "VERTICA" | "DREMIO" | "DRILL";
+
+/**
+ * @internal
+ */
+export type IDataSourcePermission = "MANAGE" | "USE";
+
+/**
+ * @internal
+ */
+export interface IDataSourceConnectionInfo {
+    data: {
+        attributes: {
+            name: string;
+            schema: string;
+            type: IDataSourceType;
+            url: string;
+            username: string;
+        };
+        id: string;
+        meta?: {
+            permissions: IDataSourcePermission[];
+        };
+        type: string;
+    };
+    links?: {
+        self: string;
+    };
+}
+
+/**
+ * @internal
+ */
+export interface IDataSourceList {
+    data: IDataSourceConnectionInfo[];
+}
+
+/**
+ *@internal
+ */
+export interface IDataSourceApiResult {
+    data?: IDataSourceConnectionInfo | IDataSourceTestConnectionResponse | IDataSourceList;
+    errorMessage?: string;
+}
+
+/**
+ * @internal
+ */
+export interface IDataSourceUpsertRequest {
+    data: {
+        attributes: {
+            name?: string;
+            password?: string;
+            schema: string;
+            token?: string;
+            type: IDataSourceType;
+            url: string;
+            username?: string;
+        };
+        id: string;
+        type: string;
+    };
+}
+
+/**
+ * @internal
+ */
+export interface IDataSourceTestConnectionRequest {
+    password?: string;
+    schema: string;
+    token?: string;
+    type: string;
+    url: string;
+    username: string;
+}
+
+/**
+ * @internal
+ */
+export interface IDataSourceTestConnectionResponse {
+    successful: boolean;
+    error?: string;
+}
+
+/**
  * TigerBackend-specific functions.
  * If possible, avoid these functions, they are here for specific use cases.
  *
@@ -216,6 +303,26 @@ export type TigerSpecificFunctions = {
     getWorkspaceLogicalModel?: (id: string) => Promise<DeclarativeModel>;
     getEntitlements?: () => Promise<Array<Entitlement>>;
     putWorkspaceLayout?: (requestParameters: LayoutApiPutWorkspaceLayoutRequest) => Promise<void>;
+    getAllDataSources?: () => Promise<IDataSourceApiResult>;
+    getDataSourceById?: (id: string) => Promise<IDataSourceApiResult>;
+    createDataSource?: (requestData: IDataSourceUpsertRequest) => Promise<IDataSourceApiResult>;
+    updateDataSource?: (id: string, requestData: IDataSourceUpsertRequest) => Promise<IDataSourceApiResult>;
+    deleteDataSource?: (id: string) => Promise<IDataSourceApiResult>;
+    testDataSourceConnection?: (
+        connectionData: IDataSourceTestConnectionRequest,
+        id?: string,
+    ) => Promise<IDataSourceTestConnectionResponse>;
+};
+
+const DATA_SOURCE_URI = "/api/v1/entities/dataSources";
+const TEST_CONNECTION_DATA_SOURCE_URI = "/api/v1/actions/dataSource/test";
+const TEST_CONNECTION_EXISTING_DATA_SOURCE_URI = "/api/v1/actions/dataSources/DATA_SOURCE_ID/test";
+
+const getErrorMessage = (error: unknown) => {
+    if (error instanceof Error) {
+        return error.message;
+    }
+    return String(error);
 };
 
 /**
@@ -584,6 +691,88 @@ export class TigerBackend implements IAnalyticalBackend {
                         });
                     } catch (error) {
                         throw convertApiError(error);
+                    }
+                },
+                getAllDataSources: async () => {
+                    try {
+                        return await this.authApiCall(async (sdk) => {
+                            const res = await sdk.axios.get(
+                                "/api/v1/entities/dataSourceIdentifiers?sort=name&metaInclude=permissions&size=250&page=0",
+                            );
+                            return { data: res?.data };
+                        });
+                    } catch (error) {
+                        return { errorMessage: getErrorMessage(error) };
+                    }
+                },
+                getDataSourceById: async (id: string) => {
+                    try {
+                        return await this.authApiCall(async (sdk) => {
+                            const res = await sdk.axios.get(`${DATA_SOURCE_URI}/${id}`);
+                            return { data: res.data };
+                        });
+                    } catch (error) {
+                        return { errorMessage: getErrorMessage(error) };
+                    }
+                },
+                createDataSource: async (requestData: IDataSourceUpsertRequest) => {
+                    try {
+                        return await this.authApiCall(async (sdk) => {
+                            const headers = {
+                                Accept: "application/vnd.gooddata.api+json",
+                                "Content-Type": "application/vnd.gooddata.api+json",
+                            };
+                            const response = await sdk.axios.post(DATA_SOURCE_URI, requestData, { headers });
+                            return { data: response.data };
+                        });
+                    } catch (error) {
+                        return { errorMessage: getErrorMessage(error) };
+                    }
+                },
+                updateDataSource: async (id: string, requestData: IDataSourceUpsertRequest) => {
+                    try {
+                        return await this.authApiCall(async (sdk) => {
+                            const headers = {
+                                Accept: "application/vnd.gooddata.api+json",
+                                "Content-Type": "application/vnd.gooddata.api+json",
+                            };
+                            const response = await sdk.axios.put(`${DATA_SOURCE_URI}/${id}`, requestData, {
+                                headers,
+                            });
+                            return { data: response.data };
+                        });
+                    } catch (error) {
+                        return { errorMessage: getErrorMessage(error) };
+                    }
+                },
+                deleteDataSource: async (id: string) => {
+                    try {
+                        return await this.authApiCall(async (sdk) => {
+                            const result = await sdk.axios.delete(`${DATA_SOURCE_URI}/${id}`);
+                            return { data: result };
+                        });
+                    } catch (error) {
+                        return { errorMessage: getErrorMessage(error) };
+                    }
+                },
+                testDataSourceConnection: async (
+                    connectionData: IDataSourceTestConnectionRequest,
+                    id?: string,
+                ) => {
+                    try {
+                        return await this.authApiCall(async (sdk) => {
+                            const apiUrl =
+                                id && isEmpty(connectionData)
+                                    ? TEST_CONNECTION_EXISTING_DATA_SOURCE_URI.replace("DATA_SOURCE_ID", id)
+                                    : TEST_CONNECTION_DATA_SOURCE_URI;
+                            const response = await sdk.axios.post(apiUrl, connectionData);
+                            return response.data as IDataSourceTestConnectionResponse;
+                        });
+                    } catch (error) {
+                        return {
+                            successful: false,
+                            error: getErrorMessage(error),
+                        };
                     }
                 },
             };
