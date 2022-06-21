@@ -62,7 +62,7 @@ if [ -z "$existing_branch" ]; then
 else
   # in case there is only the first branch for a hotfix, that ends with -fix, assume the existing fix number is 0
   # otherwise parse the number from the branch name
-  if [[ $existing_branch =~ '-fix$' ]]; then
+  if [[ $existing_branch =~ -fix$ ]]; then
     existing_fix_number=0
   else
     existing_fix_number=$(echo "$existing_branch" | sed 's/.*fix-\([0-9]*\)$/\1/')
