@@ -40,8 +40,8 @@
      */
     .row {
         width: auto;
-        margin-left: -$column-gutter/2;
-        margin-right: -$column-gutter/2;
+        margin-left: calc(-#{$column-gutter} / 2);
+        margin-right: calc(-#{$column-gutter} / 2);
     }
 
     .gd-dialog-close,
