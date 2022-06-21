@@ -59,6 +59,7 @@ export {
     createTigerAuthenticationUrl,
     redirectToTigerAuthentication,
 } from "./auth";
+
 export {
     TigerSpecificFunctions,
     IApiToken,
@@ -76,4 +77,4 @@ export {
     IDataSourceList,
     IDataSourceType,
     IDataSourcePermission,
-} from "./backend";
+} from "./backend/tigerSpecificFunctions";
