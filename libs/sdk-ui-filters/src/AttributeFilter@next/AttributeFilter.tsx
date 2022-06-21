@@ -19,7 +19,7 @@ export interface IAttributeFilterProps extends IAttributeFilterBaseProps {
  * @internal
  */
 export const AttributeFilter: React.FC<IAttributeFilterProps> = (props) => {
-    const { titleWithSelection, fullscreenOnMobile, ...baseProps } = props;
+    const { titleWithSelection, ...baseProps } = props;
 
     const ButtonComponent = titleWithSelection ? AttributeFilterSimpleButtonWithSelection : undefined;
 
