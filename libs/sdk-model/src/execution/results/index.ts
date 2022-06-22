@@ -147,7 +147,7 @@ export interface IAttributeHeaderFormOf {
 }
 
 /**
- * Attribute descriptior header.
+ * Attribute descriptor header.
  *
  * @public
  */
@@ -275,7 +275,7 @@ export interface IResultAttributeHeaderItem {
      * into multiple workspaces, it is up to the backend whether the URIs of the elements will be same across
      * all workspaces or not.
      *
-     * Recommendation for the consumers: URI is safe to use if you obtain in programatically from this header
+     * Recommendation for the consumers: URI is safe to use if you obtain in programmatically from this header
      * and then use it in the same workspace for instance for filtering. It is not safe to hardcode URIs
      * and use them in a solution which should operate on top of different workspaces.
      */
@@ -293,7 +293,7 @@ export interface IResultAttributeHeader {
 }
 
 /**
- * Measure header specifes name of the measure to which the calculated values in the particular data view slice belong.
+ * Measure header specifies name of the measure to which the calculated values in the particular data view slice belong.
  *
  * @remarks
  * Measure header also specifies 'order' - this is essentially an index into measure group descriptor's item array; it
@@ -319,7 +319,7 @@ export interface IResultMeasureHeaderItem {
 }
 
 /**
- * Measure header specifes name of the measure to which the calculated values in the particular data view slice belong.
+ * Measure header specifies name of the measure to which the calculated values in the particular data view slice belong.
  *
  * @remarks
  * Measure header also specifies 'order' - this is essentially an index into measure group descriptor's item array; it

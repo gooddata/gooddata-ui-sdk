@@ -1,4 +1,5 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
+import isNil from "lodash/isNil";
 import {
     DataCol,
     ScopeCol,
@@ -61,7 +62,7 @@ export function searchForLocatorMatch(
             // while the attribute locator has element optional (for wildcard match), all the remaining code always populates
             // the attribute element.
             // TODO: revise the API, it may be that it really should not be optional in the interface.
-            invariant(elementToMatch);
+            invariant(!isNil(elementToMatch));
 
             if (col.header.attributeHeaderItem.uri === elementToMatch) {
                 if (locators.length === 1) {
