@@ -16,7 +16,10 @@ import { IAuthenticatedPrincipal } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationContext } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationProvider } from '@gooddata/sdk-backend-spi';
 import { ITigerClient } from '@gooddata/api-client-tiger';
+import { JsonApiDataSourceInAttributesTypeEnum } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInDocument } from '@gooddata/api-client-tiger';
+import { JsonApiDataSourceInTypeEnum } from '@gooddata/api-client-tiger';
+import { JsonApiDataSourceOutTypeEnum } from '@gooddata/api-client-tiger';
 import { JsonApiOrganizationOutMetaPermissionsEnum } from '@gooddata/api-client-tiger';
 import { LayoutApiPutWorkspaceLayoutRequest } from '@gooddata/api-client-tiger';
 import { LayoutApiSetPdmLayoutRequest } from '@gooddata/api-client-tiger';
@@ -76,7 +79,7 @@ export interface IDataSource {
 // @internal (undocumented)
 export interface IDataSourceApiResult {
     // (undocumented)
-    data?: IDataSourceConnectionInfo | IDataSourceTestConnectionResponse | IDataSourceList;
+    data?: IDataSourceConnectionInfo | IDataSourceTestConnectionResponse;
     // (undocumented)
     errorMessage?: string;
 }
@@ -89,14 +92,14 @@ export interface IDataSourceConnectionInfo {
             name: string;
             schema: string;
             type: IDataSourceType;
-            url: string;
-            username: string;
+            url?: string;
+            username?: string;
         };
         id: string;
         meta?: {
-            permissions: IDataSourcePermission[];
+            permissions?: IDataSourcePermission[];
         };
-        type: string;
+        type: JsonApiDataSourceOutTypeEnum;
     };
     // (undocumented)
     links?: {
@@ -105,9 +108,15 @@ export interface IDataSourceConnectionInfo {
 }
 
 // @internal (undocumented)
-export interface IDataSourceList {
+export interface IDataSourceDefinition {
     // (undocumented)
-    data: IDataSourceConnectionInfo[];
+    id: string;
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    permissions: IDataSourcePermission[];
+    // (undocumented)
+    type: IDataSourceType;
 }
 
 // @internal (undocumented)
@@ -138,14 +147,14 @@ export interface IDataSourceTestConnectionResponse {
 }
 
 // @internal (undocumented)
-export type IDataSourceType = "POSTGRESQL" | "SNOWFLAKE" | "REDSHIFT" | "VERTICA" | "DREMIO" | "DRILL";
+export type IDataSourceType = JsonApiDataSourceInAttributesTypeEnum;
 
 // @internal (undocumented)
 export interface IDataSourceUpsertRequest {
     // (undocumented)
     data: {
         attributes: {
-            name?: string;
+            name: string;
             password?: string;
             schema: string;
             token?: string;
@@ -154,7 +163,7 @@ export interface IDataSourceUpsertRequest {
             username?: string;
         };
         id: string;
-        type: string;
+        type: JsonApiDataSourceInTypeEnum;
     };
 }
 
@@ -231,7 +240,7 @@ export type TigerSpecificFunctions = {
     getWorkspaceLogicalModel?: (id: string) => Promise<DeclarativeModel>;
     getEntitlements?: () => Promise<Array<Entitlement>>;
     putWorkspaceLayout?: (requestParameters: LayoutApiPutWorkspaceLayoutRequest) => Promise<void>;
-    getAllDataSources?: () => Promise<IDataSourceApiResult>;
+    getAllDataSources?: () => Promise<IDataSourceDefinition[]>;
     getDataSourceById?: (id: string) => Promise<IDataSourceApiResult>;
     createDataSource?: (requestData: IDataSourceUpsertRequest) => Promise<IDataSourceApiResult>;
     updateDataSource?: (id: string, requestData: IDataSourceUpsertRequest) => Promise<IDataSourceApiResult>;

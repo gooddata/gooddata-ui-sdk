@@ -74,7 +74,7 @@ export {
     IDataSourceTestConnectionRequest,
     IDataSourceTestConnectionResponse,
     IDataSourceConnectionInfo,
-    IDataSourceList,
     IDataSourceType,
     IDataSourcePermission,
+    IDataSourceDefinition,
 } from "./backend/tigerSpecificFunctions";
