@@ -10,16 +10,19 @@ export const ALIGN_POINT = [
     { align: "bl tr", offset: { x: -2, y: -8 } },
 ];
 
+//TODO move to some shared place
 export interface IAttributeFilterButtonProps {
     isOpen?: boolean;
     title: string;
-    subtitleText: string;
+    subtitleText: string; //TODO need array of selected elements title
     subtitleItemCount: number; //TODO rename it
     isFiltering?: boolean;
     isLoaded?: boolean;
     onClick: () => void;
 }
 
+// TOTO: This component receive also status messages in title
+// this needs to be refactored and status of filter should be generated base on props
 export const AttributeFilterButton: React.VFC<IAttributeFilterButtonProps> = (props) => {
     const { isOpen, title, subtitleItemCount, subtitleText, isFiltering, isLoaded, onClick } = props;
 
