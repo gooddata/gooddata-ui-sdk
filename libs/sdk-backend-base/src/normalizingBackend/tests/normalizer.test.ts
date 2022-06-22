@@ -6,6 +6,7 @@ import {
     idRef,
     IExecutionDefinition,
     IMeasure,
+    IMeasureDescriptor,
     IMeasureGroupDescriptor,
     IMeasureValueFilter,
     measureFilters,
@@ -22,6 +23,8 @@ import {
     newMeasure,
     newMeasureValueFilter,
     newNegativeAttributeFilter,
+    newPopMeasure,
+    newPreviousPeriodMeasure,
     newRankingFilter,
 } from "@gooddata/sdk-model";
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
@@ -223,74 +226,131 @@ describe("Normalizer", () => {
 });
 
 describe("Denormalizer", () => {
-    const DEFAULT_FORMAT = "______";
-    const NORMALIZED_DIMS = [
+    const measureDescriptorsWon: IMeasureDescriptor[] = [
+        {
+            measureHeaderItem: {
+                localIdentifier: "m_acugFHNJgsBy",
+                name: "Won",
+                format: "$#,##0.00", // emulating 'Format: Inherit' for master measure
+            },
+        },
+        {
+            measureHeaderItem: {
+                localIdentifier: "m_m_acugFHNJgsBy_closed.year",
+                name: "WonPopClosedYear",
+                format: "#,#.##", // emulating default format for derived measure
+            },
+        },
+        {
+            measureHeaderItem: {
+                localIdentifier: "m_m_acugFHNJgsBy_previous_period",
+                name: "WonPreviousPeriod",
+                format: "#,#.##", // emulating default format for derived measure
+            },
+        },
+    ];
+    const measureDescriptorsWonAmount: IMeasureDescriptor[] = [
+        measureDescriptorsWon[2],
+        {
+            measureHeaderItem: {
+                localIdentifier: "m_m_aangOxLSeztu_previous_period",
+                name: "AmountPreviousPeriod",
+                format: "#,#.##", // emulating default format for derived measure
+            },
+        },
+        {
+            measureHeaderItem: {
+                localIdentifier: "m_aangOxLSeztu",
+                name: "Amount",
+                format: "#,##0", // emulating 'Format: Inherit' for master measure
+            },
+        },
+        measureDescriptorsWon[1],
+        measureDescriptorsWon[0],
+        {
+            measureHeaderItem: {
+                localIdentifier: "m_m_aangOxLSeztu_closed.year",
+                name: "AmountPopClosedYear",
+                format: "#,#.##", // emulating default format for derived measure
+            },
+        },
+    ];
+    const toNormalizedDims = (measureDescriptors: IMeasureDescriptor[]) => [
         {
             headers: [
                 {
                     measureGroupHeader: {
-                        items: [
-                            {
-                                measureHeaderItem: {
-                                    localIdentifier: "m_acugFHNJgsBy",
-                                    name: "",
-                                    format: DEFAULT_FORMAT,
-                                },
-                            },
-                            {
-                                measureHeaderItem: {
-                                    localIdentifier: "m_m_acugFHNJgsBy_closed.year",
-                                    name: "",
-                                    format: DEFAULT_FORMAT,
-                                },
-                            },
-                            {
-                                measureHeaderItem: {
-                                    localIdentifier: "m_m_acugFHNJgsBy_previous_period",
-                                    name: "",
-                                    format: DEFAULT_FORMAT,
-                                },
-                            },
-                        ],
+                        items: measureDescriptors,
                     },
                 },
             ],
         },
     ];
 
-    it("should assign default formatting to derived measures", () => {
-        const def = newDefForItems("test", [
-            newMeasure(idRef("acugFHNJgsBy", "measure")),
+    it("should assign 'Format: Inherit' of master measure from normalized dimensions to master and derived measures after denormalization", () => {
+        const executionDefinition = newDefForItems("test", [
+            ReferenceMd.Won,
             ReferenceMdExt.WonPopClosedYear,
             ReferenceMdExt.WonPreviousPeriod,
         ]);
-
-        const result = Denormalizer.from(Normalizer.normalize(def)).denormalizeDimDescriptors(
-            NORMALIZED_DIMS,
+        const denormalizer = Denormalizer.from(Normalizer.normalize(executionDefinition));
+        const dimensionDescriptors = denormalizer.denormalizeDimDescriptors(
+            toNormalizedDims(measureDescriptorsWon),
         );
+        const measureGroupDescriptor = dimensionDescriptors[0].headers[0] as IMeasureGroupDescriptor;
+        const measureDescriptors = measureGroupDescriptor.measureGroupHeader.items;
 
-        (result[0].headers[0] as IMeasureGroupDescriptor).measureGroupHeader.items.map((elem) => {
-            expect(elem.measureHeaderItem.format).toEqual(DEFAULT_FORMAT);
-        });
+        expect(measureDescriptors[0].measureHeaderItem.format).toEqual("$#,##0.00");
+        expect(measureDescriptors[1].measureHeaderItem.format).toEqual("$#,##0.00");
+        expect(measureDescriptors[2].measureHeaderItem.format).toEqual("$#,##0.00");
     });
 
-    it("should assign formatting to derived measures from master", () => {
-        const FORMAT = "<#.#!>";
-        const formattedMasterMeasure = newMeasure(idRef("acugFHNJgsBy", "measure"));
-        formattedMasterMeasure.measure.format = FORMAT;
-
-        const def = newDefForItems("test", [
-            formattedMasterMeasure,
+    it("should assign the chosen format of master measure from normalized dimensions to master and derived measures after denormalization", () => {
+        const formattedMeasure = newMeasure(idRef("acugFHNJgsBy", "measure"));
+        const CHOSEN_FORMAT = "<#.#!>";
+        formattedMeasure.measure.format = CHOSEN_FORMAT;
+        const executionDefinition = newDefForItems("test", [
+            formattedMeasure,
             ReferenceMdExt.WonPopClosedYear,
             ReferenceMdExt.WonPreviousPeriod,
         ]);
-
-        const result = Denormalizer.from(Normalizer.normalize(def)).denormalizeDimDescriptors(
-            NORMALIZED_DIMS,
+        const denormalizer = Denormalizer.from(Normalizer.normalize(executionDefinition));
+        const dimensionDescriptors = denormalizer.denormalizeDimDescriptors(
+            toNormalizedDims(measureDescriptorsWon),
         );
+        const measureGroupDescriptor = dimensionDescriptors[0].headers[0] as IMeasureGroupDescriptor;
+        const measureDescriptors = measureGroupDescriptor.measureGroupHeader.items;
 
-        (result[0].headers[0] as IMeasureGroupDescriptor).measureGroupHeader.items.map((elem) => {
-            expect(elem.measureHeaderItem.format).toEqual(FORMAT);
-        });
+        expect(measureDescriptors[0].measureHeaderItem.format).toEqual(CHOSEN_FORMAT);
+        expect(measureDescriptors[1].measureHeaderItem.format).toEqual(CHOSEN_FORMAT);
+        expect(measureDescriptors[2].measureHeaderItem.format).toEqual(CHOSEN_FORMAT);
+    });
+
+    it("should correctly find derived measures for appropriate master in shuffled array", () => {
+        const executionDefinition = newDefForItems("test", [
+            ReferenceMd.Won,
+            ReferenceMdExt.WonPopClosedYear,
+            ReferenceMdExt.WonPreviousPeriod,
+            ReferenceMd.Amount,
+            newPopMeasure(ReferenceMd.Amount, ReferenceMd.DateDatasets.Closed.Year.ref, (m) =>
+                m.alias("Amount Last Year"),
+            ),
+            newPreviousPeriodMeasure(ReferenceMd.Amount, [
+                { dataSet: ReferenceMd.DateDatasets.Closed.identifier, periodsAgo: 1 },
+            ]),
+        ]);
+        const denormalizer = Denormalizer.from(Normalizer.normalize(executionDefinition));
+        const dimensionDescriptors = denormalizer.denormalizeDimDescriptors(
+            toNormalizedDims(measureDescriptorsWonAmount),
+        );
+        const measureGroupDescriptor = dimensionDescriptors[0].headers[0] as IMeasureGroupDescriptor;
+        const measureDescriptors = measureGroupDescriptor.measureGroupHeader.items;
+
+        expect(measureDescriptors[0].measureHeaderItem.format).toEqual("$#,##0.00");
+        expect(measureDescriptors[1].measureHeaderItem.format).toEqual("#,##0");
+        expect(measureDescriptors[2].measureHeaderItem.format).toEqual("#,##0");
+        expect(measureDescriptors[3].measureHeaderItem.format).toEqual("$#,##0.00");
+        expect(measureDescriptors[4].measureHeaderItem.format).toEqual("$#,##0.00");
+        expect(measureDescriptors[5].measureHeaderItem.format).toEqual("#,##0");
     });
 });
