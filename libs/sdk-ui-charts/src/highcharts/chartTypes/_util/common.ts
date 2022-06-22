@@ -3,13 +3,14 @@ import clone from "lodash/clone";
 import includes from "lodash/includes";
 import isNil from "lodash/isNil";
 import setWith from "lodash/setWith";
-import { ISeparators, numberFormat } from "@gooddata/numberjs";
+import { numberFormat } from "@gooddata/numberjs";
 import escape from "lodash/escape";
 import isEqual from "lodash/fp/isEqual";
 import unescape from "lodash/unescape";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import { IChartOptions, ISeriesItem } from "../../typings/unsafe";
 import { IChartConfig } from "../../../interfaces";
+import { DEFAULT_DECIMAL_SEPARATOR } from "../../constants/format";
 
 export function parseValue(value: string): number | null {
     const parsedValue = parseFloat(value);
@@ -169,8 +170,9 @@ export const unwrap = (wrappedObject: unknown): any => {
 const getNumberWithGivenDecimals = (value: number, decimalNumbers: number) =>
     decimalNumbers === 0 ? `${Math.round(value)}%` : `${parseFloat(value.toFixed(decimalNumbers))}%`;
 
-const getNumberOfFormatDecimals = (format: string, decimalSeparator: string): number => {
-    const splittedFormat = format.split(decimalSeparator);
+// it calculates number of decimals from default format that contains ',' and '.' as separators
+const getNumberOfDecimalsFromDefaultFormat = (format: string): number => {
+    const splittedFormat = format.split(DEFAULT_DECIMAL_SEPARATOR);
 
     if (splittedFormat.length !== 2) {
         return 0;
@@ -182,13 +184,13 @@ const getNumberOfFormatDecimals = (format: string, decimalSeparator: string): nu
     );
 };
 
-export function percentFormatter(value: number, format?: string, separators?: ISeparators): string {
+export function percentFormatter(value: number, format?: string): string {
     if (isNil(value)) {
         return "";
     }
 
-    const isPercentageFormat = format && format.trim().slice(-1) === "%" && separators;
-    const numberOfDecimals = isPercentageFormat ? getNumberOfFormatDecimals(format, separators.decimal) : 2;
+    const isPercentageFormat = format && format.trim().slice(-1) === "%";
+    const numberOfDecimals = isPercentageFormat ? getNumberOfDecimalsFromDefaultFormat(format) : 2;
 
     return getNumberWithGivenDecimals(value, numberOfDecimals);
 }

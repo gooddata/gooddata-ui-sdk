@@ -386,11 +386,7 @@ export function percentageDataLabelFormatter(config?: IChartConfig): string {
     //  * left or right axis on single axis chart, or
     //  * primary axis on dual axis chart
     if (this.percentage && (isSingleAxis || isPrimaryAxis)) {
-        return percentFormatter(
-            this.percentage,
-            this.series?.data?.length > 0 && this.series.data[0].format,
-            config?.separators,
-        );
+        return percentFormatter(this.percentage, this.series?.data?.length > 0 && this.series.data[0].format);
     }
 
     return labelFormatter.call(this, config);
