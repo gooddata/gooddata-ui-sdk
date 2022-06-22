@@ -17,6 +17,9 @@ import {
     JsonApiApiTokenInTypeEnum,
     JsonApiWorkspaceInTypeEnum,
     ITigerClient,
+    JsonApiDataSourceInTypeEnum,
+    JsonApiDataSourceInAttributesTypeEnum,
+    JsonApiDataSourceOutTypeEnum,
 } from "@gooddata/api-client-tiger";
 import { convertApiError } from "../utils/errorHandling";
 import uniq from "lodash/uniq";
@@ -89,7 +92,7 @@ export interface Entitlement {
 /**
  * @internal
  */
-export type IDataSourceType = "POSTGRESQL" | "SNOWFLAKE" | "REDSHIFT" | "VERTICA" | "DREMIO" | "DRILL";
+export type IDataSourceType = JsonApiDataSourceInAttributesTypeEnum;
 
 /**
  * @internal
@@ -105,14 +108,14 @@ export interface IDataSourceConnectionInfo {
             name: string;
             schema: string;
             type: IDataSourceType;
-            url: string;
-            username: string;
+            url?: string;
+            username?: string;
         };
         id: string;
         meta?: {
-            permissions: IDataSourcePermission[];
+            permissions?: IDataSourcePermission[];
         };
-        type: string;
+        type: JsonApiDataSourceOutTypeEnum;
     };
     links?: {
         self: string;
@@ -120,17 +123,10 @@ export interface IDataSourceConnectionInfo {
 }
 
 /**
- * @internal
- */
-export interface IDataSourceList {
-    data: IDataSourceConnectionInfo[];
-}
-
-/**
  *@internal
  */
 export interface IDataSourceApiResult {
-    data?: IDataSourceConnectionInfo | IDataSourceTestConnectionResponse | IDataSourceList;
+    data?: IDataSourceConnectionInfo | IDataSourceTestConnectionResponse;
     errorMessage?: string;
 }
 
@@ -140,7 +136,7 @@ export interface IDataSourceApiResult {
 export interface IDataSourceUpsertRequest {
     data: {
         attributes: {
-            name?: string;
+            name: string;
             password?: string;
             schema: string;
             token?: string;
@@ -149,7 +145,7 @@ export interface IDataSourceUpsertRequest {
             username?: string;
         };
         id: string;
-        type: string;
+        type: JsonApiDataSourceInTypeEnum;
     };
 }
 
@@ -171,6 +167,16 @@ export interface IDataSourceTestConnectionRequest {
 export interface IDataSourceTestConnectionResponse {
     successful: boolean;
     error?: string;
+}
+
+/**
+ * @internal
+ */
+export interface IDataSourceDefinition {
+    id: string;
+    name: string;
+    type: IDataSourceType;
+    permissions: IDataSourcePermission[];
 }
 
 /**
@@ -210,7 +216,7 @@ export type TigerSpecificFunctions = {
     getWorkspaceLogicalModel?: (id: string) => Promise<DeclarativeModel>;
     getEntitlements?: () => Promise<Array<Entitlement>>;
     putWorkspaceLayout?: (requestParameters: LayoutApiPutWorkspaceLayoutRequest) => Promise<void>;
-    getAllDataSources?: () => Promise<IDataSourceApiResult>;
+    getAllDataSources?: () => Promise<IDataSourceDefinition[]>;
     getDataSourceById?: (id: string) => Promise<IDataSourceApiResult>;
     createDataSource?: (requestData: IDataSourceUpsertRequest) => Promise<IDataSourceApiResult>;
     updateDataSource?: (id: string, requestData: IDataSourceUpsertRequest) => Promise<IDataSourceApiResult>;
@@ -220,10 +226,6 @@ export type TigerSpecificFunctions = {
         id?: string,
     ) => Promise<IDataSourceTestConnectionResponse>;
 };
-
-const DATA_SOURCE_URI = "/api/v1/entities/dataSources";
-const TEST_CONNECTION_DATA_SOURCE_URI = "/api/v1/actions/dataSource/test";
-const TEST_CONNECTION_EXISTING_DATA_SOURCE_URI = "/api/v1/actions/dataSources/DATA_SOURCE_ID/test";
 
 const getDataSourceErrorMessage = (error: unknown) => {
     if (error instanceof Error) {
@@ -342,6 +344,7 @@ export const buildTigerSpecificFunctions = (
     getDeploymentVersion: async () => {
         try {
             return await authApiCall(async (sdk) => {
+                // TODO replace with a client call when it can be obtained via OpenAPI documented endpoint
                 const profile = await sdk.axios.get("/api/v1/profile");
                 return profile?.headers?.["gooddata-deployment"];
             });
@@ -412,13 +415,15 @@ export const buildTigerSpecificFunctions = (
                 });
         });
     },
-    generateLogicalModel: async (dataSourceId: string, generateLogicalModelRequest: GenerateLdmRequest) => {
+    generateLogicalModel: async (dataSourceId: string, generateLdmRequest: GenerateLdmRequest) => {
         try {
             return await authApiCall(async (sdk) => {
-                return await sdk.axios.post(
-                    `/api/v1/actions/dataSources/${dataSourceId}/generateLogicalModel`,
-                    generateLogicalModelRequest,
-                );
+                return sdk.actions
+                    .generateLogicalModel({
+                        dataSourceId,
+                        generateLdmRequest,
+                    })
+                    .then((axiosResponse) => axiosResponse.data);
             });
         } catch (error) {
             throw convertApiError(error);
@@ -426,6 +431,7 @@ export const buildTigerSpecificFunctions = (
     },
     scanDataSource: async (dataSourceId: string, scanRequest: ScanRequest) => {
         return await authApiCall(async (sdk) => {
+            // TODO replace sdk.axios call with sdk.actions when API is regenerated for Tiger 1.7
             return await sdk.axios
                 .post(`/api/v1/actions/dataSources/${dataSourceId}/scan`, scanRequest)
                 .then((res: AxiosResponse) => {
@@ -556,20 +562,31 @@ export const buildTigerSpecificFunctions = (
     getAllDataSources: async () => {
         try {
             return await authApiCall(async (sdk) => {
-                const res = await sdk.axios.get(
-                    "/api/v1/entities/dataSourceIdentifiers?sort=name&metaInclude=permissions&size=250&page=0",
-                );
-                return { data: res?.data };
+                const result = await sdk.entities.getAllEntitiesDataSourceIdentifiers({
+                    sort: ["name"],
+                    metaInclude: ["permissions"],
+                    size: 250,
+                    page: 0,
+                });
+                return result.data?.data.map((item) => ({
+                    id: item.id,
+                    name: item.attributes.name,
+                    type: item.attributes.type,
+                    permissions: item.meta?.permissions ?? [],
+                }));
             });
         } catch (error) {
-            return { errorMessage: getDataSourceErrorMessage(error) };
+            throw convertApiError(error);
         }
     },
     getDataSourceById: async (id: string) => {
         try {
             return await authApiCall(async (sdk) => {
-                const res = await sdk.axios.get(`${DATA_SOURCE_URI}/${id}`);
-                return { data: res.data };
+                return sdk.entities
+                    .getEntityDataSources({
+                        id,
+                    })
+                    .then((axiosResponse) => ({ data: { data: axiosResponse.data.data } }));
             });
         } catch (error) {
             return { errorMessage: getDataSourceErrorMessage(error) };
@@ -578,12 +595,11 @@ export const buildTigerSpecificFunctions = (
     createDataSource: async (requestData: IDataSourceUpsertRequest) => {
         try {
             return await authApiCall(async (sdk) => {
-                const headers = {
-                    Accept: "application/vnd.gooddata.api+json",
-                    "Content-Type": "application/vnd.gooddata.api+json",
-                };
-                const response = await sdk.axios.post(DATA_SOURCE_URI, requestData, { headers });
-                return { data: response.data };
+                return sdk.entities
+                    .createEntityDataSources({
+                        jsonApiDataSourceInDocument: requestData,
+                    })
+                    .then((axiosResponse) => ({ data: axiosResponse.data }));
             });
         } catch (error) {
             return { errorMessage: getDataSourceErrorMessage(error) };
@@ -592,14 +608,12 @@ export const buildTigerSpecificFunctions = (
     updateDataSource: async (id: string, requestData: IDataSourceUpsertRequest) => {
         try {
             return await authApiCall(async (sdk) => {
-                const headers = {
-                    Accept: "application/vnd.gooddata.api+json",
-                    "Content-Type": "application/vnd.gooddata.api+json",
-                };
-                const response = await sdk.axios.put(`${DATA_SOURCE_URI}/${id}`, requestData, {
-                    headers,
-                });
-                return { data: response.data };
+                return sdk.entities
+                    .updateEntityDataSources({
+                        id,
+                        jsonApiDataSourceInDocument: requestData,
+                    })
+                    .then((axiosResponse) => ({ data: axiosResponse.data }));
             });
         } catch (error) {
             return { errorMessage: getDataSourceErrorMessage(error) };
@@ -608,8 +622,10 @@ export const buildTigerSpecificFunctions = (
     deleteDataSource: async (id: string) => {
         try {
             return await authApiCall(async (sdk) => {
-                const result = await sdk.axios.delete(`${DATA_SOURCE_URI}/${id}`);
-                return { data: result };
+                await sdk.entities.deleteEntityDataSources({
+                    id,
+                });
+                return { data: { successful: true } };
             });
         } catch (error) {
             return { errorMessage: getDataSourceErrorMessage(error) };
@@ -618,6 +634,10 @@ export const buildTigerSpecificFunctions = (
     testDataSourceConnection: async (connectionData: IDataSourceTestConnectionRequest, id?: string) => {
         try {
             return await authApiCall(async (sdk) => {
+                // TODO replace sdk.axios call with sdk.actions when API is regenerated for Tiger 1.7
+                const TEST_CONNECTION_DATA_SOURCE_URI = "/api/v1/actions/dataSource/test";
+                const TEST_CONNECTION_EXISTING_DATA_SOURCE_URI =
+                    "/api/v1/actions/dataSources/DATA_SOURCE_ID/test";
                 const apiUrl =
                     id && isEmpty(connectionData)
                         ? TEST_CONNECTION_EXISTING_DATA_SOURCE_URI.replace("DATA_SOURCE_ID", id)

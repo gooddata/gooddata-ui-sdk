@@ -3076,6 +3076,8 @@ export function isVisualizationObjectsItem(visualizationObject: unknown): visual
 // @public (undocumented)
 export interface ITigerClient {
     // (undocumented)
+    actions: ReturnType<typeof tigerActionsClientFactory>;
+    // (undocumented)
     axios: AxiosInstance;
     // (undocumented)
     declarativeLayout: ReturnType<typeof tigerLayoutClientFactory>;
@@ -6132,6 +6134,9 @@ export interface StatusType {
     reasonPhrase?: string;
     statusCode?: number;
 }
+
+// @public (undocumented)
+export const tigerActionsClientFactory: (axios: AxiosInstance) => ActionsApiInterface;
 
 // @public (undocumented)
 export const tigerAfmExplainClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "explainAFM">;
