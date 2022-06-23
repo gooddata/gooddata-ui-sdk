@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
-@import "~@gooddata/sdk-ui-kit/styles/scss/variables";
-@import "~@gooddata/sdk-ui-kit/styles/scss/typo-mixins";
-@import "~@gooddata/sdk-ui-kit/styles/scss/typo";
+@import "@gooddata/sdk-ui-kit/styles/scss/variables";
+@import "@gooddata/sdk-ui-kit/styles/scss/typo-mixins";
+@import "@gooddata/sdk-ui-kit/styles/scss/typo";
 @import "./variables";
 
 $gd-dashboards-section-title-color: var(--gd-dashboards-section-title-color, $gd-color-text);

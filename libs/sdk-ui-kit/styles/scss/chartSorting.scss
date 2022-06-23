@@ -117,42 +117,42 @@
     .gd-icon-sort-numerical-asc::before {
         @extend %sorting-icon;
 
-        background-image: url("~@gooddata/sdk-ui-kit/styles/icons/sort-numerical-asc.svg");
+        background-image: url("@gooddata/sdk-ui-kit/styles/icons/sort-numerical-asc.svg");
     }
 
     .gd-icon-sort-numerical-desc::before {
         @extend %sorting-icon;
 
-        background-image: url("~@gooddata/sdk-ui-kit/styles/icons/sort-numerical-desc.svg");
+        background-image: url("@gooddata/sdk-ui-kit/styles/icons/sort-numerical-desc.svg");
     }
 
     .gd-icon-sort-alphabetical-asc::before {
         @extend %sorting-icon;
 
-        background-image: url("~@gooddata/sdk-ui-kit/styles/icons/sort-alphabetical-asc.svg");
+        background-image: url("@gooddata/sdk-ui-kit/styles/icons/sort-alphabetical-asc.svg");
     }
 
     .gd-icon-sort-alphabetical-desc::before {
         @extend %sorting-icon;
 
-        background-image: url("~@gooddata/sdk-ui-kit/styles/icons/sort-alphabetical-desc.svg");
+        background-image: url("@gooddata/sdk-ui-kit/styles/icons/sort-alphabetical-desc.svg");
     }
 
     .gd-icon-sort-date-asc::before {
         @extend %sorting-icon;
 
-        background-image: url("~@gooddata/sdk-ui-kit/styles/icons/sort-date-asc.svg");
+        background-image: url("@gooddata/sdk-ui-kit/styles/icons/sort-date-asc.svg");
     }
 
     .gd-icon-sort-date-desc::before {
         @extend %sorting-icon;
 
-        background-image: url("~@gooddata/sdk-ui-kit/styles/icons/sort-date-desc.svg");
+        background-image: url("@gooddata/sdk-ui-kit/styles/icons/sort-date-desc.svg");
     }
 
     .gd-icon-sort-default::before {
         @extend %sorting-icon;
 
-        background-image: url("~@gooddata/sdk-ui-kit/styles/icons/sort-default.svg");
+        background-image: url("@gooddata/sdk-ui-kit/styles/icons/sort-default.svg");
     }
 }

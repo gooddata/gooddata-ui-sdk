@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 _build_styles() {
-    node-sass -q --importer node_modules/node-sass-magic-importer/dist/cli.js -o styles/css styles/scss
+    # --quiet-deps avoid foundation-sites/ag-grid deprecation warnings
+    sass --quiet-deps --load-path=node_modules --load-path=node_modules/fixed-data-table-2/dist styles/scss:styles/css
 }
 
 _clean() {
