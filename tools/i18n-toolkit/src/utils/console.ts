@@ -136,7 +136,7 @@ function resultToDetail(cwd: string, { identifier, files, data }: UsageResult) {
 
 function table(data: string[][]) {
     const max = data.reduce((prev, columns) => {
-        columns.map((colum, i) => {
+        columns.forEach((colum, i) => {
             prev[i] = Math.max(prev[i], realLength(colum));
         });
         return prev;
