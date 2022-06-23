@@ -2,6 +2,7 @@
 import once from "lodash/once";
 import {
     bucketsFind,
+    bucketTotals,
     IExecutionDefinition,
     ISortItem,
     ITotal,
@@ -45,13 +46,20 @@ export async function sleep(delay: number): Promise<void> {
 }
 
 /**
- * Remove invalid totals from an execution definition given a list of sort items
+ * Get only valid totals from an execution definition given a list of sort items
  *
  * @param definition - an execution definition to sanitize
  * @param sortItems - a specification of the sort, if not provided definition.sortBy will be used
+ * @param totals - totals to be sanitized, if not provided ATTRIBUTE bucket totals will be used
  */
-export function sanitizeDefTotals(definition: IExecutionDefinition, sortItems?: ISortItem[]): ITotal[] {
+export function sanitizeDefTotals(
+    definition: IExecutionDefinition,
+    sortItems?: ISortItem[],
+    totals?: ITotal[],
+): ITotal[] {
     const { buckets, sortBy } = definition;
     const attributeBucket = bucketsFind(buckets, BucketNames.ATTRIBUTE);
-    return attributeBucket ? sanitizeBucketTotals(attributeBucket, sortItems ?? sortBy) : [];
+    return attributeBucket
+        ? sanitizeBucketTotals(attributeBucket, sortItems ?? sortBy, totals ?? bucketTotals(attributeBucket))
+        : [];
 }
