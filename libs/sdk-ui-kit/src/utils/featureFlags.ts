@@ -11,8 +11,9 @@ const GROWTH = "growth";
 export function shouldHidePPExperience(featureFlags: ISettings): boolean {
     const hidePPExperience = Boolean(featureFlags.hidePixelPerfectExperience);
     const enablePPExperience = featureFlags.enablePixelPerfectExperience;
+    const isFreemiumUser = isFreemiumEdition(featureFlags.platformEdition);
 
-    return hidePPExperience || !enablePPExperience;
+    return hidePPExperience || (isFreemiumUser && !enablePPExperience);
 }
 
 /**
