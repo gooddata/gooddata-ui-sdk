@@ -324,7 +324,11 @@ export class TigerBackend implements IAnalyticalBackend {
                             return result.data.data?.meta?.permissions || [];
                         });
                     } catch (error) {
-                        if ([404, 403].includes(error?.response?.status)) {
+                        const toleratedCodes = [404, 403];
+                        if (
+                            toleratedCodes.includes(error?.response?.status) ||
+                            toleratedCodes.includes(error?.cause?.response?.status) // the error might be wrapped by an UnexpectedResponseError so check for it too
+                        ) {
                             // temporary - 404 gets returned if you are not org admin
                             return [];
                         }
