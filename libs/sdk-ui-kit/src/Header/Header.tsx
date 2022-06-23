@@ -214,7 +214,7 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
     });
 
     private getTrialCountdown = (expiredDate: string) => {
-        const trialDaysLeft = differenceInCalendarDays(new Date(expiredDate), new Date()) + 1; // include expired date.
+        const trialDaysLeft = differenceInCalendarDays(new Date(expiredDate), new Date());
         if (trialDaysLeft === 1) {
             return <FormattedMessage id="gs.header.countdown.lastDay" />;
         }
@@ -229,7 +229,8 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
                 />
             );
         }
-        if (trialDaysLeft > 30 && trialDaysLeft < 90) {
+        if (trialDaysLeft > 30 && trialDaysLeft <= 91) {
+            // expiredDate is one day after the last day that user can use the service
             const currentDateWithoutTime = format(new Date(), "yyyy-MM-dd");
             const trialMonthsLeft = differenceInMonths(
                 new Date(expiredDate),
