@@ -37,18 +37,20 @@ function removeInvalidTotalsFromInsight<T extends IInsightDefinition>(insight: T
 }
 
 /**
- * Takes totals from a bucket and removes all subtotals if the bucket is sorted on a different than the first attribute.
+ * Takes totals from a bucket and removes all subtotals if the bucket is sorted on other than the first attribute.
  *
  * @param bucket - a grouping of attributes, measures and totals to sanitize
  * @param sortItems - a specification of the sort
- * @returns totals - sanitized totals
+ * @param totals - if specified these totals instead of the bucket totals will be sanitized in regard to the bucket
+ * @returns sanitized totals
  * @internal
  */
-export function sanitizeBucketTotals(bucket: IBucket, sortItems: ISortItem[]): ITotal[] {
+export function sanitizeBucketTotals(bucket: IBucket, sortItems: ISortItem[], totals?: ITotal[]): ITotal[] {
+    const originalTotals = totals ?? bucketTotals(bucket);
     if (isSortedOnDifferentThanFirstAttributeInBucket(bucket, sortItems)) {
-        return getBucketTotalsWithoutSubtotals(bucket);
+        return getTotalsWithoutSubtotals(originalTotals, bucket);
     } else {
-        return bucketTotals(bucket);
+        return originalTotals;
     }
 }
 
@@ -67,8 +69,6 @@ function isSortedOnDifferentThanFirstAttributeInBucket(bucket: IBucket, sortItem
     });
 }
 
-function getBucketTotalsWithoutSubtotals(bucket: IBucket): ITotal[] {
-    return bucketTotals(bucket).filter(
-        (total) => bucketAttributeIndex(bucket, total.attributeIdentifier) === 0,
-    );
+function getTotalsWithoutSubtotals(totals: ITotal[], bucket: IBucket): ITotal[] {
+    return totals.filter((total) => bucketAttributeIndex(bucket, total.attributeIdentifier) === 0);
 }
