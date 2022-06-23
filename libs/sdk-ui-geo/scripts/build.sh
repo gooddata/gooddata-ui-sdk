@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 _build_styles() {
-    node-sass -q --importer node_modules/node-sass-magic-importer/dist/cli.js -o styles/css styles/scss/main.scss
+    # --quiet-deps avoid foundation-sites deprecation warnings
+    sass --quiet-deps --load-path=node_modules --load-path=node_modules/mapbox-gl/dist styles/scss/main.scss:styles/css/main.css
 }
 
 _clean() {

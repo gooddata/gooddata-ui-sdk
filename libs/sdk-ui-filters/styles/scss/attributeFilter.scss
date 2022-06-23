@@ -1,15 +1,16 @@
 // (C) 2021 GoodData Corporation
-@import "~@gooddata/sdk-ui/styles/scss/settings";
-@import "~@gooddata/sdk-ui-kit/styles/scss/overlay";
-@import "~@gooddata/sdk-ui-kit/styles/scss/spinner";
-@import "~@gooddata/sdk-ui-kit/styles/scss/list";
-@import "~@gooddata/sdk-ui-kit/styles/scss/dropdown";
-@import "~@gooddata/sdk-ui-kit/styles/scss/indigoFont";
-@import "~@gooddata/sdk-ui-kit/styles/scss/typo-mixins";
-@import "~@gooddata/sdk-ui-kit/styles/scss/form";
-@import "~@gooddata/sdk-ui-kit/styles/scss/button";
-@import "~@gooddata/sdk-ui-kit/styles/scss/loadingMask";
-@import "~fixed-data-table-2/dist/fixed-data-table.css";
+@use "fixed-data-table";
+@import "@gooddata/sdk-ui/styles/scss/settings";
+@import "@gooddata/sdk-ui-kit/styles/scss/overlay";
+@import "@gooddata/sdk-ui-kit/styles/scss/spinner";
+@import "@gooddata/sdk-ui-kit/styles/scss/list";
+@import "@gooddata/sdk-ui-kit/styles/scss/dropdown";
+@import "@gooddata/sdk-ui-kit/styles/scss/indigoFont";
+@import "@gooddata/sdk-ui-kit/styles/scss/typo-mixins";
+@import "@gooddata/sdk-ui-kit/styles/scss/form";
+@import "@gooddata/sdk-ui-kit/styles/scss/button";
+@import "@gooddata/sdk-ui-kit/styles/scss/loadingMask";
+// @import "fixed-data-table-2/dist/fixed-data-table.css";
 
 $transition-length: 0.2s;
 $separator-icon: "data:image/svg+xml,%3Csvg width='7' height='26' viewBox='0 0 7 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 4h2v2H0V4zm0-4h2v2H0V0zm5 4h2v2H5V4zm0-4h2v2H5V0zm0 8h2v2H5V8zM0 8h2v2H0V8zm0 4h2v2H0v-2zm5 4h2v2H5v-2zm-5 0h2v2H0v-2zm5 4h2v2H5v-2zm-5 0h2v2H0v-2zm5 4h2v2H5v-2zm-5 0h2v2H0v-2zm5-12h2v2H5v-2z' fill='%23B0BECA' fill-rule='evenodd'/%3E%3C/svg%3E%0A";
