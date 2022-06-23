@@ -735,6 +735,10 @@ export class TableFacade {
         return this.tableDescriptor.createSortItems(columns, this.currentResult.definition.sortBy);
     };
 
+    public getSortItems = (): ISortItem[] => {
+        return this.currentResult.definition.sortBy;
+    };
+
     /**
      * Tests whether the provided prepared execution matches the execution that is used to obtain data for this
      * table facade.
