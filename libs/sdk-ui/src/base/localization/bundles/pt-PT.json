@@ -64,6 +64,10 @@
     "gs.list.noItemsFound": "Nenhum item encontrado.",
     "gs.list.error": "Erro ao carregar itens da lista",
     "gs.header.upsellButtonText": "Atualizar",
+    "gs.header.countdown.numberOfDaysLeft": "{number} dias restantes",
+    "gs.header.countdown.numberOfMonthsLeft": "{number} meses restantes",
+    "gs.header.countdown.oneMonthLeft": "1 mês restante",
+    "gs.header.countdown.lastDay": "Este é o seu último dia",
     "measure.title.suffix.same_period_year_ago": "MP do ano anterior",
     "measure.title.suffix.previous_period": "período atrás",
     "visualizations.measure.arithmetic.sum.title": "Soma de {firstMeasureTitle} com {secondMeasureTitle}",
@@ -306,5 +310,8 @@
     "embedInsightDialog.prepareEnvironmentMessage.link": "Saber mais",
     "embed.dialog.numeric.input.validation": "O valor tem de ser um número superior a 0",
     "embed.dialog.numeric.input.warning": "Esta entrada só aceita dígitos superiores a 0",
-    "embedInsightDialog.complete.list.props.message": "Lista completa das propriedades de incorporação"
+    "embedInsightDialog.complete.list.props.message": "Lista completa das propriedades de incorporação",
+    "error.overlay.login": "Iniciar sessão",
+    "error.overlay.title": "A sua sessão foi terminada",
+    "error.overlay.text": "Para continuar o seu trabalho, volte a iniciar sessão."
 }

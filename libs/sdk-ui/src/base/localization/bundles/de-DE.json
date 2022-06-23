@@ -64,6 +64,10 @@
     "gs.list.noItemsFound": "Keine Elemente gefunden.",
     "gs.list.error": "Fehler beim Laden der Listenobjekte",
     "gs.header.upsellButtonText": "Upgrade",
+    "gs.header.countdown.numberOfDaysLeft": "{number} Tage übrig",
+    "gs.header.countdown.numberOfMonthsLeft": "{number} Monate übrig",
+    "gs.header.countdown.oneMonthLeft": "1 Monat übrig",
+    "gs.header.countdown.lastDay": "Dies ist dein letzter Tag.",
     "measure.title.suffix.same_period_year_ago": "vor DZ Jahr",
     "measure.title.suffix.previous_period": "früherer Zeitraum",
     "visualizations.measure.arithmetic.sum.title": "Summe von {firstMeasureTitle} und {secondMeasureTitle}",
@@ -306,5 +310,8 @@
     "embedInsightDialog.prepareEnvironmentMessage.link": "Weitere Informationen",
     "embed.dialog.numeric.input.validation": "Der Wert muss eine Zahl größer als 0 sein",
     "embed.dialog.numeric.input.warning": "Diese Eingabe akzeptiert nur Ziffern größer 0",
-    "embedInsightDialog.complete.list.props.message": "Vollständige Liste der Einbettungseigenschaften"
+    "embedInsightDialog.complete.list.props.message": "Vollständige Liste der Einbettungseigenschaften",
+    "error.overlay.login": "Anmeldung",
+    "error.overlay.title": "Sie wurden abgemeldet",
+    "error.overlay.text": "Bitte melden Sie sich erneut an, um Ihre Arbeit fortzusetzen."
 }
