@@ -2,11 +2,12 @@
 import React from "react";
 
 import { AttributeDropdownList } from "./AttributeDropdownList";
-import { AttributeDropdownButtons } from "./AttributeDropdownButtons";
-import { AttributeDropdownItemsFiltered } from "./AttributeDropdownItemsFiltered";
+import { NoData } from "@gooddata/sdk-ui-kit";
+import { MessageItemsFiltered } from "./MessageItemsFiltered";
 import { AttributeListItem, IListItem } from "../types";
 import { ObjRef } from "@gooddata/sdk-model";
-import { FormattedMessage, WrappedComponentProps } from "react-intl";
+import { FormattedMessage, useIntl, WrappedComponentProps } from "react-intl";
+import { MessageAllItemsFiltered } from "./MessageAllItemsFiltered";
 
 const ListError = () => (
     <div className="gd-message error">
@@ -14,6 +15,7 @@ const ListError = () => (
     </div>
 );
 
+//TODO this interface will be removed its part of old customization and will be handled in different way
 /**
  * @internal
  */
@@ -30,31 +32,38 @@ export interface IAttributeDropdownListItemProps extends WrappedComponentProps {
 /**
  * @internal
  */
-export interface IAttributeDropdownBodyProps {
+export interface IAttributeFilterDropdownContentProps {
     items: AttributeListItem[];
     totalCount: number;
     selectedItems: Array<IListItem>;
     isInverted: boolean;
     isLoading: boolean;
     isFullWidth?: boolean;
+
     error?: any;
-    applyDisabled?: boolean;
+    allElementsFiltered: boolean; //new added
+    hasNoData: boolean; //new added
 
     searchString: string;
     onSearch: (searchString: string) => void;
 
     onSelect: (selectedItems: IListItem[], isInverted: boolean) => void;
     onRangeChange: (searchString: string, from: number, to: number) => void;
-    onApplyButtonClicked: () => void;
-    onCloseButtonClicked: () => void;
     parentFilterTitles?: string[];
     showItemsFilteredMessage?: boolean;
 }
 
+//TODO this is temporary type
+export type IAttributeDropdownBodyPropsNoCallbacks = Omit<
+    IAttributeFilterDropdownContentProps,
+    "onApplyButtonClicked" | "onCloseButtonClicked"
+>;
+
+//TODO this interface will be removed its part of old customization and will be handled in different way
 /**
  * @internal
  */
-export interface IAttributeDropdownBodyExtendedProps extends IAttributeDropdownBodyProps {
+export interface IAttributeDropdownBodyExtendedProps extends IAttributeFilterDropdownContentProps {
     deleteFilter?: () => void; //TOTO this callback is not needed should be part of customization of dropdown buttons
     isLoaded?: boolean;
     isElementsLoading?: boolean;
@@ -67,27 +76,35 @@ export interface IAttributeDropdownBodyExtendedProps extends IAttributeDropdownB
     attributeFilterRef?: ObjRef; //TODO not sure why this is needed
 }
 
-export const AttributeDropdownBody: React.FC<IAttributeDropdownBodyExtendedProps> = ({
-    items,
-    totalCount,
-    error,
-    isLoading,
-    selectedItems,
-    isInverted,
-    applyDisabled,
-    onRangeChange,
-    onSearch,
-    searchString,
-    onSelect,
-    onApplyButtonClicked,
-    onCloseButtonClicked,
-    parentFilterTitles,
-    showItemsFilteredMessage,
-}) => {
+export const AttributeFilterDropdownContent: React.FC<IAttributeFilterDropdownContentProps> = (props) => {
+    const {
+        items,
+        totalCount,
+        error,
+        isLoading,
+        selectedItems,
+        isInverted,
+        onRangeChange,
+        onSearch,
+        searchString,
+        onSelect,
+        parentFilterTitles,
+        showItemsFilteredMessage,
+
+        allElementsFiltered,
+        hasNoData,
+    } = props;
+
+    const intl = useIntl();
+
     return (
-        <div className="gd-attribute-filter-overlay__next">
+        <>
             {error ? (
                 <ListError />
+            ) : allElementsFiltered ? (
+                <MessageAllItemsFiltered parentFilterTitles={parentFilterTitles} />
+            ) : hasNoData ? (
+                <NoData noDataLabel={intl.formatMessage({ id: "attributesDropdown.noData" })} />
             ) : (
                 <AttributeDropdownList
                     isLoading={isLoading}
@@ -102,15 +119,10 @@ export const AttributeDropdownBody: React.FC<IAttributeDropdownBodyExtendedProps
                 />
             )}
 
-            <AttributeDropdownItemsFiltered
+            <MessageItemsFiltered
                 parentFilterTitles={parentFilterTitles}
                 showItemsFilteredMessage={showItemsFilteredMessage}
             />
-            <AttributeDropdownButtons
-                applyDisabled={applyDisabled}
-                onApplyButtonClicked={onApplyButtonClicked}
-                onCloseButtonClicked={onCloseButtonClicked}
-            />
-        </div>
+        </>
     );
 };

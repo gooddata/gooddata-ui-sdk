@@ -1,27 +1,20 @@
 // (C) 2021-2022 GoodData Corporation
 import React from "react";
-import { AttributeDropdownButtons } from "./AttributeDropdownButtons";
 import { BubbleHoverTrigger, Bubble, useMediaQuery } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage } from "react-intl";
 
 const ALIGN_POINTS = [{ align: "bc tc" }];
 const ARROW_OFFSETS = { "bc tc": [0, 15] };
-export interface IAttributeDropdownAllFilteredOutBodyProps {
-    parentFilterTitles: string[];
-    onApplyButtonClick: () => void;
-    onCancelButtonClick: () => void;
-}
 
-// TODO remove buttons and callback
-// TODO rename to message something
+export interface IMessageAllItemsFilteredProps {
+    parentFilterTitles: string[];
+}
 
 /**
  * @internal
  */
-export const AttributeDropdownAllFilteredOutBody: React.FC<IAttributeDropdownAllFilteredOutBodyProps> = (
-    props,
-) => {
-    const { onApplyButtonClick, onCancelButtonClick, parentFilterTitles } = props;
+export const MessageAllItemsFiltered: React.FC<IMessageAllItemsFilteredProps> = (props) => {
+    const { parentFilterTitles } = props;
 
     const isMobile = useMediaQuery("mobileDevice");
 
@@ -48,11 +41,6 @@ export const AttributeDropdownAllFilteredOutBody: React.FC<IAttributeDropdownAll
                     </Bubble>
                 </BubbleHoverTrigger>
             </div>
-            <AttributeDropdownButtons
-                applyDisabled={true}
-                onApplyButtonClicked={onApplyButtonClick}
-                onCloseButtonClicked={onCancelButtonClick}
-            />
         </div>
     );
 };
