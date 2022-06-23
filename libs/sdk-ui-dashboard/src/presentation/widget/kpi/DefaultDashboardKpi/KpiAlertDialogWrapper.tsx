@@ -1,6 +1,6 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import React, { useMemo } from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { useIntl } from "react-intl";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 import {
@@ -12,16 +12,15 @@ import {
 import { enrichBrokenAlertsInfo, IKpiAlertDialogProps, KpiAlertDialog } from "./KpiAlerts";
 import { useBrokenAlertFiltersMeta } from "./useBrokenAlertFiltersMeta";
 
-interface IKpiAlertDialogWrapperProps
-    extends WrappedComponentProps,
-        Omit<IKpiAlertDialogProps, "brokenAlertFilters" | "intl"> {
+interface IKpiAlertDialogWrapperProps extends Omit<IKpiAlertDialogProps, "brokenAlertFilters" | "intl"> {
     brokenAlertFiltersBasicInfo: IBrokenAlertFilterBasicInfo[];
     backend: IAnalyticalBackend;
     workspace: string;
 }
 
-const KpiAlertDialogWrapperCore: React.FC<IKpiAlertDialogWrapperProps> = (props) => {
-    const { brokenAlertFiltersBasicInfo, backend, workspace, intl, ...restProps } = props;
+export const KpiAlertDialogWrapper: React.FC<IKpiAlertDialogWrapperProps> = (props) => {
+    const { brokenAlertFiltersBasicInfo, backend, workspace, ...restProps } = props;
+    const intl = useIntl();
     const dateDatasets = useDashboardSelector(selectCatalogDateDatasets);
 
     const { result: brokenAlertFiltersMeta, status } = useBrokenAlertFiltersMeta({
@@ -43,7 +42,7 @@ const KpiAlertDialogWrapperCore: React.FC<IKpiAlertDialogWrapperProps> = (props)
             brokenAlertFiltersMeta.dateDatasets,
             brokenAlertFiltersMeta.attributeFiltersMeta,
         );
-    }, [brokenAlertFiltersMeta, restProps.dateFormat]);
+    }, [brokenAlertFiltersBasicInfo, brokenAlertFiltersMeta, intl, restProps.dateFormat]);
 
     return (
         <KpiAlertDialog
@@ -53,5 +52,3 @@ const KpiAlertDialogWrapperCore: React.FC<IKpiAlertDialogWrapperProps> = (props)
         />
     );
 };
-
-export const KpiAlertDialogWrapper = injectIntl(KpiAlertDialogWrapperCore);

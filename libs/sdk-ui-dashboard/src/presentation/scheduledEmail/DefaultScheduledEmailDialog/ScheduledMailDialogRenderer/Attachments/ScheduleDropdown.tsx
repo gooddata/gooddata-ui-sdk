@@ -2,7 +2,7 @@
 import * as React from "react";
 import cx from "classnames";
 import { Bubble, BubbleHoverTrigger, Dropdown, Button } from "@gooddata/sdk-ui-kit";
-import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { ITheme } from "@gooddata/sdk-model";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 import { DEFAULT_DROPDOWN_ALIGN_POINTS, DEFAULT_DROPDOWN_ZINDEX } from "../../constants";
@@ -12,7 +12,7 @@ const ALIGN_POINTS = [
     { align: "tc bc", offset: { x: 0, y: 0 } },
 ];
 
-export interface IScheduleDropdownOwnProps {
+export interface IScheduleDropdownProps {
     title: string;
     applyDisabled?: boolean;
     theme?: ITheme;
@@ -25,13 +25,10 @@ export interface IScheduleDropdownOwnProps {
     buttonDisabled?: boolean;
 }
 
-type IScheduleDropdownProps = IScheduleDropdownOwnProps & WrappedComponentProps;
-
 export const ScheduleDropdownComponent: React.FC<IScheduleDropdownProps> = (props) => {
     const {
         title,
         applyDisabled,
-        intl,
         onApply,
         onCancel,
         iconComponent,
@@ -40,6 +37,8 @@ export const ScheduleDropdownComponent: React.FC<IScheduleDropdownProps> = (prop
         bodyClassName,
         buttonDisabled,
     } = props;
+
+    const intl = useIntl();
 
     const renderBody = (closeDropdown: () => void) => {
         return (
@@ -128,4 +127,4 @@ export const ScheduleDropdownComponent: React.FC<IScheduleDropdownProps> = (prop
     );
 };
 
-export const ScheduleDropdown = injectIntl(withTheme(ScheduleDropdownComponent));
+export const ScheduleDropdown = withTheme(ScheduleDropdownComponent);

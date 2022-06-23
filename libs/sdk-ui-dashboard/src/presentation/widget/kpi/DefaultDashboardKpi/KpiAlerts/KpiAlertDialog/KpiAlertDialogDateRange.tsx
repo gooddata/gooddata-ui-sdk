@@ -1,6 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { IDateFilter, IDashboardDateFilter, ITheme } from "@gooddata/sdk-model";
 import { Icon } from "@gooddata/sdk-ui-kit";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
@@ -13,12 +13,12 @@ interface IKpiAlertDialogDateRangeProps {
     theme?: ITheme;
 }
 
-const KpiAlertDialogDateRangeComponent: React.FC<IKpiAlertDialogDateRangeProps & WrappedComponentProps> = ({
+const KpiAlertDialogDateRangeComponent: React.FC<IKpiAlertDialogDateRangeProps> = ({
     filter,
-    intl,
     dateFormat,
     theme,
 }) => {
+    const intl = useIntl();
     const translationData = getKpiAlertTranslationData(filter, intl, dateFormat);
     if (!translationData) {
         return null;
@@ -38,4 +38,4 @@ const KpiAlertDialogDateRangeComponent: React.FC<IKpiAlertDialogDateRangeProps &
     );
 };
 
-export const KpiAlertDialogDateRange = injectIntl(withTheme(KpiAlertDialogDateRangeComponent));
+export const KpiAlertDialogDateRange = withTheme(KpiAlertDialogDateRangeComponent);

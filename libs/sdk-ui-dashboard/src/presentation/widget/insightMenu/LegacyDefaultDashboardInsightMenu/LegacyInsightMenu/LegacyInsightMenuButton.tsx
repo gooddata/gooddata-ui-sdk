@@ -3,7 +3,7 @@ import React, { useCallback } from "react";
 import { insightVisualizationUrl, objRefToString, widgetRef } from "@gooddata/sdk-model";
 import { stringUtils } from "@gooddata/util";
 import cx from "classnames";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { useIntl } from "react-intl";
 import { Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";
 import { VisType } from "@gooddata/sdk-ui";
 
@@ -17,13 +17,13 @@ function isExportableVisualization(visType: VisType): boolean {
 
 const bubbleAlignPoints: IAlignPoint[] = [{ align: "tc bc" }, { align: "tc br" }];
 
-const LegacyInsightMenuButtonCore: React.FC<IDashboardInsightMenuButtonProps & WrappedComponentProps> = ({
+export const LegacyInsightMenuButton: React.FC<IDashboardInsightMenuButtonProps> = ({
     onClick,
     widget,
     insight,
-    intl,
     isOpen,
 }) => {
+    const intl = useIntl();
     const onOptionsMenuClick = useCallback(() => {
         onClick();
     }, [onClick]);
@@ -69,5 +69,3 @@ const LegacyInsightMenuButtonCore: React.FC<IDashboardInsightMenuButtonProps & W
         </div>
     );
 };
-
-export const LegacyInsightMenuButton = injectIntl(LegacyInsightMenuButtonCore);

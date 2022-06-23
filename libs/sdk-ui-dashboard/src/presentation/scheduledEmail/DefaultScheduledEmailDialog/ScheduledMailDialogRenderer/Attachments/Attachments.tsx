@@ -1,7 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
 import * as React from "react";
 
-import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import identity from "lodash/identity";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 
@@ -11,7 +11,7 @@ import { IWidgetExportConfiguration, IWidgetsSelection } from "../../interfaces"
 import { objRefToString, ITheme } from "@gooddata/sdk-model";
 import { IInsightWidgetExtended } from "../../useScheduledEmail";
 
-export interface IAttachmentsOwnProps {
+export interface IAttachmentsProps {
     theme?: ITheme;
     dashboardTitle: string;
     insightWidgets: IInsightWidgetExtended[];
@@ -29,8 +29,6 @@ const AttachmentItem: React.FC<{ format: string }> = ({ format, children }) => (
         <span className="gd-dashboard-attachment-name">{children}</span>
     </div>
 );
-
-export type IAttachmentsProps = IAttachmentsOwnProps & WrappedComponentProps;
 
 const AttachmentsComponent = (props: IAttachmentsProps) => {
     const {
@@ -95,4 +93,4 @@ const AttachmentsComponent = (props: IAttachmentsProps) => {
     );
 };
 
-export const Attachments = injectIntl(withTheme(AttachmentsComponent));
+export const Attachments = withTheme(AttachmentsComponent);

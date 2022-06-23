@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 import React, { useCallback, useState } from "react";
 import { Button, Typography } from "@gooddata/sdk-ui-kit";
-import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { ConfigurationParentItems } from "./ConfigurationParentItems";
 import { areObjRefsEqual, ObjRef, IAttributeDisplayFormMetadataObject } from "@gooddata/sdk-model";
 import { IAttributeFilterParent, IAttributeFiltersMetaState } from "../types";
@@ -38,8 +38,7 @@ interface IAttributeFilterDropdownConfigurationDispatchProps {
     attributeFilterDisplayFormChanged: (payload: any) => void;
 }
 
-export type IAttributeFilterDropdownConfigurationProps = WrappedComponentProps &
-    IAttributeFilterDropdownConfigurationOwnProps &
+export type IAttributeFilterDropdownConfigurationProps = IAttributeFilterDropdownConfigurationOwnProps &
     IAttributeFilterDropdownConfigurationStateProps &
     IAttributeFilterDropdownConfigurationDispatchProps;
 
@@ -76,7 +75,6 @@ const isFilterDisplayFormChanged = (currentDisplayForm: ObjRef, originalDisplayF
 
 const DropdownConfiguration: React.FC<IAttributeFilterDropdownConfigurationProps> = (props) => {
     const {
-        intl,
         isDependentFiltersEnabled,
         allAttributeFilters,
         attributeFilterTitle,
@@ -90,6 +88,7 @@ const DropdownConfiguration: React.FC<IAttributeFilterDropdownConfigurationProps
         onChange,
     } = props;
 
+    const intl = useIntl();
     const [items, setItems] = useItems();
     const [currentDisplayFormRef, setCurrentDisplayFormRef] = useState(attributeFilterRef);
 
@@ -166,4 +165,4 @@ const DropdownConfiguration: React.FC<IAttributeFilterDropdownConfigurationProps
     );
 };
 
-export default injectIntl(DropdownConfiguration);
+export default DropdownConfiguration;

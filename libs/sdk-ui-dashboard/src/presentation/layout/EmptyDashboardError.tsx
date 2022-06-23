@@ -1,16 +1,14 @@
 // (C) 2020-2022 GoodData Corporation
 import React from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { useIntl } from "react-intl";
 import { IErrorProps } from "@gooddata/sdk-ui";
 
 interface IEmptyDashboardErrorProps {
     ErrorComponent: React.ComponentType<IErrorProps>;
 }
 
-const EmptyDashboardErrorCore: React.FC<IEmptyDashboardErrorProps & WrappedComponentProps> = ({
-    ErrorComponent,
-    intl,
-}) => {
+export const EmptyDashboardError: React.FC<IEmptyDashboardErrorProps> = ({ ErrorComponent }) => {
+    const intl = useIntl();
     return (
         <ErrorComponent
             className="s-layout-error"
@@ -19,5 +17,3 @@ const EmptyDashboardErrorCore: React.FC<IEmptyDashboardErrorProps & WrappedCompo
         />
     );
 };
-
-export const EmptyDashboardError = injectIntl(EmptyDashboardErrorCore);
