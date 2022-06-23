@@ -64,6 +64,10 @@
     "gs.list.noItemsFound": "Geen items gevonden.",
     "gs.list.error": "Fout bij inlezen lijstitems",
     "gs.header.upsellButtonText": "Upgrade",
+    "gs.header.countdown.numberOfDaysLeft": "Nog {number} dagen",
+    "gs.header.countdown.numberOfMonthsLeft": "Nog {number} maanden",
+    "gs.header.countdown.oneMonthLeft": "Nog 1 maand",
+    "gs.header.countdown.lastDay": "Dit is uw laatste dag",
     "measure.title.suffix.same_period_year_ago": "ZP jaar geleden",
     "measure.title.suffix.previous_period": "periode geleden",
     "visualizations.measure.arithmetic.sum.title": "Som van {firstMeasureTitle} en {secondMeasureTitle}",
@@ -306,5 +310,8 @@
     "embedInsightDialog.prepareEnvironmentMessage.link": "Meer weten",
     "embed.dialog.numeric.input.validation": "De waarde moet een getal zijn dat groter is dan 0",
     "embed.dialog.numeric.input.warning": "Deze invoer accepteert alleen getallen groter dan 0",
-    "embedInsightDialog.complete.list.props.message": "Volledig lijst van ingesloten eigenschappen"
+    "embedInsightDialog.complete.list.props.message": "Volledig lijst van ingesloten eigenschappen",
+    "error.overlay.login": "Login",
+    "error.overlay.title": "U bent afgemeld",
+    "error.overlay.text": "Meld u opnieuw aan om verder te werken."
 }

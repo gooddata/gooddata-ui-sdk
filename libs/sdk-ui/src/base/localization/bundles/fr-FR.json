@@ -64,6 +64,10 @@
     "gs.list.noItemsFound": "Éléments introuvables.",
     "gs.list.error": "Erreur lors du chargement des éléments de la liste",
     "gs.header.upsellButtonText": "Mise à niveau",
+    "gs.header.countdown.numberOfDaysLeft": "{number} jours restants",
+    "gs.header.countdown.numberOfMonthsLeft": "{number} mois restants",
+    "gs.header.countdown.oneMonthLeft": "1 mois restant",
+    "gs.header.countdown.lastDay": "Aujourd'hui est votre dernier jour",
     "measure.title.suffix.same_period_year_ago": "MP de l'année antérieure",
     "measure.title.suffix.previous_period": "période précédente",
     "visualizations.measure.arithmetic.sum.title": "Somme de {firstMeasureTitle} et {secondMeasureTitle}",
@@ -306,5 +310,8 @@
     "embedInsightDialog.prepareEnvironmentMessage.link": "En savoir plus",
     "embed.dialog.numeric.input.validation": "La valeur doit être supérieure à 0",
     "embed.dialog.numeric.input.warning": "La saisie n'accepte que les chiffres supérieurs à 0.",
-    "embedInsightDialog.complete.list.props.message": "Liste complète des propriétés d'incorporation"
+    "embedInsightDialog.complete.list.props.message": "Liste complète des propriétés d'incorporation",
+    "error.overlay.login": "Connexion",
+    "error.overlay.title": "Vous avez été déconnecté(e)",
+    "error.overlay.text": "Pour continuer à travailler, reconnectez-vous."
 }

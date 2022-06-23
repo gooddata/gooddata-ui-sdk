@@ -64,6 +64,10 @@
     "gs.list.noItemsFound": "アイテムが見つかりません。",
     "gs.list.error": "リストの読み込みエラー",
     "gs.header.upsellButtonText": "アップグレード",
+    "gs.header.countdown.numberOfDaysLeft": "残り {number} 日",
+    "gs.header.countdown.numberOfMonthsLeft": "残り {number} ヶ月",
+    "gs.header.countdown.oneMonthLeft": "残り 1 ヶ月",
+    "gs.header.countdown.lastDay": "最終日です",
     "measure.title.suffix.same_period_year_ago": "前年同期",
     "measure.title.suffix.previous_period": " 期前",
     "visualizations.measure.arithmetic.sum.title": "{firstMeasureTitle} と {secondMeasureTitle} の和",
@@ -306,5 +310,8 @@
     "embedInsightDialog.prepareEnvironmentMessage.link": "詳細",
     "embed.dialog.numeric.input.validation": "値は 0 より大きい数値にしてください",
     "embed.dialog.numeric.input.warning": "この入力には、0 より大きい数字のみを使用できます",
-    "embedInsightDialog.complete.list.props.message": "埋め込みプロパティーの完全なリストです"
+    "embedInsightDialog.complete.list.props.message": "埋め込みプロパティーの完全なリストです",
+    "error.overlay.login": "ログイン",
+    "error.overlay.title": "ログアウトしています",
+    "error.overlay.text": "作業を続行するには、再度ログインしてください。"
 }
