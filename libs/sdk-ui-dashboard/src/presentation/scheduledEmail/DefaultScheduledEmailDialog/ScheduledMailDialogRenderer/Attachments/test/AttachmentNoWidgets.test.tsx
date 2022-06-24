@@ -2,12 +2,12 @@
 import React from "react";
 import { mount, ReactWrapper } from "enzyme";
 
-import { AttachmentNoWidgets, IAttachmentNoWidgetsOwnProps } from "../AttachmentNoWidgets";
+import { AttachmentNoWidgets, IAttachmentProps } from "../AttachmentNoWidgets";
 import { IntlWrapper } from "../../../../../localization/IntlWrapper";
 
 describe("AttachmentNoWidgets", () => {
     const FILE_NAME = "ABC.pdf";
-    function renderComponent(customProps: Partial<IAttachmentNoWidgetsOwnProps> = {}): ReactWrapper {
+    function renderComponent(customProps: Partial<IAttachmentProps> = {}): ReactWrapper {
         const defaultProps = {
             includeFilterContext: false,
             isMobile: false,

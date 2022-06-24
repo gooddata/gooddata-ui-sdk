@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { useCallback, useState } from "react";
-import { injectIntl, WrappedComponentProps, FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import identity from "lodash/identity";
 
 import { Icon, InsightIcon, Typography } from "@gooddata/sdk-ui-kit";
@@ -13,7 +13,7 @@ import { IWidgetsSelection } from "../../interfaces";
 import { ObjRef, objRefToString, ITheme } from "@gooddata/sdk-model";
 import { IInsightWidgetExtended } from "../../useScheduledEmail";
 
-export interface IAttachmentsSelectionDropdownOwnProps {
+export interface IAttachmentsSelectionDropdownProps {
     dashboardTitle: string;
     dashboardSelected: boolean;
     insightWidgets: IInsightWidgetExtended[];
@@ -22,17 +22,15 @@ export interface IAttachmentsSelectionDropdownOwnProps {
     theme?: ITheme;
 }
 
-export type IAttachmentsSelectionDropdownProps = IAttachmentsSelectionDropdownOwnProps &
-    WrappedComponentProps;
-
 const AttachmentsSelectionDropdownComponent: React.FC<IAttachmentsSelectionDropdownProps> = (props) => {
-    const { intl, theme, dashboardTitle, insightWidgets = [], onApply } = props;
+    const { theme, dashboardTitle, insightWidgets = [], onApply } = props;
     const ICON_COLOR = theme?.palette?.complementary?.c5;
     const ICON_SIZE_BUTTON = 18;
     const ICON_PROPS = { color: ICON_COLOR, height: 19, width: 26 };
 
     const [dashboardSelected, setDashboardSelected] = useState(props.dashboardSelected);
     const [widgetsSelected, setWidgetsSelected] = useState(props.widgetsSelected);
+    const intl = useIntl();
 
     const handleWidgetSelectedChange = useCallback(
         (widgetRef: ObjRef) => {
@@ -117,4 +115,4 @@ const AttachmentsSelectionDropdownComponent: React.FC<IAttachmentsSelectionDropd
     );
 };
 
-export const AttachmentsSelectionDropdown = injectIntl(withTheme(AttachmentsSelectionDropdownComponent));
+export const AttachmentsSelectionDropdown = withTheme(AttachmentsSelectionDropdownComponent);

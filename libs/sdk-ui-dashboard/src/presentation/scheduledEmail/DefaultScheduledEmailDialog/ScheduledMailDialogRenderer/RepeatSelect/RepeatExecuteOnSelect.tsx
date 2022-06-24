@@ -1,6 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
-import * as React from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import React, { useMemo } from "react";
+import { useIntl } from "react-intl";
 import { Dropdown, DropdownList, DropdownButton, SingleSelectListItem } from "@gooddata/sdk-ui-kit";
 import invariant from "ts-invariant";
 
@@ -11,75 +11,58 @@ import { messages } from "../../../../../locales";
 
 const DROPDOWN_WIDTH = 154;
 
-interface IRepeatExecuteOnSelectOwnProps {
+export interface IRepeatExecuteOnSelectProps {
     repeatExecuteOn: string;
     startDate: Date;
     onChange: (repeatExecuteOn: string) => void;
 }
 
-export type IRepeatExecuteOnSelectProps = IRepeatExecuteOnSelectOwnProps & WrappedComponentProps;
+export const RepeatExecuteOnSelect: React.FC<IRepeatExecuteOnSelectProps> = (props) => {
+    const { onChange, repeatExecuteOn, startDate } = props;
+    const intl = useIntl();
 
-class RenderRepeatExecuteOnSelect extends React.PureComponent<IRepeatExecuteOnSelectProps> {
-    public render(): React.ReactNode {
-        const repeatExecuteOnItems = this.getRepeatExecuteOnItems();
-        const repeatExecuteOnItem = repeatExecuteOnItems.find(this.isRepeatExecuteOnItemSelected);
-        invariant(repeatExecuteOnItem, "Inconsistent state in RepeatExecuteOnSelect");
+    const repeatExecuteOnItems = useMemo(() => {
+        return [REPEAT_EXECUTE_ON.DAY_OF_MONTH, REPEAT_EXECUTE_ON.DAY_OF_WEEK].map((id): IDropdownItem => {
+            return {
+                id,
+                title: intl.formatMessage(messages[`scheduleDialogEmailRepeatsExecuteOn_${id}`], {
+                    date: getDate(startDate),
+                    day: getIntlDayName(intl, startDate),
+                    week: getWeek(startDate),
+                }),
+            };
+        });
+    }, [intl, startDate]);
 
-        return (
-            <Dropdown
-                alignPoints={DEFAULT_DROPDOWN_ALIGN_POINTS}
-                className="gd-schedule-email-dialog-repeat-execute-on s-gd-schedule-email-dialog-repeat-execute-on"
-                renderBody={({ closeDropdown, isMobile }) => (
-                    <DropdownList
-                        width={DROPDOWN_WIDTH}
-                        items={repeatExecuteOnItems}
-                        isMobile={isMobile}
-                        renderItem={({ item }) => (
-                            <SingleSelectListItem
-                                title={item.title}
-                                onClick={() => {
-                                    this.onRepeatExecuteOnChange(item);
-                                    closeDropdown();
-                                }}
-                                isSelected={repeatExecuteOnItem.id === item.id}
-                            />
-                        )}
-                    />
-                )}
-                renderButton={({ toggleDropdown }) => (
-                    <DropdownButton value={repeatExecuteOnItem.title} onClick={toggleDropdown} />
-                )}
-                overlayPositionType="sameAsTarget"
-                overlayZIndex={DEFAULT_DROPDOWN_ZINDEX}
-            />
-        );
-    }
+    const repeatExecuteOnItem = repeatExecuteOnItems.find((item) => item.id === repeatExecuteOn);
+    invariant(repeatExecuteOnItem, "Inconsistent state in RepeatExecuteOnSelect");
 
-    private isRepeatExecuteOnItemSelected = (item: IDropdownItem): boolean => {
-        return item.id === this.props.repeatExecuteOn;
-    };
-
-    private getRepeatExecuteOnItem = (repeatExecuteOn: string): IDropdownItem => {
-        const { intl, startDate } = this.props;
-        return {
-            id: repeatExecuteOn,
-            title: intl.formatMessage(messages[`scheduleDialogEmailRepeatsExecuteOn_${repeatExecuteOn}`], {
-                date: getDate(startDate),
-                day: getIntlDayName(intl, startDate),
-                week: getWeek(startDate),
-            }),
-        };
-    };
-
-    private getRepeatExecuteOnItems = (): IDropdownItem[] => {
-        return [REPEAT_EXECUTE_ON.DAY_OF_MONTH, REPEAT_EXECUTE_ON.DAY_OF_WEEK].map(
-            this.getRepeatExecuteOnItem,
-        );
-    };
-
-    private onRepeatExecuteOnChange = (item: IDropdownItem) => {
-        this.props.onChange(item.id);
-    };
-}
-
-export const RepeatExecuteOnSelect = injectIntl(RenderRepeatExecuteOnSelect);
+    return (
+        <Dropdown
+            alignPoints={DEFAULT_DROPDOWN_ALIGN_POINTS}
+            className="gd-schedule-email-dialog-repeat-execute-on s-gd-schedule-email-dialog-repeat-execute-on"
+            renderBody={({ closeDropdown, isMobile }) => (
+                <DropdownList
+                    width={DROPDOWN_WIDTH}
+                    items={repeatExecuteOnItems}
+                    isMobile={isMobile}
+                    renderItem={({ item }) => (
+                        <SingleSelectListItem
+                            title={item.title}
+                            onClick={() => {
+                                onChange(item.id);
+                                closeDropdown();
+                            }}
+                            isSelected={repeatExecuteOnItem.id === item.id}
+                        />
+                    )}
+                />
+            )}
+            renderButton={({ toggleDropdown }) => (
+                <DropdownButton value={repeatExecuteOnItem.title} onClick={toggleDropdown} />
+            )}
+            overlayPositionType="sameAsTarget"
+            overlayZIndex={DEFAULT_DROPDOWN_ZINDEX}
+        />
+    );
+};

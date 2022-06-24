@@ -3,11 +3,11 @@ import React from "react";
 import isEmpty from "lodash/isEmpty";
 import { v4 as uuid } from "uuid";
 import cx from "classnames";
-import { FormattedMessage, injectIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import { IAttributeDropdownListItemProps } from "@gooddata/sdk-ui-filters";
 import { stringUtils } from "@gooddata/util";
 
-const AttributeDropdownListItem: React.FC<IAttributeDropdownListItemProps> = (props) => {
+const AttributeDropdownListItem: React.FC<Omit<IAttributeDropdownListItemProps, "intl">> = (props) => {
     const { source } = props;
     if (isEmpty(source)) {
         return <div />;
@@ -62,4 +62,4 @@ const AttributeDropdownListItem: React.FC<IAttributeDropdownListItemProps> = (pr
     );
 };
 
-export default injectIntl(AttributeDropdownListItem);
+export default AttributeDropdownListItem;

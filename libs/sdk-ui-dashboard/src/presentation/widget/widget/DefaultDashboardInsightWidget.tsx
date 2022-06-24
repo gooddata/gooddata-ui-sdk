@@ -1,7 +1,7 @@
 // (C) 2020-2022 GoodData Corporation
 import React, { useMemo, useCallback } from "react";
 import cx from "classnames";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { useIntl } from "react-intl";
 import {
     IInsight,
     insightVisualizationUrl,
@@ -47,9 +47,7 @@ interface IDefaultDashboardInsightWidgetProps {
 // Sometimes this component is rendered even before insights are ready, which blows up.
 // Since the behavior is nearly impossible to replicate reliably, let's be defensive here and not render
 // anything until the insights "catch up".
-const DefaultDashboardInsightWidgetWrapper: React.FC<
-    IDefaultDashboardInsightWidgetProps & WrappedComponentProps
-> = (props) => {
+export const DefaultDashboardInsightWidget: React.FC<IDefaultDashboardInsightWidgetProps> = (props) => {
     const {
         widget,
         // @ts-expect-error Don't expose index prop on public interface (we need it only for css class for KD tests)
@@ -80,7 +78,7 @@ const DefaultDashboardInsightWidgetWrapper: React.FC<
  * @internal
  */
 const DefaultDashboardInsightWidgetCore: React.FC<
-    IDefaultDashboardInsightWidgetProps & WrappedComponentProps & { insight: IInsight }
+    IDefaultDashboardInsightWidgetProps & { insight: IInsight }
 > = ({
     widget,
     insight,
@@ -88,10 +86,10 @@ const DefaultDashboardInsightWidgetCore: React.FC<
     onError,
     onExportReady,
     onLoadingChanged,
-    intl,
     // @ts-expect-error Don't expose index prop on public interface (we need it only for css class for KD tests)
     index,
 }) => {
+    const intl = useIntl();
     const visType = insightVisualizationUrl(insight).split(":")[1] as VisType;
     const { ref: widgetRef } = widget;
 
@@ -213,5 +211,3 @@ const DefaultDashboardInsightWidgetCore: React.FC<
         </DashboardItem>
     );
 };
-
-export const DefaultDashboardInsightWidget = injectIntl(DefaultDashboardInsightWidgetWrapper);
