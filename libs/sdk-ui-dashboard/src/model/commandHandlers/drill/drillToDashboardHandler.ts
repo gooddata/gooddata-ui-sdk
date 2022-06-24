@@ -176,7 +176,8 @@ export function convertIntersectionToAttributeFilters(
         .filter((i: DrillEventIntersectionElementHeader) => filterIntersection(i, dateDataSetsAttributesRefs))
         .filter(isDrillIntersectionAttributeItem)
         .map((h: IDrillIntersectionAttributeItem): IAttributeFilter => {
-            if (backendSupportsElementUris) {
+            // on tiger, empty values have uri: "" and name: "(empty value)" so we need to detect this special case here
+            if (backendSupportsElementUris || h.attributeHeaderItem.uri === "") {
                 return newPositiveAttributeFilter(h.attributeHeader.ref, {
                     uris: [h.attributeHeaderItem.uri],
                 });

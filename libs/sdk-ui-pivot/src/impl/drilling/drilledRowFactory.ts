@@ -2,6 +2,7 @@
 import { TableDescriptor } from "../structure/tableDescriptor";
 import { DataValue } from "@gooddata/sdk-model";
 import { getMappingHeaderUri } from "@gooddata/sdk-ui";
+import isNil from "lodash/isNil";
 import { invariant } from "ts-invariant";
 import { IGridRow } from "../data/resultTypes";
 
@@ -60,7 +61,8 @@ export function createDrilledRow(row: IGridRow, tableDescriptor: TableDescriptor
 
         // if there is no drill item uri, then it means that either headerItemMap does not contain valid item or
         // the pivot table allowed click&drill on something that should not be drillable
-        invariant(drillItemUri);
+        // empty is a valid value here (on tiger)
+        invariant(!isNil(drillItemUri));
 
         const maybeId = drillItemUri.startsWith("/gdc")
             ? extractIdsFromAttributeElementUri(drillItemUri)[1]
