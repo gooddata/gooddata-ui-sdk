@@ -94,7 +94,8 @@ function fixSortItems(sortItems: ISortItem[] = []) {
 
 function fixLocatorItem(locator: ILocatorItem): ILocatorItem {
     if (isAttributeLocator(locator)) {
-        const [uri, labelValue] = locator.attributeLocatorItem.element.match(FAKE_ELEMENT_URI_REGEX) ?? [];
+        // element can be null even though the OpenAPI spec says it cannot (that will be fixed in CAL-515)
+        const [uri, labelValue] = locator.attributeLocatorItem.element?.match(FAKE_ELEMENT_URI_REGEX) ?? [];
 
         if (uri) {
             return {
