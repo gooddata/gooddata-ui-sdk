@@ -1,18 +1,15 @@
 // (C) 2019-2022 GoodData Corporation
 import * as React from "react";
-
 import { FormattedMessage } from "react-intl";
 import identity from "lodash/identity";
-import { withTheme } from "@gooddata/sdk-ui-theme-provider";
+import { objRefToString } from "@gooddata/sdk-model";
 
 import { AttachmentsSelectionDropdown } from "./AttachmentsSelectionDropdown";
 import { FormatOptionsDropdown } from "./FormatOptionsDropdown";
 import { IWidgetExportConfiguration, IWidgetsSelection } from "../../interfaces";
-import { objRefToString, ITheme } from "@gooddata/sdk-model";
 import { IInsightWidgetExtended } from "../../useScheduledEmail";
 
 export interface IAttachmentsProps {
-    theme?: ITheme;
     dashboardTitle: string;
     insightWidgets: IInsightWidgetExtended[];
     dashboardSelected: boolean;
@@ -30,7 +27,7 @@ const AttachmentItem: React.FC<{ format: string }> = ({ format, children }) => (
     </div>
 );
 
-const AttachmentsComponent = (props: IAttachmentsProps) => {
+export const Attachments = (props: IAttachmentsProps) => {
     const {
         dashboardTitle,
         dashboardSelected,
@@ -92,5 +89,3 @@ const AttachmentsComponent = (props: IAttachmentsProps) => {
         </div>
     );
 };
-
-export const Attachments = withTheme(AttachmentsComponent);

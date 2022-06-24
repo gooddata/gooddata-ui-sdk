@@ -3852,7 +3852,7 @@ export interface LoadingState {
 }
 
 // @alpha (undocumented)
-export const LockedStatusIndicator: React_2.ComponentType<Pick<ILockedStatusProps, "isLocked">>;
+export const LockedStatusIndicator: (props: ILockedStatusProps) => JSX.Element | null;
 
 // @alpha
 export interface MeasureDateDatasets {

@@ -3,8 +3,6 @@ import * as React from "react";
 import cx from "classnames";
 import { Bubble, BubbleHoverTrigger, Dropdown, Button } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage, useIntl } from "react-intl";
-import { ITheme } from "@gooddata/sdk-model";
-import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 import { DEFAULT_DROPDOWN_ALIGN_POINTS, DEFAULT_DROPDOWN_ZINDEX } from "../../constants";
 
 const ALIGN_POINTS = [
@@ -15,7 +13,6 @@ const ALIGN_POINTS = [
 export interface IScheduleDropdownProps {
     title: string;
     applyDisabled?: boolean;
-    theme?: ITheme;
     iconComponent?: React.ReactNode;
     onApply?: () => void;
     onCancel?: () => void;
@@ -25,7 +22,7 @@ export interface IScheduleDropdownProps {
     buttonDisabled?: boolean;
 }
 
-export const ScheduleDropdownComponent: React.FC<IScheduleDropdownProps> = (props) => {
+export const ScheduleDropdown: React.FC<IScheduleDropdownProps> = (props) => {
     const {
         title,
         applyDisabled,
@@ -126,5 +123,3 @@ export const ScheduleDropdownComponent: React.FC<IScheduleDropdownProps> = (prop
         />
     );
 };
-
-export const ScheduleDropdown = withTheme(ScheduleDropdownComponent);

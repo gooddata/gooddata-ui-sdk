@@ -1,10 +1,10 @@
 // (C) 2021 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
-import { useTheme, withTheme } from "@gooddata/sdk-ui-theme-provider";
+import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { LoadingSpinner } from "@gooddata/sdk-ui-kit";
 
-const LoadingEqualizer: React.FC = () => {
+export const ThemedLoadingEqualizer: React.FC = () => {
     const theme = useTheme();
 
     return (
@@ -19,8 +19,3 @@ const LoadingEqualizer: React.FC = () => {
         </div>
     );
 };
-
-/**
- * @internal
- */
-export const ThemedLoadingEqualizer = withTheme(LoadingEqualizer);

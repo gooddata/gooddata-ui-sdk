@@ -4,14 +4,13 @@ import * as React from "react";
 import { useCallback, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import identity from "lodash/identity";
-
 import { Icon, InsightIcon, Typography } from "@gooddata/sdk-ui-kit";
-import { withTheme } from "@gooddata/sdk-ui-theme-provider";
-import { ScheduleDropdown } from "./ScheduleDropdown";
+import { useTheme } from "@gooddata/sdk-ui-theme-provider";
+import { ObjRef, objRefToString } from "@gooddata/sdk-model";
 
 import { IWidgetsSelection } from "../../interfaces";
-import { ObjRef, objRefToString, ITheme } from "@gooddata/sdk-model";
 import { IInsightWidgetExtended } from "../../useScheduledEmail";
+import { ScheduleDropdown } from "./ScheduleDropdown";
 
 export interface IAttachmentsSelectionDropdownProps {
     dashboardTitle: string;
@@ -19,18 +18,18 @@ export interface IAttachmentsSelectionDropdownProps {
     insightWidgets: IInsightWidgetExtended[];
     widgetsSelected: { [widgetUri: string]: boolean };
     onApply(dashboardSelected: boolean, widgetsSelected: IWidgetsSelection): void;
-    theme?: ITheme;
 }
 
-const AttachmentsSelectionDropdownComponent: React.FC<IAttachmentsSelectionDropdownProps> = (props) => {
-    const { theme, dashboardTitle, insightWidgets = [], onApply } = props;
+export const AttachmentsSelectionDropdown: React.FC<IAttachmentsSelectionDropdownProps> = (props) => {
+    const { dashboardTitle, insightWidgets = [], onApply } = props;
+    const intl = useIntl();
+    const theme = useTheme();
     const ICON_COLOR = theme?.palette?.complementary?.c5;
     const ICON_SIZE_BUTTON = 18;
     const ICON_PROPS = { color: ICON_COLOR, height: 19, width: 26 };
 
     const [dashboardSelected, setDashboardSelected] = useState(props.dashboardSelected);
     const [widgetsSelected, setWidgetsSelected] = useState(props.widgetsSelected);
-    const intl = useIntl();
 
     const handleWidgetSelectedChange = useCallback(
         (widgetRef: ObjRef) => {
@@ -114,5 +113,3 @@ const AttachmentsSelectionDropdownComponent: React.FC<IAttachmentsSelectionDropd
         />
     );
 };
-
-export const AttachmentsSelectionDropdown = withTheme(AttachmentsSelectionDropdownComponent);
