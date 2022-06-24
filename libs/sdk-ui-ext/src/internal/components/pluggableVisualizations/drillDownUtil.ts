@@ -125,7 +125,8 @@ export function convertIntersectionToFilters(
         .map((intersection) => intersection.header)
         .filter(isDrillIntersectionAttributeItem)
         .map((header) => {
-            if (backendSupportsElementUris) {
+            // on tiger, empty values have uri: "" and name: "(empty value)" so we need to detect this special case here
+            if (backendSupportsElementUris || header.attributeHeaderItem.uri === "") {
                 return newPositiveAttributeFilter(header.attributeHeader.ref, {
                     uris: [header.attributeHeaderItem.uri],
                 });
