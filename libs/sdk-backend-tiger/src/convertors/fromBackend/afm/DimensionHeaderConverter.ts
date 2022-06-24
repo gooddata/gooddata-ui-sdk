@@ -98,7 +98,7 @@ export function getTransformDimensionHeaders(
 function attributeMeasureItem(
     header: AttributeExecutionResultHeader,
     granularity: DateAttributeGranularity | undefined,
-    dateValueFormatter: (value: string, granularity: DateAttributeGranularity) => string,
+    dateValueFormatter: (value: string | null, granularity: DateAttributeGranularity) => string,
 ): IResultAttributeHeader {
     return {
         attributeHeaderItem: {
