@@ -1,10 +1,11 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
-import { IScheduledMail, ITheme } from "@gooddata/sdk-model";
+import { IScheduledMail } from "@gooddata/sdk-model";
 import { LoadingSpinner } from "@gooddata/sdk-ui-kit";
+import { useTheme } from "@gooddata/sdk-ui-theme-provider";
+
 import { ScheduledEmail } from "./ScheduledEmail";
-import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 
 interface IScheduledEmailsProps {
     onDelete: (scheduledEmail: IScheduledMail) => void;
@@ -12,22 +13,21 @@ interface IScheduledEmailsProps {
     isLoading: boolean;
     scheduledEmails: IScheduledMail[];
     currentUserEmail?: string;
-    theme?: ITheme;
     noSchedulesMessageId: string;
     canManageScheduledMail: boolean;
 }
 
-const ScheduledEmailsComponent: React.FC<IScheduledEmailsProps> = (props) => {
+export const ScheduledEmails: React.FC<IScheduledEmailsProps> = (props) => {
     const {
         isLoading,
         scheduledEmails,
         currentUserEmail,
         onDelete,
         onEdit,
-        theme,
         noSchedulesMessageId,
         canManageScheduledMail,
     } = props;
+    const theme = useTheme();
 
     if (isLoading) {
         return (
@@ -65,5 +65,3 @@ const ScheduledEmailsComponent: React.FC<IScheduledEmailsProps> = (props) => {
         </>
     );
 };
-
-export const ScheduledEmails = withTheme(ScheduledEmailsComponent);
