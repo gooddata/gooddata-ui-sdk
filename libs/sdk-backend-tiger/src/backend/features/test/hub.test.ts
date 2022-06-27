@@ -4,6 +4,7 @@ import axios, { AxiosResponse } from "axios";
 import { ILiveFeatures } from "@gooddata/api-client-tiger";
 import { getFeatureHubFeatures, FeatureHubResponse } from "../hub";
 import { FeatureDef } from "../feature";
+import { pickContext } from "../index";
 
 jest.mock("axios");
 
@@ -53,6 +54,23 @@ describe("live features", () => {
         });
     });
 
+    it("call axios with ws context", async () => {
+        mockReturn([]);
+
+        await getFeatureHubFeatures(createFeatures(), pickContext({ earlyAccess: "omega" }));
+        expect(axios.get).toHaveBeenCalledWith("/features", {
+            baseURL: "/",
+            headers: {
+                "Content-type": "application/json",
+                "X-FeatureHub": "earlyAccess=omega",
+                "if-none-match": expect.anything(),
+            },
+            method: "GET",
+            params: { sdkUrl: "" },
+            validateStatus: expect.anything(),
+        });
+    });
+
     it("call axios with context filled", async () => {
         mockReturn([]);
 
@@ -70,6 +88,23 @@ describe("live features", () => {
         });
     });
 
+    it("call axios with context and ws context filled", async () => {
+        mockReturn([]);
+
+        await getFeatureHubFeatures(createFeatures("beta"), pickContext({ earlyAccess: "omega" }));
+        expect(axios.get).toHaveBeenCalledWith("/features", {
+            baseURL: "/",
+            headers: {
+                "Content-type": "application/json",
+                "X-FeatureHub": "earlyAccess=omega",
+                "if-none-match": expect.anything(),
+            },
+            method: "GET",
+            params: { sdkUrl: "" },
+            validateStatus: expect.anything(),
+        });
+    });
+
     it("empty definition", async () => {
         mockReturn([]);
 
@@ -79,7 +114,7 @@ describe("live features", () => {
 
     it("full definition - BOOLEAN", async () => {
         mockReturn([
-            createFeature("ADmeasureValueFilterNullAsZeroOption", "BOOLEAN", true),
+            createFeature("ADMeasureValueFilterNullAsZeroOption", "BOOLEAN", true),
             createFeature("dashboardEditModeDevRollout", "BOOLEAN", true),
             createFeature("enableKPIDashboardDeleteFilterButton", "BOOLEAN", true),
             createFeature("enableMultipleDates", "BOOLEAN", true),
@@ -88,7 +123,7 @@ describe("live features", () => {
 
         const results = await getFeatureHubFeatures(createFeatures());
         expect(results).toEqual({
-            ADmeasureValueFilterNullAsZeroOption: true,
+            ADMeasureValueFilterNullAsZeroOption: true,
             dashboardEditModeDevRollout: true,
             enableKPIDashboardDeleteFilterButton: true,
             enableMultipleDates: true,
@@ -98,7 +133,7 @@ describe("live features", () => {
 
     it("full definition - STRING", async () => {
         mockReturn([
-            createFeature("ADmeasureValueFilterNullAsZeroOption", "STRING", "EnabledUncheckedByDefault"),
+            createFeature("ADMeasureValueFilterNullAsZeroOption", "STRING", "EnabledUncheckedByDefault"),
             createFeature("dashboardEditModeDevRollout", "STRING", "ENABLED"),
             createFeature("enableKPIDashboardDeleteFilterButton", "STRING", "ENABLED"),
             createFeature("enableMultipleDates", "STRING", "ENABLED"),
@@ -107,7 +142,7 @@ describe("live features", () => {
 
         const results = await getFeatureHubFeatures(createFeatures());
         expect(results).toEqual({
-            ADmeasureValueFilterNullAsZeroOption: "EnabledUncheckedByDefault",
+            ADMeasureValueFilterNullAsZeroOption: "EnabledUncheckedByDefault",
             dashboardEditModeDevRollout: true,
             enableKPIDashboardDeleteFilterButton: true,
             enableMultipleDates: true,
