@@ -10,6 +10,7 @@ import {
     JsonApiUserOutList,
     JsonApiUserGroupOutList,
     JsonApiWorkspaceOutList,
+    JsonApiDataSourceIdentifierOutList,
     EntitiesApiGetAllEntitiesWorkspacesRequest,
     EntitiesApiGetAllEntitiesAttributesRequest,
     EntitiesApiGetAllEntitiesFactsRequest,
@@ -25,14 +26,23 @@ const DefaultOptions = {
 };
 
 /**
+ * All possible responses of API client getEntities* functions which support `included` field
+ *
+ * @internal
+ */
+export type OrganizationGetEntitiesSupportingIncludedResult =
+    | JsonApiUserOutList
+    | JsonApiUserGroupOutList
+    | JsonApiWorkspaceOutList;
+
+/**
  * All possible responses of API client getEntities* functions.
  *
  * @internal
  */
 export type OrganizationGetEntitiesResult =
-    | JsonApiUserOutList
-    | JsonApiUserGroupOutList
-    | JsonApiWorkspaceOutList;
+    | JsonApiDataSourceIdentifierOutList
+    | OrganizationGetEntitiesSupportingIncludedResult;
 
 /**
  * All possible params of API client getEntities* functions.
@@ -64,6 +74,16 @@ export type OrganizationGetEntitiesFn<
  * @internal
  */
 export class OrganizationUtilities {
+    /**
+     * Guard for recognizing entities which support `included` field.
+     * @internal
+     */
+    private static supportsIncluded(
+        entity: OrganizationGetEntitiesResult,
+    ): entity is OrganizationGetEntitiesSupportingIncludedResult {
+        return (entity as OrganizationGetEntitiesSupportingIncludedResult).included !== undefined;
+    }
+
     /**
      * Given a function to get a paged list of metadata entities, API call parameters and options, this function will
      * retrieve all pages from the metadata.
@@ -126,7 +146,9 @@ export class OrganizationUtilities {
         return {
             data: flatMap(pages, (page) => page.data) as any,
             included: uniqBy(
-                flatMap(pages, (page) => page.included ?? []),
+                flatMap(pages, (page) =>
+                    OrganizationUtilities.supportsIncluded(page) ? page.included ?? [] : [],
+                ),
                 (item: any) => `${item.id}_${item.type}`,
             ) as any,
         } as T;

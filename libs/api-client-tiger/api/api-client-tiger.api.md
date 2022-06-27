@@ -5697,7 +5697,10 @@ export type OrganizationGetEntitiesFn<T extends OrganizationGetEntitiesResult, P
 export type OrganizationGetEntitiesParams = EntitiesApiGetAllEntitiesAttributesRequest | EntitiesApiGetAllEntitiesFactsRequest | EntitiesApiGetAllEntitiesAnalyticalDashboardsRequest | EntitiesApiGetAllEntitiesDashboardPluginsRequest | EntitiesApiGetAllEntitiesVisualizationObjectsRequest | EntitiesApiGetAllEntitiesMetricsRequest | EntitiesApiGetAllEntitiesWorkspacesRequest;
 
 // @internal
-export type OrganizationGetEntitiesResult = JsonApiUserOutList | JsonApiUserGroupOutList | JsonApiWorkspaceOutList;
+export type OrganizationGetEntitiesResult = JsonApiDataSourceIdentifierOutList | OrganizationGetEntitiesSupportingIncludedResult;
+
+// @internal
+export type OrganizationGetEntitiesSupportingIncludedResult = JsonApiUserOutList | JsonApiUserGroupOutList | JsonApiWorkspaceOutList;
 
 // @internal
 export class OrganizationUtilities {

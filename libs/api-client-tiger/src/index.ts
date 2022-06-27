@@ -198,6 +198,7 @@ export {
 export {
     OrganizationUtilities,
     OrganizationGetEntitiesResult,
+    OrganizationGetEntitiesSupportingIncludedResult,
     OrganizationGetEntitiesFn,
     OrganizationGetEntitiesParams,
 } from "./organizationUtilities";
