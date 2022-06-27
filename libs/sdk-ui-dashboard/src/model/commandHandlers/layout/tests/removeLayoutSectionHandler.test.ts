@@ -13,29 +13,14 @@ import {
 import { RemoveLayoutSection, removeLayoutSection, undoLayoutChanges } from "../../../commands";
 import { selectLayout, selectStash } from "../../../store/layout/layoutSelectors";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures";
-import { uriRef } from "@gooddata/sdk-model";
-import { objRefsToStringKey } from "@gooddata/sdk-backend-mockingbird";
 
 describe("remove layout section handler", () => {
     describe("for an empty dashboard", () => {
         let Tester: DashboardTester;
         beforeEach(
-            preloadedTesterFactory(
-                (tester) => {
-                    Tester = tester;
-                },
-                EmptyDashboardIdentifier,
-                {
-                    backendConfig: {
-                        getCommonAttributesResponses: {
-                            [objRefsToStringKey([
-                                uriRef("/gdc/md/referenceworkspace/obj/1054"),
-                                uriRef("/gdc/md/referenceworkspace/obj/1086"),
-                            ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
-                        },
-                    },
-                },
-            ),
+            preloadedTesterFactory((tester) => {
+                Tester = tester;
+            }, EmptyDashboardIdentifier),
         );
 
         it("should fail the command", async () => {
@@ -52,22 +37,9 @@ describe("remove layout section handler", () => {
     describe("for any dashboard", () => {
         let Tester: DashboardTester;
         beforeEach(
-            preloadedTesterFactory(
-                (tester) => {
-                    Tester = tester;
-                },
-                SimpleDashboardIdentifier,
-                {
-                    backendConfig: {
-                        getCommonAttributesResponses: {
-                            [objRefsToStringKey([
-                                uriRef("/gdc/md/referenceworkspace/obj/1070"),
-                                uriRef("/gdc/md/referenceworkspace/obj/1088"),
-                            ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
-                        },
-                    },
-                },
-            ),
+            preloadedTesterFactory((tester) => {
+                Tester = tester;
+            }, SimpleDashboardIdentifier),
         );
 
         it("should remove the section", async () => {

@@ -1,33 +1,16 @@
 // (C) 2021-2022 GoodData Corporation
-import { objRefsToStringKey } from "@gooddata/sdk-backend-mockingbird";
 import { setAttributeFilterParents } from "../../../../commands";
 import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester";
 import { selectFilterContextAttributeFilters } from "../../../../store/filterContext/filterContextSelectors";
 import { uriRef } from "@gooddata/sdk-model";
 import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures";
 
-const BackendConfig = {
-    getCommonAttributesResponses: {
-        [objRefsToStringKey([
-            // unfortunately the recorded dashboard uses URIs, so we must hard code them here
-            uriRef("/gdc/md/referenceworkspace/obj/1070"),
-            uriRef("/gdc/md/referenceworkspace/obj/1088"),
-        ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
-    },
-};
-
 describe("setAttributeFilterParentHandler", () => {
     let Tester: DashboardTester;
     beforeEach(
-        preloadedTesterFactory(
-            (tester) => {
-                Tester = tester;
-            },
-            SimpleDashboardIdentifier,
-            {
-                backendConfig: BackendConfig,
-            },
-        ),
+        preloadedTesterFactory((tester) => {
+            Tester = tester;
+        }, SimpleDashboardIdentifier),
     );
 
     it("should emit the appropriate events for valid set attribute filter parent command", async () => {

@@ -5,8 +5,6 @@ import { renameDashboard } from "../../../commands";
 import { DashboardRenamed } from "../../../events";
 import { selectDashboardTitle, selectPersistedDashboard } from "../../../store/meta/metaSelectors";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
-import { uriRef } from "@gooddata/sdk-model";
-import { objRefsToStringKey } from "@gooddata/sdk-backend-mockingbird";
 
 describe("rename dashboard handler", () => {
     const TestTitle = "newTitle";
@@ -51,22 +49,9 @@ describe("rename dashboard handler", () => {
     describe("for existing dashboard", () => {
         let Tester: DashboardTester;
         beforeEach(
-            preloadedTesterFactory(
-                (tester) => {
-                    Tester = tester;
-                },
-                SimpleDashboardIdentifier,
-                {
-                    backendConfig: {
-                        getCommonAttributesResponses: {
-                            [objRefsToStringKey([
-                                uriRef("/gdc/md/referenceworkspace/obj/1070"),
-                                uriRef("/gdc/md/referenceworkspace/obj/1088"),
-                            ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
-                        },
-                    },
-                },
-            ),
+            preloadedTesterFactory((tester) => {
+                Tester = tester;
+            }, SimpleDashboardIdentifier),
         );
 
         it("should set title in descriptor and keep persisted dashboard data untouched", async () => {

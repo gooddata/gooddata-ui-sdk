@@ -18,27 +18,9 @@ describe("removeDrillsForInsightWidgetHandler", () => {
 
     let Tester: DashboardTester;
     beforeEach(
-        preloadedTesterFactory(
-            async (tester) => {
-                Tester = tester;
-            },
-            BrokenFilterAlertsDashboardIdentifier,
-            {
-                backendConfig: {
-                    getCommonAttributesResponses: {
-                        "/gdc/md/referenceworkspace/obj/1054_/gdc/md/referenceworkspace/obj/1088": [
-                            uriRef("/gdc/md/referenceworkspace/obj/1057"),
-                        ],
-                        "/gdc/md/referenceworkspace/obj/1054_/gdc/md/referenceworkspace/obj/1086": [
-                            uriRef("/gdc/md/referenceworkspace/obj/1057"),
-                        ],
-                        "/gdc/md/referenceworkspace/obj/1086_/gdc/md/referenceworkspace/obj/1088": [
-                            uriRef("/gdc/md/referenceworkspace/obj/1057"),
-                        ],
-                    },
-                },
-            },
-        ),
+        preloadedTesterFactory(async (tester) => {
+            Tester = tester;
+        }, BrokenFilterAlertsDashboardIdentifier),
     );
 
     describe("remove", () => {

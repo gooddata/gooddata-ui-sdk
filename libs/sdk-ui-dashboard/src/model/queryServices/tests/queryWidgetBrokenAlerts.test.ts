@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 import { DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTester";
 import { queryWidgetBrokenAlerts } from "../../queries";
-import { idRef, ObjRef, uriRef } from "@gooddata/sdk-model";
+import { idRef, ObjRef } from "@gooddata/sdk-model";
 import {
     AttributeFilterSelectionChangedRef,
     BrokenFilterAlertsDashboardIdentifier,
@@ -14,35 +14,13 @@ import {
     TestCorrelation,
 } from "../../tests/fixtures/BrokenFilterAlerts.fixtures";
 import { IBrokenAlertFilterBasicInfo } from "../../types/alertTypes";
-import { objRefsToStringKey } from "@gooddata/sdk-backend-mockingbird";
 
 describe("query widget broken alerts filters", () => {
     let Tester: DashboardTester;
     beforeEach(
-        preloadedTesterFactory(
-            (tester) => {
-                Tester = tester;
-            },
-            BrokenFilterAlertsDashboardIdentifier,
-            {
-                backendConfig: {
-                    getCommonAttributesResponses: {
-                        [objRefsToStringKey([
-                            uriRef("/gdc/md/referenceworkspace/obj/1054"),
-                            uriRef("/gdc/md/referenceworkspace/obj/1088"),
-                        ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
-                        [objRefsToStringKey([
-                            uriRef("/gdc/md/referenceworkspace/obj/1054"),
-                            uriRef("/gdc/md/referenceworkspace/obj/1086"),
-                        ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
-                        [objRefsToStringKey([
-                            uriRef("/gdc/md/referenceworkspace/obj/1086"),
-                            uriRef("/gdc/md/referenceworkspace/obj/1088"),
-                        ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
-                    },
-                },
-            },
-        ),
+        preloadedTesterFactory((tester) => {
+            Tester = tester;
+        }, BrokenFilterAlertsDashboardIdentifier),
     );
 
     it("should fail in case the widget does not exist", async () => {

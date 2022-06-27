@@ -21,7 +21,6 @@ import {
     SimpleDashboardSimpleSortedTableWonMeasureLocalIdentifier,
     SimpleSortedTableWidgetRef,
 } from "../../../tests/fixtures/SimpleDashboard.fixtures";
-import { objRefsToStringKey } from "@gooddata/sdk-backend-mockingbird";
 
 describe("removeDrillsForInsightWidgetHandler", () => {
     const fromMeasureLocalIdRef = localIdRef(SimpleDashboardSimpleSortedTableWonMeasureLocalIdentifier);
@@ -29,34 +28,21 @@ describe("removeDrillsForInsightWidgetHandler", () => {
 
     let Tester: DashboardTester;
     beforeEach(
-        preloadedTesterFactory(
-            async (tester) => {
-                Tester = tester;
-                await Tester.dispatchAndWaitFor(
-                    addDrillTargets(
-                        SimpleSortedTableWidgetRef,
-                        SimpleDashboardSimpleSortedTableWidgetDrillTargets,
-                        BeforeTestCorrelation,
-                    ),
-                    "GDC.DASH/EVT.DRILL_TARGETS.ADDED",
-                );
-                await Tester.dispatchAndWaitFor(
-                    modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, BeforeTestCorrelation),
-                    "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_MODIFIED",
-                );
-            },
-            SimpleDashboardIdentifier,
-            {
-                backendConfig: {
-                    getCommonAttributesResponses: {
-                        [objRefsToStringKey([
-                            uriRef("/gdc/md/referenceworkspace/obj/1070"),
-                            uriRef("/gdc/md/referenceworkspace/obj/1088"),
-                        ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
-                    },
-                },
-            },
-        ),
+        preloadedTesterFactory(async (tester) => {
+            Tester = tester;
+            await Tester.dispatchAndWaitFor(
+                addDrillTargets(
+                    SimpleSortedTableWidgetRef,
+                    SimpleDashboardSimpleSortedTableWidgetDrillTargets,
+                    BeforeTestCorrelation,
+                ),
+                "GDC.DASH/EVT.DRILL_TARGETS.ADDED",
+            );
+            await Tester.dispatchAndWaitFor(
+                modifyDrillsForInsightWidget(SimpleSortedTableWidgetRef, drills, BeforeTestCorrelation),
+                "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_MODIFIED",
+            );
+        }, SimpleDashboardIdentifier),
     );
 
     describe("remove", () => {

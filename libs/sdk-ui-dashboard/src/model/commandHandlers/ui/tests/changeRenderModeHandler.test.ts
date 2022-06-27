@@ -6,8 +6,6 @@ import { selectRenderMode } from "../../../store";
 import { changeRenderMode, initializeDashboard } from "../../../commands";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
 import { cancelEditRenderMode, switchToEditRenderMode } from "../../../commands/ui";
-import { uriRef } from "@gooddata/sdk-model";
-import { objRefsToStringKey } from "@gooddata/sdk-backend-mockingbird";
 
 describe("changeRenderModeHandler", () => {
     let Tester: DashboardTester;
@@ -24,14 +22,6 @@ describe("changeRenderModeHandler", () => {
                         allowUnfinishedFeatures: true,
                         settings: { dashboardEditModeDevRollout: true },
                     }),
-                    backendConfig: {
-                        getCommonAttributesResponses: {
-                            [objRefsToStringKey([
-                                uriRef("/gdc/md/referenceworkspace/obj/1070"),
-                                uriRef("/gdc/md/referenceworkspace/obj/1088"),
-                            ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
-                        },
-                    },
                 },
             ),
         );
@@ -107,13 +97,6 @@ describe("changeRenderModeHandler", () => {
                     initCommand: initializeDashboard({
                         initialRenderMode: "edit",
                     }),
-                    backendConfig: {
-                        getCommonAttributesResponses: {
-                            "/gdc/md/referenceworkspace/obj/1070_/gdc/md/referenceworkspace/obj/1088": [
-                                uriRef("/gdc/md/referenceworkspace/obj/1057"),
-                            ],
-                        },
-                    },
                 },
             ),
         );

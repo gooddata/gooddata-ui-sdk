@@ -13,23 +13,10 @@ import {
 } from "../../../../store/filterContext/filterContextSelectors";
 import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures";
 import { selectPersistedDashboard } from "../../../../store/meta/metaSelectors";
-import { uriRef } from "@gooddata/sdk-model";
-import { objRefsToStringKey } from "@gooddata/sdk-backend-mockingbird";
 
 describe("initialize dashboard handler", () => {
     it("should emit event when dashboard successfully loaded", async () => {
-        const tester = DashboardTester.forRecording(EmptyDashboardIdentifier, undefined, {
-            getCommonAttributesResponses: {
-                [objRefsToStringKey([
-                    uriRef("/gdc/md/referenceworkspace/obj/1054"),
-                    uriRef("/gdc/md/referenceworkspace/obj/1086"),
-                ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
-                [objRefsToStringKey([
-                    uriRef("/gdc/md/referenceworkspace/obj/1070"),
-                    uriRef("/gdc/md/referenceworkspace/obj/1088"),
-                ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
-            },
-        });
+        const tester = DashboardTester.forRecording(EmptyDashboardIdentifier);
 
         tester.dispatch(initializeDashboard());
         const event: DashboardInitialized = await tester.waitFor("GDC.DASH/EVT.INITIALIZED");
@@ -40,18 +27,7 @@ describe("initialize dashboard handler", () => {
     });
 
     it("should emit event when a new dashboard successfully initialized", async () => {
-        const tester = DashboardTester.forNewDashboard(undefined, {
-            getCommonAttributesResponses: {
-                [objRefsToStringKey([
-                    uriRef("/gdc/md/referenceworkspace/obj/1054"),
-                    uriRef("/gdc/md/referenceworkspace/obj/1086"),
-                ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
-                [objRefsToStringKey([
-                    uriRef("/gdc/md/referenceworkspace/obj/1070"),
-                    uriRef("/gdc/md/referenceworkspace/obj/1088"),
-                ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
-            },
-        });
+        const tester = DashboardTester.forNewDashboard();
 
         tester.dispatch(initializeDashboard());
         const event: DashboardInitialized = await tester.waitFor("GDC.DASH/EVT.INITIALIZED");
@@ -61,29 +37,14 @@ describe("initialize dashboard handler", () => {
     });
 
     it("should emit events in correct order and carry-over correlationId", async () => {
-        const tester = DashboardTester.forRecording(
-            EmptyDashboardIdentifier,
-            {
-                renderingWorkerConfig: {
-                    asyncRenderRequestedTimeout: 2000,
-                    asyncRenderResolvedTimeout: 2000,
-                    maxTimeout: 60000,
-                    correlationIdGenerator: () => "renderCorrelation",
-                },
+        const tester = DashboardTester.forRecording(EmptyDashboardIdentifier, {
+            renderingWorkerConfig: {
+                asyncRenderRequestedTimeout: 2000,
+                asyncRenderResolvedTimeout: 2000,
+                maxTimeout: 60000,
+                correlationIdGenerator: () => "renderCorrelation",
             },
-            {
-                getCommonAttributesResponses: {
-                    [objRefsToStringKey([
-                        uriRef("/gdc/md/referenceworkspace/obj/1054"),
-                        uriRef("/gdc/md/referenceworkspace/obj/1086"),
-                    ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
-                    [objRefsToStringKey([
-                        uriRef("/gdc/md/referenceworkspace/obj/1070"),
-                        uriRef("/gdc/md/referenceworkspace/obj/1088"),
-                    ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
-                },
-            },
-        );
+        });
 
         tester.dispatch(initializeDashboard());
         await tester.waitFor("GDC.DASH/EVT.INITIALIZED");
@@ -101,18 +62,6 @@ describe("initialize dashboard handler", () => {
                 SimpleDashboardIdentifier,
                 {
                     initCommand: initializeDashboard(undefined, undefined, TestCorrelation),
-                    backendConfig: {
-                        getCommonAttributesResponses: {
-                            [objRefsToStringKey([
-                                uriRef("/gdc/md/referenceworkspace/obj/1054"),
-                                uriRef("/gdc/md/referenceworkspace/obj/1086"),
-                            ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
-                            [objRefsToStringKey([
-                                uriRef("/gdc/md/referenceworkspace/obj/1070"),
-                                uriRef("/gdc/md/referenceworkspace/obj/1088"),
-                            ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
-                        },
-                    },
                 },
             ),
         );

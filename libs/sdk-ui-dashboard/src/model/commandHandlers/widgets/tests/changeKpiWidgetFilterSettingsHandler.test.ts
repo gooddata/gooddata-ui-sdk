@@ -25,7 +25,6 @@ import {
     ComplexDashboardIdentifier,
     ComplexDashboardWidgets,
 } from "../../../tests/fixtures/ComplexDashboard.fixtures";
-import { objRefsToStringKey } from "@gooddata/sdk-backend-mockingbird";
 
 function ignoredWidgetFilterRefs(tester: DashboardTester, ref: ObjRef) {
     const widget = selectAnalyticalWidgetByRef(ref)(tester.state());
@@ -45,22 +44,9 @@ describe("change KPI widget filter settings handler", () => {
 
     let Tester: DashboardTester;
     beforeEach(
-        preloadedTesterFactory(
-            (tester) => {
-                Tester = tester;
-            },
-            ComplexDashboardIdentifier,
-            {
-                backendConfig: {
-                    getCommonAttributesResponses: {
-                        [objRefsToStringKey([
-                            uriRef("/gdc/md/referenceworkspace/obj/1054"),
-                            uriRef("/gdc/md/referenceworkspace/obj/1086"),
-                        ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
-                    },
-                },
-            },
-        ),
+        preloadedTesterFactory((tester) => {
+            Tester = tester;
+        }, ComplexDashboardIdentifier),
     );
 
     describe("for replace settings operation", () => {

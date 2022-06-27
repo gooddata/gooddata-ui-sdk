@@ -15,7 +15,6 @@ import {
     TestInsightPlaceholderItem,
     TestKpiPlaceholderItem,
 } from "../../../tests/fixtures/Layout.fixtures";
-import { objRefsToStringKey } from "@gooddata/sdk-backend-mockingbird";
 
 describe("add section items handler", () => {
     describe("for any dashboard", () => {
@@ -29,12 +28,6 @@ describe("add section items handler", () => {
                 {
                     backendConfig: {
                         useRefType: "id",
-                        getCommonAttributesResponses: {
-                            [objRefsToStringKey([
-                                uriRef("/gdc/md/referenceworkspace/obj/1070"),
-                                uriRef("/gdc/md/referenceworkspace/obj/1088"),
-                            ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
-                        },
                     },
                 },
             ),
@@ -113,21 +106,9 @@ describe("add section items handler", () => {
     describe("for dashboard with existing sections", () => {
         let Tester: DashboardTester;
         beforeEach(
-            preloadedTesterFactory(
-                (tester) => {
-                    Tester = tester;
-                },
-                ComplexDashboardIdentifier,
-                {
-                    backendConfig: {
-                        getCommonAttributesResponses: {
-                            "/gdc/md/referenceworkspace/obj/1054_/gdc/md/referenceworkspace/obj/1086": [
-                                uriRef("/gdc/md/referenceworkspace/obj/1057"),
-                            ],
-                        },
-                    },
-                },
-            ),
+            preloadedTesterFactory((tester) => {
+                Tester = tester;
+            }, ComplexDashboardIdentifier),
         );
 
         // this section has two existing items

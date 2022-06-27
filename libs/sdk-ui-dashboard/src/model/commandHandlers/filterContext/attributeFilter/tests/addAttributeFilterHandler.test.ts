@@ -10,35 +10,13 @@ import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDash
 import { TestCorrelation } from "../../../../tests/fixtures/Dashboard.fixtures";
 import { uriRef } from "@gooddata/sdk-model";
 import { DashboardCommandFailed } from "../../../../events";
-import { objRefsToStringKey } from "@gooddata/sdk-backend-mockingbird";
 
 describe("addAttributeFilterHandler", () => {
     let Tester: DashboardTester;
     beforeEach(
-        preloadedTesterFactory(
-            (tester) => {
-                Tester = tester;
-            },
-            SimpleDashboardIdentifier,
-            {
-                backendConfig: {
-                    getCommonAttributesResponses: {
-                        [objRefsToStringKey([
-                            uriRef("/gdc/md/referenceworkspace/obj/1054"),
-                            uriRef("/gdc/md/referenceworkspace/obj/1088"),
-                        ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
-                        [objRefsToStringKey([
-                            uriRef("/gdc/md/referenceworkspace/obj/1054"),
-                            uriRef("/gdc/md/referenceworkspace/obj/1070"),
-                        ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
-                        [objRefsToStringKey([
-                            uriRef("/gdc/md/referenceworkspace/obj/1070"),
-                            uriRef("/gdc/md/referenceworkspace/obj/1088"),
-                        ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
-                    },
-                },
-            },
-        ),
+        preloadedTesterFactory((tester) => {
+            Tester = tester;
+        }, SimpleDashboardIdentifier),
     );
 
     it("should emit the appropriate events for added attribute filter", async () => {

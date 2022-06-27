@@ -11,29 +11,14 @@ import { selectEffectiveDateFilterConfig } from "../../../store/dateFilterConfig
 import { selectDateFilterConfig } from "../../../store/config/configSelectors";
 import { selectFilterContextAttributeFilters } from "../../../store/filterContext/filterContextSelectors";
 import { selectInsights } from "../../../store/insights/insightsSelectors";
-import { uriRef } from "@gooddata/sdk-model";
-import { objRefsToStringKey } from "@gooddata/sdk-backend-mockingbird";
 
 describe("delete dashboard handler", () => {
     describe("for unsaved dashboard", () => {
         let Tester: DashboardTester;
         beforeEach(
-            preloadedTesterFactory(
-                (tester) => {
-                    Tester = tester;
-                },
-                undefined,
-                {
-                    backendConfig: {
-                        getCommonAttributesResponses: {
-                            [objRefsToStringKey([
-                                uriRef("/gdc/md/referenceworkspace/obj/1070"),
-                                uriRef("/gdc/md/referenceworkspace/obj/1088"),
-                            ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
-                        },
-                    },
-                },
-            ),
+            preloadedTesterFactory((tester) => {
+                Tester = tester;
+            }),
         );
 
         it("should fail", async () => {
@@ -50,21 +35,9 @@ describe("delete dashboard handler", () => {
     describe("for an existing dashboard", () => {
         let Tester: DashboardTester;
         beforeEach(
-            preloadedTesterFactory(
-                (tester) => {
-                    Tester = tester;
-                },
-                SimpleDashboardIdentifier,
-                {
-                    backendConfig: {
-                        getCommonAttributesResponses: {
-                            "/gdc/md/referenceworkspace/obj/1070_/gdc/md/referenceworkspace/obj/1088": [
-                                uriRef("/gdc/md/referenceworkspace/obj/1057"),
-                            ],
-                        },
-                    },
-                },
-            ),
+            preloadedTesterFactory((tester) => {
+                Tester = tester;
+            }, SimpleDashboardIdentifier),
         );
 
         it("should revert to empty dashboard after delete", async () => {
