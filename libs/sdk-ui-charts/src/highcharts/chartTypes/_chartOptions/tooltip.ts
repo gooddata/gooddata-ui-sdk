@@ -25,5 +25,5 @@ export function getFormattedValueForTooltip(
         stackMeasuresToPercent === false || isNil(percentageValue) || isDualChartWithRightAxis;
     return isNotStackToPercent
         ? formatValueForTooltip(target ?? y, format, separators)
-        : percentFormatter(percentageValue, format, separators);
+        : percentFormatter(percentageValue, format);
 }

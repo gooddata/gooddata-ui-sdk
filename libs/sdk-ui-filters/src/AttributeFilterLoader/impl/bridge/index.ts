@@ -81,7 +81,11 @@ export class AttributeFilterReduxBridge {
             },
         });
         this.redux.dispatch(
-            actions.init({ attributeFilter: config.filter, hiddenElements: config.hiddenElements }),
+            actions.init({
+                attributeFilter: config.filter,
+                hiddenElements: config.hiddenElements,
+                staticElements: config.staticElements,
+            }),
         );
     };
 

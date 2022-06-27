@@ -501,6 +501,9 @@
     "BarChart.a0caa606b10e86cf6a71c41c40e8237d": {
         "comment": "Auto-generated insight for test scenario BarChart - single axis name customization - high."
     },
+    "BarChart.a933357a3fb54dbc62cc01c9ebe17eaf": {
+        "comment": "Auto-generated insight for test scenario BarChart - reversed two measures and two viewBy with stackMeasures."
+    },
     "BarChart.a978210f7d500ff71efecba68ada1a20": {
         "comment": "Auto-generated insight for test scenario BarChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - auto legend."
     },
@@ -2860,6 +2863,11 @@
         "scenarioName": "two measures with three rows and two column attributes",
         "visName": "PivotTable"
     },
+    "PivotTable.04714e4d77655251c37aee22bf4b59de": {
+        "comment": "Auto-generated insight for test scenario PivotTable - two measures and single grand total sorted by second attribute.",
+        "scenarioName": "two measures and single grand total sorted by second attribute",
+        "visName": "PivotTable"
+    },
     "PivotTable.060b5dc818986e5aff74df76d42a9320": {
         "comment": "Auto-generated insight for test scenario PivotTable - with column attributes only and auto-resizing."
     },
@@ -2918,6 +2926,11 @@
     "PivotTable.3905d6f8121f44f1fdaf981d5993db0c": {
         "comment": "Auto-generated insight for test scenario PivotTable - two measures.",
         "scenarioName": "two measures",
+        "visName": "PivotTable"
+    },
+    "PivotTable.3af44dc04a8c70d892b67f56e325a066": {
+        "comment": "Auto-generated insight for test scenario PivotTable - two measures and single grand total and single subtotal sorted by second attribute.",
+        "scenarioName": "two measures and single grand total and single subtotal sorted by second attribute",
         "visName": "PivotTable"
     },
     "PivotTable.3e54973168ed50cf728b3c4546bf6ecd": {

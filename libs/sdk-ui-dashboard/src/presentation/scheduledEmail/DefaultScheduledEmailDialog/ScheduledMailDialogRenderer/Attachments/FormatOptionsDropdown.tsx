@@ -2,28 +2,26 @@
 import * as React from "react";
 import { useCallback, useState } from "react";
 import { Dropdown, DropdownButton, DropdownList, SingleSelectListItem, Icon } from "@gooddata/sdk-ui-kit";
-import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { ScheduleDropdown } from "./ScheduleDropdown";
-import { ITheme } from "@gooddata/sdk-model";
-import { withTheme } from "@gooddata/sdk-ui-theme-provider";
+import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { IWidgetExportConfiguration, WidgetExportFileFormat } from "../../interfaces";
 import { DEFAULT_DROPDOWN_ALIGN_POINTS, DEFAULT_DROPDOWN_ZINDEX } from "../../constants";
 
 const ICON_SIZE_BUTTON = 18;
 const DROPDOWN_WIDTH = 70;
 
-export interface IFormatOptionsDropdownOwnProps {
-    theme?: ITheme;
+export interface IFormatOptionsDropdownProps {
     format: WidgetExportFileFormat;
     mergeHeaders: boolean;
     includeFilters: boolean;
     onApply: (result: IWidgetExportConfiguration) => void;
 }
 
-export type IFormatOptionsDropdownProps = IFormatOptionsDropdownOwnProps & WrappedComponentProps;
-
-const FormatOptionsDropdownComponent: React.FC<IFormatOptionsDropdownProps> = (props) => {
-    const { intl, theme, onApply } = props;
+export const FormatOptionsDropdown: React.FC<IFormatOptionsDropdownProps> = (props) => {
+    const { onApply } = props;
+    const intl = useIntl();
+    const theme = useTheme();
 
     const FORMAT_VALUES: WidgetExportFileFormat[] = ["csv", "xlsx"];
 
@@ -43,7 +41,7 @@ const FormatOptionsDropdownComponent: React.FC<IFormatOptionsDropdownProps> = (p
                 mergeHeaders,
                 includeFilters,
             }),
-        [format, mergeHeaders, includeFilters],
+        [format, mergeHeaders, includeFilters, onApply],
     );
 
     const handleOnCancel = useCallback(() => {
@@ -153,5 +151,3 @@ const FormatOptionsDropdownComponent: React.FC<IFormatOptionsDropdownProps> = (p
         />
     );
 };
-
-export const FormatOptionsDropdown = injectIntl(withTheme(FormatOptionsDropdownComponent));

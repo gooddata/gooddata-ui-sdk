@@ -52,3 +52,8 @@ export const selectAttributeElementsTotalCountWithCurrentSettings = createSelect
     selectState,
     (state) => state.attributeElementsTotalCountWithCurrentSettings,
 );
+
+/**
+ * @internal
+ */
+export const selectStaticElements = createSelector(selectState, (state) => state.staticElements ?? []);

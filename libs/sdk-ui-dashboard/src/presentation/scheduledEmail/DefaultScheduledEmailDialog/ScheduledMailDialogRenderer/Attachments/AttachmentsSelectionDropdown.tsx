@@ -2,31 +2,28 @@
 
 import * as React from "react";
 import { useCallback, useState } from "react";
-import { injectIntl, WrappedComponentProps, FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import identity from "lodash/identity";
-
 import { Icon, InsightIcon, Typography } from "@gooddata/sdk-ui-kit";
-import { withTheme } from "@gooddata/sdk-ui-theme-provider";
-import { ScheduleDropdown } from "./ScheduleDropdown";
+import { useTheme } from "@gooddata/sdk-ui-theme-provider";
+import { ObjRef, objRefToString } from "@gooddata/sdk-model";
 
 import { IWidgetsSelection } from "../../interfaces";
-import { ObjRef, objRefToString, ITheme } from "@gooddata/sdk-model";
 import { IInsightWidgetExtended } from "../../useScheduledEmail";
+import { ScheduleDropdown } from "./ScheduleDropdown";
 
-export interface IAttachmentsSelectionDropdownOwnProps {
+export interface IAttachmentsSelectionDropdownProps {
     dashboardTitle: string;
     dashboardSelected: boolean;
     insightWidgets: IInsightWidgetExtended[];
     widgetsSelected: { [widgetUri: string]: boolean };
     onApply(dashboardSelected: boolean, widgetsSelected: IWidgetsSelection): void;
-    theme?: ITheme;
 }
 
-export type IAttachmentsSelectionDropdownProps = IAttachmentsSelectionDropdownOwnProps &
-    WrappedComponentProps;
-
-const AttachmentsSelectionDropdownComponent: React.FC<IAttachmentsSelectionDropdownProps> = (props) => {
-    const { intl, theme, dashboardTitle, insightWidgets = [], onApply } = props;
+export const AttachmentsSelectionDropdown: React.FC<IAttachmentsSelectionDropdownProps> = (props) => {
+    const { dashboardTitle, insightWidgets = [], onApply } = props;
+    const intl = useIntl();
+    const theme = useTheme();
     const ICON_COLOR = theme?.palette?.complementary?.c5;
     const ICON_SIZE_BUTTON = 18;
     const ICON_PROPS = { color: ICON_COLOR, height: 19, width: 26 };
@@ -116,5 +113,3 @@ const AttachmentsSelectionDropdownComponent: React.FC<IAttachmentsSelectionDropd
         />
     );
 };
-
-export const AttachmentsSelectionDropdown = injectIntl(withTheme(AttachmentsSelectionDropdownComponent));

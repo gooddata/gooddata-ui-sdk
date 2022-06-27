@@ -611,13 +611,13 @@ export interface AttributeResultHeader {
      * @type {string}
      * @memberof AttributeResultHeader
      */
-    labelValue: string;
+    labelValue: string | null;
     /**
      * A value of the primary attribute label.
      * @type {string}
      * @memberof AttributeResultHeader
      */
-    primaryLabelValue: string;
+    primaryLabelValue: string | null;
 }
 /**
  * Filter the result by comparing specified metric to given constant value, using given comparison operator.
@@ -1694,7 +1694,7 @@ export interface ResultDimension {
     headers: Array<AttributeHeader | MeasureGroupHeader>;
 }
 /**
- * Specifies how the result data will be formatted (```dimensions```) and which additional data shall be computed (```grandTotals```).
+ * Specifies how the result data will be formatted (```dimensions```) and which additional data shall be computed (```totals```).
  * @export
  * @interface ResultSpec
  */
@@ -2251,6 +2251,7 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {string} resultId Result ID
          * @param {Array<number>} [offset] Request page with these offsets. Format is offset&#x3D;1,2,3,... - one offset for each dimensions in ResultSpec from originating AFM.
          * @param {Array<number>} [limit] Return only this number of items. Format is limit&#x3D;1,2,3,... - one limit for each dimensions in ResultSpec from originating AFM.
+         * @param {Array<string>} [excludedTotalDimensions] Identifiers of the dimensions where grand total data should not be returned for this request. A grand total will not be returned if all of its totalDimensions are in excludedTotalDimensions.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2259,6 +2260,7 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             resultId: string,
             offset?: Array<number>,
             limit?: Array<number>,
+            excludedTotalDimensions?: Array<string>,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
@@ -2285,6 +2287,12 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
 
             if (limit) {
                 localVarQueryParameter["limit"] = limit.join(COLLECTION_FORMATS.csv);
+            }
+
+            if (excludedTotalDimensions) {
+                localVarQueryParameter["excludedTotalDimensions"] = excludedTotalDimensions.join(
+                    COLLECTION_FORMATS.csv,
+                );
             }
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -2425,6 +2433,7 @@ export const ActionsApiFp = function (configuration?: Configuration) {
          * @param {string} resultId Result ID
          * @param {Array<number>} [offset] Request page with these offsets. Format is offset&#x3D;1,2,3,... - one offset for each dimensions in ResultSpec from originating AFM.
          * @param {Array<number>} [limit] Return only this number of items. Format is limit&#x3D;1,2,3,... - one limit for each dimensions in ResultSpec from originating AFM.
+         * @param {Array<string>} [excludedTotalDimensions] Identifiers of the dimensions where grand total data should not be returned for this request. A grand total will not be returned if all of its totalDimensions are in excludedTotalDimensions.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2433,6 +2442,7 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             resultId: string,
             offset?: Array<number>,
             limit?: Array<number>,
+            excludedTotalDimensions?: Array<string>,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExecutionResult>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.retrieveResult(
@@ -2440,6 +2450,7 @@ export const ActionsApiFp = function (configuration?: Configuration) {
                 resultId,
                 offset,
                 limit,
+                excludedTotalDimensions,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -2557,6 +2568,7 @@ export const ActionsApiFactory = function (
                     requestParameters.resultId,
                     requestParameters.offset,
                     requestParameters.limit,
+                    requestParameters.excludedTotalDimensions,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -2805,6 +2817,13 @@ export interface ActionsApiRetrieveResultRequest {
      * @memberof ActionsApiRetrieveResult
      */
     readonly limit?: Array<number>;
+
+    /**
+     * Identifiers of the dimensions where grand total data should not be returned for this request. A grand total will not be returned if all of its totalDimensions are in excludedTotalDimensions.
+     * @type {Array<string>}
+     * @memberof ActionsApiRetrieveResult
+     */
+    readonly excludedTotalDimensions?: Array<string>;
 }
 
 /**
@@ -2913,6 +2932,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
                 requestParameters.resultId,
                 requestParameters.offset,
                 requestParameters.limit,
+                requestParameters.excludedTotalDimensions,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));

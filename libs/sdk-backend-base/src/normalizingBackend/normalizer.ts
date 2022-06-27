@@ -36,6 +36,7 @@ import {
     IResultMeasureHeader,
     isAttributeDescriptor,
     isMeasureDescriptor,
+    isMeasureGroupDescriptor,
     isResultMeasureHeader,
 } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
@@ -97,6 +98,10 @@ export class Denormalizer {
      * @returns new descriptors
      */
     public denormalizeDimDescriptors = (normalizedDims: IDimensionDescriptor[]): IDimensionDescriptor[] => {
+        const measureGroup = normalizedDims
+            .find((normalizedDim) => normalizedDim.headers.find((header) => isMeasureGroupDescriptor(header)))
+            ?.headers.find((header) => isMeasureGroupDescriptor(header));
+
         return cloneDeepWith(normalizedDims, (value) => {
             if (isAttributeDescriptor(value)) {
                 const localIdentifier = this.originalLocalId(value.attributeHeader.localIdentifier);
@@ -116,15 +121,24 @@ export class Denormalizer {
             } else if (isMeasureDescriptor(value)) {
                 const localIdentifier = this.originalLocalId(value.measureHeaderItem.localIdentifier);
                 const measure = this.originalMeasures[localIdentifier]!;
-                const master = measureMasterIdentifier(measure);
+                const masterMeasureId = measureMasterIdentifier(measure);
+                const masterMeasureInheritFormat =
+                    isMeasureGroupDescriptor(measureGroup) &&
+                    measureGroup.measureGroupHeader.items.find(
+                        (item) =>
+                            this.originalLocalId(item.measureHeaderItem.localIdentifier) === masterMeasureId,
+                    )?.measureHeaderItem.format;
                 /**
-                 * Measure format is taken from its description stored in normalizer.
-                 * Otherwise, it is taken from source measure to derived ones.
-                 * Lastly, it takes the default value from measureHeaderItem.
+                 * Measure format is taken by priority from:
+                 * 1) the chosen format of the measure (undefined for inherited format and derived measures)
+                 * 2) the chosen format of the master measure (undefined for inherited format and master)
+                 * 3) the inherited format of master measure (undefined for master)
+                 * 4) the inherited format for master measure or default "#,#.##" for derived
                  */
                 const format =
                     measureFormat(measure) ||
-                    (master && measureFormat(this.originalMeasures[master])) ||
+                    (masterMeasureId && measureFormat(this.originalMeasures[masterMeasureId])) ||
+                    masterMeasureInheritFormat ||
                     value.measureHeaderItem.format;
                 const name = this.originalMeasureTitle(measure, value.measureHeaderItem.name);
 

@@ -220,7 +220,6 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
     const isDrillable =
         (kpiResult?.measureDescriptor &&
             result &&
-            status !== "error" &&
             isSomeHeaderPredicateMatched(predicates, kpiResult.measureDescriptor, result)) ||
         widgetDrills.length > 0;
 

@@ -341,6 +341,22 @@
                             "default": []
                         },
                         "example": "limit=1,10"
+                    },
+                    {
+                        "name": "excludedTotalDimensions",
+                        "in": "query",
+                        "description": "Identifiers of the dimensions where grand total data should not be returned for this request. A grand total will not be returned if all of its totalDimensions are in excludedTotalDimensions.",
+                        "required": false,
+                        "style": "form",
+                        "explode": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "default": []
+                        },
+                        "example": "excludedTotalDimensions=dim_0,dim_1"
                     }
                 ],
                 "responses": {
@@ -355,7 +371,7 @@
                         }
                     },
                     "400": {
-                        "description": "Limit and/or offset query parameters (paging) were invalid.",
+                        "description": "Limit and/or offset and/or excludedTotalDimensions query parameters (paging) were invalid.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1358,7 +1374,7 @@
                         }
                     }
                 },
-                "description": "Specifies how the result data will be formatted (```dimensions```) and which additional data shall be computed (```grandTotals```)."
+                "description": "Specifies how the result data will be formatted (```dimensions```) and which additional data shall be computed (```totals```)."
             },
             "SimpleMeasureDefinition": {
                 "required": ["measure"],
@@ -1707,11 +1723,13 @@
                     "labelValue": {
                         "type": "string",
                         "description": "A value of the current attribute label.",
+                        "nullable": true,
                         "example": "East Coast"
                     },
                     "primaryLabelValue": {
                         "type": "string",
                         "description": "A value of the primary attribute label.",
+                        "nullable": true,
                         "example": "1225"
                     }
                 },

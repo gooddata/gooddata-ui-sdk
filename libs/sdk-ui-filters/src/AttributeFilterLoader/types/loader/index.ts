@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IAttributeFilter } from "@gooddata/sdk-model";
+import { IAttributeElement, IAttributeFilter } from "@gooddata/sdk-model";
 import { CallbackRegistration } from "../common";
 import { IAttributeLoader } from "./attribute";
 import { IAttributeElementLoader } from "./elements";
@@ -35,4 +35,5 @@ export interface IAttributeFilterHandlerConfig {
     readonly workspace: string;
     readonly filter: IAttributeFilter;
     readonly hiddenElements?: string[];
+    readonly staticElements?: IAttributeElement[];
 }

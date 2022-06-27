@@ -64,6 +64,10 @@
     "gs.list.noItemsFound": "未找到任何项。",
     "gs.list.error": "加载列表项时出错",
     "gs.header.upsellButtonText": "升级",
+    "gs.header.countdown.numberOfDaysLeft": "剩余 {number} 天",
+    "gs.header.countdown.numberOfMonthsLeft": "剩余 {number} 个月",
+    "gs.header.countdown.oneMonthLeft": "剩余 1 个月",
+    "gs.header.countdown.lastDay": "这是您的最后一天",
     "measure.title.suffix.same_period_year_ago": "去年同期之前",
     "measure.title.suffix.previous_period": "时间段之前",
     "visualizations.measure.arithmetic.sum.title": "{firstMeasureTitle} 和 {secondMeasureTitle} 加",
@@ -306,5 +310,8 @@
     "embedInsightDialog.prepareEnvironmentMessage.link": "了解更多",
     "embed.dialog.numeric.input.validation": "此值必须是大于 0 的数字",
     "embed.dialog.numeric.input.warning": "此输入只接受大于 0 的数字",
-    "embedInsightDialog.complete.list.props.message": "嵌入属性的完整列表"
+    "embedInsightDialog.complete.list.props.message": "嵌入属性的完整列表",
+    "error.overlay.login": "登录",
+    "error.overlay.title": "您已经退出",
+    "error.overlay.text": "请重新登录以继续您的工作。"
 }

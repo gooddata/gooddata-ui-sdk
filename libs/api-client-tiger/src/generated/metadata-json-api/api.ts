@@ -1439,12 +1439,14 @@ export interface GenerateLdmRequest {
      * Tables starting with this prefix will be included. The prefix is then followed by the value of `separator` parameter. Given the table prefix is `out_table` and separator is `__`, the table with name like `out_table__customers` will be scanned.
      * @type {string}
      * @memberof GenerateLdmRequest
+     * @deprecated
      */
     tablePrefix?: string;
     /**
      * Views starting with this prefix will be included. The prefix is then followed by the value of `separator` parameter. Given the view prefix is `out_view` and separator is `__`, the table with name like `out_view__us_customers` will be scanned.
      * @type {string}
      * @memberof GenerateLdmRequest
+     * @deprecated
      */
     viewPrefix?: string;
     /**
@@ -1568,10 +1570,10 @@ export interface JsonApiAnalyticalDashboardIn {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * @type {JsonApiAnalyticalDashboardInAttributes}
      * @memberof JsonApiAnalyticalDashboardIn
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
 }
 
 export const JsonApiAnalyticalDashboardInTypeEnum = {
@@ -1581,6 +1583,43 @@ export const JsonApiAnalyticalDashboardInTypeEnum = {
 export type JsonApiAnalyticalDashboardInTypeEnum =
     typeof JsonApiAnalyticalDashboardInTypeEnum[keyof typeof JsonApiAnalyticalDashboardInTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiAnalyticalDashboardInAttributes
+ */
+export interface JsonApiAnalyticalDashboardInAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiAnalyticalDashboardInAttributes
+     */
+    title?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiAnalyticalDashboardInAttributes
+     */
+    description?: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof JsonApiAnalyticalDashboardInAttributes
+     */
+    tags?: Array<string>;
+    /**
+     *
+     * @type {boolean}
+     * @memberof JsonApiAnalyticalDashboardInAttributes
+     */
+    areRelationsValid?: boolean;
+    /**
+     * Free-form JSON content.
+     * @type {object}
+     * @memberof JsonApiAnalyticalDashboardInAttributes
+     */
+    content?: object;
+}
 /**
  *
  * @export
@@ -1641,10 +1680,10 @@ export interface JsonApiAnalyticalDashboardOut {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * @type {JsonApiAnalyticalDashboardInAttributes}
      * @memberof JsonApiAnalyticalDashboardOut
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationships}
@@ -1660,43 +1699,6 @@ export const JsonApiAnalyticalDashboardOutTypeEnum = {
 export type JsonApiAnalyticalDashboardOutTypeEnum =
     typeof JsonApiAnalyticalDashboardOutTypeEnum[keyof typeof JsonApiAnalyticalDashboardOutTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiAnalyticalDashboardOutAttributes
- */
-export interface JsonApiAnalyticalDashboardOutAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiAnalyticalDashboardOutAttributes
-     */
-    title?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiAnalyticalDashboardOutAttributes
-     */
-    description?: string;
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof JsonApiAnalyticalDashboardOutAttributes
-     */
-    tags?: Array<string>;
-    /**
-     *
-     * @type {boolean}
-     * @memberof JsonApiAnalyticalDashboardOutAttributes
-     */
-    areRelationsValid?: boolean;
-    /**
-     * Free-form JSON content.
-     * @type {object}
-     * @memberof JsonApiAnalyticalDashboardOutAttributes
-     */
-    content?: object;
-}
 /**
  *
  * @export
@@ -1920,10 +1922,10 @@ export interface JsonApiAnalyticalDashboardOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * @type {JsonApiAnalyticalDashboardInAttributes}
      * @memberof JsonApiAnalyticalDashboardOutWithLinks
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationships}
@@ -1965,10 +1967,10 @@ export interface JsonApiAnalyticalDashboardPatch {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * @type {JsonApiAnalyticalDashboardInAttributes}
      * @memberof JsonApiAnalyticalDashboardPatch
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
 }
 
 export const JsonApiAnalyticalDashboardPatchTypeEnum = {
@@ -2646,10 +2648,10 @@ export interface JsonApiDashboardPluginIn {
     id: string;
     /**
      *
-     * @type {JsonApiDashboardPluginOutAttributes}
+     * @type {JsonApiDashboardPluginInAttributes}
      * @memberof JsonApiDashboardPluginIn
      */
-    attributes?: JsonApiDashboardPluginOutAttributes;
+    attributes?: JsonApiDashboardPluginInAttributes;
 }
 
 export const JsonApiDashboardPluginInTypeEnum = {
@@ -2659,6 +2661,43 @@ export const JsonApiDashboardPluginInTypeEnum = {
 export type JsonApiDashboardPluginInTypeEnum =
     typeof JsonApiDashboardPluginInTypeEnum[keyof typeof JsonApiDashboardPluginInTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiDashboardPluginInAttributes
+ */
+export interface JsonApiDashboardPluginInAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiDashboardPluginInAttributes
+     */
+    title?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiDashboardPluginInAttributes
+     */
+    description?: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof JsonApiDashboardPluginInAttributes
+     */
+    tags?: Array<string>;
+    /**
+     *
+     * @type {boolean}
+     * @memberof JsonApiDashboardPluginInAttributes
+     */
+    areRelationsValid?: boolean;
+    /**
+     * Free-form JSON content.
+     * @type {object}
+     * @memberof JsonApiDashboardPluginInAttributes
+     */
+    content?: object;
+}
 /**
  *
  * @export
@@ -2719,10 +2758,10 @@ export interface JsonApiDashboardPluginOut {
     id: string;
     /**
      *
-     * @type {JsonApiDashboardPluginOutAttributes}
+     * @type {JsonApiDashboardPluginInAttributes}
      * @memberof JsonApiDashboardPluginOut
      */
-    attributes?: JsonApiDashboardPluginOutAttributes;
+    attributes?: JsonApiDashboardPluginInAttributes;
 }
 
 export const JsonApiDashboardPluginOutTypeEnum = {
@@ -2732,43 +2771,6 @@ export const JsonApiDashboardPluginOutTypeEnum = {
 export type JsonApiDashboardPluginOutTypeEnum =
     typeof JsonApiDashboardPluginOutTypeEnum[keyof typeof JsonApiDashboardPluginOutTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiDashboardPluginOutAttributes
- */
-export interface JsonApiDashboardPluginOutAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiDashboardPluginOutAttributes
-     */
-    title?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiDashboardPluginOutAttributes
-     */
-    description?: string;
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof JsonApiDashboardPluginOutAttributes
-     */
-    tags?: Array<string>;
-    /**
-     *
-     * @type {boolean}
-     * @memberof JsonApiDashboardPluginOutAttributes
-     */
-    areRelationsValid?: boolean;
-    /**
-     * Free-form JSON content.
-     * @type {object}
-     * @memberof JsonApiDashboardPluginOutAttributes
-     */
-    content?: object;
-}
 /**
  *
  * @export
@@ -2827,10 +2829,10 @@ export interface JsonApiDashboardPluginOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiDashboardPluginOutAttributes}
+     * @type {JsonApiDashboardPluginInAttributes}
      * @memberof JsonApiDashboardPluginOutWithLinks
      */
-    attributes?: JsonApiDashboardPluginOutAttributes;
+    attributes?: JsonApiDashboardPluginInAttributes;
     /**
      *
      * @type {ObjectLinks}
@@ -2866,10 +2868,10 @@ export interface JsonApiDashboardPluginPatch {
     id: string;
     /**
      *
-     * @type {JsonApiDashboardPluginOutAttributes}
+     * @type {JsonApiDashboardPluginInAttributes}
      * @memberof JsonApiDashboardPluginPatch
      */
-    attributes?: JsonApiDashboardPluginOutAttributes;
+    attributes?: JsonApiDashboardPluginInAttributes;
 }
 
 export const JsonApiDashboardPluginPatchTypeEnum = {
@@ -3964,48 +3966,22 @@ export interface JsonApiDatasetOutList {
 export interface JsonApiDatasetOutRelationships {
     /**
      *
-     * @type {JsonApiDatasetOutRelationshipsAttributes}
+     * @type {JsonApiFilterContextOutRelationshipsAttributes}
      * @memberof JsonApiDatasetOutRelationships
      */
-    attributes?: JsonApiDatasetOutRelationshipsAttributes;
+    attributes?: JsonApiFilterContextOutRelationshipsAttributes;
     /**
      *
-     * @type {JsonApiDatasetOutRelationshipsFacts}
+     * @type {JsonApiMetricOutRelationshipsFacts}
      * @memberof JsonApiDatasetOutRelationships
      */
-    facts?: JsonApiDatasetOutRelationshipsFacts;
+    facts?: JsonApiMetricOutRelationshipsFacts;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationshipsDatasets}
      * @memberof JsonApiDatasetOutRelationships
      */
     references?: JsonApiAnalyticalDashboardOutRelationshipsDatasets;
-}
-/**
- *
- * @export
- * @interface JsonApiDatasetOutRelationshipsAttributes
- */
-export interface JsonApiDatasetOutRelationshipsAttributes {
-    /**
-     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
-     * @type {Array<JsonApiAttributeLinkage>}
-     * @memberof JsonApiDatasetOutRelationshipsAttributes
-     */
-    data: Array<JsonApiAttributeLinkage>;
-}
-/**
- *
- * @export
- * @interface JsonApiDatasetOutRelationshipsFacts
- */
-export interface JsonApiDatasetOutRelationshipsFacts {
-    /**
-     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
-     * @type {Array<JsonApiFactLinkage>}
-     * @memberof JsonApiDatasetOutRelationshipsFacts
-     */
-    data: Array<JsonApiFactLinkage>;
 }
 /**
  *
@@ -4418,10 +4394,10 @@ export interface JsonApiFilterContextIn {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * @type {JsonApiAnalyticalDashboardInAttributes}
      * @memberof JsonApiFilterContextIn
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
 }
 
 export const JsonApiFilterContextInTypeEnum = {
@@ -4491,10 +4467,10 @@ export interface JsonApiFilterContextOut {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * @type {JsonApiAnalyticalDashboardInAttributes}
      * @memberof JsonApiFilterContextOut
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
     /**
      *
      * @type {JsonApiFilterContextOutRelationships}
@@ -4577,10 +4553,10 @@ export interface JsonApiFilterContextOutList {
 export interface JsonApiFilterContextOutRelationships {
     /**
      *
-     * @type {JsonApiDatasetOutRelationshipsAttributes}
+     * @type {JsonApiFilterContextOutRelationshipsAttributes}
      * @memberof JsonApiFilterContextOutRelationships
      */
-    attributes?: JsonApiDatasetOutRelationshipsAttributes;
+    attributes?: JsonApiFilterContextOutRelationshipsAttributes;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationshipsDatasets}
@@ -4593,6 +4569,19 @@ export interface JsonApiFilterContextOutRelationships {
      * @memberof JsonApiFilterContextOutRelationships
      */
     labels?: JsonApiAnalyticalDashboardOutRelationshipsLabels;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiFilterContextOutRelationshipsAttributes
+ */
+export interface JsonApiFilterContextOutRelationshipsAttributes {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     * @type {Array<JsonApiAttributeLinkage>}
+     * @memberof JsonApiFilterContextOutRelationshipsAttributes
+     */
+    data: Array<JsonApiAttributeLinkage>;
 }
 /**
  *
@@ -4614,10 +4603,10 @@ export interface JsonApiFilterContextOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * @type {JsonApiAnalyticalDashboardInAttributes}
      * @memberof JsonApiFilterContextOutWithLinks
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
     /**
      *
      * @type {JsonApiFilterContextOutRelationships}
@@ -4659,10 +4648,10 @@ export interface JsonApiFilterContextPatch {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * @type {JsonApiAnalyticalDashboardInAttributes}
      * @memberof JsonApiFilterContextPatch
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
 }
 
 export const JsonApiFilterContextPatchTypeEnum = {
@@ -4957,10 +4946,10 @@ export interface JsonApiMetricIn {
     id: string;
     /**
      *
-     * @type {JsonApiMetricOutAttributes}
+     * @type {JsonApiMetricInAttributes}
      * @memberof JsonApiMetricIn
      */
-    attributes: JsonApiMetricOutAttributes;
+    attributes: JsonApiMetricInAttributes;
 }
 
 export const JsonApiMetricInTypeEnum = {
@@ -4969,6 +4958,62 @@ export const JsonApiMetricInTypeEnum = {
 
 export type JsonApiMetricInTypeEnum = typeof JsonApiMetricInTypeEnum[keyof typeof JsonApiMetricInTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiMetricInAttributes
+ */
+export interface JsonApiMetricInAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiMetricInAttributes
+     */
+    title?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiMetricInAttributes
+     */
+    description?: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof JsonApiMetricInAttributes
+     */
+    tags?: Array<string>;
+    /**
+     *
+     * @type {boolean}
+     * @memberof JsonApiMetricInAttributes
+     */
+    areRelationsValid?: boolean;
+    /**
+     *
+     * @type {JsonApiMetricInAttributesContent}
+     * @memberof JsonApiMetricInAttributes
+     */
+    content: JsonApiMetricInAttributesContent;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiMetricInAttributesContent
+ */
+export interface JsonApiMetricInAttributesContent {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiMetricInAttributesContent
+     */
+    format?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiMetricInAttributesContent
+     */
+    maql: string;
+}
 /**
  *
  * @export
@@ -5029,10 +5074,10 @@ export interface JsonApiMetricOut {
     id: string;
     /**
      *
-     * @type {JsonApiMetricOutAttributes}
+     * @type {JsonApiMetricInAttributes}
      * @memberof JsonApiMetricOut
      */
-    attributes: JsonApiMetricOutAttributes;
+    attributes: JsonApiMetricInAttributes;
     /**
      *
      * @type {JsonApiMetricOutRelationships}
@@ -5047,62 +5092,6 @@ export const JsonApiMetricOutTypeEnum = {
 
 export type JsonApiMetricOutTypeEnum = typeof JsonApiMetricOutTypeEnum[keyof typeof JsonApiMetricOutTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiMetricOutAttributes
- */
-export interface JsonApiMetricOutAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiMetricOutAttributes
-     */
-    title?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiMetricOutAttributes
-     */
-    description?: string;
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof JsonApiMetricOutAttributes
-     */
-    tags?: Array<string>;
-    /**
-     *
-     * @type {boolean}
-     * @memberof JsonApiMetricOutAttributes
-     */
-    areRelationsValid?: boolean;
-    /**
-     *
-     * @type {JsonApiMetricOutAttributesContent}
-     * @memberof JsonApiMetricOutAttributes
-     */
-    content: JsonApiMetricOutAttributesContent;
-}
-/**
- *
- * @export
- * @interface JsonApiMetricOutAttributesContent
- */
-export interface JsonApiMetricOutAttributesContent {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiMetricOutAttributesContent
-     */
-    format?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiMetricOutAttributesContent
-     */
-    maql: string;
-}
 /**
  *
  * @export
@@ -5172,16 +5161,16 @@ export interface JsonApiMetricOutList {
 export interface JsonApiMetricOutRelationships {
     /**
      *
-     * @type {JsonApiDatasetOutRelationshipsFacts}
+     * @type {JsonApiMetricOutRelationshipsFacts}
      * @memberof JsonApiMetricOutRelationships
      */
-    facts?: JsonApiDatasetOutRelationshipsFacts;
+    facts?: JsonApiMetricOutRelationshipsFacts;
     /**
      *
-     * @type {JsonApiDatasetOutRelationshipsAttributes}
+     * @type {JsonApiFilterContextOutRelationshipsAttributes}
      * @memberof JsonApiMetricOutRelationships
      */
-    attributes?: JsonApiDatasetOutRelationshipsAttributes;
+    attributes?: JsonApiFilterContextOutRelationshipsAttributes;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationshipsLabels}
@@ -5204,6 +5193,19 @@ export interface JsonApiMetricOutRelationships {
 /**
  *
  * @export
+ * @interface JsonApiMetricOutRelationshipsFacts
+ */
+export interface JsonApiMetricOutRelationshipsFacts {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     * @type {Array<JsonApiFactLinkage>}
+     * @memberof JsonApiMetricOutRelationshipsFacts
+     */
+    data: Array<JsonApiFactLinkage>;
+}
+/**
+ *
+ * @export
  * @interface JsonApiMetricOutWithLinks
  */
 export interface JsonApiMetricOutWithLinks {
@@ -5221,10 +5223,10 @@ export interface JsonApiMetricOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiMetricOutAttributes}
+     * @type {JsonApiMetricInAttributes}
      * @memberof JsonApiMetricOutWithLinks
      */
-    attributes: JsonApiMetricOutAttributes;
+    attributes: JsonApiMetricInAttributes;
     /**
      *
      * @type {JsonApiMetricOutRelationships}
@@ -5311,10 +5313,10 @@ export interface JsonApiMetricPatchAttributes {
     areRelationsValid?: boolean;
     /**
      *
-     * @type {JsonApiMetricOutAttributesContent}
+     * @type {JsonApiMetricInAttributesContent}
      * @memberof JsonApiMetricPatchAttributes
      */
-    content?: JsonApiMetricOutAttributesContent;
+    content?: JsonApiMetricInAttributesContent;
 }
 /**
  *
@@ -5666,6 +5668,221 @@ export interface JsonApiOrganizationPatchDocument {
      * @memberof JsonApiOrganizationPatchDocument
      */
     data: JsonApiOrganizationPatch;
+}
+/**
+ * JSON:API representation of organizationSetting entity.
+ * @export
+ * @interface JsonApiOrganizationSettingIn
+ */
+export interface JsonApiOrganizationSettingIn {
+    /**
+     * Object type
+     * @type {string}
+     * @memberof JsonApiOrganizationSettingIn
+     */
+    type: JsonApiOrganizationSettingInTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiOrganizationSettingIn
+     */
+    id: string;
+    /**
+     *
+     * @type {JsonApiOrganizationSettingPatchAttributes}
+     * @memberof JsonApiOrganizationSettingIn
+     */
+    attributes?: JsonApiOrganizationSettingPatchAttributes;
+}
+
+export const JsonApiOrganizationSettingInTypeEnum = {
+    ORGANIZATION_SETTING: "organizationSetting",
+} as const;
+
+export type JsonApiOrganizationSettingInTypeEnum =
+    typeof JsonApiOrganizationSettingInTypeEnum[keyof typeof JsonApiOrganizationSettingInTypeEnum];
+
+/**
+ *
+ * @export
+ * @interface JsonApiOrganizationSettingInDocument
+ */
+export interface JsonApiOrganizationSettingInDocument {
+    /**
+     *
+     * @type {JsonApiOrganizationSettingIn}
+     * @memberof JsonApiOrganizationSettingInDocument
+     */
+    data: JsonApiOrganizationSettingIn;
+}
+/**
+ * JSON:API representation of organizationSetting entity.
+ * @export
+ * @interface JsonApiOrganizationSettingOut
+ */
+export interface JsonApiOrganizationSettingOut {
+    /**
+     * Object type
+     * @type {string}
+     * @memberof JsonApiOrganizationSettingOut
+     */
+    type: JsonApiOrganizationSettingOutTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiOrganizationSettingOut
+     */
+    id: string;
+    /**
+     *
+     * @type {JsonApiOrganizationSettingPatchAttributes}
+     * @memberof JsonApiOrganizationSettingOut
+     */
+    attributes?: JsonApiOrganizationSettingPatchAttributes;
+}
+
+export const JsonApiOrganizationSettingOutTypeEnum = {
+    ORGANIZATION_SETTING: "organizationSetting",
+} as const;
+
+export type JsonApiOrganizationSettingOutTypeEnum =
+    typeof JsonApiOrganizationSettingOutTypeEnum[keyof typeof JsonApiOrganizationSettingOutTypeEnum];
+
+/**
+ *
+ * @export
+ * @interface JsonApiOrganizationSettingOutDocument
+ */
+export interface JsonApiOrganizationSettingOutDocument {
+    /**
+     *
+     * @type {JsonApiOrganizationSettingOut}
+     * @memberof JsonApiOrganizationSettingOutDocument
+     */
+    data: JsonApiOrganizationSettingOut;
+    /**
+     *
+     * @type {ObjectLinks}
+     * @memberof JsonApiOrganizationSettingOutDocument
+     */
+    links?: ObjectLinks;
+}
+/**
+ * A JSON:API document with a list of resources
+ * @export
+ * @interface JsonApiOrganizationSettingOutList
+ */
+export interface JsonApiOrganizationSettingOutList {
+    /**
+     *
+     * @type {Array<JsonApiOrganizationSettingOutWithLinks>}
+     * @memberof JsonApiOrganizationSettingOutList
+     */
+    data: Array<JsonApiOrganizationSettingOutWithLinks>;
+    /**
+     *
+     * @type {ListLinks}
+     * @memberof JsonApiOrganizationSettingOutList
+     */
+    links?: ListLinks;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiOrganizationSettingOutWithLinks
+ */
+export interface JsonApiOrganizationSettingOutWithLinks {
+    /**
+     * Object type
+     * @type {string}
+     * @memberof JsonApiOrganizationSettingOutWithLinks
+     */
+    type: JsonApiOrganizationSettingOutWithLinksTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiOrganizationSettingOutWithLinks
+     */
+    id: string;
+    /**
+     *
+     * @type {JsonApiOrganizationSettingPatchAttributes}
+     * @memberof JsonApiOrganizationSettingOutWithLinks
+     */
+    attributes?: JsonApiOrganizationSettingPatchAttributes;
+    /**
+     *
+     * @type {ObjectLinks}
+     * @memberof JsonApiOrganizationSettingOutWithLinks
+     */
+    links?: ObjectLinks;
+}
+
+export const JsonApiOrganizationSettingOutWithLinksTypeEnum = {
+    ORGANIZATION_SETTING: "organizationSetting",
+} as const;
+
+export type JsonApiOrganizationSettingOutWithLinksTypeEnum =
+    typeof JsonApiOrganizationSettingOutWithLinksTypeEnum[keyof typeof JsonApiOrganizationSettingOutWithLinksTypeEnum];
+
+/**
+ * JSON:API representation of patching organizationSetting entity.
+ * @export
+ * @interface JsonApiOrganizationSettingPatch
+ */
+export interface JsonApiOrganizationSettingPatch {
+    /**
+     * Object type
+     * @type {string}
+     * @memberof JsonApiOrganizationSettingPatch
+     */
+    type: JsonApiOrganizationSettingPatchTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiOrganizationSettingPatch
+     */
+    id: string;
+    /**
+     *
+     * @type {JsonApiOrganizationSettingPatchAttributes}
+     * @memberof JsonApiOrganizationSettingPatch
+     */
+    attributes?: JsonApiOrganizationSettingPatchAttributes;
+}
+
+export const JsonApiOrganizationSettingPatchTypeEnum = {
+    ORGANIZATION_SETTING: "organizationSetting",
+} as const;
+
+export type JsonApiOrganizationSettingPatchTypeEnum =
+    typeof JsonApiOrganizationSettingPatchTypeEnum[keyof typeof JsonApiOrganizationSettingPatchTypeEnum];
+
+/**
+ *
+ * @export
+ * @interface JsonApiOrganizationSettingPatchAttributes
+ */
+export interface JsonApiOrganizationSettingPatchAttributes {
+    /**
+     *
+     * @type {object}
+     * @memberof JsonApiOrganizationSettingPatchAttributes
+     */
+    value?: object;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiOrganizationSettingPatchDocument
+ */
+export interface JsonApiOrganizationSettingPatchDocument {
+    /**
+     *
+     * @type {JsonApiOrganizationSettingPatch}
+     * @memberof JsonApiOrganizationSettingPatchDocument
+     */
+    data: JsonApiOrganizationSettingPatch;
 }
 /**
  * JSON:API representation of userGroup entity.
@@ -6256,10 +6473,10 @@ export interface JsonApiVisualizationObjectIn {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * @type {JsonApiAnalyticalDashboardInAttributes}
      * @memberof JsonApiVisualizationObjectIn
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
 }
 
 export const JsonApiVisualizationObjectInTypeEnum = {
@@ -6329,10 +6546,10 @@ export interface JsonApiVisualizationObjectOut {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * @type {JsonApiAnalyticalDashboardInAttributes}
      * @memberof JsonApiVisualizationObjectOut
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
     /**
      *
      * @type {JsonApiMetricOutRelationships}
@@ -6418,10 +6635,10 @@ export interface JsonApiVisualizationObjectOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * @type {JsonApiAnalyticalDashboardInAttributes}
      * @memberof JsonApiVisualizationObjectOutWithLinks
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
     /**
      *
      * @type {JsonApiMetricOutRelationships}
@@ -6463,10 +6680,10 @@ export interface JsonApiVisualizationObjectPatch {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * @type {JsonApiAnalyticalDashboardInAttributes}
      * @memberof JsonApiVisualizationObjectPatch
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
 }
 
 export const JsonApiVisualizationObjectPatchTypeEnum = {
@@ -6509,16 +6726,16 @@ export interface JsonApiWorkspaceDataFilterIn {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterOutAttributes}
+     * @type {JsonApiWorkspaceDataFilterInAttributes}
      * @memberof JsonApiWorkspaceDataFilterIn
      */
-    attributes?: JsonApiWorkspaceDataFilterOutAttributes;
+    attributes?: JsonApiWorkspaceDataFilterInAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterOutRelationships}
+     * @type {JsonApiWorkspaceDataFilterInRelationships}
      * @memberof JsonApiWorkspaceDataFilterIn
      */
-    relationships?: JsonApiWorkspaceDataFilterOutRelationships;
+    relationships?: JsonApiWorkspaceDataFilterInRelationships;
 }
 
 export const JsonApiWorkspaceDataFilterInTypeEnum = {
@@ -6531,6 +6748,31 @@ export type JsonApiWorkspaceDataFilterInTypeEnum =
 /**
  *
  * @export
+ * @interface JsonApiWorkspaceDataFilterInAttributes
+ */
+export interface JsonApiWorkspaceDataFilterInAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspaceDataFilterInAttributes
+     */
+    title?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspaceDataFilterInAttributes
+     */
+    description?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspaceDataFilterInAttributes
+     */
+    columnName?: string;
+}
+/**
+ *
+ * @export
  * @interface JsonApiWorkspaceDataFilterInDocument
  */
 export interface JsonApiWorkspaceDataFilterInDocument {
@@ -6540,6 +6782,32 @@ export interface JsonApiWorkspaceDataFilterInDocument {
      * @memberof JsonApiWorkspaceDataFilterInDocument
      */
     data: JsonApiWorkspaceDataFilterIn;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiWorkspaceDataFilterInRelationships
+ */
+export interface JsonApiWorkspaceDataFilterInRelationships {
+    /**
+     *
+     * @type {JsonApiWorkspaceDataFilterInRelationshipsFilterSettings}
+     * @memberof JsonApiWorkspaceDataFilterInRelationships
+     */
+    filterSettings?: JsonApiWorkspaceDataFilterInRelationshipsFilterSettings;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiWorkspaceDataFilterInRelationshipsFilterSettings
+ */
+export interface JsonApiWorkspaceDataFilterInRelationshipsFilterSettings {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     * @type {Array<JsonApiWorkspaceDataFilterSettingLinkage>}
+     * @memberof JsonApiWorkspaceDataFilterInRelationshipsFilterSettings
+     */
+    data: Array<JsonApiWorkspaceDataFilterSettingLinkage>;
 }
 /**
  * The \\\"type\\\" and \\\"id\\\" to non-empty members.
@@ -6588,16 +6856,16 @@ export interface JsonApiWorkspaceDataFilterOut {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterOutAttributes}
+     * @type {JsonApiWorkspaceDataFilterInAttributes}
      * @memberof JsonApiWorkspaceDataFilterOut
      */
-    attributes?: JsonApiWorkspaceDataFilterOutAttributes;
+    attributes?: JsonApiWorkspaceDataFilterInAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterOutRelationships}
+     * @type {JsonApiWorkspaceDataFilterInRelationships}
      * @memberof JsonApiWorkspaceDataFilterOut
      */
-    relationships?: JsonApiWorkspaceDataFilterOutRelationships;
+    relationships?: JsonApiWorkspaceDataFilterInRelationships;
 }
 
 export const JsonApiWorkspaceDataFilterOutTypeEnum = {
@@ -6607,31 +6875,6 @@ export const JsonApiWorkspaceDataFilterOutTypeEnum = {
 export type JsonApiWorkspaceDataFilterOutTypeEnum =
     typeof JsonApiWorkspaceDataFilterOutTypeEnum[keyof typeof JsonApiWorkspaceDataFilterOutTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiWorkspaceDataFilterOutAttributes
- */
-export interface JsonApiWorkspaceDataFilterOutAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspaceDataFilterOutAttributes
-     */
-    title?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspaceDataFilterOutAttributes
-     */
-    description?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspaceDataFilterOutAttributes
-     */
-    columnName?: string;
-}
 /**
  *
  * @export
@@ -6685,32 +6928,6 @@ export interface JsonApiWorkspaceDataFilterOutList {
 /**
  *
  * @export
- * @interface JsonApiWorkspaceDataFilterOutRelationships
- */
-export interface JsonApiWorkspaceDataFilterOutRelationships {
-    /**
-     *
-     * @type {JsonApiWorkspaceDataFilterOutRelationshipsFilterSettings}
-     * @memberof JsonApiWorkspaceDataFilterOutRelationships
-     */
-    filterSettings?: JsonApiWorkspaceDataFilterOutRelationshipsFilterSettings;
-}
-/**
- *
- * @export
- * @interface JsonApiWorkspaceDataFilterOutRelationshipsFilterSettings
- */
-export interface JsonApiWorkspaceDataFilterOutRelationshipsFilterSettings {
-    /**
-     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
-     * @type {Array<JsonApiWorkspaceDataFilterSettingLinkage>}
-     * @memberof JsonApiWorkspaceDataFilterOutRelationshipsFilterSettings
-     */
-    data: Array<JsonApiWorkspaceDataFilterSettingLinkage>;
-}
-/**
- *
- * @export
  * @interface JsonApiWorkspaceDataFilterOutWithLinks
  */
 export interface JsonApiWorkspaceDataFilterOutWithLinks {
@@ -6728,16 +6945,16 @@ export interface JsonApiWorkspaceDataFilterOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterOutAttributes}
+     * @type {JsonApiWorkspaceDataFilterInAttributes}
      * @memberof JsonApiWorkspaceDataFilterOutWithLinks
      */
-    attributes?: JsonApiWorkspaceDataFilterOutAttributes;
+    attributes?: JsonApiWorkspaceDataFilterInAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterOutRelationships}
+     * @type {JsonApiWorkspaceDataFilterInRelationships}
      * @memberof JsonApiWorkspaceDataFilterOutWithLinks
      */
-    relationships?: JsonApiWorkspaceDataFilterOutRelationships;
+    relationships?: JsonApiWorkspaceDataFilterInRelationships;
     /**
      *
      * @type {ObjectLinks}
@@ -6773,16 +6990,16 @@ export interface JsonApiWorkspaceDataFilterPatch {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterOutAttributes}
+     * @type {JsonApiWorkspaceDataFilterInAttributes}
      * @memberof JsonApiWorkspaceDataFilterPatch
      */
-    attributes?: JsonApiWorkspaceDataFilterOutAttributes;
+    attributes?: JsonApiWorkspaceDataFilterInAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterOutRelationships}
+     * @type {JsonApiWorkspaceDataFilterInRelationships}
      * @memberof JsonApiWorkspaceDataFilterPatch
      */
-    relationships?: JsonApiWorkspaceDataFilterOutRelationships;
+    relationships?: JsonApiWorkspaceDataFilterInRelationships;
 }
 
 export const JsonApiWorkspaceDataFilterPatchTypeEnum = {
@@ -8238,6 +8455,58 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          *
+         * @param {JsonApiOrganizationSettingInDocument} jsonApiOrganizationSettingInDocument
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createEntityOrganizationSettings: async (
+            jsonApiOrganizationSettingInDocument: JsonApiOrganizationSettingInDocument,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'jsonApiOrganizationSettingInDocument' is not null or undefined
+            assertParamExists(
+                "createEntityOrganizationSettings",
+                "jsonApiOrganizationSettingInDocument",
+                jsonApiOrganizationSettingInDocument,
+            );
+            const localVarPath = `/api/v1/entities/organizationSettings`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof jsonApiOrganizationSettingInDocument !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      jsonApiOrganizationSettingInDocument !== undefined
+                          ? jsonApiOrganizationSettingInDocument
+                          : {},
+                  )
+                : jsonApiOrganizationSettingInDocument || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
          * @param {JsonApiUserGroupInDocument} jsonApiUserGroupInDocument
          * @param {Array<'userGroups' | 'parents' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -8528,7 +8797,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          *
          * @param {string} workspaceId
          * @param {string} objectId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -8536,7 +8804,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         deleteEntityAnalyticalDashboards: async (
             workspaceId: string,
             objectId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
@@ -8556,10 +8823,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -8582,7 +8845,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          *
          * @param {string} userId
          * @param {string} id
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -8590,7 +8852,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         deleteEntityApiTokens: async (
             userId: string,
             id: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
@@ -8611,10 +8872,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
-
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
             }
@@ -8636,7 +8893,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          *
          * @param {string} workspaceId
          * @param {string} objectId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -8644,7 +8900,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         deleteEntityDashboardPlugins: async (
             workspaceId: string,
             objectId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
@@ -8665,10 +8920,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
-
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
             }
@@ -8689,14 +8940,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          *
          * @param {string} id
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         deleteEntityDataSources: async (
             id: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
@@ -8715,10 +8964,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -8741,7 +8986,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          *
          * @param {string} workspaceId
          * @param {string} objectId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -8749,7 +8993,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         deleteEntityFilterContexts: async (
             workspaceId: string,
             objectId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
@@ -8770,10 +9013,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
-
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
             }
@@ -8795,7 +9034,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          *
          * @param {string} workspaceId
          * @param {string} objectId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -8803,7 +9041,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         deleteEntityMetrics: async (
             workspaceId: string,
             objectId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
@@ -8824,9 +9061,50 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
             }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} id
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteEntityOrganizationSettings: async (
+            id: string,
+            filter?: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists("deleteEntityOrganizationSettings", "id", id);
+            const localVarPath = `/api/v1/entities/organizationSettings/{id}`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -8848,14 +9126,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          *
          * @param {string} id
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         deleteEntityUserGroups: async (
             id: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
@@ -8875,10 +9151,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
-
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
             }
@@ -8899,14 +9171,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          *
          * @param {string} id
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         deleteEntityUsers: async (
             id: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
@@ -8925,10 +9195,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -8951,7 +9217,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          *
          * @param {string} workspaceId
          * @param {string} objectId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -8959,7 +9224,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         deleteEntityVisualizationObjects: async (
             workspaceId: string,
             objectId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
@@ -8980,10 +9244,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
-
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
             }
@@ -9005,7 +9265,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          *
          * @param {string} workspaceId
          * @param {string} objectId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -9013,7 +9272,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         deleteEntityWorkspaceDataFilters: async (
             workspaceId: string,
             objectId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
@@ -9033,10 +9291,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -9058,14 +9312,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          *
          * @param {string} id
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         deleteEntityWorkspaces: async (
             id: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
@@ -9084,10 +9336,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -9109,7 +9357,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          *
          * @param {string} workspaceId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'visualizationObjects' | 'analyticalDashboards' | 'labels' | 'metrics' | 'datasets' | 'filterContexts' | 'dashboardPlugins' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
@@ -9121,7 +9368,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          */
         getAllEntitiesAnalyticalDashboards: async (
             workspaceId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<
                 | "visualizationObjects"
@@ -9155,10 +9401,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
-
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
             }
@@ -9201,7 +9443,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          *
          * @param {string} userId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
@@ -9211,7 +9452,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          */
         getAllEntitiesApiTokens: async (
             userId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             page?: number,
             size?: number,
@@ -9233,10 +9473,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -9270,7 +9506,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          *
          * @param {string} workspaceId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'datasets' | 'labels' | 'dataset' | 'defaultView' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
@@ -9282,7 +9517,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          */
         getAllEntitiesAttributes: async (
             workspaceId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"datasets" | "labels" | "dataset" | "defaultView" | "ALL">,
             page?: number,
@@ -9306,10 +9540,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -9353,7 +9583,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          *
          * @param {string} workspaceId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
@@ -9364,7 +9593,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          */
         getAllEntitiesDashboardPlugins: async (
             workspaceId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             page?: number,
             size?: number,
@@ -9387,10 +9615,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -9429,7 +9653,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          *
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
@@ -9439,7 +9662,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @throws {RequiredError}
          */
         getAllEntitiesDataSourceIdentifiers: async (
-            predicate?: { [key: string]: object },
             filter?: string,
             page?: number,
             size?: number,
@@ -9457,10 +9679,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -9498,7 +9716,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          *
          * @param {string} dataSourceId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
@@ -9508,7 +9725,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          */
         getAllEntitiesDataSourceTables: async (
             dataSourceId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             page?: number,
             size?: number,
@@ -9530,10 +9746,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -9566,7 +9778,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          *
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
@@ -9576,7 +9787,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @throws {RequiredError}
          */
         getAllEntitiesDataSources: async (
-            predicate?: { [key: string]: object },
             filter?: string,
             page?: number,
             size?: number,
@@ -9594,10 +9804,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -9635,7 +9841,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          *
          * @param {string} workspaceId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'attributes' | 'facts' | 'datasets' | 'references' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
@@ -9647,7 +9852,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          */
         getAllEntitiesDatasets: async (
             workspaceId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"attributes" | "facts" | "datasets" | "references" | "ALL">,
             page?: number,
@@ -9672,10 +9876,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
-
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
             }
@@ -9717,7 +9917,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          *
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
@@ -9726,7 +9925,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @throws {RequiredError}
          */
         getAllEntitiesEntitlements: async (
-            predicate?: { [key: string]: object },
             filter?: string,
             page?: number,
             size?: number,
@@ -9743,10 +9941,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -9780,7 +9974,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          *
          * @param {string} workspaceId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'datasets' | 'dataset' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
@@ -9792,7 +9985,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          */
         getAllEntitiesFacts: async (
             workspaceId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"datasets" | "dataset" | "ALL">,
             page?: number,
@@ -9817,10 +10009,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
-
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
             }
@@ -9863,7 +10051,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          *
          * @param {string} workspaceId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'attributes' | 'datasets' | 'labels' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
@@ -9875,7 +10062,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          */
         getAllEntitiesFilterContexts: async (
             workspaceId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"attributes" | "datasets" | "labels" | "ALL">,
             page?: number,
@@ -9900,10 +10086,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
-
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
             }
@@ -9946,7 +10128,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          *
          * @param {string} workspaceId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'attributes' | 'attribute' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
@@ -9958,7 +10139,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          */
         getAllEntitiesLabels: async (
             workspaceId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"attributes" | "attribute" | "ALL">,
             page?: number,
@@ -9983,10 +10163,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
-
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
             }
@@ -10029,7 +10205,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          *
          * @param {string} workspaceId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
@@ -10041,7 +10216,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          */
         getAllEntitiesMetrics: async (
             workspaceId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">,
             page?: number,
@@ -10066,10 +10240,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
-
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
             }
@@ -10111,7 +10281,62 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          *
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {number} [page] Zero-based page index (0..N)
+         * @param {number} [size] The size of the page to be returned
+         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllEntitiesOrganizationSettings: async (
+            filter?: string,
+            page?: number,
+            size?: number,
+            sort?: Array<string>,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/entities/organizationSettings`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter["page"] = page;
+            }
+
+            if (size !== undefined) {
+                localVarQueryParameter["size"] = size;
+            }
+
+            if (sort) {
+                localVarQueryParameter["sort"] = sort;
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'userGroups' | 'parents' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
@@ -10121,7 +10346,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @throws {RequiredError}
          */
         getAllEntitiesUserGroups: async (
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"userGroups" | "parents" | "ALL">,
             page?: number,
@@ -10139,10 +10363,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -10179,7 +10399,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          *
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'userGroups' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
@@ -10189,7 +10408,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @throws {RequiredError}
          */
         getAllEntitiesUsers: async (
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"userGroups" | "ALL">,
             page?: number,
@@ -10207,10 +10425,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -10248,7 +10462,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          *
          * @param {string} workspaceId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
@@ -10260,7 +10473,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          */
         getAllEntitiesVisualizationObjects: async (
             workspaceId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">,
             page?: number,
@@ -10285,10 +10497,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
-
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
             }
@@ -10331,7 +10539,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          *
          * @param {string} workspaceId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'workspaceDataFilters' | 'workspaceDataFilter' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
@@ -10343,7 +10550,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          */
         getAllEntitiesWorkspaceDataFilterSettings: async (
             workspaceId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"workspaceDataFilters" | "workspaceDataFilter" | "ALL">,
             page?: number,
@@ -10369,10 +10575,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
-
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
             }
@@ -10415,7 +10617,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          *
          * @param {string} workspaceId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'workspaceDataFilterSettings' | 'filterSettings' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
@@ -10427,7 +10628,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          */
         getAllEntitiesWorkspaceDataFilters: async (
             workspaceId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">,
             page?: number,
@@ -10451,10 +10651,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -10497,7 +10693,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          *
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'workspaces' | 'parent' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
@@ -10508,7 +10703,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @throws {RequiredError}
          */
         getAllEntitiesWorkspaces: async (
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"workspaces" | "parent" | "ALL">,
             page?: number,
@@ -10527,10 +10721,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -10635,7 +10825,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          *
          * @param {string} workspaceId
          * @param {string} objectId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'visualizationObjects' | 'analyticalDashboards' | 'labels' | 'metrics' | 'datasets' | 'filterContexts' | 'dashboardPlugins' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {boolean} [xGDCVALIDATERELATIONS]
@@ -10645,7 +10834,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         getEntityAnalyticalDashboards: async (
             workspaceId: string,
             objectId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<
                 | "visualizationObjects"
@@ -10676,10 +10864,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -10712,7 +10896,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          *
          * @param {string} userId
          * @param {string} id
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -10720,7 +10903,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         getEntityApiTokens: async (
             userId: string,
             id: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
@@ -10740,10 +10922,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -10766,7 +10944,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          *
          * @param {string} workspaceId
          * @param {string} objectId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'datasets' | 'labels' | 'dataset' | 'defaultView' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {boolean} [xGDCVALIDATERELATIONS]
@@ -10776,7 +10953,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         getEntityAttributes: async (
             workspaceId: string,
             objectId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"datasets" | "labels" | "dataset" | "defaultView" | "ALL">,
             xGDCVALIDATERELATIONS?: boolean,
@@ -10798,10 +10974,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -10833,14 +11005,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          *
          * @param {string} id
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getEntityCookieSecurityConfigurations: async (
             id: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
@@ -10859,10 +11029,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -10885,7 +11051,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          *
          * @param {string} workspaceId
          * @param {string} objectId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {boolean} [xGDCVALIDATERELATIONS]
          * @param {*} [options] Override http request option.
@@ -10894,7 +11059,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         getEntityDashboardPlugins: async (
             workspaceId: string,
             objectId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             xGDCVALIDATERELATIONS?: boolean,
             options: AxiosRequestConfig = {},
@@ -10915,10 +11079,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -10946,7 +11106,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          *
          * @param {string} id
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'permissions' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
@@ -10954,7 +11113,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          */
         getEntityDataSourceIdentifiers: async (
             id: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             metaInclude?: Array<"permissions" | "all" | "ALL">,
             options: AxiosRequestConfig = {},
@@ -10974,10 +11132,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -11004,7 +11158,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          *
          * @param {string} dataSourceId
          * @param {string} id
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -11012,7 +11165,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         getEntityDataSourceTables: async (
             dataSourceId: string,
             id: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
@@ -11032,10 +11184,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -11057,7 +11205,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          *
          * @param {string} id
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'permissions' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
@@ -11065,7 +11212,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          */
         getEntityDataSources: async (
             id: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             metaInclude?: Array<"permissions" | "all" | "ALL">,
             options: AxiosRequestConfig = {},
@@ -11085,10 +11231,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -11115,7 +11257,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          *
          * @param {string} workspaceId
          * @param {string} objectId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'attributes' | 'facts' | 'datasets' | 'references' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {boolean} [xGDCVALIDATERELATIONS]
@@ -11125,7 +11266,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         getEntityDatasets: async (
             workspaceId: string,
             objectId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"attributes" | "facts" | "datasets" | "references" | "ALL">,
             xGDCVALIDATERELATIONS?: boolean,
@@ -11148,10 +11288,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
-
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
             }
@@ -11182,14 +11318,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          *
          * @param {string} id
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getEntityEntitlements: async (
             id: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
@@ -11208,10 +11342,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -11234,7 +11364,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          *
          * @param {string} workspaceId
          * @param {string} objectId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'datasets' | 'dataset' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {boolean} [xGDCVALIDATERELATIONS]
@@ -11244,7 +11373,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         getEntityFacts: async (
             workspaceId: string,
             objectId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"datasets" | "dataset" | "ALL">,
             xGDCVALIDATERELATIONS?: boolean,
@@ -11267,10 +11395,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
-
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
             }
@@ -11302,7 +11426,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          *
          * @param {string} workspaceId
          * @param {string} objectId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'attributes' | 'datasets' | 'labels' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {boolean} [xGDCVALIDATERELATIONS]
@@ -11312,7 +11435,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         getEntityFilterContexts: async (
             workspaceId: string,
             objectId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"attributes" | "datasets" | "labels" | "ALL">,
             xGDCVALIDATERELATIONS?: boolean,
@@ -11335,10 +11457,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
-
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
             }
@@ -11370,7 +11488,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          *
          * @param {string} workspaceId
          * @param {string} objectId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'attributes' | 'attribute' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {boolean} [xGDCVALIDATERELATIONS]
@@ -11380,7 +11497,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         getEntityLabels: async (
             workspaceId: string,
             objectId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"attributes" | "attribute" | "ALL">,
             xGDCVALIDATERELATIONS?: boolean,
@@ -11403,10 +11519,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
-
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
             }
@@ -11438,7 +11550,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          *
          * @param {string} workspaceId
          * @param {string} objectId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {boolean} [xGDCVALIDATERELATIONS]
@@ -11448,7 +11559,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         getEntityMetrics: async (
             workspaceId: string,
             objectId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">,
             xGDCVALIDATERELATIONS?: boolean,
@@ -11470,10 +11580,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -11505,7 +11611,51 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          *
          * @param {string} id
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEntityOrganizationSettings: async (
+            id: string,
+            filter?: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists("getEntityOrganizationSettings", "id", id);
+            const localVarPath = `/api/v1/entities/organizationSettings/{id}`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} id
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'users' | 'userGroups' | 'bootstrapUser' | 'bootstrapUserGroup' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {Array<'permissions' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
@@ -11514,7 +11664,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          */
         getEntityOrganizations: async (
             id: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"users" | "userGroups" | "bootstrapUser" | "bootstrapUserGroup" | "ALL">,
             metaInclude?: Array<"permissions" | "all" | "ALL">,
@@ -11535,10 +11684,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -11568,7 +11713,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          *
          * @param {string} id
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'userGroups' | 'parents' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -11576,7 +11720,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          */
         getEntityUserGroups: async (
             id: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"userGroups" | "parents" | "ALL">,
             options: AxiosRequestConfig = {},
@@ -11596,10 +11739,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -11625,7 +11764,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          *
          * @param {string} id
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'userGroups' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -11633,7 +11771,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          */
         getEntityUsers: async (
             id: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"userGroups" | "ALL">,
             options: AxiosRequestConfig = {},
@@ -11653,10 +11790,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -11683,7 +11816,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          *
          * @param {string} workspaceId
          * @param {string} objectId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {boolean} [xGDCVALIDATERELATIONS]
@@ -11693,7 +11825,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         getEntityVisualizationObjects: async (
             workspaceId: string,
             objectId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">,
             xGDCVALIDATERELATIONS?: boolean,
@@ -11715,10 +11846,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -11751,7 +11878,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          *
          * @param {string} workspaceId
          * @param {string} objectId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'workspaceDataFilters' | 'workspaceDataFilter' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {boolean} [xGDCVALIDATERELATIONS]
@@ -11761,7 +11887,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         getEntityWorkspaceDataFilterSettings: async (
             workspaceId: string,
             objectId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"workspaceDataFilters" | "workspaceDataFilter" | "ALL">,
             xGDCVALIDATERELATIONS?: boolean,
@@ -11785,10 +11910,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
-
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
             }
@@ -11820,7 +11941,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          *
          * @param {string} workspaceId
          * @param {string} objectId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'workspaceDataFilterSettings' | 'filterSettings' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {boolean} [xGDCVALIDATERELATIONS]
@@ -11830,7 +11950,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         getEntityWorkspaceDataFilters: async (
             workspaceId: string,
             objectId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">,
             xGDCVALIDATERELATIONS?: boolean,
@@ -11852,10 +11971,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -11887,7 +12002,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          *
          * @param {string} id
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'workspaces' | 'parent' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {Array<'config' | 'permissions' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
@@ -11896,7 +12010,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          */
         getEntityWorkspaces: async (
             id: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"workspaces" | "parent" | "ALL">,
             metaInclude?: Array<"config" | "permissions" | "all" | "ALL">,
@@ -11917,10 +12030,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -11991,7 +12100,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} workspaceId
          * @param {string} objectId
          * @param {JsonApiAnalyticalDashboardPatchDocument} jsonApiAnalyticalDashboardPatchDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'visualizationObjects' | 'analyticalDashboards' | 'labels' | 'metrics' | 'datasets' | 'filterContexts' | 'dashboardPlugins' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -12001,7 +12109,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             workspaceId: string,
             objectId: string,
             jsonApiAnalyticalDashboardPatchDocument: JsonApiAnalyticalDashboardPatchDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<
                 | "visualizationObjects"
@@ -12037,10 +12144,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -12079,7 +12182,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          *
          * @param {string} id
          * @param {JsonApiCookieSecurityConfigurationPatchDocument} jsonApiCookieSecurityConfigurationPatchDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -12087,7 +12189,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         patchEntityCookieSecurityConfigurations: async (
             id: string,
             jsonApiCookieSecurityConfigurationPatchDocument: JsonApiCookieSecurityConfigurationPatchDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
@@ -12112,10 +12213,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -12151,7 +12248,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} workspaceId
          * @param {string} objectId
          * @param {JsonApiDashboardPluginPatchDocument} jsonApiDashboardPluginPatchDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -12160,7 +12256,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             workspaceId: string,
             objectId: string,
             jsonApiDashboardPluginPatchDocument: JsonApiDashboardPluginPatchDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
@@ -12186,10 +12281,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -12224,7 +12315,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          *
          * @param {string} id
          * @param {JsonApiDataSourcePatchDocument} jsonApiDataSourcePatchDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -12232,7 +12322,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         patchEntityDataSources: async (
             id: string,
             jsonApiDataSourcePatchDocument: JsonApiDataSourcePatchDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
@@ -12257,10 +12346,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -12294,7 +12379,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} workspaceId
          * @param {string} objectId
          * @param {JsonApiFilterContextPatchDocument} jsonApiFilterContextPatchDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'attributes' | 'datasets' | 'labels' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -12304,7 +12388,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             workspaceId: string,
             objectId: string,
             jsonApiFilterContextPatchDocument: JsonApiFilterContextPatchDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"attributes" | "datasets" | "labels" | "ALL">,
             options: AxiosRequestConfig = {},
@@ -12331,10 +12414,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -12374,7 +12453,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} workspaceId
          * @param {string} objectId
          * @param {JsonApiMetricPatchDocument} jsonApiMetricPatchDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -12384,7 +12462,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             workspaceId: string,
             objectId: string,
             jsonApiMetricPatchDocument: JsonApiMetricPatchDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">,
             options: AxiosRequestConfig = {},
@@ -12407,10 +12484,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -12444,8 +12517,72 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          *
          * @param {string} id
+         * @param {JsonApiOrganizationSettingPatchDocument} jsonApiOrganizationSettingPatchDocument
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchEntityOrganizationSettings: async (
+            id: string,
+            jsonApiOrganizationSettingPatchDocument: JsonApiOrganizationSettingPatchDocument,
+            filter?: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists("patchEntityOrganizationSettings", "id", id);
+            // verify required parameter 'jsonApiOrganizationSettingPatchDocument' is not null or undefined
+            assertParamExists(
+                "patchEntityOrganizationSettings",
+                "jsonApiOrganizationSettingPatchDocument",
+                jsonApiOrganizationSettingPatchDocument,
+            );
+            const localVarPath = `/api/v1/entities/organizationSettings/{id}`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof jsonApiOrganizationSettingPatchDocument !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      jsonApiOrganizationSettingPatchDocument !== undefined
+                          ? jsonApiOrganizationSettingPatchDocument
+                          : {},
+                  )
+                : jsonApiOrganizationSettingPatchDocument || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} id
          * @param {JsonApiOrganizationPatchDocument} jsonApiOrganizationPatchDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'users' | 'userGroups' | 'bootstrapUser' | 'bootstrapUserGroup' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -12454,7 +12591,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         patchEntityOrganizations: async (
             id: string,
             jsonApiOrganizationPatchDocument: JsonApiOrganizationPatchDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"users" | "userGroups" | "bootstrapUser" | "bootstrapUserGroup" | "ALL">,
             options: AxiosRequestConfig = {},
@@ -12480,10 +12616,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -12520,7 +12652,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          *
          * @param {string} id
          * @param {JsonApiUserGroupPatchDocument} jsonApiUserGroupPatchDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'userGroups' | 'parents' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -12529,7 +12660,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         patchEntityUserGroups: async (
             id: string,
             jsonApiUserGroupPatchDocument: JsonApiUserGroupPatchDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"userGroups" | "parents" | "ALL">,
             options: AxiosRequestConfig = {},
@@ -12555,10 +12685,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -12595,7 +12721,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          *
          * @param {string} id
          * @param {JsonApiUserPatchDocument} jsonApiUserPatchDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'userGroups' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -12604,7 +12729,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         patchEntityUsers: async (
             id: string,
             jsonApiUserPatchDocument: JsonApiUserPatchDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"userGroups" | "ALL">,
             options: AxiosRequestConfig = {},
@@ -12626,10 +12750,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -12665,7 +12785,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} workspaceId
          * @param {string} objectId
          * @param {JsonApiVisualizationObjectPatchDocument} jsonApiVisualizationObjectPatchDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -12675,7 +12794,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             workspaceId: string,
             objectId: string,
             jsonApiVisualizationObjectPatchDocument: JsonApiVisualizationObjectPatchDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">,
             options: AxiosRequestConfig = {},
@@ -12702,10 +12820,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -12745,7 +12859,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} workspaceId
          * @param {string} objectId
          * @param {JsonApiWorkspaceDataFilterPatchDocument} jsonApiWorkspaceDataFilterPatchDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'workspaceDataFilterSettings' | 'filterSettings' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -12755,7 +12868,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             workspaceId: string,
             objectId: string,
             jsonApiWorkspaceDataFilterPatchDocument: JsonApiWorkspaceDataFilterPatchDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">,
             options: AxiosRequestConfig = {},
@@ -12782,10 +12894,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -12824,7 +12932,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          *
          * @param {string} id
          * @param {JsonApiWorkspacePatchDocument} jsonApiWorkspacePatchDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'workspaces' | 'parent' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -12833,7 +12940,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         patchEntityWorkspaces: async (
             id: string,
             jsonApiWorkspacePatchDocument: JsonApiWorkspacePatchDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"workspaces" | "parent" | "ALL">,
             options: AxiosRequestConfig = {},
@@ -12859,10 +12965,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -12900,7 +13002,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} workspaceId
          * @param {string} objectId
          * @param {JsonApiAnalyticalDashboardInDocument} jsonApiAnalyticalDashboardInDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'visualizationObjects' | 'analyticalDashboards' | 'labels' | 'metrics' | 'datasets' | 'filterContexts' | 'dashboardPlugins' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -12910,7 +13011,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             workspaceId: string,
             objectId: string,
             jsonApiAnalyticalDashboardInDocument: JsonApiAnalyticalDashboardInDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<
                 | "visualizationObjects"
@@ -12946,10 +13046,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "PUT", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -12988,7 +13084,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          *
          * @param {string} id
          * @param {JsonApiCookieSecurityConfigurationInDocument} jsonApiCookieSecurityConfigurationInDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -12996,7 +13091,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         updateEntityCookieSecurityConfigurations: async (
             id: string,
             jsonApiCookieSecurityConfigurationInDocument: JsonApiCookieSecurityConfigurationInDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
@@ -13021,10 +13115,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "PUT", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -13060,7 +13150,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} workspaceId
          * @param {string} objectId
          * @param {JsonApiDashboardPluginInDocument} jsonApiDashboardPluginInDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -13069,7 +13158,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             workspaceId: string,
             objectId: string,
             jsonApiDashboardPluginInDocument: JsonApiDashboardPluginInDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
@@ -13095,10 +13183,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "PUT", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -13131,7 +13215,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          *
          * @param {string} id
          * @param {JsonApiDataSourceInDocument} jsonApiDataSourceInDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -13139,7 +13222,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         updateEntityDataSources: async (
             id: string,
             jsonApiDataSourceInDocument: JsonApiDataSourceInDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
@@ -13164,10 +13246,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "PUT", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -13199,7 +13277,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} workspaceId
          * @param {string} objectId
          * @param {JsonApiFilterContextInDocument} jsonApiFilterContextInDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'attributes' | 'datasets' | 'labels' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -13209,7 +13286,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             workspaceId: string,
             objectId: string,
             jsonApiFilterContextInDocument: JsonApiFilterContextInDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"attributes" | "datasets" | "labels" | "ALL">,
             options: AxiosRequestConfig = {},
@@ -13236,10 +13312,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "PUT", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -13277,7 +13349,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} workspaceId
          * @param {string} objectId
          * @param {JsonApiMetricInDocument} jsonApiMetricInDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -13287,7 +13358,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             workspaceId: string,
             objectId: string,
             jsonApiMetricInDocument: JsonApiMetricInDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">,
             options: AxiosRequestConfig = {},
@@ -13310,10 +13380,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "PUT", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -13347,8 +13413,72 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          *
          * @param {string} id
+         * @param {JsonApiOrganizationSettingInDocument} jsonApiOrganizationSettingInDocument
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateEntityOrganizationSettings: async (
+            id: string,
+            jsonApiOrganizationSettingInDocument: JsonApiOrganizationSettingInDocument,
+            filter?: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists("updateEntityOrganizationSettings", "id", id);
+            // verify required parameter 'jsonApiOrganizationSettingInDocument' is not null or undefined
+            assertParamExists(
+                "updateEntityOrganizationSettings",
+                "jsonApiOrganizationSettingInDocument",
+                jsonApiOrganizationSettingInDocument,
+            );
+            const localVarPath = `/api/v1/entities/organizationSettings/{id}`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "PUT", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof jsonApiOrganizationSettingInDocument !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      jsonApiOrganizationSettingInDocument !== undefined
+                          ? jsonApiOrganizationSettingInDocument
+                          : {},
+                  )
+                : jsonApiOrganizationSettingInDocument || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} id
          * @param {JsonApiOrganizationInDocument} jsonApiOrganizationInDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'users' | 'userGroups' | 'bootstrapUser' | 'bootstrapUserGroup' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -13357,7 +13487,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         updateEntityOrganizations: async (
             id: string,
             jsonApiOrganizationInDocument: JsonApiOrganizationInDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"users" | "userGroups" | "bootstrapUser" | "bootstrapUserGroup" | "ALL">,
             options: AxiosRequestConfig = {},
@@ -13383,10 +13512,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "PUT", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -13423,7 +13548,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          *
          * @param {string} id
          * @param {JsonApiUserGroupInDocument} jsonApiUserGroupInDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'userGroups' | 'parents' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -13432,7 +13556,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         updateEntityUserGroups: async (
             id: string,
             jsonApiUserGroupInDocument: JsonApiUserGroupInDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"userGroups" | "parents" | "ALL">,
             options: AxiosRequestConfig = {},
@@ -13458,10 +13581,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "PUT", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -13496,7 +13615,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          *
          * @param {string} id
          * @param {JsonApiUserInDocument} jsonApiUserInDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'userGroups' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -13505,7 +13623,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         updateEntityUsers: async (
             id: string,
             jsonApiUserInDocument: JsonApiUserInDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"userGroups" | "ALL">,
             options: AxiosRequestConfig = {},
@@ -13527,10 +13644,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "PUT", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -13566,7 +13679,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} workspaceId
          * @param {string} objectId
          * @param {JsonApiVisualizationObjectInDocument} jsonApiVisualizationObjectInDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -13576,7 +13688,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             workspaceId: string,
             objectId: string,
             jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">,
             options: AxiosRequestConfig = {},
@@ -13603,10 +13714,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "PUT", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -13646,7 +13753,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} workspaceId
          * @param {string} objectId
          * @param {JsonApiWorkspaceDataFilterInDocument} jsonApiWorkspaceDataFilterInDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'workspaceDataFilterSettings' | 'filterSettings' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -13656,7 +13762,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             workspaceId: string,
             objectId: string,
             jsonApiWorkspaceDataFilterInDocument: JsonApiWorkspaceDataFilterInDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">,
             options: AxiosRequestConfig = {},
@@ -13683,10 +13788,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "PUT", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -13725,7 +13826,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          *
          * @param {string} id
          * @param {JsonApiWorkspaceInDocument} jsonApiWorkspaceInDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'workspaces' | 'parent' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -13734,7 +13834,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         updateEntityWorkspaces: async (
             id: string,
             jsonApiWorkspaceInDocument: JsonApiWorkspaceInDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"workspaces" | "parent" | "ALL">,
             options: AxiosRequestConfig = {},
@@ -13760,10 +13859,6 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: "PUT", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (predicate !== undefined) {
-                localVarQueryParameter["predicate"] = predicate;
-            }
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
@@ -13941,6 +14036,24 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         },
         /**
          *
+         * @param {JsonApiOrganizationSettingInDocument} jsonApiOrganizationSettingInDocument
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createEntityOrganizationSettings(
+            jsonApiOrganizationSettingInDocument: JsonApiOrganizationSettingInDocument,
+            options?: AxiosRequestConfig,
+        ): Promise<
+            (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiOrganizationSettingOutDocument>
+        > {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createEntityOrganizationSettings(
+                jsonApiOrganizationSettingInDocument,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
          * @param {JsonApiUserGroupInDocument} jsonApiUserGroupInDocument
          * @param {Array<'userGroups' | 'parents' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -14048,7 +14161,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          *
          * @param {string} workspaceId
          * @param {string} objectId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -14056,14 +14168,12 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         async deleteEntityAnalyticalDashboards(
             workspaceId: string,
             objectId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteEntityAnalyticalDashboards(
                 workspaceId,
                 objectId,
-                predicate,
                 filter,
                 options,
             );
@@ -14073,7 +14183,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          *
          * @param {string} userId
          * @param {string} id
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -14081,14 +14190,12 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         async deleteEntityApiTokens(
             userId: string,
             id: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteEntityApiTokens(
                 userId,
                 id,
-                predicate,
                 filter,
                 options,
             );
@@ -14098,7 +14205,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          *
          * @param {string} workspaceId
          * @param {string} objectId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -14106,14 +14212,12 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         async deleteEntityDashboardPlugins(
             workspaceId: string,
             objectId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteEntityDashboardPlugins(
                 workspaceId,
                 objectId,
-                predicate,
                 filter,
                 options,
             );
@@ -14122,20 +14226,17 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         /**
          *
          * @param {string} id
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async deleteEntityDataSources(
             id: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteEntityDataSources(
                 id,
-                predicate,
                 filter,
                 options,
             );
@@ -14145,7 +14246,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          *
          * @param {string} workspaceId
          * @param {string} objectId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -14153,14 +14253,12 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         async deleteEntityFilterContexts(
             workspaceId: string,
             objectId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteEntityFilterContexts(
                 workspaceId,
                 objectId,
-                predicate,
                 filter,
                 options,
             );
@@ -14170,7 +14268,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          *
          * @param {string} workspaceId
          * @param {string} objectId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -14178,14 +14275,12 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         async deleteEntityMetrics(
             workspaceId: string,
             objectId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteEntityMetrics(
                 workspaceId,
                 objectId,
-                predicate,
                 filter,
                 options,
             );
@@ -14194,20 +14289,36 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         /**
          *
          * @param {string} id
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteEntityOrganizationSettings(
+            id: string,
+            filter?: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteEntityOrganizationSettings(
+                id,
+                filter,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} id
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async deleteEntityUserGroups(
             id: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteEntityUserGroups(
                 id,
-                predicate,
                 filter,
                 options,
             );
@@ -14216,30 +14327,22 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         /**
          *
          * @param {string} id
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async deleteEntityUsers(
             id: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteEntityUsers(
-                id,
-                predicate,
-                filter,
-                options,
-            );
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteEntityUsers(id, filter, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          *
          * @param {string} workspaceId
          * @param {string} objectId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -14247,14 +14350,12 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         async deleteEntityVisualizationObjects(
             workspaceId: string,
             objectId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteEntityVisualizationObjects(
                 workspaceId,
                 objectId,
-                predicate,
                 filter,
                 options,
             );
@@ -14264,7 +14365,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          *
          * @param {string} workspaceId
          * @param {string} objectId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -14272,14 +14372,12 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         async deleteEntityWorkspaceDataFilters(
             workspaceId: string,
             objectId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteEntityWorkspaceDataFilters(
                 workspaceId,
                 objectId,
-                predicate,
                 filter,
                 options,
             );
@@ -14288,20 +14386,17 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         /**
          *
          * @param {string} id
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async deleteEntityWorkspaces(
             id: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteEntityWorkspaces(
                 id,
-                predicate,
                 filter,
                 options,
             );
@@ -14310,7 +14405,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         /**
          *
          * @param {string} workspaceId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'visualizationObjects' | 'analyticalDashboards' | 'labels' | 'metrics' | 'datasets' | 'filterContexts' | 'dashboardPlugins' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
@@ -14322,7 +14416,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          */
         async getAllEntitiesAnalyticalDashboards(
             workspaceId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<
                 | "visualizationObjects"
@@ -14344,7 +14437,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         > {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAllEntitiesAnalyticalDashboards(
                 workspaceId,
-                predicate,
                 filter,
                 include,
                 page,
@@ -14358,7 +14450,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         /**
          *
          * @param {string} userId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
@@ -14368,7 +14459,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          */
         async getAllEntitiesApiTokens(
             userId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             page?: number,
             size?: number,
@@ -14377,7 +14467,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiApiTokenOutList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAllEntitiesApiTokens(
                 userId,
-                predicate,
                 filter,
                 page,
                 size,
@@ -14389,7 +14478,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         /**
          *
          * @param {string} workspaceId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'datasets' | 'labels' | 'dataset' | 'defaultView' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
@@ -14401,7 +14489,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          */
         async getAllEntitiesAttributes(
             workspaceId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"datasets" | "labels" | "dataset" | "defaultView" | "ALL">,
             page?: number,
@@ -14412,7 +14499,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiAttributeOutList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAllEntitiesAttributes(
                 workspaceId,
-                predicate,
                 filter,
                 include,
                 page,
@@ -14426,7 +14512,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         /**
          *
          * @param {string} workspaceId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
@@ -14437,7 +14522,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          */
         async getAllEntitiesDashboardPlugins(
             workspaceId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             page?: number,
             size?: number,
@@ -14449,7 +14533,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         > {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAllEntitiesDashboardPlugins(
                 workspaceId,
-                predicate,
                 filter,
                 page,
                 size,
@@ -14461,7 +14544,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         },
         /**
          *
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
@@ -14471,7 +14553,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @throws {RequiredError}
          */
         async getAllEntitiesDataSourceIdentifiers(
-            predicate?: { [key: string]: object },
             filter?: string,
             page?: number,
             size?: number,
@@ -14482,7 +14563,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiDataSourceIdentifierOutList>
         > {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAllEntitiesDataSourceIdentifiers(
-                predicate,
                 filter,
                 page,
                 size,
@@ -14495,7 +14575,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         /**
          *
          * @param {string} dataSourceId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
@@ -14505,7 +14584,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          */
         async getAllEntitiesDataSourceTables(
             dataSourceId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             page?: number,
             size?: number,
@@ -14516,7 +14594,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         > {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAllEntitiesDataSourceTables(
                 dataSourceId,
-                predicate,
                 filter,
                 page,
                 size,
@@ -14527,7 +14604,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         },
         /**
          *
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
@@ -14537,7 +14613,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @throws {RequiredError}
          */
         async getAllEntitiesDataSources(
-            predicate?: { [key: string]: object },
             filter?: string,
             page?: number,
             size?: number,
@@ -14546,7 +14621,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiDataSourceOutList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAllEntitiesDataSources(
-                predicate,
                 filter,
                 page,
                 size,
@@ -14559,7 +14633,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         /**
          *
          * @param {string} workspaceId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'attributes' | 'facts' | 'datasets' | 'references' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
@@ -14571,7 +14644,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          */
         async getAllEntitiesDatasets(
             workspaceId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"attributes" | "facts" | "datasets" | "references" | "ALL">,
             page?: number,
@@ -14582,7 +14654,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiDatasetOutList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAllEntitiesDatasets(
                 workspaceId,
-                predicate,
                 filter,
                 include,
                 page,
@@ -14595,7 +14666,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         },
         /**
          *
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
@@ -14604,7 +14674,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @throws {RequiredError}
          */
         async getAllEntitiesEntitlements(
-            predicate?: { [key: string]: object },
             filter?: string,
             page?: number,
             size?: number,
@@ -14612,7 +14681,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiEntitlementOutList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAllEntitiesEntitlements(
-                predicate,
                 filter,
                 page,
                 size,
@@ -14624,7 +14692,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         /**
          *
          * @param {string} workspaceId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'datasets' | 'dataset' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
@@ -14636,7 +14703,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          */
         async getAllEntitiesFacts(
             workspaceId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"datasets" | "dataset" | "ALL">,
             page?: number,
@@ -14647,7 +14713,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiFactOutList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAllEntitiesFacts(
                 workspaceId,
-                predicate,
                 filter,
                 include,
                 page,
@@ -14661,7 +14726,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         /**
          *
          * @param {string} workspaceId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'attributes' | 'datasets' | 'labels' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
@@ -14673,7 +14737,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          */
         async getAllEntitiesFilterContexts(
             workspaceId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"attributes" | "datasets" | "labels" | "ALL">,
             page?: number,
@@ -14684,7 +14747,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiFilterContextOutList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAllEntitiesFilterContexts(
                 workspaceId,
-                predicate,
                 filter,
                 include,
                 page,
@@ -14698,7 +14760,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         /**
          *
          * @param {string} workspaceId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'attributes' | 'attribute' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
@@ -14710,7 +14771,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          */
         async getAllEntitiesLabels(
             workspaceId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"attributes" | "attribute" | "ALL">,
             page?: number,
@@ -14721,7 +14781,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiLabelOutList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAllEntitiesLabels(
                 workspaceId,
-                predicate,
                 filter,
                 include,
                 page,
@@ -14735,7 +14794,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         /**
          *
          * @param {string} workspaceId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
@@ -14747,7 +14805,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          */
         async getAllEntitiesMetrics(
             workspaceId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">,
             page?: number,
@@ -14758,7 +14815,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiMetricOutList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAllEntitiesMetrics(
                 workspaceId,
-                predicate,
                 filter,
                 include,
                 page,
@@ -14771,7 +14827,33 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         },
         /**
          *
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {number} [page] Zero-based page index (0..N)
+         * @param {number} [size] The size of the page to be returned
+         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAllEntitiesOrganizationSettings(
+            filter?: string,
+            page?: number,
+            size?: number,
+            sort?: Array<string>,
+            options?: AxiosRequestConfig,
+        ): Promise<
+            (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiOrganizationSettingOutList>
+        > {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAllEntitiesOrganizationSettings(
+                filter,
+                page,
+                size,
+                sort,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'userGroups' | 'parents' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
@@ -14781,7 +14863,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @throws {RequiredError}
          */
         async getAllEntitiesUserGroups(
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"userGroups" | "parents" | "ALL">,
             page?: number,
@@ -14790,7 +14871,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiUserGroupOutList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAllEntitiesUserGroups(
-                predicate,
                 filter,
                 include,
                 page,
@@ -14802,7 +14882,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         },
         /**
          *
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'userGroups' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
@@ -14812,7 +14891,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @throws {RequiredError}
          */
         async getAllEntitiesUsers(
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"userGroups" | "ALL">,
             page?: number,
@@ -14821,7 +14899,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiUserOutList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAllEntitiesUsers(
-                predicate,
                 filter,
                 include,
                 page,
@@ -14834,7 +14911,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         /**
          *
          * @param {string} workspaceId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
@@ -14846,7 +14922,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          */
         async getAllEntitiesVisualizationObjects(
             workspaceId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">,
             page?: number,
@@ -14859,7 +14934,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         > {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAllEntitiesVisualizationObjects(
                 workspaceId,
-                predicate,
                 filter,
                 include,
                 page,
@@ -14873,7 +14947,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         /**
          *
          * @param {string} workspaceId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'workspaceDataFilters' | 'workspaceDataFilter' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
@@ -14885,7 +14958,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          */
         async getAllEntitiesWorkspaceDataFilterSettings(
             workspaceId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"workspaceDataFilters" | "workspaceDataFilter" | "ALL">,
             page?: number,
@@ -14902,7 +14974,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             const localVarAxiosArgs =
                 await localVarAxiosParamCreator.getAllEntitiesWorkspaceDataFilterSettings(
                     workspaceId,
-                    predicate,
                     filter,
                     include,
                     page,
@@ -14916,7 +14987,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         /**
          *
          * @param {string} workspaceId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'workspaceDataFilterSettings' | 'filterSettings' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
@@ -14928,7 +14998,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          */
         async getAllEntitiesWorkspaceDataFilters(
             workspaceId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">,
             page?: number,
@@ -14941,7 +15010,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         > {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAllEntitiesWorkspaceDataFilters(
                 workspaceId,
-                predicate,
                 filter,
                 include,
                 page,
@@ -14954,7 +15022,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         },
         /**
          *
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'workspaces' | 'parent' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
@@ -14965,7 +15032,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @throws {RequiredError}
          */
         async getAllEntitiesWorkspaces(
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"workspaces" | "parent" | "ALL">,
             page?: number,
@@ -14975,7 +15041,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWorkspaceOutList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAllEntitiesWorkspaces(
-                predicate,
                 filter,
                 include,
                 page,
@@ -15014,7 +15079,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          *
          * @param {string} workspaceId
          * @param {string} objectId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'visualizationObjects' | 'analyticalDashboards' | 'labels' | 'metrics' | 'datasets' | 'filterContexts' | 'dashboardPlugins' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {boolean} [xGDCVALIDATERELATIONS]
@@ -15024,7 +15088,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         async getEntityAnalyticalDashboards(
             workspaceId: string,
             objectId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<
                 | "visualizationObjects"
@@ -15044,7 +15107,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEntityAnalyticalDashboards(
                 workspaceId,
                 objectId,
-                predicate,
                 filter,
                 include,
                 xGDCVALIDATERELATIONS,
@@ -15056,7 +15118,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          *
          * @param {string} userId
          * @param {string} id
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -15064,14 +15125,12 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         async getEntityApiTokens(
             userId: string,
             id: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiApiTokenOutDocument>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEntityApiTokens(
                 userId,
                 id,
-                predicate,
                 filter,
                 options,
             );
@@ -15081,7 +15140,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          *
          * @param {string} workspaceId
          * @param {string} objectId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'datasets' | 'labels' | 'dataset' | 'defaultView' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {boolean} [xGDCVALIDATERELATIONS]
@@ -15091,7 +15149,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         async getEntityAttributes(
             workspaceId: string,
             objectId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"datasets" | "labels" | "dataset" | "defaultView" | "ALL">,
             xGDCVALIDATERELATIONS?: boolean,
@@ -15100,7 +15157,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEntityAttributes(
                 workspaceId,
                 objectId,
-                predicate,
                 filter,
                 include,
                 xGDCVALIDATERELATIONS,
@@ -15111,14 +15167,12 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         /**
          *
          * @param {string} id
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async getEntityCookieSecurityConfigurations(
             id: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             options?: AxiosRequestConfig,
         ): Promise<
@@ -15129,7 +15183,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         > {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEntityCookieSecurityConfigurations(
                 id,
-                predicate,
                 filter,
                 options,
             );
@@ -15139,7 +15192,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          *
          * @param {string} workspaceId
          * @param {string} objectId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {boolean} [xGDCVALIDATERELATIONS]
          * @param {*} [options] Override http request option.
@@ -15148,7 +15200,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         async getEntityDashboardPlugins(
             workspaceId: string,
             objectId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             xGDCVALIDATERELATIONS?: boolean,
             options?: AxiosRequestConfig,
@@ -15158,7 +15209,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEntityDashboardPlugins(
                 workspaceId,
                 objectId,
-                predicate,
                 filter,
                 xGDCVALIDATERELATIONS,
                 options,
@@ -15168,7 +15218,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         /**
          *
          * @param {string} id
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'permissions' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
@@ -15176,7 +15225,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          */
         async getEntityDataSourceIdentifiers(
             id: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             metaInclude?: Array<"permissions" | "all" | "ALL">,
             options?: AxiosRequestConfig,
@@ -15185,7 +15233,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         > {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEntityDataSourceIdentifiers(
                 id,
-                predicate,
                 filter,
                 metaInclude,
                 options,
@@ -15196,7 +15243,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          *
          * @param {string} dataSourceId
          * @param {string} id
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -15204,7 +15250,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         async getEntityDataSourceTables(
             dataSourceId: string,
             id: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             options?: AxiosRequestConfig,
         ): Promise<
@@ -15213,7 +15258,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEntityDataSourceTables(
                 dataSourceId,
                 id,
-                predicate,
                 filter,
                 options,
             );
@@ -15222,7 +15266,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         /**
          *
          * @param {string} id
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'permissions' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
@@ -15230,14 +15273,12 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          */
         async getEntityDataSources(
             id: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             metaInclude?: Array<"permissions" | "all" | "ALL">,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiDataSourceOutDocument>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEntityDataSources(
                 id,
-                predicate,
                 filter,
                 metaInclude,
                 options,
@@ -15248,7 +15289,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          *
          * @param {string} workspaceId
          * @param {string} objectId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'attributes' | 'facts' | 'datasets' | 'references' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {boolean} [xGDCVALIDATERELATIONS]
@@ -15258,7 +15298,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         async getEntityDatasets(
             workspaceId: string,
             objectId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"attributes" | "facts" | "datasets" | "references" | "ALL">,
             xGDCVALIDATERELATIONS?: boolean,
@@ -15267,7 +15306,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEntityDatasets(
                 workspaceId,
                 objectId,
-                predicate,
                 filter,
                 include,
                 xGDCVALIDATERELATIONS,
@@ -15278,14 +15316,12 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         /**
          *
          * @param {string} id
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async getEntityEntitlements(
             id: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             options?: AxiosRequestConfig,
         ): Promise<
@@ -15293,7 +15329,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         > {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEntityEntitlements(
                 id,
-                predicate,
                 filter,
                 options,
             );
@@ -15303,7 +15338,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          *
          * @param {string} workspaceId
          * @param {string} objectId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'datasets' | 'dataset' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {boolean} [xGDCVALIDATERELATIONS]
@@ -15313,7 +15347,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         async getEntityFacts(
             workspaceId: string,
             objectId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"datasets" | "dataset" | "ALL">,
             xGDCVALIDATERELATIONS?: boolean,
@@ -15322,7 +15355,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEntityFacts(
                 workspaceId,
                 objectId,
-                predicate,
                 filter,
                 include,
                 xGDCVALIDATERELATIONS,
@@ -15334,7 +15366,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          *
          * @param {string} workspaceId
          * @param {string} objectId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'attributes' | 'datasets' | 'labels' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {boolean} [xGDCVALIDATERELATIONS]
@@ -15344,7 +15375,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         async getEntityFilterContexts(
             workspaceId: string,
             objectId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"attributes" | "datasets" | "labels" | "ALL">,
             xGDCVALIDATERELATIONS?: boolean,
@@ -15355,7 +15385,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEntityFilterContexts(
                 workspaceId,
                 objectId,
-                predicate,
                 filter,
                 include,
                 xGDCVALIDATERELATIONS,
@@ -15367,7 +15396,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          *
          * @param {string} workspaceId
          * @param {string} objectId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'attributes' | 'attribute' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {boolean} [xGDCVALIDATERELATIONS]
@@ -15377,7 +15405,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         async getEntityLabels(
             workspaceId: string,
             objectId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"attributes" | "attribute" | "ALL">,
             xGDCVALIDATERELATIONS?: boolean,
@@ -15386,7 +15413,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEntityLabels(
                 workspaceId,
                 objectId,
-                predicate,
                 filter,
                 include,
                 xGDCVALIDATERELATIONS,
@@ -15398,7 +15424,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          *
          * @param {string} workspaceId
          * @param {string} objectId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {boolean} [xGDCVALIDATERELATIONS]
@@ -15408,7 +15433,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         async getEntityMetrics(
             workspaceId: string,
             objectId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">,
             xGDCVALIDATERELATIONS?: boolean,
@@ -15417,7 +15441,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEntityMetrics(
                 workspaceId,
                 objectId,
-                predicate,
                 filter,
                 include,
                 xGDCVALIDATERELATIONS,
@@ -15428,7 +15451,27 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         /**
          *
          * @param {string} id
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getEntityOrganizationSettings(
+            id: string,
+            filter?: string,
+            options?: AxiosRequestConfig,
+        ): Promise<
+            (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiOrganizationSettingOutDocument>
+        > {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEntityOrganizationSettings(
+                id,
+                filter,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} id
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'users' | 'userGroups' | 'bootstrapUser' | 'bootstrapUserGroup' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {Array<'permissions' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
@@ -15437,7 +15480,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          */
         async getEntityOrganizations(
             id: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"users" | "userGroups" | "bootstrapUser" | "bootstrapUserGroup" | "ALL">,
             metaInclude?: Array<"permissions" | "all" | "ALL">,
@@ -15447,7 +15489,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         > {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEntityOrganizations(
                 id,
-                predicate,
                 filter,
                 include,
                 metaInclude,
@@ -15458,7 +15499,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         /**
          *
          * @param {string} id
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'userGroups' | 'parents' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -15466,14 +15506,12 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          */
         async getEntityUserGroups(
             id: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"userGroups" | "parents" | "ALL">,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiUserGroupOutDocument>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEntityUserGroups(
                 id,
-                predicate,
                 filter,
                 include,
                 options,
@@ -15483,7 +15521,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         /**
          *
          * @param {string} id
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'userGroups' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -15491,14 +15528,12 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          */
         async getEntityUsers(
             id: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"userGroups" | "ALL">,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiUserOutDocument>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEntityUsers(
                 id,
-                predicate,
                 filter,
                 include,
                 options,
@@ -15509,7 +15544,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          *
          * @param {string} workspaceId
          * @param {string} objectId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {boolean} [xGDCVALIDATERELATIONS]
@@ -15519,7 +15553,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         async getEntityVisualizationObjects(
             workspaceId: string,
             objectId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">,
             xGDCVALIDATERELATIONS?: boolean,
@@ -15530,7 +15563,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEntityVisualizationObjects(
                 workspaceId,
                 objectId,
-                predicate,
                 filter,
                 include,
                 xGDCVALIDATERELATIONS,
@@ -15542,7 +15574,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          *
          * @param {string} workspaceId
          * @param {string} objectId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'workspaceDataFilters' | 'workspaceDataFilter' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {boolean} [xGDCVALIDATERELATIONS]
@@ -15552,7 +15583,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         async getEntityWorkspaceDataFilterSettings(
             workspaceId: string,
             objectId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"workspaceDataFilters" | "workspaceDataFilter" | "ALL">,
             xGDCVALIDATERELATIONS?: boolean,
@@ -15566,7 +15596,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEntityWorkspaceDataFilterSettings(
                 workspaceId,
                 objectId,
-                predicate,
                 filter,
                 include,
                 xGDCVALIDATERELATIONS,
@@ -15578,7 +15607,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          *
          * @param {string} workspaceId
          * @param {string} objectId
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'workspaceDataFilterSettings' | 'filterSettings' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {boolean} [xGDCVALIDATERELATIONS]
@@ -15588,7 +15616,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         async getEntityWorkspaceDataFilters(
             workspaceId: string,
             objectId: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">,
             xGDCVALIDATERELATIONS?: boolean,
@@ -15599,7 +15626,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEntityWorkspaceDataFilters(
                 workspaceId,
                 objectId,
-                predicate,
                 filter,
                 include,
                 xGDCVALIDATERELATIONS,
@@ -15610,7 +15636,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         /**
          *
          * @param {string} id
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'workspaces' | 'parent' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {Array<'config' | 'permissions' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
@@ -15619,7 +15644,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          */
         async getEntityWorkspaces(
             id: string,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"workspaces" | "parent" | "ALL">,
             metaInclude?: Array<"config" | "permissions" | "all" | "ALL">,
@@ -15627,7 +15651,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWorkspaceOutDocument>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEntityWorkspaces(
                 id,
-                predicate,
                 filter,
                 include,
                 metaInclude,
@@ -15654,7 +15677,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {string} workspaceId
          * @param {string} objectId
          * @param {JsonApiAnalyticalDashboardPatchDocument} jsonApiAnalyticalDashboardPatchDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'visualizationObjects' | 'analyticalDashboards' | 'labels' | 'metrics' | 'datasets' | 'filterContexts' | 'dashboardPlugins' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -15664,7 +15686,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             workspaceId: string,
             objectId: string,
             jsonApiAnalyticalDashboardPatchDocument: JsonApiAnalyticalDashboardPatchDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<
                 | "visualizationObjects"
@@ -15684,7 +15705,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 workspaceId,
                 objectId,
                 jsonApiAnalyticalDashboardPatchDocument,
-                predicate,
                 filter,
                 include,
                 options,
@@ -15695,7 +15715,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          *
          * @param {string} id
          * @param {JsonApiCookieSecurityConfigurationPatchDocument} jsonApiCookieSecurityConfigurationPatchDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -15703,7 +15722,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         async patchEntityCookieSecurityConfigurations(
             id: string,
             jsonApiCookieSecurityConfigurationPatchDocument: JsonApiCookieSecurityConfigurationPatchDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             options?: AxiosRequestConfig,
         ): Promise<
@@ -15715,7 +15733,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchEntityCookieSecurityConfigurations(
                 id,
                 jsonApiCookieSecurityConfigurationPatchDocument,
-                predicate,
                 filter,
                 options,
             );
@@ -15726,7 +15743,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {string} workspaceId
          * @param {string} objectId
          * @param {JsonApiDashboardPluginPatchDocument} jsonApiDashboardPluginPatchDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -15735,7 +15751,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             workspaceId: string,
             objectId: string,
             jsonApiDashboardPluginPatchDocument: JsonApiDashboardPluginPatchDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             options?: AxiosRequestConfig,
         ): Promise<
@@ -15745,7 +15760,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 workspaceId,
                 objectId,
                 jsonApiDashboardPluginPatchDocument,
-                predicate,
                 filter,
                 options,
             );
@@ -15755,7 +15769,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          *
          * @param {string} id
          * @param {JsonApiDataSourcePatchDocument} jsonApiDataSourcePatchDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -15763,14 +15776,12 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         async patchEntityDataSources(
             id: string,
             jsonApiDataSourcePatchDocument: JsonApiDataSourcePatchDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiDataSourceOutDocument>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchEntityDataSources(
                 id,
                 jsonApiDataSourcePatchDocument,
-                predicate,
                 filter,
                 options,
             );
@@ -15781,7 +15792,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {string} workspaceId
          * @param {string} objectId
          * @param {JsonApiFilterContextPatchDocument} jsonApiFilterContextPatchDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'attributes' | 'datasets' | 'labels' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -15791,7 +15801,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             workspaceId: string,
             objectId: string,
             jsonApiFilterContextPatchDocument: JsonApiFilterContextPatchDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"attributes" | "datasets" | "labels" | "ALL">,
             options?: AxiosRequestConfig,
@@ -15802,7 +15811,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 workspaceId,
                 objectId,
                 jsonApiFilterContextPatchDocument,
-                predicate,
                 filter,
                 include,
                 options,
@@ -15814,7 +15822,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {string} workspaceId
          * @param {string} objectId
          * @param {JsonApiMetricPatchDocument} jsonApiMetricPatchDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -15824,7 +15831,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             workspaceId: string,
             objectId: string,
             jsonApiMetricPatchDocument: JsonApiMetricPatchDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">,
             options?: AxiosRequestConfig,
@@ -15833,7 +15839,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 workspaceId,
                 objectId,
                 jsonApiMetricPatchDocument,
-                predicate,
                 filter,
                 include,
                 options,
@@ -15843,8 +15848,31 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         /**
          *
          * @param {string} id
+         * @param {JsonApiOrganizationSettingPatchDocument} jsonApiOrganizationSettingPatchDocument
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async patchEntityOrganizationSettings(
+            id: string,
+            jsonApiOrganizationSettingPatchDocument: JsonApiOrganizationSettingPatchDocument,
+            filter?: string,
+            options?: AxiosRequestConfig,
+        ): Promise<
+            (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiOrganizationSettingOutDocument>
+        > {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchEntityOrganizationSettings(
+                id,
+                jsonApiOrganizationSettingPatchDocument,
+                filter,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} id
          * @param {JsonApiOrganizationPatchDocument} jsonApiOrganizationPatchDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'users' | 'userGroups' | 'bootstrapUser' | 'bootstrapUserGroup' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -15853,7 +15881,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         async patchEntityOrganizations(
             id: string,
             jsonApiOrganizationPatchDocument: JsonApiOrganizationPatchDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"users" | "userGroups" | "bootstrapUser" | "bootstrapUserGroup" | "ALL">,
             options?: AxiosRequestConfig,
@@ -15863,7 +15890,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchEntityOrganizations(
                 id,
                 jsonApiOrganizationPatchDocument,
-                predicate,
                 filter,
                 include,
                 options,
@@ -15874,7 +15900,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          *
          * @param {string} id
          * @param {JsonApiUserGroupPatchDocument} jsonApiUserGroupPatchDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'userGroups' | 'parents' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -15883,7 +15908,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         async patchEntityUserGroups(
             id: string,
             jsonApiUserGroupPatchDocument: JsonApiUserGroupPatchDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"userGroups" | "parents" | "ALL">,
             options?: AxiosRequestConfig,
@@ -15891,7 +15915,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchEntityUserGroups(
                 id,
                 jsonApiUserGroupPatchDocument,
-                predicate,
                 filter,
                 include,
                 options,
@@ -15902,7 +15925,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          *
          * @param {string} id
          * @param {JsonApiUserPatchDocument} jsonApiUserPatchDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'userGroups' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -15911,7 +15933,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         async patchEntityUsers(
             id: string,
             jsonApiUserPatchDocument: JsonApiUserPatchDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"userGroups" | "ALL">,
             options?: AxiosRequestConfig,
@@ -15919,7 +15940,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchEntityUsers(
                 id,
                 jsonApiUserPatchDocument,
-                predicate,
                 filter,
                 include,
                 options,
@@ -15931,7 +15951,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {string} workspaceId
          * @param {string} objectId
          * @param {JsonApiVisualizationObjectPatchDocument} jsonApiVisualizationObjectPatchDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -15941,7 +15960,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             workspaceId: string,
             objectId: string,
             jsonApiVisualizationObjectPatchDocument: JsonApiVisualizationObjectPatchDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">,
             options?: AxiosRequestConfig,
@@ -15952,7 +15970,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 workspaceId,
                 objectId,
                 jsonApiVisualizationObjectPatchDocument,
-                predicate,
                 filter,
                 include,
                 options,
@@ -15964,7 +15981,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {string} workspaceId
          * @param {string} objectId
          * @param {JsonApiWorkspaceDataFilterPatchDocument} jsonApiWorkspaceDataFilterPatchDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'workspaceDataFilterSettings' | 'filterSettings' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -15974,7 +15990,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             workspaceId: string,
             objectId: string,
             jsonApiWorkspaceDataFilterPatchDocument: JsonApiWorkspaceDataFilterPatchDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">,
             options?: AxiosRequestConfig,
@@ -15985,7 +16000,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 workspaceId,
                 objectId,
                 jsonApiWorkspaceDataFilterPatchDocument,
-                predicate,
                 filter,
                 include,
                 options,
@@ -15996,7 +16010,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          *
          * @param {string} id
          * @param {JsonApiWorkspacePatchDocument} jsonApiWorkspacePatchDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'workspaces' | 'parent' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -16005,7 +16018,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         async patchEntityWorkspaces(
             id: string,
             jsonApiWorkspacePatchDocument: JsonApiWorkspacePatchDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"workspaces" | "parent" | "ALL">,
             options?: AxiosRequestConfig,
@@ -16013,7 +16025,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchEntityWorkspaces(
                 id,
                 jsonApiWorkspacePatchDocument,
-                predicate,
                 filter,
                 include,
                 options,
@@ -16025,7 +16036,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {string} workspaceId
          * @param {string} objectId
          * @param {JsonApiAnalyticalDashboardInDocument} jsonApiAnalyticalDashboardInDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'visualizationObjects' | 'analyticalDashboards' | 'labels' | 'metrics' | 'datasets' | 'filterContexts' | 'dashboardPlugins' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -16035,7 +16045,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             workspaceId: string,
             objectId: string,
             jsonApiAnalyticalDashboardInDocument: JsonApiAnalyticalDashboardInDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<
                 | "visualizationObjects"
@@ -16055,7 +16064,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 workspaceId,
                 objectId,
                 jsonApiAnalyticalDashboardInDocument,
-                predicate,
                 filter,
                 include,
                 options,
@@ -16066,7 +16074,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          *
          * @param {string} id
          * @param {JsonApiCookieSecurityConfigurationInDocument} jsonApiCookieSecurityConfigurationInDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -16074,7 +16081,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         async updateEntityCookieSecurityConfigurations(
             id: string,
             jsonApiCookieSecurityConfigurationInDocument: JsonApiCookieSecurityConfigurationInDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             options?: AxiosRequestConfig,
         ): Promise<
@@ -16087,7 +16093,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 await localVarAxiosParamCreator.updateEntityCookieSecurityConfigurations(
                     id,
                     jsonApiCookieSecurityConfigurationInDocument,
-                    predicate,
                     filter,
                     options,
                 );
@@ -16098,7 +16103,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {string} workspaceId
          * @param {string} objectId
          * @param {JsonApiDashboardPluginInDocument} jsonApiDashboardPluginInDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -16107,7 +16111,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             workspaceId: string,
             objectId: string,
             jsonApiDashboardPluginInDocument: JsonApiDashboardPluginInDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             options?: AxiosRequestConfig,
         ): Promise<
@@ -16117,7 +16120,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 workspaceId,
                 objectId,
                 jsonApiDashboardPluginInDocument,
-                predicate,
                 filter,
                 options,
             );
@@ -16127,7 +16129,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          *
          * @param {string} id
          * @param {JsonApiDataSourceInDocument} jsonApiDataSourceInDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -16135,14 +16136,12 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         async updateEntityDataSources(
             id: string,
             jsonApiDataSourceInDocument: JsonApiDataSourceInDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiDataSourceOutDocument>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateEntityDataSources(
                 id,
                 jsonApiDataSourceInDocument,
-                predicate,
                 filter,
                 options,
             );
@@ -16153,7 +16152,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {string} workspaceId
          * @param {string} objectId
          * @param {JsonApiFilterContextInDocument} jsonApiFilterContextInDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'attributes' | 'datasets' | 'labels' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -16163,7 +16161,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             workspaceId: string,
             objectId: string,
             jsonApiFilterContextInDocument: JsonApiFilterContextInDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"attributes" | "datasets" | "labels" | "ALL">,
             options?: AxiosRequestConfig,
@@ -16174,7 +16171,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 workspaceId,
                 objectId,
                 jsonApiFilterContextInDocument,
-                predicate,
                 filter,
                 include,
                 options,
@@ -16186,7 +16182,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {string} workspaceId
          * @param {string} objectId
          * @param {JsonApiMetricInDocument} jsonApiMetricInDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -16196,7 +16191,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             workspaceId: string,
             objectId: string,
             jsonApiMetricInDocument: JsonApiMetricInDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">,
             options?: AxiosRequestConfig,
@@ -16205,7 +16199,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 workspaceId,
                 objectId,
                 jsonApiMetricInDocument,
-                predicate,
                 filter,
                 include,
                 options,
@@ -16215,8 +16208,31 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         /**
          *
          * @param {string} id
+         * @param {JsonApiOrganizationSettingInDocument} jsonApiOrganizationSettingInDocument
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateEntityOrganizationSettings(
+            id: string,
+            jsonApiOrganizationSettingInDocument: JsonApiOrganizationSettingInDocument,
+            filter?: string,
+            options?: AxiosRequestConfig,
+        ): Promise<
+            (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiOrganizationSettingOutDocument>
+        > {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateEntityOrganizationSettings(
+                id,
+                jsonApiOrganizationSettingInDocument,
+                filter,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} id
          * @param {JsonApiOrganizationInDocument} jsonApiOrganizationInDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'users' | 'userGroups' | 'bootstrapUser' | 'bootstrapUserGroup' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -16225,7 +16241,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         async updateEntityOrganizations(
             id: string,
             jsonApiOrganizationInDocument: JsonApiOrganizationInDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"users" | "userGroups" | "bootstrapUser" | "bootstrapUserGroup" | "ALL">,
             options?: AxiosRequestConfig,
@@ -16235,7 +16250,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateEntityOrganizations(
                 id,
                 jsonApiOrganizationInDocument,
-                predicate,
                 filter,
                 include,
                 options,
@@ -16246,7 +16260,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          *
          * @param {string} id
          * @param {JsonApiUserGroupInDocument} jsonApiUserGroupInDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'userGroups' | 'parents' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -16255,7 +16268,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         async updateEntityUserGroups(
             id: string,
             jsonApiUserGroupInDocument: JsonApiUserGroupInDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"userGroups" | "parents" | "ALL">,
             options?: AxiosRequestConfig,
@@ -16263,7 +16275,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateEntityUserGroups(
                 id,
                 jsonApiUserGroupInDocument,
-                predicate,
                 filter,
                 include,
                 options,
@@ -16274,7 +16285,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          *
          * @param {string} id
          * @param {JsonApiUserInDocument} jsonApiUserInDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'userGroups' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -16283,7 +16293,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         async updateEntityUsers(
             id: string,
             jsonApiUserInDocument: JsonApiUserInDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"userGroups" | "ALL">,
             options?: AxiosRequestConfig,
@@ -16291,7 +16300,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateEntityUsers(
                 id,
                 jsonApiUserInDocument,
-                predicate,
                 filter,
                 include,
                 options,
@@ -16303,7 +16311,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {string} workspaceId
          * @param {string} objectId
          * @param {JsonApiVisualizationObjectInDocument} jsonApiVisualizationObjectInDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -16313,7 +16320,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             workspaceId: string,
             objectId: string,
             jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">,
             options?: AxiosRequestConfig,
@@ -16324,7 +16330,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 workspaceId,
                 objectId,
                 jsonApiVisualizationObjectInDocument,
-                predicate,
                 filter,
                 include,
                 options,
@@ -16336,7 +16341,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {string} workspaceId
          * @param {string} objectId
          * @param {JsonApiWorkspaceDataFilterInDocument} jsonApiWorkspaceDataFilterInDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'workspaceDataFilterSettings' | 'filterSettings' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -16346,7 +16350,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             workspaceId: string,
             objectId: string,
             jsonApiWorkspaceDataFilterInDocument: JsonApiWorkspaceDataFilterInDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">,
             options?: AxiosRequestConfig,
@@ -16357,7 +16360,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 workspaceId,
                 objectId,
                 jsonApiWorkspaceDataFilterInDocument,
-                predicate,
                 filter,
                 include,
                 options,
@@ -16368,7 +16370,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          *
          * @param {string} id
          * @param {JsonApiWorkspaceInDocument} jsonApiWorkspaceInDocument
-         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'workspaces' | 'parent' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -16377,7 +16378,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         async updateEntityWorkspaces(
             id: string,
             jsonApiWorkspaceInDocument: JsonApiWorkspaceInDocument,
-            predicate?: { [key: string]: object },
             filter?: string,
             include?: Array<"workspaces" | "parent" | "ALL">,
             options?: AxiosRequestConfig,
@@ -16385,7 +16385,6 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateEntityWorkspaces(
                 id,
                 jsonApiWorkspaceInDocument,
-                predicate,
                 filter,
                 include,
                 options,
@@ -16515,6 +16514,23 @@ export const EntitiesApiFactory = function (
         },
         /**
          *
+         * @param {EntitiesApiCreateEntityOrganizationSettingsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createEntityOrganizationSettings(
+            requestParameters: EntitiesApiCreateEntityOrganizationSettingsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<JsonApiOrganizationSettingOutDocument> {
+            return localVarFp
+                .createEntityOrganizationSettings(
+                    requestParameters.jsonApiOrganizationSettingInDocument,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
          * @param {EntitiesApiCreateEntityUserGroupsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -16619,7 +16635,6 @@ export const EntitiesApiFactory = function (
                 .deleteEntityAnalyticalDashboards(
                     requestParameters.workspaceId,
                     requestParameters.objectId,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     options,
                 )
@@ -16639,7 +16654,6 @@ export const EntitiesApiFactory = function (
                 .deleteEntityApiTokens(
                     requestParameters.userId,
                     requestParameters.id,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     options,
                 )
@@ -16659,7 +16673,6 @@ export const EntitiesApiFactory = function (
                 .deleteEntityDashboardPlugins(
                     requestParameters.workspaceId,
                     requestParameters.objectId,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     options,
                 )
@@ -16676,12 +16689,7 @@ export const EntitiesApiFactory = function (
             options?: AxiosRequestConfig,
         ): AxiosPromise<void> {
             return localVarFp
-                .deleteEntityDataSources(
-                    requestParameters.id,
-                    requestParameters.predicate,
-                    requestParameters.filter,
-                    options,
-                )
+                .deleteEntityDataSources(requestParameters.id, requestParameters.filter, options)
                 .then((request) => request(axios, basePath));
         },
         /**
@@ -16698,7 +16706,6 @@ export const EntitiesApiFactory = function (
                 .deleteEntityFilterContexts(
                     requestParameters.workspaceId,
                     requestParameters.objectId,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     options,
                 )
@@ -16718,10 +16725,23 @@ export const EntitiesApiFactory = function (
                 .deleteEntityMetrics(
                     requestParameters.workspaceId,
                     requestParameters.objectId,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     options,
                 )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {EntitiesApiDeleteEntityOrganizationSettingsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteEntityOrganizationSettings(
+            requestParameters: EntitiesApiDeleteEntityOrganizationSettingsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .deleteEntityOrganizationSettings(requestParameters.id, requestParameters.filter, options)
                 .then((request) => request(axios, basePath));
         },
         /**
@@ -16735,12 +16755,7 @@ export const EntitiesApiFactory = function (
             options?: AxiosRequestConfig,
         ): AxiosPromise<void> {
             return localVarFp
-                .deleteEntityUserGroups(
-                    requestParameters.id,
-                    requestParameters.predicate,
-                    requestParameters.filter,
-                    options,
-                )
+                .deleteEntityUserGroups(requestParameters.id, requestParameters.filter, options)
                 .then((request) => request(axios, basePath));
         },
         /**
@@ -16754,12 +16769,7 @@ export const EntitiesApiFactory = function (
             options?: AxiosRequestConfig,
         ): AxiosPromise<void> {
             return localVarFp
-                .deleteEntityUsers(
-                    requestParameters.id,
-                    requestParameters.predicate,
-                    requestParameters.filter,
-                    options,
-                )
+                .deleteEntityUsers(requestParameters.id, requestParameters.filter, options)
                 .then((request) => request(axios, basePath));
         },
         /**
@@ -16776,7 +16786,6 @@ export const EntitiesApiFactory = function (
                 .deleteEntityVisualizationObjects(
                     requestParameters.workspaceId,
                     requestParameters.objectId,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     options,
                 )
@@ -16796,7 +16805,6 @@ export const EntitiesApiFactory = function (
                 .deleteEntityWorkspaceDataFilters(
                     requestParameters.workspaceId,
                     requestParameters.objectId,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     options,
                 )
@@ -16813,12 +16821,7 @@ export const EntitiesApiFactory = function (
             options?: AxiosRequestConfig,
         ): AxiosPromise<void> {
             return localVarFp
-                .deleteEntityWorkspaces(
-                    requestParameters.id,
-                    requestParameters.predicate,
-                    requestParameters.filter,
-                    options,
-                )
+                .deleteEntityWorkspaces(requestParameters.id, requestParameters.filter, options)
                 .then((request) => request(axios, basePath));
         },
         /**
@@ -16834,7 +16837,6 @@ export const EntitiesApiFactory = function (
             return localVarFp
                 .getAllEntitiesAnalyticalDashboards(
                     requestParameters.workspaceId,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     requestParameters.page,
@@ -16858,7 +16860,6 @@ export const EntitiesApiFactory = function (
             return localVarFp
                 .getAllEntitiesApiTokens(
                     requestParameters.userId,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.page,
                     requestParameters.size,
@@ -16880,7 +16881,6 @@ export const EntitiesApiFactory = function (
             return localVarFp
                 .getAllEntitiesAttributes(
                     requestParameters.workspaceId,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     requestParameters.page,
@@ -16904,7 +16904,6 @@ export const EntitiesApiFactory = function (
             return localVarFp
                 .getAllEntitiesDashboardPlugins(
                     requestParameters.workspaceId,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.page,
                     requestParameters.size,
@@ -16926,7 +16925,6 @@ export const EntitiesApiFactory = function (
         ): AxiosPromise<JsonApiDataSourceIdentifierOutList> {
             return localVarFp
                 .getAllEntitiesDataSourceIdentifiers(
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.page,
                     requestParameters.size,
@@ -16949,7 +16947,6 @@ export const EntitiesApiFactory = function (
             return localVarFp
                 .getAllEntitiesDataSourceTables(
                     requestParameters.dataSourceId,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.page,
                     requestParameters.size,
@@ -16970,7 +16967,6 @@ export const EntitiesApiFactory = function (
         ): AxiosPromise<JsonApiDataSourceOutList> {
             return localVarFp
                 .getAllEntitiesDataSources(
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.page,
                     requestParameters.size,
@@ -16993,7 +16989,6 @@ export const EntitiesApiFactory = function (
             return localVarFp
                 .getAllEntitiesDatasets(
                     requestParameters.workspaceId,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     requestParameters.page,
@@ -17016,7 +17011,6 @@ export const EntitiesApiFactory = function (
         ): AxiosPromise<JsonApiEntitlementOutList> {
             return localVarFp
                 .getAllEntitiesEntitlements(
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.page,
                     requestParameters.size,
@@ -17038,7 +17032,6 @@ export const EntitiesApiFactory = function (
             return localVarFp
                 .getAllEntitiesFacts(
                     requestParameters.workspaceId,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     requestParameters.page,
@@ -17062,7 +17055,6 @@ export const EntitiesApiFactory = function (
             return localVarFp
                 .getAllEntitiesFilterContexts(
                     requestParameters.workspaceId,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     requestParameters.page,
@@ -17086,7 +17078,6 @@ export const EntitiesApiFactory = function (
             return localVarFp
                 .getAllEntitiesLabels(
                     requestParameters.workspaceId,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     requestParameters.page,
@@ -17110,13 +17101,32 @@ export const EntitiesApiFactory = function (
             return localVarFp
                 .getAllEntitiesMetrics(
                     requestParameters.workspaceId,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     requestParameters.page,
                     requestParameters.size,
                     requestParameters.sort,
                     requestParameters.xGDCVALIDATERELATIONS,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {EntitiesApiGetAllEntitiesOrganizationSettingsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllEntitiesOrganizationSettings(
+            requestParameters: EntitiesApiGetAllEntitiesOrganizationSettingsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<JsonApiOrganizationSettingOutList> {
+            return localVarFp
+                .getAllEntitiesOrganizationSettings(
+                    requestParameters.filter,
+                    requestParameters.page,
+                    requestParameters.size,
+                    requestParameters.sort,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -17133,7 +17143,6 @@ export const EntitiesApiFactory = function (
         ): AxiosPromise<JsonApiUserGroupOutList> {
             return localVarFp
                 .getAllEntitiesUserGroups(
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     requestParameters.page,
@@ -17155,7 +17164,6 @@ export const EntitiesApiFactory = function (
         ): AxiosPromise<JsonApiUserOutList> {
             return localVarFp
                 .getAllEntitiesUsers(
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     requestParameters.page,
@@ -17178,7 +17186,6 @@ export const EntitiesApiFactory = function (
             return localVarFp
                 .getAllEntitiesVisualizationObjects(
                     requestParameters.workspaceId,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     requestParameters.page,
@@ -17202,7 +17209,6 @@ export const EntitiesApiFactory = function (
             return localVarFp
                 .getAllEntitiesWorkspaceDataFilterSettings(
                     requestParameters.workspaceId,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     requestParameters.page,
@@ -17226,7 +17232,6 @@ export const EntitiesApiFactory = function (
             return localVarFp
                 .getAllEntitiesWorkspaceDataFilters(
                     requestParameters.workspaceId,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     requestParameters.page,
@@ -17249,7 +17254,6 @@ export const EntitiesApiFactory = function (
         ): AxiosPromise<JsonApiWorkspaceOutList> {
             return localVarFp
                 .getAllEntitiesWorkspaces(
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     requestParameters.page,
@@ -17292,7 +17296,6 @@ export const EntitiesApiFactory = function (
                 .getEntityAnalyticalDashboards(
                     requestParameters.workspaceId,
                     requestParameters.objectId,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     requestParameters.xGDCVALIDATERELATIONS,
@@ -17314,7 +17317,6 @@ export const EntitiesApiFactory = function (
                 .getEntityApiTokens(
                     requestParameters.userId,
                     requestParameters.id,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     options,
                 )
@@ -17334,7 +17336,6 @@ export const EntitiesApiFactory = function (
                 .getEntityAttributes(
                     requestParameters.workspaceId,
                     requestParameters.objectId,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     requestParameters.xGDCVALIDATERELATIONS,
@@ -17355,7 +17356,6 @@ export const EntitiesApiFactory = function (
             return localVarFp
                 .getEntityCookieSecurityConfigurations(
                     requestParameters.id,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     options,
                 )
@@ -17375,7 +17375,6 @@ export const EntitiesApiFactory = function (
                 .getEntityDashboardPlugins(
                     requestParameters.workspaceId,
                     requestParameters.objectId,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.xGDCVALIDATERELATIONS,
                     options,
@@ -17395,7 +17394,6 @@ export const EntitiesApiFactory = function (
             return localVarFp
                 .getEntityDataSourceIdentifiers(
                     requestParameters.id,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.metaInclude,
                     options,
@@ -17416,7 +17414,6 @@ export const EntitiesApiFactory = function (
                 .getEntityDataSourceTables(
                     requestParameters.dataSourceId,
                     requestParameters.id,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     options,
                 )
@@ -17435,7 +17432,6 @@ export const EntitiesApiFactory = function (
             return localVarFp
                 .getEntityDataSources(
                     requestParameters.id,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.metaInclude,
                     options,
@@ -17456,7 +17452,6 @@ export const EntitiesApiFactory = function (
                 .getEntityDatasets(
                     requestParameters.workspaceId,
                     requestParameters.objectId,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     requestParameters.xGDCVALIDATERELATIONS,
@@ -17475,12 +17470,7 @@ export const EntitiesApiFactory = function (
             options?: AxiosRequestConfig,
         ): AxiosPromise<JsonApiEntitlementOutDocument> {
             return localVarFp
-                .getEntityEntitlements(
-                    requestParameters.id,
-                    requestParameters.predicate,
-                    requestParameters.filter,
-                    options,
-                )
+                .getEntityEntitlements(requestParameters.id, requestParameters.filter, options)
                 .then((request) => request(axios, basePath));
         },
         /**
@@ -17497,7 +17487,6 @@ export const EntitiesApiFactory = function (
                 .getEntityFacts(
                     requestParameters.workspaceId,
                     requestParameters.objectId,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     requestParameters.xGDCVALIDATERELATIONS,
@@ -17519,7 +17508,6 @@ export const EntitiesApiFactory = function (
                 .getEntityFilterContexts(
                     requestParameters.workspaceId,
                     requestParameters.objectId,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     requestParameters.xGDCVALIDATERELATIONS,
@@ -17541,7 +17529,6 @@ export const EntitiesApiFactory = function (
                 .getEntityLabels(
                     requestParameters.workspaceId,
                     requestParameters.objectId,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     requestParameters.xGDCVALIDATERELATIONS,
@@ -17563,12 +17550,25 @@ export const EntitiesApiFactory = function (
                 .getEntityMetrics(
                     requestParameters.workspaceId,
                     requestParameters.objectId,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     requestParameters.xGDCVALIDATERELATIONS,
                     options,
                 )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {EntitiesApiGetEntityOrganizationSettingsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEntityOrganizationSettings(
+            requestParameters: EntitiesApiGetEntityOrganizationSettingsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<JsonApiOrganizationSettingOutDocument> {
+            return localVarFp
+                .getEntityOrganizationSettings(requestParameters.id, requestParameters.filter, options)
                 .then((request) => request(axios, basePath));
         },
         /**
@@ -17584,7 +17584,6 @@ export const EntitiesApiFactory = function (
             return localVarFp
                 .getEntityOrganizations(
                     requestParameters.id,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     requestParameters.metaInclude,
@@ -17605,7 +17604,6 @@ export const EntitiesApiFactory = function (
             return localVarFp
                 .getEntityUserGroups(
                     requestParameters.id,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     options,
@@ -17625,7 +17623,6 @@ export const EntitiesApiFactory = function (
             return localVarFp
                 .getEntityUsers(
                     requestParameters.id,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     options,
@@ -17646,7 +17643,6 @@ export const EntitiesApiFactory = function (
                 .getEntityVisualizationObjects(
                     requestParameters.workspaceId,
                     requestParameters.objectId,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     requestParameters.xGDCVALIDATERELATIONS,
@@ -17668,7 +17664,6 @@ export const EntitiesApiFactory = function (
                 .getEntityWorkspaceDataFilterSettings(
                     requestParameters.workspaceId,
                     requestParameters.objectId,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     requestParameters.xGDCVALIDATERELATIONS,
@@ -17690,7 +17685,6 @@ export const EntitiesApiFactory = function (
                 .getEntityWorkspaceDataFilters(
                     requestParameters.workspaceId,
                     requestParameters.objectId,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     requestParameters.xGDCVALIDATERELATIONS,
@@ -17711,7 +17705,6 @@ export const EntitiesApiFactory = function (
             return localVarFp
                 .getEntityWorkspaces(
                     requestParameters.id,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     requestParameters.metaInclude,
@@ -17749,7 +17742,6 @@ export const EntitiesApiFactory = function (
                     requestParameters.workspaceId,
                     requestParameters.objectId,
                     requestParameters.jsonApiAnalyticalDashboardPatchDocument,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     options,
@@ -17770,7 +17762,6 @@ export const EntitiesApiFactory = function (
                 .patchEntityCookieSecurityConfigurations(
                     requestParameters.id,
                     requestParameters.jsonApiCookieSecurityConfigurationPatchDocument,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     options,
                 )
@@ -17791,7 +17782,6 @@ export const EntitiesApiFactory = function (
                     requestParameters.workspaceId,
                     requestParameters.objectId,
                     requestParameters.jsonApiDashboardPluginPatchDocument,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     options,
                 )
@@ -17811,7 +17801,6 @@ export const EntitiesApiFactory = function (
                 .patchEntityDataSources(
                     requestParameters.id,
                     requestParameters.jsonApiDataSourcePatchDocument,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     options,
                 )
@@ -17832,7 +17821,6 @@ export const EntitiesApiFactory = function (
                     requestParameters.workspaceId,
                     requestParameters.objectId,
                     requestParameters.jsonApiFilterContextPatchDocument,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     options,
@@ -17854,9 +17842,27 @@ export const EntitiesApiFactory = function (
                     requestParameters.workspaceId,
                     requestParameters.objectId,
                     requestParameters.jsonApiMetricPatchDocument,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {EntitiesApiPatchEntityOrganizationSettingsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchEntityOrganizationSettings(
+            requestParameters: EntitiesApiPatchEntityOrganizationSettingsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<JsonApiOrganizationSettingOutDocument> {
+            return localVarFp
+                .patchEntityOrganizationSettings(
+                    requestParameters.id,
+                    requestParameters.jsonApiOrganizationSettingPatchDocument,
+                    requestParameters.filter,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -17875,7 +17881,6 @@ export const EntitiesApiFactory = function (
                 .patchEntityOrganizations(
                     requestParameters.id,
                     requestParameters.jsonApiOrganizationPatchDocument,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     options,
@@ -17896,7 +17901,6 @@ export const EntitiesApiFactory = function (
                 .patchEntityUserGroups(
                     requestParameters.id,
                     requestParameters.jsonApiUserGroupPatchDocument,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     options,
@@ -17917,7 +17921,6 @@ export const EntitiesApiFactory = function (
                 .patchEntityUsers(
                     requestParameters.id,
                     requestParameters.jsonApiUserPatchDocument,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     options,
@@ -17939,7 +17942,6 @@ export const EntitiesApiFactory = function (
                     requestParameters.workspaceId,
                     requestParameters.objectId,
                     requestParameters.jsonApiVisualizationObjectPatchDocument,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     options,
@@ -17961,7 +17963,6 @@ export const EntitiesApiFactory = function (
                     requestParameters.workspaceId,
                     requestParameters.objectId,
                     requestParameters.jsonApiWorkspaceDataFilterPatchDocument,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     options,
@@ -17982,7 +17983,6 @@ export const EntitiesApiFactory = function (
                 .patchEntityWorkspaces(
                     requestParameters.id,
                     requestParameters.jsonApiWorkspacePatchDocument,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     options,
@@ -18004,7 +18004,6 @@ export const EntitiesApiFactory = function (
                     requestParameters.workspaceId,
                     requestParameters.objectId,
                     requestParameters.jsonApiAnalyticalDashboardInDocument,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     options,
@@ -18025,7 +18024,6 @@ export const EntitiesApiFactory = function (
                 .updateEntityCookieSecurityConfigurations(
                     requestParameters.id,
                     requestParameters.jsonApiCookieSecurityConfigurationInDocument,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     options,
                 )
@@ -18046,7 +18044,6 @@ export const EntitiesApiFactory = function (
                     requestParameters.workspaceId,
                     requestParameters.objectId,
                     requestParameters.jsonApiDashboardPluginInDocument,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     options,
                 )
@@ -18066,7 +18063,6 @@ export const EntitiesApiFactory = function (
                 .updateEntityDataSources(
                     requestParameters.id,
                     requestParameters.jsonApiDataSourceInDocument,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     options,
                 )
@@ -18087,7 +18083,6 @@ export const EntitiesApiFactory = function (
                     requestParameters.workspaceId,
                     requestParameters.objectId,
                     requestParameters.jsonApiFilterContextInDocument,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     options,
@@ -18109,9 +18104,27 @@ export const EntitiesApiFactory = function (
                     requestParameters.workspaceId,
                     requestParameters.objectId,
                     requestParameters.jsonApiMetricInDocument,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {EntitiesApiUpdateEntityOrganizationSettingsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateEntityOrganizationSettings(
+            requestParameters: EntitiesApiUpdateEntityOrganizationSettingsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<JsonApiOrganizationSettingOutDocument> {
+            return localVarFp
+                .updateEntityOrganizationSettings(
+                    requestParameters.id,
+                    requestParameters.jsonApiOrganizationSettingInDocument,
+                    requestParameters.filter,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -18130,7 +18143,6 @@ export const EntitiesApiFactory = function (
                 .updateEntityOrganizations(
                     requestParameters.id,
                     requestParameters.jsonApiOrganizationInDocument,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     options,
@@ -18151,7 +18163,6 @@ export const EntitiesApiFactory = function (
                 .updateEntityUserGroups(
                     requestParameters.id,
                     requestParameters.jsonApiUserGroupInDocument,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     options,
@@ -18172,7 +18183,6 @@ export const EntitiesApiFactory = function (
                 .updateEntityUsers(
                     requestParameters.id,
                     requestParameters.jsonApiUserInDocument,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     options,
@@ -18194,7 +18204,6 @@ export const EntitiesApiFactory = function (
                     requestParameters.workspaceId,
                     requestParameters.objectId,
                     requestParameters.jsonApiVisualizationObjectInDocument,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     options,
@@ -18216,7 +18225,6 @@ export const EntitiesApiFactory = function (
                     requestParameters.workspaceId,
                     requestParameters.objectId,
                     requestParameters.jsonApiWorkspaceDataFilterInDocument,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     options,
@@ -18237,7 +18245,6 @@ export const EntitiesApiFactory = function (
                 .updateEntityWorkspaces(
                     requestParameters.id,
                     requestParameters.jsonApiWorkspaceInDocument,
-                    requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
                     options,
@@ -18324,6 +18331,18 @@ export interface EntitiesApiInterface {
         requestParameters: EntitiesApiCreateEntityMetricsRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiMetricOutDocument>;
+
+    /**
+     *
+     * @param {EntitiesApiCreateEntityOrganizationSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    createEntityOrganizationSettings(
+        requestParameters: EntitiesApiCreateEntityOrganizationSettingsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
 
     /**
      *
@@ -18454,6 +18473,18 @@ export interface EntitiesApiInterface {
      */
     deleteEntityMetrics(
         requestParameters: EntitiesApiDeleteEntityMetricsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
+
+    /**
+     *
+     * @param {EntitiesApiDeleteEntityOrganizationSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    deleteEntityOrganizationSettings(
+        requestParameters: EntitiesApiDeleteEntityOrganizationSettingsRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 
@@ -18672,6 +18703,18 @@ export interface EntitiesApiInterface {
         requestParameters: EntitiesApiGetAllEntitiesMetricsRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiMetricOutList>;
+
+    /**
+     *
+     * @param {EntitiesApiGetAllEntitiesOrganizationSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    getAllEntitiesOrganizationSettings(
+        requestParameters: EntitiesApiGetAllEntitiesOrganizationSettingsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<JsonApiOrganizationSettingOutList>;
 
     /**
      *
@@ -18933,6 +18976,18 @@ export interface EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiGetEntityOrganizationSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    getEntityOrganizationSettings(
+        requestParameters: EntitiesApiGetEntityOrganizationSettingsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
+
+    /**
+     *
      * @param {EntitiesApiGetEntityOrganizationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -19102,6 +19157,18 @@ export interface EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiPatchEntityOrganizationSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    patchEntityOrganizationSettings(
+        requestParameters: EntitiesApiPatchEntityOrganizationSettingsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
+
+    /**
+     *
      * @param {EntitiesApiPatchEntityOrganizationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -19243,6 +19310,18 @@ export interface EntitiesApiInterface {
         requestParameters: EntitiesApiUpdateEntityMetricsRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiMetricOutDocument>;
+
+    /**
+     *
+     * @param {EntitiesApiUpdateEntityOrganizationSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    updateEntityOrganizationSettings(
+        requestParameters: EntitiesApiUpdateEntityOrganizationSettingsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
 
     /**
      *
@@ -19467,6 +19546,20 @@ export interface EntitiesApiCreateEntityMetricsRequest {
 }
 
 /**
+ * Request parameters for createEntityOrganizationSettings operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiCreateEntityOrganizationSettingsRequest
+ */
+export interface EntitiesApiCreateEntityOrganizationSettingsRequest {
+    /**
+     *
+     * @type {JsonApiOrganizationSettingInDocument}
+     * @memberof EntitiesApiCreateEntityOrganizationSettings
+     */
+    readonly jsonApiOrganizationSettingInDocument: JsonApiOrganizationSettingInDocument;
+}
+
+/**
  * Request parameters for createEntityUserGroups operation in EntitiesApi.
  * @export
  * @interface EntitiesApiCreateEntityUserGroupsRequest
@@ -19606,13 +19699,6 @@ export interface EntitiesApiDeleteEntityAnalyticalDashboardsRequest {
     readonly objectId: string;
 
     /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiDeleteEntityAnalyticalDashboards
-     */
-    readonly predicate?: { [key: string]: object };
-
-    /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiDeleteEntityAnalyticalDashboards
@@ -19639,13 +19725,6 @@ export interface EntitiesApiDeleteEntityApiTokensRequest {
      * @memberof EntitiesApiDeleteEntityApiTokens
      */
     readonly id: string;
-
-    /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiDeleteEntityApiTokens
-     */
-    readonly predicate?: { [key: string]: object };
 
     /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -19676,13 +19755,6 @@ export interface EntitiesApiDeleteEntityDashboardPluginsRequest {
     readonly objectId: string;
 
     /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiDeleteEntityDashboardPlugins
-     */
-    readonly predicate?: { [key: string]: object };
-
-    /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiDeleteEntityDashboardPlugins
@@ -19702,13 +19774,6 @@ export interface EntitiesApiDeleteEntityDataSourcesRequest {
      * @memberof EntitiesApiDeleteEntityDataSources
      */
     readonly id: string;
-
-    /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiDeleteEntityDataSources
-     */
-    readonly predicate?: { [key: string]: object };
 
     /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -19739,13 +19804,6 @@ export interface EntitiesApiDeleteEntityFilterContextsRequest {
     readonly objectId: string;
 
     /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiDeleteEntityFilterContexts
-     */
-    readonly predicate?: { [key: string]: object };
-
-    /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiDeleteEntityFilterContexts
@@ -19774,16 +19832,30 @@ export interface EntitiesApiDeleteEntityMetricsRequest {
     readonly objectId: string;
 
     /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
      * @memberof EntitiesApiDeleteEntityMetrics
      */
-    readonly predicate?: { [key: string]: object };
+    readonly filter?: string;
+}
+
+/**
+ * Request parameters for deleteEntityOrganizationSettings operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiDeleteEntityOrganizationSettingsRequest
+ */
+export interface EntitiesApiDeleteEntityOrganizationSettingsRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiDeleteEntityOrganizationSettings
+     */
+    readonly id: string;
 
     /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
-     * @memberof EntitiesApiDeleteEntityMetrics
+     * @memberof EntitiesApiDeleteEntityOrganizationSettings
      */
     readonly filter?: string;
 }
@@ -19800,13 +19872,6 @@ export interface EntitiesApiDeleteEntityUserGroupsRequest {
      * @memberof EntitiesApiDeleteEntityUserGroups
      */
     readonly id: string;
-
-    /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiDeleteEntityUserGroups
-     */
-    readonly predicate?: { [key: string]: object };
 
     /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -19828,13 +19893,6 @@ export interface EntitiesApiDeleteEntityUsersRequest {
      * @memberof EntitiesApiDeleteEntityUsers
      */
     readonly id: string;
-
-    /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiDeleteEntityUsers
-     */
-    readonly predicate?: { [key: string]: object };
 
     /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -19865,13 +19923,6 @@ export interface EntitiesApiDeleteEntityVisualizationObjectsRequest {
     readonly objectId: string;
 
     /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiDeleteEntityVisualizationObjects
-     */
-    readonly predicate?: { [key: string]: object };
-
-    /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiDeleteEntityVisualizationObjects
@@ -19900,13 +19951,6 @@ export interface EntitiesApiDeleteEntityWorkspaceDataFiltersRequest {
     readonly objectId: string;
 
     /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiDeleteEntityWorkspaceDataFilters
-     */
-    readonly predicate?: { [key: string]: object };
-
-    /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiDeleteEntityWorkspaceDataFilters
@@ -19928,13 +19972,6 @@ export interface EntitiesApiDeleteEntityWorkspacesRequest {
     readonly id: string;
 
     /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiDeleteEntityWorkspaces
-     */
-    readonly predicate?: { [key: string]: object };
-
-    /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiDeleteEntityWorkspaces
@@ -19954,13 +19991,6 @@ export interface EntitiesApiGetAllEntitiesAnalyticalDashboardsRequest {
      * @memberof EntitiesApiGetAllEntitiesAnalyticalDashboards
      */
     readonly workspaceId: string;
-
-    /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiGetAllEntitiesAnalyticalDashboards
-     */
-    readonly predicate?: { [key: string]: object };
 
     /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -20028,13 +20058,6 @@ export interface EntitiesApiGetAllEntitiesApiTokensRequest {
     readonly userId: string;
 
     /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiGetAllEntitiesApiTokens
-     */
-    readonly predicate?: { [key: string]: object };
-
-    /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiGetAllEntitiesApiTokens
@@ -20075,13 +20098,6 @@ export interface EntitiesApiGetAllEntitiesAttributesRequest {
      * @memberof EntitiesApiGetAllEntitiesAttributes
      */
     readonly workspaceId: string;
-
-    /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiGetAllEntitiesAttributes
-     */
-    readonly predicate?: { [key: string]: object };
 
     /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -20140,13 +20156,6 @@ export interface EntitiesApiGetAllEntitiesDashboardPluginsRequest {
     readonly workspaceId: string;
 
     /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiGetAllEntitiesDashboardPlugins
-     */
-    readonly predicate?: { [key: string]: object };
-
-    /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiGetAllEntitiesDashboardPlugins
@@ -20188,13 +20197,6 @@ export interface EntitiesApiGetAllEntitiesDashboardPluginsRequest {
  * @interface EntitiesApiGetAllEntitiesDataSourceIdentifiersRequest
  */
 export interface EntitiesApiGetAllEntitiesDataSourceIdentifiersRequest {
-    /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiGetAllEntitiesDataSourceIdentifiers
-     */
-    readonly predicate?: { [key: string]: object };
-
     /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
@@ -20245,13 +20247,6 @@ export interface EntitiesApiGetAllEntitiesDataSourceTablesRequest {
     readonly dataSourceId: string;
 
     /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiGetAllEntitiesDataSourceTables
-     */
-    readonly predicate?: { [key: string]: object };
-
-    /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiGetAllEntitiesDataSourceTables
@@ -20286,13 +20281,6 @@ export interface EntitiesApiGetAllEntitiesDataSourceTablesRequest {
  * @interface EntitiesApiGetAllEntitiesDataSourcesRequest
  */
 export interface EntitiesApiGetAllEntitiesDataSourcesRequest {
-    /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiGetAllEntitiesDataSources
-     */
-    readonly predicate?: { [key: string]: object };
-
     /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
@@ -20341,13 +20329,6 @@ export interface EntitiesApiGetAllEntitiesDatasetsRequest {
      * @memberof EntitiesApiGetAllEntitiesDatasets
      */
     readonly workspaceId: string;
-
-    /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiGetAllEntitiesDatasets
-     */
-    readonly predicate?: { [key: string]: object };
 
     /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -20399,13 +20380,6 @@ export interface EntitiesApiGetAllEntitiesDatasetsRequest {
  */
 export interface EntitiesApiGetAllEntitiesEntitlementsRequest {
     /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiGetAllEntitiesEntitlements
-     */
-    readonly predicate?: { [key: string]: object };
-
-    /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiGetAllEntitiesEntitlements
@@ -20446,13 +20420,6 @@ export interface EntitiesApiGetAllEntitiesFactsRequest {
      * @memberof EntitiesApiGetAllEntitiesFacts
      */
     readonly workspaceId: string;
-
-    /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiGetAllEntitiesFacts
-     */
-    readonly predicate?: { [key: string]: object };
 
     /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -20511,13 +20478,6 @@ export interface EntitiesApiGetAllEntitiesFilterContextsRequest {
     readonly workspaceId: string;
 
     /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiGetAllEntitiesFilterContexts
-     */
-    readonly predicate?: { [key: string]: object };
-
-    /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiGetAllEntitiesFilterContexts
@@ -20572,13 +20532,6 @@ export interface EntitiesApiGetAllEntitiesLabelsRequest {
      * @memberof EntitiesApiGetAllEntitiesLabels
      */
     readonly workspaceId: string;
-
-    /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiGetAllEntitiesLabels
-     */
-    readonly predicate?: { [key: string]: object };
 
     /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -20637,13 +20590,6 @@ export interface EntitiesApiGetAllEntitiesMetricsRequest {
     readonly workspaceId: string;
 
     /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiGetAllEntitiesMetrics
-     */
-    readonly predicate?: { [key: string]: object };
-
-    /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiGetAllEntitiesMetrics
@@ -20687,18 +20633,46 @@ export interface EntitiesApiGetAllEntitiesMetricsRequest {
 }
 
 /**
+ * Request parameters for getAllEntitiesOrganizationSettings operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiGetAllEntitiesOrganizationSettingsRequest
+ */
+export interface EntitiesApiGetAllEntitiesOrganizationSettingsRequest {
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiGetAllEntitiesOrganizationSettings
+     */
+    readonly filter?: string;
+
+    /**
+     * Zero-based page index (0..N)
+     * @type {number}
+     * @memberof EntitiesApiGetAllEntitiesOrganizationSettings
+     */
+    readonly page?: number;
+
+    /**
+     * The size of the page to be returned
+     * @type {number}
+     * @memberof EntitiesApiGetAllEntitiesOrganizationSettings
+     */
+    readonly size?: number;
+
+    /**
+     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @type {Array<string>}
+     * @memberof EntitiesApiGetAllEntitiesOrganizationSettings
+     */
+    readonly sort?: Array<string>;
+}
+
+/**
  * Request parameters for getAllEntitiesUserGroups operation in EntitiesApi.
  * @export
  * @interface EntitiesApiGetAllEntitiesUserGroupsRequest
  */
 export interface EntitiesApiGetAllEntitiesUserGroupsRequest {
-    /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiGetAllEntitiesUserGroups
-     */
-    readonly predicate?: { [key: string]: object };
-
     /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
@@ -20741,13 +20715,6 @@ export interface EntitiesApiGetAllEntitiesUserGroupsRequest {
  * @interface EntitiesApiGetAllEntitiesUsersRequest
  */
 export interface EntitiesApiGetAllEntitiesUsersRequest {
-    /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiGetAllEntitiesUsers
-     */
-    readonly predicate?: { [key: string]: object };
-
     /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
@@ -20796,13 +20763,6 @@ export interface EntitiesApiGetAllEntitiesVisualizationObjectsRequest {
      * @memberof EntitiesApiGetAllEntitiesVisualizationObjects
      */
     readonly workspaceId: string;
-
-    /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiGetAllEntitiesVisualizationObjects
-     */
-    readonly predicate?: { [key: string]: object };
 
     /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -20861,13 +20821,6 @@ export interface EntitiesApiGetAllEntitiesWorkspaceDataFilterSettingsRequest {
     readonly workspaceId: string;
 
     /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiGetAllEntitiesWorkspaceDataFilterSettings
-     */
-    readonly predicate?: { [key: string]: object };
-
-    /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiGetAllEntitiesWorkspaceDataFilterSettings
@@ -20924,13 +20877,6 @@ export interface EntitiesApiGetAllEntitiesWorkspaceDataFiltersRequest {
     readonly workspaceId: string;
 
     /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiGetAllEntitiesWorkspaceDataFilters
-     */
-    readonly predicate?: { [key: string]: object };
-
-    /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiGetAllEntitiesWorkspaceDataFilters
@@ -20979,13 +20925,6 @@ export interface EntitiesApiGetAllEntitiesWorkspaceDataFiltersRequest {
  * @interface EntitiesApiGetAllEntitiesWorkspacesRequest
  */
 export interface EntitiesApiGetAllEntitiesWorkspacesRequest {
-    /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiGetAllEntitiesWorkspaces
-     */
-    readonly predicate?: { [key: string]: object };
-
     /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
@@ -21050,13 +20989,6 @@ export interface EntitiesApiGetEntityAnalyticalDashboardsRequest {
     readonly objectId: string;
 
     /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiGetEntityAnalyticalDashboards
-     */
-    readonly predicate?: { [key: string]: object };
-
-    /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiGetEntityAnalyticalDashboards
@@ -21108,13 +21040,6 @@ export interface EntitiesApiGetEntityApiTokensRequest {
     readonly id: string;
 
     /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiGetEntityApiTokens
-     */
-    readonly predicate?: { [key: string]: object };
-
-    /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiGetEntityApiTokens
@@ -21141,13 +21066,6 @@ export interface EntitiesApiGetEntityAttributesRequest {
      * @memberof EntitiesApiGetEntityAttributes
      */
     readonly objectId: string;
-
-    /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiGetEntityAttributes
-     */
-    readonly predicate?: { [key: string]: object };
 
     /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -21185,13 +21103,6 @@ export interface EntitiesApiGetEntityCookieSecurityConfigurationsRequest {
     readonly id: string;
 
     /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiGetEntityCookieSecurityConfigurations
-     */
-    readonly predicate?: { [key: string]: object };
-
-    /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiGetEntityCookieSecurityConfigurations
@@ -21220,13 +21131,6 @@ export interface EntitiesApiGetEntityDashboardPluginsRequest {
     readonly objectId: string;
 
     /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiGetEntityDashboardPlugins
-     */
-    readonly predicate?: { [key: string]: object };
-
-    /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiGetEntityDashboardPlugins
@@ -21253,13 +21157,6 @@ export interface EntitiesApiGetEntityDataSourceIdentifiersRequest {
      * @memberof EntitiesApiGetEntityDataSourceIdentifiers
      */
     readonly id: string;
-
-    /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiGetEntityDataSourceIdentifiers
-     */
-    readonly predicate?: { [key: string]: object };
 
     /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -21297,13 +21194,6 @@ export interface EntitiesApiGetEntityDataSourceTablesRequest {
     readonly id: string;
 
     /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiGetEntityDataSourceTables
-     */
-    readonly predicate?: { [key: string]: object };
-
-    /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiGetEntityDataSourceTables
@@ -21323,13 +21213,6 @@ export interface EntitiesApiGetEntityDataSourcesRequest {
      * @memberof EntitiesApiGetEntityDataSources
      */
     readonly id: string;
-
-    /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiGetEntityDataSources
-     */
-    readonly predicate?: { [key: string]: object };
 
     /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -21367,13 +21250,6 @@ export interface EntitiesApiGetEntityDatasetsRequest {
     readonly objectId: string;
 
     /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiGetEntityDatasets
-     */
-    readonly predicate?: { [key: string]: object };
-
-    /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiGetEntityDatasets
@@ -21409,13 +21285,6 @@ export interface EntitiesApiGetEntityEntitlementsRequest {
     readonly id: string;
 
     /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiGetEntityEntitlements
-     */
-    readonly predicate?: { [key: string]: object };
-
-    /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiGetEntityEntitlements
@@ -21442,13 +21311,6 @@ export interface EntitiesApiGetEntityFactsRequest {
      * @memberof EntitiesApiGetEntityFacts
      */
     readonly objectId: string;
-
-    /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiGetEntityFacts
-     */
-    readonly predicate?: { [key: string]: object };
 
     /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -21493,13 +21355,6 @@ export interface EntitiesApiGetEntityFilterContextsRequest {
     readonly objectId: string;
 
     /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiGetEntityFilterContexts
-     */
-    readonly predicate?: { [key: string]: object };
-
-    /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiGetEntityFilterContexts
@@ -21540,13 +21395,6 @@ export interface EntitiesApiGetEntityLabelsRequest {
      * @memberof EntitiesApiGetEntityLabels
      */
     readonly objectId: string;
-
-    /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiGetEntityLabels
-     */
-    readonly predicate?: { [key: string]: object };
 
     /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -21591,13 +21439,6 @@ export interface EntitiesApiGetEntityMetricsRequest {
     readonly objectId: string;
 
     /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiGetEntityMetrics
-     */
-    readonly predicate?: { [key: string]: object };
-
-    /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiGetEntityMetrics
@@ -21620,6 +21461,27 @@ export interface EntitiesApiGetEntityMetricsRequest {
 }
 
 /**
+ * Request parameters for getEntityOrganizationSettings operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiGetEntityOrganizationSettingsRequest
+ */
+export interface EntitiesApiGetEntityOrganizationSettingsRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiGetEntityOrganizationSettings
+     */
+    readonly id: string;
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiGetEntityOrganizationSettings
+     */
+    readonly filter?: string;
+}
+
+/**
  * Request parameters for getEntityOrganizations operation in EntitiesApi.
  * @export
  * @interface EntitiesApiGetEntityOrganizationsRequest
@@ -21631,13 +21493,6 @@ export interface EntitiesApiGetEntityOrganizationsRequest {
      * @memberof EntitiesApiGetEntityOrganizations
      */
     readonly id: string;
-
-    /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiGetEntityOrganizations
-     */
-    readonly predicate?: { [key: string]: object };
 
     /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -21675,13 +21530,6 @@ export interface EntitiesApiGetEntityUserGroupsRequest {
     readonly id: string;
 
     /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiGetEntityUserGroups
-     */
-    readonly predicate?: { [key: string]: object };
-
-    /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiGetEntityUserGroups
@@ -21708,13 +21556,6 @@ export interface EntitiesApiGetEntityUsersRequest {
      * @memberof EntitiesApiGetEntityUsers
      */
     readonly id: string;
-
-    /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiGetEntityUsers
-     */
-    readonly predicate?: { [key: string]: object };
 
     /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -21750,13 +21591,6 @@ export interface EntitiesApiGetEntityVisualizationObjectsRequest {
      * @memberof EntitiesApiGetEntityVisualizationObjects
      */
     readonly objectId: string;
-
-    /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiGetEntityVisualizationObjects
-     */
-    readonly predicate?: { [key: string]: object };
 
     /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -21801,13 +21635,6 @@ export interface EntitiesApiGetEntityWorkspaceDataFilterSettingsRequest {
     readonly objectId: string;
 
     /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiGetEntityWorkspaceDataFilterSettings
-     */
-    readonly predicate?: { [key: string]: object };
-
-    /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiGetEntityWorkspaceDataFilterSettings
@@ -21850,13 +21677,6 @@ export interface EntitiesApiGetEntityWorkspaceDataFiltersRequest {
     readonly objectId: string;
 
     /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiGetEntityWorkspaceDataFilters
-     */
-    readonly predicate?: { [key: string]: object };
-
-    /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiGetEntityWorkspaceDataFilters
@@ -21890,13 +21710,6 @@ export interface EntitiesApiGetEntityWorkspacesRequest {
      * @memberof EntitiesApiGetEntityWorkspaces
      */
     readonly id: string;
-
-    /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiGetEntityWorkspaces
-     */
-    readonly predicate?: { [key: string]: object };
 
     /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -21962,13 +21775,6 @@ export interface EntitiesApiPatchEntityAnalyticalDashboardsRequest {
     readonly jsonApiAnalyticalDashboardPatchDocument: JsonApiAnalyticalDashboardPatchDocument;
 
     /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiPatchEntityAnalyticalDashboards
-     */
-    readonly predicate?: { [key: string]: object };
-
-    /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiPatchEntityAnalyticalDashboards
@@ -22013,13 +21819,6 @@ export interface EntitiesApiPatchEntityCookieSecurityConfigurationsRequest {
     readonly jsonApiCookieSecurityConfigurationPatchDocument: JsonApiCookieSecurityConfigurationPatchDocument;
 
     /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiPatchEntityCookieSecurityConfigurations
-     */
-    readonly predicate?: { [key: string]: object };
-
-    /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiPatchEntityCookieSecurityConfigurations
@@ -22055,13 +21854,6 @@ export interface EntitiesApiPatchEntityDashboardPluginsRequest {
     readonly jsonApiDashboardPluginPatchDocument: JsonApiDashboardPluginPatchDocument;
 
     /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiPatchEntityDashboardPlugins
-     */
-    readonly predicate?: { [key: string]: object };
-
-    /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiPatchEntityDashboardPlugins
@@ -22088,13 +21880,6 @@ export interface EntitiesApiPatchEntityDataSourcesRequest {
      * @memberof EntitiesApiPatchEntityDataSources
      */
     readonly jsonApiDataSourcePatchDocument: JsonApiDataSourcePatchDocument;
-
-    /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiPatchEntityDataSources
-     */
-    readonly predicate?: { [key: string]: object };
 
     /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -22130,13 +21915,6 @@ export interface EntitiesApiPatchEntityFilterContextsRequest {
      * @memberof EntitiesApiPatchEntityFilterContexts
      */
     readonly jsonApiFilterContextPatchDocument: JsonApiFilterContextPatchDocument;
-
-    /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiPatchEntityFilterContexts
-     */
-    readonly predicate?: { [key: string]: object };
 
     /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -22181,13 +21959,6 @@ export interface EntitiesApiPatchEntityMetricsRequest {
     readonly jsonApiMetricPatchDocument: JsonApiMetricPatchDocument;
 
     /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiPatchEntityMetrics
-     */
-    readonly predicate?: { [key: string]: object };
-
-    /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiPatchEntityMetrics
@@ -22200,6 +21971,34 @@ export interface EntitiesApiPatchEntityMetricsRequest {
      * @memberof EntitiesApiPatchEntityMetrics
      */
     readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
+}
+
+/**
+ * Request parameters for patchEntityOrganizationSettings operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiPatchEntityOrganizationSettingsRequest
+ */
+export interface EntitiesApiPatchEntityOrganizationSettingsRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiPatchEntityOrganizationSettings
+     */
+    readonly id: string;
+
+    /**
+     *
+     * @type {JsonApiOrganizationSettingPatchDocument}
+     * @memberof EntitiesApiPatchEntityOrganizationSettings
+     */
+    readonly jsonApiOrganizationSettingPatchDocument: JsonApiOrganizationSettingPatchDocument;
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiPatchEntityOrganizationSettings
+     */
+    readonly filter?: string;
 }
 
 /**
@@ -22221,13 +22020,6 @@ export interface EntitiesApiPatchEntityOrganizationsRequest {
      * @memberof EntitiesApiPatchEntityOrganizations
      */
     readonly jsonApiOrganizationPatchDocument: JsonApiOrganizationPatchDocument;
-
-    /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiPatchEntityOrganizations
-     */
-    readonly predicate?: { [key: string]: object };
 
     /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -22265,13 +22057,6 @@ export interface EntitiesApiPatchEntityUserGroupsRequest {
     readonly jsonApiUserGroupPatchDocument: JsonApiUserGroupPatchDocument;
 
     /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiPatchEntityUserGroups
-     */
-    readonly predicate?: { [key: string]: object };
-
-    /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiPatchEntityUserGroups
@@ -22305,13 +22090,6 @@ export interface EntitiesApiPatchEntityUsersRequest {
      * @memberof EntitiesApiPatchEntityUsers
      */
     readonly jsonApiUserPatchDocument: JsonApiUserPatchDocument;
-
-    /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiPatchEntityUsers
-     */
-    readonly predicate?: { [key: string]: object };
 
     /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -22356,13 +22134,6 @@ export interface EntitiesApiPatchEntityVisualizationObjectsRequest {
     readonly jsonApiVisualizationObjectPatchDocument: JsonApiVisualizationObjectPatchDocument;
 
     /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiPatchEntityVisualizationObjects
-     */
-    readonly predicate?: { [key: string]: object };
-
-    /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiPatchEntityVisualizationObjects
@@ -22405,13 +22176,6 @@ export interface EntitiesApiPatchEntityWorkspaceDataFiltersRequest {
     readonly jsonApiWorkspaceDataFilterPatchDocument: JsonApiWorkspaceDataFilterPatchDocument;
 
     /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiPatchEntityWorkspaceDataFilters
-     */
-    readonly predicate?: { [key: string]: object };
-
-    /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiPatchEntityWorkspaceDataFilters
@@ -22445,13 +22209,6 @@ export interface EntitiesApiPatchEntityWorkspacesRequest {
      * @memberof EntitiesApiPatchEntityWorkspaces
      */
     readonly jsonApiWorkspacePatchDocument: JsonApiWorkspacePatchDocument;
-
-    /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiPatchEntityWorkspaces
-     */
-    readonly predicate?: { [key: string]: object };
 
     /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -22494,13 +22251,6 @@ export interface EntitiesApiUpdateEntityAnalyticalDashboardsRequest {
      * @memberof EntitiesApiUpdateEntityAnalyticalDashboards
      */
     readonly jsonApiAnalyticalDashboardInDocument: JsonApiAnalyticalDashboardInDocument;
-
-    /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiUpdateEntityAnalyticalDashboards
-     */
-    readonly predicate?: { [key: string]: object };
 
     /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -22547,13 +22297,6 @@ export interface EntitiesApiUpdateEntityCookieSecurityConfigurationsRequest {
     readonly jsonApiCookieSecurityConfigurationInDocument: JsonApiCookieSecurityConfigurationInDocument;
 
     /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiUpdateEntityCookieSecurityConfigurations
-     */
-    readonly predicate?: { [key: string]: object };
-
-    /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiUpdateEntityCookieSecurityConfigurations
@@ -22589,13 +22332,6 @@ export interface EntitiesApiUpdateEntityDashboardPluginsRequest {
     readonly jsonApiDashboardPluginInDocument: JsonApiDashboardPluginInDocument;
 
     /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiUpdateEntityDashboardPlugins
-     */
-    readonly predicate?: { [key: string]: object };
-
-    /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiUpdateEntityDashboardPlugins
@@ -22622,13 +22358,6 @@ export interface EntitiesApiUpdateEntityDataSourcesRequest {
      * @memberof EntitiesApiUpdateEntityDataSources
      */
     readonly jsonApiDataSourceInDocument: JsonApiDataSourceInDocument;
-
-    /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiUpdateEntityDataSources
-     */
-    readonly predicate?: { [key: string]: object };
 
     /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -22664,13 +22393,6 @@ export interface EntitiesApiUpdateEntityFilterContextsRequest {
      * @memberof EntitiesApiUpdateEntityFilterContexts
      */
     readonly jsonApiFilterContextInDocument: JsonApiFilterContextInDocument;
-
-    /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiUpdateEntityFilterContexts
-     */
-    readonly predicate?: { [key: string]: object };
 
     /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -22715,13 +22437,6 @@ export interface EntitiesApiUpdateEntityMetricsRequest {
     readonly jsonApiMetricInDocument: JsonApiMetricInDocument;
 
     /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiUpdateEntityMetrics
-     */
-    readonly predicate?: { [key: string]: object };
-
-    /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiUpdateEntityMetrics
@@ -22734,6 +22449,34 @@ export interface EntitiesApiUpdateEntityMetricsRequest {
      * @memberof EntitiesApiUpdateEntityMetrics
      */
     readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
+}
+
+/**
+ * Request parameters for updateEntityOrganizationSettings operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiUpdateEntityOrganizationSettingsRequest
+ */
+export interface EntitiesApiUpdateEntityOrganizationSettingsRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiUpdateEntityOrganizationSettings
+     */
+    readonly id: string;
+
+    /**
+     *
+     * @type {JsonApiOrganizationSettingInDocument}
+     * @memberof EntitiesApiUpdateEntityOrganizationSettings
+     */
+    readonly jsonApiOrganizationSettingInDocument: JsonApiOrganizationSettingInDocument;
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiUpdateEntityOrganizationSettings
+     */
+    readonly filter?: string;
 }
 
 /**
@@ -22755,13 +22498,6 @@ export interface EntitiesApiUpdateEntityOrganizationsRequest {
      * @memberof EntitiesApiUpdateEntityOrganizations
      */
     readonly jsonApiOrganizationInDocument: JsonApiOrganizationInDocument;
-
-    /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiUpdateEntityOrganizations
-     */
-    readonly predicate?: { [key: string]: object };
 
     /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -22799,13 +22535,6 @@ export interface EntitiesApiUpdateEntityUserGroupsRequest {
     readonly jsonApiUserGroupInDocument: JsonApiUserGroupInDocument;
 
     /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiUpdateEntityUserGroups
-     */
-    readonly predicate?: { [key: string]: object };
-
-    /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiUpdateEntityUserGroups
@@ -22839,13 +22568,6 @@ export interface EntitiesApiUpdateEntityUsersRequest {
      * @memberof EntitiesApiUpdateEntityUsers
      */
     readonly jsonApiUserInDocument: JsonApiUserInDocument;
-
-    /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiUpdateEntityUsers
-     */
-    readonly predicate?: { [key: string]: object };
 
     /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -22890,13 +22612,6 @@ export interface EntitiesApiUpdateEntityVisualizationObjectsRequest {
     readonly jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument;
 
     /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiUpdateEntityVisualizationObjects
-     */
-    readonly predicate?: { [key: string]: object };
-
-    /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiUpdateEntityVisualizationObjects
@@ -22939,13 +22654,6 @@ export interface EntitiesApiUpdateEntityWorkspaceDataFiltersRequest {
     readonly jsonApiWorkspaceDataFilterInDocument: JsonApiWorkspaceDataFilterInDocument;
 
     /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiUpdateEntityWorkspaceDataFilters
-     */
-    readonly predicate?: { [key: string]: object };
-
-    /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiUpdateEntityWorkspaceDataFilters
@@ -22979,13 +22687,6 @@ export interface EntitiesApiUpdateEntityWorkspacesRequest {
      * @memberof EntitiesApiUpdateEntityWorkspaces
      */
     readonly jsonApiWorkspaceInDocument: JsonApiWorkspaceInDocument;
-
-    /**
-     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @type {{ [key: string]: object; }}
-     * @memberof EntitiesApiUpdateEntityWorkspaces
-     */
-    readonly predicate?: { [key: string]: object };
 
     /**
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -23130,6 +22831,22 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiCreateEntityOrganizationSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public createEntityOrganizationSettings(
+        requestParameters: EntitiesApiCreateEntityOrganizationSettingsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .createEntityOrganizationSettings(requestParameters.jsonApiOrganizationSettingInDocument, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
      * @param {EntitiesApiCreateEntityUserGroupsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -23241,7 +22958,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             .deleteEntityAnalyticalDashboards(
                 requestParameters.workspaceId,
                 requestParameters.objectId,
-                requestParameters.predicate,
                 requestParameters.filter,
                 options,
             )
@@ -23263,7 +22979,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             .deleteEntityApiTokens(
                 requestParameters.userId,
                 requestParameters.id,
-                requestParameters.predicate,
                 requestParameters.filter,
                 options,
             )
@@ -23285,7 +23000,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             .deleteEntityDashboardPlugins(
                 requestParameters.workspaceId,
                 requestParameters.objectId,
-                requestParameters.predicate,
                 requestParameters.filter,
                 options,
             )
@@ -23304,12 +23018,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
         options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration)
-            .deleteEntityDataSources(
-                requestParameters.id,
-                requestParameters.predicate,
-                requestParameters.filter,
-                options,
-            )
+            .deleteEntityDataSources(requestParameters.id, requestParameters.filter, options)
             .then((request) => request(this.axios, this.basePath));
     }
 
@@ -23328,7 +23037,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             .deleteEntityFilterContexts(
                 requestParameters.workspaceId,
                 requestParameters.objectId,
-                requestParameters.predicate,
                 requestParameters.filter,
                 options,
             )
@@ -23350,10 +23058,25 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             .deleteEntityMetrics(
                 requestParameters.workspaceId,
                 requestParameters.objectId,
-                requestParameters.predicate,
                 requestParameters.filter,
                 options,
             )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {EntitiesApiDeleteEntityOrganizationSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public deleteEntityOrganizationSettings(
+        requestParameters: EntitiesApiDeleteEntityOrganizationSettingsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .deleteEntityOrganizationSettings(requestParameters.id, requestParameters.filter, options)
             .then((request) => request(this.axios, this.basePath));
     }
 
@@ -23369,12 +23092,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
         options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration)
-            .deleteEntityUserGroups(
-                requestParameters.id,
-                requestParameters.predicate,
-                requestParameters.filter,
-                options,
-            )
+            .deleteEntityUserGroups(requestParameters.id, requestParameters.filter, options)
             .then((request) => request(this.axios, this.basePath));
     }
 
@@ -23390,12 +23108,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
         options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration)
-            .deleteEntityUsers(
-                requestParameters.id,
-                requestParameters.predicate,
-                requestParameters.filter,
-                options,
-            )
+            .deleteEntityUsers(requestParameters.id, requestParameters.filter, options)
             .then((request) => request(this.axios, this.basePath));
     }
 
@@ -23414,7 +23127,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             .deleteEntityVisualizationObjects(
                 requestParameters.workspaceId,
                 requestParameters.objectId,
-                requestParameters.predicate,
                 requestParameters.filter,
                 options,
             )
@@ -23436,7 +23148,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             .deleteEntityWorkspaceDataFilters(
                 requestParameters.workspaceId,
                 requestParameters.objectId,
-                requestParameters.predicate,
                 requestParameters.filter,
                 options,
             )
@@ -23455,12 +23166,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
         options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration)
-            .deleteEntityWorkspaces(
-                requestParameters.id,
-                requestParameters.predicate,
-                requestParameters.filter,
-                options,
-            )
+            .deleteEntityWorkspaces(requestParameters.id, requestParameters.filter, options)
             .then((request) => request(this.axios, this.basePath));
     }
 
@@ -23478,7 +23184,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
         return EntitiesApiFp(this.configuration)
             .getAllEntitiesAnalyticalDashboards(
                 requestParameters.workspaceId,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 requestParameters.page,
@@ -23504,7 +23209,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
         return EntitiesApiFp(this.configuration)
             .getAllEntitiesApiTokens(
                 requestParameters.userId,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.page,
                 requestParameters.size,
@@ -23528,7 +23232,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
         return EntitiesApiFp(this.configuration)
             .getAllEntitiesAttributes(
                 requestParameters.workspaceId,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 requestParameters.page,
@@ -23554,7 +23257,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
         return EntitiesApiFp(this.configuration)
             .getAllEntitiesDashboardPlugins(
                 requestParameters.workspaceId,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.page,
                 requestParameters.size,
@@ -23578,7 +23280,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
     ) {
         return EntitiesApiFp(this.configuration)
             .getAllEntitiesDataSourceIdentifiers(
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.page,
                 requestParameters.size,
@@ -23603,7 +23304,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
         return EntitiesApiFp(this.configuration)
             .getAllEntitiesDataSourceTables(
                 requestParameters.dataSourceId,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.page,
                 requestParameters.size,
@@ -23626,7 +23326,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
     ) {
         return EntitiesApiFp(this.configuration)
             .getAllEntitiesDataSources(
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.page,
                 requestParameters.size,
@@ -23651,7 +23350,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
         return EntitiesApiFp(this.configuration)
             .getAllEntitiesDatasets(
                 requestParameters.workspaceId,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 requestParameters.page,
@@ -23676,7 +23374,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
     ) {
         return EntitiesApiFp(this.configuration)
             .getAllEntitiesEntitlements(
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.page,
                 requestParameters.size,
@@ -23700,7 +23397,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
         return EntitiesApiFp(this.configuration)
             .getAllEntitiesFacts(
                 requestParameters.workspaceId,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 requestParameters.page,
@@ -23726,7 +23422,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
         return EntitiesApiFp(this.configuration)
             .getAllEntitiesFilterContexts(
                 requestParameters.workspaceId,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 requestParameters.page,
@@ -23752,7 +23447,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
         return EntitiesApiFp(this.configuration)
             .getAllEntitiesLabels(
                 requestParameters.workspaceId,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 requestParameters.page,
@@ -23778,13 +23472,34 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
         return EntitiesApiFp(this.configuration)
             .getAllEntitiesMetrics(
                 requestParameters.workspaceId,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 requestParameters.page,
                 requestParameters.size,
                 requestParameters.sort,
                 requestParameters.xGDCVALIDATERELATIONS,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {EntitiesApiGetAllEntitiesOrganizationSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public getAllEntitiesOrganizationSettings(
+        requestParameters: EntitiesApiGetAllEntitiesOrganizationSettingsRequest = {},
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .getAllEntitiesOrganizationSettings(
+                requestParameters.filter,
+                requestParameters.page,
+                requestParameters.size,
+                requestParameters.sort,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -23803,7 +23518,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
     ) {
         return EntitiesApiFp(this.configuration)
             .getAllEntitiesUserGroups(
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 requestParameters.page,
@@ -23827,7 +23541,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
     ) {
         return EntitiesApiFp(this.configuration)
             .getAllEntitiesUsers(
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 requestParameters.page,
@@ -23852,7 +23565,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
         return EntitiesApiFp(this.configuration)
             .getAllEntitiesVisualizationObjects(
                 requestParameters.workspaceId,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 requestParameters.page,
@@ -23878,7 +23590,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
         return EntitiesApiFp(this.configuration)
             .getAllEntitiesWorkspaceDataFilterSettings(
                 requestParameters.workspaceId,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 requestParameters.page,
@@ -23904,7 +23615,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
         return EntitiesApiFp(this.configuration)
             .getAllEntitiesWorkspaceDataFilters(
                 requestParameters.workspaceId,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 requestParameters.page,
@@ -23929,7 +23639,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
     ) {
         return EntitiesApiFp(this.configuration)
             .getAllEntitiesWorkspaces(
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 requestParameters.page,
@@ -23982,7 +23691,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             .getEntityAnalyticalDashboards(
                 requestParameters.workspaceId,
                 requestParameters.objectId,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 requestParameters.xGDCVALIDATERELATIONS,
@@ -24006,7 +23714,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             .getEntityApiTokens(
                 requestParameters.userId,
                 requestParameters.id,
-                requestParameters.predicate,
                 requestParameters.filter,
                 options,
             )
@@ -24028,7 +23735,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             .getEntityAttributes(
                 requestParameters.workspaceId,
                 requestParameters.objectId,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 requestParameters.xGDCVALIDATERELATIONS,
@@ -24049,12 +23755,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
         options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration)
-            .getEntityCookieSecurityConfigurations(
-                requestParameters.id,
-                requestParameters.predicate,
-                requestParameters.filter,
-                options,
-            )
+            .getEntityCookieSecurityConfigurations(requestParameters.id, requestParameters.filter, options)
             .then((request) => request(this.axios, this.basePath));
     }
 
@@ -24073,7 +23774,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             .getEntityDashboardPlugins(
                 requestParameters.workspaceId,
                 requestParameters.objectId,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.xGDCVALIDATERELATIONS,
                 options,
@@ -24095,7 +23795,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
         return EntitiesApiFp(this.configuration)
             .getEntityDataSourceIdentifiers(
                 requestParameters.id,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.metaInclude,
                 options,
@@ -24118,7 +23817,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             .getEntityDataSourceTables(
                 requestParameters.dataSourceId,
                 requestParameters.id,
-                requestParameters.predicate,
                 requestParameters.filter,
                 options,
             )
@@ -24139,7 +23837,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
         return EntitiesApiFp(this.configuration)
             .getEntityDataSources(
                 requestParameters.id,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.metaInclude,
                 options,
@@ -24162,7 +23859,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             .getEntityDatasets(
                 requestParameters.workspaceId,
                 requestParameters.objectId,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 requestParameters.xGDCVALIDATERELATIONS,
@@ -24183,12 +23879,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
         options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration)
-            .getEntityEntitlements(
-                requestParameters.id,
-                requestParameters.predicate,
-                requestParameters.filter,
-                options,
-            )
+            .getEntityEntitlements(requestParameters.id, requestParameters.filter, options)
             .then((request) => request(this.axios, this.basePath));
     }
 
@@ -24204,7 +23895,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             .getEntityFacts(
                 requestParameters.workspaceId,
                 requestParameters.objectId,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 requestParameters.xGDCVALIDATERELATIONS,
@@ -24228,7 +23918,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             .getEntityFilterContexts(
                 requestParameters.workspaceId,
                 requestParameters.objectId,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 requestParameters.xGDCVALIDATERELATIONS,
@@ -24252,7 +23941,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             .getEntityLabels(
                 requestParameters.workspaceId,
                 requestParameters.objectId,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 requestParameters.xGDCVALIDATERELATIONS,
@@ -24276,12 +23964,27 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             .getEntityMetrics(
                 requestParameters.workspaceId,
                 requestParameters.objectId,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 requestParameters.xGDCVALIDATERELATIONS,
                 options,
             )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {EntitiesApiGetEntityOrganizationSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public getEntityOrganizationSettings(
+        requestParameters: EntitiesApiGetEntityOrganizationSettingsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .getEntityOrganizationSettings(requestParameters.id, requestParameters.filter, options)
             .then((request) => request(this.axios, this.basePath));
     }
 
@@ -24299,7 +24002,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
         return EntitiesApiFp(this.configuration)
             .getEntityOrganizations(
                 requestParameters.id,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 requestParameters.metaInclude,
@@ -24322,7 +24024,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
         return EntitiesApiFp(this.configuration)
             .getEntityUserGroups(
                 requestParameters.id,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 options,
@@ -24341,7 +24042,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
         return EntitiesApiFp(this.configuration)
             .getEntityUsers(
                 requestParameters.id,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 options,
@@ -24364,7 +24064,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             .getEntityVisualizationObjects(
                 requestParameters.workspaceId,
                 requestParameters.objectId,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 requestParameters.xGDCVALIDATERELATIONS,
@@ -24388,7 +24087,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             .getEntityWorkspaceDataFilterSettings(
                 requestParameters.workspaceId,
                 requestParameters.objectId,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 requestParameters.xGDCVALIDATERELATIONS,
@@ -24412,7 +24110,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             .getEntityWorkspaceDataFilters(
                 requestParameters.workspaceId,
                 requestParameters.objectId,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 requestParameters.xGDCVALIDATERELATIONS,
@@ -24435,7 +24132,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
         return EntitiesApiFp(this.configuration)
             .getEntityWorkspaces(
                 requestParameters.id,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 requestParameters.metaInclude,
@@ -24477,7 +24173,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.workspaceId,
                 requestParameters.objectId,
                 requestParameters.jsonApiAnalyticalDashboardPatchDocument,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 options,
@@ -24500,7 +24195,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             .patchEntityCookieSecurityConfigurations(
                 requestParameters.id,
                 requestParameters.jsonApiCookieSecurityConfigurationPatchDocument,
-                requestParameters.predicate,
                 requestParameters.filter,
                 options,
             )
@@ -24523,7 +24217,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.workspaceId,
                 requestParameters.objectId,
                 requestParameters.jsonApiDashboardPluginPatchDocument,
-                requestParameters.predicate,
                 requestParameters.filter,
                 options,
             )
@@ -24545,7 +24238,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             .patchEntityDataSources(
                 requestParameters.id,
                 requestParameters.jsonApiDataSourcePatchDocument,
-                requestParameters.predicate,
                 requestParameters.filter,
                 options,
             )
@@ -24568,7 +24260,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.workspaceId,
                 requestParameters.objectId,
                 requestParameters.jsonApiFilterContextPatchDocument,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 options,
@@ -24592,9 +24283,29 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.workspaceId,
                 requestParameters.objectId,
                 requestParameters.jsonApiMetricPatchDocument,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {EntitiesApiPatchEntityOrganizationSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public patchEntityOrganizationSettings(
+        requestParameters: EntitiesApiPatchEntityOrganizationSettingsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .patchEntityOrganizationSettings(
+                requestParameters.id,
+                requestParameters.jsonApiOrganizationSettingPatchDocument,
+                requestParameters.filter,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -24615,7 +24326,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             .patchEntityOrganizations(
                 requestParameters.id,
                 requestParameters.jsonApiOrganizationPatchDocument,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 options,
@@ -24638,7 +24348,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             .patchEntityUserGroups(
                 requestParameters.id,
                 requestParameters.jsonApiUserGroupPatchDocument,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 options,
@@ -24661,7 +24370,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             .patchEntityUsers(
                 requestParameters.id,
                 requestParameters.jsonApiUserPatchDocument,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 options,
@@ -24685,7 +24393,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.workspaceId,
                 requestParameters.objectId,
                 requestParameters.jsonApiVisualizationObjectPatchDocument,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 options,
@@ -24709,7 +24416,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.workspaceId,
                 requestParameters.objectId,
                 requestParameters.jsonApiWorkspaceDataFilterPatchDocument,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 options,
@@ -24732,7 +24438,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             .patchEntityWorkspaces(
                 requestParameters.id,
                 requestParameters.jsonApiWorkspacePatchDocument,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 options,
@@ -24756,7 +24461,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.workspaceId,
                 requestParameters.objectId,
                 requestParameters.jsonApiAnalyticalDashboardInDocument,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 options,
@@ -24779,7 +24483,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             .updateEntityCookieSecurityConfigurations(
                 requestParameters.id,
                 requestParameters.jsonApiCookieSecurityConfigurationInDocument,
-                requestParameters.predicate,
                 requestParameters.filter,
                 options,
             )
@@ -24802,7 +24505,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.workspaceId,
                 requestParameters.objectId,
                 requestParameters.jsonApiDashboardPluginInDocument,
-                requestParameters.predicate,
                 requestParameters.filter,
                 options,
             )
@@ -24824,7 +24526,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             .updateEntityDataSources(
                 requestParameters.id,
                 requestParameters.jsonApiDataSourceInDocument,
-                requestParameters.predicate,
                 requestParameters.filter,
                 options,
             )
@@ -24847,7 +24548,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.workspaceId,
                 requestParameters.objectId,
                 requestParameters.jsonApiFilterContextInDocument,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 options,
@@ -24871,9 +24571,29 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.workspaceId,
                 requestParameters.objectId,
                 requestParameters.jsonApiMetricInDocument,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {EntitiesApiUpdateEntityOrganizationSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public updateEntityOrganizationSettings(
+        requestParameters: EntitiesApiUpdateEntityOrganizationSettingsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .updateEntityOrganizationSettings(
+                requestParameters.id,
+                requestParameters.jsonApiOrganizationSettingInDocument,
+                requestParameters.filter,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -24894,7 +24614,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             .updateEntityOrganizations(
                 requestParameters.id,
                 requestParameters.jsonApiOrganizationInDocument,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 options,
@@ -24917,7 +24636,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             .updateEntityUserGroups(
                 requestParameters.id,
                 requestParameters.jsonApiUserGroupInDocument,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 options,
@@ -24940,7 +24658,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             .updateEntityUsers(
                 requestParameters.id,
                 requestParameters.jsonApiUserInDocument,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 options,
@@ -24964,7 +24681,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.workspaceId,
                 requestParameters.objectId,
                 requestParameters.jsonApiVisualizationObjectInDocument,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 options,
@@ -24988,7 +24704,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.workspaceId,
                 requestParameters.objectId,
                 requestParameters.jsonApiWorkspaceDataFilterInDocument,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 options,
@@ -25011,7 +24726,6 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             .updateEntityWorkspaces(
                 requestParameters.id,
                 requestParameters.jsonApiWorkspaceInDocument,
-                requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
                 options,
@@ -25379,76 +25093,18 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Set effective permissions for the workspace
-         * @summary Set permissions for the workspace
-         * @param {string} workspaceId
-         * @param {DeclarativeWorkspacePermissions} declarativeWorkspacePermissions
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getWorkspacePermissions: async (
-            workspaceId: string,
-            declarativeWorkspacePermissions: DeclarativeWorkspacePermissions,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("getWorkspacePermissions", "workspaceId", workspaceId);
-            // verify required parameter 'declarativeWorkspacePermissions' is not null or undefined
-            assertParamExists(
-                "getWorkspacePermissions",
-                "declarativeWorkspacePermissions",
-                declarativeWorkspacePermissions,
-            );
-            const localVarPath = `/api/v1/layout/workspaces/{workspaceId}/permissions`.replace(
-                `{${"workspaceId"}}`,
-                encodeURIComponent(String(workspaceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "PUT", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof declarativeWorkspacePermissions !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      declarativeWorkspacePermissions !== undefined ? declarativeWorkspacePermissions : {},
-                  )
-                : declarativeWorkspacePermissions || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Retrieve current set of permissions of the workspace in a declarative form.
          * @summary Get permissions for the workspace
          * @param {string} workspaceId
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getWorkspacePermissions1: async (
+        getWorkspacePermissions: async (
             workspaceId: string,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("getWorkspacePermissions1", "workspaceId", workspaceId);
+            assertParamExists("getWorkspacePermissions", "workspaceId", workspaceId);
             const localVarPath = `/api/v1/layout/workspaces/{workspaceId}/permissions`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
@@ -25996,6 +25652,64 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
+         * Set effective permissions for the workspace
+         * @summary Set permissions for the workspace
+         * @param {string} workspaceId
+         * @param {DeclarativeWorkspacePermissions} declarativeWorkspacePermissions
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        setWorkspacePermissions: async (
+            workspaceId: string,
+            declarativeWorkspacePermissions: DeclarativeWorkspacePermissions,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("setWorkspacePermissions", "workspaceId", workspaceId);
+            // verify required parameter 'declarativeWorkspacePermissions' is not null or undefined
+            assertParamExists(
+                "setWorkspacePermissions",
+                "declarativeWorkspacePermissions",
+                declarativeWorkspacePermissions,
+            );
+            const localVarPath = `/api/v1/layout/workspaces/{workspaceId}/permissions`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "PUT", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof declarativeWorkspacePermissions !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      declarativeWorkspacePermissions !== undefined ? declarativeWorkspacePermissions : {},
+                  )
+                : declarativeWorkspacePermissions || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Sets complete layout of workspaces, their hierarchy, models.
          * @summary Set all workspaces layout
          * @param {DeclarativeWorkspaces} declarativeWorkspaces
@@ -26190,39 +25904,19 @@ export const LayoutApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Set effective permissions for the workspace
-         * @summary Set permissions for the workspace
-         * @param {string} workspaceId
-         * @param {DeclarativeWorkspacePermissions} declarativeWorkspacePermissions
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getWorkspacePermissions(
-            workspaceId: string,
-            declarativeWorkspacePermissions: DeclarativeWorkspacePermissions,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getWorkspacePermissions(
-                workspaceId,
-                declarativeWorkspacePermissions,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
          * Retrieve current set of permissions of the workspace in a declarative form.
          * @summary Get permissions for the workspace
          * @param {string} workspaceId
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getWorkspacePermissions1(
+        async getWorkspacePermissions(
             workspaceId: string,
             options?: AxiosRequestConfig,
         ): Promise<
             (axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeclarativeWorkspacePermissions>
         > {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getWorkspacePermissions1(
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getWorkspacePermissions(
                 workspaceId,
                 options,
             );
@@ -26423,6 +26117,26 @@ export const LayoutApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Set effective permissions for the workspace
+         * @summary Set permissions for the workspace
+         * @param {string} workspaceId
+         * @param {DeclarativeWorkspacePermissions} declarativeWorkspacePermissions
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async setWorkspacePermissions(
+            workspaceId: string,
+            declarativeWorkspacePermissions: DeclarativeWorkspacePermissions,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.setWorkspacePermissions(
+                workspaceId,
+                declarativeWorkspacePermissions,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Sets complete layout of workspaces, their hierarchy, models.
          * @summary Set all workspaces layout
          * @param {DeclarativeWorkspaces} declarativeWorkspaces
@@ -26572,8 +26286,8 @@ export const LayoutApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
-         * Set effective permissions for the workspace
-         * @summary Set permissions for the workspace
+         * Retrieve current set of permissions of the workspace in a declarative form.
+         * @summary Get permissions for the workspace
          * @param {LayoutApiGetWorkspacePermissionsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -26581,28 +26295,9 @@ export const LayoutApiFactory = function (
         getWorkspacePermissions(
             requestParameters: LayoutApiGetWorkspacePermissionsRequest,
             options?: AxiosRequestConfig,
-        ): AxiosPromise<void> {
-            return localVarFp
-                .getWorkspacePermissions(
-                    requestParameters.workspaceId,
-                    requestParameters.declarativeWorkspacePermissions,
-                    options,
-                )
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * Retrieve current set of permissions of the workspace in a declarative form.
-         * @summary Get permissions for the workspace
-         * @param {LayoutApiGetWorkspacePermissions1Request} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getWorkspacePermissions1(
-            requestParameters: LayoutApiGetWorkspacePermissions1Request,
-            options?: AxiosRequestConfig,
         ): AxiosPromise<DeclarativeWorkspacePermissions> {
             return localVarFp
-                .getWorkspacePermissions1(requestParameters.workspaceId, options)
+                .getWorkspacePermissions(requestParameters.workspaceId, options)
                 .then((request) => request(axios, basePath));
         },
         /**
@@ -26773,6 +26468,25 @@ export const LayoutApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
+         * Set effective permissions for the workspace
+         * @summary Set permissions for the workspace
+         * @param {LayoutApiSetWorkspacePermissionsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        setWorkspacePermissions(
+            requestParameters: LayoutApiSetWorkspacePermissionsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .setWorkspacePermissions(
+                    requestParameters.workspaceId,
+                    requestParameters.declarativeWorkspacePermissions,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * Sets complete layout of workspaces, their hierarchy, models.
          * @summary Set all workspaces layout
          * @param {LayoutApiSetWorkspacesLayoutRequest} requestParameters Request parameters.
@@ -26905,8 +26619,8 @@ export interface LayoutApiInterface {
     ): AxiosPromise<DeclarativeWorkspaceModel>;
 
     /**
-     * Set effective permissions for the workspace
-     * @summary Set permissions for the workspace
+     * Retrieve current set of permissions of the workspace in a declarative form.
+     * @summary Get permissions for the workspace
      * @param {LayoutApiGetWorkspacePermissionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -26914,19 +26628,6 @@ export interface LayoutApiInterface {
      */
     getWorkspacePermissions(
         requestParameters: LayoutApiGetWorkspacePermissionsRequest,
-        options?: AxiosRequestConfig,
-    ): AxiosPromise<void>;
-
-    /**
-     * Retrieve current set of permissions of the workspace in a declarative form.
-     * @summary Get permissions for the workspace
-     * @param {LayoutApiGetWorkspacePermissions1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof LayoutApiInterface
-     */
-    getWorkspacePermissions1(
-        requestParameters: LayoutApiGetWorkspacePermissions1Request,
         options?: AxiosRequestConfig,
     ): AxiosPromise<DeclarativeWorkspacePermissions>;
 
@@ -27070,6 +26771,19 @@ export interface LayoutApiInterface {
     ): AxiosPromise<void>;
 
     /**
+     * Set effective permissions for the workspace
+     * @summary Set permissions for the workspace
+     * @param {LayoutApiSetWorkspacePermissionsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LayoutApiInterface
+     */
+    setWorkspacePermissions(
+        requestParameters: LayoutApiSetWorkspacePermissionsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
+
+    /**
      * Sets complete layout of workspaces, their hierarchy, models.
      * @summary Set all workspaces layout
      * @param {LayoutApiSetWorkspacesLayoutRequest} requestParameters Request parameters.
@@ -27156,27 +26870,6 @@ export interface LayoutApiGetWorkspacePermissionsRequest {
      *
      * @type {string}
      * @memberof LayoutApiGetWorkspacePermissions
-     */
-    readonly workspaceId: string;
-
-    /**
-     *
-     * @type {DeclarativeWorkspacePermissions}
-     * @memberof LayoutApiGetWorkspacePermissions
-     */
-    readonly declarativeWorkspacePermissions: DeclarativeWorkspacePermissions;
-}
-
-/**
- * Request parameters for getWorkspacePermissions1 operation in LayoutApi.
- * @export
- * @interface LayoutApiGetWorkspacePermissions1Request
- */
-export interface LayoutApiGetWorkspacePermissions1Request {
-    /**
-     *
-     * @type {string}
-     * @memberof LayoutApiGetWorkspacePermissions1
      */
     readonly workspaceId: string;
 }
@@ -27350,6 +27043,27 @@ export interface LayoutApiSetWorkspaceDataFiltersLayoutRequest {
 }
 
 /**
+ * Request parameters for setWorkspacePermissions operation in LayoutApi.
+ * @export
+ * @interface LayoutApiSetWorkspacePermissionsRequest
+ */
+export interface LayoutApiSetWorkspacePermissionsRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof LayoutApiSetWorkspacePermissions
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {DeclarativeWorkspacePermissions}
+     * @memberof LayoutApiSetWorkspacePermissions
+     */
+    readonly declarativeWorkspacePermissions: DeclarativeWorkspacePermissions;
+}
+
+/**
  * Request parameters for setWorkspacesLayout operation in LayoutApi.
  * @export
  * @interface LayoutApiSetWorkspacesLayoutRequest
@@ -27511,8 +27225,8 @@ export class LayoutApi extends BaseAPI implements LayoutApiInterface {
     }
 
     /**
-     * Set effective permissions for the workspace
-     * @summary Set permissions for the workspace
+     * Retrieve current set of permissions of the workspace in a declarative form.
+     * @summary Get permissions for the workspace
      * @param {LayoutApiGetWorkspacePermissionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -27523,28 +27237,7 @@ export class LayoutApi extends BaseAPI implements LayoutApiInterface {
         options?: AxiosRequestConfig,
     ) {
         return LayoutApiFp(this.configuration)
-            .getWorkspacePermissions(
-                requestParameters.workspaceId,
-                requestParameters.declarativeWorkspacePermissions,
-                options,
-            )
-            .then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Retrieve current set of permissions of the workspace in a declarative form.
-     * @summary Get permissions for the workspace
-     * @param {LayoutApiGetWorkspacePermissions1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof LayoutApi
-     */
-    public getWorkspacePermissions1(
-        requestParameters: LayoutApiGetWorkspacePermissions1Request,
-        options?: AxiosRequestConfig,
-    ) {
-        return LayoutApiFp(this.configuration)
-            .getWorkspacePermissions1(requestParameters.workspaceId, options)
+            .getWorkspacePermissions(requestParameters.workspaceId, options)
             .then((request) => request(this.axios, this.basePath));
     }
 
@@ -27723,6 +27416,27 @@ export class LayoutApi extends BaseAPI implements LayoutApiInterface {
     ) {
         return LayoutApiFp(this.configuration)
             .setWorkspaceDataFiltersLayout(requestParameters.declarativeWorkspaceDataFilters, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Set effective permissions for the workspace
+     * @summary Set permissions for the workspace
+     * @param {LayoutApiSetWorkspacePermissionsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LayoutApi
+     */
+    public setWorkspacePermissions(
+        requestParameters: LayoutApiSetWorkspacePermissionsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return LayoutApiFp(this.configuration)
+            .setWorkspacePermissions(
+                requestParameters.workspaceId,
+                requestParameters.declarativeWorkspacePermissions,
+                options,
+            )
             .then((request) => request(this.axios, this.basePath));
     }
 

@@ -1,6 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
-import * as React from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import React, { useMemo } from "react";
+import { useIntl } from "react-intl";
 import { Dropdown, DropdownList, DropdownButton, SingleSelectListItem } from "@gooddata/sdk-ui-kit";
 import invariant from "ts-invariant";
 
@@ -11,74 +11,60 @@ import { messages } from "../../../../../locales";
 
 const DROPDOWN_WIDTH = 199;
 
-interface IRepeatTypeSelectOwnProps {
+export interface IRepeatTypeSelectProps {
     repeatType: string;
     startDate: Date;
     onChange: (repeatType: string) => void;
 }
 
-export type IRepeatTypeSelectProps = IRepeatTypeSelectOwnProps & WrappedComponentProps;
+export const RepeatTypeSelect: React.FC<IRepeatTypeSelectProps> = (props) => {
+    const { onChange, repeatType, startDate } = props;
+    const intl = useIntl();
 
-class RenderRepeatTypeSelect extends React.PureComponent<IRepeatTypeSelectProps> {
-    public render(): React.ReactNode {
-        const repeatItems = this.getRepeatTypeItems();
-        const repeatTypeItem = repeatItems.find(this.isRepeatTypeItemSelected);
-        invariant(repeatTypeItem, "Inconsistent state in RepeatTypeSelect");
-
-        return (
-            <Dropdown
-                alignPoints={DEFAULT_DROPDOWN_ALIGN_POINTS}
-                className="gd-schedule-email-dialog-repeat-type s-gd-schedule-email-dialog-repeat-type"
-                renderButton={({ toggleDropdown }) => (
-                    <DropdownButton value={repeatTypeItem.title} onClick={toggleDropdown} />
-                )}
-                renderBody={({ closeDropdown, isMobile }) => (
-                    <DropdownList
-                        width={DROPDOWN_WIDTH}
-                        items={repeatItems}
-                        isMobile={isMobile}
-                        renderItem={({ item }) => (
-                            <SingleSelectListItem
-                                title={item.title}
-                                onClick={() => {
-                                    this.onRepeatTypeChange(item);
-                                    closeDropdown();
-                                }}
-                                isSelected={repeatTypeItem.id === item.id}
-                            />
-                        )}
-                    />
-                )}
-                overlayPositionType="sameAsTarget"
-                overlayZIndex={DEFAULT_DROPDOWN_ZINDEX}
-            />
-        );
-    }
-
-    private isRepeatTypeItemSelected = (item: IDropdownItem): boolean => {
-        return item.id === this.props.repeatType;
-    };
-
-    private getRepeatTypeItem = (repeatType: string): IDropdownItem => {
-        const { intl, startDate } = this.props;
-        return {
-            id: repeatType,
-            title: intl.formatMessage(messages[`scheduleDialogEmailRepeats_${repeatType}`], {
-                day: getIntlDayName(intl, startDate),
-                week: getWeek(startDate),
-            }),
-        };
-    };
-
-    private getRepeatTypeItems = (): IDropdownItem[] => {
+    const repeatItems = useMemo(() => {
         return [REPEAT_TYPES.DAILY, REPEAT_TYPES.WEEKLY, REPEAT_TYPES.MONTHLY, REPEAT_TYPES.CUSTOM].map(
-            this.getRepeatTypeItem,
+            (id): IDropdownItem => {
+                return {
+                    id,
+                    title: intl.formatMessage(messages[`scheduleDialogEmailRepeats_${id}`], {
+                        day: getIntlDayName(intl, startDate),
+                        week: getWeek(startDate),
+                    }),
+                };
+            },
         );
-    };
+    }, [intl, startDate]);
 
-    private onRepeatTypeChange = (item: IDropdownItem) => {
-        this.props.onChange(item.id);
-    };
-}
+    const repeatTypeItem = repeatItems.find((item) => item.id === repeatType);
 
-export const RepeatTypeSelect = injectIntl(RenderRepeatTypeSelect);
+    invariant(repeatTypeItem, "Inconsistent state in RepeatTypeSelect");
+
+    return (
+        <Dropdown
+            alignPoints={DEFAULT_DROPDOWN_ALIGN_POINTS}
+            className="gd-schedule-email-dialog-repeat-type s-gd-schedule-email-dialog-repeat-type"
+            renderButton={({ toggleDropdown }) => (
+                <DropdownButton value={repeatTypeItem.title} onClick={toggleDropdown} />
+            )}
+            renderBody={({ closeDropdown, isMobile }) => (
+                <DropdownList
+                    width={DROPDOWN_WIDTH}
+                    items={repeatItems}
+                    isMobile={isMobile}
+                    renderItem={({ item }) => (
+                        <SingleSelectListItem
+                            title={item.title}
+                            onClick={() => {
+                                onChange(item.id);
+                                closeDropdown();
+                            }}
+                            isSelected={repeatTypeItem.id === item.id}
+                        />
+                    )}
+                />
+            )}
+            overlayPositionType="sameAsTarget"
+            overlayZIndex={DEFAULT_DROPDOWN_ZINDEX}
+        />
+    );
+};

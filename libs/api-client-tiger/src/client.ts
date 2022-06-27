@@ -14,6 +14,7 @@ import { setAxiosAuthorizationToken } from "./axios";
 import { AxiosInstance } from "axios";
 import { tigerLayoutClientFactory } from "./layout";
 import { tigerAfmExplainClientFactory } from "./explain";
+import { tigerActionsClientFactory } from "./actions";
 
 import {
     MetadataConfiguration,
@@ -40,6 +41,7 @@ export {
     tigerLayoutClientFactory,
     tigerAfmExplainClientFactory,
     tigerProfileClientFactory,
+    tigerActionsClientFactory,
     MetadataConfiguration,
     MetadataConfigurationParameters,
     MetadataBaseApi,
@@ -65,6 +67,7 @@ export interface ITigerClient {
     declarativeLayout: ReturnType<typeof tigerLayoutClientFactory>;
     entities: ReturnType<typeof tigerEntitiesObjectsClientFactory>;
     profile: ReturnType<typeof tigerProfileClientFactory>;
+    actions: ReturnType<typeof tigerActionsClientFactory>;
 
     /**
      * Updates tiger client to send the provided API TOKEN in `Authorization` header of all
@@ -89,6 +92,7 @@ export const tigerClientFactory = (axios: AxiosInstance): ITigerClient => {
     const explain = tigerAfmExplainClientFactory(axios);
     const entities = tigerEntitiesObjectsClientFactory(axios);
     const profile = tigerProfileClientFactory(axios);
+    const actions = tigerActionsClientFactory(axios);
 
     return {
         axios,
@@ -100,6 +104,7 @@ export const tigerClientFactory = (axios: AxiosInstance): ITigerClient => {
         explain,
         entities,
         profile,
+        actions,
         setApiToken: (token: string | undefined): void => {
             setAxiosAuthorizationToken(axios, token);
         },

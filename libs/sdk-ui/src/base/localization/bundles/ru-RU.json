@@ -30,8 +30,8 @@
     "visualizations.totals.dropdown.tooltip.nat.disabled.ranking": "Агрегация 'Сведение (Всего)' недоступна при фильтрации анализа по фильтру ранжирования. Чтобы использовать 'Сведение (Всего)', удалите фильтр ранжирования с панели фильтров.",
     "visualizations.totals.dropdown.title.med": "Медиана",
     "visualizations.headline.tertiary.title": "по сравнению",
-    "visualization.numericValues.k": "тыс.",
-    "visualization.numericValues.m": "млн",
+    "visualization.numericValues.k": "K",
+    "visualization.numericValues.m": "M",
     "visualization.numericValues.g": "млрд",
     "visualization.numericValues.t": "трлн",
     "visualization.numericValues.p": "квадрлн",
@@ -64,6 +64,10 @@
     "gs.list.noItemsFound": "Ничего не найдено.",
     "gs.list.error": "Ошибка при загрузке элементов списка",
     "gs.header.upsellButtonText": "Улучшить",
+    "gs.header.countdown.numberOfDaysLeft": "осталось {number} {number, plural, one {день} few {дня} many {дней} other {дней}}",
+    "gs.header.countdown.numberOfMonthsLeft": "осталось {number} {number, plural, one {месяц} few {месяца} many {месяцев} other {месяцев}}",
+    "gs.header.countdown.oneMonthLeft": "остался 1 месяц",
+    "gs.header.countdown.lastDay": "Это ваш последний день",
     "measure.title.suffix.same_period_year_ago": "ТП год назад",
     "measure.title.suffix.previous_period": "пред. период",
     "visualizations.measure.arithmetic.sum.title": "Сумма {firstMeasureTitle} и {secondMeasureTitle}",
@@ -306,5 +310,8 @@
     "embedInsightDialog.prepareEnvironmentMessage.link": "Подробнее",
     "embed.dialog.numeric.input.validation": "Значение должно быть числом больше 0",
     "embed.dialog.numeric.input.warning": "Можно ввести только цифры больше 0",
-    "embedInsightDialog.complete.list.props.message": "Полный список свойств встраивания"
+    "embedInsightDialog.complete.list.props.message": "Полный список свойств встраивания",
+    "error.overlay.login": "Вход",
+    "error.overlay.title": "Вы вышли из системы",
+    "error.overlay.text": "Войдите снова, чтобы продолжить работу."
 }
