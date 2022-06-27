@@ -344,8 +344,8 @@ function formatTooltip(tooltipCallback: any, intl?: IntlShape) {
 
     return tooltipContent !== null
         ? `<div class="hc-tooltip gd-viz-tooltip" style="${tooltipStyle}">
-            <span class="stroke gd-viz-tooltip-stroke" style="${strokeStyle}"></span>
-            <div class="content gd-viz-tooltip-content" style="max-width: ${maxTooltipContentWidth}px;">
+            <span class="gd-viz-tooltip-stroke" style="${strokeStyle}"></span>
+            <div class="gd-viz-tooltip-content" style="max-width: ${maxTooltipContentWidth}px;">
                 ${tooltipContent}
                 ${interactionMessage}
             </div>

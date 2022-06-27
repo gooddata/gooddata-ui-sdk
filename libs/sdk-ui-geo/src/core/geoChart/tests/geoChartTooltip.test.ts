@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import { ISeparators } from "@gooddata/numberjs";
 import { getTooltipHtml, shouldShowTooltip, TOOLTIP_MAX_WIDTH } from "../geoChartTooltip";
 
@@ -27,8 +27,8 @@ describe("geoChartTooltip", () => {
             };
             const tooltipHtml = getTooltipHtml(geoProperties, "rgb(0,0,0)", TOOLTIP_MAX_WIDTH);
             expect(tooltipHtml).toBe(`<div class="gd-viz-tooltip" style="max-width:320px">
-                <span class="stroke gd-viz-tooltip-stroke" style="border-top-color: rgb(0,0,0)"></span>
-                <div class="content gd-viz-tooltip-content"><div class="gd-viz-tooltip-item">
+                <span class="gd-viz-tooltip-stroke" style="border-top-color: rgb(0,0,0)"></span>
+                <div class="gd-viz-tooltip-content"><div class="gd-viz-tooltip-item">
                 <span class="gd-viz-tooltip-title">State</span>
                 <div class="gd-viz-tooltip-value-wraper">
                     <span class="gd-viz-tooltip-value">Florida</span>
@@ -71,8 +71,8 @@ describe("geoChartTooltip", () => {
             };
             const tooltipHtml = getTooltipHtml(geoProperties, "rgb(0,0,0)", TOOLTIP_MAX_WIDTH);
             expect(tooltipHtml).toBe(`<div class="gd-viz-tooltip" style="max-width:320px">
-                <span class="stroke gd-viz-tooltip-stroke" style="border-top-color: rgb(0,0,0)"></span>
-                <div class="content gd-viz-tooltip-content"><div class="gd-viz-tooltip-item">
+                <span class="gd-viz-tooltip-stroke" style="border-top-color: rgb(0,0,0)"></span>
+                <div class="gd-viz-tooltip-content"><div class="gd-viz-tooltip-item">
                 <span class="gd-viz-tooltip-title">State</span>
                 <div class="gd-viz-tooltip-value-wraper">
                     <span class="gd-viz-tooltip-value">-</span>
@@ -114,8 +114,8 @@ describe("geoChartTooltip", () => {
             };
             const tooltipHtml = getTooltipHtml(geoProperties, "rgb(0,0,0)", TOOLTIP_MAX_WIDTH, separators);
             expect(tooltipHtml).toBe(`<div class="gd-viz-tooltip" style="max-width:320px">
-                <span class="stroke gd-viz-tooltip-stroke" style="border-top-color: rgb(0,0,0)"></span>
-                <div class="content gd-viz-tooltip-content"><div class="gd-viz-tooltip-item">
+                <span class="gd-viz-tooltip-stroke" style="border-top-color: rgb(0,0,0)"></span>
+                <div class="gd-viz-tooltip-content"><div class="gd-viz-tooltip-item">
                 <span class="gd-viz-tooltip-title">&lt;button&gt;State&lt;/button&gt;</span>
                 <div class="gd-viz-tooltip-value-wraper">
                     <span class="gd-viz-tooltip-value">&lt;span&gt;Florida&lt;/span&gt;</span>

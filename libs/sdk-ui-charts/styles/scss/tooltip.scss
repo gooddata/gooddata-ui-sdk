@@ -112,7 +112,7 @@
     text-align: left;
 }
 
-.multiline-supported {
+.gd-multiline-supported {
     .gd-viz-tooltip-value-wraper {
         padding-right: 0;
     }
@@ -124,7 +124,7 @@
         text-align: left;
         max-height: 2.6em;
 
-        &.clamp-two-line {
+        &.gd-clamp-two-line {
             display: flex;
 
             /*! autoprefixer: ignore next */
