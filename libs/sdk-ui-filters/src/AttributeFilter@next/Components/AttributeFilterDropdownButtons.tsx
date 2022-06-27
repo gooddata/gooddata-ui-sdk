@@ -3,14 +3,14 @@ import React from "react";
 import { useIntl } from "react-intl";
 import { Button } from "@gooddata/sdk-ui-kit";
 
-interface IAttributeDropdownButtonsProps {
+export interface IAttributeFilterDropdownButtonsProps {
     onApplyButtonClicked: () => void;
     onCloseButtonClicked: () => void;
-    applyDisabled?: boolean;
+    isApplyDisabled?: boolean;
 }
 
-export const AttributeDropdownButtons: React.VFC<IAttributeDropdownButtonsProps> = ({
-    applyDisabled,
+export const AttributeFilterDropdownButtons: React.VFC<IAttributeFilterDropdownButtonsProps> = ({
+    isApplyDisabled,
     onApplyButtonClicked,
     onCloseButtonClicked,
 }) => {
@@ -28,7 +28,7 @@ export const AttributeDropdownButtons: React.VFC<IAttributeDropdownButtonsProps>
                 title={cancelText}
             />
             <Button
-                disabled={applyDisabled}
+                disabled={isApplyDisabled}
                 className="gd-button-action gd-button-small s-apply"
                 onClick={onApplyButtonClicked}
                 value={applyText}

@@ -9,5 +9,5 @@ export type IAttributeFilterButtonProps = IAttributeFilterBaseProps;
  * @internal
  */
 export const AttributeFilterButton: React.FC<IAttributeFilterButtonProps> = (props) => {
-    return <AttributeFilterBase {...props} AttributeFilterButton={AttributeFilterButtonComponent} />;
+    return <AttributeFilterBase {...props} FilterButton={AttributeFilterButtonComponent} />;
 };

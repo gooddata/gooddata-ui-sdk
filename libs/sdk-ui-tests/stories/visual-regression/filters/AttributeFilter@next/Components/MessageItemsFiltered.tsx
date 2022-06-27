@@ -6,15 +6,15 @@ import { storiesOf } from "../../../../_infra/storyRepository";
 import { wrapWithTheme } from "../../../themeWrapper";
 
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
-import { AttributeDropdownItemsFiltered } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Components/AttributeDropdownItemsFiltered";
+import { MessageItemsFiltered } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Components/MessageItemsFiltered";
 
-const AttributeDropdownItemsFilteredExamples = (): JSX.Element => {
+const MessageItemsFilteredExamples = (): JSX.Element => {
     return (
         <InternalIntlWrapper>
             <div style={{ width: 400 }}>
                 <div className="library-component screenshot-target">
-                    <h4>AttributeDropdownItemsFiltered </h4>
-                    <AttributeDropdownItemsFiltered
+                    <h4>MessageItemsFiltered </h4>
+                    <MessageItemsFiltered
                         parentFilterTitles={["Educationally, PhoenixSoft, WonderKid"]}
                         showItemsFilteredMessage={true}
                     />
@@ -24,6 +24,6 @@ const AttributeDropdownItemsFilteredExamples = (): JSX.Element => {
     );
 };
 
-storiesOf(`${FilterStories}@next/Components/AttributeDropdownItemsFiltered`)
-    .add("full-featured", () => <AttributeDropdownItemsFilteredExamples />, {})
-    .add("themed", () => wrapWithTheme(<AttributeDropdownItemsFilteredExamples />), {});
+storiesOf(`${FilterStories}@next/Components/MessageItemsFiltered`)
+    .add("full-featured", () => <MessageItemsFilteredExamples />, {})
+    .add("themed", () => wrapWithTheme(<MessageItemsFilteredExamples />), {});

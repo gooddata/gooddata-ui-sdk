@@ -6,7 +6,7 @@ import { storiesOf } from "../../../../_infra/storyRepository";
 import { wrapWithTheme } from "../../../themeWrapper";
 
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
-import { AttributeFilterButtonDefaultDropdownBody } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Components/AttributeFilterButtonDefaultDropdownBody";
+import { AttributeFilterDropdownBody } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Components/AttributeFilterDropdownBody";
 import { action } from "@storybook/addon-actions";
 
 const AttributeFilterButtonDefaultDropdownBodyExamples = (): JSX.Element => {
@@ -16,8 +16,9 @@ const AttributeFilterButtonDefaultDropdownBodyExamples = (): JSX.Element => {
                 <div className="library-component screenshot-target">
                     <h4>AttributeFilterButtonDefaultDropdownBody</h4>
                     <div style={{ width: 261, border: "1px solid black" }}>
-                        <AttributeFilterButtonDefaultDropdownBody
-                            allElementsFiltered={false}
+                        <AttributeFilterDropdownBody
+                            isApplyDisabled={false}
+                            hasNoMatchingData={false}
                             hasNoData={false}
                             onApplyButtonClicked={action("onApplyButtonClicked")}
                             closeDropdown={action("closeDropdown")}
@@ -31,20 +32,21 @@ const AttributeFilterButtonDefaultDropdownBodyExamples = (): JSX.Element => {
                                 isInverted: false,
                                 isLoading: false,
                                 searchString: "",
+                                hasNoData: false,
+                                hasNoMatchingData: false,
                                 parentFilterTitles: ["Title1", "Title2"],
                                 onSearch: action("onSearch"),
                                 onSelect: action("onSelect"),
                                 onRangeChange: action("onRangeChange"),
-                                onApplyButtonClicked: action("onApplyButtonClicked"),
-                                onCloseButtonClicked: action("onCloseButtonClicked"),
                             }}
                         />
                     </div>
 
                     <h4>AttributeFilterButtonDefaultDropdownBody with selection and search</h4>
                     <div style={{ width: 261, border: "1px solid black" }}>
-                        <AttributeFilterButtonDefaultDropdownBody
-                            allElementsFiltered={false}
+                        <AttributeFilterDropdownBody
+                            isApplyDisabled={false}
+                            hasNoMatchingData={false}
                             hasNoData={false}
                             onApplyButtonClicked={action("onApplyButtonClicked")}
                             closeDropdown={action("closeDropdown")}
@@ -58,20 +60,21 @@ const AttributeFilterButtonDefaultDropdownBodyExamples = (): JSX.Element => {
                                 isInverted: false,
                                 isLoading: false,
                                 searchString: "bla",
+                                hasNoData: false,
+                                hasNoMatchingData: false,
                                 parentFilterTitles: ["Title1", "Title2"],
                                 onSearch: action("onSearch"),
                                 onSelect: action("onSelect"),
                                 onRangeChange: action("onRangeChange"),
-                                onApplyButtonClicked: action("onApplyButtonClicked"),
-                                onCloseButtonClicked: action("onCloseButtonClicked"),
                             }}
                         />
                     </div>
 
                     <h4>AttributeFilterButtonDefaultDropdownBody all elements filtered</h4>
                     <div style={{ width: 261, border: "1px solid black" }}>
-                        <AttributeFilterButtonDefaultDropdownBody
-                            allElementsFiltered={true}
+                        <AttributeFilterDropdownBody
+                            isApplyDisabled={false}
+                            hasNoMatchingData={true}
                             hasNoData={false}
                             onApplyButtonClicked={action("onApplyButtonClicked")}
                             closeDropdown={action("closeDropdown")}
@@ -82,20 +85,21 @@ const AttributeFilterButtonDefaultDropdownBodyExamples = (): JSX.Element => {
                                 isInverted: false,
                                 isLoading: false,
                                 searchString: "",
+                                hasNoData: false,
+                                hasNoMatchingData: true,
                                 parentFilterTitles: ["Title1", "Title2"],
                                 onSearch: action("onSearch"),
                                 onSelect: action("onSelect"),
                                 onRangeChange: action("onRangeChange"),
-                                onApplyButtonClicked: action("onApplyButtonClicked"),
-                                onCloseButtonClicked: action("onCloseButtonClicked"),
                             }}
                         />
                     </div>
 
                     <h4>AttributeFilterButtonDefaultDropdownBody parent filtered</h4>
                     <div style={{ width: 261, border: "1px solid black" }}>
-                        <AttributeFilterButtonDefaultDropdownBody
-                            allElementsFiltered={false}
+                        <AttributeFilterDropdownBody
+                            isApplyDisabled={false}
+                            hasNoMatchingData={true}
                             hasNoData={false}
                             onApplyButtonClicked={action("onApplyButtonClicked")}
                             closeDropdown={action("closeDropdown")}
@@ -109,21 +113,22 @@ const AttributeFilterButtonDefaultDropdownBodyExamples = (): JSX.Element => {
                                 isInverted: false,
                                 isLoading: false,
                                 searchString: "bla",
+                                hasNoData: false,
+                                hasNoMatchingData: true,
                                 parentFilterTitles: ["Title1", "Title2"],
                                 showItemsFilteredMessage: true,
                                 onSearch: action("onSearch"),
                                 onSelect: action("onSelect"),
                                 onRangeChange: action("onRangeChange"),
-                                onApplyButtonClicked: action("onApplyButtonClicked"),
-                                onCloseButtonClicked: action("onCloseButtonClicked"),
                             }}
                         />
                     </div>
 
                     <h4>AttributeFilterButtonDefaultDropdownBody no data</h4>
                     <div style={{ width: 261, border: "1px solid black" }}>
-                        <AttributeFilterButtonDefaultDropdownBody
-                            allElementsFiltered={false}
+                        <AttributeFilterDropdownBody
+                            isApplyDisabled={false}
+                            hasNoMatchingData={false}
                             hasNoData={true}
                             onApplyButtonClicked={action("onApplyButtonClicked")}
                             closeDropdown={action("closeDropdown")}
@@ -134,20 +139,21 @@ const AttributeFilterButtonDefaultDropdownBodyExamples = (): JSX.Element => {
                                 isInverted: false,
                                 isLoading: false,
                                 searchString: "",
+                                hasNoData: true,
+                                hasNoMatchingData: false,
                                 parentFilterTitles: ["Title1", "Title2"],
                                 onSearch: action("onSearch"),
                                 onSelect: action("onSelect"),
                                 onRangeChange: action("onRangeChange"),
-                                onApplyButtonClicked: action("onApplyButtonClicked"),
-                                onCloseButtonClicked: action("onCloseButtonClicked"),
                             }}
                         />
                     </div>
 
                     <h4>AttributeFilterButtonDefaultDropdownBody error in list</h4>
                     <div style={{ width: 261, border: "1px solid black" }}>
-                        <AttributeFilterButtonDefaultDropdownBody
-                            allElementsFiltered={false}
+                        <AttributeFilterDropdownBody
+                            isApplyDisabled={false}
+                            hasNoMatchingData={false}
                             hasNoData={false}
                             onApplyButtonClicked={action("onApplyButtonClicked")}
                             closeDropdown={action("closeDropdown")}
@@ -159,12 +165,12 @@ const AttributeFilterButtonDefaultDropdownBodyExamples = (): JSX.Element => {
                                 isInverted: false,
                                 isLoading: false,
                                 searchString: "",
+                                hasNoData: false,
+                                hasNoMatchingData: false,
                                 parentFilterTitles: ["Title1", "Title2"],
                                 onSearch: action("onSearch"),
                                 onSelect: action("onSelect"),
                                 onRangeChange: action("onRangeChange"),
-                                onApplyButtonClicked: action("onApplyButtonClicked"),
-                                onCloseButtonClicked: action("onCloseButtonClicked"),
                             }}
                         />
                     </div>
@@ -174,6 +180,6 @@ const AttributeFilterButtonDefaultDropdownBodyExamples = (): JSX.Element => {
     );
 };
 
-storiesOf(`${FilterStories}@next/Components/AttributeFilterButtonDefaultDropdownBody`)
+storiesOf(`${FilterStories}@next/Components/AttributeFilterDropdownBody`)
     .add("full-featured", () => <AttributeFilterButtonDefaultDropdownBodyExamples />, {})
     .add("themed", () => wrapWithTheme(<AttributeFilterButtonDefaultDropdownBodyExamples />), {});

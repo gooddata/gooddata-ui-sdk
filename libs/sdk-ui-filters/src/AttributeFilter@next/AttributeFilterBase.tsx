@@ -11,8 +11,8 @@ import {
 } from "@gooddata/sdk-model";
 import {
     IAttributeDropdownBodyExtendedProps,
-    IAttributeDropdownBodyProps,
-} from "./Components/AttributeDropdownBody";
+    IAttributeDropdownBodyPropsNoCallbacks,
+} from "./Components/AttributeFilterDropdownContent";
 import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
 import {
@@ -49,12 +49,13 @@ import { useFetchInitialElements } from "./AttributeFilterButton/hooks/useFetchI
 import { useOriginalTotalElementsCount } from "./AttributeFilterButton/hooks/useOriginalTotalElementsCount";
 import { useAttribute } from "./AttributeFilterButton/hooks/useAttribute";
 import { useOnErrorCallback } from "./AttributeFilterButton/hooks/useOnErrorCallback";
-import AttributeFilterButtonDropdown from "./Components/AttributeFilterButtonDropdown";
+import { AttributeFilterDropdown } from "./Components/AttributeFilterDropdown";
 import {
     AttributeFilterComponentsProvider,
     useAttributeFilterComponentsContext,
 } from "./Context/AttributeFilterComponentsContext";
 import { IAttributeFilterButtonProps } from "./Components/AttributeFilterButton";
+import { IAttributeFilterDropdownButtonsProps } from "./Components/AttributeFilterDropdownButtons";
 
 /**
  * @internal
@@ -158,12 +159,18 @@ export interface IAttributeFilterBaseProps {
     FilterError?: React.ComponentType<IAttributeFilterErrorProps>;
 
     /**
-     * Customize Customize attribute filter with a component dropdown button component
+     * Customize attribute filter button component
      */
-    AttributeFilterButton?: React.ComponentType<IAttributeFilterButtonProps>;
+    FilterButton?: React.ComponentType<IAttributeFilterButtonProps>;
+
+    /**
+     * Customize attribute filter dropdown actions buttons
+     */
+    FilterDropdownButtons?: React.ComponentType<IAttributeFilterDropdownButtonsProps>;
 
     /**
      * Customize attribute filter body with a component to be rendered instead of default filter body.
+     * @deprecated This callback is deprecated use AttributeDropdownBody component customization instead.
      */
     renderBody?: (props: IAttributeDropdownBodyExtendedProps) => React.ReactNode;
 }
@@ -355,7 +362,7 @@ const useAttributeFilterButton = (props: IAttributeFilterBaseProps) => {
         originalTotalCount,
     );
 
-    const onApply = (closeDropdown: () => void) => {
+    const onApply = () => {
         backupIsInverted();
         const filter = createFilter(
             currentFilter,
@@ -369,7 +376,6 @@ const useAttributeFilterButton = (props: IAttributeFilterBaseProps) => {
         }
 
         props.onApply?.(filter, state.isInverted);
-        return closeDropdown();
     };
 
     const onDropdownOpenStateChanged = (isOpen: boolean) => {
@@ -382,38 +388,33 @@ const useAttributeFilterButton = (props: IAttributeFilterBaseProps) => {
         !isCancelablePromiseLoading(elementsStatus) &&
         originalTotalCount === 0;
 
-    const getDropdownBodyProps: (
-        onApplyButtonClicked: () => void,
-        onCloseButtonClicked: () => void,
-        isMobile?: boolean,
-    ) => IAttributeDropdownBodyProps = (
-        onApplyButtonClicked: () => void,
-        onCloseButtonClicked: () => void,
-        isMobile: false,
-    ) => ({
-        items: state.validOptions?.items ?? [],
-        totalCount: totalCount ?? ATTRIBUTE_FILTER_BUTTON_LIMIT,
-        onSelect: onElementSelect,
-        onRangeChange,
-        onSearch,
-        selectedItems: state.selectedFilterOptions,
-        isInverted: state.isInverted,
-        isLoading:
-            (!state.validOptions?.items && isCancelablePromiseLoading(elementsStatus)) ||
-            [totalCountStatus, originalTotalCountStatus, parentFilterTitlesStatus].some(
-                isCancelablePromisePendingOrLoading,
-            ),
-        searchString: state.searchString,
-        applyDisabled:
-            getNumberOfSelectedItems(originalTotalCount, state.selectedFilterOptions, state.isInverted) === 0,
-        showItemsFilteredMessage:
-            showItemsFilteredMessage(isCancelablePromiseLoading(elementsStatus), resolvedParentFilters) &&
-            !isAllFiltered,
-        parentFilterTitles,
-        onApplyButtonClicked,
-        onCloseButtonClicked,
-        isFullWidth: isMobile,
-    });
+    const getDropdownBodyProps = (): IAttributeDropdownBodyPropsNoCallbacks => {
+        return {
+            items: state.validOptions?.items ?? [],
+            totalCount: totalCount ?? ATTRIBUTE_FILTER_BUTTON_LIMIT,
+            hasNoData,
+            hasNoMatchingData: isAllFiltered,
+            onSelect: onElementSelect,
+            onRangeChange,
+            onSearch,
+            selectedItems: state.selectedFilterOptions,
+            isInverted: state.isInverted,
+            isLoading:
+                (!state.validOptions?.items && isCancelablePromiseLoading(elementsStatus)) ||
+                [totalCountStatus, originalTotalCountStatus, parentFilterTitlesStatus].some(
+                    isCancelablePromisePendingOrLoading,
+                ),
+            searchString: state.searchString,
+            showItemsFilteredMessage:
+                showItemsFilteredMessage(isCancelablePromiseLoading(elementsStatus), resolvedParentFilters) &&
+                !isAllFiltered,
+            parentFilterTitles,
+            isFullWidth: false,
+        };
+    };
+
+    const isApplyDisabled =
+        getNumberOfSelectedItems(originalTotalCount, state.selectedFilterOptions, state.isInverted) === 0;
 
     const subtitle = getSubtitle({
         loadingProps: {
@@ -453,13 +454,12 @@ const useAttributeFilterButton = (props: IAttributeFilterBaseProps) => {
 
     const isError = () => {
         return (
-            //  attributeStatus === "error" ||
             elementsError ||
             attributeError ||
             totalCountError ||
             parentFilterTitlesError ||
-            originalTotalCountError ||
-            uriToAttributeElementMapError
+            originalTotalCountError /*||
+          //  uriToAttributeElementMapError*/ //TODO this has to be removed
         );
     };
 
@@ -490,6 +490,8 @@ const useAttributeFilterButton = (props: IAttributeFilterBaseProps) => {
         isOriginalTotalCountLoading,
         isAllFiltered,
 
+        isApplyDisabled,
+
         getDropdownBodyProps,
         hasNoData,
         onDropdownOpenStateChanged,
@@ -497,7 +499,7 @@ const useAttributeFilterButton = (props: IAttributeFilterBaseProps) => {
     };
 };
 
-export const AttributeFilterCore: React.FC<IAttributeFilterBaseProps> = (props) => {
+const AttributeFilterRenderer: React.FC<IAttributeFilterBaseProps> = (props) => {
     const {
         title,
         subtitle,
@@ -512,6 +514,8 @@ export const AttributeFilterCore: React.FC<IAttributeFilterBaseProps> = (props) 
         isOriginalTotalCountLoading,
         isAllFiltered,
 
+        isApplyDisabled,
+
         onApply,
         getDropdownBodyProps,
         onDropdownOpenStateChanged,
@@ -519,10 +523,13 @@ export const AttributeFilterCore: React.FC<IAttributeFilterBaseProps> = (props) 
 
     const { AttributeFilterError } = useAttributeFilterComponentsContext();
 
+    const dropDownBodyProps = getDropdownBodyProps();
+
     return globalErrorMessage ? (
         <AttributeFilterError message={globalErrorMessage} />
     ) : (
-        <AttributeFilterButtonDropdown
+        <AttributeFilterDropdown
+            isApplyDisabled={isApplyDisabled}
             isFiltering={isFiltering}
             isDropdownOpen={isDropdownOpen}
             isElementsLoading={isElementsLoading}
@@ -532,28 +539,28 @@ export const AttributeFilterCore: React.FC<IAttributeFilterBaseProps> = (props) 
             selectedFilterOptions={selectedFilterOptions}
             onDropdownOpenStateChanged={onDropdownOpenStateChanged}
             onApplyButtonClicked={onApply}
-            isAllFiltered={isAllFiltered}
+            hasNoMatchingData={isAllFiltered}
             hasNoData={hasNoData}
-            getDropdownBodyProps={getDropdownBodyProps}
-            renderBody={props.renderBody}
+            dropDownProps={dropDownBodyProps}
         />
     );
 };
 
-const AttributeFilterCoreWithContext = withContexts(AttributeFilterCore);
+const AttributeFilterRendererWithContext = withContexts(AttributeFilterRenderer);
 
 /**
  * @internal
  */
 export const AttributeFilterBase: React.FC<IAttributeFilterBaseProps> = (props) => {
-    const { locale, FilterError, AttributeFilterButton } = props;
+    const { locale, FilterError, FilterButton, FilterDropdownButtons } = props;
     return (
         <IntlWrapper locale={locale}>
             <AttributeFilterComponentsProvider
                 AttributeFilterError={FilterError}
-                AttributeFilterButton={AttributeFilterButton}
+                AttributeFilterButton={FilterButton}
+                AttributeFilterDropdownButtons={FilterDropdownButtons}
             >
-                <AttributeFilterCoreWithContext {...props} />
+                <AttributeFilterRendererWithContext {...props} />
             </AttributeFilterComponentsProvider>
         </IntlWrapper>
     );

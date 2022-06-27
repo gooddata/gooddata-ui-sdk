@@ -426,7 +426,9 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
     }
 }
 
-/* hide IE10+ eraser */
-::-ms-clear {
-    display: none;
+.gd-attribute-filter-delete-button {
+    float: left;
+    .delete-button:hover::before {
+        color: $gd-color-negative;
+    }
 }

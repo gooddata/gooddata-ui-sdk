@@ -23,5 +23,5 @@ export const AttributeFilter: React.FC<IAttributeFilterProps> = (props) => {
 
     const ButtonComponent = titleWithSelection ? AttributeFilterSimpleButtonWithSelection : undefined;
 
-    return <AttributeFilterBase {...baseProps} AttributeFilterButton={ButtonComponent} />;
+    return <AttributeFilterBase {...baseProps} FilterButton={ButtonComponent} />;
 };

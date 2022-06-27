@@ -6,13 +6,12 @@ import { FormattedMessage } from "react-intl";
 const ALIGN_POINTS = [{ align: "bc tl" }, { align: "tc bl" }];
 const ARROW_OFFSETS = { "bc tl": [-100, 10], "tc bl": [-100, -10] };
 
-export interface IAttributeDropdownItemsFilteredProps {
+export interface IMessageItemsFilteredProps {
     parentFilterTitles: string[];
     showItemsFilteredMessage: boolean;
 }
 
-//TODO Rename to ItemsFilteredMessage
-export const AttributeDropdownItemsFiltered: React.FC<IAttributeDropdownItemsFilteredProps> = (props) => {
+export const MessageItemsFiltered: React.FC<IMessageItemsFilteredProps> = (props) => {
     const { parentFilterTitles, showItemsFilteredMessage } = props;
 
     const tooltipText = useMemo(() => {

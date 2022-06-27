@@ -1,6 +1,10 @@
 // (C) 2019-2022 GoodData Corporation
 import React, { createContext, useContext } from "react";
 import { IAttributeFilterButtonProps } from "../Components/AttributeFilterButton";
+import {
+    AttributeFilterDropdownButtons,
+    IAttributeFilterDropdownButtonsProps,
+} from "../Components/AttributeFilterDropdownButtons";
 
 import { AttributeFilterError, IAttributeFilterErrorProps } from "../Components/AttributeFilterError";
 import { AttributeFilterSimpleButton } from "../Components/AttributeFilterSimpleButton";
@@ -11,6 +15,7 @@ import { AttributeFilterSimpleButton } from "../Components/AttributeFilterSimple
 export interface IAtributeFilterComponentsContext {
     AttributeFilterError: React.ComponentType<IAttributeFilterErrorProps>;
     AttributeFilterButton: React.ComponentType<IAttributeFilterButtonProps>;
+    AttributeFilterDropdownButtons: React.ComponentType<IAttributeFilterDropdownButtonsProps>;
 }
 
 /**
@@ -19,6 +24,7 @@ export interface IAtributeFilterComponentsContext {
 export const AttributeFilterDefaultComponents: IAtributeFilterComponentsContext = {
     AttributeFilterError: AttributeFilterError,
     AttributeFilterButton: AttributeFilterSimpleButton,
+    AttributeFilterDropdownButtons: AttributeFilterDropdownButtons,
 };
 
 /**
