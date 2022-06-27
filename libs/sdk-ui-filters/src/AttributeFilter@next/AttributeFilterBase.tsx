@@ -49,7 +49,7 @@ import { useFetchInitialElements } from "./AttributeFilterButton/hooks/useFetchI
 import { useOriginalTotalElementsCount } from "./AttributeFilterButton/hooks/useOriginalTotalElementsCount";
 import { useAttribute } from "./AttributeFilterButton/hooks/useAttribute";
 import { useOnErrorCallback } from "./AttributeFilterButton/hooks/useOnErrorCallback";
-import AttributeFilterButtonDropdown from "./Components/AttributeFilterDropdown";
+import { AttributeFilterDropdown } from "./Components/AttributeFilterDropdown";
 import {
     AttributeFilterComponentsProvider,
     useAttributeFilterComponentsContext,
@@ -161,12 +161,12 @@ export interface IAttributeFilterBaseProps {
     /**
      * Customize attribute filter button component
      */
-    AttributeFilterButton?: React.ComponentType<IAttributeFilterButtonProps>;
+    FilterButton?: React.ComponentType<IAttributeFilterButtonProps>;
 
     /**
      * Customize attribute filter dropdown actions buttons
      */
-    AttributeFilterDropdownButtons?: React.ComponentType<IAttributeFilterDropdownButtonsProps>;
+    FilterDropdownButtons?: React.ComponentType<IAttributeFilterDropdownButtonsProps>;
 
     /**
      * Customize attribute filter body with a component to be rendered instead of default filter body.
@@ -393,7 +393,7 @@ const useAttributeFilterButton = (props: IAttributeFilterBaseProps) => {
             items: state.validOptions?.items ?? [],
             totalCount: totalCount ?? ATTRIBUTE_FILTER_BUTTON_LIMIT,
             hasNoData,
-            allElementsFiltered: isAllFiltered,
+            hasNoMatchingData: isAllFiltered,
             onSelect: onElementSelect,
             onRangeChange,
             onSearch,
@@ -413,7 +413,7 @@ const useAttributeFilterButton = (props: IAttributeFilterBaseProps) => {
         };
     };
 
-    const applyDisabled =
+    const isApplyDisabled =
         getNumberOfSelectedItems(originalTotalCount, state.selectedFilterOptions, state.isInverted) === 0;
 
     const subtitle = getSubtitle({
@@ -490,7 +490,7 @@ const useAttributeFilterButton = (props: IAttributeFilterBaseProps) => {
         isOriginalTotalCountLoading,
         isAllFiltered,
 
-        applyDisabled,
+        isApplyDisabled,
 
         getDropdownBodyProps,
         hasNoData,
@@ -514,7 +514,7 @@ const AttributeFilterRenderer: React.FC<IAttributeFilterBaseProps> = (props) => 
         isOriginalTotalCountLoading,
         isAllFiltered,
 
-        applyDisabled,
+        isApplyDisabled,
 
         onApply,
         getDropdownBodyProps,
@@ -528,8 +528,8 @@ const AttributeFilterRenderer: React.FC<IAttributeFilterBaseProps> = (props) => 
     return globalErrorMessage ? (
         <AttributeFilterError message={globalErrorMessage} />
     ) : (
-        <AttributeFilterButtonDropdown
-            applyDisabled={applyDisabled}
+        <AttributeFilterDropdown
+            isApplyDisabled={isApplyDisabled}
             isFiltering={isFiltering}
             isDropdownOpen={isDropdownOpen}
             isElementsLoading={isElementsLoading}
@@ -539,7 +539,7 @@ const AttributeFilterRenderer: React.FC<IAttributeFilterBaseProps> = (props) => 
             selectedFilterOptions={selectedFilterOptions}
             onDropdownOpenStateChanged={onDropdownOpenStateChanged}
             onApplyButtonClicked={onApply}
-            isAllFiltered={isAllFiltered}
+            hasNoMatchingData={isAllFiltered}
             hasNoData={hasNoData}
             dropDownProps={dropDownBodyProps}
         />
@@ -552,13 +552,13 @@ const AttributeFilterRendererWithContext = withContexts(AttributeFilterRenderer)
  * @internal
  */
 export const AttributeFilterBase: React.FC<IAttributeFilterBaseProps> = (props) => {
-    const { locale, FilterError, AttributeFilterButton, AttributeFilterDropdownButtons } = props;
+    const { locale, FilterError, FilterButton, FilterDropdownButtons } = props;
     return (
         <IntlWrapper locale={locale}>
             <AttributeFilterComponentsProvider
                 AttributeFilterError={FilterError}
-                AttributeFilterButton={AttributeFilterButton}
-                AttributeFilterDropdownButtons={AttributeFilterDropdownButtons}
+                AttributeFilterButton={FilterButton}
+                AttributeFilterDropdownButtons={FilterDropdownButtons}
             >
                 <AttributeFilterRendererWithContext {...props} />
             </AttributeFilterComponentsProvider>

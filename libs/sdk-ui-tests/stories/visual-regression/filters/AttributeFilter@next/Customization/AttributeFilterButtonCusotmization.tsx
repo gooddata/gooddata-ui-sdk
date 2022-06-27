@@ -28,7 +28,7 @@ const CustomComponent = (props: IAttributeFilterButtonProps) => {
     );
 };
 
-storiesOf(`${FilterStories}@next/AttributeFilterBase/Customization/AttributeFilterButton`)
+storiesOf(`${FilterStories}@next/AttributeFilterBase/Customization/FilterButton`)
     .add("Default component", () => {
         return (
             <div style={wrapperStyle} className="screenshot-target">
@@ -49,7 +49,7 @@ storiesOf(`${FilterStories}@next/AttributeFilterBase/Customization/AttributeFilt
                     workspace={ReferenceWorkspaceId}
                     filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
                     onApply={action("on-apply")}
-                    AttributeFilterButton={AttributeFilterSimpleButtonWithSelection}
+                    FilterButton={AttributeFilterSimpleButtonWithSelection}
                 />
             </div>
         );
@@ -62,7 +62,7 @@ storiesOf(`${FilterStories}@next/AttributeFilterBase/Customization/AttributeFilt
                     workspace={ReferenceWorkspaceId}
                     filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
                     onApply={action("on-apply")}
-                    AttributeFilterButton={AttributeFilterButton}
+                    FilterButton={AttributeFilterButton}
                 />
             </div>
         );
@@ -75,7 +75,7 @@ storiesOf(`${FilterStories}@next/AttributeFilterBase/Customization/AttributeFilt
                     workspace={ReferenceWorkspaceId}
                     filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
                     onApply={action("on-apply")}
-                    AttributeFilterButton={CustomComponent}
+                    FilterButton={CustomComponent}
                 />
             </div>
         );

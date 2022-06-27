@@ -6,11 +6,11 @@ import { Button } from "@gooddata/sdk-ui-kit";
 export interface IAttributeFilterDropdownButtonsProps {
     onApplyButtonClicked: () => void;
     onCloseButtonClicked: () => void;
-    applyDisabled?: boolean;
+    isApplyDisabled?: boolean;
 }
 
 export const AttributeFilterDropdownButtons: React.VFC<IAttributeFilterDropdownButtonsProps> = ({
-    applyDisabled,
+    isApplyDisabled,
     onApplyButtonClicked,
     onCloseButtonClicked,
 }) => {
@@ -28,7 +28,7 @@ export const AttributeFilterDropdownButtons: React.VFC<IAttributeFilterDropdownB
                 title={cancelText}
             />
             <Button
-                disabled={applyDisabled}
+                disabled={isApplyDisabled}
                 className="gd-button-action gd-button-small s-apply"
                 onClick={onApplyButtonClicked}
                 value={applyText}

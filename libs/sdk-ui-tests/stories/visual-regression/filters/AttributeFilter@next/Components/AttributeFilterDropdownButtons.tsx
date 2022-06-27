@@ -18,13 +18,13 @@ const AttributeFilterButtonsExamples = (): JSX.Element => {
                     <AttributeFilterDropdownButtons
                         onApplyButtonClicked={action("onApplyButtonClicked")}
                         onCloseButtonClicked={action("onCloseButtonClicked")}
-                        applyDisabled={false}
+                        isApplyDisabled={false}
                     />
                     <h4>AttributeFilterDropdownButtons apply disabled</h4>
                     <AttributeFilterDropdownButtons
                         onApplyButtonClicked={action("onApplyButtonClicked")}
                         onCloseButtonClicked={action("onCloseButtonClicked")}
-                        applyDisabled={true}
+                        isApplyDisabled={true}
                     />
                 </div>
             </div>

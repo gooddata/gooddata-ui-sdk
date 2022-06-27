@@ -6,17 +6,17 @@ import {
 } from "./AttributeFilterDropdownContent";
 import { useAttributeFilterComponentsContext } from "../Context/AttributeFilterComponentsContext";
 
-interface IAttributeFilterDropdownBodyProps {
-    allElementsFiltered: boolean;
+export interface IAttributeFilterDropdownBodyProps {
+    hasNoMatchingData: boolean;
     hasNoData: boolean;
-    applyDisabled: boolean;
+    isApplyDisabled: boolean;
     bodyProps: IAttributeDropdownBodyPropsNoCallbacks;
     onApplyButtonClicked: () => void;
     closeDropdown: () => void;
 }
 
 export const AttributeFilterDropdownBody: React.FC<IAttributeFilterDropdownBodyProps> = (props) => {
-    const { allElementsFiltered, applyDisabled, onApplyButtonClicked, closeDropdown, hasNoData, bodyProps } =
+    const { hasNoMatchingData, isApplyDisabled, onApplyButtonClicked, closeDropdown, hasNoData, bodyProps } =
         props;
 
     const onApply = useCallback(() => {
@@ -26,13 +26,13 @@ export const AttributeFilterDropdownBody: React.FC<IAttributeFilterDropdownBodyP
 
     const { AttributeFilterDropdownButtons } = useAttributeFilterComponentsContext();
 
-    const applyButtonDisabled = applyDisabled || hasNoData || allElementsFiltered || !!bodyProps.error;
+    const isApplyButtonDisabled = isApplyDisabled || hasNoData || hasNoMatchingData || !!bodyProps.error;
 
     return (
         <div className="gd-attribute-filter-overlay__next">
             <AttributeFilterDropdownContent {...bodyProps} />
             <AttributeFilterDropdownButtons
-                applyDisabled={applyButtonDisabled}
+                isApplyDisabled={isApplyButtonDisabled}
                 onApplyButtonClicked={onApply}
                 onCloseButtonClicked={closeDropdown}
             />

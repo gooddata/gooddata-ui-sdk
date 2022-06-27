@@ -14,7 +14,7 @@ const ALIGN_POINTS = [
     { align: "tr tl", offset: { x: 0, y: -50 } },
 ];
 
-interface IAttributeFilterDropdownProps {
+export interface IAttributeFilterDropdownProps {
     isFiltering: boolean;
     isDropdownOpen: boolean;
 
@@ -30,14 +30,14 @@ interface IAttributeFilterDropdownProps {
     onDropdownOpenStateChanged: (isOpen: boolean) => void;
     onApplyButtonClicked: () => void;
 
-    isAllFiltered: boolean; //TODO move to DropDown props
+    hasNoMatchingData: boolean; //TODO move to DropDown props
     hasNoData: boolean; //TODO move to DropDown props
-    applyDisabled: boolean; //TODO move to DropDown props
+    isApplyDisabled: boolean; //TODO move to DropDown props
 
     dropDownProps: IAttributeDropdownBodyPropsNoCallbacks;
 }
 
-const AttributeFilterButtonDropdown: React.FC<IAttributeFilterDropdownProps> = (props) => {
+export const AttributeFilterDropdown: React.FC<IAttributeFilterDropdownProps> = (props) => {
     const {
         isFiltering,
         isDropdownOpen,
@@ -46,9 +46,9 @@ const AttributeFilterButtonDropdown: React.FC<IAttributeFilterDropdownProps> = (
         subtitle,
         selectedFilterOptions,
         onDropdownOpenStateChanged,
-        isAllFiltered,
+        hasNoMatchingData,
         hasNoData,
-        applyDisabled,
+        isApplyDisabled,
         onApplyButtonClicked,
         dropDownProps,
     } = props;
@@ -76,8 +76,8 @@ const AttributeFilterButtonDropdown: React.FC<IAttributeFilterDropdownProps> = (
             onOpenStateChanged={onDropdownOpenStateChanged}
             renderBody={({ closeDropdown }) => (
                 <AttributeFilterDropdownBody
-                    applyDisabled={applyDisabled}
-                    allElementsFiltered={isAllFiltered}
+                    isApplyDisabled={isApplyDisabled}
+                    hasNoMatchingData={hasNoMatchingData}
                     onApplyButtonClicked={onApplyButtonClicked}
                     closeDropdown={closeDropdown}
                     hasNoData={hasNoData}
@@ -87,5 +87,3 @@ const AttributeFilterButtonDropdown: React.FC<IAttributeFilterDropdownProps> = (
         />
     );
 };
-
-export default AttributeFilterButtonDropdown;

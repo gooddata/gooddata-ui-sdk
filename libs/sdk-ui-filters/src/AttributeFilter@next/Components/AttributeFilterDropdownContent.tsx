@@ -41,7 +41,7 @@ export interface IAttributeFilterDropdownContentProps {
     isFullWidth?: boolean;
 
     error?: any;
-    allElementsFiltered: boolean; //new added
+    hasNoMatchingData: boolean; //new added
     hasNoData: boolean; //new added
 
     searchString: string;
@@ -91,7 +91,7 @@ export const AttributeFilterDropdownContent: React.FC<IAttributeFilterDropdownCo
         parentFilterTitles,
         showItemsFilteredMessage,
 
-        allElementsFiltered,
+        hasNoMatchingData,
         hasNoData,
     } = props;
 
@@ -101,7 +101,7 @@ export const AttributeFilterDropdownContent: React.FC<IAttributeFilterDropdownCo
         <>
             {error ? (
                 <ListError />
-            ) : allElementsFiltered ? (
+            ) : hasNoMatchingData ? (
                 <MessageAllItemsFiltered parentFilterTitles={parentFilterTitles} />
             ) : hasNoData ? (
                 <NoData noDataLabel={intl.formatMessage({ id: "attributesDropdown.noData" })} />

@@ -22,10 +22,10 @@ const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 const backend = StorybookBackend();
 
 const CustomComponent = (props: IAttributeFilterDropdownButtonsProps) => {
-    const { onApplyButtonClicked, onCloseButtonClicked, applyDisabled } = props;
+    const { onApplyButtonClicked, onCloseButtonClicked, isApplyDisabled } = props;
     return (
         <>
-            <button onClick={onApplyButtonClicked} disabled={applyDisabled}>
+            <button onClick={onApplyButtonClicked} disabled={isApplyDisabled}>
                 Apply
             </button>
             <button onClick={onCloseButtonClicked}>Close</button>
@@ -44,7 +44,7 @@ function WithDeleteButton(deleteProps: IAttributeFilterDeleteButtonProps) {
     };
 }
 
-storiesOf(`${FilterStories}@next/AttributeFilterBase/Customization/AttributeFilterDropdownButtons`)
+storiesOf(`${FilterStories}@next/AttributeFilterBase/Customization/FilterDropdownButtons`)
     .add("Custom component", () => {
         return (
             <div style={wrapperStyle} className="screenshot-target">
@@ -53,7 +53,7 @@ storiesOf(`${FilterStories}@next/AttributeFilterBase/Customization/AttributeFilt
                     workspace={ReferenceWorkspaceId}
                     filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
                     onApply={action("onApply")}
-                    AttributeFilterDropdownButtons={CustomComponent}
+                    FilterDropdownButtons={CustomComponent}
                 />
             </div>
         );
@@ -67,7 +67,7 @@ storiesOf(`${FilterStories}@next/AttributeFilterBase/Customization/AttributeFilt
                     workspace={ReferenceWorkspaceId}
                     filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
                     onApply={action("onApply")}
-                    AttributeFilterDropdownButtons={AttributeFilterDropdownButtons}
+                    FilterDropdownButtons={AttributeFilterDropdownButtons}
                 />
             </div>
         );
