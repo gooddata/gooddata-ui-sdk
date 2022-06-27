@@ -1,56 +1,35 @@
 // (C) 2022 GoodData Corporation
-import {
-    ElementsQueryOptionsElementsSpecification,
-    IElementsQueryAttributeFilter,
-    IElementsQueryResult,
-} from "@gooddata/sdk-backend-spi";
+import { IElementsQueryAttributeFilter, IElementsQueryResult } from "@gooddata/sdk-backend-spi";
 import {
     attributeElementsIsEmpty,
     IAttributeElements,
     IAttributeMetadataObject,
-    IMeasure,
-    IRelativeDateFilter,
     newNegativeAttributeFilter,
     ObjRef,
 } from "@gooddata/sdk-model";
 
-import { AttributeFilterStoreContext } from "../types";
+import { AttributeFilterStoreContext } from "../../types";
+import { IHiddenElementsInfo, ILoadAttributeElementsOptions } from "../types";
 
 /**
  * @internal
  */
-export interface ILoadAttributeElementsOptions {
-    displayFormRef: ObjRef;
-    offset?: number;
-    limit?: number;
-    search?: string;
-    limitingAttributeFilters?: IElementsQueryAttributeFilter[];
-    limitingMeasures?: IMeasure[];
-    limitingDateFilters?: IRelativeDateFilter[];
-    elements?: ElementsQueryOptionsElementsSpecification;
-}
-
-/**
- * @internal
- */
-export async function loadAttributeElements(
+export function loadAttributeElementsFromBackend(
     context: AttributeFilterStoreContext,
-    {
+    options: ILoadAttributeElementsOptions,
+    hiddenElementsInfo: IHiddenElementsInfo,
+): Promise<IElementsQueryResult> {
+    const { backend, workspace } = context;
+    const {
         displayFormRef,
+        elements,
         limit,
-        offset,
         limitingAttributeFilters,
         limitingDateFilters,
         limitingMeasures,
+        offset,
         search,
-        elements,
-    }: ILoadAttributeElementsOptions,
-    hiddenElementsInfo: {
-        hiddenElements: IAttributeElements;
-        attribute: IAttributeMetadataObject;
-    },
-): Promise<IElementsQueryResult> {
-    const { backend, workspace } = context;
+    } = options;
 
     let loader = backend.workspace(workspace).attributes().elements().forDisplayForm(displayFormRef);
     if (limit) {

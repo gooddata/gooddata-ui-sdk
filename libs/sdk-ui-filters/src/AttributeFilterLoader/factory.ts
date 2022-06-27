@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IAttributeFilter } from "@gooddata/sdk-model";
+import { IAttributeElement, IAttributeFilter } from "@gooddata/sdk-model";
 import { MultiSelectAttributeFilterHandler, SingleSelectAttributeFilterHandler } from "./impl";
 
 import {
@@ -24,6 +24,13 @@ export interface IAttributeFilterHandlerOptionsBase {
      * then these are also interpreted as URIs, analogously with values.
      */
     hiddenElements?: string[];
+
+    /**
+     * If specified, these elements will replace the elements that would be loaded from the server.
+     * Note that if using this, limiting measures and/or filters will not work: it is your responsibility to filter
+     * the static elements yourself.
+     */
+    staticElements?: IAttributeElement[];
 }
 
 /**
@@ -80,11 +87,23 @@ export function newAttributeFilterHandler(
     filter: IAttributeFilter,
     options: IAttributeFilterHandlerOptions = { selectionMode: "multi" },
 ): IAttributeFilterHandler {
-    const { selectionMode, hiddenElements } = options;
+    const { selectionMode, hiddenElements, staticElements } = options;
 
     if (selectionMode === "multi") {
-        return new MultiSelectAttributeFilterHandler({ backend, workspace, filter, hiddenElements });
+        return new MultiSelectAttributeFilterHandler({
+            backend,
+            workspace,
+            filter,
+            hiddenElements,
+            staticElements,
+        });
     }
 
-    return new SingleSelectAttributeFilterHandler({ backend, workspace, filter, hiddenElements });
+    return new SingleSelectAttributeFilterHandler({
+        backend,
+        workspace,
+        filter,
+        hiddenElements,
+        staticElements,
+    });
 }

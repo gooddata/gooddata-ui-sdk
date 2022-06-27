@@ -307,6 +307,7 @@ export type IAttributeFilterHandlerOptions = ISingleSelectAttributeFilterHandler
 // @alpha
 export interface IAttributeFilterHandlerOptionsBase {
     hiddenElements?: string[];
+    staticElements?: IAttributeElement[];
 }
 
 // @alpha

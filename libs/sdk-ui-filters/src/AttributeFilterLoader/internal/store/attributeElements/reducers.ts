@@ -4,7 +4,7 @@ import { IAttributeElement } from "@gooddata/sdk-model";
 import identity from "lodash/identity";
 
 import { AttributeFilterReducer } from "../state";
-import { ILoadAttributeElementsOptions } from "./effects";
+import { ILoadAttributeElementsOptions } from "./types";
 
 const attributeElementsRequest: AttributeFilterReducer<
     PayloadAction<
@@ -50,6 +50,14 @@ const setAttributeElements: AttributeFilterReducer<
     state.attributeElements = action.payload.attributeElements.map((el) => el.uri);
 };
 
+const setStaticAttributeElements: AttributeFilterReducer<
+    PayloadAction<{
+        staticElements: IAttributeElement[];
+    }>
+> = (state, action) => {
+    state.staticElements = action.payload.staticElements;
+};
+
 const setAttributeElementsTotalCount: AttributeFilterReducer<
     PayloadAction<{
         totalCount: number;
@@ -79,4 +87,5 @@ export const attributeElementsReducers = {
     setAttributeElements,
     setAttributeElementsTotalCount,
     setAttributeElementsTotalCountWithCurrentSettings,
+    setStaticAttributeElements,
 };
