@@ -1,5 +1,5 @@
 // (C) 2020-2022 GoodData Corporation
-import { ILiveFeatures } from "@gooddata/api-client-tiger";
+import { ILiveFeatures, FeatureContext } from "@gooddata/api-client-tiger";
 import axios, { AxiosResponse } from "axios";
 
 import { ITigerFeatureFlags } from "../uiFeatures";
@@ -17,10 +17,11 @@ const state: HubServiceState = {};
 
 export async function getFeatureHubFeatures(
     features: ILiveFeatures["live"],
+    wsContext: Partial<FeatureContext> = {},
 ): Promise<Partial<ITigerFeatureFlags>> {
     const { configuration, context } = features;
     try {
-        const data = await loadHubFeatures(configuration, context, state);
+        const data = await loadHubFeatures(configuration, { ...context, ...wsContext }, state);
         const featuresMap = data.reduce((prev, item) => ({ ...prev, [item.key]: item }), {} as FeaturesMap);
         return mapFeatures(featuresMap);
     } catch (err) {
@@ -34,7 +35,7 @@ export async function getFeatureHubFeatures(
 // - more info in ticket RAIL-4279
 async function loadHubFeatures(
     configuration: ILiveFeatures["live"]["configuration"],
-    context: ILiveFeatures["live"]["context"],
+    context: FeatureContext,
     state: HubServiceState,
 ): Promise<FeatureHubResponse[number]["features"]> {
     const { host, key } = configuration;
@@ -84,7 +85,7 @@ export type FeatureHubResponse = {
 async function getFeatureHubData(
     host: string,
     key: string,
-    context: ILiveFeatures["live"]["context"],
+    context: FeatureContext,
     state?: HubServiceState[string],
 ): Promise<AxiosResponse<FeatureHubResponse>> {
     return axios.get("/features", {

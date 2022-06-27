@@ -5,7 +5,7 @@ import {
     IUserWorkspaceSettings,
 } from "@gooddata/sdk-backend-spi";
 import { TigerAuthenticatedCallGuard } from "../../../types";
-import { TigerFeaturesService } from "../../features";
+import { TigerFeaturesService, pickContext } from "../../features";
 import { DefaultUiSettings, DefaultUserSettings } from "../../uiSettings";
 
 export class TigerWorkspaceSettings implements IWorkspaceSettingsService {
@@ -32,16 +32,19 @@ export class TigerWorkspaceSettings implements IWorkspaceSettingsService {
 
     public getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings> {
         return this.authCall(async (client) => {
-            const profile = await client.profile.getCurrent();
-            const features = await new TigerFeaturesService(this.authCall).getFeatures(profile);
             const {
-                data: { meta: config },
+                data: { meta: config, attributes },
             } = (
                 await client.entities.getEntityWorkspaces({
                     id: this.workspace,
                     metaInclude: ["config"],
                 })
             ).data;
+            const profile = await client.profile.getCurrent();
+            const features = await new TigerFeaturesService(this.authCall).getFeatures(
+                profile,
+                pickContext(attributes),
+            );
 
             return {
                 ...DefaultUserSettings,

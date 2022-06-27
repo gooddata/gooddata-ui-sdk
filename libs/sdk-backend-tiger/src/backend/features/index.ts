@@ -1,5 +1,11 @@
 // (C) 2020-2022 GoodData Corporation
-import { IStaticFeatures, IUserProfile, ILiveFeatures } from "@gooddata/api-client-tiger";
+import {
+    IStaticFeatures,
+    IUserProfile,
+    ILiveFeatures,
+    FeatureContext,
+    JsonApiWorkspacePatchAttributes,
+} from "@gooddata/api-client-tiger";
 import { TigerAuthenticatedCallGuard } from "../../types";
 import { ITigerFeatureFlags, DefaultFeatureFlags } from "../uiFeatures";
 
@@ -9,10 +15,13 @@ import { getStaticFeatures } from "./static";
 export class TigerFeaturesService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard) {}
 
-    public async getFeatures(profile?: IUserProfile): Promise<ITigerFeatureFlags> {
+    public async getFeatures(
+        profile?: IUserProfile,
+        wsContext?: Partial<FeatureContext>,
+    ): Promise<ITigerFeatureFlags> {
         return this.authCall(async (client) => {
             const prof = profile || (await client.profile.getCurrent());
-            const results = await loadFeatures(prof);
+            const results = await loadFeatures(prof, wsContext);
 
             return {
                 ...DefaultFeatureFlags,
@@ -22,11 +31,14 @@ export class TigerFeaturesService {
     }
 }
 
-async function loadFeatures(profile: IUserProfile): Promise<Partial<ITigerFeatureFlags>> {
+async function loadFeatures(
+    profile: IUserProfile,
+    wsContext: Partial<FeatureContext> = {},
+): Promise<Partial<ITigerFeatureFlags>> {
     const features = profile.features || {};
 
     if (featuresAreLive(features)) {
-        return await getFeatureHubFeatures(features.live);
+        return await getFeatureHubFeatures(features.live, wsContext);
     }
 
     if (featuresAreStatic(features)) {
@@ -41,4 +53,15 @@ function featuresAreLive(item: any): item is ILiveFeatures {
 
 function featuresAreStatic(item: any): item is IStaticFeatures {
     return Boolean(item?.static);
+}
+
+export function pickContext(
+    attributes: JsonApiWorkspacePatchAttributes | undefined,
+): Partial<FeatureContext> {
+    const context: Partial<FeatureContext> = {};
+
+    if (attributes?.["earlyAccess"] !== undefined) {
+        context.earlyAccess = attributes["earlyAccess"];
+    }
+    return context;
 }
