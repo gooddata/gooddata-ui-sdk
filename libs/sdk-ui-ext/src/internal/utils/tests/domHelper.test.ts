@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { unmountComponentsAtNodes } from "../domHelper";
 
 describe("domHelpers", () => {
@@ -61,6 +61,17 @@ describe("domHelpers", () => {
             });
 
             expect(unmount.mock.calls.length).toBe(0);
+        });
+
+        it("should accept elements as input", () => {
+            const unmount = jest.fn();
+
+            unmountComponentsAtNodes([firstElement, secondElement], {
+                unmount,
+                documentInstance: document,
+            });
+
+            expect(unmount.mock.calls.length).toBe(2);
         });
     });
 });

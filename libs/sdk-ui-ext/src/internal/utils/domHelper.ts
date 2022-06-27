@@ -2,7 +2,7 @@
 import { unmountComponentAtNode } from "react-dom";
 
 export function unmountComponentsAtNodes(
-    elementSelectors: Array<HTMLElement | string> = [],
+    elementsOrSelectors: Array<HTMLElement | string> = [],
     {
         unmount,
         documentInstance,
@@ -14,7 +14,7 @@ export function unmountComponentsAtNodes(
         documentInstance: document,
     },
 ): void {
-    elementSelectors.forEach((elementOrSelector) => {
+    elementsOrSelectors.forEach((elementOrSelector) => {
         const element =
             typeof elementOrSelector === "string"
                 ? documentInstance.querySelector(elementOrSelector)
