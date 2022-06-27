@@ -14,7 +14,6 @@ import {
 import { BucketNames } from "@gooddata/sdk-ui";
 import { CoreHeadline, updateConfigWithSettings } from "@gooddata/sdk-ui-charts";
 import React from "react";
-import { render } from "react-dom";
 import { METRIC } from "../../../constants/bucket";
 import {
     IBucketItem,
@@ -212,7 +211,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         if (configPanelElement) {
             const properties = this.visualizationProperties ?? {};
 
-            render(
+            this.renderFun(
                 <UnsupportedConfigurationPanel
                     locale={this.locale}
                     pushData={this.pushData}

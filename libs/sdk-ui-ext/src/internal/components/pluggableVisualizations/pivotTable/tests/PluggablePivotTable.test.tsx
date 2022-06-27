@@ -1,7 +1,4 @@
 // (C) 2019-2022 GoodData Corporation
-import React from "react";
-import ReactDom from "react-dom";
-
 import {
     createPivotTableConfig,
     getColumnAttributes,
@@ -21,7 +18,7 @@ import {
     IVisProps,
 } from "../../../../interfaces/Visualization";
 import { DefaultLocale, IDrillableItem, ILocale, VisualizationEnvironment } from "@gooddata/sdk-ui";
-import { ColumnWidthItem, CorePivotTable } from "@gooddata/sdk-ui-pivot";
+import { ColumnWidthItem, CorePivotTable, ICorePivotTableProps } from "@gooddata/sdk-ui-pivot";
 import { IInsight, ISortItem, ISettings } from "@gooddata/sdk-model";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { IBackendCapabilities } from "@gooddata/sdk-backend-spi";
@@ -48,9 +45,12 @@ import {
     validMeasureSort,
 } from "./sortMocks";
 import { getInsightWithDrillDownApplied } from "./getInsightWithDrillDownAppliedMock";
-import { createDrillEvent } from "../../tests/testHelpers";
+import { createDrillEvent, getLastRenderEl } from "../../tests/testHelpers";
 
 describe("PluggablePivotTable", () => {
+    const mockElement = document.createElement("div");
+    const mockConfigElement = document.createElement("div");
+    const mockRenderFun = jest.fn();
     const backend = dummyBackend();
     const executionFactory = backend.workspace("PROJECTID").execution();
 
@@ -58,9 +58,9 @@ describe("PluggablePivotTable", () => {
         projectId: "PROJECTID",
         backend,
         visualizationProperties: {},
-        element: "#tableElement",
-        configPanelElement: null as string,
-        renderFun: ReactDom.render,
+        element: () => mockElement,
+        configPanelElement: () => mockConfigElement,
+        renderFun: mockRenderFun,
         callbacks: {
             afterRender: noop,
             pushData: noop,
@@ -70,9 +70,12 @@ describe("PluggablePivotTable", () => {
     };
 
     function createComponent(props: IVisConstruct = defaultProps) {
-        document.body.innerHTML = '<div id="tableElement" />';
         return new PluggablePivotTable(props);
     }
+
+    afterEach(() => {
+        mockRenderFun.mockReset();
+    });
 
     it("should create visualization", () => {
         const visualization = createComponent();
@@ -127,90 +130,59 @@ describe("PluggablePivotTable", () => {
 
         const emptyPropertiesMeta = {};
 
-        function spyOnFakeElement() {
-            const fakeElement: any = {};
-            const createElementSpy = jest.spyOn(React, "createElement");
-            createElementSpy.mockReturnValue(fakeElement);
-            return createElementSpy;
-        }
-
         it("should not render table when dataSource is missing", () => {
-            const renderSpy = jest.fn(noop);
-            const pivotTable = createComponent({ ...defaultProps, renderFun: renderSpy });
-
-            const createElementSpy = spyOnFakeElement();
+            const pivotTable = createComponent();
 
             const options = getDefaultOptions();
             pivotTable.update({ ...options }, testMocks.emptyInsight, emptyPropertiesMeta, executionFactory);
 
-            expect(renderSpy).toHaveBeenCalledTimes(0);
-
-            createElementSpy.mockRestore();
-            renderSpy.mockRestore();
+            const renderEl = getLastRenderEl(mockRenderFun, mockElement);
+            expect(renderEl).toBeUndefined();
         });
 
         it("should have onColumnResized callback when FF enableTableColumnsManualResizing is set to true", () => {
-            const renderSpy = jest.fn(noop);
             const pivotTable = createComponent({
                 ...defaultProps,
                 featureFlags: { enableTableColumnsManualResizing: true },
-                renderFun: renderSpy,
             });
-
-            const createElementSpy = spyOnFakeElement();
 
             const options = getDefaultOptions();
             pivotTable.update(options, testMocks.dummyInsight, emptyPropertiesMeta, executionFactory);
 
-            expect(createElementSpy).toHaveBeenCalledTimes(1);
-            expect(createElementSpy.mock.calls[0][0]).toBe(CorePivotTable);
+            const renderEl = getLastRenderEl<ICorePivotTableProps>(mockRenderFun, mockElement);
+            expect(renderEl).toBeDefined();
+            expect(renderEl.type).toBe(CorePivotTable);
 
-            const props: any = createElementSpy.mock.calls[0][1];
-            expect(props.onColumnResized).toBeInstanceOf(Function);
-
-            createElementSpy.mockRestore();
-            renderSpy.mockRestore();
+            expect(renderEl.props.onColumnResized).toBeInstanceOf(Function);
         });
 
         it("should not have onColumnResized callback when FF enableTableColumnsManualResizing is set to false", () => {
-            const renderSpy = jest.fn(noop);
             const pivotTable = createComponent({
                 ...defaultProps,
                 featureFlags: { enableTableColumnsManualResizing: false },
-                renderFun: renderSpy,
             });
-
-            const createElementSpy = spyOnFakeElement();
 
             const options = getDefaultOptions();
             pivotTable.update(options, testMocks.dummyInsight, emptyPropertiesMeta, executionFactory);
 
-            expect(createElementSpy).toHaveBeenCalledTimes(1);
-            expect(createElementSpy.mock.calls[0][0]).toBe(CorePivotTable);
+            const renderEl = getLastRenderEl<ICorePivotTableProps>(mockRenderFun, mockElement);
+            expect(renderEl).toBeDefined();
+            expect(renderEl.type).toBe(CorePivotTable);
 
-            const props: any = createElementSpy.mock.calls[0][1];
-            expect(props.onColumnResized).toBeUndefined();
-
-            createElementSpy.mockRestore();
-            renderSpy.mockRestore();
+            expect(renderEl.props.onColumnResized).toBeUndefined();
         });
 
         it("should render PivotTable passing down all the necessary properties", () => {
-            const renderSpy = jest.fn(noop);
-            const pivotTable = createComponent({ ...defaultProps, renderFun: renderSpy });
-            const createElementSpy = spyOnFakeElement();
+            const pivotTable = createComponent();
 
             const options = getDefaultOptions();
             pivotTable.update(options, testMocks.dummyInsight, emptyPropertiesMeta, executionFactory);
 
-            expect(createElementSpy).toHaveBeenCalledTimes(1);
-            expect(createElementSpy.mock.calls[0][0]).toBe(CorePivotTable);
+            const renderEl = getLastRenderEl<ICorePivotTableProps>(mockRenderFun, mockElement);
+            expect(renderEl).toBeDefined();
+            expect(renderEl.type).toBe(CorePivotTable);
 
-            const targetNode = document.querySelector(defaultProps.element);
-            expect(renderSpy).toHaveBeenCalledWith({}, targetNode);
-
-            createElementSpy.mockRestore();
-            renderSpy.mockRestore();
+            // TODO should verify props ideally
         });
     });
 

@@ -37,7 +37,6 @@ import {
     pivotTableMenuForCapabilities,
 } from "@gooddata/sdk-ui-pivot";
 import React from "react";
-import { render } from "react-dom";
 import ReactMeasure from "react-measure";
 
 import { ATTRIBUTE, DATE, METRIC } from "../../../constants/bucket";
@@ -421,7 +420,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                   }
                 : properties;
 
-            render(
+            this.renderFun(
                 <UnsupportedConfigurationPanel
                     locale={this.locale}
                     pushData={this.pushData}

@@ -8,7 +8,6 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames, IDrillEvent, VisualizationTypes } from "@gooddata/sdk-ui";
 import React from "react";
-import { render } from "react-dom";
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
 import isEmpty from "lodash/isEmpty";
@@ -225,7 +224,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {
-            render(
+            this.renderFun(
                 <LineChartBasedConfigurationPanel
                     locale={this.locale}
                     colors={this.colors}

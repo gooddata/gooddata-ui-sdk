@@ -5,25 +5,36 @@ import { PluggableBarChart } from "../PluggableBarChart";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
 import { AXIS } from "../../../../constants/axis";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { IReferencePoint } from "../../../../interfaces/Visualization";
+import { IReferencePoint, IVisConstruct } from "../../../../interfaces/Visualization";
+import * as testMocks from "../../../../tests/mocks/testMocks";
+import { getLastRenderEl } from "../../tests/testHelpers";
 
 describe("PluggableBarChart", () => {
-    const defaultProps = {
+    const mockElement = document.createElement("div");
+    const mockConfigElement = document.createElement("div");
+    const mockRenderFun = jest.fn();
+    const backend = dummyBackend();
+    const executionFactory = backend.workspace("PROJECTID").execution();
+    const defaultProps: IVisConstruct = {
         projectId: "PROJECTID",
-        element: "body",
-        configPanelElement: null as string,
+        element: () => mockElement,
+        configPanelElement: () => mockConfigElement,
         callbacks: {
             afterRender: noop,
             pushData: noop,
         },
         backend: dummyBackend(),
         visualizationProperties: {},
-        renderFun: noop,
+        renderFun: mockRenderFun,
     };
 
     function createComponent(props = defaultProps) {
         return new PluggableBarChart(props);
     }
+
+    afterEach(() => {
+        mockRenderFun.mockReset();
+    });
 
     it("should return reference point with uiConfig containing supportedOverTimeComparisonTypes", async () => {
         const barChart = createComponent();
@@ -259,5 +270,19 @@ describe("PluggableBarChart", () => {
                 expect(sortConfig.availableSorts).toMatchSnapshot();
             },
         );
+    });
+
+    describe("`renderVisualization` and `renderConfigurationPanel`", () => {
+        it("should mount on the element defined by the callback", () => {
+            const visualization = createComponent();
+
+            visualization.update({}, testMocks.insightWithSingleMeasure, {}, executionFactory);
+
+            // 1st call for rendering element
+            // 2nd call for rendering config panel
+            expect(mockRenderFun).toHaveBeenCalledTimes(2);
+            expect(getLastRenderEl(mockRenderFun, mockElement)).toBeDefined();
+            expect(getLastRenderEl(mockRenderFun, mockConfigElement)).toBeDefined();
+        });
     });
 });

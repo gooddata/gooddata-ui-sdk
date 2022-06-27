@@ -1,6 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { render } from "react-dom";
 import { configurePercent, configureOverTimeComparison } from "../../../utils/bucketConfig";
 import cloneDeep from "lodash/cloneDeep";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
@@ -160,7 +159,7 @@ export class PluggableBulletChart extends PluggableBaseChart {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {
-            render(
+            this.renderFun(
                 <BulletChartConfigurationPanel
                     locale={this.locale}
                     references={this.references}

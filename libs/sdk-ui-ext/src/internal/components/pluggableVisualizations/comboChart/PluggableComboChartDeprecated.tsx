@@ -1,7 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import React from "react";
-import { render } from "react-dom";
 
 import { BUCKETS, METRIC } from "../../../constants/bucket";
 import { COMBO_CHART_UICONFIG_DEPRECATED } from "../../../constants/uiConfig";
@@ -108,7 +107,7 @@ export class PluggableComboChartDeprecated extends PluggableBaseChart {
         if (configPanelElement) {
             const properties = this.visualizationProperties ?? {};
 
-            render(
+            this.renderFun(
                 <UnsupportedConfigurationPanel
                     locale={this.locale}
                     pushData={this.pushData}

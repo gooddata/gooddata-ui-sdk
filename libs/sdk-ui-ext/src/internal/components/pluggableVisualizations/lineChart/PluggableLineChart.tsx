@@ -1,7 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 import { BucketNames, IDrillEvent, VisualizationTypes } from "@gooddata/sdk-ui";
 import React from "react";
-import { render } from "react-dom";
 import isEmpty from "lodash/isEmpty";
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
@@ -227,7 +226,7 @@ export class PluggableLineChart extends PluggableBaseChart {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {
-            render(
+            this.renderFun(
                 <LineChartBasedConfigurationPanel
                     locale={this.locale}
                     references={this.references}

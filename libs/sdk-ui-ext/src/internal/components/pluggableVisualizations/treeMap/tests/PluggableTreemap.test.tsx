@@ -12,7 +12,12 @@ import { IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { Department, Region } from "@gooddata/reference-workspace/dist/md/full";
 import { IInsight, IInsightDefinition, IAttribute } from "@gooddata/sdk-model";
-import { createDrillEvent, insightDefinitionToInsight, createDrillDefinition } from "../../tests/testHelpers";
+import {
+    createDrillEvent,
+    insightDefinitionToInsight,
+    createDrillDefinition,
+    getLastRenderEl,
+} from "../../tests/testHelpers";
 import {
     sourceInsightDef,
     intersection,
@@ -20,20 +25,29 @@ import {
     expectedInsightDefDepartment,
     targetUri,
 } from "./getInsightWithDrillDownAppliedMock";
+import * as testMocks from "../../../../tests/mocks/testMocks";
 
 describe("PluggableTreemap", () => {
-    const defaultProps = {
+    const mockElement = document.createElement("div");
+    const mockConfigElement = document.createElement("div");
+    const mockRenderFun = jest.fn();
+    const executionFactory = dummyBackend().workspace("PROJECTID").execution();
+    const defaultProps: IVisConstruct = {
         projectId: "PROJECTID",
-        element: "body",
-        configPanelElement: null as string,
+        element: () => mockElement,
+        configPanelElement: () => mockConfigElement,
         callbacks: {
             afterRender: noop,
             pushData: noop,
         },
         backend: dummyBackend(),
         visualizationProperties: {},
-        renderFun: noop,
+        renderFun: mockRenderFun,
     };
+
+    afterEach(() => {
+        mockRenderFun.mockReset();
+    });
 
     function createComponent(props: IVisConstruct = defaultProps) {
         return new PluggableTreemap(props);
@@ -373,6 +387,20 @@ describe("PluggableTreemap", () => {
                     expect(referencePoint).toMatchObject(expectedReferencePoint);
                 },
             );
+        });
+    });
+
+    describe("PluggableTreemap renderVisualization and renderConfigurationPanel", () => {
+        it("should mount on the element defined by the callback", () => {
+            const visualization = createComponent();
+
+            visualization.update({}, testMocks.insightWithSingleMeasure, {}, executionFactory);
+
+            // 1st call for rendering element
+            // 2nd call for rendering config panel
+            expect(mockRenderFun).toHaveBeenCalledTimes(2);
+            expect(getLastRenderEl(mockRenderFun, mockElement)).toBeDefined();
+            expect(getLastRenderEl(mockRenderFun, mockConfigElement)).toBeDefined();
         });
     });
 });

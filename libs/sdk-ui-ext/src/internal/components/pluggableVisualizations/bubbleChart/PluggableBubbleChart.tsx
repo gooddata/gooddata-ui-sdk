@@ -1,7 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import React from "react";
-import { render } from "react-dom";
 import { BUCKETS, METRIC } from "../../../constants/bucket";
 import { BUBBLE_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
 import { DEFAULT_BUBBLE_CHART_CONFIG } from "../../../constants/uiConfig";
@@ -157,7 +156,7 @@ export class PluggableBubbleChart extends PluggableBaseChart {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {
-            render(
+            this.renderFun(
                 <BubbleChartConfigurationPanel
                     locale={this.locale}
                     references={this.references}

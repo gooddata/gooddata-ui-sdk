@@ -21,28 +21,23 @@ import {
 } from "../../treeMap/tests/getInsightWithDrillDownAppliedMock";
 import { Department, Region } from "@gooddata/reference-workspace/dist/md/full";
 import { IAttribute, IInsight, IInsightDefinition } from "@gooddata/sdk-model";
-import { createDrillDefinition, createDrillEvent, insightDefinitionToInsight } from "../../tests/testHelpers";
-
-jest.mock("react-dom", () => {
-    const renderObject = {
-        render: () => {
-            return;
-        }, // spy on render
-    };
-    return {
-        render: renderObject.render,
-        unmountComponentAtNode: () => {
-            return;
-        },
-        renderObject,
-    };
-});
+import {
+    createDrillDefinition,
+    createDrillEvent,
+    getLastRenderEl,
+    insightDefinitionToInsight,
+} from "../../tests/testHelpers";
+import * as testMocks from "../../../../tests/mocks/testMocks";
 
 describe("PluggableLineChart", () => {
+    const mockElement = document.createElement("div");
+    const mockConfigElement = document.createElement("div");
+    const mockRenderFun = jest.fn();
+    const executionFactory = dummyBackend().workspace("PROJECTID").execution();
     const defaultProps: IVisConstruct = {
         projectId: "PROJECTID",
-        element: "body",
-        configPanelElement: null as string,
+        element: () => mockElement,
+        configPanelElement: () => mockConfigElement,
         callbacks: {
             afterRender: noop,
             pushData: noop,
@@ -51,12 +46,16 @@ describe("PluggableLineChart", () => {
         },
         backend: dummyBackend(),
         visualizationProperties: {},
-        renderFun: noop,
+        renderFun: mockRenderFun,
     };
 
     function createComponent(props = defaultProps) {
         return new PluggableLineChart(props);
     }
+
+    afterEach(() => {
+        mockRenderFun.mockReset();
+    });
 
     it("should reuse all measures, only one category and no stacks", async () => {
         const lineChart = createComponent();
@@ -649,6 +648,20 @@ describe("PluggableLineChart", () => {
             const sortConfig = await chart.getSortConfig(referencePointMock);
 
             expect(sortConfig).toMatchSnapshot();
+        });
+    });
+
+    describe("`renderVisualization` and `renderConfigurationPanel`", () => {
+        it("should mount on the element defined by the callback", () => {
+            const visualization = createComponent();
+
+            visualization.update({}, testMocks.insightWithSingleMeasure, {}, executionFactory);
+
+            // 1st call for rendering element
+            // 2nd call for rendering config panel
+            expect(mockRenderFun).toHaveBeenCalledTimes(2);
+            expect(getLastRenderEl(mockRenderFun, mockElement)).toBeDefined();
+            expect(getLastRenderEl(mockRenderFun, mockConfigElement)).toBeDefined();
         });
     });
 });

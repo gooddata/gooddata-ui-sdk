@@ -1,7 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import React from "react";
-import { render } from "react-dom";
 import { BUCKETS } from "../../../constants/bucket";
 import { SCATTERPLOT_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
 import { DEFAULT_SCATTERPLOT_UICONFIG } from "../../../constants/uiConfig";
@@ -89,7 +88,7 @@ export class PluggableScatterPlot extends PluggableBaseChart {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {
-            render(
+            this.renderFun(
                 <ScatterPlotConfigurationPanel
                     locale={this.locale}
                     references={this.references}

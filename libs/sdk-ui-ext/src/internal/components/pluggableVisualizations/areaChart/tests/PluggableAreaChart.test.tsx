@@ -17,7 +17,12 @@ import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { IAttribute, IInsight, IInsightDefinition, insightSetProperties } from "@gooddata/sdk-model";
 import { Department, Region } from "@gooddata/reference-workspace/dist/md/full";
 import { IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
-import { createDrillDefinition, createDrillEvent, insightDefinitionToInsight } from "../../tests/testHelpers";
+import {
+    createDrillDefinition,
+    createDrillEvent,
+    insightDefinitionToInsight,
+    getLastRenderEl,
+} from "../../tests/testHelpers";
 import {
     expectedInsightDefDepartment,
     expectedInsightDefRegion,
@@ -25,12 +30,16 @@ import {
     sourceInsightDef,
     targetUri,
 } from "./getInsightWithDrillDownAppliedMock";
+import { IAreaChartProps } from "@gooddata/sdk-ui-charts";
 
 describe("PluggableAreaChart", () => {
+    const mockElement = document.createElement("div");
+    const mockConfigElement = document.createElement("div");
+    const mockRenderFun = jest.fn();
     const defaultProps: IVisConstruct = {
         projectId: "PROJECTID",
-        element: "body",
-        configPanelElement: null as string,
+        element: () => mockElement,
+        configPanelElement: () => mockConfigElement,
         callbacks: {
             afterRender: noop,
             pushData: noop,
@@ -39,7 +48,7 @@ describe("PluggableAreaChart", () => {
         },
         backend: dummyBackend(),
         visualizationProperties: {},
-        renderFun: noop,
+        renderFun: mockRenderFun,
     };
 
     const executionFactory = dummyBackend().workspace("PROJECTID").execution();
@@ -47,6 +56,10 @@ describe("PluggableAreaChart", () => {
     function createComponent(props = defaultProps) {
         return new PluggableAreaChart(props);
     }
+
+    afterEach(() => {
+        mockRenderFun.mockReset();
+    });
 
     it("should return reference point when no categories and only stacks", async () => {
         const areaChart = createComponent();
@@ -461,11 +474,7 @@ describe("PluggableAreaChart", () => {
         };
         const emptyPropertiesMeta = {};
 
-        const verifyStackMeasuresConfig = (
-            chart: PluggableAreaChart,
-            stackMeasures: boolean,
-            spyOnRender: any,
-        ) => {
+        const verifyStackMeasuresConfig = (chart: PluggableAreaChart, stackMeasures: boolean) => {
             const visualizationProperties =
                 stackMeasures !== null
                     ? {
@@ -480,23 +489,21 @@ describe("PluggableAreaChart", () => {
             );
             const expected = stackMeasures === null ? true : stackMeasures;
             chart.update(options, testInsight, emptyPropertiesMeta, executionFactory);
-            const renderCallsCount = spyOnRender.mock.calls.length;
-            const renderArguments = spyOnRender.mock.calls[renderCallsCount - 1][0];
-            expect(renderArguments.props.config.stackMeasures).toBe(expected);
+
+            const renderEl = getLastRenderEl<IAreaChartProps>(mockRenderFun, mockElement);
+            expect(renderEl.props.config.stackMeasures).toBe(expected);
         };
 
         it("should modify stack by default of area by config stackMeasures properties", async () => {
-            const mockRenderFun = jest.fn();
-            const areaChart = createComponent({ ...defaultProps, renderFun: mockRenderFun });
+            const areaChart = createComponent();
 
-            verifyStackMeasuresConfig(areaChart, null, mockRenderFun);
-            verifyStackMeasuresConfig(areaChart, true, mockRenderFun);
-            verifyStackMeasuresConfig(areaChart, false, mockRenderFun);
+            verifyStackMeasuresConfig(areaChart, null);
+            verifyStackMeasuresConfig(areaChart, true);
+            verifyStackMeasuresConfig(areaChart, false);
         });
 
         it("should modify stackMeasures and stackMeasuresToPercent properties from true to false", async () => {
-            const mockRenderFun = jest.fn();
-            const areaChart = createComponent({ ...defaultProps, renderFun: mockRenderFun });
+            const areaChart = createComponent();
 
             const visualizationProperties = {
                 properties: {
@@ -514,15 +521,13 @@ describe("PluggableAreaChart", () => {
 
             areaChart.update(options, testInsight, emptyPropertiesMeta, executionFactory);
 
-            const renderCallsCount = mockRenderFun.mock.calls.length;
-            const renderArguments: any = mockRenderFun.mock.calls[renderCallsCount - 1][0];
-            expect(renderArguments.props.config.stackMeasures).toBe(false);
-            expect(renderArguments.props.config.stackMeasuresToPercent).toBe(false);
+            const renderEl = getLastRenderEl<IAreaChartProps>(mockRenderFun, mockElement);
+            expect(renderEl.props.config.stackMeasures).toBe(false);
+            expect(renderEl.props.config.stackMeasuresToPercent).toBe(false);
         });
 
         it("should reset custom controls properties", async () => {
-            const mockRenderFun = jest.fn();
-            const areaChart = createComponent({ ...defaultProps, renderFun: mockRenderFun });
+            const areaChart = createComponent();
 
             const visualizationProperties = {
                 controls: {
@@ -542,10 +547,9 @@ describe("PluggableAreaChart", () => {
 
             areaChart.update(options, testInsight, emptyPropertiesMeta, executionFactory);
 
-            const renderCallsCount = mockRenderFun.mock.calls.length;
-            const renderArguments: any = mockRenderFun.mock.calls[renderCallsCount - 1][0];
-            expect(renderArguments.props.config.stackMeasures).toBe(true);
-            expect(renderArguments.props.config.stackMeasuresToPercent).toBe(true);
+            const renderEl = getLastRenderEl<IAreaChartProps>(mockRenderFun, mockElement);
+            expect(renderEl.props.config.stackMeasures).toBe(true);
+            expect(renderEl.props.config.stackMeasuresToPercent).toBe(true);
         });
 
         it("should reuse one measure, only one category and one category as stack", async () => {
@@ -795,6 +799,20 @@ describe("PluggableAreaChart", () => {
             const sortConfig = await chart.getSortConfig(referencePointMock);
 
             expect(sortConfig).toMatchSnapshot();
+        });
+    });
+
+    describe("`renderVisualization` and `renderConfigurationPanel`", () => {
+        it("should mount on the element defined by the callback", () => {
+            const visualization = createComponent();
+
+            visualization.update({}, testMocks.insightWithSingleMeasure, {}, executionFactory);
+
+            // 1st call for rendering element
+            // 2nd call for rendering config panel
+            expect(mockRenderFun).toHaveBeenCalledTimes(2);
+            expect(getLastRenderEl(mockRenderFun, mockElement)).toBeDefined();
+            expect(getLastRenderEl(mockRenderFun, mockConfigElement)).toBeDefined();
         });
     });
 });

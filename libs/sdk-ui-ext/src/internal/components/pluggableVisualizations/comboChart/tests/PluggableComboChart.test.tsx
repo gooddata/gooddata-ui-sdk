@@ -9,25 +9,32 @@ import {
     IExtendedReferencePoint,
     IReferencePoint,
     IUiConfig,
+    IVisConstruct,
 } from "../../../../interfaces/Visualization";
 import { AXIS } from "../../../../constants/axis";
 import { COMBO_CHART_UICONFIG } from "../../../../constants/uiConfig";
 import { COMBO_CHART_SUPPORTED_PROPERTIES } from "../../../../constants/supportedProperties";
 import { VisualizationTypes, OverTimeComparisonTypes } from "@gooddata/sdk-ui";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { getLastRenderEl } from "../../tests/testHelpers";
+import * as testMocks from "../../../../tests/mocks/testMocks";
 
 describe("PluggableComboChart", () => {
-    const defaultProps = {
+    const mockElement = document.createElement("div");
+    const mockConfigElement = document.createElement("div");
+    const mockRenderFun = jest.fn();
+    const executionFactory = dummyBackend().workspace("PROJECTID").execution();
+    const defaultProps: IVisConstruct = {
         projectId: "PROJECTID",
-        element: "body",
-        configPanelElement: null as string,
+        element: () => mockElement,
+        configPanelElement: () => mockConfigElement,
         callbacks: {
             afterRender: noop,
             pushData: noop,
         },
         backend: dummyBackend(),
         visualizationProperties: {},
-        renderFun: noop,
+        renderFun: mockRenderFun,
     };
     const primaryMeasureBucketProps: IBucketOfFun = {
         localIdentifier: "measures",
@@ -48,6 +55,10 @@ describe("PluggableComboChart", () => {
     function createComponent(props = defaultProps) {
         return new PluggableComboChart(props);
     }
+
+    afterEach(() => {
+        mockRenderFun.mockReset();
+    });
 
     it("should create visualization", () => {
         const visualization = createComponent();
@@ -595,6 +606,20 @@ describe("PluggableComboChart", () => {
             );
 
             expect(sortConfig).toMatchSnapshot();
+        });
+    });
+
+    describe("`renderVisualization` and `renderConfigurationPanel`", () => {
+        it("should mount on the element defined by the callback", () => {
+            const visualization = createComponent();
+
+            visualization.update({}, testMocks.insightWithSingleMeasure, {}, executionFactory);
+
+            // 1st call for rendering element
+            // 2nd call for rendering config panel
+            expect(mockRenderFun).toHaveBeenCalledTimes(2);
+            expect(getLastRenderEl(mockRenderFun, mockElement)).toBeDefined();
+            expect(getLastRenderEl(mockRenderFun, mockConfigElement)).toBeDefined();
         });
     });
 });

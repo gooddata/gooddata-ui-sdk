@@ -3,26 +3,36 @@ import noop from "lodash/noop";
 import { PluggableBubbleChart } from "../PluggableBubbleChart";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
 
-import { IBucketOfFun } from "../../../../interfaces/Visualization";
+import { IBucketOfFun, IVisConstruct } from "../../../../interfaces/Visualization";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import * as testMocks from "../../../../tests/mocks/testMocks";
+import { getLastRenderEl } from "../../tests/testHelpers";
 
 describe("PluggableBubbleChart", () => {
-    const defaultProps = {
+    const mockElement = document.createElement("div");
+    const mockConfigElement = document.createElement("div");
+    const mockRenderFun = jest.fn();
+    const executionFactory = dummyBackend().workspace("PROJECTID").execution();
+    const defaultProps: IVisConstruct = {
         projectId: "PROJECTID",
-        element: "body",
-        configPanelElement: null as string,
+        element: () => mockElement,
+        configPanelElement: () => mockConfigElement,
         callbacks: {
             afterRender: noop,
             pushData: noop,
         },
         backend: dummyBackend(),
         visualizationProperties: {},
-        renderFun: noop,
+        renderFun: mockRenderFun,
     };
 
     function createComponent(props = defaultProps) {
         return new PluggableBubbleChart(props);
     }
+
+    afterEach(() => {
+        mockRenderFun.mockReset();
+    });
 
     it("should create visualization", () => {
         const visualization = createComponent();
@@ -207,6 +217,20 @@ describe("PluggableBubbleChart", () => {
                     items: [],
                 },
             ]);
+        });
+    });
+
+    describe("`renderVisualization` and `renderConfigurationPanel`", () => {
+        it("should mount on the element defined by the callback", () => {
+            const visualization = createComponent();
+
+            visualization.update({}, testMocks.insightWithSingleMeasure, {}, executionFactory);
+
+            // 1st call for rendering element
+            // 2nd call for rendering config panel
+            expect(mockRenderFun).toHaveBeenCalledTimes(2);
+            expect(getLastRenderEl(mockRenderFun, mockElement)).toBeDefined();
+            expect(getLastRenderEl(mockRenderFun, mockConfigElement)).toBeDefined();
         });
     });
 });

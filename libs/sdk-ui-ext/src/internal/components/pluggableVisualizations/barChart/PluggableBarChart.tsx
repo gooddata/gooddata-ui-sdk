@@ -1,6 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { render } from "react-dom";
 import isEmpty from "lodash/isEmpty";
 
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
@@ -75,7 +74,7 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {
-            render(
+            this.renderFun(
                 <BarChartConfigurationPanel
                     locale={this.locale}
                     colors={this.colors}

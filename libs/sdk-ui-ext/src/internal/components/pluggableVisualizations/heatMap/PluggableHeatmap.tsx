@@ -1,6 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { render } from "react-dom";
 import isEmpty from "lodash/isEmpty";
 import cloneDeep from "lodash/cloneDeep";
 import includes from "lodash/includes";
@@ -271,7 +270,7 @@ export class PluggableHeatmap extends PluggableBaseChart {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {
-            render(
+            this.renderFun(
                 <HeatMapConfigurationPanel
                     locale={this.locale}
                     references={this.references}

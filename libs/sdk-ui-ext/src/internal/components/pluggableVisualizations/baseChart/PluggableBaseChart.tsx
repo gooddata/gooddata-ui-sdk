@@ -18,7 +18,6 @@ import {
     updateConfigWithSettings,
 } from "@gooddata/sdk-ui-charts";
 import React from "react";
-import { render } from "react-dom";
 import compact from "lodash/compact";
 
 import { BUCKETS } from "../../../constants/bucket";
@@ -297,7 +296,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {
-            render(
+            this.renderFun(
                 <BaseChartConfigurationPanel
                     locale={this.locale}
                     references={this.references}

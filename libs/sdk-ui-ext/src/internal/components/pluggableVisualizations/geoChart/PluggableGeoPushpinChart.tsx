@@ -273,7 +273,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
     ): void {
         const { dimensions = { height: undefined }, custom = {}, locale, theme } = options;
         const { height } = dimensions;
-        const { getElement, intl } = this;
+        const { intl } = this;
 
         // keep height undef for AD; causes indigo-visualizations to pick default 100%
         const resultingHeight = this.environment === DASHBOARDS_ENVIRONMENT ? height : undefined;
@@ -300,7 +300,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
             theme,
         };
 
-        this.renderFun(<CoreGeoChart {...geoPushpinProps} />, getElement());
+        this.renderFun(<CoreGeoChart {...geoPushpinProps} />, this.getElement());
     }
 
     private withEmptyAttributeTargets(data: any) {

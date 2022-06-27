@@ -14,7 +14,6 @@ import { BucketNames, IPushData } from "@gooddata/sdk-ui";
 
 import { CoreXirr, updateConfigWithSettings } from "@gooddata/sdk-ui-charts";
 import React from "react";
-import { render } from "react-dom";
 import {
     IExtendedReferencePoint,
     IReferencePoint,
@@ -157,7 +156,7 @@ export class PluggableXirr extends AbstractPluggableVisualization {
         if (configPanelElement) {
             const properties = this.visualizationProperties ?? {};
 
-            render(
+            this.renderFun(
                 <UnsupportedConfigurationPanel
                     locale={this.locale}
                     pushData={this.pushData}

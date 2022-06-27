@@ -1,6 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { render } from "react-dom";
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
 import without from "lodash/without";
@@ -355,7 +354,7 @@ export class PluggableComboChart extends PluggableBaseChart {
         const configPanelElement = this.getConfigPanelElement();
 
         if (configPanelElement) {
-            render(
+            this.renderFun(
                 <LineChartBasedConfigurationPanel
                     locale={this.locale}
                     references={this.references}

@@ -1,7 +1,8 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import { IDrillEvent, IDrillEventIntersectionElement, VisType } from "@gooddata/sdk-ui";
 import { IAttribute, IInsight, IInsightDefinition, localIdRef, uriRef } from "@gooddata/sdk-model";
 import { IDrillDownDefinition } from "../../../interfaces/Visualization";
+import React from "react";
 
 export function createDrillDefinition(fromAttribute: IAttribute, targetUri: string): IDrillDownDefinition {
     return {
@@ -36,4 +37,17 @@ export function createDrillEvent(type: VisType, intersection: IDrillEventInterse
             element: null,
         },
     };
+}
+
+/**
+ * Find the last call to a render function in the mock calls that matches given mounting point
+ * This is useful when need to separate between `renderVisualization` and `renderConfigurationPanel`
+ * Using second parameter - mounting point - as a differentiator
+ * @returns a React element passed to render function
+ */
+export function getLastRenderEl<T = any>(
+    func: jest.Mock,
+    element: HTMLElement,
+): React.ReactElement<T> | undefined {
+    return [...func.mock.calls].reverse().find((call) => call[1] === element)?.[0];
 }
