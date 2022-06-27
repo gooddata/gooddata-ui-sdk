@@ -25,10 +25,10 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.ADmeasureValueFilterNullAsZeroOption,
-            "ADmeasureValueFilterNullAsZeroOption",
+            TigerFeaturesNames.ADMeasureValueFilterNullAsZeroOption,
+            "ADMeasureValueFilterNullAsZeroOption",
             "STRING",
-            FeatureFlagsValues.ADmeasureValueFilterNullAsZeroOption,
+            FeatureFlagsValues.ADMeasureValueFilterNullAsZeroOption,
         ),
         ...loadFeature(
             features,

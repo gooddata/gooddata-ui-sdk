@@ -4,7 +4,7 @@ export enum TigerFeaturesNames {
     //boolean + possible values: enabled, disabled
     EnableSortingByTotalGroup = "enableSortingByTotalGroup",
     //string, possible values: disabled, enabledCheckedByDefault, enabledUncheckedByDefault
-    ADmeasureValueFilterNullAsZeroOption = "ADmeasureValueFilterNullAsZeroOption",
+    ADMeasureValueFilterNullAsZeroOption = "ADMeasureValueFilterNullAsZeroOption",
     //boolean + possible values: enabled, disabled
     EnableMultipleDates = "enableMultipleDates",
     //boolean + possible values: enabled, disabled
@@ -15,7 +15,7 @@ export enum TigerFeaturesNames {
 
 export type ITigerFeatureFlags = {
     enableSortingByTotalGroup: typeof FeatureFlagsValues["enableSortingByTotalGroup"][number];
-    ADmeasureValueFilterNullAsZeroOption: typeof FeatureFlagsValues["ADmeasureValueFilterNullAsZeroOption"][number];
+    ADMeasureValueFilterNullAsZeroOption: typeof FeatureFlagsValues["ADMeasureValueFilterNullAsZeroOption"][number];
     enableMultipleDates: typeof FeatureFlagsValues["enableMultipleDates"][number];
     enableKPIDashboardDeleteFilterButton: typeof FeatureFlagsValues["enableKPIDashboardDeleteFilterButton"][number];
     dashboardEditModeDevRollout: typeof FeatureFlagsValues["dashboardEditModeDevRollout"][number];
@@ -23,7 +23,7 @@ export type ITigerFeatureFlags = {
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableSortingByTotalGroup: false,
-    ADmeasureValueFilterNullAsZeroOption: "EnabledUncheckedByDefault",
+    ADMeasureValueFilterNullAsZeroOption: "EnabledUncheckedByDefault",
     enableMultipleDates: true,
     enableKPIDashboardDeleteFilterButton: false,
     // disable edit mode in gdc-dashboards during development
@@ -32,7 +32,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
 
 export const FeatureFlagsValues = {
     enableSortingByTotalGroup: [true, false] as const,
-    ADmeasureValueFilterNullAsZeroOption: [
+    ADMeasureValueFilterNullAsZeroOption: [
         "Disabled",
         "EnabledCheckedByDefault",
         "EnabledUncheckedByDefault",
