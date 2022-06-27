@@ -265,14 +265,12 @@ export function preloadedTesterFactory(
                   { queryServices },
                   {
                       ...backendConfig,
-                      getCommonAttributesResponses: commonAttributeResponses,
                   },
               )
             : DashboardTester.forNewDashboard(
                   { queryServices },
                   {
                       ...backendConfig,
-                      getCommonAttributesResponses: commonAttributeResponses,
                   },
               );
 
