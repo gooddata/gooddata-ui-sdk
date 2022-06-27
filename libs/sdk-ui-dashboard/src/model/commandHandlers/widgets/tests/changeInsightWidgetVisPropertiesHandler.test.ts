@@ -10,14 +10,28 @@ import {
     ComplexDashboardIdentifier,
     ComplexDashboardWidgets,
 } from "../../../tests/fixtures/ComplexDashboard.fixtures";
+import { objRefsToStringKey } from "@gooddata/sdk-backend-mockingbird";
 
 describe("change insight widget vis properties handler", () => {
     describe("for dashboard with KPIs and insights", () => {
         let Tester: DashboardTester;
         beforeEach(
-            preloadedTesterFactory((tester) => {
-                Tester = tester;
-            }, ComplexDashboardIdentifier),
+            preloadedTesterFactory(
+                (tester) => {
+                    Tester = tester;
+                },
+                ComplexDashboardIdentifier,
+                {
+                    backendConfig: {
+                        getCommonAttributesResponses: {
+                            [objRefsToStringKey([
+                                uriRef("/gdc/md/referenceworkspace/obj/1054"),
+                                uriRef("/gdc/md/referenceworkspace/obj/1086"),
+                            ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
+                        },
+                    },
+                },
+            ),
         );
 
         const TestProperties = { controls: { legend: false } };

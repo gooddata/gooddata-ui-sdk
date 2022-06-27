@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
@@ -10,6 +10,8 @@ import {
 import { ChangeLayoutSectionHeader, changeLayoutSectionHeader, undoLayoutChanges } from "../../../commands";
 import { selectLayout } from "../../../store/layout/layoutSelectors";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures";
+import { uriRef } from "@gooddata/sdk-model";
+import { objRefsToStringKey } from "@gooddata/sdk-backend-mockingbird";
 
 const FullHeader = { title: "My Section", description: "My Section Description" };
 const HeaderWithJustTitle = { title: "My Section" };
@@ -20,9 +22,22 @@ describe("change layout section header handler", () => {
     describe("for any dashboard", () => {
         let Tester: DashboardTester;
         beforeEach(
-            preloadedTesterFactory((tester) => {
-                Tester = tester;
-            }, SimpleDashboardIdentifier),
+            preloadedTesterFactory(
+                (tester) => {
+                    Tester = tester;
+                },
+                SimpleDashboardIdentifier,
+                {
+                    backendConfig: {
+                        getCommonAttributesResponses: {
+                            [objRefsToStringKey([
+                                uriRef("/gdc/md/referenceworkspace/obj/1070"),
+                                uriRef("/gdc/md/referenceworkspace/obj/1088"),
+                            ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
+                        },
+                    },
+                },
+            ),
         );
 
         it("should replace header with a new one", async () => {

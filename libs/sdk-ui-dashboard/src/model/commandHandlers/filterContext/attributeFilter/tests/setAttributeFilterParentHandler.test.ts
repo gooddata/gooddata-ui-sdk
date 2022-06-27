@@ -1,18 +1,18 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { objRefsToStringKey } from "@gooddata/sdk-backend-mockingbird";
-import { setAttributeFilterParent } from "../../../../commands";
+import { setAttributeFilterParents } from "../../../../commands";
 import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester";
 import { selectFilterContextAttributeFilters } from "../../../../store/filterContext/filterContextSelectors";
-import { idRef, uriRef } from "@gooddata/sdk-model";
+import { uriRef } from "@gooddata/sdk-model";
 import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures";
 
 const BackendConfig = {
     getCommonAttributesResponses: {
         [objRefsToStringKey([
             // unfortunately the recorded dashboard uses URIs, so we must hard code them here
-            uriRef("/gdc/md/referenceworkspace/obj/1089"),
-            uriRef("/gdc/md/referenceworkspace/obj/1071"),
-        ])]: [idRef("parent")],
+            uriRef("/gdc/md/referenceworkspace/obj/1070"),
+            uriRef("/gdc/md/referenceworkspace/obj/1088"),
+        ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
     },
 };
 
@@ -36,10 +36,12 @@ describe("setAttributeFilterParentHandler", () => {
         ).map((item) => item.attributeFilter.localIdentifier!);
 
         Tester.dispatch(
-            setAttributeFilterParent(firstFilterLocalId, {
-                filterLocalIdentifier: secondFilterLocalId,
-                over: { attributes: [idRef("parent")] },
-            }),
+            setAttributeFilterParents(firstFilterLocalId, [
+                {
+                    filterLocalIdentifier: secondFilterLocalId,
+                    over: { attributes: [uriRef("/gdc/md/referenceworkspace/obj/1057")] },
+                },
+            ]),
         );
 
         await Tester.waitFor("GDC.DASH/EVT.FILTER_CONTEXT.CHANGED");
@@ -53,10 +55,12 @@ describe("setAttributeFilterParentHandler", () => {
         ).map((item) => item.attributeFilter.localIdentifier!);
 
         Tester.dispatch(
-            setAttributeFilterParent(firstFilterLocalId, {
-                filterLocalIdentifier: secondFilterLocalId,
-                over: { attributes: [idRef("parent")] },
-            }),
+            setAttributeFilterParents(firstFilterLocalId, [
+                {
+                    filterLocalIdentifier: secondFilterLocalId,
+                    over: { attributes: [uriRef("/gdc/md/referenceworkspace/obj/1057")] },
+                },
+            ]),
         );
 
         await Tester.waitFor("GDC.DASH/EVT.FILTER_CONTEXT.CHANGED");
@@ -66,10 +70,12 @@ describe("setAttributeFilterParentHandler", () => {
 
     it("should emit the appropriate events when trying to set parent of a non-existent attribute filter", async () => {
         Tester.dispatch(
-            setAttributeFilterParent("NON EXISTENT LOCAL ID", {
-                filterLocalIdentifier: "whatever",
-                over: { attributes: [] },
-            }),
+            setAttributeFilterParents("NON EXISTENT LOCAL ID", [
+                {
+                    filterLocalIdentifier: "whatever",
+                    over: { attributes: [] },
+                },
+            ]),
         );
 
         await Tester.waitFor("GDC.DASH/EVT.COMMAND.FAILED");
@@ -81,10 +87,12 @@ describe("setAttributeFilterParentHandler", () => {
         const originalFilters = selectFilterContextAttributeFilters(Tester.state());
 
         Tester.dispatch(
-            setAttributeFilterParent("NON EXISTENT LOCAL ID", {
-                filterLocalIdentifier: "whatever",
-                over: { attributes: [] },
-            }),
+            setAttributeFilterParents("NON EXISTENT LOCAL ID", [
+                {
+                    filterLocalIdentifier: "whatever",
+                    over: { attributes: [] },
+                },
+            ]),
         );
 
         await Tester.waitFor("GDC.DASH/EVT.COMMAND.FAILED");

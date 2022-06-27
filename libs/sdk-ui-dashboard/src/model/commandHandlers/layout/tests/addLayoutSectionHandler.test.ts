@@ -21,6 +21,7 @@ import {
     TestKpiPlaceholderItem,
 } from "../../../tests/fixtures/Layout.fixtures";
 import { ActivityDateDatasetRef } from "../../../tests/fixtures/CatalogAvailability.fixtures";
+import { objRefsToStringKey } from "@gooddata/sdk-backend-mockingbird";
 
 describe("add layout section handler", () => {
     describe("for an empty dashboard", () => {
@@ -34,6 +35,12 @@ describe("add layout section handler", () => {
                 {
                     backendConfig: {
                         useRefType: "id",
+                        getCommonAttributesResponses: {
+                            [objRefsToStringKey([
+                                uriRef("/gdc/md/referenceworkspace/obj/1070"),
+                                uriRef("/gdc/md/referenceworkspace/obj/1088"),
+                            ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
+                        },
                     },
                 },
             ),
@@ -222,9 +229,21 @@ describe("add layout section handler", () => {
     describe("for a dashboard with existing sections", () => {
         let Tester: DashboardTester;
         beforeEach(
-            preloadedTesterFactory((tester) => {
-                Tester = tester;
-            }, SimpleDashboardIdentifier),
+            preloadedTesterFactory(
+                (tester) => {
+                    Tester = tester;
+                },
+                SimpleDashboardIdentifier,
+                {
+                    backendConfig: {
+                        getCommonAttributesResponses: {
+                            "/gdc/md/referenceworkspace/obj/1070_/gdc/md/referenceworkspace/obj/1088": [
+                                uriRef("/gdc/md/referenceworkspace/obj/1057"),
+                            ],
+                        },
+                    },
+                },
+            ),
         );
 
         it("should add new last section by using relative index -1", async () => {

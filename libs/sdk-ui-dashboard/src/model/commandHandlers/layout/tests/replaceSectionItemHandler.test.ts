@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
 import { TestCorrelation, TestStash } from "../../../tests/fixtures/Dashboard.fixtures";
 import {
@@ -21,14 +21,28 @@ import {
 } from "../../../tests/fixtures/Layout.fixtures";
 import { uriRef } from "@gooddata/sdk-model";
 import { selectInsightByRef } from "../../../store/insights/insightsSelectors";
+import { objRefsToStringKey } from "@gooddata/sdk-backend-mockingbird";
 
 describe("replace section item handler", () => {
     describe("for any dashboard", () => {
         let Tester: DashboardTester;
         beforeEach(
-            preloadedTesterFactory((tester) => {
-                Tester = tester;
-            }, SimpleDashboardIdentifier),
+            preloadedTesterFactory(
+                (tester) => {
+                    Tester = tester;
+                },
+                SimpleDashboardIdentifier,
+                {
+                    backendConfig: {
+                        getCommonAttributesResponses: {
+                            [objRefsToStringKey([
+                                uriRef("/gdc/md/referenceworkspace/obj/1070"),
+                                uriRef("/gdc/md/referenceworkspace/obj/1088"),
+                            ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
+                        },
+                    },
+                },
+            ),
         );
 
         it("should fail if bad section index is provided", async () => {
@@ -73,9 +87,22 @@ describe("replace section item handler", () => {
     describe("for dashboard with existing sections", () => {
         let Tester: DashboardTester;
         beforeEach(
-            preloadedTesterFactory((tester) => {
-                Tester = tester;
-            }, ComplexDashboardIdentifier),
+            preloadedTesterFactory(
+                (tester) => {
+                    Tester = tester;
+                },
+                ComplexDashboardIdentifier,
+                {
+                    backendConfig: {
+                        getCommonAttributesResponses: {
+                            [objRefsToStringKey([
+                                uriRef("/gdc/md/referenceworkspace/obj/1054"),
+                                uriRef("/gdc/md/referenceworkspace/obj/1086"),
+                            ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
+                        },
+                    },
+                },
+            ),
         );
 
         const [SecondSectionFirstItem, SecondSectionSecondItem] =

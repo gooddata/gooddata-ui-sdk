@@ -6,7 +6,10 @@ export { LoadingState } from "./loading/loadingState";
 export { selectDashboardSaving, selectIsDashboardSaving } from "./saving/savingSelectors";
 export { SavingState } from "./saving/savingState";
 export { BackendCapabilitiesState } from "./backendCapabilities/backendCapabilitiesState";
-export { selectBackendCapabilities } from "./backendCapabilities/backendCapabilitiesSelectors";
+export {
+    selectBackendCapabilities,
+    selectSupportsElementsQueryParentFiltering,
+} from "./backendCapabilities/backendCapabilitiesSelectors";
 export { ConfigState } from "./config/configState";
 export {
     selectConfig,
@@ -66,11 +69,18 @@ export {
     selectFilterContextFilters,
     selectFilterContextDateFilter,
     selectFilterContextAttributeFilters,
+    selectOtherContextAttributeFilters,
     selectAttributeFilterDisplayFormsMap,
     selectAttributeFilterDisplayForms,
     selectFilterContextAttributeFilterByDisplayForm,
     selectOriginalFilterContextDefinition,
     selectOriginalFilterContextFilters,
+    selectFiltersToIndexMap,
+    selectConnectingAttributesMatrix,
+    selectAttributeFilterDescendants,
+    selectAttributeFilterDisplayFormByLocalId,
+    selectIsCircularDependency,
+    selectConnectingAttributesForFilters,
 } from "./filterContext/filterContextSelectors";
 export {
     // Core drills

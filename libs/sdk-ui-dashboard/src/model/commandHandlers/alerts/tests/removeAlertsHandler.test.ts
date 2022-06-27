@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
 import { idRef, uriRef } from "@gooddata/sdk-model";
@@ -18,9 +18,27 @@ describe("removeDrillsForInsightWidgetHandler", () => {
 
     let Tester: DashboardTester;
     beforeEach(
-        preloadedTesterFactory(async (tester) => {
-            Tester = tester;
-        }, BrokenFilterAlertsDashboardIdentifier),
+        preloadedTesterFactory(
+            async (tester) => {
+                Tester = tester;
+            },
+            BrokenFilterAlertsDashboardIdentifier,
+            {
+                backendConfig: {
+                    getCommonAttributesResponses: {
+                        "/gdc/md/referenceworkspace/obj/1054_/gdc/md/referenceworkspace/obj/1088": [
+                            uriRef("/gdc/md/referenceworkspace/obj/1057"),
+                        ],
+                        "/gdc/md/referenceworkspace/obj/1054_/gdc/md/referenceworkspace/obj/1086": [
+                            uriRef("/gdc/md/referenceworkspace/obj/1057"),
+                        ],
+                        "/gdc/md/referenceworkspace/obj/1086_/gdc/md/referenceworkspace/obj/1088": [
+                            uriRef("/gdc/md/referenceworkspace/obj/1057"),
+                        ],
+                    },
+                },
+            },
+        ),
     );
 
     describe("remove", () => {

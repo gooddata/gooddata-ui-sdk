@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
 import { MoveLayoutSection, moveLayoutSection, undoLayoutChanges } from "../../../commands";
@@ -9,14 +9,29 @@ import {
     ComplexDashboardIdentifier,
     ComplexDashboardWithReferences,
 } from "../../../tests/fixtures/ComplexDashboard.fixtures";
+import { uriRef } from "@gooddata/sdk-model";
+import { objRefsToStringKey } from "@gooddata/sdk-backend-mockingbird";
 
 describe("move section command handler", () => {
     describe("for any dashboard", () => {
         let Tester: DashboardTester;
         beforeEach(
-            preloadedTesterFactory((tester) => {
-                Tester = tester;
-            }, SimpleDashboardIdentifier),
+            preloadedTesterFactory(
+                (tester) => {
+                    Tester = tester;
+                },
+                SimpleDashboardIdentifier,
+                {
+                    backendConfig: {
+                        getCommonAttributesResponses: {
+                            [objRefsToStringKey([
+                                uriRef("/gdc/md/referenceworkspace/obj/1070"),
+                                uriRef("/gdc/md/referenceworkspace/obj/1088"),
+                            ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
+                        },
+                    },
+                },
+            ),
         );
 
         it("should fail if bad section index specified", async () => {
@@ -47,9 +62,22 @@ describe("move section command handler", () => {
 
         let Tester: DashboardTester;
         beforeEach(
-            preloadedTesterFactory((tester) => {
-                Tester = tester;
-            }, ComplexDashboardIdentifier),
+            preloadedTesterFactory(
+                (tester) => {
+                    Tester = tester;
+                },
+                ComplexDashboardIdentifier,
+                {
+                    backendConfig: {
+                        getCommonAttributesResponses: {
+                            [objRefsToStringKey([
+                                uriRef("/gdc/md/referenceworkspace/obj/1054"),
+                                uriRef("/gdc/md/referenceworkspace/obj/1086"),
+                            ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
+                        },
+                    },
+                },
+            ),
         );
 
         it("should move first section to the end of the section list", async () => {

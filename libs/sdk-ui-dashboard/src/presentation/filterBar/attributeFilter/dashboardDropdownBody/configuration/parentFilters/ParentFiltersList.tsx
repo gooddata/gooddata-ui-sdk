@@ -1,46 +1,34 @@
 // (C) 2022 GoodData Corporation
-import React, { useCallback } from "react";
+import React from "react";
 
-import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
-import { IConfigurationParentItem, ParentFiltersListItem } from "./ParentFiltersListItem";
+import { ObjRef } from "@gooddata/sdk-model";
+import { ParentFiltersListItem } from "./ParentFiltersListItem";
 import { LoadingComponent } from "@gooddata/sdk-ui";
+import {
+    useDashboardSelector,
+    selectSupportsElementsQueryParentFiltering,
+    IDashboardAttributeFilterParentItem,
+} from "../../../../../../model";
 
 const LOADING_MASK_HEIGHT = 150;
 
 interface IConfigurationParentItemsProps {
-    isDependentFiltersEnabled: boolean;
-    attributeFilterTitle: string;
-    items: IConfigurationParentItem[];
-    setItems: (items: IConfigurationParentItem[]) => void;
-    numberOfAttributeFilters: number;
+    currentFilterLocalId: string;
+    parents: IDashboardAttributeFilterParentItem[];
+    setParents: (localId: string, isSelected: boolean, overAttributes: ObjRef[]) => void;
+    onConnectingAttributeChanged: (localId: string, selectedAttribute: ObjRef) => void;
 }
 
 export const ParentFiltersList: React.FC<IConfigurationParentItemsProps> = (props) => {
-    const { items, attributeFilterTitle, setItems, isDependentFiltersEnabled, numberOfAttributeFilters } =
-        props;
+    const { parents, currentFilterLocalId, setParents, onConnectingAttributeChanged } = props;
 
-    const onItemClick = (ref: ObjRef) => {
-        const updatedItems = items.map((item) => {
-            return areObjRefsEqual(item.ref, ref) ? { ...item, isSelected: !item.isSelected } : item;
-        });
-        setItems(updatedItems);
-    };
+    const isDependentFiltersEnabled = useDashboardSelector(selectSupportsElementsQueryParentFiltering);
 
-    const onConnectingAttributeSelect = useCallback(
-        (ref: ObjRef, selectedConnectingAttributeRef: ObjRef) => {
-            const updatedItems = items.map((item) =>
-                areObjRefsEqual(item.ref, ref) ? { ...item, selectedConnectingAttributeRef } : item,
-            );
-            setItems(updatedItems);
-        },
-        [items, setItems],
-    );
-
-    if (!isDependentFiltersEnabled || numberOfAttributeFilters <= 1) {
+    if (!isDependentFiltersEnabled || parents.length < 1) {
         return null;
     }
 
-    if (!items.length) {
+    if (!parents.length) {
         return (
             <LoadingComponent
                 height={LOADING_MASK_HEIGHT}
@@ -51,13 +39,16 @@ export const ParentFiltersList: React.FC<IConfigurationParentItemsProps> = (prop
 
     return (
         <div className="gd-infinite-list">
-            {items.map((item) => {
-                <ParentFiltersListItem
-                    item={item}
-                    attributeFilterTitle={attributeFilterTitle}
-                    onClick={onItemClick}
-                    onConnectingAttributeSelect={onConnectingAttributeSelect}
-                />;
+            {parents.map((item) => {
+                return (
+                    <ParentFiltersListItem
+                        key={item.localIdentifier}
+                        currentFilterLocalId={currentFilterLocalId}
+                        item={item}
+                        onClick={setParents}
+                        onConnectingAttributeSelect={onConnectingAttributeChanged}
+                    />
+                );
             })}
         </div>
     );

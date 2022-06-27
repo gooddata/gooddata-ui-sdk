@@ -7,14 +7,28 @@ import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures";
 import { DashboardCommandFailed, DashboardSharingChanged } from "../../../events";
 import { selectDashboardShareStatus } from "../../../store/meta/metaSelectors";
+import { objRefsToStringKey } from "@gooddata/sdk-backend-mockingbird";
 
 describe("change dashboard sharing handler", () => {
     describe("for a existing dashboard", () => {
         let Tester: DashboardTester;
         beforeEach(
-            preloadedTesterFactory((tester) => {
-                Tester = tester;
-            }, SimpleDashboardIdentifier),
+            preloadedTesterFactory(
+                (tester) => {
+                    Tester = tester;
+                },
+                SimpleDashboardIdentifier,
+                {
+                    backendConfig: {
+                        getCommonAttributesResponses: {
+                            [objRefsToStringKey([
+                                uriRef("/gdc/md/referenceworkspace/obj/1070"),
+                                uriRef("/gdc/md/referenceworkspace/obj/1088"),
+                            ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
+                        },
+                    },
+                },
+            ),
         );
 
         it("should save new dashboard share status", async () => {

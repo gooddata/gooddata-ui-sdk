@@ -26,30 +26,44 @@ import {
     SimpleSortedTableWidgetRef,
 } from "../../../tests/fixtures/SimpleDashboard.fixtures";
 import { ComplexDashboardWithReferences } from "../../../tests/fixtures/ComplexDashboard.fixtures";
+import { objRefsToStringKey } from "@gooddata/sdk-backend-mockingbird";
 
 describe("modifyDrillsForInsightWidgetHandler", () => {
     let Tester: DashboardTester;
     beforeEach(
-        preloadedTesterFactory(async (tester) => {
-            Tester = tester;
-            await Tester.dispatchAndWaitFor(
-                addDrillTargets(
-                    SimpleSortedTableWidgetRef,
-                    SimpleDashboardSimpleSortedTableWidgetDrillTargets,
-                    TestCorrelation,
-                ),
-                "GDC.DASH/EVT.DRILL_TARGETS.ADDED",
-            );
+        preloadedTesterFactory(
+            async (tester) => {
+                Tester = tester;
+                await Tester.dispatchAndWaitFor(
+                    addDrillTargets(
+                        SimpleSortedTableWidgetRef,
+                        SimpleDashboardSimpleSortedTableWidgetDrillTargets,
+                        TestCorrelation,
+                    ),
+                    "GDC.DASH/EVT.DRILL_TARGETS.ADDED",
+                );
 
-            await Tester.dispatchAndWaitFor(
-                addDrillTargets(
-                    drillToAttributeUrlWidgetRef,
-                    SimpleDashboarddrillToAttributeUrlWidgetDrillTargets,
-                    TestCorrelation,
-                ),
-                "GDC.DASH/EVT.DRILL_TARGETS.ADDED",
-            );
-        }, SimpleDashboardIdentifier),
+                await Tester.dispatchAndWaitFor(
+                    addDrillTargets(
+                        drillToAttributeUrlWidgetRef,
+                        SimpleDashboarddrillToAttributeUrlWidgetDrillTargets,
+                        TestCorrelation,
+                    ),
+                    "GDC.DASH/EVT.DRILL_TARGETS.ADDED",
+                );
+            },
+            SimpleDashboardIdentifier,
+            {
+                backendConfig: {
+                    getCommonAttributesResponses: {
+                        [objRefsToStringKey([
+                            uriRef("/gdc/md/referenceworkspace/obj/1070"),
+                            uriRef("/gdc/md/referenceworkspace/obj/1088"),
+                        ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
+                    },
+                },
+            },
+        ),
     );
 
     describe("modify", () => {

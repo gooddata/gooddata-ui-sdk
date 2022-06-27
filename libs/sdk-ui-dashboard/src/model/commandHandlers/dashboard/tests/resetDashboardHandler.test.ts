@@ -10,12 +10,13 @@ import { addAttributeFilter, addLayoutSection, renameDashboard, resetDashboard }
 import { selectLayout } from "../../../store/layout/layoutSelectors";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
 import { ReferenceMd } from "@gooddata/reference-workspace";
-import { attributeDisplayFormRef } from "@gooddata/sdk-model";
+import { attributeDisplayFormRef, uriRef } from "@gooddata/sdk-model";
 import { selectDashboardTitle } from "../../../store/meta/metaSelectors";
 import {
     selectFilterContextAttributeFilters,
     selectFilterContextDefinition,
 } from "../../../store/filterContext/filterContextSelectors";
+import { objRefsToStringKey } from "@gooddata/sdk-backend-mockingbird";
 
 const TestTitle = "Renamed Dashboard";
 
@@ -87,6 +88,20 @@ describe("reset dashboard handler", () => {
                 {
                     backendConfig: {
                         useRefType: "id",
+                        getCommonAttributesResponses: {
+                            [objRefsToStringKey([
+                                uriRef("/gdc/md/referenceworkspace/obj/1086"),
+                                uriRef("/gdc/md/referenceworkspace/obj/1088"),
+                            ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
+                            [objRefsToStringKey([
+                                uriRef("/gdc/md/referenceworkspace/obj/1070"),
+                                uriRef("/gdc/md/referenceworkspace/obj/1088"),
+                            ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
+                            [objRefsToStringKey([
+                                uriRef("/gdc/md/referenceworkspace/obj/1070"),
+                                uriRef("/gdc/md/referenceworkspace/obj/1086"),
+                            ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
+                        },
                     },
                 },
             ),

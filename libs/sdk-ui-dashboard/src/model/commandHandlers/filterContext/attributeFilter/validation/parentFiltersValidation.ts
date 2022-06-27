@@ -7,16 +7,23 @@ import {
     objRefToString,
     IDashboardAttributeFilter,
     IDashboardAttributeFilterParent,
+    IAttributeDisplayFormMetadataObject,
 } from "@gooddata/sdk-model";
 import { DashboardContext } from "../../../../types/commonTypes";
+import { ObjRefMap } from "../../../../../_staging/metadata/objRefMap";
 
-export type AttributeFilterParentsValidationResult = "VALID" | "EXTRANEOUS_PARENT" | "INVALID_CONNECTION";
+export type AttributeFilterParentsValidationResult =
+    | "VALID"
+    | "EXTRANEOUS_PARENT"
+    | "INVALID_CONNECTION"
+    | "INVALID_METADATA";
 
 export async function validateAttributeFilterParents(
     ctx: DashboardContext,
     dashboardFilter: IDashboardAttributeFilter,
     parents: IDashboardAttributeFilterParent[],
     allFilters: IDashboardAttributeFilter[],
+    displayFormsMap: ObjRefMap<IAttributeDisplayFormMetadataObject>,
 ): Promise<AttributeFilterParentsValidationResult> {
     const allExceptValidated = allFilters.filter(
         (item) =>
@@ -38,22 +45,33 @@ export async function validateAttributeFilterParents(
             (item) => item.attributeFilter.localIdentifier === parent.filterLocalIdentifier,
         )!; // the ! is cool here, we validated that the parents are available in the code above
 
+        const parentAttribute = displayFormsMap.get(parentFilter.attributeFilter.displayForm)?.attribute;
+        const dashboardFilterAttribute = displayFormsMap.get(
+            dashboardFilter.attributeFilter.displayForm,
+        )?.attribute;
+
+        if (!parentAttribute || !dashboardFilterAttribute) {
+            return undefined;
+        }
+
         return {
             parentOverAttributes: parent.over.attributes,
-            displayFormsToGetAncestorsFor: [
-                dashboardFilter.attributeFilter.displayForm,
-                parentFilter.attributeFilter.displayForm,
-            ],
+            displayFormsToGetAncestorsFor: [dashboardFilterAttribute, parentAttribute],
         };
     });
+
+    if (parentValidationData.some((parent) => parent === undefined)) {
+        return "INVALID_METADATA";
+    }
 
     const commonAttributeResults = await ctx.backend
         .workspace(ctx.workspace)
         .attributes()
-        .getCommonAttributesBatch(parentValidationData.map((item) => item.displayFormsToGetAncestorsFor));
+        // the ! is fine here, we validated parentValidationData for empty items above
+        .getCommonAttributesBatch(parentValidationData.map((item) => item!.displayFormsToGetAncestorsFor));
 
     const validationPairs = zip(
-        parentValidationData.map((item) => item.parentOverAttributes),
+        parentValidationData.map((item) => item!.parentOverAttributes),
         commonAttributeResults,
     ) as [ObjRef[], ObjRef[]][]; // we know the lengths match so we cast to get rid on the undefined in teh default typing
 

@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
 import { TestStash } from "../../../tests/fixtures/Dashboard.fixtures";
 import { addLayoutSection, addSectionItem, removeLayoutSection, replaceSectionItem } from "../../../commands";
@@ -9,13 +9,28 @@ import {
     ComplexDashboardWithReferences,
 } from "../../../tests/fixtures/ComplexDashboard.fixtures";
 import { TestKpiPlaceholderItem } from "../../../tests/fixtures/Layout.fixtures";
+import { uriRef } from "@gooddata/sdk-model";
+import { objRefsToStringKey } from "@gooddata/sdk-backend-mockingbird";
 
 describe("stashing", () => {
     let Tester: DashboardTester;
     beforeEach(
-        preloadedTesterFactory((tester) => {
-            Tester = tester;
-        }, ComplexDashboardIdentifier),
+        preloadedTesterFactory(
+            (tester) => {
+                Tester = tester;
+            },
+            ComplexDashboardIdentifier,
+            {
+                backendConfig: {
+                    getCommonAttributesResponses: {
+                        [objRefsToStringKey([
+                            uriRef("/gdc/md/referenceworkspace/obj/1054"),
+                            uriRef("/gdc/md/referenceworkspace/obj/1086"),
+                        ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
+                    },
+                },
+            },
+        ),
     );
 
     const [ThirdSectionFirstItem] = ComplexDashboardWithReferences.dashboard.layout!.sections[2].items;

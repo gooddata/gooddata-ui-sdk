@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
 import { AddDrillTargets, addDrillTargets } from "../../../commands/drillTargets";
 import { DrillTargetsAdded } from "../../../events/drillTargets";
@@ -12,15 +12,29 @@ import {
     SimpleDashboardIdentifier,
     SimpleSortedTableWidgetRef,
 } from "../../../tests/fixtures/SimpleDashboard.fixtures";
+import { objRefsToStringKey } from "@gooddata/sdk-backend-mockingbird";
 
 describe("addDrillTargetsHandler", () => {
     const availableDrillTargetsMock: IAvailableDrillTargets = {};
 
     let Tester: DashboardTester;
     beforeEach(
-        preloadedTesterFactory((tester: DashboardTester) => {
-            Tester = tester;
-        }, SimpleDashboardIdentifier),
+        preloadedTesterFactory(
+            (tester: DashboardTester) => {
+                Tester = tester;
+            },
+            SimpleDashboardIdentifier,
+            {
+                backendConfig: {
+                    getCommonAttributesResponses: {
+                        [objRefsToStringKey([
+                            uriRef("/gdc/md/referenceworkspace/obj/1070"),
+                            uriRef("/gdc/md/referenceworkspace/obj/1088"),
+                        ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
+                    },
+                },
+            },
+        ),
     );
 
     it("should add drill target to the state for given widget", async () => {

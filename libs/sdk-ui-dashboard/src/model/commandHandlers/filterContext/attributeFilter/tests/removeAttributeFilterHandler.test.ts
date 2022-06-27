@@ -7,15 +7,29 @@ import {
 } from "../../../../store/filterContext/filterContextSelectors";
 import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures";
 import { selectLayout } from "../../../../store/layout/layoutSelectors";
-import { IDashboardAttributeFilterReference, IInsightWidget } from "@gooddata/sdk-model";
+import { IDashboardAttributeFilterReference, IInsightWidget, uriRef } from "@gooddata/sdk-model";
 import { TestCorrelation } from "../../../../tests/fixtures/Dashboard.fixtures";
+import { objRefsToStringKey } from "@gooddata/sdk-backend-mockingbird";
 
 describe("removeAttributeFilterHandler", () => {
     let Tester: DashboardTester;
     beforeEach(
-        preloadedTesterFactory((tester) => {
-            Tester = tester;
-        }, SimpleDashboardIdentifier),
+        preloadedTesterFactory(
+            (tester) => {
+                Tester = tester;
+            },
+            SimpleDashboardIdentifier,
+            {
+                backendConfig: {
+                    getCommonAttributesResponses: {
+                        [objRefsToStringKey([
+                            uriRef("/gdc/md/referenceworkspace/obj/1070"),
+                            uriRef("/gdc/md/referenceworkspace/obj/1088"),
+                        ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
+                    },
+                },
+            },
+        ),
     );
 
     it("should emit the appropriate events for removed attribute filter", async () => {

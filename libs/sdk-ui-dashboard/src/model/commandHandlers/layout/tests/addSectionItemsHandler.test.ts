@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
 import { TestCorrelation, TestStash } from "../../../tests/fixtures/Dashboard.fixtures";
@@ -15,6 +15,7 @@ import {
     TestInsightPlaceholderItem,
     TestKpiPlaceholderItem,
 } from "../../../tests/fixtures/Layout.fixtures";
+import { objRefsToStringKey } from "@gooddata/sdk-backend-mockingbird";
 
 describe("add section items handler", () => {
     describe("for any dashboard", () => {
@@ -28,6 +29,12 @@ describe("add section items handler", () => {
                 {
                     backendConfig: {
                         useRefType: "id",
+                        getCommonAttributesResponses: {
+                            [objRefsToStringKey([
+                                uriRef("/gdc/md/referenceworkspace/obj/1070"),
+                                uriRef("/gdc/md/referenceworkspace/obj/1088"),
+                            ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
+                        },
                     },
                 },
             ),
@@ -106,9 +113,21 @@ describe("add section items handler", () => {
     describe("for dashboard with existing sections", () => {
         let Tester: DashboardTester;
         beforeEach(
-            preloadedTesterFactory((tester) => {
-                Tester = tester;
-            }, ComplexDashboardIdentifier),
+            preloadedTesterFactory(
+                (tester) => {
+                    Tester = tester;
+                },
+                ComplexDashboardIdentifier,
+                {
+                    backendConfig: {
+                        getCommonAttributesResponses: {
+                            "/gdc/md/referenceworkspace/obj/1054_/gdc/md/referenceworkspace/obj/1086": [
+                                uriRef("/gdc/md/referenceworkspace/obj/1057"),
+                            ],
+                        },
+                    },
+                },
+            ),
         );
 
         // this section has two existing items

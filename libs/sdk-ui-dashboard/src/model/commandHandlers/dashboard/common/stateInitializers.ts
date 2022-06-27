@@ -36,6 +36,8 @@ import { loadAvailableDisplayFormRefs } from "./loadAvailableDisplayFormRefs";
 import { PromiseFnReturnType } from "../../../types/sagas";
 import update from "lodash/fp/update";
 import isEmpty from "lodash/isEmpty";
+import { loadFiltersToIndexMapping } from "../initializeDashboardHandler/loadFiltersToIndexMapping";
+import { loadConnectingAttributesMatrix } from "../initializeDashboardHandler/loadConnectingAttributesMatrix";
 
 export const EmptyDashboardLayout: IDashboardLayout<IWidget> = {
     type: "IDashboardLayout",
@@ -56,6 +58,8 @@ export function actionsToInitializeNewDashboard(
         filterContextActions.setFilterContext({
             filterContextDefinition: createDefaultFilterContext(dateFilterConfig),
             attributeFilterDisplayForms: [],
+            filterToIndexMap: {},
+            connectingAttributesMatrix: [],
         }),
         layoutActions.setLayout(EmptyDashboardLayout),
         insightsActions.setInsights([]),
@@ -151,6 +155,19 @@ export function* actionsToInitializeExistingDashboard(
         displayForms,
     );
 
+    const attributeFilters = filterContextDefinition.filters.filter(isDashboardAttributeFilter);
+
+    const filterToIndexMap: ReturnType<typeof loadFiltersToIndexMapping> = yield call(
+        loadFiltersToIndexMapping,
+        attributeFilters,
+    );
+    const connectingAttributesMatrix: PromiseFnReturnType<typeof loadConnectingAttributesMatrix> = yield call(
+        loadConnectingAttributesMatrix,
+        ctx.backend,
+        ctx.workspace,
+        attributeFilters,
+        Array.from(attributeFilterDisplayForms),
+    );
     /*
      * NOTE: cannot do without the cast here. The layout in IDashboard is parameterized with IDashboardWidget
      * which also includes KPI and Insight widget definitions = those without identity. That is however
@@ -170,6 +187,8 @@ export function* actionsToInitializeExistingDashboard(
             filterContextDefinition,
             filterContextIdentity,
             attributeFilterDisplayForms,
+            filterToIndexMap,
+            connectingAttributesMatrix,
         }),
         layoutActions.setLayout(dashboardLayout),
         metaActions.setMeta({

@@ -43,6 +43,7 @@ export interface IAttributeDropdownBodyProps {
     onCloseButtonClicked: () => void;
     parentFilterTitles?: string[];
     showItemsFilteredMessage?: boolean;
+    attributeFilterRef?: ObjRef;
 }
 
 /**

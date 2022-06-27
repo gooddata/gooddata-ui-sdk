@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
 import { ChangeKpiWidgetMeasure, changeKpiWidgetMeasure, initializeDashboard } from "../../../commands";
@@ -14,6 +14,7 @@ import {
     MockAvailabilityWithDifferentRelevance,
     TimelineDateDatasetRef,
 } from "../../../tests/fixtures/CatalogAvailability.fixtures";
+import { objRefsToStringKey } from "@gooddata/sdk-backend-mockingbird";
 
 describe("change KPI widget measure handler", () => {
     describe("for any KPI", () => {
@@ -21,9 +22,22 @@ describe("change KPI widget measure handler", () => {
 
         let Tester: DashboardTester;
         beforeEach(
-            preloadedTesterFactory((tester) => {
-                Tester = tester;
-            }, ComplexDashboardIdentifier),
+            preloadedTesterFactory(
+                (tester) => {
+                    Tester = tester;
+                },
+                ComplexDashboardIdentifier,
+                {
+                    backendConfig: {
+                        getCommonAttributesResponses: {
+                            [objRefsToStringKey([
+                                uriRef("/gdc/md/referenceworkspace/obj/1054"),
+                                uriRef("/gdc/md/referenceworkspace/obj/1086"),
+                            ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
+                        },
+                    },
+                },
+            ),
         );
 
         it("should replace measure and keep existing header", async () => {
@@ -113,7 +127,13 @@ describe("change KPI widget measure handler", () => {
         const WidgetWithDateDataset = ComplexDashboardWidgets.FirstSection.LastKpi;
 
         it("should keep existing date dataset if it is available for the new metric", async () => {
-            const Tester = DashboardTester.forRecording(ComplexDashboardIdentifier);
+            const Tester = DashboardTester.forRecording(ComplexDashboardIdentifier, undefined, {
+                getCommonAttributesResponses: {
+                    "/gdc/md/referenceworkspace/obj/1054_/gdc/md/referenceworkspace/obj/1086": [
+                        uriRef("/gdc/md/referenceworkspace/obj/1057"),
+                    ],
+                },
+            });
             await Tester.dispatchAndWaitFor(initializeDashboard(), "GDC.DASH/EVT.INITIALIZED");
             Tester.resetMonitors();
 
@@ -134,6 +154,11 @@ describe("change KPI widget measure handler", () => {
                     catalogAvailability: {
                         availableDateDatasets: MockAvailabilityWithDifferentRelevance,
                     },
+                    getCommonAttributesResponses: {
+                        "/gdc/md/referenceworkspace/obj/1054_/gdc/md/referenceworkspace/obj/1086": [
+                            uriRef("/gdc/md/referenceworkspace/obj/1057"),
+                        ],
+                    },
                 },
             );
             await Tester.dispatchAndWaitFor(initializeDashboard(), "GDC.DASH/EVT.INITIALIZED");
@@ -152,7 +177,13 @@ describe("change KPI widget measure handler", () => {
         });
 
         it("should emit correct events", async () => {
-            const Tester = DashboardTester.forRecording(ComplexDashboardIdentifier);
+            const Tester = DashboardTester.forRecording(ComplexDashboardIdentifier, undefined, {
+                getCommonAttributesResponses: {
+                    "/gdc/md/referenceworkspace/obj/1054_/gdc/md/referenceworkspace/obj/1086": [
+                        uriRef("/gdc/md/referenceworkspace/obj/1057"),
+                    ],
+                },
+            });
             await Tester.dispatchAndWaitFor(initializeDashboard(), "GDC.DASH/EVT.INITIALIZED");
             Tester.resetMonitors();
 

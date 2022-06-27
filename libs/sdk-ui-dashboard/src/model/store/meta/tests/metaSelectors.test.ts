@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-import { newAbsoluteDateFilter, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+import { newAbsoluteDateFilter, newPositiveAttributeFilter, uriRef } from "@gooddata/sdk-model";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
@@ -35,13 +35,35 @@ import {
 } from "../../../commands";
 import { selectIsDashboardDirty } from "../metaSelectors";
 import { ExtendedDashboardItem, ICustomWidgetDefinition } from "../../../types/layoutTypes";
+import { objRefsToStringKey } from "@gooddata/sdk-backend-mockingbird";
 
 describe("selectIsDashboardDirty", () => {
     let Tester: DashboardTester;
     beforeEach(
-        preloadedTesterFactory((tester) => {
-            Tester = tester;
-        }, ComplexDashboardIdentifier),
+        preloadedTesterFactory(
+            (tester) => {
+                Tester = tester;
+            },
+            ComplexDashboardIdentifier,
+            {
+                backendConfig: {
+                    getCommonAttributesResponses: {
+                        [objRefsToStringKey([
+                            uriRef("/gdc/md/referenceworkspace/obj/1054"),
+                            uriRef("/gdc/md/referenceworkspace/obj/1088"),
+                        ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
+                        [objRefsToStringKey([
+                            uriRef("/gdc/md/referenceworkspace/obj/1054"),
+                            uriRef("/gdc/md/referenceworkspace/obj/1086"),
+                        ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
+                        [objRefsToStringKey([
+                            uriRef("/gdc/md/referenceworkspace/obj/1086"),
+                            uriRef("/gdc/md/referenceworkspace/obj/1088"),
+                        ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
+                    },
+                },
+            },
+        ),
     );
 
     it("should return false for dashboard just opened", () => {
