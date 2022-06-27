@@ -33,13 +33,15 @@ import { IAvailableSortsGroup, ISortConfig } from "./SortConfig";
 export type RenderFunction = (component: any, target: Element) => void;
 
 export type ElementSelectorFunction = () => HTMLElement | null;
+/** @deprecated Use ElementSelectorFunction instead */
+export type ElementSelectorString = string;
 
 export interface IVisConstruct {
     backend: IAnalyticalBackend;
     // TODO: rename to workspace
     projectId: string;
-    element: string | ElementSelectorFunction;
-    configPanelElement: string | ElementSelectorFunction;
+    element: ElementSelectorString | ElementSelectorFunction;
+    configPanelElement: ElementSelectorString | ElementSelectorFunction;
 
     callbacks: IVisCallbacks;
     environment?: VisualizationEnvironment;

@@ -218,16 +218,14 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
                 environment,
                 backend: props.backend,
                 element: () => {
-                    const rootNode = (this.containerRef.current?.getRootNode() ?? document) as
-                        | Document
-                        | ShadowRoot;
+                    const rootNode =
+                        (this.containerRef.current?.getRootNode() as Document | ShadowRoot) ?? document;
 
                     return rootNode.querySelector(`.${this.getVisElementClassName()}`);
                 },
                 configPanelElement: () => {
-                    const rootNode = (this.containerRef.current?.getRootNode() ?? document) as
-                        | Document
-                        | ShadowRoot;
+                    const rootNode =
+                        (this.containerRef.current?.getRootNode() as Document | ShadowRoot) ?? document;
 
                     return rootNode.querySelector(`.${configPanelClassName}`);
                 },
