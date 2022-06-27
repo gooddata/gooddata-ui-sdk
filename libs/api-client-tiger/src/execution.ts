@@ -4,7 +4,6 @@ import { ActionsApi, ActionsApiInterface } from "./generated/afm-rest-api";
 
 /**
  * Tiger execution client factory
- *
  */
 export const tigerExecutionClientFactory = (
     axios: AxiosInstance,
