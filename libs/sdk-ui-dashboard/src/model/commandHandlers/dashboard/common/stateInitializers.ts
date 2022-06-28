@@ -194,6 +194,6 @@ export function* actionsToInitializeExistingDashboard(
         metaActions.setMeta({
             dashboard,
         }),
-        uiActions.selectWidget(undefined),
+        uiActions.clearWidgetSelection(),
     ];
 }

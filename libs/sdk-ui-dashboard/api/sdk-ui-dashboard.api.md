@@ -5206,9 +5206,10 @@ payload: number | null;
 type: string;
 }>;
 selectWidget: CaseReducer<UiState, {
-payload: UriRef | IdentifierRef | undefined;
+payload: ObjRef;
 type: string;
 }>;
+clearWidgetSelection: CaseReducer<UiState, AnyAction>;
 }>;
 
 // @alpha (undocumented)

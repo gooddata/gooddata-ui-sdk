@@ -8,7 +8,6 @@ import {
     IInsightWidget,
     widgetTitle,
     ScreenSize,
-    areObjRefsEqual,
 } from "@gooddata/sdk-model";
 import { OnError, OnExportReady, OnLoadingChanged, VisType } from "@gooddata/sdk-ui";
 
@@ -18,10 +17,6 @@ import {
     isCustomWidget,
     useDashboardScheduledEmails,
     selectCanExportReport,
-    selectIsInEditMode,
-    selectSelectedWidgetRef,
-    useDashboardDispatch,
-    uiActions,
 } from "../../../model";
 import {
     DashboardItem,
@@ -34,6 +29,7 @@ import { DashboardInsight } from "../insight/DashboardInsight";
 import { useInsightExport } from "../common/useInsightExport";
 import { useDashboardComponentsContext } from "../../dashboardContexts";
 import { useInsightMenu } from "./useInsightMenu";
+import { useWidgetSelection } from "../common/useWidgetSelection";
 
 interface IDefaultDashboardInsightWidgetProps {
     widget: IInsightWidget;
@@ -138,17 +134,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
         [InsightMenuComponentProvider, insight, widget],
     );
 
-    const isSelectable = useDashboardSelector(selectIsInEditMode);
-
-    const selectedWidget = useDashboardSelector(selectSelectedWidgetRef);
-    const isSelected = isSelectable && selectedWidget && areObjRefsEqual(selectedWidget, widget.ref);
-
-    const dispatch = useDashboardDispatch();
-    const onSelected = useCallback(() => {
-        if (isSelectable && widget.ref) {
-            dispatch(uiActions.selectWidget(widget.ref));
-        }
-    }, [isSelectable, widget.ref, dispatch]);
+    const { isSelectable, isSelected, onSelected } = useWidgetSelection(widget.ref);
 
     return (
         <DashboardItem

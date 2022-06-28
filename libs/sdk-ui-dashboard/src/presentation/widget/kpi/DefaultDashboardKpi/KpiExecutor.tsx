@@ -64,6 +64,7 @@ import { DashboardItemWithKpiAlert, evaluateAlertTriggered } from "./KpiAlerts";
 import { dashboardFilterToFilterContextItem, stripDateDatasets } from "./utils/filterUtils";
 import { useWidgetBrokenAlertsQuery } from "../../common/useWidgetBrokenAlertsQuery";
 import { invariant } from "ts-invariant";
+import { useWidgetSelection } from "../../common/useWidgetSelection";
 
 interface IKpiExecutorProps {
     dashboardRef?: ObjRef;
@@ -233,6 +234,8 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
             ? "error"
             : "idle";
 
+    const { isSelectable, isSelected, onSelected } = useWidgetSelection(kpiWidget.ref);
+
     return (
         <DashboardItemWithKpiAlert
             kpi={kpiWidget}
@@ -365,6 +368,9 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
             )}
             alertDeletingStatus={kpiAlertOperations.removingStatus}
             alertSavingStatus={alertSavingStatus}
+            isSelectable={isSelectable}
+            isSelected={isSelected}
+            onSelected={onSelected}
         >
             {() => {
                 return (
