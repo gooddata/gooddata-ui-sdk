@@ -1,11 +1,9 @@
 // (C) 2020-2022 GoodData Corporation
 import React, { memo, useCallback, useEffect, useMemo } from "react";
-import { IntlShape, useIntl, WrappedComponentProps } from "react-intl";
+import { IntlShape, useIntl } from "react-intl";
 import compact from "lodash/compact";
-import isEqual from "lodash/isEqual";
 import isNil from "lodash/isNil";
 import isNumber from "lodash/isNumber";
-import flowRight from "lodash/flowRight";
 import round from "lodash/round";
 import { IAnalyticalBackend, IDataView, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import {
@@ -26,15 +24,15 @@ import {
     convertDrillableItemsToPredicates,
     createNumberJsFormatter,
     DataViewFacade,
-    GoodDataSdkError,
     IDataSeries,
     IDrillEventContext,
     ILoadingProps,
     isSomeHeaderPredicateMatched,
     NoDataSdkError,
     OnError,
-    withBackend,
-    withExecution,
+    useBackendStrict,
+    useExecutionDataView,
+    useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 
 import { filterContextItemsToDashboardFiltersByWidget } from "../../../../converters";
@@ -92,43 +90,50 @@ interface IKpiExecutorProps {
     LoadingComponent?: React.ComponentType<ILoadingProps>;
 }
 
-interface IKpiResultsProps {
-    backend: IAnalyticalBackend;
-    result?: DataViewFacade;
-    error?: GoodDataSdkError;
-    isLoading?: boolean;
-    alertExecutionResult?: DataViewFacade;
-    alertExecutionError?: GoodDataSdkError;
-    isAlertExecutionLoading?: boolean;
-}
-
-type IKpiProps = IKpiResultsProps & IKpiExecutorProps & WrappedComponentProps;
-
-const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
+const KpiExecutorCore: React.FC<IKpiExecutorProps> = (props) => {
     const {
-        backend,
-        workspace,
         dashboardRef,
         kpiWidget,
+
         primaryMeasure,
         secondaryMeasure,
-        separators,
         effectiveFilters,
-        result,
+
         alert,
-        alertExecutionResult,
-        error,
-        alertExecutionError,
-        isLoading,
-        isAlertExecutionLoading,
+
+        separators,
+        disableDrillUnderline,
+        isReadOnly,
+
         onDrill,
         onError,
         onFiltersChange,
-        isReadOnly,
-        disableDrillUnderline,
     } = props;
 
     const intl = useIntl();
+    const backend = useBackendStrict(props.backend);
+    const workspace = useWorkspaceStrict(props.workspace);
+
+    const { error, result, status } = useExecutionDataView({
+        backend,
+        workspace,
+        execution: backend
+            .workspace(workspace)
+            .execution()
+            .forItems(compact([primaryMeasure, secondaryMeasure]), effectiveFilters),
+    });
+    const isLoading = status === "loading" || status === "pending";
+
+    const {
+        error: alertExecutionError,
+        result: alertExecutionResult,
+        status: alertExecutionStatus,
+    } = useExecutionDataView({
+        backend,
+        workspace,
+        execution: backend.workspace(workspace).execution().forItems([primaryMeasure], effectiveFilters),
+    });
+    const isAlertExecutionLoading = alertExecutionStatus === "loading" || alertExecutionStatus === "pending";
 
     const currentUser = useDashboardSelector(selectCurrentUser);
     const canCreateScheduledMail = useDashboardSelector(selectCanCreateScheduledMail);
@@ -260,7 +265,7 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
                  */
                 (isAlertBroken ? new NoDataSdkError() : undefined)
             }
-            isLoading={false /* content is always loaded at this point */}
+            isLoading={isLoading}
             isAlertLoading={false /* alerts are always loaded at this point */}
             isAlertExecutionLoading={isAlertExecutionLoading}
             isAlertBroken={isAlertBroken}
@@ -385,7 +390,7 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
                         enableCompactSize={enableCompactSize}
                         error={error}
                         errorHelp={intl.formatMessage({ id: "kpi.error.view" })}
-                        isLoading={props.isLoading}
+                        isLoading={isLoading}
                     />
                 );
             }}
@@ -397,56 +402,7 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
  * Executes the given measures and displays them as KPI
  * @internal
  */
-export const KpiExecutor = flowRight(
-    memo,
-    withBackend,
-    withExecution({
-        shouldRefetch: (prevProps, nextProps) => {
-            return (
-                prevProps.alert !== nextProps.alert ||
-                !isEqual(prevProps.primaryMeasure, nextProps.primaryMeasure) ||
-                !isEqual(prevProps.effectiveFilters, nextProps.effectiveFilters)
-            );
-        },
-        execution: (props: IKpiExecutorProps) => {
-            const { backend, workspace, effectiveFilters, primaryMeasure } = props;
-
-            return backend.workspace(workspace).execution().forItems([primaryMeasure], effectiveFilters);
-        },
-        exportTitle: "",
-        loadOnMount: true,
-    }),
-    (WrappedComponent: React.ComponentType<Partial<IKpiProps>>) => {
-        const withAlertProps = ({ result, error, isLoading, ...props }: IKpiResultsProps) => (
-            <WrappedComponent
-                alertExecutionResult={result}
-                alertExecutionError={error}
-                isAlertExecutionLoading={isLoading}
-                {...props}
-            />
-        );
-        return withAlertProps;
-    },
-    withExecution({
-        shouldRefetch: (prevProps, nextProps) => {
-            return (
-                !isEqual(prevProps.primaryMeasure, nextProps.primaryMeasure) ||
-                !isEqual(prevProps.secondaryMeasure, nextProps.secondaryMeasure) ||
-                !isEqual(prevProps.effectiveFilters, nextProps.effectiveFilters)
-            );
-        },
-        execution: (props: IKpiProps) => {
-            const { backend, workspace, primaryMeasure, secondaryMeasure, effectiveFilters } = props;
-
-            return backend
-                .workspace(workspace)
-                .execution()
-                .forItems(compact([primaryMeasure, secondaryMeasure]), effectiveFilters);
-        },
-        exportTitle: "",
-        loadOnMount: true,
-    }),
-)(KpiExecutorCore);
+export const KpiExecutor = memo(KpiExecutorCore);
 
 function getSeriesResult(series: IDataSeries | undefined): number | null {
     if (!series) {
