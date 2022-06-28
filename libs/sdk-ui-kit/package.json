@@ -90,7 +90,7 @@
         "react-portal": "^4.1.5",
         "react-responsive": "^8.2.0",
         "react-select": "^3.1.0",
-        "react-textarea-autosize": "^8.3.2",
+        "react-textarea-autosize": "^8.3.4",
         "react-transition-group": "^4.4.2",
         "tinycolor2": "^1.4.2",
         "ts-invariant": "^0.7.3",
