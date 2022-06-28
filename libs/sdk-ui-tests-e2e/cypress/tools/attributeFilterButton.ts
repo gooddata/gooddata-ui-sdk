@@ -11,6 +11,12 @@ export class AttributeFilterButton {
         return this;
     }
 
+    openConfiguration(): this {
+        cy.wait(300);
+        cy.get(".s-attribute-filter-dropdown-configuration-button").click();
+        return this;
+    }
+
     titleHasText(expectedTitle: string): this {
         cy.get(`${this.attributeFilterUniqueSelector} .s-attribute-filter-button-title`).should(
             "have.text",
