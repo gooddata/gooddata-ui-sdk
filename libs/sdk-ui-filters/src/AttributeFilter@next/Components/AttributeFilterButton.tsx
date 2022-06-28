@@ -3,23 +3,13 @@ import React, { useEffect, useRef, useState } from "react";
 import { stringUtils } from "@gooddata/util";
 import cx from "classnames";
 import { ShortenedText } from "@gooddata/sdk-ui-kit";
+import { IAttributeFilterButtonProps } from "./types";
 
 export const ALIGN_POINT = [
     { align: "tc bc", offset: { x: 0, y: -2 } },
     { align: "cc tc", offset: { x: 0, y: 10 } },
     { align: "bl tr", offset: { x: -2, y: -8 } },
 ];
-
-//TODO move to some shared place
-export interface IAttributeFilterButtonProps {
-    isOpen?: boolean;
-    title: string;
-    subtitleText: string; //TODO need array of selected elements title
-    subtitleItemCount: number; //TODO rename it
-    isFiltering?: boolean;
-    isLoaded?: boolean;
-    onClick: () => void;
-}
 
 // TOTO: This component receive also status messages in title
 // this needs to be refactored and status of filter should be generated base on props

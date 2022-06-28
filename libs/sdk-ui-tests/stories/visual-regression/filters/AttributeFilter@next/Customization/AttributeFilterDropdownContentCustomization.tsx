@@ -1,12 +1,12 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
 import { AttributeFilterBase } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/AttributeFilterBase";
+import { AttributeFilterConfigurationButton } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Components/AttributeFilterConfigurationButton";
+import {
+    IAttributeFilterDropdownContentProps,
+    IAttributeFilterConfigurationButtonProps,
+} from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Components/types";
 import { AttributeFilterDefaultComponents } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Context/AttributeFilterDefaultComponents";
-import { AttributeFilterButton } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Components/AttributeFilterButton";
-
-import { IAttributeFilterButtonProps } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Components/types";
-
-import { AttributeFilterSimpleButtonWithSelection } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Components/AttributeFilterSimpleButton";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { storiesOf } from "../../../../_infra/storyRepository";
@@ -20,15 +20,33 @@ import { ReferenceWorkspaceId, StorybookBackend } from "../../../../_infra/backe
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 const backend = StorybookBackend();
 
-const CustomComponent = (props: IAttributeFilterButtonProps) => {
+const CustomComponent = (_props: IAttributeFilterDropdownContentProps) => {
+    return <div style={{ border: "1px solid black", minHeight: 300 }}>this is custom body content</div>;
+};
+
+const WithDefaultComponent = (props: IAttributeFilterDropdownContentProps) => {
     return (
-        <div style={{ border: "1px solid black" }}>
-            <AttributeFilterDefaultComponents.AttributeFilterButton {...props} title={"Filter"} />
-        </div>
+        <>
+            <div style={{ border: "1px solid black" }}>this is custom body content</div>
+            <AttributeFilterDefaultComponents.AttributeFilterDropdownContent {...props} />
+            <div style={{ border: "1px solid black" }}>this is custom body content too</div>
+        </>
     );
 };
 
-storiesOf(`${FilterStories}@next/AttributeFilterBase/Customization/FilterButton`)
+function WithConfigurationButton(configProps: IAttributeFilterConfigurationButtonProps) {
+    return function Component(props: IAttributeFilterDropdownContentProps) {
+        const { onConfiguration } = configProps;
+        return (
+            <>
+                <AttributeFilterDefaultComponents.AttributeFilterDropdownContent {...props} />
+                <AttributeFilterConfigurationButton onConfiguration={onConfiguration} />
+            </>
+        );
+    };
+}
+
+storiesOf(`${FilterStories}@next/AttributeFilterBase/Customization/FilterDropdownContent`)
     .add("Default component", () => {
         return (
             <div style={wrapperStyle} className="screenshot-target">
@@ -37,32 +55,7 @@ storiesOf(`${FilterStories}@next/AttributeFilterBase/Customization/FilterButton`
                     workspace={ReferenceWorkspaceId}
                     filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
                     onApply={action("on-apply")}
-                />
-            </div>
-        );
-    })
-    .add("Default component with selection in title", () => {
-        return (
-            <div style={wrapperStyle} className="screenshot-target">
-                <AttributeFilterBase
-                    backend={backend}
-                    workspace={ReferenceWorkspaceId}
-                    filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
-                    onApply={action("on-apply")}
-                    FilterButton={AttributeFilterSimpleButtonWithSelection}
-                />
-            </div>
-        );
-    })
-    .add("AttributeFilterButton", () => {
-        return (
-            <div style={wrapperStyle} className="screenshot-target">
-                <AttributeFilterBase
-                    backend={backend}
-                    workspace={ReferenceWorkspaceId}
-                    filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
-                    onApply={action("on-apply")}
-                    FilterButton={AttributeFilterButton}
+                    FilterDropdownContent={WithDefaultComponent}
                 />
             </div>
         );
@@ -75,7 +68,22 @@ storiesOf(`${FilterStories}@next/AttributeFilterBase/Customization/FilterButton`
                     workspace={ReferenceWorkspaceId}
                     filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
                     onApply={action("on-apply")}
-                    FilterButton={CustomComponent}
+                    FilterDropdownContent={CustomComponent}
+                />
+            </div>
+        );
+    })
+    .add("With configuration button", () => {
+        const FilterDropdownContent = WithConfigurationButton({ onConfiguration: action("onConfiguration") });
+
+        return (
+            <div style={wrapperStyle} className="screenshot-target">
+                <AttributeFilterBase
+                    backend={backend}
+                    workspace={ReferenceWorkspaceId}
+                    filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
+                    onApply={action("on-apply")}
+                    FilterDropdownContent={FilterDropdownContent}
                 />
             </div>
         );

@@ -22,7 +22,7 @@ import { UseCancelablePromiseStatus } from "@gooddata/sdk-ui";
 import isEmpty from "lodash/isEmpty";
 import { IntlShape } from "react-intl";
 import isNil from "lodash/isNil";
-import { IListItem } from "../types";
+import { IListItem } from "../Components/types";
 
 /**
  * Gets the selection from the initial {@link @gooddata/sdk-model#IAttributeFilter} object.

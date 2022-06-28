@@ -1,7 +1,8 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
-import { AttributeFilterBase, IAttributeFilterBaseProps } from "./AttributeFilterBase";
+import { AttributeFilterBase } from "./AttributeFilterBase";
 import { AttributeFilterSimpleButtonWithSelection } from "./Components/AttributeFilterSimpleButton";
+import { IAttributeFilterBaseProps } from "./types";
 
 /**
  * @internal

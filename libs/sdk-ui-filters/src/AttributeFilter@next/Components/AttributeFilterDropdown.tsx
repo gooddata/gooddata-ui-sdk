@@ -1,10 +1,8 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
 import { Dropdown } from "@gooddata/sdk-ui-kit";
-import { AttributeFilterDropdownBody } from "./AttributeFilterDropdownBody";
-import { IAttributeDropdownBodyPropsNoCallbacks } from "./AttributeFilterDropdownContent";
-import { IListItem } from "../types";
 import { useAttributeFilterComponentsContext } from "../Context/AttributeFilterComponentsContext";
+import { IAttributeFilterDropdownProps } from "./types";
 
 const ALIGN_POINTS = [
     { align: "bl tl" },
@@ -13,29 +11,6 @@ const ALIGN_POINTS = [
     { align: "tr tl", offset: { x: 0, y: -100 } },
     { align: "tr tl", offset: { x: 0, y: -50 } },
 ];
-
-export interface IAttributeFilterDropdownProps {
-    isFiltering: boolean;
-    isDropdownOpen: boolean;
-
-    isElementsLoading: boolean; //TODO investigate this prop and move it or remove it
-    isOriginalTotalCountLoading: boolean;
-
-    title: string;
-
-    subtitle: string;
-
-    selectedFilterOptions: IListItem[];
-
-    onDropdownOpenStateChanged: (isOpen: boolean) => void;
-    onApplyButtonClicked: () => void;
-
-    hasNoMatchingData: boolean; //TODO move to DropDown props
-    hasNoData: boolean; //TODO move to DropDown props
-    isApplyDisabled: boolean; //TODO move to DropDown props
-
-    dropDownProps: IAttributeDropdownBodyPropsNoCallbacks;
-}
 
 export const AttributeFilterDropdown: React.FC<IAttributeFilterDropdownProps> = (props) => {
     const {
@@ -53,7 +28,7 @@ export const AttributeFilterDropdown: React.FC<IAttributeFilterDropdownProps> = 
         dropDownProps,
     } = props;
 
-    const { AttributeFilterButton } = useAttributeFilterComponentsContext();
+    const { AttributeFilterButton, AttributeFilterDropdownBody } = useAttributeFilterComponentsContext();
 
     return (
         <Dropdown

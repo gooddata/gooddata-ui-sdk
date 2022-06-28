@@ -432,3 +432,22 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
         color: $gd-color-negative;
     }
 }
+
+.gd-attribute-filter-dropdown-configuration-button {
+    width: 100%;
+
+    .gd-attribute-filter-dropdown-configuration-button-wrapper {
+        display: flex;
+        width: 100%;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        font-size: 16px;
+        color: $gd-color-text-dimmed;
+    }
+
+    .gd-attribute-filter-dropdown-configuration-button-text {
+        padding-left: 6px;
+        font-size: 12px;
+        color: $gd-color-text;
+    }
+}

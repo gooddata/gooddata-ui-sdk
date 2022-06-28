@@ -6,21 +6,21 @@ import { storiesOf } from "../../../../_infra/storyRepository";
 import { wrapWithTheme } from "../../../themeWrapper";
 
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
-import { MessageAllItemsFiltered } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Components/MessageAllItemsFiltered";
+import { MessageNoMatchingData } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Components/MessageNoMatchingData";
 
-const MessageAllItemsFilteredExamples = (): JSX.Element => {
+const MessageNoMatchingDataExamples = (): JSX.Element => {
     return (
         <InternalIntlWrapper>
             <div style={{ width: 400 }}>
                 <div className="library-component screenshot-target">
                     <h4>MessageAllItemsFiltered</h4>
-                    <MessageAllItemsFiltered parentFilterTitles={["aaa", "bbb"]} />
+                    <MessageNoMatchingData parentFilterTitles={["aaa", "bbb"]} />
                 </div>
             </div>
         </InternalIntlWrapper>
     );
 };
 
-storiesOf(`${FilterStories}@next/Components/MessageAllItemsFiltered`)
-    .add("full-featured", () => <MessageAllItemsFilteredExamples />, {})
-    .add("themed", () => wrapWithTheme(<MessageAllItemsFilteredExamples />), {});
+storiesOf(`${FilterStories}@next/Components/MessageNoMatchingData`)
+    .add("full-featured", () => <MessageNoMatchingDataExamples />, {})
+    .add("themed", () => wrapWithTheme(<MessageNoMatchingDataExamples />), {});

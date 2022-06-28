@@ -2,11 +2,10 @@
 import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
 
-import { InvertableList, LoadingMask, useMediaQuery } from "@gooddata/sdk-ui-kit";
+import { InvertableList, useMediaQuery } from "@gooddata/sdk-ui-kit";
 
-import { AttributeFilterItem } from "./AttributeFilterItem";
-
-import { AttributeListItem, IListItem, isNonEmptyListItem } from "../types";
+import { AttributeListItem, isNonEmptyListItem, IAttributeFilterListProps } from "./types";
+import { useAttributeFilterComponentsContext } from "../Context/AttributeFilterComponentsContext";
 
 const ITEM_HEIGHT = 28;
 const MOBILE_LIST_ITEM_HEIGHT = 40;
@@ -14,23 +13,7 @@ export const MAX_SELECTION_SIZE = 500;
 const VISIBLE_ITEMS_COUNT = 10;
 const INTERNAL_LIST_WIDTH = 214;
 
-const ListLoading = (props: { height: number }) => <LoadingMask height={props.height} />;
-
-interface IAttributeDropdownListProps {
-    items: AttributeListItem[];
-    totalCount: number;
-    selectedItems: Array<IListItem>;
-    isInverted: boolean;
-    isLoading: boolean;
-
-    searchString: string;
-    onSearch: (searchString: string) => void;
-
-    onSelect: (selectedItems: IListItem[], isInverted: boolean) => void;
-    onRangeChange: (searchString: string, from: number, to: number) => void;
-}
-
-export const AttributeDropdownList: React.FC<IAttributeDropdownListProps> = ({
+export const AttributeFilterList: React.FC<IAttributeFilterListProps> = ({
     items,
     totalCount,
     isLoading,
@@ -43,6 +26,8 @@ export const AttributeDropdownList: React.FC<IAttributeDropdownListProps> = ({
 }) => {
     const intl = useIntl();
     const isMobile = useMediaQuery("mobileDevice");
+
+    const { AttributeFilterListLoading, AttributeFilterListItem } = useAttributeFilterComponentsContext();
 
     const getItemKey = useCallback((i: AttributeListItem) => {
         return isNonEmptyListItem(i) ? (i.uri ? i.uri : i.title) : "empty";
@@ -75,10 +60,10 @@ export const AttributeDropdownList: React.FC<IAttributeDropdownListProps> = ({
             width={INTERNAL_LIST_WIDTH}
             smallSearch={true}
             renderItem={(props) => {
-                return <AttributeFilterItem {...props} />;
+                return <AttributeFilterListItem {...props} />;
             }}
             renderLoading={(props: { height: number }) => {
-                return <ListLoading height={props.height} />;
+                return <AttributeFilterListLoading height={props.height} />;
             }}
             onSearch={onSearch}
             onSelect={onSelect}
