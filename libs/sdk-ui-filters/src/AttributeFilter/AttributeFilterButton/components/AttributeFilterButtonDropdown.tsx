@@ -114,7 +114,6 @@ const AttributeFilterButtonDropdown: React.FC<IAttributeFilterButtonDropdownProp
                                 isElementsLoading: isElementsLoading,
                                 isLoaded: !isOriginalTotalCountLoading,
                                 onConfigurationChange: noop,
-                                attributeFilterRef: null,
                                 isMobile,
                             })
                         ) : (

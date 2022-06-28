@@ -158,6 +158,8 @@ export interface IAttributeDropdownBodyProps {
     // (undocumented)
     applyDisabled?: boolean;
     // (undocumented)
+    attributeFilterRef?: ObjRef;
+    // (undocumented)
     error?: any;
     // (undocumented)
     isFullWidth?: boolean;

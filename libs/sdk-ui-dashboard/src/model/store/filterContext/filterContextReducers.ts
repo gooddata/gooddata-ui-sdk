@@ -3,6 +3,7 @@
 import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
 import invariant from "ts-invariant";
+import cloneDeep from "lodash/cloneDeep";
 import { FilterContextState } from "./filterContextState";
 import {
     areObjRefsEqual,
@@ -22,6 +23,7 @@ import {
     isDashboardDateFilter,
     IAttributeDisplayFormMetadataObject,
 } from "@gooddata/sdk-model";
+import { ConnectingAttributeMatrix, IParentWithConnectingAttributes } from "../../types/attributeFilterTypes";
 
 type FilterContextReducer<A extends Action> = CaseReducer<FilterContextState, A>;
 
@@ -36,6 +38,8 @@ type SetFilterContextPayload = {
     originalFilterContextDefinition?: IFilterContextDefinition;
     attributeFilterDisplayForms: IAttributeDisplayFormMetadataObject[];
     filterContextIdentity?: IDashboardObjectIdentity;
+    filterToIndexMap?: Record<string, number>;
+    connectingAttributesMatrix?: ConnectingAttributeMatrix;
 };
 
 const setFilterContext: FilterContextReducer<PayloadAction<SetFilterContextPayload>> = (state, action) => {
@@ -44,6 +48,8 @@ const setFilterContext: FilterContextReducer<PayloadAction<SetFilterContextPaylo
         originalFilterContextDefinition,
         filterContextIdentity,
         attributeFilterDisplayForms,
+        filterToIndexMap,
+        connectingAttributesMatrix,
     } = action.payload;
 
     state.filterContextDefinition = {
@@ -66,6 +72,8 @@ const setFilterContext: FilterContextReducer<PayloadAction<SetFilterContextPaylo
 
     state.filterContextIdentity = filterContextIdentity;
     state.attributeFilterDisplayForms = attributeFilterDisplayForms;
+    state.filtersToIndexMap = filterToIndexMap;
+    state.connectingAttributeMatrix = connectingAttributesMatrix;
 };
 
 //
@@ -352,6 +360,147 @@ const clearAttributeFiltersSelection: FilterContextReducer<
     });
 };
 
+export interface ISaveFilterToIndexMapPayload {
+    readonly filterToIndexMap: Record<string, number>;
+}
+
+/**
+ * Saves the filterToIndexMap to the application state.
+ */
+const saveFilterToIndexMap: FilterContextReducer<PayloadAction<ISaveFilterToIndexMapPayload>> = (
+    state,
+    action,
+) => {
+    const { filterToIndexMap } = action.payload;
+
+    state.filtersToIndexMap = filterToIndexMap;
+};
+
+export interface ISaveConnectingAttributesMatrixPayload {
+    connectingAttributesMatrix: ConnectingAttributeMatrix;
+}
+
+const saveConnectingAttributesMatrix: FilterContextReducer<
+    PayloadAction<ISaveConnectingAttributesMatrixPayload>
+> = (state, action) => {
+    const { connectingAttributesMatrix } = action.payload;
+
+    state.connectingAttributeMatrix = connectingAttributesMatrix;
+};
+
+export interface IChangeAttributeDisplayFormPayload {
+    readonly filterLocalId: string;
+    readonly displayForm: ObjRef;
+}
+
+/**
+ * Changes the display form for the filter given by its local identifier.
+ */
+const changeAttributeDisplayForm: FilterContextReducer<PayloadAction<IChangeAttributeDisplayFormPayload>> = (
+    state,
+    action,
+) => {
+    invariant(state.filterContextDefinition, "Attempt to edit uninitialized filter context");
+
+    const { filterLocalId, displayForm } = action.payload;
+
+    const currentFilterIndex = state.filterContextDefinition.filters.findIndex(
+        (item) => isDashboardAttributeFilter(item) && item.attributeFilter.localIdentifier === filterLocalId,
+    );
+
+    invariant(currentFilterIndex >= 0, "Attempt to set parent of a non-existing filter");
+
+    (
+        state.filterContextDefinition.filters[currentFilterIndex] as IDashboardAttributeFilter
+    ).attributeFilter.displayForm = { ...displayForm };
+};
+
+export interface IUpdateConnectingAttributesOnFilterAddedPayload {
+    addedFilterLocalId: string;
+    connectingAttributes: IParentWithConnectingAttributes[];
+}
+
+const updateConnectingAttributesOnFilterAdded: FilterContextReducer<
+    PayloadAction<IUpdateConnectingAttributesOnFilterAddedPayload>
+> = (state, action) => {
+    invariant(state.filtersToIndexMap, "Attempt to edit uninitialized filter context");
+
+    const { addedFilterLocalId, connectingAttributes } = action.payload;
+    const index = findIndexForConnectingAttributesMapping(state.filtersToIndexMap);
+
+    const connectingAttributeMatrix = cloneDeep(state.connectingAttributeMatrix);
+
+    invariant(
+        connectingAttributeMatrix,
+        "Attempt to edit uninitialized or incorrectly initialized filter context",
+    );
+
+    connectingAttributeMatrix[index] = [];
+
+    for (const connectingAttribute of connectingAttributes) {
+        const neighborFilterIndex = state.filtersToIndexMap?.[connectingAttribute.filterLocalId];
+
+        invariant(
+            neighborFilterIndex !== undefined,
+            "Attempt to edit uninitialized or incorrectly initialized filter context",
+        );
+
+        connectingAttributeMatrix[neighborFilterIndex][index] = connectingAttribute.connectingAttributes;
+        connectingAttributeMatrix[index][neighborFilterIndex] = connectingAttribute.connectingAttributes;
+    }
+
+    state.filtersToIndexMap[addedFilterLocalId] = index;
+    state.connectingAttributeMatrix = connectingAttributeMatrix;
+};
+
+const updateConnectingAttributesOnFilterDeleted: FilterContextReducer<PayloadAction<string>> = (
+    state,
+    action,
+) => {
+    const deletedFilterLocalId = action.payload;
+    const deletedFilterIndex = state.filtersToIndexMap?.[deletedFilterLocalId];
+    const connectingAttributeMatrix = cloneDeep(state.connectingAttributeMatrix);
+
+    invariant(
+        deletedFilterIndex !== undefined && connectingAttributeMatrix && state.filtersToIndexMap,
+        "Attempt to edit uninitialized or incorrectly initialized filter context",
+    );
+
+    for (let index = 0; index < connectingAttributeMatrix.length; index++) {
+        connectingAttributeMatrix[index][deletedFilterIndex] = [];
+        connectingAttributeMatrix[deletedFilterIndex][index] = [];
+    }
+
+    connectingAttributeMatrix[deletedFilterIndex] = [];
+
+    state.connectingAttributeMatrix = connectingAttributeMatrix;
+    delete state.filtersToIndexMap[deletedFilterLocalId];
+};
+
+/**
+ * Find the first empty index for the connecting attributes matrix during new attribute filter
+ * addition.
+ *
+ * @param filtersToIndexMap - the original connecting attributes matrix index mapping.
+ *
+ * @returns the first empty index in the connecting attributes matrix.
+ */
+function findIndexForConnectingAttributesMapping(filtersToIndexMap: Record<string, number>): number {
+    if (!filtersToIndexMap) {
+        return 0;
+    }
+
+    const indexes = Object.values(filtersToIndexMap);
+
+    for (let index = 0; index < indexes.length; index++) {
+        if (indexes.indexOf(index) === -1) {
+            return index;
+        }
+    }
+
+    return indexes.length;
+}
+
 //
 //
 //
@@ -368,4 +517,9 @@ export const filterContextReducers = {
     setAttributeFilterParents,
     clearAttributeFiltersSelection,
     upsertDateFilter,
+    saveFilterToIndexMap,
+    saveConnectingAttributesMatrix,
+    changeAttributeDisplayForm,
+    updateConnectingAttributesOnFilterAdded,
+    updateConnectingAttributesOnFilterDeleted,
 };

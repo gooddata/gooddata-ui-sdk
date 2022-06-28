@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 /*
  * The public API of the Dashboard model is exported from here.
@@ -68,6 +68,14 @@ export {
 } from "./types/alertTypes";
 
 export { ICsvExportConfig, IExportConfig, IXlsxExportConfig } from "./types/exportTypes";
+
+export {
+    IConnectingAttribute,
+    ConnectingAttributeMatrix,
+    IDashboardAttributeFilterDisplayForms,
+    IDashboardAttributeFilterParentItem,
+    IParentWithConnectingAttributes,
+} from "./types/attributeFilterTypes";
 
 export * from "./react";
 export * from "./commands";

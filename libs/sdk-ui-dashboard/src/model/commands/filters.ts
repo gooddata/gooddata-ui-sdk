@@ -529,10 +529,10 @@ export function resetAttributeFilterSelection(
 //
 
 /**
- * Payload of the {@link SetAttributeFilterParent} command.
+ * Payload of the {@link SetAttributeFilterParents} command.
  * @alpha
  */
-export interface SetAttributeFilterParentPayload {
+export interface SetAttributeFilterParentsPayload {
     readonly filterLocalId: string;
     readonly parentFilters: ReadonlyArray<IDashboardAttributeFilterParent>;
 }
@@ -540,14 +540,14 @@ export interface SetAttributeFilterParentPayload {
 /**
  * @alpha
  */
-export interface SetAttributeFilterParent extends IDashboardCommand {
-    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_PARENT";
-    readonly payload: SetAttributeFilterParentPayload;
+export interface SetAttributeFilterParents extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_PARENTS";
+    readonly payload: SetAttributeFilterParentsPayload;
 }
 
 /**
- * Creates the SetAttributeFilterParent command. Dispatching this command will result in setting a parent-child
- * relationship between two dashboard attribute filters.
+ * Creates the SetAttributeFilterParents command. Dispatching this command will result in setting a parent-child
+ * relationship between two or more dashboard attribute filters.
  *
  * When an attribute filter has a parent set up, the attribute elements that will be available in the child
  * filter will be influenced by the selection in the parent. The child filter will show only those elements
@@ -559,24 +559,24 @@ export interface SetAttributeFilterParent extends IDashboardCommand {
  * contents.
  *
  * @param filterLocalId - local id of filter that will be a child in the relationship
- * @param parentFilter - definition of the relationship to parent, this contains local id of the parent filter and
+ * @param parentFilters - definition of the relationship to parent, this contains local id of the parent filter and
  *  one or more 'over' attributes. The 'over' attributes will be included when querying
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha
  */
-export function setAttributeFilterParent(
+export function setAttributeFilterParents(
     filterLocalId: string,
-    parentFilter: IDashboardAttributeFilterParent,
+    parentFilters: IDashboardAttributeFilterParent[],
     correlationId?: string,
-): SetAttributeFilterParent {
+): SetAttributeFilterParents {
     return {
-        type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_PARENT",
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_PARENTS",
         correlationId,
         payload: {
             filterLocalId,
-            parentFilters: [parentFilter],
+            parentFilters: parentFilters,
         },
     };
 }
@@ -640,6 +640,48 @@ export function changeFilterContextSelection(
         payload: {
             filters,
             resetOthers,
+        },
+    };
+}
+
+/**
+ * @internal
+ */
+export interface SetAttributeFilterDisplayFormPayload {
+    filterLocalId: string;
+    displayForm: ObjRef;
+}
+
+/**
+ * @internal
+ */
+export interface SetAttributeFilterDisplayForm extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_DISPLAY_FORM";
+    readonly payload: SetAttributeFilterDisplayFormPayload;
+}
+
+/**
+ * Creates the {@link SetAttributeFilterDisplayForm} command.
+ *
+ * @remarks
+ * Dispatching the commands will result into setting provided display form as a selected
+ * display form for the attribute filter.
+ *
+ *
+ * @internal
+ * @param filterLocalId - local identifier of the filter the display form is changed for
+ * @param displayForm - newly selected display form
+ * @returns change filter display form command
+ */
+export function setAttributeFilterDisplayForm(
+    filterLocalId: string,
+    displayForm: ObjRef,
+): SetAttributeFilterDisplayForm {
+    return {
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_DISPLAY_FORM",
+        payload: {
+            filterLocalId,
+            displayForm,
         },
     };
 }
