@@ -25,11 +25,6 @@ import {
 import { createDateValueFormatter } from "../dateFormatting/dateValueFormatter";
 import { toSdkGranularity } from "../dateGranularityConversions";
 
-// Tiger can return nulls for empty values but SPI needs strings always, so convert nulls to empty strings
-function coalesceNulls(value: string | null): string {
-    return value ?? "";
-}
-
 const supportedSuffixes: string[] = Object.keys(JsonApiAttributeOutAttributesGranularityEnum)
     .filter((item) => isNaN(Number(item)))
     .map(
@@ -102,12 +97,10 @@ function attributeMeasureItem(
 ): IResultAttributeHeader {
     return {
         attributeHeaderItem: {
-            uri: coalesceNulls(header.attributeHeader.primaryLabelValue),
-            name: coalesceNulls(
-                granularity
-                    ? dateValueFormatter(header.attributeHeader.labelValue, granularity)
-                    : header.attributeHeader.labelValue,
-            ),
+            uri: header.attributeHeader.primaryLabelValue,
+            name: granularity
+                ? dateValueFormatter(header.attributeHeader.labelValue, granularity)
+                : header.attributeHeader.labelValue,
         },
     };
 }

@@ -506,8 +506,8 @@ export interface AttributeItem {
 
 // @public
 export interface AttributeResultHeader {
-    labelValue: string | null;
-    primaryLabelValue: string | null;
+    labelValue: string;
+    primaryLabelValue: string;
 }
 
 // @public

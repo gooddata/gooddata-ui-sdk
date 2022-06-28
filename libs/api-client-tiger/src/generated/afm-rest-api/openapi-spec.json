@@ -1723,13 +1723,11 @@
                     "labelValue": {
                         "type": "string",
                         "description": "A value of the current attribute label.",
-                        "nullable": true,
                         "example": "East Coast"
                     },
                     "primaryLabelValue": {
                         "type": "string",
                         "description": "A value of the primary attribute label.",
-                        "nullable": true,
                         "example": "1225"
                     }
                 },
