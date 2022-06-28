@@ -21,7 +21,7 @@ export const DashboardInner: React.FC<IDashboardProps> = () => {
 
     const unselectWidget = useCallback(() => {
         if (selectedWidget) {
-            dispatch(uiActions.selectWidget(undefined));
+            dispatch(uiActions.clearWidgetSelection());
         }
     }, [dispatch, selectedWidget]);
 

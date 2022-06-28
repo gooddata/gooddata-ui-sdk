@@ -89,8 +89,12 @@ const setActiveHeaderIndex: UiReducer<PayloadAction<number | null>> = (state, ac
     state.activeHeaderIndex = action.payload;
 };
 
-const selectWidget: UiReducer<PayloadAction<ObjRef | undefined>> = (state, action) => {
+const selectWidget: UiReducer<PayloadAction<ObjRef>> = (state, action) => {
     state.selectedWidgetRef = action.payload;
+};
+
+const clearWidgetSelection: UiReducer = (state) => {
+    state.selectedWidgetRef = undefined;
 };
 
 export const uiReducers = {
@@ -115,4 +119,5 @@ export const uiReducers = {
     setRenderMode,
     setActiveHeaderIndex,
     selectWidget,
+    clearWidgetSelection,
 };
