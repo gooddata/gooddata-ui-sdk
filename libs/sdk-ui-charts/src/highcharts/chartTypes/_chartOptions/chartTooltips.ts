@@ -20,10 +20,10 @@ const renderTooltipHTML = (textData: string[][], maxTooltipContentWidth: number)
     const titleStyle = `style="max-width: ${titleMaxWidth}px;"`;
     const valueStyle = `style="max-width: ${valueMaxWidth}px;"`;
     const itemClass = cx("gd-viz-tooltip-item", {
-        "multiline-supported": multiLineTruncationSupported,
+        "gd-multiline-supported": multiLineTruncationSupported,
     });
     const valueClass = cx("gd-viz-tooltip-value", {
-        "clamp-two-line": multiLineTruncationSupported,
+        "gd-clamp-two-line": multiLineTruncationSupported,
     });
 
     return textData
