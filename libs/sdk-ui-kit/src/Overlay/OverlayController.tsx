@@ -56,5 +56,6 @@ export class OverlayController {
      */
     public removeOverlay(uuid: string): void {
         this.overlays.delete(uuid);
+        this.currentCount--;
     }
 }
