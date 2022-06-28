@@ -58,7 +58,10 @@ export class DashboardTester extends HeadlessDashboard {
                 ReferenceRecordings.Recordings,
                 {
                     ...backendConfig,
-                    getCommonAttributesResponses: commonAttributeResponses,
+                    getCommonAttributesResponses: {
+                        ...commonAttributeResponses,
+                        ...(backendConfig?.getCommonAttributesResponses || {}),
+                    },
                 },
                 {
                     ...defaultRecordedBackendCapabilities,
@@ -84,7 +87,10 @@ export class DashboardTester extends HeadlessDashboard {
         const ctx: DashboardContext = {
             backend: recordedBackend(ReferenceRecordings.Recordings, {
                 ...backendConfig,
-                getCommonAttributesResponses: commonAttributeResponses,
+                getCommonAttributesResponses: {
+                    ...commonAttributeResponses,
+                    ...(backendConfig?.getCommonAttributesResponses || {}),
+                },
             }),
             workspace: "reference-workspace",
         };
