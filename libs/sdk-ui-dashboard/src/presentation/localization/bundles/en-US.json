@@ -1272,5 +1272,45 @@
         "value": "Drag the attribute filter here.",
         "comment": "",
         "limit": 0
+    },
+    "configurationPanel.increasingNumberIs": {
+        "value": "Increasing number is",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.comparisonTypeItems.previousPeriod": {
+        "value": "Previous period",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.comparisonTypeItems.samePeriodInPreviousYear": {
+        "value": "Same period in previous year",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.comparisonTypeItems.noComparison": {
+        "value": "No comparison",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.comparisonDirectionItems.green": {
+        "value": "Green",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.comparisonDirectionItems.red": {
+        "value": "Red",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.selectComparisonPlaceholder": {
+        "value": "Select comparison…",
+        "comment": "Use '…' as one character, not 3 dots ('...').",
+        "limit": 0
+    },
+    "configurationPanel.selectComparisonDirectionPlaceholder": {
+        "value": "Select positive/negative",
+        "comment": "",
+        "limit": 0
     }
 }

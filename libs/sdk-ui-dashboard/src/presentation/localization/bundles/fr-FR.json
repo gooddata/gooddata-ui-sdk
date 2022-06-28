@@ -230,5 +230,13 @@
     "visualizationsList.savedVisualizations": "Perceptions enregistrées",
     "filterBar.filter.drop": "déposer pour ajouter",
     "filterBar.filter.addFilterPlaceholder": "Faites glisser {icon} ici",
-    "filterBar.filter.dropzone.tooltip": "Faites glisser le filtre d'attribut ici."
+    "filterBar.filter.dropzone.tooltip": "Faites glisser le filtre d'attribut ici.",
+    "configurationPanel.increasingNumberIs": "Le nombre croissant est",
+    "configurationPanel.comparisonTypeItems.previousPeriod": "Période précédente",
+    "configurationPanel.comparisonTypeItems.samePeriodInPreviousYear": "Même période de l'année précédente",
+    "configurationPanel.comparisonTypeItems.noComparison": "Aucune comparaison",
+    "configurationPanel.comparisonDirectionItems.green": "Vert",
+    "configurationPanel.comparisonDirectionItems.red": "Rouge",
+    "configurationPanel.selectComparisonPlaceholder": "Sélectionner la comparaison…",
+    "configurationPanel.selectComparisonDirectionPlaceholder": "Sélectionner positif/négatif"
 }

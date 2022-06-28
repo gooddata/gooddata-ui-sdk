@@ -230,5 +230,13 @@
     "visualizationsList.savedVisualizations": "Сохраненные анализы",
     "filterBar.filter.drop": "сбросьте, чтобы добавить",
     "filterBar.filter.addFilterPlaceholder": "Перетащите {icon} сюда",
-    "filterBar.filter.dropzone.tooltip": "Перетащите фильтр атрибутов сюда."
+    "filterBar.filter.dropzone.tooltip": "Перетащите фильтр атрибутов сюда.",
+    "configurationPanel.increasingNumberIs": "Увеличение числа",
+    "configurationPanel.comparisonTypeItems.previousPeriod": "Предыдущий период",
+    "configurationPanel.comparisonTypeItems.samePeriodInPreviousYear": "Тот же период предыдущего года",
+    "configurationPanel.comparisonTypeItems.noComparison": "Без сравнения",
+    "configurationPanel.comparisonDirectionItems.green": "Зеленый",
+    "configurationPanel.comparisonDirectionItems.red": "Красный",
+    "configurationPanel.selectComparisonPlaceholder": "Выбрать сравнение…",
+    "configurationPanel.selectComparisonDirectionPlaceholder": "Выберите положительный/отрицательный"
 }

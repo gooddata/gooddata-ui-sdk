@@ -230,5 +230,13 @@
     "visualizationsList.savedVisualizations": "保存済みインサイト",
     "filterBar.filter.drop": "ドロップして追加",
     "filterBar.filter.addFilterPlaceholder": "{icon} をここにドラッグ",
-    "filterBar.filter.dropzone.tooltip": "アトリビュートフィルターをここにドラッグします。"
+    "filterBar.filter.dropzone.tooltip": "アトリビュートフィルターをここにドラッグします。",
+    "configurationPanel.increasingNumberIs": "増加している数は",
+    "configurationPanel.comparisonTypeItems.previousPeriod": "前期",
+    "configurationPanel.comparisonTypeItems.samePeriodInPreviousYear": "前年の同期間",
+    "configurationPanel.comparisonTypeItems.noComparison": "比較なし",
+    "configurationPanel.comparisonDirectionItems.green": "緑",
+    "configurationPanel.comparisonDirectionItems.red": "赤",
+    "configurationPanel.selectComparisonPlaceholder": "比較を選択…",
+    "configurationPanel.selectComparisonDirectionPlaceholder": "正/負を選択"
 }

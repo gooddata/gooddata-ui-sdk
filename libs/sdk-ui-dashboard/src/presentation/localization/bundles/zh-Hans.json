@@ -230,5 +230,13 @@
     "visualizationsList.savedVisualizations": "已保存的见解",
     "filterBar.filter.drop": "放置即可添加",
     "filterBar.filter.addFilterPlaceholder": "拖动 {icon} 至此处",
-    "filterBar.filter.dropzone.tooltip": "将属性筛选器拖至此处。"
+    "filterBar.filter.dropzone.tooltip": "将属性筛选器拖至此处。",
+    "configurationPanel.increasingNumberIs": "增加的数字是",
+    "configurationPanel.comparisonTypeItems.previousPeriod": "上一时间段",
+    "configurationPanel.comparisonTypeItems.samePeriodInPreviousYear": "上年同期",
+    "configurationPanel.comparisonTypeItems.noComparison": "无比较",
+    "configurationPanel.comparisonDirectionItems.green": "绿色",
+    "configurationPanel.comparisonDirectionItems.red": "红色",
+    "configurationPanel.selectComparisonPlaceholder": "选择比较…",
+    "configurationPanel.selectComparisonDirectionPlaceholder": "选择正/负"
 }
