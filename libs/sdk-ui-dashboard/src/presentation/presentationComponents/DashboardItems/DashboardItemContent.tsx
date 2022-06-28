@@ -1,5 +1,5 @@
 // (C) 2020-2022 GoodData Corporation
-import React, { forwardRef } from "react";
+import React, { forwardRef, useCallback } from "react";
 import cx from "classnames";
 
 interface IDashboardItemContentProps {
@@ -12,6 +12,15 @@ interface IDashboardItemContentProps {
 
 export const DashboardItemContent = forwardRef<HTMLDivElement, IDashboardItemContentProps>(
     function DashboardItemContent({ children, className, isSelectable, isSelected, onSelected }, ref) {
+        const handleClick = useCallback(
+            (e: React.MouseEvent) => {
+                if (onSelected) {
+                    e.stopPropagation();
+                    onSelected();
+                }
+            },
+            [onSelected],
+        );
         return (
             <div
                 className={cx("dash-item-content", className, {
@@ -19,7 +28,7 @@ export const DashboardItemContent = forwardRef<HTMLDivElement, IDashboardItemCon
                     "is-selected": isSelected,
                 })}
                 ref={ref}
-                onClick={onSelected}
+                onClick={handleClick}
             >
                 {children}
             </div>
