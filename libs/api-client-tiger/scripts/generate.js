@@ -23,6 +23,8 @@ program
 const specs = [
     { path: "/api/v1/schemas/metadata", name: "metadata-json-api" },
     { path: "/api/v1/schemas/afm", name: "afm-rest-api" },
+    { path: "/api/v1/schemas/scan", name: "scan-json-api" },
+    { path: "/api/v1/schemas/auth", name: "auth-json-api" },
 ];
 
 const downloadSpec = async (specMeta, outputDir, outputFile) => {

@@ -1,0 +1,587 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "OpenAPI definition",
+        "version": "v0"
+    },
+    "servers": [
+        {
+            "url": "/",
+            "description": "GoodData.CN endpoint"
+        }
+    ],
+    "tags": [
+        {
+            "name": "actions",
+            "description": "| execution of some form of computation (RPC over JSON)"
+        }
+    ],
+    "paths": {
+        "/api/v1/actions/dataSources/{dataSourceId}/test": {
+            "post": {
+                "tags": ["actions"],
+                "summary": "Test data source connection by data source id",
+                "description": "Test if it is possible to connect to a database using an existing data source definition.",
+                "operationId": "testDataSource",
+                "parameters": [
+                    {
+                        "name": "dataSourceId",
+                        "in": "path",
+                        "description": "Data source id",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        },
+                        "example": "myPostgres"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TestRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "The result of the test of a data source connection.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TestResponse"
+                                },
+                                "examples": {
+                                    "An example of a successful connection": {
+                                        "description": "An example of a successful connection",
+                                        "value": {
+                                            "successful": true
+                                        }
+                                    },
+                                    "An example of an unsuccessful connection": {
+                                        "description": "An example of an unsuccessful connection",
+                                        "value": {
+                                            "error": "Connection exception: Failed to initialize pool: FATAL: password authentication failed for user \"user\"",
+                                            "successful": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "A data source with given id does not exists.",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "An example of a non-existent data source": {
+                                        "description": "An example of a non-existent data source",
+                                        "value": {
+                                            "detail": "The requested endpoint does not exist or you do not have permission to access it.",
+                                            "status": 404,
+                                            "title": "Not Found",
+                                            "traceId": "<traceId>"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["USE"],
+                    "description": "Permissions required to test a data source."
+                }
+            }
+        },
+        "/api/v1/actions/dataSources/{dataSourceId}/scan": {
+            "post": {
+                "tags": ["actions"],
+                "summary": "Scan a database to get a physical data model (PDM)",
+                "description": "It scans a database and transforms its metadata to a declarative definition of the physical data model (PDM). The result of the request contains the mentioned physical data model (PDM) of a database within warning, for example, about unsupported columns.",
+                "operationId": "scanDataSource",
+                "parameters": [
+                    {
+                        "name": "dataSourceId",
+                        "in": "path",
+                        "description": "Data source id",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        },
+                        "example": "myPostgres"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ScanRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "The result of the scan.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScanResultPdm"
+                                },
+                                "examples": {
+                                    "An example of a successful scan": {
+                                        "description": "An example of a successful scan",
+                                        "value": {
+                                            "pdm": {
+                                                "tables": [
+                                                    {
+                                                        "columns": [
+                                                            {
+                                                                "dataType": "NUMERIC",
+                                                                "isPrimaryKey": false,
+                                                                "name": "budget"
+                                                            },
+                                                            {
+                                                                "dataType": "STRING",
+                                                                "isPrimaryKey": false,
+                                                                "name": "category"
+                                                            },
+                                                            {
+                                                                "dataType": "NUMERIC",
+                                                                "isPrimaryKey": false,
+                                                                "name": "spend"
+                                                            }
+                                                        ],
+                                                        "id": "campaign_channels",
+                                                        "path": ["demo", "campaign_channels"],
+                                                        "type": "TABLE"
+                                                    }
+                                                ]
+                                            },
+                                            "warnings": []
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "A data source with given id does not exists.",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "An example of a non-existent data source": {
+                                        "description": "An example of a non-existent data source",
+                                        "value": {
+                                            "detail": "The requested endpoint does not exist or you do not have permission to access it.",
+                                            "status": 404,
+                                            "title": "Not Found",
+                                            "traceId": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["MANAGE"],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        },
+        "/api/v1/actions/dataSource/test": {
+            "post": {
+                "tags": ["actions"],
+                "summary": "Test connection by data source definition",
+                "description": "Test if it is possible to connect to a database using a connection provided by the data source definition in the request body.",
+                "operationId": "testDataSourceDefinition",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TestDefinitionRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "The result of the test of a data source connection.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TestResponse"
+                                },
+                                "examples": {
+                                    "An example of a successful connection": {
+                                        "description": "An example of a successful connection",
+                                        "value": {
+                                            "successful": true
+                                        }
+                                    },
+                                    "An example of an unsuccessful connection": {
+                                        "description": "An example of an unsuccessful connection",
+                                        "value": {
+                                            "error": "Connection exception: Failed to initialize pool: FATAL: password authentication failed for user \"user\"",
+                                            "successful": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["MANAGE"],
+                    "description": "Minimal organization permission required to use this endpoint."
+                }
+            }
+        },
+        "/api/v1/actions/dataSources/{dataSourceId}/scanSchemata": {
+            "get": {
+                "tags": ["actions"],
+                "summary": "Get a list of schema names of a database",
+                "description": "It scans a database and reads metadata. The result of the request contains a list of schema names of a database.",
+                "operationId": "getDataSourceSchemata",
+                "parameters": [
+                    {
+                        "name": "dataSourceId",
+                        "in": "path",
+                        "description": "Data source id",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        },
+                        "example": "myPostgres"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The result of the scan schemata",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DataSourceSchemata"
+                                },
+                                "examples": {
+                                    "An example of a successful scan": {
+                                        "description": "An example of a successful scan",
+                                        "value": {
+                                            "schemaNames": ["demo", "public"]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "A data source with given id does not exists.",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "An example of a non-existent data source": {
+                                        "description": "An example of a non-existent data source",
+                                        "value": {
+                                            "detail": "The requested endpoint does not exist or you do not have permission to access it.",
+                                            "status": 404,
+                                            "title": "Not Found",
+                                            "traceId": "<traceId>"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["MANAGE"],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "TestResponse": {
+                "required": ["successful"],
+                "type": "object",
+                "properties": {
+                    "successful": {
+                        "type": "boolean",
+                        "description": "A flag indicating whether test passed or not.",
+                        "example": true
+                    },
+                    "error": {
+                        "type": "string",
+                        "description": "Field containing more details in case of a failure. Details are available to a privileged user only.",
+                        "example": "Connection exception: Failed to initialize pool: FATAL: password authentication failed for user \"user\""
+                    }
+                },
+                "description": "Response from data source testing."
+            },
+            "TestRequest": {
+                "type": "object",
+                "description": "A request containing all information for testing existing data source."
+            },
+            "ColumnWarning": {
+                "required": ["message", "name"],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "array",
+                        "description": "Column name.",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "message": {
+                        "type": "array",
+                        "description": "Warning message related to the column.",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "description": "Warning related to single column."
+            },
+            "DeclarativeColumn": {
+                "required": ["dataType", "name"],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Column name",
+                        "example": "customer_id"
+                    },
+                    "dataType": {
+                        "type": "string",
+                        "description": "Column type",
+                        "example": "INT",
+                        "enum": ["INT", "STRING", "DATE", "NUMERIC", "TIMESTAMP", "BOOLEAN"]
+                    },
+                    "isPrimaryKey": {
+                        "type": "boolean",
+                        "description": "Is column part of primary key?"
+                    },
+                    "referencedTableId": {
+                        "type": "string",
+                        "description": "Referenced table (Foreign key)",
+                        "example": "customers"
+                    },
+                    "referencedTableColumn": {
+                        "type": "string",
+                        "description": "Referenced table (Foreign key)",
+                        "example": "customer_id"
+                    }
+                },
+                "description": "A table column."
+            },
+            "DeclarativeTable": {
+                "required": ["columns", "id", "path", "type"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "Table id.",
+                        "example": "customers"
+                    },
+                    "path": {
+                        "type": "array",
+                        "description": "Path to table.",
+                        "example": ["table_schema", "table_name"],
+                        "items": {
+                            "type": "string",
+                            "example": "table_name"
+                        }
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Table type: TABLE or VIEW.",
+                        "example": "VIEW"
+                    },
+                    "namePrefix": {
+                        "type": "string",
+                        "description": "Table or view name prefix used in scan. Will be stripped when generating LDM.",
+                        "example": "out_gooddata"
+                    },
+                    "columns": {
+                        "type": "array",
+                        "description": "An array of physical columns",
+                        "items": {
+                            "$ref": "#/components/schemas/DeclarativeColumn"
+                        }
+                    }
+                },
+                "description": "A database table."
+            },
+            "DeclarativeTables": {
+                "required": ["tables"],
+                "type": "object",
+                "properties": {
+                    "tables": {
+                        "type": "array",
+                        "description": "An array of physical database tables.",
+                        "items": {
+                            "$ref": "#/components/schemas/DeclarativeTable"
+                        }
+                    }
+                },
+                "description": "A physical data model (PDM) tables."
+            },
+            "ScanResultPdm": {
+                "required": ["pdm", "warnings"],
+                "type": "object",
+                "properties": {
+                    "pdm": {
+                        "$ref": "#/components/schemas/DeclarativeTables"
+                    },
+                    "warnings": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/TableWarning"
+                        }
+                    }
+                },
+                "description": "Result of scan of data source physical model."
+            },
+            "TableWarning": {
+                "required": ["columns", "name"],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "array",
+                        "description": "Table name.",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "message": {
+                        "type": "array",
+                        "description": "Warning message related to the table.",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "columns": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ColumnWarning"
+                        }
+                    }
+                },
+                "description": "Warnings related to single table."
+            },
+            "ScanRequest": {
+                "required": ["scanTables", "scanViews", "separator"],
+                "type": "object",
+                "properties": {
+                    "separator": {
+                        "type": "string",
+                        "description": "A separator between prefixes and the names.",
+                        "example": "__"
+                    },
+                    "scanTables": {
+                        "type": "boolean",
+                        "description": "A flag indicating whether the tables should be scanned.",
+                        "example": true
+                    },
+                    "scanViews": {
+                        "type": "boolean",
+                        "description": "A flag indicating whether the views should be scanned.",
+                        "example": true
+                    },
+                    "schemata": {
+                        "type": "array",
+                        "description": "What schemata will be scanned.",
+                        "example": ["tpch", "demo"],
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "tablePrefix": {
+                        "type": "string",
+                        "description": "Tables starting with this prefix will be scanned. The prefix is then followed by the value of `separator` parameter. Given the table prefix is `out_table` and separator is `__`, the table with name like `out_table__customers` will be scanned.",
+                        "example": "out_table"
+                    },
+                    "viewPrefix": {
+                        "type": "string",
+                        "description": "Views starting with this prefix will be scanned. The prefix is then followed by the value of `separator` parameter. Given the view prefix is `out_view` and separator is `__`, the table with name like `out_view__us_customers` will be scanned.",
+                        "example": "out_view"
+                    }
+                },
+                "description": "A request containing all information critical to model scanning."
+            },
+            "TestDefinitionRequest": {
+                "required": ["type", "url"],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Type of database, where test should connect to.",
+                        "example": "POSTGRESQL",
+                        "enum": [
+                            "POSTGRESQL",
+                            "REDSHIFT",
+                            "VERTICA",
+                            "SNOWFLAKE",
+                            "ADS",
+                            "BIGQUERY",
+                            "MSSQL",
+                            "PRESTO",
+                            "DREMIO",
+                            "DRILL"
+                        ]
+                    },
+                    "url": {
+                        "type": "string",
+                        "description": "URL to database in JDBC format, where test should connect to.",
+                        "example": "jdbc:postgresql://localhost:5432/db_name"
+                    },
+                    "schema": {
+                        "type": "string",
+                        "description": "Database schema.",
+                        "example": "public"
+                    },
+                    "username": {
+                        "type": "string",
+                        "description": "Database user name.",
+                        "example": "dbadmin"
+                    },
+                    "password": {
+                        "type": "string",
+                        "description": "Database user password.",
+                        "example": "admin123"
+                    },
+                    "token": {
+                        "type": "string",
+                        "description": "Secret for token based authentication for data sources which supports it."
+                    }
+                },
+                "description": "A request containing all information for testing data source definition."
+            },
+            "DataSourceSchemata": {
+                "required": ["schemaNames"],
+                "type": "object",
+                "properties": {
+                    "schemaNames": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "description": "Result of getSchemata. Contains list of available DB schema names."
+            }
+        }
+    }
+}
