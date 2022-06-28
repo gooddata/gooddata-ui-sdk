@@ -54,6 +54,19 @@ export interface IDashboardItemWithKpiAlertProps {
 
     isReadOnlyMode?: boolean;
 
+    /**
+     * Flag indicating the given item can be selected.
+     */
+    isSelectable?: boolean;
+    /**
+     * Flag indicating the given item is selected.
+     */
+    isSelected?: boolean;
+    /**
+     * Callback to call when an item is selected.
+     */
+    onSelected?: () => void;
+
     // Callbacks
     onAlertDialogOpenClick: () => void;
 
@@ -312,6 +325,9 @@ export class DashboardItemWithKpiAlert extends Component<
                         {this.props.renderHeadline(clientHeight)}
                     </>
                 )}
+                isSelectable={this.props.isSelectable}
+                isSelected={this.props.isSelected}
+                onSelected={this.props.onSelected}
             >
                 {this.props.children}
             </DashboardItemKpi>
