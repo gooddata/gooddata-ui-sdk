@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import Highcharts, { HighchartsOptions } from "../../../lib";
 import getOptionalStackingConfiguration, {
@@ -297,7 +297,7 @@ describe("getOptionalStackingConfiguration", () => {
             ["", "auto"],
             [" not", false],
         ])(
-            'should%s show stack label when "dataLabel.visible" is %s',
+            'should%s show stack label when "dataLabel.totalsVisible" is %s',
             (_negation: string, visible: boolean | string) => {
                 const chartOptions = {
                     type: VisualizationTypes.COLUMN,
@@ -569,8 +569,8 @@ describe("getOptionalStackingConfiguration", () => {
         });
 
         describe("getYAxisConfiguration", () => {
-            it("should return empty config with not column chart type", () => {
-                const chartOptions = { type: VisualizationTypes.BAR };
+            it("should return empty config when not bar or column chart type", () => {
+                const chartOptions = { type: VisualizationTypes.AREA };
                 const config = {};
                 const chartConfig = {};
 

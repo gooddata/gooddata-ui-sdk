@@ -31,7 +31,7 @@ export default class BaseChartConfigurationPanel<
     protected renderCanvasSection(): React.ReactNode {
         const { gridEnabled } = this.getControlProperties();
 
-        const { properties, propertiesMeta, pushData } = this.props;
+        const { properties, propertiesMeta, pushData, featureFlags } = this.props;
         const controlsDisabled = this.isControlDisabled();
         return (
             <ConfigSection
@@ -45,6 +45,8 @@ export default class BaseChartConfigurationPanel<
                     pushData={pushData}
                     properties={properties}
                     isDisabled={controlsDisabled}
+                    isTotalsDisabled={controlsDisabled || !!properties?.controls?.stackMeasuresToPercent}
+                    enableSeparateTotalLabels={!!featureFlags.enableSeparateTotalLabels}
                 />
                 <CheckboxControl
                     valuePath="grid.enabled"

@@ -15,6 +15,7 @@ import {
     getFormatterProperty,
 } from "../customConfiguration";
 import { VisualizationTypes, IDrillConfig, createIntlMock } from "@gooddata/sdk-ui";
+import { IDataLabelsConfig } from "../../../../interfaces";
 import { immutableSet } from "../../_util/common";
 import {
     supportedStackingAttributesChartTypes,
@@ -665,6 +666,82 @@ describe("getCustomizedConfiguration", () => {
                 expect(bubbleFormatter()).toEqual("5");
             });
         });
+    });
+
+    describe("total labels configuration", () => {
+        it.each([
+            [
+                "bar",
+                { visible: true, totalsVisible: true },
+                { visible: true, totalsVisible: true },
+                true,
+                true,
+            ],
+            [
+                "bar",
+                { visible: false, totalsVisible: "auto" },
+                { visible: false, totalsVisible: "auto" },
+                false,
+                false,
+            ],
+            [
+                "bar",
+                { visible: "auto", totalsVisible: false },
+                { visible: "auto", totalsVisible: false },
+                false,
+                true,
+            ],
+            [
+                "column",
+                { visible: true, totalsVisible: true },
+                { visible: true, totalsVisible: true },
+                true,
+                true,
+            ],
+            [
+                "column",
+                { visible: false, totalsVisible: "auto" },
+                { visible: false, totalsVisible: "auto" },
+                false,
+                false,
+            ],
+            [
+                "column",
+                { visible: "auto", totalsVisible: false },
+                { visible: "auto", totalsVisible: false },
+                false,
+                true,
+            ],
+            ["bar", { visible: "auto" }, { visible: "auto", totalsVisible: false }, false, true],
+            ["bar", { visible: true }, { visible: true, totalsVisible: false }, true, true],
+            ["bar", { visible: false }, { visible: false, totalsVisible: false }, false, false],
+            ["column", { visible: "auto" }, { visible: "auto", totalsVisible: "auto" }, false, true],
+            ["column", { visible: true }, { visible: true, totalsVisible: true }, true, true],
+            ["column", { visible: false }, { visible: false, totalsVisible: false }, false, false],
+        ])(
+            "should return datalabel configuration for %s with DataLabels %s",
+            (
+                chartType: string,
+                dataLabels: IDataLabelsConfig,
+                expectedGdcOption: any,
+                allowedOverlap: boolean,
+                dataLabelsEnabled: boolean,
+            ) => {
+                const result: any = getCustomizedConfiguration(
+                    {
+                        ...chartOptions,
+                        isViewByTwoAttributes: true,
+                        type: chartType,
+                        stacking: "normal",
+                    },
+                    { stacking: true, dataLabels },
+                );
+
+                expect(result.plotOptions.gdcOptions.dataLabels).toEqual(expectedGdcOption);
+                expect(result.plotOptions.bar.dataLabels.allowOverlap).toEqual(allowedOverlap);
+                expect(result.plotOptions.bar.dataLabels.enabled).toEqual(dataLabelsEnabled);
+            },
+        );
     });
 
     describe("tooltip followPointer", () => {

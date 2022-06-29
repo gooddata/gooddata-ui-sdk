@@ -1,7 +1,14 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { AXIS } from "./axis";
 
-const BASE_PROPERTIES = ["dataLabels.visible", "grid", "legend", "colorMapping", "zoomInsight"];
+const BASE_PROPERTIES = [
+    "dataLabels.visible",
+    "dataLabels.totalsVisible",
+    "grid",
+    "legend",
+    "colorMapping",
+    "zoomInsight",
+];
 
 const BASE_X_AXIS_PROPERTIES = [
     "xaxis.rotation",

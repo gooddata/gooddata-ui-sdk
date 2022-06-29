@@ -2048,6 +2048,7 @@ export interface ISettings {
     enablePushpinGeoChart?: boolean;
     enableRenamingMeasureToMetric?: boolean;
     enableReversedStacking?: boolean;
+    enableSeparateTotalLabels?: boolean;
     enableTableColumnsAutoResizing?: boolean;
     enableTableColumnsGrowToFit?: boolean;
     enableTableColumnsManualResizing?: boolean;

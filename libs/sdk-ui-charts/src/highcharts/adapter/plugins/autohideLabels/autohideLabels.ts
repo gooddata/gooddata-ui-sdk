@@ -1,14 +1,19 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { getChartType } from "../../../chartTypes/_chartCreators/helpers";
 
 import {
     getDataLabelsGdcVisible,
     minimizeDataLabel,
     hideDataLabel,
+    getDataLabelsGdcTotalsVisible,
 } from "../../../chartTypes/_chartCreators/dataLabelsHelpers";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
-import { autohideColumnLabels, handleColumnLabelsOutsideChart } from "./autohideColumnLabels";
-import { autohideBarLabels, handleBarLabelsOutsideChart } from "./autohideBarLabels";
+import {
+    autohideColumnLabels,
+    autohideColumnTotalLabels,
+    handleColumnLabelsOutsideChart,
+} from "./autohideColumnLabels";
+import { autohideBarLabels, autohideBarTotalLabels, handleBarLabelsOutsideChart } from "./autohideBarLabels";
 import autohidePieLabels from "./autohidePieLabels";
 import autohideLabelsOverlappingItsShape from "./autohideLabelsOverlappingItsShape";
 
@@ -22,6 +27,18 @@ const autohideLabels = (Highcharts: any): void => {
             const chart = this;
             const chartType = getChartType(this);
             const dataLabelsUserVisibility = getDataLabelsGdcVisible(this);
+            const totalLabelsVisibility = getDataLabelsGdcTotalsVisible(this);
+
+            if (totalLabelsVisibility === "auto") {
+                switch (chartType) {
+                    case VisualizationTypes.COLUMN:
+                        autohideColumnTotalLabels(chart);
+                        break;
+                    case VisualizationTypes.BAR:
+                        autohideBarTotalLabels(chart);
+                        break;
+                }
+            }
 
             if (dataLabelsUserVisibility === "auto") {
                 switch (chartType) {
