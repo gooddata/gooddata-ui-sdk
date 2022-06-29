@@ -2,13 +2,10 @@
 import React, { useCallback } from "react";
 import cx from "classnames";
 import camelCase from "lodash/camelCase";
-import { IInvertableListRenderItemProps } from "@gooddata/sdk-ui-kit";
-import { AttributeListItem, isEmptyListItem } from "../types";
 import { FormattedMessage } from "react-intl";
+import { IAttributeFilterListItemProps, isEmptyListItem } from "./types";
 
-export type IAttributeFilterItemProps = IInvertableListRenderItemProps<AttributeListItem>;
-
-export const AttributeFilterItem: React.VFC<IAttributeFilterItemProps> = (props) => {
+export const AttributeFilterListItem: React.VFC<IAttributeFilterListItemProps> = (props) => {
     const { item, isSelected, onSelect, onSelectOnly } = props;
 
     const onItemClick = useCallback(() => {

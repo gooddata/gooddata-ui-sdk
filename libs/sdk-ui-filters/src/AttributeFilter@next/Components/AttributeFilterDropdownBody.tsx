@@ -1,19 +1,7 @@
 // (C) 2022 GoodData Corporation
 import React, { useCallback } from "react";
-import {
-    AttributeFilterDropdownContent,
-    IAttributeDropdownBodyPropsNoCallbacks,
-} from "./AttributeFilterDropdownContent";
 import { useAttributeFilterComponentsContext } from "../Context/AttributeFilterComponentsContext";
-
-export interface IAttributeFilterDropdownBodyProps {
-    hasNoMatchingData: boolean;
-    hasNoData: boolean;
-    isApplyDisabled: boolean;
-    bodyProps: IAttributeDropdownBodyPropsNoCallbacks;
-    onApplyButtonClicked: () => void;
-    closeDropdown: () => void;
-}
+import { IAttributeFilterDropdownBodyProps } from "./types";
 
 export const AttributeFilterDropdownBody: React.FC<IAttributeFilterDropdownBodyProps> = (props) => {
     const { hasNoMatchingData, isApplyDisabled, onApplyButtonClicked, closeDropdown, hasNoData, bodyProps } =
@@ -24,7 +12,8 @@ export const AttributeFilterDropdownBody: React.FC<IAttributeFilterDropdownBodyP
         closeDropdown();
     }, [closeDropdown, onApplyButtonClicked]);
 
-    const { AttributeFilterDropdownButtons } = useAttributeFilterComponentsContext();
+    const { AttributeFilterDropdownButtons, AttributeFilterDropdownContent } =
+        useAttributeFilterComponentsContext();
 
     const isApplyButtonDisabled = isApplyDisabled || hasNoData || hasNoMatchingData || !!bodyProps.error;
 

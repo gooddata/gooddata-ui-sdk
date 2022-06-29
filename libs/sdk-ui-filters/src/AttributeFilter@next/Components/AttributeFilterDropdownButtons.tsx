@@ -2,12 +2,7 @@
 import React from "react";
 import { useIntl } from "react-intl";
 import { Button } from "@gooddata/sdk-ui-kit";
-
-export interface IAttributeFilterDropdownButtonsProps {
-    onApplyButtonClicked: () => void;
-    onCloseButtonClicked: () => void;
-    isApplyDisabled?: boolean;
-}
+import { IAttributeFilterDropdownButtonsProps } from "./types";
 
 export const AttributeFilterDropdownButtons: React.VFC<IAttributeFilterDropdownButtonsProps> = ({
     isApplyDisabled,

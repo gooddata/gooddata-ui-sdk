@@ -2,16 +2,12 @@
 import React, { useMemo } from "react";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage } from "react-intl";
+import { IMessageParentItemsFilteredProps } from "./types";
 
 const ALIGN_POINTS = [{ align: "bc tl" }, { align: "tc bl" }];
 const ARROW_OFFSETS = { "bc tl": [-100, 10], "tc bl": [-100, -10] };
 
-export interface IMessageItemsFilteredProps {
-    parentFilterTitles: string[];
-    showItemsFilteredMessage: boolean;
-}
-
-export const MessageItemsFiltered: React.FC<IMessageItemsFilteredProps> = (props) => {
+export const MessageParentItemsFiltered: React.FC<IMessageParentItemsFilteredProps> = (props) => {
     const { parentFilterTitles, showItemsFilteredMessage } = props;
 
     const tooltipText = useMemo(() => {

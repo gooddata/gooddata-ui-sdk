@@ -1,9 +1,9 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
 import { AttributeFilterBase } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/AttributeFilterBase";
-import { IAttributeFilterErrorProps } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Components/types";
-import { AttributeFilterDefaultComponents } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Context/AttributeFilterDefaultComponents";
+import { IAttributeFilterDropdownBodyProps } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Components/types";
 
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import { storiesOf } from "../../../../_infra/storyRepository";
 import { action } from "@storybook/addon-actions";
 import { FilterStories } from "../../../../_infra/storyGroups";
@@ -15,48 +15,32 @@ import { ReferenceWorkspaceId, StorybookBackend } from "../../../../_infra/backe
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 const backend = StorybookBackend();
 
-const CustomErrorComponent = (props: IAttributeFilterErrorProps) => {
-    const { message } = props;
-    return (
-        <div style={{ border: "1px solid black" }}>
-            Custom error component
-            <br />
-            {message}
-        </div>
-    );
+const CustomComponent = (_props: IAttributeFilterDropdownBodyProps) => {
+    return <div style={{ border: "1px solid black", minHeight: 300 }}>this is custom dropdown body</div>;
 };
 
-const DefaultError = (_props: IAttributeFilterErrorProps) => {
-    return (
-        <div style={{ border: "1px solid black" }}>
-            <AttributeFilterDefaultComponents.AttributeFilterError message={"Custom error"} />
-        </div>
-    );
-};
-
-storiesOf(`${FilterStories}@next/AttributeFilterBase/Customization/FilterError`)
+storiesOf(`${FilterStories}@next/AttributeFilterBase/Customization/FilterDropdownBody`)
+    .add("Default component", () => {
+        return (
+            <div style={wrapperStyle} className="screenshot-target">
+                <AttributeFilterBase
+                    backend={backend}
+                    workspace={ReferenceWorkspaceId}
+                    filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
+                    onApply={action("on-apply")}
+                />
+            </div>
+        );
+    })
     .add("Custom component", () => {
         return (
             <div style={wrapperStyle} className="screenshot-target">
                 <AttributeFilterBase
                     backend={backend}
                     workspace={ReferenceWorkspaceId}
-                    filter={newNegativeAttributeFilter("NOT_EXIST", [])}
+                    filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
                     onApply={action("on-apply")}
-                    FilterError={CustomErrorComponent}
-                />
-            </div>
-        );
-    })
-    .add("With default component", () => {
-        return (
-            <div style={wrapperStyle} className="screenshot-target">
-                <AttributeFilterBase
-                    backend={backend}
-                    workspace={ReferenceWorkspaceId}
-                    filter={newNegativeAttributeFilter("NOT_EXIST", [])}
-                    onApply={action("on-apply")}
-                    FilterError={DefaultError}
+                    FilterDropdownBody={CustomComponent}
                 />
             </div>
         );

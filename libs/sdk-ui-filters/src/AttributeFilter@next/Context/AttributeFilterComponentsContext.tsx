@@ -1,13 +1,18 @@
 // (C) 2019-2022 GoodData Corporation
+import { UnexpectedSdkError } from "@gooddata/sdk-ui";
 import React, { createContext, useContext } from "react";
-import { IAttributeFilterButtonProps } from "../Components/AttributeFilterButton";
 import {
-    AttributeFilterDropdownButtons,
+    IAttributeFilterButtonProps,
+    IAttributeFilterDropdownBodyProps,
     IAttributeFilterDropdownButtonsProps,
-} from "../Components/AttributeFilterDropdownButtons";
-
-import { AttributeFilterError, IAttributeFilterErrorProps } from "../Components/AttributeFilterError";
-import { AttributeFilterSimpleButton } from "../Components/AttributeFilterSimpleButton";
+    IAttributeFilterDropdownContentProps,
+    IAttributeFilterErrorProps,
+    IAttributeFilterListItemProps,
+    IAttributeFilterListLoadingProps,
+    IAttributeFilterListProps,
+    IMessageNoMatchingDataProps,
+    IMessageParentItemsFilteredProps,
+} from "../Components/types";
 
 /**
  * @internal
@@ -15,24 +20,41 @@ import { AttributeFilterSimpleButton } from "../Components/AttributeFilterSimple
 export interface IAtributeFilterComponentsContext {
     AttributeFilterError: React.ComponentType<IAttributeFilterErrorProps>;
     AttributeFilterButton: React.ComponentType<IAttributeFilterButtonProps>;
+    AttributeFilterDropdownBody: React.ComponentType<IAttributeFilterDropdownBodyProps>;
     AttributeFilterDropdownButtons: React.ComponentType<IAttributeFilterDropdownButtonsProps>;
+    AttributeFilterDropdownContent: React.ComponentType<IAttributeFilterDropdownContentProps>;
+    AttributeFilterList: React.ComponentType<IAttributeFilterListProps>;
+    AttributeFilterListItem: React.ComponentType<IAttributeFilterListItemProps>;
+    AttributeFilterListLoading: React.ComponentType<IAttributeFilterListLoadingProps>;
+    MessageListError: React.ComponentType;
+    MessageNoData: React.ComponentType;
+    MessageNoMatchingData: React.ComponentType<IMessageNoMatchingDataProps>;
+    MessageParentItemsFiltered: React.ComponentType<IMessageParentItemsFilteredProps>;
 }
 
-/**
- * @internal
- */
-export const AttributeFilterDefaultComponents: IAtributeFilterComponentsContext = {
-    AttributeFilterError: AttributeFilterError,
-    AttributeFilterButton: AttributeFilterSimpleButton,
-    AttributeFilterDropdownButtons: AttributeFilterDropdownButtons,
+const ThrowMissingComponentError = (componentName: string) => () => {
+    throw new UnexpectedSdkError(
+        `Component: ${componentName} is missing in the AttributeFilterComponentsProvider.`,
+    );
 };
 
 /**
  * @internal
  */
-const AttributeFilterComponentsContext = createContext<IAtributeFilterComponentsContext>(
-    AttributeFilterDefaultComponents,
-);
+const AttributeFilterComponentsContext = createContext<IAtributeFilterComponentsContext>({
+    AttributeFilterError: ThrowMissingComponentError("AttributeFilterError"),
+    AttributeFilterButton: ThrowMissingComponentError("AttributeFilterButton"),
+    AttributeFilterDropdownBody: ThrowMissingComponentError("AttributeFilterDropdownBody"),
+    AttributeFilterDropdownButtons: ThrowMissingComponentError("AttributeFilterDropdownButtons"),
+    AttributeFilterDropdownContent: ThrowMissingComponentError("AttributeFilterDropdownContent"),
+    AttributeFilterList: ThrowMissingComponentError("AttributeFilterList"),
+    AttributeFilterListLoading: ThrowMissingComponentError("AttributeFilterListLoading"),
+    AttributeFilterListItem: ThrowMissingComponentError("AttributeFilterListItem"),
+    MessageListError: ThrowMissingComponentError("AttributeFilterList"),
+    MessageNoData: ThrowMissingComponentError("AttributeFilterList"),
+    MessageNoMatchingData: ThrowMissingComponentError("MessageNoMatchingData"),
+    MessageParentItemsFiltered: ThrowMissingComponentError("MessageParentItemsFiltered"),
+});
 
 AttributeFilterComponentsContext.displayName = "AttributeFilterComponentsContext";
 
@@ -46,26 +68,12 @@ export const useAttributeFilterComponentsContext = (): IAtributeFilterComponents
 /**
  * @internal
  */
-export interface IAtributeFilterComponentsProviderProps extends Partial<IAtributeFilterComponentsContext> {
-    children: React.ReactNode;
-}
-
-/**
- * @internal
- */
-export function AttributeFilterComponentsProvider(
-    props: IAtributeFilterComponentsProviderProps,
-): JSX.Element {
-    const { children, ...componentsProps } = props;
-
-    const components = Object.keys(AttributeFilterDefaultComponents).reduce((acc, key) => {
-        acc[key] = componentsProps?.[key] ?? AttributeFilterDefaultComponents[key];
-        return acc;
-    }, {} as IAtributeFilterComponentsContext);
+export const AttributeFilterComponentsProvider: React.FC<IAtributeFilterComponentsContext> = (props) => {
+    const { children, ...components } = props;
 
     return (
         <AttributeFilterComponentsContext.Provider value={components}>
             {children}
         </AttributeFilterComponentsContext.Provider>
     );
-}
+};

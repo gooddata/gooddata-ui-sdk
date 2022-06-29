@@ -2,18 +2,15 @@
 import React from "react";
 import { BubbleHoverTrigger, Bubble, useMediaQuery } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage } from "react-intl";
+import { IMessageNoMatchingDataProps } from "./types";
 
 const ALIGN_POINTS = [{ align: "bc tc" }];
 const ARROW_OFFSETS = { "bc tc": [0, 15] };
 
-export interface IMessageAllItemsFilteredProps {
-    parentFilterTitles: string[];
-}
-
 /**
  * @internal
  */
-export const MessageAllItemsFiltered: React.FC<IMessageAllItemsFilteredProps> = (props) => {
+export const MessageNoMatchingData: React.FC<IMessageNoMatchingDataProps> = (props) => {
     const { parentFilterTitles } = props;
 
     const isMobile = useMediaQuery("mobileDevice");

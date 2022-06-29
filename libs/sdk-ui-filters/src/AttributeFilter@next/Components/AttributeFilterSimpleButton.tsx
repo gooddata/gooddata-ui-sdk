@@ -1,7 +1,7 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
 import { DropdownButton } from "@gooddata/sdk-ui-kit";
-import { IAttributeFilterButtonProps } from "./AttributeFilterButton";
+import { IAttributeFilterButtonProps } from "./types";
 
 export const AttributeFilterSimpleButton: React.VFC<IAttributeFilterButtonProps> = (props) => {
     const { isOpen, title, onClick } = props;
