@@ -24,16 +24,16 @@ const placeholderMessage = defineMessage({ id: "configurationPanel.selectCompari
 const directionOrder: IKpiComparisonTypeComparison[] = ["previousPeriod", "lastYear", "none"];
 
 interface IKpiComparisonTypeDropdownProps {
-    comparisonTypeId: IKpiComparisonTypeComparison;
+    comparisonType: IKpiComparisonTypeComparison;
     onComparisonTypeChanged: (newComparisonTypeId: IKpiComparisonTypeComparison) => void;
 }
 
 export const KpiComparisonTypeDropdown: React.FC<IKpiComparisonTypeDropdownProps> = (props) => {
-    const { comparisonTypeId, onComparisonTypeChanged } = props;
+    const { comparisonType, onComparisonTypeChanged } = props;
     const intl = useIntl();
 
-    const buttonValue = comparisonTypeId
-        ? intl.formatMessage(messages[comparisonTypeId])
+    const buttonValue = comparisonType
+        ? intl.formatMessage(messages[comparisonType])
         : intl.formatMessage(placeholderMessage);
 
     return (
@@ -56,7 +56,7 @@ export const KpiComparisonTypeDropdown: React.FC<IKpiComparisonTypeDropdownProps
                     width={CONFIG_PANEL_INNER_WIDTH}
                     items={directionOrder}
                     renderItem={({ item }) => {
-                        const selected = comparisonTypeId === item;
+                        const selected = comparisonType === item;
 
                         return (
                             <SingleSelectListItem

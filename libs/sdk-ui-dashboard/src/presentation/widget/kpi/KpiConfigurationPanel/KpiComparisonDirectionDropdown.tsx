@@ -23,16 +23,16 @@ const placeholderMessage = defineMessage({ id: "configurationPanel.selectCompari
 const directionOrder: IKpiComparisonDirection[] = ["growIsGood", "growIsBad"];
 
 interface IKpiComparisonDirectionDropdownProps {
-    comparisonDirectionId: IKpiComparisonDirection | undefined;
+    comparisonDirection: IKpiComparisonDirection | undefined;
     onComparisonDirectionChanged: (newComparisonDirectionId: IKpiComparisonDirection) => void;
 }
 
 export const KpiComparisonDirectionDropdown: React.FC<IKpiComparisonDirectionDropdownProps> = (props) => {
-    const { comparisonDirectionId, onComparisonDirectionChanged } = props;
+    const { comparisonDirection, onComparisonDirectionChanged } = props;
     const intl = useIntl();
 
-    const buttonValue = comparisonDirectionId
-        ? intl.formatMessage(messages[comparisonDirectionId])
+    const buttonValue = comparisonDirection
+        ? intl.formatMessage(messages[comparisonDirection])
         : intl.formatMessage(placeholderMessage);
 
     return (
@@ -45,7 +45,7 @@ export const KpiComparisonDirectionDropdown: React.FC<IKpiComparisonDirectionDro
                     <DropdownButton
                         title={buttonValue}
                         value={buttonValue}
-                        className={comparisonDirectionId ? `type-${comparisonDirectionId}` : ""}
+                        className={comparisonDirection ? `type-${comparisonDirection}` : ""}
                         isOpen={isOpen}
                         onClick={toggleDropdown}
                     />
@@ -58,7 +58,7 @@ export const KpiComparisonDirectionDropdown: React.FC<IKpiComparisonDirectionDro
                         width={CONFIG_PANEL_INNER_WIDTH}
                         items={directionOrder}
                         renderItem={({ item }) => {
-                            const selected = comparisonDirectionId === item;
+                            const selected = comparisonDirection === item;
 
                             return (
                                 <SingleSelectListItem

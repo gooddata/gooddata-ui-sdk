@@ -1273,6 +1273,16 @@
         "comment": "",
         "limit": 0
     },
+    "configurationPanel.comparison": {
+        "value": "Comparison",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.compareWith": {
+        "value": "Compare with",
+        "comment": "",
+        "limit": 0
+    },
     "configurationPanel.increasingNumberIs": {
         "value": "Increasing number is",
         "comment": "",

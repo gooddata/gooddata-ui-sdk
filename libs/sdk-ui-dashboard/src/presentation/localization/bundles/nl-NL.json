@@ -231,6 +231,8 @@
     "filterBar.filter.drop": "laat los om toe te voegen",
     "filterBar.filter.addFilterPlaceholder": "Sleep {icon} hierheen",
     "filterBar.filter.dropzone.tooltip": "Sleep het attributenfilter hierheen.",
+    "configurationPanel.comparison": "Vergelijking",
+    "configurationPanel.compareWith": "Vergelijken met",
     "configurationPanel.increasingNumberIs": "Stijgend aantal is",
     "configurationPanel.comparisonTypeItems.previousPeriod": "Vorige periode",
     "configurationPanel.comparisonTypeItems.samePeriodInPreviousYear": "Dezelfde periode in het vorige jaar",

@@ -231,6 +231,8 @@
     "filterBar.filter.drop": "сбросьте, чтобы добавить",
     "filterBar.filter.addFilterPlaceholder": "Перетащите {icon} сюда",
     "filterBar.filter.dropzone.tooltip": "Перетащите фильтр атрибутов сюда.",
+    "configurationPanel.comparison": "Сравнение",
+    "configurationPanel.compareWith": "Сравнить с",
     "configurationPanel.increasingNumberIs": "Увеличение числа",
     "configurationPanel.comparisonTypeItems.previousPeriod": "Предыдущий период",
     "configurationPanel.comparisonTypeItems.samePeriodInPreviousYear": "Тот же период предыдущего года",

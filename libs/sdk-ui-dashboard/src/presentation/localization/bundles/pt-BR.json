@@ -231,6 +231,8 @@
     "filterBar.filter.drop": "solte para adicionar",
     "filterBar.filter.addFilterPlaceholder": "Arraste {icon} para aqui",
     "filterBar.filter.dropzone.tooltip": "Arraste o filtro de atributo até aqui.",
+    "configurationPanel.comparison": "Comparação",
+    "configurationPanel.compareWith": "Comparar com",
     "configurationPanel.increasingNumberIs": "O número ascendente é",
     "configurationPanel.comparisonTypeItems.previousPeriod": "Período anterior",
     "configurationPanel.comparisonTypeItems.samePeriodInPreviousYear": "Mesmo período no ano anterior",
