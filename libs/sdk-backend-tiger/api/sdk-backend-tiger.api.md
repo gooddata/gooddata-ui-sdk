@@ -6,6 +6,7 @@
 
 import { AnonymousAuthProvider } from '@gooddata/sdk-backend-base';
 import { AuthenticationFlow } from '@gooddata/sdk-backend-spi';
+import { DataSourceSchemata } from '@gooddata/api-client-tiger';
 import { DeclarativeModel } from '@gooddata/api-client-tiger';
 import { DeclarativePdm } from '@gooddata/api-client-tiger';
 import { DeclarativeTables } from '@gooddata/api-client-tiger';
@@ -16,6 +17,7 @@ import { IAuthenticatedPrincipal } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationContext } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationProvider } from '@gooddata/sdk-backend-spi';
 import { ITigerClient } from '@gooddata/api-client-tiger';
+import { JsonApiDataSourceIdentifierOutWithLinks } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInAttributesTypeEnum } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInDocument } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInTypeEnum } from '@gooddata/api-client-tiger';
@@ -241,11 +243,15 @@ export type TigerSpecificFunctions = {
     getEntitlements?: () => Promise<Array<Entitlement>>;
     putWorkspaceLayout?: (requestParameters: LayoutApiPutWorkspaceLayoutRequest) => Promise<void>;
     getAllDataSources?: () => Promise<IDataSourceDefinition[]>;
+    getAllDataSourcesIdentifiers?: () => Promise<JsonApiDataSourceIdentifierOutWithLinks[]>;
     getDataSourceById?: (id: string) => Promise<IDataSourceApiResult>;
     createDataSource?: (requestData: IDataSourceUpsertRequest) => Promise<IDataSourceApiResult>;
     updateDataSource?: (id: string, requestData: IDataSourceUpsertRequest) => Promise<IDataSourceApiResult>;
     deleteDataSource?: (id: string) => Promise<IDataSourceApiResult>;
     testDataSourceConnection?: (connectionData: IDataSourceTestConnectionRequest, id?: string) => Promise<IDataSourceTestConnectionResponse>;
+    publishLogicalModel?: (workspaceId: string, declarativeModel: DeclarativeModel) => void;
+    getDataSourceSchemata?: (dataSourceId: string) => Promise<DataSourceSchemata>;
+    getPdm?: (dataSourceId: string) => Promise<DeclarativePdm>;
 };
 
 // @public
