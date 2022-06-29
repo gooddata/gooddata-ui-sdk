@@ -4933,6 +4933,9 @@ export const selectInsightsMap: OutputSelector<DashboardState, ObjRefMap<IInsigh
 // @internal
 export const selectIsCircularDependency: (currentFilterLocalId: string, neighborFilterLocalid: string) => OutputSelector<DashboardState, boolean, (res: string[]) => boolean>;
 
+// @internal (undocumented)
+export const selectIsDashboardLoading: OutputSelector<DashboardState, boolean, (res: LoadingState) => boolean>;
+
 // @public (undocumented)
 export const selectIsDashboardSaving: OutputSelector<DashboardState, boolean, (res: SavingState) => boolean>;
 
@@ -4965,6 +4968,9 @@ export const selectIsKpiAlertOpenedByWidgetRef: (ref: ObjRef | undefined) => (st
 
 // @alpha
 export const selectIsLayoutEmpty: OutputSelector<DashboardState, boolean, (res: ExtendedDashboardWidget[]) => boolean>;
+
+// @internal
+export const selectIsNewDashboard: OutputSelector<DashboardState, boolean, (res: UriRef | IdentifierRef | undefined) => boolean>;
 
 // @public
 export const selectIsReadOnly: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
@@ -5201,6 +5207,8 @@ setRenderMode: CaseReducer<UiState, {
 payload: RenderMode;
 type: string;
 }>;
+setEditRenderMode: CaseReducer<UiState, AnyAction>;
+setViewRenderMode: CaseReducer<UiState, AnyAction>;
 setActiveHeaderIndex: CaseReducer<UiState, {
 payload: number | null;
 type: string;
