@@ -6,6 +6,7 @@ import isEqual from "lodash/isEqual";
 import omit from "lodash/omit";
 import { injectIntl, WrappedComponentProps, FormattedMessage } from "react-intl";
 import invariant from "ts-invariant";
+import parse from "date-fns/parse";
 import { normalizeTime, ConfirmDialogBase, Overlay, Alignment, Message } from "@gooddata/sdk-ui-kit";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
@@ -29,7 +30,13 @@ import {
 } from "@gooddata/sdk-ui";
 import memoize from "lodash/memoize";
 
-import { DEFAULT_REPEAT_PERIOD, REPEAT_EXECUTE_ON, REPEAT_FREQUENCIES, REPEAT_TYPES } from "../constants";
+import {
+    DEFAULT_REPEAT_PERIOD,
+    PLATFORM_DATE_FORMAT,
+    REPEAT_EXECUTE_ON,
+    REPEAT_FREQUENCIES,
+    REPEAT_TYPES,
+} from "../constants";
 import {
     IScheduleEmailRecipient,
     IScheduleEmailRepeat,
@@ -292,7 +299,7 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
             emailBody: schedule.body,
             selectedRecipients,
             userTimezone: getTimezoneByIdentifier(schedule.when.timeZone) || TIMEZONE_DEFAULT,
-            startDate: new Date(schedule.when.startDate),
+            startDate: parse(schedule.when.startDate, PLATFORM_DATE_FORMAT, new Date()),
             isValidScheduleEmailData: true,
             repeat: parseRepeatString(schedule.when.recurrence),
             attachments: {
