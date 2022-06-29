@@ -85,6 +85,14 @@ const setRenderMode: UiReducer<PayloadAction<RenderMode>> = (state, action) => {
     state.renderMode = action.payload;
 };
 
+const setEditRenderMode: UiReducer = (state) => {
+    state.renderMode = "edit";
+};
+
+const setViewRenderMode: UiReducer = (state) => {
+    state.renderMode = "view";
+};
+
 const setActiveHeaderIndex: UiReducer<PayloadAction<number | null>> = (state, action) => {
     state.activeHeaderIndex = action.payload;
 };
@@ -117,6 +125,8 @@ export const uiReducers = {
     closeDeleteDialog,
     setMenuButtonItemsVisibility,
     setRenderMode,
+    setEditRenderMode,
+    setViewRenderMode,
     setActiveHeaderIndex,
     selectWidget,
     clearWidgetSelection,
