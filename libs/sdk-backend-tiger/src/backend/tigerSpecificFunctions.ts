@@ -8,7 +8,6 @@ import {
     JsonApiDataSourceInDocument,
     LayoutApiSetPdmLayoutRequest,
     LayoutApiPutWorkspaceLayoutRequest,
-    DeclarativeTables,
     jsonApiHeaders,
     JsonApiOrganizationPatchTypeEnum,
     JsonApiApiTokenOutList,
@@ -19,11 +18,14 @@ import {
     ITigerClient,
     JsonApiDataSourceInTypeEnum,
     JsonApiDataSourceInAttributesTypeEnum,
-    JsonApiDataSourceOutTypeEnum,
     OrganizationUtilities,
     JsonApiDataSourceIdentifierOutWithLinks,
-    DataSourceSchemata,
     JsonApiDataSourceIdentifierOutList,
+    TestDefinitionRequestTypeEnum,
+    JsonApiDataSourceOutDocument,
+    DeclarativeTables,
+    DeclarativeAnalytics,
+    JsonApiWorkspaceInDocument,
 } from "@gooddata/api-client-tiger";
 import { convertApiError } from "../utils/errorHandling";
 import uniq from "lodash/uniq";
@@ -107,30 +109,20 @@ export type IDataSourcePermission = "MANAGE" | "USE";
  * @internal
  */
 export interface IDataSourceConnectionInfo {
-    data: {
-        attributes: {
-            name: string;
-            schema: string;
-            type: IDataSourceType;
-            url?: string;
-            username?: string;
-        };
-        id: string;
-        meta?: {
-            permissions?: IDataSourcePermission[];
-        };
-        type: JsonApiDataSourceOutTypeEnum;
-    };
-    links?: {
-        self: string;
-    };
+    id: string;
+    type: IDataSourceType;
+    name: string;
+    schema: string;
+    username?: string;
+    url?: string;
+    permissions?: IDataSourcePermission[];
 }
 
 /**
  *@internal
  */
 export interface IDataSourceApiResult {
-    data?: IDataSourceConnectionInfo | IDataSourceTestConnectionResponse;
+    data?: IDataSourceConnectionInfo;
     errorMessage?: string;
 }
 
@@ -138,19 +130,14 @@ export interface IDataSourceApiResult {
  * @internal
  */
 export interface IDataSourceUpsertRequest {
-    data: {
-        attributes: {
-            name: string;
-            password?: string;
-            schema: string;
-            token?: string;
-            type: IDataSourceType;
-            url: string;
-            username?: string;
-        };
-        id: string;
-        type: JsonApiDataSourceInTypeEnum;
-    };
+    id: string;
+    name: string;
+    password?: string;
+    schema: string;
+    token?: string;
+    type: IDataSourceType;
+    url: string;
+    username?: string;
 }
 
 /**
@@ -160,7 +147,7 @@ export interface IDataSourceTestConnectionRequest {
     password?: string;
     schema: string;
     token?: string;
-    type: string;
+    type: TestDefinitionRequestTypeEnum;
     url: string;
     username: string;
 }
@@ -176,6 +163,14 @@ export interface IDataSourceTestConnectionResponse {
 /**
  * @internal
  */
+export interface IDataSourceDeletedResponse {
+    successful?: boolean;
+    errorMessage?: string;
+}
+
+/**
+ * @internal
+ */
 export interface IDataSourceDefinition {
     id: string;
     name: string;
@@ -184,8 +179,55 @@ export interface IDataSourceDefinition {
 }
 
 /**
+ * @internal
+ */
+export type OrganizationPermission = JsonApiOrganizationOutMetaPermissionsEnum;
+
+/**
+ * @internal
+ */
+export type GenerateLogicalModelRequest = GenerateLdmRequest;
+
+/**
+ * @internal
+ */
+export type DeclarativeLogicalModel = DeclarativeModel;
+
+/**
+ * @internal
+ */
+export type DeclarativeAnalyticsModel = DeclarativeAnalytics;
+
+/**
+ * @internal
+ */
+export type PhysicalDataModel = DeclarativePdm;
+
+/**
+ * @internal
+ */
+export type SetPdmLayoutRequest = LayoutApiSetPdmLayoutRequest;
+
+/**
+ * @internal
+ */
+export type PutWorkspaceLayoutRequest = LayoutApiPutWorkspaceLayoutRequest;
+
+/**
+ * @internal
+ */
+export type DataSourceDefinition = JsonApiDataSourceInDocument;
+
+/**
+ * @internal
+ */
+export type WorkspaceDefinition = JsonApiWorkspaceInDocument;
+
+/**
  * TigerBackend-specific functions.
  * If possible, avoid these functions, they are here for specific use cases.
+ *
+ * Do not use parameters or return values from \@gooddata/api-client-tiger.
  *
  * @internal
  */
@@ -194,9 +236,7 @@ export type TigerSpecificFunctions = {
     isOrganizationAdmin?: () => Promise<boolean>;
     organizationExpiredDate?: () => Promise<string>;
     getOrganizationAllowedOrigins?: (organizationId: string) => Promise<string[]>;
-    getOrganizationPermissions?: (
-        organizationId: string,
-    ) => Promise<Array<JsonApiOrganizationOutMetaPermissionsEnum>>;
+    getOrganizationPermissions?: (organizationId: string) => Promise<Array<OrganizationPermission>>;
     updateOrganizationAllowedOrigins?: (
         organizationId: string,
         updatedOrigins: string[],
@@ -208,31 +248,31 @@ export type TigerSpecificFunctions = {
     someDataSourcesExists?: (filter?: string) => Promise<boolean>;
     generateLogicalModel?: (
         dataSourceId: string,
-        generateLogicalModelRequest: GenerateLdmRequest,
-    ) => Promise<DeclarativeModel>;
+        generateLogicalModelRequest: GenerateLogicalModelRequest,
+    ) => Promise<DeclarativeLogicalModel>;
     scanDataSource?: (dataSourceId: string, scanRequest: ScanRequest) => Promise<ScanResult>;
-    publishPdm?: (dataSourceId: string, declarativePdm: DeclarativePdm) => Promise<PublishPdmResult>;
-    createDemoDataSource?: (sampleDataSource: JsonApiDataSourceInDocument) => Promise<string>;
-    setPdmLayout?: (requestParameters: LayoutApiSetPdmLayoutRequest) => Promise<void>;
+    publishPdm?: (dataSourceId: string, declarativePdm: PhysicalDataModel) => Promise<PublishPdmResult>;
+    createDemoDataSource?: (sampleDataSource: DataSourceDefinition) => Promise<string>;
+    setPdmLayout?: (requestParameters: SetPdmLayoutRequest) => Promise<void>;
     createWorkspace?: (id: string, name: string) => Promise<string>;
     deleteWorkspace?: (id: string) => Promise<void>;
     canDeleteWorkspace?: (id: string) => Promise<boolean>;
-    getWorkspaceLogicalModel?: (id: string) => Promise<DeclarativeModel>;
+    getWorkspaceLogicalModel?: (id: string) => Promise<DeclarativeLogicalModel>;
     getEntitlements?: () => Promise<Array<Entitlement>>;
-    putWorkspaceLayout?: (requestParameters: LayoutApiPutWorkspaceLayoutRequest) => Promise<void>;
+    putWorkspaceLayout?: (requestParameters: PutWorkspaceLayoutRequest) => Promise<void>;
     getAllDataSources?: () => Promise<IDataSourceDefinition[]>;
     getAllDataSourcesIdentifiers?: () => Promise<JsonApiDataSourceIdentifierOutWithLinks[]>;
     getDataSourceById?: (id: string) => Promise<IDataSourceApiResult>;
     createDataSource?: (requestData: IDataSourceUpsertRequest) => Promise<IDataSourceApiResult>;
     updateDataSource?: (id: string, requestData: IDataSourceUpsertRequest) => Promise<IDataSourceApiResult>;
-    deleteDataSource?: (id: string) => Promise<IDataSourceApiResult>;
+    deleteDataSource?: (id: string) => Promise<IDataSourceDeletedResponse>;
     testDataSourceConnection?: (
         connectionData: IDataSourceTestConnectionRequest,
         id?: string,
     ) => Promise<IDataSourceTestConnectionResponse>;
-    publishLogicalModel?: (workspaceId: string, declarativeModel: DeclarativeModel) => Promise<void>;
-    getDataSourceSchemata?: (dataSourceId: string) => Promise<DataSourceSchemata>;
-    getPdm?: (dataSourceId: string) => Promise<DeclarativePdm>;
+    publishLogicalModel?: (workspaceId: string, declarativeModel: DeclarativeLogicalModel) => Promise<void>;
+    getDataSourceSchemata?: (dataSourceId: string) => Promise<string[]>;
+    getPdm?: (dataSourceId: string) => Promise<PhysicalDataModel>;
 };
 
 const getDataSourceErrorMessage = (error: unknown) => {
@@ -240,6 +280,22 @@ const getDataSourceErrorMessage = (error: unknown) => {
         return error.message;
     }
     return String(error);
+};
+
+const asDataSourceConnectionInfo = (
+    response: AxiosResponse<JsonApiDataSourceOutDocument>,
+): IDataSourceConnectionInfo => {
+    const { id, meta, attributes } = response.data.data;
+    const { name, url, type, schema, username } = attributes;
+    return {
+        id,
+        type,
+        name,
+        schema,
+        username,
+        url,
+        permissions: meta?.permissions ?? [],
+    };
 };
 
 export const buildTigerSpecificFunctions = (
@@ -356,7 +412,7 @@ export const buildTigerSpecificFunctions = (
     getDeploymentVersion: async () => {
         try {
             return await authApiCall(async (sdk) => {
-                // TODO replace with a client call when it can be obtained via OpenAPI documented endpoint
+                // TODO use a client call when available via some endpoint described in OpenAPI
                 const profile = await sdk.axios.get("/api/v1/profile");
                 return profile?.headers?.["gooddata-deployment"];
             });
@@ -444,9 +500,11 @@ export const buildTigerSpecificFunctions = (
     scanDataSource: async (dataSourceId: string, scanRequest: ScanRequest) => {
         try {
             return await authApiCall(async (sdk) => {
-                // TODO replace sdk.axios call with sdk.actions when API is regenerated for Tiger 1.7
-                return await sdk.axios
-                    .post(`/api/v1/actions/dataSources/${dataSourceId}/scan`, scanRequest)
+                return await sdk.scanModel
+                    .scanDataSource({
+                        dataSourceId,
+                        scanRequest,
+                    })
                     .then((res: AxiosResponse) => {
                         return res?.data;
                     });
@@ -599,34 +657,64 @@ export const buildTigerSpecificFunctions = (
                     .getEntityDataSources({
                         id,
                     })
-                    .then((axiosResponse) => ({ data: { data: axiosResponse.data.data } }));
+                    .then((axiosResponse) => ({ data: asDataSourceConnectionInfo(axiosResponse) }));
             });
         } catch (error) {
             return { errorMessage: getDataSourceErrorMessage(error) };
         }
     },
     createDataSource: async (requestData: IDataSourceUpsertRequest) => {
+        const { id, name, password, schema, token, type, url, username } = requestData;
         try {
             return await authApiCall(async (sdk) => {
                 return sdk.entities
                     .createEntityDataSources({
-                        jsonApiDataSourceInDocument: requestData,
+                        jsonApiDataSourceInDocument: {
+                            data: {
+                                attributes: {
+                                    name,
+                                    password,
+                                    schema,
+                                    token,
+                                    type,
+                                    url,
+                                    username,
+                                },
+                                id,
+                                type: JsonApiDataSourceInTypeEnum.DATA_SOURCE,
+                            },
+                        },
                     })
-                    .then((axiosResponse) => ({ data: axiosResponse.data }));
+                    .then((axiosResponse) => ({ data: asDataSourceConnectionInfo(axiosResponse) }));
             });
         } catch (error) {
             return { errorMessage: getDataSourceErrorMessage(error) };
         }
     },
     updateDataSource: async (id: string, requestData: IDataSourceUpsertRequest) => {
+        const { id: requestDataId, name, password, schema, token, type, url, username } = requestData;
         try {
             return await authApiCall(async (sdk) => {
                 return sdk.entities
                     .updateEntityDataSources({
                         id,
-                        jsonApiDataSourceInDocument: requestData,
+                        jsonApiDataSourceInDocument: {
+                            data: {
+                                attributes: {
+                                    name,
+                                    password,
+                                    schema,
+                                    token,
+                                    type,
+                                    url,
+                                    username,
+                                },
+                                id: requestDataId,
+                                type: JsonApiDataSourceInTypeEnum.DATA_SOURCE,
+                            },
+                        },
                     })
-                    .then((axiosResponse) => ({ data: axiosResponse.data }));
+                    .then((axiosResponse) => ({ data: asDataSourceConnectionInfo(axiosResponse) }));
             });
         } catch (error) {
             return { errorMessage: getDataSourceErrorMessage(error) };
@@ -638,7 +726,7 @@ export const buildTigerSpecificFunctions = (
                 await sdk.entities.deleteEntityDataSources({
                     id,
                 });
-                return { data: { successful: true } };
+                return { successful: true };
             });
         } catch (error) {
             return { errorMessage: getDataSourceErrorMessage(error) };
@@ -647,16 +735,16 @@ export const buildTigerSpecificFunctions = (
     testDataSourceConnection: async (connectionData: IDataSourceTestConnectionRequest, id?: string) => {
         try {
             return await authApiCall(async (sdk) => {
-                // TODO replace sdk.axios call with sdk.actions when API is regenerated for Tiger 1.7
-                const TEST_CONNECTION_DATA_SOURCE_URI = "/api/v1/actions/dataSource/test";
-                const TEST_CONNECTION_EXISTING_DATA_SOURCE_URI =
-                    "/api/v1/actions/dataSources/DATA_SOURCE_ID/test";
-                const apiUrl =
+                const promise =
                     id && isEmpty(connectionData)
-                        ? TEST_CONNECTION_EXISTING_DATA_SOURCE_URI.replace("DATA_SOURCE_ID", id)
-                        : TEST_CONNECTION_DATA_SOURCE_URI;
-                const response = await sdk.axios.post(apiUrl, connectionData);
-                return response.data as IDataSourceTestConnectionResponse;
+                        ? sdk.scanModel.testDataSource({
+                              dataSourceId: id,
+                              body: connectionData,
+                          })
+                        : sdk.scanModel.testDataSourceDefinition({
+                              testDefinitionRequest: connectionData,
+                          });
+                return await promise.then((axiosResponse) => axiosResponse.data);
             });
         } catch (error) {
             return {
@@ -668,7 +756,7 @@ export const buildTigerSpecificFunctions = (
     getDataSourceSchemata: async (dataSourceId: string) => {
         return await authApiCall(async (sdk) => {
             return await sdk.scanModel.getDataSourceSchemata({ dataSourceId }).then((res: AxiosResponse) => {
-                return res?.data;
+                return res?.data.schemaNames;
             });
         });
     },

@@ -6,7 +6,7 @@
 
 import { AnonymousAuthProvider } from '@gooddata/sdk-backend-base';
 import { AuthenticationFlow } from '@gooddata/sdk-backend-spi';
-import { DataSourceSchemata } from '@gooddata/api-client-tiger';
+import { DeclarativeAnalytics } from '@gooddata/api-client-tiger';
 import { DeclarativeModel } from '@gooddata/api-client-tiger';
 import { DeclarativePdm } from '@gooddata/api-client-tiger';
 import { DeclarativeTables } from '@gooddata/api-client-tiger';
@@ -20,13 +20,13 @@ import { ITigerClient } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceIdentifierOutWithLinks } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInAttributesTypeEnum } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInDocument } from '@gooddata/api-client-tiger';
-import { JsonApiDataSourceInTypeEnum } from '@gooddata/api-client-tiger';
-import { JsonApiDataSourceOutTypeEnum } from '@gooddata/api-client-tiger';
 import { JsonApiOrganizationOutMetaPermissionsEnum } from '@gooddata/api-client-tiger';
+import { JsonApiWorkspaceInDocument } from '@gooddata/api-client-tiger';
 import { LayoutApiPutWorkspaceLayoutRequest } from '@gooddata/api-client-tiger';
 import { LayoutApiSetPdmLayoutRequest } from '@gooddata/api-client-tiger';
 import { NotAuthenticated } from '@gooddata/sdk-backend-spi';
 import { NotAuthenticatedHandler } from '@gooddata/sdk-backend-spi';
+import { TestDefinitionRequestTypeEnum } from '@gooddata/api-client-tiger';
 
 export { AnonymousAuthProvider }
 
@@ -41,6 +41,15 @@ export class ContextDeferredAuthProvider extends TigerAuthProviderBase {
 
 // @public
 export function createTigerAuthenticationUrl(backend: IAnalyticalBackend, authenticationFlow: AuthenticationFlow, location: Location): string;
+
+// @internal (undocumented)
+export type DataSourceDefinition = JsonApiDataSourceInDocument;
+
+// @internal (undocumented)
+export type DeclarativeAnalyticsModel = DeclarativeAnalytics;
+
+// @internal (undocumented)
+export type DeclarativeLogicalModel = DeclarativeModel;
 
 export { DeclarativeModel }
 
@@ -57,6 +66,9 @@ export interface Entitlement {
 }
 
 export { GenerateLdmRequest }
+
+// @internal (undocumented)
+export type GenerateLogicalModelRequest = GenerateLdmRequest;
 
 // @internal (undocumented)
 export interface IApiToken {
@@ -81,7 +93,7 @@ export interface IDataSource {
 // @internal (undocumented)
 export interface IDataSourceApiResult {
     // (undocumented)
-    data?: IDataSourceConnectionInfo | IDataSourceTestConnectionResponse;
+    data?: IDataSourceConnectionInfo;
     // (undocumented)
     errorMessage?: string;
 }
@@ -89,24 +101,19 @@ export interface IDataSourceApiResult {
 // @internal (undocumented)
 export interface IDataSourceConnectionInfo {
     // (undocumented)
-    data: {
-        attributes: {
-            name: string;
-            schema: string;
-            type: IDataSourceType;
-            url?: string;
-            username?: string;
-        };
-        id: string;
-        meta?: {
-            permissions?: IDataSourcePermission[];
-        };
-        type: JsonApiDataSourceOutTypeEnum;
-    };
+    id: string;
     // (undocumented)
-    links?: {
-        self: string;
-    };
+    name: string;
+    // (undocumented)
+    permissions?: IDataSourcePermission[];
+    // (undocumented)
+    schema: string;
+    // (undocumented)
+    type: IDataSourceType;
+    // (undocumented)
+    url?: string;
+    // (undocumented)
+    username?: string;
 }
 
 // @internal (undocumented)
@@ -122,6 +129,14 @@ export interface IDataSourceDefinition {
 }
 
 // @internal (undocumented)
+export interface IDataSourceDeletedResponse {
+    // (undocumented)
+    errorMessage?: string;
+    // (undocumented)
+    successful?: boolean;
+}
+
+// @internal (undocumented)
 export type IDataSourcePermission = "MANAGE" | "USE";
 
 // @internal (undocumented)
@@ -133,7 +148,7 @@ export interface IDataSourceTestConnectionRequest {
     // (undocumented)
     token?: string;
     // (undocumented)
-    type: string;
+    type: TestDefinitionRequestTypeEnum;
     // (undocumented)
     url: string;
     // (undocumented)
@@ -154,26 +169,37 @@ export type IDataSourceType = JsonApiDataSourceInAttributesTypeEnum;
 // @internal (undocumented)
 export interface IDataSourceUpsertRequest {
     // (undocumented)
-    data: {
-        attributes: {
-            name: string;
-            password?: string;
-            schema: string;
-            token?: string;
-            type: IDataSourceType;
-            url: string;
-            username?: string;
-        };
-        id: string;
-        type: JsonApiDataSourceInTypeEnum;
-    };
+    id: string;
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    password?: string;
+    // (undocumented)
+    schema: string;
+    // (undocumented)
+    token?: string;
+    // (undocumented)
+    type: IDataSourceType;
+    // (undocumented)
+    url: string;
+    // (undocumented)
+    username?: string;
 }
+
+// @internal (undocumented)
+export type OrganizationPermission = JsonApiOrganizationOutMetaPermissionsEnum;
+
+// @internal (undocumented)
+export type PhysicalDataModel = DeclarativePdm;
 
 // @internal (undocumented)
 export interface PublishPdmResult {
     // (undocumented)
     status: string;
 }
+
+// @internal (undocumented)
+export type PutWorkspaceLayoutRequest = LayoutApiPutWorkspaceLayoutRequest;
 
 // @public
 export function redirectToTigerAuthentication(context: IAuthenticationContext, error: NotAuthenticated): void;
@@ -200,6 +226,9 @@ export interface ScanResult {
     pdm: DeclarativeTables;
 }
 
+// @internal (undocumented)
+export type SetPdmLayoutRequest = LayoutApiSetPdmLayoutRequest;
+
 // @public
 export abstract class TigerAuthProviderBase implements IAuthenticationProvider {
     // (undocumented)
@@ -224,34 +253,34 @@ export type TigerSpecificFunctions = {
     isOrganizationAdmin?: () => Promise<boolean>;
     organizationExpiredDate?: () => Promise<string>;
     getOrganizationAllowedOrigins?: (organizationId: string) => Promise<string[]>;
-    getOrganizationPermissions?: (organizationId: string) => Promise<Array<JsonApiOrganizationOutMetaPermissionsEnum>>;
+    getOrganizationPermissions?: (organizationId: string) => Promise<Array<OrganizationPermission>>;
     updateOrganizationAllowedOrigins?: (organizationId: string, updatedOrigins: string[]) => Promise<string[]>;
     getDeploymentVersion?: () => Promise<string>;
     getAllApiTokens?: (userId: string) => Promise<IApiToken[]>;
     generateApiToken?: (userId: string, tokenId: string) => Promise<IApiTokenExtended | undefined>;
     deleteApiToken?: (userId: string, tokenId: string) => Promise<void>;
     someDataSourcesExists?: (filter?: string) => Promise<boolean>;
-    generateLogicalModel?: (dataSourceId: string, generateLogicalModelRequest: GenerateLdmRequest) => Promise<DeclarativeModel>;
+    generateLogicalModel?: (dataSourceId: string, generateLogicalModelRequest: GenerateLogicalModelRequest) => Promise<DeclarativeLogicalModel>;
     scanDataSource?: (dataSourceId: string, scanRequest: ScanRequest) => Promise<ScanResult>;
-    publishPdm?: (dataSourceId: string, declarativePdm: DeclarativePdm) => Promise<PublishPdmResult>;
-    createDemoDataSource?: (sampleDataSource: JsonApiDataSourceInDocument) => Promise<string>;
-    setPdmLayout?: (requestParameters: LayoutApiSetPdmLayoutRequest) => Promise<void>;
+    publishPdm?: (dataSourceId: string, declarativePdm: PhysicalDataModel) => Promise<PublishPdmResult>;
+    createDemoDataSource?: (sampleDataSource: DataSourceDefinition) => Promise<string>;
+    setPdmLayout?: (requestParameters: SetPdmLayoutRequest) => Promise<void>;
     createWorkspace?: (id: string, name: string) => Promise<string>;
     deleteWorkspace?: (id: string) => Promise<void>;
     canDeleteWorkspace?: (id: string) => Promise<boolean>;
-    getWorkspaceLogicalModel?: (id: string) => Promise<DeclarativeModel>;
+    getWorkspaceLogicalModel?: (id: string) => Promise<DeclarativeLogicalModel>;
     getEntitlements?: () => Promise<Array<Entitlement>>;
-    putWorkspaceLayout?: (requestParameters: LayoutApiPutWorkspaceLayoutRequest) => Promise<void>;
+    putWorkspaceLayout?: (requestParameters: PutWorkspaceLayoutRequest) => Promise<void>;
     getAllDataSources?: () => Promise<IDataSourceDefinition[]>;
     getAllDataSourcesIdentifiers?: () => Promise<JsonApiDataSourceIdentifierOutWithLinks[]>;
     getDataSourceById?: (id: string) => Promise<IDataSourceApiResult>;
     createDataSource?: (requestData: IDataSourceUpsertRequest) => Promise<IDataSourceApiResult>;
     updateDataSource?: (id: string, requestData: IDataSourceUpsertRequest) => Promise<IDataSourceApiResult>;
-    deleteDataSource?: (id: string) => Promise<IDataSourceApiResult>;
+    deleteDataSource?: (id: string) => Promise<IDataSourceDeletedResponse>;
     testDataSourceConnection?: (connectionData: IDataSourceTestConnectionRequest, id?: string) => Promise<IDataSourceTestConnectionResponse>;
-    publishLogicalModel?: (workspaceId: string, declarativeModel: DeclarativeModel) => Promise<void>;
-    getDataSourceSchemata?: (dataSourceId: string) => Promise<DataSourceSchemata>;
-    getPdm?: (dataSourceId: string) => Promise<DeclarativePdm>;
+    publishLogicalModel?: (workspaceId: string, declarativeModel: DeclarativeLogicalModel) => Promise<void>;
+    getDataSourceSchemata?: (dataSourceId: string) => Promise<string[]>;
+    getPdm?: (dataSourceId: string) => Promise<PhysicalDataModel>;
 };
 
 // @public
@@ -264,5 +293,8 @@ export class TigerTokenAuthProvider extends TigerAuthProviderBase {
     // (undocumented)
     onNotAuthenticated: (context: IAuthenticationContext, error: NotAuthenticated) => void;
 }
+
+// @internal (undocumented)
+export type WorkspaceDefinition = JsonApiWorkspaceInDocument;
 
 ```
