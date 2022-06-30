@@ -1,8 +1,8 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import React, { KeyboardEventHandler, useCallback, useEffect, useMemo, useRef } from "react";
 import debounce from "debounce-promise";
 import { useIntl } from "react-intl";
-import { ValueType } from "react-select";
+import { OnChangeValue, SelectInstance } from "react-select";
 import AsyncSelect from "react-select/async";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -32,14 +32,14 @@ export const AddGranteeSelect: React.FC<IAddGranteeSelectProps> = (props) => {
     const workspace: string = useWorkspaceStrict();
 
     const intl = useIntl();
-    const selectRef = useRef<AsyncSelect<ISelectOption, false>>(null);
+    const selectRef = useRef<SelectInstance<any, false>>(null);
 
     useEffect(() => {
         selectRef.current.focus();
     }, []);
 
     const onSelect = useCallback(
-        (value: ValueType<ISelectOption, boolean>) => {
+        (value: OnChangeValue<ISelectOption, boolean>) => {
             const grantee = (value as ISelectOption).value;
 
             if (isGranteeItem(grantee)) {

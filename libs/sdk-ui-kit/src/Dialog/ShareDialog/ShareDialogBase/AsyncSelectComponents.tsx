@@ -1,10 +1,12 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import React from "react";
 import {
     components as ReactSelectComponents,
     InputProps,
-    MenuListComponentProps,
+    GroupHeadingProps,
     OptionProps,
+    MenuListProps,
+    NoticeProps,
 } from "react-select";
 import { Typography } from "../../../Typography";
 import { LoadingMask } from "../../../LoadingMask";
@@ -29,9 +31,7 @@ export const LoadingMessageRenderer = (): JSX.Element => {
     );
 };
 
-// missing export type for NoOptionsMessage from react-select
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export const NoOptionsMessageRenderer = (props: any): JSX.Element => {
+export const NoOptionsMessageRenderer = (props: NoticeProps): JSX.Element => {
     return (
         <div className="s-gd-share-dialog-no-option">
             <ReactSelectComponents.NoOptionsMessage {...props} />
@@ -39,7 +39,7 @@ export const NoOptionsMessageRenderer = (props: any): JSX.Element => {
     );
 };
 
-export const MenuListRendered = (props: MenuListComponentProps<ISelectOption, false>): JSX.Element => {
+export const MenuListRendered = (props: MenuListProps<ISelectOption, false>): JSX.Element => {
     return (
         <ReactSelectComponents.MenuList {...props}>
             <div className="s-gd-share-dialog-menu">{props.children}</div>
@@ -103,13 +103,7 @@ export const OptionRenderer = (props: OptionProps<ISelectOption, false>): JSX.El
     );
 };
 
-export interface IGroupHeading {
-    data: {
-        label: string;
-    };
-}
-
-export const GroupHeadingRenderer = (props: IGroupHeading): JSX.Element => {
+export const GroupHeadingRenderer = (props: GroupHeadingProps): JSX.Element => {
     const { label } = props.data;
     return (
         <div className={"gd-share-dialog-select-group-heading"}>
