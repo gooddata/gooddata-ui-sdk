@@ -73,7 +73,7 @@
         "custom-event": "^1.0.1",
         "lodash": "^4.17.19",
         "mapbox-gl": "^2.6.1",
-        "react-intl": "^5.23.0",
+        "react-intl": "^6.0.0",
         "react-measure": "^2.3.0",
         "ts-invariant": "^0.7.3",
         "tslib": "^2.0.0",
