@@ -74,6 +74,7 @@ async function getTigerClient(hostname: string): Promise<ITigerClient> {
         // check if user has access; if the auth is not enabled, it is no problem that user does not have
         // token set
         const hasAccess = await probeAccess(client);
+        const settingsPage = `${hostname.replace(/\/$/, "")}/settings`;
 
         if (!hasAccess) {
             if (hasToken) {
@@ -85,21 +86,21 @@ async function getTigerClient(hostname: string): Promise<ITigerClient> {
             logInfo("To obtain a token value, follow these steps:");
 
             logInfo(
-                "1. You should now see your default browser open at either your Tiger installation's home page " +
+                "1. You should now see your default browser open at either your Tiger developer settings page " +
                     "or login page (if so, please log in).",
             );
 
             logInfo(
-                "2. Once you are on your Tiger installation's home page, please " +
-                    "follow the guide at https://www.gooddata.com/developers/cloud-native/doc/1.2/administration/auth/user-token/#generate-the-api-token " +
-                    "to create a new token (using the Developer Tools way).",
+                "2. Once you are on your Tiger developer settings page please " +
+                    `create a new personal access token by clicking Manage button in Personal access tokens section . ` +
+                    "For other methods to generate the token see: https://www.gooddata.com/developers/cloud-native/doc/latest/administration/auth/user-token ",
             );
 
             logInfo(
                 `3. Once you have the token value, please set the ${TigerApiTokenVariable} environment variable and try again.`,
             );
 
-            await open(hostname, { wait: false });
+            await open(settingsPage, { wait: false });
 
             askedForLogin = true;
             throw new CatalogExportError("API token not set or no longer valid.", 1);
