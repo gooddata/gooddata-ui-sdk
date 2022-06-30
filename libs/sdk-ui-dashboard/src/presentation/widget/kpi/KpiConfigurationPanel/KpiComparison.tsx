@@ -2,46 +2,54 @@
 import React, { useCallback } from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
-import { IKpiComparisonDirection, IKpiComparisonTypeComparison, ObjRef } from "@gooddata/sdk-model";
+import {
+    IKpiComparisonDirection,
+    IKpiComparisonTypeComparison,
+    IKpiWidget,
+    widgetRef,
+} from "@gooddata/sdk-model";
 import { Typography } from "@gooddata/sdk-ui-kit";
 import { KpiComparisonTypeDropdown } from "./KpiComparisonTypeDropdown";
 import { changeKpiWidgetComparison, useDashboardDispatch } from "../../../../model";
 import { KpiComparisonDirectionDropdown } from "./KpiComparisonDirectionDropdown";
 
 interface IKpiComparisonProps {
-    isEnabled: boolean;
-    comparisonDirection: IKpiComparisonDirection;
-    comparisonType: IKpiComparisonTypeComparison;
-    widgetRef: ObjRef;
+    widget: IKpiWidget;
 }
 
 export const KpiComparison: React.FC<IKpiComparisonProps> = (props) => {
-    const { isEnabled, comparisonDirection, comparisonType, widgetRef } = props;
+    const { widget } = props;
+
+    const ref = widgetRef(widget);
+    const comparisonDirection = widget.kpi.comparisonDirection;
+    const comparisonType = widget.kpi.comparisonType;
+    const isEnabled = !!widget.kpi.metric;
+
     const classes = cx({ "is-disabled": !isEnabled });
     const dispatch = useDashboardDispatch();
 
     const handleComparisonTypeChanged = useCallback(
         (newComparisonType: IKpiComparisonTypeComparison) => {
             dispatch(
-                changeKpiWidgetComparison(widgetRef, {
+                changeKpiWidgetComparison(ref, {
                     comparisonDirection,
                     comparisonType: newComparisonType,
                 }),
             );
         },
-        [dispatch, widgetRef, comparisonDirection],
+        [dispatch, ref, comparisonDirection],
     );
 
     const handleComparisonDirectionChanged = useCallback(
         (newComparisonDirection: IKpiComparisonDirection) => {
             dispatch(
-                changeKpiWidgetComparison(widgetRef, {
+                changeKpiWidgetComparison(ref, {
                     comparisonType,
                     comparisonDirection: newComparisonDirection,
                 }),
             );
         },
-        [dispatch, widgetRef, comparisonType],
+        [dispatch, ref, comparisonType],
     );
 
     return (

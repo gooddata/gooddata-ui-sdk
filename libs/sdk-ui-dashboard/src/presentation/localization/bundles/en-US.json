@@ -1313,6 +1313,36 @@
         "comment": "",
         "limit": 0
     },
+    "configurationPanel.unlistedMetric._measure": {
+        "value": "Unlisted measure",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.unlistedMetric._metric": {
+        "value": "Unlisted metric",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.unlistedMetricIconTitle._measure": {
+        "value": "This measure is hidden. Only you can see it.",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.unlistedMetricIconTitle._metric": {
+        "value": "This metric is hidden. Only you can see it.",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.selectMeasurePlaceholder._measure": {
+        "value": "Select measure…",
+        "comment": "Use '…' as one character, not 3 dots ('...').",
+        "limit": 0
+    },
+    "configurationPanel.selectMeasurePlaceholder._metric": {
+        "value": "Select metric…",
+        "comment": "Use '…' as one character, not 3 dots ('...').",
+        "limit": 0
+    },
     "configurationPanel.selectComparisonPlaceholder": {
         "value": "Select comparison…",
         "comment": "Use '…' as one character, not 3 dots ('...').",
@@ -1321,6 +1351,79 @@
     "configurationPanel.selectComparisonDirectionPlaceholder": {
         "value": "Select positive/negative",
         "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.measure._measure": {
+        "value": "Measure",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.measure._metric": {
+        "value": "Metric",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.filterBy": {
+        "value": "Filter by",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.date": {
+        "value": "Date",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.dateAs": {
+        "value": "as",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.vizCantBeFilteredByAttribute|insight": {
+        "value": "The insight cannot be filtered by {attributeName}. Unselect the check box.",
+        "comment": "Don't translate placeholder '{attributeName}'.",
+        "limit": 0
+    },
+    "configurationPanel.vizCantBeFilteredByAttribute|report": {
+        "value": "The report cannot be filtered by {attributeName}. Unselect the check box.",
+        "comment": "Don't translate placeholder '{attributeName}'.",
+        "translate": false,
+        "limit": 0
+    },
+    "configurationPanel.kpiCantBeFilteredByAttribute": {
+        "value": "The kpi cannot be filtered by {attributeName}. Unselect the check box.",
+        "comment": "Don't translate placeholder '{attributeName}'.",
+        "limit": 0
+    },
+    "configurationPanel.vizCantBeFilteredByDate|insight": {
+        "value": "The insight cannot be filtered by Date. Unselect the check box.",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.vizCantBeFilteredByDate|report": {
+        "value": "The report cannot be filtered by Date. Unselect the check box.",
+        "comment": "",
+        "translate": false,
+        "limit": 0
+    },
+    "configurationPanel.kpiCantBeFilteredByDate": {
+        "value": "The kpi cannot be filtered by Date. Unselect the check box.",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.unrelatedVizDateInfo|insight": {
+        "value": "\"{dateDataSet}\" can no longer be applied to the insight. Select a different dimension or edit the insight.",
+        "comment": "Don't translate placeholder '{dateDataSet}' and keep '\"' characters as are.",
+        "limit": 0
+    },
+    "configurationPanel.unrelatedVizDateInfo|report": {
+        "value": "\"{dateDataSet}\" can no longer be applied to the report. Select a different dimension or edit the report.",
+        "comment": "Don't translate placeholder '{dateDataSet}' and keep '\"' characters as are.",
+        "translate": false,
+        "limit": 0
+    },
+    "configurationPanel.unrelatedKpiDateInfo": {
+        "value": "\"{dateDataSet}\" can no longer be applied to the kpi. Select a different dimension or edit the kpi.",
+        "comment": "Don't translate placeholder '{dateDataSet}' and keep '\"' characters as are.",
         "limit": 0
     }
 }

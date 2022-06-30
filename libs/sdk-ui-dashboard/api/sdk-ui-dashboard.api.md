@@ -4622,7 +4622,13 @@ export const selectAlertsMap: OutputSelector<DashboardState, ObjRefMap<IWidgetAl
 export const selectAllCatalogAttributesMap: OutputSelector<DashboardState, ObjRefMap<ICatalogAttribute | ICatalogDateAttribute>, (res1: ICatalogAttribute[], res2: ICatalogDateDataset[], res3: IBackendCapabilities) => ObjRefMap<ICatalogAttribute | ICatalogDateAttribute>>;
 
 // @alpha
+export const selectAllCatalogDateDatasetsMap: OutputSelector<DashboardState, ObjRefMap<ICatalogDateDataset>, (res1: ICatalogDateDataset[], res2: IBackendCapabilities) => ObjRefMap<ICatalogDateDataset>>;
+
+// @alpha
 export const selectAllCatalogDisplayFormsMap: OutputSelector<DashboardState, ObjRefMap<IAttributeDisplayFormMetadataObject>, (res1: ICatalogAttribute[], res2: ICatalogDateDataset[], res3: IBackendCapabilities) => ObjRefMap<IAttributeDisplayFormMetadataObject>>;
+
+// @alpha
+export const selectAllCatalogMeasuresMap: OutputSelector<DashboardState, ObjRefMap<ICatalogMeasure>, (res1: ICatalogMeasure[], res2: IBackendCapabilities) => ObjRefMap<ICatalogMeasure>>;
 
 // @alpha
 export const selectAllCustomWidgets: OutputSelector<DashboardState, ICustomWidget[], (res: ExtendedDashboardWidget[]) => ICustomWidget[]>;
@@ -4866,6 +4872,9 @@ export const selectEnableKPIDashboardSchedule: OutputSelector<DashboardState, bo
 
 // @public
 export const selectEnableKPIDashboardScheduleRecipients: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
+
+// @internal
+export const selectEnableRenamingMeasureToMetric: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
 // @internal
 export const selectEnableRenamingProjectToWorkspace: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;

@@ -41,6 +41,7 @@ export {
     selectHideKpiDrillInEmbedded,
     selectEnableWidgetCustomHeight,
     selectEnableRenamingProjectToWorkspace,
+    selectEnableRenamingMeasureToMetric,
 } from "./config/configSelectors";
 export { PermissionsState } from "./permissions/permissionsState";
 export {
@@ -136,6 +137,8 @@ export {
     selectCatalogMeasures,
     selectAllCatalogAttributesMap,
     selectAllCatalogDisplayFormsMap,
+    selectAllCatalogDateDatasetsMap,
+    selectAllCatalogMeasuresMap,
 } from "./catalog/catalogSelectors";
 export { selectDrillableItems } from "./drill/drillSelectors";
 export { DrillState } from "./drill/drillState";

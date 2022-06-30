@@ -330,3 +330,12 @@ export const selectEnableWidgetCustomHeight = createSelector(selectConfig, (stat
 export const selectEnableRenamingProjectToWorkspace = createSelector(selectConfig, (state) => {
     return !!(state.settings?.enableRenamingProjectToWorkspace ?? true);
 });
+
+/**
+ * Returns whether we should call measures metrics (true) or measures (false).
+ *
+ * @internal
+ */
+export const selectEnableRenamingMeasureToMetric = createSelector(selectConfig, (state) => {
+    return !!(state.settings?.enableRenamingMeasureToMetric ?? false);
+});
