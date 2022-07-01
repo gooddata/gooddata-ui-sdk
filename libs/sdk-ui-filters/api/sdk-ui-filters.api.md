@@ -14,18 +14,15 @@ import { IAllTimeDateFilterOption } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttributeElement } from '@gooddata/sdk-model';
 import { IAttributeFilter } from '@gooddata/sdk-model';
-import { IAttributeMetadataObject } from '@gooddata/sdk-model';
 import { IDateFilter } from '@gooddata/sdk-model';
 import { IElementsQueryAttributeFilter } from '@gooddata/sdk-backend-spi';
 import { IElementsQueryOptions } from '@gooddata/sdk-backend-spi';
 import { IElementsQueryResult } from '@gooddata/sdk-backend-spi';
 import { ILocale } from '@gooddata/sdk-ui';
-import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureValueFilter } from '@gooddata/sdk-model';
 import { IntlShape } from 'react-intl';
 import { IPlaceholder } from '@gooddata/sdk-ui';
 import { IRankingFilter } from '@gooddata/sdk-model';
-import { IRelativeDateFilter } from '@gooddata/sdk-model';
 import { IRelativeDateFilterForm } from '@gooddata/sdk-model';
 import { IRelativeDateFilterPreset } from '@gooddata/sdk-model';
 import { IRelativeDateFilterPresetOfGranularity } from '@gooddata/sdk-model';
@@ -52,20 +49,6 @@ export const AttributeFilterButton: React_2.FC<IAttributeFilterButtonOwnProps>;
 
 // @public (undocumented)
 export type AttributeListItem = IAttributeElement | EmptyListItem;
-
-// @alpha (undocumented)
-export type Callback<T extends object = {}> = (payload: CallbackPayload<T>) => void;
-
-// @alpha (undocumented)
-export type CallbackPayload<T extends object = {}> = T & {
-    correlation?: Correlation;
-};
-
-// @alpha (undocumented)
-export type CallbackRegistration<T extends object = {}> = (cb: Callback<T>) => Unsubscribe;
-
-// @alpha (undocumented)
-export type Correlation = string;
 
 // @public
 export class DateFilter extends React_2.PureComponent<IDateFilterProps, IDateFilterState> {
@@ -219,38 +202,6 @@ export interface IAttributeDropdownListItemProps extends WrappedComponentProps {
     source?: any;
 }
 
-// @alpha
-export interface IAttributeElementLoader {
-    cancelElementLoad(): void;
-    // (undocumented)
-    getAllItems(): IAttributeElement[];
-    // (undocumented)
-    getCountWithCurrentSettings(): number;
-    // (undocumented)
-    getItemsByKey(keys: string[]): IAttributeElement[];
-    // (undocumented)
-    getLoadingStatus(): LoadableStatus;
-    // (undocumented)
-    getSearch(): string;
-    // (undocumented)
-    getTotalCount(): number;
-    loadElementsRange(offset: number, limit: number, correlation?: Correlation): void;
-    // (undocumented)
-    onElementsRangeLoadCancel: CallbackRegistration;
-    // (undocumented)
-    onElementsRangeLoadError: CallbackRegistration<{
-        error: Error;
-    }>;
-    // (undocumented)
-    onElementsRangeLoadStart: CallbackRegistration;
-    // (undocumented)
-    onElementsRangeLoadSuccess: CallbackRegistration<IElementsLoadResult>;
-    setLimitingAttributeFilters(filters: IElementsQueryAttributeFilter[]): void;
-    setLimitingDateFilters(filters: IRelativeDateFilter[]): void;
-    setLimitingMeasures(measures: IMeasure[]): void;
-    setSearch(search: string): void;
-}
-
 // @public
 export interface IAttributeElementsChildren {
     error: any;
@@ -300,33 +251,6 @@ export interface IAttributeFilterButtonOwnProps {
 // @public (undocumented)
 export type IAttributeFilterButtonProps = IAttributeFilterButtonOwnProps & WrappedComponentProps;
 
-// @alpha
-export type IAttributeFilterHandler = IMultiSelectAttributeFilterHandler | ISingleSelectAttributeFilterHandler;
-
-// @alpha
-export type IAttributeFilterHandlerOptions = ISingleSelectAttributeFilterHandlerOptions | IMultiSelectAttributeFilterHandlerOptions;
-
-// @alpha
-export interface IAttributeFilterHandlerOptionsBase {
-    hiddenElements?: string[];
-    staticElements?: IAttributeElement[];
-}
-
-// @alpha
-export interface IAttributeFilterLoader extends IAttributeLoader, IAttributeElementLoader {
-    getFilter(): IAttributeFilter;
-    // (undocumented)
-    onInitCancel: CallbackRegistration;
-    // (undocumented)
-    onInitError: CallbackRegistration<{
-        error: Error;
-    }>;
-    // (undocumented)
-    onInitStart: CallbackRegistration;
-    // (undocumented)
-    onInitSuccess: CallbackRegistration;
-}
-
 // @public (undocumented)
 export interface IAttributeFilterProps {
     backend?: IAnalyticalBackend;
@@ -347,25 +271,6 @@ export interface IAttributeFilterProps {
     title?: string;
     titleWithSelection?: boolean;
     workspace?: string;
-}
-
-// @alpha
-export interface IAttributeLoader {
-    cancelAttributeLoad(): void;
-    getAttribute(): Loadable<IAttributeMetadataObject>;
-    loadAttribute(correlation?: Correlation): void;
-    // (undocumented)
-    onAttributeLoadCancel: CallbackRegistration;
-    // (undocumented)
-    onAttributeLoadError: CallbackRegistration<{
-        error: Error;
-    }>;
-    // (undocumented)
-    onAttributeLoadStart: CallbackRegistration;
-    // (undocumented)
-    onAttributeLoadSuccess: CallbackRegistration<{
-        attribute: IAttributeMetadataObject;
-    }>;
 }
 
 // @beta (undocumented)
@@ -465,38 +370,10 @@ export interface IDateTranslator {
     formatDate: IntlShape["formatDate"];
 }
 
-// @alpha (undocumented)
-export interface IElementsLoadResult {
-    // (undocumented)
-    readonly items: IAttributeElement[];
-    // (undocumented)
-    readonly limit: number;
-    // (undocumented)
-    readonly offset: number;
-    // (undocumented)
-    readonly totalCount: number;
-}
-
 // @public
 export interface IExtendedDateFilterErrors {
     absoluteForm?: IDateFilterAbsoluteFormErrors;
     relativeForm?: IDateFilterRelativeFormErrors;
-}
-
-// @alpha
-export interface IInvertableSelectionHandler<T extends InvertableSelection<any>> {
-    // (undocumented)
-    changeSelection(selection: T): void;
-    // (undocumented)
-    clearSelection(): void;
-    // (undocumented)
-    getSelection(): T;
-    // (undocumented)
-    invertSelection(): void;
-    // (undocumented)
-    onSelectionChanged: CallbackRegistration<{
-        selection: T;
-    }>;
 }
 
 // @beta (undocumented)
@@ -561,27 +438,6 @@ export interface IMessageTranslator {
     formatMessage: IntlShape["formatMessage"];
 }
 
-// @alpha
-export interface IMultiSelectAttributeFilterHandler extends IAttributeFilterLoader, IStagedInvertableSelectionHandler<InvertableAttributeElementSelection> {
-}
-
-// @alpha
-export interface IMultiSelectAttributeFilterHandlerOptions extends IAttributeFilterHandlerOptionsBase {
-    // (undocumented)
-    selectionMode: "multi";
-}
-
-// @alpha (undocumented)
-export type InvertableAttributeElementSelection = InvertableSelection<IAttributeElement>;
-
-// @alpha (undocumented)
-export interface InvertableSelection<T> {
-    // (undocumented)
-    isInverted: boolean;
-    // (undocumented)
-    items: T[];
-}
-
 // @beta (undocumented)
 export interface IRankingFilterDropdownProps {
     // (undocumented)
@@ -640,61 +496,11 @@ export const isAbsoluteDateFilterOption: (obj: unknown) => obj is AbsoluteDateFi
 // @public (undocumented)
 export const isEmptyListItem: (item: Partial<AttributeListItem>) => item is EmptyListItem;
 
-// @alpha
-export interface ISingleSelectAttributeFilterHandler extends IAttributeFilterLoader, IStagedSingleSelectionHandler<IAttributeElement | undefined> {
-}
-
-// @alpha
-export interface ISingleSelectAttributeFilterHandlerOptions extends IAttributeFilterHandlerOptionsBase {
-    // (undocumented)
-    selectionMode: "single";
-}
-
-// @alpha
-export interface ISingleSelectionHandler<T> {
-    // (undocumented)
-    changeSelection(selection: T): void;
-    // (undocumented)
-    getSelection(): T;
-    // (undocumented)
-    onSelectionChanged: CallbackRegistration<{
-        selection: T;
-    }>;
-}
-
 // @public (undocumented)
 export const isNonEmptyListItem: (item: Partial<AttributeListItem>) => item is IAttributeElement;
 
 // @public
 export const isRelativeDateFilterOption: (obj: unknown) => obj is RelativeDateFilterOption;
-
-// @alpha
-export interface IStagedInvertableSelectionHandler<T extends InvertableSelection<any>> extends Omit<IInvertableSelectionHandler<T>, "getSelection"> {
-    commitSelection(): void;
-    // (undocumented)
-    getCommittedSelection(): T;
-    // (undocumented)
-    getWorkingSelection(): T;
-    // (undocumented)
-    onSelectionCommitted: CallbackRegistration<{
-        selection: T;
-    }>;
-    revertSelection(): void;
-}
-
-// @alpha
-export interface IStagedSingleSelectionHandler<T> extends Omit<ISingleSelectionHandler<T>, "getSelection"> {
-    commitSelection(): void;
-    // (undocumented)
-    getCommittedSelection(): T;
-    // (undocumented)
-    getWorkingSelection(): T;
-    // (undocumented)
-    onSelectionCommitted: CallbackRegistration<{
-        selection: T;
-    }>;
-    revertSelection(): void;
-}
 
 // @public
 export const isUiRelativeDateFilterForm: (obj: unknown) => obj is IUiRelativeDateFilterForm;
@@ -718,40 +524,6 @@ export type IWarningMessage = {
     severity: "low" | "medium" | "high";
 };
 
-// @alpha
-export type Loadable<TResult, TError = Error> = LoadablePending | LoadableLoading | LoadableError<TError> | LoadableSuccess<TResult>;
-
-// @alpha
-export type LoadableError<TError> = {
-    result: undefined;
-    error: TError;
-    status: "error";
-};
-
-// @alpha
-export type LoadableLoading = {
-    result: undefined;
-    error: undefined;
-    status: "loading";
-};
-
-// @alpha
-export type LoadablePending = {
-    result: undefined;
-    error: undefined;
-    status: "pending";
-};
-
-// @alpha
-export type LoadableStatus = Loadable<any, any>["status"];
-
-// @alpha
-export type LoadableSuccess<TResult> = {
-    result: TResult;
-    error: undefined;
-    status: "success";
-};
-
 // @beta (undocumented)
 export class MeasureValueFilter extends React_2.PureComponent<IMeasureValueFilterProps, IMeasureValueFilterState> {
     // (undocumented)
@@ -770,12 +542,6 @@ export class MeasureValueFilterDropdown extends React_2.PureComponent<IMeasureVa
     render(): React_2.ReactNode;
 }
 
-// @alpha (undocumented)
-export function newAttributeFilterHandler(backend: IAnalyticalBackend, workspace: string, filter: IAttributeFilter, options: ISingleSelectAttributeFilterHandlerOptions): ISingleSelectAttributeFilterHandler;
-
-// @alpha (undocumented)
-export function newAttributeFilterHandler(backend: IAnalyticalBackend, workspace: string, filter: IAttributeFilter, options: IMultiSelectAttributeFilterHandlerOptions): IMultiSelectAttributeFilterHandler;
-
 // @beta (undocumented)
 export const RankingFilter: React_2.FC<IRankingFilterProps>;
 
@@ -784,9 +550,6 @@ export const RankingFilterDropdown: React_2.FC<IRankingFilterDropdownProps>;
 
 // @public
 export type RelativeDateFilterOption = IUiRelativeDateFilterForm | IRelativeDateFilterPreset;
-
-// @alpha (undocumented)
-export type Unsubscribe = () => void;
 
 // @beta (undocumented)
 export type WarningMessage = string | IWarningMessage;
