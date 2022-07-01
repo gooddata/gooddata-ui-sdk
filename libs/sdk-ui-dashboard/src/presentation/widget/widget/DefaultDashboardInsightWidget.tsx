@@ -143,6 +143,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
                 "type-visualization",
                 "gd-dashboard-view-widget",
                 getVisTypeCssClass(widget.type, visType),
+                { "is-selected": isSelected },
             )}
             screen={screen}
         >
