@@ -6,7 +6,7 @@ import { IKpiWidget } from "@gooddata/sdk-model";
 import { Typography } from "@gooddata/sdk-ui-kit";
 import noop from "lodash/noop";
 
-import { AttributeFilterConfiguration } from "./AttributeFilterConfiguration";
+import { AttributeFilterConfiguration } from "../../common";
 import { KpiComparison } from "./KpiComparison";
 import { KpiWidgetDateDatasetFilter } from "./KpiWidgetDateDatasetFilter";
 import { KpiMetricDropdown } from "./KpiMetricDropdown";

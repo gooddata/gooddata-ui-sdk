@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import {
     isDashboardAttributeFilterReference,
     isInsightWidget,
@@ -31,6 +31,12 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
     const attributeFilters = useDashboardSelector(selectFilterContextAttributeFilters);
     const dfMap = useDashboardSelector(selectAttributeFilterDisplayFormsMap);
     const attrMap = useDashboardSelector(selectAllCatalogAttributesMap);
+
+    const notAppliedFiltersRefs = useMemo(() => {
+        return widget.ignoreDashboardFilters.map((ref) => {
+            return isDashboardAttributeFilterReference(ref) ? ref.displayForm : ref.dataSet;
+        });
+    }, [widget]);
 
     const dispatch = useDashboardDispatch();
 
@@ -75,7 +81,7 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
                         attributeRef={displayForm.attribute}
                         isIgnored={isIgnored}
                         title={attribute.attribute.title}
-                        notAppliedFiltersRefs={[]} // TODO
+                        notAppliedFiltersRefs={notAppliedFiltersRefs}
                         recentlyCheckedFilters={[]} // TODO
                         onIgnoreChange={handleIgnoreChanged}
                         widget={widget}
