@@ -36,8 +36,11 @@ export function* loadDateDatasetsForInsight(
      *  then for sub-types. if whole-catalog cache is available and another request to load catalog with just a subset
      *  of types is done, caching layer can satisfy everything from memory.
      */
-    const catalogLoader = backend.workspace(workspace).catalog().load;
-    const catalog: PromiseFnReturnType<typeof catalogLoader> = yield call(catalogLoader);
+    const catalogLoader = backend.workspace(workspace).catalog();
+    const catalog: PromiseFnReturnType<typeof catalogLoader.load> = yield call([
+        catalogLoader,
+        catalogLoader.load,
+    ]);
 
     /*
      * You may remember from KD that the code to get available date datasets was also calculating the
@@ -61,11 +64,10 @@ export function* loadDateDatasetsForInsight(
         insight: insight,
         excludeTags: (availability.excludeObjectsWithTags ?? []).map((tag) => idRef(tag)),
         includeTags: (availability.includeObjectsWithTags ?? []).map((tag) => idRef(tag)),
-    }).load;
+    });
 
-    const loadedAvailableDateDataSets: PromiseFnReturnType<typeof availableDateDataSetsLoader> = yield call(
-        availableDateDataSetsLoader,
-    );
+    const loadedAvailableDateDataSets: PromiseFnReturnType<typeof availableDateDataSetsLoader.load> =
+        yield call([availableDateDataSetsLoader, availableDateDataSetsLoader.load]);
 
     /*
      * You may also remember from KD that the code was cleaning up the relevance values from the available date
