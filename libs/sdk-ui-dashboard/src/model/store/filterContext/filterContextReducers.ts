@@ -445,6 +445,10 @@ const updateConnectingAttributesOnFilterAdded: FilterContextReducer<
             "Attempt to edit uninitialized or incorrectly initialized filter context",
         );
 
+        if (!connectingAttributeMatrix[neighborFilterIndex]) {
+            connectingAttributeMatrix[neighborFilterIndex] = [];
+        }
+
         connectingAttributeMatrix[neighborFilterIndex][index] = connectingAttribute.connectingAttributes;
         connectingAttributeMatrix[index][neighborFilterIndex] = connectingAttribute.connectingAttributes;
     }
