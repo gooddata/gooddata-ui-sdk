@@ -27,7 +27,7 @@ import {
 import { dashboardLayoutSanitize } from "../../../../_staging/dashboard/dashboardLayout";
 import { SagaIterator } from "redux-saga";
 import { resolveFilterDisplayForms } from "../../../utils/filterResolver";
-import { call } from "redux-saga/effects";
+import { call, select } from "redux-saga/effects";
 import { DashboardContext, PrivateDashboardContext } from "../../../types/commonTypes";
 import { ObjRefMap } from "../../../../_staging/metadata/objRefMap";
 import { ExtendedDashboardWidget } from "../../../types/layoutTypes";
@@ -38,6 +38,7 @@ import update from "lodash/fp/update";
 import isEmpty from "lodash/isEmpty";
 import { loadFiltersToIndexMapping } from "../initializeDashboardHandler/loadFiltersToIndexMapping";
 import { loadConnectingAttributesMatrix } from "../initializeDashboardHandler/loadConnectingAttributesMatrix";
+import { selectCatalogAttributes } from "../../../store/catalog/catalogSelectors";
 
 export const EmptyDashboardLayout: IDashboardLayout<IWidget> = {
     type: "IDashboardLayout",
@@ -155,6 +156,10 @@ export function* actionsToInitializeExistingDashboard(
         displayForms,
     );
 
+    const catalogAttributes: ReturnType<typeof selectCatalogAttributes> = yield select(
+        selectCatalogAttributes,
+    );
+
     const attributeFilters = filterContextDefinition.filters.filter(isDashboardAttributeFilter);
 
     const filterToIndexMap: ReturnType<typeof loadFiltersToIndexMapping> = yield call(
@@ -166,7 +171,7 @@ export function* actionsToInitializeExistingDashboard(
         ctx.backend,
         ctx.workspace,
         attributeFilters,
-        Array.from(attributeFilterDisplayForms),
+        catalogAttributes,
     );
     /*
      * NOTE: cannot do without the cast here. The layout in IDashboard is parameterized with IDashboardWidget
