@@ -258,5 +258,9 @@
     "configurationPanel.vizCantBeFilteredByDate": "此洞察无法按日期筛选。请取消选中该复选框。",
     "configurationPanel.kpiCantBeFilteredByDate": "KPI 无法按日期筛选。请取消选中该复选框。",
     "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\"无法再应用于该洞察。请选择其他范围或编辑此洞察。",
-    "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\"无法再应用于该 KPI。请选择其他范围或编辑该 KPI。"
+    "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\"无法再应用于该 KPI。请选择其他范围或编辑该 KPI。",
+    "gs.date.date-dataset.recommended": "已推荐",
+    "gs.date.date-dataset.other": "其他",
+    "gs.date.date-dataset.related": "相关",
+    "gs.date.date-dataset.unrelated": "无关"
 }

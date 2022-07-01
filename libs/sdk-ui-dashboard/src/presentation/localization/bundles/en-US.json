@@ -1430,5 +1430,25 @@
         "value": "\"{dateDataSet}\" can no longer be applied to the kpi. Select a different dimension or edit the kpi.",
         "comment": "Don't translate placeholder '{dateDataSet}' and keep '\"' characters as are.",
         "limit": 0
+    },
+    "gs.date.date-dataset.recommended": {
+        "value": "Recommended",
+        "comment": "",
+        "limit": 0
+    },
+    "gs.date.date-dataset.other": {
+        "value": "Other",
+        "comment": "",
+        "limit": 0
+    },
+    "gs.date.date-dataset.related": {
+        "value": "Related",
+        "comment": "",
+        "limit": 0
+    },
+    "gs.date.date-dataset.unrelated": {
+        "value": "Unrelated",
+        "comment": "",
+        "limit": 0
     }
 }

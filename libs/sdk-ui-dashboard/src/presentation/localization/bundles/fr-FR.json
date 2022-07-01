@@ -258,5 +258,9 @@
     "configurationPanel.vizCantBeFilteredByDate": "La perception ne peut pas être filtrée par Date. Décochez la case.",
     "configurationPanel.kpiCantBeFilteredByDate": "Le KPI ne peut pas être filtré par Date. Décochez la case.",
     "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\" ne peut plus être appliqué à la perception. Sélectionnez une dimension différente ou éditez la perception.",
-    "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\" ne peut plus être appliqué au KPI. Sélectionnez une dimension différente ou modifiez le KPI."
+    "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\" ne peut plus être appliqué au KPI. Sélectionnez une dimension différente ou modifiez le KPI.",
+    "gs.date.date-dataset.recommended": "Recommandé",
+    "gs.date.date-dataset.other": "Autre",
+    "gs.date.date-dataset.related": "Associé",
+    "gs.date.date-dataset.unrelated": "Non associé"
 }

@@ -258,5 +258,9 @@
     "configurationPanel.vizCantBeFilteredByDate": "Het Inzicht kan niet worden gefilterd volgens Datum, verwijder het keuzevinkje.",
     "configurationPanel.kpiCantBeFilteredByDate": "De KPI kan niet worden gefilterd op Datum. Vink het selectievakje af.",
     "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\" kan niet langer op het inzicht worden toegepast. Selecteer een andere dimensie of bewerk het inzicht.",
-    "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\" kan niet langer op de KPI worden toegepast. Selecteer een andere dimensie of bewerk de KPI."
+    "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\" kan niet langer op de KPI worden toegepast. Selecteer een andere dimensie of bewerk de KPI.",
+    "gs.date.date-dataset.recommended": "Aanbevolen",
+    "gs.date.date-dataset.other": "Overige",
+    "gs.date.date-dataset.related": "Verwant",
+    "gs.date.date-dataset.unrelated": "Niet verwant"
 }

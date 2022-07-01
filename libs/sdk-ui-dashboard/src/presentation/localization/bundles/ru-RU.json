@@ -258,5 +258,9 @@
     "configurationPanel.vizCantBeFilteredByDate": "Этот анализ нельзя фильтровать по дате. Снимите флажок.",
     "configurationPanel.kpiCantBeFilteredByDate": "Этот КПЭ нельзя фильтровать по дате. Снимите флажок.",
     "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\" больше нельзя применять к анализу. Выберите другое измерение или отредактируйте анализ.",
-    "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\" больше нельзя применять к КПЭ. Выберите другое измерение или отредактируйте анализ."
+    "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\" больше нельзя применять к КПЭ. Выберите другое измерение или отредактируйте анализ.",
+    "gs.date.date-dataset.recommended": "Рекомендуемые",
+    "gs.date.date-dataset.other": "Прочие",
+    "gs.date.date-dataset.related": "Связанные",
+    "gs.date.date-dataset.unrelated": "Несвязанные"
 }

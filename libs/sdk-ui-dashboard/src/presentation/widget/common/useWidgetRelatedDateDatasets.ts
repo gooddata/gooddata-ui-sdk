@@ -1,4 +1,5 @@
 // (C) 2022 GoodData Corporation
+import { useMemo } from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
     ICatalogDateDataset,
@@ -54,16 +55,6 @@ function getOneMetricToInsight(metricRef: ObjRef): IInsightDefinition {
     );
 }
 
-const getResolvedMetricDataSets = (
-    backend: IAnalyticalBackend,
-    workspace: string,
-    metricRef: ObjRef,
-    tagsConfiguration: ObjectAvailabilityConfig,
-): Promise<ICatalogDateDataset[]> => {
-    const insight = getOneMetricToInsight(metricRef);
-    return loadDateDataSets(backend, workspace, insight, tagsConfiguration);
-};
-
 export function useKpiWidgetRelatedDateDatasets(
     kpiWidget: IKpiWidget,
 ): UseCancelablePromiseState<ICatalogDateDataset[], GoodDataSdkError> {
@@ -71,12 +62,17 @@ export function useKpiWidgetRelatedDateDatasets(
     const workspace = useWorkspaceStrict();
 
     const tagsConfiguration = useDashboardSelector(selectObjectAvailabilityConfig);
+    const metricRef = kpiWidget.kpi.metric;
+    const insight = useMemo(() => getOneMetricToInsight(metricRef), [metricRef]);
 
-    return useCancelablePromise({
-        promise: () => {
-            return getResolvedMetricDataSets(backend, workspace, kpiWidget.kpi.metric, tagsConfiguration);
+    return useCancelablePromise(
+        {
+            promise: () => {
+                return loadDateDataSets(backend, workspace, insight, tagsConfiguration);
+            },
         },
-    });
+        [backend, workspace, insight, tagsConfiguration],
+    );
 }
 
 export function useInsightWidgetRelatedDateDatasets(
@@ -89,9 +85,12 @@ export function useInsightWidgetRelatedDateDatasets(
     const insight = useDashboardSelector(selectInsightByRef(insightWidget.insight));
     invariant(insight, "Inconsistent state in useInsightWidgetRelatedDateDatasets");
 
-    return useCancelablePromise({
-        promise: () => {
-            return loadDateDataSets(backend, workspace, insight, tagsConfiguration);
+    return useCancelablePromise(
+        {
+            promise: () => {
+                return loadDateDataSets(backend, workspace, insight, tagsConfiguration);
+            },
         },
-    });
+        [backend, workspace, insight, tagsConfiguration],
+    );
 }

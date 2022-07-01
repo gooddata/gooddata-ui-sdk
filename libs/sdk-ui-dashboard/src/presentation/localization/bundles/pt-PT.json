@@ -258,5 +258,9 @@
     "configurationPanel.vizCantBeFilteredByDate": "Não é possível filtrar o insight por Data. Desmarque a caixa de verificação.",
     "configurationPanel.kpiCantBeFilteredByDate": "Não é possível filtrar o kpi por Data. Desmarque a caixa de verificação.",
     "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\" já não pode ser aplicado ao insight. Selecione uma dimensão diferente ou edite o insight.",
-    "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\" já não pode ser aplicado ao kpi. Selecione uma dimensão diferente ou edite o kpi."
+    "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\" já não pode ser aplicado ao kpi. Selecione uma dimensão diferente ou edite o kpi.",
+    "gs.date.date-dataset.recommended": "Recomendado",
+    "gs.date.date-dataset.other": "Outros",
+    "gs.date.date-dataset.related": "Relacionado",
+    "gs.date.date-dataset.unrelated": "Não relacionado"
 }

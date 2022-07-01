@@ -42,7 +42,7 @@ export const DateDatasetFilter: React.FC<IDateDatasetFilterProps> = (props) => {
     const selectedDateDataset = widget.dateDataSet && catalogDatasetsMap.get(widget.dateDataSet);
     const selectedDateDatasetHidden = false; // TODO how to get this...
 
-    const isDateFilterEnabled = true; // TODO how to get this...
+    const isDateFilterEnabled = !!widget.dateDataSet;
 
     const dispatch = useDashboardDispatch();
 

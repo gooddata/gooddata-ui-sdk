@@ -1,10 +1,9 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { ICatalogDateDataset, ObjRef, objRefToString } from "@gooddata/sdk-model";
-import { useIntl } from "react-intl";
+import { defineMessages, useIntl } from "react-intl";
 import cx from "classnames";
 import {
-    DateDatasetsListItem,
     Dropdown,
     DropdownButton,
     DropdownList,
@@ -12,10 +11,64 @@ import {
     isDateDatasetHeader,
     IDateDataset,
     IAlignPoint,
+    ShortenedText,
 } from "@gooddata/sdk-ui-kit";
+import { stringUtils } from "@gooddata/util";
 
 const DEFAULT_HYPHEN_CHAR = "-";
 const alignPoints: IAlignPoint[] = [{ align: "bl tl" }, { align: "tl bl" }];
+const tooltipAlignPoints: IAlignPoint[] = [
+    { align: "cl cr", offset: { x: -10, y: 0 } },
+    { align: "cr cl", offset: { x: 10, y: 0 } },
+];
+
+interface IDateDatasetsListItemProps {
+    id?: string;
+    title?: string;
+    isHeader?: boolean;
+    isSelected?: boolean;
+    isUnrelated?: boolean;
+    onClick: (e: React.MouseEvent<HTMLDivElement>) => void;
+}
+
+// work around the evil DateDatasetsListItem from kit that magically translates SOME of the items' titles
+// this way the i18n actually has a chance to detect these
+const dateDatasetHeaderMessages = defineMessages({
+    "gs.date.date-dataset.recommended": { id: "gs.date.date-dataset.recommended" },
+    "gs.date.date-dataset.other": { id: "gs.date.date-dataset.other" },
+    "gs.date.date-dataset.related": { id: "gs.date.date-dataset.related" },
+    "gs.date.date-dataset.unrelated": { id: "gs.date.date-dataset.unrelated" },
+});
+
+const DateDatasetsListItem: React.FC<IDateDatasetsListItemProps> = ({
+    id,
+    title = "",
+    isHeader,
+    isSelected,
+    isUnrelated,
+    onClick,
+}) => {
+    if (isHeader) {
+        return <div className="gd-list-item gd-list-item-header">{title}</div>;
+    }
+
+    const classNames = cx(
+        "gd-list-item",
+        "gd-list-item-shortened",
+        `s-${id}`,
+        `s-${stringUtils.simplifyText(title)}`,
+        {
+            "is-selected": isSelected,
+            "is-unrelated": isUnrelated,
+        },
+    );
+
+    return (
+        <div className={classNames} onClick={onClick}>
+            <ShortenedText tooltipAlignPoints={tooltipAlignPoints}>{title}</ShortenedText>
+        </div>
+    );
+};
 
 export interface IDateDatasetDropdownProps {
     autoOpen?: boolean;
@@ -132,7 +185,11 @@ export const DateDatasetDropdown: React.FC<IDateDatasetDropdownProps> = (props) 
                                 !isDateDatasetHeader(item) && unrelatedDateDataSetId === item.id;
                             return (
                                 <DateDatasetsListItem
-                                    title={item.title}
+                                    title={
+                                        isHeader
+                                            ? intl.formatMessage(dateDatasetHeaderMessages[item.title])
+                                            : item.title
+                                    }
                                     isHeader={isHeader}
                                     isSelected={isSelected}
                                     isUnrelated={isUnrelated}

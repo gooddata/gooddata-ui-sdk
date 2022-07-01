@@ -258,5 +258,9 @@
     "configurationPanel.vizCantBeFilteredByDate": "No se puede filtrar la perspectiva por fecha. Desmarque la casilla de verificación.",
     "configurationPanel.kpiCantBeFilteredByDate": "El KPI no se puede filtrar por fecha. Deseleccione la casilla de verificación.",
     "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\" no puede aplicarse más a la perspectiva. Seleccione una dimensión diferente o edite la perspectiva.",
-    "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\" ya no se puede aplicar al KPI. Seleccione otra dimensión o edite el KPI."
+    "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\" ya no se puede aplicar al KPI. Seleccione otra dimensión o edite el KPI.",
+    "gs.date.date-dataset.recommended": "Recomendado",
+    "gs.date.date-dataset.other": "Otros",
+    "gs.date.date-dataset.related": "Relacionado",
+    "gs.date.date-dataset.unrelated": "No relacionado"
 }

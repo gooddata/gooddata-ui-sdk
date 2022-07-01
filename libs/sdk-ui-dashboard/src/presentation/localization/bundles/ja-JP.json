@@ -258,5 +258,9 @@
     "configurationPanel.vizCantBeFilteredByDate": "解析を日付によりフィルターできません。チェックボックスをオフにしてください。",
     "configurationPanel.kpiCantBeFilteredByDate": "KPIは日付でフィルターできません。チェックボックスをオフにしてください。",
     "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\" は解析に適用できなくなりました。別のディメンションを選ぶか、解析を編集してください。",
-    "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\"はKPIに適用できなくなりました。別のディメンションを選ぶか、KPIを編集してください。"
+    "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\"はKPIに適用できなくなりました。別のディメンションを選ぶか、KPIを編集してください。",
+    "gs.date.date-dataset.recommended": "お勧め",
+    "gs.date.date-dataset.other": "その他",
+    "gs.date.date-dataset.related": "関係する",
+    "gs.date.date-dataset.unrelated": "無関係な"
 }
