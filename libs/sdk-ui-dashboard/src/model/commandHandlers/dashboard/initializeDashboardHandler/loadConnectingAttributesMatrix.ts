@@ -4,12 +4,7 @@ import compact from "lodash/compact";
 import flatMap from "lodash/flatMap";
 import uniqWith from "lodash/uniqWith";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import {
-    areObjRefsEqual,
-    IAttributeDisplayFormMetadataObject,
-    IDashboardAttributeFilter,
-    ObjRef,
-} from "@gooddata/sdk-model";
+import { areObjRefsEqual, ICatalogAttribute, IDashboardAttributeFilter, ObjRef } from "@gooddata/sdk-model";
 
 import { PromiseReturnType } from "../../../types/sagas";
 import { ConnectingAttributeMatrix } from "../../../types/attributeFilterTypes";
@@ -23,7 +18,7 @@ export function* loadConnectingAttributesMatrix(
     backend: IAnalyticalBackend,
     workspace: string,
     filters: IDashboardAttributeFilter[],
-    displayForms: IAttributeDisplayFormMetadataObject[],
+    catalogAttributes: ICatalogAttribute[],
 ) {
     /**
      * Load attributes for the display forms used within the filter context.
@@ -31,7 +26,11 @@ export function* loadConnectingAttributesMatrix(
     const attributes = compact(
         filters.map(
             (filter) =>
-                displayForms.find((df) => areObjRefsEqual(df, filter.attributeFilter.displayForm))?.attribute,
+                catalogAttributes.find((catalogAttribute) =>
+                    catalogAttribute.displayForms.some((df) =>
+                        areObjRefsEqual(df, filter.attributeFilter.displayForm),
+                    ),
+                )?.attribute.ref,
         ),
     );
 
@@ -50,6 +49,10 @@ export function* loadConnectingAttributesMatrix(
 
         return pairs;
     });
+
+    if (!attributePairs.length) {
+        return [];
+    }
 
     /**
      * Load connecting attributes refs for all attribute pairs.
@@ -82,7 +85,7 @@ export function* loadConnectingAttributesMatrix(
             connectingAttributeMatrix[column] = connectingAttributeMatrix[column]
                 ? connectingAttributeMatrix[column]
                 : [];
-            const connectingAttributes = connectingAttributeRefs[connectingAttributeIndex++].map((ref) =>
+            const connectingAttributes = connectingAttributeRefs[connectingAttributeIndex++]?.map((ref) =>
                 connectingAttributeMeta.find((meta) => areObjRefsEqual(meta.ref, ref)),
             );
 
