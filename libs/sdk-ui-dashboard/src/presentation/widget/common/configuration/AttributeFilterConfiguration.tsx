@@ -48,15 +48,15 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
         (filterDisplayFormRef: ObjRef, ignored: boolean) => {
             if (isInsightWidget(widget)) {
                 if (ignored) {
-                    dispatch(ignoreFilterOnInsightWidget(widgetRef(widget), filterDisplayFormRef));
-                } else {
                     dispatch(unignoreFilterOnInsightWidget(widgetRef(widget), filterDisplayFormRef));
+                } else {
+                    dispatch(ignoreFilterOnInsightWidget(widgetRef(widget), filterDisplayFormRef));
                 }
             } else {
                 if (ignored) {
-                    dispatch(ignoreFilterOnKpiWidget(widgetRef(widget), filterDisplayFormRef));
-                } else {
                     dispatch(unignoreFilterOnKpiWidget(widgetRef(widget), filterDisplayFormRef));
+                } else {
+                    dispatch(ignoreFilterOnKpiWidget(widgetRef(widget), filterDisplayFormRef));
                 }
             }
         },
