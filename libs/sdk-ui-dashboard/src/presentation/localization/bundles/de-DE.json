@@ -231,6 +231,7 @@
     "filterBar.filter.drop": "zum Hinzufügen loslassen",
     "filterBar.filter.addFilterPlaceholder": "{icon} hierher ziehen",
     "filterBar.filter.dropzone.tooltip": "Ziehen Sie den Attributfilter hierher.",
+    "configurationPanel.title": "Konfiguration",
     "configurationPanel.comparison": "Vergleich",
     "configurationPanel.compareWith": "Vergleichen mit",
     "configurationPanel.increasingNumberIs": "Steigender Wert ist",

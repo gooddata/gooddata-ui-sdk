@@ -1273,6 +1273,11 @@
         "comment": "",
         "limit": 0
     },
+    "configurationPanel.title": {
+        "value": "Configuration",
+        "comment": "Label of widget configuration section",
+        "limit": 0
+    },
     "configurationPanel.comparison": {
         "value": "Comparison",
         "comment": "",

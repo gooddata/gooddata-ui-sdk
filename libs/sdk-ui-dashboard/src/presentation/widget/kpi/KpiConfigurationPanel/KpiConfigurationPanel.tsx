@@ -4,11 +4,13 @@ import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import { IKpiWidget } from "@gooddata/sdk-model";
 import { Typography } from "@gooddata/sdk-ui-kit";
+import noop from "lodash/noop";
 
 import { AttributeFilterConfiguration } from "./AttributeFilterConfiguration";
 import { KpiComparison } from "./KpiComparison";
-import { KpiWidgetDateDatasetFilter } from "./DateDatasetFilter";
+import { KpiWidgetDateDatasetFilter } from "./KpiWidgetDateDatasetFilter";
 import { KpiMetricDropdown } from "./KpiMetricDropdown";
+import { KpiConfigurationPanelHeader } from "./KpiConfigurationPanelHeader";
 
 interface IKpiConfigurationPanelProps {
     widget: IKpiWidget;
@@ -24,21 +26,30 @@ export const KpiConfigurationPanel: React.FC<IKpiConfigurationPanelProps> = (pro
     const filtersClasses = cx({ "is-disabled": !metric });
 
     return (
-        <div className={configurationCategoryClasses}>
-            {/* {this.renderMessages()} */}
+        <>
+            <KpiConfigurationPanelHeader
+                onCloseButtonClick={
+                    noop // TODO
+                }
+            />
+            <div className="configuration-panel">
+                <div className={configurationCategoryClasses}>
+                    {/* {this.renderMessages()} */}
 
-            <Typography tagName="h3">
-                <FormattedMessage id="configurationPanel.measure" />
-            </Typography>
-            <KpiMetricDropdown widget={widget} />
+                    <Typography tagName="h3">
+                        <FormattedMessage id="configurationPanel.measure" />
+                    </Typography>
+                    <KpiMetricDropdown widget={widget} />
 
-            <Typography tagName="h3" className={filtersClasses}>
-                <FormattedMessage id="configurationPanel.filterBy" />
-            </Typography>
-            <KpiWidgetDateDatasetFilter widget={widget} />
-            <AttributeFilterConfiguration widget={widget} />
-            <KpiComparison widget={widget} />
-            {/* {this.renderDrillInto()} */}
-        </div>
+                    <Typography tagName="h3" className={filtersClasses}>
+                        <FormattedMessage id="configurationPanel.filterBy" />
+                    </Typography>
+                    <KpiWidgetDateDatasetFilter widget={widget} />
+                    <AttributeFilterConfiguration widget={widget} />
+                    <KpiComparison widget={widget} />
+                    {/* {this.renderDrillInto()} */}
+                </div>
+            </div>
+        </>
     );
 };

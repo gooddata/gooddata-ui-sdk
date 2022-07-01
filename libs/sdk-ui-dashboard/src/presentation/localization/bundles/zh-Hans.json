@@ -231,6 +231,7 @@
     "filterBar.filter.drop": "放置即可添加",
     "filterBar.filter.addFilterPlaceholder": "拖动 {icon} 至此处",
     "filterBar.filter.dropzone.tooltip": "将属性筛选器拖至此处。",
+    "configurationPanel.title": "配置",
     "configurationPanel.comparison": "比较",
     "configurationPanel.compareWith": "对比于",
     "configurationPanel.increasingNumberIs": "增加的数字是",

@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { IKpiWidget, ObjRef, widgetRef } from "@gooddata/sdk-model";
 import { useWorkspaceStrict } from "@gooddata/sdk-ui";
 
@@ -23,12 +23,14 @@ export const KpiMetricDropdown: React.FC<IKpiMetricDropdownProps> = (props) => {
         [dispatch, widget],
     );
 
+    const selectedItems = useMemo(() => [metric], [metric]);
+
     return (
         <MetricDropdown
             workspace={workspace}
             openOnInit={!metric}
             bodyClassName="configuration-dropdown metrics-list s-metrics-list"
-            selectedItems={[metric]}
+            selectedItems={selectedItems}
             onSelect={handleMeasureChanged}
         />
     );

@@ -231,6 +231,7 @@
     "filterBar.filter.drop": "largar para adicionar",
     "filterBar.filter.addFilterPlaceholder": "Arraste o {icon} para aqui",
     "filterBar.filter.dropzone.tooltip": "Arraste o filtro de atributos para aqui.",
+    "configurationPanel.title": "Configuração",
     "configurationPanel.comparison": "Comparação",
     "configurationPanel.compareWith": "Comparar com",
     "configurationPanel.increasingNumberIs": "Número crescente é",

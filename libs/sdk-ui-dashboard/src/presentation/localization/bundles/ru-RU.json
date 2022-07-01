@@ -231,6 +231,7 @@
     "filterBar.filter.drop": "сбросьте, чтобы добавить",
     "filterBar.filter.addFilterPlaceholder": "Перетащите {icon} сюда",
     "filterBar.filter.dropzone.tooltip": "Перетащите фильтр атрибутов сюда.",
+    "configurationPanel.title": "Конфигурация",
     "configurationPanel.comparison": "Сравнение",
     "configurationPanel.compareWith": "Сравнить с",
     "configurationPanel.increasingNumberIs": "Увеличение числа",

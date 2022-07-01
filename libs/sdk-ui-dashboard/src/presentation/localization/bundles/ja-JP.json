@@ -231,6 +231,7 @@
     "filterBar.filter.drop": "ドロップして追加",
     "filterBar.filter.addFilterPlaceholder": "{icon} をここにドラッグ",
     "filterBar.filter.dropzone.tooltip": "アトリビュートフィルターをここにドラッグします。",
+    "configurationPanel.title": "設定",
     "configurationPanel.comparison": "比較",
     "configurationPanel.compareWith": "次と比較:",
     "configurationPanel.increasingNumberIs": "増加している数は",
