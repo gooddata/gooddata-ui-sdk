@@ -46,6 +46,10 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
     }
 }
 
+.gd-attribute-filter-list-item__next {
+    min-height: 28px;
+}
+
 .gd-attribute-filter-actions__next {
     text-align: right;
     margin-top: 8px;

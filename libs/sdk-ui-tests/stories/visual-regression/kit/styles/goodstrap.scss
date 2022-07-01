@@ -3,6 +3,12 @@
 @import "./library";
 @import "./theme";
 
+.library-component-light {
+    color: var(--gd-palette-complementary-8, #464e56);
+    font-size: 14px;
+    font-family: gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif;
+}
+
 .library-component {
     margin: 20px;
     padding: 0;

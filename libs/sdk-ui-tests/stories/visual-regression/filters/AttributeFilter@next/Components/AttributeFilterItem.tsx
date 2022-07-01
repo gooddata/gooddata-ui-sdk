@@ -30,7 +30,7 @@ const AttributeFilterListItemExamples = (): JSX.Element => {
     return (
         <InternalIntlWrapper>
             <div style={{ width: 300 }}>
-                <div className="library-component screenshot-target">
+                <div className="library-component-light screenshot-target">
                     <h4>AttributeFilterItem unselected</h4>
                     <AttributeFilterListItem
                         item={item}

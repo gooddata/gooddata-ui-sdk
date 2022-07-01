@@ -28,6 +28,7 @@ export const AttributeFilterListItem: React.VFC<IAttributeFilterListItemProps> =
 
     const classes = cx(
         "gd-list-item",
+        "gd-attribute-filter-list-item__next",
         "has-only-visible",
         "s-attribute-filter-list-item",
         `s-attribute-filter-list-item-${camelCase(item.title)}`,
@@ -38,8 +39,10 @@ export const AttributeFilterListItem: React.VFC<IAttributeFilterListItemProps> =
 
     return (
         <div className={classes} onClick={onItemClick}>
-            <input type="checkbox" className="gd-input-checkbox" readOnly={true} checked={isSelected} />
-            <span className={"s-attribute-filter-list-item-title"}>{item.title}</span>
+            <label className="input-checkbox-label">
+                <input type="checkbox" className="input-checkbox" readOnly checked={isSelected} />
+                <span className="input-label-text">{item.title}</span>
+            </label>
             <span className="gd-list-item-only" onClick={onOnlyItemClick}>
                 <FormattedMessage id="gs.list.only" />
             </span>
