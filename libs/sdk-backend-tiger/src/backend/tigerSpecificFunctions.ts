@@ -230,7 +230,7 @@ export type TigerSpecificFunctions = {
         connectionData: IDataSourceTestConnectionRequest,
         id?: string,
     ) => Promise<IDataSourceTestConnectionResponse>;
-    publishLogicalModel?: (workspaceId: string, declarativeModel: DeclarativeModel) => void;
+    publishLogicalModel?: (workspaceId: string, declarativeModel: DeclarativeModel) => Promise<void>;
     getDataSourceSchemata?: (dataSourceId: string) => Promise<DataSourceSchemata>;
     getPdm?: (dataSourceId: string) => Promise<DeclarativePdm>;
 };
@@ -700,7 +700,7 @@ export const buildTigerSpecificFunctions = (
     },
     publishLogicalModel: async (workspaceId: string, declarativeModel: DeclarativeModel) => {
         return await authApiCall(async (sdk) => {
-            return await sdk.declarativeLayout.setLogicalModel({
+            await sdk.declarativeLayout.setLogicalModel({
                 workspaceId,
                 declarativeModel,
             });
