@@ -249,7 +249,7 @@ export type TigerSpecificFunctions = {
     updateDataSource?: (id: string, requestData: IDataSourceUpsertRequest) => Promise<IDataSourceApiResult>;
     deleteDataSource?: (id: string) => Promise<IDataSourceApiResult>;
     testDataSourceConnection?: (connectionData: IDataSourceTestConnectionRequest, id?: string) => Promise<IDataSourceTestConnectionResponse>;
-    publishLogicalModel?: (workspaceId: string, declarativeModel: DeclarativeModel) => void;
+    publishLogicalModel?: (workspaceId: string, declarativeModel: DeclarativeModel) => Promise<void>;
     getDataSourceSchemata?: (dataSourceId: string) => Promise<DataSourceSchemata>;
     getPdm?: (dataSourceId: string) => Promise<DeclarativePdm>;
 };
