@@ -9040,6 +9040,7 @@ Object {
       "totalsVisible": "auto",
       "visible": "auto",
     },
+    "enableSeparateTotalLabels": true,
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
@@ -9160,6 +9161,7 @@ Object {
     "dataLabels": Object {
       "visible": "auto",
     },
+    "enableSeparateTotalLabels": true,
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
@@ -9280,6 +9282,7 @@ Object {
     "dataLabels": Object {
       "visible": false,
     },
+    "enableSeparateTotalLabels": true,
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
@@ -9401,6 +9404,7 @@ Object {
       "totalsVisible": true,
       "visible": false,
     },
+    "enableSeparateTotalLabels": true,
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
@@ -9521,6 +9525,7 @@ Object {
     "dataLabels": Object {
       "visible": true,
     },
+    "enableSeparateTotalLabels": true,
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
@@ -9638,6 +9643,7 @@ Object {
 exports[`BarChart with data labels - default should create expected props for core chart 1`] = `
 Object {
   "config": Object {
+    "enableSeparateTotalLabels": true,
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
@@ -9758,6 +9764,7 @@ Object {
     "dataLabels": Object {
       "visible": true,
     },
+    "enableSeparateTotalLabels": true,
     "separators": Object {
       "decimal": ",",
       "thousand": ".",
@@ -9883,6 +9890,7 @@ Object {
       "totalsVisible": "auto",
       "visible": false,
     },
+    "enableSeparateTotalLabels": true,
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },

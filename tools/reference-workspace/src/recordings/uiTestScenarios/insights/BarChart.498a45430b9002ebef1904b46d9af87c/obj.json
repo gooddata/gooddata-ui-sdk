@@ -1,0 +1,52 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                            "localIdentifier": "a_label.owner.region"
+                        }
+                    }
+                ],
+                "localIdentifier": "view"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "stack"
+            }
+        ],
+        "filters": [],
+        "identifier": "BarChart.498a45430b9002ebef1904b46d9af87c",
+        "properties": {
+            "controls": { "dataLabels": { "visible": true }, "enableSeparateTotalLabels": true }
+        },
+        "sorts": [],
+        "title": "BarChart - data labels - data labels forced visible",
+        "uri": "BarChart.498a45430b9002ebef1904b46d9af87c",
+        "visualizationUrl": "local:bar"
+    }
+}

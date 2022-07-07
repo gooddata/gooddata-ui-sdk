@@ -672,15 +672,15 @@ describe("getCustomizedConfiguration", () => {
         it.each([
             [
                 "bar",
-                { visible: true, totalsVisible: true },
-                { visible: true, totalsVisible: true },
+                { visible: true, totalsVisible: false },
+                { visible: true, totalsVisible: false },
                 true,
                 true,
             ],
             [
                 "bar",
-                { visible: false, totalsVisible: "auto" },
-                { visible: false, totalsVisible: "auto" },
+                { visible: false, totalsVisible: false },
+                { visible: false, totalsVisible: false },
                 false,
                 false,
             ],

@@ -11,7 +11,7 @@ import {
     IAxisRange,
     IAxisRangeForAxes,
 } from "./helpers";
-import { isAreaChart, isBarChart, isOneOfTypes } from "../_util/common";
+import { isAreaChart, isBarChart, isColumnChart, isOneOfTypes } from "../_util/common";
 import { IDataLabelsVisible, IChartConfig } from "../../../interfaces";
 import { BLACK_LABEL, WHITE_LABEL, whiteDataLabelTypes } from "../../constants/label";
 import { StackingType } from "../../constants/stacking";
@@ -210,18 +210,37 @@ export function isInPercent(format: string = ""): boolean {
 
 // returns totalVisible based on the current conditions
 // it returns auto in case of missing chartConfig and not being requested in context of barchart
-export function getTotalsVisibility(chartType: string, chartConfig: IChartConfig): IDataLabelsVisible {
+export function getTotalsVisibility(chartConfig: IChartConfig): IDataLabelsVisible {
     const totalsVisibility: IDataLabelsVisible = chartConfig?.dataLabels?.totalsVisible;
 
     if (!isNil(totalsVisibility)) {
         return totalsVisibility;
     }
 
-    if (isBarChart(chartType)) {
-        return false;
+    return chartConfig?.dataLabels?.visible;
+}
+
+export function getTotalsVisibilityConfig(type: string, chartConfig?: IChartConfig) {
+    if (!(isColumnChart(type) || isBarChart(type))) {
+        return {};
     }
 
-    return isNil(chartConfig?.dataLabels?.visible) ? "auto" : chartConfig?.dataLabels?.visible;
+    const totalsVisible = chartConfig?.dataLabels?.totalsVisible;
+
+    // it configures logic for previous barchart generation without total labels
+    if (
+        isBarChart(type) &&
+        (!totalsVisible || isNil(totalsVisible)) &&
+        !chartConfig.enableSeparateTotalLabels
+    ) {
+        return { enabled: false };
+    }
+
+    const defaultTotalsVisibility = isNil(chartConfig?.dataLabels?.visible)
+        ? "auto"
+        : chartConfig?.dataLabels?.visible;
+
+    return getLabelsVisibilityConfig(!isNil(totalsVisible) ? totalsVisible : defaultTotalsVisibility);
 }
 
 export function getLabelsVisibilityConfig(visible: IDataLabelsVisible): Highcharts.DataLabelsOptions {

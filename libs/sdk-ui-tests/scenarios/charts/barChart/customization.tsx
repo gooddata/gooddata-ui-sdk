@@ -24,7 +24,10 @@ const dataLabelScenarios = scenariosFor<IBarChartProps>("BarChart", BarChart)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios(
         "data labels",
-        BarChartWithSingleMeasureAndViewByAndStackMultipleItems,
+        {
+            ...BarChartWithSingleMeasureAndViewByAndStackMultipleItems,
+            config: { enableSeparateTotalLabels: true },
+        },
         extendedDataLabelCustomizer,
     );
 
