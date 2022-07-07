@@ -3578,6 +3578,30 @@ packages:
     resolution: {integrity: sha512-9X2obfABZuDVLCgPK9aX0a/x4jaOEweTTWE2+9sr0Qqqevj2Uv5XorvusThmc9XGYpS9yI+fhh8RTafBtGposw==}
     dev: false
 
+  /@reach/auto-id/0.16.0_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-5ssbeP5bCkM39uVsfQCwBBL+KT8YColdnMN5/Eto6Rj7929ql95R3HZUOkKIvj7mgPtEb60BLQxd1P3o6cjbmg==}
+    peerDependencies:
+      react: ^16.8.0 || 17.x
+      react-dom: ^16.8.0 || 17.x
+    dependencies:
+      '@reach/utils': 0.16.0_react-dom@17.0.2+react@17.0.2
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      tslib: 2.3.1
+    dev: false
+
+  /@reach/utils/0.16.0_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-PCggBet3qaQmwFNcmQ/GqHSefadAFyNCUekq9RrWoaU9hh/S4iaFgf2MBMdM47eQj5i/Bk0Mm07cP/XPFlkN+Q==}
+    peerDependencies:
+      react: ^16.8.0 || 17.x
+      react-dom: ^16.8.0 || 17.x
+    dependencies:
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      tiny-warning: 1.0.3
+      tslib: 2.3.1
+    dev: false
+
   /@react-dnd/asap/4.0.1:
     resolution: {integrity: sha512-kLy0PJDDwvwwTXxqTFNAAllPHD73AycE9ypWeln/IguoGBEbvFcPDbCV03G52bEcC5E+YgupBE0VzHGdC8SIXg==}
     dev: false
@@ -8329,7 +8353,7 @@ packages:
     dev: false
 
   /concat-map/0.0.1:
-    resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
+    resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
     dev: false
 
   /concat-stream/1.6.2:
@@ -17124,13 +17148,17 @@ packages:
       react-popper: 2.2.5_bdf4b8b1046519a8ec8ac2b64ac98053
     dev: false
 
-  /react-day-picker/7.4.10_react@17.0.2:
-    resolution: {integrity: sha512-/QkK75qLKdyLmv0kcVzhL7HoJPazoZXS8a6HixbVoK6vWey1Od1WRLcxfyEiUsRfccAlIlf6oKHShqY2SM82rA==}
+  /react-day-picker/8.0.7_4781667a0ce088dd5680677bceac5559:
+    resolution: {integrity: sha512-isrLVhWpfdsxtG8YarHh5c0erL5aV1nrfolR/yK3KGTUqb7UGiCFnleBSH/Bv45tNpC2CZNFne01dsQEiocjYw==}
     peerDependencies:
-      react: ~0.13.x || ~0.14.x || ^15.0.0 || ^16.0.0 || ^17.0.0
+      date-fns: ^2.28.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
-      prop-types: 15.8.1
+      '@reach/auto-id': 0.16.0_react-dom@17.0.2+react@17.0.2
+      date-fns: 2.28.0
       react: 17.0.2
+    transitivePeerDependencies:
+      - react-dom
     dev: false
 
   /react-dnd-html5-backend/14.1.0:
@@ -19354,7 +19382,7 @@ packages:
     dev: false
 
   /strip-ansi/4.0.0:
-    resolution: {integrity: sha1-qEeQIusaw2iocTibY1JixQXuNo8=}
+    resolution: {integrity: sha512-4XaJ2zQdCzROZDivEVIDPkcQn8LMFSa8kj8Gxb/Lnwzv9A8VctNZ+lfivC/sV3ivW8ElJTERXZoPBRrZKkNKow==}
     engines: {node: '>=4'}
     dependencies:
       ansi-regex: 3.0.1
@@ -23894,7 +23922,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-filters.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-GOfNRorIxk9fjaslVBAu+Uk4MwHjhhLdeBgAQQfsbqrDk0fP/tjKnt671bQpcVPRdH9o9cNFKF1sfQybE5DmVg==, tarball: file:projects/sdk-ui-filters.tgz}
+    resolution: {integrity: sha512-F5d1+EVDtjJBh17Dc+2cRB5EJxaJos7Vxs6qX+Rck9FOanjGUoodezLYNhkAPvZcT30VeHygbZoWgR8ML2JAxQ==, tarball: file:projects/sdk-ui-filters.tgz}
     id: file:projects/sdk-ui-filters.tgz
     name: '@rush-temp/sdk-ui-filters'
     version: 0.0.0
@@ -23950,7 +23978,7 @@ packages:
       raf: 3.4.1
       react: 17.0.2
       react-content-loader: 6.2.0_react@17.0.2
-      react-day-picker: 7.4.10_react@17.0.2
+      react-day-picker: 8.0.7_4781667a0ce088dd5680677bceac5559
       react-dom: 17.0.2_react@17.0.2
       react-intl: 5.24.8_react@17.0.2+typescript@4.0.2
       react-responsive: 8.2.0_react@17.0.2
@@ -24054,7 +24082,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-kit.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-RXhoyMWNWCTUZ5GMNXX3DVhOkfI+H4QJzbQMu9d10JF3M441bpm7qgByRA3MTefQORm04DxESsSlFh6N1+8wtQ==, tarball: file:projects/sdk-ui-kit.tgz}
+    resolution: {integrity: sha512-sAvUur4ftrScCgjpo6/rFByXsqQOTj3tV7raZYD5/bO0gwRM+4AabxrDeEgX4Om3K6T9CY1oReM4lNiYFBdhvQ==, tarball: file:projects/sdk-ui-kit.tgz}
     id: file:projects/sdk-ui-kit.tgz
     name: '@rush-temp/sdk-ui-kit'
     version: 0.0.0
@@ -24120,7 +24148,7 @@ packages:
       raf: 3.4.1
       react: 17.0.2
       react-codemirror2: 7.2.1_codemirror@5.65.2+react@17.0.2
-      react-day-picker: 7.4.10_react@17.0.2
+      react-day-picker: 8.0.7_4781667a0ce088dd5680677bceac5559
       react-dom: 17.0.2_react@17.0.2
       react-helmet: 6.1.0_react@17.0.2
       react-intl: 5.24.8_react@17.0.2+typescript@4.0.2

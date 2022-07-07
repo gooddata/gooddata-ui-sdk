@@ -3,7 +3,7 @@ import React from "react";
 import { mount } from "enzyme";
 
 import { DateRangePicker, IDateRange } from "../DateRangePicker";
-import { childGetter, writeTo, clickOn } from "../../tests/utils";
+import { childGetter, firstChildGetter, writeTo, clickOn } from "../../tests/utils";
 import { IntlDecorator } from "./IntlDecorators";
 
 const getFromInput = childGetter(".s-date-range-picker-from .s-date-range-picker-input-field");
@@ -12,7 +12,7 @@ const getToInput = childGetter(".s-date-range-picker-to .s-date-range-picker-inp
 const getFromTimeInput = childGetter(".s-date-range-picker-from .s-date-range-picker-input-time .input-text");
 const getToTimeInput = childGetter(".s-date-range-picker-to .s-date-range-picker-input-time .input-text");
 
-const getTenthOfMay = childGetter('[aria-label="Fri May 10, 2019"]');
+const getTenthOfMay = firstChildGetter(".rdp-day_range_middle");
 
 const defaultDateFormat = "MM/dd/yyyy";
 const defaultRange: IDateRange = {
@@ -38,9 +38,11 @@ describe("DateRangePicker", () => {
         it("should call the appropriate callback when from input changes", () => {
             writeTo("05/01/2019", getFromInput(rendered));
             expect(onChange).toHaveBeenCalledWith({ ...defaultRange, from: new Date(2019, 4, 1) });
+            rendered.unmount();
         });
 
         it("should call the appropriate callback when to input changes", () => {
+            rendered.mount();
             writeTo("06/01/2019", getToInput(rendered));
             expect(onChange).toHaveBeenCalledWith({ ...defaultRange, to: new Date(2019, 5, 1) });
         });

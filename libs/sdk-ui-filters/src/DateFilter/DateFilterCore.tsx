@@ -124,7 +124,7 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
                             )}
                             ignoreClicksOnByClass={[
                                 ".s-do-not-close-dropdown-on-click",
-                                ".DayPicker-Day", // absolute range picker calendar items
+                                ".rdp-day", // absolute range picker calendar items
                             ]}
                             renderBody={({ closeDropdown }) => (
                                 // Dropdown component uses React.Children.map and adds special props to this component

@@ -1,6 +1,6 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
-
+import { DayPickerRangeProps } from "react-day-picker";
 import { IAbsoluteDateFilterForm } from "@gooddata/sdk-model";
 
 import { DateRangePicker, IDateRange } from "../DateRangePicker/DateRangePicker";
@@ -20,8 +20,9 @@ export interface IAbsoluteDateFilterFormProps {
     isTimeEnabled: boolean;
 }
 
-const dayPickerProps = {
-    firstDayOfWeek: 0, // Sunday, regardless of locale
+const dayPickerProps: DayPickerRangeProps = {
+    mode: "range",
+    weekStartsOn: 0, // Sunday, regardless of locale
 };
 
 /**
