@@ -92,7 +92,7 @@ async function getTigerClient(hostname: string): Promise<ITigerClient> {
 
             logInfo(
                 "2. Once you are on your Tiger developer settings page please " +
-                    `create a new personal access token by clicking Manage button in Personal access tokens section . ` +
+                    `create a new personal access token by clicking Manage button in Personal access tokens section. ` +
                     "For other methods to generate the token see: https://www.gooddata.com/developers/cloud-native/doc/latest/administration/auth/user-token ",
             );
 
