@@ -1,6 +1,12 @@
 // (C) 2007-2022 GoodData Corporation
 import React, { useMemo } from "react";
-import { Container, ScreenClassProvider, ScreenClassRender, setConfiguration } from "react-grid-system";
+import {
+    Container,
+    ScreenClass,
+    ScreenClassProvider,
+    ScreenClassRender,
+    setConfiguration,
+} from "react-grid-system";
 import { IDashboardLayout, ScreenSize } from "@gooddata/sdk-model";
 import { DashboardLayoutSection } from "./DashboardLayoutSection";
 import { IDashboardLayoutRenderProps } from "./interfaces";
@@ -59,8 +65,9 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
         >
             <ScreenClassProvider useOwnWidth={false}>
                 <ScreenClassRender
-                    render={(screen: ScreenSize) =>
-                        screen ? (
+                    render={(screenClass: ScreenClass) => {
+                        const screen = screenClass as ScreenSize;
+                        return screen ? (
                             <Container fluid={true} className="gd-fluidlayout-layout s-fluid-layout">
                                 {layoutFacade.sections().map((section) => {
                                     return (
@@ -117,8 +124,8 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
                                     );
                                 })}
                             </Container>
-                        ) : null
-                    }
+                        ) : null;
+                    }}
                 />
             </ScreenClassProvider>
         </div>
