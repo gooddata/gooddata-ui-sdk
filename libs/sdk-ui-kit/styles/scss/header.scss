@@ -143,9 +143,10 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
         position: relative;
         display: flex;
         align-items: center;
-        height: 43px;
-        padding: 0 15px;
-        line-height: 43px;
+        height: auto;
+        padding: 9px 15px;
+        line-height: 24px;
+        white-space: normal;
         color: var(--gd-palette-complementary-8, $default-gd-color-state-blank);
         cursor: pointer;
         font-size: 16px;
@@ -269,6 +270,19 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
     .gd-icon-community {
         background: url("~@gooddata/sdk-ui-kit/esm/assets/community.svg") no-repeat;
     }
+
+    &.gd-list-item.gd-menu-item-divider {
+        margin-bottom: 18px;
+        overflow: visible;
+        &::after {
+            content: "";
+            position: absolute;
+            bottom: -9px;
+            width: calc(100% - 20px);
+            height: 1px;
+            background-color: $default-gd-border-color;
+        }
+    }
 }
 
 .gd-header-menu-item {
@@ -305,6 +319,10 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
         opacity: 1;
         border-color: $gd-palette-primary-base;
         font-weight: 700;
+    }
+
+    &.gd-list-help-menu-item.gd-menu-item-divider {
+        margin-bottom: 44px;
     }
 }
 
@@ -645,13 +663,22 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
 
 .gd-header-help-dropdown {
     overflow: hidden;
+    margin-right: 10px;
 
     .gd-list {
         min-width: 150px;
+        max-width: 230px;
 
         .gd-list-item {
+            padding-top: 5px;
+            padding-bottom: 5px;
             font-family: $gd-font-primary;
             font-weight: 400;
+            white-space: unset;
+        }
+
+        .gd-list-item span {
+            line-height: 18px;
         }
     }
 }

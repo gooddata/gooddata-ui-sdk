@@ -26,6 +26,7 @@ class WrappedHeaderMenu extends PureComponent<IHeaderMenuProps & WrappedComponen
 
             const classNames = cx("gd-header-menu-item gd-list-help-menu-item", {
                 active: item.isActive,
+                [item.className]: !!item.className,
             });
 
             return (
