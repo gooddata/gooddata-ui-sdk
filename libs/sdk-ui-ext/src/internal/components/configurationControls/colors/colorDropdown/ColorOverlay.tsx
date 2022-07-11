@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { Overlay } from "@gooddata/sdk-ui-kit";
 
@@ -59,7 +59,7 @@ export default class ColorOverlay extends React.PureComponent<IColorOverlayProps
         this.startScrollingPropagation();
     }
 
-    public render(): React.ReactNode {
+    public render() {
         return (
             <Overlay
                 alignTo={this.props.alignTo}

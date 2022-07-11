@@ -13,7 +13,7 @@ export interface ILegendSection {
 }
 
 class LegendSection extends React.PureComponent<ILegendSection> {
-    public render(): React.ReactNode {
+    public render() {
         const { controlsDisabled, properties, pushData } = this.props;
 
         const legendEnabled = this.props.properties?.controls?.legend?.enabled ?? true;

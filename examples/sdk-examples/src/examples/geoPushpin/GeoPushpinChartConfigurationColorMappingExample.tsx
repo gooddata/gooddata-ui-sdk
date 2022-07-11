@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React, { Component } from "react";
 
 import "@gooddata/sdk-ui-geo/styles/css/main.css";
@@ -35,7 +35,7 @@ const colorMapping: IColorMapping[] = [
 ];
 
 export class GeoPushpinChartConfigurationColorMappingExample extends Component {
-    public render(): React.ReactNode {
+    public render() {
         const geoConfig = {
             tooltipText: tooltipTextAttribute,
             mapboxToken: MAPBOX_TOKEN,

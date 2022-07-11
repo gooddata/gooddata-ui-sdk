@@ -88,7 +88,7 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
         }
     }
 
-    public render(): React.ReactNode {
+    public render() {
         const {
             isExcludeCurrentPeriodEnabled,
             isMobile,

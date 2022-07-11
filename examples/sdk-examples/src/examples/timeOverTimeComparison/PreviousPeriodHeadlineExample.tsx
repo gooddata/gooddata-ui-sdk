@@ -21,7 +21,7 @@ export class PreviousPeriodHeadlineExample extends Component {
         return console.log("PreviousPeriodHeadlineExample onError", ...params);
     };
 
-    public render(): React.ReactNode {
+    public render() {
         const primaryMeasure = TotalSales;
         const secondaryMeasure = newPreviousPeriodMeasure(
             TotalSales,

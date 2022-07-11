@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
 import { WrappedComponentProps } from "react-intl";
 import { ISeparators } from "@gooddata/sdk-ui";
@@ -30,7 +30,7 @@ export class PresetsDropdown extends React.PureComponent<IMeasureNumberFormatDro
         ],
     };
 
-    public render(): React.ReactNode {
+    public render() {
         const { presets, anchorEl, onClose, positioning } = this.props;
 
         return (

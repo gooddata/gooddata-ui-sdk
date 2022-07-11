@@ -198,7 +198,7 @@ export const InsightRenderer: React_2.FC<IInsightRendererProps>;
 // @public
 export class InsightView extends React_2.Component<IInsightViewProps> {
     // (undocumented)
-    render(): React_2.ReactNode;
+    render(): JSX.Element;
 }
 
 // @beta

@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import memoize from "lodash/memoize";
 import { InputPure, InputPureProps } from "./InputPure";
@@ -174,7 +174,7 @@ export class InputWithNumberFormat extends React.PureComponent<
         });
     }
 
-    render(): React.ReactNode {
+    render() {
         return (
             <InputPure
                 {...this.props}

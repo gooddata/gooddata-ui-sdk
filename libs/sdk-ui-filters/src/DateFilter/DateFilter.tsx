@@ -154,7 +154,7 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
         DateFilter.checkInitialFilterOption(this.props.selectedFilterOption);
     }
 
-    public render(): React.ReactNode {
+    public render() {
         const {
             customFilterName,
             dateFilterMode,

@@ -81,7 +81,7 @@ const ErrorOverlayWithIntl = injectIntl(ErrorOverlayCore);
  * @internal
  */
 export class ErrorOverlay extends React.PureComponent<IErrorOverlayProps> {
-    public render(): React.ReactNode {
+    public render() {
         return (
             <IntlWrapper locale={this.props.locale}>
                 <ErrorOverlayWithIntl {...this.props} />

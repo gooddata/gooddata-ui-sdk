@@ -67,7 +67,7 @@ const MenuToggler = () => {
 };
 
 export default class AggregationsMenu extends React.Component<IAggregationsMenuProps> {
-    public render(): React.ReactNode {
+    public render() {
         const { intl, colId, getTableDescriptor, isMenuOpened, onMenuOpenedChange } = this.props;
 
         if (!colId) {

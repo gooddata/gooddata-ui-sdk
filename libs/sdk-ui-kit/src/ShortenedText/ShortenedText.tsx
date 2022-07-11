@@ -174,7 +174,7 @@ export class ShortenedText extends PureComponent<IShortenedTextProps, IShortened
         );
     }
 
-    render(): React.ReactNode {
+    render() {
         if (this.state.customTitle && this.props.displayTooltip) {
             return this.renderTextWithBubble();
         }

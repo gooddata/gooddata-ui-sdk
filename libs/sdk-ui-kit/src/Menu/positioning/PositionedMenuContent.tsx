@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { createRef } from "react";
 
 import { IMenuPositionConfig } from "../MenuSharedTypes";
@@ -54,7 +54,7 @@ export class PositionedMenuContent extends React.Component<
         this.removeEventListeners();
     }
 
-    public render(): React.ReactNode {
+    public render() {
         return (
             <div
                 style={{

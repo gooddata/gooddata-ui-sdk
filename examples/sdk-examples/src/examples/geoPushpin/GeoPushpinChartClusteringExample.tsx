@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React, { Component } from "react";
 import { GeoPushpinChart } from "@gooddata/sdk-ui-geo";
 
@@ -8,7 +8,7 @@ import { MAPBOX_TOKEN } from "../../constants/fixtures";
 import * as Md from "../../md/full";
 
 export class GeoPushpinChartClusteringExample extends Component {
-    public render(): React.ReactNode {
+    public render() {
         return (
             <div style={{ height: "500px", position: "relative" }} className="s-geo-pushpin-chart-clustering">
                 <GeoPushpinChart

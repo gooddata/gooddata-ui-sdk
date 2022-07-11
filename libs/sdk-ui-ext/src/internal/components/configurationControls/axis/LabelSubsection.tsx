@@ -19,7 +19,7 @@ export interface ILabelSubsection {
 }
 
 class LabelSubsection extends React.PureComponent<ILabelSubsection & WrappedComponentProps> {
-    public render(): React.ReactNode {
+    public render() {
         const { axisVisible, axisLabelsEnabled } = this.getControlProperties();
 
         return (

@@ -8,7 +8,7 @@ import { IVisualizationProperties } from "../../../interfaces/Visualization";
 import { messages } from "../../../../locales";
 
 class NameSubsection extends React.PureComponent<IConfigItemSubsection & WrappedComponentProps> {
-    public render(): React.ReactNode {
+    public render() {
         const { axisVisible, axisNameVisible } = this.getControlProperties();
         const { axis, properties, pushData, disabled, configPanelDisabled } = this.props;
 

@@ -70,7 +70,7 @@ export class AutoSize extends Component<IAutoSizeProps> {
     // (undocumented)
     componentWillUnmount(): void;
     // (undocumented)
-    render(): React_2.ReactNode;
+    render(): JSX.Element;
     // (undocumented)
     state: {
         width: number;
@@ -114,7 +114,7 @@ export class Bubble extends React_2.Component<IBubbleProps, IBubbleState> {
     // (undocumented)
     onAlign: (alignment: IAlignPoint) => void;
     // (undocumented)
-    render(): React_2.ReactNode;
+    render(): JSX.Element;
     // (undocumented)
     shouldComponentUpdate(nextProps: IBubbleProps, nextState: IBubbleState): boolean;
 }
@@ -151,7 +151,7 @@ export class BubbleTrigger<P extends IBubbleTriggerProps> extends React_2.PureCo
     // (undocumented)
     protected eventListeners(): any;
     // (undocumented)
-    render(): React_2.ReactNode;
+    render(): JSX.Element;
     // (undocumented)
     readonly state: Readonly<IBubbleTriggerState>;
 }
@@ -174,7 +174,7 @@ export class Button extends React_2.Component<IButtonProps> {
         iconRight: string;
     };
     // (undocumented)
-    render(): React_2.ReactNode;
+    render(): JSX.Element;
 }
 
 // @internal (undocumented)
@@ -223,7 +223,7 @@ export class Checkbox extends React_2.PureComponent<CheckboxProps> {
     // (undocumented)
     onChange: (e: React_2.ChangeEvent<HTMLInputElement>) => void;
     // (undocumented)
-    render(): React_2.ReactNode;
+    render(): JSX.Element;
 }
 
 // @internal (undocumented)
@@ -305,7 +305,7 @@ export const DateDatasetsListItem: React_2.FC<IDateDatasetsListItemProps>;
 // @internal (undocumented)
 export class Datepicker extends React_2.PureComponent<IDatePickerOwnProps> {
     // (undocumented)
-    render(): React_2.ReactNode;
+    render(): JSX.Element;
 }
 
 // @internal (undocumented)
@@ -447,7 +447,7 @@ export enum ENUM_KEY_CODE {
 // @internal (undocumented)
 export class ErrorOverlay extends React_2.PureComponent<IErrorOverlayProps> {
     // (undocumented)
-    render(): React_2.ReactNode;
+    render(): JSX.Element;
 }
 
 // @internal (undocumented)
@@ -2527,7 +2527,7 @@ export class Input extends React_2.PureComponent<InputPureProps, InputState> {
     // (undocumented)
     onChange: (value: string | number) => void;
     // (undocumented)
-    render(): React_2.ReactNode;
+    render(): JSX.Element;
     // (undocumented)
     UNSAFE_componentWillReceiveProps(nextProps: InputPureProps): void;
     // (undocumented)
@@ -2583,7 +2583,7 @@ export class InputPure extends React_2.PureComponent<InputPureProps> implements 
     // (undocumented)
     onKeyPress: (e: React_2.KeyboardEvent) => void;
     // (undocumented)
-    render(): React_2.ReactNode;
+    render(): JSX.Element;
     // (undocumented)
     renderClearIcon(clearOnEsc: boolean): React_2.ReactNode;
     // (undocumented)
@@ -2686,7 +2686,7 @@ export class InputWithNumberFormat extends React_2.PureComponent<InputWithNumber
     // (undocumented)
     onFocus: (e: React_2.FocusEvent<HTMLInputElement>) => void;
     // (undocumented)
-    render(): React_2.ReactNode;
+    render(): JSX.Element;
     // (undocumented)
     UNSAFE_componentWillReceiveProps({ value: newValue }: InputWithNumberFormatProps): void;
 }
@@ -3391,7 +3391,7 @@ export const LoadingSpinner: React_2.FC<ILoadingSpinner>;
 // @internal (undocumented)
 export class MeasureNumberFormat extends React_2.PureComponent<IMeasureNumberFormatOwnProps> {
     // (undocumented)
-    render(): React_2.ReactNode;
+    render(): JSX.Element;
 }
 
 // @internal (undocumented)
@@ -3465,7 +3465,7 @@ export class Overlay<T = HTMLElement> extends React_2.Component<IOverlayProps<T>
     // (undocumented)
     onDocumentMouseDown(e: React_2.MouseEvent): void;
     // (undocumented)
-    render(): React_2.ReactNode;
+    render(): JSX.Element;
     // (undocumented)
     shouldComponentUpdate(nextProps: IOverlayProps<T>, nextState: IOverlayState): boolean;
     // (undocumented)
@@ -3673,7 +3673,7 @@ export class Tabs extends Component<ITabsProps, ITabsState> {
 // @internal (undocumented)
 export class Timepicker extends React_2.PureComponent<ITimepickerOwnProps> {
     // (undocumented)
-    render(): React_2.ReactNode;
+    render(): JSX.Element;
 }
 
 // @internal (undocumented)

@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
@@ -20,7 +20,7 @@ export class ExtendedPreview extends React.Component<IExtendedPreviewProps, IExt
         expanded: false,
     };
 
-    public render(): React.ReactNode {
+    public render() {
         const { expanded } = this.state;
         const { format, separators } = this.props;
 

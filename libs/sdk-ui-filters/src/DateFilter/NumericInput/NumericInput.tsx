@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import isNumber from "lodash/isNumber";
 import defaultTo from "lodash/defaultTo";
@@ -23,7 +23,7 @@ export class NumericInput extends React.Component<{
     min?: number;
     max?: number;
 }> {
-    public render(): React.ReactNode {
+    public render() {
         const {
             props,
             handleChange,

@@ -15,9 +15,8 @@ export interface ISdkComponentProps {
 // @public (undocumented)
 export class SdkComponent extends React_2.Component<ISdkComponentProps> {
     // (undocumented)
-    render(): React_2.ReactNode;
+    render(): JSX.Element;
 }
-
 
 // (No @packageDocumentation comment for this package)
 

@@ -28,7 +28,7 @@ const dayPickerProps = {
  * @internal
  */
 export class AbsoluteDateFilterForm extends React.Component<IAbsoluteDateFilterFormProps> {
-    public render(): React.ReactNode {
+    public render() {
         const { dateFormat, isMobile, selectedFilterOption, errors, isTimeEnabled } = this.props;
         return (
             <DateRangePicker

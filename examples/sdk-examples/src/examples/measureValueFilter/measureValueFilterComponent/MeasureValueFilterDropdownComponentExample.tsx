@@ -69,7 +69,7 @@ export class MeasureValueFilterComponentExample extends React.PureComponent<
         this.setState((state) => ({ ...state, displayDropdown: !state.displayDropdown }));
     };
 
-    public render(): React.ReactNode {
+    public render() {
         const { filters, displayDropdown } = this.state;
 
         return (

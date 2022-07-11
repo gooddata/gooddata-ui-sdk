@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { VariableSizeList as List, ListChildComponentProps } from "react-window";
 import cx from "classnames";
@@ -97,7 +97,7 @@ export class VirtualizedSelectMenu<V> extends React.Component<ISelectMenuProps<V
 
     private listRef = React.createRef<List>();
 
-    public render(): React.ReactNode {
+    public render() {
         const {
             items,
             selectedItem,

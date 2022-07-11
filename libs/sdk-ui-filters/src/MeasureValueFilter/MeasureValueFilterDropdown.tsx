@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import {
     IMeasureValueFilter,
@@ -67,7 +67,7 @@ export class MeasureValueFilterDropdown extends React.PureComponent<IMeasureValu
         enableOperatorSelection: true,
     };
 
-    public render(): React.ReactNode {
+    public render() {
         const {
             filter,
             onCancel,

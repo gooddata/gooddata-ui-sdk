@@ -35,7 +35,7 @@ export const useDashboardScheduledEmails = () => {
     const isReadOnly = useDashboardSelector(selectIsReadOnly);
     const isInViewMode = useDashboardSelector(selectIsInViewMode);
     const canCreateScheduledMail = useDashboardSelector(selectCanCreateScheduledMail);
-    const isScheduledEmailingEnabled = !!useDashboardSelector(selectEnableKPIDashboardSchedule);
+    const isScheduledEmailingEnabled = useDashboardSelector(selectEnableKPIDashboardSchedule);
     const menuButtonItemsVisibility = useDashboardSelector(selectMenuButtonItemsVisibility);
 
     const openScheduleEmailingDialog = () => dispatch(uiActions.openScheduleEmailDialog());

@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { IHeaderParams } from "@ag-grid-community/all-modules";
 import React from "react";
 import { IMenu } from "../../../publicTypes";
@@ -47,7 +47,7 @@ class ColumnHeader extends React.Component<IColumnHeaderProps, IColumnHeaderStat
         this.props.setSort(sortDir, multiSort);
     };
 
-    public render(): React.ReactNode {
+    public render() {
         const { displayName, enableSorting, menu, column } = this.props;
         const col = this.getColDescriptor();
         const textAlign = isSliceCol(col) || isEmptyScopeCol(col) ? ALIGN_LEFT : ALIGN_RIGHT;

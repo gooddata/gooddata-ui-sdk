@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import noop from "lodash/noop";
@@ -75,7 +75,7 @@ export class InputControl extends React.Component<
         }
     }
 
-    public render(): React.ReactNode {
+    public render() {
         const { disabled, labelText, placeholder, showDisabledMessage, intl, type } = this.props;
 
         return (

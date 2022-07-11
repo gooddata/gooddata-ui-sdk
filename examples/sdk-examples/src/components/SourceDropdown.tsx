@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
 import { SourceContainer } from "../components/SourceContainer";
 
@@ -23,7 +23,7 @@ export class SourceDropdown extends React.Component<ISourceDropdownProps, ISourc
         this.setState((state) => ({ ...state, viewJS: isJS }));
     };
 
-    public render(): React.ReactNode {
+    public render() {
         const { hidden, viewJS } = this.state;
         const { sourceJS, source } = this.props;
 

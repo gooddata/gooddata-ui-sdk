@@ -54,7 +54,7 @@ export class PivotTableManualResizingExample extends Component {
         this.setState({ columnWidths });
     };
 
-    public render(): React.ReactNode {
+    public render() {
         return (
             <div>
                 <div>
