@@ -96,7 +96,7 @@ export class DynamicSelect extends React.Component<IDynamicSelectProps, IDynamic
         }
     };
 
-    public render(): React.ReactNode {
+    public render() {
         const {
             initialIsOpen,
             placeholder,

@@ -10,7 +10,7 @@ const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) => m.format("#,##0").
 const FranchiseFeesOngoingRoyalty = modifyMeasure(Md.$FranchiseFeesOngoingRoyalty, (m) => m.format("#,##0"));
 
 export class BulletChartExample extends Component {
-    public render(): React.ReactNode {
+    public render() {
         return (
             <div style={{ height: 300 }} className="s-bullet-chart">
                 <BulletChart

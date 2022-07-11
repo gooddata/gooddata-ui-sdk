@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import cx from "classnames";
@@ -26,7 +26,7 @@ export class OperatorDropdownItem extends React.PureComponent<IOperatorDropdownI
         bubbleText: null,
     };
 
-    public render(): React.ReactNode {
+    public render() {
         const { intl, operator, selectedOperator, bubbleText } = this.props;
 
         const className = cx(

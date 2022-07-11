@@ -12,7 +12,7 @@ export interface ILegendAxisIndicatorProps {
 export class LegendAxisIndicatorClass extends React.PureComponent<
     ILegendAxisIndicatorProps & WrappedComponentProps
 > {
-    public render(): React.ReactNode {
+    public render() {
         const { labelKey, width, data, intl } = this.props;
         const style = width ? { width: `${width}px` } : {};
         const values = (data || []).reduce(

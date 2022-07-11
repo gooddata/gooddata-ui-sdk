@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import * as React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 
@@ -39,7 +39,7 @@ class RepeatSelectRender extends React.PureComponent<IRepeatSelectProps, IRepeat
         };
     }
 
-    public render(): React.ReactNode {
+    public render() {
         const { label, startDate } = this.props;
         const { repeatType } = this.state;
         return (

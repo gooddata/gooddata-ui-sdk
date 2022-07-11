@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { ISeparators } from "@gooddata/sdk-ui";
@@ -25,7 +25,7 @@ export class Preview extends React.PureComponent<ICustomFormatPreviewProps, ICus
         preview: DEFAULT_PREVIEW_VALUE,
     };
 
-    public render(): React.ReactNode {
+    public render() {
         const { format, separators, intl } = this.props;
 
         return (

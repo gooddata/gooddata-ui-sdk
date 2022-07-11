@@ -46,7 +46,7 @@ export const selectDashboardDescriptor = createSelector(selectSelf, (state) => {
  * @internal
  */
 export const selectPersistedDashboard = createSelector(selectSelf, (state) => {
-    return state.persistedDashboard;
+    return state.persistedDashboard ?? undefined;
 });
 
 /**
@@ -58,7 +58,7 @@ export const selectPersistedDashboard = createSelector(selectSelf, (state) => {
  * been persisted (typically newly created dashboard being edited).
  */
 export const selectPersistedDashboardFilterContext = createSelector(selectSelf, (state) => {
-    return state.persistedDashboard?.filterContext;
+    return state.persistedDashboard?.filterContext ?? undefined;
 });
 
 /**
@@ -101,7 +101,7 @@ export const selectPersistedDashboardFilterContextAsFilterContextDefinition = cr
  * @public
  */
 export const selectDashboardRef = createSelector(selectPersistedDashboard, (state) => {
-    return state?.ref;
+    return state?.ref ?? undefined;
 });
 
 /**
@@ -114,7 +114,7 @@ export const selectDashboardRef = createSelector(selectPersistedDashboard, (stat
  * @public
  */
 export const selectDashboardId = createSelector(selectPersistedDashboard, (state) => {
-    return state?.identifier;
+    return state?.identifier ?? undefined;
 });
 
 /**
@@ -127,7 +127,7 @@ export const selectDashboardId = createSelector(selectPersistedDashboard, (state
  * @public
  */
 export const selectDashboardUri = createSelector(selectPersistedDashboard, (state) => {
-    return state?.uri;
+    return state?.uri ?? undefined;
 });
 
 /**
@@ -191,7 +191,7 @@ export const selectDashboardDescription = createSelector(selectDashboardDescript
  * @public
  */
 export const selectDashboardTags = createSelector(selectDashboardDescriptor, (state) => {
-    return state.tags;
+    return state.tags ?? [];
 });
 
 /**
@@ -218,7 +218,7 @@ export const selectIsDashboardPrivate = createSelector(selectDashboardShareStatu
  * @alpha
  */
 export const selectDashboardLockStatus = createSelector(selectDashboardDescriptor, (state) => {
-    return state.isLocked || false;
+    return state.isLocked ?? false;
 });
 
 /**

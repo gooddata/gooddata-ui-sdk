@@ -121,7 +121,7 @@ class KpiContent extends Component<IKpiContentProps & WrappedComponentProps> {
         return kpiValue;
     }
 
-    render(): React.ReactNode {
+    render() {
         return (
             <div className="gd-kpi-widget-content">
                 <div className="visualization-content">

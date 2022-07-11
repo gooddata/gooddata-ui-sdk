@@ -76,7 +76,7 @@ export class ErrorComponent extends React.Component<IErrorProps> {
         },
     };
 
-    public render(): React.ReactNode {
+    public render() {
         const { className, style, width, height, message, description, icon, clientHeight } = this.props;
 
         const customHeight = getCustomHeight(clientHeight);

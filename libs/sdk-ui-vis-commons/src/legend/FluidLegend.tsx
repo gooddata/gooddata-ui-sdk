@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import noop from "lodash/noop";
@@ -60,7 +60,7 @@ export class FluidLegend extends React.PureComponent<IFluidLegendProps> {
         );
     };
 
-    public render(): React.ReactNode {
+    public render() {
         const { series, containerWidth } = this.props;
         const { itemWidth, hasPaging, visibleItemsCount } = calculateFluidLegend(
             series.length,

@@ -332,7 +332,7 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
         }
     }
 
-    public render(): React.ReactNode {
+    public render() {
         const { intl, onCancel, editSchedule, enableWidgetExportScheduling } = this.props;
         const { alignment, isValidScheduleEmailData } = this.state;
         const alignPoints = [

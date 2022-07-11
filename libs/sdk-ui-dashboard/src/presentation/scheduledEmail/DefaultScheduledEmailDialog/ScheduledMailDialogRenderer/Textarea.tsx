@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import * as React from "react";
 import cx from "classnames";
 
@@ -35,7 +35,7 @@ export class Textarea extends React.PureComponent<ITextareaProps, ITextareaState
         };
     }
 
-    public render(): React.ReactNode {
+    public render() {
         const { className, label, maxlength, placeholder, value } = this.props;
         const { rows } = this.state;
 

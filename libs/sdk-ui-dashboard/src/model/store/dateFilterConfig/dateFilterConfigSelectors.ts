@@ -27,7 +27,7 @@ const selectSelf = createSelector(
  * @alpha
  */
 export const selectDateFilterConfigOverrides = createSelector(selectSelf, (dateFilterConfigState) => {
-    return dateFilterConfigState.dateFilterConfig;
+    return dateFilterConfigState.dateFilterConfig ?? undefined;
 });
 
 /**

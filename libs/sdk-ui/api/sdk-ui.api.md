@@ -396,7 +396,7 @@ export class ErrorComponent extends React_2.Component<IErrorProps> {
     // (undocumented)
     static defaultProps: Partial<IErrorProps>;
     // (undocumented)
-    render(): React_2.ReactNode;
+    render(): JSX.Element;
 }
 
 // @public
@@ -1449,7 +1449,7 @@ export class LoadingComponent extends React_2.Component<ILoadingProps> {
     // (undocumented)
     static defaultProps: Partial<ILoadingProps>;
     // (undocumented)
-    render(): React_2.ReactNode;
+    render(): JSX.Element;
 }
 
 // @public
@@ -1616,7 +1616,7 @@ export const TranslationsCustomizationProvider: React_2.FC<ITranslationsCustomiz
 // @internal (undocumented)
 export class TranslationsProvider extends React_2.PureComponent<ITranslationsProviderProps> {
     // (undocumented)
-    render(): React_2.ReactNode;
+    render(): any;
 }
 
 // @public

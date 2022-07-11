@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 
 import { OnOpenedChange, IOnOpenedChangeParams } from "./MenuSharedTypes";
@@ -36,7 +36,7 @@ export class MenuState extends React.Component<IMenuStateProps, IMenuStateState>
         };
     }
 
-    public render(): React.ReactNode {
+    public render() {
         return this.props.children({
             opened: (this.isControlled() ? this.props.opened : this.state.opened) ?? false,
             onOpenedChange: this.onOpenedChange,

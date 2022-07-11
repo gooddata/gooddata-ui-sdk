@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { IHeaderGroupParams } from "@ag-grid-community/all-modules";
 import React from "react";
 
@@ -12,7 +12,7 @@ export interface IProps extends ICommonHeaderParams, IHeaderGroupParams {
 }
 
 export default class ColumnGroupHeader extends React.Component<IProps> {
-    public render(): React.ReactNode {
+    public render() {
         const { menu, intl } = this.props;
         const colGroupDef = this.props.columnGroup.getColGroupDef()!;
         const colId = agColId(colGroupDef);

@@ -39,7 +39,7 @@ export class MeasureValueFilterExample extends Component<unknown, IMeasureValueF
         );
     }
 
-    public render(): React.ReactNode {
+    public render() {
         const { filters } = this.state;
         return (
             <div>

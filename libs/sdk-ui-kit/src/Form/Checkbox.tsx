@@ -38,7 +38,7 @@ export class Checkbox extends React.PureComponent<CheckboxProps> {
         this.props.onChange(e.target.checked);
     };
 
-    render(): React.ReactNode {
+    render() {
         const { disabled, name, text, title, value, labelSize } = this.props;
 
         const labelClasses = cx("input-label-text", {

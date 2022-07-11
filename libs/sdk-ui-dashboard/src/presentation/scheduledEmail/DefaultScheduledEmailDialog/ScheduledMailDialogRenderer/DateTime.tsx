@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import * as React from "react";
 import { Datepicker, Timepicker } from "@gooddata/sdk-ui-kit";
 
@@ -20,7 +20,7 @@ interface IDateTimeOwnProps {
 export type IDateTimeProps = IDateTimeOwnProps;
 
 export class DateTime extends React.PureComponent<IDateTimeProps> {
-    public render(): React.ReactNode {
+    public render() {
         const { date, dateFormat, label, locale, timezone, onDateChange } = this.props;
 
         return (

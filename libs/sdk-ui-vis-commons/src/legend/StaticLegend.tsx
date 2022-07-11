@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import noop from "lodash/noop";
@@ -71,7 +71,7 @@ export class StaticLegend extends React.PureComponent<IStaticLegendProps> {
         );
     };
 
-    public render(): React.ReactNode {
+    public render() {
         const {
             enableBorderRadius,
             containerHeight,

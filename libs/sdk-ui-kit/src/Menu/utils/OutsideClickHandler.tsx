@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { createRef } from "react";
 
 export interface IOutsideClickHandlerProps {
@@ -34,7 +34,7 @@ export class OutsideClickHandler extends React.Component<IOutsideClickHandlerPro
         this.removeListeners();
     }
 
-    public render(): React.ReactNode {
+    public render() {
         return <div ref={this.wrapperElRef}>{this.props.children}</div>;
     }
 

@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
 import { IMeasureValueFilter } from "@gooddata/sdk-model";
 import noop from "lodash/noop";
@@ -39,7 +39,7 @@ export class MeasureValueFilter extends React.PureComponent<
 
     private buttonRef = React.createRef<HTMLDivElement>();
 
-    public render(): React.ReactNode {
+    public render() {
         const { displayDropdown } = this.state;
         const {
             filter,

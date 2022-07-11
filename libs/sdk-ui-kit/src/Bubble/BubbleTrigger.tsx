@@ -53,7 +53,7 @@ export class BubbleTrigger<P extends IBubbleTriggerProps> extends React.PureComp
         this.setState({ isBubbleVisible: active });
     }
 
-    public render(): React.ReactNode {
+    public render() {
         const { children, eventsOnBubble, className, tagName, ...others } = this.props;
         const dataAttributes = pickBy(others, (_, key) => key.startsWith("data-"));
 

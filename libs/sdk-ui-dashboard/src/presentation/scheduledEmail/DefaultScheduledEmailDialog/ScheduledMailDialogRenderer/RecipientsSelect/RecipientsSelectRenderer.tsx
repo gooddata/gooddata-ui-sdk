@@ -122,7 +122,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSel
         }
     }
 
-    public render(): React.ReactNode {
+    public render() {
         const { isMulti, options, value } = this.props;
         const creatableSelectComponent: SelectComponentsConfig<
             IScheduleEmailRecipient,

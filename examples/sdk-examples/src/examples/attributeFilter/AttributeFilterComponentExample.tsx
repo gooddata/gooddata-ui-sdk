@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { Component } from "react";
 import { AttributeFilter } from "@gooddata/sdk-ui-filters";
 import { idRef, newPositiveAttributeFilter, newNegativeAttributeFilter, uriRef } from "@gooddata/sdk-model";
@@ -13,7 +13,7 @@ export class AttributeFilterComponentExample extends Component {
         console.log("AttributeFilterComponentExample onApply", ...params);
     };
 
-    public render(): React.ReactNode {
+    public render() {
         return (
             <div>
                 <div>attribute defined by identifier</div>

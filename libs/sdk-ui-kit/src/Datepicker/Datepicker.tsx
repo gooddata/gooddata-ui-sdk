@@ -263,7 +263,7 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
         }
     }
 
-    public render(): React.ReactNode {
+    public render() {
         const { dateFormat } = this.props;
         const classNamesProps = {
             overlay: "gd-datepicker-picker",
@@ -318,7 +318,7 @@ const DatePickerWithIntl = injectIntl(WrappedDatePicker);
  * @internal
  */
 export class Datepicker extends React.PureComponent<IDatePickerOwnProps> {
-    public render(): React.ReactNode {
+    public render() {
         return (
             <IntlWrapper locale={this.props.locale}>
                 <DatePickerWithIntl {...this.props} />

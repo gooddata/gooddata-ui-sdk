@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { Component, createRef } from "react";
 import throttle from "lodash/throttle";
 import { elementRegion } from "../utils/domUtilities";
@@ -39,7 +39,7 @@ export class AutoSize extends Component<IAutoSizeProps> {
     private throttledUpdateSize = throttle(this.updateSize, 250, { leading: false });
     private wrapperRef = createRef<HTMLDivElement>();
 
-    public render(): React.ReactNode {
+    public render() {
         const { children } = this.props;
         const { width, height } = this.state;
         return (

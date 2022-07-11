@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { visualizationIsBetaWarning } from "@gooddata/sdk-ui";
 import { BaseChart } from "../_base/BaseChart";
@@ -10,7 +10,7 @@ export class CoreFunnelChart extends React.PureComponent<ICoreChartProps> {
         visualizationIsBetaWarning();
     }
 
-    public render(): React.ReactNode {
+    public render() {
         return <BaseChart type="funnel" {...this.props} />;
     }
 }
