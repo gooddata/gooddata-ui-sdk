@@ -1,9 +1,9 @@
 // (C) 2021-2022 GoodData Corporation
-@import "~normalize.css";
-@import "~@gooddata/sdk-ui-kit/styles/css/list";
-@import "~@gooddata/sdk-ui-kit/styles/css/messages";
-@import "~@gooddata/sdk-ui-filters/styles/css/attributeFilter";
-@import "~@gooddata/sdk-ui-filters/styles/css/dateFilter";
+@use "normalize";
+@import "@gooddata/sdk-ui-kit/styles/css/list";
+@import "@gooddata/sdk-ui-kit/styles/css/messages";
+@import "@gooddata/sdk-ui-filters/styles/css/attributeFilter";
+@import "@gooddata/sdk-ui-filters/styles/css/dateFilter";
 @import "dashboard";
 @import "dragAndDrop";
 @import "filterBar";

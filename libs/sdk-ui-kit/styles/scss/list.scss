@@ -1,9 +1,9 @@
 // (C) 2007-2020 GoodData Corporation
+@use "fixed-data-table";
 @import "./animations.scss";
 @import "./List/_mixins";
 @import "./variables.scss";
 @import "./mixins.scss";
-@import "~fixed-data-table-2/dist/fixed-data-table.css";
 @import "./indigoFont.scss";
 
 $menu-item-icon-width: 30px;

@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-@import "~codemirror/lib/codemirror.css";
+@use "codemirror";
 @import "./mixins";
 
 $cm-color-matching-bracket: #000;

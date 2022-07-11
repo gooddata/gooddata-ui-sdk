@@ -1,7 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 @import "./variables.scss";
 @import "./Button/variables";
-$base-path: "~@gooddata/sdk-ui-kit/styles/images/visualization-types/";
+$base-path: "@gooddata/sdk-ui-kit/styles/images/visualization-types/";
 $visualization-types: area, bar, bubble, column, combo, combo2, donut, dual, funnel, headline, heatmap, line,
     pie, scatter, table, treemap, unknown, xirr, pushpin, region, bullet;
 

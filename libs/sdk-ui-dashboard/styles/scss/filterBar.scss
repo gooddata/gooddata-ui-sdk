@@ -79,7 +79,7 @@ $attribute-filter-drag-handle-left: 10px;
     flex-wrap: wrap;
     width: 100%;
     min-height: $filter-bar-height;
-    background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/filter-bar-background.svg");
+    background-image: url("@gooddata/sdk-ui-dashboard/esm/assets/filter-bar-background.svg");
     background-repeat: repeat;
 
     .dash-filters-attribute {
