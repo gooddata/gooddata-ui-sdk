@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import ReactDOM from "react-dom";
 
@@ -28,7 +28,7 @@ export class RenderChildrenInPortal extends React.Component<IRenderChildrenInPor
         }
     }
 
-    public render(): React.ReactNode {
+    public render() {
         return ReactDOM.createPortal(this.props.children, this.portalContentWrapperEl);
     }
 }

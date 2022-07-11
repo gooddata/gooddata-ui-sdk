@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
 import isNumber from "lodash/isNumber";
 import isString from "lodash/isString";
@@ -57,7 +57,7 @@ export class Input extends React.PureComponent<InputPureProps, InputState> {
         }
     }
 
-    render(): React.ReactNode {
+    render() {
         return (
             <InputPure
                 {...this.props}

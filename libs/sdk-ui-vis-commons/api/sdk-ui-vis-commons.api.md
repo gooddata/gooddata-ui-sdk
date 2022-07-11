@@ -80,7 +80,7 @@ export const FLUID_LEGEND_THRESHOLD = 768;
 // @internal (undocumented)
 export class FluidLegend extends React_2.PureComponent<IFluidLegendProps> {
     // (undocumented)
-    render(): React_2.ReactNode;
+    render(): JSX.Element;
     // (undocumented)
     renderPaging: () => React_2.ReactNode;
     // (undocumented)
@@ -138,7 +138,7 @@ export const HeadlinePagination: React_2.FC<IHeadlinePaginationProps>;
 // @internal (undocumented)
 export class HeatmapLegend extends React_2.PureComponent<IHeatmapLegendProps> {
     // (undocumented)
-    render(): React_2.ReactNode;
+    render(): JSX.Element;
 }
 
 // @internal (undocumented)
@@ -504,7 +504,7 @@ export class StaticLegend extends React_2.PureComponent<IStaticLegendProps> {
     // (undocumented)
     static defaultProps: Pick<IStaticLegendProps, "buttonOrientation" | "paginationHeight" | "onPageChanged">;
     // (undocumented)
-    render(): React_2.ReactNode;
+    render(): JSX.Element;
     // (undocumented)
     renderPaging: (pagesCount: number) => React_2.ReactNode;
     // (undocumented)

@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { Component } from "react";
 import { InsightView } from "@gooddata/sdk-ui-ext";
 import * as Md from "../../../md/full";
@@ -71,7 +71,7 @@ export class ConfigurationColumnChartExample extends Component<
         });
     };
 
-    public render(): React.ReactNode {
+    public render() {
         const { config } = this.state;
 
         return (

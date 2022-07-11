@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 
 import { MenuPosition } from "../positioning/MenuPosition";
@@ -14,7 +14,7 @@ export class MenuOpenedByHover extends React.Component<IMenuOpenedBySharedProps>
         this.clearCloseDelayTimer();
     }
 
-    public render(): React.ReactNode {
+    public render() {
         return (
             <MenuPosition
                 toggler={

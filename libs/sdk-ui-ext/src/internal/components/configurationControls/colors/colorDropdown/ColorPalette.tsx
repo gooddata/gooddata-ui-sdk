@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import ColorPaletteItem from "./ColorPaletteItem";
@@ -13,7 +13,7 @@ export interface IColorPaletteProps {
 }
 
 export default class ColorPalette extends React.PureComponent<IColorPaletteProps> {
-    public render(): React.ReactNode {
+    public render() {
         return <div className={this.getClassNames()}>{this.renderItems()}</div>;
     }
 

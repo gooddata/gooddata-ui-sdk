@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { PositionedMenuContent } from "./PositionedMenuContent";
 import { IMenuPositionConfig } from "../MenuSharedTypes";
@@ -54,7 +54,7 @@ export class MenuPosition extends React.Component<IMenuPositionProps, IMenuPosit
     // positions from React Measure were outdated. To solve this we do the
     // measurements manually in PositionedMenuContent at the correct time.
 
-    public render(): React.ReactNode {
+    public render() {
         const {
             portalTarget,
             topLevelMenu,

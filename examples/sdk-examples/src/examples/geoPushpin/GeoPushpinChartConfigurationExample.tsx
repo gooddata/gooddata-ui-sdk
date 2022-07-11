@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React, { Component } from "react";
 import { GeoPushpinChart } from "@gooddata/sdk-ui-geo";
 
@@ -14,7 +14,7 @@ import {
 } from "../../md/geoModel";
 
 export class GeoPushpinChartConfigurationExample extends Component {
-    public render(): React.ReactNode {
+    public render() {
         const geoConfig = {
             center: {
                 lat: 39,

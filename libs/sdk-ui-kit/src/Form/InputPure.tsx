@@ -158,7 +158,7 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
         );
     }
 
-    render(): React.ReactNode {
+    render() {
         const {
             className,
             clearOnEsc,

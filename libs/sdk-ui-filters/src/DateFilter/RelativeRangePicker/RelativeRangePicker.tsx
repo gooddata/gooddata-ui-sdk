@@ -19,7 +19,7 @@ class RelativeRangePickerComponent extends React.Component<
 > {
     private toFieldRef = React.createRef<DynamicSelect>();
 
-    public render(): React.ReactNode {
+    public render() {
         const { handleFromChange, handleToChange } = this;
         const { selectedFilterOption, intl, isMobile } = this.props;
 

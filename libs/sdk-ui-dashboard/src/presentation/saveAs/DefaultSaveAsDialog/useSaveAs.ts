@@ -61,7 +61,7 @@ export const useSaveAs = (props: UseSaveAsProps): UseSaveAsResult => {
     const { onSubmit, onSubmitSuccess, onSubmitError } = props;
     const locale = useDashboardSelector(selectLocale);
     const dashboardTitle = useDashboardSelector(selectDashboardTitle);
-    const isScheduleEmailsEnabled = useDashboardSelector(selectEnableKPIDashboardSchedule) ?? false;
+    const isScheduleEmailsEnabled = useDashboardSelector(selectEnableKPIDashboardSchedule);
     const capabilities = useDashboardSelector(selectBackendCapabilities);
     const isDashboardSaving = useDashboardSelector(selectIsDashboardSaving);
 

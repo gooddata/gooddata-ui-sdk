@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
 import { ISeparators } from "@gooddata/sdk-ui";
 import DropdownItem from "./DropdownItem";
@@ -26,7 +26,7 @@ export class FormatTemplatesDropdown extends React.Component<
         isOpened: false,
     };
 
-    public render(): React.ReactNode {
+    public render() {
         const { isOpened } = this.state;
         const { templates, separators } = this.props;
         return (

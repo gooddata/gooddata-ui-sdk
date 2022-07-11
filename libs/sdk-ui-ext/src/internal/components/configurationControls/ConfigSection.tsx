@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import cx from "classnames";
@@ -63,7 +63,7 @@ export class ConfigSection extends React.Component<IConfigSectionProps, IConfigS
         this.setState({ collapsed });
     }
 
-    public render(): React.ReactNode {
+    public render() {
         const { collapsed } = this.state;
         const { title, intl, subtitle, className } = this.props;
         const configSectionClassName = `adi-bucket-configuration ${className}`;

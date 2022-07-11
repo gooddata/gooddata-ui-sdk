@@ -280,7 +280,7 @@ export class AttributeDropdownCore extends React.PureComponent<
         return title;
     };
 
-    public render(): React.ReactNode {
+    public render() {
         const { FilterLoading, fullscreenOnMobile } = this.props;
         const customizedTitle = this.getTitle();
         const classes = cx(

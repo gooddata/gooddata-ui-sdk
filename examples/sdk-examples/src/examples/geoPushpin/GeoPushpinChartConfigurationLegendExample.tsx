@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React, { Component } from "react";
 
 import "@gooddata/sdk-ui-geo/styles/css/main.css";
@@ -8,7 +8,7 @@ import { GeoPushpinChart, IGeoConfig } from "@gooddata/sdk-ui-geo";
 import { locationAttribute, segmentByAttribute, sizeMeasure } from "../../md/geoModel";
 
 export class GeoPushpinChartConfigurationLegendExample extends Component {
-    public render(): React.ReactNode {
+    public render() {
         const geoConfig: IGeoConfig = {
             mapboxToken: MAPBOX_TOKEN,
             legend: {

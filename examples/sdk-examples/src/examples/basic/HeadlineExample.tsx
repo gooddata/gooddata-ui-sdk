@@ -19,7 +19,7 @@ export class HeadlineExample extends Component {
         return console.log("ColumnChartExample onError", ...params);
     };
 
-    public render(): React.ReactNode {
+    public render() {
         return (
             <div className="s-headline" style={{ display: "flex" }}>
                 <style jsx>

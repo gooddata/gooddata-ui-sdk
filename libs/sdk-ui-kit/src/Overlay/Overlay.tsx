@@ -175,7 +175,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
         afterOverlayClosed();
     }
 
-    public render(): React.ReactNode {
+    public render() {
         // Need stop propagation of events from Portal thats new behavior of react 16
         // https://github.com/facebook/react/issues/11387
         return (

@@ -470,7 +470,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         );
     }
 
-    public render(): React.ReactNode {
+    public render() {
         const { ErrorComponent } = this.props;
         const { desiredHeight, error } = this.state;
 

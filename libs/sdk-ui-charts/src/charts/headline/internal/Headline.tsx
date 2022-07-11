@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { createRef } from "react";
 import Measure from "react-measure";
 import { ResponsiveText } from "@gooddata/sdk-ui-kit";
@@ -59,7 +59,7 @@ export default class Headline extends React.Component<IHeadlineVisualizationProp
 
     private secondaryItemTitleWrapperRef = createRef<HTMLDivElement>();
 
-    public render(): React.ReactNode {
+    public render() {
         return (
             <Measure client>
                 {({ measureRef, contentRect }) => {

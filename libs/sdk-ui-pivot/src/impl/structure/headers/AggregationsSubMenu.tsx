@@ -49,7 +49,7 @@ export default class AggregationsSubMenu extends React.Component<IAggregationsSu
         isMenuOpened: false,
     };
 
-    public render(): React.ReactNode {
+    public render() {
         const { toggler, isMenuOpened, intl } = this.props;
         const menuOpenedProp = isMenuOpened ? { opened: true } : {};
 
