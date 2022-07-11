@@ -442,17 +442,18 @@ export const buildTigerSpecificFunctions = (
         }
     },
     scanDataSource: async (dataSourceId: string, scanRequest: ScanRequest) => {
-        return await authApiCall(async (sdk) => {
-            // TODO replace sdk.axios call with sdk.actions when API is regenerated for Tiger 1.7
-            return await sdk.axios
-                .post(`/api/v1/actions/dataSources/${dataSourceId}/scan`, scanRequest)
-                .then((res: AxiosResponse) => {
-                    return res?.data;
-                })
-                .catch((err) => {
-                    return Promise.reject(`scan error=${JSON.stringify(err.response.data)}`);
-                });
-        });
+        try {
+            return await authApiCall(async (sdk) => {
+                // TODO replace sdk.axios call with sdk.actions when API is regenerated for Tiger 1.7
+                return await sdk.axios
+                    .post(`/api/v1/actions/dataSources/${dataSourceId}/scan`, scanRequest)
+                    .then((res: AxiosResponse) => {
+                        return res?.data;
+                    });
+            });
+        } catch (error) {
+            throw convertApiError(error);
+        }
     },
     publishPdm: async (dataSourceId: string, declarativePdm: DeclarativePdm) => {
         return await authApiCall(async (sdk) => {
