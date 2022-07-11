@@ -4,20 +4,19 @@
 
 ```ts
 
-import { default as React_2 } from 'react';
+import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 
-// @public (undocumented)
-export interface ISdkComponentProps {
-    // (undocumented)
-    message: string;
-}
+// @public
+export type CustomElementContext = {
+    backend: IAnalyticalBackend;
+    workspaceId?: string;
+};
 
-// @public (undocumented)
-export class SdkComponent extends React_2.Component<ISdkComponentProps> {
-    // (undocumented)
-    render(): React_2.ReactNode;
-}
+// @public
+export const getContext: () => Promise<CustomElementContext>;
 
+// @public
+export const setContext: (context: CustomElementContext) => void;
 
 // (No @packageDocumentation comment for this package)
 

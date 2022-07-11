@@ -199,6 +199,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@gooddata/sdk-ui-web-components",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@gooddata/stylelint-config",
       "allowedCategories": [ "production" ]
     },

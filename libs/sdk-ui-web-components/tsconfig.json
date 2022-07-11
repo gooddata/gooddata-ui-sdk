@@ -1,10 +1,10 @@
 {
     "_note": "This file is only for IDE. For build use tsconfig.[dev/build].json (dev mode is less strict)",
     "compilerOptions": {
-        "target": "es5",
+        "target": "esnext",
         "jsx": "react",
         "lib": ["es7", "dom"],
-        "module": "commonjs",
+        "module": "esnext",
         "moduleResolution": "node",
         "esModuleInterop": true,
         "importHelpers": true,
@@ -18,5 +18,5 @@
         "baseUrl": ".."
     },
     "compileOnSave": false,
-    "exclude": ["**/node_modules", "dist", "esm", "**/__mocks__/**/*"]
+    "exclude": ["**/node_modules", "dist", "**/__mocks__/**/*"]
 }

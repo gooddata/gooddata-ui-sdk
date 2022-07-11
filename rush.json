@@ -305,7 +305,7 @@
             "packageName": "@gooddata/sdk-ui-web-components",
             "projectFolder": "libs/sdk-ui-web-components",
             "reviewCategory": "production",
-            "versionPolicyName": "sdk"
+            "shouldPublish": false
         },
         {
             "packageName": "@gooddata/dashboard-plugin-tests",
