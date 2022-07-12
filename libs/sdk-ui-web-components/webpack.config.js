@@ -1,8 +1,9 @@
 // (C) 2022 GoodData Corporation
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { EnvironmentPlugin, ProvidePlugin, ContextReplacementPlugin } = require("webpack");
+const { EnvironmentPlugin, ProvidePlugin, ContextReplacementPlugin, DefinePlugin } = require("webpack");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const path = require("path");
+const package = require("./package.json");
 
 module.exports = (env, argv) => ({
     mode: argv.mode,
@@ -108,6 +109,10 @@ module.exports = (env, argv) => ({
             _nodeLRUCacheForceNoSymbol: "",
             TEST_PSEUDOMAP: "",
             NODE_DEBUG: "",
+        }),
+        new DefinePlugin({
+            NPM_PACKAGE_NAME: JSON.stringify(package.name),
+            NPM_PACKAGE_VERSION: JSON.stringify(package.version),
         }),
         new ProvidePlugin({
             process: "process/browser",
