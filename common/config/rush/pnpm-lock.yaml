@@ -18276,7 +18276,7 @@ packages:
       semver: 7.3.6
     dev: false
 
-  /sass-loader/10.2.1_89732cc13ea2438c8063d0d8ede18dbd:
+  /sass-loader/10.2.1_e3a10481b6e5cbf93aa3f98fa5ee62a3:
     resolution: {integrity: sha512-RRvWl+3K2LSMezIsd008ErK4rk6CulIMSwrcc2aZvjymUgKo/vjXGp1rSWmfTUX7bblEOz8tst4wBwWtCGBqKA==}
     engines: {node: '>= 10.13.0'}
     peerDependencies:
@@ -18296,13 +18296,13 @@ packages:
       loader-utils: 2.0.2
       neo-async: 2.6.2
       node-sass: 7.0.1
-      sass: 1.53.0
+      sass: 1.50.0
       schema-utils: 3.1.1
       semver: 7.3.6
       webpack: 5.72.0_webpack-cli@4.9.2
     dev: false
 
-  /sass-loader/10.2.1_sass@1.53.0+webpack@5.72.0:
+  /sass-loader/10.2.1_sass@1.50.0+webpack@5.72.0:
     resolution: {integrity: sha512-RRvWl+3K2LSMezIsd008ErK4rk6CulIMSwrcc2aZvjymUgKo/vjXGp1rSWmfTUX7bblEOz8tst4wBwWtCGBqKA==}
     engines: {node: '>= 10.13.0'}
     peerDependencies:
@@ -18321,14 +18321,14 @@ packages:
       klona: 2.0.5
       loader-utils: 2.0.2
       neo-async: 2.6.2
-      sass: 1.53.0
+      sass: 1.50.0
       schema-utils: 3.1.1
       semver: 7.3.6
       webpack: 5.72.0_webpack-cli@4.9.2
     dev: false
 
-  /sass/1.53.0:
-    resolution: {integrity: sha512-zb/oMirbKhUgRQ0/GFz8TSAwRq2IlR29vOUJZOx0l8sV+CkHUfHa4u5nqrG+1VceZp7Jfj59SVW9ogdhTvJDcQ==}
+  /sass/1.50.0:
+    resolution: {integrity: sha512-cLsD6MEZ5URXHStxApajEh7gW189kkjn4Rc8DQweMyF+o5HF5nfEz8QYLMlPsTOD88DknatTmBWkOcw5/LnJLQ==}
     engines: {node: '>=12.0.0'}
     hasBin: true
     dependencies:
@@ -22637,7 +22637,7 @@ packages:
     dev: false
 
   file:projects/playground.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-12TLXjSQ3BPkJEzJgKaJ+s+TTKXNOjl5+8j+O6bRRN7j/R29IQf5TGJCWs4IBAW6IFLOHjS3YCCs66DvpbTZtg==, tarball: file:projects/playground.tgz}
+    resolution: {integrity: sha512-ouCSU6U0r0LyrXPwI5a/QhJCckN0YdlJn/uQ6/kpWoDl8uuMktCY81sKo4yMFWOoZEQ90ai3dZGjXi3yJf1v0Q==, tarball: file:projects/playground.tgz}
     id: file:projects/playground.tgz
     name: '@rush-temp/playground'
     version: 0.0.0
@@ -22691,8 +22691,8 @@ packages:
       prettier-loader: 3.3.0_prettier@2.5.1+webpack@5.72.0
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
-      sass: 1.53.0
-      sass-loader: 10.2.1_sass@1.53.0+webpack@5.72.0
+      sass: 1.50.0
+      sass-loader: 10.2.1_sass@1.50.0+webpack@5.72.0
       source-map-loader: 2.0.2_webpack@5.72.0
       speed-measure-webpack-plugin: 1.5.0_webpack@5.72.0
       style-loader: 3.3.1_webpack@5.72.0
@@ -23167,7 +23167,7 @@ packages:
     dev: false
 
   file:projects/sdk-examples.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-/V2W5osoybepU4ytSXCZLtDYkmrVv7Lws4U/OM554wrYR7OnccHKtdc5/8gg9mfWHPoM9rRyu3InYNMpJ09PDA==, tarball: file:projects/sdk-examples.tgz}
+    resolution: {integrity: sha512-Q7mO3mTTLdCgEJa+kdJpHt+utuRqtEZleYusRd8AfE3/r9jxZJoIAhiqATTZ5z9f+P3V6a8VudIWcFVb1Ym9MQ==, tarball: file:projects/sdk-examples.tgz}
     id: file:projects/sdk-examples.tgz
     name: '@rush-temp/sdk-examples'
     version: 0.0.0
@@ -23246,8 +23246,8 @@ packages:
       react-select: 5.3.2_e9a3ca65276589bcf2cd9ed351b66fe3
       react-syntax-highlighter: 15.5.0_react@17.0.2
       recharts: 2.1.9_react-dom@17.0.2+react@17.0.2
-      sass: 1.53.0
-      sass-loader: 10.2.1_sass@1.53.0+webpack@5.72.0
+      sass: 1.50.0
+      sass-loader: 10.2.1_sass@1.50.0+webpack@5.72.0
       source-map-loader: 2.0.2_webpack@5.72.0
       speed-measure-webpack-plugin: 1.5.0_webpack@5.72.0
       style-loader: 3.3.1_webpack@5.72.0
@@ -23479,7 +23479,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-charts.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-nNDLzNg/LfLv2XG69NbPiB0xndfO3Ywz83gACQwQk8QODvU0pWl4f58Y5vNDBTFXGsObqPoI9tUSwjDVyxlZqg==, tarball: file:projects/sdk-ui-charts.tgz}
+    resolution: {integrity: sha512-SnzZ1Sysn1Myy8W6B9NlyITnBL0MrDprQHWA1Q63eOp9HS96Lq5VhNdeUJcGKf/Nc+mmT4TQMZSnRqzeejTbTw==, tarball: file:projects/sdk-ui-charts.tgz}
     id: file:projects/sdk-ui-charts.tgz
     name: '@rush-temp/sdk-ui-charts'
     version: 0.0.0
@@ -23535,7 +23535,6 @@ packages:
       react-dom: 17.0.2_react@17.0.2
       react-intl: 5.24.8_react@17.0.2+typescript@4.0.2
       react-measure: 2.5.2_react-dom@17.0.2+react@17.0.2
-      sass: 1.53.0
       stylelint: 13.13.1
       stylelint-checkstyle-formatter: 0.1.2
       stylelint-config-prettier: 8.0.2_stylelint@13.13.1
@@ -23559,7 +23558,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-dashboard.tgz_a7e570fd5a4985262571d64f4bc94b86:
-    resolution: {integrity: sha512-O+TNnYuv7m5UzhRNHAjrrQl5m6cuycf9lVWL2YHGxuE6rv6urBK8Dve2dsfdm+LT1JZE8GlUvvVcvQq/iE9SBQ==, tarball: file:projects/sdk-ui-dashboard.tgz}
+    resolution: {integrity: sha512-bHCldMRtfYuZpH/ybLx/2ke32Uu5EyqVy+Wmy1637HJJtBIml0KSn3ti1f/XTSG0pQmAK8c2+5hIPMefoWsF8g==, tarball: file:projects/sdk-ui-dashboard.tgz}
     id: file:projects/sdk-ui-dashboard.tgz
     name: '@rush-temp/sdk-ui-dashboard'
     version: 0.0.0
@@ -23626,7 +23625,6 @@ packages:
       react-transition-group: 4.4.2_react-dom@17.0.2+react@17.0.2
       redux-batched-actions: 0.5.0
       redux-saga: 1.1.3
-      sass: 1.53.0
       stylelint: 13.13.1
       stylelint-checkstyle-formatter: 0.1.2
       stylelint-config-prettier: 8.0.2_stylelint@13.13.1
@@ -23654,7 +23652,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-ext.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-65jJ/6qfbuGbDQtiq+rajbTQK8yZqC589nkJd+U7HkXOyJcwU7tMUwCtUfHv2lqocEyqp19LpsalhWOcfVbzzQ==, tarball: file:projects/sdk-ui-ext.tgz}
+    resolution: {integrity: sha512-Jhu9ITMGL1SWv2HRNTT4cgSDWtnXL9NajPpE3xdNG8LV3fvhzlYrbhcCZlG04pwuA9dr7Zauf68bll8VM/qpBA==, tarball: file:projects/sdk-ui-ext.tgz}
     id: file:projects/sdk-ui-ext.tgz
     name: '@rush-temp/sdk-ui-ext'
     version: 0.0.0
@@ -23714,7 +23712,6 @@ packages:
       react-measure: 2.5.2_react-dom@17.0.2+react@17.0.2
       react-select: 5.3.2_b49bddbe4b905ced4713cb857cca91fa
       react-transition-group: 4.4.2_react-dom@17.0.2+react@17.0.2
-      sass: 1.53.0
       stylelint: 13.13.1
       stylelint-checkstyle-formatter: 0.1.2
       stylelint-config-prettier: 8.0.2_stylelint@13.13.1
@@ -23738,7 +23735,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-filters.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-hdqI9tHE2+r+q6Q2YBHg5LjyHBq7GIERGiM6I3fbbdb6VDTNc9JryTV0Z1FGEIQuNG+K+M5oXFkXchEext3w7A==, tarball: file:projects/sdk-ui-filters.tgz}
+    resolution: {integrity: sha512-/CZP5jN8Y7VSfpyTFADqbl/3CRq7/eaKxw05eNDWyp+X3i6hZggKrGE482EKzX3mytQIN494+aXW3ayaJfsE4Q==, tarball: file:projects/sdk-ui-filters.tgz}
     id: file:projects/sdk-ui-filters.tgz
     name: '@rush-temp/sdk-ui-filters'
     version: 0.0.0
@@ -23799,7 +23796,6 @@ packages:
       react-responsive: 8.2.0_react@17.0.2
       react-window: 1.8.7_react-dom@17.0.2+react@17.0.2
       redux-saga: 1.1.3
-      sass: 1.53.0
       stylelint: 13.13.1
       stylelint-checkstyle-formatter: 0.1.2
       stylelint-config-prettier: 8.0.2_stylelint@13.13.1
@@ -23823,7 +23819,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-geo.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-iGrZPLWtKnY9T/HPp6eDxhwZ0NtEUWZ3vWEwqNMfPa10Qk+K+ViGzNoRdQxsgj7TY0kSqyrQYvodmxIISXHuuw==, tarball: file:projects/sdk-ui-geo.tgz}
+    resolution: {integrity: sha512-XjKZl8iZsXt3BUPd1PmOw7bemNb1zmDlt27hmPDRgysFCU0SiDEHtMH3gqVb4q7lp5co2G76jmWHBpdQLDGyUg==, tarball: file:projects/sdk-ui-geo.tgz}
     id: file:projects/sdk-ui-geo.tgz
     name: '@rush-temp/sdk-ui-geo'
     version: 0.0.0
@@ -23874,7 +23870,6 @@ packages:
       react-dom: 17.0.2_react@17.0.2
       react-intl: 5.24.8_react@17.0.2+typescript@4.0.2
       react-measure: 2.5.2_react-dom@17.0.2+react@17.0.2
-      sass: 1.53.0
       stylelint: 13.13.1
       stylelint-checkstyle-formatter: 0.1.2
       stylelint-config-prettier: 8.0.2_stylelint@13.13.1
@@ -23897,7 +23892,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-kit.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-fjiTqbmwR7neQSmWG+JgB8Mpq7LH8DU1BgfoH8bjxbwuwvFLV8R8ZLbyHO4jKVGt6sv/ovBrLedf7jDl+4akFQ==, tarball: file:projects/sdk-ui-kit.tgz}
+    resolution: {integrity: sha512-L0U3AsS3HdavhXSeGO9/15tgMH5SgxVau20lJ5vzZYz1wvQgWgMzcRSQKSKPmPBSushEbdsLITN0MX3KyCtT4w==, tarball: file:projects/sdk-ui-kit.tgz}
     id: file:projects/sdk-ui-kit.tgz
     name: '@rush-temp/sdk-ui-kit'
     version: 0.0.0
@@ -23973,7 +23968,6 @@ packages:
       react-select: 5.3.2_b49bddbe4b905ced4713cb857cca91fa
       react-textarea-autosize: 8.3.4_c8e45b4eb687790dba17b4e1c4b4273f
       react-transition-group: 4.4.2_react-dom@17.0.2+react@17.0.2
-      sass: 1.53.0
       stylelint: 13.13.1
       stylelint-checkstyle-formatter: 0.1.2
       stylelint-config-prettier: 8.0.2_stylelint@13.13.1
@@ -24060,7 +24054,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-pivot.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-LMbxsLS70rXDf8t6N+N3++tVOrWuvwCWTPcE7CBmzz2Or64OKOscR6W4hOvDTLhvjloPC8Q3GJNNwxX+ueIdCA==, tarball: file:projects/sdk-ui-pivot.tgz}
+    resolution: {integrity: sha512-Eks+kz5OM74zpjEzoDNlPT+FjRg331eEfrdmgSxOXERrvgq2Yq/Y1P4cfiAeIS/KPmXG47gAjBx+9l6c0qKZyQ==, tarball: file:projects/sdk-ui-pivot.tgz}
     id: file:projects/sdk-ui-pivot.tgz
     name: '@rush-temp/sdk-ui-pivot'
     version: 0.0.0
@@ -24113,7 +24107,6 @@ packages:
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       react-intl: 5.24.8_react@17.0.2+typescript@4.0.2
-      sass: 1.53.0
       stylelint: 13.13.1
       stylelint-checkstyle-formatter: 0.1.2
       stylelint-config-prettier: 8.0.2_stylelint@13.13.1
@@ -24137,7 +24130,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-tests-e2e.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-+8T1EAhlD8A+nGyundHEVZbw0ClnVgk/F5zrSFG8TOsZaHHlvtBkDo8EX7jWctRQce0fzo18yOgXCaW0CX9xLg==, tarball: file:projects/sdk-ui-tests-e2e.tgz}
+    resolution: {integrity: sha512-vC+yTc0usHZ9o/4yVtrWnTRUk+TBYynYGg9TPMW13mUHKfxCTaGCqbMWNs2KJk3tTSzWwLnYJQ1OfD5YpO86AQ==, tarball: file:projects/sdk-ui-tests-e2e.tgz}
     id: file:projects/sdk-ui-tests-e2e.tgz
     name: '@rush-temp/sdk-ui-tests-e2e'
     version: 0.0.0
@@ -24207,8 +24200,8 @@ packages:
       react-dom: 17.0.2_react@17.0.2
       react-intl: 5.24.8_react@17.0.2+typescript@4.0.2
       react-router-dom: 5.3.0_react@17.0.2
-      sass: 1.53.0
-      sass-loader: 10.2.1_89732cc13ea2438c8063d0d8ede18dbd
+      sass: 1.50.0
+      sass-loader: 10.2.1_e3a10481b6e5cbf93aa3f98fa5ee62a3
       source-map-loader: 2.0.2_webpack@5.72.0
       speed-measure-webpack-plugin: 1.5.0_webpack@5.72.0
       style-loader: 3.3.1_webpack@5.72.0
@@ -24411,7 +24404,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-vis-commons.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-ecQHG7YwiBnna7WnJjPIZuzgGHAReCkQy0K/ACfoazYIp7Tqki80idhc0HoU/vHdrL/muo9JhBUY5SqoA3RY5A==, tarball: file:projects/sdk-ui-vis-commons.tgz}
+    resolution: {integrity: sha512-x1E6YOETgbzJauYpeWI+CIstE3wOLkh1S2dCU1nKDTrZWJwWJgDZIOKD7F5qnrIE4cz5gxxIu3ONZhxKTt/BAQ==, tarball: file:projects/sdk-ui-vis-commons.tgz}
     id: file:projects/sdk-ui-vis-commons.tgz
     name: '@rush-temp/sdk-ui-vis-commons'
     version: 0.0.0
@@ -24458,7 +24451,6 @@ packages:
       react-dom: 17.0.2_react@17.0.2
       react-intl: 5.24.8_react@17.0.2+typescript@4.0.2
       react-measure: 2.5.2_react-dom@17.0.2+react@17.0.2
-      sass: 1.53.0
       stylelint: 13.13.1
       stylelint-checkstyle-formatter: 0.1.2
       stylelint-config-prettier: 8.0.2_stylelint@13.13.1

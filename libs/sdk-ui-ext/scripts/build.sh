@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 
 _build_styles() {
-    # --quiet-deps avoid foundation-sites deprecation warnings
-    sass --quiet-deps --load-path=node_modules styles/internal/scss:styles/internal/css
-    sass --quiet-deps --load-path=node_modules styles/scss:styles/css
+    node-sass -q --importer node_modules/node-sass-magic-importer/dist/cli.js -o styles/internal/css styles/internal/scss
+    node-sass -q --importer node_modules/node-sass-magic-importer/dist/cli.js -o styles/css styles/scss
 }
 
 _clean() {

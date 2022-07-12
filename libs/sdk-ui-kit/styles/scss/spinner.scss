@@ -29,18 +29,15 @@ $spinner-item-background-color: $gd-color-state-blank;
         opacity: 0.3;
         transform: translate(0, -50%) rotate(0);
         border-radius: 50%;
-        transform-origin: #{calc($spinner-dimension / 2)} center;
+        transform-origin: #{$spinner-dimension / 2} center;
     }
 
     @for $spinner from 1 through $spinner-items {
-        $rotate: calc(360 / $spinner-items) * $spinner;
+        $rotate: (360 / $spinner-items) * $spinner;
 
         .#{$class-slug}-#{$spinner} {
             transform: translate(0, -50%) rotate(#{$rotate}deg);
-            animation-name: spinner-animation;
-            animation-duration: #{calc(#{$spinner-items} * 1) / 15}s;
-            animation-timing-function: #{calc(#{$spinner} / 15)}s;
-            animation-iteration-count: infinite;
+            animation: spinner-animation #{($spinner-items * 1) / 15}s #{($spinner) / 15}s infinite;
         }
     }
 

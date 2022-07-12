@@ -1,8 +1,9 @@
 // (C) 2007-2020 GoodData Corporation
-@use "mapbox-gl";
-@import "@gooddata/sdk-ui-kit/styles/scss/Bubble/_variables";
-@import "@gooddata/sdk-ui-kit/styles/scss/variables";
-@import "@gooddata/sdk-ui-kit/styles/scss/mixins";
+@import "~@gooddata/sdk-ui-kit/styles/scss/Bubble/_variables";
+@import "~@gooddata/sdk-ui-kit/styles/scss/variables";
+@import "~@gooddata/sdk-ui-kit/styles/scss/mixins";
+
+@import "~mapbox-gl/dist/mapbox-gl";
 
 $border-color-circle-legend: var(--gd-palette-complementary-6, #acaeae);
 $gd-color-link: var(--gd-palette-complementary-7, #6d7680);
@@ -260,6 +261,6 @@ $font-stack-roman: gdcustomfont, "Avenir", "Helvetica Neue", arial, sans-serif;
     height: 100% !important;
 }
 
-@import "@gooddata/sdk-ui-vis-commons/styles/scss/legend";
+@import "~@gooddata/sdk-ui-vis-commons/styles/scss/legend";
 @import "tooltip";
 @import "charts";
