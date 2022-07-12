@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { DraggableItemType, DraggableItem } from "./types";
 
 import { getEmptyImage } from "react-dnd-html5-backend";
+import isFunction from "lodash/isFunction";
 
 type CollectedProps = {
     isDragging: boolean;
@@ -19,20 +20,27 @@ export function useDashboardDrag<DragObject extends DraggableItem>(
         dragItem,
         canDrag = true,
         hideDefaultPreview = true,
+        dragEnd,
     }: {
-        dragItem: DragObject;
+        dragItem: DragObject | (() => DragObject);
         canDrag?: boolean | ((monitor: DragSourceMonitor<DragObject, void>) => boolean);
         hideDefaultPreview?: boolean;
+        dragEnd?: (item: DragObject, monitor: DragSourceMonitor<DragObject, void>) => void;
     },
     deps: unknown[] = [],
 ) {
     const [collectedProps, dragRef, dragPreviewRef] = useDrag<DragObject, void, CollectedProps>(
-        {
-            type: dragItem.type,
-            item: dragItem,
-            collect: basicDragCollect,
-            canDrag,
+        () => {
+            const item = isFunction(dragItem) ? dragItem() : dragItem;
+            return {
+                type: item.type,
+                item: dragItem,
+                collect: basicDragCollect,
+                canDrag,
+                end: dragEnd,
+            };
         },
+
         deps,
     );
 

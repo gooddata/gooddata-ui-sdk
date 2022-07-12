@@ -1,12 +1,13 @@
 // (C) 2007-2022 GoodData Corporation
 import { ScreenSize } from "@gooddata/sdk-model";
-import React from "react";
+import React, { useRef, useCallback } from "react";
 import { Row } from "react-grid-system";
 import { RenderMode } from "../../../types";
 import {
     IDashboardLayoutItemFacade,
     IDashboardLayoutSectionFacade,
 } from "../../../_staging/dashboard/fluidLayout/facade/interfaces";
+import { HeightResizerHotspot } from "../Resize/HeightResizerHotspot";
 import { DashboardLayoutItem } from "./DashboardLayoutItem";
 import {
     IDashboardLayoutGridRowRenderer,
@@ -30,6 +31,7 @@ export interface DashboardLayoutGridRowProps<TWidget> {
 }
 
 export function DashboardLayoutGridRow<TWidget>(props: DashboardLayoutGridRowProps<TWidget>): JSX.Element {
+    const rowRef = useRef<HTMLDivElement>(null);
     const {
         section,
         itemKeyGetter = ({ item }) => item.index(),
@@ -52,17 +54,35 @@ export function DashboardLayoutGridRow<TWidget>(props: DashboardLayoutGridRowPro
         />
     ));
 
+    const getContainerDimensions = useCallback(() => {
+        if (!rowRef.current) {
+            return undefined;
+        }
+
+        return rowRef.current.getBoundingClientRect();
+    }, []);
+
     return (
-        <Row className="gd-fluid-layout-row s-gd-fluid-layout-row">
-            {gridRowRenderer
-                ? gridRowRenderer({
-                      children: rowItems,
-                      screen,
-                      section,
-                      items,
-                      renderMode,
-                  })
-                : rowItems}
-        </Row>
+        <div ref={rowRef}>
+            <Row className="gd-fluidlayout-row s-gd-fluid-layout-row">
+                {gridRowRenderer
+                    ? gridRowRenderer({
+                          children: rowItems,
+                          screen,
+                          section,
+                          items,
+                          renderMode,
+                      })
+                    : rowItems}
+                {renderMode === "edit" && (
+                    <HeightResizerHotspot
+                        section={section}
+                        items={items}
+                        screen={screen}
+                        getContainerDimensions={getContainerDimensions}
+                    />
+                )}
+            </Row>
+        </div>
     );
 }

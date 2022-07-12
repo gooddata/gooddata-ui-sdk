@@ -1,8 +1,9 @@
 // (C) 2022 GoodData Corporation
-import React, { CSSProperties, FC, useMemo } from "react";
-import { useDragLayer, XYCoord } from "react-dnd";
-import { DefaultAttributeFilterDraggingComponent } from "./draggableAttributeFilter";
-import { DraggableItemType } from "./types";
+import React, { CSSProperties, FC } from "react";
+import { useDragLayer } from "react-dnd";
+import { HeightResizerDragPreview } from "./DragLayerPreview/HeightResizerDragPreview";
+import { DraggableInternalItemType, DraggableItemType, isDraggableInternalItemType } from "./types";
+import { ContentDragPreview } from "./DragLayerPreview/ContentDragPreview";
 
 const layerStyles: CSSProperties = {
     position: "fixed",
@@ -14,51 +15,41 @@ const layerStyles: CSSProperties = {
     height: "100%",
 };
 
-function getItemStyles(initialOffset: XYCoord | null, currentOffset: XYCoord | null) {
-    if (!initialOffset || !currentOffset) {
-        return {
-            display: "none",
-        };
-    }
-
-    const { x, y } = currentOffset;
-
-    const transform = `translate(${x}px, ${y}px)`;
-    return {
-        transform,
-        WebkitTransform: transform,
-    };
-}
+const previewComponentsMap: Record<DraggableInternalItemType, any> = {
+    "internal-height-resizer": HeightResizerDragPreview,
+    "internal-width-resizer": () => undefined,
+};
 
 export const DragLayerComponent: FC = () => {
-    const { itemType, isDragging, item, initialOffset, currentOffset } = useDragLayer((monitor) => ({
+    const dragLayerProperties = useDragLayer((monitor) => ({
         item: monitor.getItem(),
         itemType: monitor.getItemType() as DraggableItemType,
-        initialOffset: monitor.getInitialSourceClientOffset(),
         currentOffset: monitor.getSourceClientOffset(),
+        initialOffset: monitor.getInitialSourceClientOffset(),
+        differenceFromInitialOffset: monitor.getDifferenceFromInitialOffset(),
         isDragging: monitor.isDragging(),
     }));
 
-    const component = useMemo(() => {
-        // eslint-disable-next-line sonarjs/no-small-switch
-        switch (itemType) {
-            case "attributeFilter":
-                // TODO get from filter, accept filter custom component definition
-                return <DefaultAttributeFilterDraggingComponent itemType={itemType} item={item} />;
-            default:
-                return null;
-        }
-    }, [itemType]);
+    const { itemType, isDragging } = dragLayerProperties;
 
     if (!isDragging) {
         return null;
     }
 
+    const documentDimensions = {
+        scrollLeft: document.documentElement.scrollLeft,
+        scrollTop: document.documentElement.scrollTop,
+        scrollWidth: document.body.scrollWidth,
+        scrollHeight: document.body.scrollHeight,
+    };
+
+    const Component = isDraggableInternalItemType(itemType)
+        ? previewComponentsMap[itemType]
+        : ContentDragPreview;
+
     return (
         <div style={layerStyles}>
-            <div className="drag-preview" style={getItemStyles(initialOffset, currentOffset)}>
-                {component}
-            </div>
+            <Component {...dragLayerProperties} documentDimensions={documentDimensions} />
         </div>
     );
 };
