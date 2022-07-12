@@ -12,10 +12,10 @@ To integrate the library into your app, all you need to do is to integrate a scr
 section of your application.
 
 ```html
-<script type="module" src="https://{your-GD-server-URL}/components/{workspaceId}.mjs?auth=sso"></script>
+<script type="module" src="https://{your-GD-server-URL}/components/{workspaceId}.js?auth=sso"></script>
 
 <!-- for example -->
-<script type="module" src="https://analytics.example.com/components/my-workspace.mjs?auth=sso"></script>
+<script type="module" src="https://analytics.example.com/components/my-workspace.js?auth=sso"></script>
 ```
 
 Script has to be of type `module`, as we are using JavaScript modules for this distribution.
@@ -29,11 +29,11 @@ If you want to customize the authentication flow, you'll need to provide the aut
 
 ```html
 <script type="module">
-    import { setContext } from "https://analytics.example.com/components/my-workspace.mjs";
+    import { setContext } from "https://analytics.example.com/components/my-workspace.js";
     import tigerFactory, {
         ContextDeferredAuthProvider,
         redirectToTigerAuthentication,
-    } from "https://analytics.example.com/components/tigerBackend.mjs";
+    } from "https://analytics.example.com/components/tigerBackend.js";
 
     setContext({
         backend: tigerFactory()

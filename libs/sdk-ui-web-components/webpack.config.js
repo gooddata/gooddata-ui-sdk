@@ -12,6 +12,10 @@ module.exports = (env, argv) => ({
         outputModule: true,
     },
     output: {
+        assetModuleFilename: "assets/[hash][ext][query]",
+        path: path.resolve("./esm"),
+        // Force .js extension instead of .mjs
+        filename: "[name].js",
         library: {
             type: "module",
         },

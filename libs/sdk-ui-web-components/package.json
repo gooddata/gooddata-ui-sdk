@@ -1,7 +1,7 @@
 {
     "name": "@gooddata/sdk-ui-web-components",
     "version": "8.10.0-alpha.154",
-    "description": "GoodData SDK TypeScript & React skeleton",
+    "description": "GoodData Web Components wrapper for GoodData.UI",
     "repository": {
         "type": "git",
         "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
@@ -9,27 +9,27 @@
     },
     "author": "GoodData Corporation",
     "license": "MIT",
-    "main": "dist/index.js",
-    "module": "dist/index.js",
-    "es2015": "dist/index.js",
-    "typings": "dist/index.d.ts",
+    "main": "esm/index.mjs",
+    "module": "esm/index.mjs",
+    "es2015": "esm/index.mjs",
+    "typings": "esm/index.d.ts",
     "sideEffects": [
         "*.css",
         "*.svg"
     ],
     "files": [
-        "dist/**/*.js",
-        "dist/**/*.json",
-        "dist/**/*.d.ts",
-        "dist/**/*.map",
-        "dist/**/*.svg",
+        "esm/**/*.js",
+        "esm/**/*.json",
+        "esm/**/*.d.ts",
+        "esm/**/*.map",
+        "esm/**/*.svg",
         "styles"
     ],
     "config": {
         "eslint": "-c .eslintrc.js --ext ts,tsx src/"
     },
     "scripts": {
-        "clean": "rm -rf dist coverage *.log styles/css && jest --clearCache",
+        "clean": "rm -rf esm coverage *.log styles/css && jest --clearCache",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "build": "npm run clean && webpack --mode production && npm run api-extractor",
         "build-dev": "npm run clean && webpack --mode development",

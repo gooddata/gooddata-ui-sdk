@@ -1,5 +1,4 @@
 // (C) 2022 GoodData Corporation
-
 /**
  * This module registers GoodData's Custom Elements for Dashboard and Insight embedding.
  *

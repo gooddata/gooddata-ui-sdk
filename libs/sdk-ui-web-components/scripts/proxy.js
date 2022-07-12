@@ -7,7 +7,7 @@ const path = require("path");
 const TARGET_HOST = process.env.TARGET_HOST ?? "staging.anywhere.gooddata.com";
 const OWN_HOST = process.env.OWN_HOST ?? "localhost";
 const OWN_PORT = process.env.PORT ?? 8111;
-const PUBLIC_DIR = path.resolve(__dirname, "..", "dist");
+const PUBLIC_DIR = path.resolve(__dirname, "..", "esm");
 
 const proxy = httpProxy.createProxyServer({
     target: `https://${TARGET_HOST}`,

@@ -3,7 +3,7 @@ const ciBase = require("../../common/config/jest/jest.config.ci.base.js");
 
 module.exports = {
     ...ciBase,
-    testPathIgnorePatterns: ["/node_modules/", "/dist/"],
+    testPathIgnorePatterns: ["/node_modules/", "/esm/"],
     testEnvironment: "jsdom",
     setupFilesAfterEnv: ["<rootDir>/jest.setup.ts", "jest-enzyme"],
 };
