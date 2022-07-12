@@ -41,16 +41,16 @@
 @keyframes loadingSpinner {
     $steps: 12;
     $step-duration: 0.5;
-    $step-increment-progress: 1 / $steps;
-    $step-increment-deg: 360 / $steps;
+    $step-increment-progress: calc(1 / $steps);
+    $step-increment-deg: calc(360 / $steps);
 
     0% {
         transform: rotate(0deg) translateZ(-0.1px);
     }
 
     @for $i from 1 through $steps {
-        $animation-start-progress: $i * $step-increment-progress - ($step-duration / 100);
-        $animation-end-progress: $animation-start-progress + ($step-duration / 100);
+        $animation-start-progress: $i * $step-increment-progress - calc($step-duration / 100);
+        $animation-end-progress: $animation-start-progress + calc($step-duration / 100);
         $start-rotation: ($i - 1) * $step-increment-deg;
         $end-rotation: $i * $step-increment-deg;
 
