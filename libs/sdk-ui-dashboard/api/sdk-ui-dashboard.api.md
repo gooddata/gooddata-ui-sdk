@@ -2209,15 +2209,30 @@ export type DraggableComponent = {
 export type DraggableItem = AttributeFilterDraggableItem | AttributeFilterPlaceholderDraggableItem | CustomDraggableItem | WidgetDraggableItem;
 
 // @internal (undocumented)
-export type DraggableItemType = "attributeFilter" | "attributeFilter-placeholder" | "widget" | "custom";
+export type DraggableItemComponentType = "attributeFilter" | "attributeFilter-placeholder" | "widget" | "custom";
 
 // @internal (undocumented)
-export type DraggableItemTypeMapping = {
+export type DraggableItemComponentTypeMapping = {
     attributeFilter: AttributeFilterDraggableItem;
     "attributeFilter-placeholder": AttributeFilterPlaceholderDraggableItem;
     custom: CustomDraggableItem;
     widget: WidgetDraggableItem;
 };
+
+// @internal (undocumented)
+export type DraggableItemInternalType = "internal-width-resizer" | "internal-height-resizer";
+
+// @internal (undocumented)
+export type DraggableItemInternalTypeMapping = {
+    "internal-width-resizer": never;
+    "internal-height-resizer": never;
+};
+
+// @internal (undocumented)
+export type DraggableItemType = DraggableItemComponentType | DraggableItemInternalType;
+
+// @internal (undocumented)
+export type DraggableItemTypeMapping = DraggableItemComponentTypeMapping & DraggableItemInternalTypeMapping;
 
 // @internal (undocumented)
 export interface DraggingComponentProps {

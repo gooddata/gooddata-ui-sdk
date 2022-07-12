@@ -20,7 +20,7 @@ import invariant, { InvariantError } from "ts-invariant";
 import {
     MeasurableWidgetContent,
     validateDashboardLayoutWidgetSize,
-} from "../../presentation/layout/DefaultDashboardLayoutRenderer";
+} from "../../presentation/layout/DefaultDashboardLayoutRenderer/utils/sizing";
 import { ObjRefMap } from "../metadata/objRefMap";
 
 function extractContentFromWidget(

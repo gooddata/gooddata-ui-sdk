@@ -1,48 +1,43 @@
 // (C) 2019-2022 GoodData Corporation
-import flatten from "lodash/flatten";
-import round from "lodash/round";
-import isNil from "lodash/isNil";
-import isEqual from "lodash/isEqual";
-import clamp from "lodash/clamp";
-import invariant from "ts-invariant";
 import {
-    IInsightDefinition,
-    isInsight,
     AnalyticalWidgetType,
-    isWidget,
-    isWidgetDefinition,
     IDashboardLayout,
+    IDashboardLayoutItem,
     IDashboardLayoutSection,
     IDashboardLayoutSize,
     IDashboardLayoutSizeByScreenSize,
-    IDashboardLayoutItem,
-    ScreenSize,
     isDashboardLayout,
     ISettings,
-    IKpi,
-    isKpiWithoutComparison,
-    isKpi,
+    isWidget,
+    isWidgetDefinition,
+    ScreenSize,
 } from "@gooddata/sdk-model";
-import {
-    IVisualizationSizeInfo,
-    fluidLayoutDescriptor,
-    getInsightSizeInfo,
-    INSIGHT_WIDGET_SIZE_INFO_DEFAULT_LEGACY,
-    KPI_WIDGET_SIZE_INFO_DEFAULT,
-    KPI_WIDGET_SIZE_INFO_DEFAULT_LEGACY,
-    INSIGHT_WIDGET_SIZE_INFO_DEFAULT,
-} from "@gooddata/sdk-ui-ext";
+import { fluidLayoutDescriptor } from "@gooddata/sdk-ui-ext";
+import clamp from "lodash/clamp";
+import flatten from "lodash/flatten";
+import isEqual from "lodash/isEqual";
+import isNil from "lodash/isNil";
+import round from "lodash/round";
+import invariant from "ts-invariant";
 
-import { DashboardLayoutFacade } from "../../../../_staging/dashboard/fluidLayout/facade/layout";
-import { IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/fluidLayout/facade/interfaces";
+import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../../../_staging/dashboard/fluidLayout";
 import { DashboardLayoutBuilder } from "../../../../_staging/dashboard/fluidLayout/builder/layout";
+import { IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/fluidLayout/facade/interfaces";
+import { DashboardLayoutFacade } from "../../../../_staging/dashboard/fluidLayout/facade/layout";
+import {
+    getDashboardLayoutWidgetMaxGridHeight,
+    getDashboardLayoutWidgetMinGridHeight,
+    getSizeInfo,
+    MeasurableWidgetContent,
+} from "../../../../model/layout/sizing";
 import {
     ALL_SCREENS,
     DASHBOARD_LAYOUT_CONTAINER_WIDTHS,
     DASHBOARD_LAYOUT_MAX_HEIGHT_AS_RATIO_XS,
     GRID_ROW_HEIGHT_IN_PX,
 } from "../../../constants";
-import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../../../_staging/dashboard/fluidLayout";
+
+export { MeasurableWidgetContent } from "../../../../model/layout/sizing";
 
 /**
  * Unify dashboard layout items height for all screens.
@@ -446,67 +441,6 @@ export function getDashboardLayoutItemMaxGridWidth(
     return DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT - gridRowWidth;
 }
 
-/**
- * @internal
- */
-export type MeasurableWidgetContent = IInsightDefinition | IKpi;
-
-const getSizeInfo = (
-    settings: ISettings,
-    widgetType: AnalyticalWidgetType,
-    widgetContent?: MeasurableWidgetContent,
-): IVisualizationSizeInfo => {
-    if (widgetType === "kpi") {
-        return getKpiSizeInfo(settings, widgetContent);
-    }
-
-    return getVisualizationSizeInfo(settings, widgetContent);
-};
-
-const getVisualizationSizeInfo = (
-    settings: ISettings,
-    insight?: MeasurableWidgetContent,
-): IVisualizationSizeInfo => {
-    let sizeInfo;
-    if (isInsight(insight)) {
-        sizeInfo = getInsightSizeInfo(insight, settings);
-    }
-
-    if (!sizeInfo) {
-        if (!settings.enableKDWidgetCustomHeight) {
-            return INSIGHT_WIDGET_SIZE_INFO_DEFAULT_LEGACY;
-        }
-        return INSIGHT_WIDGET_SIZE_INFO_DEFAULT;
-    }
-    return sizeInfo;
-};
-
-const getKpiSizeInfo = (settings: ISettings, kpi?: MeasurableWidgetContent): IVisualizationSizeInfo => {
-    if (!settings.enableKDWidgetCustomHeight) {
-        return KPI_WIDGET_SIZE_INFO_DEFAULT_LEGACY;
-    }
-    if (!isKpi(kpi)) {
-        return KPI_WIDGET_SIZE_INFO_DEFAULT;
-    }
-    return {
-        width: {
-            min: 2,
-            default: 2,
-        },
-        height: isKpiWithoutComparison(kpi)
-            ? {
-                  default: 8,
-                  min: 6,
-                  max: 40,
-              }
-            : {
-                  default: 11,
-                  min: 10,
-                  max: 40,
-              },
-    };
-};
-
 export function getDashboardLayoutWidgetMinGridWidth(
     settings: ISettings,
     widgetType: AnalyticalWidgetType,
@@ -523,33 +457,6 @@ export function getDashboardLayoutWidgetDefaultGridWidth(
 ): number {
     const sizeInfo = getSizeInfo(settings, widgetType, widgetContent);
     return sizeInfo.width.default!;
-}
-
-export function getDashboardLayoutWidgetDefaultHeight(
-    settings: ISettings,
-    widgetType: AnalyticalWidgetType,
-    widgetContent?: MeasurableWidgetContent, // undefined for placeholders
-): number {
-    const sizeInfo = getSizeInfo(settings, widgetType, widgetContent);
-    return fluidLayoutDescriptor.toHeightInPx(sizeInfo.height.default!);
-}
-
-export function getDashboardLayoutWidgetMinGridHeight(
-    settings: ISettings,
-    widgetType: AnalyticalWidgetType,
-    widgetContent?: MeasurableWidgetContent,
-): number {
-    const sizeInfo = getSizeInfo(settings, widgetType, widgetContent);
-    return sizeInfo.height.min!;
-}
-
-export function getDashboardLayoutWidgetMaxGridHeight(
-    settings: ISettings,
-    widgetType: AnalyticalWidgetType,
-    widgetContent?: MeasurableWidgetContent,
-): number {
-    const sizeInfo = getSizeInfo(settings, widgetType, widgetContent);
-    return sizeInfo.height.max!;
 }
 
 export function getLayoutWithoutGridHeights<TWidget>(

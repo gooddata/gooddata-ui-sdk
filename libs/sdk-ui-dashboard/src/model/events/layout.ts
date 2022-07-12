@@ -254,6 +254,56 @@ export function layoutSectionHeaderChanged(
 }
 
 /**
+ * Payload of the {@link DashboardLayoutSectionItemsHeightChanged} event.
+ * @alpha
+ */
+export interface DashboardLayoutSectionItemsHeightChangedPayload {
+    /**
+     * Index of the section which items height was changed.
+     */
+    readonly sectionIndex: number;
+
+    /**
+     * Index of the items in section which height was changed.
+     */
+    readonly itemIndexes: number[];
+
+    /**
+     * New height of items.
+     */
+    readonly newHeight: number;
+}
+
+/**
+ * This event is emitted when dashboard layout items height changes.
+ *
+ * @alpha
+ */
+export interface DashboardLayoutSectionItemsHeightChanged extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ITEMS_HEIGHT_CHANGED";
+    readonly payload: DashboardLayoutSectionItemsHeightChangedPayload;
+}
+
+export function layoutSectionItemsHeightChanged(
+    ctx: DashboardContext,
+    sectionIndex: number,
+    itemIndexes: number[],
+    newHeight: number,
+    correlationId?: string,
+): DashboardLayoutSectionItemsHeightChanged {
+    return {
+        type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ITEMS_HEIGHT_CHANGED",
+        ctx,
+        correlationId,
+        payload: {
+            sectionIndex,
+            itemIndexes,
+            newHeight,
+        },
+    };
+}
+
+/**
  * Tests whether the provided object is an instance of {@link DashboardLayoutSectionHeaderChanged}.
  *
  * @param obj - object to test

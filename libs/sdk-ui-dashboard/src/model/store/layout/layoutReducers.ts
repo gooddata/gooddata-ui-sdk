@@ -139,6 +139,33 @@ const changeSectionHeader: LayoutReducer<ChangeSectionActionPayload> = (state, a
 //
 //
 
+type changeItemsHeightActionPayload = { sectionIndex: number; itemIndexes: number[]; height: number };
+
+const changeItemsHeight: LayoutReducer<changeItemsHeightActionPayload> = (state, action) => {
+    invariant(state.layout);
+
+    const { sectionIndex, itemIndexes, height } = action.payload;
+
+    const section = state.layout.sections[sectionIndex];
+    itemIndexes.forEach((itemIndex) => {
+        const item = section.items[itemIndex];
+
+        const newSize = {
+            ...item.size,
+            xl: {
+                ...item.size.xl,
+                gridHeight: height,
+            },
+        };
+
+        item.size = newSize;
+    });
+};
+
+//
+//
+//
+
 type MoveSectionActionPayload = { sectionIndex: number; toIndex: RelativeIndex };
 
 const moveSection: LayoutReducer<MoveSectionActionPayload> = (state, action) => {
@@ -517,4 +544,5 @@ export const layoutReducers = {
     replaceKpiWidgetDrill: withUndo(replaceKpiWidgetDrill),
     undoLayout: undoReducer,
     clearLayoutHistory: resetUndoReducer,
+    changeItemsHeight: changeItemsHeight,
 };

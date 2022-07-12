@@ -696,7 +696,8 @@ export type DashboardLayoutCommands =
     | ChangeLayoutSectionHeader
     | AddSectionItems
     | MoveSectionItem
-    | RemoveSectionItem;
+    | RemoveSectionItem
+    | ResizeHeight;
 
 //
 //
@@ -805,5 +806,66 @@ export function revertLastLayoutChange(correlationId?: string): UndoLayoutChange
         type: "GDC.DASH/CMD.FLUID_LAYOUT.UNDO",
         correlationId,
         payload: {},
+    };
+}
+
+/**
+ * Payload of the {@link AddLayoutSection} command.
+ * @alpha
+ */
+export interface ResizeHeightPayload {
+    /**
+     * Index of the section to resize.
+     *
+     * Index is zero-based.
+     */
+    readonly sectionIndex: number;
+
+    /**
+     * Indexes of the items to resize.
+     *
+     * Index is zero-based.
+     */
+    readonly itemIndexes: number[];
+
+    /**
+     * Height to resize.
+     */
+    readonly height: number;
+}
+
+/**
+ * @alpha
+ */
+export interface ResizeHeight extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.RESIZE_HEIGHT";
+    readonly payload: ResizeHeightPayload;
+}
+
+/**
+ * Creates the ResizeHeight command.
+ *
+ * @param sectionIndex - index of the section
+ * @param itemIndexes - indexes of the items
+ * @param height - height in GP
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function resizeHeight(
+    sectionIndex: number,
+    itemIndexes: number[],
+    height: number,
+    correlationId?: string,
+): ResizeHeight {
+    return {
+        type: "GDC.DASH/CMD.FLUID_LAYOUT.RESIZE_HEIGHT",
+        correlationId,
+        payload: {
+            sectionIndex,
+            itemIndexes,
+            height,
+        },
     };
 }

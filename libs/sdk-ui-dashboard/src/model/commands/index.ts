@@ -51,6 +51,7 @@ import {
     RemoveSectionItem,
     ReplaceSectionItem,
     UndoLayoutChanges,
+    ResizeHeight,
 } from "./layout";
 import { CreateAlert, RemoveAlerts, UpdateAlert } from "./alerts";
 import { CreateScheduledEmail, SaveScheduledEmail } from "./scheduledEmail";
@@ -159,6 +160,9 @@ export {
     revertLastLayoutChange,
     DashboardLayoutCommands,
     UndoPointSelector,
+    ResizeHeight,
+    ResizeHeightPayload,
+    resizeHeight,
 } from "./layout";
 
 export {
@@ -326,6 +330,7 @@ export type DashboardCommands =
     | MoveLayoutSection
     | RemoveLayoutSection
     | ChangeLayoutSectionHeader
+    | ResizeHeight
     | AddSectionItems
     | ReplaceSectionItem
     | MoveSectionItem
