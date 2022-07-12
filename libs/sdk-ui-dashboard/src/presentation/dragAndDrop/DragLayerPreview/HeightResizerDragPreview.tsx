@@ -1,8 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 import React, { useEffect, useState } from "react";
 
-import { HeightResizer } from "../../layout/Resize/HeightResizer";
-
+import { HeightResizer } from "../Resize/HeightResizer";
 import clamp from "lodash/clamp";
 import { DragPreviewProps, ReachedHeightResizingLimit } from "./types";
 import { fluidLayoutDescriptor } from "@gooddata/sdk-ui-ext";

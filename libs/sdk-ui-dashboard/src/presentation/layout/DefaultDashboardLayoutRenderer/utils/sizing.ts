@@ -29,15 +29,13 @@ import {
     getDashboardLayoutWidgetMinGridHeight,
     getSizeInfo,
     MeasurableWidgetContent,
-} from "../../../../model/layout/sizing";
+} from "../../../../model/layout";
 import {
     ALL_SCREENS,
     DASHBOARD_LAYOUT_CONTAINER_WIDTHS,
     DASHBOARD_LAYOUT_MAX_HEIGHT_AS_RATIO_XS,
     GRID_ROW_HEIGHT_IN_PX,
 } from "../../../constants";
-
-export { MeasurableWidgetContent } from "../../../../model/layout/sizing";
 
 /**
  * Unify dashboard layout items height for all screens.

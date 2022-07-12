@@ -27,9 +27,8 @@ import {
 } from "./DefaultDashboardLayoutRenderer";
 import { ObjRefMap } from "../../_staging/metadata/objRefMap";
 import { useDashboardComponentsContext } from "../dashboardContexts";
-import { ResizeOverlay } from "./Resize/ResizeOverlay";
-import { useResizeStatus } from "../dragAndDrop/LayoutResizeContext";
-import { getDashboardLayoutWidgetDefaultHeight } from "../../model/layout/sizing";
+import { ResizeOverlay, useResizeStatus } from "../dragAndDrop";
+import { getDashboardLayoutWidgetDefaultHeight } from "../../model/layout";
 
 function calculateWidgetMinHeight(
     widget: ExtendedDashboardWidget,

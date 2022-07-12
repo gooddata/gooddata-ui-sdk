@@ -11,7 +11,7 @@ import {
     layoutSectionItemsHeightChanged,
 } from "../../events/layout";
 import { getMaxHeight, getMinHeight } from "../../layout/sizing";
-import { selectInsightsMap } from "../../store";
+import { selectInsightsMap } from "../../store/insights/insightsSelectors";
 import { layoutActions } from "../../store/layout";
 import { selectLayout } from "../../store/layout/layoutSelectors";
 import { DashboardContext } from "../../types/commonTypes";

@@ -7,7 +7,7 @@ import {
     IDashboardLayoutItemFacade,
     IDashboardLayoutSectionFacade,
 } from "../../../_staging/dashboard/fluidLayout/facade/interfaces";
-import { HeightResizerHotspot } from "../Resize/HeightResizerHotspot";
+import { HeightResizerHotspot } from "../../dragAndDrop";
 import { DashboardLayoutItem } from "./DashboardLayoutItem";
 import {
     IDashboardLayoutGridRowRenderer,

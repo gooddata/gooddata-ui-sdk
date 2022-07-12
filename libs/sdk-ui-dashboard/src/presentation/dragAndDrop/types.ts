@@ -109,6 +109,9 @@ export type DraggableItemComponentTypeMapping = {
     widget: WidgetDraggableItem;
 };
 
+/**
+ * @internal
+ */
 export interface HeightResizerDragItem {
     type: "internal-height-resizer";
     sectionIndex: number;
@@ -119,6 +122,9 @@ export interface HeightResizerDragItem {
     maxLimit: number;
 }
 
+/**
+ * @internal
+ */
 export interface WidthResizerDragItem {
     type: "internal-height-resizer";
 }

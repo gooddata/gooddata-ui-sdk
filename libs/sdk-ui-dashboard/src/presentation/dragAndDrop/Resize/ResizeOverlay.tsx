@@ -2,7 +2,7 @@
 import React from "react";
 import cx from "classnames";
 import { FormattedMessage, defineMessages } from "react-intl";
-import { ReachedHeightResizingLimit } from "../../dragAndDrop/DragLayerPreview/types";
+import { ReachedHeightResizingLimit } from "../DragLayerPreview/types";
 
 const messages = defineMessages({
     minHeight: { id: "layout.widget.height.min" },

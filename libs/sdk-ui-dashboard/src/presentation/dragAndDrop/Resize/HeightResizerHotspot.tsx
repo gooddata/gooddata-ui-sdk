@@ -1,9 +1,9 @@
 // (C) 2021-2022 GoodData Corporation
 import React, { useEffect, useState } from "react";
-import { useDashboardDrag } from "../../dragAndDrop/useDashboardDrag";
+import { useDashboardDrag } from "../useDashboardDrag";
 
 import { IWidget, ScreenSize } from "@gooddata/sdk-model";
-import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider";
+import { useDashboardDispatch, useDashboardSelector } from "../../../model/react";
 import { selectInsightsMap } from "../../../model/store/insights/insightsSelectors";
 import {
     IDashboardLayoutItemFacade,
@@ -15,8 +15,8 @@ import { fluidLayoutDescriptor } from "@gooddata/sdk-ui-ext";
 import isEqual from "lodash/fp/isEqual";
 import isEmpty from "lodash/isEmpty";
 import { resizeHeight } from "../../../model";
-import { useResizeContext } from "../../dragAndDrop/LayoutResizeContext";
-import { getMaxHeight, getMinHeight } from "../../../model/layout/sizing";
+import { getMaxHeight, getMinHeight } from "../../../model/layout";
+import { useResizeContext } from "../LayoutResizeContext";
 
 export type HeightResizerHotspotProps = {
     section: IDashboardLayoutSectionFacade<unknown>;
@@ -55,21 +55,13 @@ export function HeightResizerHotspot({
             };
         },
         dragEnd: (item, monitor) => {
-            const { sectionIndex, itemIndexes, widgetHeights, initialScrollTop, minLimit, maxLimit } = item;
+            const { sectionIndex, itemIndexes, widgetHeights, initialScrollTop } = item;
             const newHeightGR = getNewHeightGR(
                 widgetHeights,
                 monitor.getDifferenceFromInitialOffset()?.y || 0,
                 document.documentElement.scrollTop,
                 initialScrollTop,
             );
-            console.log(
-                "getNewHeightGR",
-                widgetHeights,
-                monitor.getDifferenceFromInitialOffset()?.y || 0,
-                document.documentElement.scrollTop,
-                initialScrollTop,
-            );
-            console.log("newHeightGR", newHeightGR, minLimit, maxLimit);
             dispatch(resizeHeight(sectionIndex, itemIndexes, newHeightGR));
             resizeEnd();
         },
@@ -131,83 +123,3 @@ export function getNewHeightGR(
     const deltaHeightGR = fluidLayoutDescriptor.toGridHeight(totalDelta);
     return currentWidth + deltaHeightGR;
 }
-
-/* 
-const heightResizerSource = {
-    beginDrag(props: IHeightResizerHotspotPropsNonDnd): IHeightResizerDragItem {
-        const { layoutItems, widgets, screen, onHeightResizeStarted, contentRef } = props;
-        const objRefs = getDashboardItemsObjRefs(layoutItems);
-        const heightsGR = getHeightsGR(
-            layoutItems,
-            screen,
-            contentRef.current.getBoundingClientRect().height,
-        );
-        onHeightResizeStarted(objRefs);
-        const minLimit = getMinHeight(widgets);
-        const maxLimit = getMaxHeight(widgets);
-
-        return {
-            dndType: ItemTypes.HEIGHT_RESIZER,
-            widgetHeights: heightsGR,
-            initialScrollTop: document.documentElement.scrollTop,
-            minLimit,
-            maxLimit,
-        };
-    },
-    endDrag(props: IHeightResizerHotspotPropsNonDnd, monitor: DragSourceMonitor): void {
-        const { layoutItems, onHeightResizeFinished } = props;
-        const objRefs = getDashboardItemsObjRefs(layoutItems);
-        const {
-            widgetHeights: widgetHeightsGR,
-            initialScrollTop,
-            minLimit,
-            maxLimit,
-        }: IHeightResizerDragItem = monitor.getItem();
-        const newHeightGR = getNewHeightGR(
-            widgetHeightsGR,
-            monitor.getDifferenceFromInitialOffset().y,
-            document.documentElement.scrollTop,
-            initialScrollTop,
-        );
-        const newLimitedHeightGR = getLimitedHeightGR(newHeightGR, minLimit, maxLimit);
-
-        onHeightResizeFinished(objRefs, newLimitedHeightGR);
-    },
-};
-
-function collect(connect: DragSourceConnector) {
-    return {
-        connectDragSource: connect.dragSource(),
-    };
-}
-
-const mapStateToProps = (
-    appState: AppState,
-    props: IHeightResizerHotspotOwnProps,
-): IHeightResizerHotspotStateProps => {
-    const objRefs = getDashboardItemsObjRefs(props.layoutItems);
-    const areWidgetsResizing = areWidgetsInResizingRow(appState, objRefs);
-    return {
-        areWidgetsResizing,
-        isColumnResizing: isResizingColumn(appState),
-        isOtherRowResizing: isResizingRow(appState) && !areWidgetsResizing,
-        widgets: getWidgetsByRefs(appState, objRefs),
-    };
-};
-
-export const HeightResizerHotspotWithDnD = DragSource<
-    IHeightResizerHotspotPropsNonDnd,
-    IHeightResizerHotspotDndProps,
-    IHeightResizerDragItem
->(
-    ItemTypes.HEIGHT_RESIZER,
-    heightResizerSource,
-    collect,
-)(HeightResizerHotspot);
-
-export default connect<
-    IHeightResizerHotspotStateProps,
-    IHeightResizerHotspotDispatchProps,
-    IHeightResizerHotspotOwnProps
->(mapStateToProps)(HeightResizerHotspotWithDnD);
- */

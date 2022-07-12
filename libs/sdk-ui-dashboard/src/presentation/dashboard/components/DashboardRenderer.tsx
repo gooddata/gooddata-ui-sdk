@@ -31,9 +31,8 @@ import { IDashboardProps } from "../types";
 import { DashboardLoading } from "./DashboardLoading";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { DragLayerComponent } from "../../dragAndDrop";
+import { DragLayerComponent, LayoutResizeStateProvider } from "../../dragAndDrop";
 import { RenderModeAwareDashboardLayoutSectionHeaderRenderer } from "../DashboardSidebar/RenderModeAwareDashboardSidebar";
-import { LayoutResizeStateProvider } from "../../dragAndDrop/LayoutResizeContext";
 
 /**
  * @internal
