@@ -5,24 +5,15 @@ import identity from "lodash/identity";
 
 import { AttributeFilterReducer } from "../state";
 
-const attributeRequest: AttributeFilterReducer<PayloadAction<{ correlationId: string }>> = (state) => {
-    state.attributeStatus = "loading";
-};
+const attributeRequest: AttributeFilterReducer<PayloadAction<{ correlationId: string }>> = identity;
 
 const attributeSuccess: AttributeFilterReducer<
     PayloadAction<{ attribute: IAttributeMetadataObject; correlationId: string }>
 > = (state, action) => {
     state.attribute = action.payload.attribute;
-    state.attributeStatus = "success";
 };
 
-const attributeError: AttributeFilterReducer<PayloadAction<{ error: any; correlationId: string }>> = (
-    state,
-    action,
-) => {
-    state.attributeStatus = "error";
-    state.attributeError = action.payload.error;
-};
+const attributeError: AttributeFilterReducer<PayloadAction<{ error: any; correlationId: string }>> = identity;
 
 const attributeCancelRequest: AttributeFilterReducer<PayloadAction<{ correlationId: string }>> = identity;
 

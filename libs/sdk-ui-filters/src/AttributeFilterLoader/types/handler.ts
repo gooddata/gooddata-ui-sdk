@@ -1,5 +1,4 @@
 // (C) 2022 GoodData Corporation
-import { IAttributeElement } from "@gooddata/sdk-model";
 import { IAttributeFilterLoader } from "./loader";
 import {
     InvertableSelection,
@@ -14,7 +13,7 @@ import {
 /**
  * @alpha
  */
-export type InvertableAttributeElementSelection = InvertableSelection<IAttributeElement>;
+export type InvertableAttributeElementSelection = InvertableSelection<string>;
 
 /**
  * Handles the whole attribute filter experience
@@ -39,7 +38,7 @@ export interface IMultiSelectAttributeFilterHandler
  */
 export interface ISingleSelectAttributeFilterHandler
     extends IAttributeFilterLoader,
-        IStagedSingleSelectionHandler<IAttributeElement | undefined> {
+        IStagedSingleSelectionHandler<string | undefined> {
     //
     // selectors
     //

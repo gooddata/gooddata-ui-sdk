@@ -1,7 +1,6 @@
 // (C) 2022 GoodData Corporation
-import { v4 as uuidv4 } from "uuid";
 import { SagaIterator } from "redux-saga";
-import { call } from "redux-saga/effects";
+import { call, SagaReturnType } from "redux-saga/effects";
 
 import { asyncRequestSaga } from "../../common/asyncRequestSaga";
 import { actions } from "../../slice";
@@ -9,8 +8,8 @@ import { actions } from "../../slice";
 /**
  * @internal
  */
-export function* initAttributeSaga(): SagaIterator<void> {
-    const correlationId = `init_attribute_${uuidv4()}`;
+export function* initAttributeSaga(initCorrelationId: string): SagaIterator<void> {
+    const correlationId = `init_attribute_${initCorrelationId}`;
 
     const initAttribute = () =>
         asyncRequestSaga(
@@ -20,5 +19,8 @@ export function* initAttributeSaga(): SagaIterator<void> {
             actions.attributeCancelRequest({ correlationId }),
         );
 
-    yield call(initAttribute);
+    const result: SagaReturnType<typeof initAttribute> = yield call(initAttribute);
+    if (result.error) {
+        throw result.error.payload.error;
+    }
 }

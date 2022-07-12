@@ -1,6 +1,5 @@
 // (C) 2022 GoodData Corporation
 import {
-    IAttributeElement,
     filterObjRef,
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
@@ -42,7 +41,7 @@ export class SingleSelectAttributeFilterHandler
     }
 
     // manipulators
-    changeSelection = (selection: IAttributeElement | undefined): void => {
+    changeSelection = (selection: string | undefined): void => {
         this.bridge.changeSingleSelection(selection);
     };
 
@@ -55,20 +54,20 @@ export class SingleSelectAttributeFilterHandler
     };
 
     // selectors
-    getWorkingSelection = (): IAttributeElement | undefined => {
+    getWorkingSelection = (): string | undefined => {
         return this.bridge.getWorkingSingleSelection();
     };
 
-    getCommittedSelection = (): IAttributeElement | undefined => {
+    getCommittedSelection = (): string | undefined => {
         return this.bridge.getCommittedSingleSelection();
     };
 
     // callbacks
-    onSelectionChanged: CallbackRegistration<{ selection: IAttributeElement | undefined }> = (cb) => {
+    onSelectionChanged: CallbackRegistration<{ selection: string | undefined }> = (cb) => {
         return this.bridge.onSingleSelectionChanged(cb);
     };
 
-    onSelectionCommitted: CallbackRegistration<{ selection: IAttributeElement | undefined }> = (cb) => {
+    onSelectionCommitted: CallbackRegistration<{ selection: string | undefined }> = (cb) => {
         return this.bridge.onSingleSelectionCommitted(cb);
     };
 }

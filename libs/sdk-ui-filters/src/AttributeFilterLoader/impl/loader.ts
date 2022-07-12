@@ -13,15 +13,9 @@ import {
     IMeasure,
     IRelativeDateFilter,
 } from "@gooddata/sdk-model";
-import {
-    CallbackRegistration,
-    Correlation,
-    IElementsLoadResult,
-    Loadable,
-    LoadableStatus,
-} from "../types/common";
+import { CallbackRegistration, Correlation, IElementsLoadResult } from "../types/common";
 import { IAttributeFilterHandlerConfig, IAttributeFilterLoader } from "../types";
-import { AttributeFilterReduxBridge } from "./bridge";
+import { AttributeFilterReduxBridge } from "./bridge/index";
 
 /**
  * @internal
@@ -50,6 +44,10 @@ export class AttributeFilterLoader implements IAttributeFilterLoader {
     }
 
     // manipulators
+    init = (correlation: Correlation = uuid()): void => {
+        this.bridge.init(correlation);
+    };
+
     loadAttribute = (correlation: Correlation = uuid()): void => {
         this.bridge.loadAttribute(correlation);
     };
@@ -103,16 +101,12 @@ export class AttributeFilterLoader implements IAttributeFilterLoader {
         return this.bridge.getCountWithCurrentSettings();
     };
 
-    getAttribute = (): Loadable<IAttributeMetadataObject> => {
+    getAttribute = (): IAttributeMetadataObject | undefined => {
         return this.bridge.getAttribute();
     };
 
     getFilter = (): IAttributeFilter => {
         return this.bridge.getFilter();
-    };
-
-    getLoadingStatus = (): LoadableStatus => {
-        return this.bridge.getLoadingStatus();
     };
 
     // callbacks

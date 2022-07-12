@@ -79,15 +79,16 @@ export const newAttributeFilterCallbacks = () => {
         // Init
 
         if (actions.init.match(action)) {
-            registrations.initStart.invoke({});
+            registrations.initStart.invoke({ correlation: action.payload.correlationId });
         } else if (actions.initSuccess.match(action)) {
-            registrations.initSuccess.invoke({});
+            registrations.initSuccess.invoke({ correlation: action.payload.correlationId });
         } else if (actions.initError.match(action)) {
             registrations.initError.invoke({
                 error: action.payload.error,
+                correlation: action.payload.correlationId,
             });
         } else if (actions.initCancel.match(action)) {
-            registrations.initCancel.invoke({});
+            registrations.initCancel.invoke({ correlation: action.payload.correlationId });
         }
 
         // Attribute
@@ -120,7 +121,7 @@ export const newAttributeFilterCallbacks = () => {
             });
         } else if (actions.loadElementsRangeSuccess.match(action)) {
             registrations.elementsRangeLoadSuccess.invoke({
-                items: action.payload.attributeElements,
+                attributeElements: action.payload.attributeElements,
                 limit: action.payload.limit,
                 offset: action.payload.offset,
                 totalCount: action.payload.totalCount,
@@ -139,7 +140,13 @@ export const newAttributeFilterCallbacks = () => {
 
         // Selection
 
-        if (actions.changeSelection.match(action)) {
+        if (
+            [
+                actions.changeSelection.match,
+                actions.revertSelection.match,
+                actions.invertSelection.match,
+            ].some((m) => m(action))
+        ) {
             registrations.selectionChanged.invoke({
                 selection: select(selectInvertableWorkingSelection),
             });

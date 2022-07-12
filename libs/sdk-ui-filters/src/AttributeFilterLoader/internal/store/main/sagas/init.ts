@@ -19,19 +19,26 @@ export function* initWorker(): SagaIterator<void> {
 function* initSaga(action: PayloadAction<InitActionPayload>): SagaIterator<void> {
     try {
         if (action.payload.hiddenElements?.length > 0) {
-            yield call(initAttributeSaga);
+            yield call(initAttributeSaga, action.payload.correlationId);
             // these need the attribute loaded for the hiddenElements to work
-            yield all([call(initSelectionSaga), call(initAttributeElementsSaga)]);
+            yield all([
+                call(initSelectionSaga, action.payload.correlationId),
+                call(initAttributeElementsSaga, action.payload.correlationId),
+            ]);
         } else {
-            yield all([call(initAttributeSaga), call(initSelectionSaga), call(initAttributeElementsSaga)]);
+            yield all([
+                call(initAttributeSaga, action.payload.correlationId),
+                call(initSelectionSaga, action.payload.correlationId),
+                call(initAttributeElementsSaga, action.payload.correlationId),
+            ]);
         }
 
-        yield put(actions.initSuccess());
+        yield put(actions.initSuccess({ correlationId: action.payload.correlationId }));
     } catch (error) {
-        yield put(actions.initError({ error }));
+        yield put(actions.initError({ error, correlationId: action.payload.correlationId }));
     } finally {
         if (yield cancelled()) {
-            yield put(actions.initCancel());
+            yield put(actions.initCancel({ correlationId: action.payload.correlationId }));
         }
     }
 }

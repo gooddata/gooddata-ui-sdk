@@ -1,5 +1,4 @@
 // (C) 2022 GoodData Corporation
-import { v4 as uuidv4 } from "uuid";
 import { SagaIterator } from "redux-saga";
 import { put, select, call, SagaReturnType } from "redux-saga/effects";
 import { asyncRequestSaga } from "../../common/asyncRequestSaga";
@@ -10,8 +9,8 @@ import { selectAttributeFilterElements } from "../selectors";
 /**
  * @internal
  */
-export function* initSelectionSaga(): SagaIterator<void> {
-    const correlationId = `init_selection_${uuidv4()}`;
+export function* initSelectionSaga(initCorrelationId: string): SagaIterator<void> {
+    const correlationId = `init_selection_${initCorrelationId}`;
     const isInverted: ReturnType<typeof selectIsCommitedSelectionInverted> = yield select(
         selectIsCommitedSelectionInverted,
     );
@@ -27,14 +26,18 @@ export function* initSelectionSaga(): SagaIterator<void> {
             actions.attributeElementsCancelRequest({ correlationId }),
         );
 
-    const { success }: SagaReturnType<typeof loadSelection> = yield call(loadSelection);
+    const { success, error }: SagaReturnType<typeof loadSelection> = yield call(loadSelection);
 
-    if (success) {
+    if (error) {
+        throw error.payload.error;
+    } else if (success) {
         yield put(
             actions.changeSelection({
                 selection: success.payload.attributeElements.map((element) => element.uri),
                 isInverted,
             }),
         );
+
+        yield put(actions.commitSelection());
     }
 }

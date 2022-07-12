@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { call, put, select, SagaReturnType, takeLatest } from "redux-saga/effects";
+import { call, put, select, SagaReturnType, takeLatest, cancelled } from "redux-saga/effects";
 
 import { selectAttributeFilterDisplayForm } from "../main/selectors";
 import { cancelableEffect, getAttributeFilterContext } from "../common/sagas";
@@ -18,25 +18,38 @@ export function* attributeWorker(): SagaIterator<void> {
 function* attributeRequestSaga({
     payload: { correlationId },
 }: ReturnType<typeof actions.attributeRequest>): SagaIterator<void> {
-    const context: SagaReturnType<typeof getAttributeFilterContext> = yield call(getAttributeFilterContext);
-    const displayFormRef: ReturnType<typeof selectAttributeFilterDisplayForm> = yield select(
-        selectAttributeFilterDisplayForm,
-    );
+    let cancel = false;
+    try {
+        const context: SagaReturnType<typeof getAttributeFilterContext> = yield call(
+            getAttributeFilterContext,
+        );
+        const displayFormRef: ReturnType<typeof selectAttributeFilterDisplayForm> = yield select(
+            selectAttributeFilterDisplayForm,
+        );
 
-    const cancelableAttributeLoad = cancelableEffect({
-        effect: () => loadAttributeByDisplayForm(context, displayFormRef),
-        isCancelRequest: actions.attributeCancelRequest.match,
-    });
+        const cancelableAttributeLoad = cancelableEffect({
+            effect: () => loadAttributeByDisplayForm(context, displayFormRef),
+            isCancelRequest: actions.attributeCancelRequest.match,
+        });
 
-    const { success, error, canceled }: SagaReturnType<typeof cancelableAttributeLoad> = yield call(
-        cancelableAttributeLoad,
-    );
+        const { success, error, canceled }: SagaReturnType<typeof cancelableAttributeLoad> = yield call(
+            cancelableAttributeLoad,
+        );
 
-    if (success) {
-        yield put(actions.attributeSuccess({ attribute: success, correlationId }));
-    } else if (error) {
-        yield put(actions.attributeError({ error, correlationId }));
-    } else if (canceled) {
-        yield put(actions.attributeCancel({ correlationId }));
+        if (success) {
+            yield put(actions.attributeSuccess({ attribute: success, correlationId }));
+        } else if (error) {
+            yield put(actions.attributeError({ error, correlationId }));
+        } else if (canceled) {
+            cancel = true;
+        }
+    } finally {
+        if (yield cancelled()) {
+            cancel = true;
+        }
+
+        if (cancel) {
+            yield put(actions.attributeCancel({ correlationId }));
+        }
     }
 }

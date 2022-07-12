@@ -23,6 +23,7 @@ export type InitActionPayload = {
     attributeFilter: IAttributeFilter;
     hiddenElements?: string[];
     staticElements?: IAttributeElement[];
+    correlationId: string;
 };
 
 const init: AttributeFilterReducer<PayloadAction<InitActionPayload>> = (state, action) => {
@@ -39,9 +40,9 @@ const init: AttributeFilterReducer<PayloadAction<InitActionPayload>> = (state, a
     state.staticElements = action.payload.staticElements;
 };
 
-const initSuccess: AttributeFilterReducer = identity;
-const initError: AttributeFilterReducer<PayloadAction<{ error: any }>> = identity;
-const initCancel: AttributeFilterReducer = identity;
+const initSuccess: AttributeFilterReducer<PayloadAction<{ correlationId: string }>> = identity;
+const initError: AttributeFilterReducer<PayloadAction<{ error: any; correlationId: string }>> = identity;
+const initCancel: AttributeFilterReducer<PayloadAction<{ correlationId: string }>> = identity;
 
 const reset: AttributeFilterReducer = identity;
 

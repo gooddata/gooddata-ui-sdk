@@ -1,10 +1,17 @@
 // (C) 2022 GoodData Corporation
 import { Action, AnyAction, configureStore, Middleware } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
-import { sliceReducer } from "./slice";
+import { actions, sliceReducer } from "./slice";
 import { rootSaga } from "./rootSaga";
 import { AttributeFilterState, initialState } from "./state";
 import { AttributeFilterStore, AttributeFilterStoreContext } from "./types";
+
+const nonSerializableActions = [
+    actions.initError.type,
+    actions.attributeError.type,
+    actions.loadElementsRangeError.type,
+    actions.attributeElementsError.type,
+];
 
 // We cannot handle event listeners inside saga, as once the root saga is canceled,
 // take effects are not working anymore, but we may want to listen for actions,
@@ -43,6 +50,9 @@ export function createAttributeFilterStore(context: AttributeFilterStoreContext)
         middleware: (getDefaultMiddleware) => {
             return getDefaultMiddleware({
                 thunk: false,
+                serializableCheck: {
+                    ignoredActions: nonSerializableActions,
+                },
             }).concat([sagaMiddleware, eventListeningMiddleware(context.eventListener)]);
         },
     });

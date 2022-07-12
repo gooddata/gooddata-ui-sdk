@@ -8,7 +8,6 @@ import {
     IMeasure,
     IRelativeDateFilter,
 } from "@gooddata/sdk-model";
-import { LoadableStatus } from "../../types";
 
 /**
  * @internal
@@ -25,8 +24,6 @@ export interface AttributeFilterState {
 
     // Loaded attribute of the display form
     attribute?: IAttributeMetadataObject;
-    attributeError?: any;
-    attributeStatus?: LoadableStatus;
 
     // Loaded attribute elements cache
     attributeElementsMap?: Record<string, IAttributeElement>;

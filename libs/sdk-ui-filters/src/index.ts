@@ -76,3 +76,35 @@ export {
     IAttributeDropdownItem,
     ICustomGranularitySelection,
 } from "./RankingFilter/types";
+
+export {
+    newAttributeFilterHandler,
+    // Base
+    Correlation,
+    CallbackRegistration,
+    Callback,
+    CallbackPayload,
+    Unsubscribe,
+    // Loaders
+    IElementsLoadResult,
+    IAttributeLoader,
+    IAttributeElementLoader,
+    IAttributeFilterLoader,
+    // Options
+    IAttributeFilterHandlerOptions,
+    IAttributeFilterHandlerOptionsBase,
+    // Single selection
+    ISingleSelectionHandler,
+    IStagedSingleSelectionHandler,
+    ISingleSelectAttributeFilterHandlerOptions,
+    // Multi selection
+    InvertableSelection,
+    IInvertableSelectionHandler,
+    IStagedInvertableSelectionHandler,
+    IMultiSelectAttributeFilterHandlerOptions,
+    // Handlers
+    InvertableAttributeElementSelection,
+    IAttributeFilterHandler,
+    ISingleSelectAttributeFilterHandler,
+    IMultiSelectAttributeFilterHandler,
+} from "./AttributeFilterLoader";

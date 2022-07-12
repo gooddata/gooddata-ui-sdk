@@ -3,13 +3,12 @@ import { RecordedBackendConfig, RecordingIndex } from "./types";
 import { RecordedElementQueryFactory } from "./elements";
 import {
     ObjRef,
-    areObjRefsEqual,
     objRefToString,
-    isIdentifierRef,
     isCatalogAttribute,
     IAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,
     IMetadataObject,
+    isUriRef,
 } from "@gooddata/sdk-model";
 import { newAttributeMetadataObject } from "@gooddata/sdk-backend-base";
 import values from "lodash/values";
@@ -38,7 +37,7 @@ export class RecordedAttributes implements IWorkspaceAttributesService {
         }
 
         const recording = values(this.recordings.metadata.displayForms).find((rec) =>
-            isIdentifierRef(ref) ? ref.identifier === rec.obj.id : ref.uri === rec.obj.uri,
+            this.isObjWithRef(rec.obj, ref),
         );
 
         if (!recording) {
@@ -56,7 +55,7 @@ export class RecordedAttributes implements IWorkspaceAttributesService {
         const recording = this.recordings.metadata.catalog.items
             .filter(isCatalogAttribute)
             .find((wrappedAttribute) => {
-                return areObjRefsEqual(ref, wrappedAttribute.attribute.ref);
+                return this.isObjWithRef(wrappedAttribute.attribute, ref);
             });
 
         if (!recording) {
@@ -74,7 +73,7 @@ export class RecordedAttributes implements IWorkspaceAttributesService {
         const recording = this.recordings.metadata.catalog.items
             .filter(isCatalogAttribute)
             .find((wrappedAttribute) => {
-                return wrappedAttribute.displayForms.some((df) => areObjRefsEqual(df.ref, ref));
+                return wrappedAttribute.displayForms.some((df) => this.isObjWithRef(df, ref));
             });
 
         if (!recording) {
@@ -134,5 +133,13 @@ export class RecordedAttributes implements IWorkspaceAttributesService {
                 .description(description)
                 .displayForms(displayForms),
         );
+    }
+
+    private isObjWithRef(obj: IMetadataObject, ref: ObjRef) {
+        if (isUriRef(ref)) {
+            return obj.uri === ref.uri;
+        }
+
+        return obj.id === ref.identifier;
     }
 }
