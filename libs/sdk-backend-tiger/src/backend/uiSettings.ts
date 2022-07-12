@@ -81,8 +81,9 @@ export const DefaultUiSettings: ISettings = {
     enableAdFloatingDateRangeFilter: true,
     enableReversedStacking: true,
     enableSeparateTotalLabels: true,
+   ["msf.enableTenantCustomModel"]: false,
+    enableKPIDashboardExport: true,
 
-    ["msf.enableTenantCustomModel"]: false,
 
     ...DefaultFeatureFlags,
 };

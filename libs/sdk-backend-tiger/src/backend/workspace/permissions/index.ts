@@ -20,7 +20,7 @@ export class TigerWorkspacePermissionsFactory implements IWorkspacePermissionsSe
         return {
             //disabled for tiger for now
             canCreateReport: false,
-            canExportReport: false,
+            canExportReport: true,
             canUploadNonProductionCSV: false,
             canManageACL: false,
             canManageDomain: false,

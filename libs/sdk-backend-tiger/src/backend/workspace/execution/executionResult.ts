@@ -12,7 +12,15 @@ import {
     NotSupported,
     UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
-import { IExecutionDefinition, DataValue, IDimensionDescriptor, IResultHeader } from "@gooddata/sdk-model";
+import {
+    IExecutionDefinition,
+    DataValue,
+    IDimensionDescriptor,
+    IResultHeader,
+    isMeasureGroupDescriptor,
+    measureMasterIdentifier,
+    isAttributeDescriptor,
+} from "@gooddata/sdk-model";
 import SparkMD5 from "spark-md5";
 import { transformResultDimensions } from "../../../convertors/fromBackend/afm/dimensions";
 import { transformExecutionResult } from "../../../convertors/fromBackend/afm/result";
@@ -96,7 +104,102 @@ export class TigerExecutionResult implements IExecutionResult {
         return this.executionFactory.forDefinition(this.definition);
     }
 
-    public async export(_options: IExportConfig): Promise<IExportResult> {
+    public async export(options: IExportConfig): Promise<IExportResult> {
+        type ExportMetrics = {
+            [key: string]: {
+                title?: string;
+                format?: string;
+            };
+        };
+
+        type ExportLabels = {
+            [key: string]: {
+                title?: string;
+            };
+        };
+
+        const metrics: ExportMetrics = {};
+        const labels: ExportLabels = {};
+
+        // get measure alias or title, and format
+        this.definition.measures.forEach((measure) => {
+            const { localIdentifier, alias, title, format } = measure.measure;
+            metrics[localIdentifier] = {
+                title: alias || title,
+                format,
+            };
+        });
+
+        // get format for derived measures from master
+        this.definition.measures.forEach((measure) => {
+            const masterId = measureMasterIdentifier(measure);
+            const derivedId = measure.measure.localIdentifier;
+            if (masterId) {
+                if (metrics[masterId].format) {
+                    metrics[derivedId].format = metrics[masterId].format;
+                } else {
+                    this.dimensions.forEach((dimension) =>
+                        dimension.headers.forEach((header) => {
+                            if (isMeasureGroupDescriptor(header)) {
+                                header.measureGroupHeader.items.forEach((item) => {
+                                    const { localIdentifier, format } = item.measureHeaderItem;
+                                    if (localIdentifier === masterId) {
+                                        metrics[derivedId].format = format;
+                                    }
+                                });
+                            }
+                        }),
+                    );
+                }
+            }
+        });
+
+        // get attribute alias
+        this.definition.attributes.forEach((attribute) => {
+            const { localIdentifier, alias } = attribute.attribute;
+            labels[localIdentifier] = { title: alias };
+        });
+
+        // if nothing from before gives needed info, take from dimensions
+        this.dimensions.forEach((dimension) =>
+            dimension.headers.forEach((header) => {
+                if (isMeasureGroupDescriptor(header)) {
+                    header.measureGroupHeader.items.forEach((item) => {
+                        const { localIdentifier, name, format } = item.measureHeaderItem;
+                        if (!metrics[localIdentifier].title) {
+                            metrics[localIdentifier].title = name;
+                        }
+                        if (!metrics[localIdentifier].format) {
+                            metrics[localIdentifier].format = format;
+                        }
+                    });
+                }
+                if (isAttributeDescriptor(header)) {
+                    const { localIdentifier, formOf } = header.attributeHeader;
+                    if (!labels[localIdentifier].title) {
+                        labels[localIdentifier].title = formOf.name;
+                    }
+                }
+            }),
+        );
+
+        const payload = {
+            format: options.format?.toUpperCase(),
+            executionResult: this.resultId,
+            fileName: options.title,
+            settings: {
+                mergeHeaders: Boolean(options.mergeHeaders),
+                showFilters: Boolean(options.showFilters),
+            },
+            customOverrides: {
+                metrics,
+                labels,
+            },
+        };
+
+        console.log(payload);
+        // TODO: drop payload into api call when it will be ready on Tiger
+
         return Promise.reject(new NotSupported("Tiger backend does not support exports"));
     }
 
