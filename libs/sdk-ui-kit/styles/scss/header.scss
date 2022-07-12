@@ -255,19 +255,19 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
     }
 
     .gd-icon-slack {
-        background: url("@gooddata/sdk-ui-kit/esm/assets/slack.svg") no-repeat;
+        background: url("~@gooddata/sdk-ui-kit/esm/assets/slack.svg") no-repeat;
     }
 
     .gd-icon-documentation {
-        background: url("@gooddata/sdk-ui-kit/esm/assets/documentation.svg") no-repeat;
+        background: url("~@gooddata/sdk-ui-kit/esm/assets/documentation.svg") no-repeat;
     }
 
     .gd-icon-university {
-        background: url("@gooddata/sdk-ui-kit/esm/assets/university.svg") no-repeat;
+        background: url("~@gooddata/sdk-ui-kit/esm/assets/university.svg") no-repeat;
     }
 
     .gd-icon-community {
-        background: url("@gooddata/sdk-ui-kit/esm/assets/community.svg") no-repeat;
+        background: url("~@gooddata/sdk-ui-kit/esm/assets/community.svg") no-repeat;
     }
 }
 
@@ -705,15 +705,15 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
         border-top-right-radius: 0;
 
         &.is-normal::before {
-            background: url("@gooddata/sdk-ui-kit/esm/assets/data_source_normal_state.svg") no-repeat;
+            background: url("~@gooddata/sdk-ui-kit/esm/assets/data_source_normal_state.svg") no-repeat;
         }
 
         &.is-active::before {
-            background: url("@gooddata/sdk-ui-kit/esm/assets/data_source_active_state.svg") no-repeat;
+            background: url("~@gooddata/sdk-ui-kit/esm/assets/data_source_active_state.svg") no-repeat;
         }
 
         &.disabled::before {
-            background: url("@gooddata/sdk-ui-kit/esm/assets/data_source_disabled_state.svg") no-repeat;
+            background: url("~@gooddata/sdk-ui-kit/esm/assets/data_source_disabled_state.svg") no-repeat;
         }
 
         &::before {
@@ -730,7 +730,7 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
         border-radius: 0;
 
         &.is-normal::before {
-            background: url("@gooddata/sdk-ui-kit/esm/assets/model-normal-state.svg") no-repeat;
+            background: url("~@gooddata/sdk-ui-kit/esm/assets/model-normal-state.svg") no-repeat;
         }
 
         &::before {
@@ -866,7 +866,7 @@ button.gd-button-primary.gd-upsell-button {
         width: 14px;
         height: 13px;
         margin: auto auto 6.5px 11px;
-        background: url("@gooddata/sdk-ui-kit/esm/assets/star.svg") no-repeat;
+        background: url("~@gooddata/sdk-ui-kit/esm/assets/star.svg") no-repeat;
     }
 
     &:hover {

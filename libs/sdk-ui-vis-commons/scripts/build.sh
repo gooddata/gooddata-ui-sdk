@@ -2,7 +2,7 @@
 
 _build_styles() {
   echo
-    # sass --load-path=node_modules styles/scss:styles/scss/main.scss
+    # node-sass -q --importer node_modules/node-sass-magic-importer/dist/cli.js -o styles/css styles/scss/main.scss
 }
 
 _clean() {

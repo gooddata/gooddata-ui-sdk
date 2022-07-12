@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
-@import "@gooddata/sdk-ui-kit/styles/scss/variables";
-@import "@gooddata/sdk-ui-kit/styles/scss/Button/_variables";
-@import "@gooddata/sdk-ui-kit/styles/scss/mixins";
+@import "~@gooddata/sdk-ui-kit/styles/scss/variables";
+@import "~@gooddata/sdk-ui-kit/styles/scss/Button/_variables";
+@import "~@gooddata/sdk-ui-kit/styles/scss/mixins";
 
 $custom-foreground-color: var(--gd-table-valueColor, var(--gd-palette-complementary-8, $gd-color-text));
 $custom-secondary-foreground-color: var(
@@ -46,10 +46,10 @@ $subtotal-odd-background-color: var(
     var(--gd-palette-complementary-1, #f7f8f9)
 );
 
-@import "@ag-grid-community/all-modules/dist/styles/ag-theme-balham/sass/ag-theme-balham-mixin";
+@import "~@ag-grid-community/all-modules/dist/styles/ag-theme-balham/sass/ag-theme-balham-mixin";
 
 .gd-table-component {
-    @import "@ag-grid-community/all-modules/dist/styles/ag-grid";
+    @import "~@ag-grid-community/all-modules/dist/styles/ag-grid";
 
     // TODO really calculate disabled-foreground-color and chip-background-color, now here only because of foreground-color being a CSS variable
     // TODO really calculate modal-overlay-background-color, now here only because of background-color being a CSS variable
@@ -210,7 +210,7 @@ $subtotal-odd-background-color: var(
         }
 
         .ag-header-cell-resize {
-            right: calc(-#{$header-cell-resize-width} / 2);
+            right: -$header-cell-resize-width / 2;
             width: $header-cell-resize-width;
             opacity: 0;
 
@@ -218,11 +218,11 @@ $subtotal-odd-background-color: var(
                 content: "";
                 box-sizing: content-box;
                 display: block;
-                width: calc($header-cell-resize-width / 2);
-                margin-right: calc($header-cell-resize-width / 2);
+                width: $header-cell-resize-width / 2;
+                margin-right: $header-cell-resize-width / 2;
                 margin-top: 8px;
                 border-right: 1px solid $gd-palette-primary-base;
-                text-indent: calc($header-cell-resize-width / 2);
+                text-indent: $header-cell-resize-width / 2;
                 height: 16px;
             }
         }

@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
-@use "mixins";
 @import "./variables.scss";
+@import "./mixins.scss";
 @import "./layout.scss";
 @import "./Messages/_variables";
 
@@ -49,7 +49,7 @@ $gd-message-padding-vertical: 4px;
     opacity: 0.85;
     cursor: pointer;
 
-    @include mixins.active-states {
+    @include active-states {
         color: inherit;
         opacity: 1;
     }
@@ -70,7 +70,7 @@ $gd-message-padding-vertical: 4px;
     padding: 2px;
     margin-left: 10px;
 
-    @include mixins.active-states-and-self {
+    @include active-states-and-self {
         text-decoration: none;
     }
 }
@@ -84,7 +84,7 @@ $gd-message-padding-vertical: 4px;
     box-sizing: border-box;
     display: inline-block;
     padding: $gd-message-padding-vertical 8px $gd-message-padding-vertical 10px;
-    @include mixins.clearfix();
+    @include clearfix();
 
     line-height: 1.4em;
     color: $gd-palette-error-base;
@@ -163,8 +163,8 @@ $gd-message-padding-vertical: 4px;
 .gd-message-overlay {
     margin: 0;
 
-    @include mixins.transition("opacity", 0.25s, "ease-in-out");
-    @include mixins.box-shadow("0 1px 3px rgba(20, 56, 92, 0.1), 0 2px 9px rgba(20, 57, 93, 0.15)");
+    @include transition("opacity", 0.25s, "ease-in-out");
+    @include box-shadow("0 1px 3px rgba(20, 56, 92, 0.1), 0 2px 9px rgba(20, 57, 93, 0.15)");
 
     &.is-hidden {
         opacity: 0;

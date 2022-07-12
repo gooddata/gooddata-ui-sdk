@@ -163,9 +163,9 @@
 }
 
 .add-attribute-filter-placeholder::before {
-    background-image: url("@gooddata/sdk-ui-dashboard/esm/assets/add-attribute-filter-placeholder.svg");
+    background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/add-attribute-filter-placeholder.svg");
 
     &:disabled {
-        background-image: url("@gooddata/sdk-ui-dashboard/esm/assets/add-attribute-filter-placeholder-disabled.svg");
+        background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/add-attribute-filter-placeholder-disabled.svg");
     }
 }

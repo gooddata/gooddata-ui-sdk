@@ -38,8 +38,8 @@
     }
 
     @media #{$xxlarge-up} {
-        flex: 0 0 percentage(calc(1 / 6));
-        max-width: percentage(calc(1 / 6));
+        flex: 0 0 percentage(1/6);
+        max-width: percentage(1/6);
     }
 
     @media #{$xsmall-only}, #{$small-only} {
@@ -326,7 +326,7 @@
 
 .dash-item-action.dash-item-action-alert {
     &.disabled {
-        background-image: url("@gooddata/sdk-ui-ext/esm/internal/assets/icons/alert-bell-na.svg");
+        background-image: url("~@gooddata/sdk-ui-ext/esm/internal/assets/icons/alert-bell-na.svg");
         background-repeat: no-repeat;
         background-position: center;
         background-size: 16px;
