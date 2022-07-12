@@ -144,7 +144,7 @@
     },
     {
       "name": "@gooddata/sdk-backend-tiger",
-      "allowedCategories": [ "examples", "tools" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "@gooddata/sdk-embedding",
@@ -719,6 +719,10 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
+      "name": "http-proxy",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "http-status-codes",
       "allowedCategories": [ "production" ]
     },
@@ -1100,7 +1104,7 @@
     },
     {
       "name": "webpack-bundle-analyzer",
-      "allowedCategories": [ "tools" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "webpack-cli",
