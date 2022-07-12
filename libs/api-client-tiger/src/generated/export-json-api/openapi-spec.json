@@ -1,0 +1,225 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "OpenAPI definition",
+        "version": "v0"
+    },
+    "servers": [
+        {
+            "url": "/",
+            "description": "GoodData.CN endpoint"
+        }
+    ],
+    "tags": [
+        {
+            "name": "actions",
+            "description": "| execution of some form of computation (RPC over JSON)"
+        }
+    ],
+    "paths": {
+        "/api/v1/actions/workspaces/{workspaceId}/export/tabular": {
+            "post": {
+                "tags": ["actions"],
+                "summary": "Create tabular export request",
+                "description": "An tabular export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.",
+                "operationId": "createTabularExport",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TabularExportRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Tabular export request created successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TabularExportResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["EXPORT"],
+                    "description": "Permissions required to execute tabular export."
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/export/tabular/{exportId}": {
+            "get": {
+                "tags": ["actions"],
+                "summary": "Retrieve exported files",
+                "description": "After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn't ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.",
+                "operationId": "getTabularExport",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "exportId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Binary export result.",
+                        "headers": {
+                            "Content-Disposition": {
+                                "style": "simple",
+                                "schema": {
+                                    "pattern": "attachment; filename='[^']+'",
+                                    "type": "string",
+                                    "example": "attachment; filename='result.csv'"
+                                }
+                            }
+                        },
+                        "content": {
+                            "text/csv": {},
+                            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": {}
+                        }
+                    },
+                    "202": {
+                        "description": "Request is accepted, provided exportId exists, but export is not yet ready.",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["EXPORT"],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "CustomLabel": {
+                "required": ["title"],
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "Override value."
+                    }
+                },
+                "description": "Custom label object override."
+            },
+            "CustomMetric": {
+                "required": ["format", "title"],
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "Metric title override."
+                    },
+                    "format": {
+                        "type": "string",
+                        "description": "Format override."
+                    }
+                },
+                "description": "Custom metric object override."
+            },
+            "CustomOverride": {
+                "type": "object",
+                "properties": {
+                    "labels": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/components/schemas/CustomLabel"
+                        },
+                        "description": "Map of CustomLabels with keys used as placeholders in document."
+                    },
+                    "metrics": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/components/schemas/CustomMetric"
+                        },
+                        "description": "Map of CustomMetrics with keys used as placeholders in document."
+                    }
+                },
+                "description": "Custom cell value overrides (IDs will be replaced with specified values)."
+            },
+            "Settings": {
+                "required": ["mergeHeaders", "showFilters"],
+                "type": "object",
+                "properties": {
+                    "mergeHeaders": {
+                        "type": "boolean",
+                        "description": "Merge equal headers in neighbouring cells.",
+                        "example": true
+                    },
+                    "showFilters": {
+                        "type": "boolean",
+                        "description": "Print used filters on top o document.",
+                        "example": false
+                    }
+                },
+                "description": "XLSX specific settings."
+            },
+            "TabularExportRequest": {
+                "required": ["executionResult", "fileName", "format"],
+                "type": "object",
+                "properties": {
+                    "format": {
+                        "type": "string",
+                        "description": "Expected file format.",
+                        "example": "CSV",
+                        "enum": ["CSV"]
+                    },
+                    "executionResult": {
+                        "type": "string",
+                        "description": "Execution result identifier.",
+                        "example": "ff483727196c9dc862c7fd3a5a84df55c96d61a4"
+                    },
+                    "fileName": {
+                        "type": "string",
+                        "description": "Filename of downloaded file without extension.",
+                        "example": "result"
+                    },
+                    "settings": {
+                        "$ref": "#/components/schemas/Settings"
+                    },
+                    "customOverride": {
+                        "$ref": "#/components/schemas/CustomOverride"
+                    }
+                },
+                "description": "Export request object describing the export properties and overrides for tabular exports."
+            },
+            "TabularExportResult": {
+                "required": ["exportResult"],
+                "type": "object",
+                "properties": {
+                    "exportResult": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}

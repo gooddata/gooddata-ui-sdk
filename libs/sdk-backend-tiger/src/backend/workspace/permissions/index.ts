@@ -15,12 +15,13 @@ export class TigerWorkspacePermissionsFactory implements IWorkspacePermissionsSe
         // NOTE: From tiger backend there are permissions like MANAGE, ANALYZE, VIEW. Keep on mind that
         // NOTE: if user has MANAGE permissions, there will be also ANALYZE and VIEW in permissions array.
         const permissions = response.data.data.meta!.permissions ?? ([] as Array<TigerPermissionType>);
-        const { canViewWorkspace, canAnalyzeWorkspace, canManageWorkspace } = getPermission(permissions);
+        const { canViewWorkspace, canAnalyzeWorkspace, canManageWorkspace, canExportReport } =
+            getPermission(permissions);
 
         return {
             //disabled for tiger for now
             canCreateReport: false,
-            canExportReport: false,
+            canExportReport,
             canUploadNonProductionCSV: false,
             canManageACL: false,
             canManageDomain: false,
@@ -50,11 +51,13 @@ function getPermission(permissions: Array<TigerPermissionType>) {
     const canViewWorkspace = hasPermission(permissions, "VIEW");
     const canAnalyzeWorkspace = hasPermission(permissions, "ANALYZE");
     const canManageWorkspace = hasPermission(permissions, "MANAGE");
+    const canExportReport = hasPermission(permissions, "EXPORT");
 
     return {
         canViewWorkspace,
         canAnalyzeWorkspace,
         canManageWorkspace,
+        canExportReport,
     };
 }
 

@@ -68,3 +68,23 @@ export const selectSupportsElementUris = createSelector(
     selectBackendCapabilities,
     (capabilities) => capabilities.supportsElementUris ?? false,
 );
+
+/**
+ * Selector for {@link @gooddata/sdk-backend-spi#IBackendCapabilities.canExportCsv}
+ *
+ * @internal
+ */
+export const selectSupportsExportToCsv = createSelector(
+    selectBackendCapabilities,
+    (capabilities) => capabilities.canExportCsv ?? false,
+);
+
+/**
+ * Selector for {@link @gooddata/sdk-backend-spi#IBackendCapabilities.canExportXlsx}
+ *
+ * @internal
+ */
+export const selectSupportsExportToXlsx = createSelector(
+    selectBackendCapabilities,
+    (capabilities) => capabilities.canExportXlsx ?? false,
+);

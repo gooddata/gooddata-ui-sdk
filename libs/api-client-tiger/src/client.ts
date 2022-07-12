@@ -33,6 +33,14 @@ import {
     FeatureContext,
 } from "./profile";
 import {
+    tigerExportClientFactory,
+    ExportActionsApiInterface,
+    ActionsApiCreateTabularExportRequest,
+    TabularExportRequest,
+    TabularExportResult,
+    ActionsApiGetTabularExportRequest,
+} from "./export";
+import {
     ScanModelConfiguration,
     ScanModelConfigurationParameters,
     ScanModelBaseApi,
@@ -53,6 +61,7 @@ export {
     tigerActionsClientFactory,
     tigerAuthActionsClientFactory,
     tigerScanModelClientFactory,
+    tigerExportClientFactory,
     MetadataConfiguration,
     MetadataConfigurationParameters,
     MetadataBaseApi,
@@ -71,6 +80,11 @@ export {
     ScanModelBaseApi,
     ScanModelRequestArgs,
     ScanModelActionsApiInterface,
+    ExportActionsApiInterface,
+    ActionsApiCreateTabularExportRequest,
+    TabularExportResult,
+    TabularExportRequest,
+    ActionsApiGetTabularExportRequest,
 };
 
 export interface ITigerClient {
@@ -86,6 +100,7 @@ export interface ITigerClient {
     actions: ReturnType<typeof tigerActionsClientFactory>;
     authActions: ReturnType<typeof tigerAuthActionsClientFactory>;
     scanModel: ReturnType<typeof tigerScanModelClientFactory>;
+    export: ReturnType<typeof tigerExportClientFactory>;
 
     /**
      * Updates tiger client to send the provided API TOKEN in `Authorization` header of all
@@ -113,6 +128,7 @@ export const tigerClientFactory = (axios: AxiosInstance): ITigerClient => {
     const actions = tigerActionsClientFactory(axios);
     const authActions = tigerAuthActionsClientFactory(axios);
     const scanModel = tigerScanModelClientFactory(axios);
+    const exportFactory = tigerExportClientFactory(axios);
 
     return {
         axios,
@@ -130,5 +146,6 @@ export const tigerClientFactory = (axios: AxiosInstance): ITigerClient => {
         setApiToken: (token: string | undefined): void => {
             setAxiosAuthorizationToken(axios, token);
         },
+        export: exportFactory,
     };
 };
