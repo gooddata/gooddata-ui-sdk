@@ -163,6 +163,24 @@ export {
     TotalFunctionEnum,
 } from "./generated/afm-rest-api/api";
 export * from "./generated/metadata-json-api/api";
+export {
+    ActionsApiGetDataSourceSchemataRequest,
+    ActionsApiScanDataSourceRequest,
+    ActionsApiTestDataSourceDefinitionRequest,
+    ActionsApiTestDataSourceRequest,
+    DataSourceSchemata,
+    DeclarativeColumn as ScanModelDeclarativeColumn,
+    DeclarativeColumnDataTypeEnum as ScanModelDeclarativeColumnDataTypeEnum,
+    DeclarativeTable as ScanModelDeclarativeTable,
+    DeclarativeTables as ScanModelDeclarativeTables,
+    ScanRequest,
+    ScanResultPdm,
+    TableWarning,
+    TestDefinitionRequest,
+    TestDefinitionRequestTypeEnum,
+    TestResponse,
+    ColumnWarning,
+} from "./generated/scan-json-api/api";
 export * from "./client";
 
 export { jsonApiHeaders, JSON_API_HEADER_VALUE, ValidateRelationsHeader } from "./constants";
@@ -180,6 +198,7 @@ export {
 export {
     OrganizationUtilities,
     OrganizationGetEntitiesResult,
+    OrganizationGetEntitiesSupportingIncludedResult,
     OrganizationGetEntitiesFn,
     OrganizationGetEntitiesParams,
 } from "./organizationUtilities";

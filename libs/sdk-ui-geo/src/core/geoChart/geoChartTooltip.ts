@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import isFinite from "lodash/isFinite";
 import escape from "lodash/escape";
@@ -93,8 +93,8 @@ export function getTooltipHtml(
         .join("");
 
     return `<div class="gd-viz-tooltip" style="max-width:${maxWidth}px">
-                <span class="stroke gd-viz-tooltip-stroke" style="border-top-color: ${tooltipStroke}"></span>
-                <div class="content gd-viz-tooltip-content">${tooltipItems}${interactionMessage}</div>
+                <span class="gd-viz-tooltip-stroke" style="border-top-color: ${tooltipStroke}"></span>
+                <div class="gd-viz-tooltip-content">${tooltipItems}${interactionMessage}</div>
             </div>`;
 }
 

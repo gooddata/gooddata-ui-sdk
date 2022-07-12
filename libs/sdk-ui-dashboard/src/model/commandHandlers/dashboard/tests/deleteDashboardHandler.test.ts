@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
 import { deleteDashboard } from "../../../commands";
@@ -18,7 +18,7 @@ describe("delete dashboard handler", () => {
         beforeEach(
             preloadedTesterFactory((tester) => {
                 Tester = tester;
-            }, undefined),
+            }),
         );
 
         it("should fail", async () => {

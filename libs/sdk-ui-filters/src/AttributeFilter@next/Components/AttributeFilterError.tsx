@@ -1,9 +1,7 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
-export interface IAttributeFilterErrorProps {
-    message?: string;
-}
+import { IAttributeFilterErrorProps } from "./types";
 
 export const AttributeFilterError: React.VFC<IAttributeFilterErrorProps> = (
     _props: IAttributeFilterErrorProps,

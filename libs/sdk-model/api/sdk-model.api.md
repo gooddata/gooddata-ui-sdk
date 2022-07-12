@@ -2048,6 +2048,7 @@ export interface ISettings {
     enablePushpinGeoChart?: boolean;
     enableRenamingMeasureToMetric?: boolean;
     enableReversedStacking?: boolean;
+    enableSeparateTotalLabels?: boolean;
     enableTableColumnsAutoResizing?: boolean;
     enableTableColumnsGrowToFit?: boolean;
     enableTableColumnsManualResizing?: boolean;
@@ -2999,7 +3000,7 @@ export function resultHeaderName(header: IResultHeader): string;
 export type RgbType = "rgb";
 
 // @internal
-export function sanitizeBucketTotals(bucket: IBucket, sortItems: ISortItem[]): ITotal[];
+export function sanitizeBucketTotals(bucket: IBucket, sortItems: ISortItem[], totals?: ITotal[]): ITotal[];
 
 // @alpha
 export type ScheduledMailAttachment = IDashboardAttachment | IWidgetAttachment;

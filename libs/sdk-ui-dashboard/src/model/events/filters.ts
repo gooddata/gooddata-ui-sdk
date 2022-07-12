@@ -369,6 +369,35 @@ export function attributeFilterParentChanged(
     };
 }
 
+export interface DashboardAttributeDisplayFormChangedPayload {
+    /**
+     * The updated definition of the dashboard attribute filter.
+     *
+     * The definition of parents represents the new state.
+     */
+    readonly filter: IDashboardAttributeFilter;
+}
+
+export interface DashboardAttributeDisplayFormChanged extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.DISPLAY_FORM_CHANGED";
+    readonly payload: DashboardAttributeDisplayFormChangedPayload;
+}
+
+export function attributeDisplayFormChanged(
+    ctx: DashboardContext,
+    filter: IDashboardAttributeFilter,
+    correlationId?: string,
+): DashboardAttributeDisplayFormChanged {
+    return {
+        type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.DISPLAY_FORM_CHANGED",
+        ctx,
+        correlationId,
+        payload: {
+            filter,
+        },
+    };
+}
+
 /**
  * Tests whether the provided object is an instance of {@link DashboardAttributeFilterParentChanged}.
  *

@@ -17,7 +17,7 @@ import { addAttributeFilterHandler } from "./filterContext/attributeFilter/addAt
 import { removeAttributeFiltersHandler } from "./filterContext/attributeFilter/removeAttributeFiltersHandler";
 import { moveAttributeFilterHandler } from "./filterContext/attributeFilter/moveAttributeFilterHandler";
 import { changeAttributeFilterSelectionHandler } from "./filterContext/attributeFilter/changeAttributeFilterSelectionHandler";
-import { setAttributeFilterParentHandler } from "./filterContext/attributeFilter/setAttributeFilterParentHandler";
+import { setAttributeFilterParentsHandler } from "./filterContext/attributeFilter/setAttributeFilterParentHandler";
 import { addLayoutSectionHandler } from "./layout/addLayoutSectionHandler";
 import { moveLayoutSectionHandler } from "./layout/moveLayoutSectionHandler";
 import { removeLayoutSectionHandler } from "./layout/removeLayoutSectionHandler";
@@ -57,6 +57,7 @@ import { DashboardContext } from "../types/commonTypes";
 import { dispatchDashboardEvent } from "../store/_infra/eventDispatcher";
 import { commandRejected } from "../events/general";
 import { changeRenderModeHandler } from "./ui/changeRenderModeHandler";
+import { changeAttributeDisplayFormHandler } from "./filterContext/attributeFilter/changeAttributeDisplayFormHandler";
 
 function* notImplementedCommand(ctx: DashboardContext, cmd: IDashboardCommand): SagaIterator<void> {
     yield dispatchDashboardEvent(commandRejected(ctx, cmd.correlationId));
@@ -82,7 +83,8 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVE": removeAttributeFiltersHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVE": moveAttributeFilterHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.CHANGE_SELECTION": changeAttributeFilterSelectionHandler,
-    "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_PARENT": setAttributeFilterParentHandler,
+    "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_PARENTS": setAttributeFilterParentsHandler,
+    "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_DISPLAY_FORM": changeAttributeDisplayFormHandler,
     "GDC.DASH/CMD.FLUID_LAYOUT.ADD_SECTION": addLayoutSectionHandler,
     "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_SECTION": moveLayoutSectionHandler,
     "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_SECTION": removeLayoutSectionHandler,

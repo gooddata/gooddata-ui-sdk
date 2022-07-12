@@ -18,8 +18,9 @@ import {
     ChangeDateFilterSelection,
     MoveAttributeFilter,
     RemoveAttributeFilters,
-    SetAttributeFilterParent,
+    SetAttributeFilterParents,
     ChangeFilterContextSelection,
+    SetAttributeFilterDisplayForm,
 } from "./filters";
 import {
     ChangeInsightWidgetFilterSettings,
@@ -109,9 +110,9 @@ export {
     AttributeFilterSelectionType,
     resetAttributeFilterSelection,
     changeAttributeFilterSelection,
-    SetAttributeFilterParent,
-    SetAttributeFilterParentPayload,
-    setAttributeFilterParent,
+    SetAttributeFilterParents,
+    SetAttributeFilterParentsPayload,
+    setAttributeFilterParents,
     ChangeAttributeFilterSelectionPayload,
     ChangeFilterContextSelection,
     ChangeFilterContextSelectionPayload,
@@ -119,6 +120,9 @@ export {
     changeFilterContextSelection,
     applyAttributeFilter,
     applyDateFilter,
+    SetAttributeFilterDisplayForm,
+    SetAttributeFilterDisplayFormPayload,
+    setAttributeFilterDisplayForm,
 } from "./filters";
 
 export {
@@ -309,7 +313,7 @@ export type DashboardCommands =
     | RemoveAttributeFilters
     | MoveAttributeFilter
     | ChangeAttributeFilterSelection
-    | SetAttributeFilterParent
+    | SetAttributeFilterParents
     | AddLayoutSection
     | MoveLayoutSection
     | RemoveLayoutSection
@@ -347,4 +351,5 @@ export type DashboardCommands =
     | ChangeDrillableItems
     | AddDrillTargets
     | ChangeSharing
-    | ChangeRenderMode;
+    | ChangeRenderMode
+    | SetAttributeFilterDisplayForm;

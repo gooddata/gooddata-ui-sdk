@@ -1,12 +1,13 @@
 // (C) 2021-2022 GoodData Corporation
 
 import { PayloadAction } from "@reduxjs/toolkit";
-import { Identifier, idRef } from "@gooddata/sdk-model";
+import { Identifier, idRef, ObjRef, uriRef } from "@gooddata/sdk-model";
 import { DashboardContext, DashboardModelCustomizationFns } from "../types/commonTypes";
 import {
     recordedBackend,
     RecordedBackendConfig,
     defaultRecordedBackendCapabilities,
+    objRefsToStringKey,
 } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { DashboardCommandType, InitializeDashboard, initializeDashboard } from "../commands";
@@ -53,10 +54,20 @@ export class DashboardTester extends HeadlessDashboard {
         customCapabilities?: Partial<IBackendCapabilities>,
     ): DashboardTester {
         const ctx: DashboardContext = {
-            backend: recordedBackend(ReferenceRecordings.Recordings, backendConfig, {
-                ...defaultRecordedBackendCapabilities,
-                ...customCapabilities,
-            }),
+            backend: recordedBackend(
+                ReferenceRecordings.Recordings,
+                {
+                    ...backendConfig,
+                    getCommonAttributesResponses: {
+                        ...commonAttributeResponses,
+                        ...(backendConfig?.getCommonAttributesResponses || {}),
+                    },
+                },
+                {
+                    ...defaultRecordedBackendCapabilities,
+                    ...customCapabilities,
+                },
+            ),
             workspace: "reference-workspace",
             dashboardRef: idRef(identifier),
         };
@@ -74,7 +85,13 @@ export class DashboardTester extends HeadlessDashboard {
         backendConfig?: RecordedBackendConfig,
     ): DashboardTester {
         const ctx: DashboardContext = {
-            backend: recordedBackend(ReferenceRecordings.Recordings, backendConfig),
+            backend: recordedBackend(ReferenceRecordings.Recordings, {
+                ...backendConfig,
+                getCommonAttributesResponses: {
+                    ...commonAttributeResponses,
+                    ...(backendConfig?.getCommonAttributesResponses || {}),
+                },
+            }),
             workspace: "reference-workspace",
         };
 
@@ -249,8 +266,19 @@ export function preloadedTesterFactory(
 
     return (done: jest.DoneCallback): void => {
         const tester = identifier
-            ? DashboardTester.forRecording(identifier, { queryServices }, backendConfig)
-            : DashboardTester.forNewDashboard({ queryServices }, backendConfig);
+            ? DashboardTester.forRecording(
+                  identifier,
+                  { queryServices },
+                  {
+                      ...backendConfig,
+                  },
+              )
+            : DashboardTester.forNewDashboard(
+                  { queryServices },
+                  {
+                      ...backendConfig,
+                  },
+              );
 
         tester.dispatch(initCommand);
 
@@ -263,3 +291,30 @@ export function preloadedTesterFactory(
             });
     };
 }
+
+const commonAttributeResponses: Record<string, ObjRef[]> = {
+    [objRefsToStringKey([
+        uriRef("/gdc/md/referenceworkspace/obj/1054"),
+        uriRef("/gdc/md/referenceworkspace/obj/1086"),
+    ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
+    [objRefsToStringKey([
+        uriRef("/gdc/md/referenceworkspace/obj/1054"),
+        uriRef("/gdc/md/referenceworkspace/obj/1088"),
+    ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
+    [objRefsToStringKey([
+        uriRef("/gdc/md/referenceworkspace/obj/1054"),
+        uriRef("/gdc/md/referenceworkspace/obj/1070"),
+    ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
+    [objRefsToStringKey([
+        uriRef("/gdc/md/referenceworkspace/obj/1070"),
+        uriRef("/gdc/md/referenceworkspace/obj/1088"),
+    ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
+    [objRefsToStringKey([
+        uriRef("/gdc/md/referenceworkspace/obj/1086"),
+        uriRef("/gdc/md/referenceworkspace/obj/1088"),
+    ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
+    [objRefsToStringKey([
+        uriRef("/gdc/md/referenceworkspace/obj/1070"),
+        uriRef("/gdc/md/referenceworkspace/obj/1086"),
+    ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
+};

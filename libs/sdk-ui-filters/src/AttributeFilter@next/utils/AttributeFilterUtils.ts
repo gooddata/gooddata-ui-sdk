@@ -9,7 +9,7 @@ import {
     IElementQueryResultWithEmptyItems,
     IListItem,
     isNonEmptyListItem,
-} from "../types";
+} from "../Components/types";
 import {
     filterAttributeElements,
     filterIsEmpty,

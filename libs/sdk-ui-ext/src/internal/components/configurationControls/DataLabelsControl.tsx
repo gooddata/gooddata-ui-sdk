@@ -12,18 +12,32 @@ export interface IDataLabelsControlProps {
     pushData: (data: any) => any;
     properties: IVisualizationProperties;
     isDisabled: boolean;
+    isTotalsDisabled?: boolean;
     showDisabledMessage?: boolean;
     defaultValue?: string | boolean;
+    enableSeparateTotalLabels?: boolean;
 }
 
 class DataLabelsControl extends React.Component<IDataLabelsControlProps & WrappedComponentProps> {
     public static defaultProps = {
         defaultValue: "auto",
         showDisabledMessage: false,
+        isTotalsDisabled: true,
+        enableSeparateTotalLabels: false,
     };
     public render() {
-        const { pushData, properties, intl, isDisabled, showDisabledMessage, defaultValue } = this.props;
+        const {
+            pushData,
+            properties,
+            intl,
+            isDisabled,
+            showDisabledMessage,
+            defaultValue,
+            isTotalsDisabled,
+            enableSeparateTotalLabels,
+        } = this.props;
         const dataLabels = properties?.controls?.dataLabels?.visible ?? defaultValue;
+        const totalLabels = properties?.controls?.dataLabels?.totalsVisible ?? defaultValue;
 
         return (
             <div className="s-data-labels-config">
@@ -37,6 +51,18 @@ class DataLabelsControl extends React.Component<IDataLabelsControlProps & Wrappe
                     items={getTranslatedDropdownItems(dataLabelsDropdownItems, intl)}
                     showDisabledMessage={showDisabledMessage}
                 />
+                {enableSeparateTotalLabels && (
+                    <DropdownControl
+                        value={totalLabels}
+                        valuePath="dataLabels.totalsVisible"
+                        labelText={messages.totalLabels.id}
+                        disabled={isTotalsDisabled}
+                        properties={properties}
+                        pushData={pushData}
+                        items={getTranslatedDropdownItems(dataLabelsDropdownItems, intl)}
+                        showDisabledMessage={showDisabledMessage}
+                    />
+                )}
             </div>
         );
     }

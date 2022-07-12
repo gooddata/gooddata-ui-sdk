@@ -20,6 +20,10 @@ import {
     JsonApiDataSourceInTypeEnum,
     JsonApiDataSourceInAttributesTypeEnum,
     JsonApiDataSourceOutTypeEnum,
+    OrganizationUtilities,
+    JsonApiDataSourceIdentifierOutWithLinks,
+    DataSourceSchemata,
+    JsonApiDataSourceIdentifierOutList,
 } from "@gooddata/api-client-tiger";
 import { convertApiError } from "../utils/errorHandling";
 import uniq from "lodash/uniq";
@@ -217,6 +221,7 @@ export type TigerSpecificFunctions = {
     getEntitlements?: () => Promise<Array<Entitlement>>;
     putWorkspaceLayout?: (requestParameters: LayoutApiPutWorkspaceLayoutRequest) => Promise<void>;
     getAllDataSources?: () => Promise<IDataSourceDefinition[]>;
+    getAllDataSourcesIdentifiers?: () => Promise<JsonApiDataSourceIdentifierOutWithLinks[]>;
     getDataSourceById?: (id: string) => Promise<IDataSourceApiResult>;
     createDataSource?: (requestData: IDataSourceUpsertRequest) => Promise<IDataSourceApiResult>;
     updateDataSource?: (id: string, requestData: IDataSourceUpsertRequest) => Promise<IDataSourceApiResult>;
@@ -225,6 +230,9 @@ export type TigerSpecificFunctions = {
         connectionData: IDataSourceTestConnectionRequest,
         id?: string,
     ) => Promise<IDataSourceTestConnectionResponse>;
+    publishLogicalModel?: (workspaceId: string, declarativeModel: DeclarativeModel) => Promise<void>;
+    getDataSourceSchemata?: (dataSourceId: string) => Promise<DataSourceSchemata>;
+    getPdm?: (dataSourceId: string) => Promise<DeclarativePdm>;
 };
 
 const getDataSourceErrorMessage = (error: unknown) => {
@@ -434,17 +442,18 @@ export const buildTigerSpecificFunctions = (
         }
     },
     scanDataSource: async (dataSourceId: string, scanRequest: ScanRequest) => {
-        return await authApiCall(async (sdk) => {
-            // TODO replace sdk.axios call with sdk.actions when API is regenerated for Tiger 1.7
-            return await sdk.axios
-                .post(`/api/v1/actions/dataSources/${dataSourceId}/scan`, scanRequest)
-                .then((res: AxiosResponse) => {
-                    return Promise.resolve(res?.data);
-                })
-                .catch((err) => {
-                    return Promise.reject(`scan error=${JSON.stringify(err.response.data)}`);
-                });
-        });
+        try {
+            return await authApiCall(async (sdk) => {
+                // TODO replace sdk.axios call with sdk.actions when API is regenerated for Tiger 1.7
+                return await sdk.axios
+                    .post(`/api/v1/actions/dataSources/${dataSourceId}/scan`, scanRequest)
+                    .then((res: AxiosResponse) => {
+                        return res?.data;
+                    });
+            });
+        } catch (error) {
+            throw convertApiError(error);
+        }
     },
     publishPdm: async (dataSourceId: string, declarativePdm: DeclarativePdm) => {
         return await authApiCall(async (sdk) => {
@@ -655,5 +664,47 @@ export const buildTigerSpecificFunctions = (
                 error: getDataSourceErrorMessage(error),
             };
         }
+    },
+    getDataSourceSchemata: async (dataSourceId: string) => {
+        return await authApiCall(async (sdk) => {
+            return await sdk.scanModel.getDataSourceSchemata({ dataSourceId }).then((res: AxiosResponse) => {
+                return res?.data;
+            });
+        });
+    },
+    getPdm: async (dataSourceId: string) => {
+        return await authApiCall(async (sdk) => {
+            return await sdk.declarativeLayout
+                .getPdmLayout({
+                    dataSourceId,
+                })
+                .then((res: AxiosResponse) => {
+                    return res?.data;
+                });
+        });
+    },
+    getAllDataSourcesIdentifiers: async () => {
+        return await authApiCall(async (sdk) => {
+            return OrganizationUtilities.getAllPagesOf(
+                sdk,
+                sdk.entities.getAllEntitiesDataSourceIdentifiers,
+                {
+                    sort: ["name"],
+                    metaInclude: ["permissions"],
+                },
+            )
+                .then(OrganizationUtilities.mergeEntitiesResults)
+                .then((res: JsonApiDataSourceIdentifierOutList) => {
+                    return res?.data;
+                });
+        });
+    },
+    publishLogicalModel: async (workspaceId: string, declarativeModel: DeclarativeModel) => {
+        return await authApiCall(async (sdk) => {
+            await sdk.declarativeLayout.setLogicalModel({
+                workspaceId,
+                declarativeModel,
+            });
+        });
     },
 });

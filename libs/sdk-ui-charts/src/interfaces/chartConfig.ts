@@ -222,6 +222,11 @@ export interface IChartConfig {
      * Enables change order of stacked items in bar chart.
      */
     enableReversedStacking?: boolean;
+
+    /*
+     * Enables showing/hiding data labels and totals independently
+     */
+    enableSeparateTotalLabels?: boolean;
     //
     //
     //
@@ -305,6 +310,7 @@ export type ChartAlignTypes = "top" | "bottom" | "middle";
  */
 export interface IDataLabelsConfig {
     visible?: IDataLabelsVisible;
+    totalsVisible?: IDataLabelsVisible;
 }
 
 /**

@@ -15,7 +15,12 @@ import cx from "classnames";
 import { styleVariables } from "./styles/variables";
 import { IDrillConfig, ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
 import { IChartConfig } from "../../../interfaces";
-import { formatAsPercent, getLabelStyle, getLabelsVisibilityConfig } from "./dataLabelsHelpers";
+import {
+    formatAsPercent,
+    getLabelStyle,
+    getLabelsVisibilityConfig,
+    getTotalsVisibility,
+} from "./dataLabelsHelpers";
 import { HOVER_BRIGHTNESS, MINIMUM_HC_SAFE_BRIGHTNESS } from "./commonConfiguration";
 import { getLighterColor } from "@gooddata/sdk-ui-vis-commons";
 import {
@@ -344,8 +349,8 @@ function formatTooltip(tooltipCallback: any, intl?: IntlShape) {
 
     return tooltipContent !== null
         ? `<div class="hc-tooltip gd-viz-tooltip" style="${tooltipStyle}">
-            <span class="stroke gd-viz-tooltip-stroke" style="${strokeStyle}"></span>
-            <div class="content gd-viz-tooltip-content" style="max-width: ${maxTooltipContentWidth}px;">
+            <span class="gd-viz-tooltip-stroke" style="${strokeStyle}"></span>
+            <div class="gd-viz-tooltip-content" style="max-width: ${maxTooltipContentWidth}px;">
                 ${tooltipContent}
                 ${interactionMessage}
             </div>
@@ -550,6 +555,7 @@ function getLabelsConfiguration(chartOptions: IChartOptions, _config: any, chart
     const { stacking, yAxes = [], type } = chartOptions;
 
     const labelsVisible = chartConfig?.dataLabels?.visible;
+    const totalsVisible = getTotalsVisibility(type, chartConfig);
 
     const labelsConfig = getLabelsVisibilityConfig(labelsVisible);
 
@@ -587,6 +593,7 @@ function getLabelsConfiguration(chartOptions: IChartOptions, _config: any, chart
             gdcOptions: {
                 dataLabels: {
                     visible: labelsVisible,
+                    totalsVisible: totalsVisible,
                 },
             },
             bar: {
@@ -661,22 +668,35 @@ function getDataPointsConfiguration(_chartOptions: IChartOptions, _config: any, 
     };
 }
 
+function getTotalLabelsConfig(chartType: string, chartConfig?: IChartConfig) {
+    if (!(isColumnChart(chartType) || isBarChart(chartType))) {
+        return {};
+    }
+
+    const totalsVisible = chartConfig?.dataLabels?.totalsVisible;
+
+    // it configures logic for previous generation charts without total labels
+    if (isBarChart(chartType) && isNil(totalsVisible)) {
+        return { enabled: false };
+    }
+
+    return getLabelsVisibilityConfig(
+        !isNil(totalsVisible) ? totalsVisible : chartConfig?.dataLabels?.visible,
+    );
+}
+
 function getStackingConfiguration(
     chartOptions: IChartOptions,
     _config: any,
     chartConfig?: IChartConfig,
 ): HighchartsOptions {
     const { stacking, yAxes = [], type } = chartOptions;
-    let labelsConfig = {};
 
-    if (isColumnChart(type)) {
-        const labelsVisible = chartConfig?.dataLabels?.visible;
-        labelsConfig = getLabelsVisibilityConfig(labelsVisible);
-    }
+    const totalLabelsConfig = getTotalLabelsConfig(type, chartConfig);
 
     const yAxis = yAxes.map(() => ({
         stackLabels: {
-            ...labelsConfig,
+            ...totalLabelsConfig,
             formatter: partial(stackLabelFormatter, chartConfig),
         },
     }));

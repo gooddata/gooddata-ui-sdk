@@ -1,12 +1,15 @@
 // (C) 2021-2022 GoodData Corporation
 export { DashboardDispatch, DashboardState, DashboardSelector, DashboardSelectorEvaluator } from "./types";
 
-export { selectDashboardLoading } from "./loading/loadingSelectors";
+export { selectDashboardLoading, selectIsDashboardLoading } from "./loading/loadingSelectors";
 export { LoadingState } from "./loading/loadingState";
 export { selectDashboardSaving, selectIsDashboardSaving } from "./saving/savingSelectors";
 export { SavingState } from "./saving/savingState";
 export { BackendCapabilitiesState } from "./backendCapabilities/backendCapabilitiesState";
-export { selectBackendCapabilities } from "./backendCapabilities/backendCapabilitiesSelectors";
+export {
+    selectBackendCapabilities,
+    selectSupportsElementsQueryParentFiltering,
+} from "./backendCapabilities/backendCapabilitiesSelectors";
 export { ConfigState } from "./config/configState";
 export {
     selectConfig,
@@ -66,11 +69,18 @@ export {
     selectFilterContextFilters,
     selectFilterContextDateFilter,
     selectFilterContextAttributeFilters,
+    selectOtherContextAttributeFilters,
     selectAttributeFilterDisplayFormsMap,
     selectAttributeFilterDisplayForms,
     selectFilterContextAttributeFilterByDisplayForm,
     selectOriginalFilterContextDefinition,
     selectOriginalFilterContextFilters,
+    selectFiltersToIndexMap,
+    selectConnectingAttributesMatrix,
+    selectAttributeFilterDescendants,
+    selectAttributeFilterDisplayFormByLocalId,
+    selectIsCircularDependency,
+    selectConnectingAttributesForFilters,
 } from "./filterContext/filterContextSelectors";
 export {
     // Core drills
@@ -152,6 +162,7 @@ export {
     selectDashboardShareInfo,
     selectPersistedDashboard,
     selectDashboardLockStatus,
+    selectIsNewDashboard,
 } from "./meta/metaSelectors";
 export {
     selectListedDashboards,

@@ -236,7 +236,38 @@ Object {
         "supportsWidgetEntity": true,
       },
       "config": Object {
-        "hostname": "test",
+        "getCommonAttributesResponses": Object {
+          "/gdc/md/referenceworkspace/obj/1054_/gdc/md/referenceworkspace/obj/1070": Array [
+            Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1057",
+            },
+          ],
+          "/gdc/md/referenceworkspace/obj/1054_/gdc/md/referenceworkspace/obj/1086": Array [
+            Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1057",
+            },
+          ],
+          "/gdc/md/referenceworkspace/obj/1054_/gdc/md/referenceworkspace/obj/1088": Array [
+            Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1057",
+            },
+          ],
+          "/gdc/md/referenceworkspace/obj/1070_/gdc/md/referenceworkspace/obj/1086": Array [
+            Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1057",
+            },
+          ],
+          "/gdc/md/referenceworkspace/obj/1070_/gdc/md/referenceworkspace/obj/1088": Array [
+            Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1057",
+            },
+          ],
+          "/gdc/md/referenceworkspace/obj/1086_/gdc/md/referenceworkspace/obj/1088": Array [
+            Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1057",
+            },
+          ],
+        },
       },
       "currentUser": [Function],
       "deauthenticate": [Function],

@@ -1570,10 +1570,10 @@ export interface JsonApiAnalyticalDashboardIn {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardInAttributes}
+     * @type {JsonApiAnalyticalDashboardOutAttributes}
      * @memberof JsonApiAnalyticalDashboardIn
      */
-    attributes?: JsonApiAnalyticalDashboardInAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
 }
 
 export const JsonApiAnalyticalDashboardInTypeEnum = {
@@ -1583,43 +1583,6 @@ export const JsonApiAnalyticalDashboardInTypeEnum = {
 export type JsonApiAnalyticalDashboardInTypeEnum =
     typeof JsonApiAnalyticalDashboardInTypeEnum[keyof typeof JsonApiAnalyticalDashboardInTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiAnalyticalDashboardInAttributes
- */
-export interface JsonApiAnalyticalDashboardInAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiAnalyticalDashboardInAttributes
-     */
-    title?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiAnalyticalDashboardInAttributes
-     */
-    description?: string;
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof JsonApiAnalyticalDashboardInAttributes
-     */
-    tags?: Array<string>;
-    /**
-     *
-     * @type {boolean}
-     * @memberof JsonApiAnalyticalDashboardInAttributes
-     */
-    areRelationsValid?: boolean;
-    /**
-     * Free-form JSON content.
-     * @type {object}
-     * @memberof JsonApiAnalyticalDashboardInAttributes
-     */
-    content?: object;
-}
 /**
  *
  * @export
@@ -1680,10 +1643,10 @@ export interface JsonApiAnalyticalDashboardOut {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardInAttributes}
+     * @type {JsonApiAnalyticalDashboardOutAttributes}
      * @memberof JsonApiAnalyticalDashboardOut
      */
-    attributes?: JsonApiAnalyticalDashboardInAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationships}
@@ -1699,6 +1662,43 @@ export const JsonApiAnalyticalDashboardOutTypeEnum = {
 export type JsonApiAnalyticalDashboardOutTypeEnum =
     typeof JsonApiAnalyticalDashboardOutTypeEnum[keyof typeof JsonApiAnalyticalDashboardOutTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiAnalyticalDashboardOutAttributes
+ */
+export interface JsonApiAnalyticalDashboardOutAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiAnalyticalDashboardOutAttributes
+     */
+    title?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiAnalyticalDashboardOutAttributes
+     */
+    description?: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof JsonApiAnalyticalDashboardOutAttributes
+     */
+    tags?: Array<string>;
+    /**
+     *
+     * @type {boolean}
+     * @memberof JsonApiAnalyticalDashboardOutAttributes
+     */
+    areRelationsValid?: boolean;
+    /**
+     * Free-form JSON content.
+     * @type {object}
+     * @memberof JsonApiAnalyticalDashboardOutAttributes
+     */
+    content?: object;
+}
 /**
  *
  * @export
@@ -1922,10 +1922,10 @@ export interface JsonApiAnalyticalDashboardOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardInAttributes}
+     * @type {JsonApiAnalyticalDashboardOutAttributes}
      * @memberof JsonApiAnalyticalDashboardOutWithLinks
      */
-    attributes?: JsonApiAnalyticalDashboardInAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationships}
@@ -1967,10 +1967,10 @@ export interface JsonApiAnalyticalDashboardPatch {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardInAttributes}
+     * @type {JsonApiAnalyticalDashboardOutAttributes}
      * @memberof JsonApiAnalyticalDashboardPatch
      */
-    attributes?: JsonApiAnalyticalDashboardInAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
 }
 
 export const JsonApiAnalyticalDashboardPatchTypeEnum = {
@@ -2485,10 +2485,10 @@ export interface JsonApiCookieSecurityConfigurationIn {
     id: string;
     /**
      *
-     * @type {JsonApiCookieSecurityConfigurationPatchAttributes}
+     * @type {JsonApiCookieSecurityConfigurationInAttributes}
      * @memberof JsonApiCookieSecurityConfigurationIn
      */
-    attributes?: JsonApiCookieSecurityConfigurationPatchAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationInAttributes;
 }
 
 export const JsonApiCookieSecurityConfigurationInTypeEnum = {
@@ -2498,6 +2498,25 @@ export const JsonApiCookieSecurityConfigurationInTypeEnum = {
 export type JsonApiCookieSecurityConfigurationInTypeEnum =
     typeof JsonApiCookieSecurityConfigurationInTypeEnum[keyof typeof JsonApiCookieSecurityConfigurationInTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiCookieSecurityConfigurationInAttributes
+ */
+export interface JsonApiCookieSecurityConfigurationInAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiCookieSecurityConfigurationInAttributes
+     */
+    lastRotation?: string;
+    /**
+     * Length of interval between automatic rotations expressed in format of ISO 8601 duration
+     * @type {string}
+     * @memberof JsonApiCookieSecurityConfigurationInAttributes
+     */
+    rotationInterval?: string;
+}
 /**
  *
  * @export
@@ -2531,10 +2550,10 @@ export interface JsonApiCookieSecurityConfigurationOut {
     id: string;
     /**
      *
-     * @type {JsonApiCookieSecurityConfigurationPatchAttributes}
+     * @type {JsonApiCookieSecurityConfigurationInAttributes}
      * @memberof JsonApiCookieSecurityConfigurationOut
      */
-    attributes?: JsonApiCookieSecurityConfigurationPatchAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationInAttributes;
 }
 
 export const JsonApiCookieSecurityConfigurationOutTypeEnum = {
@@ -2583,10 +2602,10 @@ export interface JsonApiCookieSecurityConfigurationPatch {
     id: string;
     /**
      *
-     * @type {JsonApiCookieSecurityConfigurationPatchAttributes}
+     * @type {JsonApiCookieSecurityConfigurationInAttributes}
      * @memberof JsonApiCookieSecurityConfigurationPatch
      */
-    attributes?: JsonApiCookieSecurityConfigurationPatchAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationInAttributes;
 }
 
 export const JsonApiCookieSecurityConfigurationPatchTypeEnum = {
@@ -2596,25 +2615,6 @@ export const JsonApiCookieSecurityConfigurationPatchTypeEnum = {
 export type JsonApiCookieSecurityConfigurationPatchTypeEnum =
     typeof JsonApiCookieSecurityConfigurationPatchTypeEnum[keyof typeof JsonApiCookieSecurityConfigurationPatchTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiCookieSecurityConfigurationPatchAttributes
- */
-export interface JsonApiCookieSecurityConfigurationPatchAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiCookieSecurityConfigurationPatchAttributes
-     */
-    lastRotation?: string;
-    /**
-     * Length of interval between automatic rotations expressed in format of ISO 8601 duration
-     * @type {string}
-     * @memberof JsonApiCookieSecurityConfigurationPatchAttributes
-     */
-    rotationInterval?: string;
-}
 /**
  *
  * @export
@@ -2648,10 +2648,10 @@ export interface JsonApiDashboardPluginIn {
     id: string;
     /**
      *
-     * @type {JsonApiDashboardPluginInAttributes}
+     * @type {JsonApiDashboardPluginOutAttributes}
      * @memberof JsonApiDashboardPluginIn
      */
-    attributes?: JsonApiDashboardPluginInAttributes;
+    attributes?: JsonApiDashboardPluginOutAttributes;
 }
 
 export const JsonApiDashboardPluginInTypeEnum = {
@@ -2661,43 +2661,6 @@ export const JsonApiDashboardPluginInTypeEnum = {
 export type JsonApiDashboardPluginInTypeEnum =
     typeof JsonApiDashboardPluginInTypeEnum[keyof typeof JsonApiDashboardPluginInTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiDashboardPluginInAttributes
- */
-export interface JsonApiDashboardPluginInAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiDashboardPluginInAttributes
-     */
-    title?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiDashboardPluginInAttributes
-     */
-    description?: string;
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof JsonApiDashboardPluginInAttributes
-     */
-    tags?: Array<string>;
-    /**
-     *
-     * @type {boolean}
-     * @memberof JsonApiDashboardPluginInAttributes
-     */
-    areRelationsValid?: boolean;
-    /**
-     * Free-form JSON content.
-     * @type {object}
-     * @memberof JsonApiDashboardPluginInAttributes
-     */
-    content?: object;
-}
 /**
  *
  * @export
@@ -2758,10 +2721,10 @@ export interface JsonApiDashboardPluginOut {
     id: string;
     /**
      *
-     * @type {JsonApiDashboardPluginInAttributes}
+     * @type {JsonApiDashboardPluginOutAttributes}
      * @memberof JsonApiDashboardPluginOut
      */
-    attributes?: JsonApiDashboardPluginInAttributes;
+    attributes?: JsonApiDashboardPluginOutAttributes;
 }
 
 export const JsonApiDashboardPluginOutTypeEnum = {
@@ -2771,6 +2734,43 @@ export const JsonApiDashboardPluginOutTypeEnum = {
 export type JsonApiDashboardPluginOutTypeEnum =
     typeof JsonApiDashboardPluginOutTypeEnum[keyof typeof JsonApiDashboardPluginOutTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiDashboardPluginOutAttributes
+ */
+export interface JsonApiDashboardPluginOutAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiDashboardPluginOutAttributes
+     */
+    title?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiDashboardPluginOutAttributes
+     */
+    description?: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof JsonApiDashboardPluginOutAttributes
+     */
+    tags?: Array<string>;
+    /**
+     *
+     * @type {boolean}
+     * @memberof JsonApiDashboardPluginOutAttributes
+     */
+    areRelationsValid?: boolean;
+    /**
+     * Free-form JSON content.
+     * @type {object}
+     * @memberof JsonApiDashboardPluginOutAttributes
+     */
+    content?: object;
+}
 /**
  *
  * @export
@@ -2829,10 +2829,10 @@ export interface JsonApiDashboardPluginOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiDashboardPluginInAttributes}
+     * @type {JsonApiDashboardPluginOutAttributes}
      * @memberof JsonApiDashboardPluginOutWithLinks
      */
-    attributes?: JsonApiDashboardPluginInAttributes;
+    attributes?: JsonApiDashboardPluginOutAttributes;
     /**
      *
      * @type {ObjectLinks}
@@ -2868,10 +2868,10 @@ export interface JsonApiDashboardPluginPatch {
     id: string;
     /**
      *
-     * @type {JsonApiDashboardPluginInAttributes}
+     * @type {JsonApiDashboardPluginOutAttributes}
      * @memberof JsonApiDashboardPluginPatch
      */
-    attributes?: JsonApiDashboardPluginInAttributes;
+    attributes?: JsonApiDashboardPluginOutAttributes;
 }
 
 export const JsonApiDashboardPluginPatchTypeEnum = {
@@ -2914,10 +2914,10 @@ export interface JsonApiDataSourceIdentifierOut {
     id: string;
     /**
      *
-     * @type {JsonApiDataSourceOutMeta}
+     * @type {JsonApiDataSourceIdentifierOutMeta}
      * @memberof JsonApiDataSourceIdentifierOut
      */
-    meta?: JsonApiDataSourceOutMeta;
+    meta?: JsonApiDataSourceIdentifierOutMeta;
     /**
      *
      * @type {JsonApiDataSourceIdentifierOutAttributes}
@@ -3016,6 +3016,28 @@ export interface JsonApiDataSourceIdentifierOutList {
 /**
  *
  * @export
+ * @interface JsonApiDataSourceIdentifierOutMeta
+ */
+export interface JsonApiDataSourceIdentifierOutMeta {
+    /**
+     * List of valid permissions for a logged user.
+     * @type {Array<string>}
+     * @memberof JsonApiDataSourceIdentifierOutMeta
+     */
+    permissions?: Array<JsonApiDataSourceIdentifierOutMetaPermissionsEnum>;
+}
+
+export const JsonApiDataSourceIdentifierOutMetaPermissionsEnum = {
+    MANAGE: "MANAGE",
+    USE: "USE",
+} as const;
+
+export type JsonApiDataSourceIdentifierOutMetaPermissionsEnum =
+    typeof JsonApiDataSourceIdentifierOutMetaPermissionsEnum[keyof typeof JsonApiDataSourceIdentifierOutMetaPermissionsEnum];
+
+/**
+ *
+ * @export
  * @interface JsonApiDataSourceIdentifierOutWithLinks
  */
 export interface JsonApiDataSourceIdentifierOutWithLinks {
@@ -3033,10 +3055,10 @@ export interface JsonApiDataSourceIdentifierOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiDataSourceOutMeta}
+     * @type {JsonApiDataSourceIdentifierOutMeta}
      * @memberof JsonApiDataSourceIdentifierOutWithLinks
      */
-    meta?: JsonApiDataSourceOutMeta;
+    meta?: JsonApiDataSourceIdentifierOutMeta;
     /**
      *
      * @type {JsonApiDataSourceIdentifierOutAttributes}
@@ -3202,10 +3224,10 @@ export interface JsonApiDataSourceOut {
     id: string;
     /**
      *
-     * @type {JsonApiDataSourceOutMeta}
+     * @type {JsonApiDataSourceIdentifierOutMeta}
      * @memberof JsonApiDataSourceOut
      */
-    meta?: JsonApiDataSourceOutMeta;
+    meta?: JsonApiDataSourceIdentifierOutMeta;
     /**
      *
      * @type {JsonApiDataSourceOutAttributes}
@@ -3328,28 +3350,6 @@ export interface JsonApiDataSourceOutList {
 /**
  *
  * @export
- * @interface JsonApiDataSourceOutMeta
- */
-export interface JsonApiDataSourceOutMeta {
-    /**
-     * List of valid permissions for a logged user.
-     * @type {Array<string>}
-     * @memberof JsonApiDataSourceOutMeta
-     */
-    permissions?: Array<JsonApiDataSourceOutMetaPermissionsEnum>;
-}
-
-export const JsonApiDataSourceOutMetaPermissionsEnum = {
-    MANAGE: "MANAGE",
-    USE: "USE",
-} as const;
-
-export type JsonApiDataSourceOutMetaPermissionsEnum =
-    typeof JsonApiDataSourceOutMetaPermissionsEnum[keyof typeof JsonApiDataSourceOutMetaPermissionsEnum];
-
-/**
- *
- * @export
  * @interface JsonApiDataSourceOutWithLinks
  */
 export interface JsonApiDataSourceOutWithLinks {
@@ -3367,10 +3367,10 @@ export interface JsonApiDataSourceOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiDataSourceOutMeta}
+     * @type {JsonApiDataSourceIdentifierOutMeta}
      * @memberof JsonApiDataSourceOutWithLinks
      */
-    meta?: JsonApiDataSourceOutMeta;
+    meta?: JsonApiDataSourceIdentifierOutMeta;
     /**
      *
      * @type {JsonApiDataSourceOutAttributes}
@@ -3966,22 +3966,48 @@ export interface JsonApiDatasetOutList {
 export interface JsonApiDatasetOutRelationships {
     /**
      *
-     * @type {JsonApiFilterContextOutRelationshipsAttributes}
+     * @type {JsonApiDatasetOutRelationshipsAttributes}
      * @memberof JsonApiDatasetOutRelationships
      */
-    attributes?: JsonApiFilterContextOutRelationshipsAttributes;
+    attributes?: JsonApiDatasetOutRelationshipsAttributes;
     /**
      *
-     * @type {JsonApiMetricOutRelationshipsFacts}
+     * @type {JsonApiDatasetOutRelationshipsFacts}
      * @memberof JsonApiDatasetOutRelationships
      */
-    facts?: JsonApiMetricOutRelationshipsFacts;
+    facts?: JsonApiDatasetOutRelationshipsFacts;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationshipsDatasets}
      * @memberof JsonApiDatasetOutRelationships
      */
     references?: JsonApiAnalyticalDashboardOutRelationshipsDatasets;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiDatasetOutRelationshipsAttributes
+ */
+export interface JsonApiDatasetOutRelationshipsAttributes {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     * @type {Array<JsonApiAttributeLinkage>}
+     * @memberof JsonApiDatasetOutRelationshipsAttributes
+     */
+    data: Array<JsonApiAttributeLinkage>;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiDatasetOutRelationshipsFacts
+ */
+export interface JsonApiDatasetOutRelationshipsFacts {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     * @type {Array<JsonApiFactLinkage>}
+     * @memberof JsonApiDatasetOutRelationshipsFacts
+     */
+    data: Array<JsonApiFactLinkage>;
 }
 /**
  *
@@ -4394,10 +4420,10 @@ export interface JsonApiFilterContextIn {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardInAttributes}
+     * @type {JsonApiAnalyticalDashboardOutAttributes}
      * @memberof JsonApiFilterContextIn
      */
-    attributes?: JsonApiAnalyticalDashboardInAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
 }
 
 export const JsonApiFilterContextInTypeEnum = {
@@ -4467,10 +4493,10 @@ export interface JsonApiFilterContextOut {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardInAttributes}
+     * @type {JsonApiAnalyticalDashboardOutAttributes}
      * @memberof JsonApiFilterContextOut
      */
-    attributes?: JsonApiAnalyticalDashboardInAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
     /**
      *
      * @type {JsonApiFilterContextOutRelationships}
@@ -4553,10 +4579,10 @@ export interface JsonApiFilterContextOutList {
 export interface JsonApiFilterContextOutRelationships {
     /**
      *
-     * @type {JsonApiFilterContextOutRelationshipsAttributes}
+     * @type {JsonApiDatasetOutRelationshipsAttributes}
      * @memberof JsonApiFilterContextOutRelationships
      */
-    attributes?: JsonApiFilterContextOutRelationshipsAttributes;
+    attributes?: JsonApiDatasetOutRelationshipsAttributes;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationshipsDatasets}
@@ -4569,19 +4595,6 @@ export interface JsonApiFilterContextOutRelationships {
      * @memberof JsonApiFilterContextOutRelationships
      */
     labels?: JsonApiAnalyticalDashboardOutRelationshipsLabels;
-}
-/**
- *
- * @export
- * @interface JsonApiFilterContextOutRelationshipsAttributes
- */
-export interface JsonApiFilterContextOutRelationshipsAttributes {
-    /**
-     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
-     * @type {Array<JsonApiAttributeLinkage>}
-     * @memberof JsonApiFilterContextOutRelationshipsAttributes
-     */
-    data: Array<JsonApiAttributeLinkage>;
 }
 /**
  *
@@ -4603,10 +4616,10 @@ export interface JsonApiFilterContextOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardInAttributes}
+     * @type {JsonApiAnalyticalDashboardOutAttributes}
      * @memberof JsonApiFilterContextOutWithLinks
      */
-    attributes?: JsonApiAnalyticalDashboardInAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
     /**
      *
      * @type {JsonApiFilterContextOutRelationships}
@@ -4648,10 +4661,10 @@ export interface JsonApiFilterContextPatch {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardInAttributes}
+     * @type {JsonApiAnalyticalDashboardOutAttributes}
      * @memberof JsonApiFilterContextPatch
      */
-    attributes?: JsonApiAnalyticalDashboardInAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
 }
 
 export const JsonApiFilterContextPatchTypeEnum = {
@@ -4946,10 +4959,10 @@ export interface JsonApiMetricIn {
     id: string;
     /**
      *
-     * @type {JsonApiMetricInAttributes}
+     * @type {JsonApiMetricOutAttributes}
      * @memberof JsonApiMetricIn
      */
-    attributes: JsonApiMetricInAttributes;
+    attributes: JsonApiMetricOutAttributes;
 }
 
 export const JsonApiMetricInTypeEnum = {
@@ -4958,62 +4971,6 @@ export const JsonApiMetricInTypeEnum = {
 
 export type JsonApiMetricInTypeEnum = typeof JsonApiMetricInTypeEnum[keyof typeof JsonApiMetricInTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiMetricInAttributes
- */
-export interface JsonApiMetricInAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiMetricInAttributes
-     */
-    title?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiMetricInAttributes
-     */
-    description?: string;
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof JsonApiMetricInAttributes
-     */
-    tags?: Array<string>;
-    /**
-     *
-     * @type {boolean}
-     * @memberof JsonApiMetricInAttributes
-     */
-    areRelationsValid?: boolean;
-    /**
-     *
-     * @type {JsonApiMetricInAttributesContent}
-     * @memberof JsonApiMetricInAttributes
-     */
-    content: JsonApiMetricInAttributesContent;
-}
-/**
- *
- * @export
- * @interface JsonApiMetricInAttributesContent
- */
-export interface JsonApiMetricInAttributesContent {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiMetricInAttributesContent
-     */
-    format?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiMetricInAttributesContent
-     */
-    maql: string;
-}
 /**
  *
  * @export
@@ -5074,10 +5031,10 @@ export interface JsonApiMetricOut {
     id: string;
     /**
      *
-     * @type {JsonApiMetricInAttributes}
+     * @type {JsonApiMetricOutAttributes}
      * @memberof JsonApiMetricOut
      */
-    attributes: JsonApiMetricInAttributes;
+    attributes: JsonApiMetricOutAttributes;
     /**
      *
      * @type {JsonApiMetricOutRelationships}
@@ -5092,6 +5049,62 @@ export const JsonApiMetricOutTypeEnum = {
 
 export type JsonApiMetricOutTypeEnum = typeof JsonApiMetricOutTypeEnum[keyof typeof JsonApiMetricOutTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiMetricOutAttributes
+ */
+export interface JsonApiMetricOutAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiMetricOutAttributes
+     */
+    title?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiMetricOutAttributes
+     */
+    description?: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof JsonApiMetricOutAttributes
+     */
+    tags?: Array<string>;
+    /**
+     *
+     * @type {boolean}
+     * @memberof JsonApiMetricOutAttributes
+     */
+    areRelationsValid?: boolean;
+    /**
+     *
+     * @type {JsonApiMetricOutAttributesContent}
+     * @memberof JsonApiMetricOutAttributes
+     */
+    content: JsonApiMetricOutAttributesContent;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiMetricOutAttributesContent
+ */
+export interface JsonApiMetricOutAttributesContent {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiMetricOutAttributesContent
+     */
+    format?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiMetricOutAttributesContent
+     */
+    maql: string;
+}
 /**
  *
  * @export
@@ -5161,16 +5174,16 @@ export interface JsonApiMetricOutList {
 export interface JsonApiMetricOutRelationships {
     /**
      *
-     * @type {JsonApiMetricOutRelationshipsFacts}
+     * @type {JsonApiDatasetOutRelationshipsFacts}
      * @memberof JsonApiMetricOutRelationships
      */
-    facts?: JsonApiMetricOutRelationshipsFacts;
+    facts?: JsonApiDatasetOutRelationshipsFacts;
     /**
      *
-     * @type {JsonApiFilterContextOutRelationshipsAttributes}
+     * @type {JsonApiDatasetOutRelationshipsAttributes}
      * @memberof JsonApiMetricOutRelationships
      */
-    attributes?: JsonApiFilterContextOutRelationshipsAttributes;
+    attributes?: JsonApiDatasetOutRelationshipsAttributes;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationshipsLabels}
@@ -5193,19 +5206,6 @@ export interface JsonApiMetricOutRelationships {
 /**
  *
  * @export
- * @interface JsonApiMetricOutRelationshipsFacts
- */
-export interface JsonApiMetricOutRelationshipsFacts {
-    /**
-     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
-     * @type {Array<JsonApiFactLinkage>}
-     * @memberof JsonApiMetricOutRelationshipsFacts
-     */
-    data: Array<JsonApiFactLinkage>;
-}
-/**
- *
- * @export
  * @interface JsonApiMetricOutWithLinks
  */
 export interface JsonApiMetricOutWithLinks {
@@ -5223,10 +5223,10 @@ export interface JsonApiMetricOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiMetricInAttributes}
+     * @type {JsonApiMetricOutAttributes}
      * @memberof JsonApiMetricOutWithLinks
      */
-    attributes: JsonApiMetricInAttributes;
+    attributes: JsonApiMetricOutAttributes;
     /**
      *
      * @type {JsonApiMetricOutRelationships}
@@ -5313,10 +5313,10 @@ export interface JsonApiMetricPatchAttributes {
     areRelationsValid?: boolean;
     /**
      *
-     * @type {JsonApiMetricInAttributesContent}
+     * @type {JsonApiMetricOutAttributesContent}
      * @memberof JsonApiMetricPatchAttributes
      */
-    content?: JsonApiMetricInAttributesContent;
+    content?: JsonApiMetricOutAttributesContent;
 }
 /**
  *
@@ -5351,10 +5351,10 @@ export interface JsonApiOrganizationIn {
     id: string;
     /**
      *
-     * @type {JsonApiOrganizationPatchAttributes}
+     * @type {JsonApiOrganizationInAttributes}
      * @memberof JsonApiOrganizationIn
      */
-    attributes?: JsonApiOrganizationPatchAttributes;
+    attributes?: JsonApiOrganizationInAttributes;
 }
 
 export const JsonApiOrganizationInTypeEnum = {
@@ -5364,6 +5364,61 @@ export const JsonApiOrganizationInTypeEnum = {
 export type JsonApiOrganizationInTypeEnum =
     typeof JsonApiOrganizationInTypeEnum[keyof typeof JsonApiOrganizationInTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiOrganizationInAttributes
+ */
+export interface JsonApiOrganizationInAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiOrganizationInAttributes
+     */
+    name?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiOrganizationInAttributes
+     */
+    hostname?: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof JsonApiOrganizationInAttributes
+     */
+    allowedOrigins?: Array<string>;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiOrganizationInAttributes
+     */
+    oauthIssuerLocation?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiOrganizationInAttributes
+     */
+    oauthClientId?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiOrganizationInAttributes
+     */
+    oauthClientSecret?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiOrganizationInAttributes
+     */
+    earlyAccess?: string;
+    /**
+     * Any string identifying the OIDC provider. This value is used as suffix for OAuth2 callback (redirect) URL. If not defined, the standard callback URL is used. This value is valid only for external OIDC providers, not for the internal DEX provider.
+     * @type {string}
+     * @memberof JsonApiOrganizationInAttributes
+     */
+    oauthIssuerId?: string;
+}
 /**
  *
  * @export
@@ -5588,10 +5643,10 @@ export interface JsonApiOrganizationPatch {
     id: string;
     /**
      *
-     * @type {JsonApiOrganizationPatchAttributes}
+     * @type {JsonApiOrganizationInAttributes}
      * @memberof JsonApiOrganizationPatch
      */
-    attributes?: JsonApiOrganizationPatchAttributes;
+    attributes?: JsonApiOrganizationInAttributes;
 }
 
 export const JsonApiOrganizationPatchTypeEnum = {
@@ -5601,61 +5656,6 @@ export const JsonApiOrganizationPatchTypeEnum = {
 export type JsonApiOrganizationPatchTypeEnum =
     typeof JsonApiOrganizationPatchTypeEnum[keyof typeof JsonApiOrganizationPatchTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiOrganizationPatchAttributes
- */
-export interface JsonApiOrganizationPatchAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiOrganizationPatchAttributes
-     */
-    name?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiOrganizationPatchAttributes
-     */
-    hostname?: string;
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof JsonApiOrganizationPatchAttributes
-     */
-    allowedOrigins?: Array<string>;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiOrganizationPatchAttributes
-     */
-    oauthIssuerLocation?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiOrganizationPatchAttributes
-     */
-    oauthClientId?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiOrganizationPatchAttributes
-     */
-    oauthClientSecret?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiOrganizationPatchAttributes
-     */
-    earlyAccess?: string;
-    /**
-     * Any string identifying the OIDC provider. This value is used as suffix for OAuth2 callback (redirect) URL. If not defined, the standard callback URL is used. This value is valid only for external OIDC providers, not for the internal DEX provider.
-     * @type {string}
-     * @memberof JsonApiOrganizationPatchAttributes
-     */
-    oauthIssuerId?: string;
-}
 /**
  *
  * @export
@@ -5689,10 +5689,10 @@ export interface JsonApiOrganizationSettingIn {
     id: string;
     /**
      *
-     * @type {JsonApiOrganizationSettingPatchAttributes}
+     * @type {JsonApiOrganizationSettingOutAttributes}
      * @memberof JsonApiOrganizationSettingIn
      */
-    attributes?: JsonApiOrganizationSettingPatchAttributes;
+    attributes?: JsonApiOrganizationSettingOutAttributes;
 }
 
 export const JsonApiOrganizationSettingInTypeEnum = {
@@ -5735,10 +5735,10 @@ export interface JsonApiOrganizationSettingOut {
     id: string;
     /**
      *
-     * @type {JsonApiOrganizationSettingPatchAttributes}
+     * @type {JsonApiOrganizationSettingOutAttributes}
      * @memberof JsonApiOrganizationSettingOut
      */
-    attributes?: JsonApiOrganizationSettingPatchAttributes;
+    attributes?: JsonApiOrganizationSettingOutAttributes;
 }
 
 export const JsonApiOrganizationSettingOutTypeEnum = {
@@ -5748,6 +5748,19 @@ export const JsonApiOrganizationSettingOutTypeEnum = {
 export type JsonApiOrganizationSettingOutTypeEnum =
     typeof JsonApiOrganizationSettingOutTypeEnum[keyof typeof JsonApiOrganizationSettingOutTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiOrganizationSettingOutAttributes
+ */
+export interface JsonApiOrganizationSettingOutAttributes {
+    /**
+     *
+     * @type {object}
+     * @memberof JsonApiOrganizationSettingOutAttributes
+     */
+    value?: object;
+}
 /**
  *
  * @export
@@ -5806,10 +5819,10 @@ export interface JsonApiOrganizationSettingOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiOrganizationSettingPatchAttributes}
+     * @type {JsonApiOrganizationSettingOutAttributes}
      * @memberof JsonApiOrganizationSettingOutWithLinks
      */
-    attributes?: JsonApiOrganizationSettingPatchAttributes;
+    attributes?: JsonApiOrganizationSettingOutAttributes;
     /**
      *
      * @type {ObjectLinks}
@@ -5845,10 +5858,10 @@ export interface JsonApiOrganizationSettingPatch {
     id: string;
     /**
      *
-     * @type {JsonApiOrganizationSettingPatchAttributes}
+     * @type {JsonApiOrganizationSettingOutAttributes}
      * @memberof JsonApiOrganizationSettingPatch
      */
-    attributes?: JsonApiOrganizationSettingPatchAttributes;
+    attributes?: JsonApiOrganizationSettingOutAttributes;
 }
 
 export const JsonApiOrganizationSettingPatchTypeEnum = {
@@ -5858,19 +5871,6 @@ export const JsonApiOrganizationSettingPatchTypeEnum = {
 export type JsonApiOrganizationSettingPatchTypeEnum =
     typeof JsonApiOrganizationSettingPatchTypeEnum[keyof typeof JsonApiOrganizationSettingPatchTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiOrganizationSettingPatchAttributes
- */
-export interface JsonApiOrganizationSettingPatchAttributes {
-    /**
-     *
-     * @type {object}
-     * @memberof JsonApiOrganizationSettingPatchAttributes
-     */
-    value?: object;
-}
 /**
  *
  * @export
@@ -5904,10 +5904,10 @@ export interface JsonApiUserGroupIn {
     id: string;
     /**
      *
-     * @type {JsonApiUserGroupPatchRelationships}
+     * @type {JsonApiUserGroupOutRelationships}
      * @memberof JsonApiUserGroupIn
      */
-    relationships?: JsonApiUserGroupPatchRelationships;
+    relationships?: JsonApiUserGroupOutRelationships;
 }
 
 export const JsonApiUserGroupInTypeEnum = {
@@ -5977,10 +5977,10 @@ export interface JsonApiUserGroupOut {
     id: string;
     /**
      *
-     * @type {JsonApiUserGroupPatchRelationships}
+     * @type {JsonApiUserGroupOutRelationships}
      * @memberof JsonApiUserGroupOut
      */
-    relationships?: JsonApiUserGroupPatchRelationships;
+    relationships?: JsonApiUserGroupOutRelationships;
 }
 
 export const JsonApiUserGroupOutTypeEnum = {
@@ -6043,6 +6043,32 @@ export interface JsonApiUserGroupOutList {
 /**
  *
  * @export
+ * @interface JsonApiUserGroupOutRelationships
+ */
+export interface JsonApiUserGroupOutRelationships {
+    /**
+     *
+     * @type {JsonApiUserGroupOutRelationshipsParents}
+     * @memberof JsonApiUserGroupOutRelationships
+     */
+    parents?: JsonApiUserGroupOutRelationshipsParents;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiUserGroupOutRelationshipsParents
+ */
+export interface JsonApiUserGroupOutRelationshipsParents {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     * @type {Array<JsonApiUserGroupLinkage>}
+     * @memberof JsonApiUserGroupOutRelationshipsParents
+     */
+    data: Array<JsonApiUserGroupLinkage>;
+}
+/**
+ *
+ * @export
  * @interface JsonApiUserGroupOutWithLinks
  */
 export interface JsonApiUserGroupOutWithLinks {
@@ -6060,10 +6086,10 @@ export interface JsonApiUserGroupOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiUserGroupPatchRelationships}
+     * @type {JsonApiUserGroupOutRelationships}
      * @memberof JsonApiUserGroupOutWithLinks
      */
-    relationships?: JsonApiUserGroupPatchRelationships;
+    relationships?: JsonApiUserGroupOutRelationships;
     /**
      *
      * @type {ObjectLinks}
@@ -6099,10 +6125,10 @@ export interface JsonApiUserGroupPatch {
     id: string;
     /**
      *
-     * @type {JsonApiUserGroupPatchRelationships}
+     * @type {JsonApiUserGroupOutRelationships}
      * @memberof JsonApiUserGroupPatch
      */
-    relationships?: JsonApiUserGroupPatchRelationships;
+    relationships?: JsonApiUserGroupOutRelationships;
 }
 
 export const JsonApiUserGroupPatchTypeEnum = {
@@ -6124,32 +6150,6 @@ export interface JsonApiUserGroupPatchDocument {
      * @memberof JsonApiUserGroupPatchDocument
      */
     data: JsonApiUserGroupPatch;
-}
-/**
- *
- * @export
- * @interface JsonApiUserGroupPatchRelationships
- */
-export interface JsonApiUserGroupPatchRelationships {
-    /**
-     *
-     * @type {JsonApiUserGroupPatchRelationshipsParents}
-     * @memberof JsonApiUserGroupPatchRelationships
-     */
-    parents?: JsonApiUserGroupPatchRelationshipsParents;
-}
-/**
- *
- * @export
- * @interface JsonApiUserGroupPatchRelationshipsParents
- */
-export interface JsonApiUserGroupPatchRelationshipsParents {
-    /**
-     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
-     * @type {Array<JsonApiUserGroupLinkage>}
-     * @memberof JsonApiUserGroupPatchRelationshipsParents
-     */
-    data: Array<JsonApiUserGroupLinkage>;
 }
 /**
  * @type JsonApiUserGroupToOneLinkage
@@ -6178,16 +6178,16 @@ export interface JsonApiUserIn {
     id: string;
     /**
      *
-     * @type {JsonApiUserPatchAttributes}
+     * @type {JsonApiUserOutAttributes}
      * @memberof JsonApiUserIn
      */
-    attributes?: JsonApiUserPatchAttributes;
+    attributes?: JsonApiUserOutAttributes;
     /**
      *
-     * @type {JsonApiUserPatchRelationships}
+     * @type {JsonApiUserOutRelationships}
      * @memberof JsonApiUserIn
      */
-    relationships?: JsonApiUserPatchRelationships;
+    relationships?: JsonApiUserOutRelationships;
 }
 
 export const JsonApiUserInTypeEnum = {
@@ -6256,16 +6256,16 @@ export interface JsonApiUserOut {
     id: string;
     /**
      *
-     * @type {JsonApiUserPatchAttributes}
+     * @type {JsonApiUserOutAttributes}
      * @memberof JsonApiUserOut
      */
-    attributes?: JsonApiUserPatchAttributes;
+    attributes?: JsonApiUserOutAttributes;
     /**
      *
-     * @type {JsonApiUserPatchRelationships}
+     * @type {JsonApiUserOutRelationships}
      * @memberof JsonApiUserOut
      */
-    relationships?: JsonApiUserPatchRelationships;
+    relationships?: JsonApiUserOutRelationships;
 }
 
 export const JsonApiUserOutTypeEnum = {
@@ -6274,6 +6274,19 @@ export const JsonApiUserOutTypeEnum = {
 
 export type JsonApiUserOutTypeEnum = typeof JsonApiUserOutTypeEnum[keyof typeof JsonApiUserOutTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiUserOutAttributes
+ */
+export interface JsonApiUserOutAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiUserOutAttributes
+     */
+    authenticationId?: string;
+}
 /**
  *
  * @export
@@ -6327,6 +6340,19 @@ export interface JsonApiUserOutList {
 /**
  *
  * @export
+ * @interface JsonApiUserOutRelationships
+ */
+export interface JsonApiUserOutRelationships {
+    /**
+     *
+     * @type {JsonApiUserGroupOutRelationshipsParents}
+     * @memberof JsonApiUserOutRelationships
+     */
+    userGroups?: JsonApiUserGroupOutRelationshipsParents;
+}
+/**
+ *
+ * @export
  * @interface JsonApiUserOutWithLinks
  */
 export interface JsonApiUserOutWithLinks {
@@ -6344,16 +6370,16 @@ export interface JsonApiUserOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiUserPatchAttributes}
+     * @type {JsonApiUserOutAttributes}
      * @memberof JsonApiUserOutWithLinks
      */
-    attributes?: JsonApiUserPatchAttributes;
+    attributes?: JsonApiUserOutAttributes;
     /**
      *
-     * @type {JsonApiUserPatchRelationships}
+     * @type {JsonApiUserOutRelationships}
      * @memberof JsonApiUserOutWithLinks
      */
-    relationships?: JsonApiUserPatchRelationships;
+    relationships?: JsonApiUserOutRelationships;
     /**
      *
      * @type {ObjectLinks}
@@ -6389,16 +6415,16 @@ export interface JsonApiUserPatch {
     id: string;
     /**
      *
-     * @type {JsonApiUserPatchAttributes}
+     * @type {JsonApiUserOutAttributes}
      * @memberof JsonApiUserPatch
      */
-    attributes?: JsonApiUserPatchAttributes;
+    attributes?: JsonApiUserOutAttributes;
     /**
      *
-     * @type {JsonApiUserPatchRelationships}
+     * @type {JsonApiUserOutRelationships}
      * @memberof JsonApiUserPatch
      */
-    relationships?: JsonApiUserPatchRelationships;
+    relationships?: JsonApiUserOutRelationships;
 }
 
 export const JsonApiUserPatchTypeEnum = {
@@ -6407,19 +6433,6 @@ export const JsonApiUserPatchTypeEnum = {
 
 export type JsonApiUserPatchTypeEnum = typeof JsonApiUserPatchTypeEnum[keyof typeof JsonApiUserPatchTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiUserPatchAttributes
- */
-export interface JsonApiUserPatchAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiUserPatchAttributes
-     */
-    authenticationId?: string;
-}
 /**
  *
  * @export
@@ -6432,19 +6445,6 @@ export interface JsonApiUserPatchDocument {
      * @memberof JsonApiUserPatchDocument
      */
     data: JsonApiUserPatch;
-}
-/**
- *
- * @export
- * @interface JsonApiUserPatchRelationships
- */
-export interface JsonApiUserPatchRelationships {
-    /**
-     *
-     * @type {JsonApiUserGroupPatchRelationshipsParents}
-     * @memberof JsonApiUserPatchRelationships
-     */
-    userGroups?: JsonApiUserGroupPatchRelationshipsParents;
 }
 /**
  * @type JsonApiUserToOneLinkage
@@ -6473,10 +6473,10 @@ export interface JsonApiVisualizationObjectIn {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardInAttributes}
+     * @type {JsonApiAnalyticalDashboardOutAttributes}
      * @memberof JsonApiVisualizationObjectIn
      */
-    attributes?: JsonApiAnalyticalDashboardInAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
 }
 
 export const JsonApiVisualizationObjectInTypeEnum = {
@@ -6546,10 +6546,10 @@ export interface JsonApiVisualizationObjectOut {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardInAttributes}
+     * @type {JsonApiAnalyticalDashboardOutAttributes}
      * @memberof JsonApiVisualizationObjectOut
      */
-    attributes?: JsonApiAnalyticalDashboardInAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
     /**
      *
      * @type {JsonApiMetricOutRelationships}
@@ -6635,10 +6635,10 @@ export interface JsonApiVisualizationObjectOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardInAttributes}
+     * @type {JsonApiAnalyticalDashboardOutAttributes}
      * @memberof JsonApiVisualizationObjectOutWithLinks
      */
-    attributes?: JsonApiAnalyticalDashboardInAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
     /**
      *
      * @type {JsonApiMetricOutRelationships}
@@ -6680,10 +6680,10 @@ export interface JsonApiVisualizationObjectPatch {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardInAttributes}
+     * @type {JsonApiAnalyticalDashboardOutAttributes}
      * @memberof JsonApiVisualizationObjectPatch
      */
-    attributes?: JsonApiAnalyticalDashboardInAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
 }
 
 export const JsonApiVisualizationObjectPatchTypeEnum = {
@@ -6726,16 +6726,16 @@ export interface JsonApiWorkspaceDataFilterIn {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterInAttributes}
+     * @type {JsonApiWorkspaceDataFilterOutAttributes}
      * @memberof JsonApiWorkspaceDataFilterIn
      */
-    attributes?: JsonApiWorkspaceDataFilterInAttributes;
+    attributes?: JsonApiWorkspaceDataFilterOutAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterInRelationships}
+     * @type {JsonApiWorkspaceDataFilterOutRelationships}
      * @memberof JsonApiWorkspaceDataFilterIn
      */
-    relationships?: JsonApiWorkspaceDataFilterInRelationships;
+    relationships?: JsonApiWorkspaceDataFilterOutRelationships;
 }
 
 export const JsonApiWorkspaceDataFilterInTypeEnum = {
@@ -6748,31 +6748,6 @@ export type JsonApiWorkspaceDataFilterInTypeEnum =
 /**
  *
  * @export
- * @interface JsonApiWorkspaceDataFilterInAttributes
- */
-export interface JsonApiWorkspaceDataFilterInAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspaceDataFilterInAttributes
-     */
-    title?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspaceDataFilterInAttributes
-     */
-    description?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspaceDataFilterInAttributes
-     */
-    columnName?: string;
-}
-/**
- *
- * @export
  * @interface JsonApiWorkspaceDataFilterInDocument
  */
 export interface JsonApiWorkspaceDataFilterInDocument {
@@ -6782,32 +6757,6 @@ export interface JsonApiWorkspaceDataFilterInDocument {
      * @memberof JsonApiWorkspaceDataFilterInDocument
      */
     data: JsonApiWorkspaceDataFilterIn;
-}
-/**
- *
- * @export
- * @interface JsonApiWorkspaceDataFilterInRelationships
- */
-export interface JsonApiWorkspaceDataFilterInRelationships {
-    /**
-     *
-     * @type {JsonApiWorkspaceDataFilterInRelationshipsFilterSettings}
-     * @memberof JsonApiWorkspaceDataFilterInRelationships
-     */
-    filterSettings?: JsonApiWorkspaceDataFilterInRelationshipsFilterSettings;
-}
-/**
- *
- * @export
- * @interface JsonApiWorkspaceDataFilterInRelationshipsFilterSettings
- */
-export interface JsonApiWorkspaceDataFilterInRelationshipsFilterSettings {
-    /**
-     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
-     * @type {Array<JsonApiWorkspaceDataFilterSettingLinkage>}
-     * @memberof JsonApiWorkspaceDataFilterInRelationshipsFilterSettings
-     */
-    data: Array<JsonApiWorkspaceDataFilterSettingLinkage>;
 }
 /**
  * The \\\"type\\\" and \\\"id\\\" to non-empty members.
@@ -6856,16 +6805,16 @@ export interface JsonApiWorkspaceDataFilterOut {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterInAttributes}
+     * @type {JsonApiWorkspaceDataFilterOutAttributes}
      * @memberof JsonApiWorkspaceDataFilterOut
      */
-    attributes?: JsonApiWorkspaceDataFilterInAttributes;
+    attributes?: JsonApiWorkspaceDataFilterOutAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterInRelationships}
+     * @type {JsonApiWorkspaceDataFilterOutRelationships}
      * @memberof JsonApiWorkspaceDataFilterOut
      */
-    relationships?: JsonApiWorkspaceDataFilterInRelationships;
+    relationships?: JsonApiWorkspaceDataFilterOutRelationships;
 }
 
 export const JsonApiWorkspaceDataFilterOutTypeEnum = {
@@ -6875,6 +6824,31 @@ export const JsonApiWorkspaceDataFilterOutTypeEnum = {
 export type JsonApiWorkspaceDataFilterOutTypeEnum =
     typeof JsonApiWorkspaceDataFilterOutTypeEnum[keyof typeof JsonApiWorkspaceDataFilterOutTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiWorkspaceDataFilterOutAttributes
+ */
+export interface JsonApiWorkspaceDataFilterOutAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspaceDataFilterOutAttributes
+     */
+    title?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspaceDataFilterOutAttributes
+     */
+    description?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspaceDataFilterOutAttributes
+     */
+    columnName?: string;
+}
 /**
  *
  * @export
@@ -6928,6 +6902,32 @@ export interface JsonApiWorkspaceDataFilterOutList {
 /**
  *
  * @export
+ * @interface JsonApiWorkspaceDataFilterOutRelationships
+ */
+export interface JsonApiWorkspaceDataFilterOutRelationships {
+    /**
+     *
+     * @type {JsonApiWorkspaceDataFilterOutRelationshipsFilterSettings}
+     * @memberof JsonApiWorkspaceDataFilterOutRelationships
+     */
+    filterSettings?: JsonApiWorkspaceDataFilterOutRelationshipsFilterSettings;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiWorkspaceDataFilterOutRelationshipsFilterSettings
+ */
+export interface JsonApiWorkspaceDataFilterOutRelationshipsFilterSettings {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     * @type {Array<JsonApiWorkspaceDataFilterSettingLinkage>}
+     * @memberof JsonApiWorkspaceDataFilterOutRelationshipsFilterSettings
+     */
+    data: Array<JsonApiWorkspaceDataFilterSettingLinkage>;
+}
+/**
+ *
+ * @export
  * @interface JsonApiWorkspaceDataFilterOutWithLinks
  */
 export interface JsonApiWorkspaceDataFilterOutWithLinks {
@@ -6945,16 +6945,16 @@ export interface JsonApiWorkspaceDataFilterOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterInAttributes}
+     * @type {JsonApiWorkspaceDataFilterOutAttributes}
      * @memberof JsonApiWorkspaceDataFilterOutWithLinks
      */
-    attributes?: JsonApiWorkspaceDataFilterInAttributes;
+    attributes?: JsonApiWorkspaceDataFilterOutAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterInRelationships}
+     * @type {JsonApiWorkspaceDataFilterOutRelationships}
      * @memberof JsonApiWorkspaceDataFilterOutWithLinks
      */
-    relationships?: JsonApiWorkspaceDataFilterInRelationships;
+    relationships?: JsonApiWorkspaceDataFilterOutRelationships;
     /**
      *
      * @type {ObjectLinks}
@@ -6990,16 +6990,16 @@ export interface JsonApiWorkspaceDataFilterPatch {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterInAttributes}
+     * @type {JsonApiWorkspaceDataFilterOutAttributes}
      * @memberof JsonApiWorkspaceDataFilterPatch
      */
-    attributes?: JsonApiWorkspaceDataFilterInAttributes;
+    attributes?: JsonApiWorkspaceDataFilterOutAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterInRelationships}
+     * @type {JsonApiWorkspaceDataFilterOutRelationships}
      * @memberof JsonApiWorkspaceDataFilterPatch
      */
-    relationships?: JsonApiWorkspaceDataFilterInRelationships;
+    relationships?: JsonApiWorkspaceDataFilterOutRelationships;
 }
 
 export const JsonApiWorkspaceDataFilterPatchTypeEnum = {
@@ -7261,16 +7261,16 @@ export interface JsonApiWorkspaceIn {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspacePatchAttributes}
+     * @type {JsonApiWorkspaceOutAttributes}
      * @memberof JsonApiWorkspaceIn
      */
-    attributes?: JsonApiWorkspacePatchAttributes;
+    attributes?: JsonApiWorkspaceOutAttributes;
     /**
      *
-     * @type {JsonApiWorkspacePatchRelationships}
+     * @type {JsonApiWorkspaceOutRelationships}
      * @memberof JsonApiWorkspaceIn
      */
-    relationships?: JsonApiWorkspacePatchRelationships;
+    relationships?: JsonApiWorkspaceOutRelationships;
 }
 
 export const JsonApiWorkspaceInTypeEnum = {
@@ -7346,16 +7346,16 @@ export interface JsonApiWorkspaceOut {
     meta?: JsonApiWorkspaceOutMeta;
     /**
      *
-     * @type {JsonApiWorkspacePatchAttributes}
+     * @type {JsonApiWorkspaceOutAttributes}
      * @memberof JsonApiWorkspaceOut
      */
-    attributes?: JsonApiWorkspacePatchAttributes;
+    attributes?: JsonApiWorkspaceOutAttributes;
     /**
      *
-     * @type {JsonApiWorkspacePatchRelationships}
+     * @type {JsonApiWorkspaceOutRelationships}
      * @memberof JsonApiWorkspaceOut
      */
-    relationships?: JsonApiWorkspacePatchRelationships;
+    relationships?: JsonApiWorkspaceOutRelationships;
 }
 
 export const JsonApiWorkspaceOutTypeEnum = {
@@ -7365,6 +7365,25 @@ export const JsonApiWorkspaceOutTypeEnum = {
 export type JsonApiWorkspaceOutTypeEnum =
     typeof JsonApiWorkspaceOutTypeEnum[keyof typeof JsonApiWorkspaceOutTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiWorkspaceOutAttributes
+ */
+export interface JsonApiWorkspaceOutAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspaceOutAttributes
+     */
+    name?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspaceOutAttributes
+     */
+    earlyAccess?: string;
+}
 /**
  *
  * @export
@@ -7466,6 +7485,32 @@ export interface JsonApiWorkspaceOutMetaConfig {
 /**
  *
  * @export
+ * @interface JsonApiWorkspaceOutRelationships
+ */
+export interface JsonApiWorkspaceOutRelationships {
+    /**
+     *
+     * @type {JsonApiWorkspaceOutRelationshipsParent}
+     * @memberof JsonApiWorkspaceOutRelationships
+     */
+    parent?: JsonApiWorkspaceOutRelationshipsParent;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiWorkspaceOutRelationshipsParent
+ */
+export interface JsonApiWorkspaceOutRelationshipsParent {
+    /**
+     *
+     * @type {JsonApiWorkspaceToOneLinkage}
+     * @memberof JsonApiWorkspaceOutRelationshipsParent
+     */
+    data: JsonApiWorkspaceToOneLinkage | null;
+}
+/**
+ *
+ * @export
  * @interface JsonApiWorkspaceOutWithLinks
  */
 export interface JsonApiWorkspaceOutWithLinks {
@@ -7489,16 +7534,16 @@ export interface JsonApiWorkspaceOutWithLinks {
     meta?: JsonApiWorkspaceOutMeta;
     /**
      *
-     * @type {JsonApiWorkspacePatchAttributes}
+     * @type {JsonApiWorkspaceOutAttributes}
      * @memberof JsonApiWorkspaceOutWithLinks
      */
-    attributes?: JsonApiWorkspacePatchAttributes;
+    attributes?: JsonApiWorkspaceOutAttributes;
     /**
      *
-     * @type {JsonApiWorkspacePatchRelationships}
+     * @type {JsonApiWorkspaceOutRelationships}
      * @memberof JsonApiWorkspaceOutWithLinks
      */
-    relationships?: JsonApiWorkspacePatchRelationships;
+    relationships?: JsonApiWorkspaceOutRelationships;
     /**
      *
      * @type {ObjectLinks}
@@ -7534,16 +7579,16 @@ export interface JsonApiWorkspacePatch {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspacePatchAttributes}
+     * @type {JsonApiWorkspaceOutAttributes}
      * @memberof JsonApiWorkspacePatch
      */
-    attributes?: JsonApiWorkspacePatchAttributes;
+    attributes?: JsonApiWorkspaceOutAttributes;
     /**
      *
-     * @type {JsonApiWorkspacePatchRelationships}
+     * @type {JsonApiWorkspaceOutRelationships}
      * @memberof JsonApiWorkspacePatch
      */
-    relationships?: JsonApiWorkspacePatchRelationships;
+    relationships?: JsonApiWorkspaceOutRelationships;
 }
 
 export const JsonApiWorkspacePatchTypeEnum = {
@@ -7553,25 +7598,6 @@ export const JsonApiWorkspacePatchTypeEnum = {
 export type JsonApiWorkspacePatchTypeEnum =
     typeof JsonApiWorkspacePatchTypeEnum[keyof typeof JsonApiWorkspacePatchTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiWorkspacePatchAttributes
- */
-export interface JsonApiWorkspacePatchAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspacePatchAttributes
-     */
-    name?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspacePatchAttributes
-     */
-    earlyAccess?: string;
-}
 /**
  *
  * @export
@@ -7586,30 +7612,206 @@ export interface JsonApiWorkspacePatchDocument {
     data: JsonApiWorkspacePatch;
 }
 /**
- *
+ * JSON:API representation of workspaceSetting entity.
  * @export
- * @interface JsonApiWorkspacePatchRelationships
+ * @interface JsonApiWorkspaceSettingIn
  */
-export interface JsonApiWorkspacePatchRelationships {
+export interface JsonApiWorkspaceSettingIn {
+    /**
+     * Object type
+     * @type {string}
+     * @memberof JsonApiWorkspaceSettingIn
+     */
+    type: JsonApiWorkspaceSettingInTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiWorkspaceSettingIn
+     */
+    id: string;
     /**
      *
-     * @type {JsonApiWorkspacePatchRelationshipsParent}
-     * @memberof JsonApiWorkspacePatchRelationships
+     * @type {JsonApiOrganizationSettingOutAttributes}
+     * @memberof JsonApiWorkspaceSettingIn
      */
-    parent?: JsonApiWorkspacePatchRelationshipsParent;
+    attributes?: JsonApiOrganizationSettingOutAttributes;
+}
+
+export const JsonApiWorkspaceSettingInTypeEnum = {
+    WORKSPACE_SETTING: "workspaceSetting",
+} as const;
+
+export type JsonApiWorkspaceSettingInTypeEnum =
+    typeof JsonApiWorkspaceSettingInTypeEnum[keyof typeof JsonApiWorkspaceSettingInTypeEnum];
+
+/**
+ *
+ * @export
+ * @interface JsonApiWorkspaceSettingInDocument
+ */
+export interface JsonApiWorkspaceSettingInDocument {
+    /**
+     *
+     * @type {JsonApiWorkspaceSettingIn}
+     * @memberof JsonApiWorkspaceSettingInDocument
+     */
+    data: JsonApiWorkspaceSettingIn;
+}
+/**
+ * JSON:API representation of workspaceSetting entity.
+ * @export
+ * @interface JsonApiWorkspaceSettingOut
+ */
+export interface JsonApiWorkspaceSettingOut {
+    /**
+     * Object type
+     * @type {string}
+     * @memberof JsonApiWorkspaceSettingOut
+     */
+    type: JsonApiWorkspaceSettingOutTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiWorkspaceSettingOut
+     */
+    id: string;
+    /**
+     *
+     * @type {JsonApiOrganizationSettingOutAttributes}
+     * @memberof JsonApiWorkspaceSettingOut
+     */
+    attributes?: JsonApiOrganizationSettingOutAttributes;
+}
+
+export const JsonApiWorkspaceSettingOutTypeEnum = {
+    WORKSPACE_SETTING: "workspaceSetting",
+} as const;
+
+export type JsonApiWorkspaceSettingOutTypeEnum =
+    typeof JsonApiWorkspaceSettingOutTypeEnum[keyof typeof JsonApiWorkspaceSettingOutTypeEnum];
+
+/**
+ *
+ * @export
+ * @interface JsonApiWorkspaceSettingOutDocument
+ */
+export interface JsonApiWorkspaceSettingOutDocument {
+    /**
+     *
+     * @type {JsonApiWorkspaceSettingOut}
+     * @memberof JsonApiWorkspaceSettingOutDocument
+     */
+    data: JsonApiWorkspaceSettingOut;
+    /**
+     *
+     * @type {ObjectLinks}
+     * @memberof JsonApiWorkspaceSettingOutDocument
+     */
+    links?: ObjectLinks;
+}
+/**
+ * A JSON:API document with a list of resources
+ * @export
+ * @interface JsonApiWorkspaceSettingOutList
+ */
+export interface JsonApiWorkspaceSettingOutList {
+    /**
+     *
+     * @type {Array<JsonApiWorkspaceSettingOutWithLinks>}
+     * @memberof JsonApiWorkspaceSettingOutList
+     */
+    data: Array<JsonApiWorkspaceSettingOutWithLinks>;
+    /**
+     *
+     * @type {ListLinks}
+     * @memberof JsonApiWorkspaceSettingOutList
+     */
+    links?: ListLinks;
 }
 /**
  *
  * @export
- * @interface JsonApiWorkspacePatchRelationshipsParent
+ * @interface JsonApiWorkspaceSettingOutWithLinks
  */
-export interface JsonApiWorkspacePatchRelationshipsParent {
+export interface JsonApiWorkspaceSettingOutWithLinks {
+    /**
+     * Object type
+     * @type {string}
+     * @memberof JsonApiWorkspaceSettingOutWithLinks
+     */
+    type: JsonApiWorkspaceSettingOutWithLinksTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiWorkspaceSettingOutWithLinks
+     */
+    id: string;
     /**
      *
-     * @type {JsonApiWorkspaceToOneLinkage}
-     * @memberof JsonApiWorkspacePatchRelationshipsParent
+     * @type {JsonApiOrganizationSettingOutAttributes}
+     * @memberof JsonApiWorkspaceSettingOutWithLinks
      */
-    data: JsonApiWorkspaceToOneLinkage | null;
+    attributes?: JsonApiOrganizationSettingOutAttributes;
+    /**
+     *
+     * @type {ObjectLinks}
+     * @memberof JsonApiWorkspaceSettingOutWithLinks
+     */
+    links?: ObjectLinks;
+}
+
+export const JsonApiWorkspaceSettingOutWithLinksTypeEnum = {
+    WORKSPACE_SETTING: "workspaceSetting",
+} as const;
+
+export type JsonApiWorkspaceSettingOutWithLinksTypeEnum =
+    typeof JsonApiWorkspaceSettingOutWithLinksTypeEnum[keyof typeof JsonApiWorkspaceSettingOutWithLinksTypeEnum];
+
+/**
+ * JSON:API representation of patching workspaceSetting entity.
+ * @export
+ * @interface JsonApiWorkspaceSettingPatch
+ */
+export interface JsonApiWorkspaceSettingPatch {
+    /**
+     * Object type
+     * @type {string}
+     * @memberof JsonApiWorkspaceSettingPatch
+     */
+    type: JsonApiWorkspaceSettingPatchTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiWorkspaceSettingPatch
+     */
+    id: string;
+    /**
+     *
+     * @type {JsonApiOrganizationSettingOutAttributes}
+     * @memberof JsonApiWorkspaceSettingPatch
+     */
+    attributes?: JsonApiOrganizationSettingOutAttributes;
+}
+
+export const JsonApiWorkspaceSettingPatchTypeEnum = {
+    WORKSPACE_SETTING: "workspaceSetting",
+} as const;
+
+export type JsonApiWorkspaceSettingPatchTypeEnum =
+    typeof JsonApiWorkspaceSettingPatchTypeEnum[keyof typeof JsonApiWorkspaceSettingPatchTypeEnum];
+
+/**
+ *
+ * @export
+ * @interface JsonApiWorkspaceSettingPatchDocument
+ */
+export interface JsonApiWorkspaceSettingPatchDocument {
+    /**
+     *
+     * @type {JsonApiWorkspaceSettingPatch}
+     * @memberof JsonApiWorkspaceSettingPatchDocument
+     */
+    data: JsonApiWorkspaceSettingPatch;
 }
 /**
  * @type JsonApiWorkspaceToOneLinkage
@@ -8741,6 +8943,65 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          *
+         * @param {string} workspaceId
+         * @param {JsonApiWorkspaceSettingInDocument} jsonApiWorkspaceSettingInDocument
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createEntityWorkspaceSettings: async (
+            workspaceId: string,
+            jsonApiWorkspaceSettingInDocument: JsonApiWorkspaceSettingInDocument,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("createEntityWorkspaceSettings", "workspaceId", workspaceId);
+            // verify required parameter 'jsonApiWorkspaceSettingInDocument' is not null or undefined
+            assertParamExists(
+                "createEntityWorkspaceSettings",
+                "jsonApiWorkspaceSettingInDocument",
+                jsonApiWorkspaceSettingInDocument,
+            );
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/workspaceSettings`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof jsonApiWorkspaceSettingInDocument !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      jsonApiWorkspaceSettingInDocument !== undefined
+                          ? jsonApiWorkspaceSettingInDocument
+                          : {},
+                  )
+                : jsonApiWorkspaceSettingInDocument || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
          * @param {JsonApiWorkspaceInDocument} jsonApiWorkspaceInDocument
          * @param {Array<'workspaces' | 'parent' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -9280,6 +9541,54 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             // verify required parameter 'objectId' is not null or undefined
             assertParamExists("deleteEntityWorkspaceDataFilters", "objectId", objectId);
             const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/workspaceDataFilters/{objectId}`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} workspaceId
+         * @param {string} objectId
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteEntityWorkspaceSettings: async (
+            workspaceId: string,
+            objectId: string,
+            filter?: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("deleteEntityWorkspaceSettings", "workspaceId", workspaceId);
+            // verify required parameter 'objectId' is not null or undefined
+            assertParamExists("deleteEntityWorkspaceSettings", "objectId", objectId);
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/workspaceSettings/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -10693,6 +11002,77 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          *
+         * @param {string} workspaceId
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {number} [page] Zero-based page index (0..N)
+         * @param {number} [size] The size of the page to be returned
+         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllEntitiesWorkspaceSettings: async (
+            workspaceId: string,
+            filter?: string,
+            page?: number,
+            size?: number,
+            sort?: Array<string>,
+            xGDCVALIDATERELATIONS?: boolean,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("getAllEntitiesWorkspaceSettings", "workspaceId", workspaceId);
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/workspaceSettings`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter["page"] = page;
+            }
+
+            if (size !== undefined) {
+                localVarQueryParameter["size"] = size;
+            }
+
+            if (sort) {
+                localVarQueryParameter["sort"] = sort;
+            }
+
+            if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+                localVarHeaderParameter["X-GDC-VALIDATE-RELATIONS"] = String(
+                    JSON.stringify(xGDCVALIDATERELATIONS),
+                );
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'workspaces' | 'parent' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
@@ -12001,6 +12381,62 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          *
+         * @param {string} workspaceId
+         * @param {string} objectId
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEntityWorkspaceSettings: async (
+            workspaceId: string,
+            objectId: string,
+            filter?: string,
+            xGDCVALIDATERELATIONS?: boolean,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("getEntityWorkspaceSettings", "workspaceId", workspaceId);
+            // verify required parameter 'objectId' is not null or undefined
+            assertParamExists("getEntityWorkspaceSettings", "objectId", objectId);
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/workspaceSettings/{objectId}`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+                localVarHeaderParameter["X-GDC-VALIDATE-RELATIONS"] = String(
+                    JSON.stringify(xGDCVALIDATERELATIONS),
+                );
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
          * @param {string} id
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'workspaces' | 'parent' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
@@ -12930,6 +13366,74 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          *
+         * @param {string} workspaceId
+         * @param {string} objectId
+         * @param {JsonApiWorkspaceSettingPatchDocument} jsonApiWorkspaceSettingPatchDocument
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchEntityWorkspaceSettings: async (
+            workspaceId: string,
+            objectId: string,
+            jsonApiWorkspaceSettingPatchDocument: JsonApiWorkspaceSettingPatchDocument,
+            filter?: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("patchEntityWorkspaceSettings", "workspaceId", workspaceId);
+            // verify required parameter 'objectId' is not null or undefined
+            assertParamExists("patchEntityWorkspaceSettings", "objectId", objectId);
+            // verify required parameter 'jsonApiWorkspaceSettingPatchDocument' is not null or undefined
+            assertParamExists(
+                "patchEntityWorkspaceSettings",
+                "jsonApiWorkspaceSettingPatchDocument",
+                jsonApiWorkspaceSettingPatchDocument,
+            );
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/workspaceSettings/{objectId}`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof jsonApiWorkspaceSettingPatchDocument !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      jsonApiWorkspaceSettingPatchDocument !== undefined
+                          ? jsonApiWorkspaceSettingPatchDocument
+                          : {},
+                  )
+                : jsonApiWorkspaceSettingPatchDocument || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
          * @param {string} id
          * @param {JsonApiWorkspacePatchDocument} jsonApiWorkspacePatchDocument
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -13824,6 +14328,74 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          *
+         * @param {string} workspaceId
+         * @param {string} objectId
+         * @param {JsonApiWorkspaceSettingInDocument} jsonApiWorkspaceSettingInDocument
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateEntityWorkspaceSettings: async (
+            workspaceId: string,
+            objectId: string,
+            jsonApiWorkspaceSettingInDocument: JsonApiWorkspaceSettingInDocument,
+            filter?: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("updateEntityWorkspaceSettings", "workspaceId", workspaceId);
+            // verify required parameter 'objectId' is not null or undefined
+            assertParamExists("updateEntityWorkspaceSettings", "objectId", objectId);
+            // verify required parameter 'jsonApiWorkspaceSettingInDocument' is not null or undefined
+            assertParamExists(
+                "updateEntityWorkspaceSettings",
+                "jsonApiWorkspaceSettingInDocument",
+                jsonApiWorkspaceSettingInDocument,
+            );
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/workspaceSettings/{objectId}`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "PUT", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof jsonApiWorkspaceSettingInDocument !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      jsonApiWorkspaceSettingInDocument !== undefined
+                          ? jsonApiWorkspaceSettingInDocument
+                          : {},
+                  )
+                : jsonApiWorkspaceSettingInDocument || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
          * @param {string} id
          * @param {JsonApiWorkspaceInDocument} jsonApiWorkspaceInDocument
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -14140,6 +14712,27 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         },
         /**
          *
+         * @param {string} workspaceId
+         * @param {JsonApiWorkspaceSettingInDocument} jsonApiWorkspaceSettingInDocument
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createEntityWorkspaceSettings(
+            workspaceId: string,
+            jsonApiWorkspaceSettingInDocument: JsonApiWorkspaceSettingInDocument,
+            options?: AxiosRequestConfig,
+        ): Promise<
+            (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWorkspaceSettingOutDocument>
+        > {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createEntityWorkspaceSettings(
+                workspaceId,
+                jsonApiWorkspaceSettingInDocument,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
          * @param {JsonApiWorkspaceInDocument} jsonApiWorkspaceInDocument
          * @param {Array<'workspaces' | 'parent' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -14376,6 +14969,28 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteEntityWorkspaceDataFilters(
+                workspaceId,
+                objectId,
+                filter,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} workspaceId
+         * @param {string} objectId
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteEntityWorkspaceSettings(
+            workspaceId: string,
+            objectId: string,
+            filter?: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteEntityWorkspaceSettings(
                 workspaceId,
                 objectId,
                 filter,
@@ -15022,6 +15637,39 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         },
         /**
          *
+         * @param {string} workspaceId
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {number} [page] Zero-based page index (0..N)
+         * @param {number} [size] The size of the page to be returned
+         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAllEntitiesWorkspaceSettings(
+            workspaceId: string,
+            filter?: string,
+            page?: number,
+            size?: number,
+            sort?: Array<string>,
+            xGDCVALIDATERELATIONS?: boolean,
+            options?: AxiosRequestConfig,
+        ): Promise<
+            (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWorkspaceSettingOutList>
+        > {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAllEntitiesWorkspaceSettings(
+                workspaceId,
+                filter,
+                page,
+                size,
+                sort,
+                xGDCVALIDATERELATIONS,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'workspaces' | 'parent' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
@@ -15635,6 +16283,33 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         },
         /**
          *
+         * @param {string} workspaceId
+         * @param {string} objectId
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getEntityWorkspaceSettings(
+            workspaceId: string,
+            objectId: string,
+            filter?: string,
+            xGDCVALIDATERELATIONS?: boolean,
+            options?: AxiosRequestConfig,
+        ): Promise<
+            (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWorkspaceSettingOutDocument>
+        > {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEntityWorkspaceSettings(
+                workspaceId,
+                objectId,
+                filter,
+                xGDCVALIDATERELATIONS,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
          * @param {string} id
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'workspaces' | 'parent' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
@@ -16008,6 +16683,33 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         },
         /**
          *
+         * @param {string} workspaceId
+         * @param {string} objectId
+         * @param {JsonApiWorkspaceSettingPatchDocument} jsonApiWorkspaceSettingPatchDocument
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async patchEntityWorkspaceSettings(
+            workspaceId: string,
+            objectId: string,
+            jsonApiWorkspaceSettingPatchDocument: JsonApiWorkspaceSettingPatchDocument,
+            filter?: string,
+            options?: AxiosRequestConfig,
+        ): Promise<
+            (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWorkspaceSettingOutDocument>
+        > {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchEntityWorkspaceSettings(
+                workspaceId,
+                objectId,
+                jsonApiWorkspaceSettingPatchDocument,
+                filter,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
          * @param {string} id
          * @param {JsonApiWorkspacePatchDocument} jsonApiWorkspacePatchDocument
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -16368,6 +17070,33 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         },
         /**
          *
+         * @param {string} workspaceId
+         * @param {string} objectId
+         * @param {JsonApiWorkspaceSettingInDocument} jsonApiWorkspaceSettingInDocument
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateEntityWorkspaceSettings(
+            workspaceId: string,
+            objectId: string,
+            jsonApiWorkspaceSettingInDocument: JsonApiWorkspaceSettingInDocument,
+            filter?: string,
+            options?: AxiosRequestConfig,
+        ): Promise<
+            (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWorkspaceSettingOutDocument>
+        > {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateEntityWorkspaceSettings(
+                workspaceId,
+                objectId,
+                jsonApiWorkspaceSettingInDocument,
+                filter,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
          * @param {string} id
          * @param {JsonApiWorkspaceInDocument} jsonApiWorkspaceInDocument
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -16605,6 +17334,24 @@ export const EntitiesApiFactory = function (
         },
         /**
          *
+         * @param {EntitiesApiCreateEntityWorkspaceSettingsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createEntityWorkspaceSettings(
+            requestParameters: EntitiesApiCreateEntityWorkspaceSettingsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<JsonApiWorkspaceSettingOutDocument> {
+            return localVarFp
+                .createEntityWorkspaceSettings(
+                    requestParameters.workspaceId,
+                    requestParameters.jsonApiWorkspaceSettingInDocument,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
          * @param {EntitiesApiCreateEntityWorkspacesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -16803,6 +17550,25 @@ export const EntitiesApiFactory = function (
         ): AxiosPromise<void> {
             return localVarFp
                 .deleteEntityWorkspaceDataFilters(
+                    requestParameters.workspaceId,
+                    requestParameters.objectId,
+                    requestParameters.filter,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {EntitiesApiDeleteEntityWorkspaceSettingsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteEntityWorkspaceSettings(
+            requestParameters: EntitiesApiDeleteEntityWorkspaceSettingsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .deleteEntityWorkspaceSettings(
                     requestParameters.workspaceId,
                     requestParameters.objectId,
                     requestParameters.filter,
@@ -17234,6 +18000,28 @@ export const EntitiesApiFactory = function (
                     requestParameters.workspaceId,
                     requestParameters.filter,
                     requestParameters.include,
+                    requestParameters.page,
+                    requestParameters.size,
+                    requestParameters.sort,
+                    requestParameters.xGDCVALIDATERELATIONS,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {EntitiesApiGetAllEntitiesWorkspaceSettingsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllEntitiesWorkspaceSettings(
+            requestParameters: EntitiesApiGetAllEntitiesWorkspaceSettingsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<JsonApiWorkspaceSettingOutList> {
+            return localVarFp
+                .getAllEntitiesWorkspaceSettings(
+                    requestParameters.workspaceId,
+                    requestParameters.filter,
                     requestParameters.page,
                     requestParameters.size,
                     requestParameters.sort,
@@ -17694,6 +18482,26 @@ export const EntitiesApiFactory = function (
         },
         /**
          *
+         * @param {EntitiesApiGetEntityWorkspaceSettingsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEntityWorkspaceSettings(
+            requestParameters: EntitiesApiGetEntityWorkspaceSettingsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<JsonApiWorkspaceSettingOutDocument> {
+            return localVarFp
+                .getEntityWorkspaceSettings(
+                    requestParameters.workspaceId,
+                    requestParameters.objectId,
+                    requestParameters.filter,
+                    requestParameters.xGDCVALIDATERELATIONS,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
          * @param {EntitiesApiGetEntityWorkspacesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -17971,6 +18779,26 @@ export const EntitiesApiFactory = function (
         },
         /**
          *
+         * @param {EntitiesApiPatchEntityWorkspaceSettingsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchEntityWorkspaceSettings(
+            requestParameters: EntitiesApiPatchEntityWorkspaceSettingsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<JsonApiWorkspaceSettingOutDocument> {
+            return localVarFp
+                .patchEntityWorkspaceSettings(
+                    requestParameters.workspaceId,
+                    requestParameters.objectId,
+                    requestParameters.jsonApiWorkspaceSettingPatchDocument,
+                    requestParameters.filter,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
          * @param {EntitiesApiPatchEntityWorkspacesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -18233,6 +19061,26 @@ export const EntitiesApiFactory = function (
         },
         /**
          *
+         * @param {EntitiesApiUpdateEntityWorkspaceSettingsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateEntityWorkspaceSettings(
+            requestParameters: EntitiesApiUpdateEntityWorkspaceSettingsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<JsonApiWorkspaceSettingOutDocument> {
+            return localVarFp
+                .updateEntityWorkspaceSettings(
+                    requestParameters.workspaceId,
+                    requestParameters.objectId,
+                    requestParameters.jsonApiWorkspaceSettingInDocument,
+                    requestParameters.filter,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
          * @param {EntitiesApiUpdateEntityWorkspacesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -18394,6 +19242,18 @@ export interface EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiCreateEntityWorkspaceSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    createEntityWorkspaceSettings(
+        requestParameters: EntitiesApiCreateEntityWorkspaceSettingsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
+
+    /**
+     *
      * @param {EntitiesApiCreateEntityWorkspacesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -18533,6 +19393,18 @@ export interface EntitiesApiInterface {
      */
     deleteEntityWorkspaceDataFilters(
         requestParameters: EntitiesApiDeleteEntityWorkspaceDataFiltersRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
+
+    /**
+     *
+     * @param {EntitiesApiDeleteEntityWorkspaceSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    deleteEntityWorkspaceSettings(
+        requestParameters: EntitiesApiDeleteEntityWorkspaceSettingsRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 
@@ -18775,6 +19647,18 @@ export interface EntitiesApiInterface {
         requestParameters: EntitiesApiGetAllEntitiesWorkspaceDataFiltersRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiWorkspaceDataFilterOutList>;
+
+    /**
+     *
+     * @param {EntitiesApiGetAllEntitiesWorkspaceSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    getAllEntitiesWorkspaceSettings(
+        requestParameters: EntitiesApiGetAllEntitiesWorkspaceSettingsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<JsonApiWorkspaceSettingOutList>;
 
     /**
      *
@@ -19060,6 +19944,18 @@ export interface EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiGetEntityWorkspaceSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    getEntityWorkspaceSettings(
+        requestParameters: EntitiesApiGetEntityWorkspaceSettingsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
+
+    /**
+     *
      * @param {EntitiesApiGetEntityWorkspacesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -19229,6 +20125,18 @@ export interface EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiPatchEntityWorkspaceSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    patchEntityWorkspaceSettings(
+        requestParameters: EntitiesApiPatchEntityWorkspaceSettingsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
+
+    /**
+     *
      * @param {EntitiesApiPatchEntityWorkspacesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -19382,6 +20290,18 @@ export interface EntitiesApiInterface {
         requestParameters: EntitiesApiUpdateEntityWorkspaceDataFiltersRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
+
+    /**
+     *
+     * @param {EntitiesApiUpdateEntityWorkspaceSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    updateEntityWorkspaceSettings(
+        requestParameters: EntitiesApiUpdateEntityWorkspaceSettingsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
 
     /**
      *
@@ -19655,6 +20575,27 @@ export interface EntitiesApiCreateEntityWorkspaceDataFiltersRequest {
      * @memberof EntitiesApiCreateEntityWorkspaceDataFilters
      */
     readonly include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">;
+}
+
+/**
+ * Request parameters for createEntityWorkspaceSettings operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiCreateEntityWorkspaceSettingsRequest
+ */
+export interface EntitiesApiCreateEntityWorkspaceSettingsRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiCreateEntityWorkspaceSettings
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {JsonApiWorkspaceSettingInDocument}
+     * @memberof EntitiesApiCreateEntityWorkspaceSettings
+     */
+    readonly jsonApiWorkspaceSettingInDocument: JsonApiWorkspaceSettingInDocument;
 }
 
 /**
@@ -19954,6 +20895,34 @@ export interface EntitiesApiDeleteEntityWorkspaceDataFiltersRequest {
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiDeleteEntityWorkspaceDataFilters
+     */
+    readonly filter?: string;
+}
+
+/**
+ * Request parameters for deleteEntityWorkspaceSettings operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiDeleteEntityWorkspaceSettingsRequest
+ */
+export interface EntitiesApiDeleteEntityWorkspaceSettingsRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiDeleteEntityWorkspaceSettings
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiDeleteEntityWorkspaceSettings
+     */
+    readonly objectId: string;
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiDeleteEntityWorkspaceSettings
      */
     readonly filter?: string;
 }
@@ -20920,6 +21889,55 @@ export interface EntitiesApiGetAllEntitiesWorkspaceDataFiltersRequest {
 }
 
 /**
+ * Request parameters for getAllEntitiesWorkspaceSettings operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiGetAllEntitiesWorkspaceSettingsRequest
+ */
+export interface EntitiesApiGetAllEntitiesWorkspaceSettingsRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiGetAllEntitiesWorkspaceSettings
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiGetAllEntitiesWorkspaceSettings
+     */
+    readonly filter?: string;
+
+    /**
+     * Zero-based page index (0..N)
+     * @type {number}
+     * @memberof EntitiesApiGetAllEntitiesWorkspaceSettings
+     */
+    readonly page?: number;
+
+    /**
+     * The size of the page to be returned
+     * @type {number}
+     * @memberof EntitiesApiGetAllEntitiesWorkspaceSettings
+     */
+    readonly size?: number;
+
+    /**
+     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @type {Array<string>}
+     * @memberof EntitiesApiGetAllEntitiesWorkspaceSettings
+     */
+    readonly sort?: Array<string>;
+
+    /**
+     *
+     * @type {boolean}
+     * @memberof EntitiesApiGetAllEntitiesWorkspaceSettings
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+/**
  * Request parameters for getAllEntitiesWorkspaces operation in EntitiesApi.
  * @export
  * @interface EntitiesApiGetAllEntitiesWorkspacesRequest
@@ -21699,6 +22717,41 @@ export interface EntitiesApiGetEntityWorkspaceDataFiltersRequest {
 }
 
 /**
+ * Request parameters for getEntityWorkspaceSettings operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiGetEntityWorkspaceSettingsRequest
+ */
+export interface EntitiesApiGetEntityWorkspaceSettingsRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiGetEntityWorkspaceSettings
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiGetEntityWorkspaceSettings
+     */
+    readonly objectId: string;
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiGetEntityWorkspaceSettings
+     */
+    readonly filter?: string;
+
+    /**
+     *
+     * @type {boolean}
+     * @memberof EntitiesApiGetEntityWorkspaceSettings
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+/**
  * Request parameters for getEntityWorkspaces operation in EntitiesApi.
  * @export
  * @interface EntitiesApiGetEntityWorkspacesRequest
@@ -22191,6 +23244,41 @@ export interface EntitiesApiPatchEntityWorkspaceDataFiltersRequest {
 }
 
 /**
+ * Request parameters for patchEntityWorkspaceSettings operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiPatchEntityWorkspaceSettingsRequest
+ */
+export interface EntitiesApiPatchEntityWorkspaceSettingsRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiPatchEntityWorkspaceSettings
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiPatchEntityWorkspaceSettings
+     */
+    readonly objectId: string;
+
+    /**
+     *
+     * @type {JsonApiWorkspaceSettingPatchDocument}
+     * @memberof EntitiesApiPatchEntityWorkspaceSettings
+     */
+    readonly jsonApiWorkspaceSettingPatchDocument: JsonApiWorkspaceSettingPatchDocument;
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiPatchEntityWorkspaceSettings
+     */
+    readonly filter?: string;
+}
+
+/**
  * Request parameters for patchEntityWorkspaces operation in EntitiesApi.
  * @export
  * @interface EntitiesApiPatchEntityWorkspacesRequest
@@ -22669,6 +23757,41 @@ export interface EntitiesApiUpdateEntityWorkspaceDataFiltersRequest {
 }
 
 /**
+ * Request parameters for updateEntityWorkspaceSettings operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiUpdateEntityWorkspaceSettingsRequest
+ */
+export interface EntitiesApiUpdateEntityWorkspaceSettingsRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiUpdateEntityWorkspaceSettings
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiUpdateEntityWorkspaceSettings
+     */
+    readonly objectId: string;
+
+    /**
+     *
+     * @type {JsonApiWorkspaceSettingInDocument}
+     * @memberof EntitiesApiUpdateEntityWorkspaceSettings
+     */
+    readonly jsonApiWorkspaceSettingInDocument: JsonApiWorkspaceSettingInDocument;
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiUpdateEntityWorkspaceSettings
+     */
+    readonly filter?: string;
+}
+
+/**
  * Request parameters for updateEntityWorkspaces operation in EntitiesApi.
  * @export
  * @interface EntitiesApiUpdateEntityWorkspacesRequest
@@ -22925,6 +24048,26 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiCreateEntityWorkspaceSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public createEntityWorkspaceSettings(
+        requestParameters: EntitiesApiCreateEntityWorkspaceSettingsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .createEntityWorkspaceSettings(
+                requestParameters.workspaceId,
+                requestParameters.jsonApiWorkspaceSettingInDocument,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
      * @param {EntitiesApiCreateEntityWorkspacesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -23146,6 +24289,27 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
     ) {
         return EntitiesApiFp(this.configuration)
             .deleteEntityWorkspaceDataFilters(
+                requestParameters.workspaceId,
+                requestParameters.objectId,
+                requestParameters.filter,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {EntitiesApiDeleteEntityWorkspaceSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public deleteEntityWorkspaceSettings(
+        requestParameters: EntitiesApiDeleteEntityWorkspaceSettingsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .deleteEntityWorkspaceSettings(
                 requestParameters.workspaceId,
                 requestParameters.objectId,
                 requestParameters.filter,
@@ -23617,6 +24781,30 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.workspaceId,
                 requestParameters.filter,
                 requestParameters.include,
+                requestParameters.page,
+                requestParameters.size,
+                requestParameters.sort,
+                requestParameters.xGDCVALIDATERELATIONS,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {EntitiesApiGetAllEntitiesWorkspaceSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public getAllEntitiesWorkspaceSettings(
+        requestParameters: EntitiesApiGetAllEntitiesWorkspaceSettingsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .getAllEntitiesWorkspaceSettings(
+                requestParameters.workspaceId,
+                requestParameters.filter,
                 requestParameters.page,
                 requestParameters.size,
                 requestParameters.sort,
@@ -24120,6 +25308,28 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiGetEntityWorkspaceSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public getEntityWorkspaceSettings(
+        requestParameters: EntitiesApiGetEntityWorkspaceSettingsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .getEntityWorkspaceSettings(
+                requestParameters.workspaceId,
+                requestParameters.objectId,
+                requestParameters.filter,
+                requestParameters.xGDCVALIDATERELATIONS,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
      * @param {EntitiesApiGetEntityWorkspacesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -24425,6 +25635,28 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiPatchEntityWorkspaceSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public patchEntityWorkspaceSettings(
+        requestParameters: EntitiesApiPatchEntityWorkspaceSettingsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .patchEntityWorkspaceSettings(
+                requestParameters.workspaceId,
+                requestParameters.objectId,
+                requestParameters.jsonApiWorkspaceSettingPatchDocument,
+                requestParameters.filter,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
      * @param {EntitiesApiPatchEntityWorkspacesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -24706,6 +25938,28 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.jsonApiWorkspaceDataFilterInDocument,
                 requestParameters.filter,
                 requestParameters.include,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {EntitiesApiUpdateEntityWorkspaceSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public updateEntityWorkspaceSettings(
+        requestParameters: EntitiesApiUpdateEntityWorkspaceSettingsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .updateEntityWorkspaceSettings(
+                requestParameters.workspaceId,
+                requestParameters.objectId,
+                requestParameters.jsonApiWorkspaceSettingInDocument,
+                requestParameters.filter,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));

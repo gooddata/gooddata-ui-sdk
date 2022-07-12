@@ -1,11 +1,12 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
 import isEmpty from "lodash/isEmpty";
+import isNil from "lodash/isNil";
 
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { IInsightDefinition, newAttributeAreaSort, newMeasureSort } from "@gooddata/sdk-model";
 import { PluggableColumnBarCharts } from "../PluggableColumnBarCharts";
-import { IReferencePoint, IVisConstruct } from "../../../interfaces/Visualization";
+import { IReferencePoint, IVisConstruct, IVisualizationProperties } from "../../../interfaces/Visualization";
 import { BAR_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
 import BarChartConfigurationPanel from "../../configurationPanels/BarChartConfigurationPanel";
 import { AXIS, AXIS_NAME } from "../../../constants/axis";
@@ -63,7 +64,23 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
         this.defaultControlsProperties = {
             stackMeasures: false,
         };
-        this.initializeProperties(props.visualizationProperties);
+
+        const visualProps = this.adjustMissingConfiguration(props.visualizationProperties);
+        this.initializeProperties(visualProps);
+    }
+
+    // it applies the configuration that can be missing due to old chart version
+    private adjustMissingConfiguration(
+        supportedProperties: IVisualizationProperties,
+    ): IVisualizationProperties {
+        if (
+            !isNil(supportedProperties.controls?.dataLabels) &&
+            isNil(supportedProperties.controls?.dataLabels?.totalsVisible)
+        ) {
+            supportedProperties.controls.dataLabels.totalsVisible = false;
+        }
+
+        return supportedProperties;
     }
 
     public getSupportedPropertiesList(): string[] {

@@ -1,7 +1,8 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
-import { AttributeFilterBase, IAttributeFilterBaseProps } from "./AttributeFilterBase";
+import { AttributeFilterBase } from "./AttributeFilterBase";
 import { AttributeFilterSimpleButtonWithSelection } from "./Components/AttributeFilterSimpleButton";
+import { IAttributeFilterBaseProps } from "./types";
 
 /**
  * @internal
@@ -23,5 +24,5 @@ export const AttributeFilter: React.FC<IAttributeFilterProps> = (props) => {
 
     const ButtonComponent = titleWithSelection ? AttributeFilterSimpleButtonWithSelection : undefined;
 
-    return <AttributeFilterBase {...baseProps} AttributeFilterButton={ButtonComponent} />;
+    return <AttributeFilterBase {...baseProps} FilterButton={ButtonComponent} />;
 };

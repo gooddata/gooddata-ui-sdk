@@ -1,0 +1,45 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "Support for GoodData Cloud was added.",
+            "type": "none"
+        },
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "Dashboard filterContext selectors are public now.",
+            "type": "none"
+        },
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "Dashboard component user and permissions selectors are public now.",
+            "type": "none"
+        },
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "Catalog load is now more optimized for GoodData Platform.",
+            "type": "none"
+        },
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "Model interfaces from @gooddata/sdk-backend-spi were moved to @gooddata/sdk-model.",
+            "type": "none"
+        },
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "Global Dashboard CSS styles were removed.",
+            "type": "none"
+        },
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "SVG and CSS imports in typescript files were removed, GoodData.UI can be used without additional bundler setup now.",
+            "type": "none"
+        },
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "Execution definition by slices/series can be now used without React. You can use DataViewLoader @alpha version from @gooddata/sdk-ui.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

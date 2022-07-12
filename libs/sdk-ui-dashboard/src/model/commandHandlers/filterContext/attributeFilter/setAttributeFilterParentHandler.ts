@@ -1,13 +1,14 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import invariant from "ts-invariant";
 
-import { SetAttributeFilterParent } from "../../../commands/filters";
+import { SetAttributeFilterParents } from "../../../commands/filters";
 import { invalidArgumentsProvided } from "../../../events/general";
 import { attributeFilterParentChanged } from "../../../events/filters";
 import { filterContextActions } from "../../../store/filterContext";
 import {
+    selectAttributeFilterDisplayFormsMap,
     selectFilterContextAttributeFilterByLocalId,
     selectFilterContextAttributeFilters,
 } from "../../../store/filterContext/filterContextSelectors";
@@ -16,9 +17,9 @@ import { validateAttributeFilterParents } from "./validation/parentFiltersValida
 import { dispatchFilterContextChanged } from "../common";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher";
 
-export function* setAttributeFilterParentHandler(
+export function* setAttributeFilterParentsHandler(
     ctx: DashboardContext,
-    cmd: SetAttributeFilterParent,
+    cmd: SetAttributeFilterParents,
 ): SagaIterator<void> {
     const { filterLocalId, parentFilters } = cmd.payload;
 
@@ -28,6 +29,10 @@ export function* setAttributeFilterParentHandler(
 
     const affectedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByLocalId>> =
         yield select(selectFilterContextAttributeFilterByLocalId(filterLocalId));
+
+    const displayFormsMap: ReturnType<typeof selectAttributeFilterDisplayFormsMap> = yield select(
+        selectAttributeFilterDisplayFormsMap,
+    );
 
     if (!affectedFilter) {
         throw invalidArgumentsProvided(ctx, cmd, `Filter with localId ${filterLocalId} was not found.`);
@@ -39,6 +44,7 @@ export function* setAttributeFilterParentHandler(
         affectedFilter,
         [...parentFilters],
         allFilters,
+        displayFormsMap,
     );
 
     if (validationResult !== "VALID") {
@@ -46,6 +52,8 @@ export function* setAttributeFilterParentHandler(
             validationResult === "EXTRANEOUS_PARENT"
                 ? "Some of the parents provided cannot be used because filters for those are not in the filters collection. " +
                   "Only existing filters can be used as parent filters."
+                : validationResult === "INVALID_METADATA"
+                ? "Some of the parents provided cannot be used because the 'metadata' for parent filter are missing."
                 : "Some of the parents provided cannot be used because the 'over' parameter is invalid for the target filter.";
 
         throw invalidArgumentsProvided(ctx, cmd, message);

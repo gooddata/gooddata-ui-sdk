@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import map from "lodash/map";
 import zip from "lodash/zip";
 import values from "lodash/values";
@@ -27,6 +27,7 @@ import {
     hasShape,
     hideDataLabel,
     hideDataLabels,
+    setStackVisibilityByOpacity,
     showDataLabelInAxisRange,
     showStackLabelInAxisRange,
 } from "../../../chartTypes/_chartCreators/dataLabelsHelpers";
@@ -238,7 +239,7 @@ function toggleStackedLabelsForDualAxis() {
             neighborsOverlapping || areLabelsOverlappingColumns(labels, getDataPointsOfVisibleSeries(this));
 
         stackTotalGroups.forEach((stackTotalGroup: Highcharts.SVGAttributes) =>
-            setVisibilityByOpacity(stackTotalGroup, !areOverlapping),
+            setStackVisibilityByOpacity(stackTotalGroup, !areOverlapping),
         );
     }
 }
@@ -255,12 +256,8 @@ function toggleStackedLabelsForSingleAxis() {
         const labels = map(stacks[columnKey], (point: any) => point.label);
         const neighbors = toNeighbors(labels);
         const stackTotalGroupVisible = !areNeighborsOverlapping(neighbors);
-        setVisibilityByOpacity(stackTotalGroup, stackTotalGroupVisible);
+        setStackVisibilityByOpacity(stackTotalGroup, stackTotalGroupVisible);
     }
-}
-
-function setVisibilityByOpacity(stackTotalGroup: Highcharts.SVGAttributes, visible: boolean) {
-    stackTotalGroup.attr({ opacity: visible ? 1 : 0 });
 }
 
 function toggleStackedLabels() {
@@ -277,9 +274,15 @@ function toggleStackedLabels() {
     return toggleStackedLabelsForSingleAxis.call(this);
 }
 
+export const autohideColumnTotalLabels = (chart: Highcharts.Chart) => {
+    // stack labels are total values displayed on top of columns
+    if (areLabelsStacked(chart)) {
+        toggleStackedLabels.call(chart);
+    }
+};
+
 export const autohideColumnLabels = (chart: Highcharts.Chart): void => {
     const isStackedChart = isStacked(chart);
-    const hasLabelsStacked = areLabelsStacked(chart);
 
     const visiblePoints = getDataPointsOfVisibleSeries(chart);
     const axisRangeForAxes: IAxisRangeForAxes = getAxisRangeForAxes(chart);
@@ -289,11 +292,6 @@ export const autohideColumnLabels = (chart: Highcharts.Chart): void => {
         toggleStackedChartLabels(visiblePoints.filter(hasLabelInside), axisRangeForAxes);
     } else {
         toggleNonStackedChartLabels(visiblePoints, axisRangeForAxes, true);
-    }
-
-    // stack labels are total values displayed on top of columns
-    if (hasLabelsStacked) {
-        toggleStackedLabels.call(chart);
     }
 };
 

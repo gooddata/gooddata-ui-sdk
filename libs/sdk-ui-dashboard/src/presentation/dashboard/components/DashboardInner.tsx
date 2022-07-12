@@ -10,7 +10,6 @@ import { RenderModeAwareDashboardLayoutSectionHeaderRenderer } from "../Dashboar
 
 export const DashboardInner: React.FC<IDashboardProps> = () => {
     const locale = useDashboardSelector(selectLocale);
-
     return (
         <IntlWrapper locale={locale}>
             <div className="gd-dashboards-root gd-flex-container">

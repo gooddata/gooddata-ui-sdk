@@ -9,7 +9,7 @@ import { getObjRef } from "../../utils/AttributeFilterUtils";
 import { AttributeFilterButtonContextProps } from "./types";
 import { IAttributeFilterButtonState } from "./useAttributeFilterButtonState";
 import { filterAttributeElements, IAttributeFilter, isAttributeElementsByRef } from "@gooddata/sdk-model";
-import { IListItem } from "../../types";
+import { IListItem } from "../../Components/types";
 
 interface IUseFetchInitialElementsProps {
     context: Omit<AttributeFilterButtonContextProps, "filterObjRef">;

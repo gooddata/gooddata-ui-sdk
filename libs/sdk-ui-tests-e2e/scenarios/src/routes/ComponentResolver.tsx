@@ -18,6 +18,7 @@ import {
     PivotTableAggregationsMenuAllTotalScenario,
     PivotTableAggregationsMenuOneTotalScenario,
 } from "../components/Scenarios/Visualizations/PivotTable/PivotTableAggregationsMenuScenario";
+import { DashboardFilterConfigurationScenario } from "../components/Scenarios/Dashboard/DashboardFilterConfigurationScenario";
 
 /**
  * Add key here for your new E2E test. Use the key in the map below with the scenario as well as in
@@ -39,6 +40,7 @@ export const SCENARIO_KEYS = {
     FILTERS_ATTRIBUTE_FILTER_BUTTON_WITH_SELECTION: "filters/attribute-filter-button-with-selection",
     FILTERS_ATTRIBUTE_FILTER_BUTTON_PARENT_CHILD: "filters/attribute-filter-button-parent-child",
     FILTERS_PARENT_CHILD_FILTERS_WITH_PLACEHOLDERS: "filters/parent-child-filters-with-placeholder",
+    FILTERS_ATTRIBUTE_FILTER_CONFIG: "filters/attribute-filter-config",
 };
 
 const scenarios = new Map<string, React.ComponentType>([
@@ -57,6 +59,7 @@ const scenarios = new Map<string, React.ComponentType>([
     [SCENARIO_KEYS.VIS_PIVOT_TABLE_ALL_TOTAL_AGG_MENU, PivotTableAggregationsMenuAllTotalScenario],
     [SCENARIO_KEYS.VIS_PIVOT_TABLE_SIZING_RESET, PivotTableComplexResetScenario],
     [SCENARIO_KEYS.VIS_PIVOT_TABLE_SIZING, PivotTableSizingScenario],
+    [SCENARIO_KEYS.FILTERS_ATTRIBUTE_FILTER_CONFIG, DashboardFilterConfigurationScenario],
 ]);
 
 const ComponentResolver: React.FC = () => {

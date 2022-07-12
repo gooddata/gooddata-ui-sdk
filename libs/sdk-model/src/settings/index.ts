@@ -234,6 +234,11 @@ export interface ISettings {
      */
     enableAdFloatingDateRangeFilter?: boolean;
 
+    /**
+     * Enable visibility control for total labels
+     */
+    enableSeparateTotalLabels?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

@@ -1,0 +1,340 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "OpenAPI definition",
+        "version": "v0"
+    },
+    "servers": [
+        {
+            "url": "/",
+            "description": "GoodData.CN endpoint"
+        }
+    ],
+    "tags": [
+        {
+            "name": "authentication",
+            "description": "| authentication & security related resources (REST API over JSON)"
+        }
+    ],
+    "paths": {
+        "/api/v1/auth/users/{userEmail}": {
+            "get": {
+                "tags": ["authentication"],
+                "operationId": "getUser",
+                "parameters": [
+                    {
+                        "name": "userEmail",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AuthUser"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": ["authentication"],
+                "operationId": "updateUser",
+                "parameters": [
+                    {
+                        "name": "userEmail",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AuthUser"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AuthUser"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["authentication"],
+                "operationId": "deleteUser",
+                "parameters": [
+                    {
+                        "name": "userEmail",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
+        "/api/v1/auth/users": {
+            "get": {
+                "tags": ["authentication"],
+                "operationId": "getUsers",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "uniqueItems": true,
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/AuthUser"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": ["authentication"],
+                "operationId": "createUser",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AuthUser"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AuthUser"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/profile": {
+            "get": {
+                "tags": ["authentication"],
+                "operationId": "getProfile",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Profile"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "AuthUser": {
+                "required": ["displayName", "email"],
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "description": "Email - used as lookup (must be unique). For PUT method, it must be same as in URL",
+                        "example": "zeus@example.com"
+                    },
+                    "password": {
+                        "type": "string",
+                        "description": "User password. It is not returned by GET method."
+                    },
+                    "displayName": {
+                        "type": "string",
+                        "description": "User description, which will be visible in application.",
+                        "example": "jeremy"
+                    },
+                    "authenticationId": {
+                        "type": "string",
+                        "description": "Field, which should be stored in metadata in authenticationId field. In PUT and POST method it must be not present, or equal to value calculated by backend (e.g. returned from previous GET)."
+                    }
+                },
+                "description": "Entity representing user in authentication system."
+            },
+            "FeatureFlagsContext": {
+                "required": ["earlyAccess"],
+                "type": "object",
+                "properties": {
+                    "earlyAccess": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Features": {
+                "required": ["context"],
+                "type": "object",
+                "properties": {
+                    "context": {
+                        "$ref": "#/components/schemas/FeatureFlagsContext"
+                    }
+                },
+                "description": "Base Structure for feature flags"
+            },
+            "LiveFeatureFlagConfiguration": {
+                "required": ["host", "key"],
+                "type": "object",
+                "properties": {
+                    "host": {
+                        "type": "string"
+                    },
+                    "key": {
+                        "type": "string"
+                    }
+                }
+            },
+            "LiveFeatures": {
+                "required": ["configuration", "context"],
+                "type": "object",
+                "description": "Structure for featureHub",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Features"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "configuration": {
+                                "$ref": "#/components/schemas/LiveFeatureFlagConfiguration"
+                            }
+                        }
+                    }
+                ]
+            },
+            "Profile": {
+                "required": ["features", "links", "organizationId", "organizationName", "userId"],
+                "type": "object",
+                "properties": {
+                    "organizationId": {
+                        "type": "string"
+                    },
+                    "organizationName": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "userId": {
+                        "type": "string"
+                    },
+                    "telemetry": {
+                        "$ref": "#/components/schemas/Telemetry"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ProfileLinks"
+                    },
+                    "features": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/LiveFeatures"
+                            },
+                            {
+                                "$ref": "#/components/schemas/StaticFeatures"
+                            }
+                        ]
+                    }
+                }
+            },
+            "ProfileLinks": {
+                "required": ["organization", "self", "user"],
+                "type": "object",
+                "properties": {
+                    "self": {
+                        "type": "string"
+                    },
+                    "organization": {
+                        "type": "string"
+                    },
+                    "user": {
+                        "type": "string"
+                    }
+                }
+            },
+            "StaticFeatures": {
+                "required": ["context", "items"],
+                "type": "object",
+                "description": "Structure for offline feature flag",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Features"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "items": {
+                                "type": "object",
+                                "additionalProperties": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "Telemetry": {
+                "required": ["deploymentId", "host", "organizationHash", "siteId", "userHash"],
+                "type": "object",
+                "properties": {
+                    "host": {
+                        "type": "string"
+                    },
+                    "siteId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "deploymentId": {
+                        "type": "string"
+                    },
+                    "organizationHash": {
+                        "type": "string"
+                    },
+                    "userHash": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}

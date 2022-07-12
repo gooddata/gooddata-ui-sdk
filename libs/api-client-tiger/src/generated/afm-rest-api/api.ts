@@ -611,13 +611,13 @@ export interface AttributeResultHeader {
      * @type {string}
      * @memberof AttributeResultHeader
      */
-    labelValue: string | null;
+    labelValue: string;
     /**
      * A value of the primary attribute label.
      * @type {string}
      * @memberof AttributeResultHeader
      */
-    primaryLabelValue: string | null;
+    primaryLabelValue: string;
 }
 /**
  * Filter the result by comparing specified metric to given constant value, using given comparison operator.

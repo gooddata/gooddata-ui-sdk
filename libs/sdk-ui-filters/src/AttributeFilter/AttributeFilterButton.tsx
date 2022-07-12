@@ -412,6 +412,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         onApplyButtonClicked,
         onCloseButtonClicked,
         isFullWidth: isMobile,
+        attributeFilterRef: filterRef,
     });
 
     const { FilterError } = props;

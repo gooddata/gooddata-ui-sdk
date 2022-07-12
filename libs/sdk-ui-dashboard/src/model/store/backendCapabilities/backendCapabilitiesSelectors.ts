@@ -20,6 +20,16 @@ export const selectBackendCapabilities = createSelector(selectSelf, (state) => {
 });
 
 /**
+ * This selector returns capability if parent child filtering is enabled.
+ *
+ * @public
+ */
+export const selectSupportsElementsQueryParentFiltering = createSelector(
+    selectBackendCapabilities,
+    (capabilities) => capabilities.supportsElementsQueryParentFiltering ?? false,
+);
+
+/**
  * Selector for {@link IBackendCapabilities.supportsKpiWidget}
  *
  * @internal

@@ -31,6 +31,10 @@ export function updateConfigWithSettings(config: IChartConfig, settings: ISettin
         if (settings.enableReversedStacking) {
             updatedConfig = { ...updatedConfig, enableReversedStacking: true };
         }
+
+        if (settings.enableSeparateTotalLabels) {
+            updatedConfig = { ...updatedConfig, enableSeparateTotalLabels: true };
+        }
     }
 
     return updatedConfig;

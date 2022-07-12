@@ -1,8 +1,8 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
 import { AttributeFilterBase } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/AttributeFilterBase";
-import { IAttributeFilterErrorProps } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Components/AttributeFilterError";
-import { AttributeFilterDefaultComponents } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Context/AttributeFilterComponentsContext";
+import { IAttributeFilterErrorProps } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Components/types";
+import { AttributeFilterDefaultComponents } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Context/AttributeFilterDefaultComponents";
 
 import { storiesOf } from "../../../../_infra/storyRepository";
 import { action } from "@storybook/addon-actions";

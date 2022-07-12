@@ -9,10 +9,11 @@ import {
     SelectComponentsConfig,
     InputProps,
     MenuProps,
-    CommonProps,
-    MultiValueProps,
+    NoticeProps,
+    MultiValueGenericProps,
     SingleValueProps,
     components as ReactSelectComponents,
+    GroupBase,
 } from "react-select";
 import debounce from "lodash/debounce";
 import isEmpty from "lodash/isEmpty";
@@ -123,7 +124,11 @@ export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSel
 
     public render(): React.ReactNode {
         const { isMulti, options, value } = this.props;
-        const creatableSelectComponent: SelectComponentsConfig<any, boolean> = {
+        const creatableSelectComponent: SelectComponentsConfig<
+            IScheduleEmailRecipient,
+            boolean,
+            GroupBase<IScheduleEmailRecipient>
+        > = {
             ...ReactSelectComponents,
             IndicatorsContainer: this.renderEmptyContainer,
             Input: this.renderInputContainer,
@@ -141,7 +146,6 @@ export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSel
                 </label>
                 <div ref={this.recipientRef} className="gd-input s-gd-recipients-value">
                     <CreatableSelect
-                        cacheOptions={true}
                         className="gd-recipients-container"
                         classNamePrefix="gd-recipients"
                         components={creatableSelectComponent}
@@ -182,7 +186,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSel
     }
 
     private renderNoOptionsContainer = (
-        commonProps: CommonProps<any, boolean>,
+        commonProps: NoticeProps<any, boolean>,
     ): React.ReactElement | null => {
         const {
             selectProps: { inputValue },
@@ -316,7 +320,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSel
     };
 
     private renderMultiValueContainer = (
-        multiValueProps: MultiValueProps<IScheduleEmailRecipient>,
+        multiValueProps: MultiValueGenericProps<IScheduleEmailRecipient>,
     ): React.ReactElement => {
         const { data, children } = multiValueProps;
 
@@ -425,7 +429,9 @@ export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSel
         return this.renderEmptyContainer();
     };
 
-    private renderInputContainer = (inputProps: InputProps): React.ReactElement | null => {
+    private renderInputContainer = (
+        inputProps: InputProps<IScheduleEmailRecipient>,
+    ): React.ReactElement | null => {
         const { isMulti } = this.props;
 
         if (!isMulti) {

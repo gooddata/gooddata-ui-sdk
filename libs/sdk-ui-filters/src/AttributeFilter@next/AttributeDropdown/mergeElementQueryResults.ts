@@ -1,6 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 import { IElementsQueryResult } from "@gooddata/sdk-backend-spi";
-import { IElementQueryResultWithEmptyItems, emptyListItem } from "../types";
+import { IElementQueryResultWithEmptyItems, emptyListItem } from "../Components/types";
 
 export function mergeElementQueryResults(
     currentElements: IElementQueryResultWithEmptyItems,

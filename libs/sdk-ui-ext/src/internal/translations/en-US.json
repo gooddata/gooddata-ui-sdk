@@ -706,6 +706,26 @@
         "comment": "",
         "limit": 0
     },
+    "properties.canvas.totalLabels": {
+        "value": "Total Labels",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.canvas.totalLabels.auto": {
+        "value": "auto (default)",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.canvas.totalLabels.show": {
+        "value": "show",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.canvas.totalLabels.hide": {
+        "value": "hide",
+        "comment": "",
+        "limit": 0
+    },
     "properties.canvas.dataPoints": {
         "value": "Data Points",
         "comment": "",

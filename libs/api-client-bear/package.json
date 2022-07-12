@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/api-client-bear",
-    "version": "8.10.0-alpha.154",
+    "version": "8.11.0-alpha.4",
     "author": "GoodData",
     "description": "API Client for the GoodData platform",
     "repository": {
@@ -50,7 +50,7 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
     },
     "dependencies": {
-        "@gooddata/api-model-bear": "^8.10.0-alpha.154",
+        "@gooddata/api-model-bear": "^8.11.0-alpha.4",
         "fetch-cookie": "^0.7.0",
         "isomorphic-fetch": "^3.0.0",
         "lodash": "^4.17.19",
@@ -71,7 +71,7 @@
         "@types/spark-md5": "^3.0.1",
         "@typescript-eslint/eslint-plugin": "^5.5.0",
         "@typescript-eslint/parser": "^5.5.0",
-        "async": "^2.1.5",
+        "async": "^2.6.4",
         "concurrently": "^6.0.2",
         "dependency-cruiser": "^10.1.1",
         "eslint": "^8.3.0",

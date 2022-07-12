@@ -724,7 +724,12 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
     };
 
     private onMenuAggregationClick = (menuAggregationClickConfig: IMenuAggregationClickConfig) => {
-        const newColumnTotals = getUpdatedColumnTotals(this.getColumnTotals(), menuAggregationClickConfig);
+        const sortItems = this.internal.table?.getSortItems();
+        const newColumnTotals = sanitizeDefTotals(
+            this.getExecutionDefinition(),
+            sortItems,
+            getUpdatedColumnTotals(this.getColumnTotals(), menuAggregationClickConfig),
+        );
 
         this.pushDataGuard({
             properties: {

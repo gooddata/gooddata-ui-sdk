@@ -426,7 +426,28 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
     }
 }
 
-/* hide IE10+ eraser */
-::-ms-clear {
-    display: none;
+.gd-attribute-filter-delete-button {
+    float: left;
+    .delete-button:hover::before {
+        color: $gd-color-negative;
+    }
+}
+
+.gd-attribute-filter-dropdown-configuration-button {
+    width: 100%;
+
+    .gd-attribute-filter-dropdown-configuration-button-wrapper {
+        display: flex;
+        width: 100%;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        font-size: 16px;
+        color: $gd-color-text-dimmed;
+    }
+
+    .gd-attribute-filter-dropdown-configuration-button-text {
+        padding-left: 6px;
+        font-size: 12px;
+        color: $gd-color-text;
+    }
 }

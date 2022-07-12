@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
 import { MoveLayoutSection, moveLayoutSection, undoLayoutChanges } from "../../../commands";

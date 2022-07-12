@@ -27,7 +27,8 @@ import {
 } from "@gooddata/sdk-ui-filters";
 import { IAttributeElement } from "@gooddata/sdk-model";
 import AttributeDropdownListItem from "./AttributeDropdownListItem";
-import { selectLocale, useDashboardSelector } from "../../../../model";
+import { selectLocale, useDashboardSelector, selectIsInEditMode } from "../../../../model";
+import { AttributeFilterConfiguration } from "./configuration/AttributeFilterConfiguration";
 
 const MAX_SELECTION_SIZE = 500;
 const MAX_LIST_HEIGHT = 392;
@@ -47,13 +48,13 @@ const AttributeFilterBodyCore: React.FC<IAttributeDropdownBodyExtendedProps> = (
         width,
         isLoaded,
         showItemsFilteredMessage,
-        showConfigurationButton,
         showDeleteButton,
         deleteFilter,
         onCloseButtonClicked,
         onApplyButtonClicked,
         applyDisabled,
         isMobile,
+        attributeFilterRef,
     } = props;
 
     const hasNoData =
@@ -61,12 +62,15 @@ const AttributeFilterBodyCore: React.FC<IAttributeDropdownBodyExtendedProps> = (
     const currentItemHeight = isMobile ? DEFAULT_MOBILE_ITEM_HEIGHT : DEFAULT_ITEM_HEIGHT;
 
     const [isConfigurationOpen, setIsConfigurationOpen] = useState(false);
+
     const intl = useIntl();
     const classNames = cx({
         "attributevalues-list": true,
         "gd-flex-item-stretch-mobile": isMobile,
         "gd-flex-row-container-mobile": isMobile,
     });
+
+    const isEditMode = useDashboardSelector(selectIsInEditMode);
 
     const getElementsList = (items: AttributeListItem[], emptyString: string) => {
         return items.map((item) => {
@@ -150,15 +154,11 @@ const AttributeFilterBodyCore: React.FC<IAttributeDropdownBodyExtendedProps> = (
     return (
         <div className={classNames} style={attributeValuesStyles}>
             {isConfigurationOpen ? (
-                /**
-                 * TODO connect configuration with store
-                 */
-                // <DropdownConfiguration
-                //     attributeFilterRef={attributeFilterRef}
-                //     closeHandler={() => setIsConfigurationOpen(false)}
-                //     onChange={onConfigurationChange}
-                // />
-                <div>Configuration</div>
+                <AttributeFilterConfiguration
+                    closeHandler={() => setIsConfigurationOpen(false)}
+                    filterRef={attributeFilterRef}
+                    onChange={() => {}}
+                />
             ) : (
                 <>
                     {isLoaded ? list : <LoadingMask height={LOADING_HEIGHT} />}
@@ -167,7 +167,7 @@ const AttributeFilterBodyCore: React.FC<IAttributeDropdownBodyExtendedProps> = (
                             {showItemsFilteredMessage && (
                                 <ItemsFilteredMessage parentFilterTitles={parentFilterTitles!} />
                             )}
-                            {showConfigurationButton && (
+                            {isEditMode && (
                                 <ConfigurationButton setIsConfigurationOpen={setIsConfigurationOpen} />
                             )}
                             {!hasNoData && (

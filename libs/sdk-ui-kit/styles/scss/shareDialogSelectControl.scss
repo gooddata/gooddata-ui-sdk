@@ -61,6 +61,7 @@
     }
 
     .gd-share-dialog__placeholder {
+        position: absolute;
         color: var(--gd-palette-complementary-6, transparentize($default-gd-color-link, 0.25));
     }
 
