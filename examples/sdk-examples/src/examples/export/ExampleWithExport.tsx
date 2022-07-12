@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { useState, useEffect } from "react";
 import { ExportDialog, IExportDialogData } from "@gooddata/sdk-ui-kit";
 import { IExtendedExportConfig, IExportFunction } from "@gooddata/sdk-ui";
