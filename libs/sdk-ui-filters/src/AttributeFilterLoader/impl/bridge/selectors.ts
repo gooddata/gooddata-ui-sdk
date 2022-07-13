@@ -1,13 +1,17 @@
 // (C) 2022 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import { InvertableAttributeElementSelection } from "../../types";
-import { selectWorkingSelectionAttributeElements, selectIsWorkingSelectionInverted } from "../../internal";
+import {
+    selectWorkingSelection,
+    selectCommitedSelection,
+    selectIsWorkingSelectionInverted,
+} from "../../internal";
 
 /**
  * @internal
  */
 export const selectInvertableWorkingSelection = createSelector(
-    selectWorkingSelectionAttributeElements,
+    selectWorkingSelection,
     selectIsWorkingSelectionInverted,
     (items, isInverted): InvertableAttributeElementSelection => ({
         items,
@@ -19,7 +23,7 @@ export const selectInvertableWorkingSelection = createSelector(
  * @internal
  */
 export const selectInvertableCommitedSelection = createSelector(
-    selectWorkingSelectionAttributeElements,
+    selectCommitedSelection,
     selectIsWorkingSelectionInverted,
     (items, isInverted): InvertableAttributeElementSelection => ({
         items,

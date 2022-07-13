@@ -1,7 +1,7 @@
 // (C) 2022 GoodData Corporation
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IAttributeElement, IAttributeFilter } from "@gooddata/sdk-model";
-import { CallbackRegistration } from "../common";
+import { CallbackRegistration, Correlation } from "../common";
 import { IAttributeLoader } from "./attribute";
 import { IAttributeElementLoader } from "./elements";
 
@@ -17,6 +17,8 @@ export interface IAttributeFilterLoader extends IAttributeLoader, IAttributeElem
      * Get the effective filter.
      */
     getFilter(): IAttributeFilter;
+
+    init(correlation?: Correlation): void;
 
     //
     // callbacks

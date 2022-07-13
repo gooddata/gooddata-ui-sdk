@@ -1,7 +1,7 @@
 // (C) 2022 GoodData Corporation
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import { IAttributeElement, IMeasure, IRelativeDateFilter } from "@gooddata/sdk-model";
-import { IElementsLoadResult, LoadableStatus, CallbackRegistration, Correlation } from "../common";
+import { IElementsLoadResult, CallbackRegistration, Correlation } from "../common";
 
 /**
  * Handles the loading of the elements
@@ -67,12 +67,12 @@ export interface IAttributeElementLoader {
     //
     // selectors
     //
+    // TODO: Rename to getAllElements / getElementsByKey?
     getAllItems(): IAttributeElement[];
     getItemsByKey(keys: string[]): IAttributeElement[];
     getSearch(): string;
     getTotalCount(): number;
     getCountWithCurrentSettings(): number;
-    getLoadingStatus(): LoadableStatus;
 
     //
     // callbacks

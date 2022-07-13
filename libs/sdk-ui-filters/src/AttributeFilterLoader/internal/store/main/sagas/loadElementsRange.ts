@@ -66,34 +66,34 @@ function* loadElementsRangeSaga({
 
         if (cancelRequest) {
             cancel = true;
-        }
+        } else {
+            const { success, error } = loadElementsRangeResult;
 
-        const { success, error } = loadElementsRangeResult;
+            if (success) {
+                yield put(
+                    actions.setAttributeElements({
+                        attributeElements: success.payload.attributeElements,
+                    }),
+                );
 
-        if (success) {
-            yield put(
-                actions.setAttributeElements({
-                    attributeElements: success.payload.attributeElements,
-                }),
-            );
+                yield put(
+                    actions.setAttributeElementsTotalCountWithCurrentSettings({
+                        totalCount: success.payload.totalCount,
+                    }),
+                );
 
-            yield put(
-                actions.setAttributeElementsTotalCountWithCurrentSettings({
-                    totalCount: success.payload.totalCount,
-                }),
-            );
-
-            yield put(actions.loadElementsRangeSuccess(success.payload));
-        } else if (error) {
-            yield put(actions.loadElementsRangeError(error.payload));
+                yield put(actions.loadElementsRangeSuccess(success.payload));
+            } else if (error) {
+                yield put(actions.loadElementsRangeError(error.payload));
+            }
         }
     } finally {
         if (yield cancelled()) {
             cancel = true;
         }
-    }
 
-    if (cancel) {
-        yield put(actions.loadElementsRangeCancel({ correlationId }));
+        if (cancel) {
+            yield put(actions.loadElementsRangeCancel({ correlationId }));
+        }
     }
 }

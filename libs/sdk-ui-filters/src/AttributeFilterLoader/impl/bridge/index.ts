@@ -1,6 +1,7 @@
 // (C) 2022 GoodData Corporation
 import { v4 as uuid } from "uuid";
 import invariant from "ts-invariant";
+import compact from "lodash/compact";
 import {
     ElementsQueryOptionsElementsSpecification,
     IAnalyticalBackend,
@@ -14,13 +15,7 @@ import {
     IMeasure,
     IRelativeDateFilter,
 } from "@gooddata/sdk-model";
-import {
-    CallbackRegistration,
-    Correlation,
-    IElementsLoadResult,
-    Loadable,
-    LoadableStatus,
-} from "../../types/common";
+import { CallbackRegistration, Correlation, IElementsLoadResult } from "../../types/common";
 import { IAttributeFilterHandlerConfig, InvertableAttributeElementSelection } from "../../types";
 import {
     actions,
@@ -32,12 +27,10 @@ import {
     selectAttributeElementsTotalCountWithCurrentSettings,
     selectAttributeFilter,
     selectSearch,
-    selectWorkingSelectionAttributeElements,
-    selectCommitedSelectionAttributeElements,
+    selectWorkingSelection,
+    selectCommitedSelection,
     selectAttributeElementsMap,
     getElementsByKeys,
-    selectAttributeError,
-    selectAttributeStatus,
 } from "../../internal";
 import { newAttributeFilterCallbacks } from "./callbacks";
 import { selectInvertableCommitedSelection, selectInvertableWorkingSelection } from "./selectors";
@@ -63,28 +56,34 @@ export interface ElementsLoadConfig {
  */
 export class AttributeFilterReduxBridge {
     private redux: AttributeFilterStore;
+    private config: IAttributeFilterHandlerConfig;
 
     private callbacks: ReturnType<typeof newAttributeFilterCallbacks>;
 
-    constructor(private readonly config: IAttributeFilterHandlerConfig) {
-        this.initializeBridge(config);
+    constructor(config: IAttributeFilterHandlerConfig) {
+        this.config = config;
+        this.initializeBridge();
     }
 
-    private initializeBridge = (config: IAttributeFilterHandlerConfig) => {
+    private initializeBridge = () => {
         this.callbacks = newAttributeFilterCallbacks();
         this.redux = createAttributeFilterStore({
-            backend: config.backend,
-            workspace: config.workspace,
-            attributeFilter: config.filter,
+            backend: this.config.backend,
+            workspace: this.config.workspace,
+            attributeFilter: this.config.filter,
             eventListener: (action, select) => {
                 this.callbacks.eventListener(action, select);
             },
         });
+    };
+
+    init = (correlation?: string): void => {
         this.redux.dispatch(
             actions.init({
-                attributeFilter: config.filter,
-                hiddenElements: config.hiddenElements,
-                staticElements: config.staticElements,
+                correlationId: correlation,
+                attributeFilter: this.config.filter,
+                hiddenElements: this.config.hiddenElements,
+                staticElements: this.config.staticElements,
             }),
         );
     };
@@ -92,7 +91,7 @@ export class AttributeFilterReduxBridge {
     reset = (): void => {
         this.redux.cancelRootSaga();
         this.callbacks.unsubscribeAll();
-        this.initializeBridge(this.config);
+        this.initializeBridge();
     };
 
     loadAttribute = (correlation: Correlation = uuid()): void => {
@@ -150,20 +149,12 @@ export class AttributeFilterReduxBridge {
         return this.redux.select(selectAttributeElementsTotalCountWithCurrentSettings);
     };
 
-    getAttribute = (): Loadable<IAttributeMetadataObject> => {
-        return {
-            result: this.redux.select(selectAttribute),
-            error: this.redux.select(selectAttributeError),
-            status: this.redux.select(selectAttributeStatus),
-        } as Loadable<IAttributeMetadataObject>;
+    getAttribute = (): IAttributeMetadataObject | undefined => {
+        return this.redux.select(selectAttribute);
     };
 
     getFilter = (): IAttributeFilter => {
         return this.redux.select(selectAttributeFilter);
-    };
-
-    getLoadingStatus = (): LoadableStatus => {
-        return this.redux.select(selectAttributeStatus);
     };
 
     //
@@ -172,7 +163,7 @@ export class AttributeFilterReduxBridge {
     changeMultiSelection = ({ items, isInverted }: InvertableAttributeElementSelection): void => {
         this.redux.dispatch(
             actions.changeSelection({
-                selection: items.map((item) => item.uri),
+                selection: items,
                 isInverted,
             }),
         );
@@ -202,11 +193,11 @@ export class AttributeFilterReduxBridge {
         return this.redux.select(selectInvertableCommitedSelection);
     };
 
-    changeSingleSelection = (selection: IAttributeElement | undefined): void => {
+    changeSingleSelection = (selection: string | undefined): void => {
         this.redux.dispatch(
             actions.changeSelection({
                 isInverted: false,
-                selection: selection ? [selection.uri] : [],
+                selection: compact([selection]),
             }),
         );
     };
@@ -219,8 +210,8 @@ export class AttributeFilterReduxBridge {
         this.redux.dispatch(actions.commitSelection());
     };
 
-    getWorkingSingleSelection = (): IAttributeElement | undefined => {
-        const [element, ...maybeMoreElements] = this.redux.select(selectWorkingSelectionAttributeElements);
+    getWorkingSingleSelection = (): string | undefined => {
+        const [element, ...maybeMoreElements] = this.redux.select(selectWorkingSelection);
         invariant(
             !maybeMoreElements.length,
             "Trying to invoke single select method, but multiple elements are selected.",
@@ -228,8 +219,8 @@ export class AttributeFilterReduxBridge {
         return element;
     };
 
-    getCommittedSingleSelection = (): IAttributeElement | undefined => {
-        const [element, ...maybeMoreElements] = this.redux.select(selectCommitedSelectionAttributeElements);
+    getCommittedSingleSelection = (): string | undefined => {
+        const [element, ...maybeMoreElements] = this.redux.select(selectCommitedSelection);
         invariant(
             !maybeMoreElements.length,
             "Trying to invoke single select method, but multiple elements are selected.",
@@ -249,14 +240,14 @@ export class AttributeFilterReduxBridge {
         return this.callbacks.registerCallback(cb, this.callbacks.registrations.selectionCommited);
     };
 
-    onSingleSelectionChanged: CallbackRegistration<{ selection: IAttributeElement | undefined }> = (cb) => {
+    onSingleSelectionChanged: CallbackRegistration<{ selection: string | undefined }> = (cb) => {
         return this.callbacks.registerCallback(
             ({ selection }) => cb({ selection: selection[0] }),
             this.callbacks.registrations.selectionChanged,
         );
     };
 
-    onSingleSelectionCommitted: CallbackRegistration<{ selection: IAttributeElement | undefined }> = (cb) => {
+    onSingleSelectionCommitted: CallbackRegistration<{ selection: string | undefined }> = (cb) => {
         return this.callbacks.registerCallback(
             ({ selection }) => cb({ selection: selection[0] }),
             this.callbacks.registrations.selectionCommited,

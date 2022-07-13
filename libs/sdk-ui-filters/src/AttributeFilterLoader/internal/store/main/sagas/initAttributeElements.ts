@@ -1,5 +1,4 @@
 // (C) 2022 GoodData Corporation
-import { v4 as uuidv4 } from "uuid";
 import { SagaIterator } from "redux-saga";
 import { put, call, SagaReturnType } from "redux-saga/effects";
 
@@ -9,8 +8,8 @@ import { actions } from "../../slice";
 /**
  * @internal
  */
-export function* initAttributeElementsSaga(): SagaIterator<void> {
-    const correlationId = `init_paging_${uuidv4()}`;
+export function* initAttributeElementsSaga(initCorrelationId: string): SagaIterator<void> {
+    const correlationId = `init_paging_${initCorrelationId}`;
 
     const loadElements = () =>
         asyncRequestSaga(
@@ -20,9 +19,11 @@ export function* initAttributeElementsSaga(): SagaIterator<void> {
             actions.attributeElementsCancelRequest({ correlationId }),
         );
 
-    const { success }: SagaReturnType<typeof loadElements> = yield call(loadElements);
+    const { success, error }: SagaReturnType<typeof loadElements> = yield call(loadElements);
 
-    if (success) {
+    if (error) {
+        throw error.payload.error;
+    } else if (success) {
         yield put(
             actions.setAttributeElements({
                 attributeElements: success.payload.attributeElements,
