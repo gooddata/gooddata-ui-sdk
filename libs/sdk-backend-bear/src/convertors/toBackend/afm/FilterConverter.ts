@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { GdcExecuteAFM } from "@gooddata/api-model-bear";
 import {
     filterIsEmpty,
@@ -20,6 +20,7 @@ import {
 import isNil from "lodash/isNil";
 import { toBearRef, toScopedBearRef } from "../ObjRefConverter";
 import compact from "lodash/compact";
+import { assertNoNulls } from "../utils";
 
 function convertAttributeFilter(filter: IAttributeFilter): GdcExecuteAFM.FilterItem | null {
     /*
@@ -32,18 +33,20 @@ function convertAttributeFilter(filter: IAttributeFilter): GdcExecuteAFM.FilterI
     }
 
     if (!isPositiveAttributeFilter(filter)) {
+        assertNoNulls(filter.negativeAttributeFilter.notIn);
         return {
             negativeAttributeFilter: {
                 displayForm: toBearRef(filter.negativeAttributeFilter.displayForm),
-                notIn: filter.negativeAttributeFilter.notIn,
+                notIn: filter.negativeAttributeFilter.notIn as GdcExecuteAFM.AttributeElements, // checked above so the cast is ok
             },
         };
     }
 
+    assertNoNulls(filter.positiveAttributeFilter.in);
     return {
         positiveAttributeFilter: {
             displayForm: toBearRef(filter.positiveAttributeFilter.displayForm),
-            in: filter.positiveAttributeFilter.in,
+            in: filter.positiveAttributeFilter.in as GdcExecuteAFM.AttributeElements, // checked above so the cast is ok
         },
     };
 }

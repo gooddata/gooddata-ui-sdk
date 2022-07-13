@@ -27,11 +27,12 @@ export const DashboardInsightWithDrillDialog = (props: IDashboardInsightProps): 
         () =>
             drillSteps
                 .filter((s) => isDrillDownDefinition(s.drillDefinition))
-                .map((s) =>
-                    getDrillDownAttributeTitle(
-                        getDrillOriginLocalIdentifier(s.drillDefinition as IDrillDownDefinition),
-                        s.drillEvent,
-                    ),
+                .map(
+                    (s) =>
+                        getDrillDownAttributeTitle(
+                            getDrillOriginLocalIdentifier(s.drillDefinition as IDrillDownDefinition),
+                            s.drillEvent,
+                        ) ?? "NULL", // TODO localize this? drilldown is currently only on bear and that does not support nulls anyway
                 ),
         [drillSteps],
     );

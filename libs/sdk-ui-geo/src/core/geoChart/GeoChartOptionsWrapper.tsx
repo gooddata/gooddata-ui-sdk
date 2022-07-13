@@ -9,13 +9,12 @@ import { DEFAULT_DATA_POINTS_LIMIT } from "./constants/geoChart";
 import {
     DataViewFacade,
     ErrorCodes,
-    IColorAssignment,
     IErrorDescriptors,
     newErrorMapping,
     ErrorComponent as DefaultErrorComponent,
     LoadingComponent as DefaultLoadingComponent,
 } from "@gooddata/sdk-ui";
-import { IColorPalette, isResultAttributeHeader } from "@gooddata/sdk-model";
+import { isResultAttributeHeader } from "@gooddata/sdk-model";
 import {
     getValidColorPalette,
     IColorStrategy,
@@ -26,11 +25,13 @@ import { getColorStrategy } from "./colorStrategy/geoChart";
 
 export class GeoChartOptionsWrapper extends React.Component<IGeoChartInnerProps> {
     private readonly emptyHeaderString: string;
+    private readonly nullHeaderString: string;
     private readonly errorMap: IErrorDescriptors;
 
     constructor(props: IGeoChartInnerProps) {
         super(props);
         this.emptyHeaderString = props.intl.formatMessage({ id: "visualization.emptyValue" });
+        this.nullHeaderString = props.intl.formatMessage({ id: "visualization.emptyValue" }); // TODO RAIL-4360 replace by proper null header string id when available
         this.errorMap = newErrorMapping(props.intl);
     }
 
@@ -63,12 +64,12 @@ export class GeoChartOptionsWrapper extends React.Component<IGeoChartInnerProps>
     }
 
     public renderVisualization(): React.ReactNode {
-        const sanitizedProps: IGeoChartInnerProps = this.sanitizeProperties();
+        const sanitizedProps = this.sanitizeProperties();
 
         const { dataView, onDataTooLarge } = sanitizedProps;
 
         const dv = DataViewFacade.for(dataView!);
-        const geoData: IGeoData = getGeoData(dv);
+        const geoData = getGeoData(dv);
         const validationResult = this.validateData(geoData, sanitizedProps);
 
         if (validationResult?.isDataTooLarge) {
@@ -78,7 +79,7 @@ export class GeoChartOptionsWrapper extends React.Component<IGeoChartInnerProps>
             return null;
         }
 
-        const geoChartOptions: IGeoChartInnerOptions = this.buildGeoChartOptions(geoData, sanitizedProps);
+        const geoChartOptions = this.buildGeoChartOptions(geoData, sanitizedProps);
         return <GeoChartInner {...sanitizedProps} geoChartOptions={geoChartOptions} />;
     }
 
@@ -90,13 +91,10 @@ export class GeoChartOptionsWrapper extends React.Component<IGeoChartInnerProps>
         const { config: { colors = [], colorPalette = [], colorMapping = [] } = {}, dataView } = props;
 
         const dv = DataViewFacade.for(dataView!);
-        const palette: IColorPalette = getValidColorPalette(colors, colorPalette);
-        const colorStrategy: IColorStrategy = getColorStrategy(palette, colorMapping, geoData, dv);
+        const palette = getValidColorPalette(colors, colorPalette);
+        const colorStrategy = getColorStrategy(palette, colorMapping, geoData, dv);
 
-        let categoryItems: IPushpinCategoryLegendItem[] = [];
-        if (segment) {
-            categoryItems = this.getCategoryLegendItems(colorStrategy);
-        }
+        const categoryItems = segment ? this.getCategoryLegendItems(colorStrategy) : [];
 
         return {
             geoData,
@@ -107,7 +105,7 @@ export class GeoChartOptionsWrapper extends React.Component<IGeoChartInnerProps>
     };
 
     private getCategoryLegendItems(colorStrategy: IColorStrategy): IPushpinCategoryLegendItem[] {
-        return createCategoryLegendItems(colorStrategy, this.emptyHeaderString);
+        return createCategoryLegendItems(colorStrategy, this.emptyHeaderString, this.nullHeaderString);
     }
 
     private validateData = (geoData: IGeoData, props: IGeoChartInnerProps): IValidationResult | undefined => {
@@ -138,16 +136,17 @@ export class GeoChartOptionsWrapper extends React.Component<IGeoChartInnerProps>
 export function createCategoryLegendItems(
     colorStrategy: IColorStrategy,
     emptyHeaderString: string,
+    nullHeaderString: string,
 ): IPushpinCategoryLegendItem[] {
-    const colorAssignment: IColorAssignment[] = colorStrategy.getColorAssignment();
-    return colorAssignment.map((item: IColorAssignment, legendIndex: number): IPushpinCategoryLegendItem => {
+    const colorAssignment = colorStrategy.getColorAssignment();
+    return colorAssignment.map((item, legendIndex): IPushpinCategoryLegendItem => {
         const { name, uri } = isResultAttributeHeader(item.headerItem)
             ? item.headerItem.attributeHeaderItem
             : { name: emptyHeaderString, uri: emptyHeaderString };
-        const color: string = colorStrategy.getColorByIndex(legendIndex);
+        const color = colorStrategy.getColorByIndex(legendIndex);
         return {
-            uri,
-            name,
+            uri: uri ?? nullHeaderString,
+            name: name ?? nullHeaderString,
             color,
             legendIndex,
             isVisible: true,

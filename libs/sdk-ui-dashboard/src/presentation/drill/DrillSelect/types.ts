@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { DashboardDrillDefinition, DashboardDrillContext, IDashboardDrillEvent } from "../../../types";
 
 /**
@@ -16,7 +16,7 @@ export interface DrillSelectItem {
     id: string;
     name: string;
     drillDefinition: DashboardDrillDefinition;
-    attributeValue?: string;
+    attributeValue?: string | null;
 }
 
 export interface DrillSelectContext {

@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import parse from "date-fns/parse";
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 
@@ -19,11 +19,14 @@ export const DEFAULT_DATE_FORMAT: DateFormat = "MM/dd/yyyy";
  * @param dateFormat - dateFormat to assume when parsing the value.
  * @internal
  */
-export const parseDateValue = (value: string, dateFormat: DateFormat = DEFAULT_DATE_FORMAT): Date => {
+export const parseDateValue = (value: string | null, dateFormat: DateFormat = DEFAULT_DATE_FORMAT): Date => {
     if (!dateFormats.includes(dateFormat)) {
         throw new UnexpectedError(
             `Unsupported date format "${dateFormat}". Supported date formats are ${dateFormats}`,
         );
+    }
+    if (value === null) {
+        throw new UnexpectedError("Unsupported date value null. Nulls are not supported as date values");
     }
     return parse(value, dateFormat, new Date());
 };

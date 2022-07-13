@@ -113,6 +113,10 @@ export interface IAttributeLocatorItemBody {
     attributeIdentifier: Identifier;
     /**
      * Value of the attribute element; TODO: make sure bear is ready for this
+     * @remarks
+     * Note that this can actually be null on some backends if your data contains NULL values.
+     * We will change the type of this to string | null in the next major (since it is a breaking change),
+     * but for now, if you expect NULLs in your data, treat this as string | null already.
      */
     element: string;
 }

@@ -69,10 +69,10 @@ function convertAttributeSortType(sortItem: ISortItem): SortKeyAttributeAttribut
  * This function caters for the dirty trick + in case the sorts were created 'normally', programmatically by the
  * user who specified primaryLabelValue directly, it has logic to fall back to using the uri as-is.
  */
-function extractItemValueFromElement(elementUri: string): string {
+function extractItemValueFromElement(elementUri: string | null): string | null {
     // no reasonable way to avoid the super-linear backtracking right now
     // eslint-disable-next-line regexp/no-super-linear-backtracking
-    const parsedUri = elementUri.match(/obj\/([^/]*)(\/elements\?id=)?(.*)$/);
+    const parsedUri = elementUri?.match(/obj\/([^/]*)(\/elements\?id=)?(.*)$/);
 
     if (parsedUri?.[3]) {
         return parsedUri[3];
@@ -81,8 +81,8 @@ function extractItemValueFromElement(elementUri: string): string {
     return elementUri;
 }
 
-function convertMeasureLocators(locators: ILocatorItem[]): { [key: string]: string } {
-    const dataColumnLocators = locators.map<{ [key: string]: string }>((locator) => {
+function convertMeasureLocators(locators: ILocatorItem[]): { [key: string]: string | null } {
+    const dataColumnLocators = locators.map<{ [key: string]: string | null }>((locator) => {
         if (isAttributeLocator(locator)) {
             return {
                 [locator.attributeLocatorItem.attributeIdentifier]: extractItemValueFromElement(

@@ -112,7 +112,7 @@ export const resolveStringFilter =
     (filter: string | undefined) =>
     (elements: IAttributeElement[]): IAttributeElement[] => {
         return filter
-            ? elements.filter((item) => item.title.toLowerCase().includes(filter.toLowerCase()))
+            ? elements.filter((item) => item.title?.toLowerCase().includes(filter.toLowerCase()))
             : elements;
     };
 
