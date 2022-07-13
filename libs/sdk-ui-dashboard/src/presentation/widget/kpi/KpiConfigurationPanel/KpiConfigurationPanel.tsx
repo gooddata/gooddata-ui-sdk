@@ -7,9 +7,9 @@ import { Typography } from "@gooddata/sdk-ui-kit";
 import noop from "lodash/noop";
 
 import { AttributeFilterConfiguration } from "../../common";
-import { KpiComparison } from "./KpiComparison";
+import { KpiComparison } from "./KpiComparison/KpiComparison";
 import { KpiWidgetDateDatasetFilter } from "./KpiWidgetDateDatasetFilter";
-import { KpiMetricDropdown } from "./KpiMetricDropdown";
+import { KpiMetricDropdown } from "./KpiMetricDropdown/KpiMetricDropdown";
 import { KpiConfigurationPanelHeader } from "./KpiConfigurationPanelHeader";
 
 interface IKpiConfigurationPanelProps {

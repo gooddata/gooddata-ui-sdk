@@ -10,9 +10,9 @@ import {
     useDashboardSelector,
     selectCatalogMeasures,
     selectEnableRenamingMeasureToMetric,
-} from "../../../../model";
+} from "../../../../../model";
 
-import { CONFIG_PANEL_INNER_WIDTH } from "./constants";
+import { CONFIG_PANEL_INNER_WIDTH } from "../constants";
 import { MetricDropdownItem } from "./MetricDropdownItem";
 
 const alignPoints: IAlignPoint[] = [{ align: "bl tl" }];

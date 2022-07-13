@@ -9,8 +9,8 @@ import {
     widgetRef,
 } from "@gooddata/sdk-model";
 import { Typography } from "@gooddata/sdk-ui-kit";
+import { changeKpiWidgetComparison, useDashboardDispatch } from "../../../../../model";
 import { KpiComparisonTypeDropdown } from "./KpiComparisonTypeDropdown";
-import { changeKpiWidgetComparison, useDashboardDispatch } from "../../../../model";
 import { KpiComparisonDirectionDropdown } from "./KpiComparisonDirectionDropdown";
 
 interface IKpiComparisonProps {
