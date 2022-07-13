@@ -92,6 +92,10 @@ function catalogDateDatasetToDateDataset(ds: ICatalogDateDataset): IDateDataset 
     };
 }
 
+function removeDateFromTitle(title: string) {
+    return title.trim().replace(/^Date \((.*)\)$/, "$1");
+}
+
 export const DateDatasetDropdown: React.FC<IDateDatasetDropdownProps> = (props) => {
     const {
         className = "s-date-dataset-switch",
@@ -151,7 +155,7 @@ export const DateDatasetDropdown: React.FC<IDateDatasetDropdownProps> = (props) 
 
                 const buttonValue = isLoading
                     ? intl.formatMessage({ id: "loading" })
-                    : activeDateDataSetTitle;
+                    : removeDateFromTitle(activeDateDataSetTitle);
 
                 return (
                     <DropdownButton
@@ -188,7 +192,7 @@ export const DateDatasetDropdown: React.FC<IDateDatasetDropdownProps> = (props) 
                                     title={
                                         isHeader
                                             ? intl.formatMessage(dateDatasetHeaderMessages[item.title])
-                                            : item.title
+                                            : removeDateFromTitle(item.title)
                                     }
                                     isHeader={isHeader}
                                     isSelected={isSelected}
