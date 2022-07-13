@@ -156,3 +156,11 @@ export const selectActiveHeaderIndex = createSelector(selectSelf, (state) => sta
  * @internal
  */
 export const selectSelectedWidgetRef = createSelector(selectSelf, (state) => state.selectedWidgetRef);
+
+/**
+ * @internal
+ */
+export const selectConfigurationPanelOpened = createSelector(
+    selectSelf,
+    (state) => state.configurationPanelOpened,
+);

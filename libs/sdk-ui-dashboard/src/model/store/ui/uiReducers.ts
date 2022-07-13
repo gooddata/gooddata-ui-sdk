@@ -105,6 +105,10 @@ const clearWidgetSelection: UiReducer = (state) => {
     state.selectedWidgetRef = undefined;
 };
 
+const setConfigurationPanelOpened: UiReducer<PayloadAction<boolean>> = (state, action) => {
+    state.configurationPanelOpened = action.payload;
+};
+
 export const uiReducers = {
     openScheduleEmailDialog,
     closeScheduleEmailDialog,
@@ -130,4 +134,5 @@ export const uiReducers = {
     setActiveHeaderIndex,
     selectWidget,
     clearWidgetSelection,
+    setConfigurationPanelOpened,
 };

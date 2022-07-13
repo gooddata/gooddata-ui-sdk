@@ -5385,12 +5385,18 @@ payload: ObjRef;
 type: string;
 }>;
 clearWidgetSelection: CaseReducer<UiState, AnyAction>;
+setConfigurationPanelOpened: CaseReducer<UiState, {
+payload: boolean;
+type: string;
+}>;
 }>;
 
 // @alpha (undocumented)
 export interface UiState {
     // (undocumented)
     activeHeaderIndex: number | null;
+    // (undocumented)
+    configurationPanelOpened: boolean;
     // (undocumented)
     deleteDialog: {
         open: boolean;

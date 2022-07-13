@@ -1278,6 +1278,11 @@
         "comment": "Label of widget configuration section",
         "limit": 0
     },
+    "configurationPanel.interactions": {
+        "value": "Interactions",
+        "comment": "",
+        "limit": 0
+    },
     "configurationPanel.comparison": {
         "value": "Comparison",
         "comment": "",
@@ -1453,6 +1458,16 @@
     },
     "configurationPanel.unlistedDashboardTab": {
         "value": "Unlisted dashboard",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.visualprops.sectionTitle": {
+        "value": "Title",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.visualprops.hideTitle": {
+        "value": "Hide title",
         "comment": "",
         "limit": 0
     },
