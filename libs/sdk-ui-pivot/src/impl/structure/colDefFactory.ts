@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { ColDef, ColGroupDef } from "@ag-grid-community/all-modules";
 import findIndex from "lodash/findIndex";
 import {
@@ -74,7 +74,7 @@ function createColumnGroupColDef(col: ScopeCol, state: TransformState): ColDef |
         const colDef: ColDef = {
             type: COLUMN_ATTRIBUTE_COLUMN,
             colId: col.id,
-            headerName: col.header.attributeHeaderItem.name,
+            headerName: col.header.attributeHeaderItem.name ?? "NULL", // TODO RAIL-4360 localize this when the null strings are available
         };
 
         state.allColDefs.push(colDef);
@@ -84,7 +84,7 @@ function createColumnGroupColDef(col: ScopeCol, state: TransformState): ColDef |
     } else {
         const colGroup: ColGroupDef = {
             groupId: col.id,
-            headerName: col.header.attributeHeaderItem.name,
+            headerName: col.header.attributeHeaderItem.name ?? "NULL", // TODO RAIL-4360 localize this when the null strings are available
             children,
         };
 

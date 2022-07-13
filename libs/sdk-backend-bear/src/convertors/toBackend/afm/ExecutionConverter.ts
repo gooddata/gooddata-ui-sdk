@@ -8,10 +8,14 @@ import {
     dimensionTotals,
     IAttribute,
     IExecutionDefinition,
+    isAttributeLocator,
+    isMeasureSort,
+    ISortItem,
     ITotal,
     MeasureGroupIdentifier,
     totalIsNative,
 } from "@gooddata/sdk-model";
+import invariant from "ts-invariant";
 import { toBearRef } from "../ObjRefConverter";
 
 function convertAttribute(attribute: IAttribute, idx: number): GdcExecuteAFM.IAttribute {
@@ -106,8 +110,26 @@ function convertDimensions(def: IExecutionDefinition): GdcExecuteAFM.IDimension[
     });
 }
 
+function assertNoNullsInSortBy(sortBy: ISortItem[]): void {
+    sortBy.forEach((item) => {
+        if (isMeasureSort(item)) {
+            item.measureSortItem.locators.forEach((locator) => {
+                if (isAttributeLocator(locator)) {
+                    invariant(
+                        locator.attributeLocatorItem.element !== null,
+                        "Nulls are not supported as attribute element values or uris on bear",
+                    );
+                }
+            });
+        }
+    });
+}
+
 export function convertResultSpec(def: IExecutionDefinition): GdcExecuteAFM.IResultSpec {
-    const sortsProp = !isEmpty(def.sortBy) ? { sorts: def.sortBy } : {};
+    assertNoNullsInSortBy(def.sortBy ?? []);
+    const sortsProp = !isEmpty(def.sortBy)
+        ? { sorts: def.sortBy as GdcExecuteAFM.SortItem[] } // checked above, the cast is safe
+        : {};
     const dims = convertDimensions(def);
     const dimsProp = !isEmpty(dims) ? { dimensions: dims } : {};
 

@@ -104,7 +104,7 @@ export const createDrillSelectItems = (
 
             return {
                 type: DrillType.DRILL_DOWN,
-                name: title,
+                name: title ?? "NULL", // TODO localize this? drilldown is currently only on bear and that does not support nulls anyway
                 drillDefinition,
                 id: stringify(drillDefinition),
             };

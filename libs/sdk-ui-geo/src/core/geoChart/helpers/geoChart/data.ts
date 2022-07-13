@@ -37,7 +37,7 @@ interface ISegmentData {
     data: string[];
 }
 
-export function getLocation(latlng: string): IGeoLngLat | null {
+export function getLocation(latlng: string | null): IGeoLngLat | null {
     if (!latlng) {
         return null;
     }
@@ -66,7 +66,7 @@ export function getGeoData(dv: DataViewFacade): IGeoData {
     const colorIndex = geoData?.color?.index;
 
     if (locationIndex !== undefined) {
-        const locationData: string[] = getAttributeData(attributeHeaderItems, locationIndex);
+        const locationData = getAttributeData(attributeHeaderItems, locationIndex);
         geoData[BucketNames.LOCATION].data = locationData.map(getLocation);
     }
 

@@ -73,6 +73,7 @@ import { convertUrisToReferences } from "../fromBackend/ReferenceConverter";
 import isEmpty from "lodash/isEmpty";
 import omitBy from "lodash/omitBy";
 import { serializeProperties } from "../fromBackend/PropertiesConverter";
+import { assertNoNulls } from "./utils";
 
 const refToUri = (ref: ObjRef) => {
     invariant(isUriRef(ref));
@@ -234,10 +235,12 @@ export const convertFilterContextItem = (
         );
     }
 
+    assertNoNulls(attributeElements);
+
     return {
         attributeFilter: {
             negativeSelection,
-            attributeElements: attributeElements.uris,
+            attributeElements: attributeElements.uris as string[], // checked above so the cast is ok
             displayForm: displayFormUri,
             localIdentifier,
             filterElementsBy: convertedAttributeFilterParents,

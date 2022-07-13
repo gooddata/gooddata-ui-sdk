@@ -83,7 +83,7 @@ class AttributeGroupingProvider implements IGroupingProvider {
                 this.itemUris[columnId] = [];
             }
 
-            pageRows.forEach((row: IGridRow, rowIndex: number) => {
+            pageRows.forEach((row, rowIndex) => {
                 const headerItem = row.headerItemMap[columnId];
                 if (isResultAttributeHeader(headerItem)) {
                     const attributeItemUri = headerItem.attributeHeaderItem.uri;

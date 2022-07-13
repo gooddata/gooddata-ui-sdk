@@ -258,7 +258,12 @@ export interface IDimensionDescriptor {
  */
 export interface IResultAttributeHeaderItem {
     /**
-     * Human readable name of the attribute element
+     * Human readable name of the attribute element.
+     *
+     * @remarks
+     * Note that this can actually be null on some backends if your data contains NULL values.
+     * We will change the type of this to string | null in the next major (since it is a breaking change),
+     * but for now, if you expect NULLs in your data, treat this as string | null already.
      */
     name: string;
 
@@ -278,6 +283,10 @@ export interface IResultAttributeHeaderItem {
      * Recommendation for the consumers: URI is safe to use if you obtain in programmatically from this header
      * and then use it in the same workspace for instance for filtering. It is not safe to hardcode URIs
      * and use them in a solution which should operate on top of different workspaces.
+     *
+     * Note that this can actually be null on some backends if your data contains NULL values.
+     * We will change the type of this to string | null in the next major (since it is a breaking change),
+     * but for now, if you expect NULLs in your data, treat this as string | null already.
      */
     uri: string;
 }
@@ -472,6 +481,11 @@ export function isResultTotalHeader(obj: unknown): obj is IResultTotalHeader {
 
 /**
  * Returns item name contained within a result header.
+ *
+ * @remarks
+ * Note that this can actually be null on some backends if your data contains NULL values.
+ * We will change the type of this to string | null in the next major (since it is a breaking change),
+ * but for now, if you expect NULLs in your data, treat this as string | null already.
  *
  * @param header - header of any type
  * @public

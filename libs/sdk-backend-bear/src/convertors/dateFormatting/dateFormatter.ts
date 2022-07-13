@@ -39,7 +39,7 @@ export function transformDateFormat(
     }
     const resultHeaderUri = resultHeader.attributeHeaderItem.uri;
     const foundUri = dateAttributeUris.some((dateAttributeUri) =>
-        resultHeaderUri.startsWith(dateAttributeUri),
+        resultHeaderUri?.startsWith(dateAttributeUri),
     );
     if (!foundUri) {
         return resultHeader;

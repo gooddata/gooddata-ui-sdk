@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { GdcVisualizationObject } from "@gooddata/api-model-bear";
 import {
     IFilter,
@@ -25,6 +25,7 @@ import {
     ObjRefInScope,
 } from "@gooddata/sdk-model";
 import { toBearRef } from "./ObjRefConverter";
+import { assertNoNulls } from "./utils";
 
 const convertObjRefInScopeToRefWithoutIdentifier = (ref: ObjRefInScope) => {
     if (isIdentifierRef(ref)) {
@@ -89,10 +90,11 @@ const convertNegativeAttributeFilter = (
     filter: INegativeAttributeFilter,
 ): GdcVisualizationObject.INegativeAttributeFilter => {
     const elements = filterAttributeElements(filter);
+    assertNoNulls(elements);
     return {
         negativeAttributeFilter: {
             displayForm: toBearRef(filterObjRef(filter)),
-            notIn: isAttributeElementsByRef(elements) ? elements.uris : elements.values,
+            notIn: (isAttributeElementsByRef(elements) ? elements.uris : elements.values) as string[], // checked above so the cast is ok
         },
     };
 };
@@ -101,10 +103,11 @@ const convertPositiveAttributeFilter = (
     filter: IPositiveAttributeFilter,
 ): GdcVisualizationObject.IPositiveAttributeFilter => {
     const elements = filterAttributeElements(filter);
+    assertNoNulls(elements);
     return {
         positiveAttributeFilter: {
             displayForm: toBearRef(filterObjRef(filter)),
-            in: isAttributeElementsByRef(elements) ? elements.uris : elements.values,
+            in: (isAttributeElementsByRef(elements) ? elements.uris : elements.values) as string[], // checked above so the cast is ok
         },
     };
 };

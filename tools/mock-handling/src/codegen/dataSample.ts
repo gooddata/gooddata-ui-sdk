@@ -14,7 +14,7 @@ function generateRecordingForDataSample(entries: DataSampleRecording[]): string 
         .map(([_, entryRecording]) => {
             return entryRecording.getAttributeElements().map((element, index) => {
                 return `${createUniqueVariableName(
-                    element.title,
+                    element.title ?? "NULL",
                 )} : ${entryRecording.getRecordingName()}[${index}]`;
             });
         })

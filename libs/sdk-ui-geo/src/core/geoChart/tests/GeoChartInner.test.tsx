@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
 import { ShallowWrapper, shallow } from "enzyme";
 import { GeoChartInner, IGeoChartInnerProps, IGeoChartInnerOptions } from "../GeoChartInner";
@@ -13,7 +13,7 @@ const { dv, geoData } = RecShortcuts.AllAndSmall;
 
 function buildGeoChartOptions(): IGeoChartInnerOptions {
     const colorStrategy = getColorStrategy(DefaultColorPalette, [], geoData, dv);
-    const categoryItems = createCategoryLegendItems(colorStrategy, "(empty)");
+    const categoryItems = createCategoryLegendItems(colorStrategy, "(empty)", "(null)");
 
     return {
         geoData,

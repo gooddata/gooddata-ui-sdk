@@ -12,7 +12,6 @@ import { getColorPalette, rgbToRgba } from "./helpers/geoChart/colors";
 import { isAttributeDescriptor, isResultAttributeHeader } from "@gooddata/sdk-model";
 import { getMinMax } from "./helpers/geoChart/common";
 import { IColorLegendItem, IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
-import { IColorAssignment } from "@gooddata/sdk-ui";
 
 const DEFAULT_SEGMENT_ITEM = "default_segment_item";
 const DEFAULT_COLOR_INDEX_IN_PALETTE = DEFAULT_PUSHPIN_COLOR_SCALE - 1;
@@ -39,28 +38,25 @@ export function getColorIndexInPalette(value: number | null, min: number, max: n
 type ColorPaletteMapping = { [itemName: string]: string[] };
 
 export function getColorPaletteMapping(colorStrategy: IColorStrategy): ColorPaletteMapping {
-    const colorAssignment: IColorAssignment[] = colorStrategy.getColorAssignment();
+    const colorAssignment = colorStrategy.getColorAssignment();
 
-    return colorAssignment.reduce(
-        (result: ColorPaletteMapping, item: IColorAssignment, index: number): ColorPaletteMapping => {
-            const color = colorStrategy.getColorByIndex(index);
-            const colorPalette = getColorPalette(color, DEFAULT_PUSHPIN_COLOR_OPACITY);
-            // color base on Location
-            if (isAttributeDescriptor(item.headerItem)) {
-                return {
-                    [DEFAULT_SEGMENT_ITEM]: colorPalette,
-                };
-            }
-            // color base on SegmentBy
-            const name: string = isResultAttributeHeader(item.headerItem)
-                ? item.headerItem.attributeHeaderItem.name
-                : DEFAULT_SEGMENT_ITEM;
+    return colorAssignment.reduce((result: ColorPaletteMapping, item, index): ColorPaletteMapping => {
+        const color = colorStrategy.getColorByIndex(index);
+        const colorPalette = getColorPalette(color, DEFAULT_PUSHPIN_COLOR_OPACITY);
+        // color base on Location
+        if (isAttributeDescriptor(item.headerItem)) {
+            return {
+                [DEFAULT_SEGMENT_ITEM]: colorPalette,
+            };
+        }
+        // color base on SegmentBy
+        const name = isResultAttributeHeader(item.headerItem)
+            ? item.headerItem.attributeHeaderItem.name
+            : DEFAULT_SEGMENT_ITEM;
 
-            result[name] = colorPalette;
-            return result;
-        },
-        {},
-    );
+        result[name ?? DEFAULT_SEGMENT_ITEM] = colorPalette;
+        return result;
+    }, {});
 }
 
 /**

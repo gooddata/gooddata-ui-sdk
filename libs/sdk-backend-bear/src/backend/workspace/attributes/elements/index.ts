@@ -141,12 +141,16 @@ class BearWorkspaceElementsQuery implements IElementsQuery {
         );
 
         const urisToUse = elements?.uris ?? uris;
+        invariant(
+            !urisToUse || urisToUse.every((item) => item !== null),
+            "Nulls are not supported as attribute element uris on bear",
+        );
 
         return ServerPaging.for(
             async ({ limit, offset }) => {
                 const params: GdcMetadata.IValidElementsParams = {
                     ...restOptions,
-                    ...{ uris: urisToUse },
+                    ...{ uris: urisToUse as string[] | undefined },
                     limit,
                     offset,
                     afm: this.limitingAfm,
