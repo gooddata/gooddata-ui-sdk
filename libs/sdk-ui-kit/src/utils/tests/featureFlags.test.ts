@@ -1,34 +1,31 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 
 import { isFreemiumEdition, shouldEnableNewNavigation, shouldHidePPExperience } from "../featureFlags";
 
 describe("featureFlags utils", () => {
     describe("shouldHidePPExperience", () => {
-        it("should not hide pixel perfect experience for free/growth user if enablePixelPerfectExperience is true", () => {
+        it("should hide pixel perfect experience if hidePixelPerfectExperience is true", () => {
+            const shouldHidePixelperfect = shouldHidePPExperience({
+                enablePixelPerfectExperience: false,
+                hidePixelPerfectExperience: true,
+            });
+            expect(shouldHidePixelperfect).toBe(true);
+        });
+
+        it("should hide pixel perfect experience if hidePixelPerfectExperience is false and enablePixelPerfectExperience is false", () => {
+            const shouldHidePixelperfect = shouldHidePPExperience({
+                enablePixelPerfectExperience: false,
+                hidePixelPerfectExperience: false,
+            });
+            expect(shouldHidePixelperfect).toBe(true);
+        });
+
+        it("should not hide pixel perfect experience if hidePixelPerfectExperience is false and enablePixelPerfectExperience is true", () => {
             const shouldHidePixelperfect = shouldHidePPExperience({
                 enablePixelPerfectExperience: true,
-                platformEdition: "growth",
                 hidePixelPerfectExperience: false,
             });
             expect(shouldHidePixelperfect).toBe(false);
-        });
-
-        it("should hide pixel perfect experience for free/growth user if enablePixelPerfectExperience is false", () => {
-            const shouldHidePixelperfect = shouldHidePPExperience({
-                enablePixelPerfectExperience: false,
-                platformEdition: "growth",
-                hidePixelPerfectExperience: false,
-            });
-            expect(shouldHidePixelperfect).toBe(true);
-        });
-
-        it("should hide pixel perfect experience if hidePixelPerfectExperience is true", () => {
-            const shouldHidePixelperfect = shouldHidePPExperience({
-                hidePixelPerfectExperience: true,
-                enablePixelPerfectExperience: false,
-                platformEdition: "growth",
-            });
-            expect(shouldHidePixelperfect).toBe(true);
         });
     });
 
@@ -82,7 +79,17 @@ describe("featureFlags utils", () => {
                 expect(enableNewNavigation).toBe(false);
             });
 
-            it("should return true if enablePixelPerfectExperience is false", () => {
+            it("should return true if hidePixelPerfectExperience is true", () => {
+                const enableNewNavigation = shouldEnableNewNavigation({
+                    hidePixelPerfectExperience: true,
+                    enablePixelPerfectExperience: false,
+                    enableNewNavigationForResponsiveUi: true,
+                    platformEdition: "growth",
+                });
+                expect(enableNewNavigation).toBe(true);
+            });
+
+            it("should return true if hidePixelPerfectExperience is false and enablePixelPerfectExperience is false", () => {
                 const enableNewNavigation = shouldEnableNewNavigation({
                     hidePixelPerfectExperience: false,
                     enablePixelPerfectExperience: false,
@@ -92,7 +99,7 @@ describe("featureFlags utils", () => {
                 expect(enableNewNavigation).toBe(true);
             });
 
-            it("should return false if enablePixelPerfectExperience is true", () => {
+            it("should return false if hidePixelPerfectExperience is false and enablePixelPerfectExperience is true", () => {
                 const enableNewNavigation = shouldEnableNewNavigation({
                     hidePixelPerfectExperience: false,
                     enablePixelPerfectExperience: true,
@@ -122,12 +129,22 @@ describe("featureFlags utils", () => {
                 expect(enableNewNavigation).toBe(true);
             });
 
-            it("should return false if hidePixelPerfectExperience is false", () => {
+            it("should return true if hidePixelPerfectExperience is false and enablePixelPerfectExperience is false", () => {
                 const enableNewNavigation = shouldEnableNewNavigation({
                     hidePixelPerfectExperience: false,
                     enablePixelPerfectExperience: false,
                     enableNewNavigationForResponsiveUi: true,
                     platformEdition: "enterprise",
+                });
+                expect(enableNewNavigation).toBe(true);
+            });
+
+            it("should return false if hidePixelPerfectExperience is false and enablePixelPerfectExperience is true", () => {
+                const enableNewNavigation = shouldEnableNewNavigation({
+                    hidePixelPerfectExperience: false,
+                    enablePixelPerfectExperience: true,
+                    enableNewNavigationForResponsiveUi: true,
+                    platformEdition: "growth",
                 });
                 expect(enableNewNavigation).toBe(false);
             });
