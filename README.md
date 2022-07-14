@@ -51,3 +51,4 @@ This repository is under a GoodData commercial license available in the [LICENSE
 commercial package, HighCharts. Subdirectories containing the MIT license are not subject to the GoodData
 commercial license and do not contain any commercial code.
 Please see the [NOTICE](NOTICE) file for additional licensing information related to this project's third-party open source components.
+Test
