@@ -5,3 +5,5 @@ export * from "./useWidgetFilters";
 export * from "./useInsightWidgetDataView";
 export * from "./useCustomWidgetExecutionDataView";
 export * from "./useCustomWidgetInsightDataView";
+export * from "./useWidgetRelatedDateDatasets";
+export * from "./configuration";

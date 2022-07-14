@@ -15,6 +15,8 @@ $gd-palette-primary-dimmed50: var(
     --gd-palette-primary-dimmed50,
     mix($gd-color-highlight, $default-gd-color-white, 50%)
 );
+$gd-color-positive-dimmed: mix($gd-color-positive, $default-gd-color-text-light, 10%);
+$gd-color-negative-dimmed: mix($gd-color-negative, $default-gd-color-text-light, 10%);
 
 $item-border: 2px;
 $item-min-height: 178px;

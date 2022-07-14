@@ -24,13 +24,15 @@ export interface IUseWidgetSelectionResult {
     onSelected: () => void;
 }
 
-export function useWidgetSelection(widgetRef: ObjRef): IUseWidgetSelectionResult {
+export function useWidgetSelection(widgetRef: ObjRef | undefined): IUseWidgetSelectionResult {
     const dispatch = useDashboardDispatch();
 
     const isSelectable = useDashboardSelector(selectIsInEditMode);
 
     const selectedWidget = useDashboardSelector(selectSelectedWidgetRef);
-    const isSelected = isSelectable && !!selectedWidget && areObjRefsEqual(selectedWidget, widgetRef);
+    const isSelected = Boolean(
+        isSelectable && selectedWidget && widgetRef && areObjRefsEqual(selectedWidget, widgetRef),
+    );
 
     const onSelected = useCallback(() => {
         if (isSelectable && widgetRef) {

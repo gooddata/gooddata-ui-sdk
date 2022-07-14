@@ -16,6 +16,7 @@ import {
 import { IDashboardWidgetProps } from "./types";
 import { DashboardKpi } from "../kpi/DashboardKpi";
 import { DefaultDashboardInsightWidget } from "./DefaultDashboardInsightWidget";
+import { useWidgetSelection } from "../common/useWidgetSelection";
 
 /**
  * @internal
@@ -37,6 +38,8 @@ export const DefaultDashboardWidget = (props: IDashboardWidgetProps): JSX.Elemen
 
     const dispatchEvent = useDashboardEventDispatch();
     const effectiveBackend = useBackendStrict(backend);
+
+    const { isSelected } = useWidgetSelection(widgetRef);
 
     const backendWithEventing = useMemo(() => {
         // use a flag to report only the first result of the execution as per the events documented API
@@ -87,7 +90,10 @@ export const DefaultDashboardWidget = (props: IDashboardWidgetProps): JSX.Elemen
                         index={index}
                     />
                 ) : (
-                    <DashboardItem className={cx("type-kpi", `s-dash-item-${index}`)} screen={screen}>
+                    <DashboardItem
+                        className={cx("type-kpi", `s-dash-item-${index}`, { "is-selected": isSelected })}
+                        screen={screen}
+                    >
                         <DashboardKpi
                             kpiWidget={widget}
                             alert={alert}
