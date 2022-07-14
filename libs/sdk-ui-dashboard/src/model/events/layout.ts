@@ -254,10 +254,10 @@ export function layoutSectionHeaderChanged(
 }
 
 /**
- * Payload of the {@link DashboardLayoutSectionItemsHeightChanged} event.
+ * Payload of the {@link DashboardLayoutSectionItemsHeightResized} event.
  * @alpha
  */
-export interface DashboardLayoutSectionItemsHeightChangedPayload {
+export interface DashboardLayoutSectionItemsHeightResizedPayload {
     /**
      * Index of the section which items height was changed.
      */
@@ -279,20 +279,20 @@ export interface DashboardLayoutSectionItemsHeightChangedPayload {
  *
  * @alpha
  */
-export interface DashboardLayoutSectionItemsHeightChanged extends IDashboardEvent {
-    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ITEMS_HEIGHT_CHANGED";
-    readonly payload: DashboardLayoutSectionItemsHeightChangedPayload;
+export interface DashboardLayoutSectionItemsHeightResized extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ITEMS_HEIGHT_RESIZED";
+    readonly payload: DashboardLayoutSectionItemsHeightResizedPayload;
 }
 
-export function layoutSectionItemsHeightChanged(
+export function layoutSectionItemsHeightResized(
     ctx: DashboardContext,
     sectionIndex: number,
     itemIndexes: number[],
     newHeight: number,
     correlationId?: string,
-): DashboardLayoutSectionItemsHeightChanged {
+): DashboardLayoutSectionItemsHeightResized {
     return {
-        type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ITEMS_HEIGHT_CHANGED",
+        type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ITEMS_HEIGHT_RESIZED",
         ctx,
         correlationId,
         payload: {

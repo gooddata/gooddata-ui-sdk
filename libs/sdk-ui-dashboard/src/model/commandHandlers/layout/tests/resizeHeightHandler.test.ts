@@ -6,7 +6,7 @@ import { DashboardTester, preloadedTesterFactory } from "../../../tests/Dashboar
 
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures";
-import { DashboardLayoutSectionItemsHeightChanged } from "../../../events/layout";
+import { DashboardLayoutSectionItemsHeightResized } from "../../../events/layout";
 
 describe("resize section items height handler", () => {
     let Tester: DashboardTester;
@@ -44,9 +44,9 @@ describe("resize section items height handler", () => {
         it("should set height in items by index", async () => {
             const originalLayout = selectLayout(Tester.state());
 
-            const event: DashboardLayoutSectionItemsHeightChanged = await Tester.dispatchAndWaitFor(
+            const event: DashboardLayoutSectionItemsHeightResized = await Tester.dispatchAndWaitFor(
                 resizeHeight(1, [0, 1], 14),
-                "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ITEMS_HEIGHT_CHANGED",
+                "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ITEMS_HEIGHT_RESIZED",
             );
 
             const newLayout = selectLayout(Tester.state());
@@ -57,7 +57,7 @@ describe("resize section items height handler", () => {
             );
 
             expect(event).toMatchObject({
-                type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ITEMS_HEIGHT_CHANGED",
+                type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ITEMS_HEIGHT_RESIZED",
                 payload: {
                     sectionIndex: 1,
                     itemIndexes: [0, 1],

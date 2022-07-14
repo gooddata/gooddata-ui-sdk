@@ -7,8 +7,8 @@ import { put, select } from "redux-saga/effects";
 import { ResizeHeight } from "../../commands/layout";
 import { invalidArgumentsProvided } from "../../events/general";
 import {
-    DashboardLayoutSectionItemsHeightChanged,
-    layoutSectionItemsHeightChanged,
+    DashboardLayoutSectionItemsHeightResized,
+    layoutSectionItemsHeightResized,
 } from "../../events/layout";
 import { getMaxHeight, getMinHeight } from "../../layout/sizing";
 import { selectInsightsMap } from "../../store/insights/insightsSelectors";
@@ -30,7 +30,7 @@ function validateLayoutIndexes(
         throw invalidArgumentsProvided(
             ctx,
             command,
-            `Attempting to replace item from non-existent section at ${sectionIndex}. There are only ${layout.sections.length} sections.`,
+            `Attempting to resize item from non-existent section at ${sectionIndex}. There are only ${layout.sections.length} sections.`,
         );
     }
 
@@ -41,7 +41,7 @@ function validateLayoutIndexes(
             throw invalidArgumentsProvided(
                 ctx,
                 command,
-                `Attempting to replace non-existent item from index ${itemIndex} in section ${sectionIndex}. There are only ${fromSection.items.length} items in this section.`,
+                `Attempting to resize non-existent item from index ${itemIndex} in section ${sectionIndex}. There are only ${fromSection.items.length} items in this section.`,
             );
         }
     });
@@ -50,7 +50,7 @@ function validateLayoutIndexes(
 export function* resizeHeightHandler(
     ctx: DashboardContext,
     cmd: ResizeHeight,
-): SagaIterator<DashboardLayoutSectionItemsHeightChanged> {
+): SagaIterator<DashboardLayoutSectionItemsHeightResized> {
     const {
         payload: { sectionIndex, itemIndexes, height },
     } = cmd;
@@ -63,16 +63,14 @@ export function* resizeHeightHandler(
     validateHeight(ctx, layout, insightsMap, cmd);
 
     yield put(
-        batchActions([
-            layoutActions.changeItemsHeight({
-                sectionIndex,
-                itemIndexes,
-                height,
-            }),
-        ]),
+        layoutActions.changeItemsHeight({
+            sectionIndex,
+            itemIndexes,
+            height,
+        }),
     );
 
-    return layoutSectionItemsHeightChanged(ctx, sectionIndex, itemIndexes, height, cmd.correlationId);
+    return layoutSectionItemsHeightResized(ctx, sectionIndex, itemIndexes, height, cmd.correlationId);
 }
 
 function validateHeight(
@@ -98,7 +96,7 @@ function validateHeight(
         throw invalidArgumentsProvided(
             ctx,
             cmd,
-            `Attempting to set invalid height. Allowed height is form ${minLimit} to ${maxLimit}.`,
+            `Attempting to set invalid height. Allowed height is from ${minLimit} to ${maxLimit}.`,
         );
     }
 }

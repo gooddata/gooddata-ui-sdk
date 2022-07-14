@@ -810,7 +810,7 @@ export function revertLastLayoutChange(correlationId?: string): UndoLayoutChange
 }
 
 /**
- * Payload of the {@link AddLayoutSection} command.
+ * Payload of the {@link ResizeHeight} command.
  * @alpha
  */
 export interface ResizeHeightPayload {
@@ -847,7 +847,7 @@ export interface ResizeHeight extends IDashboardCommand {
  *
  * @param sectionIndex - index of the section
  * @param itemIndexes - indexes of the items
- * @param height - height in GP
+ * @param height - height in Grid Rows {@link GRID_ROW_HEIGHT_IN_PX}
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
