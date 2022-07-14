@@ -259,6 +259,7 @@
     "configurationPanel.kpiCantBeFilteredByDate": "Não é possível filtrar o kpi por Data. Desmarque a caixa de verificação.",
     "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\" já não pode ser aplicado ao insight. Selecione uma dimensão diferente ou edite o insight.",
     "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\" já não pode ser aplicado ao kpi. Selecione uma dimensão diferente ou edite o kpi.",
+    "configurationPanel.breakAlertWarning": "\n            Os utilizadores configuraram {numAlerts} {numAlerts, select, 1 {alerta} other {alertas}}\n            para este KPI. A modificação do KPI afetará {numAlerts, select, 1 {este alerta} other {estes alertas}}.\n",
     "gs.date.date-dataset.recommended": "Recomendado",
     "gs.date.date-dataset.other": "Outros",
     "gs.date.date-dataset.related": "Relacionado",

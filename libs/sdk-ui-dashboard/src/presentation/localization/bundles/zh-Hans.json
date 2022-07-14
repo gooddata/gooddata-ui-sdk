@@ -259,6 +259,7 @@
     "configurationPanel.kpiCantBeFilteredByDate": "KPI 无法按日期筛选。请取消选中该复选框。",
     "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\"无法再应用于该洞察。请选择其他范围或编辑此洞察。",
     "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\"无法再应用于该 KPI。请选择其他范围或编辑该 KPI。",
+    "configurationPanel.breakAlertWarning": "\n           用户为此 KPI 设置了 {numAlerts} {numAlerts, select, 1 {警报} other {警报}}\n 。修该此 KPI 将影响 {numAlerts, select, 1 {此警报} other {这些警报}}。\n",
     "gs.date.date-dataset.recommended": "已推荐",
     "gs.date.date-dataset.other": "其他",
     "gs.date.date-dataset.related": "相关",

@@ -259,6 +259,7 @@
     "configurationPanel.kpiCantBeFilteredByDate": "KPI kann nicht nach Datum gefiltert werden. Markierung des Kontrollfelds entfernen.",
     "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\" kann nicht mehr auf die Betrachtung angewandt werden. Wählen Sie eine andere Einheit oder bearbeiten Sie die Betrachtung.",
     "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\" kann nicht mehr auf den kpi angewandt werden. Wählen Sie eine andere Dimension oder bearbeiten Sie den KPI.",
+    "configurationPanel.breakAlertWarning": "\n            Nutzer haben {numAlerts} {numAlerts, select, 1 {Benachrichtigung} other {Benachrichtigungen}}\n            für diese KPI eingerichtet. Eine Änderung der KPI wirkt sich auf {numAlerts, select, 1 {dies Benachrichtungen} other {diese Benachrichtungen}} aus.\n",
     "gs.date.date-dataset.recommended": "Empfohlen",
     "gs.date.date-dataset.other": "Andere",
     "gs.date.date-dataset.related": "Zugehörig",

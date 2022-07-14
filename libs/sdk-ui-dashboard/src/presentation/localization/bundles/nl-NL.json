@@ -259,6 +259,7 @@
     "configurationPanel.kpiCantBeFilteredByDate": "De KPI kan niet worden gefilterd op Datum. Vink het selectievakje af.",
     "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\" kan niet langer op het inzicht worden toegepast. Selecteer een andere dimensie of bewerk het inzicht.",
     "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\" kan niet langer op de KPI worden toegepast. Selecteer een andere dimensie of bewerk de KPI.",
+    "configurationPanel.breakAlertWarning": "\n            Gebruikers hebben {numAlerts} {numAlerts, select, 1 {alarm} other {alarmen}}\n            ingesteld voor deze KPI. Het aanpassen van de KPI heeft gevolgen voor {numAlerts, select, 1 {dit alarm} other {deze alarmen}}.\n",
     "gs.date.date-dataset.recommended": "Aanbevolen",
     "gs.date.date-dataset.other": "Overige",
     "gs.date.date-dataset.related": "Verwant",

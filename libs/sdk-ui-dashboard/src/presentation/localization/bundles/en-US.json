@@ -1431,6 +1431,11 @@
         "comment": "Don't translate placeholder '{dateDataSet}' and keep '\"' characters as are.",
         "limit": 0
     },
+    "configurationPanel.breakAlertWarning": {
+        "value": "\n            Users have set up {numAlerts} {numAlerts, select, 1 {alert} other {alerts}}\n            for this KPI. Modifying the KPI will affect {numAlerts, select, 1 {this alert} other {these alerts}}.\n        ",
+        "comment": "Don't translate placeholder '{numAlerts}'. Translate only uppercase '{numAlerts, select, 1 {ALERT} other {ALERTS}}'",
+        "limit": 0
+    },
     "gs.date.date-dataset.recommended": {
         "value": "Recommended",
         "comment": "",
