@@ -1,26 +1,37 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import noop from "lodash/noop";
 import { PluggableComboChartDeprecated } from "../PluggableComboChartDeprecated";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { IVisConstruct } from "../../../../interfaces/Visualization";
+import { getLastRenderEl } from "../../tests/testHelpers";
+import * as testMocks from "../../../../tests/mocks/testMocks";
 
 describe("PluggableComboChartDeprecated", () => {
-    const defaultProps = {
+    const mockElement = document.createElement("div");
+    const mockConfigElement = document.createElement("div");
+    const mockRenderFun = jest.fn();
+    const executionFactory = dummyBackend().workspace("PROJECTID").execution();
+    const defaultProps: IVisConstruct = {
         projectId: "PROJECTID",
-        element: "body",
-        configPanelElement: null as string,
+        element: () => mockElement,
+        configPanelElement: () => mockConfigElement,
         callbacks: {
             afterRender: noop,
             pushData: noop,
         },
         backend: dummyBackend(),
         visualizationProperties: {},
-        renderFun: noop,
+        renderFun: mockRenderFun,
     };
 
     function createComponent(props = defaultProps) {
         return new PluggableComboChartDeprecated(props);
     }
+
+    afterEach(() => {
+        mockRenderFun.mockReset();
+    });
 
     it("should create visualization", () => {
         const visualization = createComponent();
@@ -109,6 +120,20 @@ describe("PluggableComboChartDeprecated", () => {
             );
 
             expect(extendedReferencePoint.uiConfig.supportedOverTimeComparisonTypes).toEqual([]);
+        });
+    });
+
+    describe("`renderVisualization` and `renderConfigurationPanel`", () => {
+        it("should mount on the element defined by the callback", () => {
+            const visualization = createComponent();
+
+            visualization.update({}, testMocks.insightWithSingleMeasure, {}, executionFactory);
+
+            // 1st call for rendering element
+            // 2nd call for rendering config panel
+            expect(mockRenderFun).toHaveBeenCalledTimes(2);
+            expect(getLastRenderEl(mockRenderFun, mockElement)).toBeDefined();
+            expect(getLastRenderEl(mockRenderFun, mockConfigElement)).toBeDefined();
         });
     });
 });

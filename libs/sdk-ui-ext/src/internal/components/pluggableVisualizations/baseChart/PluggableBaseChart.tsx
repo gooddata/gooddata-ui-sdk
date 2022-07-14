@@ -18,7 +18,6 @@ import {
     updateConfigWithSettings,
 } from "@gooddata/sdk-ui-charts";
 import React from "react";
-import { render } from "react-dom";
 import compact from "lodash/compact";
 
 import { BUCKETS } from "../../../constants/bucket";
@@ -111,7 +110,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     }
 
     public unmount(): void {
-        unmountComponentsAtNodes([this.element, this.configPanelElement]);
+        unmountComponentsAtNodes([this.getElement(), this.getConfigPanelElement()].filter(Boolean));
     }
 
     public getUiConfig(): IUiConfig {
@@ -276,7 +275,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
                 ErrorComponent={null}
                 theme={theme}
             />,
-            document.querySelector(this.element),
+            this.getElement(),
         );
     }
 
@@ -294,8 +293,10 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     }
 
     protected renderConfigurationPanel(insight: IInsightDefinition): void {
-        if (document.querySelector(this.configPanelElement)) {
-            render(
+        const configPanelElement = this.getConfigPanelElement();
+
+        if (configPanelElement) {
+            this.renderFun(
                 <BaseChartConfigurationPanel
                     locale={this.locale}
                     references={this.references}
@@ -310,7 +311,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
                     featureFlags={this.featureFlags}
                     axis={this.axis}
                 />,
-                document.querySelector(this.configPanelElement),
+                configPanelElement,
             );
         }
     }

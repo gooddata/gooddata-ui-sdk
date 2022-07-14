@@ -14,7 +14,6 @@ import {
 import { BucketNames } from "@gooddata/sdk-ui";
 import { CoreHeadline, updateConfigWithSettings } from "@gooddata/sdk-ui-charts";
 import React from "react";
-import { render } from "react-dom";
 import { METRIC } from "../../../constants/bucket";
 import {
     IBucketItem,
@@ -96,7 +95,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
     }
 
     public unmount(): void {
-        unmountComponentsAtNodes([this.element, this.configPanelElement]);
+        unmountComponentsAtNodes([this.getElement(), this.getConfigPanelElement()]);
     }
 
     public getExtendedReferencePoint(
@@ -202,21 +201,23 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
                 LoadingComponent={null}
                 ErrorComponent={null}
             />,
-            document.querySelector(this.element),
+            this.getElement(),
         );
     }
 
     protected renderConfigurationPanel(): void {
-        if (document.querySelector(this.configPanelElement)) {
+        const configPanelElement = this.getConfigPanelElement();
+
+        if (configPanelElement) {
             const properties = this.visualizationProperties ?? {};
 
-            render(
+            this.renderFun(
                 <UnsupportedConfigurationPanel
                     locale={this.locale}
                     pushData={this.pushData}
                     properties={getSupportedProperties(properties, this.supportedPropertiesList)}
                 />,
-                document.querySelector(this.configPanelElement),
+                configPanelElement,
             );
         }
     }

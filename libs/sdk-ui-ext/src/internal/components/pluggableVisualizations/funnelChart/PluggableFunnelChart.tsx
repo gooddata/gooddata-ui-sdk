@@ -1,6 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { render } from "react-dom";
 import { IVisConstruct, IReferencePoint, IExtendedReferencePoint } from "../../../interfaces/Visualization";
 
 import { PluggablePieChart } from "../pieChart/PluggablePieChart";
@@ -49,16 +48,18 @@ export class PluggableFunnelChart extends PluggablePieChart {
     }
 
     protected renderConfigurationPanel(): void {
-        if (document.querySelector(this.configPanelElement)) {
+        const configPanelElement = this.getConfigPanelElement();
+
+        if (configPanelElement) {
             const properties = this.visualizationProperties ?? {};
 
-            render(
+            this.renderFun(
                 <UnsupportedConfigurationPanel
                     locale={this.locale}
                     pushData={this.pushData}
                     properties={properties}
                 />,
-                document.querySelector(this.configPanelElement),
+                configPanelElement,
             );
         }
     }

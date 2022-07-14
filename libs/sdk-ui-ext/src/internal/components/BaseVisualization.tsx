@@ -101,11 +101,13 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
     private visElementId: string;
     private visualization: IVisualization;
     private executionFactory: IExecutionFactory;
+    private containerRef: React.RefObject<HTMLDivElement>;
 
     constructor(props: IBaseVisualizationProps) {
         super(props);
         this.visElementId = uuidv4();
         this.executionFactory = props.backend.workspace(props.projectId).execution();
+        this.containerRef = React.createRef();
     }
 
     public componentWillUnmount(): void {
@@ -166,7 +168,14 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
     }
 
     public render(): React.ReactNode {
-        return <div key={this.visElementId} style={{ height: "100%" }} className={this.getClassName()} />;
+        return (
+            <div
+                key={this.visElementId}
+                style={{ height: "100%" }}
+                className={this.getClassName()}
+                ref={this.containerRef}
+            />
+        );
     }
 
     private getVisElementClassName(): string {
@@ -208,8 +217,18 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
                 locale,
                 environment,
                 backend: props.backend,
-                element: `.${this.getVisElementClassName()}`,
-                configPanelElement: `.${configPanelClassName}`,
+                element: () => {
+                    const rootNode =
+                        (this.containerRef.current?.getRootNode() as Document | ShadowRoot) ?? document;
+
+                    return rootNode.querySelector(`.${this.getVisElementClassName()}`);
+                },
+                configPanelElement: () => {
+                    const rootNode =
+                        (this.containerRef.current?.getRootNode() as Document | ShadowRoot) ?? document;
+
+                    return rootNode.querySelector(`.${configPanelClassName}`);
+                },
                 callbacks: {
                     afterRender: props.afterRender,
                     onLoadingChanged: props.onLoadingChanged,

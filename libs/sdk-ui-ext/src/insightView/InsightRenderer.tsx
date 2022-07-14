@@ -154,8 +154,19 @@ class InsightRendererCore extends React.PureComponent<IInsightRendererProps & Wr
                 onDrill: this.props.onDrill,
                 onExportReady: this.onExportReadyDecorator,
             },
-            configPanelElement: ".gd-configuration-panel-content", // this is apparently a well-know constant (see BaseVisualization)
-            element: `#${this.elementId}`,
+            configPanelElement: () => {
+                const rootNode =
+                    (this.containerRef.current?.getRootNode() as Document | ShadowRoot) ?? document;
+
+                // this is apparently a well-know constant (see BaseVisualization)
+                return rootNode.querySelector(".gd-configuration-panel-content");
+            },
+            element: () => {
+                const rootNode =
+                    (this.containerRef.current?.getRootNode() as Document | ShadowRoot) ?? document;
+
+                return rootNode.querySelector(`#${this.elementId}`);
+            },
             environment: "dashboards", // TODO get rid of this
             locale: this.props.locale,
             projectId: this.props.workspace,

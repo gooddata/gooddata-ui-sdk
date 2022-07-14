@@ -37,7 +37,6 @@ import {
     pivotTableMenuForCapabilities,
 } from "@gooddata/sdk-ui-pivot";
 import React from "react";
-import { render } from "react-dom";
 import ReactMeasure from "react-measure";
 
 import { ATTRIBUTE, DATE, METRIC } from "../../../constants/bucket";
@@ -163,7 +162,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
     }
 
     public unmount(): void {
-        unmountComponentsAtNodes([this.element, this.configPanelElement]);
+        unmountComponentsAtNodes([this.getElement(), this.getConfigPanelElement()]);
     }
 
     public getExtendedReferencePoint(
@@ -400,15 +399,17 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                         );
                     }}
                 </ReactMeasure>,
-                document.querySelector(this.element),
+                this.getElement(),
             );
         } else {
-            this.renderFun(<CorePivotTable {...pivotTableProps} />, document.querySelector(this.element));
+            this.renderFun(<CorePivotTable {...pivotTableProps} />, this.getElement());
         }
     }
 
     protected renderConfigurationPanel(insight: IInsightDefinition): void {
-        if (document.querySelector(this.configPanelElement)) {
+        const configPanelElement = this.getConfigPanelElement();
+
+        if (configPanelElement) {
             const properties = this.visualizationProperties ?? {};
 
             // we need to handle cases when attribute previously bearing the default sort is no longer available
@@ -419,13 +420,13 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                   }
                 : properties;
 
-            render(
+            this.renderFun(
                 <UnsupportedConfigurationPanel
                     locale={this.locale}
                     pushData={this.pushData}
                     properties={sanitizedProperties}
                 />,
-                document.querySelector(this.configPanelElement),
+                configPanelElement,
             );
         }
     }

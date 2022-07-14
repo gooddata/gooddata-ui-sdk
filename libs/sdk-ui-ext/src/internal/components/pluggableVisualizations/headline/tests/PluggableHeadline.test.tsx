@@ -1,7 +1,4 @@
 // (C) 2019-2022 GoodData Corporation
-import React from "react";
-import ReactDom from "react-dom";
-
 import { PluggableHeadline } from "../PluggableHeadline";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
 import * as testMocks from "../../../../tests/mocks/testMocks";
@@ -15,19 +12,23 @@ import {
 
 import { getMeasureItems } from "../../../../utils/bucketHelper";
 import { IDrillableItem, OverTimeComparisonTypes, BucketNames } from "@gooddata/sdk-ui";
-import { CoreHeadline } from "@gooddata/sdk-ui-charts";
+import { CoreHeadline, ICoreChartProps } from "@gooddata/sdk-ui-charts";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import cloneDeep from "lodash/cloneDeep";
-import noop from "lodash/noop";
+import { getLastRenderEl } from "../../tests/testHelpers";
 
 describe("PluggableHeadline", () => {
-    const defaultProps = {
+    const mockElement = document.createElement("div");
+    const mockConfigElement = document.createElement("div");
+    const mockRenderFun = jest.fn();
+    const executionFactory = dummyBackend().workspace("PROJECTID").execution();
+    const defaultProps: IVisConstruct = {
         projectId: "PROJECTID",
         backend: dummyBackend(),
-        element: "body",
-        configPanelElement: "invalid",
+        element: () => mockElement,
+        configPanelElement: () => mockConfigElement,
         visualizationProperties: {},
-        renderFun: noop,
+        renderFun: mockRenderFun,
         callbacks: {
             afterRender: jest.fn(),
             pushData: jest.fn(),
@@ -35,8 +36,6 @@ describe("PluggableHeadline", () => {
             onError: jest.fn(),
         },
     };
-
-    const executionFactory = dummyBackend().workspace("PROJECTID").execution();
 
     function createComponent(customProps: Partial<IVisConstruct> = {}) {
         return new PluggableHeadline({
@@ -54,6 +53,10 @@ describe("PluggableHeadline", () => {
             },
         };
     }
+
+    afterEach(() => {
+        mockRenderFun.mockReset();
+    });
 
     it("should create visualization", () => {
         const visualization = createComponent();
@@ -92,12 +95,6 @@ describe("PluggableHeadline", () => {
         const emptyPropertiesMeta = {};
 
         it("should not render headline when insight is empty", () => {
-            const fakeElement: any = "fake element";
-            const reactCreateElementSpy = jest
-                .spyOn(React, "createElement")
-                .mockImplementation(() => fakeElement);
-            const reactRenderSpy = jest.spyOn(ReactDom, "render").mockImplementation(jest.fn());
-
             const onError = jest.fn();
             const headline = createComponent({
                 callbacks: {
@@ -110,20 +107,12 @@ describe("PluggableHeadline", () => {
 
             headline.update({ ...options }, testMocks.emptyInsight, emptyPropertiesMeta, executionFactory);
 
-            expect(reactRenderSpy).toHaveBeenCalledTimes(0);
+            const renderEl = getLastRenderEl(mockRenderFun, mockElement);
+            expect(renderEl).toBeUndefined();
             expect(onError).toHaveBeenCalled();
-
-            reactCreateElementSpy.mockReset();
-            reactRenderSpy.mockReset();
         });
 
         it("should not render headline when insight does not have primary measures", () => {
-            const fakeElement: any = "fake element";
-            const reactCreateElementSpy = jest
-                .spyOn(React, "createElement")
-                .mockImplementation(() => fakeElement);
-            const reactRenderSpy = jest.spyOn(ReactDom, "render").mockImplementation(jest.fn());
-
             const onError = jest.fn();
             const headline = createComponent({
                 callbacks: {
@@ -141,23 +130,14 @@ describe("PluggableHeadline", () => {
                 executionFactory,
             );
 
-            expect(reactRenderSpy).toHaveBeenCalledTimes(0);
+            const renderEl = getLastRenderEl(mockRenderFun, mockElement);
+            expect(renderEl).toBeUndefined();
             expect(onError).toHaveBeenCalled();
-
-            reactCreateElementSpy.mockReset();
-            reactRenderSpy.mockReset();
         });
 
         it("should render headline by react to given element passing down properties", () => {
-            const fakeElement: any = "fake element";
-            const reactCreateElementSpy = jest
-                .spyOn(React, "createElement")
-                .mockImplementation(() => fakeElement);
-            const mockRenderFun = jest.fn();
-
             const headline = createComponent({
                 ...defaultProps,
-                renderFun: mockRenderFun,
                 featureFlags: {
                     enableKDWidgetCustomHeight: false,
                 },
@@ -171,25 +151,14 @@ describe("PluggableHeadline", () => {
                 executionFactory,
             );
 
-            expect(reactCreateElementSpy.mock.calls[0][0]).toBe(CoreHeadline);
-            expect(mockRenderFun).toHaveBeenCalledWith(
-                fakeElement,
-                document.querySelector(defaultProps.element),
-            );
-
-            reactCreateElementSpy.mockReset();
+            const renderEl = getLastRenderEl(mockRenderFun, mockElement);
+            expect(renderEl).toBeDefined();
+            expect(renderEl.type).toBe(CoreHeadline);
         });
 
         it("should render headline by react to given element passing down properties when FF enableKDWidgetCustomHeight is set to true", () => {
-            const fakeElement: any = "fake element";
-            const reactCreateElementSpy = jest
-                .spyOn(React, "createElement")
-                .mockImplementation(() => fakeElement);
-            const mockRenderFun = jest.fn();
-
             const headline = createComponent({
                 ...defaultProps,
-                renderFun: mockRenderFun,
                 featureFlags: {
                     enableKDWidgetCustomHeight: true,
                 },
@@ -203,22 +172,13 @@ describe("PluggableHeadline", () => {
                 executionFactory,
             );
 
-            expect(reactCreateElementSpy.mock.calls[0][0]).toBe(CoreHeadline);
-            expect(mockRenderFun).toHaveBeenCalledWith(
-                fakeElement,
-                document.querySelector(defaultProps.element),
-            );
-
-            reactCreateElementSpy.mockReset();
+            const renderEl = getLastRenderEl<ICoreChartProps>(mockRenderFun, mockElement);
+            expect(renderEl).toBeDefined();
+            expect(renderEl.type).toBe(CoreHeadline);
+            expect(renderEl.props.config.enableCompactSize).toEqual(true);
         });
 
         it("should correctly set config.disableDrillUnderline from FeatureFlag disableKpiDashboardHeadlineUnderline", () => {
-            const fakeElement: any = "fake element";
-            const reactCreateElementSpy = jest
-                .spyOn(React, "createElement")
-                .mockImplementation(() => fakeElement);
-            const reactRenderSpy = jest.spyOn(ReactDom, "render").mockImplementation(jest.fn());
-
             const headline = createComponent({
                 featureFlags: {
                     disableKpiDashboardHeadlineUnderline: true,
@@ -234,10 +194,9 @@ describe("PluggableHeadline", () => {
                 executionFactory,
             );
 
-            expect(reactCreateElementSpy.mock.calls[0][0]).toBe(CoreHeadline);
-
-            reactCreateElementSpy.mockReset();
-            reactRenderSpy.mockReset();
+            const renderEl = getLastRenderEl<ICoreChartProps>(mockRenderFun, mockElement);
+            expect(renderEl.type).toBe(CoreHeadline);
+            expect(renderEl.props.config.disableDrillUnderline).toEqual(true);
         });
     });
 
@@ -1208,6 +1167,20 @@ describe("PluggableHeadline", () => {
                     ]);
                 });
             });
+        });
+    });
+
+    describe("`renderVisualization` and `renderConfigurationPanel`", () => {
+        it("should mount on the element defined by the callback", () => {
+            const visualization = createComponent();
+
+            visualization.update({}, testMocks.insightWithSingleMeasure, {}, executionFactory);
+
+            // 1st call for rendering element
+            // 2nd call for rendering config panel
+            expect(mockRenderFun).toHaveBeenCalledTimes(2);
+            expect(getLastRenderEl(mockRenderFun, mockElement)).toBeDefined();
+            expect(getLastRenderEl(mockRenderFun, mockConfigElement)).toBeDefined();
         });
     });
 });

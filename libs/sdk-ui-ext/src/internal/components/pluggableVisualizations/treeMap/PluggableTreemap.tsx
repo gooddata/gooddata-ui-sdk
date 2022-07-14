@@ -5,7 +5,6 @@ import isEmpty from "lodash/isEmpty";
 import set from "lodash/set";
 import tail from "lodash/tail";
 import { BucketNames, IDrillEvent, VisualizationTypes } from "@gooddata/sdk-ui";
-import { render } from "react-dom";
 import { BUCKETS, DATE, ATTRIBUTE } from "../../../constants/bucket";
 import { TREEMAP_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
 
@@ -208,8 +207,10 @@ export class PluggableTreemap extends PluggableBaseChart {
     }
 
     protected renderConfigurationPanel(insight: IInsightDefinition): void {
-        if (document.querySelector(this.configPanelElement)) {
-            render(
+        const configPanelElement = this.getConfigPanelElement();
+
+        if (configPanelElement) {
+            this.renderFun(
                 <TreeMapConfigurationPanel
                     locale={this.locale}
                     references={this.references}
@@ -223,7 +224,7 @@ export class PluggableTreemap extends PluggableBaseChart {
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}
                 />,
-                document.querySelector(this.configPanelElement),
+                configPanelElement,
             );
         }
     }

@@ -1,6 +1,4 @@
 // (C) 2019-2022 GoodData Corporation
-import React from "react";
-import ReactDom from "react-dom";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 import { PluggableXirr } from "../PluggableXirr";
@@ -8,14 +6,19 @@ import { IVisConstruct, IVisProps } from "../../../../interfaces/Visualization";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
 import * as testMocks from "../../../../tests/mocks/testMocks";
 import { IDrillableItem } from "@gooddata/sdk-ui";
-import { CoreXirr } from "@gooddata/sdk-ui-charts";
+import { CoreXirr, ICoreChartProps } from "@gooddata/sdk-ui-charts";
+import { getLastRenderEl } from "../../tests/testHelpers";
 
 describe("PluggableXirr", () => {
-    const defaultProps = {
+    const mockElement = document.createElement("div");
+    const mockConfigElement = document.createElement("div");
+    const mockRenderFun = jest.fn();
+    const executionFactory = dummyBackend().workspace("PROJECTID").execution();
+    const defaultProps: IVisConstruct = {
         projectId: "PROJECTID",
         backend: dummyBackend(),
-        element: "body",
-        configPanelElement: "invalid",
+        element: () => mockElement,
+        configPanelElement: () => mockConfigElement,
         visualizationProperties: {},
         callbacks: {
             afterRender: jest.fn(),
@@ -23,10 +26,12 @@ describe("PluggableXirr", () => {
             onLoadingChanged: jest.fn(),
             onError: jest.fn(),
         },
-        renderFun: jest.fn(),
+        renderFun: mockRenderFun,
     };
 
-    const executionFactory = dummyBackend().workspace("PROJECTID").execution();
+    afterEach(() => {
+        mockRenderFun.mockReset();
+    });
 
     function createComponent(customProps: Partial<IVisConstruct> = {}) {
         return new PluggableXirr({
@@ -67,30 +72,16 @@ describe("PluggableXirr", () => {
         }
 
         it("should not render xirr when dataSource is missing", () => {
-            const fakeElement: any = "fake element";
-            const reactCreateElementSpy = jest
-                .spyOn(React, "createElement")
-                .mockImplementation(() => fakeElement);
-            const reactRenderSpy = jest.spyOn(ReactDom, "render").mockImplementation(jest.fn());
-
             const xirr = createComponent();
             const options: IVisProps = getTestOptions();
 
             xirr.update({ ...options }, testMocks.emptyInsight, emptyPropertiesMeta, executionFactory);
 
-            expect(reactRenderSpy).toHaveBeenCalledTimes(0);
-
-            reactCreateElementSpy.mockReset();
-            reactRenderSpy.mockReset();
+            const renderEl = getLastRenderEl(mockRenderFun, mockElement);
+            expect(renderEl).toBeUndefined();
         });
 
         it("should render XIRR by react to given element passing down properties", () => {
-            const fakeElement: any = "fake element";
-            const reactCreateElementSpy = jest
-                .spyOn(React, "createElement")
-                .mockImplementation(() => fakeElement);
-            const mockRenderFun = jest.fn();
-
             const xirr = createComponent({
                 ...defaultProps,
                 renderFun: mockRenderFun,
@@ -100,22 +91,12 @@ describe("PluggableXirr", () => {
 
             xirr.update(options, testMocks.insightWithSingleMeasure, emptyPropertiesMeta, executionFactory);
 
-            expect(reactCreateElementSpy.mock.calls[0][0]).toBe(CoreXirr);
-            expect(mockRenderFun).toHaveBeenCalledWith(
-                fakeElement,
-                document.querySelector(defaultProps.element),
-            );
-
-            reactCreateElementSpy.mockReset();
+            const renderEl = getLastRenderEl<ICoreChartProps>(mockRenderFun, mockElement);
+            expect(renderEl.type).toBe(CoreXirr);
+            expect(renderEl.props.config.enableCompactSize).toBeUndefined();
         });
 
         it("should render XIRR by react to given element passing down properties when FF enableKDWidgetCustomHeight is set to true", () => {
-            const fakeElement: any = "fake element";
-            const reactCreateElementSpy = jest
-                .spyOn(React, "createElement")
-                .mockImplementation(() => fakeElement);
-            const mockRenderFun = jest.fn();
-
             const xirr = createComponent({
                 ...defaultProps,
                 renderFun: mockRenderFun,
@@ -125,22 +106,12 @@ describe("PluggableXirr", () => {
 
             xirr.update(options, testMocks.insightWithSingleMeasure, emptyPropertiesMeta, executionFactory);
 
-            expect(reactCreateElementSpy.mock.calls[0][0]).toBe(CoreXirr);
-            expect(mockRenderFun).toHaveBeenCalledWith(
-                fakeElement,
-                document.querySelector(defaultProps.element),
-            );
-
-            reactCreateElementSpy.mockReset();
+            const renderEl = getLastRenderEl<ICoreChartProps>(mockRenderFun, mockElement);
+            expect(renderEl.type).toBe(CoreXirr);
+            expect(renderEl.props.config.enableCompactSize).toBe(true);
         });
 
         it("should correctly set config.disableDrillUnderline from FeatureFlag disableKpiDashboardHeadlineUnderline", () => {
-            const fakeElement: any = "fake element";
-            const reactCreateElementSpy = jest
-                .spyOn(React, "createElement")
-                .mockImplementation(() => fakeElement);
-            const mockRenderFun = jest.fn();
-
             const xirr = createComponent({
                 featureFlags: {
                     disableKpiDashboardHeadlineUnderline: true,
@@ -152,9 +123,9 @@ describe("PluggableXirr", () => {
 
             xirr.update(options, testMocks.insightWithSingleMeasure, emptyPropertiesMeta, executionFactory);
 
-            expect(reactCreateElementSpy.mock.calls[0][0]).toBe(CoreXirr);
-
-            reactCreateElementSpy.mockReset();
+            const renderEl = getLastRenderEl<ICoreChartProps>(mockRenderFun, mockElement);
+            expect(renderEl.type).toBe(CoreXirr);
+            expect(renderEl.props.config.disableDrillUnderline).toBe(true);
         });
     });
 
@@ -175,6 +146,20 @@ describe("PluggableXirr", () => {
             );
 
             expect(extendedReferencePoint).toMatchSnapshot();
+        });
+    });
+
+    describe("PluggableXirr renderVisualization and renderConfigurationPanel", () => {
+        it("should mount on the element defined by the callback", () => {
+            const visualization = createComponent();
+
+            visualization.update({}, testMocks.insightWithSingleMeasure, {}, executionFactory);
+
+            // 1st call for rendering element
+            // 2nd call for rendering config panel
+            expect(mockRenderFun).toHaveBeenCalledTimes(2);
+            expect(getLastRenderEl(mockRenderFun, mockElement)).toBeDefined();
+            expect(getLastRenderEl(mockRenderFun, mockConfigElement)).toBeDefined();
         });
     });
 });

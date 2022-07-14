@@ -8,7 +8,6 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames, IDrillEvent, VisualizationTypes } from "@gooddata/sdk-ui";
 import React from "react";
-import { render } from "react-dom";
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
 import isEmpty from "lodash/isEmpty";
@@ -222,8 +221,10 @@ export class PluggableAreaChart extends PluggableBaseChart {
     }
 
     protected renderConfigurationPanel(insight: IInsightDefinition): void {
-        if (document.querySelector(this.configPanelElement)) {
-            render(
+        const configPanelElement = this.getConfigPanelElement();
+
+        if (configPanelElement) {
+            this.renderFun(
                 <LineChartBasedConfigurationPanel
                     locale={this.locale}
                     colors={this.colors}
@@ -237,7 +238,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}
                 />,
-                document.querySelector(this.configPanelElement),
+                configPanelElement,
             );
         }
     }

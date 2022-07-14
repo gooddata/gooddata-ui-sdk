@@ -7,25 +7,35 @@ import { PluggablePieChart } from "../PluggablePieChart";
 
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
 import { IBucketOfFun } from "../../../../interfaces/Visualization";
+import * as testMocks from "../../../../tests/mocks/testMocks";
+import { getLastRenderEl } from "../../tests/testHelpers";
 
 describe("PluggablePieChart", () => {
+    const mockElement = document.createElement("div");
+    const mockConfigElement = document.createElement("div");
+    const mockRenderFun = jest.fn();
+    const executionFactory = dummyBackend().workspace("PROJECTID").execution();
     const defaultProps = {
         locale: DefaultLocale,
         projectId: "PROJECTID",
-        element: "body",
-        configPanelElement: null as string,
+        element: () => mockElement,
+        configPanelElement: () => mockConfigElement,
         callbacks: {
             afterRender: noop,
             pushData: noop,
         },
         backend: dummyBackend(),
         visualizationProperties: {},
-        renderFun: noop,
+        renderFun: mockRenderFun,
     };
 
     function createComponent(props = defaultProps) {
         return new PluggablePieChart(props);
     }
+
+    afterEach(() => {
+        mockRenderFun.mockReset();
+    });
 
     it("should create visualization", () => {
         const visualization = createComponent();
@@ -171,6 +181,20 @@ describe("PluggablePieChart", () => {
             );
 
             expect(sortConfig).toMatchSnapshot();
+        });
+    });
+
+    describe("`renderVisualization` and `renderConfigurationPanel`", () => {
+        it("should mount on the element defined by the callback", () => {
+            const visualization = createComponent();
+
+            visualization.update({}, testMocks.insightWithSingleMeasure, {}, executionFactory);
+
+            // 1st call for rendering element
+            // 2nd call for rendering config panel
+            expect(mockRenderFun).toHaveBeenCalledTimes(2);
+            expect(getLastRenderEl(mockRenderFun, mockElement)).toBeDefined();
+            expect(getLastRenderEl(mockRenderFun, mockConfigElement)).toBeDefined();
         });
     });
 });

@@ -13,7 +13,12 @@ import { OverTimeComparisonTypes, IDrillEventIntersectionElement } from "@goodda
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { IInsight, IInsightDefinition, IAttribute } from "@gooddata/sdk-model";
 import { Department, Region } from "@gooddata/reference-workspace/dist/md/full";
-import { createDrillEvent, insightDefinitionToInsight, createDrillDefinition } from "../../tests/testHelpers";
+import {
+    createDrillEvent,
+    insightDefinitionToInsight,
+    createDrillDefinition,
+    getLastRenderEl,
+} from "../../tests/testHelpers";
 import {
     sourceInsightDef,
     intersection,
@@ -21,26 +26,35 @@ import {
     expectedInsightDefDepartment,
     targetUri,
 } from "./getInsightWithDrillDownAppliedMock";
-
-const defaultProps: IVisConstruct = {
-    backend: dummyBackend(),
-    projectId: "PROJECTID",
-    element: "body",
-    configPanelElement: null as string,
-    callbacks: {
-        afterRender: noop,
-        pushData: noop,
-    },
-    renderFun: noop,
-    visualizationProperties: {},
-};
-
-function createComponent(props: IVisConstruct = defaultProps) {
-    return new PluggableBulletChart(props);
-}
+import * as testMocks from "../../../../tests/mocks/testMocks";
 
 describe("PluggableBulletChart", () => {
+    const mockElement = document.createElement("div");
+    const mockConfigElement = document.createElement("div");
+    const mockRenderFun = jest.fn();
+    const executionFactory = dummyBackend().workspace("PROJECTID").execution();
+    const defaultProps: IVisConstruct = {
+        backend: dummyBackend(),
+        projectId: "PROJECTID",
+        element: () => mockElement,
+        configPanelElement: () => mockConfigElement,
+        callbacks: {
+            afterRender: noop,
+            pushData: noop,
+        },
+        renderFun: mockRenderFun,
+        visualizationProperties: {},
+    };
+
     const bulletChart = createComponent();
+
+    function createComponent(props: IVisConstruct = defaultProps) {
+        return new PluggableBulletChart(props);
+    }
+
+    afterEach(() => {
+        mockRenderFun.mockReset();
+    });
 
     it("should create visualization", () => {
         expect(bulletChart).toBeTruthy();
@@ -654,6 +668,20 @@ describe("PluggableBulletChart", () => {
             const sortConfig = await chart.getSortConfig(referencePointMock);
 
             expect(sortConfig).toMatchSnapshot();
+        });
+    });
+
+    describe("`renderVisualization` and `renderConfigurationPanel`", () => {
+        it("should mount on the element defined by the callback", () => {
+            const visualization = createComponent();
+
+            visualization.update({}, testMocks.insightWithSingleMeasure, {}, executionFactory);
+
+            // 1st call for rendering element
+            // 2nd call for rendering config panel
+            expect(mockRenderFun).toHaveBeenCalledTimes(2);
+            expect(getLastRenderEl(mockRenderFun, mockElement)).toBeDefined();
+            expect(getLastRenderEl(mockRenderFun, mockConfigElement)).toBeDefined();
         });
     });
 });

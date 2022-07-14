@@ -1,6 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { render } from "react-dom";
 import isEmpty from "lodash/isEmpty";
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
@@ -213,8 +212,10 @@ export class PluggablePieChart extends PluggableBaseChart {
     }
 
     protected renderConfigurationPanel(insight: IInsightDefinition): void {
-        if (document.querySelector(this.configPanelElement)) {
-            render(
+        const configPanelElement = this.getConfigPanelElement();
+
+        if (configPanelElement) {
+            this.renderFun(
                 <PieChartConfigurationPanel
                     locale={this.locale}
                     properties={this.visualizationProperties}
@@ -228,7 +229,7 @@ export class PluggablePieChart extends PluggableBaseChart {
                     featureFlags={this.featureFlags}
                     references={this.references}
                 />,
-                document.querySelector(this.configPanelElement),
+                configPanelElement,
             );
         }
     }

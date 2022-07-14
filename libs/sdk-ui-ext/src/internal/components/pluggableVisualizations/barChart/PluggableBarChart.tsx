@@ -1,6 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { render } from "react-dom";
 import isEmpty from "lodash/isEmpty";
 import isNil from "lodash/isNil";
 
@@ -89,8 +88,10 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
     }
 
     protected renderConfigurationPanel(insight: IInsightDefinition): void {
-        if (document.querySelector(this.configPanelElement)) {
-            render(
+        const configPanelElement = this.getConfigPanelElement();
+
+        if (configPanelElement) {
+            this.renderFun(
                 <BarChartConfigurationPanel
                     locale={this.locale}
                     colors={this.colors}
@@ -105,7 +106,7 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
                     featureFlags={this.featureFlags}
                     axis={this.axis}
                 />,
-                document.querySelector(this.configPanelElement),
+                configPanelElement,
             );
         }
     }

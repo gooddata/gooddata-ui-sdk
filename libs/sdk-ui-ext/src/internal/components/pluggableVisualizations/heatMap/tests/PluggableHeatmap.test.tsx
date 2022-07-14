@@ -13,23 +13,37 @@ import {
     targetUri,
 } from "./getInsightWithDrillDownAppliedMock";
 import { PluggableHeatmap } from "../PluggableHeatmap";
-import { createDrillDefinition, createDrillEvent, insightDefinitionToInsight } from "../../tests/testHelpers";
+import {
+    createDrillDefinition,
+    createDrillEvent,
+    insightDefinitionToInsight,
+    getLastRenderEl,
+} from "../../tests/testHelpers";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
-import { IBucketOfFun, IReferencePoint } from "../../../../interfaces/Visualization";
+import { IBucketOfFun, IReferencePoint, IVisConstruct } from "../../../../interfaces/Visualization";
+import * as testMocks from "../../../../tests/mocks/testMocks";
 
 describe("PluggableHeatmap", () => {
-    const defaultProps = {
+    const mockElement = document.createElement("div");
+    const mockConfigElement = document.createElement("div");
+    const mockRenderFun = jest.fn();
+    const executionFactory = dummyBackend().workspace("PROJECTID").execution();
+    const defaultProps: IVisConstruct = {
         projectId: "PROJECTID",
-        element: "body",
-        configPanelElement: null as string,
+        element: () => mockElement,
+        configPanelElement: () => mockConfigElement,
         callbacks: {
             afterRender: noop,
             pushData: noop,
         },
         backend: dummyBackend(),
         visualizationProperties: {},
-        renderFun: noop,
+        renderFun: mockRenderFun,
     };
+
+    afterEach(() => {
+        mockRenderFun.mockReset();
+    });
 
     function createComponent(props = defaultProps) {
         return new PluggableHeatmap(props);
@@ -250,6 +264,20 @@ describe("PluggableHeatmap", () => {
             );
 
             expect(sortConfig).toMatchSnapshot();
+        });
+    });
+
+    describe("PluggableHeatmap renderVisualization and renderConfigurationPanel", () => {
+        it("should mount on the element defined by the callback", () => {
+            const visualization = createComponent();
+
+            visualization.update({}, testMocks.insightWithSingleMeasure, {}, executionFactory);
+
+            // 1st call for rendering element
+            // 2nd call for rendering config panel
+            expect(mockRenderFun).toHaveBeenCalledTimes(2);
+            expect(getLastRenderEl(mockRenderFun, mockElement)).toBeDefined();
+            expect(getLastRenderEl(mockRenderFun, mockConfigElement)).toBeDefined();
         });
     });
 });
