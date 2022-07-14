@@ -1,7 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 
 import { IWidget } from "@gooddata/sdk-model";
-import { batchActions } from "redux-batched-actions";
 import { SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 import { ResizeHeight } from "../../commands/layout";

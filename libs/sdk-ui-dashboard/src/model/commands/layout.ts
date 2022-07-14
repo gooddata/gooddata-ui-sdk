@@ -847,7 +847,7 @@ export interface ResizeHeight extends IDashboardCommand {
  *
  * @param sectionIndex - index of the section
  * @param itemIndexes - indexes of the items
- * @param height - height in Grid Rows {@link GRID_ROW_HEIGHT_IN_PX}
+ * @param height - height in Grid Rows (by default 1 Grid Row is 20px)
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *

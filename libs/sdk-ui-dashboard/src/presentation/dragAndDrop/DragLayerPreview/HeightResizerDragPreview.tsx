@@ -14,26 +14,33 @@ export type IHeightResizerDragPreviewProps = DragPreviewProps<HeightResizerDragI
 export const HeightResizerDragPreview = (props: IHeightResizerDragPreviewProps) => {
     const { item, initialOffset, differenceFromInitialOffset, documentDimensions } = props;
     const [hasReachedLimit, setReachedLimit] = useState<ReachedHeightResizingLimit>("none");
+
     const { toggleHeightLimitReached } = useResizeHandlers();
     useEffect(() => {
         toggleHeightLimitReached(hasReachedLimit);
     }, [hasReachedLimit, toggleHeightLimitReached]);
 
     const currentOffsetY = differenceFromInitialOffset.y;
-
     const currentUnlimitedHeightGR = getNewHeightGR(
         item.widgetHeights,
         currentOffsetY,
         documentDimensions.scrollTop,
         item.initialScrollTop,
     );
-    const hasNowReachedLimit = hasHeightReachedLimit(currentUnlimitedHeightGR, item.minLimit, item.maxLimit);
 
-    if (hasNowReachedLimit !== hasReachedLimit) {
-        setReachedLimit(hasNowReachedLimit);
-    }
+    useEffect(() => {
+        const hasNowReachedLimit = hasHeightReachedLimit(
+            currentUnlimitedHeightGR,
+            item.minLimit,
+            item.maxLimit,
+        );
+
+        if (hasNowReachedLimit !== hasReachedLimit) {
+            setReachedLimit(hasNowReachedLimit);
+        }
+    }, [currentUnlimitedHeightGR, item.minLimit, item.maxLimit, hasReachedLimit]);
+
     const top = getLimitedYCoord(item, initialOffset.y, currentOffsetY, documentDimensions.scrollTop);
-
     const style = {
         top: `${top + 4}px`,
         left: `${initialOffset.x}px`,

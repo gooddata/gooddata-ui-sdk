@@ -82,7 +82,7 @@ export function HeightResizerHotspot({
         }
     }, [isDragging]);
 
-    const areWidgetsResizing = resizeDirection != "none";
+    const areWidgetsResizing = resizeDirection !== "none";
     const isColumnResizing = resizeDirection === "width";
     const isOtherRowResizing =
         !isEmpty(resizeItemIdentifiers) && !isEqual(resizeItemIdentifiers, widgetIdentifiers);
