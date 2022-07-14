@@ -464,3 +464,98 @@ export function refreshKpiWidget(ref: ObjRef, correlationId?: string): RefreshKp
         },
     };
 }
+
+//
+//
+//
+
+/**
+ * Payload of the {@link SetDrillForKpiWidget} command.
+ * @alpha
+ */
+export interface SetDrillForKpiWidgetPayload {
+    /**
+     * Reference to KPI Widget to modify.
+     */
+    readonly ref: ObjRef;
+    readonly legacyDashboardRef: ObjRef;
+    readonly legacyDashboardTabIdentifier: string;
+}
+
+/**
+ * @alpha
+ */
+export interface SetDrillForKpiWidget extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.KPI_WIDGET.SET_DRILL";
+    readonly payload: SetDrillForKpiWidgetPayload;
+}
+
+/**
+ * Creates the SetDrillForKpiWidget command. Dispatching this command will result in KPI having its drill set to the given value.
+ *
+ * @param ref - reference of the KPI widget to modify
+ * @param legacyDashboardRef - ref of the legacy dashboard to drill to
+ * @param legacyDashboardTabIdentifier - identifier of the legacy dashboard tab to drill to
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function setDrillForKpiWidget(
+    ref: ObjRef,
+    legacyDashboardRef: ObjRef,
+    legacyDashboardTabIdentifier: string,
+    correlationId?: string,
+): SetDrillForKpiWidget {
+    return {
+        type: "GDC.DASH/CMD.KPI_WIDGET.SET_DRILL",
+        correlationId,
+        payload: {
+            ref,
+            legacyDashboardTabIdentifier,
+            legacyDashboardRef,
+        },
+    };
+}
+
+//
+//
+//
+
+/**
+ * Payload of the {@link RemoveDrillForKpiWidget} command.
+ * @alpha
+ */
+export interface RemoveDrillForKpiWidgetPayload {
+    /**
+     * Reference to KPI Widget to modify.
+     */
+    readonly ref: ObjRef;
+}
+
+/**
+ * @alpha
+ */
+export interface RemoveDrillForKpiWidget extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.KPI_WIDGET.REMOVE_DRILL";
+    readonly payload: RemoveDrillForKpiWidgetPayload;
+}
+
+/**
+ * Creates the RemoveDrillForKpiWidget command. Dispatching this command will result in KPI having its drill removed.
+ *
+ * @param ref - reference of the KPI widget to modify
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function removeDrillForKpiWidget(ref: ObjRef, correlationId?: string): RemoveDrillForKpiWidget {
+    return {
+        type: "GDC.DASH/CMD.KPI_WIDGET.REMOVE_DRILL",
+        correlationId,
+        payload: {
+            ref,
+        },
+    };
+}

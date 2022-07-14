@@ -24,6 +24,7 @@ import {
     IDashboardLayoutSectionHeader,
     IKpiComparisonDirection,
     IKpiComparisonTypeComparison,
+    IDrillToLegacyDashboard,
 } from "@gooddata/sdk-model";
 import { WidgetHeader } from "../../types/widgetTypes";
 import flatMap from "lodash/flatMap";
@@ -474,6 +475,26 @@ const replaceKpiWidgetComparison: LayoutReducer<ReplaceKpiWidgetComparison> = (s
     widget.kpi.comparisonDirection = comparisonDirection;
 };
 
+//
+//
+//
+
+type ReplaceKpiWidgetDrill = {
+    ref: ObjRef;
+    drill: IDrillToLegacyDashboard | undefined;
+};
+
+const replaceKpiWidgetDrill: LayoutReducer<ReplaceKpiWidgetDrill> = (state, action) => {
+    invariant(state.layout);
+
+    const { ref, drill } = action.payload;
+    const widget = getWidgetByRef(state, ref);
+
+    invariant(widget && isKpiWidget(widget));
+
+    widget.drills = drill ? [drill] : [];
+};
+
 export const layoutReducers = {
     setLayout,
     updateWidgetIdentities,
@@ -493,6 +514,7 @@ export const layoutReducers = {
     replaceWidgetDateDataset: withUndo(replaceWidgetDateDataset),
     replaceKpiWidgetMeasure: withUndo(replaceKpiWidgetMeasure),
     replaceKpiWidgetComparison: withUndo(replaceKpiWidgetComparison),
+    replaceKpiWidgetDrill: withUndo(replaceKpiWidgetDrill),
     undoLayout: undoReducer,
     clearLayoutHistory: resetUndoReducer,
 };

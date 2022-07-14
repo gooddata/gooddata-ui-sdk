@@ -58,6 +58,8 @@ import { dispatchDashboardEvent } from "../store/_infra/eventDispatcher";
 import { commandRejected } from "../events/general";
 import { changeRenderModeHandler } from "./ui/changeRenderModeHandler";
 import { changeAttributeDisplayFormHandler } from "./filterContext/attributeFilter/changeAttributeDisplayFormHandler";
+import { removeDrillForKpiWidgetHandler } from "./widgets/removeDrillForKpiWidgetHandler";
+import { setDrillForKpiWidgetHandler } from "./widgets/setDrillForKpiWidgetHandler";
 
 function* notImplementedCommand(ctx: DashboardContext, cmd: IDashboardCommand): SagaIterator<void> {
     yield dispatchDashboardEvent(commandRejected(ctx, cmd.correlationId));
@@ -98,6 +100,8 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.KPI_WIDGET.CHANGE_MEASURE": changeKpiWidgetMeasureHandler,
     "GDC.DASH/CMD.KPI_WIDGET.CHANGE_FILTER_SETTINGS": changeKpiWidgetFilterSettingsHandler,
     "GDC.DASH/CMD.KPI_WIDGET.CHANGE_COMPARISON": changeKpiWidgetComparisonHandler,
+    "GDC.DASH/CMD.KPI_WIDGET.REMOVE_DRILL": removeDrillForKpiWidgetHandler,
+    "GDC.DASH/CMD.KPI_WIDGET.SET_DRILL": setDrillForKpiWidgetHandler,
     "GDC.DASH/CMD.KPI_WIDGET.REFRESH": notImplementedCommand,
     "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_HEADER": changeInsightWidgetHeaderHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_FILTER_SETTINGS": changeInsightWidgetFilterSettingsHandler,

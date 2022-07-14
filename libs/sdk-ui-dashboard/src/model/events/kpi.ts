@@ -8,6 +8,7 @@ import {
     ICatalogDateDataset,
     IMeasureMetadataObject,
     IKpi,
+    IDrillToLegacyDashboard,
 } from "@gooddata/sdk-model";
 
 import { IDashboardEvent } from "./base";
@@ -272,6 +273,113 @@ export function kpiWidgetComparisonChanged(
  */
 export const isDashboardKpiWidgetComparisonChanged = eventGuard<DashboardKpiWidgetComparisonChanged>(
     "GDC.DASH/EVT.KPI_WIDGET.COMPARISON_CHANGED",
+);
+
+//
+//
+//
+
+/**
+ * Payload of the {@link DashboardKpiWidgetDrillRemoved} event.
+ * @alpha
+ */
+export interface DashboardKpiWidgetDrillRemovedPayload {
+    /**
+     * Reference to changed KPI Widget.
+     */
+    readonly ref: ObjRef;
+}
+
+/**
+ * This event is emitted when dashboard's KPI Widget has its drills removed.
+ *
+ * @alpha
+ */
+export interface DashboardKpiWidgetDrillRemoved extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.KPI_WIDGET.DRILL_REMOVED";
+    readonly payload: DashboardKpiWidgetDrillRemovedPayload;
+}
+
+export function kpiWidgetDrillRemoved(
+    ctx: DashboardContext,
+    ref: ObjRef,
+    correlationId?: string,
+): DashboardKpiWidgetDrillRemoved {
+    return {
+        type: "GDC.DASH/EVT.KPI_WIDGET.DRILL_REMOVED",
+        ctx,
+        correlationId,
+        payload: {
+            ref,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardKpiWidgetDrillRemoved}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardKpiWidgetDrillRemoved = eventGuard<DashboardKpiWidgetDrillRemoved>(
+    "GDC.DASH/EVT.KPI_WIDGET.DRILL_REMOVED",
+);
+
+//
+//
+//
+
+/**
+ * Payload of the {@link DashboardKpiWidgetDrillSet} event.
+ * @alpha
+ */
+export interface DashboardKpiWidgetDrillSetPayload {
+    /**
+     * Reference to changed KPI Widget.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * The drill set.
+     */
+    readonly drill: IDrillToLegacyDashboard;
+}
+
+/**
+ * This event is emitted when dashboard's KPI Widget has its drill set.
+ *
+ * @alpha
+ */
+export interface DashboardKpiWidgetDrillSet extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.KPI_WIDGET.DRILL_SET";
+    readonly payload: DashboardKpiWidgetDrillSetPayload;
+}
+
+export function kpiWidgetDrillSet(
+    ctx: DashboardContext,
+    ref: ObjRef,
+    drill: IDrillToLegacyDashboard,
+    correlationId?: string,
+): DashboardKpiWidgetDrillSet {
+    return {
+        type: "GDC.DASH/EVT.KPI_WIDGET.DRILL_SET",
+        ctx,
+        correlationId,
+        payload: {
+            ref,
+            drill,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardKpiWidgetDrillSet}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardKpiWidgetDrillSet = eventGuard<DashboardKpiWidgetDrillSet>(
+    "GDC.DASH/EVT.KPI_WIDGET.DRILL_SET",
 );
 
 //
