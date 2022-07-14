@@ -30,14 +30,14 @@ export function DraggableAttributeFilter({
                 filter,
                 filterIndex,
             },
+            canDrag: isInEditMode,
         },
-        [filter, filterIndex],
+        [filter, filterIndex, isInEditMode],
     );
-
     const showDropZones = isInEditMode && !isDragging;
 
     return (
-        <div style={{ position: "relative" }}>
+        <div className="draggable-attribute-filter">
             {showDropZones && (
                 <AttributeFilterDropZoneHint
                     hintPosition="prev"

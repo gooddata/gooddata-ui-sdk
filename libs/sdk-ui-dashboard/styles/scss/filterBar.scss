@@ -212,9 +212,13 @@ $attribute-filter-drag-handle-left: 10px;
 }
 
 .filter-bar-dropzone-container {
-    position: "relative";
+    position: relative;
     flex-grow: 1;
-    height: "55px";
+    height: 55px;
+}
+
+.draggable-attribute-filter {
+    position: relative;
 }
 
 .add-attribute-filter-dropdown {
