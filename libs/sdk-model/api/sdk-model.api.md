@@ -1265,6 +1265,21 @@ export interface IKpiWithPreviousPeriodComparison extends IKpiBase {
 }
 
 // @alpha
+export interface ILegacyDashboard {
+    readonly identifier: string;
+    readonly ref: ObjRef;
+    readonly tabs: ILegacyDashboardTab[];
+    readonly title: string;
+    readonly uri: string;
+}
+
+// @alpha
+export interface ILegacyDashboardTab {
+    readonly identifier: string;
+    readonly title: string;
+}
+
+// @alpha
 export interface IListedDashboard extends Readonly<Required<IAuditableDates>>, Readonly<IAuditableUsers>, IAccessControlAware {
     readonly availability: ListedDashboardAvailability;
     readonly description: string;

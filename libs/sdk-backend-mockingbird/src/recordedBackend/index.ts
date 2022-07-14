@@ -33,6 +33,7 @@ import {
     IDateFilterConfigsQueryResult,
     IWorkspaceUserGroupsQuery,
     IWorkspaceAccessControlService,
+    IWorkspaceLegacyDashboardsService,
 } from "@gooddata/sdk-backend-spi";
 import {
     IColorPalette,
@@ -84,6 +85,7 @@ export const defaultRecordedBackendCapabilities: IBackendCapabilities = {
     allowsInconsistentRelations: false,
     supportsHierarchicalWorkspaces: false,
     supportsCustomColorPalettes: true,
+    supportsLegacyDashboards: false,
 };
 
 /**
@@ -229,6 +231,9 @@ function recordedWorkspace(
         },
         accessControl(): IWorkspaceAccessControlService {
             return recordedAccessControlFactory(implConfig);
+        },
+        legacyDashboards(): IWorkspaceLegacyDashboardsService {
+            throw new NotSupported("not supported");
         },
     };
 }

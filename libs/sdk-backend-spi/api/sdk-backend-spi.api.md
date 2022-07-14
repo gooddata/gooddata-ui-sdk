@@ -57,6 +57,7 @@ import { IKpiWithComparison } from '@gooddata/sdk-model';
 import { IKpiWithoutComparison } from '@gooddata/sdk-model';
 import { IKpiWithPopComparison } from '@gooddata/sdk-model';
 import { IKpiWithPreviousPeriodComparison } from '@gooddata/sdk-model';
+import { ILegacyDashboard } from '@gooddata/sdk-model';
 import { IListedDashboard as IListedDashboard_2 } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureMetadataObject as IMeasureMetadataObject_2 } from '@gooddata/sdk-model';
@@ -279,6 +280,7 @@ export interface IAnalyticalWorkspace {
     getDescriptor(): Promise<IWorkspaceDescriptor>;
     getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined>;
     insights(): IWorkspaceInsightsService;
+    legacyDashboards(): IWorkspaceLegacyDashboardsService;
     measures(): IWorkspaceMeasuresService;
     permissions(): IWorkspacePermissionsService;
     settings(): IWorkspaceSettingsService;
@@ -366,6 +368,7 @@ export interface IBackendCapabilities {
     supportsHierarchicalWorkspaces?: boolean;
     supportsHyperlinkAttributeLabels?: boolean;
     supportsKpiWidget?: boolean;
+    supportsLegacyDashboards?: boolean;
     supportsObjectUris?: boolean;
     supportsOwners?: boolean;
     supportsRankingFilter?: boolean;
@@ -1690,6 +1693,11 @@ export interface IWorkspaceInsightsService {
     getVisualizationClass(ref: ObjRef): Promise<IVisualizationClass>;
     getVisualizationClasses(options?: IGetVisualizationClassesOptions): Promise<IVisualizationClass[]>;
     updateInsight(insight: IInsight): Promise<IInsight>;
+}
+
+// @alpha
+export interface IWorkspaceLegacyDashboardsService {
+    getLegacyDashboards(): Promise<ILegacyDashboard[]>;
 }
 
 // @public

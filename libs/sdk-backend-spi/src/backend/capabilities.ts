@@ -162,6 +162,11 @@ export interface IBackendCapabilities {
     supportsCustomColorPalettes?: boolean;
 
     /**
+     * Indicates whether backend supports Legacy Dashboards (a.k.a. PP Dashboards).
+     */
+    supportsLegacyDashboards?: boolean;
+
+    /**
      * Catchall for additional capabilities
      */
     [key: string]: undefined | boolean | number | string;

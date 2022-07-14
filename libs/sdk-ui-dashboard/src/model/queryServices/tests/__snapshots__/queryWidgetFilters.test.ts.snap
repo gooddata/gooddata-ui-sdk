@@ -232,6 +232,7 @@ Object {
         "supportsCustomColorPalettes": true,
         "supportsHierarchicalWorkspaces": false,
         "supportsKpiWidget": true,
+        "supportsLegacyDashboards": false,
         "supportsOwners": true,
         "supportsWidgetEntity": true,
       },

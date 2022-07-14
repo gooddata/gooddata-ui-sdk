@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 import {
     IAnalyticalWorkspace,
@@ -19,6 +19,7 @@ import {
     IWorkspaceDescriptor,
     IWorkspaceUserGroupsQuery,
     IWorkspaceAccessControlService,
+    IWorkspaceLegacyDashboardsService,
 } from "@gooddata/sdk-backend-spi";
 import { CustomExecutionFactory } from "./execution";
 import { CustomBackendConfig, CustomBackendState } from "./config";
@@ -109,5 +110,9 @@ export class CustomWorkspace implements IAnalyticalWorkspace {
 
     public accessControl(): IWorkspaceAccessControlService {
         throw new NotSupported("access control is not supported");
+    }
+
+    public legacyDashboards(): IWorkspaceLegacyDashboardsService {
+        throw new NotSupported("legacy dashboards are not supported");
     }
 }

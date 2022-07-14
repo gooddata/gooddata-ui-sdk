@@ -15,6 +15,7 @@ import { IWorkspaceMeasuresService } from "./measures";
 import { IWorkspaceFactsService } from "./facts";
 import { IWorkspaceAccessControlService } from "./accessControl";
 import { IWorkspaceUserGroupsQuery } from "./userGroups";
+import { IWorkspaceLegacyDashboardsService } from "./legacyDashboards";
 
 /**
  * Represents an analytical workspace hosted on a backend.
@@ -115,6 +116,12 @@ export interface IAnalyticalWorkspace {
      * Returns service that can be used to manage access control records for the workspace.
      */
     accessControl(): IWorkspaceAccessControlService;
+
+    /**
+     * Returns service that can be used to list Legacy Dashboards on backends that support them (see the supportsLegacyDashboards capability).
+     * See {@link IAnalyticalWorkspace.dashboards} for the non-legacy dashboards that are most likely a better choice.
+     */
+    legacyDashboards(): IWorkspaceLegacyDashboardsService;
 }
 
 /**

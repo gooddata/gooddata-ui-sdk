@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 import {
     IAnalyticalWorkspace,
@@ -18,6 +18,7 @@ import {
     IWorkspaceDescriptor,
     IWorkspaceUserGroupsQuery,
     IWorkspaceAccessControlService,
+    IWorkspaceLegacyDashboardsService,
 } from "@gooddata/sdk-backend-spi";
 import { BearExecution } from "./execution/executionFactory";
 import { BearWorkspaceMeasures } from "./measures";
@@ -35,6 +36,7 @@ import { BearWorkspaceAttributes } from "./attributes/index";
 import { BearWorkspaceFacts } from "./facts";
 import { BearWorkspaceUserGroupsQuery } from "./userGroups";
 import { BearWorkspaceAccessControlService } from "./accessControl";
+import { BearWorkspaceLegacyDashboards } from "./legacyDashboards";
 
 export class BearWorkspace implements IAnalyticalWorkspace {
     constructor(
@@ -123,5 +125,9 @@ export class BearWorkspace implements IAnalyticalWorkspace {
 
     public accessControl(): IWorkspaceAccessControlService {
         return new BearWorkspaceAccessControlService(this.authCall, this.workspace);
+    }
+
+    public legacyDashboards(): IWorkspaceLegacyDashboardsService {
+        return new BearWorkspaceLegacyDashboards(this.authCall, this.workspace);
     }
 }

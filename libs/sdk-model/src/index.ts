@@ -738,3 +738,5 @@ export {
 } from "./accessControl";
 
 export { IOrganizationDescriptor } from "./organization";
+
+export { ILegacyDashboard, ILegacyDashboardTab } from "./legacyDashboard";

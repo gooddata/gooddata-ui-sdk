@@ -175,6 +175,8 @@ export {
 
 export { IWorkspaceAccessControlService } from "./workspace/accessControl";
 
+export { IWorkspaceLegacyDashboardsService } from "./workspace/legacyDashboards";
+
 // Moved to @gooddata/sdk-model
 export {
     IDateFilterConfig,

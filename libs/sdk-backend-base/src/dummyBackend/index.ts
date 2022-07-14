@@ -41,6 +41,7 @@ import {
     IMeasureReferencing,
     IWorkspaceUserGroupsQuery,
     IWorkspaceAccessControlService,
+    IWorkspaceLegacyDashboardsService,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -267,6 +268,9 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
             throw new NotSupported("not supported");
         },
         accessControl(): IWorkspaceAccessControlService {
+            throw new NotSupported("not supported");
+        },
+        legacyDashboards(): IWorkspaceLegacyDashboardsService {
             throw new NotSupported("not supported");
         },
     };

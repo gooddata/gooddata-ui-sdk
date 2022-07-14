@@ -73,6 +73,7 @@ const CAPABILITIES: IBackendCapabilities = {
     supportsTimeGranularities: false,
     supportsHierarchicalWorkspaces: false,
     supportsCustomColorPalettes: true,
+    supportsLegacyDashboards: true,
 };
 
 /**
@@ -111,6 +112,9 @@ type BearLegacyFunctions = {
         workspace: string,
         postMessageData: IDrillableItemsCommandBody,
     ): Promise<IDrillableItemsCommandBody>;
+    /**
+     * @deprecated use the {@link @gooddata/sdk-backend-spi#IAnalyticalWorkspace.legacyDashboards} instead
+     */
     getProjectDashboards?(workspace: string): Promise<GdcProjectDashboard.IWrappedProjectDashboard[]>;
     getUrisFromIdentifiers?(
         workspace: string,

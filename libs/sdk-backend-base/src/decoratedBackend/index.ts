@@ -28,6 +28,7 @@ import {
     IOrganizations,
     IWorkspaceUserGroupsQuery,
     IWorkspaceAccessControlService,
+    IWorkspaceLegacyDashboardsService,
 } from "@gooddata/sdk-backend-spi";
 import { IOrganizationDescriptor } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
@@ -200,6 +201,10 @@ class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
 
     public accessControl(): IWorkspaceAccessControlService {
         return this.decorated.accessControl();
+    }
+
+    public legacyDashboards(): IWorkspaceLegacyDashboardsService {
+        return this.decorated.legacyDashboards();
     }
 }
 
