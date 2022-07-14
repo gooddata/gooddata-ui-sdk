@@ -84,7 +84,6 @@
         "normalize.css": "^8.0.1",
         "react-dnd": "^14.0.5",
         "react-dnd-html5-backend": "^14.1.0",
-        "react-dnd-scrolling": "~1.2.4",
         "react-grid-system": "^8.1.4",
         "react-intl": "^5.23.0",
         "react-lines-ellipsis": "^0.15.0",

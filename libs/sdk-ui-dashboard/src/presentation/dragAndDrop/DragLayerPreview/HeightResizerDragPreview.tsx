@@ -35,7 +35,7 @@ export const HeightResizerDragPreview = (props: IHeightResizerDragPreviewProps) 
     const top = getLimitedYCoord(item, initialOffset.y, currentOffsetY, documentDimensions.scrollTop);
 
     const style = {
-        top: `${top - documentDimensions.scrollTop}px`,
+        top: `${top + 4}px`,
         left: `${initialOffset.x}px`,
         right: `30px`,
     };

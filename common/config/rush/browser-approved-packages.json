@@ -883,10 +883,6 @@
       "allowedCategories": [ "production", "tools" ]
     },
     {
-      "name": "react-dnd-scrolling",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "react-dom",
       "allowedCategories": [ "examples", "production", "tools" ]
     },

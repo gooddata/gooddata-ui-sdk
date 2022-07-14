@@ -4,9 +4,10 @@ import { useDragLayer } from "react-dnd";
 import { HeightResizerDragPreview } from "./DragLayerPreview/HeightResizerDragPreview";
 import { DraggableInternalItemType, DraggableItemType, isDraggableInternalItemType } from "./types";
 import { ContentDragPreview } from "./DragLayerPreview/ContentDragPreview";
+import { useScrolling } from "./Resize/useScrolling";
 
 const layerStyles: CSSProperties = {
-    position: "fixed",
+    position: "relative",
     pointerEvents: "none",
     zIndex: 5001,
     left: 0,
@@ -31,6 +32,8 @@ export const DragLayerComponent: FC = () => {
     }));
 
     const { itemType, isDragging } = dragLayerProperties;
+
+    useScrolling(isDragging);
 
     if (!isDragging) {
         return null;
