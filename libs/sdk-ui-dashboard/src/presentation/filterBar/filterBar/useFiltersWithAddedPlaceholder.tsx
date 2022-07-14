@@ -3,6 +3,7 @@
 import { useCallback, useMemo, useState } from "react";
 import partition from "lodash/partition";
 import {
+    areObjRefsEqual,
     FilterContextItem,
     ICatalogAttribute,
     IDashboardAttributeFilter,
@@ -99,7 +100,16 @@ export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
             filterIndex,
         }));
 
-        if (addedAttributeFilter === undefined) {
+        const containsAddedAttributeDisplayForm =
+            addedAttributeFilter?.attribute &&
+            attributeFilters.some((attributeFilter) =>
+                areObjRefsEqual(
+                    attributeFilter.attributeFilter.displayForm,
+                    addedAttributeFilter.attribute?.defaultDisplayForm,
+                ),
+            );
+
+        if (addedAttributeFilter === undefined || containsAddedAttributeDisplayForm) {
             return filterObjects;
         }
 
