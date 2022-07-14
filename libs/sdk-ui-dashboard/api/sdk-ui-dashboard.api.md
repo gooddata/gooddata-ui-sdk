@@ -5054,6 +5054,9 @@ export const selectSeparators: OutputSelector<DashboardState, ISeparators, (res:
 export const selectSettings: OutputSelector<DashboardState, ISettings, (res: ResolvedDashboardConfig) => ISettings>;
 
 // @internal
+export const selectShouldHidePixelPerfectExperience: OutputSelector<DashboardState, string | number | boolean | object, (res: ResolvedDashboardConfig) => string | number | boolean | object>;
+
+// @internal
 export const selectStash: OutputSelector<DashboardState, Record<string, ExtendedDashboardItem<ExtendedDashboardWidget>[]>, (res: LayoutState) => Record<string, ExtendedDashboardItem<ExtendedDashboardWidget>[]>>;
 
 // @public

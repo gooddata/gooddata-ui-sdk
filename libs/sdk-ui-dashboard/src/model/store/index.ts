@@ -42,6 +42,7 @@ export {
     selectEnableWidgetCustomHeight,
     selectEnableRenamingProjectToWorkspace,
     selectEnableRenamingMeasureToMetric,
+    selectShouldHidePixelPerfectExperience,
 } from "./config/configSelectors";
 export { PermissionsState } from "./permissions/permissionsState";
 export {
