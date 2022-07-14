@@ -2,7 +2,6 @@
 import { TableDescriptor } from "../structure/tableDescriptor";
 import { DataValue } from "@gooddata/sdk-model";
 import { getMappingHeaderUri } from "@gooddata/sdk-ui";
-import isNil from "lodash/isNil";
 import { invariant } from "ts-invariant";
 import { IGridRow } from "../data/resultTypes";
 
@@ -25,18 +24,18 @@ export type DrilledSliceDetail = {
      *
      * @deprecated use URI instead; ID does not hold full information about the attribute element
      */
-    id: string;
+    id: string | null;
 
     /**
      * This is an URI exactly identifying attribute element. It is essentially a primary key of the
      * attribute element.
      */
-    uri: string;
+    uri: string | null;
 
     /**
      * Name of the attribute element.
      */
-    name: string;
+    name: string | null;
 };
 
 export type DrilledRow = Array<DrilledSliceDetail | DataValue>;
@@ -57,26 +56,20 @@ export function createDrilledRow(row: IGridRow, tableDescriptor: TableDescriptor
         // row data is hosed or table code allowed to click on something that should not be drillable
         invariant(mappingHeader);
 
-        const drillItemUri = getMappingHeaderUri(mappingHeader);
+        const drillItemUri = getMappingHeaderUri(mappingHeader) ?? null;
+        const id = getDrillItemId(drillItemUri);
 
-        // if there is no drill item uri, then it means that either headerItemMap does not contain valid item or
-        // the pivot table allowed click&drill on something that should not be drillable
-        // empty is a valid value here (on tiger)
-        invariant(!isNil(drillItemUri));
-
-        const maybeId = drillItemUri.startsWith("/gdc")
-            ? extractIdsFromAttributeElementUri(drillItemUri)[1]
-            : null;
-
-        result.push({
-            // Note: this is related to `id` deprecation. The whole `id` thing does not make sense. Code should
-            // send the entire URI (== PK of the element) so that the code is backend-agnostic. Doing the check
-            // here so that for bear, drill contains the `id` and for other backends code adds the entire uri (PK).
-            // with this in place, we don't have to worry about how other backends represent the PK of the element.
-            id: maybeId ?? drillItemUri,
-            uri: drillItemUri,
-            name: row[col.id],
-        });
+        switch (id) {
+            case "":
+                result.push(createDrilledSliceDetail("", "", ""));
+                break;
+            case null:
+                result.push(createDrilledSliceDetail(null, null, null));
+                break;
+            default:
+                result.push(createDrilledSliceDetail(id, drillItemUri, row[col.id]));
+                break;
+        }
     });
 
     tableDescriptor.headers.leafDataCols.forEach((col) => {
@@ -84,4 +77,22 @@ export function createDrilledRow(row: IGridRow, tableDescriptor: TableDescriptor
     });
 
     return result;
+}
+
+function createDrilledSliceDetail(id: string | null, uri: string | null, name: string | null) {
+    return {
+        id,
+        uri,
+        name,
+    };
+}
+
+function getDrillItemId(drillItemUri: string | null) {
+    // Note: this is related to `id` deprecation. The whole `id` thing does not make sense. Code should
+    // send the entire URI (== PK of the element) so that the code is backend-agnostic. Doing the check
+    // here so that for bear, drill contains the `id` and for other backends code adds the entire uri (PK).
+    // with this in place, we don't have to worry about how other backends represent the PK of the element.
+    return drillItemUri?.startsWith("/gdc")
+        ? extractIdsFromAttributeElementUri(drillItemUri)[1]
+        : null ?? drillItemUri;
 }

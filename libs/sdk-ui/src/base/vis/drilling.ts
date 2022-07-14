@@ -4,6 +4,7 @@ import {
     isTotalDescriptor,
     isMeasureDescriptor,
     isResultAttributeHeader,
+    IResultAttributeHeader,
 } from "@gooddata/sdk-model";
 import CustomEventPolyfill from "custom-event";
 import findIndex from "lodash/findIndex";
@@ -82,7 +83,7 @@ export function getDrillIntersection(drillItems: IMappingHeader[]): IDrillEventI
                 if (attributeItem && isResultAttributeHeader(attributeItem)) {
                     drillIntersection.push({
                         header: {
-                            ...attributeItem,
+                            ...convertToEmpty(attributeItem),
                             ...drillItem,
                         },
                     });
@@ -127,4 +128,24 @@ export function fireDrillEvent(
             }),
         );
     }
+}
+
+function convertToEmpty(attributeItem: IResultAttributeHeader) {
+    const { attributeHeaderItem } = attributeItem;
+
+    // This is special behaviour for tiger when we allowed empty string or null
+    // In this case if uri is one of these special value, set on same value also name
+    // because there is now some special ui value (from example "(empty value)") which is not
+    // valid for this case
+    const values = ["", null] as Array<any>;
+    const isEmpty = values.indexOf(attributeHeaderItem.uri) >= 0;
+
+    return {
+        ...attributeItem,
+        attributeHeaderItem: {
+            ...attributeHeaderItem,
+            // Send empty string for not, need to be updated for NULL in future
+            name: isEmpty ? "" : attributeHeaderItem.name,
+        },
+    };
 }
