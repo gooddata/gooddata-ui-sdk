@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import cx from "classnames";
@@ -27,7 +27,7 @@ export class OperatorDropdown extends React.PureComponent<IOperatorDropdownProps
         opened: false,
     };
 
-    public render(): React.ReactNode {
+    public render() {
         return (
             <>
                 {this.renderDropdownButton()}

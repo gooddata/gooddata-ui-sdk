@@ -2,6 +2,45 @@
   "name": "@gooddata/sdk-ui-all",
   "entries": [
     {
+      "version": "8.10.0",
+      "tag": "@gooddata/sdk-ui-all_v8.10.0",
+      "date": "Thu, 14 Jul 2022 08:56:22 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "DashboardView component was removed. Use Dashboard component from @gooddata/sdk-ui-dashboard instead."
+          },
+          {
+            "comment": "Support for GoodData Cloud was added."
+          },
+          {
+            "comment": "Dashboard filterContext selectors are public now."
+          },
+          {
+            "comment": "Dashboard component user and permissions selectors are public now."
+          },
+          {
+            "comment": "Catalog load is now more optimized for GoodData Platform."
+          },
+          {
+            "comment": "Model interfaces from @gooddata/sdk-backend-spi were moved to @gooddata/sdk-model."
+          },
+          {
+            "comment": "Global Dashboard CSS styles were removed."
+          },
+          {
+            "comment": "SVG and CSS imports in typescript files were removed, GoodData.UI can be used without an additional bundler setup now"
+          },
+          {
+            "comment": "Execution definition by slices/series can be now used without React. You can use the DataViewLoader @alpha version from @gooddata/sdk-ui."
+          },
+          {
+            "comment": "The useDashboardAsyncRender hook and related commands and events that inform about the dashboard rendering status are now public."
+          }
+        ]
+      }
+    },
+    {
       "version": "8.9.0",
       "tag": "@gooddata/sdk-ui-all_v8.9.0",
       "date": "Thu, 17 Mar 2022 12:48:39 GMT",

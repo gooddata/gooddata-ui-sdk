@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React, { Component } from "react";
 
 import "@gooddata/sdk-ui-geo/styles/css/main.css";
@@ -16,7 +16,7 @@ export class GeoPushpinChartConfigurationPointsGroupNearbyExample extends Compon
         groupNearbyPoints: false,
     };
 
-    public render(): React.ReactNode {
+    public render() {
         const { groupNearbyPoints } = this.state;
         const geoConfig = {
             mapboxToken: MAPBOX_TOKEN,

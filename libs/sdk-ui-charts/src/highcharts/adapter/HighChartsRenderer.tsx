@@ -418,7 +418,7 @@ export class HighChartsRenderer extends React.PureComponent<
         );
     }
 
-    public render(): React.ReactNode {
+    public render() {
         return this.renderVisualization();
     }
 

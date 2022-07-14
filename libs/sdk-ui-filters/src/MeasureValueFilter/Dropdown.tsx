@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { IntlWrapper, ISeparators } from "@gooddata/sdk-ui";
@@ -102,7 +102,7 @@ class DropdownWrapped extends React.PureComponent<IDropdownProps, IDropdownState
 export const DropdownWithIntl = injectIntl(DropdownWrapped);
 
 export class Dropdown extends React.PureComponent<IDropdownOwnProps, IDropdownState> {
-    public render(): React.ReactNode {
+    public render() {
         return (
             <IntlWrapper locale={this.props.locale}>
                 <DropdownWithIntl {...this.props} />

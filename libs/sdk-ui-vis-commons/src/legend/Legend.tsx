@@ -151,7 +151,7 @@ export class Legend extends React.PureComponent<ILegendProps> {
         );
     };
 
-    public render(): React.ReactNode {
+    public render() {
         const { contentDimensions, responsive, heatmapLegend, showFluidLegend, maximumRows } = this.props;
 
         if (heatmapLegend) {

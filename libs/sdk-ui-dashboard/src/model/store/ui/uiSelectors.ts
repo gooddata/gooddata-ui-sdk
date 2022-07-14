@@ -24,7 +24,7 @@ export const selectIsScheduleEmailDialogOpen = createSelector(
  */
 export const selectScheduleEmailDialogDefaultAttachment = createSelector(
     selectSelf,
-    (state) => state.scheduleEmailDialog.defaultAttachmentRef,
+    (state) => state.scheduleEmailDialog.defaultAttachmentRef ?? undefined,
 );
 
 /**
@@ -65,7 +65,10 @@ const selectHighlightedKpiWidgetRef = createSelector(
     (state) => state.kpiAlerts.highlightedWidgetRef,
 );
 
-const selectOpenedKpiWidgetRef = createSelector(selectSelf, (state) => state.kpiAlerts.openedWidgetRef);
+const selectOpenedKpiWidgetRef = createSelector(
+    selectSelf,
+    (state) => state.kpiAlerts.openedWidgetRef ?? undefined,
+);
 
 /**
  * @alpha
@@ -147,7 +150,7 @@ export const selectIsInEditMode = createSelector(selectSelf, (state) => state.re
 /**
  * @internal
  */
-export const selectActiveHeaderIndex = createSelector(selectSelf, (state) => state.activeHeaderIndex);
+export const selectActiveHeaderIndex = createSelector(selectSelf, (state) => state.activeHeaderIndex ?? null);
 
 /**
  * @internal

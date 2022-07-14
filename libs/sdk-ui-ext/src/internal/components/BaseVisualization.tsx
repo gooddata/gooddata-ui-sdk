@@ -167,7 +167,7 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
         }
     }
 
-    public render(): React.ReactNode {
+    public render() {
         return (
             <div
                 key={this.visElementId}

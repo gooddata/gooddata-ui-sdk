@@ -151,7 +151,7 @@ export class KpiAlertDialog extends Component<
         }
     }
 
-    render(): React.ReactNode {
+    render() {
         return (
             <KpiAlertDialogWrapper>
                 {(isMobile) => {

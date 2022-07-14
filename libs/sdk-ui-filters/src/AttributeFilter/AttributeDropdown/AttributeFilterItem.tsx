@@ -19,7 +19,7 @@ export interface IAttributeFilterItemProps {
 }
 
 export class AttributeFilterItem extends React.PureComponent<IAttributeFilterItemProps> {
-    public render(): React.ReactNode {
+    public render() {
         const { item } = this.props;
 
         if (!item || item.source.empty) {

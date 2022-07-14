@@ -31,7 +31,7 @@ class DateRangePickerComponent extends React.Component<IDateRangePickerProps & W
     private fromInputRef = React.createRef<DayPickerInput>();
     private toInputRef = React.createRef<DayPickerInput>();
 
-    public render(): React.ReactNode {
+    public render() {
         const {
             dateFormat,
             range: { from, to },

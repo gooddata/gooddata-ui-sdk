@@ -34,7 +34,7 @@ export type ITranslationsProviderProps = ITranslationsProviderOwnProps & Wrapped
  * @internal
  */
 export class TranslationsProvider extends React.PureComponent<ITranslationsProviderProps> {
-    public render(): React.ReactNode {
+    public render() {
         const props: ITranslationsComponentProps = {
             numericSymbols: getNumericSymbols(this.props.intl),
             emptyHeaderString: this.getEmptyHeaderString(),

@@ -247,7 +247,7 @@ class InsightRendererCore extends React.PureComponent<IInsightRendererProps & Wr
         this.unmountVisualization();
     }
 
-    public render(): React.ReactNode {
+    public render() {
         return (
             // never ever dynamically change the props of this div, otherwise bad things will happen
             // e.g. visualization being rendered multiple times, etc.

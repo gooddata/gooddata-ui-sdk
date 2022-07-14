@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
 import "@gooddata/sdk-ui-geo/styles/css/main.css";
 
@@ -21,7 +21,7 @@ export class GeoPushpinChartDrillExample extends React.Component<unknown, State>
         drillEvent: null,
     };
 
-    public render(): React.ReactNode {
+    public render() {
         return (
             <div className="s-geo-pushpin-chart-on-drill">
                 <div style={{ height: 500, position: "relative" }} className="s-geo-pushpin-chart">

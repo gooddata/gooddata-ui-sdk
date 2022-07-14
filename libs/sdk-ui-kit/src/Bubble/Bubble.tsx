@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
 import keys from "lodash/keys";
 import cloneDeep from "lodash/cloneDeep";
@@ -174,7 +174,7 @@ export class Bubble extends React.Component<IBubbleProps, IBubbleState> {
         }, this);
     }
 
-    render(): React.ReactNode {
+    render() {
         const arrowStyle = result(this.props, "arrowStyle", {});
 
         return (

@@ -38,7 +38,7 @@ export class LoadingComponent extends React.Component<ILoadingProps> {
         imageWidth: undefined,
     };
 
-    public render(): React.ReactNode {
+    public render() {
         const { inline, width, height, imageWidth, imageHeight, color, speed = 1, className } = this.props;
         const duration = baseAnimationDuration / speed;
         const delay = duration / -5;

@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { IColor, IColorFromPalette, IColorPaletteItem } from "@gooddata/sdk-model";
 import cx from "classnames";
@@ -19,7 +19,7 @@ export default class ColorPaletteItem extends React.PureComponent<IColorPaletteI
         this.itemRef = (React as any).createRef();
     }
 
-    public render(): React.ReactNode {
+    public render() {
         return (
             <div
                 ref={this.itemRef}

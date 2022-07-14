@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { stringUtils } from "@gooddata/util";
@@ -30,7 +30,7 @@ export default class DropdownItem extends React.Component<
         displayHelp: false,
     };
 
-    public render(): React.ReactNode {
+    public render() {
         const { template, separators } = this.props;
         const { displayHelp } = this.state;
         return (

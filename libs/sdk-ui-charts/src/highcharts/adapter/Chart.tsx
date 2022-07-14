@@ -89,7 +89,7 @@ export class Chart extends React.Component<IChartProps> {
         );
     }
 
-    public render(): React.ReactNode {
+    public render() {
         return <div {...this.props.domProps} ref={this.setChartRef} />;
     }
 }

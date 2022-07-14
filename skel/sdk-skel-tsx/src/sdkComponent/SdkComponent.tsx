@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 
 /**
@@ -12,7 +12,7 @@ export interface ISdkComponentProps {
  * @public
  */
 export class SdkComponent extends React.Component<ISdkComponentProps> {
-    public render(): React.ReactNode {
+    public render() {
         return <p>{this.props.message}</p>;
     }
 }

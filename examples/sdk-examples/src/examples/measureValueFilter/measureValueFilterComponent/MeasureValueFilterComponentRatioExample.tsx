@@ -34,7 +34,7 @@ export class MeasureValueFilterComponentRatioExample extends React.PureComponent
         this.setState({ filters: [filter ?? defaultFilter] });
     };
 
-    public render(): React.ReactNode {
+    public render() {
         const { filters } = this.state;
         return (
             <React.Fragment>

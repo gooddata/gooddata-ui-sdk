@@ -168,7 +168,7 @@ class GeoChartRenderer extends React.Component<IGeoChartRendererProps> {
         });
     };
 
-    public render(): React.ReactNode {
+    public render() {
         const {
             config: { isExportMode = false },
         } = this.props;

@@ -33,7 +33,7 @@ export const selectConfig = createSelector(selectSelf, (configState) => {
  * @public
  */
 export const selectDateFilterConfig = createSelector(selectConfig, (state) => {
-    return state.dateFilterConfig;
+    return state.dateFilterConfig ?? undefined;
 });
 
 /**
@@ -42,7 +42,7 @@ export const selectDateFilterConfig = createSelector(selectConfig, (state) => {
  * @public
  */
 export const selectSettings = createSelector(selectConfig, (state) => {
-    return state.settings;
+    return state.settings ?? undefined;
 });
 
 /**
@@ -51,7 +51,7 @@ export const selectSettings = createSelector(selectConfig, (state) => {
  * @public
  */
 export const selectLocale = createSelector(selectConfig, (state) => {
-    return state.locale;
+    return state.locale ?? undefined;
 });
 
 /**
@@ -60,7 +60,7 @@ export const selectLocale = createSelector(selectConfig, (state) => {
  * @public
  */
 export const selectSeparators = createSelector(selectConfig, (state) => {
-    return state.separators;
+    return state.separators ?? undefined;
 });
 
 /**
@@ -69,7 +69,7 @@ export const selectSeparators = createSelector(selectConfig, (state) => {
  * @public
  */
 export const selectColorPalette = createSelector(selectConfig, (state) => {
-    return state.colorPalette;
+    return state.colorPalette ?? undefined;
 });
 
 /**
@@ -82,7 +82,7 @@ export const selectColorPalette = createSelector(selectConfig, (state) => {
  * @public
  */
 export const selectObjectAvailabilityConfig = createSelector(selectConfig, (state) => {
-    return state.objectAvailability;
+    return state.objectAvailability ?? undefined;
 });
 
 /**
@@ -91,7 +91,7 @@ export const selectObjectAvailabilityConfig = createSelector(selectConfig, (stat
  * @internal
  */
 export const selectMapboxToken = createSelector(selectConfig, (state) => {
-    return state.mapboxToken;
+    return state.mapboxToken ?? undefined;
 });
 
 /**
@@ -103,7 +103,7 @@ export const selectMapboxToken = createSelector(selectConfig, (state) => {
  * @public
  */
 export const selectIsReadOnly = createSelector(selectConfig, (state) => {
-    return state.isReadOnly;
+    return state.isReadOnly ?? false;
 });
 
 /**
@@ -115,7 +115,7 @@ export const selectIsReadOnly = createSelector(selectConfig, (state) => {
  * @public
  */
 export const selectIsEmbedded = createSelector(selectConfig, (state) => {
-    return state.isEmbedded;
+    return state.isEmbedded ?? false;
 });
 
 /**
@@ -125,7 +125,7 @@ export const selectIsEmbedded = createSelector(selectConfig, (state) => {
  * @internal
  */
 export const selectIsExport = createSelector(selectConfig, (state) => {
-    return state.isExport;
+    return state.isExport ?? false;
 });
 
 /**
@@ -134,7 +134,7 @@ export const selectIsExport = createSelector(selectConfig, (state) => {
  * @internal
  */
 export const selectIsWhiteLabeled = createSelector(selectConfig, (state) => {
-    return state.isWhiteLabeled;
+    return state.isWhiteLabeled ?? false;
 });
 
 /**
@@ -175,7 +175,7 @@ export const selectIsSaveAsNewButtonHidden = createSelector(selectConfig, (state
  * @public
  */
 export const selectDateFormat = createSelector(selectConfig, (state) => {
-    return state.settings?.responsiveUiDateFormat;
+    return state.settings?.responsiveUiDateFormat ?? undefined;
 });
 
 /**
@@ -184,7 +184,7 @@ export const selectDateFormat = createSelector(selectConfig, (state) => {
  * @public
  */
 export const selectEnableKPIDashboardSchedule = createSelector(selectConfig, (state) => {
-    return state.settings?.enableKPIDashboardSchedule;
+    return state.settings?.enableKPIDashboardSchedule ?? false;
 });
 
 /**
@@ -301,7 +301,7 @@ export const selectEnableInsightExportScheduling = createSelector(selectConfig, 
  * @internal
  */
 export const selectDashboardEditModeDevRollout = createSelector(selectConfig, (state) => {
-    return !!state.settings?.dashboardEditModeDevRollout;
+    return !!state.settings?.dashboardEditModeDevRollout ?? false;
 });
 
 /**

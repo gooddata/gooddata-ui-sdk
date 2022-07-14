@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { IntlShape } from "react-intl";
 import cx from "classnames";
@@ -90,7 +90,7 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
         }
     }
 
-    public render(): React.ReactNode {
+    public render() {
         const { menuPosition, className } = this.props;
 
         return (

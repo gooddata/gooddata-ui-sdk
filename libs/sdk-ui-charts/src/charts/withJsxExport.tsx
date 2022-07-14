@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import isFunction from "lodash/isFunction";
 import isString from "lodash/isString";
@@ -29,7 +29,7 @@ export const withJsxExport = <T extends object>(
             return `<${getDisplayName(Component)}\n${paddedPropDeclarations}\n/>`;
         };
 
-        public render(): React.ReactNode {
+        public render() {
             return <Component {...this.props} />;
         }
     };

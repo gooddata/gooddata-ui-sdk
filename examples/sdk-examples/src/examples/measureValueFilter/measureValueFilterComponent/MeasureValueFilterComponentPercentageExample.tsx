@@ -31,7 +31,7 @@ export class MeasureValueFilterComponentPercentageExample extends React.PureComp
         this.setState({ filters: [filter ?? defaultFilter] });
     };
 
-    public render(): React.ReactNode {
+    public render() {
         const { filters } = this.state;
 
         return (

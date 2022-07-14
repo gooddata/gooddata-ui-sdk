@@ -10,7 +10,7 @@ import { IVisualizationProperties } from "../../../interfaces/Visualization";
 import { messages } from "../../../../locales";
 
 class NamePositionControl extends React.PureComponent<IConfigItemSubsection & WrappedComponentProps> {
-    public render(): React.ReactNode {
+    public render() {
         const { axisVisible, axisNameVisible, namePosition } = this.getControlProperties();
         const { axis, properties, pushData, disabled, configPanelDisabled, intl } = this.props;
 

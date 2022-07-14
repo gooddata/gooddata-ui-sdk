@@ -47,7 +47,7 @@ export default abstract class ConfigurationPanelContent<
 
     protected supportedPropertiesList: string[];
 
-    public render(): React.ReactNode {
+    public render() {
         return (
             <div key={`config-${this.props.type}`}>
                 <InternalIntlWrapper locale={this.props.locale}>

@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import { ISeparators } from "@gooddata/sdk-ui";
@@ -19,7 +19,7 @@ export class PresetsDropdownItem extends React.PureComponent<IMeasureNumberForma
         isSelected: false,
     };
 
-    public render(): React.ReactNode {
+    public render() {
         const { preset, separators, isSelected } = this.props;
         const { localIdentifier, name, previewNumber, format } = preset;
 

@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import { IRgbColorValue } from "@gooddata/sdk-model";
@@ -10,7 +10,7 @@ export interface IColoredItemContentProps extends ISelectableChild {
 }
 
 export default class ColoredItemContent extends React.PureComponent<IColoredItemContentProps> {
-    public render(): React.ReactNode {
+    public render() {
         return (
             <div className={this.getClassName()}>
                 <div className={this.getIconStyle()} style={{ backgroundColor: this.getBackgroundColor() }} />

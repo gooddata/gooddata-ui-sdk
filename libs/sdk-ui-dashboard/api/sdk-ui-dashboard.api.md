@@ -4775,7 +4775,7 @@ export const selectDashboardShareInfo: OutputSelector<DashboardState, IAccessCon
 export const selectDashboardShareStatus: OutputSelector<DashboardState, ShareStatus, (res: DashboardDescriptor) => ShareStatus>;
 
 // @public
-export const selectDashboardTags: OutputSelector<DashboardState, string[] | undefined, (res: DashboardDescriptor) => string[] | undefined>;
+export const selectDashboardTags: OutputSelector<DashboardState, string[], (res: DashboardDescriptor) => string[]>;
 
 // @public
 export const selectDashboardTitle: OutputSelector<DashboardState, string, (res: DashboardDescriptor) => string>;
@@ -4868,7 +4868,7 @@ export const selectEnableKPIDashboardImplicitDrillDown: OutputSelector<Dashboard
 export const selectEnableKPIDashboardSaveAsNew: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
 // @public
-export const selectEnableKPIDashboardSchedule: OutputSelector<DashboardState, boolean | undefined, (res: ResolvedDashboardConfig) => boolean | undefined>;
+export const selectEnableKPIDashboardSchedule: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
 // @public
 export const selectEnableKPIDashboardScheduleRecipients: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;

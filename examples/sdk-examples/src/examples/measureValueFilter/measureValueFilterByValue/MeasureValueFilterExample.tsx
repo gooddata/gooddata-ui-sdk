@@ -41,7 +41,7 @@ export class FilterByValueExample extends Component<unknown, IMeasureValueFilter
         );
     }
 
-    public render(): React.ReactNode {
+    public render() {
         const { filters } = this.state;
         return (
             <div>

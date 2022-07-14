@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import moment from "moment";
@@ -124,7 +124,7 @@ export class WrappedTimepicker extends React.PureComponent<TimePickerProps, ITim
         this.setState({ selectedTime }, () => this.props.onChange(selectedTime));
     };
 
-    public render(): React.ReactNode {
+    public render() {
         const { overlayPositionType, maxVisibleItemsCount, overlayZIndex } = this.props;
         const { dropdownWidth, selectedTime } = this.state;
         const time = {
@@ -184,7 +184,7 @@ const TimePickerWithIntl = injectIntl(WrappedTimepicker);
  * @internal
  */
 export class Timepicker extends React.PureComponent<ITimepickerOwnProps> {
-    public render(): React.ReactNode {
+    public render() {
         return (
             <IntlWrapper locale={this.props.locale}>
                 <TimePickerWithIntl {...this.props} />

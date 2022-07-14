@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import * as React from "react";
 
 interface IRepeatPeriodSelectData {
@@ -24,7 +24,7 @@ export class RepeatPeriodSelect extends React.PureComponent<
         };
     }
 
-    public render(): React.ReactNode {
+    public render() {
         return (
             <div className="gd-schedule-email-dialog-repeat-period">
                 <input

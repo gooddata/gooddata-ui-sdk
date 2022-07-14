@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 /* eslint-disable import/no-unresolved,import/default */
 import React from "react";
 
@@ -10,6 +10,7 @@ import { PivotTableExportExample } from "./PivotTableExportExample";
 import { insightViewColumnChartExportExample } from "./InsightViewColumnChartExportExample";
 import { HeadlineExportExample } from "./HeadlineExportExample";
 import { ExecuteExportExample } from "./ExecuteExportExample";
+import { UseDataExportExample } from "./UseDataExportExample";
 
 import BarChartExportExampleSRC from "./BarChartExportExample?raw";
 import PivotTableExportExampleSRC from "./PivotTableExportExample?raw";
@@ -17,6 +18,7 @@ import insightViewColumnChartExportExampleSRC from "./InsightViewColumnChartExpo
 import HeadlineExportExampleSRC from "./HeadlineExportExample?raw";
 import ExecuteExportExampleSRC from "./ExecuteExportExample?raw";
 import ExampleWithExportSRC from "./ExampleWithExport?raw";
+import UseDataExportExampleSRC from "./UseDataExportExample?raw";
 
 import BarChartExportExampleSRCJS from "./BarChartExportExample?rawJS";
 import PivotTableExportExampleSRCJS from "./PivotTableExportExample?rawJS";
@@ -24,6 +26,7 @@ import insightViewColumnChartExportExampleSRCJS from "./InsightViewColumnChartEx
 import HeadlineExportExampleSRCJS from "./HeadlineExportExample?rawJS";
 import ExecuteExportExampleSRCJS from "./ExecuteExportExample?rawJS";
 import ExampleWithExportSRCJS from "./ExampleWithExport?rawJS";
+import UseDataExportExampleSRCJS from "./UseDataExportExample?rawJS";
 
 export const Export: React.FC = () => (
     <div>
@@ -84,6 +87,15 @@ export const Export: React.FC = () => (
             for={ExecuteExportExample}
             source={ExecuteExportExampleSRC}
             sourceJS={ExecuteExportExampleSRCJS}
+        />
+
+        <hr className="separator" />
+
+        <h2>Use Data Export hook</h2>
+        <ExampleWithSource
+            for={UseDataExportExample}
+            source={UseDataExportExampleSRC}
+            sourceJS={UseDataExportExampleSRCJS}
         />
     </div>
 );
