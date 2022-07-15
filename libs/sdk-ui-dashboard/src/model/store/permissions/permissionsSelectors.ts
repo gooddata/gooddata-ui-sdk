@@ -43,10 +43,10 @@ const selectSelf = createSelector(
  *
  * @public
  */
-export const selectPermissions = createSelector(selectSelf, (filterContextState) => {
-    invariant(filterContextState.permissions, "attempting to access uninitialized permissions state");
+export const selectPermissions = createSelector(selectSelf, (state) => {
+    invariant(state.permissions, "attempting to access uninitialized permissions state");
 
-    return filterContextState.permissions!;
+    return state.permissions!;
 });
 
 /**

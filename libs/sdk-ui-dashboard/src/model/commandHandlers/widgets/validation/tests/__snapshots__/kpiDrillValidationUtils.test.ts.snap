@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`validateKpiDrillTarget should throw for invalid tab on an existing dashboard 1`] = `"Dashboard with ref /gdc/md/foo does not contain tab with identifier missing."`;
+
+exports[`validateKpiDrillTarget should throw for not found dashboard 1`] = `"Dashboard with ref missing was not found."`;

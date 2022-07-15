@@ -339,3 +339,14 @@ export const selectEnableRenamingProjectToWorkspace = createSelector(selectConfi
 export const selectEnableRenamingMeasureToMetric = createSelector(selectConfig, (state) => {
     return !!(state.settings?.enableRenamingMeasureToMetric ?? false);
 });
+
+/**
+ * Returns whether we should hide the pixel perfect experience references.
+ *
+ * @internal
+ */
+export const selectShouldHidePixelPerfectExperience = createSelector(selectConfig, (state) => {
+    const isHidden = state.settings?.hidePixelPerfectExperience ?? true;
+    const isEnabled = state.settings?.enablePixelPerfectExperience ?? false;
+    return !isHidden && isEnabled;
+});

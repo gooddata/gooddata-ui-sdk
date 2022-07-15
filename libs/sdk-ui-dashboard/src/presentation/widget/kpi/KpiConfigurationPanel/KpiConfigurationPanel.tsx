@@ -13,6 +13,7 @@ import { KpiWidgetDateDatasetFilter } from "./KpiWidgetDateDatasetFilter";
 import { KpiMetricDropdown } from "./KpiMetricDropdown/KpiMetricDropdown";
 import { KpiConfigurationPanelHeader } from "./KpiConfigurationPanelHeader";
 import { KpiConfigurationMessages } from "./KpiConfigurationMessages";
+import { KpiDrillConfiguration } from "./KpiDrill/KpiDrillConfiguration";
 
 interface IKpiConfigurationPanelProps {
     widget: IKpiWidget;
@@ -71,7 +72,7 @@ export const KpiConfigurationPanel: React.FC<IKpiConfigurationPanelProps> = (pro
                     <KpiWidgetDateDatasetFilter widget={widget} />
                     <AttributeFilterConfiguration widget={widget} />
                     <KpiComparison widget={widget} />
-                    {/* {this.renderDrillInto()} */}
+                    <KpiDrillConfiguration widget={widget} />
                 </div>
             </div>
         </>

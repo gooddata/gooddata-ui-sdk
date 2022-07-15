@@ -1436,6 +1436,26 @@
         "comment": "Don't translate placeholder '{numAlerts}'. Translate only uppercase '{numAlerts, select, 1 {ALERT} other {ALERTS}}'",
         "limit": 0
     },
+    "configurationPanel.drillIntoDashboard": {
+        "value": "Drill into dashboard",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.noLinkableDashboards": {
+        "value": "No dashboard to link to",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.selectDashboard": {
+        "value": "Select a dashboard",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.unlistedDashboardTab": {
+        "value": "Unlisted dashboard",
+        "comment": "",
+        "limit": 0
+    },
     "gs.date.date-dataset.recommended": {
         "value": "Recommended",
         "comment": "",

@@ -38,6 +38,8 @@ import {
     ChangeKpiWidgetHeader,
     ChangeKpiWidgetMeasure,
     RefreshKpiWidget,
+    SetDrillForKpiWidget,
+    RemoveDrillForKpiWidget,
 } from "./kpi";
 import {
     AddLayoutSection,
@@ -237,6 +239,12 @@ export {
     RefreshKpiWidgetPayload,
     refreshKpiWidget,
     KpiWidgetComparison,
+    RemoveDrillForKpiWidget,
+    RemoveDrillForKpiWidgetPayload,
+    removeDrillForKpiWidget,
+    SetDrillForKpiWidget,
+    SetDrillForKpiWidgetPayload,
+    setDrillForKpiWidget,
 } from "./kpi";
 
 export {
@@ -328,6 +336,8 @@ export type DashboardCommands =
     | ChangeKpiWidgetFilterSettings
     | ChangeKpiWidgetComparison
     | RefreshKpiWidget
+    | SetDrillForKpiWidget
+    | RemoveDrillForKpiWidget
     | ChangeInsightWidgetHeader
     | ChangeInsightWidgetFilterSettings
     | ChangeInsightWidgetVisProperties

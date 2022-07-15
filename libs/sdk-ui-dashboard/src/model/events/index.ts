@@ -46,6 +46,8 @@ import {
     DashboardKpiWidgetFilterSettingsChanged,
     DashboardKpiWidgetHeaderChanged,
     DashboardKpiWidgetMeasureChanged,
+    DashboardKpiWidgetDrillRemoved,
+    DashboardKpiWidgetDrillSet,
 } from "./kpi";
 import {
     DashboardInsightWidgetChanged,
@@ -223,6 +225,10 @@ export {
     DashboardKpiWidgetFilterSettingsChangedPayload,
     DashboardKpiWidgetComparisonChanged,
     DashboardKpiWidgetComparisonChangedPayload,
+    DashboardKpiWidgetDrillRemoved,
+    DashboardKpiWidgetDrillRemovedPayload,
+    DashboardKpiWidgetDrillSet,
+    DashboardKpiWidgetDrillSetPayload,
     DashboardKpiWidgetChanged,
     DashboardKpiWidgetChangedPayload,
     isDashboardKpiWidgetChanged,
@@ -230,6 +236,8 @@ export {
     isDashboardKpiWidgetFilterSettingsChanged,
     isDashboardKpiWidgetHeaderChanged,
     isDashboardKpiWidgetMeasureChanged,
+    isDashboardKpiWidgetDrillRemoved,
+    isDashboardKpiWidgetDrillSet,
 } from "./kpi";
 
 export {
@@ -423,6 +431,8 @@ export type DashboardEvents =
     | DashboardKpiWidgetMeasureChanged
     | DashboardKpiWidgetFilterSettingsChanged
     | DashboardKpiWidgetComparisonChanged
+    | DashboardKpiWidgetDrillRemoved
+    | DashboardKpiWidgetDrillSet
     | DashboardKpiWidgetChanged
     | DashboardInsightWidgetHeaderChanged
     | DashboardInsightWidgetFilterSettingsChanged
