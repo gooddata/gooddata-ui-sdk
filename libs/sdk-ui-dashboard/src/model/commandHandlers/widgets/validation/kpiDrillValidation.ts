@@ -4,7 +4,7 @@ import { SagaReturnType, select } from "redux-saga/effects";
 import { KpiDrillDefinition } from "@gooddata/sdk-model";
 
 import { DashboardContext } from "../../../types/commonTypes";
-import { internalErrorOccurred, invalidArgumentsProvided } from "../../../events/general";
+import { invalidArgumentsProvided } from "../../../events/general";
 import { selectLegacyDashboards } from "../../../store/legacyDashboards/legacyDashboardsSelectors";
 import { IDashboardCommand } from "../../../commands";
 import { validateKpiDrillTarget } from "./kpiDrillValidationUtils";
@@ -17,14 +17,6 @@ export function* validateKpiDrill(
     const legacyDashboards: SagaReturnType<typeof selectLegacyDashboards> = yield select(
         selectLegacyDashboards,
     );
-
-    if (!legacyDashboards) {
-        throw internalErrorOccurred(
-            ctx,
-            cmd,
-            "KPI drill validation called when legacy dashboards have not yet been loaded.",
-        );
-    }
 
     try {
         validateKpiDrillTarget(drill, legacyDashboards);

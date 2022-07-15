@@ -5075,7 +5075,7 @@ export const selectIsShareDialogOpen: OutputSelector<DashboardState, boolean, (r
 export const selectLayout: OutputSelector<DashboardState, IDashboardLayout<ExtendedDashboardWidget>, (res: LayoutState) => IDashboardLayout<ExtendedDashboardWidget>>;
 
 // @alpha
-export const selectLegacyDashboards: OutputSelector<DashboardState, ILegacyDashboard[] | undefined, (res: LegacyDashboardsState) => ILegacyDashboard[] | undefined>;
+export const selectLegacyDashboards: OutputSelector<DashboardState, ILegacyDashboard[], (res: LegacyDashboardsState) => ILegacyDashboard[]>;
 
 // @alpha
 export const selectListedDashboards: (state: DashboardState) => IListedDashboard[];
