@@ -3,12 +3,13 @@
 import { DashboardContext } from "../../types/commonTypes";
 import { SetDrillForKpiWidget } from "../../commands";
 import { SagaIterator } from "redux-saga";
-import { put, select } from "redux-saga/effects";
+import { call, put, select } from "redux-saga/effects";
 import { DashboardKpiWidgetDrillSet, kpiWidgetDrillSet } from "../../events/kpi";
 import { selectWidgetsMap } from "../../store/layout/layoutSelectors";
 import { validateExistingKpiWidget } from "./validation/widgetValidations";
 import { layoutActions } from "../../store/layout";
 import { KpiDrillDefinition } from "@gooddata/sdk-model";
+import { validateKpiDrill } from "./validation/kpiDrillValidation";
 
 export function* setDrillForKpiWidgetHandler(
     ctx: DashboardContext,
@@ -32,7 +33,7 @@ export function* setDrillForKpiWidgetHandler(
         transition: "in-place",
     };
 
-    // TODO validate the drill targets?
+    yield call(validateKpiDrill, drill, ctx, cmd);
 
     yield put(
         layoutActions.replaceKpiWidgetDrill({
