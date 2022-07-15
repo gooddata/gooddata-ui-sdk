@@ -9,6 +9,7 @@ export { BackendCapabilitiesState } from "./backendCapabilities/backendCapabilit
 export {
     selectBackendCapabilities,
     selectSupportsElementsQueryParentFiltering,
+    selectSupportsElementUris,
 } from "./backendCapabilities/backendCapabilitiesSelectors";
 export { ConfigState } from "./config/configState";
 export {

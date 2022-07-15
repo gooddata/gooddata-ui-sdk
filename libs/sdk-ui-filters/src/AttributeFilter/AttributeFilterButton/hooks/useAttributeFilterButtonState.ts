@@ -2,7 +2,7 @@
 
 import { IAnalyticalBackend, IElementsQueryResult } from "@gooddata/sdk-backend-spi";
 import { IElementQueryResultWithEmptyItems, isNonEmptyListItem } from "../../AttributeDropdown/types";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ATTRIBUTE_FILTER_BUTTON_LIMIT } from "../constants";
 import { IAttributeFilter, IAttributeElement } from "@gooddata/sdk-model";
 import {
@@ -15,6 +15,7 @@ import { mergeElementQueryResults } from "../../AttributeDropdown/mergeElementQu
 import { updateSelectedOptionsWithDataByMap } from "../../utils/AttributeFilterUtils";
 import compact from "lodash/compact";
 import debounce from "lodash/debounce";
+import uniqWith from "lodash/uniqWith";
 
 export interface IAttributeFilterButtonState {
     selectedFilterOptions: IAttributeElement[];
@@ -59,8 +60,8 @@ export const useAttributeFilterButtonState = (
         const initialIsInverted = getInitialIsInverted(currentFilter);
 
         return {
-            selectedFilterOptions: initialSelection,
-            appliedFilterOptions: initialSelection,
+            selectedFilterOptions: uniqWith(initialSelection, isEqual),
+            appliedFilterOptions: uniqWith(initialSelection, isEqual),
             isInverted: initialIsInverted,
             appliedIsInverted: initialIsInverted,
             firstLoad: true,
@@ -77,7 +78,7 @@ export const useAttributeFilterButtonState = (
 
     const onCurrentFilterChange = (currentFilter: IAttributeFilter) => {
         setState((prevValue) => {
-            const initialSelection = getInitialSelectedOptions(currentFilter);
+            const initialSelection = uniqWith(getInitialSelectedOptions(currentFilter), isEqual);
             const initialIsInverted = getInitialIsInverted(currentFilter);
 
             // todo check if there is need to handle values here
@@ -194,20 +195,17 @@ export const useAttributeFilterButtonState = (
         });
     };
 
-    const onSearch = useCallback(
-        debounce((query: string) => {
-            setState((s) => ({
-                ...s,
-                searchString: query,
-            }));
-        }, 500),
-        [],
-    );
+    const onSearch = debounce((query: string) => {
+        setState((s) => ({
+            ...s,
+            searchString: query,
+        }));
+    }, 500);
 
     const onElementSelect = (selectedFilterOptions: IAttributeElement[], isInverted: boolean) => {
         setState((s) => ({
             ...s,
-            selectedFilterOptions: selectedFilterOptions,
+            selectedFilterOptions: uniqWith(selectedFilterOptions, isEqual),
             isInverted: isInverted,
         }));
     };
@@ -243,7 +241,7 @@ export const useAttributeFilterButtonState = (
         setState((s) => {
             return {
                 ...s,
-                selectedFilterOptions: s.appliedFilterOptions,
+                selectedFilterOptions: uniqWith(s.selectedFilterOptions, isEqual),
                 isInverted: s.appliedIsInverted,
                 searchString: "",
                 isDropdownOpen: false,
