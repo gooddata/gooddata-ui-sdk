@@ -2,6 +2,7 @@
 import React, { useCallback } from "react";
 import { ICatalogDateDataset, idRef, isInsightWidget, IWidget, ObjRef } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
+import first from "lodash/first";
 import noop from "lodash/noop";
 
 import { DateFilterCheckbox } from "./DateFilterCheckbox";
@@ -15,8 +16,26 @@ import {
 } from "../../../../model";
 import { DateDatasetPicker } from "./DateDatasetPicker";
 import { getUnrelatedDateDataset } from "./utils";
+import { getRecommendedDateDataset } from "@gooddata/sdk-ui-kit";
 
 const CONFIG_PANEL_DATE_FILTER_WIDTH = 159;
+
+function getRecommendedCatalogDateDataset(
+    dateDatasets: ICatalogDateDataset[],
+): ICatalogDateDataset | undefined {
+    const recommendedDateDataSetId = getRecommendedDateDataset(
+        dateDatasets.map((ds) => {
+            return {
+                id: ds.dataSet.id,
+                title: ds.dataSet.title,
+            };
+        }),
+    )?.id;
+
+    return recommendedDateDataSetId
+        ? dateDatasets.find((ds) => ds.dataSet.id === recommendedDateDataSetId)
+        : undefined;
+}
 
 interface IDateDatasetFilterProps {
     widget: IWidget;
@@ -49,13 +68,29 @@ export const DateDatasetFilter: React.FC<IDateDatasetFilterProps> = (props) => {
     const handleDateDatasetFilterEnabled = useCallback(
         (enabled: boolean, dateDatasetRef: ObjRef | undefined) => {
             if (enabled) {
-                invariant(dateDatasetRef, "Date filtering enabled without a date dataset.");
-                dispatch(enableKpiWidgetDateFilter(widget.ref, dateDatasetRef));
+                if (dateDatasetRef) {
+                    dispatch(enableKpiWidgetDateFilter(widget.ref, dateDatasetRef));
+                } else {
+                    invariant(
+                        relatedDateDatasets?.length,
+                        "Date filtering enabled without a date dataset available.",
+                    );
+
+                    // preselect the recommended if any, or the first one
+                    const recommendedDateDataSet = getRecommendedCatalogDateDataset(relatedDateDatasets);
+                    const firstDataSet = first(relatedDateDatasets);
+
+                    const preselectedDateDataSetRef = recommendedDateDataSet
+                        ? recommendedDateDataSet.dataSet.ref
+                        : firstDataSet!.dataSet.ref;
+
+                    dispatch(enableKpiWidgetDateFilter(widget.ref, preselectedDateDataSetRef));
+                }
             } else {
                 dispatch(disableKpiWidgetDateFilter(widget.ref));
             }
         },
-        [dispatch, widget.ref],
+        [dispatch, relatedDateDatasets, widget.ref],
     );
 
     const handleDateDatasetChanged = useCallback(
