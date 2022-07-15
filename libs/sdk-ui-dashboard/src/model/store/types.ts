@@ -16,6 +16,7 @@ import { BackendCapabilitiesState } from "./backendCapabilities/backendCapabilit
 import { IDrillTargets } from "./drillTargets/drillTargetsTypes";
 import { IExecutionResultEnvelope } from "./executionResults/types";
 import { UiState } from "./ui/uiState";
+import { LegacyDashboardsState } from "./legacyDashboards/legacyDashboardsState";
 
 /*
  * This explicit typing is unfortunate but cannot find better way. Normally the typings get inferred from store,
@@ -48,6 +49,7 @@ export interface DashboardState {
     user: UserState;
     meta: DashboardMetaState;
     drill: DrillState;
+    legacyDashboards: LegacyDashboardsState;
     // Entities
     insights: EntityState<IInsight>;
     alerts: EntityState<IWidgetAlert>;

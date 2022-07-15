@@ -195,3 +195,49 @@ export type RenderMode = "view" | "edit";
  * @public
  */
 export type DateFilterValidationResult = "TOO_MANY_CONFIGS" | "NO_CONFIG" | DateFilterConfigValidationResult;
+
+/**
+ * Legacy Dashboard (a.k.a. PP Dashboard) tab.
+ * @alpha
+ */
+export interface ILegacyDashboardTab {
+    /**
+     * Title of the tab
+     */
+    readonly title: string;
+    /**
+     * Unique identifier of the tab
+     */
+    readonly identifier: string;
+}
+
+/**
+ * Legacy Dashboard (a.k.a. PP Dashboard).
+ * @alpha
+ */
+export interface ILegacyDashboard {
+    /**
+     * Object ref
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * Object uri
+     */
+    readonly uri: string;
+
+    /**
+     * Object identifier
+     */
+    readonly identifier: string;
+
+    /**
+     * Title of the legacy dashboard
+     */
+    readonly title: string;
+
+    /**
+     * Tabs included in the legacy dashboard
+     */
+    readonly tabs: ILegacyDashboardTab[];
+}

@@ -1,14 +1,11 @@
 // (C) 2019-2022 GoodData Corporation
 
 import { uriRef } from "@gooddata/sdk-model";
-import { ILegacyDashboard, ILegacyDashboardTab } from "./types";
+import { ILegacyDashboard, ILegacyDashboardTab } from "../../../../types";
+import { DashboardContext } from "../../../types/commonTypes";
 
-export async function loadLegacyDashboards(
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    backend: any,
-    workspace: string,
-): Promise<ILegacyDashboard[]> {
-    const dashboardResponse = await getProjectDashboards(backend, workspace);
+export async function loadLegacyDashboards(ctx: DashboardContext): Promise<ILegacyDashboard[]> {
+    const dashboardResponse = await getProjectDashboards(ctx.backend, ctx.workspace);
 
     if (!dashboardResponse) {
         return [];

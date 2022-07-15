@@ -96,6 +96,7 @@ export {
     selectDrillableItemsByAvailableDrillTargets,
     IImplicitDrillWithPredicates,
 } from "./widgetDrills/widgetDrillSelectors";
+export { selectLegacyDashboards } from "./legacyDashboards/legacyDashboardsSelectors";
 
 export { UndoEnhancedState, UndoEntry } from "./_infra/undoEnhancer";
 export { LayoutState, LayoutStash } from "./layout/layoutState";
@@ -204,6 +205,7 @@ export {
     selectSelectedWidgetRef,
 } from "./ui/uiSelectors";
 export { uiActions } from "./ui";
+export { LegacyDashboardsState } from "./legacyDashboards/legacyDashboardsState";
 
 export { queryAndWaitFor } from "./_infra/queryAndWaitFor";
 export { dispatchAndWaitFor } from "./_infra/dispatchAndWaitFor";

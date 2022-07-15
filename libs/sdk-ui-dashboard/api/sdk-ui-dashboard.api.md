@@ -1949,6 +1949,8 @@ export interface DashboardState {
     // (undocumented)
     layout: LayoutState;
     // (undocumented)
+    legacyDashboards: LegacyDashboardsState;
+    // (undocumented)
     listedDashboards: EntityState<IListedDashboard>;
     // (undocumented)
     loading: LoadingState;
@@ -3271,6 +3273,21 @@ export interface IInsightMenuItemSeparator {
     type: "separator";
 }
 
+// @alpha
+export interface ILegacyDashboard {
+    readonly identifier: string;
+    readonly ref: ObjRef;
+    readonly tabs: ILegacyDashboardTab[];
+    readonly title: string;
+    readonly uri: string;
+}
+
+// @alpha
+export interface ILegacyDashboardTab {
+    readonly identifier: string;
+    readonly title: string;
+}
+
 // @alpha (undocumented)
 export interface ILockedStatusProps {
     // (undocumented)
@@ -3914,6 +3931,12 @@ export const LegacyDashboardInsightMenu: (props: IDashboardInsightMenuProps) => 
 
 // @internal (undocumented)
 export const LegacyDashboardInsightMenuButton: (props: IDashboardInsightMenuButtonProps) => JSX.Element;
+
+// @alpha (undocumented)
+export interface LegacyDashboardsState {
+    // (undocumented)
+    legacyDashboards?: ILegacyDashboard[];
+}
 
 // @alpha (undocumented)
 export interface LoadingState {
@@ -5050,6 +5073,9 @@ export const selectIsShareDialogOpen: OutputSelector<DashboardState, boolean, (r
 
 // @alpha
 export const selectLayout: OutputSelector<DashboardState, IDashboardLayout<ExtendedDashboardWidget>, (res: LayoutState) => IDashboardLayout<ExtendedDashboardWidget>>;
+
+// @alpha
+export const selectLegacyDashboards: OutputSelector<DashboardState, ILegacyDashboard[] | undefined, (res: LegacyDashboardsState) => ILegacyDashboard[] | undefined>;
 
 // @alpha
 export const selectListedDashboards: (state: DashboardState) => IListedDashboard[];

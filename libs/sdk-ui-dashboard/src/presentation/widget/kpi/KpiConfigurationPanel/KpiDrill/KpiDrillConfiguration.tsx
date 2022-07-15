@@ -14,14 +14,15 @@ import {
     SingleSelectListItem,
     Typography,
 } from "@gooddata/sdk-ui-kit";
-import { IKpiWidget } from "@gooddata/sdk-model";
+import { IKpiWidget, ObjRef, widgetRef } from "@gooddata/sdk-model";
 import {
+    removeDrillForKpiWidget,
+    selectLegacyDashboards,
     selectShouldHidePixelPerfectExperience,
+    setDrillForKpiWidget,
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../../../model";
-import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
-import { loadLegacyDashboards } from "./loadLegacyDashboards";
 import { CONFIG_PANEL_INNER_WIDTH } from "../constants";
 
 const alignPoints: IAlignPoint[] = [{ align: "bl tl" }, { align: "tl bl" }];
@@ -69,32 +70,23 @@ const KpiDrillConfigurationCore: React.FC<IKpiDrillConfigurationProps> = (props)
     const { widget } = props;
 
     const intl = useIntl();
-    const backend = useBackendStrict();
-    const workspace = useWorkspaceStrict();
 
     const dispatch = useDashboardDispatch();
 
     const onDrillToSelect = useCallback(
-        (_item: { identifier: string }) => {
-            // TODO
+        (item: { identifier: string; dashboardRef: ObjRef }) => {
+            dispatch(setDrillForKpiWidget(widgetRef(widget), item.dashboardRef, item.identifier));
         },
-        [dispatch],
+        [dispatch, widget],
     );
 
     const onDrillToRemove = useCallback(() => {
-        // TODO
-    }, [dispatch]);
+        dispatch(removeDrillForKpiWidget(widgetRef(widget)));
+    }, [dispatch, widget]);
+
+    const dashboards = useDashboardSelector(selectLegacyDashboards);
 
     const drillToItem = widget.drills?.[0]?.tab;
-
-    const { result: dashboards, status } = useCancelablePromise(
-        {
-            promise: () => {
-                return loadLegacyDashboards(backend, workspace); // TODO cache this?
-            },
-        },
-        [backend, workspace],
-    );
 
     const UNLISTED_DASHBOARD_TAB = {
         title: intl.formatMessage({ id: "configurationPanel.unlistedDashboardTab" }),
@@ -111,12 +103,14 @@ const KpiDrillConfigurationCore: React.FC<IKpiDrillConfigurationProps> = (props)
                 {
                     title: dash.title,
                     identifier: dash.identifier,
+                    dashboardRef: dash.ref,
                     type: "header" as const,
                 },
                 ...dash.tabs.map((tab) => {
                     return {
                         title: tab.title,
                         identifier: tab.identifier,
+                        dashboardRef: dash.ref,
                         type: undefined,
                     };
                 }),
@@ -154,7 +148,7 @@ const KpiDrillConfigurationCore: React.FC<IKpiDrillConfigurationProps> = (props)
                     )}
                     renderBody={({ closeDropdown }) => (
                         <DropdownList
-                            isLoading={status === "loading" || status === "pending"}
+                            isLoading={!dashboards}
                             renderNoData={({ hasNoMatchingData }) => (
                                 <NoData
                                     hasNoMatchingData={hasNoMatchingData}

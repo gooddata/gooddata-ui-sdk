@@ -35,6 +35,8 @@ import { createDisplayFormMapFromCatalog } from "../../../../_staging/catalog/di
 import { getPrivateContext } from "../../../store/_infra/contexts";
 import { accessibleDashboardsActions } from "../../../store/accessibleDashboards";
 import { loadAccessibleDashboardList } from "./loadAccessibleDashboardList";
+import { loadLegacyDashboards } from "./loadLegacyDashboards";
+import { legacyDashboardsActions } from "../../../store/legacyDashboards";
 
 function loadDashboardFromBackend(
     ctx: DashboardContext,
@@ -85,6 +87,7 @@ function* loadExistingDashboard(
         user,
         listedDashboards,
         accessibleDashboards,
+        legacyDashboards,
     ]: [
         PromiseFnReturnType<typeof loadDashboardFromBackend>,
         SagaReturnType<typeof resolveDashboardConfig>,
@@ -94,6 +97,7 @@ function* loadExistingDashboard(
         PromiseFnReturnType<typeof loadUser>,
         PromiseFnReturnType<typeof loadDashboardList>,
         PromiseFnReturnType<typeof loadAccessibleDashboardList>,
+        PromiseFnReturnType<typeof loadLegacyDashboards>,
     ] = yield all([
         call(loadDashboardFromBackend, ctx, privateCtx, dashboardRef),
         call(resolveDashboardConfig, ctx, cmd),
@@ -103,6 +107,7 @@ function* loadExistingDashboard(
         call(loadUser, ctx),
         call(loadDashboardList, ctx),
         call(loadAccessibleDashboardList, ctx),
+        call(loadLegacyDashboards, ctx),
     ]);
 
     const {
@@ -150,6 +155,7 @@ function* loadExistingDashboard(
             }),
             listedDashboardsActions.setListedDashboards(listedDashboards),
             accessibleDashboardsActions.setAccessibleDashboards(accessibleDashboards),
+            legacyDashboardsActions.setLegacyDashboards(legacyDashboards),
             uiActions.setMenuButtonItemsVisibility(config.menuButtonItemsVisibility),
             uiActions.setRenderMode(config.initialRenderMode),
         ],
@@ -169,13 +175,14 @@ function* initializeNewDashboard(
 ): SagaIterator<DashboardLoadResult> {
     const { backend } = ctx;
 
-    const [config, permissions, catalog, user, listedDashboards, accessibleDashboards]: [
+    const [config, permissions, catalog, user, listedDashboards, accessibleDashboards, legacyDashboards]: [
         SagaReturnType<typeof resolveDashboardConfig>,
         SagaReturnType<typeof resolvePermissions>,
         PromiseFnReturnType<typeof loadCatalog>,
         PromiseFnReturnType<typeof loadUser>,
         PromiseFnReturnType<typeof loadDashboardList>,
         PromiseFnReturnType<typeof loadAccessibleDashboardList>,
+        PromiseFnReturnType<typeof loadLegacyDashboards>,
     ] = yield all([
         call(resolveDashboardConfig, ctx, cmd),
         call(resolvePermissions, ctx, cmd),
@@ -183,6 +190,7 @@ function* initializeNewDashboard(
         call(loadUser, ctx),
         call(loadDashboardList, ctx),
         call(loadAccessibleDashboardList, ctx),
+        call(loadLegacyDashboards, ctx),
     ]);
 
     const batch: BatchAction = batchActions(
@@ -199,6 +207,7 @@ function* initializeNewDashboard(
             }),
             listedDashboardsActions.setListedDashboards(listedDashboards),
             accessibleDashboardsActions.setAccessibleDashboards(accessibleDashboards),
+            legacyDashboardsActions.setLegacyDashboards(legacyDashboards),
             executionResultsActions.clearAllExecutionResults(),
             ...actionsToInitializeNewDashboard(config.dateFilterConfig),
             dateFilterConfigActions.setDateFilterConfig({
