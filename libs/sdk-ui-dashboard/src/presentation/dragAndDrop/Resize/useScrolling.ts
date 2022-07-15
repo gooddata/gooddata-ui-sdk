@@ -16,7 +16,8 @@ function checkScroll(e: MouseEvent) {
 export function useScrolling(isDragging: boolean) {
     useEffect(() => {
         if (isDragging) {
-            window.addEventListener("drag", checkScroll);
+            // there is false positive alarm in sonar rule, we need to disable it (https://github.com/SonarSource/SonarJS/issues/2666)
+            window.addEventListener("drag", checkScroll); //NOSONAR
         }
 
         return () => {
