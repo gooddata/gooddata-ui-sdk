@@ -5,3 +5,6 @@ export * from "./DragLayer";
 export * from "./DeleteDropZone";
 export * from "./types";
 export * from "./useDashboardDrop";
+export * from "./LayoutResizeContext";
+export * from "./Resize/HeightResizerHotspot";
+export * from "./Resize/ResizeOverlay";

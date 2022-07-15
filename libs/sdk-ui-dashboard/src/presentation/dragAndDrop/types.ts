@@ -5,7 +5,27 @@ import { IDashboardAttributeFilter } from "@gooddata/sdk-model";
 /**
  * @internal
  */
-export type DraggableItemType = "attributeFilter" | "attributeFilter-placeholder" | "widget" | "custom";
+export type DraggableContentItemType =
+    | "attributeFilter"
+    | "attributeFilter-placeholder"
+    | "widget"
+    | "custom";
+
+/**
+ * @internal
+ */
+export type DraggableInternalItemType = "internal-width-resizer" | "internal-height-resizer";
+/**
+ * @internal
+ */
+export function isDraggableInternalItemType(type: string): type is DraggableInternalItemType {
+    return type === "internal-width-resizer" || type === "internal-height-resizer";
+}
+
+/**
+ * @internal
+ */
+export type DraggableItemType = DraggableContentItemType | DraggableInternalItemType;
 
 /**
  * @internal
@@ -58,7 +78,7 @@ export type WidgetDraggableItem = {
 /**
  * @internal
  */
-export type DraggableItem =
+export type DraggableContentItem =
     | AttributeFilterDraggableItem
     | AttributeFilterPlaceholderDraggableItem
     | CustomDraggableItem
@@ -67,11 +87,54 @@ export type DraggableItem =
 /**
  * @internal
  */
-export type DraggableItemTypeMapping = {
+export type DraggableInternalItem = HeightResizerDragItem;
+
+/**
+ * @internal
+ */
+export type DraggableItem = DraggableContentItem | DraggableInternalItem;
+
+/**
+ * @internal
+ */
+export type DraggableItemTypeMapping = DraggableItemComponentTypeMapping & DraggableItemInternalTypeMapping;
+
+/**
+ * @internal
+ */
+export type DraggableItemComponentTypeMapping = {
     attributeFilter: AttributeFilterDraggableItem;
     "attributeFilter-placeholder": AttributeFilterPlaceholderDraggableItem;
     custom: CustomDraggableItem;
     widget: WidgetDraggableItem;
+};
+
+/**
+ * @internal
+ */
+export interface HeightResizerDragItem {
+    type: "internal-height-resizer";
+    sectionIndex: number;
+    itemIndexes: number[];
+    widgetHeights: number[];
+    initialScrollTop: number;
+    minLimit: number;
+    maxLimit: number;
+}
+
+/**
+ * @internal
+ */
+export interface WidthResizerDragItem {
+    type: "internal-height-resizer";
+}
+
+/**
+ * @internal
+ */
+export type DraggableItemInternalTypeMapping = {
+    "internal-width-resizer": WidthResizerDragItem;
+    "internal-height-resizer": HeightResizerDragItem;
 };
 
 /**

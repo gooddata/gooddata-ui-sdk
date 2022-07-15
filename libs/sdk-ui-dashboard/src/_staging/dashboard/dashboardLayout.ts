@@ -17,11 +17,9 @@ import {
 import compact from "lodash/compact";
 import keyBy from "lodash/keyBy";
 import invariant, { InvariantError } from "ts-invariant";
-import {
-    MeasurableWidgetContent,
-    validateDashboardLayoutWidgetSize,
-} from "../../presentation/layout/DefaultDashboardLayoutRenderer";
+import { validateDashboardLayoutWidgetSize } from "../../presentation/layout/DefaultDashboardLayoutRenderer/utils/sizing";
 import { ObjRefMap } from "../metadata/objRefMap";
+import { MeasurableWidgetContent } from "../../model/layout/sizing";
 
 function extractContentFromWidget(
     widget: IDashboardWidget,

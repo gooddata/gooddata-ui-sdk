@@ -1,7 +1,6 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { IDashboardLayoutSectionRenderer } from "./interfaces";
-import { Row } from "react-grid-system";
 import cx from "classnames";
 
 const isHiddenStyle = { height: 0, width: 0, overflow: "hidden", flex: 0 };
@@ -13,13 +12,13 @@ export const DashboardLayoutSectionRenderer: IDashboardLayoutSectionRenderer<unk
     const style = isHidden ? isHiddenStyle : defaultStyle;
 
     return (
-        <Row
+        <div
             className={cx(["gd-fluidlayout-row", "s-fluid-layout-row", className], {
                 "gd-fluidlayout-row-debug": debug,
             })}
             style={style}
         >
             {children}
-        </Row>
+        </div>
     );
 };

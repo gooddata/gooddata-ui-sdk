@@ -49,6 +49,7 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
         debug,
         onMouseLeave,
         enableCustomHeight,
+        renderMode = "view",
     } = props;
 
     const { layoutFacade, resizedItemPositions } = useMemo(() => {
@@ -120,6 +121,7 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
                                                 );
                                             }}
                                             screen={screen}
+                                            renderMode={renderMode}
                                         />
                                     );
                                 })}

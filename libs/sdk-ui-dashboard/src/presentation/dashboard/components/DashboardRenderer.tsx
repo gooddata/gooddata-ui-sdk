@@ -31,7 +31,7 @@ import { IDashboardProps } from "../types";
 import { DashboardLoading } from "./DashboardLoading";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { DragLayerComponent } from "../../dragAndDrop";
+import { DragLayerComponent, LayoutResizeStateProvider } from "../../dragAndDrop";
 import { RenderModeAwareDashboardLayoutSectionHeaderRenderer } from "../DashboardSidebar/RenderModeAwareDashboardSidebar";
 
 /**
@@ -113,8 +113,10 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
                                     >
                                         <DashboardConfigProvider menuButtonConfig={props.menuButtonConfig}>
                                             <DndProvider backend={HTML5Backend}>
-                                                <DragLayerComponent />
-                                                <DashboardLoading {...props} />
+                                                <LayoutResizeStateProvider>
+                                                    <DragLayerComponent />
+                                                    <DashboardLoading {...props} />
+                                                </LayoutResizeStateProvider>
                                             </DndProvider>
                                         </DashboardConfigProvider>
                                     </DashboardComponentsProvider>

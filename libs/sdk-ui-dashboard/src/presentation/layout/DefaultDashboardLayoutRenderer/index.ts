@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 export {
     IDashboardLayoutItemKeyGetter,
     IDashboardLayoutItemKeyGetterProps,
@@ -31,14 +31,10 @@ export {
     getDashboardLayoutItemHeightForRatioAndScreen,
     getDashboardLayoutItemMaxGridWidth,
     getDashboardLayoutWidgetDefaultGridWidth,
-    getDashboardLayoutWidgetDefaultHeight,
     getDashboardLayoutWidgetMinGridWidth,
     getDashboardLayoutItemHeightForGrid,
     getDashboardLayoutItemHeight,
-    getDashboardLayoutWidgetMinGridHeight,
-    getDashboardLayoutWidgetMaxGridHeight,
     validateDashboardLayoutWidgetSize,
-    MeasurableWidgetContent,
 } from "./utils/sizing";
 export { DashboardLayoutBuilder } from "../../../_staging/dashboard/fluidLayout/builder/layout";
 export { DashboardLayoutFacade } from "../../../_staging/dashboard/fluidLayout/facade/layout";

@@ -22,12 +22,13 @@ import { DashboardWidget, IDashboardWidgetProps } from "../widget";
 import {
     getDashboardLayoutItemHeight,
     getDashboardLayoutItemHeightForRatioAndScreen,
-    getDashboardLayoutWidgetDefaultHeight,
     IDashboardLayoutItemFacade,
     IDashboardLayoutWidgetRenderer,
 } from "./DefaultDashboardLayoutRenderer";
 import { ObjRefMap } from "../../_staging/metadata/objRefMap";
 import { useDashboardComponentsContext } from "../dashboardContexts";
+import { ResizeOverlay, useResizeStatus } from "../dragAndDrop";
+import { getDashboardLayoutWidgetDefaultHeight } from "../../model/layout";
 
 function calculateWidgetMinHeight(
     widget: ExtendedDashboardWidget,
@@ -100,6 +101,8 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
     const className = enableWidgetCustomHeight ? "custom-height" : undefined;
     const index = getWidgetIndex(item);
 
+    const { isActive, isResizingColumnOrRow, heightLimitReached } = useResizeStatus(widget.identifier);
+
     return (
         <DefaultWidgetRenderer
             DefaultWidgetRenderer={DefaultWidgetRenderer}
@@ -120,6 +123,12 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                 widget={widget as ExtendedDashboardWidget}
                 ErrorComponent={ErrorComponent}
                 LoadingComponent={LoadingComponent}
+            />
+            <ResizeOverlay
+                isActive={isActive}
+                isResizingColumnOrRow={isResizingColumnOrRow}
+                isUnderWidthMinLimit={false}
+                reachedHeightLimit={heightLimitReached}
             />
         </DefaultWidgetRenderer>
     );

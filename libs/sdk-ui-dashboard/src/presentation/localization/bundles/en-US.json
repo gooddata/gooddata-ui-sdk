@@ -1475,5 +1475,20 @@
         "value": "Unrelated",
         "comment": "",
         "limit": 0
+    },
+    "layout.widget.under.limit": {
+        "value": "Widget is at the minimal width",
+        "comment": "Shown as red text inside of widget if resized under min limit.",
+        "limit": 0
+    },
+    "layout.widget.height.min": {
+        "value": "Widget is at the minimal height",
+        "comment": "Shown as red text inside of widget if resized under min limit.",
+        "limit": 0
+    },
+    "layout.widget.height.max": {
+        "value": "Widget is at the maximal height",
+        "comment": "Shown as red text inside of widget if resized under max limit.",
+        "limit": 0
     }
 }

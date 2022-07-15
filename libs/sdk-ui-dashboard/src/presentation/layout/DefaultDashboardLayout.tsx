@@ -32,6 +32,7 @@ import {
 } from "./DefaultDashboardLayoutRenderer";
 import { RenderModeAwareDashboardLayoutSectionHeaderRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionHeaderRenderer";
 import { getMemoizedWidgetSanitizer } from "./DefaultDashboardLayoutUtils";
+import { selectRenderMode } from "../../model/store/ui/uiSelectors";
 
 /**
  * Get dashboard layout for exports.
@@ -91,6 +92,7 @@ export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Elemen
     const enableWidgetCustomHeight = useDashboardSelector(selectEnableWidgetCustomHeight);
     const insights = useDashboardSelector(selectInsightsMap);
     const isExport = useDashboardSelector(selectIsExport);
+    const renderMode = useDashboardSelector(selectRenderMode);
 
     const getInsightByRef = useCallback(
         (insightRef: ObjRef): IInsight | undefined => {
@@ -141,6 +143,7 @@ export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Elemen
             widgetRenderer={widgetRenderer}
             enableCustomHeight={enableWidgetCustomHeight}
             sectionHeaderRenderer={RenderModeAwareDashboardLayoutSectionHeaderRenderer}
+            renderMode={renderMode}
         />
     );
 };
