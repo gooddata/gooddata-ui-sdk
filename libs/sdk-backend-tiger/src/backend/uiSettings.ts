@@ -79,7 +79,7 @@ export const DefaultUiSettings: ISettings = {
     enableAxisNameConfiguration: true,
     enableDataSourceManagement: true,
     enableAdFloatingDateRangeFilter: true,
-    enableReversedStacking: false,
+    enableReversedStacking: true,
     enableSeparateTotalLabels: false,
 
     ...DefaultFeatureFlags,
