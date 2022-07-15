@@ -1,6 +1,13 @@
 // (C) 2022 GoodData Corporation
 import React, { useCallback } from "react";
-import { ICatalogDateDataset, idRef, isInsightWidget, IWidget, ObjRef } from "@gooddata/sdk-model";
+import {
+    areObjRefsEqual,
+    ICatalogDateDataset,
+    idRef,
+    isInsightWidget,
+    IWidget,
+    ObjRef,
+} from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import first from "lodash/first";
 import noop from "lodash/noop";
@@ -59,7 +66,9 @@ export const DateDatasetFilter: React.FC<IDateDatasetFilterProps> = (props) => {
 
     const catalogDatasetsMap = useDashboardSelector(selectAllCatalogDateDatasetsMap);
     const selectedDateDataset = widget.dateDataSet && catalogDatasetsMap.get(widget.dateDataSet);
-    const selectedDateDatasetHidden = false; // TODO how to get this...
+    const selectedDateDatasetHidden = !relatedDateDatasets?.some((ds) =>
+        areObjRefsEqual(ds.dataSet.ref, selectedDateDataset?.dataSet.ref),
+    );
 
     const isDateFilterEnabled = !!widget.dateDataSet;
 
@@ -138,6 +147,7 @@ export const DateDatasetFilter: React.FC<IDateDatasetFilterProps> = (props) => {
                     onDateDatasetChange={handleDateDatasetChanged}
                     autoOpenChanged={noop} // TODO
                     autoOpen={false} // TODO
+                    isLoading={isDropdownLoading}
                 />
             )}
         </div>
