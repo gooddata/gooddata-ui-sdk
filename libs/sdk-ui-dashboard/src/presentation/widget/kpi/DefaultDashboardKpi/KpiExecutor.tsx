@@ -1,17 +1,12 @@
 // (C) 2020-2022 GoodData Corporation
 import React, { memo, useCallback, useEffect, useMemo } from "react";
-import { IntlShape, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import compact from "lodash/compact";
-import isNil from "lodash/isNil";
-import isNumber from "lodash/isNumber";
-import round from "lodash/round";
 import { IAnalyticalBackend, IDataView, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import {
     IMeasure,
     IPoPMeasureDefinition,
     IPreviousPeriodMeasureDefinition,
-    isMeasureFormatInPercent,
-    measureLocalId,
     ObjRef,
     objRefToString,
     FilterContextItem,
@@ -22,9 +17,6 @@ import {
 } from "@gooddata/sdk-model";
 import {
     convertDrillableItemsToPredicates,
-    createNumberJsFormatter,
-    DataViewFacade,
-    IDataSeries,
     IDrillEventContext,
     ILoadingProps,
     isSomeHeaderPredicateMatched,
@@ -56,15 +48,21 @@ import {
 import { DashboardItemHeadline } from "../../../presentationComponents";
 import { IDashboardFilter, OnFiredDashboardDrillEvent } from "../../../../types";
 
-import { KpiRenderer } from "./KpiRenderer";
 import { KpiAlertDialogWrapper } from "./KpiAlertDialogWrapper";
 import { useKpiAlertOperations } from "./useKpiAlertOperations";
-import { IKpiAlertResult, IKpiResult } from "./types";
 import { DashboardItemWithKpiAlert, evaluateAlertTriggered } from "./KpiAlerts";
-import { dashboardFilterToFilterContextItem, stripDateDatasets } from "./utils/filterUtils";
 import { useWidgetBrokenAlertsQuery } from "../../common/useWidgetBrokenAlertsQuery";
 import { invariant } from "ts-invariant";
 import { useWidgetSelection } from "../../common/useWidgetSelection";
+import {
+    dashboardFilterToFilterContextItem,
+    getAlertThresholdInfo,
+    getKpiAlertResult,
+    getKpiResult,
+    getNoDataKpiResult,
+    KpiRenderer,
+    stripDateDatasets,
+} from "../common";
 
 interface IKpiExecutorProps {
     dashboardRef?: ObjRef;
@@ -417,95 +415,3 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps> = (props) => {
  * @internal
  */
 export const KpiExecutor = memo(KpiExecutorCore);
-
-function getSeriesResult(series: IDataSeries | undefined): number | null {
-    if (!series) {
-        return null;
-    }
-
-    const value = series.dataPoints()[0].rawValue;
-
-    if (isNil(value)) {
-        return null;
-    }
-
-    if (isNumber(value)) {
-        return value;
-    }
-
-    return Number.parseFloat(value);
-}
-
-function getNoDataKpiResult(
-    result: DataViewFacade | undefined,
-    primaryMeasure: IMeasure,
-): IKpiResult | undefined {
-    if (!result) {
-        return;
-    }
-
-    return {
-        measureDescriptor: result.meta().measureDescriptor(measureLocalId(primaryMeasure)),
-        measureFormat: result.meta().measureDescriptor(measureLocalId(primaryMeasure))?.measureHeaderItem
-            ?.format,
-        measureResult: undefined,
-        measureForComparisonResult: undefined,
-    };
-}
-
-function getKpiResult(
-    result: DataViewFacade | undefined,
-    primaryMeasure: IMeasure,
-    secondaryMeasure:
-        | IMeasure<IPoPMeasureDefinition>
-        | IMeasure<IPreviousPeriodMeasureDefinition>
-        | undefined,
-    separators: ISeparators,
-): IKpiResult | undefined {
-    const series = result?.data({ valueFormatter: createNumberJsFormatter(separators) }).series();
-    const primarySeries = series?.firstForMeasure(primaryMeasure);
-    const secondarySeries = secondaryMeasure ? series?.firstForMeasure(secondaryMeasure) : undefined;
-
-    return primarySeries
-        ? {
-              measureDescriptor: primarySeries.descriptor.measureDescriptor,
-              measureFormat: primarySeries.measureFormat(),
-              measureResult: getSeriesResult(primarySeries)!,
-              measureForComparisonResult: getSeriesResult(secondarySeries)!,
-          }
-        : undefined;
-}
-
-function getKpiAlertResult(
-    result: DataViewFacade | undefined,
-    primaryMeasure: IMeasure,
-    separators: ISeparators,
-): IKpiAlertResult | undefined {
-    const alertSeries = result?.data({ valueFormatter: createNumberJsFormatter(separators) }).series();
-    return alertSeries
-        ? {
-              measureFormat: alertSeries.count
-                  ? alertSeries.firstForMeasure(primaryMeasure).measureFormat()
-                  : undefined,
-              measureResult: alertSeries.count
-                  ? getSeriesResult(alertSeries.firstForMeasure(primaryMeasure))!
-                  : 0,
-          }
-        : undefined;
-}
-
-function getAlertThresholdInfo(kpiResult: IKpiResult | undefined, intl: IntlShape) {
-    const isThresholdRepresentingPercent = kpiResult?.measureFormat
-        ? isMeasureFormatInPercent(kpiResult.measureFormat)
-        : false;
-
-    const value = round(kpiResult?.measureResult || 0, 2); // sure about rounding?
-    const thresholdPlaceholder = isThresholdRepresentingPercent
-        ? `${intl.formatMessage({ id: "kpi.alertBox.example" })} ${value * 100}`
-        : `${intl.formatMessage({ id: "kpi.alertBox.example" })} ${value}`; // TODO fix floating point multiply
-
-    return {
-        isThresholdRepresentingPercent,
-        thresholdPlaceholder,
-    };
-}

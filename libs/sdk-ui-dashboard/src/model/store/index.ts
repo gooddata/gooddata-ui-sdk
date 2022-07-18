@@ -43,6 +43,7 @@ export {
     selectEnableRenamingProjectToWorkspace,
     selectEnableRenamingMeasureToMetric,
     selectShouldHidePixelPerfectExperience,
+    selectDisableKpiDashboardHeadlineUnderline,
 } from "./config/configSelectors";
 export { PermissionsState } from "./permissions/permissionsState";
 export {

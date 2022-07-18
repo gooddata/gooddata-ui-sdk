@@ -11,7 +11,7 @@ import {
     DashboardCommands,
 } from "../../../../model";
 
-import { KpiAlertOperationStatus } from "./types";
+import { KpiAlertOperationStatus } from "../common";
 
 /**
  * @internal

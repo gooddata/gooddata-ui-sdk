@@ -20,7 +20,7 @@ import isEmpty from "lodash/isEmpty";
 import { createExecution } from "./createExecution";
 
 /**
- * Convenient interfance to define execution by series and slices.
+ * Convenient interface to define execution by series and slices.
  *
  * @public
  */

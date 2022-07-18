@@ -11,7 +11,7 @@ import {
     LegacyDashboardInsightMenuButton,
     DefaultDashboardInsightMenu,
     LegacyDashboardInsightMenu,
-    DefaultDashboardKpi,
+    RenderModeAwareDashboardKpi,
     DefaultInsightBody,
 } from "../../widget";
 import { IDashboardProps } from "../types";
@@ -115,7 +115,7 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
     const kpiProvider = useCallback<KpiComponentProvider>(
         (kpi, widget) => {
             const userSpecified = KpiComponentProvider?.(kpi, widget);
-            return userSpecified ?? DefaultDashboardKpi;
+            return userSpecified ?? RenderModeAwareDashboardKpi;
         },
         [KpiComponentProvider],
     );

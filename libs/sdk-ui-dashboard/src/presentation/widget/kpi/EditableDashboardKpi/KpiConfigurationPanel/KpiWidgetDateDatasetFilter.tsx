@@ -2,7 +2,7 @@
 import React from "react";
 import { IKpiWidget } from "@gooddata/sdk-model";
 
-import { DateDatasetFilter, useKpiWidgetRelatedDateDatasets } from "../../common";
+import { DateDatasetFilter, useKpiWidgetRelatedDateDatasets } from "../../../common";
 
 export const KpiWidgetDateDatasetFilter: React.FC<{
     widget: IKpiWidget;

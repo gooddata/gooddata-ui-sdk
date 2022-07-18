@@ -350,3 +350,12 @@ export const selectShouldHidePixelPerfectExperience = createSelector(selectConfi
     const isEnabled = state.settings?.enablePixelPerfectExperience ?? false;
     return !isHidden && isEnabled;
 });
+
+/**
+ * Returns whether we should disable the underline in KPIs when they are drillable.
+ *
+ * @internal
+ */
+export const selectDisableKpiDashboardHeadlineUnderline = createSelector(selectConfig, (state) => {
+    return !!(state.settings?.disableKpiDashboardHeadlineUnderline ?? false);
+});

@@ -1,31 +1,17 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2022 GoodData Corporation
 import React from "react";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import invariant from "ts-invariant";
 
 import { useDashboardComponentsContext } from "../../../dashboardContexts";
-import {
-    selectDashboardRef,
-    selectDisableKpiDashboardHeadlineUnderline,
-    selectFilterContextFilters,
-    selectIsReadOnly,
-    selectSeparators,
-    useDashboardSelector,
-} from "../../../../model";
+import { selectFilterContextFilters, useDashboardSelector } from "../../../../model";
 import { IDashboardKpiProps } from "../types";
-
-import { KpiExecutor } from "./KpiExecutor";
 import { useKpiData } from "../common";
+import { EditableKpiExecutor } from "./EditableKpiExecutor";
 
-/**
- * @internal
- */
-export const DashboardKpiCore = (props: IDashboardKpiProps): JSX.Element => {
+export const EditableDashboardKpi = (props: IDashboardKpiProps) => {
     const {
         kpiWidget,
-        alert,
-        onFiltersChange,
-        onDrill,
         onError,
         backend: customBackend,
         workspace: customWorkspace,
@@ -43,11 +29,7 @@ export const DashboardKpiCore = (props: IDashboardKpiProps): JSX.Element => {
     const backend = useBackendStrict(customBackend);
     const workspace = useWorkspaceStrict(customWorkspace);
 
-    const dashboardRef = useDashboardSelector(selectDashboardRef);
     const dashboardFilters = useDashboardSelector(selectFilterContextFilters);
-    const disableDrillUnderline = useDashboardSelector(selectDisableKpiDashboardHeadlineUnderline);
-    const separators = useDashboardSelector(selectSeparators);
-    const isReadOnly = useDashboardSelector(selectIsReadOnly);
 
     const kpiData = useKpiData({
         kpiWidget,
@@ -65,23 +47,13 @@ export const DashboardKpiCore = (props: IDashboardKpiProps): JSX.Element => {
     }
 
     return (
-        <KpiExecutor
-            dashboardRef={dashboardRef}
+        <EditableKpiExecutor
             kpiWidget={kpiWidget}
             primaryMeasure={kpiData.result.primaryMeasure}
             secondaryMeasure={kpiData.result.secondaryMeasure}
-            alert={alert}
-            allFilters={kpiData.result.allFilters}
             effectiveFilters={kpiData.result.effectiveFilters}
-            onFiltersChange={onFiltersChange}
-            onDrill={onDrill}
             onError={onError}
-            separators={separators}
-            disableDrillUnderline={disableDrillUnderline}
-            backend={backend}
-            workspace={workspace}
             LoadingComponent={LoadingComponent}
-            isReadOnly={isReadOnly}
         />
     );
 };

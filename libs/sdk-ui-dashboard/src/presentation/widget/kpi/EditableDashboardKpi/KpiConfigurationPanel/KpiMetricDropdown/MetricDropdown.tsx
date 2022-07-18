@@ -10,7 +10,7 @@ import {
     useDashboardSelector,
     selectCatalogMeasures,
     selectEnableRenamingMeasureToMetric,
-} from "../../../../../model";
+} from "../../../../../../model";
 
 import { CONFIG_PANEL_INNER_WIDTH } from "../constants";
 import { MetricDropdownItem } from "./MetricDropdownItem";

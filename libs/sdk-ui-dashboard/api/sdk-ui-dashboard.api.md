@@ -4546,6 +4546,9 @@ export function renderModeAware<T extends ComponentType<any>>(components: {
 } & Partial<Record<RenderMode, T>>): ComponentType<ComponentPropsWithRef<T>>;
 
 // @internal (undocumented)
+export const RenderModeAwareDashboardKpi: ComponentType<IDashboardKpiProps>;
+
+// @internal (undocumented)
 export const RenderModeAwareTitle: ComponentType<PropsWithChildren<ITitleProps> | (ITitleProps & RefAttributes<Component<ITitleProps, any, any>>)>;
 
 // @internal (undocumented)
@@ -4938,6 +4941,9 @@ export const selectDateFormat: OutputSelector<DashboardState, string | undefined
 
 // @public
 export const selectDisableDefaultDrills: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
+
+// @internal
+export const selectDisableKpiDashboardHeadlineUnderline: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
 // @alpha
 export const selectDrillableItems: OutputSelector<DashboardState, ExplicitDrill[], (res: DrillState) => ExplicitDrill[]>;

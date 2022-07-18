@@ -23,6 +23,7 @@ import {
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 import invariant from "ts-invariant";
+import stringify from "json-stable-stringify";
 
 import { filterContextItemsToDashboardFiltersByWidget } from "../../../../converters";
 import { IDashboardFilter } from "../../../../types";
@@ -119,7 +120,7 @@ export function useKpiData({
         effectiveBackend,
         effectiveWorkspace,
         effectiveFilters,
-        kpiWidget,
+        stringify(kpiWidget),
     ]);
 }
 
