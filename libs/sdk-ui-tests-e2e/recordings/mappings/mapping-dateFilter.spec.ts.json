@@ -1,7 +1,7 @@
 {
     "mappings": [
         {
-            "id": "d5557ab2-eed0-4862-adae-6b1469fb39c7",
+            "id": "c7d854a2-299d-4f5d-a7d6-4b3b2a15b05a",
             "name": "gdc_account_login",
             "request": {
                 "url": "/gdc/account/login",
@@ -20,10 +20,10 @@
                     "pragma": "no-cache"
                 }
             },
-            "uuid": "d5557ab2-eed0-4862-adae-6b1469fb39c7"
+            "uuid": "c7d854a2-299d-4f5d-a7d6-4b3b2a15b05a"
         },
         {
-            "id": "bb8775e7-b51b-4075-90e3-0513451c44d4",
+            "id": "baebef9f-d6ad-4bdc-b47b-eb49c3b8d5b9",
             "name": "gdc_account_profile_current",
             "request": {
                 "url": "/gdc/account/profile/current",
@@ -39,33 +39,29 @@
                     "cache-control": "no-cache, no-store, must-revalidate"
                 }
             },
-            "uuid": "bb8775e7-b51b-4075-90e3-0513451c44d4"
+            "uuid": "baebef9f-d6ad-4bdc-b47b-eb49c3b8d5b9"
         },
         {
-            "id": "28ccd1a5-3edb-478e-aefe-306521b3b612",
+            "id": "b4d1f3c8-a6be-4228-b8d7-ab0105c6d1fc",
             "name": "gdc_account_profile_b388eefffab41947076a75fd36d0bad1",
             "request": {
                 "url": "/gdc/account/profile/b388eefffab41947076a75fd36d0bad1",
                 "method": "GET"
             },
             "response": {
-                "status": 401,
-                "body": "{\"error\":{\"code\":401,\"message\":\"Authorization Required\",\"description\":\"This server could not verify that you are authorized to access the document requested. Either you supplied the wrong credentials (e.g., bad password), or your browser doesn't understand how to supply the credentials required\",\"links\":{\"documentation\":\"https://help.gooddata.com/display/developer/API+Reference#/reference/authentication/log-in\"}}}",
+                "status": 200,
+                "body": "{\"accountSetting\":{\"ssoProvider\":null,\"updated\":\"2021-07-21 14:07:27\",\"timezone\":null,\"position\":null,\"phoneNumber\":\"000000000\",\"login\":\"first.last@gooddata.com\",\"lastName\":\"Last\",\"firstName\":\"First\",\"created\":\"2021-04-07 11:36:41\",\"country\":null,\"companyName\":\"Good Data\",\"email\":\"first.last@gooddata.com\",\"authenticationModes\":[],\"language\":\"en-US\",\"ipWhitelist\":null,\"effectiveIpWhitelist\":null,\"links\":{\"self\":\"/gdc/account/profile/b388eefffab41947076a75fd36d0bad1\",\"projects\":\"/gdc/account/profile/b388eefffab41947076a75fd36d0bad1/projects\",\"domain\":\"/gdc/domains/default\",\"auditEvents\":\"/gdc/account/profile/b388eefffab41947076a75fd36d0bad1/auditEvents\"}}}",
                 "headers": {
-                    "expires": "Thu, 01 Jan 1970 00:00:00 GMT",
                     "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
-                    "vary": "origin",
-                    "www-authenticate": "GoodData realm=\"GoodData API\" cookie=GDCAuthTT",
-                    "content-type": "application/json; charset=utf-8",
-                    "cache-control": "no-store, no-cache, must-revalidate, max-age=0",
-                    "P3P": "CP='IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT'",
-                    "pragma": "no-cache"
+                    "vary": "origin,X-GDC-VERSION",
+                    "content-type": "application/json;charset=utf-8",
+                    "cache-control": "no-cache, no-store, must-revalidate"
                 }
             },
-            "uuid": "28ccd1a5-3edb-478e-aefe-306521b3b612"
+            "uuid": "b4d1f3c8-a6be-4228-b8d7-ab0105c6d1fc"
         },
         {
-            "id": "cc168639-e562-4e03-ab11-3359adb8c300",
+            "id": "145fe907-357c-4768-a725-0219526dc522",
             "name": "gdc_account_token",
             "request": {
                 "url": "/gdc/account/token",
@@ -81,7 +77,7 @@
                     "WWW-Authenticate": "GoodData realm=\"GoodData API\" cookie=GDCAuthSST location=/gdc/account/login"
                 }
             },
-            "uuid": "cc168639-e562-4e03-ab11-3359adb8c300"
+            "uuid": "145fe907-357c-4768-a725-0219526dc522"
         }
     ]
 }

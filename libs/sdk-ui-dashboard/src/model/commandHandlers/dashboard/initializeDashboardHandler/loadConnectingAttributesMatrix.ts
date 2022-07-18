@@ -4,7 +4,12 @@ import compact from "lodash/compact";
 import flatMap from "lodash/flatMap";
 import uniqWith from "lodash/uniqWith";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { areObjRefsEqual, ICatalogAttribute, IDashboardAttributeFilter, ObjRef } from "@gooddata/sdk-model";
+import {
+    areObjRefsEqual,
+    IAttributeDisplayFormMetadataObject,
+    IDashboardAttributeFilter,
+    ObjRef,
+} from "@gooddata/sdk-model";
 
 import { PromiseReturnType } from "../../../types/sagas";
 import { ConnectingAttributeMatrix } from "../../../types/attributeFilterTypes";
@@ -18,7 +23,7 @@ export function* loadConnectingAttributesMatrix(
     backend: IAnalyticalBackend,
     workspace: string,
     filters: IDashboardAttributeFilter[],
-    catalogAttributes: ICatalogAttribute[],
+    attributeDisplayForms: IAttributeDisplayFormMetadataObject[],
 ) {
     /**
      * Load attributes for the display forms used within the filter context.
@@ -26,11 +31,8 @@ export function* loadConnectingAttributesMatrix(
     const attributes = compact(
         filters.map(
             (filter) =>
-                catalogAttributes.find((catalogAttribute) =>
-                    catalogAttribute.displayForms.some((df) =>
-                        areObjRefsEqual(df, filter.attributeFilter.displayForm),
-                    ),
-                )?.attribute.ref,
+                attributeDisplayForms.find((df) => areObjRefsEqual(df, filter.attributeFilter.displayForm))
+                    ?.attribute,
         ),
     );
 
