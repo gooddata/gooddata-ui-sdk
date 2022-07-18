@@ -22,9 +22,7 @@ import {
     isSomeHeaderPredicateMatched,
     NoDataSdkError,
     OnError,
-    useBackendStrict,
     useExecutionDataView,
-    useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 
 import { filterContextItemsToDashboardFiltersByWidget } from "../../../../converters";
@@ -95,6 +93,9 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps> = (props) => {
         dashboardRef,
         kpiWidget,
 
+        backend,
+        workspace,
+
         primaryMeasure,
         secondaryMeasure,
         effectiveFilters,
@@ -111,8 +112,6 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps> = (props) => {
     } = props;
 
     const intl = useIntl();
-    const backend = useBackendStrict(props.backend);
-    const workspace = useWorkspaceStrict(props.workspace);
 
     const kpiWidgetRef = widgetRef(kpiWidget);
 

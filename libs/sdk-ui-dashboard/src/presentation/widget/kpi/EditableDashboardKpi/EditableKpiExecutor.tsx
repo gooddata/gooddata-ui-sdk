@@ -11,13 +11,7 @@ import {
     IKpiWidget,
     widgetRef,
 } from "@gooddata/sdk-model";
-import {
-    ILoadingProps,
-    OnError,
-    useBackendStrict,
-    useExecutionDataView,
-    useWorkspaceStrict,
-} from "@gooddata/sdk-ui";
+import { ILoadingProps, OnError, useExecutionDataView } from "@gooddata/sdk-ui";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 import {
@@ -53,6 +47,9 @@ export const EditableKpiExecutor = (props: IEditableKpiExecutorProps) => {
     const {
         kpiWidget,
 
+        backend,
+        workspace,
+
         primaryMeasure,
         secondaryMeasure,
         effectiveFilters,
@@ -61,8 +58,6 @@ export const EditableKpiExecutor = (props: IEditableKpiExecutorProps) => {
     } = props;
 
     const intl = useIntl();
-    const backend = useBackendStrict(props.backend);
-    const workspace = useWorkspaceStrict(props.workspace);
 
     const enableCompactSize = useDashboardSelector(selectEnableWidgetCustomHeight);
     const separators = useDashboardSelector(selectSeparators);
