@@ -50,6 +50,8 @@ import {
     useDashboardDispatch,
     selectIsKpiAlertOpenedByWidgetRef,
     selectIsKpiAlertHighlightedByWidgetRef,
+    selectEnableWidgetCustomHeight,
+    selectDateFormat,
 } from "../../../../model";
 import { DashboardItemHeadline } from "../../../presentationComponents";
 import { IDashboardFilter, OnFiredDashboardDrillEvent } from "../../../../types";
@@ -114,42 +116,56 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps> = (props) => {
     const backend = useBackendStrict(props.backend);
     const workspace = useWorkspaceStrict(props.workspace);
 
-    const { error, result, status } = useExecutionDataView({
-        backend,
-        workspace,
-        execution: backend
-            .workspace(workspace)
-            .execution()
-            .forItems(compact([primaryMeasure, secondaryMeasure]), effectiveFilters),
-    });
+    const kpiWidgetRef = widgetRef(kpiWidget);
+
+    const { error, result, status } = useExecutionDataView(
+        {
+            backend,
+            workspace,
+            execution: {
+                seriesBy: compact([primaryMeasure, secondaryMeasure]),
+                filters: effectiveFilters,
+            },
+        },
+        [primaryMeasure, secondaryMeasure, effectiveFilters, backend, workspace],
+    );
     const isLoading = status === "loading" || status === "pending";
 
     const {
         error: alertExecutionError,
         result: alertExecutionResult,
         status: alertExecutionStatus,
-    } = useExecutionDataView({
-        backend,
-        workspace,
-        execution: backend.workspace(workspace).execution().forItems([primaryMeasure], effectiveFilters),
-    });
+    } = useExecutionDataView(
+        {
+            backend,
+            workspace,
+            execution: {
+                seriesBy: [primaryMeasure],
+                filters: effectiveFilters,
+            },
+        },
+        [primaryMeasure, effectiveFilters, backend, workspace],
+    );
     const isAlertExecutionLoading = alertExecutionStatus === "loading" || alertExecutionStatus === "pending";
 
     const currentUser = useDashboardSelector(selectCurrentUser);
     const canCreateScheduledMail = useDashboardSelector(selectCanCreateScheduledMail);
     const settings = useDashboardSelector(selectSettings);
+    const enableCompactSize = useDashboardSelector(selectEnableWidgetCustomHeight);
+    const dateFormat = useDashboardSelector(selectDateFormat);
+
     const drillableItems = useDashboardSelector(selectDrillableItems);
-    const widgetDrills = useDashboardSelector(selectValidConfiguredDrillsByWidgetRef(kpiWidget.ref));
-    const isAlertDialogOpen = useDashboardSelector(selectIsKpiAlertOpenedByWidgetRef(kpiWidget.ref));
-    const isAlertHighlighted = useDashboardSelector(selectIsKpiAlertHighlightedByWidgetRef(kpiWidget.ref));
+    const widgetDrills = useDashboardSelector(selectValidConfiguredDrillsByWidgetRef(kpiWidgetRef));
+    const isAlertDialogOpen = useDashboardSelector(selectIsKpiAlertOpenedByWidgetRef(kpiWidgetRef));
+    const isAlertHighlighted = useDashboardSelector(selectIsKpiAlertHighlightedByWidgetRef(kpiWidgetRef));
 
     const dispatch = useDashboardDispatch();
     const openAlertDialog = useCallback(() => {
-        dispatch(uiActions.openKpiAlertDialog(kpiWidget.ref));
-    }, [kpiWidget]);
+        dispatch(uiActions.openKpiAlertDialog(kpiWidgetRef));
+    }, [kpiWidgetRef, dispatch]);
     const closeAlertDialog = useCallback(() => {
         dispatch(uiActions.closeKpiAlertDialog());
-    }, []);
+    }, [dispatch]);
 
     const { result: brokenAlertsBasicInfo } = useWidgetBrokenAlertsQuery(kpiWidget, alert);
 
@@ -229,8 +245,6 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps> = (props) => {
             isSomeHeaderPredicateMatched(predicates, kpiResult.measureDescriptor, result)) ||
         widgetDrills.length > 0;
 
-    const enableCompactSize = settings.enableKDWidgetCustomHeight;
-
     const alertSavingStatus =
         kpiAlertOperations.creatingStatus === "inProgress" ||
         kpiAlertOperations.updatingStatus === "inProgress"
@@ -239,7 +253,7 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps> = (props) => {
             ? "error"
             : "idle";
 
-    const { isSelectable, isSelected, onSelected } = useWidgetSelection(kpiWidget.ref);
+    const { isSelectable, isSelected, onSelected } = useWidgetSelection(kpiWidgetRef);
 
     return (
         <DashboardItemWithKpiAlert
@@ -278,7 +292,7 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps> = (props) => {
             renderAlertDialog={() => (
                 <KpiAlertDialogWrapper
                     alert={alert}
-                    dateFormat={settings.responsiveUiDateFormat!}
+                    dateFormat={dateFormat!}
                     userEmail={currentUser.email!}
                     onAlertDialogCloseClick={() => {
                         kpiAlertDialogClosed();
@@ -308,7 +322,7 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps> = (props) => {
 
                         return kpiAlertOperations.onCreateAlert({
                             dashboard: dashboardRef,
-                            widget: widgetRef(kpiWidget),
+                            widget: kpiWidgetRef,
                             threshold,
                             whenTriggered,
                             isTriggered: evaluateAlertTriggered(
