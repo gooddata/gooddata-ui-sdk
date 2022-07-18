@@ -24,6 +24,7 @@ export class Table {
     public waitLoaded(): this {
         this.getElement().find(".s-loading").should("not.exist");
         this.getElement().find(".s-loading-done").should("exist");
+        cy.wait(500);
         return this;
     }
 
@@ -38,6 +39,7 @@ export class Table {
 
         this.getElement()
             .find(`.gd-cell-drillable.s-cell-${rowIndex}-${columnIndex} .s-value`)
+            .first()
             .should("exist");
 
         this.getElement()
