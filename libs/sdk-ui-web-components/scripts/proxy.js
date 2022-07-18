@@ -63,11 +63,11 @@ const server = http.createServer((req, res) => {
         try {
             filePath = path.resolve(PUBLIC_DIR, req.url.replace("/components/", ""));
             output = fs.readFileSync(filePath);
-            mime = mimeTypes[path.extname(filePath).substr(1)] || "application/octet-stream";
+            mime = mimeTypes[path.extname(filePath).substring(1)] || "application/octet-stream";
         } catch (e) {
             // No file with the given path, deliver the main js file
             // TODO check the error type to ensure it's really "file not found"
-            filePath = path.resolve(PUBLIC_DIR, "index.mjs");
+            filePath = path.resolve(PUBLIC_DIR, "index.js");
             output = fs.readFileSync(filePath);
             mime = mimeTypes.mjs;
         }
@@ -75,7 +75,11 @@ const server = http.createServer((req, res) => {
         res.writeHead(200, {
             "Content-Type": mime,
             "Content-Length": output.length, // TODO account for special chars when calc length
-            "Access-Control-Allow-Origin": req.headers.origin,
+            ...(req.headers.origin
+                ? {
+                      "Access-Control-Allow-Origin": req.headers.origin,
+                  }
+                : {}),
         });
         res.write(output);
         res.end();

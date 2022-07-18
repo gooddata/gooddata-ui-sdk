@@ -15,16 +15,12 @@ describe("parseUrl", () => {
         expect(workspaceId).toEqual("workspace-id");
     });
 
-    it("should parse hostname from the URL", () => {
-        const { host } = parseUrl(new URL("https://somehost.com/components/workspace-id.js"));
+    it.each(["sso", "bearSso", "bear"])("should parse '%s' authType from the URL", (auth) => {
+        const { authType } = parseUrl(
+            new URL(`https://somehost.com/components/workspace-id.js?auth=${auth}`),
+        );
 
-        expect(host).toEqual("somehost.com");
-    });
-
-    it("should parse authType from the URL", () => {
-        const { authType } = parseUrl(new URL("https://somehost.com/components/workspace-id.js?auth=sso"));
-
-        expect(authType).toEqual("sso");
+        expect(authType).toEqual(auth);
     });
 
     it("should set authType to 'none' if query parameter is omitted", () => {
@@ -53,21 +49,15 @@ describe("parseUrl", () => {
         }).toThrow();
     });
 
-    it("should detect HTTP protocol", () => {
-        const { protocol } = parseUrl(new URL("http://localhost/components/workspace-id.js"));
+    it("should detect HTTP hostname", () => {
+        const { hostname } = parseUrl(new URL("http://localhost/components/workspace-id.js"));
 
-        expect(protocol).toBe("http");
+        expect(hostname).toBe("http://localhost");
     });
 
     it("should detect HTTPS protocol", () => {
-        const { protocol } = parseUrl(new URL("https://localhost/components/workspace-id.js"));
+        const { hostname } = parseUrl(new URL("https://localhost/components/workspace-id.js"));
 
-        expect(protocol).toBe("https");
-    });
-
-    it("should default to HTTPS protocol", () => {
-        const { protocol } = parseUrl(new URL("ftp://localhost/components/workspace-id.js"));
-
-        expect(protocol).toBe("https");
+        expect(hostname).toBe("https://localhost");
     });
 });

@@ -3,7 +3,7 @@
 const { EnvironmentPlugin, ProvidePlugin, ContextReplacementPlugin, DefinePlugin } = require("webpack");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const path = require("path");
-const package = require("./package.json");
+const npmPackage = require("./package.json");
 
 module.exports = (env, argv) => ({
     mode: argv.mode,
@@ -24,6 +24,7 @@ module.exports = (env, argv) => ({
     entry: {
         index: "./src/index",
         tigerBackend: "./src/tigerBackend",
+        bearBackend: "./src/bearBackend",
     },
     name: "index",
     resolve: {
@@ -64,13 +65,13 @@ module.exports = (env, argv) => ({
                         options:
                             argv.mode === "production"
                                 ? {
-                                      transpileOnly: false,
-                                      configFile: path.resolve("./tsconfig.build.json"),
-                                  }
+                                    transpileOnly: false,
+                                    configFile: path.resolve("./tsconfig.build.json"),
+                                }
                                 : {
-                                      transpileOnly: true,
-                                      configFile: path.resolve("./tsconfig.dev.json"),
-                                  },
+                                    transpileOnly: true,
+                                    configFile: path.resolve("./tsconfig.dev.json"),
+                                },
                     },
                 ],
             },
@@ -111,8 +112,8 @@ module.exports = (env, argv) => ({
             NODE_DEBUG: "",
         }),
         new DefinePlugin({
-            NPM_PACKAGE_NAME: JSON.stringify(package.name),
-            NPM_PACKAGE_VERSION: JSON.stringify(package.version),
+            NPM_PACKAGE_NAME: JSON.stringify(npmPackage.name),
+            NPM_PACKAGE_VERSION: JSON.stringify(npmPackage.version),
         }),
         new ProvidePlugin({
             process: "process/browser",

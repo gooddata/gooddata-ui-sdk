@@ -10,43 +10,74 @@
  * @packageDocumentation
  */
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { CustomElementContext, getContext, setContext } from "./context";
 import { parseUrl } from "./parseUrl";
 import { Insight } from "./visualizations/Insight";
 import { Dashboard } from "./visualizations/Dashboard";
 
-// Detect current host based on the script's URL
-const { protocol, host, authType, workspaceId } = parseUrl(new URL(import.meta.url));
+const authMethodsMap = {
+    sso: async function configureTigerSso(hostname: string) {
+        const {
+            default: tigerBackend,
+            ContextDeferredAuthProvider,
+            redirectToTigerAuthentication,
+        } = await import("./tigerBackend");
 
-/**
- * Configure backend with a given host, automatic SSO with redirection.
- *
- * @internal
- */
-async function configureTigerSso(hostname: string): Promise<IAnalyticalBackend> {
-    const {
-        default: tigerBackend,
-        ContextDeferredAuthProvider,
-        redirectToTigerAuthentication,
-    } = await import("./tigerBackend");
+        return tigerBackend({ hostname }).withAuthentication(
+            new ContextDeferredAuthProvider(redirectToTigerAuthentication),
+        );
+    },
+    bearSso: async function configureBearSso(hostname: string) {
+        const {
+            default: bearBackend,
+            ContextDeferredAuthProvider,
+            redirectToBearSsoAuthentication,
+        } = await import("./bearBackend");
 
-    return tigerBackend()
-        .onHostname(`${protocol}://${hostname}`)
-        .withAuthentication(new ContextDeferredAuthProvider(redirectToTigerAuthentication));
-}
+        return bearBackend({ hostname }).withAuthentication(
+            new ContextDeferredAuthProvider(redirectToBearSsoAuthentication),
+        );
+    },
+    bear: async function configureBearAuth(hostname: string) {
+        const {
+            default: bearBackend,
+            ContextDeferredAuthProvider,
+            redirectToBearAuthentication,
+        } = await import("./bearBackend");
 
-if (authType === "sso") {
-    // Perform Tiger autologin
-    configureTigerSso(host)
-        .then((backend) => {
-            setContext({ backend, workspaceId });
-        })
-        .catch((error) => {
-            // eslint-disable-next-line no-console
-            console.error("Failed to configure automatic authentication flow", error);
-        });
-}
+        return bearBackend({ hostname }).withAuthentication(
+            new ContextDeferredAuthProvider(redirectToBearAuthentication),
+        );
+    },
+};
+
+const initializeAutoAuth = async () => {
+    let parsedUrl: ReturnType<typeof parseUrl>;
+
+    try {
+        // Detect current host based on the script's URL
+        parsedUrl = parseUrl(new URL(/*import.meta.url*/ "https://test.com/components/FU.js"));
+    } catch (e) {
+        // Can't parse the URL, user can still use manual configuration, though
+        return;
+    }
+
+    const { hostname, authType, workspaceId } = parsedUrl;
+
+    const getBackend = authMethodsMap[authType];
+
+    // No auto-auth...
+    if (!getBackend) return;
+
+    const backend = await getBackend(hostname);
+
+    setContext({ backend, workspaceId });
+};
+
+initializeAutoAuth().catch((error) => {
+    // eslint-disable-next-line no-console
+    console.error("Failed to configure automatic authentication flow", error);
+});
 
 // Register custom elements with the browser
 window.customElements.define("gd-insight", Insight);
