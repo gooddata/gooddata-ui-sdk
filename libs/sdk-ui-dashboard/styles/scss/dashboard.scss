@@ -390,6 +390,29 @@
     }
 }
 
+.dash-item-action-delete {
+    z-index: 2;
+    top: 0;
+    right: 0;
+    padding-top: 1px;
+    background-color: $gd-palette-primary-base;
+
+    &.gd-icon-trash::before {
+        content: url("~@gooddata/sdk-ui-dashboard/esm/assets/trash.svg");
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+    }
+
+    &::before {
+        z-index: 2;
+    }
+
+    &:hover {
+        background-color: $gd-palette-error-base;
+    }
+}
+
 .dash-item-action-options {
     display: none;
     color: $gd-color-label;

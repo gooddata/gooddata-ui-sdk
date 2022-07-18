@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
 import compact from "lodash/compact";
@@ -20,6 +20,9 @@ import {
     selectEnableWidgetCustomHeight,
     selectSeparators,
     selectDisableKpiDashboardHeadlineUnderline,
+    useDashboardDispatch,
+    eagerRemoveSectionItem,
+    selectWidgetCoordinatesByRef,
 } from "../../../../model";
 import { DashboardItemHeadline, DashboardItemKpi } from "../../../presentationComponents";
 import { IDashboardFilter } from "../../../../types";
@@ -63,6 +66,12 @@ export const EditableKpiExecutor = (props: IEditableKpiExecutorProps) => {
     const separators = useDashboardSelector(selectSeparators);
     const disableDrillUnderline = useDashboardSelector(selectDisableKpiDashboardHeadlineUnderline);
     const isDrillable = kpiWidget.drills.length > 0;
+
+    const dispatch = useDashboardDispatch();
+    const coordinates = useDashboardSelector(selectWidgetCoordinatesByRef(widgetRef(kpiWidget)));
+    const onWidgetDelete = useCallback(() => {
+        dispatch(eagerRemoveSectionItem(coordinates.sectionIndex, coordinates.itemIndex));
+    }, [dispatch, coordinates.sectionIndex, coordinates.itemIndex]);
 
     const { error, result, status } = useExecutionDataView(
         {
@@ -108,6 +117,14 @@ export const EditableKpiExecutor = (props: IEditableKpiExecutorProps) => {
                 }
                 return null;
             }}
+            renderAfterContent={() =>
+                isSelected ? (
+                    <div
+                        className="dash-item-action dash-item-action-delete gd-icon-trash"
+                        onClick={onWidgetDelete}
+                    />
+                ) : null
+            }
             renderHeadline={(clientHeight) => (
                 <DashboardItemHeadline title={kpiWidget.title} clientHeight={clientHeight} />
             )}

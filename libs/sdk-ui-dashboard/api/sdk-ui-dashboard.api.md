@@ -5210,6 +5210,15 @@ export const selectValidConfiguredDrillsByWidgetRef: (ref: ObjRef) => OutputSele
 export const selectWidgetByRef: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IKpiWidget | IInsightWidget | ICustomWidget | undefined, (res: ObjRefMap<ExtendedDashboardWidget>) => IKpiWidget | IInsightWidget | ICustomWidget | undefined>;
 
 // @alpha
+export const selectWidgetCoordinatesByRef: (ref: ObjRef) => OutputSelector<DashboardState, {
+sectionIndex: number;
+itemIndex: number;
+}, (res1: IKpiWidget | IInsightWidget | ICustomWidget | undefined, res2: IDashboardLayout<ExtendedDashboardWidget>) => {
+sectionIndex: number;
+itemIndex: number;
+}>;
+
+// @alpha
 export const selectWidgetDrills: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IDrillToLegacyDashboard[] | InsightDrillDefinition[], (res: IKpiWidget | IInsightWidget | undefined) => IDrillToLegacyDashboard[] | InsightDrillDefinition[]>;
 
 // @internal

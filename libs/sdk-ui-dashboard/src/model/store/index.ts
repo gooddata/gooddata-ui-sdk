@@ -113,6 +113,7 @@ export {
     selectAllKpiWidgets,
     selectIsLayoutEmpty,
     selectWidgetDrills,
+    selectWidgetCoordinatesByRef,
 } from "./layout/layoutSelectors";
 export { DateFilterConfigState } from "./dateFilterConfig/dateFilterConfigState";
 export {
