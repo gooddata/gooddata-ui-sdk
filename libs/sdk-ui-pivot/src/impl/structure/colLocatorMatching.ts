@@ -1,5 +1,4 @@
 // (C) 2021-2022 GoodData Corporation
-import isNil from "lodash/isNil";
 import {
     DataCol,
     ScopeCol,
@@ -9,13 +8,7 @@ import {
     isRootCol,
     LeafDataCol,
 } from "./tableDescriptorTypes";
-import {
-    ColumnLocator,
-    IAttributeColumnLocator,
-    isAttributeColumnLocator,
-    isMeasureColumnLocator,
-} from "../../columnWidths";
-import invariant from "ts-invariant";
+import { ColumnLocator, isAttributeColumnLocator, isMeasureColumnLocator } from "../../columnWidths";
 import { colMeasureLocalId } from "./colAccessors";
 
 /**
@@ -51,19 +44,14 @@ export function searchForLocatorMatch(
                 );
             });
 
-            if (!matchingLocator) {
+            if (!isAttributeColumnLocator(matchingLocator)) {
                 // if there is no matching attribute locator yet code is on scope col, then it
                 // means there are less attributes in the table than there are attribute locators. the
                 // table has changed yet some sort items hang around. bail out immediately with no match.
                 return undefined;
             }
 
-            const elementToMatch = (matchingLocator as IAttributeColumnLocator).attributeLocatorItem.element;
-            // while the attribute locator has element optional (for wildcard match), all the remaining code always populates
-            // the attribute element.
-            // TODO: revise the API, it may be that it really should not be optional in the interface.
-            invariant(!isNil(elementToMatch));
-
+            const elementToMatch = matchingLocator.attributeLocatorItem.element;
             if (col.header.attributeHeaderItem.uri === elementToMatch) {
                 if (locators.length === 1) {
                     // elements match; see if all locators exhausted. if so, it means the width item does
