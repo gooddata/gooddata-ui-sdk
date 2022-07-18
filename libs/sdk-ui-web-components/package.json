@@ -9,9 +9,10 @@
     },
     "author": "GoodData Corporation",
     "license": "MIT",
-    "main": "esm/index.mjs",
-    "module": "esm/index.mjs",
-    "es2015": "esm/index.mjs",
+    "main": "esm/index.js",
+    "browser": "esm/index.js",
+    "module": "esm/index.js",
+    "es2015": "esm/index.js",
     "typings": "esm/index.d.ts",
     "sideEffects": [
         "*.css",
@@ -23,7 +24,10 @@
         "esm/**/*.d.ts",
         "esm/**/*.map",
         "esm/**/*.svg",
-        "styles"
+        "esm/**/*.woff",
+        "esm/**/*.eot",
+        "esm/**/*.ttf",
+        "bin/**/*.sh"
     ],
     "config": {
         "eslint": "-c .eslintrc.js --ext ts,tsx src/"

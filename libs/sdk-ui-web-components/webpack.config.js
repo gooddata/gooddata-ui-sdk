@@ -65,13 +65,13 @@ module.exports = (env, argv) => ({
                         options:
                             argv.mode === "production"
                                 ? {
-                                    transpileOnly: false,
-                                    configFile: path.resolve("./tsconfig.build.json"),
-                                }
+                                      transpileOnly: false,
+                                      configFile: path.resolve("./tsconfig.build.json"),
+                                  }
                                 : {
-                                    transpileOnly: true,
-                                    configFile: path.resolve("./tsconfig.dev.json"),
-                                },
+                                      transpileOnly: true,
+                                      configFile: path.resolve("./tsconfig.dev.json"),
+                                  },
                     },
                 ],
             },
@@ -79,7 +79,15 @@ module.exports = (env, argv) => ({
                 test: /\.css$/,
                 use: [
                     // Use lazy injection, as we need to use it with Shadow DOM
-                    { loader: "style-loader", options: { injectType: "lazyStyleTag" } },
+                    {
+                        loader: "style-loader",
+                        options: {
+                            injectType: "lazyStyleTag",
+                            insert: (element, options) => {
+                                (options.target || document.head).appendChild(element);
+                            },
+                        },
+                    },
                     "css-loader",
                 ],
             },

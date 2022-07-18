@@ -1,0 +1,5 @@
+gd-insight,
+gd-dashboard {
+    display: flex;
+    flex-direction: column;
+}

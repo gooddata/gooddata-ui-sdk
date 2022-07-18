@@ -1,12 +1,15 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
 import ReactDom from "react-dom";
-
+import invariant from "ts-invariant";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { LoadingComponent } from "@gooddata/sdk-ui/esm/base/react/LoadingComponent";
 
 import { CustomElementContext, getContext } from "../context";
-import invariant from "ts-invariant";
+import componentStyles from "./components.css";
+import componentShadowStyles from "./componentsShadow.css";
+
+componentStyles.use();
 
 // Since JS does not support private properties natively,
 // use Symbols to hide them. Otherwise, would be seen on the element instance.
@@ -26,7 +29,7 @@ export abstract class CustomElementAdapter<C> extends HTMLElement {
      *
      * @internal
      */
-    private [MOUNT_POINT]: HTMLDivElement = document.createElement("div");
+    private [MOUNT_POINT]: HTMLDivElement;
 
     /**
      * @remarks
@@ -51,6 +54,7 @@ export abstract class CustomElementAdapter<C> extends HTMLElement {
         const shadowRoot = this.attachShadow({ mode: "closed" });
 
         // Inject styles to the node, async
+        componentShadowStyles.use({ target: shadowRoot });
         this[LOAD_STYLES]()
             .then((styles) => {
                 // According to MDN, browsers optimize styles by de-duping the ones with same content
@@ -65,6 +69,8 @@ export abstract class CustomElementAdapter<C> extends HTMLElement {
             });
 
         // Attach a mounting point for React
+        this[MOUNT_POINT] = document.createElement("div");
+        this[MOUNT_POINT].classList.add("mount-point");
         shadowRoot.appendChild(this[MOUNT_POINT]);
 
         // Load the rest of the dependencies needed for React element rendering
@@ -84,7 +90,7 @@ export abstract class CustomElementAdapter<C> extends HTMLElement {
 
     attributeChangedCallback(_name: string, oldValue: string, newValue: string) {
         // Custom element API allows setting same value and browser would trigger the callback
-        if (oldValue !== newValue) {
+        if (oldValue !== newValue && this.isConnected) {
             // Trigger rendering when a tracked attribute changes
             this[RENDER]();
         }
@@ -92,7 +98,6 @@ export abstract class CustomElementAdapter<C> extends HTMLElement {
 
     connectedCallback() {
         // Re-render React, as we unmounted in "disconnectedCallback"
-        // TODO - is it necessary?
         this[RENDER]();
     }
 
