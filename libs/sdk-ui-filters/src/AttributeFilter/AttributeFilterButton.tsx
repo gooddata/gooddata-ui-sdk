@@ -394,7 +394,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         totalCount: totalCount ?? ATTRIBUTE_FILTER_BUTTON_LIMIT,
         onSelect: onElementSelect,
         onRangeChange,
-        onSearch,
+        onSearch: onSearch.current,
         selectedItems: state.selectedFilterOptions,
         isInverted: state.isInverted,
         isLoading:

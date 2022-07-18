@@ -2,7 +2,7 @@
 
 import { IAnalyticalBackend, IElementsQueryResult } from "@gooddata/sdk-backend-spi";
 import { IElementQueryResultWithEmptyItems, isNonEmptyListItem } from "../../AttributeDropdown/types";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ATTRIBUTE_FILTER_BUTTON_LIMIT } from "../constants";
 import { IAttributeFilter, IAttributeElement } from "@gooddata/sdk-model";
 import {
@@ -195,12 +195,14 @@ export const useAttributeFilterButtonState = (
         });
     };
 
-    const onSearch = debounce((query: string) => {
-        setState((s) => ({
-            ...s,
-            searchString: query,
-        }));
-    }, 500);
+    const onSearch = useRef<(query: string) => void>(
+        debounce((query: string) => {
+            setState((s) => ({
+                ...s,
+                searchString: query,
+            }));
+        }, 500),
+    );
 
     const onElementSelect = (selectedFilterOptions: IAttributeElement[], isInverted: boolean) => {
         setState((s) => ({
@@ -241,7 +243,7 @@ export const useAttributeFilterButtonState = (
         setState((s) => {
             return {
                 ...s,
-                selectedFilterOptions: uniqWith(s.selectedFilterOptions, isEqual),
+                selectedFilterOptions: uniqWith(s.appliedFilterOptions, isEqual),
                 isInverted: s.appliedIsInverted,
                 searchString: "",
                 isDropdownOpen: false,

@@ -11,6 +11,7 @@ import {
     NoData,
 } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
+import { v4 as uuid } from "uuid";
 import { AllItemsFilteredMessage } from "./AllItemsFilteredMessage";
 import { ItemsFilteredMessage } from "./ItemsFilteredMessage";
 import { ConfigurationButton } from "./configuration/ConfigurationButton";
@@ -60,6 +61,8 @@ const AttributeFilterBodyCore: React.FC<IAttributeDropdownBodyExtendedProps> = (
         isMobile,
         attributeFilterRef,
     } = props;
+
+    const emptyValueKey = uuid();
 
     const hasNoData =
         !searchString && !parentFilterTitles?.length && !isElementsLoading && items.length === 0;
@@ -140,7 +143,7 @@ const AttributeFilterBodyCore: React.FC<IAttributeDropdownBodyExtendedProps> = (
             itemsCount={props.totalCount}
             isLoading={isElementsLoading}
             isLoadingClass={LoadingMask}
-            getItemKey={(item: IAttributeElement) => item?.uri || "empty"}
+            getItemKey={(item: IAttributeElement) => item?.uri || emptyValueKey}
             itemHeight={currentItemHeight}
             height={getDropdownBodyHeight()}
             searchPlaceholder={intl.formatMessage({ id: "attributeFilterDropdown.searchPlaceholder" })}
