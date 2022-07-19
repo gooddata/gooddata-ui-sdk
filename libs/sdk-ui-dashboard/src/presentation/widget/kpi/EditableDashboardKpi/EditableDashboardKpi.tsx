@@ -1,26 +1,46 @@
 // (C) 2022 GoodData Corporation
-import React from "react";
-import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
-import invariant from "ts-invariant";
+import React, { useCallback, useEffect } from "react";
+import cx from "classnames";
+import { useIntl } from "react-intl";
+import compact from "lodash/compact";
+import noop from "lodash/noop";
+import { widgetRef } from "@gooddata/sdk-model";
+import { useBackendStrict, useExecutionDataView, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
+import {
+    useDashboardSelector,
+    useWidgetExecutionsHandler,
+    selectEnableWidgetCustomHeight,
+    selectSeparators,
+    selectDisableKpiDashboardHeadlineUnderline,
+    useDashboardDispatch,
+    eagerRemoveSectionItem,
+    selectWidgetCoordinatesByRef,
+    selectFilterContextFilters,
+} from "../../../../model";
+import { DashboardItemHeadline, DashboardItemKpi } from "../../../presentationComponents";
 import { useDashboardComponentsContext } from "../../../dashboardContexts";
-import { selectFilterContextFilters, useDashboardSelector } from "../../../../model";
+
+import { useWidgetSelection } from "../../common/useWidgetSelection";
+import { ConfigurationBubble } from "../../common";
+import { KpiConfigurationPanel } from "./KpiConfigurationPanel/KpiConfigurationPanel";
+import { getKpiResult, getNoDataKpiResult, KpiRenderer, useKpiData } from "../common";
 import { IDashboardKpiProps } from "../types";
-import { useKpiData } from "../common";
-import { EditableKpiExecutor } from "./EditableKpiExecutor";
 
 export const EditableDashboardKpi = (props: IDashboardKpiProps) => {
     const {
         kpiWidget,
-        onError,
+
         backend: customBackend,
         workspace: customWorkspace,
+
         ErrorComponent: CustomErrorComponent,
         LoadingComponent: CustomLoadingComponent,
+
+        onError,
     } = props;
 
-    invariant(kpiWidget.kpi, "The provided widget is not a KPI widget.");
-
+    const intl = useIntl();
     const { ErrorComponent, LoadingComponent } = useDashboardComponentsContext({
         ErrorComponent: CustomErrorComponent,
         LoadingComponent: CustomLoadingComponent,
@@ -31,29 +51,133 @@ export const EditableDashboardKpi = (props: IDashboardKpiProps) => {
 
     const dashboardFilters = useDashboardSelector(selectFilterContextFilters);
 
-    const kpiData = useKpiData({
+    const {
+        error: kpiDataError,
+        result: kpiDataResult,
+        status: kpiDataStatus,
+    } = useKpiData({
         kpiWidget,
         backend,
         dashboardFilters,
         workspace,
     });
 
-    if (kpiData.status === "loading" || kpiData.status === "pending") {
-        return <LoadingComponent />;
-    }
+    const enableCompactSize = useDashboardSelector(selectEnableWidgetCustomHeight);
+    const separators = useDashboardSelector(selectSeparators);
+    const disableDrillUnderline = useDashboardSelector(selectDisableKpiDashboardHeadlineUnderline);
+    const isDrillable = kpiWidget.drills.length > 0;
 
-    if (kpiData.status === "error") {
-        return <ErrorComponent message={kpiData.error.message} />;
-    }
+    const dispatch = useDashboardDispatch();
+    const coordinates = useDashboardSelector(selectWidgetCoordinatesByRef(widgetRef(kpiWidget)));
+    const onWidgetDelete = useCallback(() => {
+        dispatch(eagerRemoveSectionItem(coordinates.sectionIndex, coordinates.itemIndex));
+    }, [dispatch, coordinates.sectionIndex, coordinates.itemIndex]);
+
+    const { error, result, status } = useExecutionDataView(
+        {
+            backend,
+            workspace,
+            execution:
+                kpiDataStatus === "success"
+                    ? {
+                          seriesBy: compact([kpiDataResult!.primaryMeasure, kpiDataResult!.secondaryMeasure]),
+                          filters: kpiDataResult!.effectiveFilters,
+                      }
+                    : undefined,
+        },
+        [
+            kpiDataStatus,
+            kpiDataResult?.primaryMeasure,
+            kpiDataResult?.secondaryMeasure,
+            kpiDataResult?.effectiveFilters,
+            backend,
+            workspace,
+        ],
+    );
+
+    const isLoading =
+        status === "loading" ||
+        status === "pending" ||
+        kpiDataStatus === "loading" ||
+        kpiDataStatus === "pending";
+
+    const executionsHandler = useWidgetExecutionsHandler(widgetRef(kpiWidget));
+    const { isSelectable, isSelected, onSelected } = useWidgetSelection(widgetRef(kpiWidget));
+
+    useEffect(() => {
+        if (error) {
+            onError?.(error);
+            executionsHandler.onError(error);
+        }
+    }, [error, executionsHandler, onError]);
 
     return (
-        <EditableKpiExecutor
-            kpiWidget={kpiWidget}
-            primaryMeasure={kpiData.result.primaryMeasure}
-            secondaryMeasure={kpiData.result.secondaryMeasure}
-            effectiveFilters={kpiData.result.effectiveFilters}
-            onError={onError}
-            LoadingComponent={LoadingComponent}
-        />
+        <DashboardItemKpi
+            visualizationClassName={cx("s-dashboard-kpi-component", "widget-loaded", "visualization", {
+                "kpi-with-pop": kpiWidget.kpi.comparisonType !== "none",
+                "content-loading": isLoading,
+                "content-loaded": !isLoading,
+            })}
+            renderBeforeContent={() => {
+                if (isSelected) {
+                    return (
+                        <ConfigurationBubble widget={kpiWidget}>
+                            <KpiConfigurationPanel widget={kpiWidget} />
+                        </ConfigurationBubble>
+                    );
+                }
+                return null;
+            }}
+            renderAfterContent={() =>
+                isSelected ? (
+                    <div
+                        className="dash-item-action dash-item-action-delete gd-icon-trash"
+                        onClick={onWidgetDelete}
+                    />
+                ) : null
+            }
+            renderHeadline={(clientHeight) => (
+                <DashboardItemHeadline title={kpiWidget.title} clientHeight={clientHeight} />
+            )}
+            isSelectable={isSelectable}
+            isSelected={isSelected}
+            onSelected={onSelected}
+        >
+            {() => {
+                if (kpiDataStatus === "loading" || kpiDataStatus === "pending") {
+                    return <LoadingComponent />;
+                }
+
+                if (kpiDataStatus === "error") {
+                    return <ErrorComponent message={kpiDataError!.message} />;
+                }
+
+                const kpiResult = !result?.dataView.totalCount[0]
+                    ? getNoDataKpiResult(result, kpiDataResult!.primaryMeasure)
+                    : getKpiResult(
+                          result,
+                          kpiDataResult!.primaryMeasure,
+                          kpiDataResult!.secondaryMeasure,
+                          separators,
+                      );
+
+                return (
+                    <KpiRenderer
+                        kpi={kpiWidget}
+                        kpiResult={kpiResult}
+                        filters={kpiDataResult?.effectiveFilters ?? []}
+                        separators={separators}
+                        enableCompactSize={enableCompactSize}
+                        error={error}
+                        errorHelp={intl.formatMessage({ id: "kpi.error.view" })}
+                        isLoading={isLoading}
+                        // need to pass something so that the underline is shown...
+                        onDrill={noop}
+                        isDrillable={isDrillable}
+                        disableDrillUnderline={disableDrillUnderline}
+                    />
+                );
+            }}
+        </DashboardItemKpi>
     );
 };
