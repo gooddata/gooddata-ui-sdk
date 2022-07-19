@@ -76,7 +76,6 @@ export {
     IDataSourceConnectionInfo,
     IDataSourceType,
     IDataSourcePermission,
-    IDataSourceDefinition,
     OrganizationPermission,
     GenerateLogicalModelRequest,
     DeclarativeLogicalModel,

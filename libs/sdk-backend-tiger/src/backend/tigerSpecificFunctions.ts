@@ -171,16 +171,6 @@ export interface IDataSourceDeletedResponse {
 /**
  * @internal
  */
-export interface IDataSourceDefinition {
-    id: string;
-    name: string;
-    type: IDataSourceType;
-    permissions: IDataSourcePermission[];
-}
-
-/**
- * @internal
- */
 export type OrganizationPermission = JsonApiOrganizationOutMetaPermissionsEnum;
 
 /**
@@ -260,8 +250,7 @@ export type TigerSpecificFunctions = {
     getWorkspaceLogicalModel?: (id: string) => Promise<DeclarativeLogicalModel>;
     getEntitlements?: () => Promise<Array<Entitlement>>;
     putWorkspaceLayout?: (requestParameters: PutWorkspaceLayoutRequest) => Promise<void>;
-    getAllDataSources?: () => Promise<IDataSourceDefinition[]>;
-    getAllDataSourcesIdentifiers?: () => Promise<JsonApiDataSourceIdentifierOutWithLinks[]>;
+    getAllDataSources?: () => Promise<IDataSourceConnectionInfo[]>;
     getDataSourceById?: (id: string) => Promise<IDataSourceApiResult>;
     createDataSource?: (requestData: IDataSourceUpsertRequest) => Promise<IDataSourceApiResult>;
     updateDataSource?: (id: string, requestData: IDataSourceUpsertRequest) => Promise<IDataSourceApiResult>;
@@ -282,7 +271,7 @@ const getDataSourceErrorMessage = (error: unknown) => {
     return String(error);
 };
 
-const asDataSourceConnectionInfo = (
+const dataSourceResponseAsDataSourceConnectionInfo = (
     response: AxiosResponse<JsonApiDataSourceOutDocument>,
 ): IDataSourceConnectionInfo => {
     const { id, meta, attributes } = response.data.data;
@@ -294,6 +283,22 @@ const asDataSourceConnectionInfo = (
         schema,
         username,
         url,
+        permissions: meta?.permissions ?? [],
+    };
+};
+
+const dataSourceIdentifierAsDataSourceConnectionInfo = (
+    response: JsonApiDataSourceIdentifierOutWithLinks,
+): IDataSourceConnectionInfo => {
+    const { id, meta, attributes } = response;
+    const { name, type, schema } = attributes;
+    return {
+        id,
+        type,
+        name,
+        schema,
+        username: undefined,
+        url: undefined,
         permissions: meta?.permissions ?? [],
     };
 };
@@ -630,26 +635,6 @@ export const buildTigerSpecificFunctions = (
             throw convertApiError(error);
         }
     },
-    getAllDataSources: async () => {
-        try {
-            return await authApiCall(async (sdk) => {
-                const result = await sdk.entities.getAllEntitiesDataSourceIdentifiers({
-                    sort: ["name"],
-                    metaInclude: ["permissions"],
-                    size: 250,
-                    page: 0,
-                });
-                return result.data?.data.map((item) => ({
-                    id: item.id,
-                    name: item.attributes.name,
-                    type: item.attributes.type,
-                    permissions: item.meta?.permissions ?? [],
-                }));
-            });
-        } catch (error) {
-            throw convertApiError(error);
-        }
-    },
     getDataSourceById: async (id: string) => {
         try {
             return await authApiCall(async (sdk) => {
@@ -657,7 +642,9 @@ export const buildTigerSpecificFunctions = (
                     .getEntityDataSources({
                         id,
                     })
-                    .then((axiosResponse) => ({ data: asDataSourceConnectionInfo(axiosResponse) }));
+                    .then((axiosResponse) => ({
+                        data: dataSourceResponseAsDataSourceConnectionInfo(axiosResponse),
+                    }));
             });
         } catch (error) {
             return { errorMessage: getDataSourceErrorMessage(error) };
@@ -685,7 +672,9 @@ export const buildTigerSpecificFunctions = (
                             },
                         },
                     })
-                    .then((axiosResponse) => ({ data: asDataSourceConnectionInfo(axiosResponse) }));
+                    .then((axiosResponse) => ({
+                        data: dataSourceResponseAsDataSourceConnectionInfo(axiosResponse),
+                    }));
             });
         } catch (error) {
             return { errorMessage: getDataSourceErrorMessage(error) };
@@ -714,7 +703,9 @@ export const buildTigerSpecificFunctions = (
                             },
                         },
                     })
-                    .then((axiosResponse) => ({ data: asDataSourceConnectionInfo(axiosResponse) }));
+                    .then((axiosResponse) => ({
+                        data: dataSourceResponseAsDataSourceConnectionInfo(axiosResponse),
+                    }));
             });
         } catch (error) {
             return { errorMessage: getDataSourceErrorMessage(error) };
@@ -771,7 +762,7 @@ export const buildTigerSpecificFunctions = (
                 });
         });
     },
-    getAllDataSourcesIdentifiers: async () => {
+    getAllDataSources: async () => {
         return await authApiCall(async (sdk) => {
             return OrganizationUtilities.getAllPagesOf(
                 sdk,
@@ -783,7 +774,7 @@ export const buildTigerSpecificFunctions = (
             )
                 .then(OrganizationUtilities.mergeEntitiesResults)
                 .then((res: JsonApiDataSourceIdentifierOutList) => {
-                    return res?.data;
+                    return res.data.map(dataSourceIdentifierAsDataSourceConnectionInfo);
                 });
         });
     },
