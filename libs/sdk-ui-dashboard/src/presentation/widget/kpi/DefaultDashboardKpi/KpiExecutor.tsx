@@ -57,7 +57,6 @@ import {
     getAlertThresholdInfo,
     getKpiAlertResult,
     getKpiResult,
-    getNoDataKpiResult,
     KpiRenderer,
     stripDateDatasets,
 } from "../common";
@@ -226,9 +225,7 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps> = (props) => {
 
     const { kpiAlertDialogClosed, kpiAlertDialogOpened } = useDashboardUserInteraction();
 
-    const kpiResult = !result?.dataView.totalCount[0]
-        ? getNoDataKpiResult(result, primaryMeasure)
-        : getKpiResult(result, primaryMeasure, secondaryMeasure, separators);
+    const kpiResult = getKpiResult(result, primaryMeasure, secondaryMeasure, separators);
     const kpiAlertResult = getKpiAlertResult(alertExecutionResult, primaryMeasure, separators);
     const { isThresholdRepresentingPercent, thresholdPlaceholder } = useMemo(
         () => getAlertThresholdInfo(kpiResult, intl),

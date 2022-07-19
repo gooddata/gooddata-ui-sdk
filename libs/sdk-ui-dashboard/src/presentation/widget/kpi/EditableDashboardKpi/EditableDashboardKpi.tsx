@@ -24,7 +24,7 @@ import { useDashboardComponentsContext } from "../../../dashboardContexts";
 import { useWidgetSelection } from "../../common/useWidgetSelection";
 import { ConfigurationBubble } from "../../common";
 import { KpiConfigurationPanel } from "./KpiConfigurationPanel/KpiConfigurationPanel";
-import { getKpiResult, getNoDataKpiResult, KpiRenderer, useKpiData } from "../common";
+import { getKpiResult, KpiRenderer, useKpiData } from "../common";
 import { IDashboardKpiProps } from "../types";
 
 export const EditableDashboardKpi = (props: IDashboardKpiProps) => {
@@ -62,6 +62,8 @@ export const EditableDashboardKpi = (props: IDashboardKpiProps) => {
         workspace,
     });
 
+    const { primaryMeasure, secondaryMeasure, effectiveFilters } = kpiDataResult ?? {};
+
     const enableCompactSize = useDashboardSelector(selectEnableWidgetCustomHeight);
     const separators = useDashboardSelector(selectSeparators);
     const disableDrillUnderline = useDashboardSelector(selectDisableKpiDashboardHeadlineUnderline);
@@ -80,19 +82,12 @@ export const EditableDashboardKpi = (props: IDashboardKpiProps) => {
             execution:
                 kpiDataStatus === "success"
                     ? {
-                          seriesBy: compact([kpiDataResult!.primaryMeasure, kpiDataResult!.secondaryMeasure]),
-                          filters: kpiDataResult!.effectiveFilters,
+                          seriesBy: compact([primaryMeasure, secondaryMeasure]),
+                          filters: effectiveFilters,
                       }
                     : undefined,
         },
-        [
-            kpiDataStatus,
-            kpiDataResult?.primaryMeasure,
-            kpiDataResult?.secondaryMeasure,
-            kpiDataResult?.effectiveFilters,
-            backend,
-            workspace,
-        ],
+        [kpiDataStatus, primaryMeasure, secondaryMeasure, effectiveFilters, backend, workspace],
     );
 
     const isLoading =
@@ -152,19 +147,10 @@ export const EditableDashboardKpi = (props: IDashboardKpiProps) => {
                     return <ErrorComponent message={kpiDataError!.message} />;
                 }
 
-                const kpiResult = !result?.dataView.totalCount[0]
-                    ? getNoDataKpiResult(result, kpiDataResult!.primaryMeasure)
-                    : getKpiResult(
-                          result,
-                          kpiDataResult!.primaryMeasure,
-                          kpiDataResult!.secondaryMeasure,
-                          separators,
-                      );
-
                 return (
                     <KpiRenderer
                         kpi={kpiWidget}
-                        kpiResult={kpiResult}
+                        kpiResult={getKpiResult(result, primaryMeasure!, secondaryMeasure, separators)}
                         filters={kpiDataResult?.effectiveFilters ?? []}
                         separators={separators}
                         enableCompactSize={enableCompactSize}

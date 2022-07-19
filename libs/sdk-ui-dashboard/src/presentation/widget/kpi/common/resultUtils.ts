@@ -32,7 +32,7 @@ function getSeriesResult(series: IDataSeries | undefined): number | null {
     return Number.parseFloat(value);
 }
 
-export function getNoDataKpiResult(
+function getNoDataKpiResult(
     result: DataViewFacade | undefined,
     primaryMeasure: IMeasure,
 ): IKpiResult | undefined {
@@ -49,7 +49,7 @@ export function getNoDataKpiResult(
     };
 }
 
-export function getKpiResult(
+function getKpiResultInner(
     result: DataViewFacade | undefined,
     primaryMeasure: IMeasure,
     secondaryMeasure:
@@ -70,6 +70,20 @@ export function getKpiResult(
               measureForComparisonResult: getSeriesResult(secondarySeries)!,
           }
         : undefined;
+}
+
+export function getKpiResult(
+    result: DataViewFacade | undefined,
+    primaryMeasure: IMeasure,
+    secondaryMeasure:
+        | IMeasure<IPoPMeasureDefinition>
+        | IMeasure<IPreviousPeriodMeasureDefinition>
+        | undefined,
+    separators: ISeparators,
+): IKpiResult | undefined {
+    return !result?.dataView.totalCount[0]
+        ? getNoDataKpiResult(result, primaryMeasure)
+        : getKpiResultInner(result, primaryMeasure, secondaryMeasure, separators);
 }
 
 export function getKpiAlertResult(
