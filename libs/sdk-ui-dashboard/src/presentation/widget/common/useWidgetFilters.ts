@@ -25,6 +25,7 @@ import {
     useDashboardQueryProcessing,
     useDashboardSelector,
 } from "../../../model";
+import { safeSerializeObjRef } from "../../../_staging/metadata/safeSerializeObjRef";
 
 /**
  * Hook for obtaining the effective filters for a widget.
@@ -91,10 +92,10 @@ export function useWidgetFilters(
 
     // only run the "full" filters query if any of the non-ignored filters has changed
     useEffect(() => {
-        if (widget && nonIgnoredFiltersStatus === "success") {
-            runFiltersQuery(widget, insight);
+        if (widget?.ref && nonIgnoredFiltersStatus === "success") {
+            runFiltersQuery(widget.ref, insight);
         }
-    }, [widget, stringify(nonIgnoredFilters), insight, nonIgnoredFiltersStatus]);
+    }, [safeSerializeObjRef(widget?.ref), stringify(nonIgnoredFilters), insight, nonIgnoredFiltersStatus]);
 
     return {
         result: effectiveFiltersState.filters,
@@ -140,11 +141,11 @@ function useNonIgnoredFilters(widget: ExtendedDashboardWidget | undefined) {
     });
 
     useEffect(() => {
-        if (widget) {
+        if (widget?.ref) {
             // force ignore the insight -> this way we get only the dashboard level filters even for InsightWidgets
-            run(widget, null);
+            run(widget.ref, null);
         }
-    }, [widget, filtersDigest(dashboardFilters, widgetIgnoresDateFilter)]);
+    }, [safeSerializeObjRef(widget?.ref), filtersDigest(dashboardFilters, widgetIgnoresDateFilter)]);
 
     const nonIgnoredFilters = useMemo(
         () =>
