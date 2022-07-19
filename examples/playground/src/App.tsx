@@ -1,5 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import React from "react";
+import React, { useMemo } from "react";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import bearFactory, {
     AnonymousAuthProvider,
@@ -22,6 +22,21 @@ function createBackend() {
     );
 }
 
+const AppWithBackend: React.FC = () => {
+    // only create the backend instance once
+    const backend = useMemo(() => {
+        return createBackend();
+    }, []);
+
+    return (
+        <BackendProvider backend={backend}>
+            <WorkspaceProvider workspace={WORKSPACE}>
+                {/* Build your playground components under the playground directory.*/}
+            </WorkspaceProvider>
+        </BackendProvider>
+    );
+};
+
 export const App: React.FC = () => {
     if (!hasCredentialsSetup()) {
         return (
@@ -33,13 +48,5 @@ export const App: React.FC = () => {
         );
     }
 
-    const backend = createBackend();
-
-    return (
-        <BackendProvider backend={backend}>
-            <WorkspaceProvider workspace={WORKSPACE}>
-                {/* Build your playground components under the playground directory.*/}
-            </WorkspaceProvider>
-        </BackendProvider>
-    );
+    return <AppWithBackend />;
 };
