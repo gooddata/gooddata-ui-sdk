@@ -5197,6 +5197,9 @@ export const selectStash: OutputSelector<DashboardState, Record<string, Extended
 // @public
 export const selectSupportsElementsQueryParentFiltering: OutputSelector<DashboardState, boolean, (res: IBackendCapabilities) => boolean>;
 
+// @internal
+export const selectSupportsElementUris: OutputSelector<DashboardState, boolean, (res: IBackendCapabilities) => boolean>;
+
 // @internal (undocumented)
 export const selectValidConfiguredDrillsByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res1: IImplicitDrillWithPredicates[], res2: ObjRefMap<IAttributeDisplayFormMetadataObject>, res3: ObjRefMap<IListedDashboard>, res4: ObjRefMap<IInsight>) => IImplicitDrillWithPredicates[]>;
 

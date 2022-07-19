@@ -11,8 +11,8 @@ import {
     NoData,
 } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
-import { AllItemsFilteredMessage } from "./AllItemsFilteredMessage";
 import { v4 as uuid } from "uuid";
+import { AllItemsFilteredMessage } from "./AllItemsFilteredMessage";
 import { ItemsFilteredMessage } from "./ItemsFilteredMessage";
 import { ConfigurationButton } from "./configuration/ConfigurationButton";
 import { DeleteButton } from "./DeleteButton";
@@ -27,7 +27,12 @@ import {
 } from "@gooddata/sdk-ui-filters";
 import { IAttributeElement } from "@gooddata/sdk-model";
 import AttributeDropdownListItem from "./AttributeDropdownListItem";
-import { selectLocale, useDashboardSelector, selectIsInEditMode } from "../../../../model";
+import {
+    selectLocale,
+    useDashboardSelector,
+    selectIsInEditMode,
+    selectSupportsElementUris,
+} from "../../../../model";
 import { AttributeFilterConfiguration } from "./configuration/AttributeFilterConfiguration";
 
 const MAX_SELECTION_SIZE = 500;
@@ -38,6 +43,7 @@ const LIST_EXTRAS = 143;
 const MOBILE_LIST_EXTRAS = 167;
 const LIST_ITEM_HEIGHT = 28;
 const MOBILE_LIST_ITEM_HEIGHT = 40;
+const EMPTY_VALUE_KEY = uuid();
 
 const AttributeFilterBodyCore: React.FC<IAttributeDropdownBodyExtendedProps> = (props) => {
     const {
@@ -71,6 +77,7 @@ const AttributeFilterBodyCore: React.FC<IAttributeDropdownBodyExtendedProps> = (
     });
 
     const isEditMode = useDashboardSelector(selectIsInEditMode);
+    const isSupportElementUris = useDashboardSelector(selectSupportsElementUris);
 
     const getElementsList = (items: AttributeListItem[], emptyString: string) => {
         return items.map((item) => {
@@ -79,9 +86,14 @@ const AttributeFilterBodyCore: React.FC<IAttributeDropdownBodyExtendedProps> = (
                 return {} as any;
             }
 
-            // set "empty value" title only to items that have empty title but not URL
+            const replaceWithEmpty = isSupportElementUris
+                ? isEmpty(item?.title) && !isEmpty(item?.uri)
+                : isEmpty(item?.title);
+
+            // set "empty value" title only to items that have empty title but not URL (in case the backend capability
+            // `supportsElementUris` is set to `true`)
             // this is to distinguish between elements that have not been loaded yet and those who have and have empty title
-            return isEmpty(item?.title) && !isEmpty(item?.uri)
+            return replaceWithEmpty
                 ? {
                       ...item,
                       title: emptyString,
@@ -130,7 +142,7 @@ const AttributeFilterBodyCore: React.FC<IAttributeDropdownBodyExtendedProps> = (
             itemsCount={props.totalCount}
             isLoading={isElementsLoading}
             isLoadingClass={LoadingMask}
-            getItemKey={(item: IAttributeElement) => item?.uri || uuid()}
+            getItemKey={(item: IAttributeElement) => item?.uri || EMPTY_VALUE_KEY}
             itemHeight={currentItemHeight}
             height={getDropdownBodyHeight()}
             searchPlaceholder={intl.formatMessage({ id: "attributeFilterDropdown.searchPlaceholder" })}

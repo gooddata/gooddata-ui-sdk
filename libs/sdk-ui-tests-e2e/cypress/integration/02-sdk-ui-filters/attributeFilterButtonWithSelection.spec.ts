@@ -21,12 +21,10 @@ describe("AttributeFilterButton with initial selection", () => {
         attributeFilter.open().clearSelection().subtitleHasText("None").applyDisabled();
 
         attributeFilter
-            .selectElement(`.s-attribute-filter-list-item-${camelCase("1000Bulbs.com > Educationly")}`)
-            .selectElement(`.s-attribute-filter-list-item-${camelCase("1000Bulbs.com > PhoenixSoft")}`)
-            .selectElement(`.s-attribute-filter-list-item-${camelCase("101 Financial > Educationly")}`)
-            .subtitleHasText(
-                "1000Bulbs.com > Educationly, 1000Bulbs.com > PhoenixSoft, 101 Financial > Educationly",
-            );
+            .selectElement(`.s-attribute-filter-list-item-${camelCase(".decimal > Explorer")}`)
+            .selectElement(`.s-attribute-filter-list-item-${camelCase("(add)ventures > CompuSci")}`)
+            .selectElement(`.s-attribute-filter-list-item-${camelCase("(mt) Media Temple > CompuSci")}`)
+            .subtitleHasText(".decimal > Explorer, (add)ventures > CompuSci, (mt) Media Temple > CompuSci");
 
         attributeFilter.clickCancel().subtitleHasText("Zoup! Fresh Soup > CompuSci");
     });

@@ -1,7 +1,7 @@
 {
     "mappings": [
         {
-            "id": "b6497804-b428-4e77-a63a-b5a2043d2dbc",
+            "id": "06bf4a73-df75-4c96-97ac-e0bf3b351ddf",
             "name": "gdc_account_login",
             "request": {
                 "url": "/gdc/account/login",
@@ -9,7 +9,7 @@
             },
             "response": {
                 "status": 200,
-                "body": "{\"userLogin\":{\"profile\":\"/gdc/account/profile/b4ca6d6ec31ff764130a13893950091c\",\"state\":\"/gdc/account/login/b4ca6d6ec31ff764130a13893950091c\"}}",
+                "body": "{\"userLogin\":{\"profile\":\"/gdc/account/profile/b388eefffab41947076a75fd36d0bad1\",\"state\":\"/gdc/account/login/b388eefffab41947076a75fd36d0bad1\"}}",
                 "headers": {
                     "expires": "Thu, 01 Jan 1970 00:00:00 GMT",
                     "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
@@ -20,10 +20,10 @@
                     "pragma": "no-cache"
                 }
             },
-            "uuid": "b6497804-b428-4e77-a63a-b5a2043d2dbc"
+            "uuid": "06bf4a73-df75-4c96-97ac-e0bf3b351ddf"
         },
         {
-            "id": "f6925501-9383-478f-8e60-dab5c0cf5f53",
+            "id": "d0201ec3-b06b-43d5-b367-f5c34cc22596",
             "name": "gdc_account_profile_current",
             "request": {
                 "url": "/gdc/account/profile/current",
@@ -35,14 +35,14 @@
                 "headers": {
                     "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
                     "vary": "origin,X-GDC-VERSION",
-                    "location": "/gdc/account/profile/b4ca6d6ec31ff764130a13893950091c",
+                    "location": "/gdc/account/profile/b388eefffab41947076a75fd36d0bad1",
                     "cache-control": "no-cache, no-store, must-revalidate"
                 }
             },
-            "uuid": "f6925501-9383-478f-8e60-dab5c0cf5f53"
+            "uuid": "d0201ec3-b06b-43d5-b367-f5c34cc22596"
         },
         {
-            "id": "98c93d21-980c-4159-8bb5-1ef16e94a3cc",
+            "id": "54e73646-cc61-48c8-824c-72108a1419d6",
             "name": "gdc_app_projects_frho3i7qc6epdek7mcgergm9vtm6o5ty_executeafm",
             "request": {
                 "url": "/gdc/app/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty/executeAfm",
@@ -57,7 +57,7 @@
             },
             "response": {
                 "status": 201,
-                "body": "{\"executionResponse\":{\"dimensions\":[{\"headers\":[{\"measureGroupHeader\":{\"items\":[{\"measureHeaderItem\":{\"name\":\"Won\",\"format\":\"$#,##0.00\",\"localIdentifier\":\"m_acugFHNJgsBy\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1249\",\"identifier\":\"acugFHNJgsBy\"}}]}}]}],\"links\":{\"executionResult\":\"/gdc/app/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty/executionResults/6116968891433712640?c=6c31ad6a5fee39067fea94dcc87c4030&q=eAEtjcsOgkAMRf%2BluCQOviDwA8aNO%2BPCsMCZAUcpxTJoCOHfLYZd77ltzwhsW2J%2FLtBCBpfGO19b%0AAyGg9ex0B9ltXOaTkQ1VGa3QqJIftHPJW8e2NfaVoK4sV5h%2BPMZ08IOi%2B1NttvtUXpXEWHg5XgVh%0AEETrKBL4Fwm7UiOp6xELHiTDlIfA9J3Ni%2FjI1LcgWFPdYzM3%2BfQDozk88g%3D%3D%0A&offset=0%2C0&limit=1000%2C1000&dimensions=1&totals=0\"}}}",
+                "body": "{\"executionResponse\":{\"dimensions\":[{\"headers\":[{\"measureGroupHeader\":{\"items\":[{\"measureHeaderItem\":{\"name\":\"Won\",\"format\":\"$#,##0.00\",\"localIdentifier\":\"m_acugFHNJgsBy\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1249\",\"identifier\":\"acugFHNJgsBy\"}}]}}]}],\"links\":{\"executionResult\":\"/gdc/app/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty/executionResults/2745563125255601664?c=6c15a7bdf1040868d69f6ed87a4a9fd9&q=eAE9jr0OgkAQhN9lsSQe%2FkHgBYyNnbEwFHh34CnL4rJoCOHdPYyxm5kvk5kR2LbEcizQQganRpzU%0A1kAIaIWd7iC7jPANPT5T8ycH4wNVGa3QqJJvtHHJU8e2NfaRoK4sV5i%2BBGPayaDoeler9Tb19a5H%0ALHjwbW9KYizE60UQBkG0jCKY8hA01T0287g3TO9Z%2FR7tmfoW8ukDrYg88g%3D%3D%0A&offset=0%2C0&limit=1000%2C1000&dimensions=1&totals=0\"}}}",
                 "headers": {
                     "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
                     "Cache-Control": "no-cache, no-store, must-revalidate",
@@ -65,18 +65,18 @@
                     "Content-Type": "application/json;charset=utf-8"
                 }
             },
-            "uuid": "98c93d21-980c-4159-8bb5-1ef16e94a3cc"
+            "uuid": "54e73646-cc61-48c8-824c-72108a1419d6"
         },
         {
-            "id": "36f33746-7032-4c0c-8095-197f577b72df",
-            "name": "gdc_account_profile_b4ca6d6ec31ff764130a13893950091c",
+            "id": "2c49c478-7e96-4a12-a422-f49ac5930393",
+            "name": "gdc_account_profile_b388eefffab41947076a75fd36d0bad1",
             "request": {
-                "url": "/gdc/account/profile/b4ca6d6ec31ff764130a13893950091c",
+                "url": "/gdc/account/profile/b388eefffab41947076a75fd36d0bad1",
                 "method": "GET"
             },
             "response": {
                 "status": 200,
-                "body": "{\"accountSetting\":{\"ssoProvider\":null,\"updated\":\"2021-06-25 11:13:07\",\"timezone\":null,\"position\":null,\"phoneNumber\":\"000000000\",\"login\":\"first.last@gooddata.com\",\"lastName\":\"Last\",\"firstName\":\"First\",\"created\":\"2018-08-08 10:09:41\",\"country\":null,\"companyName\":\"GD\",\"email\":\"first.last@gooddata.com\",\"authenticationModes\":[],\"language\":\"en-US\",\"ipWhitelist\":null,\"effectiveIpWhitelist\":null,\"links\":{\"self\":\"/gdc/account/profile/b4ca6d6ec31ff764130a13893950091c\",\"projects\":\"/gdc/account/profile/b4ca6d6ec31ff764130a13893950091c/projects\",\"domain\":\"/gdc/domains/default\",\"auditEvents\":\"/gdc/account/profile/b4ca6d6ec31ff764130a13893950091c/auditEvents\"}}}",
+                "body": "{\"accountSetting\":{\"ssoProvider\":null,\"updated\":\"2021-07-21 14:07:27\",\"timezone\":null,\"position\":null,\"phoneNumber\":\"000000000\",\"login\":\"first.last@gooddata.com\",\"lastName\":\"Last\",\"firstName\":\"First\",\"created\":\"2021-04-07 11:36:41\",\"country\":null,\"companyName\":\"Good Data\",\"email\":\"first.last@gooddata.com\",\"authenticationModes\":[],\"language\":\"en-US\",\"ipWhitelist\":null,\"effectiveIpWhitelist\":null,\"links\":{\"self\":\"/gdc/account/profile/b388eefffab41947076a75fd36d0bad1\",\"projects\":\"/gdc/account/profile/b388eefffab41947076a75fd36d0bad1/projects\",\"domain\":\"/gdc/domains/default\",\"auditEvents\":\"/gdc/account/profile/b388eefffab41947076a75fd36d0bad1/auditEvents\"}}}",
                 "headers": {
                     "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
                     "vary": "origin,X-GDC-VERSION",
@@ -84,18 +84,18 @@
                     "cache-control": "no-cache, no-store, must-revalidate"
                 }
             },
-            "uuid": "36f33746-7032-4c0c-8095-197f577b72df"
+            "uuid": "2c49c478-7e96-4a12-a422-f49ac5930393"
         },
         {
-            "id": "475f43e4-fb98-447f-a36b-5a2a6ae572e1",
+            "id": "197c4a06-0e08-40af-9471-387133670b05",
             "name": "gdc_internal_projects",
             "request": {
-                "url": "/gdc/internal/projects/?limit=100&offset=0&userId=b4ca6d6ec31ff764130a13893950091c&projectStates=ENABLED&userState=ENABLED",
+                "url": "/gdc/internal/projects/?limit=100&offset=0&userId=b388eefffab41947076a75fd36d0bad1&projectStates=ENABLED&userState=ENABLED",
                 "method": "GET"
             },
             "response": {
                 "status": 200,
-                "body": "{\"userProjects\":{\"paging\":{\"offset\":0,\"limit\":100,\"count\":15,\"totalCount\":15},\"items\":[{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"# My project - DO NOT DELETE\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/kzfaabpubxludopwiwy60xq7dk2v3t3t\",\"projectUser\":\"/gdc/projects/kzfaabpubxludopwiwy60xq7dk2v3t3t/users/b4ca6d6ec31ff764130a13893950091c\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"demo1\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8\",\"projectUser\":\"/gdc/projects/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/users/b4ca6d6ec31ff764130a13893950091c\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"Huyen's project\",\"projectTitle\":\"GoodSaleDemo2 - DO NOT DELETE\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/ryfz7w64063fkotl5mr0yv5ikpijt8s4\",\"projectUser\":\"/gdc/projects/ryfz7w64063fkotl5mr0yv5ikpijt8s4/users/b4ca6d6ec31ff764130a13893950091c\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"GoodSales/3 test\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/j1qu7grwl84bb1uwf3cz49tpkakh5fat\",\"projectUser\":\"/gdc/projects/j1qu7grwl84bb1uwf3cz49tpkakh5fat/users/b4ca6d6ec31ff764130a13893950091c\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"Tadaaaa\",\"projectTitle\":\"Ivec project 2\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/lmnivlu3sowt63jvr2mo1wlse5fyv203\",\"projectUser\":\"/gdc/projects/lmnivlu3sowt63jvr2mo1wlse5fyv203/users/b4ca6d6ec31ff764130a13893950091c\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"Ivec project new\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/giqyn2u687ahdk191r3z7qxuxu7b7d7n\",\"projectUser\":\"/gdc/projects/giqyn2u687ahdk191r3z7qxuxu7b7d7n/users/b4ca6d6ec31ff764130a13893950091c\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"jsc-prod-gs3\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/nbdbiqquclvbim18g0eo98kerdtbfrr1\",\"projectUser\":\"/gdc/projects/nbdbiqquclvbim18g0eo98kerdtbfrr1/users/b4ca6d6ec31ff764130a13893950091c\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"MAP Test project\",\"projectTitle\":\"MAP GoodSales\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/ofyndwehwd0gwipdtdlcv4cpd81qpa5x\",\"projectUser\":\"/gdc/projects/ofyndwehwd0gwipdtdlcv4cpd81qpa5x/users/b4ca6d6ec31ff764130a13893950091c\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"NEW UI(stg3)_ DO NOT DELETE\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/xtuuemh43miequnxq9ohc69cb9tr0lei\",\"projectUser\":\"/gdc/projects/xtuuemh43miequnxq9ohc69cb9tr0lei/users/b4ca6d6ec31ff764130a13893950091c\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"NewMDProject\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/onao6i5mwezrprltatd6lpihelbeuzxa\",\"projectUser\":\"/gdc/projects/onao6i5mwezrprltatd6lpihelbeuzxa/users/b4ca6d6ec31ff764130a13893950091c\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"QA LIVE EXAMPLE - DO NOT DELETE\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/y2lwt04m1kb3r4mlclsu39tmvf935vy9\",\"projectUser\":\"/gdc/projects/y2lwt04m1kb3r4mlclsu39tmvf935vy9/users/b4ca6d6ec31ff764130a13893950091c\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"RAIL E2E test do not delete\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty\",\"projectUser\":\"/gdc/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty/users/b4ca6d6ec31ff764130a13893950091c\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"RAIL test-do not delete\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/mbuumy476p78ybcceiru61hcyr8i8lo8\",\"projectUser\":\"/gdc/projects/mbuumy476p78ybcceiru61hcyr8i8lo8/users/b4ca6d6ec31ff764130a13893950091c\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"Test reference workspace Mar 1, 2022, 10:12\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/ccd6pazq45wb5tb7i0qh4ljjyzubcbs6\",\"projectUser\":\"/gdc/projects/ccd6pazq45wb5tb7i0qh4ljjyzubcbs6/users/b4ca6d6ec31ff764130a13893950091c\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"VLK Test 2019 - development\",\"projectTitle\":\"VLK Test 2019\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/bo2qdmj8bphn27wml9tf56f60ayx70sg\",\"projectUser\":\"/gdc/projects/bo2qdmj8bphn27wml9tf56f60ayx70sg/users/b4ca6d6ec31ff764130a13893950091c\"}}}]}}",
+                "body": "{\"userProjects\":{\"paging\":{\"offset\":0,\"limit\":100,\"count\":7,\"totalCount\":7},\"items\":[{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"# My project - DO NOT DELETE\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/kzfaabpubxludopwiwy60xq7dk2v3t3t\",\"projectUser\":\"/gdc/projects/kzfaabpubxludopwiwy60xq7dk2v3t3t/users/b388eefffab41947076a75fd36d0bad1\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"1. NEW UI(stg3)_ DO NOT DELETE\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/g2zpqxe8zk32vmjrux9mb3zywxat1w70\",\"projectUser\":\"/gdc/projects/g2zpqxe8zk32vmjrux9mb3zywxat1w70/users/b388eefffab41947076a75fd36d0bad1\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"Huyen's project\",\"projectTitle\":\"GoodSaleDemo2 - DO NOT DELETE\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/ryfz7w64063fkotl5mr0yv5ikpijt8s4\",\"projectUser\":\"/gdc/projects/ryfz7w64063fkotl5mr0yv5ikpijt8s4/users/b388eefffab41947076a75fd36d0bad1\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"MAP Test project\",\"projectTitle\":\"MAP GoodSales\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/ofyndwehwd0gwipdtdlcv4cpd81qpa5x\",\"projectUser\":\"/gdc/projects/ofyndwehwd0gwipdtdlcv4cpd81qpa5x/users/b388eefffab41947076a75fd36d0bad1\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"RAIL E2E test do not delete\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty\",\"projectUser\":\"/gdc/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty/users/b388eefffab41947076a75fd36d0bad1\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"RAIL test-do not delete\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/mbuumy476p78ybcceiru61hcyr8i8lo8\",\"projectUser\":\"/gdc/projects/mbuumy476p78ybcceiru61hcyr8i8lo8/users/b388eefffab41947076a75fd36d0bad1\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"test\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/s4olt3n7v1d2e86iavfylx4s3qzwdzyz\",\"projectUser\":\"/gdc/projects/s4olt3n7v1d2e86iavfylx4s3qzwdzyz/users/b388eefffab41947076a75fd36d0bad1\"}}}]}}",
                 "headers": {
                     "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
                     "Cache-Control": "no-cache, no-store, must-revalidate",
@@ -103,13 +103,13 @@
                     "Content-Type": "application/json;charset=utf-8"
                 }
             },
-            "uuid": "475f43e4-fb98-447f-a36b-5a2a6ae572e1"
+            "uuid": "197c4a06-0e08-40af-9471-387133670b05"
         },
         {
-            "id": "b9512026-4ab0-4051-b145-3cdc14e9826a",
-            "name": "gdc_app_projects_frho3i7qc6epdek7mcgergm9vtm6o5ty_executionresults_6116968891433712640",
+            "id": "5f6d7302-cadd-4346-bc74-506e36952080",
+            "name": "gdc_app_projects_frho3i7qc6epdek7mcgergm9vtm6o5ty_executionresults_2745563125255601664",
             "request": {
-                "url": "/gdc/app/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty/executionResults/6116968891433712640?c=6c31ad6a5fee39067fea94dcc87c4030&q=eAEtjcsOgkAMRf%2BluCQOviDwA8aNO%2BPCsMCZAUcpxTJoCOHfLYZd77ltzwhsW2J%2FLtBCBpfGO19b%0AAyGg9ex0B9ltXOaTkQ1VGa3QqJIftHPJW8e2NfaVoK4sV5h%2BPMZ08IOi%2B1NttvtUXpXEWHg5XgVh%0AEETrKBL4Fwm7UiOp6xELHiTDlIfA9J3Ni%2FjI1LcgWFPdYzM3%2BfQDozk88g%3D%3D%0A&offset=0&limit=1000&dimensions=1&totals=0",
+                "url": "/gdc/app/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty/executionResults/2745563125255601664?c=6c15a7bdf1040868d69f6ed87a4a9fd9&q=eAE9jr0OgkAQhN9lsSQe%2FkHgBYyNnbEwFHh34CnL4rJoCOHdPYyxm5kvk5kR2LbEcizQQganRpzU%0A1kAIaIWd7iC7jPANPT5T8ycH4wNVGa3QqJJvtHHJU8e2NfaRoK4sV5i%2BBGPayaDoeler9Tb19a5H%0ALHjwbW9KYizE60UQBkG0jCKY8hA01T0287g3TO9Z%2FR7tmfoW8ukDrYg88g%3D%3D%0A&offset=0&limit=1000&dimensions=1&totals=0",
                 "method": "GET"
             },
             "response": {
@@ -122,7 +122,7 @@
                     "Content-Type": "application/json;charset=utf-8"
                 }
             },
-            "uuid": "b9512026-4ab0-4051-b145-3cdc14e9826a"
+            "uuid": "5f6d7302-cadd-4346-bc74-506e36952080"
         }
     ]
 }

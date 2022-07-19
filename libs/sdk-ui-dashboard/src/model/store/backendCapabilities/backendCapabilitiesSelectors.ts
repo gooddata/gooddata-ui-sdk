@@ -58,3 +58,13 @@ export const selectSupportsHierarchicalWorkspacesCapability = createSelector(
     selectBackendCapabilities,
     (capabilities) => capabilities.supportsHierarchicalWorkspaces ?? false,
 );
+
+/**
+ * Selector for {@link @gooddata/sdk-backend-spi#IBackendCapabilities.supportsElementUris}
+ *
+ * @internal
+ */
+export const selectSupportsElementUris = createSelector(
+    selectBackendCapabilities,
+    (capabilities) => capabilities.supportsElementUris ?? false,
+);

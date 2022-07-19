@@ -30,7 +30,7 @@ describe("Drilling", () => {
 
             cy.get(".s-attribute-url").should(
                 "have.text",
-                "https://www.google.com/search?q=1000Bulbs.com%20%3E%20Educationly",
+                "https://www.google.com/search?q=.decimal%20%3E%20Explorer",
             );
         });
 
@@ -45,7 +45,7 @@ describe("Drilling", () => {
 
             cy.get(".s-attribute-url").should(
                 "have.text",
-                "https://www.google.com/search?q=1000Bulbs.com%20%3E%20Educationly",
+                "https://www.google.com/search?q=.decimal%20%3E%20Explorer",
             );
         });
     });
