@@ -15,7 +15,7 @@ import {
     IWidgetAlertDefinition,
 } from "@gooddata/sdk-model";
 
-import { KpiAlertOperationStatus } from "../../types";
+import { KpiAlertOperationStatus } from "../../../common";
 
 import { KpiAlertDialogDateRange } from "./KpiAlertDialogDateRange";
 import { kpiAlertDialogAlignPoints, kpiAlertDialogMobileAlignPoints } from "./alignPoints";

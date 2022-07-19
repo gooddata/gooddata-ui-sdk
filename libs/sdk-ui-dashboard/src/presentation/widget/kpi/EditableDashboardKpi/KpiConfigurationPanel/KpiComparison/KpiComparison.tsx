@@ -9,7 +9,7 @@ import {
     widgetRef,
 } from "@gooddata/sdk-model";
 import { Typography } from "@gooddata/sdk-ui-kit";
-import { changeKpiWidgetComparison, useDashboardDispatch } from "../../../../../model";
+import { changeKpiWidgetComparison, useDashboardDispatch } from "../../../../../../model";
 import { KpiComparisonTypeDropdown } from "./KpiComparisonTypeDropdown";
 import { KpiComparisonDirectionDropdown } from "./KpiComparisonDirectionDropdown";
 

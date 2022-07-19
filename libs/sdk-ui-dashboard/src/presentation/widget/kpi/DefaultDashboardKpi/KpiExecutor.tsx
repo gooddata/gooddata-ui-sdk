@@ -1,17 +1,12 @@
 // (C) 2020-2022 GoodData Corporation
 import React, { memo, useCallback, useEffect, useMemo } from "react";
-import { IntlShape, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import compact from "lodash/compact";
-import isNil from "lodash/isNil";
-import isNumber from "lodash/isNumber";
-import round from "lodash/round";
 import { IAnalyticalBackend, IDataView, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import {
     IMeasure,
     IPoPMeasureDefinition,
     IPreviousPeriodMeasureDefinition,
-    isMeasureFormatInPercent,
-    measureLocalId,
     ObjRef,
     objRefToString,
     FilterContextItem,
@@ -22,17 +17,12 @@ import {
 } from "@gooddata/sdk-model";
 import {
     convertDrillableItemsToPredicates,
-    createNumberJsFormatter,
-    DataViewFacade,
-    IDataSeries,
     IDrillEventContext,
     ILoadingProps,
     isSomeHeaderPredicateMatched,
     NoDataSdkError,
     OnError,
-    useBackendStrict,
     useExecutionDataView,
-    useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 
 import { filterContextItemsToDashboardFiltersByWidget } from "../../../../converters";
@@ -50,19 +40,26 @@ import {
     useDashboardDispatch,
     selectIsKpiAlertOpenedByWidgetRef,
     selectIsKpiAlertHighlightedByWidgetRef,
+    selectEnableWidgetCustomHeight,
+    selectDateFormat,
 } from "../../../../model";
 import { DashboardItemHeadline } from "../../../presentationComponents";
 import { IDashboardFilter, OnFiredDashboardDrillEvent } from "../../../../types";
 
-import { KpiRenderer } from "./KpiRenderer";
 import { KpiAlertDialogWrapper } from "./KpiAlertDialogWrapper";
 import { useKpiAlertOperations } from "./useKpiAlertOperations";
-import { IKpiAlertResult, IKpiResult } from "./types";
 import { DashboardItemWithKpiAlert, evaluateAlertTriggered } from "./KpiAlerts";
-import { dashboardFilterToFilterContextItem, stripDateDatasets } from "./utils/filterUtils";
 import { useWidgetBrokenAlertsQuery } from "../../common/useWidgetBrokenAlertsQuery";
 import { invariant } from "ts-invariant";
 import { useWidgetSelection } from "../../common/useWidgetSelection";
+import {
+    dashboardFilterToFilterContextItem,
+    getAlertThresholdInfo,
+    getKpiAlertResult,
+    getKpiResult,
+    KpiRenderer,
+    stripDateDatasets,
+} from "../common";
 
 interface IKpiExecutorProps {
     dashboardRef?: ObjRef;
@@ -95,6 +92,9 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps> = (props) => {
         dashboardRef,
         kpiWidget,
 
+        backend,
+        workspace,
+
         primaryMeasure,
         secondaryMeasure,
         effectiveFilters,
@@ -111,45 +111,57 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps> = (props) => {
     } = props;
 
     const intl = useIntl();
-    const backend = useBackendStrict(props.backend);
-    const workspace = useWorkspaceStrict(props.workspace);
 
-    const { error, result, status } = useExecutionDataView({
-        backend,
-        workspace,
-        execution: backend
-            .workspace(workspace)
-            .execution()
-            .forItems(compact([primaryMeasure, secondaryMeasure]), effectiveFilters),
-    });
+    const kpiWidgetRef = widgetRef(kpiWidget);
+
+    const { error, result, status } = useExecutionDataView(
+        {
+            backend,
+            workspace,
+            execution: {
+                seriesBy: compact([primaryMeasure, secondaryMeasure]),
+                filters: effectiveFilters,
+            },
+        },
+        [primaryMeasure, secondaryMeasure, effectiveFilters, backend, workspace],
+    );
     const isLoading = status === "loading" || status === "pending";
 
     const {
         error: alertExecutionError,
         result: alertExecutionResult,
         status: alertExecutionStatus,
-    } = useExecutionDataView({
-        backend,
-        workspace,
-        execution: backend.workspace(workspace).execution().forItems([primaryMeasure], effectiveFilters),
-    });
+    } = useExecutionDataView(
+        {
+            backend,
+            workspace,
+            execution: {
+                seriesBy: [primaryMeasure],
+                filters: effectiveFilters,
+            },
+        },
+        [primaryMeasure, effectiveFilters, backend, workspace],
+    );
     const isAlertExecutionLoading = alertExecutionStatus === "loading" || alertExecutionStatus === "pending";
 
     const currentUser = useDashboardSelector(selectCurrentUser);
     const canCreateScheduledMail = useDashboardSelector(selectCanCreateScheduledMail);
     const settings = useDashboardSelector(selectSettings);
+    const enableCompactSize = useDashboardSelector(selectEnableWidgetCustomHeight);
+    const dateFormat = useDashboardSelector(selectDateFormat);
+
     const drillableItems = useDashboardSelector(selectDrillableItems);
-    const widgetDrills = useDashboardSelector(selectValidConfiguredDrillsByWidgetRef(kpiWidget.ref));
-    const isAlertDialogOpen = useDashboardSelector(selectIsKpiAlertOpenedByWidgetRef(kpiWidget.ref));
-    const isAlertHighlighted = useDashboardSelector(selectIsKpiAlertHighlightedByWidgetRef(kpiWidget.ref));
+    const widgetDrills = useDashboardSelector(selectValidConfiguredDrillsByWidgetRef(kpiWidgetRef));
+    const isAlertDialogOpen = useDashboardSelector(selectIsKpiAlertOpenedByWidgetRef(kpiWidgetRef));
+    const isAlertHighlighted = useDashboardSelector(selectIsKpiAlertHighlightedByWidgetRef(kpiWidgetRef));
 
     const dispatch = useDashboardDispatch();
     const openAlertDialog = useCallback(() => {
-        dispatch(uiActions.openKpiAlertDialog(kpiWidget.ref));
-    }, [kpiWidget]);
+        dispatch(uiActions.openKpiAlertDialog(kpiWidgetRef));
+    }, [kpiWidgetRef, dispatch]);
     const closeAlertDialog = useCallback(() => {
         dispatch(uiActions.closeKpiAlertDialog());
-    }, []);
+    }, [dispatch]);
 
     const { result: brokenAlertsBasicInfo } = useWidgetBrokenAlertsQuery(kpiWidget, alert);
 
@@ -213,9 +225,7 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps> = (props) => {
 
     const { kpiAlertDialogClosed, kpiAlertDialogOpened } = useDashboardUserInteraction();
 
-    const kpiResult = !result?.dataView.totalCount[0]
-        ? getNoDataKpiResult(result, primaryMeasure)
-        : getKpiResult(result, primaryMeasure, secondaryMeasure, separators);
+    const kpiResult = getKpiResult(result, primaryMeasure, secondaryMeasure, separators);
     const kpiAlertResult = getKpiAlertResult(alertExecutionResult, primaryMeasure, separators);
     const { isThresholdRepresentingPercent, thresholdPlaceholder } = useMemo(
         () => getAlertThresholdInfo(kpiResult, intl),
@@ -229,8 +239,6 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps> = (props) => {
             isSomeHeaderPredicateMatched(predicates, kpiResult.measureDescriptor, result)) ||
         widgetDrills.length > 0;
 
-    const enableCompactSize = settings.enableKDWidgetCustomHeight;
-
     const alertSavingStatus =
         kpiAlertOperations.creatingStatus === "inProgress" ||
         kpiAlertOperations.updatingStatus === "inProgress"
@@ -239,7 +247,7 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps> = (props) => {
             ? "error"
             : "idle";
 
-    const { isSelectable, isSelected, onSelected } = useWidgetSelection(kpiWidget.ref);
+    const { isSelectable, isSelected, onSelected } = useWidgetSelection(kpiWidgetRef);
 
     return (
         <DashboardItemWithKpiAlert
@@ -278,7 +286,7 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps> = (props) => {
             renderAlertDialog={() => (
                 <KpiAlertDialogWrapper
                     alert={alert}
-                    dateFormat={settings.responsiveUiDateFormat!}
+                    dateFormat={dateFormat!}
                     userEmail={currentUser.email!}
                     onAlertDialogCloseClick={() => {
                         kpiAlertDialogClosed();
@@ -308,7 +316,7 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps> = (props) => {
 
                         return kpiAlertOperations.onCreateAlert({
                             dashboard: dashboardRef,
-                            widget: widgetRef(kpiWidget),
+                            widget: kpiWidgetRef,
                             threshold,
                             whenTriggered,
                             isTriggered: evaluateAlertTriggered(
@@ -403,95 +411,3 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps> = (props) => {
  * @internal
  */
 export const KpiExecutor = memo(KpiExecutorCore);
-
-function getSeriesResult(series: IDataSeries | undefined): number | null {
-    if (!series) {
-        return null;
-    }
-
-    const value = series.dataPoints()[0].rawValue;
-
-    if (isNil(value)) {
-        return null;
-    }
-
-    if (isNumber(value)) {
-        return value;
-    }
-
-    return Number.parseFloat(value);
-}
-
-function getNoDataKpiResult(
-    result: DataViewFacade | undefined,
-    primaryMeasure: IMeasure,
-): IKpiResult | undefined {
-    if (!result) {
-        return;
-    }
-
-    return {
-        measureDescriptor: result.meta().measureDescriptor(measureLocalId(primaryMeasure)),
-        measureFormat: result.meta().measureDescriptor(measureLocalId(primaryMeasure))?.measureHeaderItem
-            ?.format,
-        measureResult: undefined,
-        measureForComparisonResult: undefined,
-    };
-}
-
-function getKpiResult(
-    result: DataViewFacade | undefined,
-    primaryMeasure: IMeasure,
-    secondaryMeasure:
-        | IMeasure<IPoPMeasureDefinition>
-        | IMeasure<IPreviousPeriodMeasureDefinition>
-        | undefined,
-    separators: ISeparators,
-): IKpiResult | undefined {
-    const series = result?.data({ valueFormatter: createNumberJsFormatter(separators) }).series();
-    const primarySeries = series?.firstForMeasure(primaryMeasure);
-    const secondarySeries = secondaryMeasure ? series?.firstForMeasure(secondaryMeasure) : undefined;
-
-    return primarySeries
-        ? {
-              measureDescriptor: primarySeries.descriptor.measureDescriptor,
-              measureFormat: primarySeries.measureFormat(),
-              measureResult: getSeriesResult(primarySeries)!,
-              measureForComparisonResult: getSeriesResult(secondarySeries)!,
-          }
-        : undefined;
-}
-
-function getKpiAlertResult(
-    result: DataViewFacade | undefined,
-    primaryMeasure: IMeasure,
-    separators: ISeparators,
-): IKpiAlertResult | undefined {
-    const alertSeries = result?.data({ valueFormatter: createNumberJsFormatter(separators) }).series();
-    return alertSeries
-        ? {
-              measureFormat: alertSeries.count
-                  ? alertSeries.firstForMeasure(primaryMeasure).measureFormat()
-                  : undefined,
-              measureResult: alertSeries.count
-                  ? getSeriesResult(alertSeries.firstForMeasure(primaryMeasure))!
-                  : 0,
-          }
-        : undefined;
-}
-
-function getAlertThresholdInfo(kpiResult: IKpiResult | undefined, intl: IntlShape) {
-    const isThresholdRepresentingPercent = kpiResult?.measureFormat
-        ? isMeasureFormatInPercent(kpiResult.measureFormat)
-        : false;
-
-    const value = round(kpiResult?.measureResult || 0, 2); // sure about rounding?
-    const thresholdPlaceholder = isThresholdRepresentingPercent
-        ? `${intl.formatMessage({ id: "kpi.alertBox.example" })} ${value * 100}`
-        : `${intl.formatMessage({ id: "kpi.alertBox.example" })} ${value}`; // TODO fix floating point multiply
-
-    return {
-        isThresholdRepresentingPercent,
-        thresholdPlaceholder,
-    };
-}

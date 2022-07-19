@@ -8,6 +8,7 @@ import {
     isInsightWidget,
     IDashboardLayout,
     IDashboardLayoutItem,
+    areObjRefsEqual,
 } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import { DashboardState } from "../types";
@@ -233,4 +234,36 @@ export const selectAllInsightWidgets = createSelector(selectAllWidgets, (allWidg
  */
 export const selectAllCustomWidgets = createSelector(selectAllWidgets, (allWidgets) => {
     return allWidgets.filter(isCustomWidget);
+});
+
+/**
+ * Selects layout coordinates for a given widget.
+ *
+ * @alpha
+ */
+export const selectWidgetCoordinatesByRef = createMemoizedSelector((ref: ObjRef) => {
+    return createSelector(
+        selectWidgetByRef(ref),
+        selectLayout,
+        (widget, layout): { sectionIndex: number; itemIndex: number } => {
+            invariant(widget, `widget with ref ${objRefToString(ref)} does not exist in the state`);
+
+            for (let sectionIndex = 0; sectionIndex < layout.sections.length; sectionIndex++) {
+                const section = layout.sections[sectionIndex];
+
+                for (let itemIndex = 0; itemIndex < section.items.length; itemIndex++) {
+                    const item = section.items[itemIndex];
+
+                    if (areObjRefsEqual(item.widget?.ref, ref)) {
+                        return {
+                            sectionIndex,
+                            itemIndex,
+                        };
+                    }
+                }
+            }
+
+            invariant(false, `widget with ref ${objRefToString(ref)} does not exist in the state`);
+        },
+    );
 });

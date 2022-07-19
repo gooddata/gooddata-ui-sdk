@@ -16,7 +16,7 @@ import {
 import KpiValue from "./KpiValue";
 import KpiPop from "./KpiPop";
 import { IKpiResult } from "../types";
-import { isDateFilterIrrelevant } from "../utils/filterUtils";
+import { isDateFilterIrrelevant } from "../filterUtils";
 import { getKpiPopLabel } from "./utils/translations";
 
 export interface IKpiContentProps {

@@ -44,6 +44,7 @@ export {
     selectEnableRenamingProjectToWorkspace,
     selectEnableRenamingMeasureToMetric,
     selectShouldHidePixelPerfectExperience,
+    selectDisableKpiDashboardHeadlineUnderline,
 } from "./config/configSelectors";
 export { PermissionsState } from "./permissions/permissionsState";
 export {
@@ -113,6 +114,7 @@ export {
     selectAllKpiWidgets,
     selectIsLayoutEmpty,
     selectWidgetDrills,
+    selectWidgetCoordinatesByRef,
 } from "./layout/layoutSelectors";
 export { DateFilterConfigState } from "./dateFilterConfig/dateFilterConfigState";
 export {

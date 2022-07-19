@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import invariant from "ts-invariant";
@@ -6,16 +6,16 @@ import invariant from "ts-invariant";
 import { useDashboardComponentsContext } from "../../../dashboardContexts";
 import {
     selectDashboardRef,
+    selectDisableKpiDashboardHeadlineUnderline,
     selectFilterContextFilters,
     selectIsReadOnly,
     selectSeparators,
-    selectSettings,
     useDashboardSelector,
 } from "../../../../model";
 import { IDashboardKpiProps } from "../types";
 
 import { KpiExecutor } from "./KpiExecutor";
-import { useKpiData } from "./useKpiData";
+import { useKpiData } from "../common";
 
 /**
  * @internal
@@ -45,7 +45,7 @@ export const DashboardKpiCore = (props: IDashboardKpiProps): JSX.Element => {
 
     const dashboardRef = useDashboardSelector(selectDashboardRef);
     const dashboardFilters = useDashboardSelector(selectFilterContextFilters);
-    const settings = useDashboardSelector(selectSettings);
+    const disableDrillUnderline = useDashboardSelector(selectDisableKpiDashboardHeadlineUnderline);
     const separators = useDashboardSelector(selectSeparators);
     const isReadOnly = useDashboardSelector(selectIsReadOnly);
 
@@ -77,7 +77,7 @@ export const DashboardKpiCore = (props: IDashboardKpiProps): JSX.Element => {
             onDrill={onDrill}
             onError={onError}
             separators={separators}
-            disableDrillUnderline={settings.disableKpiDashboardHeadlineUnderline}
+            disableDrillUnderline={disableDrillUnderline}
             backend={backend}
             workspace={workspace}
             LoadingComponent={LoadingComponent}

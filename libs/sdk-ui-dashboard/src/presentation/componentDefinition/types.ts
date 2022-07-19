@@ -1,7 +1,7 @@
 // (C) 2022 GoodData Corporation
 import { ComponentType } from "react";
 import { IDashboardAttributeFilterProps } from "../filterBar/types";
-import { IDashboardKpiProps, IDashboardWidgetProps } from "../widget";
+import { IDashboardKpiProps, IDashboardWidgetProps } from "../widget/types";
 import { AttributeFilterDraggableItem, CustomDraggableItem } from "../dragAndDrop/types";
 
 /**

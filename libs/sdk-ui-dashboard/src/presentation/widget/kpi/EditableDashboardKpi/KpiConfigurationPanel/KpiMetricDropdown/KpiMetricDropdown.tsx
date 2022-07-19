@@ -8,7 +8,7 @@ import {
     selectAllCatalogMeasuresMap,
     useDashboardDispatch,
     useDashboardSelector,
-} from "../../../../../model";
+} from "../../../../../../model";
 import { MetricDropdown } from "./MetricDropdown";
 
 interface IKpiMetricDropdownProps {

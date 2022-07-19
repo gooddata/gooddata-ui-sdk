@@ -19,7 +19,7 @@ options = {
             "src/presentation/filterBar",
             "src/presentation/filterBar/types.ts",
             "src/presentation/dragAndDrop/types.ts",
-            "src/presentation/widget",
+            "src/presentation/widget/types.ts",
             "src/types.ts",
         ]),
         depCruiser.moduleWithDependencies(
@@ -151,6 +151,7 @@ options = {
             "src/model",
             "src/model/events/widget.ts",
             "src/presentation/constants",
+            "src/presentation/componentDefinition",
             "src/presentation/dashboardContexts",
             "src/presentation/drill",
             "src/presentation/drill/types.ts",
