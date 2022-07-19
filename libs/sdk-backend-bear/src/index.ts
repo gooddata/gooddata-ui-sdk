@@ -69,7 +69,7 @@ export const BearToBackendConvertors = {
     convertLayoutItemSize,
 };
 
-import { convertVisualization } from "./convertors/fromBackend/VisualizationConverter";
+import { convertVisualization, convertBucket } from "./convertors/fromBackend/VisualizationConverter";
 import {
     convertReferencesToUris,
     convertUrisToReferences,
@@ -97,6 +97,7 @@ import {
  * @internal
  */
 export const BackendToBearConvertors = {
+    convertBucket,
     convertVisualization,
     convertReferencesToUris,
     convertFilterContext,
