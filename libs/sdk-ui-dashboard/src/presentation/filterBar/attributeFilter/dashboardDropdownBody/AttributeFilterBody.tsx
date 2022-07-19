@@ -43,6 +43,7 @@ const LIST_EXTRAS = 143;
 const MOBILE_LIST_EXTRAS = 167;
 const LIST_ITEM_HEIGHT = 28;
 const MOBILE_LIST_ITEM_HEIGHT = 40;
+const EMPTY_VALUE_KEY = uuid();
 
 const AttributeFilterBodyCore: React.FC<IAttributeDropdownBodyExtendedProps> = (props) => {
     const {
@@ -61,8 +62,6 @@ const AttributeFilterBodyCore: React.FC<IAttributeDropdownBodyExtendedProps> = (
         isMobile,
         attributeFilterRef,
     } = props;
-
-    const emptyValueKey = uuid();
 
     const hasNoData =
         !searchString && !parentFilterTitles?.length && !isElementsLoading && items.length === 0;
@@ -143,7 +142,7 @@ const AttributeFilterBodyCore: React.FC<IAttributeDropdownBodyExtendedProps> = (
             itemsCount={props.totalCount}
             isLoading={isElementsLoading}
             isLoadingClass={LoadingMask}
-            getItemKey={(item: IAttributeElement) => item?.uri || emptyValueKey}
+            getItemKey={(item: IAttributeElement) => item?.uri || EMPTY_VALUE_KEY}
             itemHeight={currentItemHeight}
             height={getDropdownBodyHeight()}
             searchPlaceholder={intl.formatMessage({ id: "attributeFilterDropdown.searchPlaceholder" })}
