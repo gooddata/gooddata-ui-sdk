@@ -61,6 +61,7 @@ import { changeAttributeDisplayFormHandler } from "./filterContext/attributeFilt
 import { removeDrillForKpiWidgetHandler } from "./widgets/removeDrillForKpiWidgetHandler";
 import { setDrillForKpiWidgetHandler } from "./widgets/setDrillForKpiWidgetHandler";
 import { resizeHeightHandler } from "./layout/resizeHeightHandler";
+import { resizeWidthHandler } from "./layout/resizeWidthHandler";
 
 function* notImplementedCommand(ctx: DashboardContext, cmd: IDashboardCommand): SagaIterator<void> {
     yield dispatchDashboardEvent(commandRejected(ctx, cmd.correlationId));
@@ -93,6 +94,7 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_SECTION": removeLayoutSectionHandler,
     "GDC.DASH/CMD.FLUID_LAYOUT.CHANGE_SECTION_HEADER": changeLayoutSectionHeaderHandler,
     "GDC.DASH/CMD.FLUID_LAYOUT.RESIZE_HEIGHT": resizeHeightHandler,
+    "GDC.DASH/CMD.FLUID_LAYOUT.RESIZE_WIDTH": resizeWidthHandler,
     "GDC.DASH/CMD.FLUID_LAYOUT.ADD_ITEMS": addSectionItemsHandler,
     "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM": moveSectionItemHandler,
     "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM": removeSectionItemHandler,

@@ -869,3 +869,64 @@ export function resizeHeight(
         },
     };
 }
+
+/**
+ * Payload of the {@link ResizeWidth} command.
+ * @alpha
+ */
+export interface ResizeWidthPayload {
+    /**
+     * Index of the section to resize.
+     *
+     * Index is zero-based.
+     */
+    readonly sectionIndex: number;
+
+    /**
+     * Indexes of the item to resize.
+     *
+     * Index is zero-based.
+     */
+    readonly itemIndex: number;
+
+    /**
+     * width to resize.
+     */
+    readonly width: number;
+}
+
+/**
+ * @alpha
+ */
+export interface ResizeWidth extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.RESIZE_WIDTH";
+    readonly payload: ResizeWidthPayload;
+}
+
+/**
+ * Creates the ResizeHeight command.
+ *
+ * @param sectionIndex - index of the section
+ * @param itemIndex - index of the item
+ * @param width - width in Grid Rows (by default 1 Grid Row is 20px)
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function resizeWidth(
+    sectionIndex: number,
+    itemIndex: number,
+    width: number,
+    correlationId?: string,
+): ResizeWidth {
+    return {
+        type: "GDC.DASH/CMD.FLUID_LAYOUT.RESIZE_WIDTH",
+        correlationId,
+        payload: {
+            sectionIndex,
+            itemIndex,
+            width,
+        },
+    };
+}
