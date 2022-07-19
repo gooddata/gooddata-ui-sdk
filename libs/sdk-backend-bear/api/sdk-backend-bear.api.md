@@ -20,6 +20,7 @@ import { IAnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
 import { IAuthenticatedPrincipal } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationContext } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationProvider } from '@gooddata/sdk-backend-spi';
+import { IBucket } from '@gooddata/sdk-model';
 import { IDashboardDateFilterConfig } from '@gooddata/sdk-model';
 import { IDashboardFilterReference } from '@gooddata/sdk-model';
 import { IDashboardLayoutSize } from '@gooddata/sdk-model';
@@ -46,6 +47,7 @@ export { AnonymousAuthProvider }
 
 // @internal
 export const BackendToBearConvertors: {
+    convertBucket: (bucket: GdcVisualizationObject.IBucket) => IBucket;
     convertVisualization: (visualization: GdcVisualizationObject.IVisualization, visualizationClassUri: string, userMap?: Map<string, IUser> | undefined) => IInsight;
     convertReferencesToUris: ReferenceConverter;
     convertFilterContext: (filterContext: GdcFilterContext.IWrappedFilterContext) => IFilterContextDefinition | IFilterContext;

@@ -167,7 +167,7 @@ const convertBucketItem = (bucketItem: GdcVisualizationObject.BucketItem): IAttr
         : convertAttribute(bucketItem);
 };
 
-const convertBucket = (bucket: GdcVisualizationObject.IBucket): IBucket => {
+export const convertBucket = (bucket: GdcVisualizationObject.IBucket): IBucket => {
     return {
         items: bucket.items.map(convertBucketItem),
         localIdentifier: bucket.localIdentifier,
