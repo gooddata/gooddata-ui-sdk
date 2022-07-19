@@ -18,3 +18,4 @@ export * from "./presentation/widget/kpi/DefaultDashboardKpi/types";
 export * from "./presentation/widget/kpi/DefaultDashboardKpi/utils/filterUtils";
 export * from "./model/utils/alertsUtils";
 export * from "./_staging/dashboard/fluidLayout/config";
+export * from "./model/layout/sizing";
