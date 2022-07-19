@@ -293,12 +293,12 @@ describe("getOptionalStackingConfiguration", () => {
         });
 
         it.each([
-            ["", true],
-            ["", "auto"],
-            [" not", false],
+            ["", true, true],
+            ["", "auto", true],
+            ["", false, false],
         ])(
-            'should%s show stack label when "dataLabel.totalsVisible" is %s',
-            (_negation: string, visible: boolean | string) => {
+            'should%s show stack label when "dataLabel.visible" is %s',
+            (_negation: string, totalsVisible: boolean | string, stackingResult: boolean | string) => {
                 const chartOptions = {
                     type: VisualizationTypes.COLUMN,
                     yAxes: [{ label: "" }],
@@ -309,13 +309,13 @@ describe("getOptionalStackingConfiguration", () => {
                 };
                 const chartConfig = {
                     stackMeasures: true,
-                    dataLabels: { visible },
+                    dataLabels: { totalsVisible },
                 };
                 const { yAxis }: any = getStackMeasuresConfiguration(chartOptions, config, chartConfig);
 
                 expect(yAxis).toEqual(
                     Array(1).fill({
-                        stackLabels: { enabled: Boolean(visible) },
+                        stackLabels: { enabled: Boolean(stackingResult) },
                     }),
                 );
             },

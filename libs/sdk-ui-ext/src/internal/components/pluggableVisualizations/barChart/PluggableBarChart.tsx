@@ -73,11 +73,15 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
     private adjustMissingConfiguration(
         supportedProperties: IVisualizationProperties,
     ): IVisualizationProperties {
+        const dataLabelVisibility = supportedProperties.controls?.dataLabels?.visible;
+
+        // copy label configuration to totalLabels if not defined yet
         if (
-            !isNil(supportedProperties.controls?.dataLabels) &&
-            isNil(supportedProperties.controls?.dataLabels?.totalsVisible)
+            !isNil(dataLabelVisibility) &&
+            isNil(supportedProperties.controls?.dataLabels?.totalsVisible) &&
+            !!this.featureFlags.enableSeparateTotalLabels
         ) {
-            supportedProperties.controls.dataLabels.totalsVisible = false;
+            supportedProperties.controls.dataLabels.totalsVisible = dataLabelVisibility;
         }
 
         return supportedProperties;

@@ -2,6 +2,7 @@
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import includes from "lodash/includes";
+import isEmpty from "lodash/isEmpty";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
@@ -20,7 +21,7 @@ import {
 import LabelSubsection from "../configurationControls/axis/LabelSubsection";
 import { IAxisProperties } from "../../interfaces/AxisType";
 import { AXIS, BASE_CHART_AXIS_CONFIG, DUAL_AXES_SUPPORTED_CHARTS } from "../../constants/axis";
-import { bucketsIsEmpty, insightBuckets } from "@gooddata/sdk-model";
+import { bucketsById, bucketsIsEmpty, insightBuckets } from "@gooddata/sdk-model";
 import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIntrospection";
 import NameSubsection from "../configurationControls/axis/NameSubsection";
 import { messages } from "../../../locales";
@@ -31,8 +32,13 @@ export default class BaseChartConfigurationPanel<
     protected renderCanvasSection(): React.ReactNode {
         const { gridEnabled } = this.getControlProperties();
 
-        const { properties, propertiesMeta, pushData, featureFlags } = this.props;
+        const { properties, propertiesMeta, pushData, featureFlags, insight } = this.props;
         const controlsDisabled = this.isControlDisabled();
+        const { buckets } = insight.insight;
+
+        const stackBy = bucketsById(buckets, BucketNames.STACK);
+        const isNotStacked = isEmpty(stackBy);
+
         return (
             <ConfigSection
                 id="canvas_section"
@@ -45,7 +51,11 @@ export default class BaseChartConfigurationPanel<
                     pushData={pushData}
                     properties={properties}
                     isDisabled={controlsDisabled}
-                    isTotalsDisabled={controlsDisabled || !!properties?.controls?.stackMeasuresToPercent}
+                    isTotalsDisabled={
+                        controlsDisabled ||
+                        !!properties?.controls?.stackMeasuresToPercent ||
+                        (isNotStacked && !properties?.controls?.stackMeasures)
+                    }
                     enableSeparateTotalLabels={!!featureFlags.enableSeparateTotalLabels}
                 />
                 <CheckboxControl

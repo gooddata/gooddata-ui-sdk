@@ -80,7 +80,7 @@ export const DefaultUiSettings: ISettings = {
     enableDataSourceManagement: true,
     enableAdFloatingDateRangeFilter: true,
     enableReversedStacking: true,
-    enableSeparateTotalLabels: false,
+    enableSeparateTotalLabels: true,
 
     ...DefaultFeatureFlags,
 };

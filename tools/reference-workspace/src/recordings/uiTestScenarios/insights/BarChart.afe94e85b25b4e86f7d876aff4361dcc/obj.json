@@ -12,19 +12,20 @@
                             },
                             "localIdentifier": "m_aangOxLSeztu"
                         }
-                    },
-                    {
-                        "measure": {
-                            "definition": {
-                                "measureDefinition": {
-                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
-                                }
-                            },
-                            "localIdentifier": "m_acugFHNJgsBy"
-                        }
                     }
                 ],
                 "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                            "localIdentifier": "a_label.owner.region"
+                        }
+                    }
+                ],
+                "localIdentifier": "view"
             },
             {
                 "items": [
@@ -35,13 +36,12 @@
                         }
                     }
                 ],
-                "localIdentifier": "view"
-            },
-            { "items": [], "localIdentifier": "stack" }
+                "localIdentifier": "stack"
+            }
         ],
         "filters": [],
         "identifier": "BarChart.afe94e85b25b4e86f7d876aff4361dcc",
-        "properties": { "controls": {} },
+        "properties": { "controls": { "enableSeparateTotalLabels": true } },
         "sorts": [],
         "title": "BarChart - data labels - default",
         "uri": "BarChart.afe94e85b25b4e86f7d876aff4361dcc",

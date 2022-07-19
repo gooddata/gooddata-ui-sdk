@@ -6,7 +6,7 @@ import isNil from "lodash/isNil";
 import set from "lodash/set";
 import isArray from "lodash/isArray";
 import { IChartConfig } from "../../../interfaces";
-import { formatAsPercent, getLabelStyle, getTotalsVisibility } from "./dataLabelsHelpers";
+import { formatAsPercent, getLabelStyle, getTotalsVisibilityConfig } from "./dataLabelsHelpers";
 import {
     getPrimaryChartType,
     isInvertedChartType,
@@ -188,11 +188,11 @@ export function getYAxisConfiguration(
         return {};
     }
 
-    const stackLabelConfig = getTotalsVisibility(type, chartConfig);
+    const { enabled: stackingDataLabelEnabled } = getTotalsVisibilityConfig(type, chartConfig);
 
     const yAxisWithStackLabel = yAxis.map((axis: IHighChartAxis, index: number) => {
         // disable stack labels for primary Y axis when there is 'Stack to 100%' on
-        const stackLabelEnabled = (index !== 0 || !stackMeasuresToPercent) && !!stackLabelConfig;
+        const stackLabelEnabled = (index !== 0 || !stackMeasuresToPercent) && !!stackingDataLabelEnabled;
         return {
             ...axis,
             stackLabels: {

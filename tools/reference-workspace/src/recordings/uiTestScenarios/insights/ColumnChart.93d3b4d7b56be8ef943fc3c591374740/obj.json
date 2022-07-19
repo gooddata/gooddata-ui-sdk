@@ -12,19 +12,20 @@
                             },
                             "localIdentifier": "m_aangOxLSeztu"
                         }
-                    },
-                    {
-                        "measure": {
-                            "definition": {
-                                "measureDefinition": {
-                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
-                                }
-                            },
-                            "localIdentifier": "m_acugFHNJgsBy"
-                        }
                     }
                 ],
                 "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                            "localIdentifier": "a_label.owner.region"
+                        }
+                    }
+                ],
+                "localIdentifier": "view"
             },
             {
                 "items": [
@@ -35,9 +36,8 @@
                         }
                     }
                 ],
-                "localIdentifier": "view"
-            },
-            { "items": [], "localIdentifier": "stack" }
+                "localIdentifier": "stack"
+            }
         ],
         "filters": [],
         "identifier": "ColumnChart.93d3b4d7b56be8ef943fc3c591374740",

@@ -19,6 +19,7 @@ import {
     formatAsPercent,
     getLabelStyle,
     getLabelsVisibilityConfig,
+    getTotalsVisibilityConfig,
     getTotalsVisibility,
 } from "./dataLabelsHelpers";
 import { HOVER_BRIGHTNESS, MINIMUM_HC_SAFE_BRIGHTNESS } from "./commonConfiguration";
@@ -93,6 +94,8 @@ const TOOLTIP_FULLSCREEN_THRESHOLD = 480;
 
 export const TOOLTIP_PADDING = 24; // padding of tooltip container - defined by CSS
 export const TOOLTIP_VIEWPORT_MARGIN_TOP = 20;
+
+const BAR_WIDTH_WHEN_TOTAL_LABELS_AVAILABLE = "90%";
 
 const escapeAngleBrackets = (str: any) => str?.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
@@ -553,9 +556,13 @@ function shouldDisableHeatmapDataLabels(series: ISeriesItem[]): boolean {
 
 function getLabelsConfiguration(chartOptions: IChartOptions, _config: any, chartConfig?: IChartConfig) {
     const { stacking, yAxes = [], type } = chartOptions;
+    const { stackMeasuresToPercent = false, enableSeparateTotalLabels = false } = chartConfig || {};
 
     const labelsVisible = chartConfig?.dataLabels?.visible;
-    const totalsVisible = getTotalsVisibility(type, chartConfig);
+
+    // handling of existing behaviour
+    const totalsVisible =
+        isBarChart(type) && !enableSeparateTotalLabels ? false : getTotalsVisibility(chartConfig);
 
     const labelsConfig = getLabelsVisibilityConfig(labelsVisible);
 
@@ -567,7 +574,6 @@ function getLabelsConfiguration(chartOptions: IChartOptions, _config: any, chart
 
     const series: ISeriesItem[] = chartOptions.data?.series ?? [];
     const canStackInPercent = canComboChartBeStackedInPercent(series);
-    const { stackMeasuresToPercent = false } = chartConfig || {};
 
     // only applied to bar, column, dual axis and area chart
     const dataLabelFormatter =
@@ -668,23 +674,6 @@ function getDataPointsConfiguration(_chartOptions: IChartOptions, _config: any, 
     };
 }
 
-function getTotalLabelsConfig(chartType: string, chartConfig?: IChartConfig) {
-    if (!(isColumnChart(chartType) || isBarChart(chartType))) {
-        return {};
-    }
-
-    const totalsVisible = chartConfig?.dataLabels?.totalsVisible;
-
-    // it configures logic for previous generation charts without total labels
-    if (isBarChart(chartType) && isNil(totalsVisible)) {
-        return { enabled: false };
-    }
-
-    return getLabelsVisibilityConfig(
-        !isNil(totalsVisible) ? totalsVisible : chartConfig?.dataLabels?.visible,
-    );
-}
-
 function getStackingConfiguration(
     chartOptions: IChartOptions,
     _config: any,
@@ -692,7 +681,11 @@ function getStackingConfiguration(
 ): HighchartsOptions {
     const { stacking, yAxes = [], type } = chartOptions;
 
-    const totalLabelsConfig = getTotalLabelsConfig(type, chartConfig);
+    if (!stacking) {
+        return {};
+    }
+
+    const totalLabelsConfig = getTotalsVisibilityConfig(type, chartConfig);
 
     const yAxis = yAxes.map(() => ({
         stackLabels: {
@@ -701,24 +694,32 @@ function getStackingConfiguration(
         },
     }));
 
-    let connectNulls = {};
-    if (stacking && isAreaChart(type)) {
-        connectNulls = {
-            connectNulls: true,
-        };
-    }
+    const connectNulls = isAreaChart(type) ? { connectNulls: true } : {};
 
-    return stacking
-        ? {
-              plotOptions: {
-                  series: {
-                      stacking, // this stacking config will be applied to all series
-                      ...connectNulls,
-                  },
-              },
-              yAxis,
-          }
-        : {};
+    // extra space allocation for total labels if available
+    const totalLabelsExtention =
+        isBarChart(type) &&
+        chartConfig?.enableSeparateTotalLabels &&
+        (!!chartConfig?.dataLabels?.totalsVisible || isNil(chartConfig?.dataLabels?.totalsVisible)) &&
+        !chartConfig.stackMeasuresToPercent
+            ? {
+                  chart: { marginRight: 0 },
+                  yAxis: yAxis.map((element) => {
+                      return { ...element, width: BAR_WIDTH_WHEN_TOTAL_LABELS_AVAILABLE };
+                  }),
+              }
+            : {};
+
+    return {
+        plotOptions: {
+            series: {
+                stacking, // this stacking config will be applied to all series
+                ...connectNulls,
+            },
+        },
+        yAxis,
+        ...totalLabelsExtention,
+    };
 }
 
 function getSeries(series: any) {

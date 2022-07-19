@@ -327,6 +327,9 @@
     "BarChart.243625b3a69a7d7252da0164b5045730": {
         "comment": "Auto-generated insight for test scenario BarChart - 120x354 - without y axis labels."
     },
+    "BarChart.26925091b22a031264678b91f8b13d52": {
+        "comment": "Auto-generated insight for test scenario BarChart - data labels - data labels auto visibility."
+    },
     "BarChart.26fa2c24798aa652058bed4b7175b20d": {
         "comment": "Auto-generated insight for test scenario BarChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - legend on left."
     },
@@ -380,6 +383,9 @@
     "BarChart.427d5b3a1a8fe74c442ed82c7b7f6903": {
         "comment": "Auto-generated insight for test scenario BarChart - legend position - auto legend."
     },
+    "BarChart.4298d6d3a7fe5ab7959645c1e141ee4a": {
+        "comment": "Auto-generated insight for test scenario BarChart - data labels - labels forced hidden totals auto visibility."
+    },
     "BarChart.45beabdd49035f39271e8476d5b93b49": {
         "comment": "Auto-generated insight for test scenario BarChart - single measure.",
         "scenarioName": "single measure",
@@ -394,8 +400,14 @@
     "BarChart.482e6f31f9ccb15606fdcec035649d73": {
         "comment": "Auto-generated insight for test scenario BarChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - legend on left."
     },
+    "BarChart.498a45430b9002ebef1904b46d9af87c": {
+        "comment": "Auto-generated insight for test scenario BarChart - data labels - data labels forced visible."
+    },
     "BarChart.4a0cabac44c6c92165b5a5a639ced5e7": {
         "comment": "Auto-generated insight for test scenario BarChart - dual axis name customization - invisible."
+    },
+    "BarChart.4aadbf066d4f84b409c7c92b0336f9a5": {
+        "comment": "Auto-generated insight for test scenario BarChart - data labels - data labels forced hidden totals forced visible."
     },
     "BarChart.4e0ac95066705bb9e90e2f931c68bdc3": {
         "comment": "Auto-generated insight for test scenario BarChart - assign color to master measure impacts derived PoP."
@@ -408,11 +420,17 @@
         "scenarioName": "single measure with viewBy and stackBy",
         "visName": "BarChart"
     },
+    "BarChart.502978c311765bb56a9e9ad9c5ffc195": {
+        "comment": "Auto-generated insight for test scenario BarChart - data labels - forced dataLabels visible and german separators."
+    },
     "BarChart.5031770cf6df0ded9597dcfc4ca55146": {
         "comment": "Auto-generated insight for test scenario BarChart - stack measures and dual axis."
     },
     "BarChart.544b073235ffcc41396b4b5f71c8efdd": {
         "comment": "Auto-generated insight for test scenario BarChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on left."
+    },
+    "BarChart.55519316df8abae731fe3866bbfd620e": {
+        "comment": "Auto-generated insight for test scenario BarChart - data labels - data labels and totals with auto visibility."
     },
     "BarChart.58cc5b2ca9519b01ed3e4cd2d8709f62": {
         "comment": "Auto-generated insight for test scenario BarChart - data labels - forced hidden."
@@ -431,6 +449,9 @@
     },
     "BarChart.6645e7061dab075a089f3be89ead8cc3": {
         "comment": "Auto-generated insight for test scenario BarChart - Y axis rotation."
+    },
+    "BarChart.6cd3d6b14be98a244e4ba8090f11bef0": {
+        "comment": "Auto-generated insight for test scenario BarChart - data labels - data labels forced hidden."
     },
     "BarChart.704f7bc26452493cc2cd42df7f3d23b4": {
         "comment": "Auto-generated insight for test scenario BarChart - 610x154 - Force position RIGHT - legend on left."
@@ -1259,6 +1280,9 @@
     "ColumnChart.56058d1d1601efbadc4e78ca5ee3402a": {
         "comment": "Auto-generated insight for test scenario ColumnChart - assign color to measures."
     },
+    "ColumnChart.56f805b7722650ae616ef014aa334096": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - data labels - data labels forced hidden."
+    },
     "ColumnChart.584b3f14c72a55ab3b298f6527a98035": {
         "comment": "Auto-generated insight for test scenario ColumnChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - auto legend."
     },
@@ -1305,6 +1329,9 @@
     "ColumnChart.7648a0f625cec8a7a130303ab8c9889b": {
         "comment": "Auto-generated insight for test scenario ColumnChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - legend on right."
     },
+    "ColumnChart.77bf06884049ba184d76d9999b1ca94e": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - data labels - data labels and totals with auto visibility."
+    },
     "ColumnChart.815cceda14b0fc7f8699e015ea323fa9": {
         "comment": "Auto-generated insight for test scenario ColumnChart - two measures.",
         "scenarioName": "two measures",
@@ -1335,6 +1362,9 @@
     "ColumnChart.90921bab2c45c8ea0a2ca6e9cdb9cc4b": {
         "comment": "Auto-generated insight for test scenario ColumnChart - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - legend on left."
     },
+    "ColumnChart.9182ee0b2fd70fa4e920cecdf9a56675": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - data labels - data labels forced visible."
+    },
     "ColumnChart.92ea0625f70926e7278679565bcd6e6e": {
         "comment": "Auto-generated insight for test scenario ColumnChart - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - legend on left."
     },
@@ -1364,6 +1394,9 @@
     "ColumnChart.a3f6361167da6025e8e9883b42c183df": {
         "comment": "Auto-generated insight for test scenario ColumnChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - legend on top."
     },
+    "ColumnChart.a5f7116c246851c0a92638f631ee170a": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - data labels - forced dataLabels visible and german separators."
+    },
     "ColumnChart.a67aa69b9fa6147a0c8fea3c63e08eac": {
         "comment": "Auto-generated insight for test scenario ColumnChart - single axis name customization - low."
     },
@@ -1383,6 +1416,12 @@
     },
     "ColumnChart.aed769d32853cb0cde7ff06da591a8fa": {
         "comment": "Auto-generated insight for test scenario ColumnChart - 40x60 - without x axis, without y axis (very small container)."
+    },
+    "ColumnChart.b25e985eea0e3c1e9df778cd32f1d00d": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - data labels - data labels auto visibility."
+    },
+    "ColumnChart.b2ce5bcede48b6054e9edf26247c22d4": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - data labels - data labels forced hidden totals forced visible."
     },
     "ColumnChart.b47e055f0b0d7b051b05663671149ef0": {
         "comment": "Auto-generated insight for test scenario ColumnChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on left."
@@ -1489,6 +1528,9 @@
     },
     "ColumnChart.f4dfbea34ad5deab7a7a89324299f08e": {
         "comment": "Auto-generated insight for test scenario ColumnChart - legend position - auto legend."
+    },
+    "ColumnChart.f64270cd487563d55d9e62b59d377036": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - data labels - labels forced hidden totals auto visibility."
     },
     "ColumnChart.f7a7c1f20094f1d47fa887bcee53be2a": {
         "comment": "Auto-generated insight for test scenario ColumnChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - legend at bottom."
