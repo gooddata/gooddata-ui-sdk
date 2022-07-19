@@ -17,7 +17,6 @@ import { IAuthenticatedPrincipal } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationContext } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationProvider } from '@gooddata/sdk-backend-spi';
 import { ITigerClient } from '@gooddata/api-client-tiger';
-import { JsonApiDataSourceIdentifierOutWithLinks } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInAttributesTypeEnum } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInDocument } from '@gooddata/api-client-tiger';
 import { JsonApiOrganizationOutMetaPermissionsEnum } from '@gooddata/api-client-tiger';
@@ -114,18 +113,6 @@ export interface IDataSourceConnectionInfo {
     url?: string;
     // (undocumented)
     username?: string;
-}
-
-// @internal (undocumented)
-export interface IDataSourceDefinition {
-    // (undocumented)
-    id: string;
-    // (undocumented)
-    name: string;
-    // (undocumented)
-    permissions: IDataSourcePermission[];
-    // (undocumented)
-    type: IDataSourceType;
 }
 
 // @internal (undocumented)
@@ -271,8 +258,7 @@ export type TigerSpecificFunctions = {
     getWorkspaceLogicalModel?: (id: string) => Promise<DeclarativeLogicalModel>;
     getEntitlements?: () => Promise<Array<Entitlement>>;
     putWorkspaceLayout?: (requestParameters: PutWorkspaceLayoutRequest) => Promise<void>;
-    getAllDataSources?: () => Promise<IDataSourceDefinition[]>;
-    getAllDataSourcesIdentifiers?: () => Promise<JsonApiDataSourceIdentifierOutWithLinks[]>;
+    getAllDataSources?: () => Promise<IDataSourceConnectionInfo[]>;
     getDataSourceById?: (id: string) => Promise<IDataSourceApiResult>;
     createDataSource?: (requestData: IDataSourceUpsertRequest) => Promise<IDataSourceApiResult>;
     updateDataSource?: (id: string, requestData: IDataSourceUpsertRequest) => Promise<IDataSourceApiResult>;
