@@ -55,10 +55,6 @@ export const ConfigurationBubble: React.FC<IConfigurationBubbleProps> = (props) 
             arrowDirections={arrowDirections}
         >
             {children}
-            {/* <ConfigurationPanel
-                onWidgetDelete={props.onWidgetDelete}
-                // handleSetConfigMenuDisplay={setConfigMenuDisplay}
-            /> */}
         </Bubble>
     );
 };

@@ -37,6 +37,7 @@ export interface UiState {
     renderMode: RenderMode;
     activeHeaderIndex: number | null;
     selectedWidgetRef: ObjRef | undefined;
+    configurationPanelOpened: boolean;
 }
 
 export const uiInitialState: UiState = {
@@ -70,4 +71,5 @@ export const uiInitialState: UiState = {
     renderMode: "view",
     activeHeaderIndex: null,
     selectedWidgetRef: undefined,
+    configurationPanelOpened: true,
 };

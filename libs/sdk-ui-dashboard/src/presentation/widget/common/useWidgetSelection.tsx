@@ -37,6 +37,7 @@ export function useWidgetSelection(widgetRef: ObjRef | undefined): IUseWidgetSel
     const onSelected = useCallback(() => {
         if (isSelectable && widgetRef) {
             dispatch(uiActions.selectWidget(widgetRef));
+            dispatch(uiActions.setConfigurationPanelOpened(true));
         }
     }, [isSelectable, widgetRef, dispatch]);
 

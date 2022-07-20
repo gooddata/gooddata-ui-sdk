@@ -17,6 +17,8 @@ import {
     isCustomWidget,
     useDashboardScheduledEmails,
     selectCanExportReport,
+    useDashboardDispatch,
+    uiActions,
 } from "../../../model";
 import {
     DashboardItem,
@@ -30,6 +32,8 @@ import { useInsightExport } from "../common/useInsightExport";
 import { useDashboardComponentsContext } from "../../dashboardContexts";
 import { useInsightMenu } from "./useInsightMenu";
 import { useWidgetSelection } from "../common/useWidgetSelection";
+import { ConfigurationBubble } from "../common";
+import InsightConfigurationPanel from "../insight/configuration/InsightConfigurationPanel";
 
 interface IDefaultDashboardInsightWidgetProps {
     widget: IInsightWidget;
@@ -134,6 +138,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
         [InsightMenuComponentProvider, insight, widget],
     );
 
+    const dispatch = useDashboardDispatch();
     const { isSelectable, isSelected, onSelected } = useWidgetSelection(widget.ref);
 
     return (
@@ -157,13 +162,26 @@ const DefaultDashboardInsightWidgetCore: React.FC<
                     )
                 }
                 renderBeforeVisualization={() => (
-                    <InsightMenuButtonComponent
-                        insight={insight}
-                        widget={widget}
-                        isOpen={isMenuOpen}
-                        onClick={openMenu}
-                        items={menuItems}
-                    />
+                    <>
+                        {isSelected && (
+                            <>
+                                <ConfigurationBubble widget={widget}>
+                                    <InsightConfigurationPanel />
+                                </ConfigurationBubble>
+                                <div
+                                    className="dash-item-action dash-item-action-lw-options"
+                                    onClick={() => dispatch(uiActions.setConfigurationPanelOpened(true))}
+                                />
+                            </>
+                        )}
+                        <InsightMenuButtonComponent
+                            insight={insight}
+                            widget={widget}
+                            isOpen={isMenuOpen}
+                            onClick={openMenu}
+                            items={menuItems}
+                        />
+                    </>
                 )}
                 renderAfterContent={() => {
                     if (!isMenuOpen) {
