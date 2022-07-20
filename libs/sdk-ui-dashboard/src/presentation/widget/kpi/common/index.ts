@@ -4,3 +4,4 @@ export { KpiRenderer } from "./KpiRenderer";
 export * from "./resultUtils";
 export * from "./types";
 export { useKpiData } from "./useKpiData";
+export { useKpiExecutionDataView } from "./useKpiExecutionDataView";

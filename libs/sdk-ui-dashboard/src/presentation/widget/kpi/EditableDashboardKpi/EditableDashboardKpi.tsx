@@ -2,10 +2,9 @@
 import React, { useCallback, useEffect } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
-import compact from "lodash/compact";
 import noop from "lodash/noop";
 import { widgetRef } from "@gooddata/sdk-model";
-import { useBackendStrict, useExecutionDataView, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 import {
     useDashboardSelector,
@@ -24,7 +23,7 @@ import { useDashboardComponentsContext } from "../../../dashboardContexts";
 import { useWidgetSelection } from "../../common/useWidgetSelection";
 import { ConfigurationBubble } from "../../common";
 import { KpiConfigurationPanel } from "./KpiConfigurationPanel/KpiConfigurationPanel";
-import { getKpiResult, KpiRenderer, useKpiData } from "../common";
+import { getKpiResult, KpiRenderer, useKpiData, useKpiExecutionDataView } from "../common";
 import { IDashboardKpiProps } from "../types";
 
 export const EditableDashboardKpi = (props: IDashboardKpiProps) => {
@@ -70,16 +69,13 @@ export const EditableDashboardKpi = (props: IDashboardKpiProps) => {
         dispatch(eagerRemoveSectionItem(coordinates.sectionIndex, coordinates.itemIndex));
     }, [dispatch, coordinates.sectionIndex, coordinates.itemIndex]);
 
-    const { error, result, status } = useExecutionDataView({
+    const { error, result, status } = useKpiExecutionDataView({
         backend,
         workspace,
-        execution:
-            kpiDataStatus === "success"
-                ? {
-                      seriesBy: compact([primaryMeasure, secondaryMeasure]),
-                      filters: effectiveFilters,
-                  }
-                : undefined,
+        primaryMeasure,
+        secondaryMeasure,
+        effectiveFilters,
+        shouldLoad: kpiDataStatus === "success",
     });
 
     const isLoading =

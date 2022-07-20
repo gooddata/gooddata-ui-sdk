@@ -1,7 +1,6 @@
 // (C) 2020-2022 GoodData Corporation
 import React, { memo, useCallback, useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
-import compact from "lodash/compact";
 import { IAnalyticalBackend, IDataView, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import {
     IMeasure,
@@ -22,7 +21,6 @@ import {
     isSomeHeaderPredicateMatched,
     NoDataSdkError,
     OnError,
-    useExecutionDataView,
 } from "@gooddata/sdk-ui";
 
 import { filterContextItemsToDashboardFiltersByWidget } from "../../../../converters";
@@ -59,6 +57,7 @@ import {
     getKpiResult,
     KpiRenderer,
     stripDateDatasets,
+    useKpiExecutionDataView,
 } from "../common";
 
 interface IKpiExecutorProps {
@@ -114,13 +113,13 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps> = (props) => {
 
     const kpiWidgetRef = widgetRef(kpiWidget);
 
-    const { error, result, status } = useExecutionDataView({
+    const { error, result, status } = useKpiExecutionDataView({
         backend,
         workspace,
-        execution: {
-            seriesBy: compact([primaryMeasure, secondaryMeasure]),
-            filters: effectiveFilters,
-        },
+        primaryMeasure,
+        secondaryMeasure,
+        effectiveFilters,
+        shouldLoad: true,
     });
     const isLoading = status === "loading" || status === "pending";
 
@@ -128,11 +127,12 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps> = (props) => {
         error: alertExecutionError,
         result: alertExecutionResult,
         status: alertExecutionStatus,
-    } = useExecutionDataView({
-        execution: {
-            seriesBy: [primaryMeasure],
-            filters: effectiveFilters,
-        },
+    } = useKpiExecutionDataView({
+        backend,
+        workspace,
+        primaryMeasure,
+        effectiveFilters,
+        shouldLoad: true,
     });
     const isAlertExecutionLoading = alertExecutionStatus === "loading" || alertExecutionStatus === "pending";
 
