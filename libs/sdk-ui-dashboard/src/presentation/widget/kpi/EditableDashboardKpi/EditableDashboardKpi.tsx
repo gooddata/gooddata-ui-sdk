@@ -55,12 +55,7 @@ export const EditableDashboardKpi = (props: IDashboardKpiProps) => {
         error: kpiDataError,
         result: kpiDataResult,
         status: kpiDataStatus,
-    } = useKpiData({
-        kpiWidget,
-        backend,
-        dashboardFilters,
-        workspace,
-    });
+    } = useKpiData({ kpiWidget, dashboardFilters });
 
     const { primaryMeasure, secondaryMeasure, effectiveFilters } = kpiDataResult ?? {};
 

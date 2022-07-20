@@ -49,12 +49,7 @@ export const DashboardKpiCore = (props: IDashboardKpiProps): JSX.Element => {
     const separators = useDashboardSelector(selectSeparators);
     const isReadOnly = useDashboardSelector(selectIsReadOnly);
 
-    const kpiData = useKpiData({
-        kpiWidget,
-        backend,
-        dashboardFilters,
-        workspace,
-    });
+    const kpiData = useKpiData({ kpiWidget, dashboardFilters });
 
     if (kpiData.status === "loading" || kpiData.status === "pending") {
         return <LoadingComponent />;
