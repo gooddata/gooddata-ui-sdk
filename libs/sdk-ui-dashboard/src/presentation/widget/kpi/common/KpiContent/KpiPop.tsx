@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { PureComponent } from "react";
 import cx from "classnames";
 import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
@@ -108,7 +108,7 @@ class KpiPop extends PureComponent<IKpiPopProps & WrappedComponentProps> {
         ) : (
             <>
                 <span className={cx(`gd-icon-trend-${popInfo.trend}`, "gd-kpi-trend-icon")} />
-                {popInfo.percentage}
+                <span>{popInfo.percentage}</span>
             </>
         );
     }
