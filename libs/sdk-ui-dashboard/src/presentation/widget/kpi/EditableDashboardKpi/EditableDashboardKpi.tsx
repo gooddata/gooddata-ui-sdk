@@ -89,7 +89,9 @@ export const EditableDashboardKpi = (props: IDashboardKpiProps) => {
         kpiDataStatus === "pending";
 
     const executionsHandler = useWidgetExecutionsHandler(widgetRef(kpiWidget));
-    const { isSelectable, isSelected, onSelected } = useWidgetSelection(widgetRef(kpiWidget));
+    const { isSelectable, isSelected, onSelected, hasConfigPanelOpen } = useWidgetSelection(
+        widgetRef(kpiWidget),
+    );
 
     useEffect(() => {
         if (error) {
@@ -106,7 +108,7 @@ export const EditableDashboardKpi = (props: IDashboardKpiProps) => {
                 "content-loaded": !isLoading,
             })}
             renderBeforeContent={() => {
-                if (isSelected) {
+                if (isSelected && hasConfigPanelOpen) {
                     return (
                         <ConfigurationBubble widget={kpiWidget}>
                             <KpiConfigurationPanel widget={kpiWidget} />
@@ -115,14 +117,17 @@ export const EditableDashboardKpi = (props: IDashboardKpiProps) => {
                 }
                 return null;
             }}
-            renderAfterContent={() =>
-                isSelected ? (
-                    <div
-                        className="dash-item-action dash-item-action-delete gd-icon-trash"
-                        onClick={onWidgetDelete}
-                    />
-                ) : null
-            }
+            renderAfterContent={() => {
+                if (isSelected) {
+                    return (
+                        <div
+                            className="dash-item-action dash-item-action-delete gd-icon-trash"
+                            onClick={onWidgetDelete}
+                        />
+                    );
+                }
+                return null;
+            }}
             renderHeadline={(clientHeight) => (
                 <DashboardItemHeadline title={kpiWidget.title} clientHeight={clientHeight} />
             )}
