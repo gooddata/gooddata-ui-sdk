@@ -525,7 +525,7 @@ export function generateHeaderHelpMenuItems(documentationUrl?: string, supportFo
 export function generateHeaderMenuItemsGroups(featureFlags: ISettings, workspacePermissions: IWorkspacePermissions, hasAnalyticalDashboards?: boolean, workspaceId?: string, dashboardId?: string, tabId?: string, hasNoDataSet?: boolean, backendSupportsDataItem?: boolean, backendSupportsCsvUploader?: boolean, hasMeasures?: boolean, hasManage?: boolean): IHeaderMenuItem[][];
 
 // @internal (undocumented)
-export function generateHeaderStaticHelpMenuItems(): IHeaderMenuItem[];
+export function generateHeaderStaticHelpMenuItems(documentationUrl?: string, communityUrl?: string, universityUrl?: string, slackUrl?: string): IHeaderMenuItem[];
 
 // @internal (undocumented)
 export function generateSupportUrl(projectId?: string, sessionId?: string, userEmail?: string, url?: string): string;
