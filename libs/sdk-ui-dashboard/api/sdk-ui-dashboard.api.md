@@ -5309,6 +5309,9 @@ export const ShareDialog: (props: IShareDialogProps) => JSX.Element;
 // @alpha (undocumented)
 export const ShareStatusIndicator: (props: IShareStatusProps) => JSX.Element;
 
+// @internal (undocumented)
+export const SidebarConfigurationPanel: () => JSX.Element;
+
 // @public
 export class SingleDashboardStoreAccessor {
     static clearAccessor(): void;

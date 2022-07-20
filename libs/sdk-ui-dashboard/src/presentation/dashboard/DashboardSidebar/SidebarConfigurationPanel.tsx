@@ -3,6 +3,9 @@ import React from "react";
 import { DeleteDropZone } from "../../dragAndDrop";
 import { CreationPanel } from "./CreationPanel";
 
+/**
+ * @internal
+ */
 export const SidebarConfigurationPanel = (): JSX.Element => {
     return (
         <div className="col gd-flex-item gd-sidebar-container">
