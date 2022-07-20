@@ -6,14 +6,14 @@ import { DashboardHeader } from "../DashboardHeader/DashboardHeader";
 import { IDashboardProps } from "../types";
 import { DashboardMainContent } from "./DashboardMainContent";
 import { DashboardSidebar } from "../DashboardSidebar/DashboardSidebar";
-import { RenderModeAwareDashboardLayoutSectionHeaderRenderer } from "../DashboardSidebar/RenderModeAwareDashboardSidebar";
+import { RenderModeAwareDashboardSidebar } from "../DashboardSidebar/RenderModeAwareDashboardSidebar";
 
 export const DashboardInner: React.FC<IDashboardProps> = () => {
     const locale = useDashboardSelector(selectLocale);
     return (
         <IntlWrapper locale={locale}>
             <div className="gd-dashboards-root gd-flex-container">
-                <DashboardSidebar DefaultSidebar={RenderModeAwareDashboardLayoutSectionHeaderRenderer} />
+                <DashboardSidebar DefaultSidebar={RenderModeAwareDashboardSidebar} />
                 <div className="gd-dash-content">
                     <div className="gd-dash-header-wrapper">
                         <DashboardHeader />

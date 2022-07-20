@@ -32,7 +32,7 @@ import { DashboardLoading } from "./DashboardLoading";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DragLayerComponent, LayoutResizeStateProvider } from "../../dragAndDrop";
-import { RenderModeAwareDashboardLayoutSectionHeaderRenderer } from "../DashboardSidebar/RenderModeAwareDashboardSidebar";
+import { RenderModeAwareDashboardSidebar } from "../DashboardSidebar/RenderModeAwareDashboardSidebar";
 
 /**
  * @internal
@@ -107,8 +107,7 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
                                         }
                                         FilterBarComponent={props.FilterBarComponent ?? DefaultFilterBar}
                                         SidebarComponent={
-                                            props.SidebarComponent ??
-                                            RenderModeAwareDashboardLayoutSectionHeaderRenderer
+                                            props.SidebarComponent ?? RenderModeAwareDashboardSidebar
                                         }
                                     >
                                         <DashboardConfigProvider menuButtonConfig={props.menuButtonConfig}>
