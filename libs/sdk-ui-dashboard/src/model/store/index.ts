@@ -206,6 +206,7 @@ export {
     selectIsInEditMode,
     selectIsInViewMode,
     selectSelectedWidgetRef,
+    selectConfigurationPanelOpened,
 } from "./ui/uiSelectors";
 export { uiActions } from "./ui";
 export { LegacyDashboardsState } from "./legacyDashboards/legacyDashboardsState";

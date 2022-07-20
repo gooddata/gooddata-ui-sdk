@@ -1,11 +1,10 @@
 // (C) 2022 GoodData Corporation
-import React from "react";
+import React, { useCallback } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
-import { IKpiWidget, widgetRef } from "@gooddata/sdk-model";
-import { useBackendStrict, useWorkspaceStrict, useCancelablePromise } from "@gooddata/sdk-ui";
+import { IKpiWidget, serializeObjRef, widgetRef } from "@gooddata/sdk-model";
+import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { Typography } from "@gooddata/sdk-ui-kit";
-import noop from "lodash/noop";
 
 import { AttributeFilterConfiguration } from "../../../common";
 import { KpiComparison } from "./KpiComparison/KpiComparison";
@@ -14,6 +13,7 @@ import { KpiMetricDropdown } from "./KpiMetricDropdown/KpiMetricDropdown";
 import { KpiConfigurationPanelHeader } from "./KpiConfigurationPanelHeader";
 import { KpiConfigurationMessages } from "./KpiConfigurationMessages";
 import { KpiDrillConfiguration } from "./KpiDrill/KpiDrillConfiguration";
+import { uiActions, useDashboardDispatch } from "../../../../../model";
 
 interface IKpiConfigurationPanelProps {
     widget: IKpiWidget;
@@ -21,25 +21,33 @@ interface IKpiConfigurationPanelProps {
 
 export const KpiConfigurationPanel: React.FC<IKpiConfigurationPanelProps> = (props) => {
     const { widget } = props;
+
+    const ref = widgetRef(widget);
     const metric = widget.kpi.metric;
 
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
+    const dispatch = useDashboardDispatch();
+
+    const closeConfigPanel = useCallback(
+        () => dispatch(uiActions.setConfigurationPanelOpened(false)),
+        [dispatch],
+    );
 
     const { result: numberOfAlerts, status } = useCancelablePromise(
         {
-            promise: widgetRef(widget)
+            promise: ref
                 ? async () => {
                       const res = await backend
                           .workspace(workspace)
                           .dashboards()
-                          .getWidgetAlertsCountForWidgets([widgetRef(widget)]);
+                          .getWidgetAlertsCountForWidgets([ref]);
 
                       return res[0]?.alertCount;
                   }
                 : null,
         },
-        [backend, workspace, widget],
+        [backend, workspace, serializeObjRef(ref)],
     );
 
     const isNumOfAlertsLoaded = status === "success";
@@ -52,11 +60,7 @@ export const KpiConfigurationPanel: React.FC<IKpiConfigurationPanelProps> = (pro
 
     return (
         <>
-            <KpiConfigurationPanelHeader
-                onCloseButtonClick={
-                    noop // TODO
-                }
-            />
+            <KpiConfigurationPanelHeader onCloseButtonClick={closeConfigPanel} />
             <div className="configuration-panel">
                 <div className={configurationCategoryClasses}>
                     <KpiConfigurationMessages numberOfAlerts={numberOfAlerts} />

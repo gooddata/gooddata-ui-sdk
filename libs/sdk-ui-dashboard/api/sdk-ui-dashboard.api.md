@@ -4865,6 +4865,9 @@ export const selectColorPalette: OutputSelector<DashboardState, IColorPalette, (
 export const selectConfig: OutputSelector<DashboardState, ResolvedDashboardConfig, (res: ConfigState) => ResolvedDashboardConfig>;
 
 // @internal (undocumented)
+export const selectConfigurationPanelOpened: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
+
+// @internal (undocumented)
 export const selectConfiguredAndImplicitDrillsByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res1: IImplicitDrillWithPredicates[], res2: IImplicitDrillWithPredicates[], res3: IImplicitDrillWithPredicates[]) => IImplicitDrillWithPredicates[]>;
 
 // @internal (undocumented)

@@ -1,39 +1,29 @@
 // (C) 2020-2022 GoodData Corporation
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
     IMeasure,
     IPoPMeasureDefinition,
     IPreviousPeriodMeasureDefinition,
     isAllTimeDateFilter,
     isDateFilter,
-    isUriRef,
     newMeasure,
     newPopMeasure,
     newPreviousPeriodMeasure,
-    ObjRef,
     FilterContextItem,
     IKpiWidget,
+    ICatalogDateDataset,
 } from "@gooddata/sdk-model";
-import {
-    GoodDataSdkError,
-    OnError,
-    useBackendStrict,
-    useCancelablePromise,
-    UseCancelablePromiseState,
-    useWorkspaceStrict,
-} from "@gooddata/sdk-ui";
+import { GoodDataSdkError, UnexpectedSdkError, UseCancelablePromiseState } from "@gooddata/sdk-ui";
 import invariant from "ts-invariant";
 
 import { filterContextItemsToDashboardFiltersByWidget } from "../../../../converters";
 import { IDashboardFilter } from "../../../../types";
+import { selectAllCatalogDateDatasetsMap, useDashboardSelector } from "../../../../model";
 import { useWidgetFilters } from "../../common";
+import { ObjRefMap } from "../../../../_staging/metadata/objRefMap";
 
 interface IUseKpiDataConfig {
     kpiWidget?: IKpiWidget;
     dashboardFilters: FilterContextItem[];
-    backend?: IAnalyticalBackend;
-    workspace?: string;
-    onError?: OnError;
 }
 
 interface IUseKpiDataResult {
@@ -49,103 +39,104 @@ interface IUseKpiDataResult {
 export function useKpiData({
     kpiWidget,
     dashboardFilters,
-    backend,
-    workspace,
 }: IUseKpiDataConfig): UseCancelablePromiseState<IUseKpiDataResult, GoodDataSdkError> {
-    const effectiveBackend = useBackendStrict(backend);
-    const effectiveWorkspace = useWorkspaceStrict(workspace);
-
-    const { status, result } = useWidgetFilters(kpiWidget);
+    const { status, result, error } = useWidgetFilters(kpiWidget);
 
     // we only put IDashboardFilters in, so we must get IDashboardFilters out as well
     const effectiveFilters = result as IDashboardFilter[] | undefined;
 
-    const promise =
-        kpiWidget && dashboardFilters && effectiveFilters && status === "success"
-            ? async (): Promise<IUseKpiDataResult> => {
-                  invariant(kpiWidget.kpi, "The provided widget is not a KPI widget.");
+    const dateDatasetsMap = useDashboardSelector(selectAllCatalogDateDatasetsMap);
 
-                  const allFilters = filterContextItemsToDashboardFiltersByWidget(
-                      dashboardFilters,
-                      kpiWidget,
-                  );
+    if (!kpiWidget || status === "pending") {
+        return {
+            status: "pending",
+            error: undefined,
+            result: undefined,
+        };
+    }
 
-                  const primaryMeasure = newMeasure(kpiWidget.kpi.metric);
+    if (status === "error") {
+        return {
+            status: "error",
+            error: error!,
+            result: undefined,
+        };
+    }
 
-                  const comparison = kpiWidget.kpi.comparisonType;
+    if (status === "rejected") {
+        return {
+            status: "error",
+            error: new UnexpectedSdkError("Getting filter settings for a KPI widget failed."),
+            result: undefined,
+        };
+    }
 
-                  const isAllTime =
-                      !effectiveFilters ||
-                      !effectiveFilters.some(
-                          (filter) => isDateFilter(filter) && !isAllTimeDateFilter(filter),
-                      );
+    if (status === "running") {
+        return {
+            status: "loading",
+            error: undefined,
+            result: undefined,
+        };
+    }
 
-                  if (comparison === "none" || isAllTime) {
-                      return { primaryMeasure, effectiveFilters, allFilters };
-                  }
-
-                  if (comparison === "previousPeriod") {
-                      invariant(
-                          kpiWidget.dateDataSet,
-                          "Inconsistent KPI in useKpiData, it has comparison but not dateDataset",
-                      );
-                      const secondaryMeasure = newPreviousPeriodMeasure(primaryMeasure, [
-                          { dataSet: kpiWidget.dateDataSet, periodsAgo: 1 },
-                      ]);
-
-                      return { primaryMeasure, secondaryMeasure, effectiveFilters, allFilters };
-                  }
-
-                  if (comparison === "lastYear") {
-                      invariant(
-                          kpiWidget.dateDataSet,
-                          "Inconsistent KPI in useKpiData, it has comparison but not dateDataset",
-                      );
-                      const secondaryMeasure = await getLastYearComparisonMeasure(
-                          effectiveBackend,
-                          effectiveWorkspace,
-                          primaryMeasure,
-                          kpiWidget.dateDataSet,
-                      );
-
-                      return { primaryMeasure, secondaryMeasure, effectiveFilters, allFilters };
-                  }
-
-                  invariant(false, `Unknown comparison ${comparison}`);
-              }
-            : null;
-
-    return useCancelablePromise({ promise }, [
-        effectiveBackend,
-        effectiveWorkspace,
-        effectiveFilters,
+    const allFilters = filterContextItemsToDashboardFiltersByWidget(dashboardFilters, kpiWidget);
+    const primaryMeasure = newMeasure(kpiWidget.kpi.metric);
+    const secondaryMeasure = getSecondaryMeasure(
         kpiWidget,
-    ]);
-}
-
-async function getLastYearComparisonMeasure(
-    backend: IAnalyticalBackend,
-    workspace: string,
-    primaryMeasure: IMeasure,
-    targetDateDataset: ObjRef,
-): Promise<IMeasure<IPoPMeasureDefinition>> {
-    const catalog = await backend.workspace(workspace).catalog().forTypes(["dateDataset"]).load();
-    const dateDatasets = catalog.dateDatasets();
-    const relevantDateDataset = dateDatasets.find((dateDataset) => {
-        if (isUriRef(targetDateDataset)) {
-            return dateDataset.dataSet.uri === targetDateDataset.uri;
-        } else {
-            return dateDataset.dataSet.id === targetDateDataset.identifier;
-        }
-    });
-
-    invariant(relevantDateDataset, "Cannot find relevant date dataset in useKpiData");
-
-    const yearAttribute = relevantDateDataset.dateAttributes.find(
-        (dateAttribute) => dateAttribute.granularity === "GDC.time.year",
+        primaryMeasure,
+        effectiveFilters,
+        dateDatasetsMap,
     );
 
-    invariant(yearAttribute, "Cannot find yearAttribute in useKpiData");
+    return {
+        status: "success",
+        error: undefined,
+        result: { primaryMeasure, secondaryMeasure, effectiveFilters, allFilters },
+    };
+}
 
-    return newPopMeasure(primaryMeasure, yearAttribute.attribute.ref);
+function getSecondaryMeasure(
+    kpiWidget: IKpiWidget,
+    primaryMeasure: IMeasure,
+    effectiveFilters: IDashboardFilter[] | undefined,
+    dateDatasetsMap: ObjRefMap<ICatalogDateDataset>,
+): IMeasure<IPoPMeasureDefinition> | IMeasure<IPreviousPeriodMeasureDefinition> | undefined {
+    const comparison = kpiWidget.kpi.comparisonType;
+    const isAllTime =
+        !effectiveFilters ||
+        !effectiveFilters.some((filter) => isDateFilter(filter) && !isAllTimeDateFilter(filter));
+
+    if (comparison === "none" || isAllTime) {
+        return undefined;
+    }
+
+    if (comparison === "previousPeriod") {
+        invariant(
+            kpiWidget.dateDataSet,
+            "Inconsistent KPI in useKpiData, it has comparison but not dateDataset",
+        );
+
+        return newPreviousPeriodMeasure(primaryMeasure, [{ dataSet: kpiWidget.dateDataSet, periodsAgo: 1 }]);
+    }
+
+    if (comparison === "lastYear") {
+        invariant(
+            kpiWidget.dateDataSet,
+            "Inconsistent KPI in useKpiData, it has comparison but not dateDataset",
+        );
+
+        const relevantDateDataset = dateDatasetsMap.get(kpiWidget.dateDataSet);
+
+        invariant(relevantDateDataset, "Cannot find relevant date dataset in useKpiData");
+
+        const yearAttribute = relevantDateDataset.dateAttributes.find(
+            (dateAttribute) => dateAttribute.granularity === "GDC.time.year",
+        );
+
+        invariant(yearAttribute, "Cannot find yearAttribute in useKpiData");
+
+        return newPopMeasure(primaryMeasure, yearAttribute.attribute.ref);
+    }
+
+    invariant(false, `Unknown comparison ${comparison}`);
 }

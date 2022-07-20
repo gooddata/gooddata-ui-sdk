@@ -114,34 +114,26 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps> = (props) => {
 
     const kpiWidgetRef = widgetRef(kpiWidget);
 
-    const { error, result, status } = useExecutionDataView(
-        {
-            backend,
-            workspace,
-            execution: {
-                seriesBy: compact([primaryMeasure, secondaryMeasure]),
-                filters: effectiveFilters,
-            },
+    const { error, result, status } = useExecutionDataView({
+        backend,
+        workspace,
+        execution: {
+            seriesBy: compact([primaryMeasure, secondaryMeasure]),
+            filters: effectiveFilters,
         },
-        [primaryMeasure, secondaryMeasure, effectiveFilters, backend, workspace],
-    );
+    });
     const isLoading = status === "loading" || status === "pending";
 
     const {
         error: alertExecutionError,
         result: alertExecutionResult,
         status: alertExecutionStatus,
-    } = useExecutionDataView(
-        {
-            backend,
-            workspace,
-            execution: {
-                seriesBy: [primaryMeasure],
-                filters: effectiveFilters,
-            },
+    } = useExecutionDataView({
+        execution: {
+            seriesBy: [primaryMeasure],
+            filters: effectiveFilters,
         },
-        [primaryMeasure, effectiveFilters, backend, workspace],
-    );
+    });
     const isAlertExecutionLoading = alertExecutionStatus === "loading" || alertExecutionStatus === "pending";
 
     const currentUser = useDashboardSelector(selectCurrentUser);

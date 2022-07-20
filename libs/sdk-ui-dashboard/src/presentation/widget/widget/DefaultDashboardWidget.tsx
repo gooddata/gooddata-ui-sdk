@@ -17,6 +17,7 @@ import { IDashboardWidgetProps } from "./types";
 import { DashboardKpi } from "../kpi/DashboardKpi";
 import { DefaultDashboardInsightWidget } from "./DefaultDashboardInsightWidget";
 import { useWidgetSelection } from "../common/useWidgetSelection";
+import { safeSerializeObjRef } from "../../../_staging/metadata/safeSerializeObjRef";
 
 /**
  * @internal
@@ -71,7 +72,7 @@ export const DefaultDashboardWidget = (props: IDashboardWidgetProps): JSX.Elemen
                 onError(error, executionId);
             },
         });
-    }, [effectiveBackend, dispatchEvent, widgetRef]);
+    }, [effectiveBackend, dispatchEvent, safeSerializeObjRef(widgetRef)]);
 
     if (!isDashboardWidget(widget)) {
         throw new UnexpectedError(

@@ -2,6 +2,7 @@
 import { useCallback } from "react";
 import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
 import {
+    selectConfigurationPanelOpened,
     selectIsInEditMode,
     selectSelectedWidgetRef,
     uiActions,
@@ -22,10 +23,16 @@ export interface IUseWidgetSelectionResult {
      * Callback to call when an item is selected.
      */
     onSelected: () => void;
+    /**
+     * Flag indicating the given item has its config panel open.
+     */
+    hasConfigPanelOpen: boolean;
 }
 
 export function useWidgetSelection(widgetRef: ObjRef | undefined): IUseWidgetSelectionResult {
     const dispatch = useDashboardDispatch();
+
+    const isConfigPanelOpen = useDashboardSelector(selectConfigurationPanelOpened);
 
     const isSelectable = useDashboardSelector(selectIsInEditMode);
 
@@ -45,5 +52,6 @@ export function useWidgetSelection(widgetRef: ObjRef | undefined): IUseWidgetSel
         isSelectable,
         isSelected,
         onSelected,
+        hasConfigPanelOpen: isConfigPanelOpen && isSelected,
     };
 }
