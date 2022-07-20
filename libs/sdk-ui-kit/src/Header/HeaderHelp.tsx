@@ -5,7 +5,7 @@ import cx from "classnames";
 import isEmpty from "lodash/isEmpty";
 
 import { Overlay } from "../Overlay";
-import { HelpMenuDropdownAlignPoints } from "../typings/positioning";
+import { HelpMenuDropdownAlignPoints, IAlignPoint } from "../typings/positioning";
 
 interface IHelpItem {
     key: string;
@@ -57,7 +57,7 @@ export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
                 onClick={() => {
                     menuItemClicked(item);
                 }}
-                className={`gd-list-item gd-list-help-menu-item ${item.className}`}
+                className={cx("gd-list-item gd-list-help-menu-item", { [item.className]: !!item.className })}
             >
                 {item.iconName && <i className={cx(item.iconName, "gd-icon")} />}
                 <span>
@@ -77,15 +77,34 @@ export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
         onMenuItemClick(...args);
     };
 
+    /**
+     * Menu dropdown content is long enough to make it max-width (230px),
+     * so it should just switch alignment to bottom right corner of the Help button.
+     */
+    const getHelpDropdownAlignPoints = (): IAlignPoint[] => {
+        const defaultAlignPoints = [
+            {
+                align: "br tr",
+            },
+        ];
+
+        if (!helpMenuDropdownAlignPoints || helpMenuDropdownAlignPoints === "br tr") {
+            return defaultAlignPoints;
+        }
+
+        return [
+            {
+                align: helpMenuDropdownAlignPoints,
+            },
+            ...defaultAlignPoints,
+        ];
+    };
+
     const renderHelpMenu = () => {
         return isOpen ? (
             <Overlay
                 alignTo=".gd-header-help"
-                alignPoints={[
-                    {
-                        align: helpMenuDropdownAlignPoints || "br tr",
-                    },
-                ]}
+                alignPoints={getHelpDropdownAlignPoints()}
                 closeOnOutsideClick
                 closeOnMouseDrag
                 closeOnParentScroll
