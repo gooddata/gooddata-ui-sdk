@@ -7,9 +7,7 @@ import { ISidebarProps } from "./types";
 /**
  * @internal
  */
-export const RenderModeAwareDashboardLayoutSectionHeaderRenderer = renderModeAware<
-    ComponentType<ISidebarProps>
->({
+export const RenderModeAwareDashboardSidebar = renderModeAware<ComponentType<ISidebarProps>>({
     view: () => <></>,
     edit: SidebarConfigurationPanel,
 });
