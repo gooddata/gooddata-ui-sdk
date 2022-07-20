@@ -75,20 +75,17 @@ export const EditableDashboardKpi = (props: IDashboardKpiProps) => {
         dispatch(eagerRemoveSectionItem(coordinates.sectionIndex, coordinates.itemIndex));
     }, [dispatch, coordinates.sectionIndex, coordinates.itemIndex]);
 
-    const { error, result, status } = useExecutionDataView(
-        {
-            backend,
-            workspace,
-            execution:
-                kpiDataStatus === "success"
-                    ? {
-                          seriesBy: compact([primaryMeasure, secondaryMeasure]),
-                          filters: effectiveFilters,
-                      }
-                    : undefined,
-        },
-        [kpiDataStatus, primaryMeasure, secondaryMeasure, effectiveFilters, backend, workspace],
-    );
+    const { error, result, status } = useExecutionDataView({
+        backend,
+        workspace,
+        execution:
+            kpiDataStatus === "success"
+                ? {
+                      seriesBy: compact([primaryMeasure, secondaryMeasure]),
+                      filters: effectiveFilters,
+                  }
+                : undefined,
+    });
 
     const isLoading =
         status === "loading" ||
