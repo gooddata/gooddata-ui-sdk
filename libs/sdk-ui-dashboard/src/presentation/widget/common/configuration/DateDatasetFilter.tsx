@@ -1,13 +1,6 @@
 // (C) 2022 GoodData Corporation
 import React, { useCallback } from "react";
-import {
-    areObjRefsEqual,
-    ICatalogDateDataset,
-    idRef,
-    isInsightWidget,
-    IWidget,
-    ObjRef,
-} from "@gooddata/sdk-model";
+import { ICatalogDateDataset, idRef, isInsightWidget, IWidget, ObjRef } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import first from "lodash/first";
 import noop from "lodash/noop";
@@ -66,9 +59,7 @@ export const DateDatasetFilter: React.FC<IDateDatasetFilterProps> = (props) => {
 
     const catalogDatasetsMap = useDashboardSelector(selectAllCatalogDateDatasetsMap);
     const selectedDateDataset = widget.dateDataSet && catalogDatasetsMap.get(widget.dateDataSet);
-    const selectedDateDatasetHidden = !relatedDateDatasets?.some((ds) =>
-        areObjRefsEqual(ds.dataSet.ref, selectedDateDataset?.dataSet.ref),
-    );
+    const selectedDateDatasetHiddenByObjectAvailability = false; // TODO we need to resolve tags here, but ICatalogDateDataset has no tags...
 
     const isDateFilterEnabled = !!widget.dateDataSet;
 
@@ -116,11 +107,15 @@ export const DateDatasetFilter: React.FC<IDateDatasetFilterProps> = (props) => {
     const shouldRenderDateDataSetsDropdown =
         !dateFilterCheckboxDisabled &&
         !(!isDateFilterEnabled || isFilterLoading) &&
-        (relatedDateDatasets?.length || isDropdownLoading || selectedDateDatasetHidden);
+        (relatedDateDatasets?.length || isDropdownLoading || selectedDateDatasetHiddenByObjectAvailability);
 
     const unrelatedDateDataset =
         relatedDateDatasets &&
-        getUnrelatedDateDataset(relatedDateDatasets, selectedDateDataset, selectedDateDatasetHidden);
+        getUnrelatedDateDataset(
+            relatedDateDatasets,
+            selectedDateDataset,
+            selectedDateDatasetHiddenByObjectAvailability,
+        );
 
     return (
         <div>
@@ -132,7 +127,7 @@ export const DateDatasetFilter: React.FC<IDateDatasetFilterProps> = (props) => {
                 isDropdownLoading={isDropdownLoading}
                 isFilterLoading={isFilterLoading}
                 selectedDateDataset={selectedDateDataset}
-                selectedDateDatasetHidden={selectedDateDatasetHidden}
+                selectedDateDatasetHidden={selectedDateDatasetHiddenByObjectAvailability}
                 onDateDatasetFilterEnabled={handleDateDatasetFilterEnabled}
             />
             {!!shouldRenderDateDataSetsDropdown && (
@@ -142,7 +137,7 @@ export const DateDatasetFilter: React.FC<IDateDatasetFilterProps> = (props) => {
                     widget={widget}
                     width={CONFIG_PANEL_DATE_FILTER_WIDTH}
                     selectedDateDataset={selectedDateDataset}
-                    selectedDateDatasetHidden={selectedDateDatasetHidden}
+                    selectedDateDatasetHidden={selectedDateDatasetHiddenByObjectAvailability}
                     unrelatedDateDataset={unrelatedDateDataset}
                     onDateDatasetChange={handleDateDatasetChanged}
                     autoOpenChanged={noop} // TODO
