@@ -260,8 +260,15 @@
     "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\" kann nicht mehr auf die Betrachtung angewandt werden. Wählen Sie eine andere Einheit oder bearbeiten Sie die Betrachtung.",
     "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\" kann nicht mehr auf den kpi angewandt werden. Wählen Sie eine andere Dimension oder bearbeiten Sie den KPI.",
     "configurationPanel.breakAlertWarning": "\n            Nutzer haben {numAlerts} {numAlerts, select, 1 {Benachrichtigung} other {Benachrichtigungen}}\n            für diese KPI eingerichtet. Eine Änderung der KPI wirkt sich auf {numAlerts, select, 1 {dies Benachrichtungen} other {diese Benachrichtungen}} aus.\n",
+    "configurationPanel.drillIntoDashboard": "Dashboard verfeinern",
+    "configurationPanel.noLinkableDashboards": "Kein Dashboard zum Verbinden mit",
+    "configurationPanel.selectDashboard": "Ein Dashboard auswählen",
+    "configurationPanel.unlistedDashboardTab": "Nicht aufgeführtes Dashboard",
     "gs.date.date-dataset.recommended": "Empfohlen",
     "gs.date.date-dataset.other": "Andere",
     "gs.date.date-dataset.related": "Zugehörig",
-    "gs.date.date-dataset.unrelated": "Nicht zugehörig"
+    "gs.date.date-dataset.unrelated": "Nicht zugehörig",
+    "layout.widget.under.limit": "Widget hat minimale Breite",
+    "layout.widget.height.min": "Das Widget befindet sich auf der minimalen Höhe",
+    "layout.widget.height.max": "Das Widget befindet sich auf der maximalen Höhe"
 }

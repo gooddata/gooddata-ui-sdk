@@ -260,8 +260,15 @@
     "configurationPanel.unrelatedVizDateInfo": "Não é possível aplicar \"{dateDataSet}\" ao insight. Selecione uma dimensão diferente ou edite o insight.",
     "configurationPanel.unrelatedKpiDateInfo": "Não é possível aplicar \"{dateDataSet}\" ao KPI. Selecione uma dimensão diferente ou edite o KPI.",
     "configurationPanel.breakAlertWarning": "\n            Usuários configuraram {numAlerts} {numAlerts, select, 1 {alerta} other {alertas}}\n            para este KPI. Modificar o KPI afetará {numAlerts, select, 1 {este alerta} other {estes alertas}}.\n",
+    "configurationPanel.drillIntoDashboard": "Detalhar painel",
+    "configurationPanel.noLinkableDashboards": "Nenhum dashboard para vincular",
+    "configurationPanel.selectDashboard": "Selecionar um painel",
+    "configurationPanel.unlistedDashboardTab": "Painel não listado",
     "gs.date.date-dataset.recommended": "Recomendado",
     "gs.date.date-dataset.other": "Outros",
     "gs.date.date-dataset.related": "Relacionado",
-    "gs.date.date-dataset.unrelated": "Não relacionado"
+    "gs.date.date-dataset.unrelated": "Não relacionado",
+    "layout.widget.under.limit": "O widget está na largura mínima",
+    "layout.widget.height.min": "O widget já está com a altura mínima",
+    "layout.widget.height.max": "O widget já está com a altura máxima"
 }
