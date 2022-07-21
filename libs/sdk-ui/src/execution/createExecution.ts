@@ -41,7 +41,7 @@ export type CreateExecutionOptions = {
      * Data series will be built using the provided measures that are further scoped for
      * elements of the specified attributes.
      */
-    seriesBy: IAttributeOrMeasure[];
+    seriesBy?: IAttributeOrMeasure[];
 
     /**
      * Slice all data series by elements of these attributes.
@@ -123,7 +123,7 @@ export function createExecution(options: CreateExecutionOptions): IPreparedExecu
     const {
         backend,
         workspace,
-        seriesBy,
+        seriesBy = [],
         slicesBy = [],
         filters = [],
         sortBy = [],
