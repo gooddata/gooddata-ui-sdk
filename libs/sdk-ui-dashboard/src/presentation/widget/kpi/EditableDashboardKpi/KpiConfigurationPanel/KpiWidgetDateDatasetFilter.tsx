@@ -13,7 +13,6 @@ export const KpiWidgetDateDatasetFilter: React.FC<{
         <div className="gd-kpi-date-dataset-dropdown">
             <DateDatasetFilter
                 widget={widget}
-                isFilterLoading={false} // TODO
                 dateFilterCheckboxDisabled={false} // for KPI date checkbox is always enabled
                 isDropdownLoading={status === "loading" || status === "pending"}
                 relatedDateDatasets={result}
