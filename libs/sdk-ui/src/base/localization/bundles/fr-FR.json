@@ -6,6 +6,7 @@
     "gs.list.all": "Tout",
     "gs.list.except": "sauf",
     "gs.list.is": "est",
+    "gs.list.search.placeholder": "Rechercher...",
     "gs.list.notAvailableAbbreviation": "S/O",
     "gs.list.searchResults": "résultats de la recherche",
     "gs.visualizationsList.loading": "Chargement en cours…",

@@ -260,8 +260,15 @@
     "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\"无法再应用于该洞察。请选择其他范围或编辑此洞察。",
     "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\"无法再应用于该 KPI。请选择其他范围或编辑该 KPI。",
     "configurationPanel.breakAlertWarning": "\n           用户为此 KPI 设置了 {numAlerts} {numAlerts, select, 1 {警报} other {警报}}\n 。修该此 KPI 将影响 {numAlerts, select, 1 {此警报} other {这些警报}}。\n",
+    "configurationPanel.drillIntoDashboard": "深入控制面板",
+    "configurationPanel.noLinkableDashboards": "没有控制面板链接至",
+    "configurationPanel.selectDashboard": "选择控制面板",
+    "configurationPanel.unlistedDashboardTab": "未列出的控制面板",
     "gs.date.date-dataset.recommended": "已推荐",
     "gs.date.date-dataset.other": "其他",
     "gs.date.date-dataset.related": "相关",
-    "gs.date.date-dataset.unrelated": "无关"
+    "gs.date.date-dataset.unrelated": "无关",
+    "layout.widget.under.limit": "构件处于最小宽度",
+    "layout.widget.height.min": "构件处于最小高度",
+    "layout.widget.height.max": "构件处于最大高度"
 }

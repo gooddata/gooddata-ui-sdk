@@ -260,8 +260,15 @@
     "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\" больше нельзя применять к анализу. Выберите другое измерение или отредактируйте анализ.",
     "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\" больше нельзя применять к КПЭ. Выберите другое измерение или отредактируйте анализ.",
     "configurationPanel.breakAlertWarning": "\n            Пользователи настроили {numAlerts} {numAlerts, select, 1 {оповещение} few {оповещения} many {оповещений} other {оповещений}}\n            для этого КПЭ. Изменение КПЭ повлияет на {numAlerts, select, 1 {это оповещение} few {этих оповещения} many {этих оповещений} other {тих оповещений}}.\n        ",
+    "configurationPanel.drillIntoDashboard": "Углубиться в дашборд",
+    "configurationPanel.noLinkableDashboards": "Нет дашборда для ссылки",
+    "configurationPanel.selectDashboard": "Выберите дашборд",
+    "configurationPanel.unlistedDashboardTab": "Дашборд вне списка",
     "gs.date.date-dataset.recommended": "Рекомендуемые",
     "gs.date.date-dataset.other": "Прочие",
     "gs.date.date-dataset.related": "Связанные",
-    "gs.date.date-dataset.unrelated": "Несвязанные"
+    "gs.date.date-dataset.unrelated": "Несвязанные",
+    "layout.widget.under.limit": "Виджет имеет минимальную ширину",
+    "layout.widget.height.min": "Виджет имеет минимальную высоту",
+    "layout.widget.height.max": "Виджет имеет максимальную высоту"
 }

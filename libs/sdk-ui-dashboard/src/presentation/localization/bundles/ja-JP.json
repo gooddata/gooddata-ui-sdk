@@ -260,8 +260,15 @@
     "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\" は解析に適用できなくなりました。別のディメンションを選ぶか、解析を編集してください。",
     "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\"はKPIに適用できなくなりました。別のディメンションを選ぶか、KPIを編集してください。",
     "configurationPanel.breakAlertWarning": "\n ユーザーがこのKPIで{numAlerts, select, 1 {通知} other {通知}}\nを{numAlerts}件設定しました。このKPIを変更すると{numAlerts, select, 1 {その通知} other {その通知}}に影響が出ます。\n",
+    "configurationPanel.drillIntoDashboard": "ダッシュボードにドリル",
+    "configurationPanel.noLinkableDashboards": "次にリンクされているダッシュボードはありません",
+    "configurationPanel.selectDashboard": "ダッシュボードを選択",
+    "configurationPanel.unlistedDashboardTab": "リストにないダッシュボード",
     "gs.date.date-dataset.recommended": "お勧め",
     "gs.date.date-dataset.other": "その他",
     "gs.date.date-dataset.related": "関係する",
-    "gs.date.date-dataset.unrelated": "無関係な"
+    "gs.date.date-dataset.unrelated": "無関係な",
+    "layout.widget.under.limit": "現在ウィジェットの幅が最小です",
+    "layout.widget.height.min": "ウィジェットの高さは最小になっています",
+    "layout.widget.height.max": "ウィジェットの高さは最大になっています"
 }
