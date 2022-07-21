@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
@@ -11,19 +11,10 @@ import {
     IWidget,
     ObjRef,
     objRefToString,
-    widgetRef,
 } from "@gooddata/sdk-model";
 
-import {
-    ignoreFilterOnInsightWidget,
-    ignoreFilterOnKpiWidget,
-    selectAttributeFilterDisplayFormsMap,
-    unignoreFilterOnInsightWidget,
-    unignoreFilterOnKpiWidget,
-    useDashboardCommandProcessing,
-    useDashboardSelector,
-} from "../../../../model";
-import { safeSerializeObjRef } from "../../../../_staging/metadata/safeSerializeObjRef";
+import { selectAttributeFilterDisplayFormsMap, useDashboardSelector } from "../../../../model";
+import { useAttributeFilterConfigurationHandling } from "./useAttributeFilterConfigurationHandling";
 
 const tooltipAlignPoints: IAlignPoint[] = [{ align: "cl cr", offset: { x: -20, y: 0 } }];
 
@@ -48,85 +39,11 @@ export const AttributeFilterConfigurationItem: React.FC<IAttributeFilterConfigur
                 return areObjRefsEqual(df?.ref, displayFormRef);
             }),
     );
-    const [status, setStatus] = useState<"ok" | "error" | "loading">("ok");
 
-    const ref = widgetRef(widget);
-
-    const { run: ignoreKpiFilter } = useDashboardCommandProcessing({
-        commandCreator: ignoreFilterOnKpiWidget,
-        successEvent: "GDC.DASH/EVT.KPI_WIDGET.FILTER_SETTINGS_CHANGED",
-        errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
-        onBeforeRun: () => {
-            setIsApplied(false);
-        },
-    });
-
-    const { run: unignoreKpiFilter } = useDashboardCommandProcessing({
-        commandCreator: unignoreFilterOnKpiWidget,
-        successEvent: "GDC.DASH/EVT.KPI_WIDGET.FILTER_SETTINGS_CHANGED",
-        errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
-        onBeforeRun: () => {
-            setIsApplied(true);
-            setStatus("loading");
-        },
-        onError: () => {
-            setStatus("error");
-        },
-        onSuccess: (_command) => {
-            setStatus("ok");
-        },
-    });
-
-    const { run: ignoreInsightFilter } = useDashboardCommandProcessing({
-        commandCreator: ignoreFilterOnInsightWidget,
-        successEvent: "GDC.DASH/EVT.INSIGHT_WIDGET.FILTER_SETTINGS_CHANGED",
-        errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
-        onBeforeRun: () => {
-            setIsApplied(false);
-        },
-    });
-
-    const { run: unignoreInsightFilter } = useDashboardCommandProcessing({
-        commandCreator: unignoreFilterOnInsightWidget,
-        successEvent: "GDC.DASH/EVT.INSIGHT_WIDGET.FILTER_SETTINGS_CHANGED",
-        errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
-        onBeforeRun: () => {
-            setIsApplied(true);
-            setStatus("loading");
-        },
-        onError: () => {
-            setStatus("error");
-        },
-        onSuccess: (_command) => {
-            setStatus("ok");
-        },
-    });
-
-    const handleIgnoreChanged = useCallback(
-        (ignored: boolean) => {
-            if (isInsightWidget(widget)) {
-                if (ignored) {
-                    unignoreInsightFilter(ref, displayFormRef);
-                } else {
-                    ignoreInsightFilter(ref, displayFormRef);
-                }
-            } else {
-                if (ignored) {
-                    unignoreKpiFilter(ref, displayFormRef);
-                } else {
-                    ignoreKpiFilter(ref, displayFormRef);
-                }
-            }
-        },
-        [
-            isInsightWidget(widget),
-            safeSerializeObjRef(displayFormRef),
-            safeSerializeObjRef(ref),
-            ignoreInsightFilter,
-            ignoreKpiFilter,
-            unignoreInsightFilter,
-            unignoreKpiFilter,
-        ],
+    const { handleIgnoreChanged, status } = useAttributeFilterConfigurationHandling(
+        widget,
+        displayFormRef,
+        setIsApplied,
     );
 
     const isError = status === "error";
