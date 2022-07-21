@@ -41,7 +41,6 @@ export default function InsightDateDataSetFilter({ widget }: IConfigurationPanel
         return (
             <DateDatasetFilter
                 widget={widget}
-                isFilterLoading={false} // TODO
                 dateFilterCheckboxDisabled={false}
                 isDropdownLoading={status === "loading" || status === "pending"}
                 relatedDateDatasets={result}
