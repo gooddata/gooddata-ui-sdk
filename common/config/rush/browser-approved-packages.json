@@ -144,7 +144,7 @@
     },
     {
       "name": "@gooddata/sdk-backend-tiger",
-      "allowedCategories": [ "tools" ]
+      "allowedCategories": [ "examples", "tools" ]
     },
     {
       "name": "@gooddata/sdk-embedding",

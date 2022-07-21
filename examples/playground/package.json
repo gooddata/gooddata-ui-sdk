@@ -76,6 +76,7 @@
         "@gooddata/sdk-backend-base": "^8.11.0-alpha.17",
         "@gooddata/sdk-backend-bear": "^8.11.0-alpha.17",
         "@gooddata/sdk-backend-spi": "^8.11.0-alpha.17",
+        "@gooddata/sdk-backend-tiger": "^8.11.0-alpha.17",
         "@gooddata/sdk-model": "^8.11.0-alpha.17",
         "@gooddata/sdk-ui": "^8.11.0-alpha.17",
         "@gooddata/sdk-ui-charts": "^8.11.0-alpha.17",

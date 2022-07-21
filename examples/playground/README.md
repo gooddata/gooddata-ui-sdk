@@ -25,8 +25,8 @@ examples workspace. You can start playing around immediately and not worry about
 Other backends are also available. Check out the [webpack.config.js](webpack.config.js) for a list of choices. All
 backends except the `public` one require authentication.
 
-In order to get the login screen out of the way, the playground requires that you specify username and password in
-the `.env` file. Set the `GDC_USERNAME` and `GDC_PASSWORD` variables in the `.env` file. The playground will pick them
+In order to get the login screen out of the way, the playground requires that you specify username and password for Bear or API token for Tiger in
+the `.env` file. Set the `GDC_USERNAME` and `GDC_PASSWORD` and/or `TIGER_API_TOKEN` variables in the `.env` file. The playground will pick them
 up and will use these automatically when it needs to authenticate the session.
 
 NOTE: the `.env` file is already ignored and will not land in commit.
