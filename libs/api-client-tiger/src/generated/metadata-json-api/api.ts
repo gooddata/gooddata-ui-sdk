@@ -137,7 +137,7 @@ export interface DeclarativeAnalyticalDashboard {
      */
     description?: string;
     /**
-     * A server agnostic definition of the dashboard plugin in JSON format.
+     * Custom setting content in JSON format.
      * @type {object}
      * @memberof DeclarativeAnalyticalDashboard
      */
@@ -344,7 +344,7 @@ export interface DeclarativeDashboardPlugin {
      */
     description?: string;
     /**
-     * A server agnostic definition of the dashboard plugin in JSON format.
+     * Custom setting content in JSON format.
      * @type {object}
      * @memberof DeclarativeDashboardPlugin
      */
@@ -681,7 +681,7 @@ export interface DeclarativeFilterContext {
      */
     description?: string;
     /**
-     * A server agnostic definition of the dashboard plugin in JSON format.
+     * Custom setting content in JSON format.
      * @type {object}
      * @memberof DeclarativeFilterContext
      */
@@ -790,7 +790,7 @@ export interface DeclarativeMetric {
      */
     description?: string;
     /**
-     * A server agnostic definition of the dashboard plugin in JSON format.
+     * Custom setting content in JSON format.
      * @type {object}
      * @memberof DeclarativeMetric
      */
@@ -918,6 +918,12 @@ export interface DeclarativeOrganizationInfo {
      * @memberof DeclarativeOrganizationInfo
      */
     oauthIssuerId?: string;
+    /**
+     * A list of organization settings.
+     * @type {Array<DeclarativeSetting>}
+     * @memberof DeclarativeOrganizationInfo
+     */
+    settings?: Array<DeclarativeSetting>;
 }
 /**
  * Definition of a permission assigned to a user/user-group.
@@ -983,6 +989,25 @@ export interface DeclarativeReference {
      * @memberof DeclarativeReference
      */
     sourceColumns: Array<string>;
+}
+/**
+ * Setting and its value.
+ * @export
+ * @interface DeclarativeSetting
+ */
+export interface DeclarativeSetting {
+    /**
+     * Setting ID.
+     * @type {string}
+     * @memberof DeclarativeSetting
+     */
+    id: string;
+    /**
+     * Custom setting content in JSON format.
+     * @type {object}
+     * @memberof DeclarativeSetting
+     */
+    content?: object;
 }
 /**
  *
@@ -1087,6 +1112,12 @@ export interface DeclarativeUser {
      * @memberof DeclarativeUser
      */
     userGroups?: Array<UserGroupIdentifier>;
+    /**
+     * A list of user settings.
+     * @type {Array<DeclarativeSetting>}
+     * @memberof DeclarativeUser
+     */
+    settings?: Array<DeclarativeSetting>;
 }
 /**
  * A user-group and its properties
@@ -1177,7 +1208,7 @@ export interface DeclarativeVisualizationObject {
      */
     description?: string;
     /**
-     * A server agnostic definition of the dashboard plugin in JSON format.
+     * Custom setting content in JSON format.
      * @type {object}
      * @memberof DeclarativeVisualizationObject
      */
@@ -1237,6 +1268,12 @@ export interface DeclarativeWorkspace {
      * @memberof DeclarativeWorkspace
      */
     earlyAccess?: string;
+    /**
+     * A list of workspace settings.
+     * @type {Array<DeclarativeSetting>}
+     * @memberof DeclarativeWorkspace
+     */
+    settings?: Array<DeclarativeSetting>;
 }
 /**
  * Workspace Data Filters serving the filtering of what data users can see in workspaces.
@@ -1416,6 +1453,114 @@ export interface DeclarativeWorkspaces {
      * @memberof DeclarativeWorkspaces
      */
     workspaceDataFilters: Array<DeclarativeWorkspaceDataFilter>;
+}
+/**
+ *
+ * @export
+ * @interface DependentEntitiesEdge
+ */
+export interface DependentEntitiesEdge {
+    /**
+     *
+     * @type {EntityIdentifier}
+     * @memberof DependentEntitiesEdge
+     */
+    from: EntityIdentifier;
+    /**
+     *
+     * @type {EntityIdentifier}
+     * @memberof DependentEntitiesEdge
+     */
+    to: EntityIdentifier;
+}
+/**
+ *
+ * @export
+ * @interface DependentEntitiesGraph
+ */
+export interface DependentEntitiesGraph {
+    /**
+     *
+     * @type {Array<DependentEntitiesNode>}
+     * @memberof DependentEntitiesGraph
+     */
+    nodes: Array<DependentEntitiesNode>;
+    /**
+     *
+     * @type {Array<DependentEntitiesEdge>}
+     * @memberof DependentEntitiesGraph
+     */
+    edges: Array<DependentEntitiesEdge>;
+}
+/**
+ *
+ * @export
+ * @interface DependentEntitiesNode
+ */
+export interface DependentEntitiesNode {
+    /**
+     *
+     * @type {string}
+     * @memberof DependentEntitiesNode
+     */
+    id: string;
+    /**
+     *
+     * @type {string}
+     * @memberof DependentEntitiesNode
+     */
+    type: string;
+    /**
+     *
+     * @type {string}
+     * @memberof DependentEntitiesNode
+     */
+    title?: string;
+}
+/**
+ *
+ * @export
+ * @interface DependentEntitiesRequest
+ */
+export interface DependentEntitiesRequest {
+    /**
+     *
+     * @type {Array<EntityIdentifier>}
+     * @memberof DependentEntitiesRequest
+     */
+    identifiers: Array<EntityIdentifier>;
+}
+/**
+ *
+ * @export
+ * @interface DependentEntitiesResponse
+ */
+export interface DependentEntitiesResponse {
+    /**
+     *
+     * @type {DependentEntitiesGraph}
+     * @memberof DependentEntitiesResponse
+     */
+    graph: DependentEntitiesGraph;
+}
+/**
+ *
+ * @export
+ * @interface EntityIdentifier
+ */
+export interface EntityIdentifier {
+    /**
+     *
+     * @type {string}
+     * @memberof EntityIdentifier
+     */
+    id: string;
+    /**
+     *
+     * @type {string}
+     * @memberof EntityIdentifier
+     */
+    type: string;
 }
 /**
  * A request containing all information needed for generation of logical model.
@@ -2485,10 +2630,10 @@ export interface JsonApiCookieSecurityConfigurationIn {
     id: string;
     /**
      *
-     * @type {JsonApiCookieSecurityConfigurationInAttributes}
+     * @type {JsonApiCookieSecurityConfigurationPatchAttributes}
      * @memberof JsonApiCookieSecurityConfigurationIn
      */
-    attributes?: JsonApiCookieSecurityConfigurationInAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationPatchAttributes;
 }
 
 export const JsonApiCookieSecurityConfigurationInTypeEnum = {
@@ -2498,25 +2643,6 @@ export const JsonApiCookieSecurityConfigurationInTypeEnum = {
 export type JsonApiCookieSecurityConfigurationInTypeEnum =
     typeof JsonApiCookieSecurityConfigurationInTypeEnum[keyof typeof JsonApiCookieSecurityConfigurationInTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiCookieSecurityConfigurationInAttributes
- */
-export interface JsonApiCookieSecurityConfigurationInAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiCookieSecurityConfigurationInAttributes
-     */
-    lastRotation?: string;
-    /**
-     * Length of interval between automatic rotations expressed in format of ISO 8601 duration
-     * @type {string}
-     * @memberof JsonApiCookieSecurityConfigurationInAttributes
-     */
-    rotationInterval?: string;
-}
 /**
  *
  * @export
@@ -2550,10 +2676,10 @@ export interface JsonApiCookieSecurityConfigurationOut {
     id: string;
     /**
      *
-     * @type {JsonApiCookieSecurityConfigurationInAttributes}
+     * @type {JsonApiCookieSecurityConfigurationPatchAttributes}
      * @memberof JsonApiCookieSecurityConfigurationOut
      */
-    attributes?: JsonApiCookieSecurityConfigurationInAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationPatchAttributes;
 }
 
 export const JsonApiCookieSecurityConfigurationOutTypeEnum = {
@@ -2602,10 +2728,10 @@ export interface JsonApiCookieSecurityConfigurationPatch {
     id: string;
     /**
      *
-     * @type {JsonApiCookieSecurityConfigurationInAttributes}
+     * @type {JsonApiCookieSecurityConfigurationPatchAttributes}
      * @memberof JsonApiCookieSecurityConfigurationPatch
      */
-    attributes?: JsonApiCookieSecurityConfigurationInAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationPatchAttributes;
 }
 
 export const JsonApiCookieSecurityConfigurationPatchTypeEnum = {
@@ -2618,6 +2744,25 @@ export type JsonApiCookieSecurityConfigurationPatchTypeEnum =
 /**
  *
  * @export
+ * @interface JsonApiCookieSecurityConfigurationPatchAttributes
+ */
+export interface JsonApiCookieSecurityConfigurationPatchAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiCookieSecurityConfigurationPatchAttributes
+     */
+    lastRotation?: string;
+    /**
+     * Length of interval between automatic rotations expressed in format of ISO 8601 duration
+     * @type {string}
+     * @memberof JsonApiCookieSecurityConfigurationPatchAttributes
+     */
+    rotationInterval?: string;
+}
+/**
+ *
+ * @export
  * @interface JsonApiCookieSecurityConfigurationPatchDocument
  */
 export interface JsonApiCookieSecurityConfigurationPatchDocument {
@@ -2627,6 +2772,234 @@ export interface JsonApiCookieSecurityConfigurationPatchDocument {
      * @memberof JsonApiCookieSecurityConfigurationPatchDocument
      */
     data: JsonApiCookieSecurityConfigurationPatch;
+}
+/**
+ * JSON:API representation of cspDirective entity.
+ * @export
+ * @interface JsonApiCspDirectiveIn
+ */
+export interface JsonApiCspDirectiveIn {
+    /**
+     * Object type
+     * @type {string}
+     * @memberof JsonApiCspDirectiveIn
+     */
+    type: JsonApiCspDirectiveInTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiCspDirectiveIn
+     */
+    id: string;
+    /**
+     *
+     * @type {JsonApiCspDirectiveOutAttributes}
+     * @memberof JsonApiCspDirectiveIn
+     */
+    attributes: JsonApiCspDirectiveOutAttributes;
+}
+
+export const JsonApiCspDirectiveInTypeEnum = {
+    CSP_DIRECTIVE: "cspDirective",
+} as const;
+
+export type JsonApiCspDirectiveInTypeEnum =
+    typeof JsonApiCspDirectiveInTypeEnum[keyof typeof JsonApiCspDirectiveInTypeEnum];
+
+/**
+ *
+ * @export
+ * @interface JsonApiCspDirectiveInDocument
+ */
+export interface JsonApiCspDirectiveInDocument {
+    /**
+     *
+     * @type {JsonApiCspDirectiveIn}
+     * @memberof JsonApiCspDirectiveInDocument
+     */
+    data: JsonApiCspDirectiveIn;
+}
+/**
+ * JSON:API representation of cspDirective entity.
+ * @export
+ * @interface JsonApiCspDirectiveOut
+ */
+export interface JsonApiCspDirectiveOut {
+    /**
+     * Object type
+     * @type {string}
+     * @memberof JsonApiCspDirectiveOut
+     */
+    type: JsonApiCspDirectiveOutTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiCspDirectiveOut
+     */
+    id: string;
+    /**
+     *
+     * @type {JsonApiCspDirectiveOutAttributes}
+     * @memberof JsonApiCspDirectiveOut
+     */
+    attributes: JsonApiCspDirectiveOutAttributes;
+}
+
+export const JsonApiCspDirectiveOutTypeEnum = {
+    CSP_DIRECTIVE: "cspDirective",
+} as const;
+
+export type JsonApiCspDirectiveOutTypeEnum =
+    typeof JsonApiCspDirectiveOutTypeEnum[keyof typeof JsonApiCspDirectiveOutTypeEnum];
+
+/**
+ *
+ * @export
+ * @interface JsonApiCspDirectiveOutAttributes
+ */
+export interface JsonApiCspDirectiveOutAttributes {
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof JsonApiCspDirectiveOutAttributes
+     */
+    sources: Array<string>;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiCspDirectiveOutDocument
+ */
+export interface JsonApiCspDirectiveOutDocument {
+    /**
+     *
+     * @type {JsonApiCspDirectiveOut}
+     * @memberof JsonApiCspDirectiveOutDocument
+     */
+    data: JsonApiCspDirectiveOut;
+    /**
+     *
+     * @type {ObjectLinks}
+     * @memberof JsonApiCspDirectiveOutDocument
+     */
+    links?: ObjectLinks;
+}
+/**
+ * A JSON:API document with a list of resources
+ * @export
+ * @interface JsonApiCspDirectiveOutList
+ */
+export interface JsonApiCspDirectiveOutList {
+    /**
+     *
+     * @type {Array<JsonApiCspDirectiveOutWithLinks>}
+     * @memberof JsonApiCspDirectiveOutList
+     */
+    data: Array<JsonApiCspDirectiveOutWithLinks>;
+    /**
+     *
+     * @type {ListLinks}
+     * @memberof JsonApiCspDirectiveOutList
+     */
+    links?: ListLinks;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiCspDirectiveOutWithLinks
+ */
+export interface JsonApiCspDirectiveOutWithLinks {
+    /**
+     * Object type
+     * @type {string}
+     * @memberof JsonApiCspDirectiveOutWithLinks
+     */
+    type: JsonApiCspDirectiveOutWithLinksTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiCspDirectiveOutWithLinks
+     */
+    id: string;
+    /**
+     *
+     * @type {JsonApiCspDirectiveOutAttributes}
+     * @memberof JsonApiCspDirectiveOutWithLinks
+     */
+    attributes: JsonApiCspDirectiveOutAttributes;
+    /**
+     *
+     * @type {ObjectLinks}
+     * @memberof JsonApiCspDirectiveOutWithLinks
+     */
+    links?: ObjectLinks;
+}
+
+export const JsonApiCspDirectiveOutWithLinksTypeEnum = {
+    CSP_DIRECTIVE: "cspDirective",
+} as const;
+
+export type JsonApiCspDirectiveOutWithLinksTypeEnum =
+    typeof JsonApiCspDirectiveOutWithLinksTypeEnum[keyof typeof JsonApiCspDirectiveOutWithLinksTypeEnum];
+
+/**
+ * JSON:API representation of patching cspDirective entity.
+ * @export
+ * @interface JsonApiCspDirectivePatch
+ */
+export interface JsonApiCspDirectivePatch {
+    /**
+     * Object type
+     * @type {string}
+     * @memberof JsonApiCspDirectivePatch
+     */
+    type: JsonApiCspDirectivePatchTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiCspDirectivePatch
+     */
+    id: string;
+    /**
+     *
+     * @type {JsonApiCspDirectivePatchAttributes}
+     * @memberof JsonApiCspDirectivePatch
+     */
+    attributes: JsonApiCspDirectivePatchAttributes;
+}
+
+export const JsonApiCspDirectivePatchTypeEnum = {
+    CSP_DIRECTIVE: "cspDirective",
+} as const;
+
+export type JsonApiCspDirectivePatchTypeEnum =
+    typeof JsonApiCspDirectivePatchTypeEnum[keyof typeof JsonApiCspDirectivePatchTypeEnum];
+
+/**
+ *
+ * @export
+ * @interface JsonApiCspDirectivePatchAttributes
+ */
+export interface JsonApiCspDirectivePatchAttributes {
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof JsonApiCspDirectivePatchAttributes
+     */
+    sources?: Array<string>;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiCspDirectivePatchDocument
+ */
+export interface JsonApiCspDirectivePatchDocument {
+    /**
+     *
+     * @type {JsonApiCspDirectivePatch}
+     * @memberof JsonApiCspDirectivePatchDocument
+     */
+    data: JsonApiCspDirectivePatch;
 }
 /**
  * JSON:API representation of dashboardPlugin entity.
@@ -5351,10 +5724,10 @@ export interface JsonApiOrganizationIn {
     id: string;
     /**
      *
-     * @type {JsonApiOrganizationInAttributes}
+     * @type {JsonApiOrganizationPatchAttributes}
      * @memberof JsonApiOrganizationIn
      */
-    attributes?: JsonApiOrganizationInAttributes;
+    attributes?: JsonApiOrganizationPatchAttributes;
 }
 
 export const JsonApiOrganizationInTypeEnum = {
@@ -5364,61 +5737,6 @@ export const JsonApiOrganizationInTypeEnum = {
 export type JsonApiOrganizationInTypeEnum =
     typeof JsonApiOrganizationInTypeEnum[keyof typeof JsonApiOrganizationInTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiOrganizationInAttributes
- */
-export interface JsonApiOrganizationInAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiOrganizationInAttributes
-     */
-    name?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiOrganizationInAttributes
-     */
-    hostname?: string;
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof JsonApiOrganizationInAttributes
-     */
-    allowedOrigins?: Array<string>;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiOrganizationInAttributes
-     */
-    oauthIssuerLocation?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiOrganizationInAttributes
-     */
-    oauthClientId?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiOrganizationInAttributes
-     */
-    oauthClientSecret?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiOrganizationInAttributes
-     */
-    earlyAccess?: string;
-    /**
-     * Any string identifying the OIDC provider. This value is used as suffix for OAuth2 callback (redirect) URL. If not defined, the standard callback URL is used. This value is valid only for external OIDC providers, not for the internal DEX provider.
-     * @type {string}
-     * @memberof JsonApiOrganizationInAttributes
-     */
-    oauthIssuerId?: string;
-}
 /**
  *
  * @export
@@ -5643,10 +5961,10 @@ export interface JsonApiOrganizationPatch {
     id: string;
     /**
      *
-     * @type {JsonApiOrganizationInAttributes}
+     * @type {JsonApiOrganizationPatchAttributes}
      * @memberof JsonApiOrganizationPatch
      */
-    attributes?: JsonApiOrganizationInAttributes;
+    attributes?: JsonApiOrganizationPatchAttributes;
 }
 
 export const JsonApiOrganizationPatchTypeEnum = {
@@ -5656,6 +5974,61 @@ export const JsonApiOrganizationPatchTypeEnum = {
 export type JsonApiOrganizationPatchTypeEnum =
     typeof JsonApiOrganizationPatchTypeEnum[keyof typeof JsonApiOrganizationPatchTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiOrganizationPatchAttributes
+ */
+export interface JsonApiOrganizationPatchAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiOrganizationPatchAttributes
+     */
+    name?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiOrganizationPatchAttributes
+     */
+    hostname?: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof JsonApiOrganizationPatchAttributes
+     */
+    allowedOrigins?: Array<string>;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiOrganizationPatchAttributes
+     */
+    oauthIssuerLocation?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiOrganizationPatchAttributes
+     */
+    oauthClientId?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiOrganizationPatchAttributes
+     */
+    oauthClientSecret?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiOrganizationPatchAttributes
+     */
+    earlyAccess?: string;
+    /**
+     * Any string identifying the OIDC provider. This value is used as suffix for OAuth2 callback (redirect) URL. If not defined, the standard callback URL is used. This value is valid only for external OIDC providers, not for the internal DEX provider.
+     * @type {string}
+     * @memberof JsonApiOrganizationPatchAttributes
+     */
+    oauthIssuerId?: string;
+}
 /**
  *
  * @export
@@ -5689,10 +6062,10 @@ export interface JsonApiOrganizationSettingIn {
     id: string;
     /**
      *
-     * @type {JsonApiOrganizationSettingOutAttributes}
+     * @type {JsonApiUserSettingInAttributes}
      * @memberof JsonApiOrganizationSettingIn
      */
-    attributes?: JsonApiOrganizationSettingOutAttributes;
+    attributes?: JsonApiUserSettingInAttributes;
 }
 
 export const JsonApiOrganizationSettingInTypeEnum = {
@@ -5735,10 +6108,10 @@ export interface JsonApiOrganizationSettingOut {
     id: string;
     /**
      *
-     * @type {JsonApiOrganizationSettingOutAttributes}
+     * @type {JsonApiUserSettingInAttributes}
      * @memberof JsonApiOrganizationSettingOut
      */
-    attributes?: JsonApiOrganizationSettingOutAttributes;
+    attributes?: JsonApiUserSettingInAttributes;
 }
 
 export const JsonApiOrganizationSettingOutTypeEnum = {
@@ -5748,19 +6121,6 @@ export const JsonApiOrganizationSettingOutTypeEnum = {
 export type JsonApiOrganizationSettingOutTypeEnum =
     typeof JsonApiOrganizationSettingOutTypeEnum[keyof typeof JsonApiOrganizationSettingOutTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiOrganizationSettingOutAttributes
- */
-export interface JsonApiOrganizationSettingOutAttributes {
-    /**
-     *
-     * @type {object}
-     * @memberof JsonApiOrganizationSettingOutAttributes
-     */
-    value?: object;
-}
 /**
  *
  * @export
@@ -5819,10 +6179,10 @@ export interface JsonApiOrganizationSettingOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiOrganizationSettingOutAttributes}
+     * @type {JsonApiUserSettingInAttributes}
      * @memberof JsonApiOrganizationSettingOutWithLinks
      */
-    attributes?: JsonApiOrganizationSettingOutAttributes;
+    attributes?: JsonApiUserSettingInAttributes;
     /**
      *
      * @type {ObjectLinks}
@@ -5858,10 +6218,10 @@ export interface JsonApiOrganizationSettingPatch {
     id: string;
     /**
      *
-     * @type {JsonApiOrganizationSettingOutAttributes}
+     * @type {JsonApiUserSettingInAttributes}
      * @memberof JsonApiOrganizationSettingPatch
      */
-    attributes?: JsonApiOrganizationSettingOutAttributes;
+    attributes?: JsonApiUserSettingInAttributes;
 }
 
 export const JsonApiOrganizationSettingPatchTypeEnum = {
@@ -5883,6 +6243,244 @@ export interface JsonApiOrganizationSettingPatchDocument {
      * @memberof JsonApiOrganizationSettingPatchDocument
      */
     data: JsonApiOrganizationSettingPatch;
+}
+/**
+ * JSON:API representation of theme entity.
+ * @export
+ * @interface JsonApiThemeIn
+ */
+export interface JsonApiThemeIn {
+    /**
+     * Object type
+     * @type {string}
+     * @memberof JsonApiThemeIn
+     */
+    type: JsonApiThemeInTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiThemeIn
+     */
+    id: string;
+    /**
+     *
+     * @type {JsonApiThemeOutAttributes}
+     * @memberof JsonApiThemeIn
+     */
+    attributes: JsonApiThemeOutAttributes;
+}
+
+export const JsonApiThemeInTypeEnum = {
+    THEME: "theme",
+} as const;
+
+export type JsonApiThemeInTypeEnum = typeof JsonApiThemeInTypeEnum[keyof typeof JsonApiThemeInTypeEnum];
+
+/**
+ *
+ * @export
+ * @interface JsonApiThemeInDocument
+ */
+export interface JsonApiThemeInDocument {
+    /**
+     *
+     * @type {JsonApiThemeIn}
+     * @memberof JsonApiThemeInDocument
+     */
+    data: JsonApiThemeIn;
+}
+/**
+ * JSON:API representation of theme entity.
+ * @export
+ * @interface JsonApiThemeOut
+ */
+export interface JsonApiThemeOut {
+    /**
+     * Object type
+     * @type {string}
+     * @memberof JsonApiThemeOut
+     */
+    type: JsonApiThemeOutTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiThemeOut
+     */
+    id: string;
+    /**
+     *
+     * @type {JsonApiThemeOutAttributes}
+     * @memberof JsonApiThemeOut
+     */
+    attributes: JsonApiThemeOutAttributes;
+}
+
+export const JsonApiThemeOutTypeEnum = {
+    THEME: "theme",
+} as const;
+
+export type JsonApiThemeOutTypeEnum = typeof JsonApiThemeOutTypeEnum[keyof typeof JsonApiThemeOutTypeEnum];
+
+/**
+ *
+ * @export
+ * @interface JsonApiThemeOutAttributes
+ */
+export interface JsonApiThemeOutAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiThemeOutAttributes
+     */
+    name: string;
+    /**
+     *
+     * @type {object}
+     * @memberof JsonApiThemeOutAttributes
+     */
+    content: object;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiThemeOutDocument
+ */
+export interface JsonApiThemeOutDocument {
+    /**
+     *
+     * @type {JsonApiThemeOut}
+     * @memberof JsonApiThemeOutDocument
+     */
+    data: JsonApiThemeOut;
+    /**
+     *
+     * @type {ObjectLinks}
+     * @memberof JsonApiThemeOutDocument
+     */
+    links?: ObjectLinks;
+}
+/**
+ * A JSON:API document with a list of resources
+ * @export
+ * @interface JsonApiThemeOutList
+ */
+export interface JsonApiThemeOutList {
+    /**
+     *
+     * @type {Array<JsonApiThemeOutWithLinks>}
+     * @memberof JsonApiThemeOutList
+     */
+    data: Array<JsonApiThemeOutWithLinks>;
+    /**
+     *
+     * @type {ListLinks}
+     * @memberof JsonApiThemeOutList
+     */
+    links?: ListLinks;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiThemeOutWithLinks
+ */
+export interface JsonApiThemeOutWithLinks {
+    /**
+     * Object type
+     * @type {string}
+     * @memberof JsonApiThemeOutWithLinks
+     */
+    type: JsonApiThemeOutWithLinksTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiThemeOutWithLinks
+     */
+    id: string;
+    /**
+     *
+     * @type {JsonApiThemeOutAttributes}
+     * @memberof JsonApiThemeOutWithLinks
+     */
+    attributes: JsonApiThemeOutAttributes;
+    /**
+     *
+     * @type {ObjectLinks}
+     * @memberof JsonApiThemeOutWithLinks
+     */
+    links?: ObjectLinks;
+}
+
+export const JsonApiThemeOutWithLinksTypeEnum = {
+    THEME: "theme",
+} as const;
+
+export type JsonApiThemeOutWithLinksTypeEnum =
+    typeof JsonApiThemeOutWithLinksTypeEnum[keyof typeof JsonApiThemeOutWithLinksTypeEnum];
+
+/**
+ * JSON:API representation of patching theme entity.
+ * @export
+ * @interface JsonApiThemePatch
+ */
+export interface JsonApiThemePatch {
+    /**
+     * Object type
+     * @type {string}
+     * @memberof JsonApiThemePatch
+     */
+    type: JsonApiThemePatchTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiThemePatch
+     */
+    id: string;
+    /**
+     *
+     * @type {JsonApiThemePatchAttributes}
+     * @memberof JsonApiThemePatch
+     */
+    attributes: JsonApiThemePatchAttributes;
+}
+
+export const JsonApiThemePatchTypeEnum = {
+    THEME: "theme",
+} as const;
+
+export type JsonApiThemePatchTypeEnum =
+    typeof JsonApiThemePatchTypeEnum[keyof typeof JsonApiThemePatchTypeEnum];
+
+/**
+ *
+ * @export
+ * @interface JsonApiThemePatchAttributes
+ */
+export interface JsonApiThemePatchAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiThemePatchAttributes
+     */
+    name?: string;
+    /**
+     *
+     * @type {object}
+     * @memberof JsonApiThemePatchAttributes
+     */
+    content?: object;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiThemePatchDocument
+ */
+export interface JsonApiThemePatchDocument {
+    /**
+     *
+     * @type {JsonApiThemePatch}
+     * @memberof JsonApiThemePatchDocument
+     */
+    data: JsonApiThemePatch;
 }
 /**
  * JSON:API representation of userGroup entity.
@@ -6446,6 +7044,175 @@ export interface JsonApiUserPatchDocument {
      */
     data: JsonApiUserPatch;
 }
+/**
+ * JSON:API representation of userSetting entity.
+ * @export
+ * @interface JsonApiUserSettingIn
+ */
+export interface JsonApiUserSettingIn {
+    /**
+     * Object type
+     * @type {string}
+     * @memberof JsonApiUserSettingIn
+     */
+    type: JsonApiUserSettingInTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiUserSettingIn
+     */
+    id: string;
+    /**
+     *
+     * @type {JsonApiUserSettingInAttributes}
+     * @memberof JsonApiUserSettingIn
+     */
+    attributes?: JsonApiUserSettingInAttributes;
+}
+
+export const JsonApiUserSettingInTypeEnum = {
+    USER_SETTING: "userSetting",
+} as const;
+
+export type JsonApiUserSettingInTypeEnum =
+    typeof JsonApiUserSettingInTypeEnum[keyof typeof JsonApiUserSettingInTypeEnum];
+
+/**
+ *
+ * @export
+ * @interface JsonApiUserSettingInAttributes
+ */
+export interface JsonApiUserSettingInAttributes {
+    /**
+     *
+     * @type {object}
+     * @memberof JsonApiUserSettingInAttributes
+     */
+    content?: object;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiUserSettingInDocument
+ */
+export interface JsonApiUserSettingInDocument {
+    /**
+     *
+     * @type {JsonApiUserSettingIn}
+     * @memberof JsonApiUserSettingInDocument
+     */
+    data: JsonApiUserSettingIn;
+}
+/**
+ * JSON:API representation of userSetting entity.
+ * @export
+ * @interface JsonApiUserSettingOut
+ */
+export interface JsonApiUserSettingOut {
+    /**
+     * Object type
+     * @type {string}
+     * @memberof JsonApiUserSettingOut
+     */
+    type: JsonApiUserSettingOutTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiUserSettingOut
+     */
+    id: string;
+    /**
+     *
+     * @type {JsonApiUserSettingInAttributes}
+     * @memberof JsonApiUserSettingOut
+     */
+    attributes?: JsonApiUserSettingInAttributes;
+}
+
+export const JsonApiUserSettingOutTypeEnum = {
+    USER_SETTING: "userSetting",
+} as const;
+
+export type JsonApiUserSettingOutTypeEnum =
+    typeof JsonApiUserSettingOutTypeEnum[keyof typeof JsonApiUserSettingOutTypeEnum];
+
+/**
+ *
+ * @export
+ * @interface JsonApiUserSettingOutDocument
+ */
+export interface JsonApiUserSettingOutDocument {
+    /**
+     *
+     * @type {JsonApiUserSettingOut}
+     * @memberof JsonApiUserSettingOutDocument
+     */
+    data: JsonApiUserSettingOut;
+    /**
+     *
+     * @type {ObjectLinks}
+     * @memberof JsonApiUserSettingOutDocument
+     */
+    links?: ObjectLinks;
+}
+/**
+ * A JSON:API document with a list of resources
+ * @export
+ * @interface JsonApiUserSettingOutList
+ */
+export interface JsonApiUserSettingOutList {
+    /**
+     *
+     * @type {Array<JsonApiUserSettingOutWithLinks>}
+     * @memberof JsonApiUserSettingOutList
+     */
+    data: Array<JsonApiUserSettingOutWithLinks>;
+    /**
+     *
+     * @type {ListLinks}
+     * @memberof JsonApiUserSettingOutList
+     */
+    links?: ListLinks;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiUserSettingOutWithLinks
+ */
+export interface JsonApiUserSettingOutWithLinks {
+    /**
+     * Object type
+     * @type {string}
+     * @memberof JsonApiUserSettingOutWithLinks
+     */
+    type: JsonApiUserSettingOutWithLinksTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiUserSettingOutWithLinks
+     */
+    id: string;
+    /**
+     *
+     * @type {JsonApiUserSettingInAttributes}
+     * @memberof JsonApiUserSettingOutWithLinks
+     */
+    attributes?: JsonApiUserSettingInAttributes;
+    /**
+     *
+     * @type {ObjectLinks}
+     * @memberof JsonApiUserSettingOutWithLinks
+     */
+    links?: ObjectLinks;
+}
+
+export const JsonApiUserSettingOutWithLinksTypeEnum = {
+    USER_SETTING: "userSetting",
+} as const;
+
+export type JsonApiUserSettingOutWithLinksTypeEnum =
+    typeof JsonApiUserSettingOutWithLinksTypeEnum[keyof typeof JsonApiUserSettingOutWithLinksTypeEnum];
+
 /**
  * @type JsonApiUserToOneLinkage
  * References to other resource objects in a to-one (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
@@ -7631,10 +8398,10 @@ export interface JsonApiWorkspaceSettingIn {
     id: string;
     /**
      *
-     * @type {JsonApiOrganizationSettingOutAttributes}
+     * @type {JsonApiUserSettingInAttributes}
      * @memberof JsonApiWorkspaceSettingIn
      */
-    attributes?: JsonApiOrganizationSettingOutAttributes;
+    attributes?: JsonApiUserSettingInAttributes;
 }
 
 export const JsonApiWorkspaceSettingInTypeEnum = {
@@ -7677,10 +8444,10 @@ export interface JsonApiWorkspaceSettingOut {
     id: string;
     /**
      *
-     * @type {JsonApiOrganizationSettingOutAttributes}
+     * @type {JsonApiUserSettingInAttributes}
      * @memberof JsonApiWorkspaceSettingOut
      */
-    attributes?: JsonApiOrganizationSettingOutAttributes;
+    attributes?: JsonApiUserSettingInAttributes;
 }
 
 export const JsonApiWorkspaceSettingOutTypeEnum = {
@@ -7748,10 +8515,10 @@ export interface JsonApiWorkspaceSettingOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiOrganizationSettingOutAttributes}
+     * @type {JsonApiUserSettingInAttributes}
      * @memberof JsonApiWorkspaceSettingOutWithLinks
      */
-    attributes?: JsonApiOrganizationSettingOutAttributes;
+    attributes?: JsonApiUserSettingInAttributes;
     /**
      *
      * @type {ObjectLinks}
@@ -7787,10 +8554,10 @@ export interface JsonApiWorkspaceSettingPatch {
     id: string;
     /**
      *
-     * @type {JsonApiOrganizationSettingOutAttributes}
+     * @type {JsonApiUserSettingInAttributes}
      * @memberof JsonApiWorkspaceSettingPatch
      */
-    attributes?: JsonApiOrganizationSettingOutAttributes;
+    attributes?: JsonApiUserSettingInAttributes;
 }
 
 export const JsonApiWorkspaceSettingPatchTypeEnum = {
@@ -7932,6 +8699,19 @@ export type ReferenceIdentifierTypeEnum =
     typeof ReferenceIdentifierTypeEnum[keyof typeof ReferenceIdentifierTypeEnum];
 
 /**
+ * A request containing setting IDs to resolve.
+ * @export
+ * @interface ResolveSettingsRequest
+ */
+export interface ResolveSettingsRequest {
+    /**
+     * An array of setting IDs to resolve.
+     * @type {Array<string>}
+     * @memberof ResolveSettingsRequest
+     */
+    settings: Array<string>;
+}
+/**
  * A user group identifier.
  * @export
  * @interface UserGroupIdentifier
@@ -8044,6 +8824,102 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Computes the dependent entities graph
+         * @summary Computes the dependent entities graph
+         * @param {string} workspaceId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDependentEntitiesGraph: async (
+            workspaceId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("getDependentEntitiesGraph", "workspaceId", workspaceId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/dependentEntitiesGraph`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Computes the dependent entities graph from given entry points
+         * @summary Computes the dependent entities graph from given entry points
+         * @param {string} workspaceId
+         * @param {DependentEntitiesRequest} dependentEntitiesRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDependentEntitiesGraphFromEntryPoints: async (
+            workspaceId: string,
+            dependentEntitiesRequest: DependentEntitiesRequest,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("getDependentEntitiesGraphFromEntryPoints", "workspaceId", workspaceId);
+            // verify required parameter 'dependentEntitiesRequest' is not null or undefined
+            assertParamExists(
+                "getDependentEntitiesGraphFromEntryPoints",
+                "dependentEntitiesRequest",
+                dependentEntitiesRequest,
+            );
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/dependentEntitiesGraph`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof dependentEntitiesRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(dependentEntitiesRequest !== undefined ? dependentEntitiesRequest : {})
+                : dependentEntitiesRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Notification sets up all reports to be computed again with new data.
          * @summary Register an upload notification
          * @param {string} dataSourceId
@@ -8083,6 +8959,98 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Resolves values for all settings in a workspace by current user, workspace, organization, or default settings.
+         * @summary Values for all settings.
+         * @param {string} workspaceId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        workspaceResolveAllSettings: async (
+            workspaceId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("workspaceResolveAllSettings", "workspaceId", workspaceId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/resolveSettings`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Resolves value for selected settings in a workspace by current user, workspace, organization, or default settings.
+         * @summary Values for selected settings.
+         * @param {string} workspaceId
+         * @param {ResolveSettingsRequest} resolveSettingsRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        workspaceResolveSettings: async (
+            workspaceId: string,
+            resolveSettingsRequest: ResolveSettingsRequest,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("workspaceResolveSettings", "workspaceId", workspaceId);
+            // verify required parameter 'resolveSettingsRequest' is not null or undefined
+            assertParamExists("workspaceResolveSettings", "resolveSettingsRequest", resolveSettingsRequest);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/resolveSettings`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof resolveSettingsRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(resolveSettingsRequest !== undefined ? resolveSettingsRequest : {})
+                : resolveSettingsRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     };
 };
 
@@ -8114,6 +9082,44 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Computes the dependent entities graph
+         * @summary Computes the dependent entities graph
+         * @param {string} workspaceId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getDependentEntitiesGraph(
+            workspaceId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DependentEntitiesResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDependentEntitiesGraph(
+                workspaceId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Computes the dependent entities graph from given entry points
+         * @summary Computes the dependent entities graph from given entry points
+         * @param {string} workspaceId
+         * @param {DependentEntitiesRequest} dependentEntitiesRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getDependentEntitiesGraphFromEntryPoints(
+            workspaceId: string,
+            dependentEntitiesRequest: DependentEntitiesRequest,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DependentEntitiesResponse>> {
+            const localVarAxiosArgs =
+                await localVarAxiosParamCreator.getDependentEntitiesGraphFromEntryPoints(
+                    workspaceId,
+                    dependentEntitiesRequest,
+                    options,
+                );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Notification sets up all reports to be computed again with new data.
          * @summary Register an upload notification
          * @param {string} dataSourceId
@@ -8126,6 +9132,43 @@ export const ActionsApiFp = function (configuration?: Configuration) {
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.registerUploadNotification(
                 dataSourceId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Resolves values for all settings in a workspace by current user, workspace, organization, or default settings.
+         * @summary Values for all settings.
+         * @param {string} workspaceId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async workspaceResolveAllSettings(
+            workspaceId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.workspaceResolveAllSettings(
+                workspaceId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Resolves value for selected settings in a workspace by current user, workspace, organization, or default settings.
+         * @summary Values for selected settings.
+         * @param {string} workspaceId
+         * @param {ResolveSettingsRequest} resolveSettingsRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async workspaceResolveSettings(
+            workspaceId: string,
+            resolveSettingsRequest: ResolveSettingsRequest,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.workspaceResolveSettings(
+                workspaceId,
+                resolveSettingsRequest,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -8164,6 +9207,40 @@ export const ActionsApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
+         * Computes the dependent entities graph
+         * @summary Computes the dependent entities graph
+         * @param {ActionsApiGetDependentEntitiesGraphRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDependentEntitiesGraph(
+            requestParameters: ActionsApiGetDependentEntitiesGraphRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<DependentEntitiesResponse> {
+            return localVarFp
+                .getDependentEntitiesGraph(requestParameters.workspaceId, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * Computes the dependent entities graph from given entry points
+         * @summary Computes the dependent entities graph from given entry points
+         * @param {ActionsApiGetDependentEntitiesGraphFromEntryPointsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDependentEntitiesGraphFromEntryPoints(
+            requestParameters: ActionsApiGetDependentEntitiesGraphFromEntryPointsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<DependentEntitiesResponse> {
+            return localVarFp
+                .getDependentEntitiesGraphFromEntryPoints(
+                    requestParameters.workspaceId,
+                    requestParameters.dependentEntitiesRequest,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * Notification sets up all reports to be computed again with new data.
          * @summary Register an upload notification
          * @param {ActionsApiRegisterUploadNotificationRequest} requestParameters Request parameters.
@@ -8176,6 +9253,40 @@ export const ActionsApiFactory = function (
         ): AxiosPromise<void> {
             return localVarFp
                 .registerUploadNotification(requestParameters.dataSourceId, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * Resolves values for all settings in a workspace by current user, workspace, organization, or default settings.
+         * @summary Values for all settings.
+         * @param {ActionsApiWorkspaceResolveAllSettingsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        workspaceResolveAllSettings(
+            requestParameters: ActionsApiWorkspaceResolveAllSettingsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .workspaceResolveAllSettings(requestParameters.workspaceId, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * Resolves value for selected settings in a workspace by current user, workspace, organization, or default settings.
+         * @summary Values for selected settings.
+         * @param {ActionsApiWorkspaceResolveSettingsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        workspaceResolveSettings(
+            requestParameters: ActionsApiWorkspaceResolveSettingsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .workspaceResolveSettings(
+                    requestParameters.workspaceId,
+                    requestParameters.resolveSettingsRequest,
+                    options,
+                )
                 .then((request) => request(axios, basePath));
         },
     };
@@ -8201,6 +9312,32 @@ export interface ActionsApiInterface {
     ): AxiosPromise<DeclarativeModel>;
 
     /**
+     * Computes the dependent entities graph
+     * @summary Computes the dependent entities graph
+     * @param {ActionsApiGetDependentEntitiesGraphRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    getDependentEntitiesGraph(
+        requestParameters: ActionsApiGetDependentEntitiesGraphRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<DependentEntitiesResponse>;
+
+    /**
+     * Computes the dependent entities graph from given entry points
+     * @summary Computes the dependent entities graph from given entry points
+     * @param {ActionsApiGetDependentEntitiesGraphFromEntryPointsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    getDependentEntitiesGraphFromEntryPoints(
+        requestParameters: ActionsApiGetDependentEntitiesGraphFromEntryPointsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<DependentEntitiesResponse>;
+
+    /**
      * Notification sets up all reports to be computed again with new data.
      * @summary Register an upload notification
      * @param {ActionsApiRegisterUploadNotificationRequest} requestParameters Request parameters.
@@ -8210,6 +9347,32 @@ export interface ActionsApiInterface {
      */
     registerUploadNotification(
         requestParameters: ActionsApiRegisterUploadNotificationRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
+
+    /**
+     * Resolves values for all settings in a workspace by current user, workspace, organization, or default settings.
+     * @summary Values for all settings.
+     * @param {ActionsApiWorkspaceResolveAllSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    workspaceResolveAllSettings(
+        requestParameters: ActionsApiWorkspaceResolveAllSettingsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
+
+    /**
+     * Resolves value for selected settings in a workspace by current user, workspace, organization, or default settings.
+     * @summary Values for selected settings.
+     * @param {ActionsApiWorkspaceResolveSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    workspaceResolveSettings(
+        requestParameters: ActionsApiWorkspaceResolveSettingsRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 }
@@ -8236,6 +9399,41 @@ export interface ActionsApiGenerateLogicalModelRequest {
 }
 
 /**
+ * Request parameters for getDependentEntitiesGraph operation in ActionsApi.
+ * @export
+ * @interface ActionsApiGetDependentEntitiesGraphRequest
+ */
+export interface ActionsApiGetDependentEntitiesGraphRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiGetDependentEntitiesGraph
+     */
+    readonly workspaceId: string;
+}
+
+/**
+ * Request parameters for getDependentEntitiesGraphFromEntryPoints operation in ActionsApi.
+ * @export
+ * @interface ActionsApiGetDependentEntitiesGraphFromEntryPointsRequest
+ */
+export interface ActionsApiGetDependentEntitiesGraphFromEntryPointsRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiGetDependentEntitiesGraphFromEntryPoints
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {DependentEntitiesRequest}
+     * @memberof ActionsApiGetDependentEntitiesGraphFromEntryPoints
+     */
+    readonly dependentEntitiesRequest: DependentEntitiesRequest;
+}
+
+/**
  * Request parameters for registerUploadNotification operation in ActionsApi.
  * @export
  * @interface ActionsApiRegisterUploadNotificationRequest
@@ -8247,6 +9445,41 @@ export interface ActionsApiRegisterUploadNotificationRequest {
      * @memberof ActionsApiRegisterUploadNotification
      */
     readonly dataSourceId: string;
+}
+
+/**
+ * Request parameters for workspaceResolveAllSettings operation in ActionsApi.
+ * @export
+ * @interface ActionsApiWorkspaceResolveAllSettingsRequest
+ */
+export interface ActionsApiWorkspaceResolveAllSettingsRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiWorkspaceResolveAllSettings
+     */
+    readonly workspaceId: string;
+}
+
+/**
+ * Request parameters for workspaceResolveSettings operation in ActionsApi.
+ * @export
+ * @interface ActionsApiWorkspaceResolveSettingsRequest
+ */
+export interface ActionsApiWorkspaceResolveSettingsRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiWorkspaceResolveSettings
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {ResolveSettingsRequest}
+     * @memberof ActionsApiWorkspaceResolveSettings
+     */
+    readonly resolveSettingsRequest: ResolveSettingsRequest;
 }
 
 /**
@@ -8278,6 +9511,44 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
+     * Computes the dependent entities graph
+     * @summary Computes the dependent entities graph
+     * @param {ActionsApiGetDependentEntitiesGraphRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public getDependentEntitiesGraph(
+        requestParameters: ActionsApiGetDependentEntitiesGraphRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .getDependentEntitiesGraph(requestParameters.workspaceId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Computes the dependent entities graph from given entry points
+     * @summary Computes the dependent entities graph from given entry points
+     * @param {ActionsApiGetDependentEntitiesGraphFromEntryPointsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public getDependentEntitiesGraphFromEntryPoints(
+        requestParameters: ActionsApiGetDependentEntitiesGraphFromEntryPointsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .getDependentEntitiesGraphFromEntryPoints(
+                requestParameters.workspaceId,
+                requestParameters.dependentEntitiesRequest,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Notification sets up all reports to be computed again with new data.
      * @summary Register an upload notification
      * @param {ActionsApiRegisterUploadNotificationRequest} requestParameters Request parameters.
@@ -8291,6 +9562,44 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     ) {
         return ActionsApiFp(this.configuration)
             .registerUploadNotification(requestParameters.dataSourceId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Resolves values for all settings in a workspace by current user, workspace, organization, or default settings.
+     * @summary Values for all settings.
+     * @param {ActionsApiWorkspaceResolveAllSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public workspaceResolveAllSettings(
+        requestParameters: ActionsApiWorkspaceResolveAllSettingsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .workspaceResolveAllSettings(requestParameters.workspaceId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Resolves value for selected settings in a workspace by current user, workspace, organization, or default settings.
+     * @summary Values for selected settings.
+     * @param {ActionsApiWorkspaceResolveSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public workspaceResolveSettings(
+        requestParameters: ActionsApiWorkspaceResolveSettingsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .workspaceResolveSettings(
+                requestParameters.workspaceId,
+                requestParameters.resolveSettingsRequest,
+                options,
+            )
             .then((request) => request(this.axios, this.basePath));
     }
 }
@@ -8424,6 +9733,56 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             localVarRequestOptions.data = needsSerialization
                 ? JSON.stringify(jsonApiApiTokenInDocument !== undefined ? jsonApiApiTokenInDocument : {})
                 : jsonApiApiTokenInDocument || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {JsonApiCspDirectiveInDocument} jsonApiCspDirectiveInDocument
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createEntityCspDirectives: async (
+            jsonApiCspDirectiveInDocument: JsonApiCspDirectiveInDocument,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'jsonApiCspDirectiveInDocument' is not null or undefined
+            assertParamExists(
+                "createEntityCspDirectives",
+                "jsonApiCspDirectiveInDocument",
+                jsonApiCspDirectiveInDocument,
+            );
+            const localVarPath = `/api/v1/entities/cspDirectives`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof jsonApiCspDirectiveInDocument !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      jsonApiCspDirectiveInDocument !== undefined ? jsonApiCspDirectiveInDocument : {},
+                  )
+                : jsonApiCspDirectiveInDocument || "";
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -8709,6 +10068,50 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          *
+         * @param {JsonApiThemeInDocument} jsonApiThemeInDocument
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createEntityThemes: async (
+            jsonApiThemeInDocument: JsonApiThemeInDocument,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'jsonApiThemeInDocument' is not null or undefined
+            assertParamExists("createEntityThemes", "jsonApiThemeInDocument", jsonApiThemeInDocument);
+            const localVarPath = `/api/v1/entities/themes`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof jsonApiThemeInDocument !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(jsonApiThemeInDocument !== undefined ? jsonApiThemeInDocument : {})
+                : jsonApiThemeInDocument || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
          * @param {JsonApiUserGroupInDocument} jsonApiUserGroupInDocument
          * @param {Array<'userGroups' | 'parents' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -8755,6 +10158,63 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             localVarRequestOptions.data = needsSerialization
                 ? JSON.stringify(jsonApiUserGroupInDocument !== undefined ? jsonApiUserGroupInDocument : {})
                 : jsonApiUserGroupInDocument || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} userId
+         * @param {JsonApiUserSettingInDocument} jsonApiUserSettingInDocument
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createEntityUserSettings: async (
+            userId: string,
+            jsonApiUserSettingInDocument: JsonApiUserSettingInDocument,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists("createEntityUserSettings", "userId", userId);
+            // verify required parameter 'jsonApiUserSettingInDocument' is not null or undefined
+            assertParamExists(
+                "createEntityUserSettings",
+                "jsonApiUserSettingInDocument",
+                jsonApiUserSettingInDocument,
+            );
+            const localVarPath = `/api/v1/entities/users/{userId}/userSettings`.replace(
+                `{${"userId"}}`,
+                encodeURIComponent(String(userId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof jsonApiUserSettingInDocument !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      jsonApiUserSettingInDocument !== undefined ? jsonApiUserSettingInDocument : {},
+                  )
+                : jsonApiUserSettingInDocument || "";
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -9152,6 +10612,51 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          *
+         * @param {string} id
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteEntityCspDirectives: async (
+            id: string,
+            filter?: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists("deleteEntityCspDirectives", "id", id);
+            const localVarPath = `/api/v1/entities/cspDirectives/{id}`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
          * @param {string} workspaceId
          * @param {string} objectId
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -9391,6 +10896,51 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        deleteEntityThemes: async (
+            id: string,
+            filter?: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists("deleteEntityThemes", "id", id);
+            const localVarPath = `/api/v1/entities/themes/{id}`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} id
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         deleteEntityUserGroups: async (
             id: string,
             filter?: string,
@@ -9402,6 +10952,54 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} userId
+         * @param {string} id
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteEntityUserSettings: async (
+            userId: string,
+            id: string,
+            filter?: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists("deleteEntityUserSettings", "userId", userId);
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists("deleteEntityUserSettings", "id", id);
+            const localVarPath = `/api/v1/entities/users/{userId}/userSettings/{id}`
+                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)))
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -9874,6 +11472,62 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 localVarHeaderParameter["X-GDC-VALIDATE-RELATIONS"] = String(
                     JSON.stringify(xGDCVALIDATERELATIONS),
                 );
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {number} [page] Zero-based page index (0..N)
+         * @param {number} [size] The size of the page to be returned
+         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllEntitiesCspDirectives: async (
+            filter?: string,
+            page?: number,
+            size?: number,
+            sort?: Array<string>,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/entities/cspDirectives`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter["page"] = page;
+            }
+
+            if (size !== undefined) {
+                localVarQueryParameter["size"] = size;
+            }
+
+            if (sort) {
+                localVarQueryParameter["sort"] = sort;
             }
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -10647,6 +12301,62 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          *
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {number} [page] Zero-based page index (0..N)
+         * @param {number} [size] The size of the page to be returned
+         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllEntitiesThemes: async (
+            filter?: string,
+            page?: number,
+            size?: number,
+            sort?: Array<string>,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/entities/themes`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter["page"] = page;
+            }
+
+            if (size !== undefined) {
+                localVarQueryParameter["size"] = size;
+            }
+
+            if (sort) {
+                localVarQueryParameter["sort"] = sort;
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'userGroups' | 'parents' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
@@ -10679,6 +12389,69 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             if (include) {
                 localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter["page"] = page;
+            }
+
+            if (size !== undefined) {
+                localVarQueryParameter["size"] = size;
+            }
+
+            if (sort) {
+                localVarQueryParameter["sort"] = sort;
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} userId
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {number} [page] Zero-based page index (0..N)
+         * @param {number} [size] The size of the page to be returned
+         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllEntitiesUserSettings: async (
+            userId: string,
+            filter?: string,
+            page?: number,
+            size?: number,
+            sort?: Array<string>,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists("getAllEntitiesUserSettings", "userId", userId);
+            const localVarPath = `/api/v1/entities/users/{userId}/userSettings`.replace(
+                `{${"userId"}}`,
+                encodeURIComponent(String(userId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (page !== undefined) {
@@ -11429,6 +13202,51 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          *
+         * @param {string} id
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEntityCspDirectives: async (
+            id: string,
+            filter?: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists("getEntityCspDirectives", "id", id);
+            const localVarPath = `/api/v1/entities/cspDirectives/{id}`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
          * @param {string} workspaceId
          * @param {string} objectId
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -12094,6 +13912,51 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          *
          * @param {string} id
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEntityThemes: async (
+            id: string,
+            filter?: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists("getEntityThemes", "id", id);
+            const localVarPath = `/api/v1/entities/themes/{id}`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} id
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'userGroups' | 'parents' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -12126,6 +13989,54 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             if (include) {
                 localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} userId
+         * @param {string} id
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEntityUserSettings: async (
+            userId: string,
+            id: string,
+            filter?: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists("getEntityUserSettings", "userId", userId);
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists("getEntityUserSettings", "id", id);
+            const localVarPath = `/api/v1/entities/users/{userId}/userSettings/{id}`
+                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)))
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
             }
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -12681,6 +14592,69 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          *
+         * @param {string} id
+         * @param {JsonApiCspDirectivePatchDocument} jsonApiCspDirectivePatchDocument
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchEntityCspDirectives: async (
+            id: string,
+            jsonApiCspDirectivePatchDocument: JsonApiCspDirectivePatchDocument,
+            filter?: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists("patchEntityCspDirectives", "id", id);
+            // verify required parameter 'jsonApiCspDirectivePatchDocument' is not null or undefined
+            assertParamExists(
+                "patchEntityCspDirectives",
+                "jsonApiCspDirectivePatchDocument",
+                jsonApiCspDirectivePatchDocument,
+            );
+            const localVarPath = `/api/v1/entities/cspDirectives/{id}`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof jsonApiCspDirectivePatchDocument !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      jsonApiCspDirectivePatchDocument !== undefined ? jsonApiCspDirectivePatchDocument : {},
+                  )
+                : jsonApiCspDirectivePatchDocument || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
          * @param {string} workspaceId
          * @param {string} objectId
          * @param {JsonApiDashboardPluginPatchDocument} jsonApiDashboardPluginPatchDocument
@@ -13078,6 +15052,63 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                       jsonApiOrganizationPatchDocument !== undefined ? jsonApiOrganizationPatchDocument : {},
                   )
                 : jsonApiOrganizationPatchDocument || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} id
+         * @param {JsonApiThemePatchDocument} jsonApiThemePatchDocument
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchEntityThemes: async (
+            id: string,
+            jsonApiThemePatchDocument: JsonApiThemePatchDocument,
+            filter?: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists("patchEntityThemes", "id", id);
+            // verify required parameter 'jsonApiThemePatchDocument' is not null or undefined
+            assertParamExists("patchEntityThemes", "jsonApiThemePatchDocument", jsonApiThemePatchDocument);
+            const localVarPath = `/api/v1/entities/themes/{id}`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof jsonApiThemePatchDocument !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(jsonApiThemePatchDocument !== undefined ? jsonApiThemePatchDocument : {})
+                : jsonApiThemePatchDocument || "";
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -13586,6 +15617,70 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          *
+         * @param {string} userId
+         * @param {string} id
+         * @param {JsonApiApiTokenInDocument} jsonApiApiTokenInDocument
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateEntityApiTokens: async (
+            userId: string,
+            id: string,
+            jsonApiApiTokenInDocument: JsonApiApiTokenInDocument,
+            filter?: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists("updateEntityApiTokens", "userId", userId);
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists("updateEntityApiTokens", "id", id);
+            // verify required parameter 'jsonApiApiTokenInDocument' is not null or undefined
+            assertParamExists(
+                "updateEntityApiTokens",
+                "jsonApiApiTokenInDocument",
+                jsonApiApiTokenInDocument,
+            );
+            const localVarPath = `/api/v1/entities/users/{userId}/apiTokens/{id}`
+                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)))
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "PUT", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof jsonApiApiTokenInDocument !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(jsonApiApiTokenInDocument !== undefined ? jsonApiApiTokenInDocument : {})
+                : jsonApiApiTokenInDocument || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
          * @param {string} id
          * @param {JsonApiCookieSecurityConfigurationInDocument} jsonApiCookieSecurityConfigurationInDocument
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -13643,6 +15738,69 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                           : {},
                   )
                 : jsonApiCookieSecurityConfigurationInDocument || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} id
+         * @param {JsonApiCspDirectiveInDocument} jsonApiCspDirectiveInDocument
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateEntityCspDirectives: async (
+            id: string,
+            jsonApiCspDirectiveInDocument: JsonApiCspDirectiveInDocument,
+            filter?: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists("updateEntityCspDirectives", "id", id);
+            // verify required parameter 'jsonApiCspDirectiveInDocument' is not null or undefined
+            assertParamExists(
+                "updateEntityCspDirectives",
+                "jsonApiCspDirectiveInDocument",
+                jsonApiCspDirectiveInDocument,
+            );
+            const localVarPath = `/api/v1/entities/cspDirectives/{id}`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "PUT", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof jsonApiCspDirectiveInDocument !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      jsonApiCspDirectiveInDocument !== undefined ? jsonApiCspDirectiveInDocument : {},
+                  )
+                : jsonApiCspDirectiveInDocument || "";
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -14051,6 +16209,63 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          *
          * @param {string} id
+         * @param {JsonApiThemeInDocument} jsonApiThemeInDocument
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateEntityThemes: async (
+            id: string,
+            jsonApiThemeInDocument: JsonApiThemeInDocument,
+            filter?: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists("updateEntityThemes", "id", id);
+            // verify required parameter 'jsonApiThemeInDocument' is not null or undefined
+            assertParamExists("updateEntityThemes", "jsonApiThemeInDocument", jsonApiThemeInDocument);
+            const localVarPath = `/api/v1/entities/themes/{id}`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "PUT", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof jsonApiThemeInDocument !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(jsonApiThemeInDocument !== undefined ? jsonApiThemeInDocument : {})
+                : jsonApiThemeInDocument || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} id
          * @param {JsonApiUserGroupInDocument} jsonApiUserGroupInDocument
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'userGroups' | 'parents' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
@@ -14109,6 +16324,72 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             localVarRequestOptions.data = needsSerialization
                 ? JSON.stringify(jsonApiUserGroupInDocument !== undefined ? jsonApiUserGroupInDocument : {})
                 : jsonApiUserGroupInDocument || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} userId
+         * @param {string} id
+         * @param {JsonApiUserSettingInDocument} jsonApiUserSettingInDocument
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateEntityUserSettings: async (
+            userId: string,
+            id: string,
+            jsonApiUserSettingInDocument: JsonApiUserSettingInDocument,
+            filter?: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists("updateEntityUserSettings", "userId", userId);
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists("updateEntityUserSettings", "id", id);
+            // verify required parameter 'jsonApiUserSettingInDocument' is not null or undefined
+            assertParamExists(
+                "updateEntityUserSettings",
+                "jsonApiUserSettingInDocument",
+                jsonApiUserSettingInDocument,
+            );
+            const localVarPath = `/api/v1/entities/users/{userId}/userSettings/{id}`
+                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)))
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "PUT", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof jsonApiUserSettingInDocument !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      jsonApiUserSettingInDocument !== undefined ? jsonApiUserSettingInDocument : {},
+                  )
+                : jsonApiUserSettingInDocument || "";
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -14525,6 +16806,24 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         },
         /**
          *
+         * @param {JsonApiCspDirectiveInDocument} jsonApiCspDirectiveInDocument
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createEntityCspDirectives(
+            jsonApiCspDirectiveInDocument: JsonApiCspDirectiveInDocument,
+            options?: AxiosRequestConfig,
+        ): Promise<
+            (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiCspDirectiveOutDocument>
+        > {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createEntityCspDirectives(
+                jsonApiCspDirectiveInDocument,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
          * @param {string} workspaceId
          * @param {JsonApiDashboardPluginInDocument} jsonApiDashboardPluginInDocument
          * @param {*} [options] Override http request option.
@@ -14626,6 +16925,22 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         },
         /**
          *
+         * @param {JsonApiThemeInDocument} jsonApiThemeInDocument
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createEntityThemes(
+            jsonApiThemeInDocument: JsonApiThemeInDocument,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiThemeOutDocument>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createEntityThemes(
+                jsonApiThemeInDocument,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
          * @param {JsonApiUserGroupInDocument} jsonApiUserGroupInDocument
          * @param {Array<'userGroups' | 'parents' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
@@ -14639,6 +16954,27 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createEntityUserGroups(
                 jsonApiUserGroupInDocument,
                 include,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} userId
+         * @param {JsonApiUserSettingInDocument} jsonApiUserSettingInDocument
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createEntityUserSettings(
+            userId: string,
+            jsonApiUserSettingInDocument: JsonApiUserSettingInDocument,
+            options?: AxiosRequestConfig,
+        ): Promise<
+            (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiUserSettingOutDocument>
+        > {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createEntityUserSettings(
+                userId,
+                jsonApiUserSettingInDocument,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -14796,6 +17132,25 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         },
         /**
          *
+         * @param {string} id
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteEntityCspDirectives(
+            id: string,
+            filter?: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteEntityCspDirectives(
+                id,
+                filter,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
          * @param {string} workspaceId
          * @param {string} objectId
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -14905,12 +17260,49 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        async deleteEntityThemes(
+            id: string,
+            filter?: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteEntityThemes(id, filter, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} id
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         async deleteEntityUserGroups(
             id: string,
             filter?: string,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteEntityUserGroups(
+                id,
+                filter,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} userId
+         * @param {string} id
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteEntityUserSettings(
+            userId: string,
+            id: string,
+            filter?: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteEntityUserSettings(
+                userId,
                 id,
                 filter,
                 options,
@@ -15120,6 +17512,31 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 size,
                 sort,
                 xGDCVALIDATERELATIONS,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {number} [page] Zero-based page index (0..N)
+         * @param {number} [size] The size of the page to be returned
+         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAllEntitiesCspDirectives(
+            filter?: string,
+            page?: number,
+            size?: number,
+            sort?: Array<string>,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiCspDirectiveOutList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAllEntitiesCspDirectives(
+                filter,
+                page,
+                size,
+                sort,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -15470,6 +17887,31 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         /**
          *
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {number} [page] Zero-based page index (0..N)
+         * @param {number} [size] The size of the page to be returned
+         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAllEntitiesThemes(
+            filter?: string,
+            page?: number,
+            size?: number,
+            sort?: Array<string>,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiThemeOutList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAllEntitiesThemes(
+                filter,
+                page,
+                size,
+                sort,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'userGroups' | 'parents' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
@@ -15488,6 +17930,34 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAllEntitiesUserGroups(
                 filter,
                 include,
+                page,
+                size,
+                sort,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} userId
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {number} [page] Zero-based page index (0..N)
+         * @param {number} [size] The size of the page to be returned
+         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAllEntitiesUserSettings(
+            userId: string,
+            filter?: string,
+            page?: number,
+            size?: number,
+            sort?: Array<string>,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiUserSettingOutList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAllEntitiesUserSettings(
+                userId,
+                filter,
                 page,
                 size,
                 sort,
@@ -15838,6 +18308,27 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         },
         /**
          *
+         * @param {string} id
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getEntityCspDirectives(
+            id: string,
+            filter?: string,
+            options?: AxiosRequestConfig,
+        ): Promise<
+            (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiCspDirectiveOutDocument>
+        > {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEntityCspDirectives(
+                id,
+                filter,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
          * @param {string} workspaceId
          * @param {string} objectId
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -16148,6 +18639,21 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          *
          * @param {string} id
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getEntityThemes(
+            id: string,
+            filter?: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiThemeOutDocument>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEntityThemes(id, filter, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} id
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'userGroups' | 'parents' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -16162,6 +18668,30 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 id,
                 filter,
                 include,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} userId
+         * @param {string} id
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getEntityUserSettings(
+            userId: string,
+            id: string,
+            filter?: string,
+            options?: AxiosRequestConfig,
+        ): Promise<
+            (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiUserSettingOutDocument>
+        > {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEntityUserSettings(
+                userId,
+                id,
+                filter,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -16415,6 +18945,30 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         },
         /**
          *
+         * @param {string} id
+         * @param {JsonApiCspDirectivePatchDocument} jsonApiCspDirectivePatchDocument
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async patchEntityCspDirectives(
+            id: string,
+            jsonApiCspDirectivePatchDocument: JsonApiCspDirectivePatchDocument,
+            filter?: string,
+            options?: AxiosRequestConfig,
+        ): Promise<
+            (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiCspDirectiveOutDocument>
+        > {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchEntityCspDirectives(
+                id,
+                jsonApiCspDirectivePatchDocument,
+                filter,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
          * @param {string} workspaceId
          * @param {string} objectId
          * @param {JsonApiDashboardPluginPatchDocument} jsonApiDashboardPluginPatchDocument
@@ -16567,6 +19121,28 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 jsonApiOrganizationPatchDocument,
                 filter,
                 include,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} id
+         * @param {JsonApiThemePatchDocument} jsonApiThemePatchDocument
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async patchEntityThemes(
+            id: string,
+            jsonApiThemePatchDocument: JsonApiThemePatchDocument,
+            filter?: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiThemeOutDocument>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchEntityThemes(
+                id,
+                jsonApiThemePatchDocument,
+                filter,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -16774,6 +19350,31 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         },
         /**
          *
+         * @param {string} userId
+         * @param {string} id
+         * @param {JsonApiApiTokenInDocument} jsonApiApiTokenInDocument
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateEntityApiTokens(
+            userId: string,
+            id: string,
+            jsonApiApiTokenInDocument: JsonApiApiTokenInDocument,
+            filter?: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiApiTokenOutDocument>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateEntityApiTokens(
+                userId,
+                id,
+                jsonApiApiTokenInDocument,
+                filter,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
          * @param {string} id
          * @param {JsonApiCookieSecurityConfigurationInDocument} jsonApiCookieSecurityConfigurationInDocument
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -16798,6 +19399,30 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                     filter,
                     options,
                 );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} id
+         * @param {JsonApiCspDirectiveInDocument} jsonApiCspDirectiveInDocument
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateEntityCspDirectives(
+            id: string,
+            jsonApiCspDirectiveInDocument: JsonApiCspDirectiveInDocument,
+            filter?: string,
+            options?: AxiosRequestConfig,
+        ): Promise<
+            (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiCspDirectiveOutDocument>
+        > {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateEntityCspDirectives(
+                id,
+                jsonApiCspDirectiveInDocument,
+                filter,
+                options,
+            );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -16961,6 +19586,28 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         /**
          *
          * @param {string} id
+         * @param {JsonApiThemeInDocument} jsonApiThemeInDocument
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateEntityThemes(
+            id: string,
+            jsonApiThemeInDocument: JsonApiThemeInDocument,
+            filter?: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiThemeOutDocument>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateEntityThemes(
+                id,
+                jsonApiThemeInDocument,
+                filter,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} id
          * @param {JsonApiUserGroupInDocument} jsonApiUserGroupInDocument
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'userGroups' | 'parents' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
@@ -16979,6 +19626,33 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 jsonApiUserGroupInDocument,
                 filter,
                 include,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} userId
+         * @param {string} id
+         * @param {JsonApiUserSettingInDocument} jsonApiUserSettingInDocument
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateEntityUserSettings(
+            userId: string,
+            id: string,
+            jsonApiUserSettingInDocument: JsonApiUserSettingInDocument,
+            filter?: string,
+            options?: AxiosRequestConfig,
+        ): Promise<
+            (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiUserSettingOutDocument>
+        > {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateEntityUserSettings(
+                userId,
+                id,
+                jsonApiUserSettingInDocument,
+                filter,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -17173,6 +19847,20 @@ export const EntitiesApiFactory = function (
         },
         /**
          *
+         * @param {EntitiesApiCreateEntityCspDirectivesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createEntityCspDirectives(
+            requestParameters: EntitiesApiCreateEntityCspDirectivesRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<JsonApiCspDirectiveOutDocument> {
+            return localVarFp
+                .createEntityCspDirectives(requestParameters.jsonApiCspDirectiveInDocument, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
          * @param {EntitiesApiCreateEntityDashboardPluginsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -17260,6 +19948,20 @@ export const EntitiesApiFactory = function (
         },
         /**
          *
+         * @param {EntitiesApiCreateEntityThemesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createEntityThemes(
+            requestParameters: EntitiesApiCreateEntityThemesRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<JsonApiThemeOutDocument> {
+            return localVarFp
+                .createEntityThemes(requestParameters.jsonApiThemeInDocument, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
          * @param {EntitiesApiCreateEntityUserGroupsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -17272,6 +19974,24 @@ export const EntitiesApiFactory = function (
                 .createEntityUserGroups(
                     requestParameters.jsonApiUserGroupInDocument,
                     requestParameters.include,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {EntitiesApiCreateEntityUserSettingsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createEntityUserSettings(
+            requestParameters: EntitiesApiCreateEntityUserSettingsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<JsonApiUserSettingOutDocument> {
+            return localVarFp
+                .createEntityUserSettings(
+                    requestParameters.userId,
+                    requestParameters.jsonApiUserSettingInDocument,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -17408,6 +20128,20 @@ export const EntitiesApiFactory = function (
         },
         /**
          *
+         * @param {EntitiesApiDeleteEntityCspDirectivesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteEntityCspDirectives(
+            requestParameters: EntitiesApiDeleteEntityCspDirectivesRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .deleteEntityCspDirectives(requestParameters.id, requestParameters.filter, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
          * @param {EntitiesApiDeleteEntityDashboardPluginsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -17493,6 +20227,20 @@ export const EntitiesApiFactory = function (
         },
         /**
          *
+         * @param {EntitiesApiDeleteEntityThemesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteEntityThemes(
+            requestParameters: EntitiesApiDeleteEntityThemesRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .deleteEntityThemes(requestParameters.id, requestParameters.filter, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
          * @param {EntitiesApiDeleteEntityUserGroupsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -17503,6 +20251,25 @@ export const EntitiesApiFactory = function (
         ): AxiosPromise<void> {
             return localVarFp
                 .deleteEntityUserGroups(requestParameters.id, requestParameters.filter, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {EntitiesApiDeleteEntityUserSettingsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteEntityUserSettings(
+            requestParameters: EntitiesApiDeleteEntityUserSettingsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .deleteEntityUserSettings(
+                    requestParameters.userId,
+                    requestParameters.id,
+                    requestParameters.filter,
+                    options,
+                )
                 .then((request) => request(axios, basePath));
         },
         /**
@@ -17653,6 +20420,26 @@ export const EntitiesApiFactory = function (
                     requestParameters.size,
                     requestParameters.sort,
                     requestParameters.xGDCVALIDATERELATIONS,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {EntitiesApiGetAllEntitiesCspDirectivesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllEntitiesCspDirectives(
+            requestParameters: EntitiesApiGetAllEntitiesCspDirectivesRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<JsonApiCspDirectiveOutList> {
+            return localVarFp
+                .getAllEntitiesCspDirectives(
+                    requestParameters.filter,
+                    requestParameters.page,
+                    requestParameters.size,
+                    requestParameters.sort,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -17899,6 +20686,26 @@ export const EntitiesApiFactory = function (
         },
         /**
          *
+         * @param {EntitiesApiGetAllEntitiesThemesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllEntitiesThemes(
+            requestParameters: EntitiesApiGetAllEntitiesThemesRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<JsonApiThemeOutList> {
+            return localVarFp
+                .getAllEntitiesThemes(
+                    requestParameters.filter,
+                    requestParameters.page,
+                    requestParameters.size,
+                    requestParameters.sort,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
          * @param {EntitiesApiGetAllEntitiesUserGroupsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -17911,6 +20718,27 @@ export const EntitiesApiFactory = function (
                 .getAllEntitiesUserGroups(
                     requestParameters.filter,
                     requestParameters.include,
+                    requestParameters.page,
+                    requestParameters.size,
+                    requestParameters.sort,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {EntitiesApiGetAllEntitiesUserSettingsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllEntitiesUserSettings(
+            requestParameters: EntitiesApiGetAllEntitiesUserSettingsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<JsonApiUserSettingOutList> {
+            return localVarFp
+                .getAllEntitiesUserSettings(
+                    requestParameters.userId,
+                    requestParameters.filter,
                     requestParameters.page,
                     requestParameters.size,
                     requestParameters.sort,
@@ -18151,6 +20979,20 @@ export const EntitiesApiFactory = function (
         },
         /**
          *
+         * @param {EntitiesApiGetEntityCspDirectivesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEntityCspDirectives(
+            requestParameters: EntitiesApiGetEntityCspDirectivesRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<JsonApiCspDirectiveOutDocument> {
+            return localVarFp
+                .getEntityCspDirectives(requestParameters.id, requestParameters.filter, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
          * @param {EntitiesApiGetEntityDashboardPluginsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -18381,6 +21223,20 @@ export const EntitiesApiFactory = function (
         },
         /**
          *
+         * @param {EntitiesApiGetEntityThemesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEntityThemes(
+            requestParameters: EntitiesApiGetEntityThemesRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<JsonApiThemeOutDocument> {
+            return localVarFp
+                .getEntityThemes(requestParameters.id, requestParameters.filter, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
          * @param {EntitiesApiGetEntityUserGroupsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -18394,6 +21250,25 @@ export const EntitiesApiFactory = function (
                     requestParameters.id,
                     requestParameters.filter,
                     requestParameters.include,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {EntitiesApiGetEntityUserSettingsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEntityUserSettings(
+            requestParameters: EntitiesApiGetEntityUserSettingsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<JsonApiUserSettingOutDocument> {
+            return localVarFp
+                .getEntityUserSettings(
+                    requestParameters.userId,
+                    requestParameters.id,
+                    requestParameters.filter,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -18577,6 +21452,25 @@ export const EntitiesApiFactory = function (
         },
         /**
          *
+         * @param {EntitiesApiPatchEntityCspDirectivesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchEntityCspDirectives(
+            requestParameters: EntitiesApiPatchEntityCspDirectivesRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<JsonApiCspDirectiveOutDocument> {
+            return localVarFp
+                .patchEntityCspDirectives(
+                    requestParameters.id,
+                    requestParameters.jsonApiCspDirectivePatchDocument,
+                    requestParameters.filter,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
          * @param {EntitiesApiPatchEntityDashboardPluginsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -18691,6 +21585,25 @@ export const EntitiesApiFactory = function (
                     requestParameters.jsonApiOrganizationPatchDocument,
                     requestParameters.filter,
                     requestParameters.include,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {EntitiesApiPatchEntityThemesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchEntityThemes(
+            requestParameters: EntitiesApiPatchEntityThemesRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<JsonApiThemeOutDocument> {
+            return localVarFp
+                .patchEntityThemes(
+                    requestParameters.id,
+                    requestParameters.jsonApiThemePatchDocument,
+                    requestParameters.filter,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -18840,6 +21753,26 @@ export const EntitiesApiFactory = function (
         },
         /**
          *
+         * @param {EntitiesApiUpdateEntityApiTokensRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateEntityApiTokens(
+            requestParameters: EntitiesApiUpdateEntityApiTokensRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<JsonApiApiTokenOutDocument> {
+            return localVarFp
+                .updateEntityApiTokens(
+                    requestParameters.userId,
+                    requestParameters.id,
+                    requestParameters.jsonApiApiTokenInDocument,
+                    requestParameters.filter,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
          * @param {EntitiesApiUpdateEntityCookieSecurityConfigurationsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -18852,6 +21785,25 @@ export const EntitiesApiFactory = function (
                 .updateEntityCookieSecurityConfigurations(
                     requestParameters.id,
                     requestParameters.jsonApiCookieSecurityConfigurationInDocument,
+                    requestParameters.filter,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {EntitiesApiUpdateEntityCspDirectivesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateEntityCspDirectives(
+            requestParameters: EntitiesApiUpdateEntityCspDirectivesRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<JsonApiCspDirectiveOutDocument> {
+            return localVarFp
+                .updateEntityCspDirectives(
+                    requestParameters.id,
+                    requestParameters.jsonApiCspDirectiveInDocument,
                     requestParameters.filter,
                     options,
                 )
@@ -18979,6 +21931,25 @@ export const EntitiesApiFactory = function (
         },
         /**
          *
+         * @param {EntitiesApiUpdateEntityThemesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateEntityThemes(
+            requestParameters: EntitiesApiUpdateEntityThemesRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<JsonApiThemeOutDocument> {
+            return localVarFp
+                .updateEntityThemes(
+                    requestParameters.id,
+                    requestParameters.jsonApiThemeInDocument,
+                    requestParameters.filter,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
          * @param {EntitiesApiUpdateEntityUserGroupsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -18993,6 +21964,26 @@ export const EntitiesApiFactory = function (
                     requestParameters.jsonApiUserGroupInDocument,
                     requestParameters.filter,
                     requestParameters.include,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {EntitiesApiUpdateEntityUserSettingsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateEntityUserSettings(
+            requestParameters: EntitiesApiUpdateEntityUserSettingsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<JsonApiUserSettingOutDocument> {
+            return localVarFp
+                .updateEntityUserSettings(
+                    requestParameters.userId,
+                    requestParameters.id,
+                    requestParameters.jsonApiUserSettingInDocument,
+                    requestParameters.filter,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -19134,6 +22125,18 @@ export interface EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiCreateEntityCspDirectivesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    createEntityCspDirectives(
+        requestParameters: EntitiesApiCreateEntityCspDirectivesRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<JsonApiCspDirectiveOutDocument>;
+
+    /**
+     *
      * @param {EntitiesApiCreateEntityDashboardPluginsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -19194,6 +22197,18 @@ export interface EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiCreateEntityThemesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    createEntityThemes(
+        requestParameters: EntitiesApiCreateEntityThemesRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<JsonApiThemeOutDocument>;
+
+    /**
+     *
      * @param {EntitiesApiCreateEntityUserGroupsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -19203,6 +22218,18 @@ export interface EntitiesApiInterface {
         requestParameters: EntitiesApiCreateEntityUserGroupsRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiUserGroupOutDocument>;
+
+    /**
+     *
+     * @param {EntitiesApiCreateEntityUserSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    createEntityUserSettings(
+        requestParameters: EntitiesApiCreateEntityUserSettingsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<JsonApiUserSettingOutDocument>;
 
     /**
      *
@@ -19290,6 +22317,18 @@ export interface EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiDeleteEntityCspDirectivesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    deleteEntityCspDirectives(
+        requestParameters: EntitiesApiDeleteEntityCspDirectivesRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
+
+    /**
+     *
      * @param {EntitiesApiDeleteEntityDashboardPluginsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -19350,6 +22389,18 @@ export interface EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiDeleteEntityThemesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    deleteEntityThemes(
+        requestParameters: EntitiesApiDeleteEntityThemesRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
+
+    /**
+     *
      * @param {EntitiesApiDeleteEntityUserGroupsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -19357,6 +22408,18 @@ export interface EntitiesApiInterface {
      */
     deleteEntityUserGroups(
         requestParameters: EntitiesApiDeleteEntityUserGroupsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
+
+    /**
+     *
+     * @param {EntitiesApiDeleteEntityUserSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    deleteEntityUserSettings(
+        requestParameters: EntitiesApiDeleteEntityUserSettingsRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 
@@ -19455,6 +22518,18 @@ export interface EntitiesApiInterface {
         requestParameters: EntitiesApiGetAllEntitiesAttributesRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiAttributeOutList>;
+
+    /**
+     *
+     * @param {EntitiesApiGetAllEntitiesCspDirectivesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    getAllEntitiesCspDirectives(
+        requestParameters: EntitiesApiGetAllEntitiesCspDirectivesRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<JsonApiCspDirectiveOutList>;
 
     /**
      *
@@ -19590,6 +22665,18 @@ export interface EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiGetAllEntitiesThemesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    getAllEntitiesThemes(
+        requestParameters: EntitiesApiGetAllEntitiesThemesRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<JsonApiThemeOutList>;
+
+    /**
+     *
      * @param {EntitiesApiGetAllEntitiesUserGroupsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -19599,6 +22686,18 @@ export interface EntitiesApiInterface {
         requestParameters: EntitiesApiGetAllEntitiesUserGroupsRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiUserGroupOutList>;
+
+    /**
+     *
+     * @param {EntitiesApiGetAllEntitiesUserSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    getAllEntitiesUserSettings(
+        requestParameters: EntitiesApiGetAllEntitiesUserSettingsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<JsonApiUserSettingOutList>;
 
     /**
      *
@@ -19737,6 +22836,18 @@ export interface EntitiesApiInterface {
         requestParameters: EntitiesApiGetEntityCookieSecurityConfigurationsRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiCookieSecurityConfigurationOutDocument>;
+
+    /**
+     *
+     * @param {EntitiesApiGetEntityCspDirectivesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    getEntityCspDirectives(
+        requestParameters: EntitiesApiGetEntityCspDirectivesRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<JsonApiCspDirectiveOutDocument>;
 
     /**
      *
@@ -19884,6 +22995,18 @@ export interface EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiGetEntityThemesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    getEntityThemes(
+        requestParameters: EntitiesApiGetEntityThemesRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<JsonApiThemeOutDocument>;
+
+    /**
+     *
      * @param {EntitiesApiGetEntityUserGroupsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -19893,6 +23016,18 @@ export interface EntitiesApiInterface {
         requestParameters: EntitiesApiGetEntityUserGroupsRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiUserGroupOutDocument>;
+
+    /**
+     *
+     * @param {EntitiesApiGetEntityUserSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    getEntityUserSettings(
+        requestParameters: EntitiesApiGetEntityUserSettingsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<JsonApiUserSettingOutDocument>;
 
     /**
      *
@@ -20005,6 +23140,18 @@ export interface EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiPatchEntityCspDirectivesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    patchEntityCspDirectives(
+        requestParameters: EntitiesApiPatchEntityCspDirectivesRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<JsonApiCspDirectiveOutDocument>;
+
+    /**
+     *
      * @param {EntitiesApiPatchEntityDashboardPluginsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -20074,6 +23221,18 @@ export interface EntitiesApiInterface {
         requestParameters: EntitiesApiPatchEntityOrganizationsRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiOrganizationOutDocument>;
+
+    /**
+     *
+     * @param {EntitiesApiPatchEntityThemesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    patchEntityThemes(
+        requestParameters: EntitiesApiPatchEntityThemesRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<JsonApiThemeOutDocument>;
 
     /**
      *
@@ -20161,6 +23320,18 @@ export interface EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiUpdateEntityApiTokensRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    updateEntityApiTokens(
+        requestParameters: EntitiesApiUpdateEntityApiTokensRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<JsonApiApiTokenOutDocument>;
+
+    /**
+     *
      * @param {EntitiesApiUpdateEntityCookieSecurityConfigurationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -20170,6 +23341,18 @@ export interface EntitiesApiInterface {
         requestParameters: EntitiesApiUpdateEntityCookieSecurityConfigurationsRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiCookieSecurityConfigurationOutDocument>;
+
+    /**
+     *
+     * @param {EntitiesApiUpdateEntityCspDirectivesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    updateEntityCspDirectives(
+        requestParameters: EntitiesApiUpdateEntityCspDirectivesRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<JsonApiCspDirectiveOutDocument>;
 
     /**
      *
@@ -20245,6 +23428,18 @@ export interface EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiUpdateEntityThemesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    updateEntityThemes(
+        requestParameters: EntitiesApiUpdateEntityThemesRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<JsonApiThemeOutDocument>;
+
+    /**
+     *
      * @param {EntitiesApiUpdateEntityUserGroupsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -20254,6 +23449,18 @@ export interface EntitiesApiInterface {
         requestParameters: EntitiesApiUpdateEntityUserGroupsRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiUserGroupOutDocument>;
+
+    /**
+     *
+     * @param {EntitiesApiUpdateEntityUserSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    updateEntityUserSettings(
+        requestParameters: EntitiesApiUpdateEntityUserSettingsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<JsonApiUserSettingOutDocument>;
 
     /**
      *
@@ -20375,6 +23582,20 @@ export interface EntitiesApiCreateEntityApiTokensRequest {
 }
 
 /**
+ * Request parameters for createEntityCspDirectives operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiCreateEntityCspDirectivesRequest
+ */
+export interface EntitiesApiCreateEntityCspDirectivesRequest {
+    /**
+     *
+     * @type {JsonApiCspDirectiveInDocument}
+     * @memberof EntitiesApiCreateEntityCspDirectives
+     */
+    readonly jsonApiCspDirectiveInDocument: JsonApiCspDirectiveInDocument;
+}
+
+/**
  * Request parameters for createEntityDashboardPlugins operation in EntitiesApi.
  * @export
  * @interface EntitiesApiCreateEntityDashboardPluginsRequest
@@ -20480,6 +23701,20 @@ export interface EntitiesApiCreateEntityOrganizationSettingsRequest {
 }
 
 /**
+ * Request parameters for createEntityThemes operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiCreateEntityThemesRequest
+ */
+export interface EntitiesApiCreateEntityThemesRequest {
+    /**
+     *
+     * @type {JsonApiThemeInDocument}
+     * @memberof EntitiesApiCreateEntityThemes
+     */
+    readonly jsonApiThemeInDocument: JsonApiThemeInDocument;
+}
+
+/**
  * Request parameters for createEntityUserGroups operation in EntitiesApi.
  * @export
  * @interface EntitiesApiCreateEntityUserGroupsRequest
@@ -20498,6 +23733,27 @@ export interface EntitiesApiCreateEntityUserGroupsRequest {
      * @memberof EntitiesApiCreateEntityUserGroups
      */
     readonly include?: Array<"userGroups" | "parents" | "ALL">;
+}
+
+/**
+ * Request parameters for createEntityUserSettings operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiCreateEntityUserSettingsRequest
+ */
+export interface EntitiesApiCreateEntityUserSettingsRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiCreateEntityUserSettings
+     */
+    readonly userId: string;
+
+    /**
+     *
+     * @type {JsonApiUserSettingInDocument}
+     * @memberof EntitiesApiCreateEntityUserSettings
+     */
+    readonly jsonApiUserSettingInDocument: JsonApiUserSettingInDocument;
 }
 
 /**
@@ -20676,6 +23932,27 @@ export interface EntitiesApiDeleteEntityApiTokensRequest {
 }
 
 /**
+ * Request parameters for deleteEntityCspDirectives operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiDeleteEntityCspDirectivesRequest
+ */
+export interface EntitiesApiDeleteEntityCspDirectivesRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiDeleteEntityCspDirectives
+     */
+    readonly id: string;
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiDeleteEntityCspDirectives
+     */
+    readonly filter?: string;
+}
+
+/**
  * Request parameters for deleteEntityDashboardPlugins operation in EntitiesApi.
  * @export
  * @interface EntitiesApiDeleteEntityDashboardPluginsRequest
@@ -20802,6 +24079,27 @@ export interface EntitiesApiDeleteEntityOrganizationSettingsRequest {
 }
 
 /**
+ * Request parameters for deleteEntityThemes operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiDeleteEntityThemesRequest
+ */
+export interface EntitiesApiDeleteEntityThemesRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiDeleteEntityThemes
+     */
+    readonly id: string;
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiDeleteEntityThemes
+     */
+    readonly filter?: string;
+}
+
+/**
  * Request parameters for deleteEntityUserGroups operation in EntitiesApi.
  * @export
  * @interface EntitiesApiDeleteEntityUserGroupsRequest
@@ -20818,6 +24116,34 @@ export interface EntitiesApiDeleteEntityUserGroupsRequest {
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiDeleteEntityUserGroups
+     */
+    readonly filter?: string;
+}
+
+/**
+ * Request parameters for deleteEntityUserSettings operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiDeleteEntityUserSettingsRequest
+ */
+export interface EntitiesApiDeleteEntityUserSettingsRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiDeleteEntityUserSettings
+     */
+    readonly userId: string;
+
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiDeleteEntityUserSettings
+     */
+    readonly id: string;
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiDeleteEntityUserSettings
      */
     readonly filter?: string;
 }
@@ -21109,6 +24435,41 @@ export interface EntitiesApiGetAllEntitiesAttributesRequest {
      * @memberof EntitiesApiGetAllEntitiesAttributes
      */
     readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+/**
+ * Request parameters for getAllEntitiesCspDirectives operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiGetAllEntitiesCspDirectivesRequest
+ */
+export interface EntitiesApiGetAllEntitiesCspDirectivesRequest {
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiGetAllEntitiesCspDirectives
+     */
+    readonly filter?: string;
+
+    /**
+     * Zero-based page index (0..N)
+     * @type {number}
+     * @memberof EntitiesApiGetAllEntitiesCspDirectives
+     */
+    readonly page?: number;
+
+    /**
+     * The size of the page to be returned
+     * @type {number}
+     * @memberof EntitiesApiGetAllEntitiesCspDirectives
+     */
+    readonly size?: number;
+
+    /**
+     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @type {Array<string>}
+     * @memberof EntitiesApiGetAllEntitiesCspDirectives
+     */
+    readonly sort?: Array<string>;
 }
 
 /**
@@ -21637,6 +24998,41 @@ export interface EntitiesApiGetAllEntitiesOrganizationSettingsRequest {
 }
 
 /**
+ * Request parameters for getAllEntitiesThemes operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiGetAllEntitiesThemesRequest
+ */
+export interface EntitiesApiGetAllEntitiesThemesRequest {
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiGetAllEntitiesThemes
+     */
+    readonly filter?: string;
+
+    /**
+     * Zero-based page index (0..N)
+     * @type {number}
+     * @memberof EntitiesApiGetAllEntitiesThemes
+     */
+    readonly page?: number;
+
+    /**
+     * The size of the page to be returned
+     * @type {number}
+     * @memberof EntitiesApiGetAllEntitiesThemes
+     */
+    readonly size?: number;
+
+    /**
+     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @type {Array<string>}
+     * @memberof EntitiesApiGetAllEntitiesThemes
+     */
+    readonly sort?: Array<string>;
+}
+
+/**
  * Request parameters for getAllEntitiesUserGroups operation in EntitiesApi.
  * @export
  * @interface EntitiesApiGetAllEntitiesUserGroupsRequest
@@ -21674,6 +25070,48 @@ export interface EntitiesApiGetAllEntitiesUserGroupsRequest {
      * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
      * @type {Array<string>}
      * @memberof EntitiesApiGetAllEntitiesUserGroups
+     */
+    readonly sort?: Array<string>;
+}
+
+/**
+ * Request parameters for getAllEntitiesUserSettings operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiGetAllEntitiesUserSettingsRequest
+ */
+export interface EntitiesApiGetAllEntitiesUserSettingsRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiGetAllEntitiesUserSettings
+     */
+    readonly userId: string;
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiGetAllEntitiesUserSettings
+     */
+    readonly filter?: string;
+
+    /**
+     * Zero-based page index (0..N)
+     * @type {number}
+     * @memberof EntitiesApiGetAllEntitiesUserSettings
+     */
+    readonly page?: number;
+
+    /**
+     * The size of the page to be returned
+     * @type {number}
+     * @memberof EntitiesApiGetAllEntitiesUserSettings
+     */
+    readonly size?: number;
+
+    /**
+     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @type {Array<string>}
+     * @memberof EntitiesApiGetAllEntitiesUserSettings
      */
     readonly sort?: Array<string>;
 }
@@ -22129,6 +25567,27 @@ export interface EntitiesApiGetEntityCookieSecurityConfigurationsRequest {
 }
 
 /**
+ * Request parameters for getEntityCspDirectives operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiGetEntityCspDirectivesRequest
+ */
+export interface EntitiesApiGetEntityCspDirectivesRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiGetEntityCspDirectives
+     */
+    readonly id: string;
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiGetEntityCspDirectives
+     */
+    readonly filter?: string;
+}
+
+/**
  * Request parameters for getEntityDashboardPlugins operation in EntitiesApi.
  * @export
  * @interface EntitiesApiGetEntityDashboardPluginsRequest
@@ -22535,6 +25994,27 @@ export interface EntitiesApiGetEntityOrganizationsRequest {
 }
 
 /**
+ * Request parameters for getEntityThemes operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiGetEntityThemesRequest
+ */
+export interface EntitiesApiGetEntityThemesRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiGetEntityThemes
+     */
+    readonly id: string;
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiGetEntityThemes
+     */
+    readonly filter?: string;
+}
+
+/**
  * Request parameters for getEntityUserGroups operation in EntitiesApi.
  * @export
  * @interface EntitiesApiGetEntityUserGroupsRequest
@@ -22560,6 +26040,34 @@ export interface EntitiesApiGetEntityUserGroupsRequest {
      * @memberof EntitiesApiGetEntityUserGroups
      */
     readonly include?: Array<"userGroups" | "parents" | "ALL">;
+}
+
+/**
+ * Request parameters for getEntityUserSettings operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiGetEntityUserSettingsRequest
+ */
+export interface EntitiesApiGetEntityUserSettingsRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiGetEntityUserSettings
+     */
+    readonly userId: string;
+
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiGetEntityUserSettings
+     */
+    readonly id: string;
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiGetEntityUserSettings
+     */
+    readonly filter?: string;
 }
 
 /**
@@ -22880,6 +26388,34 @@ export interface EntitiesApiPatchEntityCookieSecurityConfigurationsRequest {
 }
 
 /**
+ * Request parameters for patchEntityCspDirectives operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiPatchEntityCspDirectivesRequest
+ */
+export interface EntitiesApiPatchEntityCspDirectivesRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiPatchEntityCspDirectives
+     */
+    readonly id: string;
+
+    /**
+     *
+     * @type {JsonApiCspDirectivePatchDocument}
+     * @memberof EntitiesApiPatchEntityCspDirectives
+     */
+    readonly jsonApiCspDirectivePatchDocument: JsonApiCspDirectivePatchDocument;
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiPatchEntityCspDirectives
+     */
+    readonly filter?: string;
+}
+
+/**
  * Request parameters for patchEntityDashboardPlugins operation in EntitiesApi.
  * @export
  * @interface EntitiesApiPatchEntityDashboardPluginsRequest
@@ -23087,6 +26623,34 @@ export interface EntitiesApiPatchEntityOrganizationsRequest {
      * @memberof EntitiesApiPatchEntityOrganizations
      */
     readonly include?: Array<"users" | "userGroups" | "bootstrapUser" | "bootstrapUserGroup" | "ALL">;
+}
+
+/**
+ * Request parameters for patchEntityThemes operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiPatchEntityThemesRequest
+ */
+export interface EntitiesApiPatchEntityThemesRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiPatchEntityThemes
+     */
+    readonly id: string;
+
+    /**
+     *
+     * @type {JsonApiThemePatchDocument}
+     * @memberof EntitiesApiPatchEntityThemes
+     */
+    readonly jsonApiThemePatchDocument: JsonApiThemePatchDocument;
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiPatchEntityThemes
+     */
+    readonly filter?: string;
 }
 
 /**
@@ -23365,6 +26929,41 @@ export interface EntitiesApiUpdateEntityAnalyticalDashboardsRequest {
 }
 
 /**
+ * Request parameters for updateEntityApiTokens operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiUpdateEntityApiTokensRequest
+ */
+export interface EntitiesApiUpdateEntityApiTokensRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiUpdateEntityApiTokens
+     */
+    readonly userId: string;
+
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiUpdateEntityApiTokens
+     */
+    readonly id: string;
+
+    /**
+     *
+     * @type {JsonApiApiTokenInDocument}
+     * @memberof EntitiesApiUpdateEntityApiTokens
+     */
+    readonly jsonApiApiTokenInDocument: JsonApiApiTokenInDocument;
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiUpdateEntityApiTokens
+     */
+    readonly filter?: string;
+}
+
+/**
  * Request parameters for updateEntityCookieSecurityConfigurations operation in EntitiesApi.
  * @export
  * @interface EntitiesApiUpdateEntityCookieSecurityConfigurationsRequest
@@ -23388,6 +26987,34 @@ export interface EntitiesApiUpdateEntityCookieSecurityConfigurationsRequest {
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiUpdateEntityCookieSecurityConfigurations
+     */
+    readonly filter?: string;
+}
+
+/**
+ * Request parameters for updateEntityCspDirectives operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiUpdateEntityCspDirectivesRequest
+ */
+export interface EntitiesApiUpdateEntityCspDirectivesRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiUpdateEntityCspDirectives
+     */
+    readonly id: string;
+
+    /**
+     *
+     * @type {JsonApiCspDirectiveInDocument}
+     * @memberof EntitiesApiUpdateEntityCspDirectives
+     */
+    readonly jsonApiCspDirectiveInDocument: JsonApiCspDirectiveInDocument;
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiUpdateEntityCspDirectives
      */
     readonly filter?: string;
 }
@@ -23603,6 +27230,34 @@ export interface EntitiesApiUpdateEntityOrganizationsRequest {
 }
 
 /**
+ * Request parameters for updateEntityThemes operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiUpdateEntityThemesRequest
+ */
+export interface EntitiesApiUpdateEntityThemesRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiUpdateEntityThemes
+     */
+    readonly id: string;
+
+    /**
+     *
+     * @type {JsonApiThemeInDocument}
+     * @memberof EntitiesApiUpdateEntityThemes
+     */
+    readonly jsonApiThemeInDocument: JsonApiThemeInDocument;
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiUpdateEntityThemes
+     */
+    readonly filter?: string;
+}
+
+/**
  * Request parameters for updateEntityUserGroups operation in EntitiesApi.
  * @export
  * @interface EntitiesApiUpdateEntityUserGroupsRequest
@@ -23635,6 +27290,41 @@ export interface EntitiesApiUpdateEntityUserGroupsRequest {
      * @memberof EntitiesApiUpdateEntityUserGroups
      */
     readonly include?: Array<"userGroups" | "parents" | "ALL">;
+}
+
+/**
+ * Request parameters for updateEntityUserSettings operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiUpdateEntityUserSettingsRequest
+ */
+export interface EntitiesApiUpdateEntityUserSettingsRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiUpdateEntityUserSettings
+     */
+    readonly userId: string;
+
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiUpdateEntityUserSettings
+     */
+    readonly id: string;
+
+    /**
+     *
+     * @type {JsonApiUserSettingInDocument}
+     * @memberof EntitiesApiUpdateEntityUserSettings
+     */
+    readonly jsonApiUserSettingInDocument: JsonApiUserSettingInDocument;
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiUpdateEntityUserSettings
+     */
+    readonly filter?: string;
 }
 
 /**
@@ -23876,6 +27566,22 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiCreateEntityCspDirectivesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public createEntityCspDirectives(
+        requestParameters: EntitiesApiCreateEntityCspDirectivesRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .createEntityCspDirectives(requestParameters.jsonApiCspDirectiveInDocument, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
      * @param {EntitiesApiCreateEntityDashboardPluginsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -23970,6 +27676,22 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiCreateEntityThemesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public createEntityThemes(
+        requestParameters: EntitiesApiCreateEntityThemesRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .createEntityThemes(requestParameters.jsonApiThemeInDocument, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
      * @param {EntitiesApiCreateEntityUserGroupsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -23983,6 +27705,26 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             .createEntityUserGroups(
                 requestParameters.jsonApiUserGroupInDocument,
                 requestParameters.include,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {EntitiesApiCreateEntityUserSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public createEntityUserSettings(
+        requestParameters: EntitiesApiCreateEntityUserSettingsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .createEntityUserSettings(
+                requestParameters.userId,
+                requestParameters.jsonApiUserSettingInDocument,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -24130,6 +27872,22 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiDeleteEntityCspDirectivesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public deleteEntityCspDirectives(
+        requestParameters: EntitiesApiDeleteEntityCspDirectivesRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .deleteEntityCspDirectives(requestParameters.id, requestParameters.filter, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
      * @param {EntitiesApiDeleteEntityDashboardPluginsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -24225,6 +27983,22 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiDeleteEntityThemesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public deleteEntityThemes(
+        requestParameters: EntitiesApiDeleteEntityThemesRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .deleteEntityThemes(requestParameters.id, requestParameters.filter, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
      * @param {EntitiesApiDeleteEntityUserGroupsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -24236,6 +28010,27 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
     ) {
         return EntitiesApiFp(this.configuration)
             .deleteEntityUserGroups(requestParameters.id, requestParameters.filter, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {EntitiesApiDeleteEntityUserSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public deleteEntityUserSettings(
+        requestParameters: EntitiesApiDeleteEntityUserSettingsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .deleteEntityUserSettings(
+                requestParameters.userId,
+                requestParameters.id,
+                requestParameters.filter,
+                options,
+            )
             .then((request) => request(this.axios, this.basePath));
     }
 
@@ -24402,6 +28197,28 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.size,
                 requestParameters.sort,
                 requestParameters.xGDCVALIDATERELATIONS,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {EntitiesApiGetAllEntitiesCspDirectivesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public getAllEntitiesCspDirectives(
+        requestParameters: EntitiesApiGetAllEntitiesCspDirectivesRequest = {},
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .getAllEntitiesCspDirectives(
+                requestParameters.filter,
+                requestParameters.page,
+                requestParameters.size,
+                requestParameters.sort,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -24671,6 +28488,28 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiGetAllEntitiesThemesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public getAllEntitiesThemes(
+        requestParameters: EntitiesApiGetAllEntitiesThemesRequest = {},
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .getAllEntitiesThemes(
+                requestParameters.filter,
+                requestParameters.page,
+                requestParameters.size,
+                requestParameters.sort,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
      * @param {EntitiesApiGetAllEntitiesUserGroupsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -24684,6 +28523,29 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             .getAllEntitiesUserGroups(
                 requestParameters.filter,
                 requestParameters.include,
+                requestParameters.page,
+                requestParameters.size,
+                requestParameters.sort,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {EntitiesApiGetAllEntitiesUserSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public getAllEntitiesUserSettings(
+        requestParameters: EntitiesApiGetAllEntitiesUserSettingsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .getAllEntitiesUserSettings(
+                requestParameters.userId,
+                requestParameters.filter,
                 requestParameters.page,
                 requestParameters.size,
                 requestParameters.sort,
@@ -24949,6 +28811,22 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiGetEntityCspDirectivesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public getEntityCspDirectives(
+        requestParameters: EntitiesApiGetEntityCspDirectivesRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .getEntityCspDirectives(requestParameters.id, requestParameters.filter, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
      * @param {EntitiesApiGetEntityDashboardPluginsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -25200,6 +29078,22 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiGetEntityThemesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public getEntityThemes(
+        requestParameters: EntitiesApiGetEntityThemesRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .getEntityThemes(requestParameters.id, requestParameters.filter, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
      * @param {EntitiesApiGetEntityUserGroupsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -25214,6 +29108,27 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.id,
                 requestParameters.filter,
                 requestParameters.include,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {EntitiesApiGetEntityUserSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public getEntityUserSettings(
+        requestParameters: EntitiesApiGetEntityUserSettingsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .getEntityUserSettings(
+                requestParameters.userId,
+                requestParameters.id,
+                requestParameters.filter,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -25413,6 +29328,27 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiPatchEntityCspDirectivesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public patchEntityCspDirectives(
+        requestParameters: EntitiesApiPatchEntityCspDirectivesRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .patchEntityCspDirectives(
+                requestParameters.id,
+                requestParameters.jsonApiCspDirectivePatchDocument,
+                requestParameters.filter,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
      * @param {EntitiesApiPatchEntityDashboardPluginsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -25538,6 +29474,27 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.jsonApiOrganizationPatchDocument,
                 requestParameters.filter,
                 requestParameters.include,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {EntitiesApiPatchEntityThemesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public patchEntityThemes(
+        requestParameters: EntitiesApiPatchEntityThemesRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .patchEntityThemes(
+                requestParameters.id,
+                requestParameters.jsonApiThemePatchDocument,
+                requestParameters.filter,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -25702,6 +29659,28 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiUpdateEntityApiTokensRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public updateEntityApiTokens(
+        requestParameters: EntitiesApiUpdateEntityApiTokensRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .updateEntityApiTokens(
+                requestParameters.userId,
+                requestParameters.id,
+                requestParameters.jsonApiApiTokenInDocument,
+                requestParameters.filter,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
      * @param {EntitiesApiUpdateEntityCookieSecurityConfigurationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -25715,6 +29694,27 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             .updateEntityCookieSecurityConfigurations(
                 requestParameters.id,
                 requestParameters.jsonApiCookieSecurityConfigurationInDocument,
+                requestParameters.filter,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {EntitiesApiUpdateEntityCspDirectivesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public updateEntityCspDirectives(
+        requestParameters: EntitiesApiUpdateEntityCspDirectivesRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .updateEntityCspDirectives(
+                requestParameters.id,
+                requestParameters.jsonApiCspDirectiveInDocument,
                 requestParameters.filter,
                 options,
             )
@@ -25855,6 +29855,27 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiUpdateEntityThemesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public updateEntityThemes(
+        requestParameters: EntitiesApiUpdateEntityThemesRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .updateEntityThemes(
+                requestParameters.id,
+                requestParameters.jsonApiThemeInDocument,
+                requestParameters.filter,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
      * @param {EntitiesApiUpdateEntityUserGroupsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -25870,6 +29891,28 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.jsonApiUserGroupInDocument,
                 requestParameters.filter,
                 requestParameters.include,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {EntitiesApiUpdateEntityUserSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public updateEntityUserSettings(
+        requestParameters: EntitiesApiUpdateEntityUserSettingsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .updateEntityUserSettings(
+                requestParameters.userId,
+                requestParameters.id,
+                requestParameters.jsonApiUserSettingInDocument,
+                requestParameters.filter,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
