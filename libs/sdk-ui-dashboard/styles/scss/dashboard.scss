@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-@import "~@gooddata/sdk-ui-kit/styles/scss/mixins";
+@import "@gooddata/sdk-ui-kit/styles/scss/mixins";
 
 @import "./variables";
 @import "./layout";
@@ -45,8 +45,8 @@
     }
 
     @media #{$xxlarge-up} {
-        flex: 0 0 percentage(1/6);
-        max-width: percentage(1/6);
+        flex: 0 0 percentage(calc(1 / 6));
+        max-width: percentage(calc(1 / 6));
     }
 
     @media #{$xsmall-only}, #{$small-only} {

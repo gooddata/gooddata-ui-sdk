@@ -38,8 +38,8 @@
     }
 
     @media #{$xxlarge-up} {
-        flex: 0 0 percentage(1/6);
-        max-width: percentage(1/6);
+        flex: 0 0 percentage(calc(1 / 6));
+        max-width: percentage(calc(1 / 6));
     }
 
     @media #{$xsmall-only}, #{$small-only} {
