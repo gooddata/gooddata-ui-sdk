@@ -216,6 +216,25 @@ describe("Execute", () => {
             }),
         );
     });
+
+    it("should throw if neither seriesBy not slicesBy have any elements", async () => {
+        const mounted = mount(
+            <Execute backend={DummyBackendEmptyData} workspace={"testWorkspace"}>
+                {({ error }) => {
+                    if (error) {
+                        return <div className="my-error">ERROR</div>;
+                    }
+                    return null;
+                }}
+            </Execute>,
+        );
+
+        await createDummyPromise({ delay: 100 });
+
+        mounted.update();
+
+        expect(mounted).toContainMatchingElement(".my-error");
+    });
 });
 
 describe("createExecution", () => {

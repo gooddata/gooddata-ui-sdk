@@ -13,6 +13,7 @@ import {
     TotalsOrPlaceholders,
     NullableFiltersOrPlaceholders,
     SortsOrPlaceholders,
+    UnexpectedSdkError,
 } from "../base";
 import { createExecution } from "./createExecution";
 import { IExecuteErrorComponent, IExecuteLoadingComponent } from "./interfaces";
@@ -44,7 +45,7 @@ export interface IExecuteProps extends IWithLoadingEvents<IExecuteProps> {
      * Data series will be built using the provided measures that are further scoped for
      * elements of the specified attributes.
      */
-    seriesBy: AttributesMeasuresOrPlaceholders;
+    seriesBy?: AttributesMeasuresOrPlaceholders;
 
     /**
      * Slice all data series by elements of these attributes.
@@ -182,6 +183,12 @@ const WrappedExecute = withContexts(
         exportTitle,
         execution: (props) => {
             const { seriesBy, slicesBy, totals, filters, sortBy } = props;
+            if (!seriesBy?.length && !slicesBy?.length) {
+                throw new UnexpectedSdkError(
+                    "In the Execute component, either seriesBy or slicesBy must be defined and must contain at least one item",
+                );
+            }
+
             return createExecution({
                 ...props,
                 componentName: componentName(props),

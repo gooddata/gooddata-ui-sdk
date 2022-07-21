@@ -951,7 +951,7 @@ export interface IExecuteProps extends IWithLoadingEvents<IExecuteProps> {
     LoadingComponent?: IExecuteLoadingComponent;
     loadOnMount?: boolean;
     placeholdersResolutionContext?: any;
-    seriesBy: AttributesMeasuresOrPlaceholders;
+    seriesBy?: AttributesMeasuresOrPlaceholders;
     slicesBy?: AttributesOrPlaceholders;
     sortBy?: SortsOrPlaceholders;
     totals?: TotalsOrPlaceholders;
