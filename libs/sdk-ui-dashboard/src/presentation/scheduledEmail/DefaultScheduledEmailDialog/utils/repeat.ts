@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import identity from "lodash/identity";
 import { IScheduleEmailRepeat, IScheduleEmailRepeatFrequency } from "../interfaces";
 import { REPEAT_EXECUTE_ON, REPEAT_TYPES } from "../constants";
@@ -110,9 +110,7 @@ export function generateRepeatString(repeat: IScheduleEmailRepeat): string {
     ];
 
     // Join into one repeatData string
-    const repeatString = reptParts.map((p: number[]) => p.join(FRAGMENT_DELIM)).join(REPEAT_DELIM);
-
-    return repeatString;
+    return reptParts.map((p: number[]) => p.join(FRAGMENT_DELIM)).join(REPEAT_DELIM);
 }
 
 export function setDailyRepeat(repeatData: IScheduleEmailRepeat): void {

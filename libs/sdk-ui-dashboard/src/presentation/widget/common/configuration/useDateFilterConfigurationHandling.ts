@@ -102,10 +102,9 @@ export function useDateFilterConfigurationHandling(
                 const recommendedDateDataSet = getRecommendedCatalogDateDataset(relatedDateDatasets);
                 const firstDataSet = first(relatedDateDatasets);
 
-                const preselectedDateDataSetRef = recommendedDateDataSet
+                return recommendedDateDataSet
                     ? recommendedDateDataSet.dataSet.ref
                     : firstDataSet!.dataSet.ref;
-                return preselectedDateDataSetRef;
             };
 
             const enable = isInsightWidget(widget) ? enableInsightDateFilter : enableKpiDateFilter;

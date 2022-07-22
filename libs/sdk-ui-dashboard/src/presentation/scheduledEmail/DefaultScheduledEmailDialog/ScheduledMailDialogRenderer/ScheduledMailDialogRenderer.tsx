@@ -761,10 +761,9 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
     private getDefaultSubject = (): string => {
         const { dashboardTitle } = this.props;
         const isDashboardTitleTooLong = dashboardTitle.length > MAX_DASHBOARD_TITLE_LENGTH;
-        const truncatedDashboardTitle = isDashboardTitleTooLong
+        return isDashboardTitleTooLong
             ? dashboardTitle.substring(0, MAX_DASHBOARD_TITLE_LENGTH)
             : dashboardTitle;
-        return truncatedDashboardTitle;
     };
 
     private getDefaultEmailBody = (): string => {

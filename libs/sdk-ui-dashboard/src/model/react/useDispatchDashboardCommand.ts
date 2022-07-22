@@ -30,13 +30,11 @@ export const useDispatchDashboardCommand = <TCommand extends DashboardCommands, 
 ): ((...args: TArgs) => void) => {
     const dispatch = useDashboardDispatch();
 
-    const run = useCallback(
+    return useCallback(
         (...args: TArgs) => {
             const command = commandCreator(...args);
             dispatch(command);
         },
         [commandCreator],
     );
-
-    return run;
 };

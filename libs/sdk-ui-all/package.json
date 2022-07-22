@@ -77,7 +77,7 @@
         "eslint-plugin-no-only-tests": "^2.4.0",
         "eslint-plugin-prettier": "^4.0.0",
         "eslint-plugin-regexp": "^1.7.0",
-        "eslint-plugin-sonarjs": "^0.13.0",
+        "eslint-plugin-sonarjs": "^0.14.0",
         "eslint-plugin-tsdoc": "^0.2.14",
         "jest": "^27.5.1",
         "jest-junit": "^3.0.0",

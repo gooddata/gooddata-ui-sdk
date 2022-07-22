@@ -77,13 +77,11 @@ export function unifyDashboardLayoutItemHeights<TWidget>(
         (acc, screen) => {
             const itemsAsFutureGridRows = splitDashboardLayoutItemsAsRenderedGridRows(acc, screen);
 
-            const itemsWithUnifiedHeight = flatten(
+            return flatten(
                 itemsAsFutureGridRows.map((futureGridRow) =>
                     unifyDashboardLayoutItemHeightsForScreen(futureGridRow, screen),
                 ),
             );
-
-            return itemsWithUnifiedHeight;
         },
         itemsWithSizeForAllScreens,
     );

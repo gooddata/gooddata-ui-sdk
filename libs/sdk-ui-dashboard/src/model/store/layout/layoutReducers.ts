@@ -309,13 +309,12 @@ const getWidgetByRef = (state: Draft<LayoutState>, widgetRef: ObjRef) => {
         section.items.map((item) => item.widget),
     );
 
-    const widget = allWidgets.find((w) => {
+    return allWidgets.find((w) => {
         // defer type checks until the actual widget is found
         const ref: ObjRef | undefined = w && (w as any).ref;
 
         return ref && areObjRefsEqual(ref, widgetRef);
     });
-    return widget;
 };
 
 //

@@ -265,7 +265,7 @@ export const selectValidConfiguredDrillsByWidgetRef = createMemoizedSelector((re
         selectAccessibleDashboardsMap,
         selectInsightsMap,
         (drills = [], displayFormsMap, accessibleDashboardsMap, insightsMap) => {
-            const filteredDrills = drills.filter((drill) => {
+            return drills.filter((drill) => {
                 switch (drill.drillDefinition.type) {
                     case "drillToAttributeUrl": {
                         return displayFormsMap.get(drill.drillDefinition.target.hyperlinkDisplayForm);
@@ -295,8 +295,6 @@ export const selectValidConfiguredDrillsByWidgetRef = createMemoizedSelector((re
                     }
                 }
             });
-
-            return filteredDrills;
         },
     ),
 );
@@ -401,11 +399,7 @@ export const selectDrillableItemsByAvailableDrillTargets = createMemoizedSelecto
         createSelector(
             selectImplicitDrillsByAvailableDrillTargets(availableDrillTargets),
             (implicitDrillDowns) => {
-                const drillableItems = flatMap(
-                    implicitDrillDowns,
-                    (implicitDrill) => implicitDrill.predicates,
-                );
-                return drillableItems;
+                return flatMap(implicitDrillDowns, (implicitDrill) => implicitDrill.predicates);
             },
         ),
 );

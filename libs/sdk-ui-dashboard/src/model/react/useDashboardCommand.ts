@@ -33,7 +33,7 @@ export const useDashboardCommand = <TCommand extends DashboardCommands, TArgs ex
     const dispatch = useDashboardDispatch();
     const { registerHandler, unregisterHandler } = useDashboardEventsContext();
 
-    const run = useCallback((...args: TArgs) => {
+    return useCallback((...args: TArgs) => {
         let command = commandCreator(...args);
 
         const correlationId = command.correlationId ?? uuid();
@@ -74,6 +74,4 @@ export const useDashboardCommand = <TCommand extends DashboardCommands, TArgs ex
         onBeforeRun?.(command);
         dispatch(command);
     }, []);
-
-    return run;
 };

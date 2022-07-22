@@ -7,17 +7,14 @@ import compact from "lodash/compact";
 
 export const getRecipientsLabel = (intl: IntlShape, recipients: string[], currentUserEmail?: string) => {
     const numberOfRecipients = recipients.length;
-    const recipientsLabel =
-        numberOfRecipients === 1 && recipients[0] === currentUserEmail
-            ? intl.formatMessage({ id: "dialogs.schedule.management.recipients.onlyYou" })
-            : intl.formatMessage(
-                  {
-                      id: "dialogs.schedule.management.recipients",
-                  },
-                  { n: numberOfRecipients },
-              );
-
-    return recipientsLabel;
+    return numberOfRecipients === 1 && recipients[0] === currentUserEmail
+        ? intl.formatMessage({ id: "dialogs.schedule.management.recipients.onlyYou" })
+        : intl.formatMessage(
+              {
+                  id: "dialogs.schedule.management.recipients",
+              },
+              { n: numberOfRecipients },
+          );
 };
 
 export const getAttachmentType = (intl: IntlShape, attachments: ScheduledMailAttachment[]) => {
