@@ -10,12 +10,12 @@ export default scenariosFor<IXirrProps>("Xirr", Xirr)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta", "mock-no-insight")
     .addScenario("drilling on single measure", {
         measure: ReferenceMd.SampleXIRR,
-        attribute: ReferenceMd.TimelineYear,
+        attribute: ReferenceMd.DateDatasets.Timeline.Year.Default,
         drillableItems: [SampleXirrMeasurePredicate],
     })
     .addScenario("drilling on single measure with underlining disabled", {
         measure: ReferenceMd.SampleXIRR,
-        attribute: ReferenceMd.TimelineYear,
+        attribute: ReferenceMd.DateDatasets.Timeline.Year.Default,
         drillableItems: [SampleXirrMeasurePredicate],
         config: {
             disableDrillUnderline: true,

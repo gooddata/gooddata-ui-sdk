@@ -21,14 +21,14 @@ export const BulletChartWithAllMeasuresAndTwoViewBy = {
 
 export const BulletChartWithPrimaryMeasureAndTwoViewByDates = {
     primaryMeasure: ReferenceMd.Won,
-    viewBy: [ReferenceMd.ClosedYear, ReferenceMdExt.ModifiedClosedYear],
+    viewBy: [ReferenceMd.DateDatasets.Closed.Year.Default, ReferenceMdExt.ModifiedClosedYear],
 };
 
 export const BulletChartWithAllMeasuresMeasuresAndTwoViewByDates = {
     primaryMeasure: ReferenceMd.Won,
     targetMeasure: ReferenceMd.Amount,
     comparativeMeasure: ReferenceMdExt.CalculatedLost,
-    viewBy: [ReferenceMd.ClosedYear, ReferenceMdExt.ModifiedClosedYear],
+    viewBy: [ReferenceMd.DateDatasets.Closed.Year.Default, ReferenceMdExt.ModifiedClosedYear],
 };
 
 export default scenariosFor<IBulletChartProps>("BulletChart", BulletChart)

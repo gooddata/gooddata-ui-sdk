@@ -10,13 +10,13 @@ export default scenariosFor<IXirrProps>("Xirr", Xirr)
     .withDefaultTags("themed")
     .addScenario("themed", {
         measure: ReferenceMd.SampleXIRR,
-        attribute: ReferenceMd.TimelineYear,
+        attribute: ReferenceMd.DateDatasets.Timeline.Year.Default,
     })
     .addScenario(
         "font",
         {
             measure: ReferenceMd.SampleXIRR,
-            attribute: ReferenceMd.TimelineYear,
+            attribute: ReferenceMd.DateDatasets.Timeline.Year.Default,
         },
         (m) => m.withTags("themed", "font"),
     );

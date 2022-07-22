@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import {
     modifyMeasure,
     newArithmeticMeasure,
@@ -72,6 +72,7 @@ export const StageHistoryAttributeRef: ObjRef = {
 /**
  * Copy of ClosedYear attribute
  */
-export const ModifiedClosedYear: IAttribute = modifyAttribute(ReferenceMd.ClosedYear, (m) =>
-    m.localId("closed.second"),
+export const ModifiedClosedYear: IAttribute = modifyAttribute(
+    ReferenceMd.DateDatasets.Closed.Year.Default,
+    (m) => m.localId("closed.second"),
 );

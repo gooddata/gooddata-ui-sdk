@@ -16,7 +16,7 @@ const simpleScenarios = responsiveScenarios(
     LineChart,
     {
         measures: [ReferenceMd.Amount],
-        trendBy: ReferenceMd.CreatedQuarterYear,
+        trendBy: ReferenceMd.DateDatasets.Created.QuarterYear.USShort,
         config: { enableCompactSize: true, legend: { enabled: false } },
     },
     sizeVariantsSimple,

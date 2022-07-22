@@ -55,17 +55,17 @@ export const ColumnChartWithArithmeticMeasuresAndViewBy = {
 
 export const ColumnChartViewByDateAndPop = {
     measures: [ReferenceMd.Amount, ReferenceMd.Won, ReferenceMdExt.WonPopClosedYear],
-    viewBy: [ReferenceMd.ClosedYear],
+    viewBy: [ReferenceMd.DateDatasets.Closed.Year.Default],
 };
 
 export const ColumnChartViewByTwoDates = {
     measures: [ReferenceMd.Amount, ReferenceMd.Won, ReferenceMdExt.WonPopClosedYear],
-    viewBy: [ReferenceMd.ClosedYear, ReferenceMdExt.ModifiedClosedYear],
+    viewBy: [ReferenceMd.DateDatasets.Closed.Year.Default, ReferenceMdExt.ModifiedClosedYear],
 };
 
 export const ColumnChartStackByDate = {
     measures: [ReferenceMd.Amount, ReferenceMd.Won, ReferenceMdExt.WonPopClosedYear],
-    stackBy: ReferenceMd.ClosedYear,
+    stackBy: ReferenceMd.DateDatasets.Closed.Year.Default,
 };
 
 /*

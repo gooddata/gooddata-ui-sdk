@@ -39,5 +39,5 @@ export default scenariosFor<IScatterPlotProps>("ScatterPlot", ScatterPlot)
     .addScenario("x and y axis measures and attribute with nulls in data", {
         xAxisMeasure: ReferenceMd.Amount,
         yAxisMeasure: ReferenceMd.WinRate,
-        attribute: ReferenceMd.ClosedYear,
+        attribute: ReferenceMd.DateDatasets.Closed.Year.Default,
     });

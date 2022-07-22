@@ -54,5 +54,5 @@ export default scenariosFor<IBubbleChartProps>("BubbleChart", BubbleChart)
         xAxisMeasure: ReferenceMd.Amount,
         yAxisMeasure: ReferenceMd.WinRate,
         size: ReferenceMd.Probability,
-        viewBy: ReferenceMd.ClosedYear,
+        viewBy: ReferenceMd.DateDatasets.Closed.Year.Default,
     });

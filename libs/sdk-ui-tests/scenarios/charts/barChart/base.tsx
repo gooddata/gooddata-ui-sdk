@@ -111,17 +111,17 @@ export const BarChartWithArithmeticMeasuresAndViewBy = {
 
 export const BarChartViewByDateAndPop = {
     measures: [ReferenceMd.Amount, ReferenceMd.Won, ReferenceMdExt.WonPopClosedYear],
-    viewBy: [ReferenceMd.ClosedYear],
+    viewBy: [ReferenceMd.DateDatasets.Closed.Year.Default],
 };
 
 export const BarChartViewByTwoDates = {
     measures: [ReferenceMd.Amount, ReferenceMd.Won, ReferenceMdExt.WonPopClosedYear],
-    viewBy: [ReferenceMd.ClosedYear, ReferenceMdExt.ModifiedClosedYear],
+    viewBy: [ReferenceMd.DateDatasets.Closed.Year.Default, ReferenceMdExt.ModifiedClosedYear],
 };
 
 export const BarChartStackByDate = {
     measures: [ReferenceMd.Amount, ReferenceMd.Won, ReferenceMdExt.WonPopClosedYear],
-    stackBy: ReferenceMd.ClosedYear,
+    stackBy: ReferenceMd.DateDatasets.Closed.Year.Default,
 };
 
 export default scenariosFor<IBarChartProps>("BarChart", BarChart)
@@ -159,7 +159,7 @@ export default scenariosFor<IBarChartProps>("BarChart", BarChart)
             ReferenceMdExt.CalculatedLost,
             ReferenceMdExt.CalculatedWonLostRatio,
         ],
-        viewBy: [ReferenceMd.ClosedYear],
+        viewBy: [ReferenceMd.DateDatasets.Closed.Year.Default],
     })
     .addScenario("viewBy with two dates", BarChartViewByTwoDates)
     .addScenario("stackBy with one date", BarChartStackByDate);

@@ -11,9 +11,9 @@ export default scenariosFor<IXirrProps>("Xirr", Xirr)
     })
     .addScenario("correct config", {
         measure: ReferenceMd.SampleXIRR,
-        attribute: ReferenceMd.TimelineYear,
+        attribute: ReferenceMd.DateDatasets.Timeline.Year.Default,
     })
     .addScenario("semantically wrong measure", {
         measure: ReferenceMd.TimelineEOP,
-        attribute: ReferenceMd.TimelineYear,
+        attribute: ReferenceMd.DateDatasets.Timeline.Year.Default,
     });

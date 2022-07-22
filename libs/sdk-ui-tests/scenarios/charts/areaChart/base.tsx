@@ -23,7 +23,7 @@ export const AreaChartWithTwoMeasuresAndViewBy = {
 
 export const AreaChartViewByDate = {
     measures: [ReferenceMd.Amount, ReferenceMd.Won],
-    viewBy: [ReferenceMd.ClosedYear],
+    viewBy: [ReferenceMd.DateDatasets.Closed.Year.Default],
 };
 
 export const AreaChartWithManyDataPoints = {
@@ -43,13 +43,13 @@ export const AreaChartWithLotArithmeticMeasuresAndViewBy = {
         ReferenceMdExt.CalculatedLost,
         ReferenceMdExt.CalculatedWonLostRatio,
     ],
-    viewBy: ReferenceMd.CreatedQuarterYear,
+    viewBy: ReferenceMd.DateDatasets.Created.QuarterYear.USShort,
 };
 
 export const AreaChartWithViewByDateAndStackByDate = {
     measures: [ReferenceMd.Amount],
-    viewBy: [ReferenceMd.ClosedYear],
-    stackBy: ReferenceMd.CreatedYear,
+    viewBy: [ReferenceMd.DateDatasets.Closed.Year.Default],
+    stackBy: ReferenceMd.DateDatasets.Created.Year.Default,
 };
 
 export default scenariosFor<IAreaChartProps>("AreaChart", AreaChart)

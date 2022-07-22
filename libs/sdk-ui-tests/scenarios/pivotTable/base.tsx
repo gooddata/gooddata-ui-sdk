@@ -50,13 +50,13 @@ export const PivotTableWithAttributesWithoutMeasures = {
     columns: [ReferenceMd.Department],
 };
 
-const modifiedCreatedYear: IAttribute = modifyAttribute(ReferenceMd.CreatedYear, (m) =>
+const modifiedCreatedYear: IAttribute = modifyAttribute(ReferenceMd.DateDatasets.Created.Year.Default, (m) =>
     m.localId("created.test"),
 );
 
 export const PivotTableWithTwoSameDate = {
     measures: [],
-    rows: [ReferenceMd.CreatedYear, modifiedCreatedYear],
+    rows: [ReferenceMd.DateDatasets.Created.Year.Default, modifiedCreatedYear],
     columns: [],
 };
 
