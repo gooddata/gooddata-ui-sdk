@@ -36,7 +36,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableKPIDashboardDeleteFilterButton: false,
     // disable edit mode in gdc-dashboards during development
     dashboardEditModeDevRollout: false,
-    enablePantherTheming: false,
+    enablePantherTheming: true, // TODO INE just for development
 };
 
 export const FeatureFlagsValues = {
