@@ -23,7 +23,7 @@ export const useResolveDashboardInsightProperties = (
     const { widget, insight } = props;
     const settings = useDashboardSelector(selectSettings);
 
-    const insightWithAddedWidgetProperties = useMemo(() => {
+    return useMemo(() => {
         if (!insight) {
             return insight;
         }
@@ -61,6 +61,4 @@ export const useResolveDashboardInsightProperties = (
 
         return insightSetProperties(insight, merged);
     }, [insight, widget.properties, settings]);
-
-    return insightWithAddedWidgetProperties;
 };

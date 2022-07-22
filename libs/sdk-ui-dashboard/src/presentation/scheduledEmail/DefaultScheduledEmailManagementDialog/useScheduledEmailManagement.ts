@@ -43,9 +43,7 @@ export const useScheduledEmailManagement = (props: IUseScheduledEmailManagementP
                       createdByCurrentUser: !canManageScheduledMail,
                   });
 
-              const reversedScheduledEmails = scheduledEmails.reverse();
-
-              return reversedScheduledEmails;
+              return scheduledEmails.reverse();
           }
         : null;
 

@@ -12,9 +12,5 @@ module.exports = {
         "plugin:react-hooks/recommended",
         "../../.eslintrc.react.js",
     ],
-    rules: {
-        // this pattern is necessary for typing saga iterator results
-        "sonarjs/prefer-immediate-return": "off",
-    },
     parserOptions: { tsconfigRootDir: __dirname },
 };

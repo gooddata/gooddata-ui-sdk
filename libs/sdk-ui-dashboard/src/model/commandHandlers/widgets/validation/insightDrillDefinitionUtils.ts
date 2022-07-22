@@ -102,10 +102,9 @@ export function extractDisplayFormIdentifiers(drillDefinitions: InsightDrillDefi
             .map((drillItem) => {
                 if (isDrillToCustomUrl(drillItem)) {
                     const params = getAttributeIdentifiersPlaceholdersFromUrl(drillItem.target.url);
-                    const ids = params.map((param) => {
+                    return params.map((param) => {
                         return idRef(param.identifier);
                     });
-                    return ids;
                 } else {
                     return [drillItem.target.displayForm, drillItem.target.hyperlinkDisplayForm];
                 }

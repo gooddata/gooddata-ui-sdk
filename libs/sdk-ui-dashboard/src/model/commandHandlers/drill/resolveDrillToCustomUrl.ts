@@ -304,7 +304,5 @@ export function* resolveDrillToCustomUrl(
 
     const replacements = [...attributeIdentifiersReplacements, ...insightIdentifiersReplacements];
 
-    const resolvedUrl = applyReplacements(customUrl, replacements);
-
-    return resolvedUrl;
+    return applyReplacements(customUrl, replacements);
 }

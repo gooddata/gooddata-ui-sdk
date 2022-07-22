@@ -29,7 +29,7 @@ export function validateExistingAlerts(
         payload: { refs },
     } = cmd;
 
-    const result = refs.map((ref) => {
+    return refs.map((ref) => {
         const alert = alerts.get(ref);
 
         if (!alert) {
@@ -42,6 +42,4 @@ export function validateExistingAlerts(
 
         return alert;
     });
-
-    return result;
 }

@@ -69,9 +69,7 @@ function getWidgetIndex(item: IDashboardLayoutItemFacade<ExtendedDashboardWidget
     for (let i = 0; i < sectionIndex; i += 1) {
         itemsInSectionsBefore += item.section().layout().section(i)?.items().count() ?? 0;
     }
-    const index = itemsInSectionsBefore + item.index();
-
-    return index;
+    return itemsInSectionsBefore + item.index();
 }
 
 /**
