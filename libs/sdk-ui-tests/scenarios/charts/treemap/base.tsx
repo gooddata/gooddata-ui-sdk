@@ -7,7 +7,7 @@ import { ScenarioGroupNames } from "../_infra/groupNames";
 
 export const TreemapWithArithmeticMeasuresAndSegment = {
     measures: [ReferenceMd.Amount, ReferenceMd.Won, ReferenceMdExt.CalculatedLost],
-    segmentBy: ReferenceMd.CreatedQuarterYear,
+    segmentBy: ReferenceMd.DateDatasets.Created.QuarterYear.USShort,
 };
 
 export const TreemapWithMeasureViewByAndSegmentBy = {
@@ -18,8 +18,8 @@ export const TreemapWithMeasureViewByAndSegmentBy = {
 
 export const TreemapWithViewByDateAndStackByDate = {
     measures: [ReferenceMd.Amount],
-    viewBy: ReferenceMd.ClosedYear,
-    segmentBy: ReferenceMd.CreatedYear,
+    viewBy: ReferenceMd.DateDatasets.Closed.Year.Default,
+    segmentBy: ReferenceMd.DateDatasets.Created.Year.Default,
 };
 
 export default scenariosFor<ITreemapProps>("Treemap", Treemap)

@@ -13,7 +13,7 @@ export const HeatmapWithMeasureRowsAndColumns = {
 export const HeatmapWithNullDataPoints = {
     measure: ReferenceMd.Amount,
     rows: ReferenceMd.Product.Name,
-    columns: ReferenceMd.ClosedYear,
+    columns: ReferenceMd.DateDatasets.Closed.Year.Default,
 };
 
 /*
