@@ -238,8 +238,12 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
         }
     };
 
+    protected getZIndex(): number | undefined {
+        return this.context ? this.context.getZIndex(this.id) : this.props.zIndex;
+    }
+
     protected getOverlayStyles = (): React.CSSProperties => {
-        const { alignTo, positionType, zIndex } = this.props;
+        const { alignTo, positionType } = this.props;
         const { alignment } = this.state;
 
         const position = this.isSameAsTargetPosition(positionType)
@@ -252,7 +256,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
             position,
             left: alignment.left,
             top: alignment.top,
-            zIndex: this.context ? this.context.getZIndex(this.id) : zIndex,
+            zIndex: this.getZIndex(),
             visibility: this.isAligned() ? undefined : "hidden",
         };
     };

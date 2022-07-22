@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import merge from "lodash/merge";
 import { Overlay } from "./Overlay";
 import { IOverlayProps, IOverlayState } from "./typings";
@@ -42,12 +42,16 @@ export class FullScreenOverlay extends Overlay<IOverlayState> {
     }
 
     protected getOverlayStyles = (): React.CSSProperties => {
+        const zIndex = this.getZIndex();
+        const additionalStyles = zIndex ? { zIndex } : {};
+
         return {
             position: "fixed",
             left: 0,
             top: 0,
             bottom: 0,
             right: 0,
+            ...additionalStyles,
         };
     };
 }

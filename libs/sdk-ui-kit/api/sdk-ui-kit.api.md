@@ -3463,6 +3463,8 @@ export class Overlay<T = HTMLElement> extends React_2.Component<IOverlayProps<T>
     // (undocumented)
     protected getOverlayStyles: () => React_2.CSSProperties;
     // (undocumented)
+    protected getZIndex(): number | undefined;
+    // (undocumented)
     onDocumentMouseDown(e: React_2.MouseEvent): void;
     // (undocumented)
     render(): JSX.Element;
