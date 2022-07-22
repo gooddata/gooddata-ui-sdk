@@ -1,4 +1,5 @@
 // (C) 2022 GoodData Corporation
+import { useEffect, useMemo } from "react";
 import {
     DataViewFacade,
     GoodDataSdkError,
@@ -73,6 +74,25 @@ export function useCustomWidgetExecutionDataView({
         onSuccess,
     });
 
+    const rejectError = useMemo(() => {
+        if (filterQueryTask.status === "rejected") {
+            return new UnexpectedSdkError("The widget filter query was rejected");
+        }
+        return undefined;
+    }, [filterQueryTask.status]);
+
+    useEffect(() => {
+        if (filterQueryTask.status === "rejected" && rejectError) {
+            onError?.(rejectError);
+        }
+    }, [filterQueryTask.status, onError, rejectError]);
+
+    useEffect(() => {
+        if (filterQueryTask.status === "error") {
+            onError?.(filterQueryTask.error);
+        }
+    }, [filterQueryTask.error, filterQueryTask.status, onError]);
+
     if (filterQueryTask.status === "pending" || dataViewTask.status === "pending") {
         return {
             error: undefined,
@@ -90,9 +110,6 @@ export function useCustomWidgetExecutionDataView({
     }
 
     if (filterQueryTask.status === "error" || dataViewTask.status === "error") {
-        if (filterQueryTask.status === "error") {
-            onError?.(filterQueryTask.error);
-        }
         return {
             error: (filterQueryTask.error ?? dataViewTask.error)!,
             result: undefined,
@@ -101,10 +118,8 @@ export function useCustomWidgetExecutionDataView({
     }
 
     if (filterQueryTask.status === "rejected") {
-        const error = new UnexpectedSdkError("The widget filter query was rejected");
-        onError?.(error);
         return {
-            error,
+            error: rejectError!,
             result: undefined,
             status: "error",
         };

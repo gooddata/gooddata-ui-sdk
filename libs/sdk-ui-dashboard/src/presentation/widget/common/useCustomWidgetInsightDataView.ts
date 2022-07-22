@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { IInsightDefinition, insightSetFilters, isInsight, ObjRef } from "@gooddata/sdk-model";
 import {
     DataViewFacade,
@@ -121,6 +121,12 @@ export function useCustomWidgetInsightDataView({
         onSuccess,
     });
 
+    useEffect(() => {
+        if (filterQueryTask.status === "error") {
+            onError?.(filterQueryTask.error);
+        }
+    }, [filterQueryTask.error, filterQueryTask.status, onError]);
+
     // insight non-success status has precedence, other things cannot run without an insight
     if (
         effectiveInsightTask.status === "error" ||
@@ -151,9 +157,6 @@ export function useCustomWidgetInsightDataView({
     }
 
     if (filterQueryTask.status === "error" || dataViewTask.status === "error") {
-        if (filterQueryTask.status === "error") {
-            onError?.(filterQueryTask.error);
-        }
         return {
             error: (dataViewTask.error ?? filterQueryTask.error)!,
             result: undefined,
