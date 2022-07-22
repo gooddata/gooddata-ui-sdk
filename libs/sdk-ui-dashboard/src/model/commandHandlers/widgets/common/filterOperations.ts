@@ -21,6 +21,7 @@ import {
 import { SagaIterator } from "redux-saga";
 import { call, SagaReturnType, select } from "redux-saga/effects";
 import { selectFilterContextAttributeFilters } from "../../../store/filterContext/filterContextSelectors";
+import { selectAllCatalogDateDatasetsMap } from "../../../store/catalog/catalogSelectors";
 
 function toAttributeDisplayFormRefs(references: IDashboardFilterReference[]) {
     return references.filter(isDashboardAttributeFilterReference).map((reference) => reference.displayForm);
@@ -72,19 +73,33 @@ function* replaceFilterSettings(
     };
 }
 
+function* changeDateFilterIgnore(
+    widget: IAnalyticalWidget,
+    dateDataSet: ICatalogDateDataset | undefined,
+): SagaIterator<FilterOpResult> {
+    const attributeFilters: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
+        selectFilterContextAttributeFilters,
+    );
+    const ignoredFilters = getIgnoredAttributeFilters(attributeFilters, widget.ignoreDashboardFilters);
+
+    return {
+        dateDataSet,
+        ignoredFilters,
+    };
+}
+
 function* disableDateFilter(
-    ctx: DashboardContext,
-    validators: FilterValidators<IAnalyticalWidget>,
-    cmd: IDashboardCommand,
+    _ctx: DashboardContext,
+    _validators: FilterValidators<IAnalyticalWidget>,
+    _cmd: IDashboardCommand,
     widget: IAnalyticalWidget,
 ): SagaIterator<FilterOpResult> {
-    const replaceEquivalent: FilterOpReplaceAll = {
-        type: "replace",
-        dateDatasetForFiltering: undefined,
-        ignoreAttributeFilters: toAttributeDisplayFormRefs(widget.ignoreDashboardFilters),
-    };
-
-    return yield call(replaceFilterSettings, ctx, validators, cmd, widget, replaceEquivalent);
+    const result: SagaReturnType<typeof changeDateFilterIgnore> = yield call(
+        changeDateFilterIgnore,
+        widget,
+        undefined,
+    );
+    return result;
 }
 
 function* enableDateFilter(
@@ -94,13 +109,35 @@ function* enableDateFilter(
     widget: IAnalyticalWidget,
     op: FilterOpEnableDateFilter,
 ): SagaIterator<FilterOpResult> {
-    const replaceEquivalent: FilterOpReplaceAll = {
-        type: "replace",
-        dateDatasetForFiltering: op.dateDataset,
-        ignoreAttributeFilters: toAttributeDisplayFormRefs(widget.ignoreDashboardFilters),
-    };
+    const dateDataSet: SagaReturnType<typeof validators.dateDatasetValidator> = yield call(
+        validators.dateDatasetValidator,
+        ctx,
+        cmd,
+        widget,
+        op.dateDataset,
+    );
 
-    return yield call(replaceFilterSettings, ctx, validators, cmd, widget, replaceEquivalent);
+    const result: SagaReturnType<typeof changeDateFilterIgnore> = yield call(
+        changeDateFilterIgnore,
+        widget,
+        dateDataSet,
+    );
+    return result;
+}
+
+function* changeAttributeIgnores(
+    widget: IAnalyticalWidget,
+    newlyIgnoredFilters: IDashboardAttributeFilter[] | undefined,
+): SagaIterator<FilterOpResult> {
+    const dateDataSetMap: SagaReturnType<typeof selectAllCatalogDateDatasetsMap> = yield select(
+        selectAllCatalogDateDatasetsMap,
+    );
+    const dateDataSet = widget.dateDataSet ? dateDataSetMap.get(widget.dateDataSet) : undefined;
+
+    return {
+        dateDataSet,
+        ignoredFilters: newlyIgnoredFilters,
+    };
 }
 
 function* replaceAttributeIgnores(
@@ -110,13 +147,21 @@ function* replaceAttributeIgnores(
     widget: IAnalyticalWidget,
     op: FilterOpReplaceAttributeIgnores,
 ): SagaIterator<FilterOpResult> {
-    const replaceEquivalent: FilterOpReplaceAll = {
-        type: "replace",
-        dateDatasetForFiltering: widget.dateDataSet,
-        ignoreAttributeFilters: op.displayFormRefs,
-    };
+    const ignoredFilters: SagaReturnType<typeof validators.attributeFilterValidator> = yield call(
+        validators.attributeFilterValidator,
+        ctx,
+        cmd,
+        widget,
+        op.displayFormRefs,
+    );
 
-    return yield call(replaceFilterSettings, ctx, validators, cmd, widget, replaceEquivalent);
+    const result: SagaReturnType<typeof changeAttributeIgnores> = yield call(
+        changeAttributeIgnores,
+        widget,
+        ignoredFilters,
+    );
+
+    return result;
 }
 
 function* ignoreAttributeFilter(
@@ -126,39 +171,30 @@ function* ignoreAttributeFilter(
     widget: IAnalyticalWidget,
     op: FilterOpIgnoreAttributeFilter,
 ): SagaIterator<FilterOpResult> {
-    const replaceIntermediate: FilterOpReplaceAll = {
-        type: "replace",
-        dateDatasetForFiltering: widget.dateDataSet,
-        ignoreAttributeFilters: op.displayFormRefs,
-    };
-
-    const intermediate: SagaReturnType<typeof replaceFilterSettings> = yield call(
-        replaceFilterSettings,
+    const ignoredFilters: SagaReturnType<typeof validators.attributeFilterValidator> = yield call(
+        validators.attributeFilterValidator,
         ctx,
-        validators,
         cmd,
         widget,
-        replaceIntermediate,
+        op.displayFormRefs,
     );
+
     const attributeFilters: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
         selectFilterContextAttributeFilters,
     );
     const alreadyIgnored = getIgnoredAttributeFilters(attributeFilters, widget.ignoreDashboardFilters);
-    const addToIgnore = (intermediate.ignoredFilters ?? []).filter((candidate) => {
-        return (
-            alreadyIgnored.find((ignoredFilter) =>
-                areObjRefsEqual(
-                    ignoredFilter.attributeFilter.displayForm,
-                    candidate.attributeFilter.displayForm,
-                ),
-            ) === undefined
+    const addToIgnore = (ignoredFilters ?? []).filter((candidate) => {
+        return !alreadyIgnored.some((ignoredFilter) =>
+            areObjRefsEqual(ignoredFilter.attributeFilter.displayForm, candidate.attributeFilter.displayForm),
         );
     });
 
-    return {
-        dateDataSet: intermediate.dateDataSet,
-        ignoredFilters: [...alreadyIgnored, ...addToIgnore],
-    };
+    const result: SagaReturnType<typeof changeAttributeIgnores> = yield call(changeAttributeIgnores, widget, [
+        ...alreadyIgnored,
+        ...addToIgnore,
+    ]);
+
+    return result;
 }
 
 function* unignoreAttributeFilter(
@@ -168,36 +204,31 @@ function* unignoreAttributeFilter(
     widget: IAnalyticalWidget,
     op: FilterOpUnignoreAttributeFilter,
 ): SagaIterator<FilterOpResult> {
-    const replaceIntermediate: FilterOpReplaceAll = {
-        type: "replace",
-        dateDatasetForFiltering: widget.dateDataSet,
-        ignoreAttributeFilters: op.displayFormRefs,
-    };
-
-    const intermediate: SagaReturnType<typeof replaceFilterSettings> = yield call(
-        replaceFilterSettings,
+    const unignoredFilters: SagaReturnType<typeof validators.attributeFilterValidator> = yield call(
+        validators.attributeFilterValidator,
         ctx,
-        validators,
         cmd,
         widget,
-        replaceIntermediate,
+        op.displayFormRefs,
     );
+
     const attributeFilters: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
         selectFilterContextAttributeFilters,
     );
     const alreadyIgnored = getIgnoredAttributeFilters(attributeFilters, widget.ignoreDashboardFilters);
     const reducedIgnores = alreadyIgnored.filter((candidate) => {
-        return (
-            (intermediate.ignoredFilters ?? []).find((toRemove) =>
-                areObjRefsEqual(candidate.attributeFilter.displayForm, toRemove.attributeFilter.displayForm),
-            ) === undefined
+        return !(unignoredFilters ?? []).some((toRemove) =>
+            areObjRefsEqual(candidate.attributeFilter.displayForm, toRemove.attributeFilter.displayForm),
         );
     });
 
-    return {
-        dateDataSet: intermediate.dateDataSet,
-        ignoredFilters: reducedIgnores,
-    };
+    const result: SagaReturnType<typeof changeAttributeIgnores> = yield call(
+        changeAttributeIgnores,
+        widget,
+        reducedIgnores,
+    );
+
+    return result;
 }
 
 //

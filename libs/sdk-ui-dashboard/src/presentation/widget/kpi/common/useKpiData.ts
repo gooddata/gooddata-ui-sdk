@@ -106,25 +106,15 @@ function getSecondaryMeasure(
         !effectiveFilters ||
         !effectiveFilters.some((filter) => isDateFilter(filter) && !isAllTimeDateFilter(filter));
 
-    if (comparison === "none" || isAllTime) {
+    if (comparison === "none" || isAllTime || !kpiWidget.dateDataSet) {
         return undefined;
     }
 
     if (comparison === "previousPeriod") {
-        invariant(
-            kpiWidget.dateDataSet,
-            "Inconsistent KPI in useKpiData, it has comparison but not dateDataset",
-        );
-
         return newPreviousPeriodMeasure(primaryMeasure, [{ dataSet: kpiWidget.dateDataSet, periodsAgo: 1 }]);
     }
 
     if (comparison === "lastYear") {
-        invariant(
-            kpiWidget.dateDataSet,
-            "Inconsistent KPI in useKpiData, it has comparison but not dateDataset",
-        );
-
         const relevantDateDataset = dateDatasetsMap.get(kpiWidget.dateDataSet);
 
         invariant(relevantDateDataset, "Cannot find relevant date dataset in useKpiData");

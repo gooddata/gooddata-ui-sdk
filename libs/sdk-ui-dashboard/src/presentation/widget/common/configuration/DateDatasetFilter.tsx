@@ -8,13 +8,14 @@ import { useDashboardSelector, selectAllCatalogDateDatasetsMap } from "../../../
 import { DateDatasetPicker } from "./DateDatasetPicker";
 import { getUnrelatedDateDataset } from "./utils";
 import { useDateFilterConfigurationHandling } from "./useDateFilterConfigurationHandling";
+import { useIsSelectedDatasetHidden } from "./useIsSelectedDatasetHidden";
 
 const CONFIG_PANEL_DATE_FILTER_WIDTH = 159;
 
 interface IDateDatasetFilterProps {
     widget: IWidget;
     relatedDateDatasets: ICatalogDateDataset[] | undefined;
-    isDropdownLoading: boolean;
+    isDatasetsLoading: boolean;
 
     dateFromVisualization?: ICatalogDateDataset;
     dateFilterCheckboxDisabled: boolean;
@@ -26,12 +27,14 @@ export const DateDatasetFilter: React.FC<IDateDatasetFilterProps> = (props) => {
         widget,
         dateFilterCheckboxDisabled,
         dateFromVisualization,
-        isDropdownLoading,
+        isDatasetsLoading,
     } = props;
 
     const catalogDatasetsMap = useDashboardSelector(selectAllCatalogDateDatasetsMap);
     const selectedDateDataset = widget.dateDataSet && catalogDatasetsMap.get(widget.dateDataSet);
-    const selectedDateDatasetHiddenByObjectAvailability = false; // TODO we need to resolve tags here, but ICatalogDateDataset has no tags...
+
+    const { selectedDateDatasetHiddenByObjectAvailability, status: visibleDateDatasetsStatus } =
+        useIsSelectedDatasetHidden(selectedDateDataset?.dataSet.ref);
 
     const [isDateFilterEnabled, setIsDateFilterEnabled] = useState(!!widget.dateDataSet);
 
@@ -42,6 +45,7 @@ export const DateDatasetFilter: React.FC<IDateDatasetFilterProps> = (props) => {
     );
 
     const isFilterLoading = status === "loading";
+    const isDropdownLoading = isDatasetsLoading || visibleDateDatasetsStatus === "loading";
 
     const shouldRenderDateDataSetsDropdown =
         !dateFilterCheckboxDisabled &&

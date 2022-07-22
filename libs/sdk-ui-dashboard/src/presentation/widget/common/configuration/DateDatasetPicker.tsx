@@ -48,7 +48,7 @@ export const DateDatasetPicker: React.FC<IDateDatasetPickerProps> = (props) => {
                 widgetRef={widget.ref}
                 className="s-filter-date-dropdown"
                 relatedDateDatasets={relatedDateDatasets ?? []}
-                activeDateDataset={selectedDateDataset}
+                activeDateDataset={selectedDateDatasetHidden ? undefined : selectedDateDataset}
                 unrelatedDateDataset={unrelatedDateDataset}
                 dateFromVisualization={dateFromVisualization}
                 onDateDatasetChange={onDateDatasetChange}
