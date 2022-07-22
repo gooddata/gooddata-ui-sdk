@@ -76,6 +76,7 @@ import { isKpiWithComparison } from '@gooddata/sdk-model';
 import { isKpiWithoutComparison } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
 import { ITheme as ITheme_2 } from '@gooddata/sdk-model';
+import { IThemeMetadataObject } from '@gooddata/sdk-model';
 import { IUser as IUser_2 } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
 import { IWidget as IWidget_2 } from '@gooddata/sdk-model';
@@ -962,6 +963,7 @@ export interface IOrganization {
     getDescriptor(): Promise<IOrganizationDescriptor_2>;
     readonly organizationId: string;
     securitySettings(): ISecuritySettingsService;
+    styling(): IOrganizationStylingService;
 }
 
 // @public
@@ -971,6 +973,14 @@ export interface IOrganizationDescriptor extends m.IOrganizationDescriptor {
 // @public
 export interface IOrganizations {
     getCurrentOrganization(): Promise<IOrganization>;
+}
+
+// @public
+export interface IOrganizationStylingService {
+    // (undocumented)
+    getThemes(): Promise<IThemeMetadataObject[]>;
+    // (undocumented)
+    setActiveTheme(themeRef: ObjRef): Promise<void>;
 }
 
 // @public

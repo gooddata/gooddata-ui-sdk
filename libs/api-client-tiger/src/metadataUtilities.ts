@@ -16,6 +16,7 @@ import {
     JsonApiFilterContextOutList,
     JsonApiLabelOutList,
     JsonApiMetricOutList,
+    JsonApiThemeOutList,
     JsonApiVisualizationObjectOutList,
 } from "./generated/metadata-json-api";
 
@@ -52,6 +53,15 @@ export type MetadataGetEntitiesUserParams = {
 };
 
 /**
+ * Theme get entities params
+ *
+ * @internal
+ */
+export type MetadataGetEntitiesThemeParams = {
+    filter?: string;
+};
+
+/**
  * Common parameters for all API client getEntities* parameters.
  *
  * Note: the different generated client functions are actually incorrect. They list page, size, include, sort in
@@ -59,7 +69,10 @@ export type MetadataGetEntitiesUserParams = {
  *
  * @internal
  */
-export type MetadataGetEntitiesParams = MetadataGetEntitiesWorkspaceParams | MetadataGetEntitiesUserParams;
+export type MetadataGetEntitiesParams =
+    | MetadataGetEntitiesWorkspaceParams
+    | MetadataGetEntitiesUserParams
+    | MetadataGetEntitiesThemeParams;
 
 /**
  * Common parameters for all API client getEntities* parameters.
@@ -92,7 +105,8 @@ export type MetadataGetEntitiesResult =
     | JsonApiMetricOutList
     | JsonApiFactOutList
     | JsonApiFilterContextOutList
-    | JsonApiApiTokenOutList;
+    | JsonApiApiTokenOutList
+    | JsonApiThemeOutList;
 
 /**
  * All API client getEntities* functions follow this signature.

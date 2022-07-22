@@ -41,6 +41,7 @@ import {
     IMeasureReferencing,
     IWorkspaceUserGroupsQuery,
     IWorkspaceAccessControlService,
+    IOrganizationStylingService,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -447,6 +448,13 @@ class DummyOrganization implements IOrganization {
             isDashboardPluginUrlValid(_url: string, _workspace: string): Promise<boolean> {
                 return Promise.resolve(true);
             },
+        };
+    }
+
+    styling(): IOrganizationStylingService {
+        return {
+            getThemes: () => Promise.resolve([]),
+            setActiveTheme: () => Promise.resolve(),
         };
     }
 }

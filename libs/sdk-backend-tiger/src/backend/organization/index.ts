@@ -1,10 +1,16 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { IOrganization, IOrganizations, ISecuritySettingsService } from "@gooddata/sdk-backend-spi";
+import {
+    IOrganization,
+    IOrganizations,
+    IOrganizationStylingService,
+    ISecuritySettingsService,
+} from "@gooddata/sdk-backend-spi";
 import { IOrganizationDescriptor } from "@gooddata/sdk-model";
 
 import { SecuritySettingsService } from "./securitySettings";
 import { TigerAuthenticatedCallGuard } from "../../types";
+import { OrganizationStylingService } from "./styling";
 
 export class TigerOrganization implements IOrganization {
     constructor(
@@ -33,6 +39,10 @@ export class TigerOrganization implements IOrganization {
 
     public securitySettings(): ISecuritySettingsService {
         return new SecuritySettingsService(this.organizationId);
+    }
+
+    public styling(): IOrganizationStylingService {
+        return new OrganizationStylingService(this.authCall);
     }
 }
 

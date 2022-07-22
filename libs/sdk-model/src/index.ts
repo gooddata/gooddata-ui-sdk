@@ -684,6 +684,7 @@ export {
     IThemeDashboardSectionDescription,
     IThemeDashboardSectionTitle,
     IThemeDashboardTitle,
+    IThemeMetadataObject,
     IThemeModal,
     IThemeModalTitle,
     IThemeTooltip,

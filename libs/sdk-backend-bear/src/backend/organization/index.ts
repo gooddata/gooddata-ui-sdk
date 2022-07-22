@@ -1,11 +1,17 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { IOrganization, IOrganizations, ISecuritySettingsService } from "@gooddata/sdk-backend-spi";
+import {
+    IOrganization,
+    IOrganizations,
+    IOrganizationStylingService,
+    ISecuritySettingsService,
+} from "@gooddata/sdk-backend-spi";
 import { IOrganizationDescriptor } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 
 import { SecuritySettingsService } from "./securitySettings";
 import { BearAuthenticatedCallGuard } from "../../types/auth";
+import { OrganizationStylingService } from "./styling";
 
 export class BearOrganization implements IOrganization {
     constructor(
@@ -33,6 +39,10 @@ export class BearOrganization implements IOrganization {
     public securitySettings(): ISecuritySettingsService {
         const organizationUri = `/gdc/domains/${this.organizationId}`;
         return new SecuritySettingsService(this.authCall, organizationUri);
+    }
+
+    public styling(): IOrganizationStylingService {
+        return new OrganizationStylingService();
     }
 }
 

@@ -33,6 +33,7 @@ import {
     IDateFilterConfigsQueryResult,
     IWorkspaceUserGroupsQuery,
     IWorkspaceAccessControlService,
+    IOrganizationStylingService,
 } from "@gooddata/sdk-backend-spi";
 import {
     IColorPalette,
@@ -261,6 +262,12 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                     }
                     return Promise.resolve(true);
                 },
+            };
+        },
+        styling(): IOrganizationStylingService {
+            return {
+                getThemes: () => Promise.resolve([]),
+                setActiveTheme: () => Promise.resolve(),
             };
         },
     };

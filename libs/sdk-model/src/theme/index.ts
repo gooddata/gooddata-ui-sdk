@@ -1,5 +1,7 @@
 // (C) 2020-2022 GoodData Corporation
 
+import { IMetadataObject } from "../ldm/metadata";
+
 /**
  * Custom font URI which is used to override the default font
  *
@@ -816,4 +818,13 @@ export interface ITheme {
      * Analytical designer specific properties
      */
     analyticalDesigner?: IThemeAnalyticalDesigner;
+}
+
+/**
+ * Theme metadata object
+ *
+ * @alpha
+ */
+export interface IThemeMetadataObject extends IMetadataObject {
+    theme: ITheme;
 }
