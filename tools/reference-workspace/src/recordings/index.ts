@@ -2,7 +2,7 @@
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable header/header */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2022-07-12T12:39:34.917Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2022-07-26T12:13:00.555Z; */
 const fp_00ab8c432637030b305313405b3f4efc = {
     definition: require("./uiTestScenarios/executions/00ab8c432637030b305313405b3f4efc/definition.json"),
     executionResult: require("./uiTestScenarios/executions/00ab8c432637030b305313405b3f4efc/executionResult.json"),
@@ -1759,6 +1759,9 @@ const i_BarChart_502978c311765bb56a9e9ad9c5ffc195 = {
 const i_BarChart_5031770cf6df0ded9597dcfc4ca55146 = {
     obj: require("./uiTestScenarios/insights/BarChart.5031770cf6df0ded9597dcfc4ca55146/obj.json"),
 };
+const i_BarChart_528a4646cf071cbdbdd2f74fa468813f = {
+    obj: require("./uiTestScenarios/insights/BarChart.528a4646cf071cbdbdd2f74fa468813f/obj.json"),
+};
 const i_BarChart_544b073235ffcc41396b4b5f71c8efdd = {
     obj: require("./uiTestScenarios/insights/BarChart.544b073235ffcc41396b4b5f71c8efdd/obj.json"),
 };
@@ -2502,6 +2505,9 @@ const i_ColumnChart_3e0f5869b74a5798bc34280f774cb14a = {
 };
 const i_ColumnChart_3e8baf9a4a568e084ddc2ebb560d3fd4 = {
     obj: require("./uiTestScenarios/insights/ColumnChart.3e8baf9a4a568e084ddc2ebb560d3fd4/obj.json"),
+};
+const i_ColumnChart_407c66e8e5714012a706e7dbd0941749 = {
+    obj: require("./uiTestScenarios/insights/ColumnChart.407c66e8e5714012a706e7dbd0941749/obj.json"),
 };
 const i_ColumnChart_43280dc648476209c055156a88fbc89f = {
     obj: require("./uiTestScenarios/insights/ColumnChart.43280dc648476209c055156a88fbc89f/obj.json"),
@@ -5056,6 +5062,7 @@ export const Recordings = {
             i_BarChart_4f67e58629863f139c791769bb8df688,
             i_BarChart_502978c311765bb56a9e9ad9c5ffc195,
             i_BarChart_5031770cf6df0ded9597dcfc4ca55146,
+            i_BarChart_528a4646cf071cbdbdd2f74fa468813f,
             i_BarChart_544b073235ffcc41396b4b5f71c8efdd,
             i_BarChart_55519316df8abae731fe3866bbfd620e,
             i_BarChart_58cc5b2ca9519b01ed3e4cd2d8709f62,
@@ -5304,6 +5311,7 @@ export const Recordings = {
             i_ColumnChart_3e0c7af52ffd8ee35a6dee46409d15d9,
             i_ColumnChart_3e0f5869b74a5798bc34280f774cb14a,
             i_ColumnChart_3e8baf9a4a568e084ddc2ebb560d3fd4,
+            i_ColumnChart_407c66e8e5714012a706e7dbd0941749,
             i_ColumnChart_43280dc648476209c055156a88fbc89f,
             i_ColumnChart_457b8e5227317c1f629c84ab2b012fd2,
             i_ColumnChart_46803fa6ce6742f0dafa2b80c19fd334,

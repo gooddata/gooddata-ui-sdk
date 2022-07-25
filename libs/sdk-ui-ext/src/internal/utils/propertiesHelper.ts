@@ -7,6 +7,7 @@ import set from "lodash/set";
 import keys from "lodash/keys";
 import isEmpty from "lodash/isEmpty";
 import cloneDeep from "lodash/cloneDeep";
+import isNil from "lodash/isNil";
 import {
     IExtendedReferencePoint,
     IVisualizationProperties,
@@ -20,6 +21,7 @@ import {
     getItemsLocalIdentifiers,
     getMeasureItems,
     getAllMeasuresShowOnSecondaryAxis,
+    getStackItems,
 } from "./bucketHelper";
 import { PROPERTY_CONTROLS } from "../constants/properties";
 import { UICONFIG_AXIS } from "../constants/uiConfig";
@@ -134,6 +136,39 @@ export function getReferencePointWithSupportedProperties(
             controls: supportedControlsProperties,
         },
     };
+}
+
+export function getReferencePointWithTotalLabelsInitialized(
+    referencePoint: IExtendedReferencePoint,
+): IExtendedReferencePoint {
+    const dataLabelVisibility = referencePoint.properties.controls?.dataLabels?.visible;
+    const stacks = getStackItems(referencePoint.buckets);
+
+    // Initialize total labels visibility with data labels visibility value.
+    // Initialize if data labels visibility is defined and total labels visibility
+    // is not defined and if current chart configuration allows configuring total labels.
+    if (
+        !isNil(dataLabelVisibility) &&
+        isNil(referencePoint.properties.controls?.dataLabels?.totalsVisible) &&
+        !isStackingToPercent(referencePoint.properties) &&
+        (stacks.length || isStackingMeasure(referencePoint.properties))
+    ) {
+        return {
+            ...referencePoint,
+            properties: {
+                ...referencePoint.properties,
+                controls: {
+                    ...referencePoint.properties.controls,
+                    dataLabels: {
+                        ...referencePoint.properties.controls.dataLabels,
+                        totalsVisible: dataLabelVisibility,
+                    },
+                },
+            },
+        };
+    }
+
+    return referencePoint;
 }
 
 export function isStackingMeasure(properties: IVisualizationProperties): boolean {

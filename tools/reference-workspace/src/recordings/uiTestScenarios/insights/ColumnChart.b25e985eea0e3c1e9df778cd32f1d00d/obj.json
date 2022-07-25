@@ -41,7 +41,7 @@
         ],
         "filters": [],
         "identifier": "ColumnChart.b25e985eea0e3c1e9df778cd32f1d00d",
-        "properties": { "controls": { "dataLabels": { "totalsVisible": "auto", "visible": "auto" } } },
+        "properties": { "controls": { "dataLabels": { "visible": "auto" } } },
         "sorts": [],
         "title": "ColumnChart - data labels - data labels auto visibility",
         "uri": "ColumnChart.b25e985eea0e3c1e9df778cd32f1d00d",

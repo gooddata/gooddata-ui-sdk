@@ -41,7 +41,7 @@
         ],
         "filters": [],
         "identifier": "ColumnChart.a5f7116c246851c0a92638f631ee170a",
-        "properties": { "controls": { "dataLabels": { "totalsVisible": true, "visible": true } } },
+        "properties": { "controls": { "dataLabels": { "visible": true } } },
         "sorts": [],
         "title": "ColumnChart - data labels - forced dataLabels visible and german separators",
         "uri": "ColumnChart.a5f7116c246851c0a92638f631ee170a",

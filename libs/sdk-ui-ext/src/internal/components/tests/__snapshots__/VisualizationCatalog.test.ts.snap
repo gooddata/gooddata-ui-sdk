@@ -7306,6 +7306,46 @@ export function MyComponent() {
 "
 `;
 
+exports[`getEmbeddingCode functionality should generate code for BarChart - data labels - data labels forced hidden totals forced hidden 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newAttributeAreaSort, newMeasure } from \\"@gooddata/sdk-model\\";
+import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
+];
+const viewBy: IAttribute[] = [
+    newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
+];
+const stackBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const sortBy: ISortItem[] = [
+    newAttributeAreaSort(\\"a_label.owner.region\\", \\"desc\\", \\"sum\\")
+];
+const config: IChartConfig = {
+    dataLabels: {totalsVisible: false, visible: false},
+    enableSeparateTotalLabels: true,
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    legend: {position: \\"right\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <BarChart
+                measures={measures}
+                viewBy={viewBy}
+                stackBy={stackBy}
+                sortBy={sortBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
 exports[`getEmbeddingCode functionality should generate code for BarChart - data labels - data labels forced hidden totals forced visible 1`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newAttributeAreaSort, newMeasure } from \\"@gooddata/sdk-model\\";
@@ -16478,7 +16518,7 @@ const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
 ];
 const config: IChartConfig = {
-    dataLabels: {totalsVisible: true, visible: true},
+    dataLabels: {visible: true},
     stackMeasuresToPercent: true,
     yaxis: {max: \\"0.9\\", min: \\"0.1\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -16937,7 +16977,7 @@ const viewBy: IAttribute[] = [
 ];
 const stackBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
-    dataLabels: {totalsVisible: \\"auto\\", visible: \\"auto\\"},
+    dataLabels: {visible: \\"auto\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"right\\"},
     dataPoints: {visible: \\"auto\\"}
@@ -16960,6 +17000,41 @@ export function MyComponent() {
 `;
 
 exports[`getEmbeddingCode functionality should generate code for ColumnChart - data labels - data labels forced hidden 1`] = `
+"import React from \\"react\\";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { ColumnChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
+];
+const viewBy: IAttribute[] = [
+    newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
+];
+const stackBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
+const config: IChartConfig = {
+    dataLabels: {visible: false},
+    separators: {decimal: \\".\\", thousand: \\",\\"},
+    legend: {position: \\"right\\"},
+    dataPoints: {visible: \\"auto\\"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <ColumnChart
+                measures={measures}
+                viewBy={viewBy}
+                stackBy={stackBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality should generate code for ColumnChart - data labels - data labels forced hidden totals forced hidden 1`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
 import { ColumnChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
@@ -17042,7 +17117,7 @@ const viewBy: IAttribute[] = [
 ];
 const stackBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
-    dataLabels: {totalsVisible: true, visible: true},
+    dataLabels: {visible: true},
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"right\\"},
     dataPoints: {visible: \\"auto\\"}
@@ -17111,7 +17186,7 @@ const viewBy: IAttribute[] = [
 ];
 const stackBy: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
 const config: IChartConfig = {
-    dataLabels: {totalsVisible: true, visible: true},
+    dataLabels: {visible: true},
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"right\\"},
     dataPoints: {visible: \\"auto\\"}
