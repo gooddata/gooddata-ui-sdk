@@ -4003,6 +4003,20 @@ export interface MeasureDateDatasets {
 // @internal (undocumented)
 export const MenuButton: (props: IMenuButtonProps) => JSX.Element;
 
+// @internal
+export const metaActions: CaseReducerActions<    {
+setMeta: CaseReducer<DashboardMetaState, {
+payload: {
+dashboard?: IDashboard<IDashboardWidget> | undefined;
+};
+type: string;
+}>;
+setDashboardTitle: CaseReducer<DashboardMetaState, {
+payload: string;
+type: string;
+}>;
+}>;
+
 // @alpha (undocumented)
 export interface ModifyDrillsForInsightWidget extends IDashboardCommand {
     // (undocumented)
