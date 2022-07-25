@@ -1,0 +1,87 @@
+// (C) 2022 GoodData Corporation
+import { IAttributeFilterLoader } from "./attributeFilterLoader";
+import { AttributeElementKey } from "./common";
+import {
+    InvertableSelection,
+    IStagedInvertableSelectionHandler,
+    IStagedSingleSelectionHandler,
+} from "./selectionHandler";
+
+/**
+ * Invertable selection with list of the unique attribute elements keys.
+ *
+ * @alpha
+ */
+export type InvertableAttributeElementSelection = InvertableSelection<AttributeElementKey>;
+
+/**
+ * Core API for attribute filter components, that allows you to implement custom attribute filter components.
+ *
+ * @remarks
+ * It has the following capabilities:
+ *
+ * - Load all the required metadata during the intitialization
+ *
+ * - Attribute elements paging and filtering
+ *
+ * - Loading of the additional attribute elements
+ *
+ * - Invertable multi selection handling with working and committed stage
+ *
+ * - Support for static attribute elements (if you don't want to load them from the backend)
+ *
+ * - Support for hiding particular attribute elements
+ *
+ * @alpha
+ */
+export interface IMultiSelectAttributeFilterHandler
+    extends IAttributeFilterLoader,
+        IStagedInvertableSelectionHandler<InvertableAttributeElementSelection> {}
+
+/**
+ * Core API for attribute filter components, that allows you to implement custom attribute filter components.
+ *
+ * @remarks
+ * It has the following capabilities:
+ *
+ * - Load all the required metadata during the intitialization
+ *
+ * - Attribute elements paging and filtering
+ *
+ * - Loading of the additional attribute elements
+ *
+ * - Single selection handling with working and committed stage
+ *
+ * - Support for static attribute elements (if you don't want to load them from the backend)
+ *
+ * - Support for hiding particular attribute elements
+ *
+ * @alpha
+ */
+export interface ISingleSelectAttributeFilterHandler
+    extends IAttributeFilterLoader,
+        IStagedSingleSelectionHandler<AttributeElementKey | undefined> {}
+
+/**
+ * Core API for attribute filter components, that allows you to implement custom attribute filter components.
+ *
+ * @remarks
+ * It has the following capabilities:
+ *
+ * - Load all the required metadata during the intitialization
+ *
+ * - Attribute elements paging and filtering
+ *
+ * - Loading of the additional attribute elements
+ *
+ * - Single selection handling with working and committed stage
+ *
+ * - Support for static attribute elements (if you don't want to load them from the backend)
+ *
+ * - Support for hiding particular attribute elements
+ *
+ * @alpha
+ */
+export type IAttributeFilterHandler =
+    | IMultiSelectAttributeFilterHandler
+    | ISingleSelectAttributeFilterHandler;

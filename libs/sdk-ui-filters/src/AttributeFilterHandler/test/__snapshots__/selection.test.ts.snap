@@ -1,0 +1,106 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MultiSelectAttributeFilterHandler changeSelection() should trigger onSelectionChanged() callback: parameters 1`] = `
+Array [
+  Object {
+    "selection": Object {
+      "isInverted": true,
+      "keys": Array [
+        "/selectedElement",
+      ],
+    },
+  },
+]
+`;
+
+exports[`MultiSelectAttributeFilterHandler clearSelection() should trigger onSelectionChanged() callback: parameters 1`] = `
+Array [
+  Object {
+    "selection": Object {
+      "isInverted": false,
+      "keys": Array [],
+    },
+  },
+]
+`;
+
+exports[`MultiSelectAttributeFilterHandler commitSelection() should trigger onSelectionCommitted() callback: parameters 1`] = `
+Array [
+  Object {
+    "selection": Object {
+      "isInverted": true,
+      "keys": Array [
+        "/selectedElement",
+      ],
+    },
+  },
+]
+`;
+
+exports[`MultiSelectAttributeFilterHandler invertSelection() should trigger onSelectionChanged() callback: parameters 1`] = `
+Array [
+  Object {
+    "selection": Object {
+      "isInverted": true,
+      "keys": Array [
+        "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
+        "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
+      ],
+    },
+  },
+]
+`;
+
+exports[`MultiSelectAttributeFilterHandler revertSelection() should trigger onSelectionChanged() callback: parameters 1`] = `
+Array [
+  Object {
+    "selection": Object {
+      "isInverted": false,
+      "keys": Array [
+        "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
+        "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
+      ],
+    },
+  },
+]
+`;
+
+exports[`MultiSelectAttributeFilterHandler should initialize selection for negative attribute filter: committed selection 1`] = `
+Object {
+  "isInverted": true,
+  "keys": Array [
+    "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
+    "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
+  ],
+}
+`;
+
+exports[`MultiSelectAttributeFilterHandler should initialize selection for negative attribute filter: working selection 1`] = `
+Object {
+  "isInverted": true,
+  "keys": Array [
+    "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
+    "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
+  ],
+}
+`;
+
+exports[`MultiSelectAttributeFilterHandler should initialize selection for positive attribute filter: committed selection 1`] = `
+Object {
+  "isInverted": false,
+  "keys": Array [
+    "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
+    "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
+  ],
+}
+`;
+
+exports[`MultiSelectAttributeFilterHandler should initialize selection for positive attribute filter: working selection 1`] = `
+Object {
+  "isInverted": false,
+  "keys": Array [
+    "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
+    "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
+  ],
+}
+`;

@@ -76,7 +76,7 @@ class RecordedElements implements IElementsQuery {
             );
         }
 
-        const elements = flow(
+        let elements = flow(
             // resolve limiting items first so that they do not need to care about the other filters
             // and have nice indexes for the limiting strategies
             resolveLimitingItems(
@@ -88,6 +88,10 @@ class RecordedElements implements IElementsQuery {
             resolveSelectedElements(this.options.elements),
             resolveStringFilter(this.options.filter),
         )(recording.elements);
+
+        if (this.options.order === "desc") {
+            elements = [...elements].reverse();
+        }
 
         return Promise.resolve(new InMemoryPaging<IAttributeElement>(elements, this.limit, this.offset));
     }

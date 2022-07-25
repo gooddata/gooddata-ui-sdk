@@ -1,0 +1,109 @@
+// (C) 2022 GoodData Corporation
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { IAttributeElement, IAttributeFilter } from "@gooddata/sdk-model";
+import { MultiSelectAttributeFilterHandler, SingleSelectAttributeFilterHandler } from "./internal";
+
+import {
+    IAttributeFilterHandler,
+    IMultiSelectAttributeFilterHandler,
+    ISingleSelectAttributeFilterHandler,
+} from "./types";
+
+/**
+ * Common options for initialization of the {@link IAttributeFilterHandler}.
+ *
+ * @alpha
+ */
+export interface IAttributeFilterHandlerOptionsBase {
+    /**
+     * If specified, these will be excluded from the elements available for selection and will also be removed from the resulting filter.
+     * This effectively behaves as if those elements were not part of the underlying display form.
+     *
+     * @remarks
+     * The meaning of the items is determined by the way the filter is specified: if the filter uses URIs,
+     * then these are also interpreted as URIs, analogously with values.
+     */
+    hiddenElements?: string[];
+
+    /**
+     * If specified, these elements will replace the elements that would be loaded from the server.
+     * Note that if using this, limiting measures and/or filters will not work: it is your responsibility to filter
+     * the static elements yourself.
+     */
+    staticElements?: IAttributeElement[];
+}
+
+/**
+ * Options for initialization of the {@link IAttributeFilterHandler} with single selection.
+ *
+ * @alpha
+ */
+export interface ISingleSelectAttributeFilterHandlerOptions extends IAttributeFilterHandlerOptionsBase {
+    selectionMode: "single";
+}
+
+/**
+ * Options for initialization of the {@link IAttributeFilterHandler} with multi selection.
+ *
+ * @alpha
+ */
+export interface IMultiSelectAttributeFilterHandlerOptions extends IAttributeFilterHandlerOptionsBase {
+    selectionMode: "multi";
+}
+
+/**
+ * Options for initialization of the {@link IAttributeFilterHandler}.
+ *
+ * @alpha
+ */
+export type IAttributeFilterHandlerOptions =
+    | ISingleSelectAttributeFilterHandlerOptions
+    | IMultiSelectAttributeFilterHandlerOptions;
+
+/**
+ * @alpha
+ */
+export function newAttributeFilterHandler(
+    backend: IAnalyticalBackend,
+    workspace: string,
+    attributeFilter: IAttributeFilter,
+    options: ISingleSelectAttributeFilterHandlerOptions,
+): ISingleSelectAttributeFilterHandler;
+/**
+ * @alpha
+ */
+export function newAttributeFilterHandler(
+    backend: IAnalyticalBackend,
+    workspace: string,
+    attributeFilter: IAttributeFilter,
+    options: IMultiSelectAttributeFilterHandlerOptions,
+): IMultiSelectAttributeFilterHandler;
+/**
+ * @alpha
+ */
+export function newAttributeFilterHandler(
+    backend: IAnalyticalBackend,
+    workspace: string,
+    attributeFilter: IAttributeFilter,
+    options: IAttributeFilterHandlerOptions = { selectionMode: "multi" },
+): IAttributeFilterHandler {
+    const { selectionMode, hiddenElements, staticElements } = options;
+
+    if (selectionMode === "multi") {
+        return new MultiSelectAttributeFilterHandler({
+            backend,
+            workspace,
+            attributeFilter,
+            hiddenElements,
+            staticElements,
+        });
+    }
+
+    return new SingleSelectAttributeFilterHandler({
+        backend,
+        workspace,
+        attributeFilter,
+        hiddenElements,
+        staticElements,
+    });
+}

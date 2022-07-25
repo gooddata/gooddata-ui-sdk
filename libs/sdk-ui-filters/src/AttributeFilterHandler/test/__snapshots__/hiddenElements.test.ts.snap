@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AttributeFilterHandler hiddenElements option should hide element in getAllElements() 1`] = `
+Array [
+  Object {
+    "title": "Educationly",
+    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
+  },
+  Object {
+    "title": "Grammar Plus",
+    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737",
+  },
+  Object {
+    "title": "TouchAll",
+    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=460491",
+  },
+]
+`;
+
+exports[`AttributeFilterHandler hiddenElements option should work properly with loadNextElementsPage() call 1`] = `
+Array [
+  Object {
+    "title": "Educationly",
+    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
+  },
+  Object {
+    "title": "Grammar Plus",
+    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737",
+  },
+]
+`;
