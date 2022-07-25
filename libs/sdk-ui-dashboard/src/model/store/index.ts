@@ -172,6 +172,7 @@ export {
     selectDashboardLockStatus,
     selectIsNewDashboard,
 } from "./meta/metaSelectors";
+export { metaActions } from "./meta";
 export {
     selectListedDashboards,
     selectListedDashboardsMap,
