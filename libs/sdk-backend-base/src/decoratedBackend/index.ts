@@ -28,6 +28,7 @@ import {
     IOrganizations,
     IWorkspaceUserGroupsQuery,
     IWorkspaceAccessControlService,
+    IOrganizationStylingService,
 } from "@gooddata/sdk-backend-spi";
 import { IOrganizationDescriptor } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
@@ -226,6 +227,10 @@ class OrganizationDecorator implements IOrganization {
         }
 
         return this.decorated.securitySettings();
+    }
+
+    public styling(): IOrganizationStylingService {
+        return this.decorated.styling();
     }
 }
 

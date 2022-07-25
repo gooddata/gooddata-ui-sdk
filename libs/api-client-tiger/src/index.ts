@@ -139,6 +139,9 @@ export {
     SortKey,
     SortKeyAttribute,
     SortKeyAttributeAttribute,
+    SortKeyTotal,
+    SortKeyTotalTotal,
+    SortKeyTotalTotalDirectionEnum,
     SortKeyValue,
     SortKeyValueValue,
     SortKeyValueValueDirectionEnum,
@@ -191,6 +194,7 @@ export {
     MetadataGetEntitiesFn,
     MetadataGetEntitiesOptions,
     MetadataGetEntitiesParams,
+    MetadataGetEntitiesThemeParams,
     MetadataGetEntitiesWorkspaceParams,
     MetadataGetEntitiesUserParams,
 } from "./metadataUtilities";

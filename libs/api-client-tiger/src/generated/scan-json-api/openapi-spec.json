@@ -366,7 +366,7 @@
                         "type": "string",
                         "description": "Column type",
                         "example": "INT",
-                        "enum": ["INT", "STRING", "DATE", "NUMERIC", "TIMESTAMP", "BOOLEAN"]
+                        "enum": ["INT", "STRING", "DATE", "NUMERIC", "TIMESTAMP", "TIMESTAMP_TZ", "BOOLEAN"]
                     },
                     "isPrimaryKey": {
                         "type": "boolean",

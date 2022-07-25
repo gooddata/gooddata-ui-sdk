@@ -12,6 +12,10 @@
     ],
     "tags": [
         {
+            "name": "actions",
+            "description": "| execution of some form of computation (RPC over JSON)"
+        },
+        {
             "name": "authentication",
             "description": "| authentication & security related resources (REST API over JSON)"
         }
@@ -148,6 +152,32 @@
                 }
             }
         },
+        "/api/v1/actions/invite": {
+            "post": {
+                "tags": ["actions"],
+                "summary": "Puts a new invitation requirement into the invitation generator queue.",
+                "operationId": "processInvitation",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Invitation"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["MANAGE"],
+                    "description": "Permissions required to add an invitation."
+                }
+            }
+        },
         "/api/v1/profile": {
             "get": {
                 "tags": ["authentication"],
@@ -193,6 +223,16 @@
                     }
                 },
                 "description": "Entity representing user in authentication system."
+            },
+            "Invitation": {
+                "required": ["email"],
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email"
+                    }
+                }
             },
             "FeatureFlagsContext": {
                 "required": ["earlyAccess"],

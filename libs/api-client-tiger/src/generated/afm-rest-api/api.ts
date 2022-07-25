@@ -702,7 +702,7 @@ export interface DataColumnLocator {
  */
 export interface DataColumnLocators {
     /**
-     * Mapping from dimensions to data column locators. Locators for each dimension opposite to the sorted one must be specified.
+     * Mapping from dimensions to data column locators.
      * @type {{ [key: string]: DataColumnLocator; }}
      * @memberof DataColumnLocators
      */
@@ -1447,6 +1447,12 @@ export interface Problem {
      */
     type: string;
     /**
+     * Unique trace id used in open-tracing (semantics of transactions in distributed systems). Can be used to correlate client error with concrete request processing in the system.
+     * @type {string}
+     * @memberof Problem
+     */
+    traceId: string;
+    /**
      * A short, summary of the problem type. Written in english and readable for engineers (usually not suited for non technical stakeholders and not localized).
      * @type {string}
      * @memberof Problem
@@ -1458,12 +1464,6 @@ export interface Problem {
      * @memberof Problem
      */
     status: StatusType;
-    /**
-     * Unique trace id used in open-tracing (semantics of transactions in distributed systems). Can be used to correlate client error with concrete request processing in the system.
-     * @type {string}
-     * @memberof Problem
-     */
-    traceId: string;
     /**
      * A human readable explanation specific to this occurrence of the problem.
      * @type {string}
@@ -1776,7 +1776,7 @@ export type SimpleMeasureDefinitionMeasureAggregationEnum =
  * List of sorting rules. From most relevant to least relevant (less relevant rule is applied, when more relevant rule compares items as equal).
  * @export
  */
-export type SortKey = SortKeyAttribute | SortKeyValue;
+export type SortKey = SortKeyAttribute | SortKeyTotal | SortKeyValue;
 
 /**
  * Sorting rule for sorting by attribute value in current dimension.
@@ -1835,7 +1835,54 @@ export type SortKeyAttributeAttributeDirectionEnum =
     typeof SortKeyAttributeAttributeDirectionEnum[keyof typeof SortKeyAttributeAttributeDirectionEnum];
 
 /**
- * Sorting rule for sorting by measure value.
+ * Sorting rule for sorting by total value. DataColumnLocators are only required if there is ambiguity. Locator for measureGroup is taken from the metric of the total.
+ * @export
+ * @interface SortKeyTotal
+ */
+export interface SortKeyTotal {
+    /**
+     *
+     * @type {SortKeyTotalTotal}
+     * @memberof SortKeyTotal
+     */
+    total: SortKeyTotalTotal;
+}
+/**
+ *
+ * @export
+ * @interface SortKeyTotalTotal
+ */
+export interface SortKeyTotalTotal {
+    /**
+     *
+     * @type {string}
+     * @memberof SortKeyTotalTotal
+     */
+    totalIdentifier: string;
+    /**
+     *
+     * @type {DataColumnLocators}
+     * @memberof SortKeyTotalTotal
+     */
+    dataColumnLocators?: DataColumnLocators;
+    /**
+     * Sorting elements - ascending/descending order.
+     * @type {string}
+     * @memberof SortKeyTotalTotal
+     */
+    direction?: SortKeyTotalTotalDirectionEnum;
+}
+
+export const SortKeyTotalTotalDirectionEnum = {
+    ASC: "ASC",
+    DESC: "DESC",
+} as const;
+
+export type SortKeyTotalTotalDirectionEnum =
+    typeof SortKeyTotalTotalDirectionEnum[keyof typeof SortKeyTotalTotalDirectionEnum];
+
+/**
+ * Sorting rule for sorting by measure value. DataColumnLocators for each dimension opposite to the sorted one must be specified.
  * @export
  * @interface SortKeyValue
  */

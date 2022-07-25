@@ -202,7 +202,8 @@
                         "in": "header",
                         "required": false,
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "format": "timestamp"
                         },
                         "example": "2020-06-03T10:15:30+01:00"
                     }
@@ -925,7 +926,7 @@
                         "additionalProperties": {
                             "$ref": "#/components/schemas/DataColumnLocator"
                         },
-                        "description": "Mapping from dimensions to data column locators. Locators for each dimension opposite to the sorted one must be specified.",
+                        "description": "Mapping from dimensions to data column locators.",
                         "example": {
                             "dim2": {
                                 "status": "lost",
@@ -1428,6 +1429,9 @@
                     },
                     {
                         "$ref": "#/components/schemas/SortKeyValue"
+                    },
+                    {
+                        "$ref": "#/components/schemas/SortKeyTotal"
                     }
                 ]
             },
@@ -1460,6 +1464,30 @@
                 },
                 "description": "Sorting rule for sorting by attribute value in current dimension."
             },
+            "SortKeyTotal": {
+                "required": ["total"],
+                "type": "object",
+                "properties": {
+                    "total": {
+                        "required": ["totalIdentifier"],
+                        "type": "object",
+                        "properties": {
+                            "totalIdentifier": {
+                                "type": "string"
+                            },
+                            "dataColumnLocators": {
+                                "$ref": "#/components/schemas/DataColumnLocators"
+                            },
+                            "direction": {
+                                "type": "string",
+                                "description": "Sorting elements - ascending/descending order.",
+                                "enum": ["ASC", "DESC"]
+                            }
+                        }
+                    }
+                },
+                "description": "Sorting rule for sorting by total value. DataColumnLocators are only required if there is ambiguity. Locator for measureGroup is taken from the metric of the total."
+            },
             "SortKeyValue": {
                 "required": ["value"],
                 "type": "object",
@@ -1479,7 +1507,7 @@
                         }
                     }
                 },
-                "description": "Sorting rule for sorting by measure value."
+                "description": "Sorting rule for sorting by measure value. DataColumnLocators for each dimension opposite to the sorted one must be specified."
             },
             "Total": {
                 "required": ["function", "localIdentifier", "metric", "totalDimensions"],
@@ -1932,6 +1960,11 @@
                         "description": "An relative URI that identifies the problem type. When dereferenced, it should provide human-readable documentation for the problem type (e.g., using HTML).",
                         "format": "uri"
                     },
+                    "traceId": {
+                        "type": "string",
+                        "description": "Unique trace id used in open-tracing (semantics of transactions in distributed systems). Can be used to correlate client error with concrete request processing in the system.",
+                        "example": "5202292772879600441"
+                    },
                     "title": {
                         "type": "string",
                         "description": "A short, summary of the problem type. Written in english and readable for engineers (usually not suited for non technical stakeholders and not localized).",
@@ -1939,11 +1972,6 @@
                     },
                     "status": {
                         "$ref": "#/components/schemas/StatusType"
-                    },
-                    "traceId": {
-                        "type": "string",
-                        "description": "Unique trace id used in open-tracing (semantics of transactions in distributed systems). Can be used to correlate client error with concrete request processing in the system.",
-                        "example": "5202292772879600441"
                     },
                     "detail": {
                         "type": "string",

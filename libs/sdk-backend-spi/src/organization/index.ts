@@ -1,6 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 import { IOrganizationDescriptor } from "@gooddata/sdk-model";
 import { ISecuritySettingsService } from "./securitySettings";
+import { IOrganizationStylingService } from "./styling";
 
 /**
  * Represents an organization that services analytical workspaces.
@@ -22,6 +23,11 @@ export interface IOrganization {
      * Returns service that can be used to query and update organization security settings.
      */
     securitySettings(): ISecuritySettingsService;
+
+    /**
+     * Returns service that can be used to query and update organization styling.
+     */
+    styling(): IOrganizationStylingService;
 }
 
 /**

@@ -2443,6 +2443,12 @@ export interface IThemeKpiValue {
     textAlign?: string;
 }
 
+// @alpha
+export interface IThemeMetadataObject extends IMetadataObject {
+    // (undocumented)
+    theme: ITheme;
+}
+
 // @beta
 export interface IThemeModal {
     borderColor?: ThemeColor;
@@ -2927,7 +2933,7 @@ export function newTotal(type: TotalType, measureOrId: IMeasure | Identifier, at
 export function newTwoDimensional(dim1Input: DimensionItem[], dim2Input: DimensionItem[]): IDimension[];
 
 // @public
-export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard"
+export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme"
 /**
 * @deprecated will be removed in the next major release, use "insight" instead
 */

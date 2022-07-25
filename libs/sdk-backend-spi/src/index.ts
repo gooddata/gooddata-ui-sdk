@@ -166,6 +166,7 @@ export {
 
 export { IOrganization, IOrganizations } from "./organization";
 export { ISecuritySettingsService, ValidationContext } from "./organization/securitySettings";
+export { IOrganizationStylingService } from "./organization/styling";
 
 export {
     IWorkspaceUserGroupsQuery,
