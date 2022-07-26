@@ -305,7 +305,8 @@
             "packageName": "@gooddata/codemods",
             "projectFolder": "tools/codemods",
             "reviewCategory": "tools",
-            "shouldPublish": false
+            // "versionPolicyName": "sdk", // until we publish this, we cannot specify the policy, it overrides the shouldPublish
+            "shouldPublish": false // skipping publishing for now, the package is not ready for publication yet
         },
         {
             "packageName": "@gooddata/dashboard-plugin-tests",
