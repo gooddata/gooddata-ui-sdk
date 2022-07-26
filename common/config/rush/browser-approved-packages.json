@@ -307,6 +307,10 @@
       "allowedCategories": [ "production", "tools" ]
     },
     {
+      "name": "@types/jscodeshift",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "@types/json-stable-stringify",
       "allowedCategories": [ "production", "tools" ]
     },
@@ -753,6 +757,10 @@
     {
       "name": "js-object-pretty-print",
       "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "jscodeshift",
+      "allowedCategories": [ "tools" ]
     },
     {
       "name": "json-stable-stringify",

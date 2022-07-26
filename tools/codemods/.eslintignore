@@ -1,0 +1,7 @@
+# (C) 2022 GoodData Corporation
+node_modules
+dist
+esm
+ci/results
+scripts
+.vscode

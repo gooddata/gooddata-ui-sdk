@@ -26,12 +26,13 @@
         "esm/**/*.map"
     ],
     "config": {
-        "eslint": "-c .eslintrc.js --ext ts src/"
+        "eslint": "-c .eslintrc.js --ext ts ./"
     },
     "scripts": {
         "clean": "rm -rf ci dist esm coverage *.log && jest --clearCache",
         "dev": "tsc -p tsconfig.dev.json --watch",
-        "build": "concurrently \"npm run build-cjs\" \"npm run build-esm\" && npm run api-extractor",
+        "build": "echo Nothing to build for now.",
+        "build_": "concurrently \"npm run build-cjs\" \"npm run build-esm\" && npm run api-extractor",
         "build-cjs": "tsc -p tsconfig.build.json",
         "build-esm": "tsc -p tsconfig.build.esm.json",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
@@ -45,18 +46,25 @@
         "dep-cruiser": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
         "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
         "validate": "npm run dep-cruiser && npm run eslint && npm run prettier-check",
-        "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
+        "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check",
+        "run-measure-to-metric": "jscodeshift -t=./transforms/MeasureToMetric/MeasureToMetric.ts --extensions=ts,tsx"
     },
     "dependencies": {
+        "jscodeshift": "^0.13.1",
         "lodash": "^4.17.19",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^2.1.0",
+        "@gooddata/sdk-model": "^8.11.0-alpha.18",
+        "@gooddata/sdk-ui-charts": "^8.11.0-alpha.18",
         "@microsoft/api-documenter": "^7.17.0",
         "@microsoft/api-extractor": "^7.20.0",
         "@types/jest": "^27.0.1",
+        "@types/jscodeshift": "^0.11.5",
         "@types/lodash": "^4.14.158",
+        "@types/node": "^16.11.11",
+        "@types/react": "^17.0.34",
         "@typescript-eslint/eslint-plugin": "^5.5.0",
         "@typescript-eslint/parser": "^5.5.0",
         "concurrently": "^6.0.2",
@@ -73,6 +81,7 @@
         "jest": "^27.5.1",
         "jest-junit": "^3.0.0",
         "prettier": "~2.5.0",
+        "react": "^17.0.2",
         "ts-jest": "^27.0.5",
         "typescript": "4.0.2"
     }

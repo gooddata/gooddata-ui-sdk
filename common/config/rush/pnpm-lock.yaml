@@ -5058,6 +5058,13 @@ packages:
       pretty-format: 27.5.1
     dev: false
 
+  /@types/jscodeshift/0.11.5:
+    resolution: {integrity: sha512-7JV0qdblTeWFigevmwFUgROXX395F+MQx6v0YqPn8Bx0B4Sng6alEejz9PENzgLYpG+zL0O4tGdBzc4gKZH8XA==}
+    dependencies:
+      ast-types: 0.14.2
+      recast: 0.20.5
+    dev: false
+
   /@types/json-schema/7.0.11:
     resolution: {integrity: sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ==}
     dev: false
@@ -6761,6 +6768,14 @@ packages:
       follow-redirects: 1.14.9
     transitivePeerDependencies:
       - debug
+    dev: false
+
+  /babel-core/7.0.0-bridge.0_@babel+core@7.17.9:
+    resolution: {integrity: sha512-poPX9mZH/5CSanm50Q+1toVci6pv5KSRv/5TWCwtzQS5XEwn40BcCrgIeMFWP9CKKIniKXNxoIOnOq4VVlGXhg==}
+    peerDependencies:
+      '@babel/core': ^7.0.0-0
+    dependencies:
+      '@babel/core': 7.17.9
     dev: false
 
   /babel-jest/27.5.1_@babel+core@7.17.9:
@@ -10690,6 +10705,11 @@ packages:
     resolution: {integrity: sha512-WIWGi2L3DyTUvUrwRKgGi9TwxQMUEqPOPQBVi71R96jZXJdFskXEmf54BoZaS1kknGODoIGASGEzBUYdyMCBJg==}
     dev: false
 
+  /flow-parser/0.183.0:
+    resolution: {integrity: sha512-2e/aIZIM7iJpHCBxpqdXetYYoO3YQEJzA7M8v5bhWhXCu+lIfkeSfOWycWW0rhlnJyjMftbmwn6B2eenKeGlag==}
+    engines: {node: '>=0.4.0'}
+    dev: false
+
   /flush-write-stream/1.1.1:
     resolution: {integrity: sha512-3Z4XhFZ3992uIq0XOqb9AreonueSYphE6oYbpt5+3u06JWklbsPkNv3ZKkP9Bz/r+1MWCaMoSQ28P85+1Yc77w==}
     dependencies:
@@ -13725,6 +13745,35 @@ packages:
 
   /jsbn/1.1.0:
     resolution: {integrity: sha512-4bYVV3aAMtDTTu4+xsDYa6sy9GyJ69/amsu9sYF2zqjiEoZA5xJi3BrfX3uY+/IekIu7MwdObdbDWpoZdBv3/A==}
+    dev: false
+
+  /jscodeshift/0.13.1:
+    resolution: {integrity: sha512-lGyiEbGOvmMRKgWk4vf+lUrCWO/8YR8sUR3FKF1Cq5fovjZDlIcw3Hu5ppLHAnEXshVffvaM0eyuY/AbOeYpnQ==}
+    hasBin: true
+    peerDependencies:
+      '@babel/preset-env': ^7.1.6
+    dependencies:
+      '@babel/core': 7.17.9
+      '@babel/parser': 7.17.9
+      '@babel/plugin-proposal-class-properties': 7.16.7_@babel+core@7.17.9
+      '@babel/plugin-proposal-nullish-coalescing-operator': 7.16.7_@babel+core@7.17.9
+      '@babel/plugin-proposal-optional-chaining': 7.16.7_@babel+core@7.17.9
+      '@babel/plugin-transform-modules-commonjs': 7.17.9_@babel+core@7.17.9
+      '@babel/preset-flow': 7.16.7_@babel+core@7.17.9
+      '@babel/preset-typescript': 7.16.7_@babel+core@7.17.9
+      '@babel/register': 7.17.7_@babel+core@7.17.9
+      babel-core: 7.0.0-bridge.0_@babel+core@7.17.9
+      chalk: 4.1.2
+      flow-parser: 0.183.0
+      graceful-fs: 4.2.10
+      micromatch: 3.1.10
+      neo-async: 2.6.2
+      node-dir: 0.1.17
+      recast: 0.20.5
+      temp: 0.8.4
+      write-file-atomic: 2.4.3
+    transitivePeerDependencies:
+      - supports-color
     dev: false
 
   /jsdoctypeparser/9.0.0:
@@ -17589,6 +17638,16 @@ packages:
     engines: {node: '>=8.10.0'}
     dependencies:
       picomatch: 2.3.1
+    dev: false
+
+  /recast/0.20.5:
+    resolution: {integrity: sha512-E5qICoPoNL4yU0H0NoBDntNB0Q5oMSNh9usFctYniLBluTthi3RsQVBXIJNbApOlvSwW/RGxIuokPcAc59J5fQ==}
+    engines: {node: '>= 4'}
+    dependencies:
+      ast-types: 0.14.2
+      esprima: 4.0.1
+      source-map: 0.6.1
+      tslib: 2.3.1
     dev: false
 
   /recharts-scale/0.4.5:
@@ -21801,6 +21860,14 @@ packages:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
     dev: false
 
+  /write-file-atomic/2.4.3:
+    resolution: {integrity: sha512-GaETH5wwsX+GcnzhPgKcKjJ6M2Cq3/iZp1WyY/X1CSqrW+jVNM9Y7D8EC2sM4ZG/V8wZlSniJnCKWPmBYAucRQ==}
+    dependencies:
+      graceful-fs: 4.2.10
+      imurmurhash: 0.1.4
+      signal-exit: 3.0.7
+    dev: false
+
   /write-file-atomic/3.0.3:
     resolution: {integrity: sha512-AvHcyZ5JnSfq3ioSyjrBkH9yW4m7Ayk8/9My/DD9onKeu/94fwrMocemO2QAJFAlnnDN+ZDS+ZjAR5ua1/PV/Q==}
     dependencies:
@@ -22272,7 +22339,7 @@ packages:
     dev: false
 
   file:projects/codemods.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-rIfJzJ8VzHontMz5VniizdQ/ZWm7W6RGCxw8WvRbds/wqxvXIpV3CuzYzxFxEEuJFYNiIFM6lnPihklgqZ6H1g==, tarball: file:projects/codemods.tgz}
+    resolution: {integrity: sha512-YqO6hT20GdwKnD7+L+H1Duh8w5GJHeLZ09fkASIGsHZZs+qoFjA7E2hEvt2c96qGCmitZr2LrSprCG6DFvAnOQ==, tarball: file:projects/codemods.tgz}
     id: file:projects/codemods.tgz
     name: '@rush-temp/codemods'
     version: 0.0.0
@@ -22281,7 +22348,10 @@ packages:
       '@microsoft/api-documenter': 7.17.2
       '@microsoft/api-extractor': 7.20.1
       '@types/jest': 27.4.1
+      '@types/jscodeshift': 0.11.5
       '@types/lodash': 4.14.181
+      '@types/node': 16.11.26
+      '@types/react': 17.0.44
       '@typescript-eslint/eslint-plugin': 5.18.0_53b148e638f33f2f6f1c65934f996443
       '@typescript-eslint/parser': 5.18.0_eslint@8.12.0+typescript@4.0.2
       concurrently: 6.5.1
@@ -22297,13 +22367,16 @@ packages:
       eslint-plugin-tsdoc: 0.2.15
       jest: 27.5.1_ts-node@10.7.0
       jest-junit: 3.7.0
+      jscodeshift: 0.13.1
       lodash: 4.17.21
       prettier: 2.5.1
+      react: 17.0.2
       ts-jest: 27.1.4_dddc46dbe41fd8ba74d3d274e144bf21
       tslib: 2.3.1
       typescript: 4.0.2
     transitivePeerDependencies:
       - '@babel/core'
+      - '@babel/preset-env'
       - babel-jest
       - bufferutil
       - canvas

@@ -1,0 +1,269 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MeasureToMetric should convert chartConfig 1`] = `
+"// (C) 2022 GoodData Corporation
+import { IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+
+export const withType: IChartConfig = {
+    stackMetrics: true,
+    stackMetricsToPercent: false,
+};
+
+export const withoutType = {
+    stackMetrics: true,
+    stackMetricsToPercent: false,
+};"
+`;
+
+exports[`MeasureToMetric should convert factories 1`] = `
+"// (C) 2022 GoodData Corporation
+import {
+    newMetric,
+    newPreviousPeriodMetric,
+    newPopMetric,
+    newArithmeticMetric,
+    newMetricValueFilter,
+} from \\"@gooddata/sdk-model\\";
+
+export const measure = newMetric(\\"Measure\\", (m) => m.format(\\"#,##0\\"));
+export const ppMeasure = newPreviousPeriodMetric(\\"Measure\\", [{ dataSet: \\"Dataset\\", periodsAgo: 1 }], (m) =>
+    m.alias(\\"Alias\\").masterMetric(\\"SomeOther\\"),
+);
+export const popMeasure = newPopMetric(\\"Measure\\", \\"Attr\\", (m) =>
+    m.alias(\\"PoP measure\\").masterMetric(\\"SomeOther\\"),
+);
+export const changeMeasure = newArithmeticMetric([\\"Measure\\", \\"AnotherMeasure\\"], \\"change\\", (m) =>
+    m.title(\\"Change\\"),
+);
+export const greaterThanFilter = newMetricValueFilter(\\"Measure\\", \\"GREATER_THAN\\", 7000000);"
+`;
+
+exports[`MeasureToMetric should convert getters 1`] = `
+"// (C) 2022 GoodData Corporation
+import {
+    metricLocalId,
+    metricUri,
+    metricIdentifier,
+    metricItem,
+    metricDoesComputeRatio,
+    metricMasterIdentifier,
+    metricArithmeticOperands,
+    metricArithmeticOperator,
+    metricAlias,
+    metricTitle,
+    metricFormat,
+    isMetricFormatInPercent,
+    metricAggregation,
+    metricFilters,
+    metricPopAttribute,
+    metricPreviousPeriodDateDataSets,
+    metricValueFilterMetric,
+    metricValueFilterCondition,
+    metricValueFilterOperator,
+} from \\"@gooddata/sdk-model\\";
+
+export const measure = {} as any;
+
+export const measureLocalIdResult = metricLocalId(measure);
+export const measureUriResult = metricUri(measure);
+export const measureIdentifierResult = metricIdentifier(measure);
+export const measureItemResult = metricItem(measure);
+export const measureDoesComputeRatioResult = metricDoesComputeRatio(measure);
+export const measureMasterIdentifierResult = metricMasterIdentifier(measure);
+export const measureArithmeticOperandsResult = metricArithmeticOperands(measure);
+export const measureArithmeticOperatorResult = metricArithmeticOperator(measure);
+export const measureAliasResult = metricAlias(measure);
+export const measureTitleResult = metricTitle(measure);
+export const measureFormatResult = metricFormat(measure);
+export const isMeasureFormatInPercentResult = isMetricFormatInPercent(measure);
+export const measureAggregationResult = metricAggregation(measure);
+export const measureFiltersResult = metricFilters(measure);
+export const measurePopAttributeResult = metricPopAttribute(measure);
+export const measurePreviousPeriodDateDataSetsResult = metricPreviousPeriodDateDataSets(measure);
+export const measureValueFilterMeasureResult = metricValueFilterMetric(measure);
+export const measureValueFilterConditionResult = metricValueFilterCondition(measure);
+export const measureValueFilterOperatorResult = metricValueFilterOperator(measure);
+
+export const pointFree = [].map(isMetricFormatInPercent);"
+`;
+
+exports[`MeasureToMetric should convert importAlias 1`] = `
+"// (C) 2022 GoodData Corporation
+import {
+    IMetricValueFilter as IMeasureValueFilterModel,
+    isMetric,
+    IMetric,
+    isMetricValueFilter as query,
+} from \\"@gooddata/sdk-model\\";
+
+export const foo = (_filter: IMeasureValueFilterModel | null): IMetric | null => {
+    const a = isMetric({});
+    const b = query({});
+    return (a || b) as any;
+};"
+`;
+
+exports[`MeasureToMetric should convert manipulators 1`] = `
+"// (C) 2022 GoodData Corporation
+import {
+    modifyMetric,
+    modifySimpleMetric,
+    modifyPopMetric,
+    modifyPreviousPeriodMetric,
+    idRef,
+} from \\"@gooddata/sdk-model\\";
+
+const measure = {} as any;
+
+export const modifiedMeasure = modifyMetric(measure, (m) => m.title(\\"Test\\"));
+export const modifiedSimpleMeasure = modifySimpleMetric(measure, (m) => m.metricItem(idRef(\\"other\\")));
+export const modifiedPopMeasure = modifyPopMetric(measure, (m) => m.masterMetric(\\"other\\"));
+export const modifiedPreviousPeriodMeasure = modifyPreviousPeriodMetric(measure, (m) =>
+    m.masterMetric(\\"other\\"),
+);"
+`;
+
+exports[`MeasureToMetric should convert notGooddata 1`] = `
+"// (C) 2022 GoodData Corporation
+/* eslint-disable @typescript-eslint/no-unused-vars */
+// disable TS checks here, we need to simulate an unrelated package
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+import {
+    IMeasure,
+    IPoPMeasureDefinition,
+    IPreviousPeriodMeasureDefinition,
+    IArithmeticMeasureDefinition,
+    IMeasureDefinition,
+    IMeasureValueFilter,
+    IMeasureValueFilterBody,
+    MeasureValueFilterCondition,
+    measureLocalId,
+    measureUri,
+    measureIdentifier,
+    measureItem,
+    measureDoesComputeRatio,
+    measureMasterIdentifier,
+    measureArithmeticOperands,
+    measureArithmeticOperator,
+    measureAlias,
+    measureTitle,
+    measureFormat,
+    isMeasureFormatInPercent,
+    measureAggregation,
+    measureFilters,
+    measurePopAttribute,
+    measurePreviousPeriodDateDataSets,
+    measureValueFilterMeasure,
+    measureValueFilterCondition,
+    measureValueFilterOperator,
+} from \\"@gooddata/unrelated-package-with-gooddata-names\\"; // eslint-disable-line import/no-unresolved
+
+const measure: IMeasure = {} as any;
+const measure2: IMeasure<IMeasureDefinition> = {} as any;
+const popMeasure: IMeasure<IPoPMeasureDefinition> = {} as any;
+const ppMeasure: IMeasure<IPreviousPeriodMeasureDefinition> = {} as any;
+const arithmetic: IMeasure<IArithmeticMeasureDefinition> = {} as any;
+const mvf: IMeasureValueFilter = {} as any;
+const mvfBody: IMeasureValueFilterBody = {} as any;
+const mvfCondition: MeasureValueFilterCondition = {} as any;
+
+const measureLocalIdResult = measureLocalId(measure);
+const measureUriResult = measureUri(measure);
+const measureIdentifierResult = measureIdentifier(measure);
+const measureItemResult = measureItem(measure);
+const measureDoesComputeRatioResult = measureDoesComputeRatio(measure);
+const measureMasterIdentifierResult = measureMasterIdentifier(measure);
+const measureArithmeticOperandsResult = measureArithmeticOperands(measure);
+const measureArithmeticOperatorResult = measureArithmeticOperator(measure);
+const measureAliasResult = measureAlias(measure);
+const measureTitleResult = measureTitle(measure);
+const measureFormatResult = measureFormat(measure);
+const isMeasureFormatInPercentResult = isMeasureFormatInPercent(measure);
+const measureAggregationResult = measureAggregation(measure);
+const measureFiltersResult = measureFilters(measure);
+const measurePopAttributeResult = measurePopAttribute(measure);
+const measurePreviousPeriodDateDataSetsResult = measurePreviousPeriodDateDataSets(measure);
+const measureValueFilterMeasureResult = measureValueFilterMeasure(measure);
+const measureValueFilterConditionResult = measureValueFilterCondition(measure);
+const measureValueFilterOperatorResult = measureValueFilterOperator(measure);"
+`;
+
+exports[`MeasureToMetric should convert props 1`] = `
+"// (C) 2022 GoodData Corporation
+import React from \\"react\\";
+import { AreaChart, BulletChart, Headline, Heatmap, ScatterPlot } from \\"@gooddata/sdk-ui-charts\\";
+import { IMetric, newMetric } from \\"@gooddata/sdk-model\\";
+
+const measure: IMetric = newMetric(\\"foo\\");
+
+export const heatmap = <Heatmap metric={measure} />;
+export const area = <AreaChart metrics={[measure]} />;
+export const headline = <Headline primaryMetric={measure} secondaryMetric={measure} />;
+export const bullet = (
+    <BulletChart primaryMetric={measure} comparativeMetric={measure} targetMetric={measure} />
+);
+export const scatter = <ScatterPlot xAxisMetric={measure} yAxisMetric={measure} />;"
+`;
+
+exports[`MeasureToMetric should convert typeguards 1`] = `
+"// (C) 2022 GoodData Corporation
+import {
+    isMetric,
+    isSimpleMetric,
+    isAdhocMetric,
+    isPoPMetric,
+    isPreviousPeriodMetric,
+    isArithmeticMetric,
+    isMetricDefinition,
+    isPoPMetricDefinition,
+    isPreviousPeriodMetricDefinition,
+    isArithmeticMetricDefinition,
+    isMetricValueFilter,
+} from \\"@gooddata/sdk-model\\";
+
+const input = {};
+
+export const isMeasureResult = isMetric(input);
+export const isSimpleMeasureResult = isSimpleMetric(input);
+export const isAdhocMeasureResult = isAdhocMetric(input);
+export const isPoPMeasureResult = isPoPMetric(input);
+export const isPreviousPeriodMeasureResult = isPreviousPeriodMetric(input);
+export const isArithmeticMeasureResult = isArithmeticMetric(input);
+export const isMeasureDefinitionResult = isMetricDefinition(input);
+export const isPoPMeasureDefinitionResult = isPoPMetricDefinition(input);
+export const isPreviousPeriodMeasureDefinitionResult = isPreviousPeriodMetricDefinition(input);
+export const isArithmeticMeasureDefinitionResult = isArithmeticMetricDefinition(input);
+export const isMeasureValueFilterResult = isMetricValueFilter(input);
+
+export const pointFree = [].filter(isPoPMetric);"
+`;
+
+exports[`MeasureToMetric should convert types 1`] = `
+"// (C) 2022 GoodData Corporation
+import {
+    IMetric,
+    IPoPMetricDefinition,
+    IPreviousPeriodMetricDefinition,
+    IArithmeticMetricDefinition,
+    IMetricDefinition,
+    IMetricValueFilter,
+    IMetricValueFilterBody,
+    MetricValueFilterCondition,
+} from \\"@gooddata/sdk-model\\";
+
+export const measure: IMetric = {} as any;
+export const measure2: IMetric<IMetricDefinition> = {} as any;
+export const popMeasure: IMetric<IPoPMetricDefinition> = {} as any;
+export const ppMeasure: IMetric<IPreviousPeriodMetricDefinition> = {} as any;
+export const arithmetic: IMetric<IArithmeticMetricDefinition> = {} as any;
+export const mvf: IMetricValueFilter = {} as any;
+export const mvfBody: IMetricValueFilterBody = {} as any;
+export const mvfCondition: MetricValueFilterCondition = {} as any;
+
+export type MyType = IMetric | IMetricValueFilter;
+
+export interface MyInterface extends IMetric {
+    filter: IMetricValueFilter;
+}"
+`;
