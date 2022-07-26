@@ -68,15 +68,15 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
     }
 
     public withAttributeFilters(): IElementsQuery {
-        throw new NotSupported("not supported");
+        throw new NotSupported("withAttributeFilters is not supported in sdk-backend-tiger yet");
     }
 
     public withDateFilters(): IElementsQuery {
-        throw new NotSupported("not supported");
+        throw new NotSupported("withDateFilters is not supported in sdk-backend-tiger yet");
     }
 
     public withMeasures(): IElementsQuery {
-        throw new NotSupported("not supported");
+        throw new NotSupported("withMeasures is not supported in sdk-backend-tiger yet");
     }
 
     public withOptions(options: IElementsQueryOptions): IElementsQuery {

@@ -157,16 +157,21 @@ class AttributeElementsCore extends React.PureComponent<IAttributeElementsProps,
             const configHash = this.getLoadingConfigHash(this.props);
             this.lastRequestedConfigHash = configHash;
 
-            const elements = await this.getBackend()
+            let loader = this.getBackend()
                 .workspace(workspace)
                 .attributes()
                 .elements()
                 .forDisplayForm(displayForm)
                 .withOffset(offset || 0)
                 .withLimit(limit || 50)
-                .withOptions(options ?? {})
-                .withAttributeFilters(filters ?? [])
-                .query();
+                .withOptions(options ?? {});
+
+            if (filters) {
+                // only set the attribute filters if needed to make this work on backend that might not support this yet
+                loader = loader.withAttributeFilters(filters);
+            }
+
+            const elements = await loader.query();
 
             // only set the result if the data is still relevant
             if (this.lastRequestedConfigHash === configHash) {
