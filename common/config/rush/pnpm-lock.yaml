@@ -20,6 +20,7 @@ specifiers:
   '@rush-temp/api-model-bear': file:./projects/api-model-bear.tgz
   '@rush-temp/applink': file:./projects/applink.tgz
   '@rush-temp/catalog-export': file:./projects/catalog-export.tgz
+  '@rush-temp/codemods': file:./projects/codemods.tgz
   '@rush-temp/dashboard-plugin-template': file:./projects/dashboard-plugin-template.tgz
   '@rush-temp/dashboard-plugin-tests': file:./projects/dashboard-plugin-tests.tgz
   '@rush-temp/experimental-workspace': file:./projects/experimental-workspace.tgz
@@ -82,6 +83,7 @@ dependencies:
   '@rush-temp/api-model-bear': file:projects/api-model-bear.tgz_ts-node@10.7.0
   '@rush-temp/applink': file:projects/applink.tgz
   '@rush-temp/catalog-export': file:projects/catalog-export.tgz
+  '@rush-temp/codemods': file:projects/codemods.tgz_ts-node@10.7.0
   '@rush-temp/dashboard-plugin-template': file:projects/dashboard-plugin-template.tgz_ts-node@10.7.0
   '@rush-temp/dashboard-plugin-tests': file:projects/dashboard-plugin-tests.tgz
   '@rush-temp/experimental-workspace': file:projects/experimental-workspace.tgz_ts-node@10.7.0
@@ -22266,6 +22268,50 @@ packages:
       - eslint-config-prettier
       - node-notifier
       - supports-color
+      - utf-8-validate
+    dev: false
+
+  file:projects/codemods.tgz_ts-node@10.7.0:
+    resolution: {integrity: sha512-rIfJzJ8VzHontMz5VniizdQ/ZWm7W6RGCxw8WvRbds/wqxvXIpV3CuzYzxFxEEuJFYNiIFM6lnPihklgqZ6H1g==, tarball: file:projects/codemods.tgz}
+    id: file:projects/codemods.tgz
+    name: '@rush-temp/codemods'
+    version: 0.0.0
+    dependencies:
+      '@gooddata/eslint-config': 2.1.0_5ea461816bcbaf247eaf4135748aa0c1
+      '@microsoft/api-documenter': 7.17.2
+      '@microsoft/api-extractor': 7.20.1
+      '@types/jest': 27.4.1
+      '@types/lodash': 4.14.181
+      '@typescript-eslint/eslint-plugin': 5.18.0_53b148e638f33f2f6f1c65934f996443
+      '@typescript-eslint/parser': 5.18.0_eslint@8.12.0+typescript@4.0.2
+      concurrently: 6.5.1
+      dependency-cruiser: 10.9.0
+      eslint: 8.12.0
+      eslint-plugin-header: 3.1.1_eslint@8.12.0
+      eslint-plugin-import: 2.26.0_eslint@8.12.0
+      eslint-plugin-jest: 25.7.0_3e999e51021df3f123b4550d8cc1e70b
+      eslint-plugin-no-only-tests: 2.6.0
+      eslint-plugin-prettier: 4.0.0_eslint@8.12.0+prettier@2.5.1
+      eslint-plugin-regexp: 1.7.0_eslint@8.12.0
+      eslint-plugin-sonarjs: 0.14.0_eslint@8.12.0
+      eslint-plugin-tsdoc: 0.2.15
+      jest: 27.5.1_ts-node@10.7.0
+      jest-junit: 3.7.0
+      lodash: 4.17.21
+      prettier: 2.5.1
+      ts-jest: 27.1.4_dddc46dbe41fd8ba74d3d274e144bf21
+      tslib: 2.3.1
+      typescript: 4.0.2
+    transitivePeerDependencies:
+      - '@babel/core'
+      - babel-jest
+      - bufferutil
+      - canvas
+      - esbuild
+      - eslint-config-prettier
+      - node-notifier
+      - supports-color
+      - ts-node
       - utf-8-validate
     dev: false
 
