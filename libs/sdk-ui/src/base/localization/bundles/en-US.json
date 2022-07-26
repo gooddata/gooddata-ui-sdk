@@ -1674,5 +1674,20 @@
         "value": "Please log back in to continue your work.",
         "comment": "",
         "limit": 0
+    },
+    "stylingPicker.title.basic": {
+        "value": "Basic",
+        "comment": "",
+        "limit": 0
+    },
+    "stylingPicker.title.custom": {
+        "value": "Custom",
+        "comment": "",
+        "limit": 0
+    },
+    "stylingPicker.title.create": {
+        "value": "Create",
+        "comment": "",
+        "limit": 0
     }
 }
