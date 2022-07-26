@@ -1,5 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { FormattedMessage, injectIntl, IntlShape } from "react-intl";
 import cx from "classnames";
 import isEmpty from "lodash/isEmpty";
@@ -38,6 +38,7 @@ export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
     helpRedirectUrl,
 }) => {
     const [isOpen, setIsOpen] = useState(false);
+    const helpMenuRef = useRef<HTMLDivElement>(null);
 
     const classNames = cx({
         "gd-header-help": true,
@@ -78,7 +79,7 @@ export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
     };
 
     /**
-     * Menu dropdown content is long enough to make it max-width (230px),
+     * Menu dropdown content is long enough to make it max-width (240px),
      * so it should just switch alignment to bottom right corner of the Help button.
      */
     const getHelpDropdownAlignPoints = (): IAlignPoint[] => {
@@ -87,8 +88,13 @@ export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
                 align: "br tr",
             },
         ];
-
-        if (!helpMenuDropdownAlignPoints || helpMenuDropdownAlignPoints === "br tr") {
+        const helpMenuCurrentRef = helpMenuRef?.current;
+        if (
+            !helpMenuCurrentRef ||
+            !helpMenuDropdownAlignPoints ||
+            helpMenuDropdownAlignPoints === "br tr" ||
+            window.innerWidth - helpMenuCurrentRef.offsetLeft < 240
+        ) {
             return defaultAlignPoints;
         }
 
@@ -96,7 +102,6 @@ export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
             {
                 align: helpMenuDropdownAlignPoints,
             },
-            ...defaultAlignPoints,
         ];
     };
 
@@ -128,7 +133,7 @@ export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
             <FormattedMessage id="gs.header.help" />
         </a>
     ) : (
-        <div className={classNames} onClick={() => toggleHelpMenu()}>
+        <div className={classNames} onClick={() => toggleHelpMenu()} ref={helpMenuRef}>
             <FormattedMessage id="gs.header.help" />
             {renderHelpMenu()}
         </div>
