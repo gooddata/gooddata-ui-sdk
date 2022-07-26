@@ -1,0 +1,189 @@
+@import "./variables";
+
+.gd-styling-picker {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    width: 100%;
+    padding: 20px;
+    background-color: $gd-color-white;
+    border: 1px solid $is-focused-background;
+
+    .gd-styling-picker-title {
+        display: flex;
+        padding-bottom: 10px;
+        line-height: 23px;
+        cursor: default;
+
+        h3 {
+            font-weight: bold;
+            color: $gd-color-text;
+        }
+
+        .gd-styling-picker-title-content {
+            display: flex;
+        }
+
+        .gd-styling-picker-title-icon {
+            display: flex;
+            align-items: center;
+            margin: 1px 0 0 10px;
+            color: $gd-color-state-blank;
+        }
+    }
+
+    .gd-styling-picker-content {
+        display: flex;
+        flex-direction: column;
+        height: 269px;
+    }
+
+    .gd-styling-picker-footer {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        min-height: 32px;
+        padding-top: 20px;
+        flex-wrap: wrap;
+        white-space: nowrap;
+        gap: 10px;
+
+        .gd-styling-picker-footer-message {
+            display: flex;
+            overflow: hidden;
+        }
+
+        .gd-styling-picker-footer-message > .gd-message {
+            width: 100%;
+        }
+
+        .gd-styling-picker-footer-help {
+            display: flex;
+            align-items: center;
+            margin-right: auto;
+            overflow: hidden;
+        }
+
+        .gd-styling-picker-footer-icon {
+            color: $gd-color-state-blank;
+            margin-top: 4px;
+        }
+
+        .gd-styling-picker-footer-text > a {
+            text-decoration: underline;
+        }
+
+        .gd-styling-picker-footer-buttons {
+            display: flex;
+            justify-content: flex-end;
+            padding-left: 10px;
+        }
+    }
+
+    .gd-styling-picker-list-wrapper {
+        display: flex;
+        flex-direction: column;
+        flex: 1 auto;
+    }
+
+    .gd-styling-picker-list {
+        display: flex;
+        flex-direction: column;
+        height: 163px;
+        margin-right: -20px;
+        padding-right: 20px;
+        overflow-y: auto;
+
+        .gd-styling-picker-list-item {
+            padding: 14px 0;
+        }
+    }
+
+    .gd-styling-picker-list-loading {
+        min-height: 100px;
+    }
+
+    .gd-styling-picker-list-empty {
+        padding-top: inherit;
+        min-height: 100px;
+    }
+
+    .gd-dialog-list-header {
+        padding-bottom: 0;
+    }
+
+    .gd-content-divider {
+        margin-top: 0;
+    }
+
+    .gd-styling-picker-list-item {
+        padding: 10px 0;
+
+        &.is-selected > .gd-styling-picker-list-item-content {
+            font-weight: bold;
+        }
+
+        .gd-styling-picker-list-item-color {
+            width: 15px;
+            height: 14px;
+        }
+
+        .gd-styling-picker-list-item-colors {
+            display: flex;
+            align-items: center;
+            padding: 0 10px 0 4px;
+        }
+
+        .gd-styling-picker-list-item-colors > span:first-child {
+            border-radius: 4px 0 0 4px;
+        }
+
+        .gd-styling-picker-list-item-colors > span:last-child {
+            border-radius: 0 4px 4px 0;
+        }
+
+        .gd-styling-picker-list-item-content {
+            display: flex;
+            flex-direction: row;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .gd-styling-picker-list-item-text {
+            max-width: 75%;
+            white-space: nowrap;
+        }
+
+        .gd-styling-picker-list-item-text-shortened {
+            display: inline-block;
+            width: 100%;
+            white-space: nowrap;
+        }
+    }
+
+    @media only screen and (max-width: 640px) {
+        min-width: unset;
+
+        .gd-styling-picker-content {
+            height: inherit;
+        }
+
+        .gd-styling-picker-list {
+            height: 100%;
+        }
+
+        .gd-styling-picker-footer {
+            flex-direction: column;
+            justify-content: unset;
+            flex-wrap: unset;
+            height: 124px;
+            gap: unset;
+        }
+
+        .gd-styling-picker-footer-help {
+            margin: 20px auto 20px 0;
+        }
+    }
+}
