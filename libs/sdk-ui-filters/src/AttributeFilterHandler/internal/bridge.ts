@@ -73,7 +73,7 @@ import {
     selectIsWorkingSelectionChanged,
     selectIsWorkingSelectionEmpty,
     selectOffset,
-    isLoadElementsOptionsChanged,
+    selectIsLoadElementsOptionsChanged,
 } from "./redux";
 import { newAttributeFilterCallbacks } from "./callbacks";
 import { AttributeFilterHandlerConfig } from "./types";
@@ -501,6 +501,6 @@ export class AttributeFilterReduxBridge {
     };
 
     isLoadElementsOptionsChanged = (): boolean => {
-        return this.redux.select(isLoadElementsOptionsChanged);
+        return this.redux.select(selectIsLoadElementsOptionsChanged);
     };
 }

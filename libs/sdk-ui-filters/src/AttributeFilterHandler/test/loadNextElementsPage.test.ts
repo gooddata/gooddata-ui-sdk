@@ -14,6 +14,7 @@ describe("AttributeFilterHandler", () => {
         const onLoadNextElementsPageStart = jest.fn();
         const attributeFilterHandler = newTestAttributeFilterHandler("positive");
 
+        attributeFilterHandler.setLimit(2);
         attributeFilterHandler.init();
         await waitForAsync();
 
@@ -26,10 +27,26 @@ describe("AttributeFilterHandler", () => {
         expect(onLoadNextElementsPageStart.mock.calls[0]).toMatchSnapshot("with parameters");
     });
 
+    it("loadNextElementsPage() should not trigger onLoadNextElementsPageStart() callback, when all elements are loaded", async () => {
+        const onLoadNextElementsPageStart = jest.fn();
+        const attributeFilterHandler = newTestAttributeFilterHandler("positive");
+
+        attributeFilterHandler.init();
+        await waitForAsync();
+
+        attributeFilterHandler.onLoadNextElementsPageStart(onLoadNextElementsPageStart);
+        attributeFilterHandler.loadNextElementsPage();
+
+        await waitForAsync();
+
+        expect(onLoadNextElementsPageStart).toHaveBeenCalledTimes(0);
+    });
+
     it("loadNextElementsPage() that was successful should trigger onLoadNextElementsPageSuccess() callback", async () => {
         const onLoadNextElementsPageSuccess = jest.fn();
         const attributeFilterHandler = newTestAttributeFilterHandler("positive");
 
+        attributeFilterHandler.setLimit(2);
         attributeFilterHandler.init();
         await waitForAsync();
 
@@ -46,6 +63,7 @@ describe("AttributeFilterHandler", () => {
         const onLoadNextElementsPageError = jest.fn();
         const attributeFilterHandler = newTestAttributeFilterHandler("positive");
 
+        attributeFilterHandler.setLimit(2);
         attributeFilterHandler.init();
         await waitForAsync();
 
@@ -63,6 +81,7 @@ describe("AttributeFilterHandler", () => {
         const onLoadNextElementsPageCancel = jest.fn();
         const attributeFilterHandler = newTestAttributeFilterHandler("positive");
 
+        attributeFilterHandler.setLimit(2);
         attributeFilterHandler.init();
         await waitForAsync();
 
@@ -80,6 +99,7 @@ describe("AttributeFilterHandler", () => {
         const onLoadNextElementsPageCancel = jest.fn();
         const attributeFilterHandler = newTestAttributeFilterHandler("positive");
 
+        attributeFilterHandler.setLimit(2);
         attributeFilterHandler.init();
         await waitForAsync();
 
@@ -201,6 +221,7 @@ describe("AttributeFilterHandler", () => {
     it("getNextElementsPageError() should return error", async () => {
         const attributeFilterHandler = newTestAttributeFilterHandler("positive");
 
+        attributeFilterHandler.setLimit(2);
         attributeFilterHandler.init();
         await waitForAsync();
 

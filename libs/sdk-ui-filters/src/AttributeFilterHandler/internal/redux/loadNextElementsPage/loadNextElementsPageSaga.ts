@@ -4,7 +4,7 @@ import { put, call, takeLatest, select, cancelled } from "redux-saga/effects";
 
 import { elementsSaga } from "../elements/elementsSaga";
 import { actions } from "../store/slice";
-import { selectLoadNextElementsPageOptions } from "./loadNextElementsPageSelectors";
+import { selectHasNextPage, selectLoadNextElementsPageOptions } from "./loadNextElementsPageSelectors";
 
 /**
  * @internal
@@ -40,6 +40,12 @@ export function* loadNextElementsPageSaga(
     const {
         payload: { correlation },
     } = action;
+
+    const hasNextPage: ReturnType<typeof selectHasNextPage> = yield select(selectHasNextPage);
+
+    if (!hasNextPage) {
+        return;
+    }
 
     try {
         yield put(actions.loadNextElementsPageStart({ correlation }));
