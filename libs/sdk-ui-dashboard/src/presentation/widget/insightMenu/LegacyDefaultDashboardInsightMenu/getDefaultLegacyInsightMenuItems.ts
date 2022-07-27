@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { IntlShape } from "react-intl";
 
 import { IInsightMenuItem } from "../types";
@@ -13,10 +13,14 @@ export function getDefaultLegacyInsightMenuItems(
         exportCSVDisabled: boolean;
         onExportXLSX: () => void;
         onExportCSV: () => void;
-        tooltipMessage: string;
+        isDataError: boolean;
     },
 ): IInsightMenuItem[] {
-    const { exportCSVDisabled, exportXLSXDisabled, onExportCSV, onExportXLSX, tooltipMessage } = config;
+    const { exportCSVDisabled, exportXLSXDisabled, onExportCSV, onExportXLSX, isDataError } = config;
+
+    const tooltip = isDataError
+        ? intl.formatMessage({ id: "options.menu.unsupported.error" })
+        : intl.formatMessage({ id: "options.menu.unsupported.loading" });
 
     return [
         {
@@ -25,7 +29,7 @@ export function getDefaultLegacyInsightMenuItems(
             itemName: intl.formatMessage({ id: "options.menu.export.XLSX" }),
             disabled: exportXLSXDisabled,
             onClick: onExportXLSX,
-            tooltip: tooltipMessage,
+            tooltip,
             className: "options-menu-export-xlsx s-options-menu-export-xlsx",
         },
         {
@@ -34,7 +38,7 @@ export function getDefaultLegacyInsightMenuItems(
             itemName: intl.formatMessage({ id: "options.menu.export.CSV" }),
             disabled: exportCSVDisabled,
             onClick: onExportCSV,
-            tooltip: tooltipMessage,
+            tooltip,
             className: "options-menu-export-csv s-options-menu-export-csv",
         },
     ];

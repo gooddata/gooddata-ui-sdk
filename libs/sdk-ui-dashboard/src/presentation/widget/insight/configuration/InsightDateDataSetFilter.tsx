@@ -26,9 +26,8 @@
 //     getVisualizationDateDataSet,
 // } from "../../modules/Widgets";
 import React from "react";
-import { useInsightWidgetRelatedDateDatasets } from "../../../widget/common/useWidgetRelatedDateDatasets";
+import { DateDatasetFilter, useInsightWidgetRelatedDateDatasets } from "../../common";
 import { IInsightWidget, isInsightWidget } from "@gooddata/sdk-model";
-import { DateDatasetFilter } from "../../common/configuration/DateDatasetFilter";
 
 export interface IConfigurationPanelProps {
     widget: IInsightWidget;
