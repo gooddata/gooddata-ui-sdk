@@ -12,7 +12,8 @@ import {
     GET_VISUALIZATION,
 } from "./CustomElementAdapter";
 
-type IInsightView = typeof import("@gooddata/sdk-ui-ext/esm/insightView/InsightView").InsightView;
+import type { InsightView } from "@gooddata/sdk-ui-ext";
+type IInsightView = typeof InsightView;
 
 export class Insight extends CustomElementAdapter<IInsightView> {
     static get observedAttributes() {

@@ -1,7 +1,7 @@
 # GoodData Web Component
 
-This library provides a set of Custom Elements (aka Web Components) to easy the embedding of GoodData visualizations
-into web applications.
+This library provides a set of Custom Elements (aka Web Components) to make the embedding of GoodData visualizations
+into web applications easier.
 
 The library is meant to be hosted by GoodData.CN and GoodData Cloud for easier integration.
 At this time we do not provide an NPM package that you can import directly.
@@ -15,7 +15,7 @@ section of your application.
 <script type="module" src="https://{your-GD-server-URL}/components/{workspaceId}.js?auth=sso"></script>
 
 <!-- for example -->
-<script type="module" src="https://analytics.example.com/components/my-workspace.js?auth=sso"></script>
+<script type="module" src="https://example.gooddata.com/components/my-workspace.js?auth=sso"></script>
 ```
 
 Script has to be of type `module`, as we are using JavaScript modules for this distribution.
@@ -29,15 +29,15 @@ If you want to customize the authentication flow, you'll need to provide the aut
 
 ```html
 <script type="module">
-    import { setContext } from "https://analytics.example.com/components/my-workspace.js";
+    import { setContext } from "https://example.gooddata.com/components/my-workspace.js";
     import tigerFactory, {
         ContextDeferredAuthProvider,
         redirectToTigerAuthentication,
-    } from "https://analytics.example.com/components/tigerBackend.js";
+    } from "https://example.gooddata.com/components/tigerBackend.js";
 
     setContext({
         backend: tigerFactory()
-            .onHostname("https://analytics.example.com")
+            .onHostname("https://example.gooddata.com")
             // Following is the part that you might want to change in case of a custom authentication flow
             .withAuthentication(new ContextDeferredAuthProvider(redirectToTigerAuthentication)),
         workspaceId: "my-workspace",
@@ -67,7 +67,7 @@ Once authentication is set and ready, you can embed Dashboard or a single visual
 -   `locale` - the localization of the visualization. For available languages, see [the full list of available localizations](https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui/src/base/localization/Locale.ts).
 -   `mapbox` - the map access token to be used by [geo pushpin charts](https://sdk.gooddata.com/gooddata-ui/docs/geo_pushpin_chart_component.html#geo-config).
 
-`gd-dashboard` emits events from [this list](https://sdk.gooddata.com/gooddata-ui-apidocs/v8.9.0/docs/sdk-ui-dashboard.dashboardeventtype.html).
+`gd-dashboard` emits events from [this list](https://sdk.gooddata.com/gooddata-ui-apidocs/docs/sdk-ui-dashboard.dashboardeventtype.html).
 Events do not bubble and are not cancelable. Here is how you can subscribe to one from your code:
 
 ```html
@@ -125,6 +125,6 @@ InsightView component](https://sdk.gooddata.com/gooddata-ui/docs/visualization_c
 
 ## License
 
-(C) 2017-2022 GoodData Corporation
+(C) 2022 GoodData Corporation
 
 This project is under commercial license. See [LICENSE](https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-charts/LICENSE).

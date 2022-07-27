@@ -11,7 +11,8 @@ import {
     LOAD_COMPONENT,
 } from "./CustomElementAdapter";
 
-type IDashboard = typeof import("@gooddata/sdk-ui-dashboard/esm/presentation/dashboard/Dashboard").Dashboard;
+import type { Dashboard as OriginalDashboard } from "@gooddata/sdk-ui-dashboard";
+type IDashboard = typeof OriginalDashboard;
 
 export class Dashboard extends CustomElementAdapter<IDashboard> {
     static get observedAttributes() {

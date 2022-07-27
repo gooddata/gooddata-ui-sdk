@@ -15,6 +15,12 @@ describe("parseUrl", () => {
         expect(workspaceId).toEqual("workspace-id");
     });
 
+    it("should parse workspaceId in case it includes dot", () => {
+        const { workspaceId } = parseUrl(new URL("https://somehost.com/components/work.space.id"));
+
+        expect(workspaceId).toEqual("work.space.id");
+    });
+
     it.each(["sso", "bearSso", "bear"])("should parse '%s' authType from the URL", (auth) => {
         const { authType } = parseUrl(
             new URL(`https://somehost.com/components/workspace-id.js?auth=${auth}`),

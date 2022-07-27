@@ -1,9 +1,9 @@
 // (C) 2022 GoodData Corporation
-import { CustomElementContext } from "../context";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 describe("context", () => {
     // Use enforced type casting for test simplicity
-    const mockContext = { backend: "test", workspaceId: "test" } as unknown as CustomElementContext;
+    const mockContext = { backend: dummyBackend, workspaceId: "test" };
 
     beforeEach(() => {
         // Have to re-import and reset modules for each test,

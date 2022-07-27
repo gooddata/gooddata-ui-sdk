@@ -1,7 +1,5 @@
 // (C) 2022 GoodData Corporation
 
-import invariant from "ts-invariant";
-
 /**
  * "none" means programmatic backend setup
  * "sso" means automatic Tiger SSO with redirection
@@ -23,18 +21,22 @@ const mapAuthType = (auth: string | null): AuthType => {
 };
 
 /**
- * @internal
+ * @remarks
+ * Parse script's own URL and return hostname, workspaceId and authType
  *
- * TODO rewrite this once specs on infra are clarified, versioned etc.
- *  For now, assuming URL pattern: https://[host]/components/[workspaceId].js[?auth=sso]
+ * @internal
  */
 export const parseUrl = (scriptUrl: URL) => {
     const protocol = scriptUrl.protocol.toLowerCase() === "http:" ? "http:" : "https:";
     const host = scriptUrl.host;
-    const workspaceId = scriptUrl.pathname.match(/^\/components\/([^./]+)(\.js)?$/i)?.[1];
-    const authType: AuthType = mapAuthType(scriptUrl.searchParams.get("auth"));
+    const path = scriptUrl.pathname.replace(/^\/+/, "").replace(/\/+$/, "").split("/");
 
-    invariant(workspaceId, "Unable to parse workspace id based on the script URL");
+    if (path.length !== 2 || path[0] !== "components") {
+        throw new Error("Unable to parse workspace id based on the script URL");
+    }
+
+    const workspaceId = path[1].replace(/(\.js)?$/i, "");
+    const authType: AuthType = mapAuthType(scriptUrl.searchParams.get("auth"));
 
     return { hostname: `${protocol}//${host}`, workspaceId, authType };
 };
