@@ -2052,6 +2052,7 @@ export interface ISettings {
     enableTableColumnsAutoResizing?: boolean;
     enableTableColumnsGrowToFit?: boolean;
     enableTableColumnsManualResizing?: boolean;
+    enableTheming?: boolean;
     enableWeekFilters?: boolean;
     hideKpiDrillInEmbedded?: boolean;
     platformEdition?: PlatformEdition;
