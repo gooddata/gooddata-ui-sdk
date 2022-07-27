@@ -552,7 +552,7 @@
     },
     {
       "name": "copy-webpack-plugin",
-      "allowedCategories": [ "tools" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "core-js",

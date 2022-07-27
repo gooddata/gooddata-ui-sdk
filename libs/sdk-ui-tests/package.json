@@ -92,7 +92,8 @@
         "ts-jest": "^27.0.5",
         "ts-loader": "^8.3.0",
         "tslib": "^2.0.0",
-        "uuid": "^8.3.2"
+        "uuid": "^8.3.2",
+        "copy-webpack-plugin": "~11.0.0"
     },
     "peerDependencies": {
         "@gooddata/sdk-ui": "^8.11.0-alpha.19",
@@ -103,6 +104,7 @@
         "@gooddata/sdk-ui-kit": "^8.11.0-alpha.19",
         "@gooddata/sdk-ui-pivot": "^8.11.0-alpha.19",
         "@gooddata/sdk-ui-theme-provider": "^8.11.0-alpha.19",
+        "@gooddata/sdk-ui-web-components": "^8.11.0-alpha.19",
         "react": "^16.10.0 || ^17.0.0",
         "react-dom": "^16.10.0 || ^17.0.0",
         "typescript": ">= 2.5.3"
@@ -117,6 +119,7 @@
         "@gooddata/sdk-ui-kit": "^8.11.0-alpha.19",
         "@gooddata/sdk-ui-pivot": "^8.11.0-alpha.19",
         "@gooddata/sdk-ui-theme-provider": "^8.11.0-alpha.19",
+        "@gooddata/sdk-ui-web-components": "^8.11.0-alpha.19",
         "@gooddata/sdk-ui": "^8.11.0-alpha.19",
         "@gooddata/stylelint-config": "^5.0.0",
         "@types/enzyme": "^3.10.3",
