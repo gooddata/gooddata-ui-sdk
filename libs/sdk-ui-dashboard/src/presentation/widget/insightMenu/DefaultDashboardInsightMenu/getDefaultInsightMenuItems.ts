@@ -17,7 +17,7 @@ export function getDefaultInsightMenuItems(
         onExportCSV: () => void;
         onScheduleExport: () => void;
         isScheduleExportVisible: boolean;
-        tooltipMessage: string;
+        isDataError: boolean;
     },
 ): IInsightMenuItem[] {
     const {
@@ -28,8 +28,12 @@ export function getDefaultInsightMenuItems(
         onExportXLSX,
         onScheduleExport,
         isScheduleExportVisible,
-        tooltipMessage,
+        isDataError,
     } = config;
+
+    const tooltip = isDataError
+        ? intl.formatMessage({ id: "options.menu.unsupported.error" })
+        : intl.formatMessage({ id: "options.menu.unsupported.loading" });
 
     return compact([
         {
@@ -38,7 +42,7 @@ export function getDefaultInsightMenuItems(
             itemName: intl.formatMessage({ id: "widget.options.menu.exportToXLSX" }),
             onClick: onExportXLSX,
             disabled: exportXLSXDisabled,
-            tooltip: tooltipMessage,
+            tooltip,
             icon: "gd-icon-download",
             className: "s-options-menu-export-xlsx",
         },
@@ -48,7 +52,7 @@ export function getDefaultInsightMenuItems(
             itemName: intl.formatMessage({ id: "widget.options.menu.exportToCSV" }),
             onClick: onExportCSV,
             disabled: exportCSVDisabled,
-            tooltip: tooltipMessage,
+            tooltip,
             icon: "gd-icon-download",
             className: "s-options-menu-export-csv",
         },
@@ -58,7 +62,7 @@ export function getDefaultInsightMenuItems(
             itemName: intl.formatMessage({ id: "widget.options.menu.scheduleExport" }),
             onClick: onScheduleExport,
             disabled: scheduleExportDisabled,
-            tooltip: tooltipMessage,
+            tooltip,
             icon: "gd-icon-clock",
             className: "s-options-menu-schedule-export",
         },

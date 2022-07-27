@@ -55,6 +55,7 @@ options = {
             "src/presentation/topBar/types.ts",
             "src/presentation/widget/types.ts",
             "src/presentation/dashboard/DashboardSidebar/types.ts",
+            "src/types.ts",
             "src/model",
         ]),
         depCruiser.moduleWithDependencies("dialogs", "src/presentation/dialogs", [

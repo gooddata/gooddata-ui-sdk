@@ -36,7 +36,27 @@ export interface IInsightMenuItemSeparator {
 /**
  * @alpha
  */
-export type IInsightMenuItem = IInsightMenuItemButton | IInsightMenuItemSeparator;
+export interface IInsightMenuSubmenu {
+    type: "submenu";
+    itemId: string;
+    itemName: string;
+    renderSubmenu: () => JSX.Element;
+    /**
+     * If specified, the value is shown on hover of the item as a tooltip.
+     */
+    tooltip?: string;
+    disabled?: boolean;
+    icon?: JSX.Element | string;
+    /**
+     * Additional class names to be applied to the item.
+     */
+    className?: string;
+}
+
+/**
+ * @alpha
+ */
+export type IInsightMenuItem = IInsightMenuItemButton | IInsightMenuItemSeparator | IInsightMenuSubmenu;
 
 /**
  * @alpha

@@ -11,6 +11,7 @@ import {
 import { ExtendedDashboardWidget } from "../../model";
 import { IInsight, IDashboardAttributeFilter, IKpiWidget, IInsightWidget, IKpi } from "@gooddata/sdk-model";
 import { CustomDashboardAttributeFilterComponent } from "../filterBar/types";
+import { RenderMode } from "../../types";
 
 /**
  * @public
@@ -89,6 +90,7 @@ export type InsightMenuItemsProvider = (
     widget: IInsightWidget,
     defaultItems: IInsightMenuItem[],
     closeMenu: () => void,
+    renderMode: RenderMode,
 ) => IInsightMenuItem[];
 
 /**
