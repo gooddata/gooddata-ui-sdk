@@ -551,6 +551,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "copy-webpack-plugin",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "core-js",
       "allowedCategories": [ "production" ]
     },
@@ -792,6 +796,10 @@
     },
     {
       "name": "memoize-one",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "mini-css-extract-plugin",
       "allowedCategories": [ "production" ]
     },
     {

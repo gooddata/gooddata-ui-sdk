@@ -14984,6 +14984,16 @@ packages:
       tiny-warning: 1.0.3
     dev: false
 
+  /mini-css-extract-plugin/2.6.1_webpack@5.72.0:
+    resolution: {integrity: sha512-wd+SD57/K6DiV7jIR34P+s3uckTRuQvx0tKPcvjFlrEylk6P4mQ2KSWk1hblj1Kxaqok7LogKOieygXqBczNlg==}
+    engines: {node: '>= 12.13.0'}
+    peerDependencies:
+      webpack: ^5.0.0
+    dependencies:
+      schema-utils: 4.0.0
+      webpack: 5.72.0_webpack-cli@4.9.2
+    dev: false
+
   /minimalistic-assert/1.0.1:
     resolution: {integrity: sha512-UtJcAD4yEaGtjPezWuO9wC4nwUnVH/8/Im3yEHQP4b67cXlD/Qr9hdITCU1xDbSEXg2XKNaP8jsReV7vQd00/A==}
     dev: false
@@ -24586,7 +24596,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-web-components.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-Y0a/gXjf6NdLB9rk6Zo/qk51fR4lJ5cZRxRYNFyCpsJ293VBLogdl1c1jbQO36fCNMDJv3wQtUELySt1y2W4fQ==, tarball: file:projects/sdk-ui-web-components.tgz}
+    resolution: {integrity: sha512-XVQuiyrySaMQ/PxZSnnTEhJ/ZBpS3WSbiQPXGn5B8lQNvlzCoB/ybqe69pofnOl/SlbPb7H3eb3MbjHT8thnQQ==, tarball: file:projects/sdk-ui-web-components.tgz}
     id: file:projects/sdk-ui-web-components.tgz
     name: '@rush-temp/sdk-ui-web-components'
     version: 0.0.0
@@ -24625,6 +24635,7 @@ packages:
       jest-enzyme: 7.1.2_4c874ea13312c50d8c9b996ca71028db
       jest-junit: 3.7.0
       lodash: 4.17.21
+      mini-css-extract-plugin: 2.6.1_webpack@5.72.0
       node-sass: 7.0.1
       node-sass-magic-importer: 5.3.2
       prettier: 2.5.1

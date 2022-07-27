@@ -2,8 +2,10 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { EnvironmentPlugin, ProvidePlugin, ContextReplacementPlugin, DefinePlugin } = require("webpack");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require("path");
 const npmPackage = require("./package.json");
+const SHADOW_STYLES = "assets/styles.shadow.css";
 
 module.exports = (env, argv) => ({
     mode: argv.mode,
@@ -35,7 +37,7 @@ module.exports = (env, argv) => ({
             // fixes tilde imports in CSS from sdk-ui-* packages
             "@gooddata/sdk-ui-filters": path.resolve("./node_modules/@gooddata/sdk-ui-filters"),
             "@gooddata/sdk-ui-charts": path.resolve("./node_modules/@gooddata/sdk-ui-charts"),
-            "@gooddata/sdk-ui-geo": path.resolve("./node_modules/@gooddata/sdk-ui-charts"),
+            "@gooddata/sdk-ui-geo": path.resolve("./node_modules/@gooddata/sdk-ui-geo"),
             "@gooddata/sdk-ui-pivot": path.resolve("./node_modules/@gooddata/sdk-ui-pivot"),
             "@gooddata/sdk-ui-dashboard": path.resolve("./node_modules/@gooddata/sdk-ui-dashboard"),
             "@gooddata/sdk-ui-ext": path.resolve("./node_modules/@gooddata/sdk-ui-ext"),
@@ -77,18 +79,14 @@ module.exports = (env, argv) => ({
             },
             {
                 test: /\.css$/,
-                use: [
-                    // Use lazy injection, as we need to use it with Shadow DOM
+                oneOf: [
                     {
-                        loader: "style-loader",
-                        options: {
-                            injectType: "lazyStyleTag",
-                            insert: (element, options) => {
-                                (options.target || document.head).appendChild(element);
-                            },
-                        },
+                        test: /\.shadow\.css$/,
+                        use: [MiniCssExtractPlugin.loader, "css-loader"],
                     },
-                    "css-loader",
+                    {
+                        use: ["style-loader", "css-loader"],
+                    },
                 ],
             },
             {
@@ -122,9 +120,14 @@ module.exports = (env, argv) => ({
         new DefinePlugin({
             NPM_PACKAGE_NAME: JSON.stringify(npmPackage.name),
             NPM_PACKAGE_VERSION: JSON.stringify(npmPackage.version),
+            SHADOW_STYLES: JSON.stringify(SHADOW_STYLES),
         }),
         new ProvidePlugin({
             process: "process/browser",
+        }),
+        new MiniCssExtractPlugin({
+            filename: SHADOW_STYLES,
+            runtime: false,
         }),
         env.analyze &&
             new BundleAnalyzerPlugin({

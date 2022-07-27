@@ -2,3 +2,4 @@
 declare module "*.css";
 declare const NPM_PACKAGE_NAME: string;
 declare const NPM_PACKAGE_VERSION: string;
+declare const SHADOW_STYLES: string;

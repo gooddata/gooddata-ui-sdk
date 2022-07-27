@@ -9,7 +9,6 @@ import {
     EVENT_HANDLER,
     GET_VISUALIZATION,
     LOAD_COMPONENT,
-    LOAD_STYLES,
 } from "./CustomElementAdapter";
 
 type IDashboard = typeof import("@gooddata/sdk-ui-dashboard/esm/presentation/dashboard/Dashboard").Dashboard;
@@ -17,20 +16,6 @@ type IDashboard = typeof import("@gooddata/sdk-ui-dashboard/esm/presentation/das
 export class Dashboard extends CustomElementAdapter<IDashboard> {
     static get observedAttributes() {
         return ["workspace", "dashboard", "locale", "readonly", "mapboxToken"];
-    }
-
-    async [LOAD_STYLES]() {
-        return (
-            await Promise.all([
-                import("@gooddata/sdk-ui-filters/styles/css/main.css"),
-                import("@gooddata/sdk-ui-charts/styles/css/main.css"),
-                import("@gooddata/sdk-ui-geo/styles/css/main.css"),
-                import("@gooddata/sdk-ui-pivot/styles/css/main.css"),
-                import("@gooddata/sdk-ui-kit/styles/css/main.css"),
-                import("@gooddata/sdk-ui-ext/styles/css/main.css"),
-                import("@gooddata/sdk-ui-dashboard/styles/css/main.css"),
-            ])
-        ).map((mod) => mod.default);
     }
 
     async [LOAD_COMPONENT]() {

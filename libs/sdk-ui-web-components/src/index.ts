@@ -56,7 +56,7 @@ const initializeAutoAuth = async () => {
 
     try {
         // Detect current host based on the script's URL
-        parsedUrl = parseUrl(new URL(/*import.meta.url*/ "https://test.com/components/FU.js"));
+        parsedUrl = parseUrl(new URL(import.meta.url));
     } catch (e) {
         // Can't parse the URL, user can still use manual configuration, though
         return;
