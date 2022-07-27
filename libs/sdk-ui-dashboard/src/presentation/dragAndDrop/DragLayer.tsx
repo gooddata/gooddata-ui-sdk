@@ -1,20 +1,10 @@
 // (C) 2022 GoodData Corporation
-import React, { CSSProperties, FC } from "react";
+import React, { CSSProperties, FC, useMemo } from "react";
 import { useDragLayer } from "react-dnd";
 import { HeightResizerDragPreview } from "./DragLayerPreview/HeightResizerDragPreview";
 import { DraggableInternalItemType, DraggableItemType, isDraggableInternalItemType } from "./types";
 import { ContentDragPreview } from "./DragLayerPreview/ContentDragPreview";
 import { useScrolling } from "./Resize/useScrolling";
-
-const layerStyles: CSSProperties = {
-    position: "relative",
-    pointerEvents: "none",
-    zIndex: 5001,
-    left: 0,
-    top: 0,
-    width: "100%",
-    height: "100%",
-};
 
 const previewComponentsMap: Record<DraggableInternalItemType, any> = {
     "internal-height-resizer": HeightResizerDragPreview,
@@ -33,8 +23,22 @@ export const DragLayerComponent: FC = () => {
 
     const { itemType, isDragging } = dragLayerProperties;
 
-    useScrolling(isDragging);
+    const layerStyles: CSSProperties = useMemo(() => {
+        const isResizing = itemType === "internal-height-resizer" || itemType === "internal-width-resizer";
+        const position = isResizing ? "relative" : "fixed";
 
+        return {
+            position,
+            pointerEvents: "none",
+            zIndex: 5001,
+            left: 0,
+            top: 0,
+            width: "100%",
+            height: "100%",
+        };
+    }, [itemType]);
+
+    useScrolling(isDragging);
     if (!isDragging) {
         return null;
     }
