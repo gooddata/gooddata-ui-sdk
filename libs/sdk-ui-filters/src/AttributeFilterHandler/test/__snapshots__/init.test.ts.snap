@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AttributeFilterHandler getElementsByKey() should return selection elements after successful initialization 1`] = `
+Array [
+  Object {
+    "title": "CompuSci",
+    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
+  },
+  Object {
+    "title": "Educationly",
+    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
+  },
+]
+`;
+
+exports[`AttributeFilterHandler getInitError() should return error 1`] = `[Error: NOT_FOUND]`;
+
+exports[`AttributeFilterHandler getInitStatus() should return proper status for failed load: after the load 1`] = `"error"`;
+
+exports[`AttributeFilterHandler getInitStatus() should return proper status for failed load: before the load 1`] = `"pending"`;
+
+exports[`AttributeFilterHandler getInitStatus() should return proper status for failed load: during the load 1`] = `"loading"`;
+
+exports[`AttributeFilterHandler getInitStatus() should return proper status for successful load: after the load 1`] = `"success"`;
+
+exports[`AttributeFilterHandler getInitStatus() should return proper status for successful load: before the load 1`] = `"pending"`;
+
+exports[`AttributeFilterHandler getInitStatus() should return proper status for successful load: during the load 1`] = `"loading"`;
+
+exports[`AttributeFilterHandler init() should trigger onInitStart() callback: with parameters 1`] = `
+Array [
+  Object {
+    "correlation": "start",
+  },
+]
+`;
+
+exports[`AttributeFilterHandler init() that failed should trigger onInitError() callback: with parameters 1`] = `
+Array [
+  Object {
+    "correlation": "error",
+    "error": [Error: NOT_FOUND],
+  },
+]
+`;
+
+exports[`AttributeFilterHandler init() that was canceled should trigger onInitCancel() callback: with parameters 1`] = `
+Array [
+  Object {
+    "correlation": "cancel",
+  },
+]
+`;
+
+exports[`AttributeFilterHandler init() that was successful should trigger onInitSuccess() callback: with parameters 1`] = `
+Array [
+  Object {
+    "correlation": "success",
+  },
+]
+`;

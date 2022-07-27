@@ -8,6 +8,8 @@ import { AttributeFiltersOrPlaceholders } from '@gooddata/sdk-ui';
 import { DashboardDateFilterConfigMode } from '@gooddata/sdk-model';
 import { DateFilterGranularity } from '@gooddata/sdk-model';
 import { DateString } from '@gooddata/sdk-model';
+import { ElementsQueryOptionsElementsSpecification } from '@gooddata/sdk-backend-spi';
+import { GoodDataSdkError } from '@gooddata/sdk-ui';
 import { IAbsoluteDateFilterForm } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilterPreset } from '@gooddata/sdk-model';
 import { IAllTimeDateFilterOption } from '@gooddata/sdk-model';
@@ -36,10 +38,17 @@ import { OnError } from '@gooddata/sdk-ui';
 import { default as React_2 } from 'react';
 import { ReactNode } from 'react';
 import { RelativeDateFilterGranularityOffset } from '@gooddata/sdk-model';
+import { SortDirection } from '@gooddata/sdk-model';
 import { WrappedComponentProps } from 'react-intl';
 
 // @public
 export type AbsoluteDateFilterOption = IUiAbsoluteDateFilterForm | IAbsoluteDateFilterPreset;
+
+// @alpha
+export type AsyncOperationStatus = "pending" | "loading" | "success" | "error" | "canceled";
+
+// @alpha
+export type AttributeElementKey = string;
 
 // @public
 export const AttributeElements: React_2.ComponentType<IAttributeElementsProps>;
@@ -54,15 +63,15 @@ export const AttributeFilterButton: React_2.FC<IAttributeFilterButtonOwnProps>;
 export type AttributeListItem = IAttributeElement | EmptyListItem;
 
 // @alpha (undocumented)
-export type Callback<T extends object = {}> = (payload: CallbackPayload<T>) => void;
+export type Callback<T> = (payload: T) => void;
 
 // @alpha (undocumented)
-export type CallbackPayload<T extends object = {}> = T & {
-    correlation?: Correlation;
+export type CallbackPayloadWithCorrelation<T = {}> = T & {
+    correlation: Correlation;
 };
 
 // @alpha (undocumented)
-export type CallbackRegistration<T extends object = {}> = (cb: Callback<T>) => Unsubscribe;
+export type CallbackRegistration<T> = (cb: Callback<T>) => Unsubscribe;
 
 // @alpha (undocumented)
 export type Correlation = string;
@@ -221,31 +230,44 @@ export interface IAttributeDropdownListItemProps extends WrappedComponentProps {
 
 // @alpha
 export interface IAttributeElementLoader {
-    cancelElementLoad(): void;
-    // (undocumented)
-    getAllItems(): IAttributeElement[];
-    // (undocumented)
-    getCountWithCurrentSettings(): number;
-    // (undocumented)
-    getItemsByKey(keys: string[]): IAttributeElement[];
-    // (undocumented)
+    cancelCustomElementsLoad(correlation?: Correlation): void;
+    cancelInitialElementsPageLoad(): void;
+    cancelNextElementsPageLoad(): void;
+    getAllElements(): IAttributeElement[];
+    getElementsByKey(keys: AttributeElementKey[]): IAttributeElement[];
+    getInitialElementsPageError(): GoodDataSdkError | undefined;
+    getInitialElementsPageStatus(): AsyncOperationStatus;
+    getLimit(): number;
+    getLimitingAttributeFilters(): IElementsQueryAttributeFilter[];
+    getLimitingDateFilters(): IRelativeDateFilter[];
+    getLimitingMeasures(): IMeasure[];
+    getNextElementsPageError(): GoodDataSdkError | undefined;
+    getNextElementsPageStatus(): AsyncOperationStatus;
+    getOffset(): number;
+    getOrder(): SortDirection;
     getSearch(): string;
-    // (undocumented)
-    getTotalCount(): number;
-    loadElementsRange(offset: number, limit: number, correlation?: Correlation): void;
-    // (undocumented)
-    onElementsRangeLoadCancel: CallbackRegistration;
-    // (undocumented)
-    onElementsRangeLoadError: CallbackRegistration<{
-        error: Error;
-    }>;
-    // (undocumented)
-    onElementsRangeLoadStart: CallbackRegistration;
-    // (undocumented)
-    onElementsRangeLoadSuccess: CallbackRegistration<IElementsLoadResult>;
+    getTotalElementsCount(): number;
+    getTotalElementsCountWithCurrentSettings(): number;
+    loadCustomElements(options: ILoadElementsOptions, correlation?: Correlation): void;
+    loadInitialElementsPage(correlation?: Correlation): void;
+    loadNextElementsPage(correlation?: Correlation): void;
+    onLoadCustomElementsCancel: CallbackRegistration<OnLoadCustomElementsCancelCallbackPayload>;
+    onLoadCustomElementsError: CallbackRegistration<OnLoadCustomElementsErrorCallbackPayload>;
+    onLoadCustomElementsStart: CallbackRegistration<OnLoadCustomElementsStartCallbackPayload>;
+    onLoadCustomElementsSuccess: CallbackRegistration<OnLoadCustomElementsSuccessCallbackPayload>;
+    onLoadInitialElementsPageCancel: CallbackRegistration<OnLoadInitialElementsPageCancelCallbackPayload>;
+    onLoadInitialElementsPageError: CallbackRegistration<OnLoadInitialElementsPageErrorCallbackPayload>;
+    onLoadInitialElementsPageStart: CallbackRegistration<OnLoadInitialElementsPageStartCallbackPayload>;
+    onLoadInitialElementsPageSuccess: CallbackRegistration<OnLoadInitialElementsPageSuccessCallbackPayload>;
+    onLoadNextElementsPageCancel: CallbackRegistration<OnLoadNextElementsPageCancelCallbackPayload>;
+    onLoadNextElementsPageError: CallbackRegistration<OnLoadNextElementsPageErrorCallbackPayload>;
+    onLoadNextElementsPageStart: CallbackRegistration<OnLoadNextElementsPageStartCallbackPayload>;
+    onLoadNextElementsPageSuccess: CallbackRegistration<OnLoadNextElementsPageSuccessCallbackPayload>;
+    setLimit(limit: number): void;
     setLimitingAttributeFilters(filters: IElementsQueryAttributeFilter[]): void;
     setLimitingDateFilters(filters: IRelativeDateFilter[]): void;
     setLimitingMeasures(measures: IMeasure[]): void;
+    setOrder(order: SortDirection): void;
     setSearch(search: string): void;
 }
 
@@ -313,18 +335,14 @@ export interface IAttributeFilterHandlerOptionsBase {
 // @alpha
 export interface IAttributeFilterLoader extends IAttributeLoader, IAttributeElementLoader {
     getFilter(): IAttributeFilter;
-    // (undocumented)
+    getInitError(): GoodDataSdkError | undefined;
+    getInitStatus(): AsyncOperationStatus;
     init(correlation?: Correlation): void;
-    // (undocumented)
-    onInitCancel: CallbackRegistration;
-    // (undocumented)
-    onInitError: CallbackRegistration<{
-        error: Error;
-    }>;
-    // (undocumented)
-    onInitStart: CallbackRegistration;
-    // (undocumented)
-    onInitSuccess: CallbackRegistration;
+    onInitCancel: CallbackRegistration<OnInitCancelCallbackPayload>;
+    onInitError: CallbackRegistration<OnInitErrorCallbackPayload>;
+    onInitStart: CallbackRegistration<OnInitStartCallbackPayload>;
+    onInitSuccess: CallbackRegistration<OnInitSuccessCallbackPayload>;
+    onUpdate: CallbackRegistration<void>;
 }
 
 // @public (undocumented)
@@ -353,19 +371,13 @@ export interface IAttributeFilterProps {
 export interface IAttributeLoader {
     cancelAttributeLoad(): void;
     getAttribute(): IAttributeMetadataObject | undefined;
+    getAttributeError(): GoodDataSdkError | undefined;
+    getAttributeStatus(): AsyncOperationStatus;
     loadAttribute(correlation?: Correlation): void;
-    // (undocumented)
-    onAttributeLoadCancel: CallbackRegistration;
-    // (undocumented)
-    onAttributeLoadError: CallbackRegistration<{
-        error: Error;
-    }>;
-    // (undocumented)
-    onAttributeLoadStart: CallbackRegistration;
-    // (undocumented)
-    onAttributeLoadSuccess: CallbackRegistration<{
-        attribute: IAttributeMetadataObject;
-    }>;
+    onLoadAttributeCancel: CallbackRegistration<OnLoadAttributeCancelCallbackPayload>;
+    onLoadAttributeError: CallbackRegistration<OnLoadAttributeErrorCallbackPayload>;
+    onLoadAttributeStart: CallbackRegistration<OnLoadAttributeStartCallbackPayload>;
+    onLoadAttributeSuccess: CallbackRegistration<OnLoadAttributeSuccessCallbackPayload>;
 }
 
 // @beta (undocumented)
@@ -465,18 +477,6 @@ export interface IDateTranslator {
     formatDate: IntlShape["formatDate"];
 }
 
-// @alpha (undocumented)
-export interface IElementsLoadResult {
-    // (undocumented)
-    readonly attributeElements: IAttributeElement[];
-    // (undocumented)
-    readonly limit: number;
-    // (undocumented)
-    readonly offset: number;
-    // (undocumented)
-    readonly totalCount: number;
-}
-
 // @public
 export interface IExtendedDateFilterErrors {
     absoluteForm?: IDateFilterAbsoluteFormErrors;
@@ -485,18 +485,43 @@ export interface IExtendedDateFilterErrors {
 
 // @alpha
 export interface IInvertableSelectionHandler<T extends InvertableSelection<any>> {
-    // (undocumented)
     changeSelection(selection: T): void;
-    // (undocumented)
     clearSelection(): void;
-    // (undocumented)
     getSelection(): T;
-    // (undocumented)
     invertSelection(): void;
+    onSelectionChanged: CallbackRegistration<OnSelectionChangedCallbackPayload<T>>;
+}
+
+// @alpha
+export interface ILoadElementsOptions {
     // (undocumented)
-    onSelectionChanged: CallbackRegistration<{
-        selection: T;
-    }>;
+    elements?: ElementsQueryOptionsElementsSpecification;
+    // (undocumented)
+    includeTotalCountWithoutFilters?: boolean;
+    // (undocumented)
+    limit?: number;
+    // (undocumented)
+    limitingAttributeFilters?: IElementsQueryAttributeFilter[];
+    // (undocumented)
+    limitingDateFilters?: IRelativeDateFilter[];
+    // (undocumented)
+    limitingMeasures?: IMeasure[];
+    // (undocumented)
+    offset?: number;
+    // (undocumented)
+    order?: SortDirection;
+    // (undocumented)
+    search?: string;
+}
+
+// @alpha
+export interface ILoadElementsResult {
+    // (undocumented)
+    elements: IAttributeElement[];
+    // (undocumented)
+    options: ILoadElementsOptions;
+    // (undocumented)
+    totalCount: number;
 }
 
 // @beta (undocumented)
@@ -571,15 +596,15 @@ export interface IMultiSelectAttributeFilterHandlerOptions extends IAttributeFil
     selectionMode: "multi";
 }
 
-// @alpha (undocumented)
-export type InvertableAttributeElementSelection = InvertableSelection<string>;
+// @alpha
+export type InvertableAttributeElementSelection = InvertableSelection<AttributeElementKey>;
 
 // @alpha (undocumented)
 export interface InvertableSelection<T> {
     // (undocumented)
     isInverted: boolean;
     // (undocumented)
-    items: T[];
+    keys: T[];
 }
 
 // @beta (undocumented)
@@ -641,7 +666,7 @@ export const isAbsoluteDateFilterOption: (obj: unknown) => obj is AbsoluteDateFi
 export const isEmptyListItem: (item: Partial<AttributeListItem>) => item is EmptyListItem;
 
 // @alpha
-export interface ISingleSelectAttributeFilterHandler extends IAttributeFilterLoader, IStagedSingleSelectionHandler<string | undefined> {
+export interface ISingleSelectAttributeFilterHandler extends IAttributeFilterLoader, IStagedSingleSelectionHandler<AttributeElementKey | undefined> {
 }
 
 // @alpha
@@ -652,14 +677,9 @@ export interface ISingleSelectAttributeFilterHandlerOptions extends IAttributeFi
 
 // @alpha
 export interface ISingleSelectionHandler<T> {
-    // (undocumented)
     changeSelection(selection: T): void;
-    // (undocumented)
     getSelection(): T;
-    // (undocumented)
-    onSelectionChanged: CallbackRegistration<{
-        selection: T;
-    }>;
+    onSelectionChanged: CallbackRegistration<OnSelectionChangedCallbackPayload<T>>;
 }
 
 // @public (undocumented)
@@ -671,28 +691,22 @@ export const isRelativeDateFilterOption: (obj: unknown) => obj is RelativeDateFi
 // @alpha
 export interface IStagedInvertableSelectionHandler<T extends InvertableSelection<any>> extends Omit<IInvertableSelectionHandler<T>, "getSelection"> {
     commitSelection(): void;
-    // (undocumented)
     getCommittedSelection(): T;
-    // (undocumented)
     getWorkingSelection(): T;
-    // (undocumented)
-    onSelectionCommitted: CallbackRegistration<{
-        selection: T;
-    }>;
+    isWorkingSelectionChanged(): boolean;
+    isWorkingSelectionEmpty(): boolean;
+    onSelectionCommitted: CallbackRegistration<OnSelectionCommittedCallbackPayload<T>>;
     revertSelection(): void;
 }
 
 // @alpha
 export interface IStagedSingleSelectionHandler<T> extends Omit<ISingleSelectionHandler<T>, "getSelection"> {
     commitSelection(): void;
-    // (undocumented)
     getCommittedSelection(): T;
-    // (undocumented)
     getWorkingSelection(): T;
-    // (undocumented)
-    onSelectionCommitted: CallbackRegistration<{
-        selection: T;
-    }>;
+    isWorkingSelectionChanged(): boolean;
+    isWorkingSelectionEmpty(): boolean;
+    onSelectionCommitted: CallbackRegistration<OnSelectionCommittedCallbackPayload<T>>;
     revertSelection(): void;
 }
 
@@ -737,10 +751,92 @@ export class MeasureValueFilterDropdown extends React_2.PureComponent<IMeasureVa
 }
 
 // @alpha (undocumented)
-export function newAttributeFilterHandler(backend: IAnalyticalBackend, workspace: string, filter: IAttributeFilter, options: ISingleSelectAttributeFilterHandlerOptions): ISingleSelectAttributeFilterHandler;
+export function newAttributeFilterHandler(backend: IAnalyticalBackend, workspace: string, attributeFilter: IAttributeFilter, options: ISingleSelectAttributeFilterHandlerOptions): ISingleSelectAttributeFilterHandler;
 
 // @alpha (undocumented)
-export function newAttributeFilterHandler(backend: IAnalyticalBackend, workspace: string, filter: IAttributeFilter, options: IMultiSelectAttributeFilterHandlerOptions): IMultiSelectAttributeFilterHandler;
+export function newAttributeFilterHandler(backend: IAnalyticalBackend, workspace: string, attributeFilter: IAttributeFilter, options: IMultiSelectAttributeFilterHandlerOptions): IMultiSelectAttributeFilterHandler;
+
+// @alpha
+export type OnInitCancelCallbackPayload = CallbackPayloadWithCorrelation;
+
+// @alpha
+export type OnInitErrorCallbackPayload = CallbackPayloadWithCorrelation<{
+    error: GoodDataSdkError;
+}>;
+
+// @alpha
+export type OnInitStartCallbackPayload = CallbackPayloadWithCorrelation;
+
+// @alpha
+export type OnInitSuccessCallbackPayload = CallbackPayloadWithCorrelation;
+
+// @alpha
+export type OnLoadAttributeCancelCallbackPayload = CallbackPayloadWithCorrelation;
+
+// @alpha
+export type OnLoadAttributeErrorCallbackPayload = CallbackPayloadWithCorrelation<{
+    error: GoodDataSdkError;
+}>;
+
+// @alpha
+export type OnLoadAttributeStartCallbackPayload = CallbackPayloadWithCorrelation;
+
+// @alpha
+export type OnLoadAttributeSuccessCallbackPayload = CallbackPayloadWithCorrelation<{
+    attribute: IAttributeMetadataObject;
+}>;
+
+// @alpha
+export type OnLoadCustomElementsCancelCallbackPayload = Partial<CallbackPayloadWithCorrelation>;
+
+// @alpha
+export type OnLoadCustomElementsErrorCallbackPayload = Partial<CallbackPayloadWithCorrelation> & {
+    error: GoodDataSdkError;
+};
+
+// @alpha
+export type OnLoadCustomElementsStartCallbackPayload = Partial<CallbackPayloadWithCorrelation>;
+
+// @alpha
+export type OnLoadCustomElementsSuccessCallbackPayload = Partial<CallbackPayloadWithCorrelation> & ILoadElementsResult;
+
+// @alpha
+export type OnLoadInitialElementsPageCancelCallbackPayload = CallbackPayloadWithCorrelation;
+
+// @alpha
+export type OnLoadInitialElementsPageErrorCallbackPayload = CallbackPayloadWithCorrelation<{
+    error: GoodDataSdkError;
+}>;
+
+// @alpha
+export type OnLoadInitialElementsPageStartCallbackPayload = CallbackPayloadWithCorrelation;
+
+// @alpha
+export type OnLoadInitialElementsPageSuccessCallbackPayload = CallbackPayloadWithCorrelation<ILoadElementsResult>;
+
+// @alpha
+export type OnLoadNextElementsPageCancelCallbackPayload = CallbackPayloadWithCorrelation;
+
+// @alpha
+export type OnLoadNextElementsPageErrorCallbackPayload = CallbackPayloadWithCorrelation<{
+    error: GoodDataSdkError;
+}>;
+
+// @alpha
+export type OnLoadNextElementsPageStartCallbackPayload = CallbackPayloadWithCorrelation;
+
+// @alpha
+export type OnLoadNextElementsPageSuccessCallbackPayload = CallbackPayloadWithCorrelation<ILoadElementsResult>;
+
+// @alpha
+export type OnSelectionChangedCallbackPayload<T> = {
+    selection: T;
+};
+
+// @alpha
+export type OnSelectionCommittedCallbackPayload<T> = {
+    selection: T;
+};
 
 // @beta (undocumented)
 export const RankingFilter: React_2.FC<IRankingFilterProps>;
