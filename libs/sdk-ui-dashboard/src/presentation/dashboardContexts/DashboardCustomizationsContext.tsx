@@ -1,19 +1,13 @@
 // (C) 2019-2022 GoodData Corporation
 import React, { createContext, useContext } from "react";
-import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 
-import { IInsightMenuItem } from "../widget/types";
+import { InsightMenuItemsProvider } from "./types";
 
 /**
  * @internal
  */
 interface IDashboardCustomizationsContext {
-    insightMenuItemsProvider?: (
-        insight: IInsight,
-        widget: IInsightWidget,
-        defaultItems: IInsightMenuItem[],
-        closeMenu: () => void,
-    ) => IInsightMenuItem[];
+    insightMenuItemsProvider?: InsightMenuItemsProvider;
 }
 
 /**

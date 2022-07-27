@@ -1,6 +1,6 @@
 // (C) 2020-2022 GoodData Corporation
 
-import { ITigerFeatureFlags, TigerFeaturesNames, FeatureFlagsValues } from "../uiFeatures";
+import { FeatureFlagsValues, ITigerFeatureFlags, TigerFeaturesNames } from "../uiFeatures";
 import { convertState } from "./state";
 
 export type FeatureDef = {
@@ -50,6 +50,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "dashboardEditModeDevRollout",
             "BOOLEAN",
             FeatureFlagsValues.dashboardEditModeDevRollout,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableTheming,
+            "enableTheming",
+            "BOOLEAN",
+            FeatureFlagsValues.enableTheming,
         ),
     };
 }

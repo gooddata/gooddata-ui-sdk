@@ -49,7 +49,7 @@
         "identifier": "ColumnChart.9734f5d20a842690a4ad77294a025f1a",
         "properties": {
             "controls": {
-                "dataLabels": { "totalsVisible": true, "visible": true },
+                "dataLabels": { "visible": true },
                 "stackMeasuresToPercent": true,
                 "yaxis": { "max": "0.9", "min": "0.1" }
             }

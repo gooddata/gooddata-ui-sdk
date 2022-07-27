@@ -1278,11 +1278,6 @@
         "comment": "Label of widget configuration section",
         "limit": 0
     },
-    "configurationPanel.interactions": {
-        "value": "Interactions",
-        "comment": "",
-        "limit": 0
-    },
     "configurationPanel.comparison": {
         "value": "Comparison",
         "comment": "",

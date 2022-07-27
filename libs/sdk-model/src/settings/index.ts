@@ -239,6 +239,11 @@ export interface ISettings {
      */
     enableSeparateTotalLabels?: boolean;
 
+    /**
+     * Enable theming on Panther
+     */
+    enableTheming?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

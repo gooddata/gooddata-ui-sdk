@@ -2559,6 +2559,11 @@ export type FiltersInfo = {
 export type FluidLayoutCustomizationFn = (layout: IDashboardLayout<ExtendedDashboardWidget>, customizer: IFluidLayoutCustomizer) => void;
 
 // @internal (undocumented)
+export function getDefaultInsightEditMenuItems(intl: IntlShape, config: {
+    widget: IInsightWidget;
+}): IInsightMenuItem[];
+
+// @internal (undocumented)
 export function getDefaultInsightMenuItems(intl: IntlShape, config: {
     exportXLSXDisabled: boolean;
     exportCSVDisabled: boolean;
@@ -2567,7 +2572,7 @@ export function getDefaultInsightMenuItems(intl: IntlShape, config: {
     onExportCSV: () => void;
     onScheduleExport: () => void;
     isScheduleExportVisible: boolean;
-    tooltipMessage: string;
+    isDataError: boolean;
 }): IInsightMenuItem[];
 
 // @internal (undocumented)
@@ -2576,7 +2581,7 @@ export function getDefaultLegacyInsightMenuItems(intl: IntlShape, config: {
     exportCSVDisabled: boolean;
     onExportXLSX: () => void;
     onExportCSV: () => void;
-    tooltipMessage: string;
+    isDataError: boolean;
 }): IInsightMenuItem[];
 
 // @internal (undocumented)
@@ -3284,7 +3289,7 @@ export interface IInsightListProps {
 }
 
 // @alpha (undocumented)
-export type IInsightMenuItem = IInsightMenuItemButton | IInsightMenuItemSeparator;
+export type IInsightMenuItem = IInsightMenuItemButton | IInsightMenuItemSeparator | IInsightMenuSubmenu;
 
 // @alpha (undocumented)
 export interface IInsightMenuItemButton {
@@ -3310,6 +3315,24 @@ export interface IInsightMenuItemSeparator {
     itemId: string;
     // (undocumented)
     type: "separator";
+}
+
+// @alpha (undocumented)
+export interface IInsightMenuSubmenu {
+    className?: string;
+    // (undocumented)
+    disabled?: boolean;
+    // (undocumented)
+    icon?: JSX.Element | string;
+    // (undocumented)
+    itemId: string;
+    // (undocumented)
+    itemName: string;
+    // (undocumented)
+    renderSubmenu: () => JSX.Element;
+    tooltip?: string;
+    // (undocumented)
+    type: "submenu";
 }
 
 // @alpha
@@ -3463,7 +3486,7 @@ export type InsightMenuButtonComponentProvider = (insight: IInsight, widget: IIn
 export type InsightMenuComponentProvider = (insight: IInsight, widget: IInsightWidget) => CustomDashboardInsightMenuComponent;
 
 // @alpha (undocumented)
-export type InsightMenuItemsProvider = (insight: IInsight, widget: IInsightWidget, defaultItems: IInsightMenuItem[], closeMenu: () => void) => IInsightMenuItem[];
+export type InsightMenuItemsProvider = (insight: IInsight, widget: IInsightWidget, defaultItems: IInsightMenuItem[], closeMenu: () => void, renderMode: RenderMode) => IInsightMenuItem[];
 
 // @alpha (undocumented)
 export interface InsightPlaceholderWidget extends ICustomWidgetBase {

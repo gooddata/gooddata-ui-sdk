@@ -115,7 +115,7 @@ export async function promptHostname(backend: TargetBackendType): Promise<string
         }
     }
 
-    const displayName = backend === "bear" ? "GoodData platform" : "GoodData.CN";
+    const displayName = backend === "bear" ? "GoodData platform" : "GoodData Cloud or Gooddata.CN";
     const question: DistinctQuestion = {
         message: `Enter ${displayName} hostname:`,
         name: "hostname",
@@ -139,7 +139,7 @@ export async function promptBackend(): Promise<TargetBackendType> {
                 value: "bear",
             },
             {
-                name: "Gooddata.CN (codename 'Tiger')",
+                name: "GoodData Cloud or Gooddata.CN (codename 'Tiger')",
                 value: "tiger",
             },
         ],

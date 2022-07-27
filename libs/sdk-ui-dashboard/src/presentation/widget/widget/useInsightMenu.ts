@@ -1,20 +1,22 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState, Dispatch, SetStateAction } from "react";
 import { useIntl } from "react-intl";
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 
-import { selectExecutionResultByRef, useDashboardSelector } from "../../../model";
+import { selectExecutionResultByRef, useDashboardSelector, selectRenderMode } from "../../../model";
 
+import { RenderMode } from "../../../types";
 import { isDataError } from "../../../_staging/errors/errorPredicates";
-import { useDashboardCustomizationsContext } from "../../dashboardContexts";
+import { useDashboardCustomizationsContext, InsightMenuItemsProvider } from "../../dashboardContexts";
 import {
     getDefaultInsightMenuItems,
     getDefaultLegacyInsightMenuItems,
+    getDefaultInsightEditMenuItems,
     IInsightMenuItem,
 } from "../insightMenu";
 
-export const useInsightMenu = (config: {
+type UseInsightMenuConfig = {
     insight: IInsight;
     widget: IInsightWidget;
     exportCSVEnabled: boolean;
@@ -24,12 +26,41 @@ export const useInsightMenu = (config: {
     onExportXLSX: () => void;
     onScheduleExport: () => void;
     isScheduleExportVisible: boolean;
-}): { menuItems: IInsightMenuItem[]; isMenuOpen: boolean; openMenu: () => void; closeMenu: () => void } => {
+};
+
+export const useInsightMenu = (
+    config: UseInsightMenuConfig,
+): { menuItems: IInsightMenuItem[]; isMenuOpen: boolean; openMenu: () => void; closeMenu: () => void } => {
+    const { insight, widget } = config;
+
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const closeMenu = useCallback(() => setIsMenuOpen(false), []);
+    const openMenu = useCallback(() => setIsMenuOpen(true), []);
+
+    const renderMode = useDashboardSelector(selectRenderMode);
+
+    const { insightMenuItemsProvider } = useDashboardCustomizationsContext();
+    const defaultMenuItems = useDefaultMenuItems(config, renderMode, insightMenuItemsProvider, setIsMenuOpen);
+
+    const menuItems = useMemo<IInsightMenuItem[]>(() => {
+        return insightMenuItemsProvider
+            ? insightMenuItemsProvider(insight, widget, defaultMenuItems, closeMenu, renderMode)
+            : defaultMenuItems;
+    }, [insightMenuItemsProvider, insight, widget, defaultMenuItems, closeMenu, renderMode]);
+
+    return { menuItems, isMenuOpen, openMenu, closeMenu };
+};
+
+function useDefaultMenuItems(
+    config: UseInsightMenuConfig,
+    renderMode: RenderMode,
+    insightMenuItemsProvider: InsightMenuItemsProvider | undefined,
+    setIsMenuOpen: Dispatch<SetStateAction<boolean>>,
+) {
     const {
         exportCSVEnabled,
         exportXLSXEnabled,
         scheduleExportEnabled,
-        insight,
         onExportCSV,
         onExportXLSX,
         onScheduleExport,
@@ -38,23 +69,13 @@ export const useInsightMenu = (config: {
     } = config;
 
     const intl = useIntl();
-
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const closeMenu = useCallback(() => setIsMenuOpen(false), []);
-    const openMenu = useCallback(() => setIsMenuOpen(true), []);
-
     const execution = useDashboardSelector(selectExecutionResultByRef(widget.ref));
 
-    const { insightMenuItemsProvider } = useDashboardCustomizationsContext();
-
-    const defaultMenuItems = useMemo<IInsightMenuItem[]>(() => {
-        const useLegacyMenu = !insightMenuItemsProvider;
-
-        const defaultMenuItemsGetter = useLegacyMenu
-            ? getDefaultLegacyInsightMenuItems
-            : getDefaultInsightMenuItems;
+    return useMemo<IInsightMenuItem[]>(() => {
+        const defaultMenuItemsGetter = getDefaultMenuItemsGetter(renderMode, !insightMenuItemsProvider);
 
         return defaultMenuItemsGetter(intl, {
+            widget,
             exportCSVDisabled: !exportCSVEnabled,
             exportXLSXDisabled: !exportXLSXEnabled,
             scheduleExportDisabled: !scheduleExportEnabled,
@@ -71,11 +92,11 @@ export const useInsightMenu = (config: {
                 onScheduleExport();
             },
             isScheduleExportVisible,
-            tooltipMessage: isDataError(execution?.error)
-                ? intl.formatMessage({ id: "options.menu.unsupported.error" })
-                : intl.formatMessage({ id: "options.menu.unsupported.loading" }),
+            isDataError: isDataError(execution?.error),
         });
     }, [
+        widget,
+        renderMode,
         insightMenuItemsProvider,
         execution,
         exportCSVEnabled,
@@ -86,13 +107,18 @@ export const useInsightMenu = (config: {
         onScheduleExport,
         isScheduleExportVisible,
         intl,
+        setIsMenuOpen,
     ]);
+}
 
-    const menuItems = useMemo<IInsightMenuItem[]>(() => {
-        return insightMenuItemsProvider
-            ? insightMenuItemsProvider(insight, widget, defaultMenuItems, closeMenu)
-            : defaultMenuItems;
-    }, [insightMenuItemsProvider, insight, widget, defaultMenuItems, closeMenu]);
-
-    return { menuItems, isMenuOpen, openMenu, closeMenu };
-};
+function getDefaultMenuItemsGetter(renderMode: RenderMode, useLegacyMenu: boolean) {
+    if (useLegacyMenu) {
+        return getDefaultLegacyInsightMenuItems;
+    }
+    switch (renderMode) {
+        case "edit":
+            return getDefaultInsightEditMenuItems;
+        case "view":
+            return getDefaultInsightMenuItems;
+    }
+}

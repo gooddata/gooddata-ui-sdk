@@ -51,6 +51,7 @@ import {
     isStackingToPercent,
     removeImmutableOptionalStackingProperties,
     setSecondaryMeasures,
+    getReferencePointWithTotalLabelsInitialized,
 } from "../../utils/propertiesHelper";
 import { setColumnBarChartUiConfig } from "../../utils/uiConfigHelpers/columnBarChartUiConfigHelper";
 import { PluggableBaseChart } from "./baseChart/PluggableBaseChart";
@@ -86,6 +87,10 @@ export class PluggableColumnBarCharts extends PluggableBaseChart {
             );
 
             newExt = getReferencePointWithSupportedProperties(newExt, this.supportedPropertiesList);
+            if (this.featureFlags.enableSeparateTotalLabels) {
+                newExt = getReferencePointWithTotalLabelsInitialized(newExt);
+            }
+
             return setColumnBarChartUiConfig(newExt, this.intl);
         });
     }

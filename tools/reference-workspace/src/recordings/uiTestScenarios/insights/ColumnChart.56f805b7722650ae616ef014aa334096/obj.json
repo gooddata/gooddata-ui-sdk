@@ -41,7 +41,7 @@
         ],
         "filters": [],
         "identifier": "ColumnChart.56f805b7722650ae616ef014aa334096",
-        "properties": { "controls": { "dataLabels": { "totalsVisible": false, "visible": false } } },
+        "properties": { "controls": { "dataLabels": { "visible": false } } },
         "sorts": [],
         "title": "ColumnChart - data labels - data labels forced hidden",
         "uri": "ColumnChart.56f805b7722650ae616ef014aa334096",

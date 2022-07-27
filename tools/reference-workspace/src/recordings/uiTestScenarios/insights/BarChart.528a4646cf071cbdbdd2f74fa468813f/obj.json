@@ -1,0 +1,55 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                            "localIdentifier": "a_label.owner.region"
+                        }
+                    }
+                ],
+                "localIdentifier": "view"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "stack"
+            }
+        ],
+        "filters": [],
+        "identifier": "BarChart.528a4646cf071cbdbdd2f74fa468813f",
+        "properties": {
+            "controls": {
+                "dataLabels": { "totalsVisible": false, "visible": false },
+                "enableSeparateTotalLabels": true
+            }
+        },
+        "sorts": [],
+        "title": "BarChart - data labels - data labels forced hidden totals forced hidden",
+        "uri": "BarChart.528a4646cf071cbdbdd2f74fa468813f",
+        "visualizationUrl": "local:bar"
+    }
+}
