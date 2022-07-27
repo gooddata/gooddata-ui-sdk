@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import { ObjRef, serializeObjRef } from "@gooddata/sdk-model";
@@ -98,5 +98,10 @@ export function* exportInsightWidgetHandler(
         config,
     );
 
-    return insightWidgetExportResolved(ctx, resultUri, cmd.correlationId);
+    // prepend hostname if provided so that the results are downloaded from there, not from where the app is hosted
+    const fullUri = ctx.backend.config.hostname
+        ? new URL(resultUri, ctx.backend.config.hostname).href
+        : resultUri;
+
+    return insightWidgetExportResolved(ctx, fullUri, cmd.correlationId);
 }
