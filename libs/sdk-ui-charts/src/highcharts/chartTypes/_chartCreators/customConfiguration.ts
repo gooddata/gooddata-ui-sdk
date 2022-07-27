@@ -697,10 +697,12 @@ function getStackingConfiguration(
     const connectNulls = isAreaChart(type) ? { connectNulls: true } : {};
 
     // extra space allocation for total labels if available
+    const totalsVisibleByLabelsConfig =
+        isNil(chartConfig?.dataLabels?.totalsVisible) && !!chartConfig?.dataLabels?.visible;
     const totalLabelsExtention =
         isBarChart(type) &&
         chartConfig?.enableSeparateTotalLabels &&
-        (!!chartConfig?.dataLabels?.totalsVisible || isNil(chartConfig?.dataLabels?.totalsVisible)) &&
+        (!!chartConfig?.dataLabels?.totalsVisible || totalsVisibleByLabelsConfig) &&
         !chartConfig.stackMeasuresToPercent
             ? {
                   chart: { marginRight: 0 },

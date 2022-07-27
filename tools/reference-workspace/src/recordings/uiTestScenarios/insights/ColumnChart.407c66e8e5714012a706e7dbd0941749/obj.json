@@ -40,11 +40,11 @@
             }
         ],
         "filters": [],
-        "identifier": "ColumnChart.56f805b7722650ae616ef014aa334096",
-        "properties": { "controls": { "dataLabels": { "visible": false } } },
+        "identifier": "ColumnChart.407c66e8e5714012a706e7dbd0941749",
+        "properties": { "controls": { "dataLabels": { "totalsVisible": false, "visible": false } } },
         "sorts": [],
-        "title": "ColumnChart - data labels - data labels forced hidden",
-        "uri": "ColumnChart.56f805b7722650ae616ef014aa334096",
+        "title": "ColumnChart - data labels - data labels forced hidden totals forced hidden",
+        "uri": "ColumnChart.407c66e8e5714012a706e7dbd0941749",
         "visualizationUrl": "local:column"
     }
 }

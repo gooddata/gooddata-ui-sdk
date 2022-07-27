@@ -1,12 +1,11 @@
 // (C) 2019-2022 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
-import isNil from "lodash/isNil";
 import { VisualizationTypes, BucketNames } from "@gooddata/sdk-ui";
 import { newAttributeSort } from "@gooddata/sdk-model";
 import { PluggableColumnBarCharts } from "../PluggableColumnBarCharts";
 import { AXIS, AXIS_NAME } from "../../../constants/axis";
 import { COLUMN_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
-import { IVisConstruct, IReferencePoint, IVisualizationProperties } from "../../../interfaces/Visualization";
+import { IVisConstruct, IReferencePoint } from "../../../interfaces/Visualization";
 import { getBucketItems } from "../../../utils/bucketHelper";
 import { canSortStackTotalValue } from "../barChart/sortHelpers";
 import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig";
@@ -55,22 +54,7 @@ export class PluggableColumnChart extends PluggableColumnBarCharts {
             stackMeasures: false,
         };
 
-        const visualProps = this.adjustMissingConfiguration(props.visualizationProperties);
-        this.initializeProperties(visualProps);
-    }
-
-    // it applies the configuration that can be missing due to old chart version
-    private adjustMissingConfiguration(
-        supportedProperties: IVisualizationProperties,
-    ): IVisualizationProperties {
-        const dataLabelVisibility = supportedProperties.controls?.dataLabels?.visible;
-
-        // copy label configuration to totalLabels if not defined yet
-        if (!isNil(dataLabelVisibility) && isNil(supportedProperties.controls?.dataLabels?.totalsVisible)) {
-            supportedProperties.controls.dataLabels.totalsVisible = dataLabelVisibility;
-        }
-
-        return supportedProperties;
+        this.initializeProperties(props.visualizationProperties);
     }
 
     public getSupportedPropertiesList(): string[] {

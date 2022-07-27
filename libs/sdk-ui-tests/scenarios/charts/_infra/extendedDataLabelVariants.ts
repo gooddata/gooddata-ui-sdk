@@ -22,6 +22,10 @@ const ConfigVariants: Array<[string, IChartConfig]> = [
         { dataLabels: { visible: false, totalsVisible: true } },
     ],
     [
+        "data labels forced hidden totals forced hidden",
+        { dataLabels: { visible: false, totalsVisible: false } },
+    ],
+    [
         "labels forced hidden totals auto visibility",
         { dataLabels: { visible: false, totalsVisible: "auto" } },
     ],
