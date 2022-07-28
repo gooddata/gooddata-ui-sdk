@@ -4569,6 +4569,9 @@ export function renderModeAware<T extends ComponentType<any>>(components: {
 } & Partial<Record<RenderMode, T>>): ComponentType<ComponentPropsWithRef<T>>;
 
 // @internal (undocumented)
+export const RenderModeAwareDashboardInsight: ComponentType<IDashboardInsightProps>;
+
+// @internal (undocumented)
 export const RenderModeAwareDashboardKpi: ComponentType<IDashboardKpiProps>;
 
 // @internal (undocumented)
