@@ -5,7 +5,7 @@ import { OnError } from "@gooddata/sdk-ui";
 import React from "react";
 import { DashboardItem } from "../../presentationComponents";
 import { DashboardKpi } from "../kpi";
-import { useWidgetSelection } from "../common/useWidgetSelection";
+import { useWidgetSelection } from "../common";
 import { selectAlertByWidgetRef, useDashboardSelector } from "../../../model";
 import { IDashboardFilter } from "../../../types";
 

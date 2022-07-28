@@ -12,9 +12,9 @@ import {
     widgetExecutionSucceeded,
 } from "../../../model/events/widget";
 import { IDashboardWidgetProps } from "./types";
-import { DefaultDashboardInsightWidget } from "./DefaultDashboardInsightWidget";
 import { safeSerializeObjRef } from "../../../_staging/metadata/safeSerializeObjRef";
 import { DefaultDashboardKpiWidget } from "./DefaultDashboardKpiWidget";
+import { RenderModeAwareDashboardInsightWidget } from "./InsightWidget";
 
 /**
  * @internal
@@ -79,7 +79,7 @@ export const DefaultDashboardWidget = (props: IDashboardWidgetProps): JSX.Elemen
         return (
             <BackendProvider backend={backendWithEventing}>
                 {isInsightWidget(widget) ? (
-                    <DefaultDashboardInsightWidget
+                    <RenderModeAwareDashboardInsightWidget
                         widget={widget}
                         screen={screen}
                         dashboardItemClasses={dashboardItemClasses}

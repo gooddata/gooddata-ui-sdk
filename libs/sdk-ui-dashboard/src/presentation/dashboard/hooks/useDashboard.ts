@@ -6,13 +6,13 @@ import { useThemeIsLoading } from "@gooddata/sdk-ui-theme-provider";
 import { DefaultDashboardAttributeFilter } from "../../filterBar";
 import {
     DefaultDashboardWidget,
-    DefaultDashboardInsight,
     DefaultDashboardInsightMenuButton,
     LegacyDashboardInsightMenuButton,
     DefaultDashboardInsightMenu,
     LegacyDashboardInsightMenu,
     RenderModeAwareDashboardKpi,
     DefaultInsightBody,
+    RenderModeAwareDashboardInsight,
 } from "../../widget";
 import { IDashboardProps } from "../types";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -75,7 +75,7 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
     const insightProvider = useCallback<InsightComponentProvider>(
         (insight, widget) => {
             const userSpecified = InsightComponentProvider?.(insight, widget);
-            return userSpecified ?? DefaultDashboardInsight;
+            return userSpecified ?? RenderModeAwareDashboardInsight;
         },
         [InsightComponentProvider],
     );

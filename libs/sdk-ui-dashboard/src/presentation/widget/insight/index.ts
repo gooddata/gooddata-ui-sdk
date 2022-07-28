@@ -2,6 +2,7 @@
 export * from "./DefaultDashboardInsight";
 export * from "./DefaultInsightBody";
 export { DashboardInsight } from "./DashboardInsight";
+export { RenderModeAwareDashboardInsight } from "./RenderModeAwareDashboardInsight";
 export {
     IDashboardInsightProps,
     CustomDashboardInsightComponent,
