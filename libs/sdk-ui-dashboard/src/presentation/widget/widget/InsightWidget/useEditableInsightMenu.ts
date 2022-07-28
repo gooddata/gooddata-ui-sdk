@@ -3,8 +3,8 @@ import { useMemo } from "react";
 import { useIntl } from "react-intl";
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 
-import { useDashboardCustomizationsContext } from "../../dashboardContexts";
-import { getDefaultInsightEditMenuItems, IInsightMenuItem } from "../insightMenu";
+import { useDashboardCustomizationsContext } from "../../../dashboardContexts";
+import { getDefaultInsightEditMenuItems, IInsightMenuItem } from "../../insightMenu";
 
 type UseEditableInsightMenuConfig = {
     insight: IInsight;

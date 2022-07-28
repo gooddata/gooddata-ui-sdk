@@ -4,38 +4,23 @@ import cx from "classnames";
 import { IInsight, insightVisualizationUrl, widgetRef } from "@gooddata/sdk-model";
 import { VisType } from "@gooddata/sdk-ui";
 
-import { useDashboardSelector, selectInsightsMap } from "../../../model";
 import {
     DashboardItem,
     DashboardItemHeadline,
     DashboardItemVisualization,
     getVisTypeCssClass,
-} from "../../presentationComponents";
-
-import { DashboardInsight } from "../insight";
-import { useDashboardComponentsContext } from "../../dashboardContexts";
-import { useWidgetSelection } from "../common/useWidgetSelection";
+} from "../../../presentationComponents";
+import { DashboardInsight } from "../../insight";
+import { useDashboardComponentsContext } from "../../../dashboardContexts";
+import { useWidgetSelection } from "../../common";
 import { useEditableInsightMenu } from "./useEditableInsightMenu";
-import { IDefaultDashboardInsightWidgetProps } from "./DefaultDashboardInsightWidget";
+import { IDefaultDashboardInsightWidgetProps } from "./types";
+import { DashboardWidgetInsightGuard } from "./DashboardWidgetInsightGuard";
 
-// TODO unify with teh same wrapper in DefaultDashboardInsightWidget
-// Sometimes this component is rendered even before insights are ready, which blows up.
-// Since the behavior is nearly impossible to replicate reliably, let's be defensive here and not render
-// anything until the insights "catch up".
-export const EditableDashboardInsightWidget: React.FC<IDefaultDashboardInsightWidgetProps> = (props) => {
-    const { widget } = props;
-    const insights = useDashboardSelector(selectInsightsMap);
-    const insight = insights.get(widget.insight);
-
-    if (!insight) {
-        // eslint-disable-next-line no-console
-        console.debug(
-            "EditableDashboardInsightWidget rendered before the insights were ready, skipping render.",
-        );
-        return null;
-    }
-
-    return <EditableDashboardInsightWidgetCore {...props} insight={insight} />;
+export const EditableDashboardInsightWidget: React.FC<
+    Omit<IDefaultDashboardInsightWidgetProps, "insight">
+> = (props) => {
+    return <DashboardWidgetInsightGuard {...props} Component={EditableDashboardInsightWidgetCore} />;
 };
 
 /**

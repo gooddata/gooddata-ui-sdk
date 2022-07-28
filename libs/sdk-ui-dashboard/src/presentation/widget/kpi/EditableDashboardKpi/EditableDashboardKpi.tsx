@@ -20,8 +20,7 @@ import {
 import { DashboardItemHeadline, DashboardItemKpi } from "../../../presentationComponents";
 import { useDashboardComponentsContext } from "../../../dashboardContexts";
 
-import { useWidgetSelection } from "../../common/useWidgetSelection";
-import { ConfigurationBubble } from "../../common";
+import { ConfigurationBubble, useWidgetSelection } from "../../common";
 import { KpiConfigurationPanel } from "./KpiConfigurationPanel/KpiConfigurationPanel";
 import { getKpiResult, KpiRenderer, useKpiData, useKpiExecutionDataView } from "../common";
 import { IDashboardKpiProps } from "../types";

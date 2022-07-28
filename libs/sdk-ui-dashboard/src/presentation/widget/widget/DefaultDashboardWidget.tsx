@@ -14,7 +14,7 @@ import {
 import { IDashboardWidgetProps } from "./types";
 import { safeSerializeObjRef } from "../../../_staging/metadata/safeSerializeObjRef";
 import { DefaultDashboardKpiWidget } from "./DefaultDashboardKpiWidget";
-import { RenderModeAwareDashboardInsightWidget } from "./RenderModeAwareDashboardInsightWidget";
+import { RenderModeAwareDashboardInsightWidget } from "./InsightWidget";
 
 /**
  * @internal

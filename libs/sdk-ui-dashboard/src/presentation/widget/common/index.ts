@@ -7,3 +7,4 @@ export * from "./useCustomWidgetExecutionDataView";
 export * from "./useCustomWidgetInsightDataView";
 export * from "./useWidgetRelatedDateDatasets";
 export * from "./configuration";
+export * from "./useWidgetSelection";

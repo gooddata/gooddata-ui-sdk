@@ -49,7 +49,7 @@ import { useKpiAlertOperations } from "./useKpiAlertOperations";
 import { DashboardItemWithKpiAlert, evaluateAlertTriggered } from "./KpiAlerts";
 import { useWidgetBrokenAlertsQuery } from "../../common/useWidgetBrokenAlertsQuery";
 import { invariant } from "ts-invariant";
-import { useWidgetSelection } from "../../common/useWidgetSelection";
+import { useWidgetSelection } from "../../common";
 import {
     dashboardFilterToFilterContextItem,
     getAlertThresholdInfo,

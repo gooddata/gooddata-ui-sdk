@@ -2,63 +2,32 @@
 import React, { useMemo, useCallback } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
-import {
-    IInsight,
-    insightVisualizationUrl,
-    IInsightWidget,
-    widgetTitle,
-    ScreenSize,
-} from "@gooddata/sdk-model";
-import { OnError, OnExportReady, OnLoadingChanged, VisType } from "@gooddata/sdk-ui";
+import { IInsight, insightVisualizationUrl, widgetTitle } from "@gooddata/sdk-model";
+import { VisType } from "@gooddata/sdk-ui";
 
 import {
     useDashboardSelector,
-    selectInsightsMap,
     isCustomWidget,
     useDashboardScheduledEmails,
     selectCanExportReport,
-    selectIsInEditMode,
-} from "../../../model";
+} from "../../../../model";
 import {
     DashboardItem,
     DashboardItemHeadline,
     DashboardItemVisualization,
     getVisTypeCssClass,
-} from "../../presentationComponents";
-
-import { DashboardInsight } from "../insight";
-import { useInsightExport } from "../common";
-import { useDashboardComponentsContext } from "../../dashboardContexts";
+} from "../../../presentationComponents";
+import { DashboardInsight } from "../../insight";
+import { useInsightExport } from "../../common";
+import { useDashboardComponentsContext } from "../../../dashboardContexts";
 import { useInsightMenu } from "./useInsightMenu";
-import { useWidgetSelection } from "../common/useWidgetSelection";
+import { DashboardWidgetInsightGuard } from "./DashboardWidgetInsightGuard";
+import { IDefaultDashboardInsightWidgetProps } from "./types";
 
-export interface IDefaultDashboardInsightWidgetProps {
-    widget: IInsightWidget;
-    screen: ScreenSize;
-    dashboardItemClasses: string;
-
-    onLoadingChanged?: OnLoadingChanged;
-    onExportReady?: OnExportReady;
-    onError?: OnError;
-}
-
-// Sometimes this component is rendered even before insights are ready, which blows up.
-// Since the behavior is nearly impossible to replicate reliably, let's be defensive here and not render
-// anything until the insights "catch up".
-export const DefaultDashboardInsightWidget: React.FC<IDefaultDashboardInsightWidgetProps> = (props) => {
-    const { widget } = props;
-    const insights = useDashboardSelector(selectInsightsMap);
-    const insight = insights.get(widget.insight);
-
-    if (!insight) {
-        // eslint-disable-next-line no-console
-        console.debug(
-            "DefaultDashboardInsightWidget rendered before the insights were ready, skipping render.",
-        );
-        return null;
-    }
-
-    return <DefaultDashboardInsightWidgetCore {...props} insight={insight} />;
+export const DefaultDashboardInsightWidget: React.FC<Omit<IDefaultDashboardInsightWidgetProps, "insight">> = (
+    props,
+) => {
+    return <DashboardWidgetInsightGuard {...props} Component={DefaultDashboardInsightWidgetCore} />;
 };
 
 /**
@@ -80,7 +49,6 @@ const DefaultDashboardInsightWidgetCore: React.FC<
     const { isScheduledEmailingVisible, enableInsightExportScheduling, onScheduleEmailingOpen } =
         useDashboardScheduledEmails();
     const canExportReport = useDashboardSelector(selectCanExportReport);
-    const isInEditMode = useDashboardSelector(selectIsInEditMode);
 
     const onScheduleExport = useCallback(() => {
         onScheduleEmailingOpen(widgetRef);
@@ -117,20 +85,6 @@ const DefaultDashboardInsightWidgetCore: React.FC<
         [InsightMenuComponentProvider, insight, widget],
     );
 
-    const { isSelectable, isSelected, onSelected, closeConfigPanel, hasConfigPanelOpen } = useWidgetSelection(
-        widget.ref,
-    );
-
-    const onCloseClick = useCallback(() => {
-        if (isInEditMode) {
-            closeConfigPanel();
-        } else {
-            closeMenu();
-        }
-    }, [closeConfigPanel, closeMenu, isInEditMode]);
-
-    const shouldShowMenu = isInEditMode ? hasConfigPanelOpen : isMenuOpen;
-
     return (
         <DashboardItem
             className={cx(
@@ -138,14 +92,10 @@ const DefaultDashboardInsightWidgetCore: React.FC<
                 "type-visualization",
                 "gd-dashboard-view-widget",
                 getVisTypeCssClass(widget.type, visType),
-                { "is-selected": isSelected },
             )}
             screen={screen}
         >
             <DashboardItemVisualization
-                isSelectable={isSelectable}
-                isSelected={isSelected}
-                onSelected={onSelected}
                 renderHeadline={(clientHeight) =>
                     !widget.configuration?.hideTitle && (
                         <DashboardItemHeadline title={widget.title} clientHeight={clientHeight} />
@@ -156,14 +106,14 @@ const DefaultDashboardInsightWidgetCore: React.FC<
                         <InsightMenuButtonComponent
                             insight={insight}
                             widget={widget}
-                            isOpen={shouldShowMenu}
+                            isOpen={isMenuOpen}
                             onClick={openMenu}
                             items={menuItems}
                         />
                     </>
                 )}
                 renderAfterContent={() => {
-                    if (!shouldShowMenu) {
+                    if (!isMenuOpen) {
                         return null;
                     }
 
@@ -171,8 +121,8 @@ const DefaultDashboardInsightWidgetCore: React.FC<
                         <InsightMenuComponent
                             insight={insight}
                             widget={widget}
-                            isOpen={shouldShowMenu}
-                            onClose={onCloseClick}
+                            isOpen={isMenuOpen}
+                            onClose={closeMenu}
                             items={menuItems}
                         />
                     );
