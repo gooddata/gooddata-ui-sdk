@@ -112,13 +112,10 @@ function useDefaultMenuItems(
 }
 
 function getDefaultMenuItemsGetter(renderMode: RenderMode, useLegacyMenu: boolean) {
-    if (useLegacyMenu) {
-        return getDefaultLegacyInsightMenuItems;
-    }
     switch (renderMode) {
         case "edit":
             return getDefaultInsightEditMenuItems;
         case "view":
-            return getDefaultInsightMenuItems;
+            return useLegacyMenu ? getDefaultLegacyInsightMenuItems : getDefaultInsightMenuItems;
     }
 }

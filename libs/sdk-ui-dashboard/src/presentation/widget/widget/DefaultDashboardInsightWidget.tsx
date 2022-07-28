@@ -17,6 +17,7 @@ import {
     isCustomWidget,
     useDashboardScheduledEmails,
     selectCanExportReport,
+    selectIsInEditMode,
 } from "../../../model";
 import {
     DashboardItem,
@@ -34,6 +35,7 @@ import { useWidgetSelection } from "../common/useWidgetSelection";
 interface IDefaultDashboardInsightWidgetProps {
     widget: IInsightWidget;
     screen: ScreenSize;
+    dashboardItemClasses: string;
 
     onLoadingChanged?: OnLoadingChanged;
     onExportReady?: OnExportReady;
@@ -44,11 +46,7 @@ interface IDefaultDashboardInsightWidgetProps {
 // Since the behavior is nearly impossible to replicate reliably, let's be defensive here and not render
 // anything until the insights "catch up".
 export const DefaultDashboardInsightWidget: React.FC<IDefaultDashboardInsightWidgetProps> = (props) => {
-    const {
-        widget,
-        // @ts-expect-error Don't expose index prop on public interface (we need it only for css class for KD tests)
-        index,
-    } = props;
+    const { widget } = props;
     const insights = useDashboardSelector(selectInsightsMap);
     const insight = insights.get(widget.insight);
 
@@ -60,14 +58,7 @@ export const DefaultDashboardInsightWidget: React.FC<IDefaultDashboardInsightWid
         return null;
     }
 
-    return (
-        <DefaultDashboardInsightWidgetCore
-            {...props}
-            insight={insight}
-            // @ts-expect-error Don't expose index prop on public interface (we need it only for css class for KD tests)
-            index={index}
-        />
-    );
+    return <DefaultDashboardInsightWidgetCore {...props} insight={insight} />;
 };
 
 /**
@@ -75,16 +66,7 @@ export const DefaultDashboardInsightWidget: React.FC<IDefaultDashboardInsightWid
  */
 const DefaultDashboardInsightWidgetCore: React.FC<
     IDefaultDashboardInsightWidgetProps & { insight: IInsight }
-> = ({
-    widget,
-    insight,
-    screen,
-    onError,
-    onExportReady,
-    onLoadingChanged,
-    // @ts-expect-error Don't expose index prop on public interface (we need it only for css class for KD tests)
-    index,
-}) => {
+> = ({ widget, insight, screen, onError, onExportReady, onLoadingChanged, dashboardItemClasses }) => {
     const intl = useIntl();
     const visType = insightVisualizationUrl(insight).split(":")[1] as VisType;
     const { ref: widgetRef } = widget;
@@ -98,6 +80,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
     const { isScheduledEmailingVisible, enableInsightExportScheduling, onScheduleEmailingOpen } =
         useDashboardScheduledEmails();
     const canExportReport = useDashboardSelector(selectCanExportReport);
+    const isInEditMode = useDashboardSelector(selectIsInEditMode);
 
     const onScheduleExport = useCallback(() => {
         onScheduleEmailingOpen(widgetRef);
@@ -134,12 +117,24 @@ const DefaultDashboardInsightWidgetCore: React.FC<
         [InsightMenuComponentProvider, insight, widget],
     );
 
-    const { isSelectable, isSelected, onSelected } = useWidgetSelection(widget.ref);
+    const { isSelectable, isSelected, onSelected, closeConfigPanel, hasConfigPanelOpen } = useWidgetSelection(
+        widget.ref,
+    );
+
+    const onCloseClick = useCallback(() => {
+        if (isInEditMode) {
+            closeConfigPanel();
+        } else {
+            closeMenu();
+        }
+    }, [closeConfigPanel, closeMenu, isInEditMode]);
+
+    const shouldShowMenu = isInEditMode ? hasConfigPanelOpen : isMenuOpen;
 
     return (
         <DashboardItem
             className={cx(
-                `s-dash-item-${index}`,
+                dashboardItemClasses,
                 "type-visualization",
                 "gd-dashboard-view-widget",
                 getVisTypeCssClass(widget.type, visType),
@@ -161,14 +156,14 @@ const DefaultDashboardInsightWidgetCore: React.FC<
                         <InsightMenuButtonComponent
                             insight={insight}
                             widget={widget}
-                            isOpen={isMenuOpen}
+                            isOpen={shouldShowMenu}
                             onClick={openMenu}
                             items={menuItems}
                         />
                     </>
                 )}
                 renderAfterContent={() => {
-                    if (!isMenuOpen) {
+                    if (!shouldShowMenu) {
                         return null;
                     }
 
@@ -176,8 +171,8 @@ const DefaultDashboardInsightWidgetCore: React.FC<
                         <InsightMenuComponent
                             insight={insight}
                             widget={widget}
-                            isOpen={isMenuOpen}
-                            onClose={closeMenu}
+                            isOpen={shouldShowMenu}
+                            onClose={onCloseClick}
                             items={menuItems}
                         />
                     );

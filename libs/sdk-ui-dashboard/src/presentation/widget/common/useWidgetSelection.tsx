@@ -24,6 +24,10 @@ export interface IUseWidgetSelectionResult {
      */
     onSelected: () => void;
     /**
+     * Callback to call when you want to close the config panel.
+     */
+    closeConfigPanel: () => void;
+    /**
      * Flag indicating the given item has its config panel open.
      */
     hasConfigPanelOpen: boolean;
@@ -41,6 +45,10 @@ export function useWidgetSelection(widgetRef: ObjRef | undefined): IUseWidgetSel
         isSelectable && selectedWidget && widgetRef && areObjRefsEqual(selectedWidget, widgetRef),
     );
 
+    const closeConfigPanel = useCallback(() => {
+        dispatch(uiActions.setConfigurationPanelOpened(false));
+    }, [dispatch]);
+
     const onSelected = useCallback(() => {
         if (isSelectable && widgetRef) {
             dispatch(uiActions.selectWidget(widgetRef));
@@ -53,5 +61,6 @@ export function useWidgetSelection(widgetRef: ObjRef | undefined): IUseWidgetSel
         isSelected,
         onSelected,
         hasConfigPanelOpen: isConfigPanelOpen && isSelected,
+        closeConfigPanel,
     };
 }
