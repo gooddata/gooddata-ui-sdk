@@ -35,17 +35,27 @@ const InsightContainer: React.FC<InsightContainerProps> = (props) => {
 };
 
 storiesOf(`${WebComponents}/Insight`)
-    .add("Base", () => <InsightContainer insight={insightIds[0]} />)
+    .add("Base", () => <InsightContainer insight={insightIds[0]} />, { screenshot: true })
     // TODO - not sure how to test locale
-    .add("With localization", () => <InsightContainer insight={insightIds[0]} locale="fr-FR" />)
-    .add("With custom title", () => <InsightContainer insight={insightIds[0]} title="Custom title" />)
+    .add("With localization", () => <InsightContainer insight={insightIds[0]} locale="fr-FR" />, {
+        screenshot: true,
+    })
+    .add("With custom title", () => <InsightContainer insight={insightIds[0]} title="Custom title" />, {
+        screenshot: true,
+    })
     // JSX+React has issues with setting boolean props on custom element, so we can't use
     //  <InsightContainer title /> without specifying an empty string value or boolean
-    .add("With default title", () => <InsightContainer insight={insightIds[0]} title="" />)
-    .add("All insight types", () => (
-        <>
-            {insightIds.map((id) => (
-                <InsightContainer insight={id} key={id} />
-            ))}
-        </>
-    ));
+    .add("With default title", () => <InsightContainer insight={insightIds[0]} title="" />, {
+        screenshot: true,
+    })
+    .add(
+        "All insight types",
+        () => (
+            <>
+                {insightIds.map((id) => (
+                    <InsightContainer insight={id} key={id} />
+                ))}
+            </>
+        ),
+        { screenshot: true },
+    );
