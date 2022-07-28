@@ -6,6 +6,8 @@ import { ArrowDirections, ArrowOffsets, Bubble, IAlignPoint } from "@gooddata/sd
 
 interface IConfigurationBubbleProps {
     widget: IWidget;
+    classNames?: string;
+    onClose?: () => void;
 }
 
 const alignPoints: IAlignPoint[] = [
@@ -30,29 +32,27 @@ const arrowDirections: ArrowDirections = {
 };
 
 export const ConfigurationBubble: React.FC<IConfigurationBubbleProps> = (props) => {
-    const { children } = props;
+    const { children, classNames, onClose } = props;
     // const [configMenuDisplay, setConfigMenuDisplay] = useState(false);
-
-    const classNames = cx(
-        "bubble-light gd-configuration-bubble s-gd-configuration-bubble",
-        // getEditInsightClassNames(widget, !configMenuDisplay),
-        {
-            // "is-sticky": props.isSticky,
-        },
-    );
-
-    const overlayClassNames = cx("gd-configuration-bubble-wrapper", {
-        // "is-sticky": props.isSticky,
-    });
 
     return (
         <Bubble
-            className={classNames}
-            overlayClassName={overlayClassNames}
+            className={cx(
+                "bubble-light gd-configuration-bubble s-gd-configuration-bubble",
+                classNames,
+                // getEditInsightClassNames(widget, !configMenuDisplay),
+                {
+                    // "is-sticky": props.isSticky,
+                },
+            )}
+            overlayClassName={cx("gd-configuration-bubble-wrapper", {
+                // "is-sticky": props.isSticky,
+            })}
             alignTo={".s-dash-item.is-selected"}
             alignPoints={alignPoints}
             arrowOffsets={arrowOffsets}
             arrowDirections={arrowDirections}
+            onClose={onClose}
         >
             {children}
         </Bubble>

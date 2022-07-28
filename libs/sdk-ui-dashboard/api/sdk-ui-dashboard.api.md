@@ -3992,10 +3992,10 @@ export interface LayoutState extends UndoEnhancedState<DashboardLayoutCommands> 
 }
 
 // @internal (undocumented)
-export const LegacyDashboardInsightMenu: (props: IDashboardInsightMenuProps) => JSX.Element;
+export const LegacyDashboardInsightMenu: ComponentType<PropsWithChildren<IDashboardInsightMenuProps> | (IDashboardInsightMenuProps & RefAttributes<Component<IDashboardInsightMenuProps, any, any>>)>;
 
 // @internal (undocumented)
-export const LegacyDashboardInsightMenuButton: (props: IDashboardInsightMenuButtonProps) => JSX.Element;
+export const LegacyDashboardInsightMenuButton: ComponentType<PropsWithChildren<IDashboardInsightMenuButtonProps> | (IDashboardInsightMenuButtonProps & RefAttributes<Component<IDashboardInsightMenuButtonProps, any, any>>)>;
 
 // @alpha (undocumented)
 export interface LegacyDashboardsState {
