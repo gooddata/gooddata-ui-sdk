@@ -2069,6 +2069,9 @@ export interface DashboardWidgetExecutionSucceededPayload {
 }
 
 // @alpha (undocumented)
+export type DateFilterComponentProvider = (filter: IDashboardDateFilter) => CustomDashboardDateFilterComponent;
+
+// @alpha (undocumented)
 export interface DateFilterConfigState {
     dateFilterConfig?: IDashboardDateFilterConfig_2;
     dateFilterConfigValidationWarnings?: DateFilterValidationResult[];
@@ -2675,6 +2678,12 @@ export type IAttributeFilterDraggingComponentProps = {
     item: AttributeFilterDraggableItem;
 };
 
+// @public
+export interface IAttributeFiltersCustomizer {
+    withCustomDecorator(providerFactory: (next: AttributeFilterComponentProvider) => OptionalAttributeFilterComponentProvider): IAttributeFiltersCustomizer;
+    withCustomProvider(provider: OptionalAttributeFilterComponentProvider): IAttributeFiltersCustomizer;
+}
+
 // @internal (undocumented)
 export interface IAttributesDropdownProps {
     // (undocumented)
@@ -2869,6 +2878,7 @@ export interface IDashboardCustomizationProps extends IDashboardCustomComponentP
 export interface IDashboardCustomizer {
     customWidgets(): IDashboardWidgetCustomizer;
     filterBar(): IFilterBarCustomizer;
+    filters(): IFiltersCustomizer;
     insightWidgets(): IDashboardInsightCustomizer;
     kpiWidgets(): IDashboardKpiCustomizer;
     layout(): IDashboardLayoutCustomizer;
@@ -3166,6 +3176,12 @@ export interface IDashboardWidgetProps {
     workspace?: string;
 }
 
+// @public
+export interface IDateFiltersCustomizer {
+    withCustomDecorator(providerFactory: (next: DateFilterComponentProvider) => OptionalDateFilterComponentProvider): IDateFiltersCustomizer;
+    withCustomProvider(provider: OptionalDateFilterComponentProvider): IDateFiltersCustomizer;
+}
+
 // @alpha
 export interface IDrillDownContext {
     // (undocumented)
@@ -3236,6 +3252,12 @@ export interface IFilterBarProps {
     filters: FilterContextItem[];
     onAttributeFilterChanged: (filter: IDashboardAttributeFilter) => void;
     onDateFilterChanged: (filter: IDashboardDateFilter | undefined, dateFilterOptionLocalId?: string) => void;
+}
+
+// @public
+export interface IFiltersCustomizer {
+    attribute(): IAttributeFiltersCustomizer;
+    date(): IDateFiltersCustomizer;
 }
 
 // @public
@@ -4222,6 +4244,9 @@ export type OnWidgetDrill = (drillEvent: IDashboardDrillEvent, drillContext: Das
 
 // @alpha (undocumented)
 export type OptionalAttributeFilterComponentProvider = OptionalProvider<AttributeFilterComponentProvider>;
+
+// @alpha (undocumented)
+export type OptionalDateFilterComponentProvider = OptionalProvider<AttributeFilterComponentProvider>;
 
 // @alpha (undocumented)
 export type OptionalInsightBodyComponentProvider = OptionalProvider<InsightBodyComponentProvider>;

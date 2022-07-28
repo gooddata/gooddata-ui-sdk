@@ -13,4 +13,7 @@ export {
     IFilterBarCustomizer,
     DashboardStateChangeCallback,
     FilterBarRenderingMode,
+    IAttributeFiltersCustomizer,
+    IDateFiltersCustomizer,
+    IFiltersCustomizer,
 } from "./customizer";
