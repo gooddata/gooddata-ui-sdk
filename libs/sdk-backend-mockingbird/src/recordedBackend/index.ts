@@ -268,7 +268,9 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
         styling(): IOrganizationStylingService {
             return {
                 getThemes: () => Promise.resolve([]),
+                getActiveTheme: () => Promise.resolve(undefined),
                 setActiveTheme: () => Promise.resolve(),
+                clearActiveTheme: () => Promise.resolve(),
             };
         },
     };

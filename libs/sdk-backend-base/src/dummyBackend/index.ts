@@ -454,7 +454,9 @@ class DummyOrganization implements IOrganization {
     styling(): IOrganizationStylingService {
         return {
             getThemes: () => Promise.resolve([]),
+            getActiveTheme: () => Promise.resolve(undefined),
             setActiveTheme: () => Promise.resolve(),
+            clearActiveTheme: () => Promise.resolve(),
         };
     }
 }
