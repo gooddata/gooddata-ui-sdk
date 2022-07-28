@@ -9,14 +9,16 @@ describe("parseUrl", () => {
         expect(workspaceId).toEqual("workspace-id");
     });
 
-    it("should parse workspaceId from the URL even if the extension is not provided", () => {
-        const { workspaceId } = parseUrl(new URL("https://somehost.com/components/workspace-id"));
+    it("should parse workspaceId from the URL query", () => {
+        const { workspaceId } = parseUrl(
+            new URL("https://somehost.com/components/workspace-id.js?workspace=override"),
+        );
 
-        expect(workspaceId).toEqual("workspace-id");
+        expect(workspaceId).toEqual("override");
     });
 
     it("should parse workspaceId in case it includes dot", () => {
-        const { workspaceId } = parseUrl(new URL("https://somehost.com/components/work.space.id"));
+        const { workspaceId } = parseUrl(new URL("https://somehost.com/components/work.space.id.js"));
 
         expect(workspaceId).toEqual("work.space.id");
     });

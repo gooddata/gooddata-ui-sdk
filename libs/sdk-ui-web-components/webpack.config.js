@@ -19,6 +19,7 @@ module.exports = (env, argv) => ({
         path: path.resolve("./esm"),
         // Force .js extension instead of .mjs
         filename: "[name].js",
+        chunkFilename: "assets/[name].js",
         library: {
             type: "module",
         },
