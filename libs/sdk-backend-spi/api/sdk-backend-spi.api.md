@@ -977,9 +977,9 @@ export interface IOrganizations {
 
 // @public
 export interface IOrganizationStylingService {
-    // (undocumented)
+    clearActiveTheme(): Promise<void>;
+    getActiveTheme(): Promise<ObjRef | undefined>;
     getThemes(): Promise<IThemeMetadataObject[]>;
-    // (undocumented)
     setActiveTheme(themeRef: ObjRef): Promise<void>;
 }
 
