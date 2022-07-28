@@ -2,7 +2,6 @@
 import React from "react";
 import invariant from "ts-invariant";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { GoodDataSdkError, ILoadingState, IDrillEvent, IExportFunction, ILocale } from "@gooddata/sdk-ui";
 import { IInsight } from "@gooddata/sdk-model";
 import {
@@ -12,25 +11,29 @@ import {
     GET_VISUALIZATION,
 } from "./CustomElementAdapter";
 
+import { CustomElementContext } from "../context";
 import type { InsightView } from "@gooddata/sdk-ui-ext";
 type IInsightView = typeof InsightView;
 
 export class Insight extends CustomElementAdapter<IInsightView> {
     static get observedAttributes() {
-        return ["workspace", "insight", "locale", "title"];
+        return ["workspace", "insight", "locale", "title", "mapbox"];
     }
 
     async [LOAD_COMPONENT]() {
         return (await import("@gooddata/sdk-ui-ext/esm/insightView/InsightView")).InsightView;
     }
 
-    [GET_VISUALIZATION](Component: IInsightView, backend: IAnalyticalBackend, workspace: string) {
+    [GET_VISUALIZATION](
+        Component: IInsightView,
+        { backend, workspaceId, mapboxToken }: CustomElementContext,
+    ) {
         // Ensure mandatory property is provided
         const insight = this.getAttribute("insight");
         invariant(insight, '"insight" is a mandatory attribute and it cannot be empty');
 
         // Collect the rest of the props
-        const extraProps: Partial<React.ComponentProps<typeof Component>> = {};
+        const extraProps: Partial<React.ComponentProps<typeof Component>> = { config: {} };
 
         if (this.hasAttribute("locale")) {
             extraProps.locale = this.getAttribute("locale") as ILocale;
@@ -43,10 +46,14 @@ export class Insight extends CustomElementAdapter<IInsightView> {
             extraProps.showTitle = this.getAttribute("title") || true;
         }
 
+        if (this.hasAttribute("mapbox") || mapboxToken) {
+            extraProps.config!.mapboxToken = (this.getAttribute("mapbox") || mapboxToken) ?? "";
+        }
+
         return (
             <Component
                 backend={backend}
-                workspace={workspace}
+                workspace={workspaceId}
                 insight={insight}
                 onDrill={this[EVENT_HANDLER]<IDrillEvent>("drill")}
                 onError={this[EVENT_HANDLER]<GoodDataSdkError>("error")}

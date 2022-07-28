@@ -10,6 +10,7 @@ import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 export type CustomElementContext = {
     backend: IAnalyticalBackend;
     workspaceId?: string;
+    mapboxToken?: string;
 };
 
 // @public

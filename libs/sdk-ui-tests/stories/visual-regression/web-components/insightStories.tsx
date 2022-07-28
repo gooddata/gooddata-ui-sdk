@@ -36,7 +36,6 @@ const InsightContainer: React.FC<InsightContainerProps> = (props) => {
 
 storiesOf(`${WebComponents}/Insight`)
     .add("Base", () => <InsightContainer insight={insightIds[0]} />, { screenshot: true })
-    // TODO - not sure how to test locale
     .add("With localization", () => <InsightContainer insight={insightIds[0]} locale="fr-FR" />, {
         screenshot: true,
     })

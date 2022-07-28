@@ -2,7 +2,6 @@
 import React from "react";
 import invariant from "ts-invariant";
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { ILocale } from "@gooddata/sdk-ui";
 import {
     CustomElementAdapter,
@@ -11,19 +10,20 @@ import {
     LOAD_COMPONENT,
 } from "./CustomElementAdapter";
 
+import type { CustomElementContext } from "../context";
 import type { Dashboard as OriginalDashboard } from "@gooddata/sdk-ui-dashboard";
 type IDashboard = typeof OriginalDashboard;
 
 export class Dashboard extends CustomElementAdapter<IDashboard> {
     static get observedAttributes() {
-        return ["workspace", "dashboard", "locale", "readonly", "mapboxToken"];
+        return ["workspace", "dashboard", "locale", "readonly", "mapbox"];
     }
 
     async [LOAD_COMPONENT]() {
         return (await import("@gooddata/sdk-ui-dashboard/esm/presentation/dashboard/Dashboard")).Dashboard;
     }
 
-    [GET_VISUALIZATION](Component: IDashboard, backend: IAnalyticalBackend, workspace: string) {
+    [GET_VISUALIZATION](Component: IDashboard, { backend, workspaceId, mapboxToken }: CustomElementContext) {
         const dashboard = this.getAttribute("dashboard");
 
         // "dashboard" property is mandatory
@@ -40,13 +40,14 @@ export class Dashboard extends CustomElementAdapter<IDashboard> {
             extraProps.config!.isReadOnly = true;
         }
 
-        if (this.hasAttribute("mapbox")) {
-            extraProps.config!.mapboxToken = this.getAttribute("mapbox") ?? "";
+        if (this.hasAttribute("mapbox") || mapboxToken) {
+            extraProps.config!.mapboxToken = (this.getAttribute("mapbox") || mapboxToken) ?? "";
         }
+
         return (
             <Component
                 backend={backend}
-                workspace={workspace}
+                workspace={workspaceId}
                 dashboard={dashboard}
                 eventHandlers={[
                     {

@@ -1,4 +1,4 @@
-# GoodData Web Component
+# GoodData Web Components
 
 This library provides a set of Custom Elements (aka Web Components) to make the embedding of GoodData visualizations
 into web applications easier.
@@ -21,7 +21,10 @@ section of your application.
 Script has to be of type `module`, as we are using JavaScript modules for this distribution.
 
 An `auth` query parameter is optional. When set to `sso`, the library will trigger automatic SSO flow when user is not
-authenticated with GoodData server, i.e. will redirect user to the authentication flow and then back once user is authorized.
+authenticated with GoodData.CN or GoodData Cloud server, i.e. will redirect user to the authentication flow and then
+back once user is authorized.
+
+For GoodData platform, use `auth=bearSso` (for Service initiated SAML SSO flow) or `auth=bear` for regular bear login.
 
 ## Custom authentication flow
 
@@ -41,6 +44,8 @@ If you want to customize the authentication flow, you'll need to provide the aut
             // Following is the part that you might want to change in case of a custom authentication flow
             .withAuthentication(new ContextDeferredAuthProvider(redirectToTigerAuthentication)),
         workspaceId: "my-workspace",
+        // Optional, mapbox token
+        mapboxToken: "my-mapbox-token",
     });
 </script>
 ```
@@ -89,6 +94,7 @@ Events do not bubble and are not cancelable. Here is how you can subscribe to on
 -   `workspace` - optional, an ID of the workspace for this dashboard. By default, it's taken from the context (e.g. from the script URL).
 -   `locale` - the localization of the visualization. For available languages, see [the full list of available localizations](https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui/src/base/localization/Locale.ts).
 -   `title` - if provided as a boolean shortcut attribute, will render the insight title. If provided as a string, will override the default value and render the visualization with that string.
+-   `mapbox` - the map access token to be used by [geo pushpin charts](https://sdk.gooddata.com/gooddata-ui/docs/geo_pushpin_chart_component.html#geo-config).
 
 ```html
 <!-- with no `title` attribute, the title will not be rendered -->

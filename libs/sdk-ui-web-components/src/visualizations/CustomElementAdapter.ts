@@ -2,7 +2,6 @@
 import React from "react";
 import ReactDom from "react-dom";
 import invariant from "ts-invariant";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { LoadingComponent } from "@gooddata/sdk-ui/esm/base/react/LoadingComponent";
 
 import { CustomElementContext, getContext } from "../context";
@@ -118,7 +117,10 @@ export abstract class CustomElementAdapter<C> extends HTMLElement {
         invariant(workspace, "Workspace must be provided either through script URL or directly in HTML.");
 
         // Get the visualization from implementation
-        const reactElement = this[GET_VISUALIZATION](this[COMPONENT], this[CONTEXT].backend, workspace);
+        const reactElement = this[GET_VISUALIZATION](this[COMPONENT], {
+            ...this[CONTEXT],
+            workspaceId: workspace,
+        });
 
         // Mount / update the React app
         ReactDom.render(reactElement, this[MOUNT_POINT]);
@@ -153,11 +155,7 @@ export abstract class CustomElementAdapter<C> extends HTMLElement {
      * @internal
      * @returns A ReactElement to be mounted into the Shadow DOM for this visualization
      */
-    abstract [GET_VISUALIZATION](
-        Component: C,
-        backend: IAnalyticalBackend,
-        workspace: string,
-    ): React.ReactElement;
+    abstract [GET_VISUALIZATION](Component: C, context: CustomElementContext): React.ReactElement;
 
     /**
      * @remarks
