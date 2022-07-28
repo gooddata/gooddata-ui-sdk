@@ -119,6 +119,15 @@ const ScenarioConfig = [
             misMatchThreshold: 0.01,
         },
     },
+    {
+        /*
+         * Tests for Web Components
+         */
+        idRegex: /(13).*/g,
+        config: {
+            misMatchThreshold: 0.01,
+        },
+    },
 ];
 
 // --------------------------------------------------------------------
