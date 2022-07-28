@@ -18,6 +18,9 @@ $gd-palette-primary-dimmed50: var(
 $gd-color-positive-dimmed: mix($gd-color-positive, $default-gd-color-text-light, 10%);
 $gd-color-negative-dimmed: mix($gd-color-negative, $default-gd-color-text-light, 10%);
 
+$grey-background: #eceff3;
+$darker-grey-background: var(--gd-palette-complementary-7, #b4c0cf);
+
 $item-border: 2px;
 $item-min-height: 178px;
 $item-inner-padding: 8px;

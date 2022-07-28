@@ -4,15 +4,13 @@ import { useCallback, useMemo, useState, Dispatch, SetStateAction } from "react"
 import { useIntl } from "react-intl";
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 
-import { selectExecutionResultByRef, useDashboardSelector, selectRenderMode } from "../../../model";
+import { selectExecutionResultByRef, useDashboardSelector } from "../../../model";
 
-import { RenderMode } from "../../../types";
 import { isDataError } from "../../../_staging/errors/errorPredicates";
 import { useDashboardCustomizationsContext, InsightMenuItemsProvider } from "../../dashboardContexts";
 import {
     getDefaultInsightMenuItems,
     getDefaultLegacyInsightMenuItems,
-    getDefaultInsightEditMenuItems,
     IInsightMenuItem,
 } from "../insightMenu";
 
@@ -37,23 +35,20 @@ export const useInsightMenu = (
     const closeMenu = useCallback(() => setIsMenuOpen(false), []);
     const openMenu = useCallback(() => setIsMenuOpen(true), []);
 
-    const renderMode = useDashboardSelector(selectRenderMode);
-
     const { insightMenuItemsProvider } = useDashboardCustomizationsContext();
-    const defaultMenuItems = useDefaultMenuItems(config, renderMode, insightMenuItemsProvider, setIsMenuOpen);
+    const defaultMenuItems = useDefaultMenuItems(config, insightMenuItemsProvider, setIsMenuOpen);
 
     const menuItems = useMemo<IInsightMenuItem[]>(() => {
         return insightMenuItemsProvider
-            ? insightMenuItemsProvider(insight, widget, defaultMenuItems, closeMenu, renderMode)
+            ? insightMenuItemsProvider(insight, widget, defaultMenuItems, closeMenu, "view")
             : defaultMenuItems;
-    }, [insightMenuItemsProvider, insight, widget, defaultMenuItems, closeMenu, renderMode]);
+    }, [insightMenuItemsProvider, insight, widget, defaultMenuItems, closeMenu]);
 
     return { menuItems, isMenuOpen, openMenu, closeMenu };
 };
 
 function useDefaultMenuItems(
     config: UseInsightMenuConfig,
-    renderMode: RenderMode,
     insightMenuItemsProvider: InsightMenuItemsProvider | undefined,
     setIsMenuOpen: Dispatch<SetStateAction<boolean>>,
 ) {
@@ -72,10 +67,11 @@ function useDefaultMenuItems(
     const execution = useDashboardSelector(selectExecutionResultByRef(widget.ref));
 
     return useMemo<IInsightMenuItem[]>(() => {
-        const defaultMenuItemsGetter = getDefaultMenuItemsGetter(renderMode, !insightMenuItemsProvider);
+        const defaultMenuItemsGetter = !insightMenuItemsProvider
+            ? getDefaultLegacyInsightMenuItems
+            : getDefaultInsightMenuItems;
 
         return defaultMenuItemsGetter(intl, {
-            widget,
             exportCSVDisabled: !exportCSVEnabled,
             exportXLSXDisabled: !exportXLSXEnabled,
             scheduleExportDisabled: !scheduleExportEnabled,
@@ -95,8 +91,6 @@ function useDefaultMenuItems(
             isDataError: isDataError(execution?.error),
         });
     }, [
-        widget,
-        renderMode,
         insightMenuItemsProvider,
         execution,
         exportCSVEnabled,
@@ -109,13 +103,4 @@ function useDefaultMenuItems(
         intl,
         setIsMenuOpen,
     ]);
-}
-
-function getDefaultMenuItemsGetter(renderMode: RenderMode, useLegacyMenu: boolean) {
-    switch (renderMode) {
-        case "edit":
-            return getDefaultInsightEditMenuItems;
-        case "view":
-            return useLegacyMenu ? getDefaultLegacyInsightMenuItems : getDefaultInsightMenuItems;
-    }
 }

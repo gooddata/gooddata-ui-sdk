@@ -139,6 +139,16 @@
             }
         }
     }
+
+    &.is-selected {
+        .dash-item-action-lw-options {
+            display: block;
+            background-color: $darker-grey-background;
+            &::before {
+                color: var(--gd-palette-complementary-0, #fff);
+            }
+        }
+    }
 }
 
 @keyframes alert-highlighted {
@@ -448,6 +458,26 @@
         &::before {
             color: $gd-color-white;
         }
+    }
+}
+
+.dash-item-action-lw-options {
+    top: 30px;
+    right: 30px;
+    display: none;
+    border-radius: 50%;
+    background-color: var(--gd-palette-complementary-2, $grey-background);
+    width: 36px;
+    height: 36px;
+    transition: $transition-length;
+
+    &::before {
+        content: "...";
+        font-size: 22px;
+        position: relative;
+        top: -5px;
+        display: inline;
+        color: $darker-grey-background;
     }
 }
 

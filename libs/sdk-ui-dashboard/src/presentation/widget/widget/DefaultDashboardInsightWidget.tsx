@@ -32,7 +32,7 @@ import { useDashboardComponentsContext } from "../../dashboardContexts";
 import { useInsightMenu } from "./useInsightMenu";
 import { useWidgetSelection } from "../common/useWidgetSelection";
 
-interface IDefaultDashboardInsightWidgetProps {
+export interface IDefaultDashboardInsightWidgetProps {
     widget: IInsightWidget;
     screen: ScreenSize;
     dashboardItemClasses: string;
