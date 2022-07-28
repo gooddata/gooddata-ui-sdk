@@ -30,9 +30,7 @@ const loadNextElementsPageSuccess: AttributeFilterReducer<
         }
     });
     state.elements.data = state.elements.data.concat(action.payload.elements.map((data) => data.uri));
-    state.elements.currentOptions.offset =
-        state.elements.currentOptions.offset + state.elements.currentOptions.limit;
-    state.elements.lastLoadedOptions = state.elements.currentOptions;
+    state.elements.lastLoadedOptions = action.payload.options;
 };
 
 const loadNextElementsPageError: AttributeFilterReducer<

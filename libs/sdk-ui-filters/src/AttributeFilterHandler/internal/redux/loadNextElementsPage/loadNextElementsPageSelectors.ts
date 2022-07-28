@@ -1,8 +1,14 @@
 // (C) 2021-2022 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
+import isEqual from "lodash/isEqual";
+import omit from "lodash/omit";
 
 import { selectState } from "../common/selectors";
-import { selectLoadElementsOptions } from "../elements/elementsSelectors";
+import {
+    selectElementsTotalCount,
+    selectLastLoadedElementsOptions,
+    selectLoadElementsOptions,
+} from "../elements/elementsSelectors";
 import { ILoadElementsOptions } from "../../../types";
 
 /**
@@ -31,5 +37,27 @@ export const selectLoadNextElementsPageOptions = createSelector(
             ...options,
             offset: options.offset + options.limit,
         };
+    },
+);
+
+/**
+ * @internal
+ */
+export const selectHasNextPage = createSelector(
+    selectLastLoadedElementsOptions,
+    selectElementsTotalCount,
+    (lastLoadedOptions, totalCount) => {
+        return lastLoadedOptions.offset + lastLoadedOptions.limit < totalCount;
+    },
+);
+
+/**
+ * @internal
+ */
+export const selectIsLoadElementsOptionsChanged = createSelector(
+    selectLoadElementsOptions,
+    selectLastLoadedElementsOptions,
+    (loadOptions, lastLoadedOptions) => {
+        return !isEqual(omit(loadOptions, "offset"), omit(lastLoadedOptions, "offset"));
     },
 );

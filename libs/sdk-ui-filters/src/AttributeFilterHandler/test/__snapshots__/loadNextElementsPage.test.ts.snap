@@ -67,13 +67,22 @@ exports[`AttributeFilterHandler loadNextElementsPage() that was successful shoul
 Array [
   Object {
     "correlation": "success",
-    "elements": Array [],
+    "elements": Array [
+      Object {
+        "title": "Explorer",
+        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345",
+      },
+      Object {
+        "title": "Grammar Plus",
+        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737",
+      },
+    ],
     "options": Object {
-      "limit": 550,
+      "limit": 2,
       "limitingAttributeFilters": undefined,
       "limitingDateFilters": undefined,
       "limitingMeasures": undefined,
-      "offset": 550,
+      "offset": 2,
       "order": undefined,
       "search": "",
     },

@@ -22,6 +22,8 @@ export function* initSelectionSaga(correlation: Correlation): SagaIterator<void>
         return;
     }
 
+    const initSelectionCorrelation = `initSelection_${correlation}`;
+
     yield fork(
         loadCustomElementsSaga,
         actions.loadCustomElementsRequest({
@@ -31,7 +33,7 @@ export function* initSelectionSaga(correlation: Correlation): SagaIterator<void>
                 limit: 550,
                 search: undefined,
             },
-            correlation,
+            correlation: initSelectionCorrelation,
         }),
     );
 
@@ -44,15 +46,18 @@ export function* initSelectionSaga(correlation: Correlation): SagaIterator<void>
     } = yield race({
         success: take(
             (a: AnyAction) =>
-                actions.loadCustomElementsSuccess.match(a) && a.payload.correlation === correlation,
+                actions.loadCustomElementsSuccess.match(a) &&
+                a.payload.correlation === initSelectionCorrelation,
         ),
         error: take(
             (a: AnyAction) =>
-                actions.loadCustomElementsError.match(a) && a.payload.correlation === correlation,
+                actions.loadCustomElementsError.match(a) &&
+                a.payload.correlation === initSelectionCorrelation,
         ),
         cancel: take(
             (a: AnyAction) =>
-                actions.loadCustomElementsCancel.match(a) && a.payload.correlation === correlation,
+                actions.loadCustomElementsCancel.match(a) &&
+                a.payload.correlation === initSelectionCorrelation,
         ),
     });
 

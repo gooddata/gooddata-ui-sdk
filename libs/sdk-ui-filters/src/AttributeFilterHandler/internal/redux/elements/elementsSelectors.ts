@@ -2,7 +2,6 @@
 import { IAttributeElement } from "@gooddata/sdk-model";
 import { createSelector } from "@reduxjs/toolkit";
 import invariant from "ts-invariant";
-import isEqual from "lodash/isEqual";
 
 import { ILoadElementsOptions } from "../../../types";
 import { selectState } from "../common/selectors";
@@ -133,14 +132,3 @@ export const selectLoadElementsOptions = createSelector(
 export const selectLastLoadedElementsOptions = createSelector(selectState, (state): ILoadElementsOptions => {
     return state.elements.lastLoadedOptions;
 });
-
-/**
- * @internal
- */
-export const isLoadElementsOptionsChanged = createSelector(
-    selectLoadElementsOptions,
-    selectLastLoadedElementsOptions,
-    (loadOptions, lastLoadedOptions) => {
-        return !isEqual(loadOptions, lastLoadedOptions);
-    },
-);
