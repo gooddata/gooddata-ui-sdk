@@ -9,9 +9,19 @@ import {
     IInsightMenuItem,
 } from "../widget/types";
 import { ExtendedDashboardWidget } from "../../model";
-import { IInsight, IDashboardAttributeFilter, IKpiWidget, IInsightWidget, IKpi } from "@gooddata/sdk-model";
-import { CustomDashboardAttributeFilterComponent } from "../filterBar/types";
+import {
+    CustomDashboardAttributeFilterComponent,
+    CustomDashboardDateFilterComponent,
+} from "../filterBar/types";
 import { RenderMode } from "../../types";
+import {
+    IInsight,
+    IDashboardAttributeFilter,
+    IKpiWidget,
+    IInsightWidget,
+    IKpi,
+    IDashboardDateFilter,
+} from "@gooddata/sdk-model";
 
 /**
  * @public
@@ -102,6 +112,18 @@ export type KpiComponentProvider = (kpi: IKpi, widget: IKpiWidget) => CustomDash
  * @public
  */
 export type OptionalKpiComponentProvider = OptionalProvider<KpiComponentProvider>;
+
+/**
+ * @alpha
+ */
+export type DateFilterComponentProvider = (
+    filter: IDashboardDateFilter,
+) => CustomDashboardDateFilterComponent;
+
+/**
+ * @alpha
+ */
+export type OptionalDateFilterComponentProvider = OptionalProvider<AttributeFilterComponentProvider>;
 
 /**
  * @alpha

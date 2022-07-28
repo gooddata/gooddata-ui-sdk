@@ -7,6 +7,7 @@ import {
     IDashboardLayoutCustomizer,
     IDashboardWidgetCustomizer,
     IFilterBarCustomizer,
+    IFiltersCustomizer,
 } from "../customizer";
 import { IDashboardExtensionProps } from "../../presentation";
 import { DefaultInsightCustomizer } from "./insightCustomizer";
@@ -16,6 +17,7 @@ import { DefaultKpiCustomizer } from "./kpiCustomizer";
 import { DefaultWidgetCustomizer } from "./widgetCustomizer";
 import { DefaultLayoutCustomizer } from "./layoutCustomizer";
 import { DefaultFilterBarCustomizer } from "./filterBarCustomizer";
+import { NotImplemented } from "@gooddata/sdk-backend-spi";
 
 /**
  * @internal
@@ -55,6 +57,10 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
 
     public filterBar = (): IFilterBarCustomizer => {
         return this.filterBarCustomizer;
+    };
+
+    public filters = (): IFiltersCustomizer => {
+        throw new NotImplemented("Not implemented yet");
     };
 
     public onBeforePluginRegister = (plugin: IDashboardPluginContract_V1): void => {

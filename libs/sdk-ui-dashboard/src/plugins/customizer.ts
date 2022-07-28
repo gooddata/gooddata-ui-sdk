@@ -7,6 +7,10 @@ import {
     OptionalInsightComponentProvider,
     OptionalInsightBodyComponentProvider,
     OptionalKpiComponentProvider,
+    OptionalDateFilterComponentProvider,
+    DateFilterComponentProvider,
+    OptionalAttributeFilterComponentProvider,
+    AttributeFilterComponentProvider,
 } from "../presentation";
 import {
     DashboardDispatch,
@@ -340,6 +344,171 @@ export interface IFilterBarCustomizer {
 }
 
 /**
+ * Set of functions you can use to customize rendering of the filters.
+ *
+ * @public
+ */
+export interface IFiltersCustomizer {
+    /**
+     * Customize how rendering of date filters is done.
+     */
+    date(): IDateFiltersCustomizer;
+
+    /**
+     * Customize how rendering of attribute filters is done.
+     */
+    attribute(): IAttributeFiltersCustomizer;
+}
+
+/**
+ * Set of functions you can use to customize how attribute filters are rendered.
+ *
+ * @public
+ */
+export interface IAttributeFiltersCustomizer {
+    /**
+     * Register a provider for React components to render attribute filters.
+     *
+     * @remarks
+     * A provider takes the attribute filter as input and is expected to return
+     * a React component that should be used to render that filter.
+     *
+     * If the provider returns `undefined` then:
+     *
+     * -  if there are other providers registered, they will be called to see if they can provide
+     *    a component to render the attribute filter
+     * -  if there are no other providers registered, the default, built-in component will be used.
+     *
+     * You may register multiple providers. They will be evaluated in the order you register them.
+     *
+     * @param provider - provider to register
+     * @returns self, for call chaining sakes
+     */
+    withCustomProvider(provider: OptionalAttributeFilterComponentProvider): IAttributeFiltersCustomizer;
+
+    /**
+     * Register a factory for attribute filter decorator providers.
+     *
+     * @remarks
+     * Decorators are a way to add customizations or embellishments on top
+     * of an existing component. Decorators are more complex to write because they need to work with the component
+     * they should decorate and add 'something' on top of that component.
+     *
+     * This is best illustrated on an example:
+     *
+     * @example
+     * ```
+     * withCustomDecorator((next) => {
+     *     return (attributeFilter) => {
+     *         if (some_condition_to_prevent_decoration) {
+     *             return undefined;
+     *         }
+     *
+     *         function MyCustomDecorator(props) {
+     *              const Decorated = next(attributeFilter);
+     *
+     *              return (
+     *                  <div>
+     *                      <p>My Custom Decoration</p>
+     *                      <Decorated {...props}/>
+     *                  </div>
+     *              )
+     *         }
+     *
+     *         return MyCustomDecorator;
+     *     }
+     * })
+     * ```
+     *
+     * The above shows how to register a decorator that will use some condition to determine whether particular
+     * attribute filter is eligible for decoration. If yes, it will add some extra text in front of the attribute filter. Decorator
+     * defers rendering of the actual attribute filter to the underlying provider.
+     *
+     * Note: the factory function that you specify will be called immediately at the registration time. The
+     * provider that it returns will be called at render time.
+     *
+     * @param providerFactory - factory
+     */
+    withCustomDecorator(
+        providerFactory: (next: AttributeFilterComponentProvider) => OptionalAttributeFilterComponentProvider,
+    ): IAttributeFiltersCustomizer;
+}
+
+/**
+ * Set of functions you can use to customize how date filters are rendered.
+ *
+ * @public
+ */
+export interface IDateFiltersCustomizer {
+    /**
+     * Register a provider for React components to render date filters.
+     *
+     * @remarks
+     * A provider takes the date filter as input and is expected to return
+     * a React component that should be used to render that filter.
+     *
+     * If the provider returns `undefined` then:
+     *
+     * -  if there are other providers registered, they will be called to see if they can provide
+     *    a component to render the date filter
+     * -  if there are no other providers registered, the default, built-in component will be used.
+     *
+     * You may register multiple providers. They will be evaluated in the order you register them.
+     *
+     * @param provider - provider to register
+     * @returns self, for call chaining sakes
+     */
+    withCustomProvider(provider: OptionalDateFilterComponentProvider): IDateFiltersCustomizer;
+
+    /**
+     * Register a factory for date filter decorator providers.
+     *
+     * @remarks
+     * Decorators are a way to add customizations or embellishments on top
+     * of an existing component. Decorators are more complex to write because they need to work with the component
+     * they should decorate and add 'something' on top of that component.
+     *
+     * This is best illustrated on an example:
+     *
+     * @example
+     * ```
+     * withCustomDecorator((next) => {
+     *     return (dateFilter) => {
+     *         if (some_condition_to_prevent_decoration) {
+     *             return undefined;
+     *         }
+     *
+     *         function MyCustomDecorator(props) {
+     *              const Decorated = next(dateFilter);
+     *
+     *              return (
+     *                  <div>
+     *                      <p>My Custom Decoration</p>
+     *                      <Decorated {...props}/>
+     *                  </div>
+     *              )
+     *         }
+     *
+     *         return MyCustomDecorator;
+     *     }
+     * })
+     * ```
+     *
+     * The above shows how to register a decorator that will use some condition to determine whether particular
+     * date filter is eligible for decoration. If yes, it will add some extra text in front of the date filter. Decorator
+     * defers rendering of the actual date filter to the underlying provider.
+     *
+     * Note: the factory function that you specify will be called immediately at the registration time. The
+     * provider that it returns will be called at render time.
+     *
+     * @param providerFactory - factory
+     */
+    withCustomDecorator(
+        providerFactory: (next: DateFilterComponentProvider) => OptionalDateFilterComponentProvider,
+    ): IDateFiltersCustomizer;
+}
+
+/**
  * @public
  */
 export interface IDashboardCustomizer {
@@ -372,6 +541,11 @@ export interface IDashboardCustomizer {
      * Customize the filter bar.
      */
     filterBar(): IFilterBarCustomizer;
+
+    /**
+     * Customize how rendering of filters is done.
+     */
+    filters(): IFiltersCustomizer;
 }
 
 /**
