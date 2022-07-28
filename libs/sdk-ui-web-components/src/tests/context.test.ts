@@ -2,7 +2,6 @@
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 describe("context", () => {
-    // Use enforced type casting for test simplicity
     const mockContext = { backend: dummyBackend, workspaceId: "test" };
 
     beforeEach(() => {
