@@ -8,6 +8,7 @@ import { IDashboardAttributeFilter } from "@gooddata/sdk-model";
 export type DraggableContentItemType =
     | "attributeFilter"
     | "attributeFilter-placeholder"
+    | "insight"
     | "widget"
     | "custom";
 
@@ -62,6 +63,20 @@ export function isAttributeFilterPlaceholderDraggableItem(
 /**
  * @internal
  */
+export type InsightPlaceholderDraggableItem = {
+    type: "insight-placeholder";
+};
+
+/**
+ * @internal
+ */
+export function isInsightPlaceholderDraggableItem(item: any): item is InsightPlaceholderDraggableItem {
+    return item.type === "insight-placeholder";
+}
+
+/**
+ * @internal
+ */
 export type CustomDraggableItem = {
     type: "custom";
     [key: string]: any;
@@ -81,6 +96,7 @@ export type WidgetDraggableItem = {
 export type DraggableContentItem =
     | AttributeFilterDraggableItem
     | AttributeFilterPlaceholderDraggableItem
+    | InsightPlaceholderDraggableItem
     | CustomDraggableItem
     | WidgetDraggableItem;
 
@@ -105,6 +121,7 @@ export type DraggableItemTypeMapping = DraggableItemComponentTypeMapping & Dragg
 export type DraggableItemComponentTypeMapping = {
     attributeFilter: AttributeFilterDraggableItem;
     "attributeFilter-placeholder": AttributeFilterPlaceholderDraggableItem;
+    insight: InsightPlaceholderDraggableItem;
     custom: CustomDraggableItem;
     widget: WidgetDraggableItem;
 };
@@ -149,3 +166,20 @@ export type CustomDashboardAttributeFilterPlaceholderComponentProps = {
  */
 export type CustomDashboardAttributeFilterPlaceholderComponent =
     React.ComponentType<CustomDashboardAttributeFilterPlaceholderComponentProps>;
+
+/**
+ * @internal
+ */
+export type CustomDashboardInsightPlaceholderComponentProps = {
+    isLocked?: boolean;
+    title?: string;
+    updated?: string;
+    type?: string;
+    className?: string;
+};
+
+/**
+ * @internal
+ */
+export type CustomDashboardInsightPlaceholderComponent =
+    React.ComponentType<CustomDashboardInsightPlaceholderComponentProps>;

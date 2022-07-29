@@ -359,6 +359,16 @@ $dialog-background: var(--gd-palette-complementary-0, #fcfcfd);
     }
 }
 
+.gd-visualizations-list-item-wrap {
+    &.is-first {
+        margin-top: 10px;
+    }
+
+    &.is-last {
+        margin-bottom: 10px;
+    }
+}
+
 .flex-panel-full-vh-height {
     display: flex;
     flex-direction: column;

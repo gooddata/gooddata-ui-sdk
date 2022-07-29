@@ -5,6 +5,7 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import { CreatableAttributeFilter } from "./CreationalPanelItems/CreatableAttributeFilter";
+import { DraggableInsightList } from "./DraggableInsightList";
 
 interface ICreationPanelProps {
     isSticky: boolean;
@@ -33,6 +34,7 @@ export const CreationPanel: React.FC<ICreationPanelProps> = ({ isSticky = false 
                     <Typography tagName="h3">
                         <FormattedMessage id="visualizationsList.savedVisualizations" />
                     </Typography>
+                    <DraggableInsightList />
                 </div>
             </div>
         </div>
