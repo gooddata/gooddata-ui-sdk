@@ -4,7 +4,6 @@ import { IDashboardLayoutItemRenderer, IDashboardLayoutWidgetRenderer } from "./
 import { IDashboardLayoutItemFacade } from "../../../_staging/dashboard/fluidLayout/facade/interfaces";
 import { DashboardLayoutItemRenderer } from "./DashboardLayoutItemRenderer";
 import { DashboardLayoutWidgetRenderer } from "./DashboardLayoutWidgetRenderer";
-import { RenderMode } from "../../../types";
 
 /**
  * @alpha
@@ -12,7 +11,6 @@ import { RenderMode } from "../../../types";
 export interface IDashboardLayoutItemProps<TWidget> {
     item: IDashboardLayoutItemFacade<TWidget>;
     screen: ScreenSize;
-    renderMode: RenderMode;
     itemRenderer?: IDashboardLayoutItemRenderer<TWidget>;
     widgetRenderer: IDashboardLayoutWidgetRenderer<TWidget>;
 }

@@ -95,7 +95,12 @@ export function useWidgetFilters(
         if (widget?.ref && nonIgnoredFiltersStatus === "success") {
             runFiltersQuery(widget.ref, insight);
         }
-    }, [safeSerializeObjRef(widget?.ref), stringify(nonIgnoredFilters), insight, nonIgnoredFiltersStatus]);
+    }, [
+        safeSerializeObjRef(widget?.ref),
+        fullFiltersDigest(nonIgnoredFilters),
+        insight,
+        nonIgnoredFiltersStatus,
+    ]);
 
     return {
         result: effectiveFiltersState.filters,
@@ -188,32 +193,46 @@ function combineQueryProcessingStatuses(...statuses: QueryProcessingStatus[]): Q
 }
 
 /**
- * Gets a serialized digest of the filters provided. This is useful for detecting if the set of filters has changed.
+ * Gets a simplified serialized digest of the filters provided. This is useful for detecting if the set of filters has changed.
  *
  * @remarks
  * This digest is only concerned with the display forms/datasets, not the selected values of the filters.
+ * Also, the order of filters is ignored as it does not matter for executions.
  *
  * @param filters - filters to get digest for
  * @param ignoreDateFilter - whether to ignore date filters
  * @returns
  */
 function filtersDigest(filters: FilterContextItem[], ignoreDateFilter: boolean): string {
-    const data = filters
-        // if the widget ignores date filters, remove it from the digest to avoid false positives
-        // when date filter changes to or from All time (this effectively adds/removes the date filter in the filters set,
-        // but we do not care either way, so remove it altogether)
-        .filter((filter) => !ignoreDateFilter || isDashboardAttributeFilter(filter))
-        .map((filter) => {
-            if (isDashboardAttributeFilter(filter)) {
-                return {
-                    displayForm: filter.attributeFilter.displayForm,
-                };
-            } else {
-                return {
-                    dataSet: filter.dateFilter.dataSet,
-                };
-            }
-        });
+    return (
+        filters
+            // if the widget ignores date filters, remove it from the digest to avoid false positives
+            // when date filter changes to or from All time (this effectively adds/removes the date filter in the filters set,
+            // but we do not care either way, so remove it altogether)
+            .filter((filter) => !ignoreDateFilter || isDashboardAttributeFilter(filter))
+            .map((filter) => {
+                return isDashboardAttributeFilter(filter)
+                    ? `df_${safeSerializeObjRef(filter.attributeFilter.displayForm)}`
+                    : `ds_${safeSerializeObjRef(filter.dateFilter.dataSet)}`;
+            })
+            .sort()
+            .join("|")
+    );
+}
 
-    return stringify(data);
+/**
+ * Gets a serialized digest of the filters provided. This is useful for detecting if the set of filters has changed.
+ *
+ * @remarks
+ * This digest also takes the selected values of the filters into account.
+ * The order of filters is ignored as it does not matter for executions.
+ *
+ * @param filters - filters to get digest for
+ * @returns
+ */
+function fullFiltersDigest(filters: FilterContextItem[]): string {
+    return filters
+        .map((filter) => stringify(filter))
+        .sort()
+        .join("|");
 }

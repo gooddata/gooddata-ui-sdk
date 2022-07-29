@@ -1,5 +1,5 @@
 // (C) 2007-2022 GoodData Corporation
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import {
     Container,
     ScreenClass,
@@ -9,8 +9,13 @@ import {
 } from "react-grid-system";
 import { IDashboardLayout, ScreenSize } from "@gooddata/sdk-model";
 import { DashboardLayoutSection } from "./DashboardLayoutSection";
-import { IDashboardLayoutRenderProps } from "./interfaces";
+import {
+    IDashboardLayoutRenderProps,
+    IDashboardLayoutSectionRenderer,
+    IDashboardLayoutWidgetRenderer,
+} from "./interfaces";
 import cx from "classnames";
+import stringify from "json-stable-stringify";
 import { DashboardLayoutFacade } from "../../../_staging/dashboard/fluidLayout/facade/layout";
 import {
     getResizedItemPositions,
@@ -59,6 +64,42 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
         return { layoutFacade, resizedItemPositions };
     }, [layout, enableCustomHeight]);
 
+    const sectionRendererWrapped = useCallback<IDashboardLayoutSectionRenderer<TWidget>>(
+        (renderProps) =>
+            sectionRenderer ? (
+                sectionRenderer({
+                    ...renderProps,
+                    debug,
+                })
+            ) : (
+                <renderProps.DefaultSectionRenderer {...renderProps} debug={debug} />
+            ),
+        [debug, sectionRenderer],
+    );
+
+    const widgetRendererWrapped = useCallback<IDashboardLayoutWidgetRenderer<TWidget>>(
+        (renderProps) => {
+            const isResizedByLayoutSizingStrategy = resizedItemPositions.some((position) =>
+                isEqual(position, [renderProps.item.section().index(), renderProps.item.index()]),
+            );
+
+            return widgetRenderer ? (
+                widgetRenderer({
+                    ...renderProps,
+                    isResizedByLayoutSizingStrategy,
+                    debug,
+                })
+            ) : (
+                <renderProps.DefaultWidgetRenderer
+                    {...renderProps}
+                    debug={debug}
+                    isResizedByLayoutSizingStrategy={isResizedByLayoutSizingStrategy}
+                />
+            );
+        },
+        [debug, stringify(resizedItemPositions), widgetRenderer],
+    );
+
     return (
         <div
             className={cx("gd-fluidlayout-container", "s-fluid-layout-container", "gd-dashboards", className)}
@@ -73,53 +114,14 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
                                 {layoutFacade.sections().map((section) => {
                                     return (
                                         <DashboardLayoutSection
-                                            key={sectionKeyGetter({
-                                                section,
-                                                screen,
-                                            })}
+                                            key={sectionKeyGetter({ section, screen })}
                                             section={section}
-                                            sectionRenderer={(renderProps) =>
-                                                sectionRenderer ? (
-                                                    sectionRenderer({
-                                                        ...renderProps,
-                                                        debug,
-                                                    })
-                                                ) : (
-                                                    <renderProps.DefaultSectionRenderer
-                                                        {...renderProps}
-                                                        debug={debug}
-                                                    />
-                                                )
-                                            }
+                                            sectionRenderer={sectionRendererWrapped}
                                             sectionHeaderRenderer={sectionHeaderRenderer}
                                             itemKeyGetter={itemKeyGetter}
                                             itemRenderer={itemRenderer}
                                             gridRowRenderer={gridRowRenderer}
-                                            widgetRenderer={(renderProps) => {
-                                                const isResizedByLayoutSizingStrategy =
-                                                    resizedItemPositions.some((position) =>
-                                                        isEqual(position, [
-                                                            renderProps.item.section().index(),
-                                                            renderProps.item.index(),
-                                                        ]),
-                                                    );
-
-                                                return widgetRenderer ? (
-                                                    widgetRenderer({
-                                                        ...renderProps,
-                                                        isResizedByLayoutSizingStrategy,
-                                                        debug,
-                                                    })
-                                                ) : (
-                                                    <renderProps.DefaultWidgetRenderer
-                                                        {...renderProps}
-                                                        debug={debug}
-                                                        isResizedByLayoutSizingStrategy={
-                                                            isResizedByLayoutSizingStrategy
-                                                        }
-                                                    />
-                                                );
-                                            }}
+                                            widgetRenderer={widgetRendererWrapped}
                                             screen={screen}
                                             renderMode={renderMode}
                                         />

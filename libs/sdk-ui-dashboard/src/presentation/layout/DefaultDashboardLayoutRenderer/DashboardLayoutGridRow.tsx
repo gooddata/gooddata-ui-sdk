@@ -50,7 +50,6 @@ export function DashboardLayoutGridRow<TWidget>(props: DashboardLayoutGridRowPro
             itemRenderer={itemRenderer}
             widgetRenderer={widgetRenderer}
             screen={screen}
-            renderMode={renderMode}
         />
     ));
 
