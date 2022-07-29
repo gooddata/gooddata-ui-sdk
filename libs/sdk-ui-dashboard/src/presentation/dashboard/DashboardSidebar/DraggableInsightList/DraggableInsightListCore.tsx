@@ -10,7 +10,7 @@ export const DraggableInsightListCore: React.FC<IInsightListProps> = (props) => 
     return (
         <InsightList
             {...props}
-            renderItem={({ item: insight, width, rowIndex }) => {
+            renderItem={({ item: insight, width, isFirst, isLast }) => {
                 if (!insight) {
                     return <InsightListItem isLoading />;
                 }
@@ -19,8 +19,8 @@ export const DraggableInsightListCore: React.FC<IInsightListProps> = (props) => 
                 const visualizationType = visualizationUrl?.split(":")[1];
 
                 const classNames = cx("gd-visualizations-list-item-wrap", {
-                    "is-first": rowIndex === 0,
-                    // "is-last": rowIndex === totalInsightsCount,
+                    "is-first": isFirst,
+                    "is-last": isLast,
                 });
 
                 return (
