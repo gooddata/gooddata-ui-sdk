@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
 
-import { IDashboardAttributeFilter } from "@gooddata/sdk-model";
+import { IDashboardAttributeFilter, ObjRef } from "@gooddata/sdk-model";
 
 /**
  * @internal
@@ -8,7 +8,7 @@ import { IDashboardAttributeFilter } from "@gooddata/sdk-model";
 export type DraggableContentItemType =
     | "attributeFilter"
     | "attributeFilter-placeholder"
-    | "insight"
+    | "insightListItem"
     | "widget"
     | "custom";
 
@@ -63,15 +63,16 @@ export function isAttributeFilterPlaceholderDraggableItem(
 /**
  * @internal
  */
-export type InsightPlaceholderDraggableItem = {
-    type: "insight-placeholder";
+export type InsightDraggableListItem = {
+    type: "insightListItem";
+    insightRef: ObjRef;
 };
 
 /**
  * @internal
  */
-export function isInsightPlaceholderDraggableItem(item: any): item is InsightPlaceholderDraggableItem {
-    return item.type === "insight-placeholder";
+export function isInsightDraggableListItem(item: any): item is InsightDraggableListItem {
+    return item.type === "insightListItem";
 }
 
 /**
@@ -96,7 +97,7 @@ export type WidgetDraggableItem = {
 export type DraggableContentItem =
     | AttributeFilterDraggableItem
     | AttributeFilterPlaceholderDraggableItem
-    | InsightPlaceholderDraggableItem
+    | InsightDraggableListItem
     | CustomDraggableItem
     | WidgetDraggableItem;
 
@@ -121,7 +122,7 @@ export type DraggableItemTypeMapping = DraggableItemComponentTypeMapping & Dragg
 export type DraggableItemComponentTypeMapping = {
     attributeFilter: AttributeFilterDraggableItem;
     "attributeFilter-placeholder": AttributeFilterPlaceholderDraggableItem;
-    insight: InsightPlaceholderDraggableItem;
+    insightListItem: InsightDraggableListItem;
     custom: CustomDraggableItem;
     widget: WidgetDraggableItem;
 };
@@ -170,7 +171,7 @@ export type CustomDashboardAttributeFilterPlaceholderComponent =
 /**
  * @internal
  */
-export type CustomDashboardInsightPlaceholderComponentProps = {
+export type CustomDashboardInsightListItemComponentProps = {
     isLocked?: boolean;
     title?: string;
     updated?: string;
@@ -181,5 +182,5 @@ export type CustomDashboardInsightPlaceholderComponentProps = {
 /**
  * @internal
  */
-export type CustomDashboardInsightPlaceholderComponent =
-    React.ComponentType<CustomDashboardInsightPlaceholderComponentProps>;
+export type CustomDashboardInsightListItemComponent =
+    React.ComponentType<CustomDashboardInsightListItemComponentProps>;

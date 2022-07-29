@@ -1,10 +1,16 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
 import cx from "classnames";
-import { insightIsLocked, insightTitle, insightUpdated, insightVisualizationUrl } from "@gooddata/sdk-model";
+import {
+    insightIsLocked,
+    insightRef,
+    insightTitle,
+    insightUpdated,
+    insightVisualizationUrl,
+} from "@gooddata/sdk-model";
 import { InsightListItem } from "@gooddata/sdk-ui-kit";
 import { IInsightListProps, InsightList } from "../../../insightList";
-import { DraggableInsightListItem } from "./DraggableInsightListItem";
+import { DraggableInsightListItemWrapper } from "./DraggableInsightListItemWrapper";
 
 export const DraggableInsightListCore: React.FC<IInsightListProps> = (props) => {
     return (
@@ -24,13 +30,14 @@ export const DraggableInsightListCore: React.FC<IInsightListProps> = (props) => 
                 });
 
                 return (
-                    <DraggableInsightListItem
+                    <DraggableInsightListItemWrapper
                         title={insightTitle(insight)}
                         type={visualizationType}
                         width={width}
                         className={classNames}
                         updated={insightUpdated(insight)}
                         isLocked={insightIsLocked(insight)}
+                        insightRef={insightRef(insight)}
                     />
                 );
             }}

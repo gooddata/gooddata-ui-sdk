@@ -4,23 +4,27 @@ import { useDashboardDrag } from "../useDashboardDrag";
 import classNames from "classnames";
 import { useDashboardSelector, selectIsInEditMode } from "../../../model";
 import {
-    CustomDashboardInsightPlaceholderComponent,
-    CustomDashboardInsightPlaceholderComponentProps,
+    CustomDashboardInsightListItemComponent,
+    CustomDashboardInsightListItemComponentProps,
 } from "../types";
+import { ObjRef } from "@gooddata/sdk-model";
 
-type DraggableInsightPlaceholderProps = {
-    PlaceholderComponent: CustomDashboardInsightPlaceholderComponent;
-    placeholderComponentProps: CustomDashboardInsightPlaceholderComponentProps;
+type DraggableInsightProps = {
+    ListItemComponent: CustomDashboardInsightListItemComponent;
+    listItemComponentProps: CustomDashboardInsightListItemComponentProps;
+    insightRef: ObjRef;
 };
 
-export function DraggableInsightPlaceholder({
-    PlaceholderComponent,
-    placeholderComponentProps,
-}: DraggableInsightPlaceholderProps) {
+export function DraggableInsightListItem({
+    ListItemComponent,
+    listItemComponentProps,
+    insightRef,
+}: DraggableInsightProps) {
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
     const [{ isDragging }, dragRef] = useDashboardDrag({
         dragItem: {
-            type: "insight-placeholder",
+            type: "insightListItem",
+            insightRef,
         },
         canDrag: isInEditMode,
         hideDefaultPreview: false,
@@ -28,7 +32,7 @@ export function DraggableInsightPlaceholder({
 
     return (
         <div className={classNames({ "is-dragging": isDragging })} ref={dragRef}>
-            <PlaceholderComponent {...placeholderComponentProps} />
+            <ListItemComponent {...listItemComponentProps} />
         </div>
     );
 }

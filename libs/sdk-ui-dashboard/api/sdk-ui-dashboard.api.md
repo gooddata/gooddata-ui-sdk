@@ -691,23 +691,23 @@ export type CustomDashboardDateFilterComponent = ComponentType<IDashboardDateFil
 // @public (undocumented)
 export type CustomDashboardInsightComponent = ComponentType<IDashboardInsightProps>;
 
-// @alpha (undocumented)
-export type CustomDashboardInsightMenuButtonComponent = ComponentType<IDashboardInsightMenuButtonProps>;
-
-// @alpha (undocumented)
-export type CustomDashboardInsightMenuComponent = ComponentType<IDashboardInsightMenuProps>;
+// @internal (undocumented)
+export type CustomDashboardInsightListItemComponent = React.ComponentType<CustomDashboardInsightListItemComponentProps>;
 
 // @internal (undocumented)
-export type CustomDashboardInsightPlaceholderComponent = React.ComponentType<CustomDashboardInsightPlaceholderComponentProps>;
-
-// @internal (undocumented)
-export type CustomDashboardInsightPlaceholderComponentProps = {
+export type CustomDashboardInsightListItemComponentProps = {
     isLocked?: boolean;
     title?: string;
     updated?: string;
     type?: string;
     className?: string;
 };
+
+// @alpha (undocumented)
+export type CustomDashboardInsightMenuButtonComponent = ComponentType<IDashboardInsightMenuButtonProps>;
+
+// @alpha (undocumented)
+export type CustomDashboardInsightMenuComponent = ComponentType<IDashboardInsightMenuProps>;
 
 // @public (undocumented)
 export type CustomDashboardKpiComponent = ComponentType<IDashboardKpiProps>;
@@ -2222,10 +2222,10 @@ export type DraggableComponent = {
 };
 
 // @internal (undocumented)
-export type DraggableContentItem = AttributeFilterDraggableItem | AttributeFilterPlaceholderDraggableItem | InsightPlaceholderDraggableItem | CustomDraggableItem | WidgetDraggableItem;
+export type DraggableContentItem = AttributeFilterDraggableItem | AttributeFilterPlaceholderDraggableItem | InsightDraggableListItem | CustomDraggableItem | WidgetDraggableItem;
 
 // @internal (undocumented)
-export type DraggableContentItemType = "attributeFilter" | "attributeFilter-placeholder" | "insight" | "widget" | "custom";
+export type DraggableContentItemType = "attributeFilter" | "attributeFilter-placeholder" | "insightListItem" | "widget" | "custom";
 
 // @internal (undocumented)
 export type DraggableInternalItem = HeightResizerDragItem;
@@ -2240,7 +2240,7 @@ export type DraggableItem = DraggableContentItem | DraggableInternalItem;
 export type DraggableItemComponentTypeMapping = {
     attributeFilter: AttributeFilterDraggableItem;
     "attributeFilter-placeholder": AttributeFilterPlaceholderDraggableItem;
-    insight: InsightPlaceholderDraggableItem;
+    insightListItem: InsightDraggableListItem;
     custom: CustomDraggableItem;
     widget: WidgetDraggableItem;
 };
@@ -3515,6 +3515,12 @@ export interface InsightDateDatasets {
 }
 
 // @internal (undocumented)
+export type InsightDraggableListItem = {
+    type: "insightListItem";
+    insightRef: ObjRef;
+};
+
+// @internal (undocumented)
 export const InsightList: React_2.FC<IInsightListProps>;
 
 // @alpha (undocumented)
@@ -3525,11 +3531,6 @@ export type InsightMenuComponentProvider = (insight: IInsight, widget: IInsightW
 
 // @alpha (undocumented)
 export type InsightMenuItemsProvider = (insight: IInsight, widget: IInsightWidget, defaultItems: IInsightMenuItem[], closeMenu: () => void, renderMode: RenderMode) => IInsightMenuItem[];
-
-// @internal (undocumented)
-export type InsightPlaceholderDraggableItem = {
-    type: "insight-placeholder";
-};
 
 // @alpha (undocumented)
 export interface InsightPlaceholderWidget extends ICustomWidgetBase {
@@ -3951,7 +3952,7 @@ export interface ISidebarProps {
 }
 
 // @internal (undocumented)
-export function isInsightPlaceholderDraggableItem(item: any): item is InsightPlaceholderDraggableItem;
+export function isInsightDraggableListItem(item: any): item is InsightDraggableListItem;
 
 // @alpha (undocumented)
 export interface ITitleProps {
