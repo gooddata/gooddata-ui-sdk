@@ -3,7 +3,7 @@ import { useCallback, useMemo } from "react";
 import { idRef, IdentifierRef, UriRef } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { useThemeIsLoading } from "@gooddata/sdk-ui-theme-provider";
-import { DefaultDashboardAttributeFilter } from "../../filterBar";
+import { DefaultDashboardAttributeFilter, DefaultDashboardDateFilter } from "../../filterBar";
 import {
     DefaultDashboardWidget,
     DefaultDashboardInsightMenuButton,
@@ -24,6 +24,7 @@ import {
     InsightMenuButtonComponentProvider,
     InsightMenuComponentProvider,
     KpiComponentProvider,
+    DateFilterComponentProvider,
 } from "../../dashboardContexts";
 
 interface IUseDashboardResult {
@@ -32,6 +33,7 @@ interface IUseDashboardResult {
     dashboardOrRef: UriRef | IdentifierRef | undefined;
     hasThemeProvider: boolean;
     attributeFilterProvider: AttributeFilterComponentProvider;
+    dateFilterProvider: DateFilterComponentProvider;
     widgetProvider: WidgetComponentProvider;
     insightProvider: InsightComponentProvider;
     insightBodyProvider: InsightBodyComponentProvider;
@@ -44,6 +46,7 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
     const {
         dashboard,
         DashboardAttributeFilterComponentProvider,
+        DashboardDateFilterComponentProvider,
         WidgetComponentProvider,
         InsightComponentProvider,
         InsightBodyComponentProvider,
@@ -62,6 +65,14 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
             return userSpecified ?? DefaultDashboardAttributeFilter;
         },
         [DashboardAttributeFilterComponentProvider],
+    );
+
+    const dateFilterProvider = useCallback<DateFilterComponentProvider>(
+        (filter) => {
+            const userSpecified = DashboardDateFilterComponentProvider?.(filter);
+            return userSpecified ?? DefaultDashboardDateFilter;
+        },
+        [DashboardDateFilterComponentProvider],
     );
 
     const widgetProvider = useCallback<WidgetComponentProvider>(
@@ -133,6 +144,7 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         hasThemeProvider,
         dashboardOrRef,
         attributeFilterProvider,
+        dateFilterProvider,
         widgetProvider,
         insightProvider,
         insightBodyProvider,

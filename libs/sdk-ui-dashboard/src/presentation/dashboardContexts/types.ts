@@ -123,7 +123,7 @@ export type DateFilterComponentProvider = (
 /**
  * @alpha
  */
-export type OptionalDateFilterComponentProvider = OptionalProvider<AttributeFilterComponentProvider>;
+export type OptionalDateFilterComponentProvider = OptionalProvider<DateFilterComponentProvider>;
 
 /**
  * @alpha

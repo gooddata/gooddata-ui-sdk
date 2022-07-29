@@ -1,5 +1,4 @@
-// (C) 2021 GoodData Corporation
-export { DashboardDateFilter } from "./DashboardDateFilter";
+// (C) 2021-2022 GoodData Corporation
 export { DefaultDashboardDateFilter } from "./DefaultDashboardDateFilter";
 export { HiddenDashboardDateFilter } from "./HiddenDashboardDateFilter";
 export * from "./types";

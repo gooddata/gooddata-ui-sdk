@@ -19,7 +19,7 @@ import {
     DashboardComponentsProvider,
     DashboardConfigProvider,
 } from "../../dashboardContexts";
-import { DefaultDashboardDateFilter, DefaultFilterBar } from "../../filterBar";
+import { DefaultFilterBar } from "../../filterBar";
 import { DefaultDashboardLayout } from "../../layout";
 import { DefaultSaveAsDialog } from "../../saveAs";
 import { DefaultScheduledEmailDialog, DefaultScheduledEmailManagementDialog } from "../../scheduledEmail";
@@ -44,6 +44,7 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
         hasThemeProvider,
         dashboardOrRef,
         attributeFilterProvider,
+        dateFilterProvider,
         widgetProvider,
         insightProvider,
         insightBodyProvider,
@@ -102,9 +103,7 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
                                             props.SaveAsDialogComponent ?? DefaultSaveAsDialog
                                         }
                                         DashboardAttributeFilterComponentProvider={attributeFilterProvider}
-                                        DashboardDateFilterComponent={
-                                            props.DashboardDateFilterComponent ?? DefaultDashboardDateFilter
-                                        }
+                                        DashboardDateFilterComponentProvider={dateFilterProvider}
                                         FilterBarComponent={props.FilterBarComponent ?? DefaultFilterBar}
                                         SidebarComponent={
                                             props.SidebarComponent ?? RenderModeAwareDashboardSidebar
