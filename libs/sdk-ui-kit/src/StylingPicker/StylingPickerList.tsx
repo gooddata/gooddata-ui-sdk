@@ -1,9 +1,10 @@
 // (C) 2022 GoodData Corporation
 
 import React from "react";
-import { StylingPickerItem, StylingPickerListItem } from "./StylingPickerListItem";
+import { StylingPickerListItem } from "./StylingPickerListItem";
 import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
 import { DialogListEmpty } from "../Dialog/DialogList/DialogListEmpty";
+import { StylingPickerItem } from "../Dialog";
 
 interface IStylingPickerListProps {
     items: StylingPickerItem[];

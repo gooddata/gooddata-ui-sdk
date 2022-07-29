@@ -4,11 +4,10 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import cx from "classnames";
 import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
-import { ContentDivider } from "../Dialog";
-import { useMediaQuery } from "../responsive/useMediaQuery";
+import { ContentDivider, StylingPickerItem } from "../Dialog";
+import { useMediaQuery } from "../responsive";
 import { StylingPickerHeader } from "./StylingPickerHeader";
 import { StylingPickerFooter } from "./StylingPickerFooter";
-import { StylingPickerItem } from "./StylingPickerListItem";
 import { StylingPickerBody } from "./StylingPickerBody";
 
 /**

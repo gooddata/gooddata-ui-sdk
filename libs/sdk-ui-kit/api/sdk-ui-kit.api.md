@@ -132,6 +132,9 @@ export class BubbleFocusTrigger extends BubbleTrigger<BubbleFocusTriggerProps> {
 export type BubbleFocusTriggerProps = IBubbleTriggerProps;
 
 // @internal (undocumented)
+export const BubbleHeaderSeparator: ({ title, message }: IBubbleHeaderSeparatorProps) => JSX.Element;
+
+// @internal (undocumented)
 export class BubbleHoverTrigger extends BubbleTrigger<IBubbleHoverTriggerProps> {
     // (undocumented)
     componentWillUnmount(): void;
@@ -270,6 +273,9 @@ export const ColorPicker: React_2.FC<WithIntlProps<IColorPickerProps & WrappedCo
 
 // @internal (undocumented)
 export const ColorPickerPointer: React_2.FC;
+
+// @internal (undocumented)
+export const ColorPreview: (props: IColorPreviewProps) => JSX.Element;
 
 // @internal (undocumented)
 export const CommunityEditionDialog: React_2.FC<ICommunityEditionDialogProps>;
@@ -791,6 +797,14 @@ export type IBreakpointsConfig = {
 };
 
 // @internal (undocumented)
+export interface IBubbleHeaderSeparatorProps {
+    // (undocumented)
+    message?: string;
+    // (undocumented)
+    title?: string;
+}
+
+// @internal (undocumented)
 export interface IBubbleHoverTriggerProps extends IBubbleTriggerProps {
     // (undocumented)
     hideDelay?: number;
@@ -937,6 +951,14 @@ export interface IColorPickerProps {
 export interface IColorPickerState {
     // (undocumented)
     draftHslColor: ColorFormats.HSL;
+}
+
+// @internal (undocumented)
+export interface IColorPreviewProps {
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    colors: string[];
 }
 
 // @internal (undocumented)
@@ -3153,6 +3175,43 @@ export interface ISpinnerProps {
 }
 
 // @internal (undocumented)
+export interface IStylingEditorDialogFooterProps extends IDialogBaseProps {
+    // (undocumented)
+    disableSubmit?: boolean;
+    // (undocumented)
+    link: {
+        text: string;
+        url: string;
+    };
+}
+
+// @internal (undocumented)
+export interface IStylingEditorDialogProps extends IStylingEditorDialogFooterProps {
+    // (undocumented)
+    examples?: StylingPickerItem[];
+    // (undocumented)
+    exampleToColorPreview?: (example: StylingPickerItem) => string[];
+    // (undocumented)
+    locale?: string;
+    // (undocumented)
+    stylingContent?: StylingPickerItem;
+    // (undocumented)
+    title: string;
+    // (undocumented)
+    tooltip?: string;
+}
+
+// @internal (undocumented)
+export interface IStylingExampleProps {
+    // (undocumented)
+    colors: string[];
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    onClick: () => void;
+}
+
+// @internal (undocumented)
 export interface IStylingPickerProps {
     // (undocumented)
     className?: string;
@@ -3691,6 +3750,15 @@ export class Spinner extends PureComponent<ISpinnerProps> {
 
 // @internal (undocumented)
 export type SpinnerSize = "large" | "small";
+
+// @internal (undocumented)
+export const StylingEditorDialog: (props: IStylingEditorDialogProps) => JSX.Element;
+
+// @internal (undocumented)
+export const StylingEditorDialogFooter: (props: IStylingEditorDialogFooterProps) => JSX.Element;
+
+// @internal (undocumented)
+export const StylingExample: (props: IStylingExampleProps) => JSX.Element;
 
 // @internal (undocumented)
 export class StylingPicker extends React_2.PureComponent<IStylingPickerProps> {

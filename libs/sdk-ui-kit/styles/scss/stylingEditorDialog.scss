@@ -1,0 +1,218 @@
+// (C) 2022 GoodData Corporation
+@import "./variables.scss";
+
+.gd-styling-editor-dialog {
+    display: flex;
+    font-family: $gd-font-primary;
+    max-height: 560px;
+    width: 100vw;
+    height: 100vh;
+    flex-direction: column;
+
+    &-create {
+        // stylelint-disable-next-line declaration-no-important
+        max-width: 830px !important;
+    }
+
+    &-header {
+        background-color: $gd-color-white;
+        padding: 20px;
+        line-height: 26px;
+        color: $gd-color-text;
+        font-size: 20px;
+        border-bottom: 1px solid $gd-border-color;
+        margin-top: -20px;
+        margin-left: -20px;
+        margin-right: -20px;
+    }
+}
+
+.gd-styling-editor-dialog-content {
+    display: flex;
+    flex: 1;
+    background-color: $gd-color-light;
+    flex-direction: row;
+    overflow: hidden;
+    margin: 0 -20px 0 -20px;
+    padding: 0 20px 0 20px;
+
+    &-form {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+
+        &-input {
+            line-height: 21px;
+            font-size: 14px;
+            color: $gd-color-link;
+            margin-top: 20px;
+        }
+
+        &-textarea {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            line-height: 21px;
+            font-size: 14px;
+            color: $gd-color-link;
+            margin-top: 20px;
+
+            textarea {
+                resize: none;
+                flex: 1;
+                margin-bottom: 20px;
+                line-height: 18px;
+                font-size: 12px;
+                font-family: $measure_sequence_number_font;
+                color: $gd-color-text;
+            }
+        }
+
+        &-invalid {
+            color: $gd-palette-error-base;
+
+            > .gd-input-field,
+            :hover,
+            :focus {
+                border-color: $gd-palette-error-base;
+            }
+        }
+
+        &-error {
+            margin-bottom: 20px;
+        }
+    }
+
+    &-examples {
+        display: flex;
+        overflow: hidden;
+        width: 230px;
+        border-left: 1px solid $gd-border-color;
+        margin-left: 20px;
+        margin-right: -20px;
+        padding: 20px 0;
+        flex-direction: column;
+
+        &-list {
+            flex: 1;
+            overflow: auto;
+            scroll-behavior: auto;
+            padding: 0 20px;
+        }
+    }
+}
+
+.gd-styling-editor-dialog-footer {
+    display: flex;
+    border-top: 1px solid $gd-border-color;
+    background-color: $gd-color-white;
+    align-items: center;
+    overflow: hidden;
+    margin: 0 -20px -20px -20px;
+    padding: 20px;
+    flex-direction: row;
+
+    &-link {
+        flex: 1;
+
+        > a {
+            // stylelint-disable-next-line declaration-no-important
+            text-decoration: underline !important;
+            line-height: 30px;
+        }
+    }
+}
+
+.gd-bubble-header-separator {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px 10px 20px;
+    white-space: nowrap;
+
+    h3 {
+        font-size: 11px;
+        font-weight: bold;
+        text-transform: uppercase;
+        color: $gd-color-state-blank;
+        margin-right: 10px;
+    }
+
+    &-icon {
+        color: $gd-color-state-blank;
+        margin-right: 10px;
+    }
+
+    &-divider {
+        width: 100%;
+        border-top: 1px solid $gd-border-color;
+        margin: 10px 0;
+    }
+}
+
+.gd-styling-example {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid $gd-border-color;
+    border-radius: 3px;
+    background-color: $gd-color-white;
+
+    &-label {
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        line-height: 14px;
+        white-space: nowrap;
+        color: $gd-color-label;
+        font-size: 14px;
+        font-weight: 400;
+        margin-bottom: 10px;
+        text-overflow: ellipsis;
+        flex-direction: row;
+
+        &-name {
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        &-action {
+            display: none;
+            color: $gd-palette-primary-base;
+            cursor: pointer;
+        }
+    }
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    &:hover &-label-action {
+        display: block;
+    }
+}
+
+.gd-color-preview {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    height: 10px;
+    border-radius: 3px;
+
+    &-element {
+        flex: 1;
+        width: 100%;
+        height: 100%;
+    }
+
+    &-small {
+        height: 12px;
+    }
+
+    &-big {
+        height: 14px;
+    }
+}
