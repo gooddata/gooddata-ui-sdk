@@ -2882,6 +2882,10 @@ export interface IRenderItemProps<T> {
     // (undocumented)
     height: number;
     // (undocumented)
+    isFirst: boolean;
+    // (undocumented)
+    isLast: boolean;
+    // (undocumented)
     item: T;
     // (undocumented)
     rowIndex: number;

@@ -23,6 +23,8 @@ export interface IRenderItemProps<T> {
     item: T;
     width: number;
     height: number;
+    isFirst: boolean;
+    isLast: boolean;
 }
 
 /**
@@ -164,6 +166,8 @@ export class List<T> extends Component<IListProps<T>> {
                                         item,
                                         width,
                                         height,
+                                        isFirst: rowIndex === 0,
+                                        isLast: rowIndex === itemsCount - 1,
                                     })}
                                 </Cell>
                             );
