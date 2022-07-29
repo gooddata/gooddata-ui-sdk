@@ -1,6 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IAttributeFilter, ObjRef } from "@gooddata/sdk-model";
+import { IAttributeFilter } from "@gooddata/sdk-model";
 import { AttributeFiltersOrPlaceholders, IPlaceholder } from "@gooddata/sdk-ui";
 
 import {
@@ -14,6 +14,8 @@ import {
     IMessageParentItemsFilteredProps,
     IAttributeFilterDropdownBodyProps,
     IAttributeFilterDropdownContentProps,
+    ParentFilterOverAttributeType,
+    OnApplyCallbackType,
 } from "./Components/types";
 
 /**
@@ -70,12 +72,12 @@ export interface IAttributeFilterBaseProps {
      *
      * @remarks
      * You can either provide an {@link @gooddata/sdk-model#ObjRef} which will be used for all the parent filters,
-     * or you can provide a function that will be called for each parent filter to determine the respective over attribute.
+     * or you can provide a pure function that will be called for each parent filter to determine the respective over attribute.
      */
-    parentFilterOverAttribute?: ObjRef | ((parentFilter: IAttributeFilter, index: number) => ObjRef);
+    parentFilterOverAttribute?: ParentFilterOverAttributeType;
 
     /**
-     * Specify identifier of attribute, for which you want to construct the filter.
+     * Specify identifier of attribute display form, for which you want to construct the filter.
      *
      * @remarks
      * Note: this is optional and deprecated. If you do not specify this, then you MUST specify the 'filter' prop or 'connectToPlaceholder' prop.
@@ -104,7 +106,7 @@ export interface IAttributeFilterBaseProps {
      *
      * @param filter - new value of the filter.
      */
-    onApply?: (filter: IAttributeFilter, isInverted: boolean) => void;
+    onApply?: OnApplyCallbackType;
 
     /**
      * Customize attribute filter with a callback function to trigger when an error occurs while

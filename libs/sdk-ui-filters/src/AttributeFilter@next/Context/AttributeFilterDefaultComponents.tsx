@@ -1,9 +1,7 @@
-// (C) 2019-2022 GoodData Corporation
-
-import { IAtributeFilterComponentsContext } from "./AttributeFilterComponentsContext";
+// (C) 2022 GoodData Corporation
+import { IAtributeFilterComponentsContext } from "./types";
 import { AttributeFilterDropdownButtons } from "../Components/AttributeFilterDropdownButtons";
-import { AttributeFilterSimpleButton } from "../Components/AttributeFilterSimpleButton";
-
+import { AttributeFilterButton } from "../Components/AttributeFilterButton";
 import { AttributeFilterError } from "../Components/AttributeFilterError";
 import { AttributeFilterDropdownBody } from "../Components/AttributeFilterDropdownBody";
 import { AttributeFilterDropdownContent } from "../Components/AttributeFilterDropdownContent";
@@ -20,7 +18,7 @@ import { AttributeFilterListItem } from "../Components/AttributeFilterListItem";
  */
 export const AttributeFilterDefaultComponents: IAtributeFilterComponentsContext = {
     AttributeFilterError: AttributeFilterError,
-    AttributeFilterButton: AttributeFilterSimpleButton,
+    AttributeFilterButton: AttributeFilterButton,
     AttributeFilterDropdownBody: AttributeFilterDropdownBody,
     AttributeFilterDropdownButtons: AttributeFilterDropdownButtons,
     AttributeFilterDropdownContent: AttributeFilterDropdownContent,

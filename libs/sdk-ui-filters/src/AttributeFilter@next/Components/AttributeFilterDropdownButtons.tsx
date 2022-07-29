@@ -3,6 +3,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 import { Button } from "@gooddata/sdk-ui-kit";
 import { IAttributeFilterDropdownButtonsProps } from "./types";
+import { useAttributeFilterContext } from "../Context/AttributeFilterContext";
 
 export const AttributeFilterDropdownButtons: React.VFC<IAttributeFilterDropdownButtonsProps> = ({
     isApplyDisabled,
@@ -31,4 +32,23 @@ export const AttributeFilterDropdownButtons: React.VFC<IAttributeFilterDropdownB
             />
         </div>
     );
+};
+
+export interface IUseAttributeFilterDropdownButtonsProps {
+    onApplyButtonClicked: () => void;
+    onCloseButtonClicked: () => void;
+}
+
+export const useAttributeFilterDropdownButtons = (
+    props: IUseAttributeFilterDropdownButtonsProps,
+): IAttributeFilterDropdownButtonsProps => {
+    const { onApplyButtonClicked, onCloseButtonClicked } = props;
+
+    const { isApplyDisabled } = useAttributeFilterContext();
+
+    return {
+        isApplyDisabled,
+        onApplyButtonClicked,
+        onCloseButtonClicked,
+    };
 };

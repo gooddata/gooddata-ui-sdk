@@ -1,59 +1,51 @@
-// (C) 2019-2022 GoodData Corporation
-import { UnexpectedSdkError } from "@gooddata/sdk-ui";
+// (C) 2022 GoodData Corporation
 import React, { createContext, useContext } from "react";
-import {
-    IAttributeFilterButtonProps,
-    IAttributeFilterDropdownBodyProps,
-    IAttributeFilterDropdownButtonsProps,
-    IAttributeFilterDropdownContentProps,
-    IAttributeFilterErrorProps,
-    IAttributeFilterListItemProps,
-    IAttributeFilterListLoadingProps,
-    IAttributeFilterListProps,
-    IMessageNoMatchingDataProps,
-    IMessageParentItemsFilteredProps,
-} from "../Components/types";
+import { ThrowMissingComponentError } from "../utils/MissingComponent";
+import { IAtributeFilterComponentsContext } from "./types";
 
-/**
- * @internal
- */
-export interface IAtributeFilterComponentsContext {
-    AttributeFilterError: React.ComponentType<IAttributeFilterErrorProps>;
-    AttributeFilterButton: React.ComponentType<IAttributeFilterButtonProps>;
-    AttributeFilterDropdownBody: React.ComponentType<IAttributeFilterDropdownBodyProps>;
-    AttributeFilterDropdownButtons: React.ComponentType<IAttributeFilterDropdownButtonsProps>;
-    AttributeFilterDropdownContent: React.ComponentType<IAttributeFilterDropdownContentProps>;
-    AttributeFilterList: React.ComponentType<IAttributeFilterListProps>;
-    AttributeFilterListItem: React.ComponentType<IAttributeFilterListItemProps>;
-    AttributeFilterListLoading: React.ComponentType<IAttributeFilterListLoadingProps>;
-    MessageListError: React.ComponentType;
-    MessageNoData: React.ComponentType;
-    MessageNoMatchingData: React.ComponentType<IMessageNoMatchingDataProps>;
-    MessageParentItemsFiltered: React.ComponentType<IMessageParentItemsFilteredProps>;
-}
-
-const ThrowMissingComponentError = (componentName: string) => () => {
-    throw new UnexpectedSdkError(
-        `Component: ${componentName} is missing in the AttributeFilterComponentsProvider.`,
-    );
-};
-
-/**
- * @internal
- */
 const AttributeFilterComponentsContext = createContext<IAtributeFilterComponentsContext>({
-    AttributeFilterError: ThrowMissingComponentError("AttributeFilterError"),
-    AttributeFilterButton: ThrowMissingComponentError("AttributeFilterButton"),
-    AttributeFilterDropdownBody: ThrowMissingComponentError("AttributeFilterDropdownBody"),
-    AttributeFilterDropdownButtons: ThrowMissingComponentError("AttributeFilterDropdownButtons"),
-    AttributeFilterDropdownContent: ThrowMissingComponentError("AttributeFilterDropdownContent"),
-    AttributeFilterList: ThrowMissingComponentError("AttributeFilterList"),
-    AttributeFilterListLoading: ThrowMissingComponentError("AttributeFilterListLoading"),
-    AttributeFilterListItem: ThrowMissingComponentError("AttributeFilterListItem"),
-    MessageListError: ThrowMissingComponentError("AttributeFilterList"),
-    MessageNoData: ThrowMissingComponentError("AttributeFilterList"),
-    MessageNoMatchingData: ThrowMissingComponentError("MessageNoMatchingData"),
-    MessageParentItemsFiltered: ThrowMissingComponentError("MessageParentItemsFiltered"),
+    AttributeFilterError: ThrowMissingComponentError(
+        "AttributeFilterError",
+        "AttributeFilterComponentsContext",
+    ),
+    AttributeFilterButton: ThrowMissingComponentError(
+        "AttributeFilterButton",
+        "AttributeFilterComponentsContext",
+    ),
+    AttributeFilterDropdownBody: ThrowMissingComponentError(
+        "AttributeFilterDropdownBody",
+        "AttributeFilterComponentsContext",
+    ),
+    AttributeFilterDropdownButtons: ThrowMissingComponentError(
+        "AttributeFilterDropdownButtons",
+        "AttributeFilterComponentsContext",
+    ),
+    AttributeFilterDropdownContent: ThrowMissingComponentError(
+        "AttributeFilterDropdownContent",
+        "AttributeFilterComponentsContext",
+    ),
+    AttributeFilterList: ThrowMissingComponentError(
+        "AttributeFilterList",
+        "AttributeFilterComponentsContext",
+    ),
+    AttributeFilterListLoading: ThrowMissingComponentError(
+        "AttributeFilterListLoading",
+        "AttributeFilterComponentsContext",
+    ),
+    AttributeFilterListItem: ThrowMissingComponentError(
+        "AttributeFilterListItem",
+        "AttributeFilterComponentsContext",
+    ),
+    MessageListError: ThrowMissingComponentError("AttributeFilterList", "AttributeFilterComponentsContext"),
+    MessageNoData: ThrowMissingComponentError("AttributeFilterList", "AttributeFilterComponentsContext"),
+    MessageNoMatchingData: ThrowMissingComponentError(
+        "MessageNoMatchingData",
+        "AttributeFilterComponentsContext",
+    ),
+    MessageParentItemsFiltered: ThrowMissingComponentError(
+        "MessageParentItemsFiltered",
+        "AttributeFilterComponentsContext",
+    ),
 });
 
 AttributeFilterComponentsContext.displayName = "AttributeFilterComponentsContext";

@@ -883,6 +883,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "react-content-loader",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "react-datepicker",
       "allowedCategories": [ "examples" ]
     },

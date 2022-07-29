@@ -1,27 +1,12 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-
 import { IAttributeFilterDropdownContentProps } from "./types";
 import { useAttributeFilterComponentsContext } from "../Context/AttributeFilterComponentsContext";
+import { useAttributeFilterList } from "./AttributeFilterList";
+import { useAttributeFilterContext } from "../Context/AttributeFilterContext";
 
 export const AttributeFilterDropdownContent: React.FC<IAttributeFilterDropdownContentProps> = (props) => {
-    const {
-        items,
-        totalCount,
-        error,
-        isLoading,
-        selectedItems,
-        isInverted,
-        onRangeChange,
-        onSearch,
-        searchString,
-        onSelect,
-        parentFilterTitles,
-        showItemsFilteredMessage,
-
-        hasNoMatchingData,
-        hasNoData,
-    } = props;
+    const { error, parentFilterTitles, showItemsFilteredMessage, hasNoMatchingData, hasNoData } = props;
 
     const {
         AttributeFilterList,
@@ -31,6 +16,7 @@ export const AttributeFilterDropdownContent: React.FC<IAttributeFilterDropdownCo
         MessageListError,
     } = useAttributeFilterComponentsContext();
 
+    const listProps = useAttributeFilterList();
     return (
         <>
             {error ? (
@@ -40,17 +26,7 @@ export const AttributeFilterDropdownContent: React.FC<IAttributeFilterDropdownCo
             ) : hasNoData ? (
                 <MessageNoData />
             ) : (
-                <AttributeFilterList
-                    isLoading={isLoading}
-                    items={items}
-                    isInverted={isInverted}
-                    onRangeChange={onRangeChange}
-                    selectedItems={selectedItems}
-                    totalCount={totalCount}
-                    onSearch={onSearch}
-                    searchString={searchString}
-                    onSelect={onSelect}
-                />
+                <AttributeFilterList {...listProps} />
             )}
 
             <MessageParentItemsFiltered
@@ -59,4 +35,16 @@ export const AttributeFilterDropdownContent: React.FC<IAttributeFilterDropdownCo
             />
         </>
     );
+};
+
+export const useAttributeFilterDropdownContent = (): IAttributeFilterDropdownContentProps => {
+    const { elements } = useAttributeFilterContext();
+
+    return {
+        error: elements.initialPageLoad.error,
+        hasNoMatchingData: false, //implement it
+        hasNoData: false, //implement it
+        parentFilterTitles: [], //implement it
+        showItemsFilteredMessage: false, //implement it
+    };
 };

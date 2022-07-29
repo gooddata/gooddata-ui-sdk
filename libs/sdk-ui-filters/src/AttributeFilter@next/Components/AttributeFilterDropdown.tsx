@@ -3,6 +3,7 @@ import React from "react";
 import { Dropdown } from "@gooddata/sdk-ui-kit";
 import { useAttributeFilterComponentsContext } from "../Context/AttributeFilterComponentsContext";
 import { IAttributeFilterDropdownProps } from "./types";
+import { useAttributeFilterButton } from "./AttributeFilterButton";
 
 const ALIGN_POINTS = [
     { align: "bl tl" },
@@ -13,23 +14,10 @@ const ALIGN_POINTS = [
 ];
 
 export const AttributeFilterDropdown: React.FC<IAttributeFilterDropdownProps> = (props) => {
-    const {
-        isFiltering,
-        isDropdownOpen,
-        isOriginalTotalCountLoading,
-        title,
-        subtitle,
-        selectedFilterOptions,
-        onDropdownOpenStateChanged,
-        hasNoMatchingData,
-        hasNoData,
-        isApplyDisabled,
-        onApplyButtonClicked,
-        dropDownProps,
-    } = props;
+    const { isDropdownOpen, onDropdownOpenStateChanged, onApplyButtonClicked } = props;
 
     const { AttributeFilterButton, AttributeFilterDropdownBody } = useAttributeFilterComponentsContext();
-
+    const attributeFilterProps = useAttributeFilterButton({ isOpen: isDropdownOpen });
     return (
         <Dropdown
             closeOnParentScroll={true}
@@ -38,25 +26,13 @@ export const AttributeFilterDropdown: React.FC<IAttributeFilterDropdownProps> = 
             enableEventPropagation={true}
             alignPoints={ALIGN_POINTS}
             renderButton={({ toggleDropdown }) => (
-                <AttributeFilterButton
-                    isFiltering={isFiltering}
-                    isOpen={isDropdownOpen}
-                    title={title}
-                    subtitleText={subtitle}
-                    subtitleItemCount={selectedFilterOptions.length}
-                    isLoaded={!isOriginalTotalCountLoading}
-                    onClick={toggleDropdown}
-                />
+                <AttributeFilterButton {...attributeFilterProps} onClick={toggleDropdown} />
             )}
             onOpenStateChanged={onDropdownOpenStateChanged}
             renderBody={({ closeDropdown }) => (
                 <AttributeFilterDropdownBody
-                    isApplyDisabled={isApplyDisabled}
-                    hasNoMatchingData={hasNoMatchingData}
                     onApplyButtonClicked={onApplyButtonClicked}
                     closeDropdown={closeDropdown}
-                    hasNoData={hasNoData}
-                    bodyProps={dropDownProps}
                 />
             )}
         />

@@ -2,6 +2,7 @@
 
 import { IInvertableListRenderItemProps } from "@gooddata/sdk-ui-kit";
 import { IPagedResource } from "@gooddata/sdk-backend-spi";
+import { IAttributeFilter, ObjRef } from "@gooddata/sdk-model";
 
 /**
  * @internal
@@ -49,10 +50,6 @@ export type IElementQueryResultWithEmptyItems = IPagedResource<AttributeListItem
  * @internal
  */
 export interface IAttributeFilterDropdownBodyProps {
-    hasNoMatchingData: boolean;
-    hasNoData: boolean;
-    isApplyDisabled: boolean;
-    bodyProps: IAttributeDropdownBodyPropsNoCallbacks;
     onApplyButtonClicked: () => void;
     closeDropdown: () => void;
 }
@@ -61,59 +58,20 @@ export interface IAttributeFilterDropdownBodyProps {
  * @internal
  */
 export interface IAttributeFilterDropdownContentProps {
-    items: AttributeListItem[];
-    totalCount: number;
-    selectedItems: Array<IListItem>;
-    isInverted: boolean;
-    isLoading: boolean;
-    isFullWidth?: boolean;
-
     error?: any;
     hasNoMatchingData: boolean; //new added
     hasNoData: boolean; //new added
-
-    searchString: string;
-    onSearch: (searchString: string) => void;
-
-    onSelect: (selectedItems: IListItem[], isInverted: boolean) => void;
-    onRangeChange: (searchString: string, from: number, to: number) => void;
     parentFilterTitles?: string[];
     showItemsFilteredMessage?: boolean;
 }
-
-//TODO this is temporary type
-/**
- * @internal
- */
-export type IAttributeDropdownBodyPropsNoCallbacks = Omit<
-    IAttributeFilterDropdownContentProps,
-    "onApplyButtonClicked" | "onCloseButtonClicked"
->;
 
 /**
  * @internal
  */
 export interface IAttributeFilterDropdownProps {
-    isFiltering: boolean;
     isDropdownOpen: boolean;
-
-    isElementsLoading: boolean; //TODO investigate this prop and move it or remove it
-    isOriginalTotalCountLoading: boolean;
-
-    title: string;
-
-    subtitle: string;
-
-    selectedFilterOptions: IListItem[];
-
     onDropdownOpenStateChanged: (isOpen: boolean) => void;
     onApplyButtonClicked: () => void;
-
-    hasNoMatchingData: boolean; //TODO move to DropDown props
-    hasNoData: boolean; //TODO move to DropDown props
-    isApplyDisabled: boolean; //TODO move to DropDown props
-
-    dropDownProps: IAttributeDropdownBodyPropsNoCallbacks;
 }
 
 /**
@@ -141,12 +99,13 @@ export type IAttributeFilterListItemProps = IInvertableListRenderItemProps<Attri
  * @internal
  */
 export interface IAttributeFilterButtonProps {
-    isOpen?: boolean;
+    isOpen: boolean;
     title: string;
-    subtitleText: string; //TODO need array of selected elements title
-    subtitleItemCount: number; //TODO rename it
-    isFiltering?: boolean;
-    isLoaded?: boolean;
+    subtitleText: string;
+    subtitleItemCount: number;
+    isFiltering: boolean;
+    isLoaded: boolean;
+    isLoading: boolean;
     onClick: () => void;
 }
 
@@ -184,18 +143,38 @@ export interface IAttributeFilterConfigurationButtonProps {
  */
 export interface IAttributeFilterListProps {
     items: AttributeListItem[];
+    pageSize: number;
+    loadedCount: number;
     totalCount: number;
     selectedItems: IListItem[];
     isInverted: boolean;
     isLoading: boolean;
-
     searchString: string;
     onSearch: (searchString: string) => void;
-
     onSelect: (selectedItems: IListItem[], isInverted: boolean) => void;
-    onRangeChange: (searchString: string, from: number, to: number) => void;
+    onNextPageRequest?: () => void;
 }
 
 export interface IAttributeFilterListLoadingProps {
     height: number;
+}
+
+/**
+ * @internal
+ */
+export type OnApplyCallbackType = (filter: IAttributeFilter, isInverted: boolean) => void;
+
+/**
+ * @internal
+ */
+export type ParentFilterOverAttributeType =
+    | ObjRef
+    | ((parentFilter: IAttributeFilter, index: number) => ObjRef);
+
+/**
+ * @internal
+ */
+export interface IAttributeFilterRendererProps {
+    onApply?: OnApplyCallbackType;
+    onError?: (error: any) => void;
 }
