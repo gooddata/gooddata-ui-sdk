@@ -1500,5 +1500,20 @@
         "value": "Widget is at the maximal height",
         "comment": "Shown as red text inside of widget if resized under max limit.",
         "limit": 0
+    },
+    "dropzone.widget.desc": {
+        "value": "Drop <b>here</b>",
+        "comment": "Do not translate HTML markup enclosed in <>. Translate word 'here'.",
+        "limit": 0
+    },
+    "dropzone.widget.last.in.row.desc": {
+        "value": "Drop to the <b>existing section</b>",
+        "comment": "Used as placeholder when user drags some widget and tries to drop it on dashboard. Dropping the widget over such placeholder will cause adding the widget to an existing section of a dashboard. Do not translate HTML markup enclosed in <>. Translate words 'existing section'.",
+        "limit": 0
+    },
+    "dropzone.new.row.desc": {
+        "value": "Drop to create a{nbsp}<b>new section</b>",
+        "comment": "Used as placeholder when user drags some widget and tries to drop it on dashboard. Dropping the widget over such placeholder creates new section of a dashboard. Do not translate HTML markup enclosed in <>. Translate words 'new section'.",
+        "limit": 0
     }
 }

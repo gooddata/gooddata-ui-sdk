@@ -7,24 +7,24 @@ import {
     CustomDashboardInsightListItemComponent,
     CustomDashboardInsightListItemComponentProps,
 } from "../types";
-import { ObjRef } from "@gooddata/sdk-model";
+import { IInsight } from "@gooddata/sdk-model";
 
 type DraggableInsightProps = {
     ListItemComponent: CustomDashboardInsightListItemComponent;
     listItemComponentProps: CustomDashboardInsightListItemComponentProps;
-    insightRef: ObjRef;
+    insight: IInsight;
 };
 
 export function DraggableInsightListItem({
     ListItemComponent,
     listItemComponentProps,
-    insightRef,
+    insight,
 }: DraggableInsightProps) {
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
     const [{ isDragging }, dragRef] = useDashboardDrag({
         dragItem: {
             type: "insightListItem",
-            insightRef,
+            insight,
         },
         canDrag: isInEditMode,
         hideDefaultPreview: false,

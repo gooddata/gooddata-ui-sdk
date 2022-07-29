@@ -197,7 +197,7 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
     }, [isVisualizationLoading, effectiveError]);
 
     const visualizationProperties = insightProperties(insightWithAddedWidgetProperties);
-    const isZoomable = visualizationProperties?.controls.zoomInsight;
+    const isZoomable = visualizationProperties?.controls?.zoomInsight;
 
     return (
         <div className="visualization-content">

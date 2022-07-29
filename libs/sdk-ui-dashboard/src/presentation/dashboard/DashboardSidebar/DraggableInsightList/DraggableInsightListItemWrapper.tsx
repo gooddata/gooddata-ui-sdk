@@ -2,11 +2,11 @@
 import React from "react";
 import { IInsightListItemProps, InsightListItem } from "@gooddata/sdk-ui-kit";
 import { DraggableInsightListItem, CustomDashboardInsightListItemComponent } from "../../../dragAndDrop";
-import { ObjRef } from "@gooddata/sdk-model";
+import { IInsight } from "@gooddata/sdk-model";
 
 interface IDraggableInsightListItemWrapperProps extends IInsightListItemProps {
     className?: string;
-    insightRef: ObjRef;
+    insight: IInsight;
 }
 
 const DraggableInsightListItemBody: CustomDashboardInsightListItemComponent = (props) => {
@@ -19,12 +19,12 @@ const DraggableInsightListItemBody: CustomDashboardInsightListItemComponent = (p
 };
 
 export const DraggableInsightListItemWrapper: React.FC<IDraggableInsightListItemWrapperProps> = (props) => {
-    const { className, isLocked, title, type, updated, insightRef } = props;
+    const { className, isLocked, title, type, updated, insight } = props;
     return (
         <DraggableInsightListItem
             ListItemComponent={DraggableInsightListItemBody}
             listItemComponentProps={{ className, isLocked, title, type, updated }}
-            insightRef={insightRef}
+            insight={insight}
         />
     );
 };

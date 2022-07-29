@@ -1,6 +1,5 @@
 // (C) 2022 GoodData Corporation
-
-import { IDashboardAttributeFilter, ObjRef } from "@gooddata/sdk-model";
+import { IDashboardAttributeFilter, IInsight } from "@gooddata/sdk-model";
 
 /**
  * @internal
@@ -65,7 +64,7 @@ export function isAttributeFilterPlaceholderDraggableItem(
  */
 export type InsightDraggableListItem = {
     type: "insightListItem";
-    insightRef: ObjRef;
+    insight: IInsight;
 };
 
 /**

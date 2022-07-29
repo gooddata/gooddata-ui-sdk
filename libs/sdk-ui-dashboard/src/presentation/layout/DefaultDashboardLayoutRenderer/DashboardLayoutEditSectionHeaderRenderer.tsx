@@ -5,6 +5,7 @@ import { DashboardLayoutSectionHeader } from "./DashboardLayoutSectionHeader";
 import { IDashboardLayoutSectionHeaderRenderProps } from "./interfaces";
 import { SectionHeaderEditable } from "./EditableHeader/SectionHeaderEditable";
 import { emptyItemFacadeWithFullSize } from "./utils/emptyFacade";
+import { SectionHotspot } from "../../dragAndDrop";
 
 export function DashboardLayoutEditSectionHeaderRenderer(
     props: IDashboardLayoutSectionHeaderRenderProps<any>,
@@ -21,6 +22,7 @@ export function DashboardLayoutEditSectionHeaderRenderer(
             <DashboardLayoutSectionHeader
                 title={sectionHeader.title}
                 description={sectionHeader.description}
+                renderBeforeHeader={<SectionHotspot index={section.index()} targetPosition="above" />}
                 renderHeader={
                     <SectionHeaderEditable
                         title={sectionHeader.title || ""}

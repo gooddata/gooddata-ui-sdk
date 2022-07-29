@@ -86,7 +86,6 @@
     }
 }
 
-// (C) 2007-2021 GoodData Corporation
 .gd-dropzone {
     position: relative;
 
@@ -168,4 +167,336 @@
     &:disabled {
         background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/add-attribute-filter-placeholder-disabled.svg");
     }
+}
+
+.dropzone {
+    &.next,
+    &.prev {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 50%;
+    }
+
+    &.next {
+        right: 0;
+
+        .drop-hint {
+            float: right;
+            margin-left: 3px;
+        }
+
+        &.full {
+            width: 100%;
+        }
+    }
+
+    &.prev {
+        left: 0;
+
+        .drop-hint {
+            float: left;
+            margin-left: -3px;
+        }
+
+        &.full {
+            width: 100%;
+        }
+    }
+
+    &.hidden {
+        display: none;
+    }
+
+    &.extended {
+        width: 100%;
+    }
+}
+
+.widget-dropzone,
+.new-row-dropzone {
+    width: 100%;
+    height: 100%;
+
+    .widget-dropzone-box {
+        position: relative;
+        box-sizing: border-box;
+        display: flex;
+        align-items: stretch;
+        width: 100%;
+        height: 100%;
+        padding: 10px;
+
+        .can-drop {
+            margin: 0;
+
+            .drag-info-placeholder-drop-target {
+                display: block;
+            }
+        }
+
+        .drop-target-message {
+            font-weight: normal;
+        }
+    }
+
+    .over-widget-dropzone {
+        position: relative;
+        box-sizing: border-box;
+        display: flex;
+        align-items: stretch;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.new-row-dropzone {
+    height: 80px;
+
+    .drag-info-placeholder.type-kpi .kpi-drop-target {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &::before {
+            margin-right: 10px;
+        }
+    }
+
+    .gd-fluid-layout-row-header & {
+        height: 100%;
+        background-color: var(--gd-palette-complementary-0, white);
+    }
+}
+
+.row-hotspot-container {
+    position: relative;
+    z-index: 99;
+    width: 100%;
+    height: 0;
+
+    .row-hotspot {
+        position: absolute;
+        z-index: 99;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        visibility: visible;
+        width: 100%;
+        height: 100px;
+
+        &.hidden {
+            visibility: hidden;
+        }
+    }
+
+    &.last {
+        height: 100px;
+        margin: -8px 0 0;
+    }
+}
+
+.gd-fluid-layout-row-header {
+    .row-hotspot-container {
+        position: absolute;
+        top: 0;
+        height: 100%;
+
+        &.hidden {
+            height: 0;
+        }
+
+        .row-hotspot {
+            height: 100%;
+        }
+    }
+}
+
+.drag-info-placeholder {
+    position: relative;
+    text-align: center;
+
+    &.type-none,
+    &.type-attribute-filter {
+        flex-basis: 100%;
+        max-width: 100%;
+    }
+
+    &.type-kpi {
+        text-align: left;
+
+        .kpi-drop-target {
+            display: block;
+        }
+    }
+
+    &.type-visualization {
+        .visualization-drop-target {
+            display: block;
+        }
+
+        .drag-info-placeholder-drop-target {
+            width: 100%;
+        }
+    }
+
+    .can-drop {
+        margin: 0;
+
+        .drag-info-placeholder-box {
+            display: none;
+        }
+
+        .drag-info-placeholder-drop-target {
+            display: block;
+        }
+
+        &.is-over {
+            .drop-target-inner {
+                background-color: $gd-palette-primary-base;
+            }
+
+            .drop-target-message {
+                color: $gd-color-text-light;
+            }
+        }
+    }
+}
+
+.gd-fluidlayout-layout {
+    .drag-info-placeholder {
+        &.type-visualization {
+            .drag-info-placeholder-drop-target {
+                width: auto;
+            }
+        }
+    }
+}
+
+.drag-info-placeholder-inner {
+    width: 100%;
+}
+
+.drag-info-placeholder-box {
+    width: 420px;
+    margin: 110px auto 0;
+    padding: 40px;
+    border-radius: 15px;
+    border: 2px dashed var(--gd-palette-complementary-3, transparentize($default-gd-color-disabled, 0.55));
+    background: var(--gd-palette-complementary-1, transparentize($dialog-border, 0.95));
+    text-align: center;
+
+    h2 {
+        font-weight: bold;
+        font-size: 20px;
+        line-height: 28px;
+        color: $gd-color-state-blank;
+    }
+
+    p {
+        margin-top: 5px;
+        font-size: 18px;
+        line-height: 28px;
+        font-weight: normal;
+        color: $gd-color-state-blank;
+    }
+
+    .gd-icon-insight {
+        &::before {
+            content: url("~@gooddata/sdk-ui-dashboard/esm/assets/add-insight-placeholder.svg");
+            display: inline-block;
+            margin-right: 10px;
+        }
+    }
+}
+
+.drag-info-placeholder-drop-target,
+.drop-target-inner {
+    position: absolute;
+}
+
+.drag-info-placeholder-drop-target {
+    $outter-padding: 10px;
+
+    top: $outter-padding;
+    right: $outter-padding;
+    bottom: $outter-padding;
+    left: $outter-padding;
+    border: $item-border dashed $gd-palette-primary-base;
+    border-radius: 15px;
+    background-color: $gd-palette-primary-dimmed;
+}
+.drop-target-inner {
+    $inner-padding: 8px;
+
+    top: $inner-padding;
+    right: $inner-padding;
+    bottom: $inner-padding;
+    left: $inner-padding;
+    border-radius: 7px;
+}
+
+.drop-target-message {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    left: 0;
+    display: inline-block;
+    padding: 0 10px;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    vertical-align: middle;
+    color: $info-text-color;
+    transform: translateY(-50%);
+}
+
+.drop-target-message,
+.drag-info-placeholder-drop-target {
+    display: none;
+}
+
+.gd-fluidlayout-row-separator {
+    position: absolute;
+    right: 10px;
+    left: 10px;
+    height: 2px;
+    background-color: $gd-color-disabled;
+
+    &-icon {
+        position: absolute;
+        top: -9px;
+        width: 20px;
+        height: 20px;
+
+        &-left {
+            left: -25px;
+        }
+
+        &-right {
+            right: -25px;
+            transform: rotate(180deg);
+        }
+    }
+
+    .new-row-dropzone &.bottom {
+        bottom: 20px;
+    }
+
+    &.top {
+        top: 0;
+    }
+
+    &.bottom {
+        bottom: -2px;
+    }
+
+    &.active {
+        background-color: $gd-palette-primary-base;
+    }
+}
+
+.gd-fluid-layout-row-header .new-row-dropzone .gd-fluidlayout-row-separator.bottom {
+    bottom: -2px;
 }

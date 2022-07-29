@@ -33,6 +33,7 @@ import {
 import { RenderModeAwareDashboardLayoutSectionHeaderRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionHeaderRenderer";
 import { getMemoizedWidgetSanitizer } from "./DefaultDashboardLayoutUtils";
 import { selectRenderMode } from "../../model/store/ui/uiSelectors";
+import { SectionHotspot } from "../dragAndDrop";
 
 /**
  * Get dashboard layout for exports.
@@ -136,14 +137,18 @@ export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Elemen
     return isLayoutEmpty ? (
         <EmptyDashboardError ErrorComponent={ErrorComponent} />
     ) : (
-        <DashboardLayout
-            className={isExport ? "export-mode" : ""}
-            layout={transformedLayout}
-            itemKeyGetter={itemKeyGetter}
-            widgetRenderer={widgetRenderer}
-            enableCustomHeight={enableWidgetCustomHeight}
-            sectionHeaderRenderer={RenderModeAwareDashboardLayoutSectionHeaderRenderer}
-            renderMode={renderMode}
-        />
+        <>
+            <DashboardLayout
+                className={isExport ? "export-mode" : ""}
+                layout={transformedLayout}
+                itemKeyGetter={itemKeyGetter}
+                widgetRenderer={widgetRenderer}
+                enableCustomHeight={enableWidgetCustomHeight}
+                sectionHeaderRenderer={RenderModeAwareDashboardLayoutSectionHeaderRenderer}
+                renderMode={renderMode}
+            />
+            {/* TODO: render only if needed */}
+            <SectionHotspot index={-1} targetPosition="below" />
+        </>
     );
 };

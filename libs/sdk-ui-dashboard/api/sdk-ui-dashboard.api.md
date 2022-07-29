@@ -3517,7 +3517,7 @@ export interface InsightDateDatasets {
 // @internal (undocumented)
 export type InsightDraggableListItem = {
     type: "insightListItem";
-    insightRef: ObjRef;
+    insight: IInsight;
 };
 
 // @internal (undocumented)
