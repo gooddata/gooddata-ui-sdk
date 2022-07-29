@@ -3,7 +3,6 @@ import React from "react";
 import { AttributeFilterBase } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/AttributeFilterBase";
 import { storiesOf } from "../../../_infra/storyRepository";
 import { action } from "@storybook/addon-actions";
-//import { LongPostInteractionTimeout } from "../../../_infra/backstopWrapper";
 import { FilterStories } from "../../../_infra/storyGroups";
 
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";

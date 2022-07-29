@@ -24,6 +24,7 @@ const AttributeFilterButtonExamples = (): JSX.Element => {
                         subtitleItemCount={10}
                         isFiltering={false}
                         isLoaded={true}
+                        isLoading={false}
                         onClick={action("onClick")}
                     />
                     <h4>AttributeFilterButton opened</h4>
@@ -34,6 +35,7 @@ const AttributeFilterButtonExamples = (): JSX.Element => {
                         subtitleItemCount={10}
                         isFiltering={false}
                         isLoaded={true}
+                        isLoading={false}
                         onClick={action("onClick")}
                     />
                     <h4>AttributeFilterButton filtering</h4>
@@ -44,6 +46,18 @@ const AttributeFilterButtonExamples = (): JSX.Element => {
                         subtitleItemCount={10}
                         isFiltering={true}
                         isLoaded={true}
+                        isLoading={false}
+                        onClick={action("onClick")}
+                    />
+                    <h4>AttributeFilterButton loading</h4>
+                    <AttributeFilterButton
+                        isOpen={false}
+                        title={attributeTitle}
+                        subtitleText={"All"}
+                        subtitleItemCount={10}
+                        isFiltering={false}
+                        isLoaded={false}
+                        isLoading={true}
                         onClick={action("onClick")}
                     />
                     <h4>AttributeFilterButton long subtitle and item count 3</h4>
@@ -54,6 +68,7 @@ const AttributeFilterButtonExamples = (): JSX.Element => {
                         subtitleItemCount={3}
                         isFiltering={false}
                         isLoaded={true}
+                        isLoading={false}
                         onClick={action("onClick")}
                     />
                     <h4>AttributeFilterButton shortened title</h4>
@@ -65,6 +80,7 @@ const AttributeFilterButtonExamples = (): JSX.Element => {
                             subtitleItemCount={3}
                             isFiltering={false}
                             isLoaded={true}
+                            isLoading={false}
                             onClick={action("onClick")}
                         />
                     </div>
@@ -77,40 +93,11 @@ const AttributeFilterButtonExamples = (): JSX.Element => {
                             subtitleItemCount={3}
                             isFiltering={false}
                             isLoaded={true}
+                            isLoading={false}
                             onClick={action("onClick")}
                         />
                     </div>
                 </div>
-            </div>
-        </InternalIntlWrapper>
-    );
-};
-
-// TODO fix mobile view or remove it
-export const AttributeFilterButtonMobileExamples = (): JSX.Element => {
-    return (
-        <InternalIntlWrapper>
-            <div className="library-component screenshot-target">
-                <h4>AttributeFilterButton closed</h4>
-                <AttributeFilterButton
-                    isOpen={false}
-                    title={attributeTitle}
-                    subtitleText={"All"}
-                    subtitleItemCount={10}
-                    isFiltering={false}
-                    isLoaded={true}
-                    onClick={action("onClick")}
-                />
-                <h4>AttributeFilterButton opened</h4>
-                <AttributeFilterButton
-                    isOpen={true}
-                    title={attributeTitle}
-                    subtitleText={"All"}
-                    subtitleItemCount={10}
-                    isFiltering={false}
-                    isLoaded={true}
-                    onClick={action("onClick")}
-                />
             </div>
         </InternalIntlWrapper>
     );

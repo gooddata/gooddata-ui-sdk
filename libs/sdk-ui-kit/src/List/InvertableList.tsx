@@ -317,6 +317,7 @@ export class InvertableList<T> extends Component<IInvertableListProps<T>, IInver
 
     private renderListOrNoItems = () => {
         const {
+            isInverted,
             items,
             searchString,
             filteredItemsCount,
@@ -326,6 +327,7 @@ export class InvertableList<T> extends Component<IInvertableListProps<T>, IInver
             tagName,
             renderItem,
             renderNoItems,
+            actionsAsCheckboxes,
         } = this.props;
 
         if (searchString && filteredItemsCount === 0) {
@@ -337,6 +339,7 @@ export class InvertableList<T> extends Component<IInvertableListProps<T>, IInver
 
         return (
             <MultiSelectList
+                isInverted={isInverted}
                 items={items}
                 selectedItems={selectedItems}
                 itemsCount={filteredItemsCount}
@@ -355,6 +358,7 @@ export class InvertableList<T> extends Component<IInvertableListProps<T>, IInver
                 onScrollEnd={onScrollEnd}
                 tagName={tagName}
                 listClassNames={"gd-infinite-list"}
+                selectAllCheckbox={actionsAsCheckboxes}
             />
         );
     };

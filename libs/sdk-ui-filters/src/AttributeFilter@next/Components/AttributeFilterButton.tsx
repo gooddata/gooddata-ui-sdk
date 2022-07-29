@@ -1,9 +1,12 @@
 // (C) 2022 GoodData Corporation
 import React, { useEffect, useRef, useState } from "react";
+import { useIntl } from "react-intl";
 import { stringUtils } from "@gooddata/util";
 import cx from "classnames";
 import { ShortenedText } from "@gooddata/sdk-ui-kit";
 import { IAttributeFilterButtonProps } from "./types";
+import { useAttributeFilterContext } from "../Context/AttributeFilterContext";
+import { getFilteringTitleIntl, getLoadingTitleIntl } from "../utils/AttributeFilterUtils";
 
 export const ALIGN_POINT = [
     { align: "tc bc", offset: { x: 0, y: -2 } },
@@ -11,11 +14,11 @@ export const ALIGN_POINT = [
     { align: "bl tr", offset: { x: -2, y: -8 } },
 ];
 
-// TOTO: This component receive also status messages in title
-// this needs to be refactored and status of filter should be generated base on props
 export const AttributeFilterButton: React.VFC<IAttributeFilterButtonProps> = (props) => {
-    const { isOpen, title, subtitleItemCount, subtitleText, isFiltering, isLoaded, onClick } = props;
+    const { isOpen, title, subtitleItemCount, subtitleText, isFiltering, isLoaded, isLoading, onClick } =
+        props;
 
+    const intl = useIntl();
     const subtitleSelectedItemsRef = useRef(null);
     const [displayItemCount, setDisplayItemCount] = useState(false);
 
@@ -31,6 +34,9 @@ export const AttributeFilterButton: React.VFC<IAttributeFilterButtonProps> = (pr
 
         setDisplayItemCount(displayItemCount);
     }, [subtitleText]);
+
+    const buttonTitle = isLoading ? getLoadingTitleIntl(intl) : title;
+    const buttonSubtitle = isFiltering ? getFilteringTitleIntl(intl) : subtitleText;
 
     return (
         <div
@@ -52,7 +58,7 @@ export const AttributeFilterButton: React.VFC<IAttributeFilterButtonProps> = (pr
                         tooltipAlignPoints={ALIGN_POINT}
                         className={"s-attribute-filter-button-title"}
                     >
-                        {title}
+                        {buttonTitle}
                     </ShortenedText>
                 </div>
                 <div className="button-subtitle__next">
@@ -60,7 +66,7 @@ export const AttributeFilterButton: React.VFC<IAttributeFilterButtonProps> = (pr
                         className="button-selected-items__next s-attribute-filter-button-subtitle"
                         ref={subtitleSelectedItemsRef}
                     >
-                        {subtitleText}
+                        {buttonSubtitle}
                     </span>
                     {displayItemCount && (
                         <span className="button-selected-items-count__next">{`(${subtitleItemCount})`}</span>
@@ -69,4 +75,28 @@ export const AttributeFilterButton: React.VFC<IAttributeFilterButtonProps> = (pr
             </div>
         </div>
     );
+};
+
+export interface IUseAttributeFilterButtonProp {
+    isOpen: boolean;
+    onClick?: () => void;
+}
+
+export const useAttributeFilterButton = (
+    props: IUseAttributeFilterButtonProp,
+): IAttributeFilterButtonProps => {
+    const { isOpen, onClick } = props;
+
+    const { attributeFilterTitle, initialization } = useAttributeFilterContext();
+
+    return {
+        isOpen,
+        onClick,
+        title: attributeFilterTitle,
+        subtitleText: "", //TODO implement
+        subtitleItemCount: 0, //TODO rename it
+        isFiltering: false, //TODO implement
+        isLoaded: initialization.status === "success",
+        isLoading: initialization.status !== "success" && initialization.status !== "error",
+    };
 };

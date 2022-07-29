@@ -47,7 +47,7 @@ const WithDefaultComponent = (props: IAttributeFilterListItemProps) => {
 storiesOf(`${FilterStories}@next/AttributeFilterBase/Customization/FilterListItem`)
     .add("Default component", () => {
         return (
-            <div style={wrapperStyle} className="screenshot-target">
+            <div style={wrapperStyle} className="library-component-light screenshot-target">
                 <AttributeFilterBase
                     backend={backend}
                     workspace={ReferenceWorkspaceId}
@@ -60,7 +60,7 @@ storiesOf(`${FilterStories}@next/AttributeFilterBase/Customization/FilterListIte
     })
     .add("Custom component", () => {
         return (
-            <div style={wrapperStyle} className="screenshot-target">
+            <div style={wrapperStyle} className="library-component-light screenshot-target">
                 <AttributeFilterBase
                     backend={backend}
                     workspace={ReferenceWorkspaceId}

@@ -26,8 +26,7 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
 }
 
 .gd-attribute-filter-overlay__next {
-    padding: 16px 8px 8px 8px;
-    max-width: 245px;
+    width: 245px;
 
     .gd-message {
         position: relative;
@@ -46,9 +45,15 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
     }
 }
 
+.gd-attribute-filter-list-item__next {
+    min-height: 28px;
+}
+
 .gd-attribute-filter-actions__next {
+    border-top: 1px solid var(--gd-palette-complementary-3, #dde4eb);
     text-align: right;
-    margin-top: 8px;
+    margin: 0 10px;
+    padding: 10px 0;
 }
 
 .attribute-filter-button__next {
@@ -321,20 +326,14 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
     font-weight: bold;
 }
 
-.attributevalues-list {
-    // seams not used directly
-    .loading-mask {
-        flex: 1 0 auto;
-        min-height: 52px;
-    }
-
+.gd-attribute-filter-list {
     .gd-list-item {
         &:hover {
             background-color: $is-focused-background;
 
             &.is-selected {
                 color: $gd-color-text;
-                background-color: $is-focused-background;
+                background-color: $is-selected-focused-background;
             }
 
             .input-label-text {
