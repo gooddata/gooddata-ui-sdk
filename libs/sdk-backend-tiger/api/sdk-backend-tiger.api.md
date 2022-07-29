@@ -10,6 +10,8 @@ import { DeclarativeAnalytics } from '@gooddata/api-client-tiger';
 import { DeclarativeModel } from '@gooddata/api-client-tiger';
 import { DeclarativePdm } from '@gooddata/api-client-tiger';
 import { DeclarativeTables } from '@gooddata/api-client-tiger';
+import { DependentEntitiesRequest } from '@gooddata/api-client-tiger';
+import { DependentEntitiesResponse } from '@gooddata/api-client-tiger';
 import { GenerateLdmRequest } from '@gooddata/api-client-tiger';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
@@ -53,6 +55,12 @@ export type DeclarativeLogicalModel = DeclarativeModel;
 export { DeclarativeModel }
 
 export { DeclarativePdm }
+
+// @internal (undocumented)
+export type DependentEntitiesGraphRequest = DependentEntitiesRequest;
+
+// @internal (undocumented)
+export type DependentEntitiesGraphResponse = DependentEntitiesResponse;
 
 // @internal (undocumented)
 export interface Entitlement {
@@ -267,6 +275,8 @@ export type TigerSpecificFunctions = {
     publishLogicalModel?: (workspaceId: string, declarativeModel: DeclarativeLogicalModel) => Promise<void>;
     getDataSourceSchemata?: (dataSourceId: string) => Promise<string[]>;
     getPdm?: (dataSourceId: string) => Promise<PhysicalDataModel>;
+    getDependentEntitiesGraph?: (workspaceId: string) => Promise<DependentEntitiesGraphResponse>;
+    getDependentEntitiesGraphFromEntryPoints?: (workspaceId: string, dependentEntitiesGraphRequest: DependentEntitiesGraphRequest) => Promise<DependentEntitiesGraphResponse>;
 };
 
 // @public
