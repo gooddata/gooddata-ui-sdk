@@ -1,3 +1,5 @@
+const CopyPlugin = require("copy-webpack-plugin");
+
 module.exports = {
     addons: ["@storybook/addon-actions", "@storybook/preset-scss"],
     stories: ["../stories/**/*.@(ts|tsx)"],
@@ -9,4 +11,18 @@ module.exports = {
     core: {
         builder: "webpack5",
     },
+    webpackFinal: async (config) => ({
+        ...config,
+        plugins: [
+            ...config.plugins,
+            new CopyPlugin({
+                patterns: [
+                    {
+                        from: "./node_modules/@gooddata/sdk-ui-web-components/esm",
+                        to: "./static/web-components/",
+                    },
+                ],
+            }),
+        ],
+    }),
 };

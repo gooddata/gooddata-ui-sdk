@@ -18,6 +18,7 @@ const libsToBeRemoved = [
     "sdk-ui-kit",
     "sdk-ui-tests",
     "sdk-ui-tests-e2e",
+    "sdk-ui-web-components",
 ];
 
 function main() {

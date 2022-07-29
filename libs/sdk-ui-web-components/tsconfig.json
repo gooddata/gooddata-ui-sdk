@@ -1,0 +1,23 @@
+{
+    "_note": "This file is only for IDE. For build use tsconfig.[dev/build].json (dev mode is less strict)",
+    "compilerOptions": {
+        "target": "esnext",
+        "jsx": "react",
+        "lib": ["es7", "dom"],
+        "module": "esnext",
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "importHelpers": true,
+        "strict": true,
+        "noImplicitAny": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "outDir": "esm",
+        "removeComments": false,
+        "sourceMap": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "baseUrl": ".."
+    },
+    "compileOnSave": false,
+    "exclude": ["**/node_modules", "esm", "**/__mocks__/**/*"]
+}
