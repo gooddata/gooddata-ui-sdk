@@ -1,6 +1,6 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { useCallback } from "react";
-import { IntlProvider } from "react-intl";
+import { CustomFormats, IntlProvider } from "react-intl";
 import {
     DefaultLocale,
     ITranslationsCustomizationProviderProps,
@@ -8,6 +8,26 @@ import {
 } from "@gooddata/sdk-ui";
 
 import { translations } from "./translations";
+
+const formats: CustomFormats = {
+    time: {
+        hhmm: {
+            hour: "numeric",
+            minute: "2-digit",
+        },
+    },
+    date: {
+        shortWithoutYear: {
+            day: "numeric",
+            month: "short",
+        },
+        shortWithYear: {
+            day: "numeric",
+            month: "short",
+            year: "numeric",
+        },
+    },
+};
 
 /**
  * @internal
@@ -22,7 +42,7 @@ export interface IIntlWrapperProps {
 export const IntlWrapper: React.FC<IIntlWrapperProps> = ({ children, locale = DefaultLocale }) => {
     const render = useCallback<ITranslationsCustomizationProviderProps["render"]>(
         (modifiedTranslations) => (
-            <IntlProvider locale={locale} messages={modifiedTranslations}>
+            <IntlProvider locale={locale} messages={modifiedTranslations} formats={formats}>
                 {children}
             </IntlProvider>
         ),

@@ -34,6 +34,7 @@ options = {
                 "src/presentation/dialogs",
                 "src/presentation/dragAndDrop",
                 "src/presentation/filterBar",
+                "src/presentation/insightList",
                 "src/presentation/layout",
                 "src/presentation/localization",
                 "src/presentation/scheduledEmail",

@@ -1,6 +1,5 @@
 // (C) 2022 GoodData Corporation
-
-import { IDashboardAttributeFilter } from "@gooddata/sdk-model";
+import { IDashboardAttributeFilter, IInsight } from "@gooddata/sdk-model";
 
 /**
  * @internal
@@ -8,6 +7,7 @@ import { IDashboardAttributeFilter } from "@gooddata/sdk-model";
 export type DraggableContentItemType =
     | "attributeFilter"
     | "attributeFilter-placeholder"
+    | "insightListItem"
     | "widget"
     | "custom";
 
@@ -62,6 +62,21 @@ export function isAttributeFilterPlaceholderDraggableItem(
 /**
  * @internal
  */
+export type InsightDraggableListItem = {
+    type: "insightListItem";
+    insight: IInsight;
+};
+
+/**
+ * @internal
+ */
+export function isInsightDraggableListItem(item: any): item is InsightDraggableListItem {
+    return item.type === "insightListItem";
+}
+
+/**
+ * @internal
+ */
 export type CustomDraggableItem = {
     type: "custom";
     [key: string]: any;
@@ -81,6 +96,7 @@ export type WidgetDraggableItem = {
 export type DraggableContentItem =
     | AttributeFilterDraggableItem
     | AttributeFilterPlaceholderDraggableItem
+    | InsightDraggableListItem
     | CustomDraggableItem
     | WidgetDraggableItem;
 
@@ -105,6 +121,7 @@ export type DraggableItemTypeMapping = DraggableItemComponentTypeMapping & Dragg
 export type DraggableItemComponentTypeMapping = {
     attributeFilter: AttributeFilterDraggableItem;
     "attributeFilter-placeholder": AttributeFilterPlaceholderDraggableItem;
+    insightListItem: InsightDraggableListItem;
     custom: CustomDraggableItem;
     widget: WidgetDraggableItem;
 };
@@ -149,3 +166,20 @@ export type CustomDashboardAttributeFilterPlaceholderComponentProps = {
  */
 export type CustomDashboardAttributeFilterPlaceholderComponent =
     React.ComponentType<CustomDashboardAttributeFilterPlaceholderComponentProps>;
+
+/**
+ * @internal
+ */
+export type CustomDashboardInsightListItemComponentProps = {
+    isLocked?: boolean;
+    title?: string;
+    updated?: string;
+    type?: string;
+    className?: string;
+};
+
+/**
+ * @internal
+ */
+export type CustomDashboardInsightListItemComponent =
+    React.ComponentType<CustomDashboardInsightListItemComponentProps>;

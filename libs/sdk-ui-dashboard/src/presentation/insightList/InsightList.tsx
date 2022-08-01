@@ -44,7 +44,12 @@ const dropdownTabsTranslationIds = [messages.tabsMy, messages.tabsAll];
 /**
  * @internal
  */
-export const InsightList: React.FC<IInsightListProps> = ({ height, searchAutofocus, noDataButton }) => {
+export const InsightList: React.FC<IInsightListProps> = ({
+    height,
+    searchAutofocus,
+    noDataButton,
+    renderItem,
+}) => {
     const intl = useIntl();
 
     const backend = useBackendStrict();
@@ -133,7 +138,7 @@ export const InsightList: React.FC<IInsightListProps> = ({ height, searchAutofoc
     return (
         <DropdownList
             width={LIST_WIDTH}
-            height={height - controlsHeight}
+            height={height && height - controlsHeight}
             isMobile={false}
             isLoading={isLoading && insights.length === 0}
             showSearch={initialLoadCompleted}
@@ -151,26 +156,29 @@ export const InsightList: React.FC<IInsightListProps> = ({ height, searchAutofoc
             }}
             itemHeight={ITEM_HEIGHT}
             itemHeightGetter={itemHeightGetter}
-            items={insights}
+            items={insights as IInsight[]}
             itemsCount={totalInsightsCount}
-            renderItem={({ item: insight, width }) => {
-                if (!insight) {
-                    return <InsightListItem isLoading />;
-                }
+            renderItem={
+                renderItem ??
+                (({ item: insight, width }) => {
+                    if (!insight) {
+                        return <InsightListItem isLoading />;
+                    }
 
-                const title = insightTitle(insight);
-                const insightListSourceItem = getInsightListSourceItem(insight);
+                    const title = insightTitle(insight);
+                    const insightListSourceItem = getInsightListSourceItem(insight);
 
-                return (
-                    <InsightListItem
-                        title={title}
-                        type={insightListSourceItem.insightType}
-                        width={width}
-                        updated={insightUpdated(insightListSourceItem.insight)}
-                        isLocked={insightIsLocked(insightListSourceItem.insight)}
-                    />
-                );
-            }}
+                    return (
+                        <InsightListItem
+                            title={title}
+                            type={insightListSourceItem.insightType}
+                            width={width}
+                            updated={insightUpdated(insightListSourceItem.insight)}
+                            isLocked={insightIsLocked(insightListSourceItem.insight)}
+                        />
+                    );
+                })
+            }
             renderNoData={({ hasNoMatchingData }) => (
                 <InsightListNoData
                     isUserInsights={selectedTabId === messages.tabsMy.id}

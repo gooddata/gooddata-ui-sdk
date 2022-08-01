@@ -97,6 +97,7 @@ import { IntlShape } from 'react-intl';
 import { IPositiveAttributeFilter } from '@gooddata/sdk-model';
 import { IPushData } from '@gooddata/sdk-ui';
 import { IRelativeDateFilter } from '@gooddata/sdk-model';
+import { IRenderItemProps } from '@gooddata/sdk-ui-kit';
 import { IScheduledMail } from '@gooddata/sdk-model';
 import { IScheduledMailDefinition } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-model';
@@ -689,6 +690,18 @@ export type CustomDashboardDateFilterComponent = ComponentType<IDashboardDateFil
 
 // @public (undocumented)
 export type CustomDashboardInsightComponent = ComponentType<IDashboardInsightProps>;
+
+// @internal (undocumented)
+export type CustomDashboardInsightListItemComponent = React.ComponentType<CustomDashboardInsightListItemComponentProps>;
+
+// @internal (undocumented)
+export type CustomDashboardInsightListItemComponentProps = {
+    isLocked?: boolean;
+    title?: string;
+    updated?: string;
+    type?: string;
+    className?: string;
+};
 
 // @alpha (undocumented)
 export type CustomDashboardInsightMenuButtonComponent = ComponentType<IDashboardInsightMenuButtonProps>;
@@ -2209,10 +2222,10 @@ export type DraggableComponent = {
 };
 
 // @internal (undocumented)
-export type DraggableContentItem = AttributeFilterDraggableItem | AttributeFilterPlaceholderDraggableItem | CustomDraggableItem | WidgetDraggableItem;
+export type DraggableContentItem = AttributeFilterDraggableItem | AttributeFilterPlaceholderDraggableItem | InsightDraggableListItem | CustomDraggableItem | WidgetDraggableItem;
 
 // @internal (undocumented)
-export type DraggableContentItemType = "attributeFilter" | "attributeFilter-placeholder" | "widget" | "custom";
+export type DraggableContentItemType = "attributeFilter" | "attributeFilter-placeholder" | "insightListItem" | "widget" | "custom";
 
 // @internal (undocumented)
 export type DraggableInternalItem = HeightResizerDragItem;
@@ -2227,6 +2240,7 @@ export type DraggableItem = DraggableContentItem | DraggableInternalItem;
 export type DraggableItemComponentTypeMapping = {
     attributeFilter: AttributeFilterDraggableItem;
     "attributeFilter-placeholder": AttributeFilterPlaceholderDraggableItem;
+    insightListItem: InsightDraggableListItem;
     custom: CustomDraggableItem;
     widget: WidgetDraggableItem;
 };
@@ -3303,9 +3317,11 @@ export interface IInsightBodyProps extends Partial<IVisualizationCallbacks> {
 // @internal (undocumented)
 export interface IInsightListProps {
     // (undocumented)
-    height: number;
+    height?: number;
     // (undocumented)
     noDataButton?: INoDataButton;
+    // (undocumented)
+    renderItem?: (props: IRenderItemProps<IInsight>) => React.ReactNode;
     // (undocumented)
     searchAutofocus?: boolean;
 }
@@ -3497,6 +3513,12 @@ export interface InsightDateDatasets {
     readonly usedInAttributes: ReadonlyArray<ICatalogDateDataset | undefined>;
     readonly usedInDateFilters: ReadonlyArray<ICatalogDateDataset>;
 }
+
+// @internal (undocumented)
+export type InsightDraggableListItem = {
+    type: "insightListItem";
+    insight: IInsight;
+};
 
 // @internal (undocumented)
 export const InsightList: React_2.FC<IInsightListProps>;
@@ -3928,6 +3950,9 @@ export interface ISharingProperties {
 export interface ISidebarProps {
     DefaultSidebar: ComponentType<ISidebarProps>;
 }
+
+// @internal (undocumented)
+export function isInsightDraggableListItem(item: any): item is InsightDraggableListItem;
 
 // @alpha (undocumented)
 export interface ITitleProps {
