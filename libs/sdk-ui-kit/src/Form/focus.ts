@@ -3,13 +3,13 @@
 import invariant from "ts-invariant";
 
 type AutofocusData = {
-    frame: number;
+    frame: number | null;
     start: number;
     element: HTMLElement | null;
 };
 
 export function runAutofocus(element: HTMLElement | null, autofocus: boolean): () => void {
-    const data: AutofocusData = { frame: -1, element, start: new Date().getTime() };
+    const data: AutofocusData = { frame: null, element, start: new Date().getTime() };
 
     if (autofocus) {
         startAutofocus(data);
@@ -45,7 +45,10 @@ function startAutofocus(data: AutofocusData) {
 }
 
 function cancelAutofocus(data: AutofocusData) {
-    window.cancelAnimationFrame(data.frame);
+    if (data.frame !== null) {
+        window.cancelAnimationFrame(data.frame);
+    }
+    data.frame = null;
 }
 
 function reportWarning(data: AutofocusData) {
