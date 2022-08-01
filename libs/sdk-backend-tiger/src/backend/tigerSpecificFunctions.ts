@@ -26,6 +26,8 @@ import {
     DeclarativeTables,
     DeclarativeAnalytics,
     JsonApiWorkspaceInDocument,
+    DependentEntitiesRequest,
+    DependentEntitiesResponse,
 } from "@gooddata/api-client-tiger";
 import { convertApiError } from "../utils/errorHandling";
 import uniq from "lodash/uniq";
@@ -214,6 +216,16 @@ export type DataSourceDefinition = JsonApiDataSourceInDocument;
 export type WorkspaceDefinition = JsonApiWorkspaceInDocument;
 
 /**
+ * @internal
+ */
+export type DependentEntitiesGraphRequest = DependentEntitiesRequest;
+
+/**
+ * @internal
+ */
+export type DependentEntitiesGraphResponse = DependentEntitiesResponse;
+
+/**
  * TigerBackend-specific functions.
  * If possible, avoid these functions, they are here for specific use cases.
  *
@@ -262,6 +274,11 @@ export type TigerSpecificFunctions = {
     publishLogicalModel?: (workspaceId: string, declarativeModel: DeclarativeLogicalModel) => Promise<void>;
     getDataSourceSchemata?: (dataSourceId: string) => Promise<string[]>;
     getPdm?: (dataSourceId: string) => Promise<PhysicalDataModel>;
+    getDependentEntitiesGraph?: (workspaceId: string) => Promise<DependentEntitiesGraphResponse>;
+    getDependentEntitiesGraphFromEntryPoints?: (
+        workspaceId: string,
+        dependentEntitiesGraphRequest: DependentEntitiesGraphRequest,
+    ) => Promise<DependentEntitiesGraphResponse>;
 };
 
 const getDataSourceErrorMessage = (error: unknown) => {
@@ -785,5 +802,39 @@ export const buildTigerSpecificFunctions = (
                 declarativeModel,
             });
         });
+    },
+    getDependentEntitiesGraph: async (workspaceId: string) => {
+        try {
+            return await authApiCall(async (sdk) => {
+                return await sdk.actions
+                    .getDependentEntitiesGraph({
+                        workspaceId,
+                    })
+                    .then((res: AxiosResponse) => {
+                        return res?.data;
+                    });
+            });
+        } catch (error) {
+            throw convertApiError(error);
+        }
+    },
+    getDependentEntitiesGraphFromEntryPoints: async (
+        workspaceId: string,
+        dependentEntitiesGraphRequest: DependentEntitiesGraphRequest,
+    ) => {
+        try {
+            return await authApiCall(async (sdk) => {
+                return await sdk.actions
+                    .getDependentEntitiesGraphFromEntryPoints({
+                        workspaceId,
+                        dependentEntitiesRequest: dependentEntitiesGraphRequest,
+                    })
+                    .then((res: AxiosResponse) => {
+                        return res?.data;
+                    });
+            });
+        } catch (error) {
+            throw convertApiError(error);
+        }
     },
 });

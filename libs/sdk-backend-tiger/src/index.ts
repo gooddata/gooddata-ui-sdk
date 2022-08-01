@@ -86,4 +86,6 @@ export {
     DataSourceDefinition,
     IDataSourceDeletedResponse,
     WorkspaceDefinition,
+    DependentEntitiesGraphRequest,
+    DependentEntitiesGraphResponse,
 } from "./backend/tigerSpecificFunctions";
