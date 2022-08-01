@@ -15,7 +15,8 @@ export function validateSectionPlacement(
         return true;
     }
 
-    return index < layout.sections.length;
+    // using <= here so that we can add to the last place not only by using -1 by also by using (lastIndex+1)
+    return index <= layout.sections.length;
 }
 
 export function validateSectionExists(
@@ -34,7 +35,8 @@ export function validateItemPlacement(section: ExtendedDashboardLayoutSection, i
         return true;
     }
 
-    return index < section.items.length;
+    // using <= here so that we can add to the last place not only by using -1 by also by using (lastIndex+1)
+    return index <= section.items.length;
 }
 
 export function validateItemExists(section: ExtendedDashboardLayoutSection, index: number): boolean {
