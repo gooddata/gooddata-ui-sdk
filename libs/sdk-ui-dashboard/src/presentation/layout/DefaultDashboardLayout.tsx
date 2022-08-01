@@ -147,7 +147,6 @@ export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Elemen
                 sectionHeaderRenderer={RenderModeAwareDashboardLayoutSectionHeaderRenderer}
                 renderMode={renderMode}
             />
-            {/* TODO: render only if needed */}
             <SectionHotspot index={-1} targetPosition="below" />
         </>
     );
