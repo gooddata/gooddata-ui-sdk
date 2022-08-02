@@ -47,7 +47,7 @@ describe("move layout section item handler", () => {
         it("should fail if bad target section index is provided", async () => {
             const originalLayout = selectLayout(Tester.state());
             const event: DashboardCommandFailed<MoveLayoutSection> = await Tester.dispatchAndWaitFor(
-                moveSectionItem(0, 0, originalLayout.sections.length, -1, TestCorrelation),
+                moveSectionItem(0, 0, originalLayout.sections.length + 1, -1, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 

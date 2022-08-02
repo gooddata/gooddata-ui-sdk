@@ -27,7 +27,7 @@ import {
 } from "./DefaultDashboardLayoutRenderer";
 import { ObjRefMap } from "../../_staging/metadata/objRefMap";
 import { useDashboardComponentsContext } from "../dashboardContexts";
-import { ResizeOverlay, useResizeStatus } from "../dragAndDrop";
+import { Hotspot, ResizeOverlay, useResizeStatus } from "../dragAndDrop";
 import { getDashboardLayoutWidgetDefaultHeight } from "../../model/layout";
 
 function calculateWidgetMinHeight(
@@ -128,6 +128,8 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                 isUnderWidthMinLimit={false}
                 reachedHeightLimit={heightLimitReached}
             />
+            <Hotspot dropZoneType="prev" itemIndex={item.index()} sectionIndex={item.section().index()} />
+            <Hotspot dropZoneType="next" itemIndex={item.index()} sectionIndex={item.section().index()} />
         </DefaultWidgetRenderer>
     );
 };
