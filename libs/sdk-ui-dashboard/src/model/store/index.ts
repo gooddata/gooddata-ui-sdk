@@ -210,6 +210,9 @@ export {
 } from "./ui/uiSelectors";
 export { uiActions } from "./ui";
 export { LegacyDashboardsState } from "./legacyDashboards/legacyDashboardsState";
+export { PlaceholdersState, IWidgetPlaceholderSpec } from "./placeholders/placeholdersState";
+export { selectWidgetPlaceholder } from "./placeholders/placeholdersSelectors";
+export { placeholdersActions } from "./placeholders";
 
 export { queryAndWaitFor } from "./_infra/queryAndWaitFor";
 export { dispatchAndWaitFor } from "./_infra/dispatchAndWaitFor";

@@ -1971,6 +1971,7 @@ export interface DashboardState {
     meta: DashboardMetaState;
     // (undocumented)
     permissions: PermissionsState;
+    placeholders: PlaceholdersState;
     // @internal
     _queryCache: {
         [queryName: string]: any;
@@ -3996,6 +3997,19 @@ export interface IUseInsightWidgetDataView {
 }
 
 // @alpha (undocumented)
+export interface IWidgetPlaceholderSpec {
+    // (undocumented)
+    itemIndex: number;
+    // (undocumented)
+    sectionIndex: number;
+    // (undocumented)
+    size: {
+        width: number;
+        height: number;
+    };
+}
+
+// @alpha (undocumented)
 export interface IXlsxExportConfig {
     // (undocumented)
     format: "xlsx";
@@ -4298,6 +4312,21 @@ export type OptionalWidgetComponentProvider = OptionalProvider<WidgetComponentPr
 export interface PermissionsState {
     // (undocumented)
     permissions?: IWorkspacePermissions;
+}
+
+// @internal
+export const placeholdersActions: CaseReducerActions<    {
+setWidgetPlaceholder: CaseReducer<PlaceholdersState, {
+payload: IWidgetPlaceholderSpec;
+type: string;
+}>;
+clearWidgetPlaceholder: CaseReducer<PlaceholdersState, AnyAction>;
+}>;
+
+// @alpha (undocumented)
+export interface PlaceholdersState {
+    // (undocumented)
+    widgetPlaceholder: IWidgetPlaceholderSpec | undefined;
 }
 
 // @internal
@@ -5302,6 +5331,9 @@ itemIndex: number;
 
 // @alpha
 export const selectWidgetDrills: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IDrillToLegacyDashboard[] | InsightDrillDefinition[], (res: IKpiWidget | IInsightWidget | undefined) => IDrillToLegacyDashboard[] | InsightDrillDefinition[]>;
+
+// @alpha (undocumented)
+export const selectWidgetPlaceholder: OutputSelector<DashboardState, IWidgetPlaceholderSpec | undefined, (res: PlaceholdersState) => IWidgetPlaceholderSpec | undefined>;
 
 // @internal
 export const selectWidgets: OutputSelector<DashboardState, ExtendedDashboardWidget[], (res: IDashboardLayout<ExtendedDashboardWidget>) => ExtendedDashboardWidget[]>;
