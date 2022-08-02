@@ -28,21 +28,17 @@ export class DateFilterAbsoluteForm {
     }
 
     fromCalendarOpen(isOpen = true): this {
-        this.getCalendarElement(".s-date-range-picker-from .s-date-range-calendar").should(
-            isOpen ? "exist" : "not.exist",
-        );
+        this.getCalendarElement(".s-date-range-calendar-from").should(isOpen ? "exist" : "not.exist");
         return this;
     }
 
     toCalendarOpen(isOpen = true): this {
-        this.getCalendarElement(".s-date-range-picker-to .s-date-range-calendar").should(
-            isOpen ? "exist" : "not.exist",
-        );
+        this.getCalendarElement(".s-date-range-calendar-to").should(isOpen ? "exist" : "not.exist");
         return this;
     }
 
     selectDateInNextMonth(): this {
-        cy.get(".DayPicker-Week:last-child .DayPicker-Day--outside").eq(4).click();
+        cy.get(".rdp-row:last-child .rdp-day_outside").eq(4).click();
         return this;
     }
 

@@ -1,50 +1,86 @@
 // (C) 2022 GoodData Corporation
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import cx from "classnames";
-import { DateRangePickerInputField } from "./DateRangePickerInputField";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import DayPickerInput from "react-day-picker/DayPickerInput";
 import moment from "moment";
+import isValid from "date-fns/isValid";
+import parse from "date-fns/parse";
+import format from "date-fns/format";
+
 import { DateRangePickerInputFieldBody } from "./DateRangePickerInputFieldBody";
+
 import { convertPlatformDateStringToDate } from "../utils/DateConversions";
 import { TIME_FORMAT } from "../constants/Platform";
-import { DayPickerProps } from "react-day-picker";
 import { getPlatformStringFromDate, getTimeStringFromDate } from "./utils";
+
+function formatDate(date: Date, dateFormat: string): string {
+    return format(date, dateFormat);
+}
+
+function parseDate(str: string, dateFormat: string): Date | undefined {
+    try {
+        const parsedDate: Date = parse(str, dateFormat, new Date());
+        // parse only dates with 4-digit years. this mimics moment.js behavior - it parses only dates above 1900
+        // this is to make sure that the picker input is not overwritten in the middle of writing the year with year "0002" when writing 2020.
+        //
+        // it's also necessary to parse only when the input string fully matches with the desired format
+        // to make sure that the picker input is not overwritten in the middle of writing.
+        // e.g, let's consider a case where dateFormat is "dd/MM/yyyy" and the DayPickerInput has already been filled with a valid string "13/09/2020",
+        // then an user wants to change only the month "13/09/2020" -> "13/11/2020" by removing "09" and typing "11".
+        // in such case the parsing should wait until the user completes typing "11" (otherwise if parsing is done right after the first "1" is typed,
+        // the cursor automatically moves to the end of the string in the middle of writing, causing a bad experience for the user).
+        if (
+            isValid(parsedDate) &&
+            parsedDate.getFullYear() >= 1000 &&
+            str === formatDate(parsedDate, dateFormat)
+        ) {
+            return parsedDate;
+        }
+        return;
+    } catch {
+        return;
+    }
+}
 
 interface IDateTimePickerOwnProps {
     placeholderDate: string;
     dateFormat: string;
     onChange: (value: Date) => void;
     value: Date;
-    dayPickerPropsWithDefaults: DayPickerProps;
     handleDayClick: () => void;
-    locale: string;
     isMobile: boolean;
     isTimeEnabled: boolean;
     className: string;
+    onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
     defaultTime?: string;
     error?: boolean;
 }
 
 type DateTimePickerComponentProps = IDateTimePickerOwnProps & WrappedComponentProps;
 
-const DateTimePickerComponent = React.forwardRef<DayPickerInput, DateTimePickerComponentProps>(
+const DateTimePickerComponent = React.forwardRef<HTMLInputElement, DateTimePickerComponentProps>(
     (props: DateTimePickerComponentProps, ref) => {
         const {
             placeholderDate,
             value,
             onChange,
             dateFormat,
-            dayPickerPropsWithDefaults,
             handleDayClick,
             isMobile,
             isTimeEnabled,
+            onKeyDown,
             className,
             error = false,
         } = props;
 
         // keeping local copy to enable time update onBlur
         const [pickerTime, setPickerTime] = useState<string>(getTimeStringFromDate(value));
+
+        const [inputValue, setInputValue] = useState<string>(formatDate(value, dateFormat));
+
+        useEffect(() => {
+            setInputValue(formatDate(value, dateFormat));
+        }, [value]);
 
         // make sure it contains appropriate time if enabled
         const adjustDate = (selectedDate: Date) => {
@@ -60,6 +96,14 @@ const DateTimePickerComponent = React.forwardRef<DayPickerInput, DateTimePickerC
 
         const onDateChange = (selectedDate: Date) => {
             onChange(adjustDate(selectedDate));
+        };
+
+        const handleInputChange = (value: string) => {
+            setInputValue(value);
+
+            const parsedDate = parseDate(value, dateFormat);
+
+            onDateChange(parsedDate);
         };
 
         const onTimeChange = (input: string) => {
@@ -92,23 +136,26 @@ const DateTimePickerComponent = React.forwardRef<DayPickerInput, DateTimePickerC
                         value={getPlatformStringFromDate(value)}
                     />
                 ) : (
-                    <DateRangePickerInputField
+                    <div
                         className={cx(
-                            `s-date-range-picker-date`,
+                            "gd-date-range-picker-input",
                             error && "gd-date-range-picker-input-error",
                         )}
-                        classNameCalendar={`s-date-range-calendar`}
-                        ref={ref}
-                        onDayChange={onDateChange}
-                        value={value}
-                        format={dateFormat}
-                        placeholder={placeholderDate}
-                        dayPickerProps={{
-                            ...dayPickerPropsWithDefaults,
-                            onDayClick: handleDayClick,
-                        }}
-                        // showOverlay={true} // Always shows the calendar, useful for CSS debugging
-                    />
+                    >
+                        <span>
+                            <span className="gd-icon-calendar" />
+                            <input
+                                onKeyDown={onKeyDown}
+                                ref={ref}
+                                placeholder={placeholderDate}
+                                onChange={(event) => handleInputChange(event.target.value)}
+                                onClick={handleDayClick}
+                                onFocus={handleDayClick}
+                                value={inputValue}
+                                className="input-text s-date-range-picker-input-field"
+                            />
+                        </span>
+                    </div>
                 )}
                 {isTimeEnabled && (
                     <span
@@ -132,13 +179,11 @@ const DateTimePickerComponent = React.forwardRef<DayPickerInput, DateTimePickerC
         );
     },
 );
+
 DateTimePickerComponent.displayName = "DateTimePickerComponent";
 
 const DateTimePickerWithInt = injectIntl(DateTimePickerComponent, { forwardRef: true });
 
-const DateTimePicker = React.forwardRef<DayPickerInput, IDateTimePickerOwnProps>((props, ref) => (
-    <DateTimePickerWithInt {...props} ref={ref} />
-));
-DateTimePicker.displayName = "DateTimePicker";
+DateTimePickerWithInt.displayName = "DateTimePicker";
 
-export { DateTimePicker, DateTimePickerComponentProps };
+export { DateTimePickerWithInt, DateTimePickerComponentProps };

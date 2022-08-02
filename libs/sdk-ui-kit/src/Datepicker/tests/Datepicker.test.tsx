@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
 import { mount, ReactWrapper } from "enzyme";
 import parseDate from "date-fns/parse";
@@ -6,6 +6,18 @@ import { WrappedDatePicker, DatePickerProps } from "../Datepicker";
 import { createIntlMock } from "@gooddata/sdk-ui";
 
 const defaultDateFormat = "MM/dd/yyyy";
+
+type ExpectedState = {
+    inputValue: string;
+    selectedDate: Date | undefined;
+    monthDate: Date | undefined;
+    align: string;
+    isOpen: boolean;
+};
+interface ITestCases {
+    inputValue: string;
+    expectedState: ExpectedState;
+}
 
 describe("DatePicker", () => {
     const defaultProps = {
@@ -34,11 +46,15 @@ describe("DatePicker", () => {
     }
 
     function openDatePickerCalendar(datePicker: ReactWrapper) {
-        getDatePickerInputField(datePicker).simulate("focus");
+        getDatePickerInputField(datePicker).simulate("click");
+    }
+
+    function getDatePickerInputIcon(datePicker: ReactWrapper) {
+        return getDatePickerInput(datePicker).find(".gd-datepicker-input span.gd-datepicker-icon");
     }
 
     function closeDatePickerCalendar(datePicker: ReactWrapper) {
-        getDatePickerInputField(datePicker).simulate("blur");
+        getDatePickerInputIcon(datePicker).simulate("click");
     }
 
     it("should align when window resizes", () => {
@@ -47,7 +63,13 @@ describe("DatePicker", () => {
         const onAlign = jest.fn();
         const component = mountComponent({ onAlign });
 
+        const instance = component.instance() as any;
+
+        expect(instance.state.isOpen).toBe(false);
+
         openDatePickerCalendar(component);
+
+        expect(instance.state.isOpen).toBe(true);
         expect(onAlign).toHaveBeenCalledTimes(1);
 
         window.dispatchEvent(new Event("resize", {}));
@@ -62,20 +84,17 @@ describe("DatePicker", () => {
         const component = mountComponent();
         const instance = component.instance() as any;
 
-        expect(instance.state.focused).toBe(false);
-        expect(instance.datePickerContainer).toBeFalsy();
+        expect(instance.state.isOpen).toBe(false);
 
         openDatePickerCalendar(component);
         jest.runAllTimers();
         component.update();
-        expect(instance.state.focused).toBe(true);
-        expect(instance.datePickerContainer).toBeTruthy();
+        expect(instance.state.isOpen).toBe(true);
 
-        closeDatePickerCalendar(component);
+        instance.setState({ isOpen: false });
         jest.runAllTimers();
         component.update();
-        expect(instance.state.focused).toBe(false);
-        expect(instance.datePickerContainer).toBeFalsy();
+        expect(instance.state.isOpen).toBe(false);
         jest.useRealTimers();
     });
 
@@ -97,6 +116,7 @@ describe("DatePicker", () => {
 
     it("should set css classes according to focused state", () => {
         const component = mountComponent();
+        const instance = component.instance();
 
         expect(component.find(".gd-datepicker-focused").exists()).toBe(false);
 
@@ -104,6 +124,8 @@ describe("DatePicker", () => {
         expect(component.find(".gd-datepicker-focused").exists()).toBe(true);
 
         closeDatePickerCalendar(component);
+        instance.setState({ isOpen: false });
+        component.update();
         expect(component.find(".gd-datepicker-focused").exists()).toBe(false);
     });
 
@@ -113,7 +135,7 @@ describe("DatePicker", () => {
         });
 
         openDatePickerCalendar(component);
-        const shortSundayText = component.find(".DayPicker-Weekday abbr").first().text();
+        const shortSundayText = component.find(".rdp-head_cell span").first().text();
         expect(shortSundayText).toBe("一");
     });
 
@@ -220,7 +242,7 @@ describe("DatePicker", () => {
                             value: "01/01/2015",
                         },
                     };
-                    getDatePickerInputField(component).simulate("blur", event);
+                    getDatePickerInputField(component).simulate("change", event);
 
                     const onChange = component.prop("onChange");
                     expect(onChange).toHaveBeenCalledTimes(1);
@@ -240,7 +262,7 @@ describe("DatePicker", () => {
                             value: "2019/01/20",
                         },
                     };
-                    getDatePickerInputField(component).simulate("blur", event);
+                    getDatePickerInputField(component).simulate("change", event);
 
                     const onChange = component.prop("onChange");
                     expect(onChange).toHaveBeenCalledTimes(1);
@@ -256,7 +278,7 @@ describe("DatePicker", () => {
                             value: "invalidDate",
                         },
                     };
-                    getDatePickerInputField(component).simulate("blur", event);
+                    getDatePickerInputField(component).simulate("change", event);
 
                     const onChange = component.prop("onChange");
                     expect(onChange).toHaveBeenCalledTimes(1);
@@ -268,7 +290,7 @@ describe("DatePicker", () => {
                         onChange: jest.fn(),
                     });
                     openDatePickerCalendar(component);
-                    component.find(".DayPicker-Day--outside").first().simulate("click");
+                    component.find(".rdp-day_outside").first().simulate("click");
 
                     const onChange = component.prop("onChange");
                     expect(onChange).toHaveBeenCalledTimes(1);
@@ -280,7 +302,7 @@ describe("DatePicker", () => {
                         onChange: jest.fn(),
                     });
                     openDatePickerCalendar(component);
-                    component.find(".DayPicker-Day--today").first().simulate("click");
+                    component.find(".rdp-day_today").first().simulate("click");
 
                     const onChange = component.prop("onChange");
                     expect(onChange).toHaveBeenCalledTimes(0);
@@ -294,8 +316,10 @@ describe("DatePicker", () => {
 
                     component = component.setProps({ date: new Date(2017, 0, 18) });
 
+                    component.update();
+
                     openDatePickerCalendar(component);
-                    const calendarHeaderText = component.find(".DayPicker-Caption div").first().text();
+                    const calendarHeaderText = component.find(".rdp-caption_label").text();
                     expect(calendarHeaderText).toBe("January 2017");
                 });
             });
@@ -311,15 +335,7 @@ describe("DatePicker", () => {
             expect(pickerExists).toEqual(true);
         });
 
-        it("should open date picker on focus", () => {
-            const component = mountComponent();
-            getDatePickerInputField(component).simulate("focus");
-
-            const pickerExists = getDatePickerCalendar(component).exists();
-            expect(pickerExists).toEqual(true);
-        });
-
-        it("should close date picker on blur", () => {
+        it("should close date picker", () => {
             jest.useFakeTimers();
             const component = mountComponent();
             openDatePickerCalendar(component);
@@ -327,7 +343,7 @@ describe("DatePicker", () => {
             let pickerExists = getDatePickerCalendar(component).exists();
             expect(pickerExists).toEqual(true);
 
-            getDatePickerInputField(component).simulate("blur");
+            component.find(".rdp-day").first().simulate("click");
             jest.runAllTimers();
             component.update();
             pickerExists = getDatePickerCalendar(component).exists();
@@ -337,29 +353,35 @@ describe("DatePicker", () => {
 
         describe("input field value changes", () => {
             const initialDate = new Date(2011, 11, 11);
-            const testCases = [
+            const testCases: ITestCases[] = [
                 {
                     inputValue: "",
                     expectedState: {
-                        selectedDate: initialDate,
+                        selectedDate: undefined,
+                        monthDate: undefined,
+                        inputValue: "",
+                        isOpen: true,
                         align: "bl tl",
-                        focused: true,
                     },
                 },
                 {
                     inputValue: "12/12/2012",
                     expectedState: {
+                        inputValue: "12/12/2012",
                         selectedDate: new Date(2012, 11, 12),
+                        monthDate: new Date(2012, 11, 12),
                         align: "bl tl",
-                        focused: true,
+                        isOpen: true,
                     },
                 },
                 {
                     inputValue: "blabla",
                     expectedState: {
-                        selectedDate: initialDate,
+                        selectedDate: undefined,
+                        monthDate: undefined,
                         align: "bl tl",
-                        focused: true,
+                        inputValue: "blabla",
+                        isOpen: true,
                     },
                 },
             ];
@@ -377,11 +399,11 @@ describe("DatePicker", () => {
             });
 
             it.each([
-                ["not reset", false, 1],
-                ["reset", true, 0],
+                ["not reset", false, 1, undefined],
+                ["reset", true, 0, initialDate],
             ])(
                 "should %s value when input value was invalid and resetOnInvalidValue is %s",
-                (_expectedAction, resetOnInvalidValue, expectedCalledTimes) => {
+                (_expectedAction, resetOnInvalidValue, expectedCalledTimes, date) => {
                     const component = mountComponent({
                         date: initialDate,
                         resetOnInvalidValue,
@@ -398,10 +420,10 @@ describe("DatePicker", () => {
                     const onChange = component.prop("onChange");
                     expect(onChange).toHaveBeenCalledTimes(expectedCalledTimes);
 
-                    expect(component.state()).toEqual({
-                        selectedDate: initialDate,
+                    expect(component.state()).toMatchObject({
+                        selectedDate: date,
                         align: "bl tl",
-                        focused: false,
+                        monthDate: date,
                     });
                 },
             );

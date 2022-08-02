@@ -5,6 +5,9 @@ import { CommonWrapper, ShallowWrapper, ReactWrapper } from "enzyme";
 export const childGetter = (selector: any) => (component: ShallowWrapper | ReactWrapper) =>
     component.find(selector);
 
+export const firstChildGetter = (selector: any) => (component: ShallowWrapper | ReactWrapper) =>
+    component.find(selector).first();
+
 export const clickOn = (component: CommonWrapper) => component.simulate("click");
 
 export const pressButtonOn = (keyCode: number, component: CommonWrapper) =>
