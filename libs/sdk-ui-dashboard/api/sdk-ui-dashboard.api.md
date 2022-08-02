@@ -3322,9 +3322,13 @@ export interface IInsightListProps {
     // (undocumented)
     noDataButton?: INoDataButton;
     // (undocumented)
+    onSelect?: (insight: IInsight) => void;
+    // (undocumented)
     renderItem?: (props: IRenderItemProps<IInsight>) => React.ReactNode;
     // (undocumented)
     searchAutofocus?: boolean;
+    // (undocumented)
+    selectedRef?: ObjRef;
 }
 
 // @alpha (undocumented)

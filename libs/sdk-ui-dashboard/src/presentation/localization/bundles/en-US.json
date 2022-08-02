@@ -1451,6 +1451,77 @@
         "comment": "",
         "limit": 0
     },
+    "configurationPanel.interactions": {
+        "value": "Interactions",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.interactions": {
+        "value": "Drill interactions",
+        "comment": "Header of a section where user can set drilling for some visualization widget containing some visualization (chart, table, etc). Interactions here stands for user interactions.",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.addInteraction": {
+        "value": "Add interaction",
+        "comment": "Use imperative. Button label that is related to \"Interactions\" section. This button adds some drilling to a widget.",
+        "limit": 30
+    },
+    "configurationPanel.drillConfig.clickHint": {
+        "value": "When I click on",
+        "comment": "Hint guiding users how to understand interaction (drilling) setting. Example in sentence: \"WHEN I CLICK ON on value of measure 'Number of user accounts', drill into detail.\"",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.measureValue._measure": {
+        "value": "Value of measure",
+        "comment": "Hint guiding users how to understand interaction (drilling) setting. Example in sentence: \"When I click on VALUE OF MEASURE 'Number of user accounts', drill into detail.\"",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.measureValue._metric": {
+        "value": "Value of metric",
+        "comment": "Hint guiding users how to understand interaction (drilling) setting. Example in sentence: \"When I click on VALUE OF METRIC 'Number of user accounts', drill into detail.\"",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.attributeValue": {
+        "value": "Value of attribute",
+        "comment": "Hint guiding users how to understand interaction (drilling) setting. Example in sentence: \"When I click on VALUE OF ATTRIBUTE 'Account', drill into detail.\"",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.selectTarget": {
+        "value": "I want to",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.clickHintItem": {
+        "value": "When I click on <addon>(value of)</addon>",
+        "comment": "Do not translate <addon...> and </addon>, but translate (value of)",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.drillIntoDashboard": {
+        "value": "Drill into dashboard",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.drillIntoInsight|insight": {
+        "value": "Drill into insight",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.drillIntoInsight|report": {
+        "value": "Drill into report",
+        "comment": "",
+        "translate": false,
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.drillIntoUrl": {
+        "value": "Drill into URL",
+        "comment": "Name of an option in dropdown that is used to select type of dashboard drill.",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.select": {
+        "value": "Choose action…",
+        "comment": "Hint guiding users that drill actions in select box has to be selected. Use '…' as one character, not 3 dots ('...').",
+        "limit": 0
+    },
     "configurationPanel.unlistedDashboardTab": {
         "value": "Unlisted dashboard",
         "comment": "",

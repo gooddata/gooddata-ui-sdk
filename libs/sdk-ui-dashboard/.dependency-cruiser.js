@@ -82,6 +82,7 @@ options = {
             "src/_staging/*",
             "src/model",
             "src/presentation/constants",
+            "src/presentation/types.ts",
             "src/presentation/localization",
             "src/types.ts",
         ]),

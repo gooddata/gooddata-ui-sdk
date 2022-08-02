@@ -8,6 +8,7 @@ import {
     insightUpdated,
     insightIsLocked,
     isUriRef,
+    areObjRefsEqual,
 } from "@gooddata/sdk-model";
 import debounce from "lodash/debounce";
 import range from "lodash/range";
@@ -49,6 +50,8 @@ export const InsightList: React.FC<IInsightListProps> = ({
     searchAutofocus,
     noDataButton,
     renderItem,
+    selectedRef,
+    onSelect,
 }) => {
     const intl = useIntl();
 
@@ -167,14 +170,17 @@ export const InsightList: React.FC<IInsightListProps> = ({
 
                     const title = insightTitle(insight);
                     const insightListSourceItem = getInsightListSourceItem(insight);
+                    const isSelected = areObjRefsEqual(insight.insight.ref, selectedRef);
 
                     return (
                         <InsightListItem
                             title={title}
                             type={insightListSourceItem.insightType}
                             width={width}
+                            isSelected={isSelected}
                             updated={insightUpdated(insightListSourceItem.insight)}
                             isLocked={insightIsLocked(insightListSourceItem.insight)}
+                            onClick={() => onSelect && onSelect(insight)}
                         />
                     );
                 })
