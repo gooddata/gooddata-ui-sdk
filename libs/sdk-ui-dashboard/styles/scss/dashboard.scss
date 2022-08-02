@@ -11,13 +11,15 @@
 
 // this must be used on the body element in gdc-dashboards
 .gd-dashboards-root {
+    flex-wrap: nowrap;
     background: $gd-dashboards-content-backgroundColor;
     @include default-styles();
 }
 
 .gd-dash-content {
     flex: 1;
-    width: 100%;
+    flex-basis: 100%;
+    overflow: hidden;
 }
 
 .dash-item {
