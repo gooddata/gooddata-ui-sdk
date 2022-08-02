@@ -82,7 +82,6 @@
         "lodash": "^4.17.19",
         "moment-timezone": "^0.5.33",
         "moment": "^2.24.0",
-        "react-codemirror2": "^7.2.0",
         "react-day-picker": "^8.0.1",
         "react-helmet": "^6.1.0",
         "react-intl": "^5.23.0",

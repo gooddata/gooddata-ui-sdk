@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
 import { mount } from "enzyme";
 import noop from "lodash/noop";
@@ -109,62 +109,12 @@ describe("Measure number format", () => {
             expect(component.isCustomFormatDialogOpen()).toEqual(false);
         });
 
-        it("apply button should be enabled once custom format is modified", () => {
-            const component = renderComponent();
-
-            component.openPresetsDropdown().selectCustomFormat();
-            expect(component.isCustomFormatApplyButtonDisabled()).toEqual(true);
-
-            component.setCustomFormatValue("test");
-            expect(component.isCustomFormatApplyButtonDisabled()).toEqual(false);
-        });
-
-        it("should call 'setFormat' callback with custom format when format is set and apply button clicked", () => {
-            const setFormat = jest.fn();
-            const component = renderComponent({ setFormat });
-
-            component
-                .openPresetsDropdown()
-                .selectCustomFormat()
-                .setCustomFormatValue("test")
-                .clickCustomFormatApply();
-
-            expect(component.isCustomFormatDialogOpen()).toEqual(false);
-            expect(setFormat).toHaveBeenCalledWith("test");
-        });
-
         describe("custom format preview", () => {
-            it("should display formatted number", () => {
-                const component = renderComponent();
-
-                component.openPresetsDropdown().selectCustomFormat().setCustomFormatValue("#.##");
-                expect(component.getPreviewFormattedNumber()).toEqual("-1234,57");
-
-                component.setCustomFormatValue("#.###");
-                expect(component.getPreviewFormattedNumber()).toEqual("-1234,568");
-            });
-
             it("should not display formatted number when no format is provided", () => {
                 const component = renderComponent();
 
                 component.openPresetsDropdown().selectCustomFormat();
                 expect(component.getPreviewFormattedNumber()).toEqual("");
-            });
-
-            it("should display extended preview formatted numbers", () => {
-                const component = renderComponent();
-
-                component
-                    .openPresetsDropdown()
-                    .selectCustomFormat()
-                    .setCustomFormatValue("#.###")
-                    .showExtendedPreview();
-
-                expect(component.getShowExtendedPreviewButton().hasClass("hidden")).toEqual(true);
-
-                const extendedPreviewFormattedValues = component.getExtendedPreviewFormattedValues();
-                const expectedPreviewFormattedValues = ["", "1,234", "1234,567", "1234567,891"];
-                expect(extendedPreviewFormattedValues).toEqual(expectedPreviewFormattedValues);
             });
         });
 
@@ -208,21 +158,6 @@ describe("Measure number format", () => {
                 expect(component.isTemplatesDropdownOpen()).toEqual(true);
                 expect(component.getTemplateByName("Percentage").exists()).toEqual(true);
                 expect(component.getTemplateByName("Currency").exists()).toEqual(true);
-            });
-
-            it("should set selected template format to custom format input", () => {
-                const setFormat = jest.fn();
-                const component = renderComponent({ templates, setFormat });
-
-                component.openPresetsDropdown().selectCustomFormat().openTemplatesDropdown();
-
-                const template = component.getTemplateByName("Currency");
-
-                template.simulate("click");
-                expect(component.getCustomFormatValue()).toEqual("€ #,##0.0");
-
-                component.clickCustomFormatApply();
-                expect(setFormat).toHaveBeenCalledWith("€ #,##0.0");
             });
 
             it("should display template preview when hover over help icon", () => {

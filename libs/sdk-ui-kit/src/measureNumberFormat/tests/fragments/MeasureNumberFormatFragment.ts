@@ -1,8 +1,7 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { ReactWrapper } from "enzyme";
 import { stringUtils } from "@gooddata/util";
-import { UnControlled as CodeMirrorInput } from "react-codemirror2";
 
 const CUSTOM_FORMAT_APPLY_BUTTON_SELECTOR = ".s-custom-format-dialog-apply";
 const CUSTOM_FORMAT_CANCEL_BUTTON_SELECTOR = ".s-custom-format-dialog-cancel";
@@ -21,10 +20,6 @@ const DOCUMENTATION_LINK_SELECTOR = ".s-custom-format-dialog-documentation-link"
 const TEMPLATES_DROPDOWN_TOGGLE_BUTTON_SELECTOR = ".s-measure-format-templates-toggle-button";
 const TEMPLATES_DROPDOWN_BODY_SELECTOR = ".s-measure-number-format-templates-dropdown";
 const TEMPLATE_PREVIEW_ICON_SELECTOR = ".s-measure-format-template-help-toggle-icon";
-
-interface ICodeMirrorInputInstance extends CodeMirrorInput {
-    editor: CodeMirror.Editor;
-}
 
 export default class MeasureNumberFormatFragment {
     private component: ReactWrapper;
@@ -77,17 +72,6 @@ export default class MeasureNumberFormatFragment {
 
     public clickCustomFormatCancel = () => {
         this.component.find(CUSTOM_FORMAT_CANCEL_BUTTON_SELECTOR).hostNodes().simulate("click");
-        return this;
-    };
-
-    public getCustomFormatValue = () => {
-        const doc = this.getCodeMirrorDocument();
-        return doc.getValue();
-    };
-
-    public setCustomFormatValue = (value: string) => {
-        const doc = this.getCodeMirrorDocument();
-        doc.setValue(value);
         return this;
     };
 
@@ -147,11 +131,4 @@ export default class MeasureNumberFormatFragment {
     };
 
     private getCustomFormatPreviewInput = () => this.component.find(CUSTOM_FORMAT_PREVIEW_INPUT).hostNodes();
-
-    private getCodeMirrorDocument = () => {
-        const codeMirrorInstance = this.component
-            .find(CodeMirrorInput)
-            .instance() as ICodeMirrorInputInstance;
-        return codeMirrorInstance.editor.getDoc();
-    };
 }

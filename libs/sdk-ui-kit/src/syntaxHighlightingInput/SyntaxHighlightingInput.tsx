@@ -1,7 +1,6 @@
 // (C) 2020-2022 GoodData Corporation
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import cx from "classnames";
-import { UnControlled as CodeMirrorInput, IDefineModeOptions } from "react-codemirror2";
 import CodeMirror from "codemirror";
 // eslint-disable-next-line import/no-unassigned-import
 import "codemirror/addon/mode/simple";
@@ -51,13 +50,17 @@ const findCursorIndexAcrossMultipleLines = (
  * @internal
  */
 export const SyntaxHighlightingInput: React.FC<ISyntaxHighlightingInputProps> = (props) => {
-    const { value, onChange, onCursor, formatting, customOptions, className } = props;
+    const { value, onChange, onCursor, customOptions, className, formatting } = props;
+
+    const ref = useRef<HTMLDivElement>();
+    const view = useRef<CodeMirror.Editor>();
 
     const reportCursorPosition = (editor: CodeMirror.Editor): void => {
         if (onCursor) {
             const from = editor.getCursor("from");
             const to = editor.getCursor("to");
             const currentValue = editor.getValue();
+
             onCursor(
                 findCursorIndexAcrossMultipleLines(currentValue, from.line, from.ch),
                 findCursorIndexAcrossMultipleLines(currentValue, to.line, to.ch),
@@ -65,31 +68,34 @@ export const SyntaxHighlightingInput: React.FC<ISyntaxHighlightingInputProps> = 
         }
     };
 
-    const handleOnChange = (
-        _editor: CodeMirror.Editor,
-        _change: CodeMirror.EditorChange,
-        value: string,
-    ): void => {
-        onChange(value);
+    const handleOnChange = (): void => {
+        onChange(view.current.getValue());
     };
 
-    const modeOptions: IDefineModeOptions = formatting && {
-        name: "format",
-        fn: (CodeMirror as any).defineSimpleMode("syntaxHighlight", formatting),
-    };
+    useEffect(() => {
+        (CodeMirror as any).defineSimpleMode("syntaxHighlight", formatting);
 
-    return (
-        <CodeMirrorInput
-            className={cx(className, "gd-input-syntax-highlighting-input")}
-            value={value}
-            defineMode={modeOptions}
-            onChange={handleOnChange}
-            onCursorActivity={reportCursorPosition}
-            autoCursor={false}
-            options={{
-                ...defaultOptions,
-                ...customOptions,
-            }}
-        />
-    );
+        view.current = CodeMirror(ref.current, {
+            ...customOptions,
+            ...defaultOptions,
+            mode: "syntaxHighlight",
+            value,
+        });
+
+        view.current.on("change", handleOnChange);
+        view.current.on("cursorActivity", reportCursorPosition);
+
+        return () => {
+            view.current.off("change", handleOnChange);
+            view.current.off("cursorActivity", reportCursorPosition);
+        };
+    }, []);
+
+    useEffect(() => {
+        const cursor = view.current.getCursor();
+        view.current.setValue(value);
+        view.current.setCursor(cursor);
+    }, [value]);
+
+    return <div className={cx(className, "gd-input-syntax-highlighting-input")} ref={ref} />;
 };
