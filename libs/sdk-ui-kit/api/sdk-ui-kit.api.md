@@ -22,6 +22,7 @@ import { ISeparators } from '@gooddata/sdk-ui';
 import { ISettings } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
+import { IThemeMetadataObject } from '@gooddata/sdk-model';
 import { IWorkspacePermissions } from '@gooddata/sdk-model';
 import { LocalIdRef } from '@gooddata/sdk-model';
 import { MessageDescriptor } from 'react-intl';
@@ -313,6 +314,9 @@ export const DEFAULT_ITEM_HEIGHT = 28;
 
 // @internal (undocumented)
 export const DEFAULT_MOBILE_ITEM_HEIGHT = 40;
+
+// @internal
+export const defaultThemeMetadataObject: IThemeMetadataObject;
 
 // @internal (undocumented)
 export class Dialog extends Component<IDialogBaseProps> {
@@ -3149,6 +3153,38 @@ export interface ISpinnerProps {
 }
 
 // @internal (undocumented)
+export interface IStylingPickerProps {
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    customItems: StylingPickerItem[];
+    // (undocumented)
+    defaultItem: StylingPickerItem;
+    // (undocumented)
+    emptyMessage: () => JSX.Element;
+    // (undocumented)
+    footerHelpLink?: string;
+    // (undocumented)
+    footerHelpTitle?: string;
+    // (undocumented)
+    footerMobileMessage?: string;
+    // (undocumented)
+    isLoading?: boolean;
+    // (undocumented)
+    locale?: string;
+    // (undocumented)
+    onApply?: (ref: ObjRef) => void;
+    // (undocumented)
+    onListActionClick?: () => void;
+    // (undocumented)
+    selectedItemRef?: ObjRef;
+    // (undocumented)
+    title: string;
+    // (undocumented)
+    titleTooltip?: string;
+}
+
+// @internal (undocumented)
 export interface ISubMenuProps extends IMenuStateConfig, Partial<IMenuPositionConfig> {
     // (undocumented)
     children: React_2.ReactNode;
@@ -3655,6 +3691,15 @@ export class Spinner extends PureComponent<ISpinnerProps> {
 
 // @internal (undocumented)
 export type SpinnerSize = "large" | "small";
+
+// @internal (undocumented)
+export class StylingPicker extends React_2.PureComponent<IStylingPickerProps> {
+    // (undocumented)
+    render(): JSX.Element;
+}
+
+// @internal (undocumented)
+export type StylingPickerItem = IThemeMetadataObject;
 
 // @internal (undocumented)
 export const SubMenu: React_2.FC<ISubMenuProps>;

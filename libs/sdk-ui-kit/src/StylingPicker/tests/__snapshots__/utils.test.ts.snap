@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getColorsPreviewFromThemeMetadataObject should return correct array of colors when only complementary colors are set in theme 1`] = `
+Array [
+  "#323232",
+  "#292727",
+  "#14b2e2",
+  "#EAEAEA",
+  "#D6D6D6",
+  "#B9B9B9",
+]
+`;
+
+exports[`getColorsPreviewFromThemeMetadataObject should return correct array of colors when theme is fully defined 1`] = `
+Array [
+  "#f0f0f0",
+  "#dfdfdf",
+  "#eba12a",
+  "#fff",
+  "#ff0000",
+  "#778491",
+]
+`;
+
+exports[`getColorsPreviewFromThemeMetadataObject should return default array of colors when theme is empty 1`] = `
+Array [
+  "#303442",
+  "#fff",
+  "#14b2e2",
+  "#000",
+  "#464e56",
+  "#778491",
+]
+`;
