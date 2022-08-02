@@ -5,7 +5,7 @@ import { DraggableItemType, DraggableItemTypeMapping } from "./types";
 
 type DashboardDropTargetHookSpec<DragObject, CollectedProps> = Pick<
     DropTargetHookSpec<DragObject, void, CollectedProps>,
-    "canDrop" | "drop"
+    "canDrop" | "drop" | "hover"
 >;
 
 const basicDropCollect = (monitor: DropTargetMonitor) => ({
@@ -29,6 +29,7 @@ export function useDashboardDrop<
             drop: specArg.drop,
             canDrop: specArg.canDrop,
             collect: basicDropCollect,
+            hover: specArg.hover,
         },
         deps,
     );

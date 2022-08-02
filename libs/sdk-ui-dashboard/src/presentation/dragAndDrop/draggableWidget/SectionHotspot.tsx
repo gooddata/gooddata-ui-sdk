@@ -3,7 +3,14 @@ import React from "react";
 import cx from "classnames";
 
 import { getDropZoneDebugStyle } from "../debug";
-import { addLayoutSection, selectSettings, useDashboardDispatch, useDashboardSelector } from "../../../model";
+import {
+    addLayoutSection,
+    placeholdersActions,
+    selectIsWidgetPlaceholderShown,
+    selectSettings,
+    useDashboardDispatch,
+    useDashboardSelector,
+} from "../../../model";
 import { useDashboardDrop } from "../useDashboardDrop";
 import { SectionDropZoneBox } from "./SectionDropZoneBox";
 import { DashboardLayoutSectionBorderLine } from "./DashboardLayoutSectionBorder";
@@ -22,6 +29,8 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
 
     const dispatch = useDashboardDispatch();
     const settings = useDashboardSelector(selectSettings);
+    const isWidgetPlaceholderShown = useDashboardSelector(selectIsWidgetPlaceholderShown);
+
     const [{ canDrop, isOver }, dropRef] = useDashboardDrop(
         "insightListItem",
         {
@@ -51,8 +60,13 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
                     ]),
                 );
             },
+            hover: () => {
+                if (isWidgetPlaceholderShown) {
+                    dispatch(placeholdersActions.clearWidgetPlaceholder());
+                }
+            },
         },
-        [dispatch],
+        [dispatch, isWidgetPlaceholderShown, settings],
     );
 
     if (!canDrop) {

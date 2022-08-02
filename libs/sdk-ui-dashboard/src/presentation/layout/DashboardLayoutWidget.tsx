@@ -29,6 +29,7 @@ import { ObjRefMap } from "../../_staging/metadata/objRefMap";
 import { useDashboardComponentsContext } from "../dashboardContexts";
 import { Hotspot, ResizeOverlay, useResizeStatus } from "../dragAndDrop";
 import { getDashboardLayoutWidgetDefaultHeight } from "../../model/layout";
+import { isInsightPlaceholderWidget } from "../../widgets/placeholders/types";
 
 function calculateWidgetMinHeight(
     widget: ExtendedDashboardWidget,
@@ -128,8 +129,20 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                 isUnderWidthMinLimit={false}
                 reachedHeightLimit={heightLimitReached}
             />
-            <Hotspot dropZoneType="prev" itemIndex={item.index()} sectionIndex={item.section().index()} />
-            <Hotspot dropZoneType="next" itemIndex={item.index()} sectionIndex={item.section().index()} />
+            {!isInsightPlaceholderWidget(widget) && (
+                <>
+                    <Hotspot
+                        dropZoneType="prev"
+                        itemIndex={item.index()}
+                        sectionIndex={item.section().index()}
+                    />
+                    <Hotspot
+                        dropZoneType="next"
+                        itemIndex={item.index()}
+                        sectionIndex={item.section().index()}
+                    />
+                </>
+            )}
         </DefaultWidgetRenderer>
     );
 };

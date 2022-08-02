@@ -3534,9 +3534,15 @@ export type InsightMenuComponentProvider = (insight: IInsight, widget: IInsightW
 export type InsightMenuItemsProvider = (insight: IInsight, widget: IInsightWidget, defaultItems: IInsightMenuItem[], closeMenu: () => void, renderMode: RenderMode) => IInsightMenuItem[];
 
 // @alpha (undocumented)
-export interface InsightPlaceholderWidget extends ICustomWidgetBase {
+export interface InsightPlaceholderWidget extends ICustomWidget {
     // (undocumented)
     readonly customType: "insightPlaceholder";
+    // (undocumented)
+    readonly isLastInSection: boolean;
+    // (undocumented)
+    readonly itemIndex: number;
+    // (undocumented)
+    readonly sectionIndex: number;
 }
 
 // @alpha
@@ -4027,7 +4033,7 @@ export type KpiAlertDialogOpenedPayload = UserInteractionPayloadWithDataBase<"kp
 export type KpiComponentProvider = (kpi: IKpi, widget: IKpiWidget) => CustomDashboardKpiComponent;
 
 // @alpha (undocumented)
-export interface KpiPlaceholderWidget extends ICustomWidgetBase {
+export interface KpiPlaceholderWidget extends ICustomWidget {
     // (undocumented)
     readonly customType: "kpiPlaceholder";
 }
@@ -5244,6 +5250,9 @@ export const selectIsScheduleEmailManagementDialogOpen: OutputSelector<Dashboard
 
 // @alpha (undocumented)
 export const selectIsShareDialogOpen: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
+
+// @alpha (undocumented)
+export const selectIsWidgetPlaceholderShown: OutputSelector<DashboardState, boolean, (res: IWidgetPlaceholderSpec | undefined) => boolean>;
 
 // @alpha
 export const selectLayout: OutputSelector<DashboardState, IDashboardLayout<ExtendedDashboardWidget>, (res: LayoutState) => IDashboardLayout<ExtendedDashboardWidget>>;

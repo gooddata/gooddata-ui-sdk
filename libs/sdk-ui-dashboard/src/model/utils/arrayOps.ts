@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { RelativeIndex } from "../types/layoutTypes";
 import { Draft } from "@reduxjs/toolkit";
 import { invariant } from "ts-invariant";
@@ -48,7 +48,8 @@ export function resolveRelativeIndex<T>(arr: T[], index: RelativeIndex): number 
  * where the new item _will be_ placed.
  */
 export function resolveIndexOfNewItem<T>(arr: T[], index: RelativeIndex): number {
-    invariant(index === 0 || (index < arr.length && index >= -1));
+    // using <= here so that we can add to the last place not only by using -1 by also by using (lastIndex+1)
+    invariant(index === 0 || (index <= arr.length && index >= -1));
 
     return index < 0 ? arr.length : index;
 }

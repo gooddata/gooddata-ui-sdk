@@ -5,6 +5,7 @@ import {
     IInsight,
     IInsightDefinition,
     IKpi,
+    isDashboardWidget,
     ISettings,
     isInsight,
     isKpi,
@@ -114,23 +115,27 @@ export function getDashboardLayoutWidgetMaxGridHeight(
 }
 
 export function getMinHeight(widgets: IWidget[], insightMap: ObjRefMap<IInsight>): number {
-    const mins: number[] = widgets.map((widget) =>
-        getDashboardLayoutWidgetMinGridHeight(
-            { enableKDWidgetCustomHeight: true },
-            widgetType(widget),
-            isKpiWidget(widget) ? widget.kpi : insightMap.get(widget.insight),
-        ),
-    );
+    const mins: number[] = widgets
+        .filter(isDashboardWidget)
+        .map((widget) =>
+            getDashboardLayoutWidgetMinGridHeight(
+                { enableKDWidgetCustomHeight: true },
+                widgetType(widget),
+                isKpiWidget(widget) ? widget.kpi : insightMap.get(widget.insight),
+            ),
+        );
     return Math.max(...mins);
 }
 
 export function getMaxHeight(widgets: IWidget[], insightMap: ObjRefMap<IInsight>): number {
-    const maxs: number[] = widgets.map((widget) =>
-        getDashboardLayoutWidgetMaxGridHeight(
-            { enableKDWidgetCustomHeight: true },
-            widgetType(widget),
-            isKpiWidget(widget) ? widget.kpi : insightMap.get(widget.insight),
-        ),
-    );
+    const maxs: number[] = widgets
+        .filter(isDashboardWidget)
+        .map((widget) =>
+            getDashboardLayoutWidgetMaxGridHeight(
+                { enableKDWidgetCustomHeight: true },
+                widgetType(widget),
+                isKpiWidget(widget) ? widget.kpi : insightMap.get(widget.insight),
+            ),
+        );
     return Math.min(...maxs);
 }

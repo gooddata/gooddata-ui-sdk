@@ -73,6 +73,7 @@ options = {
             "src/presentation/componentDefinition",
             "src/presentation/filterBar",
             "src/presentation/filterBar/types.ts",
+            "src/presentation/widget/types.ts",
         ]),
         depCruiser.moduleWithDependencies("drill", "src/presentation/drill", [
             "src/_staging/*",
@@ -155,6 +156,7 @@ options = {
             "src/presentation/constants",
             "src/presentation/componentDefinition",
             "src/presentation/dashboardContexts",
+            "src/presentation/dragAndDrop",
             "src/presentation/drill",
             "src/presentation/drill/types.ts",
             "src/presentation/localization",

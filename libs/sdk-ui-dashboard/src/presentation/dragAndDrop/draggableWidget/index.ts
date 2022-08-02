@@ -2,3 +2,4 @@
 export * from "./DraggableInsightListItem";
 export * from "./SectionHotspot";
 export * from "./Hotspot";
+export * from "./WidgetDropZone";

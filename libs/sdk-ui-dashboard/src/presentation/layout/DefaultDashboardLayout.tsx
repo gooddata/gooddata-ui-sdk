@@ -18,6 +18,7 @@ import {
     ExtendedDashboardWidget,
     selectInsightsMap,
     selectEnableWidgetCustomHeight,
+    selectWidgetPlaceholder,
 } from "../../model";
 import { useDashboardComponentsContext } from "../dashboardContexts";
 
@@ -34,6 +35,7 @@ import { RenderModeAwareDashboardLayoutSectionHeaderRenderer } from "./DefaultDa
 import { getMemoizedWidgetSanitizer } from "./DefaultDashboardLayoutUtils";
 import { selectRenderMode } from "../../model/store/ui/uiSelectors";
 import { SectionHotspot } from "../dragAndDrop";
+import { newInsightPlaceholderWidget } from "../../widgets/placeholders/types";
 
 /**
  * Get dashboard layout for exports.
@@ -94,6 +96,7 @@ export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Elemen
     const insights = useDashboardSelector(selectInsightsMap);
     const isExport = useDashboardSelector(selectIsExport);
     const renderMode = useDashboardSelector(selectRenderMode);
+    const widgetPlaceholder = useDashboardSelector(selectWidgetPlaceholder);
 
     const getInsightByRef = useCallback(
         (insightRef: ObjRef): IInsight | undefined => {
@@ -113,12 +116,34 @@ export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Elemen
             return getDashboardLayoutForExport(layout);
         }
 
-        return DashboardLayoutBuilder.for(layout)
-            .modifySections((section) =>
-                section.modifyItems(sanitizeWidgets(getInsightByRef, enableWidgetCustomHeight)),
-            )
-            .build();
-    }, [layout, isExport, getInsightByRef, enableWidgetCustomHeight, sanitizeWidgets]);
+        let builder = DashboardLayoutBuilder.for(layout).modifySections((section) =>
+            section.modifyItems(sanitizeWidgets(getInsightByRef, enableWidgetCustomHeight)),
+        );
+
+        if (widgetPlaceholder) {
+            builder = builder.modifySection(widgetPlaceholder.sectionIndex, (section) =>
+                section.addItem(
+                    {
+                        type: "IDashboardLayoutItem",
+                        size: {
+                            xl: {
+                                gridHeight: widgetPlaceholder.size.height,
+                                gridWidth: widgetPlaceholder.size.width,
+                            },
+                        },
+                        widget: newInsightPlaceholderWidget(
+                            widgetPlaceholder.sectionIndex,
+                            widgetPlaceholder.itemIndex,
+                            widgetPlaceholder.itemIndex === section.facade().items().count(),
+                        ),
+                    },
+                    widgetPlaceholder.itemIndex,
+                ),
+            );
+        }
+
+        return builder.build();
+    }, [layout, isExport, getInsightByRef, enableWidgetCustomHeight, sanitizeWidgets, widgetPlaceholder]);
 
     const widgetRenderer = useCallback<IDashboardLayoutWidgetRenderer<ExtendedDashboardWidget>>(
         (renderProps) => {
