@@ -63,14 +63,29 @@ function calculateWidgetMinHeight(
 /**
  * Tests in KD require widget index for css selectors.
  * Widget index equals to the widget order in the layout.
+ * Also placeholders are ignored for this.
  */
 function getWidgetIndex(item: IDashboardLayoutItemFacade<ExtendedDashboardWidget>): number {
     const sectionIndex = item.section().index();
+    const isIgnoredForIndexes = (widget: ExtendedDashboardWidget | undefined) => {
+        return !widget || isInsightPlaceholderWidget(widget);
+    };
+
     let itemsInSectionsBefore = 0;
     for (let i = 0; i < sectionIndex; i += 1) {
-        itemsInSectionsBefore += item.section().layout().section(i)?.items().count() ?? 0;
+        itemsInSectionsBefore +=
+            item
+                .section()
+                .layout()
+                .section(i)
+                ?.items()
+                .filter((i) => !isIgnoredForIndexes(i.widget())).length ?? 0;
     }
-    return itemsInSectionsBefore + item.index();
+    const ignoredWidgetsBeforeItemCount = item
+        .section()
+        .items()
+        .filter((i) => i.index() < item.index() && isIgnoredForIndexes(i.widget())).length;
+    return itemsInSectionsBefore + item.index() - ignoredWidgetsBeforeItemCount;
 }
 
 /**
