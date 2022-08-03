@@ -74,6 +74,7 @@ options = {
             "src/presentation/filterBar",
             "src/presentation/filterBar/types.ts",
             "src/presentation/widget/types.ts",
+            "src/widgets/placeholders/types.ts",
         ]),
         depCruiser.moduleWithDependencies("drill", "src/presentation/drill", [
             "src/_staging/*",
@@ -103,6 +104,7 @@ options = {
             "src/presentation/widget",
             "src/presentation/componentDefinition",
             "src/model/store/([^/]+)/.+Selectors.ts",
+            "src/widgets/placeholders/types.ts",
             "src/types.ts",
         ]),
         depCruiser.moduleWithDependencies("logUserInteraction", "src/logUserInteraction", ["src/model"]),
@@ -121,6 +123,7 @@ options = {
             "src/model/layout",
             "src/model/react",
             "src/model/store/([^/]+)/.+Selectors.ts",
+            "src/widgets/placeholders/types.ts",
             "src/types.ts",
         ]),
         depCruiser.moduleWithDependencies("scheduledEmail", "src/presentation/scheduledEmail", [
@@ -161,6 +164,7 @@ options = {
             "src/presentation/drill/types.ts",
             "src/presentation/localization",
             "src/presentation/presentationComponents",
+            "src/widgets/placeholders/types.ts",
             "src/types.ts",
         ]),
     ],

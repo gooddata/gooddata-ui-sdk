@@ -7,6 +7,9 @@ import { ICustomWidget, newCustomWidget } from "../../model";
  */
 export interface KpiPlaceholderWidget extends ICustomWidget {
     readonly customType: "kpiPlaceholder";
+    readonly sectionIndex: number;
+    readonly itemIndex: number;
+    readonly isLastInSection: boolean;
 }
 
 /**
@@ -17,6 +20,21 @@ export interface KpiPlaceholderWidget extends ICustomWidget {
  */
 export function isKpiPlaceholderWidget(obj: unknown): obj is KpiPlaceholderWidget {
     return !isEmpty(obj) && (obj as KpiPlaceholderWidget).customType === "kpiPlaceholder";
+}
+
+/**
+ * @alpha
+ */
+export function newKpiPlaceholderWidget(
+    sectionIndex: number,
+    itemIndex: number,
+    isLastInSection: boolean,
+): KpiPlaceholderWidget {
+    return newCustomWidget("__kpiPlaceholder__", "kpiPlaceholder", {
+        sectionIndex,
+        itemIndex,
+        isLastInSection,
+    }) as KpiPlaceholderWidget;
 }
 
 /**

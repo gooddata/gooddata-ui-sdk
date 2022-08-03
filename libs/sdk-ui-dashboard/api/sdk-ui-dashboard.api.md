@@ -4036,6 +4036,12 @@ export type KpiComponentProvider = (kpi: IKpi, widget: IKpiWidget) => CustomDash
 export interface KpiPlaceholderWidget extends ICustomWidget {
     // (undocumented)
     readonly customType: "kpiPlaceholder";
+    // (undocumented)
+    readonly isLastInSection: boolean;
+    // (undocumented)
+    readonly itemIndex: number;
+    // (undocumented)
+    readonly sectionIndex: number;
 }
 
 // @alpha (undocumented)

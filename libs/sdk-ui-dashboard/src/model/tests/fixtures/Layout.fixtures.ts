@@ -13,17 +13,19 @@ import {
     IDashboardLayoutItem,
 } from "@gooddata/sdk-model";
 import { PivotTableWithRowAndColumnAttributes } from "./Insights.fixtures";
-import { InsightPlaceholderWidget, KpiPlaceholderWidget } from "../../../widgets/placeholders/types";
+import {
+    InsightPlaceholderWidget,
+    KpiPlaceholderWidget,
+    newInsightPlaceholderWidget,
+    newKpiPlaceholderWidget,
+} from "../../../widgets/placeholders/types";
 
 export const TestSectionHeader: IDashboardLayoutSectionHeader = {
     title: "Test Section",
     description: "Section added for test purposes",
 };
 
-const TestKpiPlaceholderWidget: KpiPlaceholderWidget = {
-    type: "customWidget",
-    customType: "kpiPlaceholder",
-};
+const TestKpiPlaceholderWidget = newKpiPlaceholderWidget(0, 0, false);
 export const TestKpiPlaceholderItem: IDashboardLayoutItem<KpiPlaceholderWidget> = {
     type: "IDashboardLayoutItem",
     widget: TestKpiPlaceholderWidget,
@@ -34,10 +36,7 @@ export const TestKpiPlaceholderItem: IDashboardLayoutItem<KpiPlaceholderWidget> 
     },
 };
 
-const TestInsightPlaceholderWidget: InsightPlaceholderWidget = {
-    type: "customWidget",
-    customType: "insightPlaceholder",
-};
+const TestInsightPlaceholderWidget = newInsightPlaceholderWidget(0, 0, false);
 export const TestInsightPlaceholderItem: IDashboardLayoutItem<InsightPlaceholderWidget> = {
     type: "IDashboardLayoutItem",
     widget: TestInsightPlaceholderWidget,
