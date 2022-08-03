@@ -249,7 +249,7 @@ export class EditableLabelInner extends Component<IEditableLabelInnerProps, IEdi
         return this.props.textareaInOverlay
             ? this.renderTextAreaInOverlay()
             : this.renderTextarea(
-                  this.root.current.clientWidth ? { width: this.root.current.clientWidth } : {},
+                  this.root.current ? { width: this.root.current.getBoundingClientRect().width } : {},
               );
     }
 
