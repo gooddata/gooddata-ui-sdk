@@ -48,8 +48,10 @@ export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionPr
     const renderProps = { section, screen, renderMode };
 
     const items = flatMap(section.items().asGridRows(screen), (itemsInRow) => {
+        const rowKey = itemsInRow.map((item) => itemKeyGetter({ item, screen })).join(";");
         return (
             <DashboardLayoutGridRow
+                key={rowKey}
                 screen={screen}
                 section={section}
                 items={itemsInRow}
