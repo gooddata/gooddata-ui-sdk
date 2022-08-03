@@ -4,7 +4,7 @@ import { Dialog } from "../Dialog";
 import { Typography } from "../../Typography";
 import cx from "classnames";
 import { StylingExample } from "./StylingExample";
-import { IThemeMetadataObject } from "@gooddata/sdk-model";
+import { IThemeDefinition } from "@gooddata/sdk-model";
 import { BubbleHeaderSeparator } from "./BubbleHeaderSeparator";
 import { StylingEditorDialogFooter, IStylingEditorDialogFooterProps } from "./StylingEditorDialogFooter";
 import { IntlWrapper } from "@gooddata/sdk-ui";
@@ -14,7 +14,7 @@ import { Message } from "../../Messages";
 /**
  * @internal
  */
-export type StylingPickerItem = IThemeMetadataObject;
+export type StylingPickerItem = IThemeDefinition;
 
 /**
  * @internal
@@ -50,6 +50,8 @@ const StylingEditorDialogCore = (props: IStylingEditorDialogProps) => {
         onClose,
         onSubmit,
         onCancel,
+        disableSubmit,
+        showProgressIndicator,
     } = props;
     const providedExamples = !!examples && examples.length !== 0 && !!exampleToColorPreview;
     const [nameField, setNameField] = useState(stylingContent?.title ?? "");
@@ -58,8 +60,8 @@ const StylingEditorDialogCore = (props: IStylingEditorDialogProps) => {
     );
     const [invalidDefinition, setInvalidDefinition] = useState(false);
     const isSubmitDisabled = useMemo(
-        () => nameField === "" || definitionField === "" || invalidDefinition,
-        [nameField, definitionField, invalidDefinition],
+        () => nameField === "" || definitionField === "" || invalidDefinition || disableSubmit,
+        [nameField, definitionField, invalidDefinition, disableSubmit],
     );
     const intl = useIntl();
     const validateDefinition = (value: string): boolean => {
@@ -78,6 +80,17 @@ const StylingEditorDialogCore = (props: IStylingEditorDialogProps) => {
         setDefinitionField(value);
     };
 
+    const getFinalStylingItem = (
+        original: StylingPickerItem,
+        definition: string,
+        title: string,
+    ): StylingPickerItem => ({
+        ...(original ? original : {}),
+        type: "theme",
+        theme: JSON.parse(definition),
+        title,
+    });
+
     return (
         <Dialog
             className={cx("gd-styling-editor-dialog", {
@@ -93,7 +106,7 @@ const StylingEditorDialogCore = (props: IStylingEditorDialogProps) => {
             <div className="gd-styling-editor-dialog-content">
                 <form className="gd-styling-editor-dialog-content-form" onSubmit={(e) => e.preventDefault()}>
                     <label className="gd-styling-editor-dialog-content-form-input">
-                        {intl.formatMessage({ id: "styling.editor.dialog.name" })}
+                        {intl.formatMessage({ id: "stylingEditor.dialog.name" })}
                         <input
                             className="gd-input-field s-input-field"
                             type="text"
@@ -106,7 +119,7 @@ const StylingEditorDialogCore = (props: IStylingEditorDialogProps) => {
                             "gd-styling-editor-dialog-content-form-invalid": invalidDefinition,
                         })}
                     >
-                        {intl.formatMessage({ id: "styling.editor.dialog.definition" })}
+                        {intl.formatMessage({ id: "stylingEditor.dialog.definition" })}
                         <textarea
                             className="gd-input-field s-textarea-field"
                             wrap={"off"}
@@ -134,7 +147,7 @@ const StylingEditorDialogCore = (props: IStylingEditorDialogProps) => {
                         )}
                     >
                         <BubbleHeaderSeparator
-                            title={intl.formatMessage({ id: "styling.editor.dialog.examples" })}
+                            title={intl.formatMessage({ id: "stylingEditor.dialog.examples" })}
                             message={tooltip}
                         />
                         <div className="gd-styling-editor-dialog-content-examples-list">
@@ -155,8 +168,13 @@ const StylingEditorDialogCore = (props: IStylingEditorDialogProps) => {
             </div>
             <StylingEditorDialogFooter
                 disableSubmit={isSubmitDisabled}
+                showProgressIndicator={showProgressIndicator}
                 link={link}
-                onSubmit={() => (validateDefinition(definitionField) ? onSubmit() : undefined)}
+                onSubmit={() =>
+                    validateDefinition(definitionField)
+                        ? onSubmit(getFinalStylingItem(stylingContent, definitionField, nameField))
+                        : undefined
+                }
                 onCancel={onCancel}
             />
         </Dialog>

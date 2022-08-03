@@ -1690,24 +1690,39 @@
         "comment": "",
         "limit": 0
     },
-    "styling.editor.dialog.name": {
+    "stylingEditor.dialog.name": {
         "value": "Name",
         "comment": "",
         "limit": 0
     },
-    "styling.editor.dialog.definition": {
+    "stylingEditor.dialog.definition": {
         "value": "Definition",
         "comment": "Name of the text field to describe an object.",
         "limit": 0
     },
-    "styling.editor.dialog.examples": {
+    "stylingEditor.dialog.examples": {
         "value": "Examples",
         "comment": "",
         "limit": 0
     },
-    "styling.editor.dialog.example.paste": {
+    "stylingEditor.dialog.example.paste": {
         "value": "Paste",
         "comment": "Button text to paste content into text field.",
+        "limit": 0
+    },
+    "stylingPicker.item.edit": {
+        "value": "Edit",
+        "comment": "",
+        "limit": 0
+    },
+    "stylingPicker.item.delete": {
+        "value": "Delete",
+        "comment": "",
+        "limit": 0
+    },
+    "stylingPicker.item.delete.tooltip": {
+        "value": "Default item cannot be deleted.",
+        "comment": "",
         "limit": 0
     }
 }

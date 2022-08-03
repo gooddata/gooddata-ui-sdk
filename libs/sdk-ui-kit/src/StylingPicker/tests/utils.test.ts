@@ -1,12 +1,12 @@
 // (C) 2022 GoodData Corporation
 
 import { idRef } from "@gooddata/sdk-model";
-import { getColorsPreviewFromThemeMetadataObject } from "../utils";
+import { getColorsPreviewFromTheme } from "../utils";
 import { customThemesMock, fullyDefinedThemeMock } from "./mocks";
 
-describe("getColorsPreviewFromThemeMetadataObject", () => {
+describe("getColorsPreviewFromTheme", () => {
     it("should return default array of colors when theme is empty", () => {
-        const result = getColorsPreviewFromThemeMetadataObject({
+        const result = getColorsPreviewFromTheme({
             id: "",
             ref: idRef("default-them"),
             uri: "",
@@ -23,13 +23,13 @@ describe("getColorsPreviewFromThemeMetadataObject", () => {
     });
 
     it("should return correct array of colors when only complementary colors are set in theme", () => {
-        const result = getColorsPreviewFromThemeMetadataObject(customThemesMock[0]);
+        const result = getColorsPreviewFromTheme(customThemesMock[0]);
 
         expect(result).toMatchSnapshot();
     });
 
     it("should return correct array of colors when theme is fully defined", () => {
-        const result = getColorsPreviewFromThemeMetadataObject(fullyDefinedThemeMock);
+        const result = getColorsPreviewFromTheme(fullyDefinedThemeMock);
 
         expect(result).toMatchSnapshot();
     });

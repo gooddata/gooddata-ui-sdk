@@ -68,12 +68,6 @@ describe("StylingPicker", () => {
         expect(component.find(".s-styling-picker-list-item-first_theme input").prop("checked")).toBe(true);
     });
 
-    it("should not render footer buttons when selected item is not provided (hence, basic item is selected)", () => {
-        const component = renderComponent({});
-
-        expect(component.find(".s-styling-picker-footer-buttons")).not.toExist();
-    });
-
     it("should not render footer buttons when no custom items are provided", () => {
         const component = renderComponent({ customItems: [] });
 
@@ -135,6 +129,38 @@ describe("StylingPicker", () => {
         expect(onListActionClick).toHaveBeenCalled();
     });
 
+    it("should not render Actions menu if no onItemEdit and onItemDelete provided", () => {
+        const component = renderComponent({});
+
+        expect(component.find(".gd-styling-item-menu.s-menu-toggle")).not.toExist();
+    });
+
+    it("should render Actions menu if onItemEdit provided", () => {
+        const onItemEdit = jest.fn();
+        const component = renderComponent({ onItemEdit });
+
+        expect(component.find(".gd-styling-item-menu.s-menu-toggle")).toExist();
+    });
+    it("should call onItemEdit when list item menu is clicked", () => {
+        const onItemEdit = jest.fn();
+        const component = renderComponent({ onItemEdit });
+
+        component.find(".gd-styling-item-menu.s-menu-toggle").first().simulate("click");
+        component.find(".s-styling-item-menu-item-edit").hostNodes().simulate("click");
+
+        expect(onItemEdit).toHaveBeenCalled();
+    });
+
+    it("should call onItemDelete when list item menu is clicked", () => {
+        const onItemDelete = jest.fn();
+        const component = renderComponent({ onItemDelete });
+
+        component.find(".gd-styling-item-menu.s-menu-toggle").first().simulate("click");
+        component.find(".s-styling-item-menu-item-delete").hostNodes().simulate("click");
+
+        expect(onItemDelete).toHaveBeenCalled();
+    });
+
     it("should call onApply when apply button is clicked", () => {
         const onApply = jest.fn();
         const component = renderComponent({ onApply });
@@ -151,5 +177,13 @@ describe("StylingPicker", () => {
         const component = renderComponent({});
 
         expect(component.find(".s-styling-picker-list-header a")).not.toExist();
+    });
+
+    it("should not render list item Actions menu on mobile device", () => {
+        jest.spyOn(useMediaQuery, "useMediaQuery").mockReturnValue(true);
+        const onItemEdit = jest.fn();
+        const onItemDelete = jest.fn();
+        const component = renderComponent({ onItemEdit, onItemDelete });
+        expect(component.find(".gd-styling-item-menu.s-menu-toggle")).not.toExist();
     });
 });

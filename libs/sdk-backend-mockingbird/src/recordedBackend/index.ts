@@ -301,7 +301,7 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                         theme: theme.theme,
                     });
                 },
-                deleteTheme: () => Promise.resolve(undefined),
+                deleteTheme: () => Promise.resolve(),
             };
         },
     };

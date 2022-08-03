@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
 
-import { idRef, IThemeMetadataObject } from "@gooddata/sdk-model";
+import { idRef, IThemeDefinition } from "@gooddata/sdk-model";
 
 /**
  * Dummy theme metadata object which represents the default colors of GD.
@@ -11,7 +11,7 @@ import { idRef, IThemeMetadataObject } from "@gooddata/sdk-model";
  *
  * @internal
  */
-export const defaultThemeMetadataObject: IThemeMetadataObject = {
+export const defaultThemeMetadataObject: IThemeDefinition = {
     id: "default-theme",
     ref: idRef("default-theme"),
     uri: "",
@@ -41,11 +41,11 @@ export const defaultThemeMetadataObject: IThemeMetadataObject = {
  * This function transforms a theme metadata object into an array of colors which is used
  * to render the theme in styling picker. When provided theme object is missing some properties,
  * defaults are taken from the {@link defaultThemeMetadataObject}.
+ *
+ * @internal
  */
-export const getColorsPreviewFromThemeMetadataObject = (
-    themeMetadataObject: IThemeMetadataObject,
-): string[] => {
-    const { theme } = themeMetadataObject;
+export const getColorsPreviewFromTheme = (themeDef: IThemeDefinition): string[] => {
+    const { theme } = themeDef;
     const { theme: defaultTheme } = defaultThemeMetadataObject;
 
     const color1 =

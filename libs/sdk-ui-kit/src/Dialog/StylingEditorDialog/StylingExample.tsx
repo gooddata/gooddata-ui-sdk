@@ -27,7 +27,7 @@ export const StylingExample = (props: IStylingExampleProps) => {
                     className="gd-styling-example-label-action s-gd-styling-example-label-action"
                     onClick={onClick}
                 >
-                    {intl.formatMessage({ id: "styling.editor.dialog.example.paste" })}
+                    {intl.formatMessage({ id: "stylingEditor.dialog.example.paste" })}
                 </div>
             </div>
             <ColorPreview className="color-preview-small" colors={colors} />

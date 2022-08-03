@@ -38,6 +38,8 @@ const StylingPickerTest: React.FC = () => {
                         selectedItemRef={idRef("theme2")}
                         onApply={action("onApply")}
                         onListActionClick={action("onListActionClick")}
+                        onItemEdit={action("onItemEdit")}
+                        onItemDelete={action("onItemDelete")}
                     />
                 </div>
                 <div className="library-component screenshot-target">
@@ -51,6 +53,8 @@ const StylingPickerTest: React.FC = () => {
                         customItems={customThemeItems.slice(0, 2)}
                         onApply={action("onApply")}
                         onListActionClick={action("onListActionClick")}
+                        onItemEdit={action("onItemEdit")}
+                        onItemDelete={action("onItemDelete")}
                     />
                 </div>
                 <div className="library-component screenshot-target">

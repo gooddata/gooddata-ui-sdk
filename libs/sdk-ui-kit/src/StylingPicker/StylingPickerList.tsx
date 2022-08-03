@@ -11,12 +11,16 @@ interface IStylingPickerListProps {
     emptyMessageElement: JSX.Element;
     onItemClick: (ref: ObjRef) => void;
     selectedItemRef?: ObjRef;
+    onItemEdit?: (item: StylingPickerItem) => void;
+    onItemDelete?: (ref: ObjRef) => void;
 }
 
 export const StylingPickerList: React.FC<IStylingPickerListProps> = ({
     items,
     emptyMessageElement,
     onItemClick,
+    onItemEdit,
+    onItemDelete,
     selectedItemRef,
 }) => {
     if (items.length === 0) {
@@ -31,6 +35,8 @@ export const StylingPickerList: React.FC<IStylingPickerListProps> = ({
                     item={item}
                     isSelected={areObjRefsEqual(item.ref, selectedItemRef)}
                     onClick={onItemClick}
+                    onDelete={onItemDelete}
+                    onEdit={onItemEdit}
                 />
             ))}
         </div>

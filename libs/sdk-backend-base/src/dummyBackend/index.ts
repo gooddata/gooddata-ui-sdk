@@ -487,7 +487,7 @@ class DummyOrganization implements IOrganization {
                     theme: theme.theme,
                 });
             },
-            deleteTheme: () => Promise.resolve(undefined),
+            deleteTheme: () => Promise.resolve(),
         };
     }
 }

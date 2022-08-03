@@ -22,7 +22,7 @@ import { ISeparators } from '@gooddata/sdk-ui';
 import { ISettings } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
-import { IThemeMetadataObject } from '@gooddata/sdk-model';
+import { IThemeDefinition } from '@gooddata/sdk-model';
 import { IWorkspacePermissions } from '@gooddata/sdk-model';
 import { LocalIdRef } from '@gooddata/sdk-model';
 import { MessageDescriptor } from 'react-intl';
@@ -322,7 +322,7 @@ export const DEFAULT_ITEM_HEIGHT = 28;
 export const DEFAULT_MOBILE_ITEM_HEIGHT = 40;
 
 // @internal
-export const defaultThemeMetadataObject: IThemeMetadataObject;
+export const defaultThemeMetadataObject: IThemeDefinition;
 
 // @internal (undocumented)
 export class Dialog extends Component<IDialogBaseProps> {
@@ -539,6 +539,9 @@ export function generateHeaderStaticHelpMenuItems(documentationUrl?: string, com
 
 // @internal (undocumented)
 export function generateSupportUrl(projectId?: string, sessionId?: string, userEmail?: string, url?: string): string;
+
+// @internal
+export const getColorsPreviewFromTheme: (themeDef: IThemeDefinition) => string[];
 
 // @internal
 export function getDateTimeConfig(date: string, options?: IDateTimeConfigOptions): IInsightListItemDateConfig;
@@ -3183,6 +3186,8 @@ export interface IStylingEditorDialogFooterProps extends IDialogBaseProps {
         text: string;
         url: string;
     };
+    // (undocumented)
+    showProgressIndicator?: boolean;
 }
 
 // @internal (undocumented)
@@ -3233,6 +3238,10 @@ export interface IStylingPickerProps {
     locale?: string;
     // (undocumented)
     onApply?: (ref: ObjRef) => void;
+    // (undocumented)
+    onItemDelete?: (ref: ObjRef) => void;
+    // (undocumented)
+    onItemEdit?: (modifiedItem: StylingPickerItem) => void;
     // (undocumented)
     onListActionClick?: () => void;
     // (undocumented)
@@ -3767,7 +3776,7 @@ export class StylingPicker extends React_2.PureComponent<IStylingPickerProps> {
 }
 
 // @internal (undocumented)
-export type StylingPickerItem = IThemeMetadataObject;
+export type StylingPickerItem = IThemeDefinition;
 
 // @internal (undocumented)
 export const SubMenu: React_2.FC<ISubMenuProps>;

@@ -1,7 +1,9 @@
 // (C) 2022 GoodData Corporation
 
 import { v4 as uuidv4 } from "uuid";
-import { jsonApiHeaders, MetadataUtilities } from "@gooddata/api-client-tiger";
+import { AxiosResponse } from "axios";
+
+import { jsonApiHeaders, JsonApiThemeOutDocument, MetadataUtilities } from "@gooddata/api-client-tiger";
 import { IOrganizationStylingService } from "@gooddata/sdk-backend-spi";
 import { idRef, IThemeMetadataObject, ObjRef, IThemeDefinition } from "@gooddata/sdk-model";
 import { objRefToIdentifier } from "../../utils/api";
@@ -82,11 +84,7 @@ export class OrganizationStylingService implements IOrganizationStylingService {
                         headers: jsonApiHeaders,
                     },
                 )
-                .then((result) => {
-                    const { data } = result;
-
-                    return convertThemeFromBackend(data);
-                }),
+                .then(this.parseResult),
         );
     }
 
@@ -108,12 +106,14 @@ export class OrganizationStylingService implements IOrganizationStylingService {
                         headers: jsonApiHeaders,
                     },
                 )
-                .then((result) => {
-                    const { data } = result;
-
-                    return convertThemeFromBackend(data);
-                }),
+                .then(this.parseResult),
         );
+    }
+
+    private parseResult(result: AxiosResponse<JsonApiThemeOutDocument>): IThemeMetadataObject {
+        const { data } = result;
+
+        return convertThemeFromBackend(data);
     }
 
     public async deleteTheme(themeRef: ObjRef): Promise<void> {
