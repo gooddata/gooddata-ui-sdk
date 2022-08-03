@@ -13,7 +13,8 @@ _RUSH="${DIR}/docker_rush.sh"
 _RUSHX="${DIR}/docker_rushx.sh"
 
 $_RUSH install
-$_RUSH build
+# only build everything that sdk-ui-tests need, no need to build sdk-examples for instance
+$_RUSH build -T sdk-ui-tests
 $_RUSHX libs/sdk-ui-tests build-storybook
 $_RUSHX libs/sdk-ui-tests story-extractor
 
