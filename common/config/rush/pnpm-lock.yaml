@@ -10978,10 +10978,6 @@ packages:
     engines: {node: '>= 0.6'}
     dev: false
 
-  /foundation-sites/5.5.3:
-    resolution: {integrity: sha512-z0NZl6Orkmeu0yhgjl3a8Ecd3frjEichn9IqocQX2jHMv9Ecd6UOPWS85f1YJXdCF6bHqnekGkrcWQ37ciR0Pw==}
-    dev: false
-
   /fp-ts/2.11.9:
     resolution: {integrity: sha512-GhYlNKkCOfdjp71ocdtyaQGoqCswEoWDJLRr+2jClnBBq2dnSOtd6QxmJdALq8UhfqCyZZ0f0lxadU4OhwY9nw==}
     dev: false
@@ -23702,7 +23698,6 @@ packages:
       eslint-plugin-regexp: 1.7.0_eslint@8.12.0
       eslint-plugin-sonarjs: 0.14.0_eslint@8.12.0
       eslint-plugin-tsdoc: 0.2.15
-      foundation-sites: 5.5.3
       full-icu: 1.4.0
       highcharts: 9.3.0
       hoist-non-react-statics: 3.3.2
@@ -23785,7 +23780,6 @@ packages:
       eslint-plugin-regexp: 1.7.0_eslint@8.12.0
       eslint-plugin-sonarjs: 0.14.0_eslint@8.12.0
       eslint-plugin-tsdoc: 0.2.15
-      foundation-sites: 5.5.3
       immer: 9.0.12
       jest: 27.5.1_ts-node@10.7.0
       jest-enzyme: 7.1.2_4c874ea13312c50d8c9b996ca71028db
@@ -23881,7 +23875,6 @@ packages:
       eslint-plugin-sonarjs: 0.14.0_eslint@8.12.0
       eslint-plugin-tsdoc: 0.2.15
       fixed-data-table-2: 1.2.6_react-dom@17.0.2+react@17.0.2
-      foundation-sites: 5.5.3
       full-icu: 1.4.0
       jest: 27.5.1_ts-node@10.7.0
       jest-enzyme: 7.1.2_4c874ea13312c50d8c9b996ca71028db
@@ -23964,7 +23957,6 @@ packages:
       eslint-plugin-sonarjs: 0.14.0_eslint@8.12.0
       eslint-plugin-tsdoc: 0.2.15
       fixed-data-table-2: 1.2.6_react-dom@17.0.2+react@17.0.2
-      foundation-sites: 5.5.3
       full-icu: 1.4.0
       jest: 27.5.1_ts-node@10.7.0
       jest-enzyme: 7.1.2_4c874ea13312c50d8c9b996ca71028db
@@ -24045,7 +24037,6 @@ packages:
       eslint-plugin-regexp: 1.7.0_eslint@8.12.0
       eslint-plugin-sonarjs: 0.14.0_eslint@8.12.0
       eslint-plugin-tsdoc: 0.2.15
-      foundation-sites: 5.5.3
       jest: 27.5.1_ts-node@10.7.0
       jest-enzyme: 7.1.2_4c874ea13312c50d8c9b996ca71028db
       jest-junit: 3.7.0
@@ -24134,7 +24125,6 @@ packages:
       eslint-plugin-sonarjs: 0.14.0_eslint@8.12.0
       eslint-plugin-tsdoc: 0.2.15
       fixed-data-table-2: 1.2.6_react-dom@17.0.2+react@17.0.2
-      foundation-sites: 5.5.3
       jest: 27.5.1_ts-node@10.7.0
       jest-enzyme: 7.1.2_4c874ea13312c50d8c9b996ca71028db
       jest-junit: 3.7.0
@@ -24285,7 +24275,6 @@ packages:
       eslint-plugin-sonarjs: 0.14.0_eslint@8.12.0
       eslint-plugin-tsdoc: 0.2.15
       fixed-data-table-2: 1.2.6_react-dom@17.0.2+react@17.0.2
-      foundation-sites: 5.5.3
       full-icu: 1.4.0
       jest: 27.5.1_ts-node@10.7.0
       jest-enzyme: 7.1.2_4c874ea13312c50d8c9b996ca71028db
@@ -24631,7 +24620,6 @@ packages:
       eslint-plugin-regexp: 1.7.0_eslint@8.12.0
       eslint-plugin-sonarjs: 0.14.0_eslint@8.12.0
       eslint-plugin-tsdoc: 0.2.15
-      foundation-sites: 5.5.3
       jest: 27.5.1_ts-node@10.7.0
       jest-enzyme: 7.1.2_4c874ea13312c50d8c9b996ca71028db
       jest-junit: 3.7.0
@@ -24779,7 +24767,6 @@ packages:
       eslint-plugin-regexp: 1.7.0_eslint@8.12.0
       eslint-plugin-sonarjs: 0.14.0_eslint@8.12.0
       eslint-plugin-tsdoc: 0.2.15
-      foundation-sites: 5.5.3
       full-icu: 1.4.0
       hoist-non-react-statics: 3.3.2
       http-status-codes: 2.2.0
