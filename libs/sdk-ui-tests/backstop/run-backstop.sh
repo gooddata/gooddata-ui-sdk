@@ -68,7 +68,7 @@ docker network create "${BACKSTOP_NET}" || { echo "Network creation failed" && e
     echo "Starting BackstopJS in dir ${BACKSTOP_DIR} with params: $@"
 
     {
-        docker run --rm \
+        docker run --init --rm \
             --env BACKSTOP_CAPTURE_LIMIT \
             --env BACKSTOP_COMPARE_LIMIT \
             --env BACKSTOP_DEBUG \
