@@ -43,6 +43,8 @@ import {
     IWorkspacePermissions,
     IOrganizationDescriptor,
     IUser,
+    IThemeDefinition,
+    IThemeMetadataObject,
 } from "@gooddata/sdk-model";
 import { RecordedExecutionFactory } from "./execution";
 import { RecordedBackendConfig, RecordingIndex } from "./types";
@@ -271,6 +273,35 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 getActiveTheme: () => Promise.resolve(undefined),
                 setActiveTheme: () => Promise.resolve(),
                 clearActiveTheme: () => Promise.resolve(),
+                createTheme: (theme: IThemeDefinition): Promise<IThemeMetadataObject> => {
+                    return Promise.resolve({
+                        type: "theme",
+                        id: "theme_id",
+                        title: "Theme 1",
+                        description: "",
+                        production: true,
+                        deprecated: false,
+                        unlisted: false,
+                        ref: idRef("theme_id"),
+                        uri: "",
+                        theme: theme.theme,
+                    });
+                },
+                updateTheme: (theme: IThemeDefinition): Promise<IThemeMetadataObject> => {
+                    return Promise.resolve({
+                        type: "theme",
+                        id: "theme_id",
+                        title: "Theme 1",
+                        description: "",
+                        production: true,
+                        deprecated: false,
+                        unlisted: false,
+                        ref: idRef("theme_id"),
+                        uri: "theme_uri",
+                        theme: theme.theme,
+                    });
+                },
+                deleteTheme: () => Promise.resolve(undefined),
             };
         },
     };

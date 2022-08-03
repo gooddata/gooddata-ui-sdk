@@ -1,10 +1,15 @@
 // (C) 2022 GoodData Corporation
 
-import { MetadataUtilities } from "@gooddata/api-client-tiger";
+import { v4 as uuidv4 } from "uuid";
+import { jsonApiHeaders, MetadataUtilities } from "@gooddata/api-client-tiger";
 import { IOrganizationStylingService } from "@gooddata/sdk-backend-spi";
-import { idRef, IThemeMetadataObject, ObjRef } from "@gooddata/sdk-model";
+import { idRef, IThemeMetadataObject, ObjRef, IThemeDefinition } from "@gooddata/sdk-model";
 import { objRefToIdentifier } from "../../utils/api";
-import { convertTheme } from "../../convertors/fromBackend/ThemeConverter";
+import {
+    convertTheme as convertThemeFromBackend,
+    convertThemeWithLinks,
+} from "../../convertors/fromBackend/ThemeConverter";
+import { convertTheme as convertThemeToBackend } from "../../convertors/toBackend/ThemeConverter";
 import { JsonApiId } from "../../convertors/fromBackend/ObjRefConverter";
 import { TigerAuthenticatedCallGuard } from "../../types";
 
@@ -15,7 +20,7 @@ export class OrganizationStylingService implements IOrganizationStylingService {
         return await this.authCall((client) =>
             MetadataUtilities.getAllPagesOf(client, client.entities.getAllEntitiesThemes, {})
                 .then(MetadataUtilities.mergeEntitiesResults)
-                .then((themes) => themes.data.map(convertTheme)),
+                .then((themes) => themes.data.map(convertThemeWithLinks)),
         );
     }
 
@@ -60,6 +65,62 @@ export class OrganizationStylingService implements IOrganizationStylingService {
         await this.authCall((client) =>
             client.entities.deleteEntityOrganizationSettings({
                 id: "activeTheme",
+            }),
+        );
+    }
+
+    public async createTheme(theme: IThemeDefinition): Promise<IThemeMetadataObject> {
+        return await this.authCall((client) =>
+            client.entities
+                .createEntityThemes(
+                    {
+                        jsonApiThemeInDocument: {
+                            data: convertThemeToBackend(uuidv4(), theme),
+                        },
+                    },
+                    {
+                        headers: jsonApiHeaders,
+                    },
+                )
+                .then((result) => {
+                    const { data } = result;
+
+                    return convertThemeFromBackend(data);
+                }),
+        );
+    }
+
+    public async updateTheme(theme: IThemeDefinition): Promise<IThemeMetadataObject> {
+        if (!theme.ref) {
+            return this.createTheme(theme);
+        }
+        const id = await objRefToIdentifier(theme.ref, this.authCall);
+        return await this.authCall((client) =>
+            client.entities
+                .updateEntityThemes(
+                    {
+                        id,
+                        jsonApiThemeInDocument: {
+                            data: convertThemeToBackend(id, theme),
+                        },
+                    },
+                    {
+                        headers: jsonApiHeaders,
+                    },
+                )
+                .then((result) => {
+                    const { data } = result;
+
+                    return convertThemeFromBackend(data);
+                }),
+        );
+    }
+
+    public async deleteTheme(themeRef: ObjRef): Promise<void> {
+        const id = await objRefToIdentifier(themeRef, this.authCall);
+        await this.authCall((client) =>
+            client.entities.deleteEntityThemes({
+                id,
             }),
         );
     }

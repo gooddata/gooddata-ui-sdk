@@ -826,5 +826,16 @@ export interface ITheme {
  * @alpha
  */
 export interface IThemeMetadataObject extends IMetadataObject {
-    theme: ITheme;
+    readonly type: "theme";
+    readonly theme: ITheme;
+}
+
+/**
+ * Theme definition represents modified or created theme
+ *
+ * @alpha
+ */
+export interface IThemeDefinition extends Partial<IMetadataObject> {
+    readonly type: "theme";
+    readonly theme: ITheme;
 }
