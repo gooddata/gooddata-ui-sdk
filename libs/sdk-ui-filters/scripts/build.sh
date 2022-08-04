@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
 _build_styles() {
-     # --quiet-deps avoid foundation-sites deprecation warnings
-    sass --quiet-deps --load-path=node_modules --load-path=node_modules/fixed-data-table-2/dist styles/scss:styles/css
+    sass --load-path=node_modules --load-path=node_modules/fixed-data-table-2/dist styles/scss:styles/css
 }
 
 _clean() {

@@ -5,8 +5,6 @@
 $include-html-classes: false;
 $include-html-global-classes: false;
 
-@import "foundation-sites/scss/foundation/components/_global.scss";
-
 $small-breakpoint: em-calc(640) !default;
 $medium-breakpoint: em-calc(1024) !default;
 $large-breakpoint: em-calc(1440) !default;
@@ -20,6 +18,20 @@ $xlarge-range: ($large-breakpoint + em-calc(1), $xlarge-breakpoint) !default; /*
 $xxlarge-range: ($xlarge-breakpoint + em-calc(1), em-calc(99999999)) !default; /* 1921px, ... */
 
 // Media Queries
+@function lower-bound($range) {
+    @if length($range) <= 0 {
+        @return 0;
+    }
+    @return nth($range, 1);
+}
+
+@function upper-bound($range) {
+    @if length($range) < 2 {
+        @return 999999999999;
+    }
+    @return nth($range, 2);
+}
+
 $screen: "only screen" !default;
 
 $landscape: "#{$screen} and (orientation: landscape)" !default;

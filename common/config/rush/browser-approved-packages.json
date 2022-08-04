@@ -687,10 +687,6 @@
       "allowedCategories": [ "examples" ]
     },
     {
-      "name": "foundation-sites",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "fs-extra",
       "allowedCategories": [ "tools" ]
     },
