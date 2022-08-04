@@ -49,6 +49,11 @@ export const selectCatalogMeasures = createSelector(selectSelf, (state) => {
 });
 
 /**
+ * @alpha
+ */
+export const selectHasCatalogMeasures = createSelector(selectCatalogMeasures, negate(isEmpty));
+
+/**
  * @public
  */
 export const selectCatalogFacts = createSelector(selectSelf, (state) => {
@@ -56,11 +61,21 @@ export const selectCatalogFacts = createSelector(selectSelf, (state) => {
 });
 
 /**
+ * @alpha
+ */
+export const selectHasCatalogFacts = createSelector(selectCatalogFacts, negate(isEmpty));
+
+/**
  * @public
  */
 export const selectCatalogDateDatasets = createSelector(selectSelf, (state) => {
     return state.dateDatasets ?? [];
 });
+
+/**
+ * @alpha
+ */
+export const selectHasCatalogDateDatasets = createSelector(selectCatalogDateDatasets, negate(isEmpty));
 
 /**
  * @public

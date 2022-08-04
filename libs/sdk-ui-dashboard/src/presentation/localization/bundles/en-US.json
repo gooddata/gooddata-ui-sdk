@@ -1242,6 +1242,26 @@
         "comment": "",
         "limit": 0
     },
+    "addPanel.kpi": {
+        "value": "Key Performance Indicator",
+        "comment": "",
+        "limit": 0
+    },
+    "addPanel.kpi.tooltip.no_measures._measure": {
+        "value": "The Key Performance Indicator requires a calculated measure.",
+        "comment": "",
+        "limit": 0
+    },
+    "addPanel.kpi.tooltip.no_measures._metric": {
+        "value": "The Key Performance Indicator requires a metric.",
+        "comment": "",
+        "limit": 0
+    },
+    "addPanel.kpi.tooltip.no_measures.link": {
+        "value": "Learn more",
+        "comment": "",
+        "limit": 0
+    },
     "visualizationsList.dragToAdd": {
         "value": "Drag to add",
         "comment": "",

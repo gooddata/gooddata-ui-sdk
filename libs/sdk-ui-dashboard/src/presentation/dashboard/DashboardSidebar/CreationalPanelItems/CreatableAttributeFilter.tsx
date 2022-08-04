@@ -1,12 +1,10 @@
 // (C) 2007-2022 GoodData Corporation
-import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import React from "react";
+import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage } from "react-intl";
 import { DraggableAttributeFilterPlaceholder } from "../../../dragAndDrop";
 import { AddAttributeFilterPlaceholder } from "../../../filterBar";
-import { useDashboardSelector } from "../../../../model";
-import { selectHasCatalogAttributes } from "../../../../model/store/catalog/catalogSelectors";
-import { selectIsWhiteLabeled } from "../../../../model/store/config/configSelectors";
+import { useDashboardSelector, selectHasCatalogAttributes, selectIsWhiteLabeled } from "../../../../model";
 
 export function CreatableAttributeFilter() {
     const hasAttributes = useDashboardSelector(selectHasCatalogAttributes);

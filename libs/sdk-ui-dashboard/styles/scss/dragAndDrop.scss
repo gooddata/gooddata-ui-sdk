@@ -161,6 +161,10 @@
     }
 }
 
+.add-kpi-placeholder::before {
+    background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/add-kpi-placeholder.svg");
+}
+
 .add-attribute-filter-placeholder::before {
     background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/add-attribute-filter-placeholder.svg");
 

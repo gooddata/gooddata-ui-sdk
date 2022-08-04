@@ -30,7 +30,7 @@ export const selectSupportsElementsQueryParentFiltering = createSelector(
 );
 
 /**
- * Selector for {@link IBackendCapabilities.supportsKpiWidget}
+ * Selector for {@link @gooddata/sdk-backend-spi#IBackendCapabilities.supportsKpiWidget}
  *
  * @internal
  */
@@ -40,7 +40,7 @@ export const selectSupportsKpiWidgetCapability = createSelector(
 );
 
 /**
- * Selector for {@link IBackendCapabilities.supportsAccessControl}
+ * Selector for {@link @gooddata/sdk-backend-spi#IBackendCapabilities.supportsAccessControl}
  *
  * @internal
  */
@@ -50,7 +50,7 @@ export const selectSupportsAccessControlCapability = createSelector(
 );
 
 /**
- * Selector for {@link IBackendCapabilities.supportsHierarchicalWorkspaces}
+ * Selector for {@link @gooddata/sdk-backend-spi#IBackendCapabilities.supportsHierarchicalWorkspaces}
  *
  * @internal
  */

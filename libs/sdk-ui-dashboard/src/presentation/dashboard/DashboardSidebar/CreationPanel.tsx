@@ -5,13 +5,16 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import { CreatableAttributeFilter } from "./CreationalPanelItems/CreatableAttributeFilter";
+import { CreatableKpi } from "./CreationalPanelItems/CreatableKpi";
 import { DraggableInsightList } from "./DraggableInsightList";
+import { selectSupportsKpiWidgetCapability, useDashboardSelector } from "../../../model";
 
 interface ICreationPanelProps {
     isSticky: boolean;
 }
 
 export const CreationPanel: React.FC<ICreationPanelProps> = ({ isSticky = false }) => {
+    const supportsKpis = useDashboardSelector(selectSupportsKpiWidgetCapability);
     return (
         <div className="configuration-panel creation-panel">
             <div
@@ -28,6 +31,7 @@ export const CreationPanel: React.FC<ICreationPanelProps> = ({ isSticky = false 
                     </Typography>
                     <div className="add-item-panel">
                         <CreatableAttributeFilter />
+                        {supportsKpis && <CreatableKpi />}
                     </div>
                 </div>
                 <div className="configuration-category configuration-category-vis drag-to-add flex-panel-item-stretch">

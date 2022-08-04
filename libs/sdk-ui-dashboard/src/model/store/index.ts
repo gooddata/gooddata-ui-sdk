@@ -10,6 +10,7 @@ export {
     selectBackendCapabilities,
     selectSupportsElementsQueryParentFiltering,
     selectSupportsElementUris,
+    selectSupportsKpiWidgetCapability,
 } from "./backendCapabilities/backendCapabilitiesSelectors";
 export { ConfigState } from "./config/configState";
 export {
@@ -45,6 +46,7 @@ export {
     selectEnableRenamingMeasureToMetric,
     selectShouldHidePixelPerfectExperience,
     selectDisableKpiDashboardHeadlineUnderline,
+    selectIsWhiteLabeled,
 } from "./config/configSelectors";
 export { PermissionsState } from "./permissions/permissionsState";
 export {
@@ -144,6 +146,10 @@ export {
     selectAllCatalogDisplayFormsMap,
     selectAllCatalogDateDatasetsMap,
     selectAllCatalogMeasuresMap,
+    selectHasCatalogAttributes,
+    selectHasCatalogMeasures,
+    selectHasCatalogDateDatasets,
+    selectHasCatalogFacts,
 } from "./catalog/catalogSelectors";
 export { selectDrillableItems } from "./drill/drillSelectors";
 export { DrillState } from "./drill/drillState";
