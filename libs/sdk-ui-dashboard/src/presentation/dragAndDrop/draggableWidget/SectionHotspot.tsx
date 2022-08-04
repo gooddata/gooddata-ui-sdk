@@ -1,10 +1,10 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
 import cx from "classnames";
-
 import { getDropZoneDebugStyle } from "../debug";
 import {
     addLayoutSection,
+    dispatchAndWaitFor,
     placeholdersActions,
     selectIsWidgetPlaceholderShown,
     selectSettings,
@@ -15,7 +15,8 @@ import { useDashboardDrop } from "../useDashboardDrop";
 import { SectionDropZoneBox } from "./SectionDropZoneBox";
 import { DashboardLayoutSectionBorderLine } from "./DashboardLayoutSectionBorder";
 import { insightRef, insightTitle } from "@gooddata/sdk-model";
-import { getInsightSizeInfo } from "@gooddata/sdk-ui-ext";
+import { isInsightDraggableListItem, isKpiPlaceholderDraggableItem } from "../../dragAndDrop/types";
+import { getSizeInfo } from "../../../model/layout";
 
 export type RowPosition = "above" | "below";
 
@@ -32,33 +33,53 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
     const isWidgetPlaceholderShown = useDashboardSelector(selectIsWidgetPlaceholderShown);
 
     const [{ canDrop, isOver }, dropRef] = useDashboardDrop(
-        "insightListItem",
+        ["insightListItem", "kpi-placeholder"],
         {
-            drop: ({ insight }) => {
-                const sizeInfo = getInsightSizeInfo(insight, settings);
-                dispatch(
-                    addLayoutSection(index, {}, [
-                        {
-                            type: "IDashboardLayoutItem",
-                            widget: {
-                                type: "insight",
-                                insight: insightRef(insight),
-                                ignoreDashboardFilters: [],
-                                drills: [],
-                                title: insightTitle(insight),
-                                description: "",
-                                configuration: { hideTitle: false },
-                                properties: {},
-                            },
-                            size: {
-                                xl: {
-                                    gridHeight: sizeInfo.height.default,
-                                    gridWidth: sizeInfo.width.default!,
+            drop: (item) => {
+                if (isInsightDraggableListItem(item)) {
+                    const { insight } = item;
+                    const sizeInfo = getSizeInfo(settings, "insight", insight);
+                    dispatch(
+                        addLayoutSection(index, {}, [
+                            {
+                                type: "IDashboardLayoutItem",
+                                widget: {
+                                    type: "insight",
+                                    insight: insightRef(insight),
+                                    ignoreDashboardFilters: [],
+                                    drills: [],
+                                    title: insightTitle(insight),
+                                    description: "",
+                                    configuration: { hideTitle: false },
+                                    properties: {},
+                                },
+                                size: {
+                                    xl: {
+                                        gridHeight: sizeInfo.height.default,
+                                        gridWidth: sizeInfo.width.default!,
+                                    },
                                 },
                             },
-                        },
-                    ]),
-                );
+                        ]),
+                    );
+                }
+                if (isKpiPlaceholderDraggableItem(item)) {
+                    const sizeInfo = getSizeInfo(settings, "kpi");
+
+                    dispatchAndWaitFor(dispatch, addLayoutSection(index, {})).then(() => {
+                        dispatch(
+                            placeholdersActions.setWidgetPlaceholder({
+                                itemIndex: 0,
+                                sectionIndex: index,
+                                size: {
+                                    height: sizeInfo.height.default!,
+                                    width: sizeInfo.width.default!,
+                                },
+                                type: "kpi",
+                            }),
+                        );
+                    });
+                }
             },
             hover: () => {
                 if (isWidgetPlaceholderShown) {

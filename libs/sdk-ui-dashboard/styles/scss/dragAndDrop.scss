@@ -504,3 +504,20 @@
 .gd-fluid-layout-row-header .new-row-dropzone .gd-fluidlayout-row-separator.bottom {
     bottom: -2px;
 }
+
+.kpi-placeholder {
+    $padding: 10px;
+
+    position: absolute;
+    top: $padding;
+    right: $padding;
+    bottom: $padding;
+    left: $padding;
+    text-align: center;
+    cursor: pointer;
+
+    &.select-measure {
+        background: url("~@gooddata/sdk-ui-dashboard/esm/assets/dummy-kpi-simple.svg") no-repeat center center;
+        background-size: 130px;
+    }
+}

@@ -4025,6 +4025,8 @@ export interface IWidgetPlaceholderSpec {
         width: number;
         height: number;
     };
+    // (undocumented)
+    type: "widget" | "insight" | "kpi";
 }
 
 // @alpha (undocumented)

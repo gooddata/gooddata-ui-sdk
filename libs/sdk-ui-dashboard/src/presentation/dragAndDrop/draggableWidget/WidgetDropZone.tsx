@@ -1,13 +1,13 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
 import { insightRef, insightTitle } from "@gooddata/sdk-model";
-import { getInsightSizeInfo } from "@gooddata/sdk-ui-ext";
 import invariant from "ts-invariant";
 
 import { CustomDashboardWidgetComponent } from "../../widget/types";
 import {
     addSectionItem,
     dispatchAndWaitFor,
+    IWidgetPlaceholderSpec,
     placeholdersActions,
     selectSettings,
     useDashboardDispatch,
@@ -15,11 +15,13 @@ import {
 } from "../../../model";
 import { useDashboardDrop } from "../useDashboardDrop";
 import { WidgetDropZoneBox } from "./WidgetDropZoneBox";
-import { isInsightPlaceholderWidget } from "../../../widgets/placeholders/types";
+import { isPlaceholderWidget } from "../../../widgets/placeholders/types";
+import { isInsightDraggableListItem, isKpiPlaceholderDraggableItem } from "../types";
+import { getSizeInfo } from "../../../model/layout";
 
 export const WidgetDropZone: CustomDashboardWidgetComponent = (props) => {
     const { widget } = props;
-    invariant(isInsightPlaceholderWidget(widget));
+    invariant(isPlaceholderWidget(widget));
 
     const { sectionIndex, itemIndex, isLastInSection } = widget;
 
@@ -27,34 +29,50 @@ export const WidgetDropZone: CustomDashboardWidgetComponent = (props) => {
     const settings = useDashboardSelector(selectSettings);
 
     const [, dropRef] = useDashboardDrop(
-        "insightListItem",
+        ["insightListItem", "kpi-placeholder"],
         {
-            drop: ({ insight }) => {
-                const sizeInfo = getInsightSizeInfo(insight, settings);
-                dispatchAndWaitFor(
-                    dispatch,
-                    addSectionItem(sectionIndex, itemIndex, {
-                        type: "IDashboardLayoutItem",
-                        widget: {
-                            type: "insight",
-                            insight: insightRef(insight),
-                            ignoreDashboardFilters: [],
-                            drills: [],
-                            title: insightTitle(insight),
-                            description: "",
-                            configuration: { hideTitle: false },
-                            properties: {},
-                        },
-                        size: {
-                            xl: {
-                                gridHeight: sizeInfo.height.default,
-                                gridWidth: sizeInfo.width.default!,
+            drop: (item) => {
+                if (isInsightDraggableListItem(item)) {
+                    const { insight } = item;
+                    const sizeInfo = getSizeInfo(settings, "insight", insight);
+                    dispatchAndWaitFor(
+                        dispatch,
+                        addSectionItem(sectionIndex, itemIndex, {
+                            type: "IDashboardLayoutItem",
+                            widget: {
+                                type: "insight",
+                                insight: insightRef(insight),
+                                ignoreDashboardFilters: [],
+                                drills: [],
+                                title: insightTitle(insight),
+                                description: "",
+                                configuration: { hideTitle: false },
+                                properties: {},
                             },
+                            size: {
+                                xl: {
+                                    gridHeight: sizeInfo.height.default,
+                                    gridWidth: sizeInfo.width.default!,
+                                },
+                            },
+                        }),
+                    ).then(() => {
+                        dispatch(placeholdersActions.clearWidgetPlaceholder());
+                    });
+                }
+                if (isKpiPlaceholderDraggableItem(item)) {
+                    const sizeInfo = getSizeInfo(settings, "kpi");
+                    const placeholderSpec: IWidgetPlaceholderSpec = {
+                        itemIndex,
+                        sectionIndex,
+                        size: {
+                            height: sizeInfo.height.default!,
+                            width: sizeInfo.width.default!,
                         },
-                    }),
-                ).then(() => {
-                    dispatch(placeholdersActions.clearWidgetPlaceholder());
-                });
+                        type: "kpi",
+                    };
+                    dispatch(placeholdersActions.setWidgetPlaceholder(placeholderSpec));
+                }
             },
         },
         [dispatch, settings, sectionIndex, itemIndex],

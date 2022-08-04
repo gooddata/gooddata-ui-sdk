@@ -31,6 +31,9 @@ import { ObjRefMap } from "../../_staging/metadata/objRefMap";
  */
 export type MeasurableWidgetContent = IInsightDefinition | IKpi;
 
+/**
+ * @internal
+ */
 export const getSizeInfo = (
     settings: ISettings,
     widgetType: AnalyticalWidgetType,

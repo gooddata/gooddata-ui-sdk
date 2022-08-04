@@ -105,7 +105,7 @@ export const EditableDashboardKpi = (props: IDashboardKpiProps) => {
             renderBeforeContent={() => {
                 if (isSelected && hasConfigPanelOpen) {
                     return (
-                        <ConfigurationBubble widget={kpiWidget}>
+                        <ConfigurationBubble>
                             <KpiConfigurationPanel widget={kpiWidget} />
                         </ConfigurationBubble>
                     );

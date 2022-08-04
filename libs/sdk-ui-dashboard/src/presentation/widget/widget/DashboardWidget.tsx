@@ -6,7 +6,8 @@ import { DefaultDashboardWidget } from "./DefaultDashboardWidget";
 import { isDashboardWidget } from "@gooddata/sdk-model";
 import { CustomDashboardWidgetComponent, IDashboardWidgetProps } from "./types";
 import { WidgetDropZone } from "../../dragAndDrop";
-import { isInsightPlaceholderWidget } from "../../../widgets/placeholders/types";
+import { isKpiPlaceholderWidget, isPlaceholderWidget } from "../../../widgets/placeholders/types";
+import { DefaultDashboardKpiPlaceholderWidget } from "../kpiPlaceholder";
 
 const BadWidgetType: React.FC = () => {
     return <div>Missing renderer</div>;
@@ -43,8 +44,12 @@ export const DashboardWidget = (props: IDashboardWidgetProps): JSX.Element => {
             return Component;
         }
 
-        if (isInsightPlaceholderWidget(widget)) {
+        if (isPlaceholderWidget(widget)) {
             return WidgetDropZone;
+        }
+
+        if (isKpiPlaceholderWidget(widget)) {
+            return DefaultDashboardKpiPlaceholderWidget;
         }
 
         if (isDashboardWidget(widget)) {

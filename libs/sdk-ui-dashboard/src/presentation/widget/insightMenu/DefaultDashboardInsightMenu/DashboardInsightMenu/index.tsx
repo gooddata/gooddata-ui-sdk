@@ -36,7 +36,6 @@ export const DashboardInsightMenu: React.FC<IDashboardInsightMenuProps> = (props
 
     return isInEditMode ? (
         <ConfigurationBubble
-            widget={widget}
             classNames={cx(
                 "edit-insight-config",
                 "s-edit-insight-config",

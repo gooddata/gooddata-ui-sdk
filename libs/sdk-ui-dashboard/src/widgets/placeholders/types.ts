@@ -71,3 +71,50 @@ export function newInsightPlaceholderWidget(
         isLastInSection,
     }) as InsightPlaceholderWidget;
 }
+
+/**
+ * @alpha
+ */
+export interface PlaceholderWidget extends ICustomWidget {
+    readonly customType: "placeholder";
+    readonly sectionIndex: number;
+    readonly itemIndex: number;
+    readonly isLastInSection: boolean;
+}
+
+/**
+ * Tests whether an object is a {@link PlaceholderWidget}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export function isPlaceholderWidget(obj: unknown): obj is PlaceholderWidget {
+    return !isEmpty(obj) && (obj as PlaceholderWidget).customType === "placeholder";
+}
+
+/**
+ * @alpha
+ */
+export function newPlaceholderWidget(
+    sectionIndex: number,
+    itemIndex: number,
+    isLastInSection: boolean,
+): InsightPlaceholderWidget {
+    return newCustomWidget("__placeholder__", "placeholder", {
+        sectionIndex,
+        itemIndex,
+        isLastInSection,
+    }) as InsightPlaceholderWidget;
+}
+
+/**
+ * Tests whether an object is any type of placeholder widgets.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export function isAnyPlaceholderWidget(
+    obj: unknown,
+): obj is PlaceholderWidget | InsightPlaceholderWidget | KpiPlaceholderWidget {
+    return isPlaceholderWidget(obj) || isInsightPlaceholderWidget(obj) || isKpiPlaceholderWidget(obj);
+}

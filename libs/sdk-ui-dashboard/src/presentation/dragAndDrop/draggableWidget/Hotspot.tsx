@@ -14,8 +14,9 @@ import {
 } from "../../../model";
 import stringify from "json-stable-stringify";
 import { useDashboardDrop } from "../useDashboardDrop";
-import { getInsightSizeInfo } from "@gooddata/sdk-ui-ext";
 import { insightRef, insightTitle } from "@gooddata/sdk-model";
+import { isInsightDraggableListItem, isKpiPlaceholderDraggableItem } from "../types";
+import { getSizeInfo } from "../../../model/layout";
 
 interface IHotspotProps {
     sectionIndex: number;
@@ -35,47 +36,82 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
     const targetItemIndex = dropZoneType === "next" ? itemIndex + 1 : itemIndex;
 
     const [{ canDrop, isOver }, dropRef] = useDashboardDrop(
-        "insightListItem",
+        ["insightListItem", "kpi-placeholder"],
         {
-            drop: ({ insight }) => {
-                const sizeInfo = getInsightSizeInfo(insight, settings);
-                dispatchAndWaitFor(
-                    dispatch,
-                    addSectionItem(sectionIndex, targetItemIndex, {
-                        type: "IDashboardLayoutItem",
-                        widget: {
-                            type: "insight",
-                            insight: insightRef(insight),
-                            ignoreDashboardFilters: [],
-                            drills: [],
-                            title: insightTitle(insight),
-                            description: "",
-                            configuration: { hideTitle: false },
-                            properties: {},
-                        },
-                        size: {
-                            xl: {
-                                gridHeight: sizeInfo.height.default,
-                                gridWidth: sizeInfo.width.default!,
+            drop: (item) => {
+                if (isInsightDraggableListItem(item)) {
+                    const { insight } = item;
+                    const sizeInfo = getSizeInfo(settings, "insight", insight);
+                    dispatchAndWaitFor(
+                        dispatch,
+                        addSectionItem(sectionIndex, targetItemIndex, {
+                            type: "IDashboardLayoutItem",
+                            widget: {
+                                type: "insight",
+                                insight: insightRef(insight),
+                                ignoreDashboardFilters: [],
+                                drills: [],
+                                title: insightTitle(insight),
+                                description: "",
+                                configuration: { hideTitle: false },
+                                properties: {},
                             },
+                            size: {
+                                xl: {
+                                    gridHeight: sizeInfo.height.default,
+                                    gridWidth: sizeInfo.width.default!,
+                                },
+                            },
+                        }),
+                    ).then(() => {
+                        dispatch(placeholdersActions.clearWidgetPlaceholder());
+                    });
+                }
+                if (isKpiPlaceholderDraggableItem(item)) {
+                    const sizeInfo = getSizeInfo(settings, "kpi");
+                    const placeholderSpec: IWidgetPlaceholderSpec = {
+                        itemIndex: targetItemIndex,
+                        sectionIndex,
+                        size: {
+                            height: sizeInfo.height.default!,
+                            width: sizeInfo.width.default!,
                         },
-                    }),
-                ).then(() => {
-                    dispatch(placeholdersActions.clearWidgetPlaceholder());
-                });
-            },
-            hover: ({ insight }) => {
-                const sizeInfo = getInsightSizeInfo(insight, settings);
-                const placeholderSpec: IWidgetPlaceholderSpec = {
-                    itemIndex: targetItemIndex,
-                    sectionIndex,
-                    size: {
-                        height: sizeInfo.height.default!,
-                        width: sizeInfo.width.default!,
-                    },
-                };
-                if (stringify(placeholderSpec) !== stringify(widgetPlaceholder)) {
+                        type: "kpi",
+                    };
                     dispatch(placeholdersActions.setWidgetPlaceholder(placeholderSpec));
+                }
+            },
+            hover: (item) => {
+                if (isInsightDraggableListItem(item)) {
+                    const { insight } = item;
+                    const sizeInfo = getSizeInfo(settings, "insight", insight);
+                    const placeholderSpec: IWidgetPlaceholderSpec = {
+                        itemIndex: targetItemIndex,
+                        sectionIndex,
+                        size: {
+                            height: sizeInfo.height.default!,
+                            width: sizeInfo.width.default!,
+                        },
+                        type: "widget",
+                    };
+                    if (stringify(placeholderSpec) !== stringify(widgetPlaceholder)) {
+                        dispatch(placeholdersActions.setWidgetPlaceholder(placeholderSpec));
+                    }
+                }
+                if (isKpiPlaceholderDraggableItem(item)) {
+                    const sizeInfo = getSizeInfo(settings, "kpi");
+                    const placeholderSpec: IWidgetPlaceholderSpec = {
+                        itemIndex: targetItemIndex,
+                        sectionIndex,
+                        size: {
+                            height: sizeInfo.height.default!,
+                            width: sizeInfo.width.default!,
+                        },
+                        type: "widget",
+                    };
+                    if (stringify(placeholderSpec) !== stringify(widgetPlaceholder)) {
+                        dispatch(placeholdersActions.setWidgetPlaceholder(placeholderSpec));
+                    }
                 }
             },
         },

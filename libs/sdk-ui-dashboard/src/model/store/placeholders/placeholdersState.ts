@@ -10,6 +10,7 @@ export interface IWidgetPlaceholderSpec {
         width: number;
         height: number;
     };
+    type: "widget" | "insight" | "kpi";
 }
 
 /**

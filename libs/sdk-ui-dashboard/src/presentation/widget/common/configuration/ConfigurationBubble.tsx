@@ -1,11 +1,9 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
 import cx from "classnames";
-import { IWidget } from "@gooddata/sdk-model";
 import { ArrowDirections, ArrowOffsets, Bubble, IAlignPoint } from "@gooddata/sdk-ui-kit";
 
 interface IConfigurationBubbleProps {
-    widget: IWidget;
     classNames?: string;
     onClose?: () => void;
 }
@@ -33,21 +31,11 @@ const arrowDirections: ArrowDirections = {
 
 export const ConfigurationBubble: React.FC<IConfigurationBubbleProps> = (props) => {
     const { children, classNames, onClose } = props;
-    // const [configMenuDisplay, setConfigMenuDisplay] = useState(false);
 
     return (
         <Bubble
-            className={cx(
-                "bubble-light gd-configuration-bubble s-gd-configuration-bubble",
-                classNames,
-                // getEditInsightClassNames(widget, !configMenuDisplay),
-                {
-                    // "is-sticky": props.isSticky,
-                },
-            )}
-            overlayClassName={cx("gd-configuration-bubble-wrapper", {
-                // "is-sticky": props.isSticky,
-            })}
+            className={cx("bubble-light gd-configuration-bubble s-gd-configuration-bubble", classNames)}
+            overlayClassName="gd-configuration-bubble-wrapper"
             alignTo={".s-dash-item.is-selected"}
             alignPoints={alignPoints}
             arrowOffsets={arrowOffsets}
