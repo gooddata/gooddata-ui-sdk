@@ -1,12 +1,20 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { PureComponent } from "react";
-import { Button, Dialog, ConfirmDialog, ExportDialog, CommunityEditionDialog } from "@gooddata/sdk-ui-kit";
+import {
+    Button,
+    Dialog,
+    ConfirmDialog,
+    ExportDialog,
+    CommunityEditionDialog,
+    StylingEditorDialog,
+} from "@gooddata/sdk-ui-kit";
 import { storiesOf } from "../../../_infra/storyRepository";
 import { UiKit } from "../../../_infra/storyGroups";
 import { wrapWithTheme } from "../../themeWrapper";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "./styles.scss";
+import { IThemeMetadataObject } from "@gooddata/sdk-model";
 
 class DialogExamples extends PureComponent {
     state = {
@@ -17,6 +25,7 @@ class DialogExamples extends PureComponent {
         confirmDialogWithProgress: false,
         exportDialogOpen: false,
         communityDialogOpen: false,
+        stylingEditorOpen: false,
     };
 
     private onExportCancel = () => {
@@ -169,6 +178,61 @@ class DialogExamples extends PureComponent {
         );
     }
 
+    public renderStylingEditorDialogContent(): JSX.Element {
+        const theme = (color: string) => {
+            return {
+                palette: {
+                    primary: {
+                        base: color,
+                    },
+                    complementary: {
+                        c0: "#122330",
+                        c9: "#F0F8FF",
+                    },
+                },
+            };
+        };
+
+        return (
+            <StylingEditorDialog
+                title="Styling editor"
+                link={{
+                    text: "Documentation link.",
+                    url: "#",
+                }}
+                locale="en-US"
+                tooltip="Tooltip to describe examples usage."
+                stylingContent={
+                    {
+                        title: "Red theme",
+                        theme: theme("red"),
+                    } as IThemeMetadataObject
+                }
+                examples={[
+                    {
+                        title: "Green theme",
+                        theme: theme("green"),
+                    } as IThemeMetadataObject,
+                    {
+                        title: "Blue theme",
+                        theme: theme("blue"),
+                    } as IThemeMetadataObject,
+                ]}
+                exampleToColorPreview={() => [
+                    "#313441",
+                    "#FFFFFF",
+                    "#14B2E2",
+                    "#464E56",
+                    "#94A1AD",
+                    "#E2E7EC",
+                ]}
+                onSubmit={() => this.setState({ stylingEditorOpen: false })}
+                onCancel={() => this.setState({ stylingEditorOpen: false })}
+                onClose={() => this.setState({ stylingEditorOpen: false })}
+            />
+        );
+    }
+
     public renderDialogExample(): JSX.Element {
         return (
             <div id="dialog-example">
@@ -282,6 +346,21 @@ class DialogExamples extends PureComponent {
         );
     }
 
+    public renderStylingEditorDialog(): JSX.Element {
+        return (
+            <div id="styling-editor-dialog-example">
+                <Button
+                    value="Open styling editor dialog"
+                    className="gd-button-positive s-styling-editor-dialog-button"
+                    onClick={() => {
+                        this.setState({ stylingEditorOpen: !this.state.stylingEditorOpen });
+                    }}
+                />
+                {this.state.stylingEditorOpen && this.renderStylingEditorDialogContent()}
+            </div>
+        );
+    }
+
     public render(): JSX.Element {
         return (
             <div className="library-component screenshot-target">
@@ -305,6 +384,9 @@ class DialogExamples extends PureComponent {
 
                 <h4>Community edition dialog</h4>
                 {this.renderCommunityEditionDialogExample()}
+
+                <h4>Styling editor dialog</h4>
+                {this.renderStylingEditorDialog()}
             </div>
         );
     }
@@ -330,6 +412,11 @@ const communityEditionDialogProps = {
     postInteractionWait: 200,
 };
 
+const stylingEditorDialogProps = {
+    clickSelector: "#styling-editor-dialog-example button",
+    postInteractionWait: 200,
+};
+
 const screenshotProps = {
     dialog: {
         clickSelector: "#dialog-example button",
@@ -347,11 +434,13 @@ const screenshotProps = {
     "confirm-dialog-with-progress": confirmDialogWithProgressProps,
     "export-dialog": exportDialogProps,
     "community-edition-dialog": communityEditionDialogProps,
+    "styling-editor-dialog": stylingEditorDialogProps,
 };
 
 const screenshotPropsThemed = {
     "confirm-dialog-with-warning": confirmDialogWithWarningProps,
     "export-dialog": exportDialogProps,
+    "styling-editor-dialog": stylingEditorDialogProps,
 };
 
 storiesOf(`${UiKit}/Dialog`)

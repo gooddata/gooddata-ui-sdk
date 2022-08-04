@@ -18,3 +18,5 @@ export * from "./ShareDialog";
 export * from "./EmbedInsightDialog";
 
 export * from "./DialogList";
+
+export * from "./StylingEditorDialog";

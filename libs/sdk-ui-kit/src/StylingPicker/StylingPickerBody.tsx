@@ -3,10 +3,10 @@
 import React from "react";
 import { useIntl } from "react-intl";
 import { ObjRef } from "@gooddata/sdk-model";
-import { DialogListHeader } from "../Dialog";
+import { DialogListHeader, StylingPickerItem } from "../Dialog";
 import { DialogListLoading } from "../Dialog/DialogList/DialogListLoading";
 import { StylingPickerList } from "./StylingPickerList";
-import { StylingPickerItem, StylingPickerListItem } from "./StylingPickerListItem";
+import { StylingPickerListItem } from "./StylingPickerListItem";
 
 interface IStylingPickerBodyProps {
     isMobile: boolean;
