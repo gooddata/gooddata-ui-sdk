@@ -904,7 +904,7 @@ export interface ResizeWidth extends IDashboardCommand {
 }
 
 /**
- * Creates the ResizeHeight command.
+ * Creates the ResizeWidth command.
  *
  * @param sectionIndex - index of the section
  * @param itemIndex - index of the item

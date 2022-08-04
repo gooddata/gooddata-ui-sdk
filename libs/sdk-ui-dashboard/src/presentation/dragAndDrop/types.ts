@@ -103,7 +103,7 @@ export type DraggableContentItem =
 /**
  * @internal
  */
-export type DraggableInternalItem = HeightResizerDragItem;
+export type DraggableInternalItem = HeightResizerDragItem | WidthResizerDragItem;
 
 /**
  * @internal
@@ -143,7 +143,15 @@ export interface HeightResizerDragItem {
  * @internal
  */
 export interface WidthResizerDragItem {
-    type: "internal-height-resizer";
+    type: "internal-width-resizer";
+    sectionIndex: number;
+    itemIndex: number;
+    gridColumnWidth: number;
+    gridColumnHeightInPx: number;
+    currentWidth: number;
+    initialLayoutDimensions: DOMRect;
+    minLimit: number;
+    maxLimit: number;
 }
 
 /**

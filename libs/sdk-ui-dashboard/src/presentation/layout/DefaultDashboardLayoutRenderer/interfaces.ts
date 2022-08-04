@@ -265,6 +265,11 @@ export interface IDashboardLayoutWidgetRenderProps<TWidget = IDashboardWidget> {
     debug?: boolean;
 
     /**
+     * Get dimensions of layout container element
+     */
+    getLayoutDimensions: () => DOMRect;
+
+    /**
      * Default widget renderer - can be used as a fallback for custom widgetRenderer.
      */
     DefaultWidgetRenderer: IDashboardLayoutWidgetRenderer<TWidget>;

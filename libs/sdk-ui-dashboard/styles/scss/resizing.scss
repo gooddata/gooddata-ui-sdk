@@ -183,6 +183,7 @@ $gd-width-resizer-hotpost-height: 40px;
 }
 
 .gd-resize-bullets-bar {
+    position: absolute;
     display: flex;
     justify-content: space-between;
     width: 100%;

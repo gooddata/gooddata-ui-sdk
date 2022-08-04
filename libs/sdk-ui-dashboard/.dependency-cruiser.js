@@ -68,6 +68,8 @@ options = {
             "src/_staging/*",
             "src/model",
             "src/model/layout",
+            "src/presentation/layout/constants.ts",
+            "src/presentation/layout/DefaultDashboardLayoutRenderer/utils/sizing.ts",
             "src/model/react",
             "src/model/store/([^/]+)/.+Selectors.ts",
             "src/presentation/componentDefinition",

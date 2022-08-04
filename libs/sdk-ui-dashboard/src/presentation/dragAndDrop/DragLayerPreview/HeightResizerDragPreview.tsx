@@ -2,16 +2,16 @@
 import React, { useEffect, useState } from "react";
 
 import { HeightResizer } from "../Resize/HeightResizer";
-import clamp from "lodash/clamp";
 import { DragPreviewProps, ReachedHeightResizingLimit } from "./types";
 import { fluidLayoutDescriptor } from "@gooddata/sdk-ui-ext";
 
 import { HeightResizerDragItem } from "../types";
 import { useResizeHandlers } from "../LayoutResizeContext";
+import { getLimitedSize } from "./sizeLimiting";
 
-export type IHeightResizerDragPreviewProps = DragPreviewProps<HeightResizerDragItem>;
+export type HeightResizerDragPreviewProps = DragPreviewProps<HeightResizerDragItem>;
 
-export const HeightResizerDragPreview = (props: IHeightResizerDragPreviewProps) => {
+export const HeightResizerDragPreview = (props: HeightResizerDragPreviewProps) => {
     const { item, initialOffset, differenceFromInitialOffset, documentDimensions } = props;
     const [hasReachedLimit, setReachedLimit] = useState<ReachedHeightResizingLimit>("none");
 
@@ -94,14 +94,4 @@ export function getLimitedYCoord(
     const deltaY = fluidLayoutDescriptor.toHeightInPx(newSizeLimited - curPrimaryHeightGR);
 
     return absoluteY + deltaY;
-}
-
-export function getLimitedSize(
-    minimumSize: number,
-    maximumSize: number,
-    originalSize: number,
-    deltaSize: number,
-): number {
-    const newSize = originalSize + deltaSize;
-    return clamp(newSize, minimumSize, maximumSize);
 }

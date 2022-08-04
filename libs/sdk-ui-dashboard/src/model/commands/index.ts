@@ -164,6 +164,9 @@ export {
     ResizeHeight,
     ResizeHeightPayload,
     resizeHeight,
+    ResizeWidth,
+    ResizeWidthPayload,
+    resizeWidth,
 } from "./layout";
 
 export {
