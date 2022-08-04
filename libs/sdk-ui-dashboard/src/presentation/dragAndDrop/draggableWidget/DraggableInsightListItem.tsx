@@ -2,7 +2,12 @@
 import React from "react";
 import { useDashboardDrag } from "../useDashboardDrag";
 import classNames from "classnames";
-import { useDashboardSelector, selectIsInEditMode } from "../../../model";
+import {
+    useDashboardSelector,
+    selectIsInEditMode,
+    useDashboardDispatch,
+    placeholdersActions,
+} from "../../../model";
 import {
     CustomDashboardInsightListItemComponent,
     CustomDashboardInsightListItemComponentProps,
@@ -20,15 +25,25 @@ export function DraggableInsightListItem({
     listItemComponentProps,
     insight,
 }: DraggableInsightProps) {
+    const dispatch = useDashboardDispatch();
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
-    const [{ isDragging }, dragRef] = useDashboardDrag({
-        dragItem: {
-            type: "insightListItem",
-            insight,
+
+    const [{ isDragging }, dragRef] = useDashboardDrag(
+        {
+            dragItem: {
+                type: "insightListItem",
+                insight,
+            },
+            canDrag: isInEditMode,
+            hideDefaultPreview: false,
+            dragEnd: (_, monitor) => {
+                if (!monitor.didDrop()) {
+                    dispatch(placeholdersActions.clearWidgetPlaceholder());
+                }
+            },
         },
-        canDrag: isInEditMode,
-        hideDefaultPreview: false,
-    });
+        [isInEditMode, insight],
+    );
 
     return (
         <div className={classNames({ "is-dragging": isDragging })} ref={dragRef}>

@@ -13,24 +13,24 @@ export function DashboardLayoutEditSectionHeaderRenderer(
     const { section, screen } = props;
     const sectionHeader = section.header();
 
-    return sectionHeader ? (
+    return (
         <DashboardLayoutItemRenderer
             DefaultItemRenderer={DashboardLayoutItemRenderer}
             item={emptyItemFacadeWithFullSize}
             screen={screen}
         >
             <DashboardLayoutSectionHeader
-                title={sectionHeader.title}
-                description={sectionHeader.description}
+                title={sectionHeader?.title}
+                description={sectionHeader?.description}
                 renderBeforeHeader={<SectionHotspot index={section.index()} targetPosition="above" />}
                 renderHeader={
                     <SectionHeaderEditable
-                        title={sectionHeader.title || ""}
-                        description={sectionHeader.description || ""}
+                        title={sectionHeader?.title || ""}
+                        description={sectionHeader?.description || ""}
                         index={section.index()}
                     />
                 }
             />
         </DashboardLayoutItemRenderer>
-    ) : null;
+    );
 }

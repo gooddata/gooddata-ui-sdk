@@ -1971,6 +1971,7 @@ export interface DashboardState {
     meta: DashboardMetaState;
     // (undocumented)
     permissions: PermissionsState;
+    placeholders: PlaceholdersState;
     // @internal
     _queryCache: {
         [queryName: string]: any;
@@ -3533,9 +3534,15 @@ export type InsightMenuComponentProvider = (insight: IInsight, widget: IInsightW
 export type InsightMenuItemsProvider = (insight: IInsight, widget: IInsightWidget, defaultItems: IInsightMenuItem[], closeMenu: () => void, renderMode: RenderMode) => IInsightMenuItem[];
 
 // @alpha (undocumented)
-export interface InsightPlaceholderWidget extends ICustomWidgetBase {
+export interface InsightPlaceholderWidget extends ICustomWidget {
     // (undocumented)
     readonly customType: "insightPlaceholder";
+    // (undocumented)
+    readonly isLastInSection: boolean;
+    // (undocumented)
+    readonly itemIndex: number;
+    // (undocumented)
+    readonly sectionIndex: number;
 }
 
 // @alpha
@@ -3996,6 +4003,19 @@ export interface IUseInsightWidgetDataView {
 }
 
 // @alpha (undocumented)
+export interface IWidgetPlaceholderSpec {
+    // (undocumented)
+    itemIndex: number;
+    // (undocumented)
+    sectionIndex: number;
+    // (undocumented)
+    size: {
+        width: number;
+        height: number;
+    };
+}
+
+// @alpha (undocumented)
 export interface IXlsxExportConfig {
     // (undocumented)
     format: "xlsx";
@@ -4013,9 +4033,15 @@ export type KpiAlertDialogOpenedPayload = UserInteractionPayloadWithDataBase<"kp
 export type KpiComponentProvider = (kpi: IKpi, widget: IKpiWidget) => CustomDashboardKpiComponent;
 
 // @alpha (undocumented)
-export interface KpiPlaceholderWidget extends ICustomWidgetBase {
+export interface KpiPlaceholderWidget extends ICustomWidget {
     // (undocumented)
     readonly customType: "kpiPlaceholder";
+    // (undocumented)
+    readonly isLastInSection: boolean;
+    // (undocumented)
+    readonly itemIndex: number;
+    // (undocumented)
+    readonly sectionIndex: number;
 }
 
 // @alpha (undocumented)
@@ -4298,6 +4324,21 @@ export type OptionalWidgetComponentProvider = OptionalProvider<WidgetComponentPr
 export interface PermissionsState {
     // (undocumented)
     permissions?: IWorkspacePermissions;
+}
+
+// @internal
+export const placeholdersActions: CaseReducerActions<    {
+setWidgetPlaceholder: CaseReducer<PlaceholdersState, {
+payload: IWidgetPlaceholderSpec;
+type: string;
+}>;
+clearWidgetPlaceholder: CaseReducer<PlaceholdersState, AnyAction>;
+}>;
+
+// @alpha (undocumented)
+export interface PlaceholdersState {
+    // (undocumented)
+    widgetPlaceholder: IWidgetPlaceholderSpec | undefined;
 }
 
 // @internal
@@ -5216,6 +5257,9 @@ export const selectIsScheduleEmailManagementDialogOpen: OutputSelector<Dashboard
 // @alpha (undocumented)
 export const selectIsShareDialogOpen: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
 
+// @alpha (undocumented)
+export const selectIsWidgetPlaceholderShown: OutputSelector<DashboardState, boolean, (res: IWidgetPlaceholderSpec | undefined) => boolean>;
+
 // @alpha
 export const selectLayout: OutputSelector<DashboardState, IDashboardLayout<ExtendedDashboardWidget>, (res: LayoutState) => IDashboardLayout<ExtendedDashboardWidget>>;
 
@@ -5302,6 +5346,9 @@ itemIndex: number;
 
 // @alpha
 export const selectWidgetDrills: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IDrillToLegacyDashboard[] | InsightDrillDefinition[], (res: IKpiWidget | IInsightWidget | undefined) => IDrillToLegacyDashboard[] | InsightDrillDefinition[]>;
+
+// @alpha (undocumented)
+export const selectWidgetPlaceholder: OutputSelector<DashboardState, IWidgetPlaceholderSpec | undefined, (res: PlaceholdersState) => IWidgetPlaceholderSpec | undefined>;
 
 // @internal
 export const selectWidgets: OutputSelector<DashboardState, ExtendedDashboardWidget[], (res: IDashboardLayout<ExtendedDashboardWidget>) => ExtendedDashboardWidget[]>;

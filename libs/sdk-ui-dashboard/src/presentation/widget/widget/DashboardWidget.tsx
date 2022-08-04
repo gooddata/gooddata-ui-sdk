@@ -4,7 +4,9 @@ import { useDashboardComponentsContext } from "../../dashboardContexts";
 import { extendedWidgetDebugStr } from "../../../model";
 import { DefaultDashboardWidget } from "./DefaultDashboardWidget";
 import { isDashboardWidget } from "@gooddata/sdk-model";
-import { IDashboardWidgetProps } from "./types";
+import { CustomDashboardWidgetComponent, IDashboardWidgetProps } from "./types";
+import { WidgetDropZone } from "../../dragAndDrop";
+import { isInsightPlaceholderWidget } from "../../../widgets/placeholders/types";
 
 const BadWidgetType: React.FC = () => {
     return <div>Missing renderer</div>;
@@ -24,7 +26,7 @@ export const DashboardWidget = (props: IDashboardWidgetProps): JSX.Element => {
         // @ts-expect-error Don't expose index prop on public interface (we need it only for css class for KD tests)
         index,
     } = props;
-    const WidgetComponent = useMemo((): React.ComponentType<IDashboardWidgetProps> => {
+    const WidgetComponent = useMemo((): CustomDashboardWidgetComponent => {
         // TODO: we need to get rid of this; the widget being optional at this point is the problem; the parent
         //  components (or possibly the model) should deal with layout items that have no valid widgets associated
         //  and thus short-circuit.
@@ -36,8 +38,13 @@ export const DashboardWidget = (props: IDashboardWidgetProps): JSX.Element => {
 
         const Component = WidgetComponentProvider(widget);
 
-        if (Component) {
+        // the default WidgetComponentProvider always returns something, DefaultDashboardWidget by default
+        if (Component && Component !== DefaultDashboardWidget) {
             return Component;
+        }
+
+        if (isInsightPlaceholderWidget(widget)) {
+            return WidgetDropZone;
         }
 
         if (isDashboardWidget(widget)) {

@@ -17,6 +17,7 @@ import { IDrillTargets } from "./drillTargets/drillTargetsTypes";
 import { IExecutionResultEnvelope } from "./executionResults/types";
 import { UiState } from "./ui/uiState";
 import { LegacyDashboardsState } from "./legacyDashboards/legacyDashboardsState";
+import { PlaceholdersState } from "./placeholders/placeholdersState";
 
 /*
  * This explicit typing is unfortunate but cannot find better way. Normally the typings get inferred from store,
@@ -61,6 +62,11 @@ export interface DashboardState {
      * Ui state controllable from the outside.
      */
     ui: UiState;
+
+    /**
+     * State of temporary placeholders.
+     */
+    placeholders: PlaceholdersState;
 
     /**
      * Part of state where execution results of the individual widgets are stored.
