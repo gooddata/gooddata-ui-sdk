@@ -264,6 +264,8 @@
     "configurationPanel.noLinkableDashboards": "次にリンクされているダッシュボードはありません",
     "configurationPanel.selectDashboard": "ダッシュボードを選択",
     "configurationPanel.unlistedDashboardTab": "リストにないダッシュボード",
+    "configurationPanel.visualprops.sectionTitle": "タイトル",
+    "configurationPanel.visualprops.hideTitle": "タイトルを非表示",
     "gs.date.date-dataset.recommended": "お勧め",
     "gs.date.date-dataset.other": "その他",
     "gs.date.date-dataset.related": "関係する",
