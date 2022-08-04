@@ -27,6 +27,7 @@ import { DashboardLayoutFacade } from "../../../../_staging/dashboard/fluidLayou
 import {
     getDashboardLayoutWidgetMaxGridHeight,
     getDashboardLayoutWidgetMinGridHeight,
+    getDashboardLayoutWidgetMinGridWidth,
     getSizeInfo,
     MeasurableWidgetContent,
 } from "../../../../model/layout";
@@ -435,15 +436,6 @@ export function getDashboardLayoutItemMaxGridWidth(
     }
 
     return DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT - gridRowWidth;
-}
-
-export function getDashboardLayoutWidgetMinGridWidth(
-    settings: ISettings,
-    widgetType: AnalyticalWidgetType,
-    widgetContent?: MeasurableWidgetContent, // undefined for placeholders
-): number {
-    const sizeInfo = getSizeInfo(settings, widgetType, widgetContent);
-    return sizeInfo.width.min!;
 }
 
 export function getDashboardLayoutWidgetDefaultGridWidth(

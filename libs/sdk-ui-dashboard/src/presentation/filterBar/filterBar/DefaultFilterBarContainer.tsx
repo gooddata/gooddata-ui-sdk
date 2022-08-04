@@ -14,6 +14,7 @@ import {
 } from "../../../model";
 import { ShowAllFiltersButton } from "./ShowAllFiltersButton";
 import { DEFAULT_FILTER_BAR_HEIGHT } from "../../constants";
+import { BulletsBar } from "../../dragAndDrop";
 
 const DefaultFilterBarContainerCore: React.FC = ({ children }) => {
     const dispatch = useDashboardDispatch();
@@ -60,6 +61,7 @@ const DefaultFilterBarContainerCore: React.FC = ({ children }) => {
                 isVisible={!areFiltersHidden}
                 onToggle={(isExpanded) => setFilterBarExpanded(isExpanded)}
             />
+            <BulletsBar />
         </div>
     );
 };

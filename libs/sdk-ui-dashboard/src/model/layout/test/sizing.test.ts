@@ -4,9 +4,10 @@ import {
     getDashboardLayoutWidgetDefaultHeight,
     getDashboardLayoutWidgetMinGridHeight,
     getDashboardLayoutWidgetMaxGridHeight,
+    getDashboardLayoutWidgetMinGridWidth,
 } from "../sizing";
 import { VisType } from "@gooddata/sdk-ui";
-import { idRef, newInsightDefinition } from "@gooddata/sdk-model";
+import { AnalyticalWidgetType, idRef, newInsightDefinition } from "@gooddata/sdk-model";
 
 export const allVisTypes: VisType[] = [
     "area",
@@ -124,6 +125,53 @@ describe("sizing", () => {
             it("should get max height for unknown widget", () => {
                 expect(getDashboardLayoutWidgetMaxGridHeight(settings, "unknown" as any)).toMatchSnapshot();
             });
+        });
+    });
+
+    describe("getDashboardLayoutWidgetMinGridWidth", () => {
+        describe.each([false, true])("is independent on customHeight %s", (enableKDWidgetCustomHeight) => {
+            const settings = {
+                enableKDWidgetCustomHeight,
+            };
+            it("should get minimum width for uknown visType", () => {
+                expect(getDashboardLayoutWidgetMinGridWidth(settings, "insight")).toBe(4);
+            });
+
+            it("should get minimum width for kpi", () => {
+                expect(getDashboardLayoutWidgetMinGridWidth(settings, "kpi")).toBe(2);
+            });
+
+            type Scenario = [string, string, VisType | undefined, number];
+            const scenarios: Scenario[] = [
+                ["KPI", "kpi", undefined, 2],
+                ["Headline", "insight", "headline", 2],
+                ["Column Chart", "insight", "column", 4],
+                ["Bar Chart", "insight", "bar", 4],
+                ["Line Chart", "insight", "line", 4],
+                ["Area Chart", "insight", "area", 4],
+                ["Combo Chart", "insight", "combo", 4],
+                ["Combo2 Chart", "insight", "combo2", 4],
+                ["Scatter Plot", "insight", "scatter", 4],
+                ["Bubble Chart", "insight", "bubble", 4],
+                ["Pie Chart", "insight", "pie", 4],
+                ["Donut Chart", "insight", "donut", 4],
+                ["Treemap", "insight", "treemap", 4],
+                ["Heatmap", "insight", "heatmap", 4],
+                ["Table", "insight", "table", 3],
+                ["Geochart", "insight", "pushpin", 6],
+            ];
+            it.each(scenarios)(
+                "should get default height for %s found in widgets by qualifier",
+                (_name, widgetType, visType, width) => {
+                    expect(
+                        getDashboardLayoutWidgetMinGridWidth(
+                            settings,
+                            widgetType as AnalyticalWidgetType,
+                            newInsightDefinition(`local:${visType}`),
+                        ),
+                    ).toBe(width);
+                },
+            );
         });
     });
 });

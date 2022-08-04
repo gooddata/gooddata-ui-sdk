@@ -139,3 +139,20 @@ export function getMaxHeight(widgets: IWidget[], insightMap: ObjRefMap<IInsight>
         );
     return Math.min(...maxs);
 }
+
+export function getDashboardLayoutWidgetMinGridWidth(
+    settings: ISettings,
+    widgetType: AnalyticalWidgetType,
+    widgetContent?: MeasurableWidgetContent, // undefined for placeholders
+): number {
+    const sizeInfo = getSizeInfo(settings, widgetType, widgetContent);
+    return sizeInfo.width.min!;
+}
+
+export function getMinWidth(widget: IWidget, insightMap: ObjRefMap<IInsight>): number {
+    return getDashboardLayoutWidgetMinGridWidth(
+        { enableKDWidgetCustomHeight: true },
+        widgetType(widget),
+        isKpiWidget(widget) ? widget.kpi : insightMap.get(widget.insight),
+    );
+}

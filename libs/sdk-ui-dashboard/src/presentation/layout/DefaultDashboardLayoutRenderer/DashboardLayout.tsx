@@ -24,6 +24,7 @@ import {
 } from "./utils/sizing";
 import isEqual from "lodash/isEqual";
 import { DASHBOARD_LAYOUT_GRID_CONFIGURATION } from "../../constants";
+import { emptyDOMRect } from "../constants";
 
 setConfiguration(DASHBOARD_LAYOUT_GRID_CONFIGURATION);
 
@@ -57,6 +58,8 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
         renderMode = "view",
     } = props;
 
+    const layoutRef = React.useRef<HTMLDivElement>(null);
+
     const { layoutFacade, resizedItemPositions } = useMemo(() => {
         const updatedLayout = removeHeights(layout, !!enableCustomHeight);
         const layoutFacade = DashboardLayoutFacade.for(unifyDashboardLayoutItemHeights(updatedLayout));
@@ -79,6 +82,10 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
 
     const widgetRendererWrapped = useCallback<IDashboardLayoutWidgetRenderer<TWidget>>(
         (renderProps) => {
+            function getLayoutDimensions(): DOMRect {
+                return layoutRef?.current ? layoutRef.current.getBoundingClientRect() : emptyDOMRect;
+            }
+
             const isResizedByLayoutSizingStrategy = resizedItemPositions.some((position) =>
                 isEqual(position, [renderProps.item.section().index(), renderProps.item.index()]),
             );
@@ -88,12 +95,14 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
                     ...renderProps,
                     isResizedByLayoutSizingStrategy,
                     debug,
+                    getLayoutDimensions: getLayoutDimensions,
                 })
             ) : (
                 <renderProps.DefaultWidgetRenderer
                     {...renderProps}
                     debug={debug}
                     isResizedByLayoutSizingStrategy={isResizedByLayoutSizingStrategy}
+                    getLayoutDimensions={getLayoutDimensions}
                 />
             );
         },
@@ -104,6 +113,7 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
         <div
             className={cx("gd-fluidlayout-container", "s-fluid-layout-container", "gd-dashboards", className)}
             onMouseLeave={onMouseLeave}
+            ref={layoutRef}
         >
             <ScreenClassProvider useOwnWidth={false}>
                 <ScreenClassRender

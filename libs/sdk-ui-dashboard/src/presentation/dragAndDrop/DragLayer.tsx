@@ -5,10 +5,11 @@ import { HeightResizerDragPreview } from "./DragLayerPreview/HeightResizerDragPr
 import { DraggableInternalItemType, DraggableItemType, isDraggableInternalItemType } from "./types";
 import { ContentDragPreview } from "./DragLayerPreview/ContentDragPreview";
 import { useScrolling } from "./Resize/useScrolling";
+import { WidthResizerDragPreview } from "./DragLayerPreview/WidthResizerDragPreview";
 
 const previewComponentsMap: Record<DraggableInternalItemType, any> = {
     "internal-height-resizer": HeightResizerDragPreview,
-    "internal-width-resizer": () => undefined,
+    "internal-width-resizer": WidthResizerDragPreview,
 };
 
 export const DragLayerComponent: FC = () => {
@@ -24,8 +25,8 @@ export const DragLayerComponent: FC = () => {
     const { itemType, isDragging } = dragLayerProperties;
 
     const layerStyles: CSSProperties = useMemo(() => {
-        const isResizing = itemType === "internal-height-resizer" || itemType === "internal-width-resizer";
-        const position = isResizing ? "relative" : "fixed";
+        const isHeightResizing = itemType === "internal-height-resizer";
+        const position = isHeightResizing ? "relative" : "fixed";
 
         return {
             position,

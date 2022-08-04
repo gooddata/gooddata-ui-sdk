@@ -1,5 +1,5 @@
 // (C) 2020-2022 GoodData Corporation
-import React from "react";
+import React, { useRef } from "react";
 import {
     IInsight,
     AnalyticalWidgetType,
@@ -27,9 +27,11 @@ import {
 } from "./DefaultDashboardLayoutRenderer";
 import { ObjRefMap } from "../../_staging/metadata/objRefMap";
 import { useDashboardComponentsContext } from "../dashboardContexts";
-import { Hotspot, ResizeOverlay, useResizeStatus } from "../dragAndDrop";
+import { Hotspot, WidthResizerHotspot, ResizeOverlay, useResizeItemStatus } from "../dragAndDrop";
 import { getDashboardLayoutWidgetDefaultHeight } from "../../model/layout";
 import { isInsightPlaceholderWidget } from "../../widgets/placeholders/types";
+import { selectIsInEditMode } from "../../model/store/ui/uiSelectors";
+import { DEFAULT_COLUMN_CLIENT_WIDTH, DEFAULT_WIDTH_RESIZER_HEIGHT } from "./constants";
 
 function calculateWidgetMinHeight(
     widget: ExtendedDashboardWidget,
@@ -95,9 +97,12 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
     ExtendedDashboardWidget,
     Pick<IDashboardWidgetProps, "onError" | "onDrill" | "onFiltersChange">
 > = (props) => {
-    const { item, screen, DefaultWidgetRenderer, onDrill, onFiltersChange, onError } = props;
+    const { item, screen, DefaultWidgetRenderer, onDrill, onFiltersChange, onError, getLayoutDimensions } =
+        props;
+
     const insights = useDashboardSelector(selectInsightsMap);
     const settings = useDashboardSelector(selectSettings);
+    const isInEditMode = useDashboardSelector(selectIsInEditMode);
     const enableWidgetCustomHeight = useDashboardSelector(selectEnableWidgetCustomHeight);
 
     const { ErrorComponent, LoadingComponent } = useDashboardComponentsContext();
@@ -115,7 +120,28 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
     const className = enableWidgetCustomHeight ? "custom-height" : undefined;
     const index = getWidgetIndex(item);
 
-    const { isActive, isResizingColumnOrRow, heightLimitReached } = useResizeStatus(widget.identifier);
+    const { isActive, isResizingColumnOrRow, heightLimitReached, widthLimitReached } = useResizeItemStatus(
+        widget.identifier,
+    );
+
+    const contentRef = useRef<HTMLDivElement | null>(null);
+    function getWidthInPx(): number {
+        return contentRef?.current
+            ? contentRef.current.getBoundingClientRect().width
+            : DEFAULT_COLUMN_CLIENT_WIDTH;
+    }
+
+    function getHeightInPx(): number {
+        return contentRef?.current
+            ? contentRef.current.getBoundingClientRect().height
+            : DEFAULT_WIDTH_RESIZER_HEIGHT;
+    }
+
+    function getGridColumnWidth(): number {
+        const columnWidthInGC = item.sizeForScreen(screen)?.gridWidth as number;
+        const columnWidthInPx = getWidthInPx();
+        return columnWidthInPx / columnWidthInGC;
+    }
 
     return (
         <DefaultWidgetRenderer
@@ -126,6 +152,8 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
             height={height}
             minHeight={minHeight}
             className={className}
+            contentRef={contentRef}
+            getLayoutDimensions={getLayoutDimensions}
         >
             <DashboardWidget
                 // @ts-expect-error Don't expose index prop on public interface (we need it only for css class for KD tests)
@@ -138,23 +166,36 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                 ErrorComponent={ErrorComponent}
                 LoadingComponent={LoadingComponent}
             />
-            <ResizeOverlay
-                isActive={isActive}
-                isResizingColumnOrRow={isResizingColumnOrRow}
-                isUnderWidthMinLimit={false}
-                reachedHeightLimit={heightLimitReached}
-            />
-            {!isInsightPlaceholderWidget(widget) && (
+
+            {isInEditMode && (
                 <>
-                    <Hotspot
-                        dropZoneType="prev"
-                        itemIndex={item.index()}
-                        sectionIndex={item.section().index()}
+                    <ResizeOverlay
+                        isActive={isActive}
+                        isResizingColumnOrRow={isResizingColumnOrRow}
+                        isUnderWidthMinLimit={widthLimitReached}
+                        reachedHeightLimit={heightLimitReached}
                     />
-                    <Hotspot
-                        dropZoneType="next"
-                        itemIndex={item.index()}
-                        sectionIndex={item.section().index()}
+                    {!isInsightPlaceholderWidget(widget) && (
+                        <>
+                            <Hotspot
+                                dropZoneType="prev"
+                                itemIndex={item.index()}
+                                sectionIndex={item.section().index()}
+                            />
+                            <Hotspot
+                                dropZoneType="next"
+                                itemIndex={item.index()}
+                                sectionIndex={item.section().index()}
+                            />
+                        </>
+                    )}
+
+                    <WidthResizerHotspot
+                        item={item}
+                        screen={screen}
+                        getGridColumnHeightInPx={getHeightInPx}
+                        getGridColumnWidth={getGridColumnWidth}
+                        getLayoutDimensions={getLayoutDimensions}
                     />
                 </>
             )}

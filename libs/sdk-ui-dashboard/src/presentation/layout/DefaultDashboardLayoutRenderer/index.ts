@@ -31,7 +31,6 @@ export {
     getDashboardLayoutItemHeightForRatioAndScreen,
     getDashboardLayoutItemMaxGridWidth,
     getDashboardLayoutWidgetDefaultGridWidth,
-    getDashboardLayoutWidgetMinGridWidth,
     getDashboardLayoutItemHeightForGrid,
     getDashboardLayoutItemHeight,
     validateDashboardLayoutWidgetSize,
