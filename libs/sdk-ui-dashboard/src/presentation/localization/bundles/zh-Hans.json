@@ -264,6 +264,8 @@
     "configurationPanel.noLinkableDashboards": "没有控制面板链接至",
     "configurationPanel.selectDashboard": "选择控制面板",
     "configurationPanel.unlistedDashboardTab": "未列出的控制面板",
+    "configurationPanel.visualprops.sectionTitle": "标题",
+    "configurationPanel.visualprops.hideTitle": "隐藏标题",
     "gs.date.date-dataset.recommended": "已推荐",
     "gs.date.date-dataset.other": "其他",
     "gs.date.date-dataset.related": "相关",

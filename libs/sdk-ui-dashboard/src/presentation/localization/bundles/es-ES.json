@@ -264,6 +264,8 @@
     "configurationPanel.noLinkableDashboards": "No hay ningún panel con el que vincular",
     "configurationPanel.selectDashboard": "Seleccione un panel",
     "configurationPanel.unlistedDashboardTab": "Panel no listado",
+    "configurationPanel.visualprops.sectionTitle": "Título",
+    "configurationPanel.visualprops.hideTitle": "Ocultar título",
     "gs.date.date-dataset.recommended": "Recomendado",
     "gs.date.date-dataset.other": "Otros",
     "gs.date.date-dataset.related": "Relacionado",

@@ -264,6 +264,8 @@
     "configurationPanel.noLinkableDashboards": "Geen dashboard om te linken",
     "configurationPanel.selectDashboard": "Een dashboard selecteren",
     "configurationPanel.unlistedDashboardTab": "Niet-vermeld dashboard",
+    "configurationPanel.visualprops.sectionTitle": "titel",
+    "configurationPanel.visualprops.hideTitle": "Titel verbergen",
     "gs.date.date-dataset.recommended": "Aanbevolen",
     "gs.date.date-dataset.other": "Overige",
     "gs.date.date-dataset.related": "Verwant",

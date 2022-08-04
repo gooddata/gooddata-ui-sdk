@@ -264,6 +264,8 @@
     "configurationPanel.noLinkableDashboards": "Нет дашборда для ссылки",
     "configurationPanel.selectDashboard": "Выберите дашборд",
     "configurationPanel.unlistedDashboardTab": "Дашборд вне списка",
+    "configurationPanel.visualprops.sectionTitle": "Заголовок",
+    "configurationPanel.visualprops.hideTitle": "Скрыть заголовок",
     "gs.date.date-dataset.recommended": "Рекомендуемые",
     "gs.date.date-dataset.other": "Прочие",
     "gs.date.date-dataset.related": "Связанные",
