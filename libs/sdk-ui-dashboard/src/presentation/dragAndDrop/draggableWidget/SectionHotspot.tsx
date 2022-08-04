@@ -8,15 +8,17 @@ import {
     placeholdersActions,
     selectIsWidgetPlaceholderShown,
     selectSettings,
+    uiActions,
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../model";
 import { useDashboardDrop } from "../useDashboardDrop";
 import { SectionDropZoneBox } from "./SectionDropZoneBox";
 import { DashboardLayoutSectionBorderLine } from "./DashboardLayoutSectionBorder";
-import { insightRef, insightTitle } from "@gooddata/sdk-model";
+import { idRef, insightRef, insightTitle } from "@gooddata/sdk-model";
 import { isInsightDraggableListItem, isKpiPlaceholderDraggableItem } from "../../dragAndDrop/types";
 import { getSizeInfo } from "../../../model/layout";
+import { KPI_PLACEHOLDER_WIDGET_ID } from "../../../widgets/placeholders/types";
 
 export type RowPosition = "above" | "below";
 
@@ -67,6 +69,8 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
                     const sizeInfo = getSizeInfo(settings, "kpi");
 
                     dispatchAndWaitFor(dispatch, addLayoutSection(index, {})).then(() => {
+                        dispatch(uiActions.selectWidget(idRef(KPI_PLACEHOLDER_WIDGET_ID)));
+                        dispatch(uiActions.setConfigurationPanelOpened(true));
                         dispatch(
                             placeholdersActions.setWidgetPlaceholder({
                                 itemIndex: 0,

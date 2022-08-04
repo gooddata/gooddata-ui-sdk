@@ -11,12 +11,14 @@ import {
     selectWidgetPlaceholder,
     IWidgetPlaceholderSpec,
     dispatchAndWaitFor,
+    uiActions,
 } from "../../../model";
 import stringify from "json-stable-stringify";
 import { useDashboardDrop } from "../useDashboardDrop";
-import { insightRef, insightTitle } from "@gooddata/sdk-model";
+import { idRef, insightRef, insightTitle } from "@gooddata/sdk-model";
 import { isInsightDraggableListItem, isKpiPlaceholderDraggableItem } from "../types";
 import { getSizeInfo } from "../../../model/layout";
+import { KPI_PLACEHOLDER_WIDGET_ID } from "../../../widgets/placeholders/types";
 
 interface IHotspotProps {
     sectionIndex: number;
@@ -69,16 +71,19 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
                 }
                 if (isKpiPlaceholderDraggableItem(item)) {
                     const sizeInfo = getSizeInfo(settings, "kpi");
-                    const placeholderSpec: IWidgetPlaceholderSpec = {
-                        itemIndex: targetItemIndex,
-                        sectionIndex,
-                        size: {
-                            height: sizeInfo.height.default!,
-                            width: sizeInfo.width.default!,
-                        },
-                        type: "kpi",
-                    };
-                    dispatch(placeholdersActions.setWidgetPlaceholder(placeholderSpec));
+                    dispatch(uiActions.selectWidget(idRef(KPI_PLACEHOLDER_WIDGET_ID)));
+                    dispatch(uiActions.setConfigurationPanelOpened(true));
+                    dispatch(
+                        placeholdersActions.setWidgetPlaceholder({
+                            itemIndex: targetItemIndex,
+                            sectionIndex,
+                            size: {
+                                height: sizeInfo.height.default!,
+                                width: sizeInfo.width.default!,
+                            },
+                            type: "kpi",
+                        }),
+                    );
                 }
             },
             hover: (item) => {

@@ -1,21 +1,21 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
-import { insightRef, insightTitle } from "@gooddata/sdk-model";
+import { idRef, insightRef, insightTitle } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 
 import { CustomDashboardWidgetComponent } from "../../widget/types";
 import {
     addSectionItem,
     dispatchAndWaitFor,
-    IWidgetPlaceholderSpec,
     placeholdersActions,
     selectSettings,
+    uiActions,
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../model";
 import { useDashboardDrop } from "../useDashboardDrop";
 import { WidgetDropZoneBox } from "./WidgetDropZoneBox";
-import { isPlaceholderWidget } from "../../../widgets/placeholders/types";
+import { isPlaceholderWidget, KPI_PLACEHOLDER_WIDGET_ID } from "../../../widgets/placeholders/types";
 import { isInsightDraggableListItem, isKpiPlaceholderDraggableItem } from "../types";
 import { getSizeInfo } from "../../../model/layout";
 
@@ -62,16 +62,19 @@ export const WidgetDropZone: CustomDashboardWidgetComponent = (props) => {
                 }
                 if (isKpiPlaceholderDraggableItem(item)) {
                     const sizeInfo = getSizeInfo(settings, "kpi");
-                    const placeholderSpec: IWidgetPlaceholderSpec = {
-                        itemIndex,
-                        sectionIndex,
-                        size: {
-                            height: sizeInfo.height.default!,
-                            width: sizeInfo.width.default!,
-                        },
-                        type: "kpi",
-                    };
-                    dispatch(placeholdersActions.setWidgetPlaceholder(placeholderSpec));
+                    dispatch(uiActions.selectWidget(idRef(KPI_PLACEHOLDER_WIDGET_ID)));
+                    dispatch(uiActions.setConfigurationPanelOpened(true));
+                    dispatch(
+                        placeholdersActions.setWidgetPlaceholder({
+                            itemIndex,
+                            sectionIndex,
+                            size: {
+                                height: sizeInfo.height.default!,
+                                width: sizeInfo.width.default!,
+                            },
+                            type: "kpi",
+                        }),
+                    );
                 }
             },
         },

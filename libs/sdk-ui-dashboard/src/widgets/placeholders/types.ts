@@ -23,6 +23,11 @@ export function isKpiPlaceholderWidget(obj: unknown): obj is KpiPlaceholderWidge
 }
 
 /**
+ * @internal
+ */
+export const KPI_PLACEHOLDER_WIDGET_ID = "__kpiPlaceholder__";
+
+/**
  * @alpha
  */
 export function newKpiPlaceholderWidget(
@@ -30,7 +35,7 @@ export function newKpiPlaceholderWidget(
     itemIndex: number,
     isLastInSection: boolean,
 ): KpiPlaceholderWidget {
-    return newCustomWidget("__kpiPlaceholder__", "kpiPlaceholder", {
+    return newCustomWidget(KPI_PLACEHOLDER_WIDGET_ID, "kpiPlaceholder", {
         sectionIndex,
         itemIndex,
         isLastInSection,
@@ -58,6 +63,11 @@ export function isInsightPlaceholderWidget(obj: unknown): obj is InsightPlacehol
 }
 
 /**
+ * @internal
+ */
+export const INSIGHT_PLACEHOLDER_WIDGET_ID = "__insightPlaceholder__";
+
+/**
  * @alpha
  */
 export function newInsightPlaceholderWidget(
@@ -65,7 +75,7 @@ export function newInsightPlaceholderWidget(
     itemIndex: number,
     isLastInSection: boolean,
 ): InsightPlaceholderWidget {
-    return newCustomWidget("__insightPlaceholder__", "insightPlaceholder", {
+    return newCustomWidget(INSIGHT_PLACEHOLDER_WIDGET_ID, "insightPlaceholder", {
         sectionIndex,
         itemIndex,
         isLastInSection,
@@ -93,6 +103,11 @@ export function isPlaceholderWidget(obj: unknown): obj is PlaceholderWidget {
 }
 
 /**
+ * @internal
+ */
+export const PLACEHOLDER_WIDGET_ID = "__placeholder__";
+
+/**
  * @alpha
  */
 export function newPlaceholderWidget(
@@ -100,7 +115,7 @@ export function newPlaceholderWidget(
     itemIndex: number,
     isLastInSection: boolean,
 ): InsightPlaceholderWidget {
-    return newCustomWidget("__placeholder__", "placeholder", {
+    return newCustomWidget(PLACEHOLDER_WIDGET_ID, "placeholder", {
         sectionIndex,
         itemIndex,
         isLastInSection,
