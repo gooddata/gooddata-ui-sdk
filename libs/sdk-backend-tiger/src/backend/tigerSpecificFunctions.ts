@@ -259,7 +259,7 @@ export type TigerSpecificFunctions = {
     createWorkspace?: (id: string, name: string) => Promise<string>;
     deleteWorkspace?: (id: string) => Promise<void>;
     canDeleteWorkspace?: (id: string) => Promise<boolean>;
-    getWorkspaceLogicalModel?: (id: string) => Promise<DeclarativeLogicalModel>;
+    getWorkspaceLogicalModel?: (id: string, includeParents?: boolean) => Promise<DeclarativeLogicalModel>;
     getEntitlements?: () => Promise<Array<Entitlement>>;
     putWorkspaceLayout?: (requestParameters: PutWorkspaceLayoutRequest) => Promise<void>;
     getAllDataSources?: () => Promise<IDataSourceConnectionInfo[]>;
@@ -619,10 +619,10 @@ export const buildTigerSpecificFunctions = (
             return true;
         }
     },
-    getWorkspaceLogicalModel: async (workspaceId: string) => {
+    getWorkspaceLogicalModel: async (workspaceId: string, includeParents: boolean = false) => {
         try {
             return await authApiCall(async (sdk) => {
-                const result = await sdk.declarativeLayout.getLogicalModel({ workspaceId });
+                const result = await sdk.declarativeLayout.getLogicalModel({ workspaceId, includeParents });
                 return result.data;
             });
         } catch (error) {
