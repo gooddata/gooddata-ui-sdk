@@ -7,14 +7,14 @@ $attribute-filter-drag-handle-left: 10px;
     position: relative;
 
     .show-all {
+        display: none;
+    }
+    .show-all:last-child {
         position: absolute;
         bottom: -25px;
         left: 50%;
+        display: block;
         transform: translateX(-50%);
-
-        @media #{$xsmall-only}, #{$small-only} {
-            display: none;
-        }
     }
 }
 
@@ -65,29 +65,56 @@ $attribute-filter-drag-handle-left: 10px;
 }
 
 .dash-filters-visible {
+    position: relative;
     overflow-y: hidden;
     padding: 0 15px;
     border-bottom: $nav-border;
     border-bottom-color: var(--gd-dashboards-filterBar-borderColor, $gd-border-color);
     background-color: $gd-dashboards-filterBar-backgroundColor;
     transition: height $transition-length;
+    max-height: 50vh;
+
+    &.scrollable {
+        overflow-y: auto;
+    }
+
+    .dash-filters-rows {
+        position: absolute;
+        top: 0;
+        right: 15px;
+        left: 15px;
+        display: flex;
+        flex-direction: column;
+        pointer-events: none;
+
+        .dash-filters-row {
+            width: 100%;
+            background-image: linear-gradient(
+                to right,
+                var(--gd-dashboards-filterBar-borderColor, $gd-border-color) 15%,
+                rgba(255, 255, 255, 0) 0%
+            );
+            background-position: bottom;
+            background-size: 4px 1px;
+            background-repeat: repeat-x;
+        }
+        .dash-filters-row:last-child {
+            background: none;
+        }
+    }
 }
 
 .dash-filters-all {
+    position: relative;
     display: flex;
-    align-items: center;
+    align-items: stretch;
     flex-wrap: wrap;
-    width: 100%;
+    width: calc(100% - $scrollbar-width);
     min-height: $filter-bar-height;
-    background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/filter-bar-background.svg");
-    background-repeat: repeat;
+    margin-right: $scrollbar-width;
 
     .dash-filters-attribute {
         position: relative;
-    }
-
-    @media #{$xsmall-only}, #{$small-only} {
-        flex-wrap: nowrap;
     }
 }
 
@@ -162,14 +189,14 @@ $attribute-filter-drag-handle-left: 10px;
 
 .attr-filter-dropzone-box-outer {
     display: flex;
-    align-items: center;
-    height: $filter-bar-height;
+    align-items: stretch;
 }
 
 .attr-filter-dropzone-box {
     display: flex;
     min-width: 160px;
-    height: 30px;
+    height: calc(100% - ($filter-bar-height - $filter-bar-drop-zone-height));
+    margin: calc(($filter-bar-height - $filter-bar-drop-zone-height) / 2) 0;
     padding: 3px;
     border: 2px dashed var(--gd-palette-complementary-3, transparentize($default-gd-color-disabled, 0.55));
     color: $gd-color-state-blank;
@@ -190,7 +217,7 @@ $attribute-filter-drag-handle-left: 10px;
         text-transform: uppercase;
         border-radius: 3px;
         justify-content: center;
-        align-items: flex-start;
+        align-items: center;
 
         .attribute-filter-icon {
             margin: 0 4px;

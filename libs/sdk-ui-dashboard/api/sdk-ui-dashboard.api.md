@@ -5167,9 +5167,6 @@ export const selectExecutionResultByRef: (ref: ObjRef) => OutputSelector<Dashboa
 // @alpha (undocumented)
 export const selectFilterBarExpanded: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
 
-// @internal (undocumented)
-export const selectFilterBarHeight: OutputSelector<DashboardState, number, (res: UiState) => number>;
-
 // @public
 export const selectFilterContextAttributeFilterByDisplayForm: (displayForm: ObjRef) => OutputSelector<DashboardState, IDashboardAttributeFilter | undefined, (res1: ObjRefMap<IAttributeDisplayFormMetadataObject>, res2: IDashboardAttributeFilter[]) => IDashboardAttributeFilter | undefined>;
 
@@ -5510,10 +5507,6 @@ openScheduleEmailManagementDialog: CaseReducer<UiState, AnyAction>;
 closeScheduleEmailManagementDialog: CaseReducer<UiState, AnyAction>;
 openSaveAsDialog: CaseReducer<UiState, AnyAction>;
 closeSaveAsDialog: CaseReducer<UiState, AnyAction>;
-setFilterBarHeight: CaseReducer<UiState, {
-payload: number;
-type: string;
-}>;
 setFilterBarExpanded: CaseReducer<UiState, {
 payload: boolean;
 type: string;
@@ -5568,7 +5561,6 @@ export interface UiState {
     };
     // (undocumented)
     filterBar: {
-        height: number;
         expanded: boolean;
     };
     // (undocumented)

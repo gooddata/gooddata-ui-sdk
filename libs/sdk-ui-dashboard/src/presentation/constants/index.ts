@@ -2,5 +2,4 @@
 
 export * from "./zIndex";
 export * from "./layout";
-export * from "./filterBar";
 export * from "./dashboard";

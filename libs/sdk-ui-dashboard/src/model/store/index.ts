@@ -197,7 +197,6 @@ export {
     selectIsSaveAsDialogOpen,
     selectIsShareDialogOpen,
     selectFilterBarExpanded,
-    selectFilterBarHeight,
     selectIsKpiAlertOpenedByWidgetRef,
     selectIsKpiAlertHighlightedByWidgetRef,
     selectMenuButtonItemsVisibility,
