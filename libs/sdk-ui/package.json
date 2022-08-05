@@ -128,6 +128,7 @@
         "tsd": "^0.21.0",
         "typescript": "4.0.2",
         "@testing-library/react": "12.1.5",
-        "@testing-library/jest-dom": "5.12.0"
+        "@testing-library/jest-dom": "5.12.0",
+        "@testing-library/user-event": "^14.4.2"
     }
 }

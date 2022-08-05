@@ -1,7 +1,8 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { withExecutionLoading, IWithExecutionLoading, WithLoadingResult } from "../withExecutionLoading";
-import { render, fireEvent } from "@testing-library/react";
+import { render } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { IDummyPromise, createDummyPromise } from "../../base/react/tests/toolkit";
 import { DataViewFacade } from "../../base";
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
@@ -76,8 +77,8 @@ describe("withLoading", () => {
     it("should start loading again after invoking injected fetch function", async () => {
         const { getByText } = renderEnhancedComponent({ delay: 100 });
         await createDummyPromise({ delay: 150 });
-        fireEvent.click(getByText("Refetch"));
-
+        userEvent.setup();
+        await userEvent.click(getByText("Refetch"));
         expect(getByText("Loading")).toBeInTheDocument();
     });
 
