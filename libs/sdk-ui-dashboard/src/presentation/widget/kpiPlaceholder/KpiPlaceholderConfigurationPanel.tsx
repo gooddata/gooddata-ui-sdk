@@ -72,7 +72,7 @@ export const KpiPlaceholderConfigurationPanel: React.FC<IKpiPlaceholderConfigura
                         comparisonDirection: "growIsGood",
                     },
                     title: measure.measure.title,
-                    dateDataSet: undefined, // TODO preselect the default dataset somehow
+                    dateDataSet: undefined, // the dataset is preselected elsewhere
                 },
             });
         },

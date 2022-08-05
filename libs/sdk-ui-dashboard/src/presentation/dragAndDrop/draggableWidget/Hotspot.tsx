@@ -3,21 +3,19 @@ import React from "react";
 import cx from "classnames";
 import { getDropZoneDebugStyle } from "../debug";
 import {
-    addSectionItem,
     selectSettings,
     useDashboardDispatch,
     useDashboardSelector,
     placeholdersActions,
     selectWidgetPlaceholder,
     IWidgetPlaceholderSpec,
-    dispatchAndWaitFor,
 } from "../../../model";
 import stringify from "json-stable-stringify";
 import { useDashboardDrop } from "../useDashboardDrop";
-import { insightRef, insightTitle } from "@gooddata/sdk-model";
 import { isInsightDraggableListItem, isKpiPlaceholderDraggableItem } from "../types";
 import { getSizeInfo } from "../../../model/layout";
 import { useKpiPlaceholderDropHandler } from "./useKpiPlaceholderDropHandler";
+import { useInsightPlaceholderDropHandler } from "./useInsightPlaceholderDropHandler";
 
 interface IHotspotProps {
     sectionIndex: number;
@@ -36,6 +34,7 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
     // for "next" we need to add the item after the current index, for "prev" on the current one
     const targetItemIndex = dropZoneType === "next" ? itemIndex + 1 : itemIndex;
 
+    const handleInsightPlaceholderDrop = useInsightPlaceholderDropHandler();
     const handleKpiPlaceholderDrop = useKpiPlaceholderDropHandler();
 
     const [{ canDrop, isOver }, dropRef] = useDashboardDrop(
@@ -43,32 +42,7 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
         {
             drop: (item) => {
                 if (isInsightDraggableListItem(item)) {
-                    const { insight } = item;
-                    const sizeInfo = getSizeInfo(settings, "insight", insight);
-                    dispatchAndWaitFor(
-                        dispatch,
-                        addSectionItem(sectionIndex, targetItemIndex, {
-                            type: "IDashboardLayoutItem",
-                            widget: {
-                                type: "insight",
-                                insight: insightRef(insight),
-                                ignoreDashboardFilters: [],
-                                drills: [],
-                                title: insightTitle(insight),
-                                description: "",
-                                configuration: { hideTitle: false },
-                                properties: {},
-                            },
-                            size: {
-                                xl: {
-                                    gridHeight: sizeInfo.height.default,
-                                    gridWidth: sizeInfo.width.default!,
-                                },
-                            },
-                        }),
-                    ).then(() => {
-                        dispatch(placeholdersActions.clearWidgetPlaceholder());
-                    });
+                    handleInsightPlaceholderDrop(sectionIndex, targetItemIndex, item.insight);
                 }
                 if (isKpiPlaceholderDraggableItem(item)) {
                     handleKpiPlaceholderDrop(sectionIndex, targetItemIndex);
@@ -108,7 +82,15 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
                 }
             },
         },
-        [dispatch, widgetPlaceholder, settings, targetItemIndex, sectionIndex, handleKpiPlaceholderDrop],
+        [
+            dispatch,
+            widgetPlaceholder,
+            settings,
+            targetItemIndex,
+            sectionIndex,
+            handleKpiPlaceholderDrop,
+            handleInsightPlaceholderDrop,
+        ],
     );
 
     const debugStyle = getDropZoneDebugStyle({ isOver });

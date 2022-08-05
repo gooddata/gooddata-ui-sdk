@@ -1,23 +1,15 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
-import { insightRef, insightTitle } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 
 import { CustomDashboardWidgetComponent } from "../../widget/types";
-import {
-    addSectionItem,
-    dispatchAndWaitFor,
-    placeholdersActions,
-    selectSettings,
-    useDashboardDispatch,
-    useDashboardSelector,
-} from "../../../model";
+import { selectSettings, useDashboardDispatch, useDashboardSelector } from "../../../model";
 import { useDashboardDrop } from "../useDashboardDrop";
 import { WidgetDropZoneBox } from "./WidgetDropZoneBox";
 import { isPlaceholderWidget } from "../../../widgets/placeholders/types";
 import { isInsightDraggableListItem, isKpiPlaceholderDraggableItem } from "../types";
-import { getSizeInfo } from "../../../model/layout";
 import { useKpiPlaceholderDropHandler } from "./useKpiPlaceholderDropHandler";
+import { useInsightPlaceholderDropHandler } from "./useInsightPlaceholderDropHandler";
 
 export const WidgetDropZone: CustomDashboardWidgetComponent = (props) => {
     const { widget } = props;
@@ -28,6 +20,7 @@ export const WidgetDropZone: CustomDashboardWidgetComponent = (props) => {
     const dispatch = useDashboardDispatch();
     const settings = useDashboardSelector(selectSettings);
 
+    const handleInsightPlaceholderDrop = useInsightPlaceholderDropHandler();
     const handleKpiPlaceholderDrop = useKpiPlaceholderDropHandler();
 
     const [, dropRef] = useDashboardDrop(
@@ -35,32 +28,7 @@ export const WidgetDropZone: CustomDashboardWidgetComponent = (props) => {
         {
             drop: (item) => {
                 if (isInsightDraggableListItem(item)) {
-                    const { insight } = item;
-                    const sizeInfo = getSizeInfo(settings, "insight", insight);
-                    dispatchAndWaitFor(
-                        dispatch,
-                        addSectionItem(sectionIndex, itemIndex, {
-                            type: "IDashboardLayoutItem",
-                            widget: {
-                                type: "insight",
-                                insight: insightRef(insight),
-                                ignoreDashboardFilters: [],
-                                drills: [],
-                                title: insightTitle(insight),
-                                description: "",
-                                configuration: { hideTitle: false },
-                                properties: {},
-                            },
-                            size: {
-                                xl: {
-                                    gridHeight: sizeInfo.height.default,
-                                    gridWidth: sizeInfo.width.default!,
-                                },
-                            },
-                        }),
-                    ).then(() => {
-                        dispatch(placeholdersActions.clearWidgetPlaceholder());
-                    });
+                    handleInsightPlaceholderDrop(sectionIndex, itemIndex, item.insight);
                 }
                 if (isKpiPlaceholderDraggableItem(item)) {
                     handleKpiPlaceholderDrop(sectionIndex, itemIndex);
