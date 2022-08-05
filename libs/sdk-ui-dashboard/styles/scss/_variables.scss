@@ -21,6 +21,8 @@ $gd-color-negative-dimmed: mix($gd-color-negative, $default-gd-color-text-light,
 $grey-background: #eceff3;
 $darker-grey-background: var(--gd-palette-complementary-7, #b4c0cf);
 
+$scrollbar-width: 15px;
+
 $item-border: 2px;
 $item-min-height: 178px;
 $item-inner-padding: 8px;
@@ -41,6 +43,7 @@ $button-grey-background: var(--gd-palette-complementary-2, #ebeff4);
 $gd-dashboards-content-backgroundColor: var(--gd-dashboards-content-backgroundColor, $gd-color-white);
 
 $filter-bar-height: 55px;
+$filter-bar-drop-zone-height: 30px;
 
 $gd-dashboards-filterBar-backgroundColor: var(--gd-dashboards-filterBar-backgroundColor, $gd-color-white);
 
@@ -83,7 +86,7 @@ $gd-configuration-bubble-height: 450px;
 $gd-configuration-bubble-width: 251px;
 $gd-configuration-bubble-borders-width: 2px;
 $gd-configuration-bubble-margin: 15px;
-$gd-configuration-right-scrollbar-spacer: 15px;
+$gd-configuration-right-scrollbar-spacer: $scrollbar-width;
 $gd-configuration-panel-inner-width: $gd-configuration-bubble-width - $gd-configuration-bubble-borders-width -
     (2 * $gd-configuration-bubble-margin) - $gd-configuration-right-scrollbar-spacer;
 

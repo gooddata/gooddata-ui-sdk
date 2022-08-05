@@ -24,7 +24,6 @@ export interface UiState {
         open: boolean;
     };
     filterBar: {
-        height: number;
         expanded: boolean;
     };
     kpiAlerts: {
@@ -58,7 +57,6 @@ export const uiInitialState: UiState = {
         open: false,
     },
     filterBar: {
-        height: 0,
         expanded: false,
     },
     kpiAlerts: {

@@ -1,68 +1,75 @@
 // (C) 2021-2022 GoodData Corporation
-import React from "react";
+import React, { useRef } from "react";
 import Measure from "react-measure";
 import cx from "classnames";
 
 import { IntlWrapper } from "../../localization";
-import {
-    selectFilterBarExpanded,
-    selectFilterBarHeight,
-    selectLocale,
-    uiActions,
-    useDashboardDispatch,
-    useDashboardSelector,
-} from "../../../model";
-import { ShowAllFiltersButton } from "./ShowAllFiltersButton";
-import { DEFAULT_FILTER_BAR_HEIGHT } from "../../constants";
+import { selectLocale, useDashboardSelector } from "../../../model";
+
 import { BulletsBar } from "../../dragAndDrop";
+import { ShowAllFiltersButton } from "./ShowAllFiltersButton";
+import { useRowsCalculator, CalculatedRows } from "./hooks/useRowsCalculator";
+import { useFilterBarState } from "./hooks/useFilterBarState";
 
 const DefaultFilterBarContainerCore: React.FC = ({ children }) => {
-    const dispatch = useDashboardDispatch();
-    const filterBarHeight = useDashboardSelector(selectFilterBarHeight);
-    const filterBarExpanded = useDashboardSelector(selectFilterBarExpanded);
-
-    const setFilterBarExpanded = (isExpanded: boolean) =>
-        dispatch(uiActions.setFilterBarExpanded(isExpanded));
-    const setFilterBarHeight = (height: number) => dispatch(uiActions.setFilterBarHeight(height));
-
-    const onAttributeFilterBarHeightChange = (val: number) => {
-        if (val !== filterBarHeight) {
-            setFilterBarHeight(val);
-        }
-    };
-
-    const areFiltersHidden = Math.round(filterBarHeight) <= DEFAULT_FILTER_BAR_HEIGHT;
-
-    const dashFiltersVisibleStyle = {
-        height: filterBarExpanded ? filterBarHeight : DEFAULT_FILTER_BAR_HEIGHT,
-    };
+    const { rows, height, isFilterBarExpanded, scrollable, setFilterBarExpanded, setCalculatedRows } =
+        useFilterBarState();
 
     return (
         <div className="dash-filters-wrapper s-gd-dashboard-filter-bar">
             <div
+                style={{ height }}
                 className={cx("dash-filters-visible", {
-                    "s-dash-filters-visible-all": filterBarExpanded,
+                    scrollable: scrollable,
+                    "s-dash-filters-visible-all": isFilterBarExpanded,
                 })}
-                style={dashFiltersVisibleStyle}
             >
-                <Measure
-                    bounds
-                    onResize={(dimensions) => onAttributeFilterBarHeightChange(dimensions.bounds!.height)}
-                >
-                    {({ measureRef }) => (
-                        <div className="dash-filters-all" ref={measureRef}>
-                            {children}
-                        </div>
-                    )}
-                </Measure>
+                <AllFiltersContainer setCalculatedRows={setCalculatedRows}>{children}</AllFiltersContainer>
+                <FiltersRows rows={rows} />
             </div>
             <ShowAllFiltersButton
-                isFilterBarExpanded={filterBarExpanded}
-                isVisible={!areFiltersHidden}
+                isFilterBarExpanded={isFilterBarExpanded}
+                isVisible={rows.length > 1}
                 onToggle={(isExpanded) => setFilterBarExpanded(isExpanded)}
             />
             <BulletsBar />
         </div>
+    );
+};
+
+const AllFiltersContainer: React.FC<{ setCalculatedRows: (data: CalculatedRows) => void }> = ({
+    setCalculatedRows,
+    children,
+}) => {
+    const ref = useRef<Element | null>(null);
+    const rowCalculator = useRowsCalculator(ref);
+
+    return (
+        <Measure
+            bounds
+            innerRef={(rf) => (ref.current = rf)}
+            onResize={(dimensions) => setCalculatedRows(rowCalculator(dimensions))}
+        >
+            {({ measureRef }) => (
+                <div className="dash-filters-all" ref={measureRef}>
+                    {children}
+                </div>
+            )}
+        </Measure>
+    );
+};
+
+const FiltersRows: React.FC<{ rows: number[] }> = ({ rows }) => {
+    return (
+        <>
+            {rows.length > 1 && (
+                <div className="dash-filters-rows">
+                    {rows.map((height, index) => (
+                        <div className="dash-filters-row" style={{ height }} key={index} />
+                    ))}
+                </div>
+            )}
+        </>
     );
 };
 

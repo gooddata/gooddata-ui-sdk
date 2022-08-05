@@ -54,10 +54,6 @@ const closeDeleteDialog: UiReducer = (state) => {
     state.deleteDialog.open = false;
 };
 
-const setFilterBarHeight: UiReducer<PayloadAction<number>> = (state, action) => {
-    state.filterBar.height = action.payload;
-};
-
 const setFilterBarExpanded: UiReducer<PayloadAction<boolean>> = (state, action) => {
     state.filterBar.expanded = action.payload;
 };
@@ -118,7 +114,6 @@ export const uiReducers = {
     closeScheduleEmailManagementDialog,
     openSaveAsDialog,
     closeSaveAsDialog,
-    setFilterBarHeight,
     setFilterBarExpanded,
     closeKpiAlertDialog,
     openKpiAlertDialog,
