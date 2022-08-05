@@ -1,11 +1,8 @@
 // (C) 2020-2022 GoodData Corporation
 import React from "react";
-
-// import { AppState } from "../../../../../../modules/Core/typings/state";
-// import { getWorkspaceDataProductId } from "../../../../../../modules/Bootstrap";
-
 import { ParameterDetail } from "./ParameterDetail";
 import { useIntl } from "react-intl";
+import { useClientWorkspaceIdentifiers } from "@gooddata/sdk-ui";
 
 interface IdentifierDetailProps {
     title: string;
@@ -13,6 +10,7 @@ interface IdentifierDetailProps {
 
 export const DataProductIdParameterDetail: React.FC<IdentifierDetailProps> = ({ title }) => {
     const intl = useIntl();
+    const { dataProduct } = useClientWorkspaceIdentifiers();
 
     return (
         <ParameterDetail
@@ -21,15 +19,7 @@ export const DataProductIdParameterDetail: React.FC<IdentifierDetailProps> = ({ 
                 id: "configurationPanel.drillIntoUrl.editor.identifierTypeLabel",
             })}
             useEllipsis={false}
-            values={[] /*TODO select productId*/}
+            values={dataProduct ? [dataProduct] : []}
         />
     );
 };
-
-// const mapStateToProps = (appState: AppState): IIdentifierDetailStateProps => ({
-//     value: getWorkspaceDataProductId(appState),
-// });
-//
-// export const DataProductIdParameterDetail = connect(mapStateToProps)(
-//     injectIntl(DataProductIdParameterDetailComponent),
-// );

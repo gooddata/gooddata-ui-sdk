@@ -9,13 +9,14 @@ import {
     Overlay,
 } from "@gooddata/sdk-ui-kit";
 import { ParametersPanel } from "./CustomUrlEditorParameters";
-import { IAttributeDisplayForm, isDrillToCustomUrlConfig, UrlDrillTarget } from "../../../types";
+import { isDrillToCustomUrlConfig, UrlDrillTarget } from "../../../types";
+import { IAttributeDisplayFormMetadataObject } from "@gooddata/sdk-model";
 
 export interface IUrlInputProps {
     currentUrlValue: string;
     onChange: (value: string) => void;
     onCursor: (from: number, to: number) => void;
-    syntaxHighlightingRules: IFormattingRules;
+    syntaxHighlightingRules?: IFormattingRules;
     intl: IntlShape;
 }
 
@@ -55,17 +56,19 @@ interface IUrlInputPanelProps {
     currentUrlValue: string;
     onChange: (value: string) => void;
     onCursor: (from: number, to: number) => void;
-    attributeDisplayForms: IAttributeDisplayForm[];
+    attributeDisplayForms?: IAttributeDisplayFormMetadataObject[];
     documentationLink?: string;
     intl: IntlShape;
 }
 
-const buildValidDisplayFormsFormattingRule = (attributeDisplayForms: IAttributeDisplayForm[]) => {
+const buildValidDisplayFormsFormattingRule = (
+    attributeDisplayForms: IAttributeDisplayFormMetadataObject[],
+) => {
     if (attributeDisplayForms.length === 0) {
         return undefined;
     }
     const validAttributePlaceholders = attributeDisplayForms
-        .map((displayForm) => `{attribute_title\\(${displayForm.identifier}\\)}`)
+        .map((displayForm) => `{attribute_title\\(${displayForm.id}\\)}`)
         .join("|");
     return { regex: new RegExp(validAttributePlaceholders), token: "attribute" };
 };
@@ -94,7 +97,9 @@ const DEFAULT_RULES: IFormattingRule[] = [
     INVALID_IDENTIFIER_RULE,
 ];
 
-const buildFormattingRules = (attributeDisplayForms: IAttributeDisplayForm[]): IFormattingRules => {
+const buildFormattingRules = (
+    attributeDisplayForms: IAttributeDisplayFormMetadataObject[],
+): IFormattingRules => {
     const validDisplayFormsRule = buildValidDisplayFormsFormattingRule(attributeDisplayForms);
     return {
         start: validDisplayFormsRule ? [validDisplayFormsRule, ...DEFAULT_RULES] : DEFAULT_RULES,
@@ -104,7 +109,7 @@ const buildFormattingRules = (attributeDisplayForms: IAttributeDisplayForm[]): I
 const UrlInputPanel: React.FC<IUrlInputPanelProps> = (props) => {
     const { currentUrlValue, onChange, onCursor, documentationLink, attributeDisplayForms, intl } = props;
     const syntaxHighlightingRules = useMemo(
-        () => buildFormattingRules(attributeDisplayForms),
+        () => attributeDisplayForms && buildFormattingRules(attributeDisplayForms),
         [attributeDisplayForms],
     );
     return (
@@ -152,7 +157,7 @@ const getWarningTextForInvalidParameters = (parameters: string[]): React.ReactEl
 
 export interface CustomUrlEditorProps {
     urlDrillTarget?: UrlDrillTarget;
-    attributeDisplayForms: IAttributeDisplayForm[];
+    attributeDisplayForms?: IAttributeDisplayFormMetadataObject[];
     loadingAttributeDisplayForms: boolean;
     invalidAttributeDisplayFormIdentifiers: string[];
     documentationLink?: string;

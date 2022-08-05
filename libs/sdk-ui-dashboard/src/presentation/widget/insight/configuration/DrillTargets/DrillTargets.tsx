@@ -1,12 +1,18 @@
 // (C) 2020-2022 GoodData Corporation
 import React from "react";
 import { IDrillToInsight, IInsight, InsightDrillDefinition } from "@gooddata/sdk-model";
-import { DRILL_TARGET_TYPE, IDrillConfigItem, isDrillToInsightConfig } from "../../../../drill/types";
+import {
+    DRILL_TARGET_TYPE,
+    IDrillConfigItem,
+    isDrillToUrlConfig,
+    UrlDrillTarget,
+} from "../../../../drill/types";
 import { DrillTargetInsightItem } from "./DrillTargetInsightItem";
+import { DrillTargetUrlItem } from "./DrillTargetUrlItem";
 
 export interface IDrillTargetsProps {
     item: IDrillConfigItem;
-    onSetup: (drill: InsightDrillDefinition) => void;
+    onSetup: (drill: InsightDrillDefinition, changedItem: IDrillConfigItem) => void;
 }
 
 export const DrillTargets: React.FunctionComponent<IDrillTargetsProps> = (props) => {
@@ -21,7 +27,7 @@ export const DrillTargets: React.FunctionComponent<IDrillTargetsProps> = (props)
             type: "drillToInsight",
             target: targetItem.insight.ref,
         };
-        props.onSetup(drillConfigItem);
+        props.onSetup(drillConfigItem, { ...item, insightRef: targetItem.insight.ref });
     };
     //
     // const onDashboardTargetSelect = (targetItem: IDashboardsListItem) => {
@@ -35,15 +41,16 @@ export const DrillTargets: React.FunctionComponent<IDrillTargetsProps> = (props)
     //     props.onSetup(drillConfigItem, { dashboard });
     // };
     //
-    // const onCustomUrlTargetSelect = (selectedUrlDrillTarget: UrlDrillTarget) => {
-    //     const drillConfigItem: IDrillToUrlConfig = {
-    //         ...props.item,
-    //         drillTargetType: DRILL_TARGET_TYPE.DRILL_TO_URL,
-    //         urlDrillTarget: selectedUrlDrillTarget,
-    //         complete: true,
-    //     };
-    //     props.onSetup(drillConfigItem, { urlDrillTarget: selectedUrlDrillTarget });
-    // };
+    const onCustomUrlTargetSelect = (selectedUrlDrillTarget: UrlDrillTarget) => {
+        console.log(selectedUrlDrillTarget);
+        // const drillConfigItem: IDrillToUrlConfig = {
+        //     ...props.item,
+        //     drillTargetType: DRILL_TARGET_TYPE.DRILL_TO_URL,
+        //     urlDrillTarget: selectedUrlDrillTarget,
+        //     complete: true,
+        // };
+        // props.onSetup(drillConfigItem, { urlDrillTarget: selectedUrlDrillTarget });
+    };
 
     switch (props.item.drillTargetType) {
         case DRILL_TARGET_TYPE.DRILL_TO_DASHBOARD:
@@ -55,22 +62,15 @@ export const DrillTargets: React.FunctionComponent<IDrillTargetsProps> = (props)
             // );
             return null;
         case DRILL_TARGET_TYPE.DRILL_TO_INSIGHT:
-            return (
-                <>
-                    {isDrillToInsightConfig(item) && (
-                        <DrillTargetInsightItem insight={item} onSelect={onInsightTargetSelect} />
-                    )}
-                </>
-            );
+            return <DrillTargetInsightItem insight={item} onSelect={onInsightTargetSelect} />;
         case DRILL_TARGET_TYPE.DRILL_TO_URL:
-            // return (
-            // <DrillTargetUrlItem
-            //     urlDrillTarget={isDrillToUrlConfig(item) ? item.urlDrillTarget : undefined}
-            //     attributes={item.attributes}
-            //     onSelect={onCustomUrlTargetSelect}
-            // />
-            // );
-            return null;
+            return (
+                <DrillTargetUrlItem
+                    urlDrillTarget={isDrillToUrlConfig(item) ? item.urlDrillTarget : undefined}
+                    attributes={item.attributes}
+                    onSelect={onCustomUrlTargetSelect}
+                />
+            );
         case undefined:
             return null;
         default:

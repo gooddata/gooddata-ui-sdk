@@ -3,7 +3,7 @@ import React from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 import { stringUtils } from "@gooddata/util";
-import { IDrillConfigItem } from "../../../drill/types";
+import { DRILL_TARGET_TYPE, IDrillConfigItem } from "../../../drill/types";
 import { DrillMeasureItem } from "./DrillMeasureItem";
 import { IDrillTargetType } from "./useDrillTargetTypeItems";
 import { DrillTargetType } from "./DrillTargetType";
@@ -13,8 +13,8 @@ import { InsightDrillDefinition } from "@gooddata/sdk-model";
 export interface IDrillConfigItemProps {
     item: IDrillConfigItem;
     // onDelete: (item: IDrillConfigItem) => void;
-    onSetup: (drill: InsightDrillDefinition) => void;
-    // onIncompleteChange: (changedItem: IDrillConfigItem) => void;
+    onSetup: (drill: InsightDrillDefinition, changedItem: IDrillConfigItem) => void;
+    onIncompleteChange: (changedItem: IDrillConfigItem) => void;
     enabledDrillTargetTypeItems: IDrillTargetType[];
     // warning?: string;
 }
@@ -22,18 +22,18 @@ export interface IDrillConfigItemProps {
 const DrillConfigItem: React.FunctionComponent<IDrillConfigItemProps> = ({
     // onDelete,
     item,
-    // onIncompleteChange,
+    onIncompleteChange,
     onSetup,
     enabledDrillTargetTypeItems,
 }) => {
     const onDeleteClick = () => {
         // onDelete(item);
     };
-    const onDrillTargetTypeSelect = () => {
-        // onIncompleteChange({
-        //     ...item,
-        //     drillTargetType: target,
-        // });
+    const onDrillTargetTypeSelect = (target: DRILL_TARGET_TYPE) => {
+        onIncompleteChange({
+            ...item,
+            drillTargetType: target,
+        });
     };
 
     const classNames = cx(

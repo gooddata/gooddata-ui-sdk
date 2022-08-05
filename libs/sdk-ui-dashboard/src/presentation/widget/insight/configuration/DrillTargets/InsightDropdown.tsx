@@ -3,13 +3,12 @@ import React from "react";
 import { Dropdown, DropdownButton } from "@gooddata/sdk-ui-kit";
 import { ObjRef, IInsight, isInsight, insightVisualizationUrl } from "@gooddata/sdk-model";
 import { IntlShape, useIntl } from "react-intl";
-import { IDrillToInsightConfig } from "../../../../drill/types";
+import { IDrillConfigItem, isDrillToInsightConfig } from "../../../../drill/types";
 import { InsightList } from "../../../../insightList";
-import { selectInsightByRef, useDashboardSelector } from "../../../../../model";
-import invariant from "ts-invariant";
+import { selectInsightsMap, useDashboardSelector } from "../../../../../model";
 
 export interface IInsightDropdownProps {
-    insightConfig: IDrillToInsightConfig;
+    insightConfig: IDrillConfigItem;
     onSelect: (targetItem: IInsight) => void;
 }
 
@@ -41,12 +40,20 @@ function getButtonValue(title: string, intl: IntlShape, ref?: ObjRef) {
 export const InsightDropdown: React.FC<IInsightDropdownProps> = ({ insightConfig, onSelect }) => {
     const intl = useIntl();
 
-    const insight = useDashboardSelector(selectInsightByRef(insightConfig.insightRef));
-    invariant(isInsight(insight), "must be insight");
-    const buttonText = getButtonValue(insight.insight.title, intl, insightConfig.insightRef);
+    const insights = useDashboardSelector(selectInsightsMap);
 
-    const insightUrl = insightVisualizationUrl(insight);
-    const insightType = insightUrl?.split(":")[1];
+    let buttonText = "";
+    let insightType: string | null = null;
+
+    if (isDrillToInsightConfig(insightConfig) && insightConfig.insightRef) {
+        const insight = insights.get(insightConfig.insightRef);
+
+        if (isInsight(insight)) {
+            buttonText = getButtonValue(insight.insight.title, intl, insightConfig.insightRef);
+            const insightUrl = insightVisualizationUrl(insight);
+            insightType = insightUrl?.split(":")[1];
+        }
+    }
 
     return (
         <Dropdown
@@ -67,7 +74,9 @@ export const InsightDropdown: React.FC<IInsightDropdownProps> = ({ insightConfig
                 return (
                     <div className="open-visualizations s-open-visualizations">
                         <InsightList
-                            selectedRef={insightConfig.insightRef}
+                            selectedRef={
+                                isDrillToInsightConfig(insightConfig) ? insightConfig.insightRef : undefined
+                            }
                             height={200}
                             onSelect={(insight) => {
                                 onSelect(insight);

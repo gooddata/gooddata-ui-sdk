@@ -5,16 +5,11 @@ import { IDrillConfigItem } from "../../../drill/types";
 import { IDrillTargetType } from "./useDrillTargetTypeItems";
 import { InsightDrillDefinition } from "@gooddata/sdk-model";
 
-// import { DrillActionTarget, IDrillConfigItem } from "../../../../modules/Drilling";
-// import { IDropdownItem } from "../../../../modules/Core/typings/DropdownItem";
-
-// import DrillConfigItem from "./DrillConfigItem";
-
 export interface IDrillConfigListProps {
     drillConfigItems?: IDrillConfigItem[];
     // onDelete: (item: IDrillConfigItem) => void;
-    onSetup: (drill: InsightDrillDefinition) => void;
-    // onIncompleteChange: (changedItem: IDrillConfigItem) => void;
+    onSetup: (drill: InsightDrillDefinition, changedItem: IDrillConfigItem) => void;
+    onIncompleteChange: (changedItem: IDrillConfigItem) => void;
     enabledDrillTargetTypeItems: IDrillTargetType[];
 }
 
@@ -27,7 +22,7 @@ export const InsightDrillConfigList: React.FunctionComponent<IDrillConfigListPro
                     key={item.localIdentifier}
                     // onDelete={props.onDelete}
                     onSetup={props.onSetup}
-                    // onIncompleteChange={props.onIncompleteChange}
+                    onIncompleteChange={props.onIncompleteChange}
                     enabledDrillTargetTypeItems={props.enabledDrillTargetTypeItems}
                 />
             ))}

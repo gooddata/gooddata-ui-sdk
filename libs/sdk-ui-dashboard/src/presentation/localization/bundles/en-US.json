@@ -1537,6 +1537,188 @@
         "comment": "",
         "limit": 0
     },
+    "configurationPanel.drillIntoUrl.invalidRedirectError": {
+        "value": "Failed to load URL.",
+        "comment": "The text of error notification shown to the user when it is not possible to redirect him to the target URL due to an invalid drill configuration.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.defaultButtonValue": {
+        "value": "Choose URL",
+        "comment": "Default value of 'Drill into URL' dropdown button before a value is selected.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.attributeUrlSectionTitle": {
+        "value": "Hyperlink in attribute label",
+        "comment": "Title of 'Drill into URL' dropdown section.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.customUrlSectionTitle": {
+        "value": "Custom URL",
+        "comment": "Title of 'Drill into URL' dropdown section.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.customUrlAddButtonLabel": {
+        "value": "Add custom URL",
+        "comment": "Label of the button in 'Drill into URL' dropdown that is used for adding of the custom URL.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.customUrlEditButtonLabel": {
+        "value": "Edit custom URL",
+        "comment": "Label of the button in 'Drill into URL' dropdown that is used for editing of the custom URL.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.addUrlTitle": {
+        "value": "Add custom URL",
+        "comment": "Title of Drill to URL 'Custom URL' editor when URL is not defined.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.editUrlTitle": {
+        "value": "Edit custom URL",
+        "comment": "Title of Drill to URL 'Custom URL' editor when URL is defined.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.textAreaLabel": {
+        "value": "URL",
+        "comment": "Label of the textarea in Drill to URL 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.parametersPanelLabel": {
+        "value": "Parameters",
+        "comment": "Label of the panel in Drill to URL 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.parametersPanelTooltip": {
+        "value": "Parameters are placeholders that are replaced by dynamic values during drilling.",
+        "comment": "Tooltip displayed when user hovers over question mark icon next to label of the parameters panel in Drill to URL 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.addParameterButtonLabel": {
+        "value": "Add",
+        "comment": "Label of the button that adds a parameter to URL in Drill to URL 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.parameterDetailType": {
+        "value": "Type",
+        "comment": "Title of type section in parameter detail in 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.parameterDetailLabel": {
+        "value": "Label",
+        "comment": "Title of label section in parameter detail in 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.parameterDetailValues": {
+        "value": "{numberOfValues, plural, one {Value} other {Values}}",
+        "comment": "Translate only uppercase words in '{numberOfValues, plural, one {VALUE} other {VALUES}}'. Title of values section in parameter detail in 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.parameterDetailMoreValues": {
+        "value": "...and {count} more",
+        "comment": "Translate only uppercase words In '...AND {count} MORE'. Info about number of other values not shown in parameter detail in 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.defaultDisplayFormTypeLabel": {
+        "value": "Attribute label value",
+        "comment": "Type label of default display form in parameter detail in 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.urlDisplayFormTypeLabel": {
+        "value": "Attribute URL value",
+        "comment": "Type label of URL display form in parameter detail in 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.geoDisplayFormTypeLabel": {
+        "value": "Attribute geo value",
+        "comment": "Type label of geo display form in parameter detail in 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.identifierTypeLabel": {
+        "value": "Identifier",
+        "comment": "Type label of identifier in parameter detail in 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.insightParametersSectionLabel|insight": {
+        "value": "Insight",
+        "comment": "Label of the parameters section that contains attributes and measures in Drill to URL 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.insightParametersSectionLabel|report": {
+        "value": "Report",
+        "comment": "Label of the parameters section that contains attributes and measures in Drill to URL 'Custom URL' editor.",
+        "translate": false,
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.identifierParametersSectionLabel": {
+        "value": "Identifiers",
+        "comment": "Label of the parameters section that contains identifiers in Drill to URL 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.projectIdParameterLabel": {
+        "value": "Project ID",
+        "comment": "Label of the insight parameter in Drill to URL 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.workspaceIdParameterLabel": {
+        "value": "Workspace ID",
+        "comment": "Label of the insight parameter in Drill to URL 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.insightIdParameterLabel|insight": {
+        "value": "Insight ID",
+        "comment": "Label of the insight parameter in Drill to URL 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.insightIdParameterLabel|report": {
+        "value": "Report ID",
+        "comment": "Label of the report parameter in Drill to URL 'Custom URL' editor.",
+        "translate": false,
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.widgetIdParameterLabel": {
+        "value": "Widget ID",
+        "comment": "Label of the insight parameter in Drill to URL 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.dashboardIdParameterLabel": {
+        "value": "Dashboard ID",
+        "comment": "Label of the insight parameter in Drill to URL 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.clientIdParameterLabel": {
+        "value": "Client ID",
+        "comment": "Label of the insight parameter in Drill to URL 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.dataProductIdParameterLabel": {
+        "value": "Data product ID",
+        "comment": "Label of the insight parameter in Drill to URL 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.applyButtonLabel": {
+        "value": "Apply",
+        "comment": "Label of the button that applies changes in Drill to URL 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.cancelButtonLabel": {
+        "value": "Cancel",
+        "comment": "Label of the button that cancels changes in Drill to URL 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.textAreaPlaceholder": {
+        "value": "Enter URL and add parameters from the right panel.",
+        "comment": "Placeholder of textarea in Drill to URL 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.helpButtonLabel": {
+        "value": "How to create custom URLs?",
+        "comment": "Help button label in Drill to URL 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.invalidAttributeDisplayForms": {
+        "value": "Invalid parameters: {invalidParameters}",
+        "comment": "Help button label in Drill to URL 'Custom URL' editor. Do not translate '{invalidParameters}' placeholder.",
+        "limit": 0
+    },
     "gs.date.date-dataset.recommended": {
         "value": "Recommended",
         "comment": "",

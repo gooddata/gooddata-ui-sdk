@@ -3,7 +3,6 @@
 import { useIntl } from "react-intl";
 import { DRILL_TARGET_TYPE } from "../../../drill/types";
 import {
-    selectConfig,
     selectEnableKPIDashboardDrillToDashboard,
     selectEnableKPIDashboardDrillToInsight,
     selectEnableKPIDashboardDrillToURL,
@@ -22,8 +21,6 @@ export const useDrillTargetTypeItems = (): IDrillTargetType[] => {
     const enableKPIDashboardDrillToDashboard = useDashboardSelector(selectEnableKPIDashboardDrillToDashboard);
     const enableKPIDashboardDrillToInsight = useDashboardSelector(selectEnableKPIDashboardDrillToInsight);
     const enableKPIDashboardDrillToURL = useDashboardSelector(selectEnableKPIDashboardDrillToURL);
-
-    console.log(enableKPIDashboardDrillToDashboard);
 
     if (enableKPIDashboardDrillToDashboard) {
         dropdownItems.push({
@@ -46,6 +43,5 @@ export const useDrillTargetTypeItems = (): IDrillTargetType[] => {
         });
     }
 
-    console.log(dropdownItems);
     return dropdownItems;
 };

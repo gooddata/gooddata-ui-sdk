@@ -34,9 +34,9 @@ const getIconClassNameBySelection = (selection: DRILL_TARGET_TYPE) => {
 };
 
 export const DrillTargetType: React.FunctionComponent<IDrillTargetProps> = (props) => {
-    const { selection } = props;
+    const { selection, enabledDrillTargetTypeItems } = props;
     const intl = useIntl();
-    const targetBySelection = getTargetBySelection(selection, props.enabledDrillTargetTypeItems);
+    const targetBySelection = getTargetBySelection(selection, enabledDrillTargetTypeItems);
     const buttonValue = targetBySelection
         ? targetBySelection.title
         : intl.formatMessage({ id: "configurationPanel.drillConfig.select" });
@@ -71,7 +71,7 @@ export const DrillTargetType: React.FunctionComponent<IDrillTargetProps> = (prop
                 <DropdownList
                     width={DROPDOWN_BODY_WIDTH}
                     itemHeight={ITEM_HEIGHT}
-                    items={props.enabledDrillTargetTypeItems}
+                    items={enabledDrillTargetTypeItems}
                     className="gd-drill-config-panel-target s-drill-config-panel-target-type-open"
                     renderItem={({ item }) => {
                         const isSelected = targetBySelection && targetBySelection.id === item.id;

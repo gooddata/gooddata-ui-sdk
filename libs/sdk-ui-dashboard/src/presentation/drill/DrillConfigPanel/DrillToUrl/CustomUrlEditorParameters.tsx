@@ -1,21 +1,13 @@
 // (C) 2020-2022 GoodData Corporation
 import React from "react";
-import { FormattedMessage, IntlShape } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
-
-import {
-    IdentifierParametersSection,
-    IIdentifierParametersSectionProps,
-} from "./CustomUrlEditorParametersSections/IdentifierParametersSection";
+import { IdentifierParametersSection } from "./CustomUrlEditorParametersSections/IdentifierParametersSection";
 import {
     IInsightParametersSectionProps,
     InsightParametersSection,
 } from "./CustomUrlEditorParametersSections/InsightParametersSection";
-
-export interface IParametersPanelSectionsCommonProps {
-    onAdd: (placeholder: string) => void;
-    intl: IntlShape;
-}
+import { IIdentifierParametersSectionProps } from "./types";
 
 type IParametersPanelProps = IInsightParametersSectionProps & IIdentifierParametersSectionProps;
 

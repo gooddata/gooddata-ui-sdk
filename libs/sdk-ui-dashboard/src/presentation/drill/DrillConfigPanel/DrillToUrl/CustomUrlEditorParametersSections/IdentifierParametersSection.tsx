@@ -1,9 +1,7 @@
 // (C) 2020-2022 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
-
 import { DropdownSectionHeader } from "../DropdownSectionHeader";
-import { IParametersPanelSectionsCommonProps } from "../CustomUrlEditorParameters";
 import { ProjectIdParameterDetail } from "../ParameterDetails/ProjectIdParameterDetail";
 import { DashboardIdParameterDetail } from "../ParameterDetails/DashboardIdParameterDetail";
 import { WidgetIdParameterDetail } from "../ParameterDetails/WidgetIdParameterDetail";
@@ -11,7 +9,8 @@ import { InsightIdParameterDetail } from "../ParameterDetails/InsightIdParameter
 import { ClientIdParameterDetail } from "../ParameterDetails/ClientIdParameterDetail";
 import { DataProductIdParameterDetail } from "../ParameterDetails/DataProductIdParameterDetail";
 import { Parameter } from "./Parameter";
-import { DRILL_TO_URL_PLACEHOLDER } from "../../../../../../model/commandHandlers/drill/resolveDrillToCustomUrl";
+import { DRILL_TO_URL_PLACEHOLDER } from "../../../../../model/commandHandlers/drill/resolveDrillToCustomUrl";
+import { IIdentifierParametersSectionProps } from "../types";
 
 interface IIdentifierParameter {
     titleIntlKey: string;
@@ -68,12 +67,6 @@ const getDetailContent = (type: string, title: string): JSX.Element => {
             return <></>;
     }
 };
-
-export interface IIdentifierParametersSectionProps extends IParametersPanelSectionsCommonProps {
-    enableClientIdParameter: boolean;
-    enableDataProductIdParameter: boolean;
-    enableWidgetIdParameter: boolean;
-}
 
 export const IdentifierParametersSection: React.FC<IIdentifierParametersSectionProps> = ({
     enableClientIdParameter,

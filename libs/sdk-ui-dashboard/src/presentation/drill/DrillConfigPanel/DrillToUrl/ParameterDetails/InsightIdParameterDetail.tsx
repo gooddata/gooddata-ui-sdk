@@ -1,12 +1,15 @@
 // (C) 2020-2022 GoodData Corporation
 import React from "react";
 import { useIntl } from "react-intl";
-
-// import { AppState } from "../../../../../../modules/Core/typings/state";
-// import { getSelectedWidgetRef } from "../../../../../../modules/Core/services/DashboardService";
-// import { getVisualizationIdentifierByWidgetRef } from "../../../../../../modules/Widgets";
-
 import { ParameterDetail } from "./ParameterDetail";
+import {
+    selectInsightByRef,
+    selectSelectedWidgetRef,
+    selectWidgetByRef,
+    useDashboardSelector,
+} from "../../../../../model";
+import { isInsightWidget } from "@gooddata/sdk-model";
+import invariant from "ts-invariant";
 
 interface IdentifierDetailProps {
     title: string;
@@ -14,6 +17,10 @@ interface IdentifierDetailProps {
 
 export const InsightIdParameterDetail: React.FC<IdentifierDetailProps> = ({ title }) => {
     const intl = useIntl();
+    const widgetRef = useDashboardSelector(selectSelectedWidgetRef);
+    const widget = useDashboardSelector(selectWidgetByRef(widgetRef));
+    invariant(isInsightWidget(widget), "must be insight widget selected");
+    const insight = useDashboardSelector(selectInsightByRef(widget.insight));
 
     return (
         <ParameterDetail
@@ -22,15 +29,7 @@ export const InsightIdParameterDetail: React.FC<IdentifierDetailProps> = ({ titl
                 id: "configurationPanel.drillIntoUrl.editor.identifierTypeLabel",
             })}
             useEllipsis={false}
-            values={[] /*TODO: make widgets selectable*/}
+            values={insight?.insight.identifier ? [insight.insight.identifier] : []}
         />
     );
 };
-
-// const mapStateToProps = (appState: AppState): IIdentifierDetailStateProps => ({
-//     value: getVisualizationIdentifierByWidgetRef(appState, getSelectedWidgetRef(appState)),
-// });
-//
-// export const InsightIdParameterDetail = connect(mapStateToProps)(
-//     injectIntl(InsightIdParameterDetailComponent),
-// );

@@ -1,16 +1,49 @@
 // (C) 2020-2022 GoodData Corporation
 import React from "react";
-import { FormattedMessage } from "react-intl";
-
+import { FormattedMessage, useIntl } from "react-intl";
 import { DropdownSectionHeader } from "../DropdownSectionHeader";
-import { IParametersPanelSectionsCommonProps } from "../CustomUrlEditorParameters";
 import { AttributeDisplayFormParameterDetail } from "../ParameterDetails/AttributeDisplayFormParameterDetail";
-
 import { Parameter } from "./Parameter";
 import { useWorkspaceStrict } from "@gooddata/sdk-ui";
-import { AttributeDisplayFormType, IAttributeDisplayForm } from "../../../../types";
+import { IParametersPanelSectionsCommonProps } from "../types";
+import { IAttributeDisplayFormMetadataObject } from "@gooddata/sdk-model";
+import { AttributeDisplayFormType } from "../../../types";
+import { selectAllCatalogAttributesMap, useDashboardSelector } from "../../../../../model";
 
-const getDisplayFormIcon = (type: AttributeDisplayFormType) => {
+interface XProps {
+    item: IAttributeDisplayFormMetadataObject;
+    onAdd: (placeholder: string) => void;
+}
+
+const ParameterX: React.FC<XProps> = ({ item, onAdd }) => {
+    const x = useDashboardSelector(selectAllCatalogAttributesMap);
+    const y = x.get(item.attribute);
+    const intl = useIntl();
+    const projectId = useWorkspaceStrict();
+
+    return (
+        <Parameter
+            key={item.id}
+            name={y?.attribute.title || ""}
+            description={item.title}
+            detailContent={
+                <AttributeDisplayFormParameterDetail
+                    title={y?.attribute.title || ""}
+                    label={item.title}
+                    type={item.displayFormType}
+                    projectId={projectId}
+                    displayFormRef={item.ref}
+                    showValues={true} // TODO
+                />
+            }
+            iconClassName={getDisplayFormIcon(item.displayFormType)}
+            onAdd={() => onAdd(`{attribute_title(${item.id})}`)}
+            intl={intl}
+        />
+    );
+};
+
+const getDisplayFormIcon = (type: string | undefined) => {
     switch (type) {
         case AttributeDisplayFormType.HYPERLINK:
             return "gd-icon-hyperlink-warning";
@@ -22,7 +55,7 @@ const getDisplayFormIcon = (type: AttributeDisplayFormType) => {
 };
 
 export interface IInsightParametersSectionProps extends IParametersPanelSectionsCommonProps {
-    attributeDisplayForms: IAttributeDisplayForm[];
+    attributeDisplayForms?: IAttributeDisplayFormMetadataObject[];
     loadingAttributeDisplayForms: boolean;
 }
 
@@ -30,13 +63,11 @@ export const InsightParametersSection: React.FC<IInsightParametersSectionProps> 
     attributeDisplayForms,
     loadingAttributeDisplayForms,
     onAdd,
-    intl,
 }) => {
-    const projectId = useWorkspaceStrict();
-
     return (
         <>
-            {(attributeDisplayForms.length > 0 || loadingAttributeDisplayForms) && (
+            {((attributeDisplayForms && attributeDisplayForms.length > 0) ||
+                loadingAttributeDisplayForms) && (
                 <>
                     <DropdownSectionHeader>
                         <FormattedMessage id="configurationPanel.drillIntoUrl.editor.insightParametersSectionLabel" />
@@ -46,27 +77,9 @@ export const InsightParametersSection: React.FC<IInsightParametersSectionProps> 
                             <div className="gd-spinner small" />
                         </div>
                     ) : (
-                        attributeDisplayForms.map(
-                            ({ attributeTitle, displayFormTitle, type, identifier, ref }) => (
-                                <Parameter
-                                    key={identifier}
-                                    name={attributeTitle}
-                                    description={displayFormTitle}
-                                    detailContent={
-                                        <AttributeDisplayFormParameterDetail
-                                            title={attributeTitle}
-                                            label={displayFormTitle}
-                                            type={type}
-                                            projectId={projectId}
-                                            displayFormRef={ref}
-                                        />
-                                    }
-                                    iconClassName={getDisplayFormIcon(type)}
-                                    onAdd={() => onAdd(`{attribute_title(${identifier})}`)}
-                                    intl={intl}
-                                />
-                            ),
-                        )
+                        attributeDisplayForms?.map((item) => (
+                            <ParameterX key={item.id} item={item} onAdd={onAdd} />
+                        ))
                     )}
                 </>
             )}

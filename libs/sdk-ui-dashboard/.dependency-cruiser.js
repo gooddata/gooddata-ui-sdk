@@ -84,6 +84,7 @@ options = {
             "src/presentation/constants",
             "src/presentation/types.ts",
             "src/presentation/localization",
+            "src/model/commandHandlers/drill/resolveDrillToCustomUrl.ts",
             "src/types.ts",
         ]),
         depCruiser.moduleWithDependencies("filterBar", "src/presentation/filterBar", [
