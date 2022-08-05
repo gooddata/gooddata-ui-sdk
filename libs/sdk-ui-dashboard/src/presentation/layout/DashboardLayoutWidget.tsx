@@ -167,7 +167,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                 LoadingComponent={LoadingComponent}
             />
 
-            {isInEditMode && (
+            {isInEditMode && !isAnyPlaceholderWidget(widget) && (
                 <>
                     <ResizeOverlay
                         isActive={isActive}
@@ -175,21 +175,16 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                         isUnderWidthMinLimit={widthLimitReached}
                         reachedHeightLimit={heightLimitReached}
                     />
-                    {!isAnyPlaceholderWidget(widget) && (
-                        <>
-                            <Hotspot
-                                dropZoneType="prev"
-                                itemIndex={item.index()}
-                                sectionIndex={item.section().index()}
-                            />
-                            <Hotspot
-                                dropZoneType="next"
-                                itemIndex={item.index()}
-                                sectionIndex={item.section().index()}
-                            />
-                        </>
-                    )}
-
+                    <Hotspot
+                        dropZoneType="prev"
+                        itemIndex={item.index()}
+                        sectionIndex={item.section().index()}
+                    />
+                    <Hotspot
+                        dropZoneType="next"
+                        itemIndex={item.index()}
+                        sectionIndex={item.section().index()}
+                    />
                     <WidthResizerHotspot
                         item={item}
                         screen={screen}
