@@ -875,10 +875,6 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "react-codemirror2",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "react-content-loader",
       "allowedCategories": [ "production" ]
     },

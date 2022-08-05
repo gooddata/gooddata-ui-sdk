@@ -1,9 +1,14 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
-import { mount, ReactWrapper as MountWrapper } from "enzyme";
-import { UnControlled as CodeMirrorInput } from "react-codemirror2";
+import cx from "classnames";
+import { mount } from "enzyme";
 
-import { SyntaxHighlightingInput, ISyntaxHighlightingInputProps } from "../SyntaxHighlightingInput";
+import * as SyntaxHighlightingInput from "../SyntaxHighlightingInput";
+
+const defaultProps: SyntaxHighlightingInput.ISyntaxHighlightingInputProps = {
+    value: "",
+    onChange: jest.fn(),
+};
 
 (window as any).document.body.createTextRange = jest.fn(() => ({
     setStart: jest.fn(),
@@ -12,75 +17,79 @@ import { SyntaxHighlightingInput, ISyntaxHighlightingInputProps } from "../Synta
     getClientRects: jest.fn(() => ({ length: null })),
 }));
 
-const defaultProps: ISyntaxHighlightingInputProps = {
-    value: "",
-    onChange: jest.fn(),
+const renderComponent = (props?: Partial<SyntaxHighlightingInput.ISyntaxHighlightingInputProps>) => {
+    return mount(<SyntaxHighlightingInput.SyntaxHighlightingInput {...defaultProps} {...props} />);
 };
 
-interface ICodeMirrorInputInstance extends CodeMirrorInput {
-    editor: CodeMirror.Editor;
-}
-
-const renderComponent = (props?: Partial<ISyntaxHighlightingInputProps>) => {
-    return mount(<SyntaxHighlightingInput {...defaultProps} {...props} />);
-};
-
-const getCodeMirrorDocument = (wrapper: MountWrapper) => {
-    const instance = wrapper.find(CodeMirrorInput).instance() as ICodeMirrorInputInstance;
-    return instance.editor.getDoc();
-};
+const multiLineValue = "01234\n01234\n01234";
 
 describe("SyntaxHighlightingInput", () => {
+    beforeAll(() => {
+        jest.spyOn(SyntaxHighlightingInput, "SyntaxHighlightingInput").mockImplementation(
+            ({
+                onChange,
+                value,
+                className,
+                onCursor,
+            }: SyntaxHighlightingInput.ISyntaxHighlightingInputProps) => {
+                const onChangeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+                    onChange(e.target.value);
+
+                    if (value === multiLineValue) {
+                        onCursor(8, 8);
+                    }
+                };
+
+                return (
+                    <textarea
+                        className={cx(className, "s-input-syntax-highlighting-input")}
+                        value={value}
+                        onChange={onChangeHandler}
+                    />
+                );
+            },
+        );
+    });
+
+    afterAll(() => {
+        jest.clearAllMocks();
+    });
+
     it("should render CodeMirrorInput component", () => {
         const wrapper = renderComponent();
-        expect(wrapper.find(CodeMirrorInput)).toHaveLength(1);
+
+        expect(wrapper.find(".s-input-syntax-highlighting-input")).toHaveLength(1);
     });
 
     it("should render correct value and classname", () => {
-        const props: ISyntaxHighlightingInputProps = {
+        const props: SyntaxHighlightingInput.ISyntaxHighlightingInputProps = {
             ...defaultProps,
             value: "this is a text content",
             className: "this-is-a-classname",
         };
         const wrapper = renderComponent(props);
-        const doc = getCodeMirrorDocument(wrapper);
+        const value = wrapper.find("textarea").text();
 
-        expect(doc.getValue()).toEqual(props.value);
-        expect(wrapper.find(`div.${props.className}`)).toHaveLength(1);
+        expect(value).toEqual(props.value);
+        expect(wrapper.find(`textarea.${props.className}`)).toHaveLength(1);
     });
 
-    it("should call onChangeHandler function on value change", () => {
+    it("should call onChangeHandler function on value change", async () => {
         const onChange = jest.fn();
+        const newValue = "new text content";
         const wrapper = renderComponent({ onChange });
 
-        const newValue = "new text content";
-        const doc = getCodeMirrorDocument(wrapper);
-        doc.setValue(newValue);
-
-        expect(onChange).toHaveBeenCalledWith(newValue);
+        wrapper.find("textarea").simulate("change", { target: { value: newValue } });
+        expect(onChange).toHaveBeenCalledTimes(1);
     });
 
     describe("onCursor", () => {
-        const multiLineValue = "01234\n01234\n01234";
-
         it("should call onCursor function with expected parameters on cursor position change", () => {
             const onCursor = jest.fn();
             const wrapper = renderComponent({ onCursor, value: multiLineValue });
-
-            const doc = getCodeMirrorDocument(wrapper);
-            doc.setCursor({ line: 1, ch: 2 });
+            wrapper.find("textarea").simulate("change", { target: { value: multiLineValue } });
 
             expect(onCursor).toHaveBeenCalledWith(8, 8);
-        });
-
-        it("should call onCursor function with expected parameters on multiline selection", () => {
-            const onCursor = jest.fn();
-            const wrapper = renderComponent({ onCursor, value: multiLineValue });
-
-            const doc = getCodeMirrorDocument(wrapper);
-            doc.setSelection({ line: 0, ch: 3 }, { line: 2, ch: 2 });
-
-            expect(onCursor).toHaveBeenCalledWith(3, 14);
         });
     });
 });
