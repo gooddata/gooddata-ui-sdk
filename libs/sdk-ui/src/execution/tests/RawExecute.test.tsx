@@ -1,13 +1,12 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { render } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { dummyBackend, dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
 import { IRawExecuteProps, RawExecute } from "../RawExecute";
 import { createDummyPromise } from "../../base/react/tests/toolkit";
 import { DataViewFacade } from "../../base/results/facade";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { LoadingComponent } from "../../base/react/LoadingComponent";
-import { IExecuteErrorComponent } from "../interfaces";
 
 const DummyBackendEmptyData = dummyBackendEmptyData();
 const makeChild = () => jest.fn((_) => <div />);
@@ -16,7 +15,7 @@ const renderDummyExecutor = (
     props: Omit<IRawExecuteProps, "execution" | "children"> = {},
     backend: IAnalyticalBackend = DummyBackendEmptyData,
 ) => {
-    return mount(
+    return render(
         <RawExecute execution={backend.workspace("dummy").execution().forItems([])} {...props}>
             {child}
         </RawExecute>,
@@ -75,9 +74,10 @@ describe("RawExecute", () => {
     });
 
     it("should start loading after invoking injected reload function", async () => {
-        const child = jest.fn(({ reload }) => <button onClick={reload} />);
-        const wrapper = renderDummyExecutor(child, { loadOnMount: false });
-        wrapper.find("button").simulate("click");
+        const child = jest.fn(({ reload }) => <button onClick={reload}>Reload</button>);
+        const { getByText } = renderDummyExecutor(child, { loadOnMount: false });
+        userEvent.setup();
+        await userEvent.click(getByText("Reload"));
 
         expect(child).toHaveBeenCalledWith({
             isLoading: false,
@@ -166,37 +166,32 @@ describe("RawExecute", () => {
 
     it("should render LoadingComponent", async () => {
         const child = makeChild();
-        const dummyExecutor = renderDummyExecutor(child, {
-            LoadingComponent,
+        const { getByText } = renderDummyExecutor(child, {
+            LoadingComponent: () => <div>CUSTOM_LOADING</div>,
         });
 
-        expect(dummyExecutor.find(LoadingComponent)).toExist();
+        expect(getByText("CUSTOM_LOADING")).toBeInTheDocument();
     });
 
     it("should render ErrorComponent, when execution fails", async () => {
-        const ErrorComponent: IExecuteErrorComponent = () => <div />;
         const child = makeChild();
-        const dummyExecutor = renderDummyExecutor(
+        const { getByText } = renderDummyExecutor(
             child,
             {
-                ErrorComponent,
+                ErrorComponent: () => <div>CUSTOM_ERROR</div>,
             },
             dummyBackend(),
         );
 
         await createDummyPromise({ delay: 100 });
-
-        dummyExecutor.update();
-
-        expect(dummyExecutor.find(ErrorComponent)).toExist();
+        expect(getByText("CUSTOM_ERROR")).toBeInTheDocument();
     });
 
     it("should not call children function without result, when both Loading & ErrorComponent are provided", async () => {
-        const ErrorComponent: IExecuteErrorComponent = () => <div />;
         const child = makeChild();
         renderDummyExecutor(child, {
-            LoadingComponent,
-            ErrorComponent,
+            LoadingComponent: () => <div />,
+            ErrorComponent: () => <div />,
         });
 
         expect(child).not.toHaveBeenCalledWith(
