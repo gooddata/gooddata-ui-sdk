@@ -57,7 +57,7 @@ export const KpiPlaceholderConfigurationPanel: React.FC<IKpiPlaceholderConfigura
                 type: "IDashboardLayoutItem",
                 size: {
                     xl: {
-                        gridHeight: sizeInfo.width.default!,
+                        gridHeight: sizeInfo.height.default!,
                         gridWidth: sizeInfo.width.default!,
                     },
                 },
