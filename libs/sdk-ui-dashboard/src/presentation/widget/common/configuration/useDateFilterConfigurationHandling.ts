@@ -15,7 +15,7 @@ import { getRecommendedDateDataset } from "@gooddata/sdk-ui-kit";
 import { safeSerializeObjRef } from "../../../../_staging/metadata/safeSerializeObjRef";
 
 function getRecommendedCatalogDateDataset(
-    dateDatasets: ICatalogDateDataset[],
+    dateDatasets: readonly ICatalogDateDataset[],
 ): ICatalogDateDataset | undefined {
     const recommendedDateDataSetId = getRecommendedDateDataset(
         dateDatasets.map((ds) => {
@@ -33,7 +33,7 @@ function getRecommendedCatalogDateDataset(
 
 export function useDateFilterConfigurationHandling(
     widget: IWidget,
-    relatedDateDatasets: ICatalogDateDataset[] | undefined,
+    relatedDateDatasets: readonly ICatalogDateDataset[] | undefined,
     onAppliedChanged: (applied: boolean) => void,
 ) {
     const [status, setStatus] = useState<"ok" | "error" | "loading">("ok");

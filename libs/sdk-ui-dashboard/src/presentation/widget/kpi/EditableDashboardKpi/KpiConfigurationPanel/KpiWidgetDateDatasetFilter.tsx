@@ -2,13 +2,17 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { IKpiWidget, widgetRef } from "@gooddata/sdk-model";
 
-import { DateDatasetFilter, useKpiWidgetRelatedDateDatasets } from "../../../common";
+import { DateDatasetFilter } from "../../../common";
 import {
     enableKpiWidgetDateFilter,
+    MeasureDateDatasets,
+    queryDateDatasetsForMeasure,
+    QueryMeasureDateDatasets,
     selectKpiDateDatasetAutoOpen,
     uiActions,
     useDashboardCommandProcessing,
     useDashboardDispatch,
+    useDashboardQueryProcessing,
     useDashboardSelector,
 } from "../../../../../model";
 
@@ -16,7 +20,22 @@ export const KpiWidgetDateDatasetFilter: React.FC<{
     widget: IKpiWidget;
 }> = (props) => {
     const { widget } = props;
-    const { status, result } = useKpiWidgetRelatedDateDatasets(props.widget);
+    const {
+        status,
+        run: queryDateDatasets,
+        result,
+    } = useDashboardQueryProcessing<
+        QueryMeasureDateDatasets,
+        MeasureDateDatasets,
+        Parameters<typeof queryDateDatasetsForMeasure>
+    >({
+        queryCreator: queryDateDatasetsForMeasure,
+    });
+
+    useEffect(() => {
+        queryDateDatasets(widget.kpi.metric);
+    }, [queryDateDatasets, widget.kpi.metric]);
+
     const isKpiDateDatasetAutoOpen = useDashboardSelector(selectKpiDateDatasetAutoOpen);
 
     const dispatch = useDashboardDispatch();
@@ -36,7 +55,7 @@ export const KpiWidgetDateDatasetFilter: React.FC<{
     // preselect the first dataset upon loading if the auto open was true
     useEffect(() => {
         if (isKpiDateDatasetAutoOpen && result) {
-            const first = result[0];
+            const first = result.dateDatasetsOrdered[0];
             if (first) {
                 preselectDateDataset(widgetRef(widget), first.dataSet.ref);
             }
@@ -60,8 +79,8 @@ export const KpiWidgetDateDatasetFilter: React.FC<{
             <DateDatasetFilter
                 widget={widget}
                 dateFilterCheckboxDisabled={false} // for KPI date checkbox is always enabled
-                isDatasetsLoading={status === "loading" || status === "pending" || isWaitingForPreselect}
-                relatedDateDatasets={result}
+                isDatasetsLoading={status === "running" || status === "pending" || isWaitingForPreselect}
+                relatedDateDatasets={result?.dateDatasetsOrdered}
                 shouldPickDateDataset={isKpiDateDatasetAutoOpen}
                 onDateDatasetChanged={handleDateDatasetChanged}
             />

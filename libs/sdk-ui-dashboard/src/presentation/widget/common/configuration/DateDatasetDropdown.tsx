@@ -73,7 +73,7 @@ const DateDatasetsListItem: React.FC<IDateDatasetsListItemProps> = ({
 export interface IDateDatasetDropdownProps {
     autoOpen?: boolean;
     widgetRef: ObjRef;
-    relatedDateDatasets: ICatalogDateDataset[];
+    relatedDateDatasets: readonly ICatalogDateDataset[];
     activeDateDataset?: ICatalogDateDataset;
     unrelatedDateDataset?: ICatalogDateDataset;
     dateFromVisualization?: ICatalogDateDataset;

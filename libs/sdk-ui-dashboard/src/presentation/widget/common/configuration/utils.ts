@@ -12,7 +12,7 @@ import {
 } from "@gooddata/sdk-model";
 
 export function getUnrelatedDateDataset(
-    relatedDateDataSets: ICatalogDateDataset[],
+    relatedDateDataSets: readonly ICatalogDateDataset[],
     selectedDateDataSet: ICatalogDateDataset | undefined,
     selectedDateDataSetHidden: boolean | undefined,
 ): ICatalogDateDataset | undefined {

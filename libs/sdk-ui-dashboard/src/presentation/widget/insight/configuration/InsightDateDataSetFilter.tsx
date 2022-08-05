@@ -25,24 +25,44 @@
 //     getDateFilterAutoOpen,
 //     getVisualizationDateDataSet,
 // } from "../../modules/Widgets";
-import React from "react";
-import { DateDatasetFilter, useInsightWidgetRelatedDateDatasets } from "../../common";
+import React, { useEffect } from "react";
+import { DateDatasetFilter } from "../../common";
 import { IInsightWidget, isInsightWidget } from "@gooddata/sdk-model";
+import {
+    MeasureDateDatasets,
+    queryDateDatasetsForInsight,
+    QueryInsightDateDatasets,
+    useDashboardQueryProcessing,
+} from "../../../../model";
 
 export interface IConfigurationPanelProps {
     widget: IInsightWidget;
 }
 
 export default function InsightDateDataSetFilter({ widget }: IConfigurationPanelProps) {
-    const { status, result } = useInsightWidgetRelatedDateDatasets(widget);
+    const {
+        status,
+        run: queryDateDatasets,
+        result,
+    } = useDashboardQueryProcessing<
+        QueryInsightDateDatasets,
+        MeasureDateDatasets,
+        Parameters<typeof queryDateDatasetsForInsight>
+    >({
+        queryCreator: queryDateDatasetsForInsight,
+    });
+
+    useEffect(() => {
+        queryDateDatasets(widget.insight);
+    }, [queryDateDatasets, widget.insight]);
 
     if (isInsightWidget(widget)) {
         return (
             <DateDatasetFilter
                 widget={widget}
                 dateFilterCheckboxDisabled={false}
-                isDatasetsLoading={status === "loading" || status === "pending"}
-                relatedDateDatasets={result}
+                isDatasetsLoading={status === "running" || status === "pending"}
+                relatedDateDatasets={result?.dateDatasetsOrdered}
             />
         );
     }

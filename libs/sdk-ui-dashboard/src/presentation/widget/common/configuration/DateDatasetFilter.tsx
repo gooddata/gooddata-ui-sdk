@@ -13,7 +13,7 @@ const CONFIG_PANEL_DATE_FILTER_WIDTH = 159;
 
 interface IDateDatasetFilterProps {
     widget: IWidget;
-    relatedDateDatasets: ICatalogDateDataset[] | undefined;
+    relatedDateDatasets: readonly ICatalogDateDataset[] | undefined;
     isDatasetsLoading: boolean;
 
     dateFromVisualization?: ICatalogDateDataset;

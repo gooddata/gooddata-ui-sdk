@@ -9,7 +9,7 @@ import { getUnrelatedDateDataset } from "./utils";
 export interface IDateDatasetPickerProps {
     autoOpen?: boolean;
     widget: IWidget;
-    relatedDateDatasets: ICatalogDateDataset[] | undefined;
+    relatedDateDatasets: readonly ICatalogDateDataset[] | undefined;
     selectedDateDataset?: ICatalogDateDataset;
     selectedDateDatasetHidden?: boolean;
 

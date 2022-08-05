@@ -7,7 +7,7 @@ import { getUnrelatedDateDataset } from "./utils";
 
 interface IDateFilterCheckboxProps {
     widget: IWidget;
-    relatedDateDatasets: ICatalogDateDataset[] | undefined;
+    relatedDateDatasets: readonly ICatalogDateDataset[] | undefined;
     isDropdownLoading?: boolean;
     isFilterLoading?: boolean;
     selectedDateDataset?: ICatalogDateDataset;
