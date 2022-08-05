@@ -122,6 +122,11 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
         this.createPortalNode();
     }
 
+    public UNSAFE_componentWillMount(): void {
+        // reserve the zIndex via the context as soon as possible so that Overlays in the children get higher zIndex
+        this.context?.addOverlay(this.id);
+    }
+
     public componentDidMount(): void {
         this.isComponentMounted = true;
         afterOverlayOpened();
@@ -129,10 +134,6 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
         window.addEventListener("resize", this.resizeHandler);
 
         this.addListeners(this.props);
-
-        if (this.context) {
-            this.context.addOverlay(this.id);
-        }
 
         setTimeout(() => {
             this.align();
@@ -168,9 +169,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
 
         this.removePortalNodeAfterAllTreeUnmount();
 
-        if (this.context) {
-            this.context.removeOverlay(this.id);
-        }
+        this.context?.removeOverlay(this.id);
 
         afterOverlayClosed();
     }
