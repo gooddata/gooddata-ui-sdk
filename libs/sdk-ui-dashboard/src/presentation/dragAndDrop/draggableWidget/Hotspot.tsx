@@ -11,14 +11,13 @@ import {
     selectWidgetPlaceholder,
     IWidgetPlaceholderSpec,
     dispatchAndWaitFor,
-    uiActions,
 } from "../../../model";
 import stringify from "json-stable-stringify";
 import { useDashboardDrop } from "../useDashboardDrop";
-import { idRef, insightRef, insightTitle } from "@gooddata/sdk-model";
+import { insightRef, insightTitle } from "@gooddata/sdk-model";
 import { isInsightDraggableListItem, isKpiPlaceholderDraggableItem } from "../types";
 import { getSizeInfo } from "../../../model/layout";
-import { KPI_PLACEHOLDER_WIDGET_ID } from "../../../widgets/placeholders/types";
+import { useKpiPlaceholderDropHandler } from "./useKpiPlaceholderDropHandler";
 
 interface IHotspotProps {
     sectionIndex: number;
@@ -36,6 +35,8 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
 
     // for "next" we need to add the item after the current index, for "prev" on the current one
     const targetItemIndex = dropZoneType === "next" ? itemIndex + 1 : itemIndex;
+
+    const handleKpiPlaceholderDrop = useKpiPlaceholderDropHandler();
 
     const [{ canDrop, isOver }, dropRef] = useDashboardDrop(
         ["insightListItem", "kpi-placeholder"],
@@ -70,21 +71,7 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
                     });
                 }
                 if (isKpiPlaceholderDraggableItem(item)) {
-                    const sizeInfo = getSizeInfo(settings, "kpi");
-                    dispatch(uiActions.selectWidget(idRef(KPI_PLACEHOLDER_WIDGET_ID)));
-                    dispatch(uiActions.setConfigurationPanelOpened(true));
-                    dispatch(uiActions.setKpiDateDatasetAutoOpen(true));
-                    dispatch(
-                        placeholdersActions.setWidgetPlaceholder({
-                            itemIndex: targetItemIndex,
-                            sectionIndex,
-                            size: {
-                                height: sizeInfo.height.default!,
-                                width: sizeInfo.width.default!,
-                            },
-                            type: "kpi",
-                        }),
-                    );
+                    handleKpiPlaceholderDrop(sectionIndex, targetItemIndex);
                 }
             },
             hover: (item) => {
@@ -121,7 +108,7 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
                 }
             },
         },
-        [dispatch, widgetPlaceholder, settings, targetItemIndex, sectionIndex],
+        [dispatch, widgetPlaceholder, settings, targetItemIndex, sectionIndex, handleKpiPlaceholderDrop],
     );
 
     const debugStyle = getDropZoneDebugStyle({ isOver });

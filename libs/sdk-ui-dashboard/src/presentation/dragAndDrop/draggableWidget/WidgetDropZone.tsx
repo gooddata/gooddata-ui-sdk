@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
-import { idRef, insightRef, insightTitle } from "@gooddata/sdk-model";
+import { insightRef, insightTitle } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 
 import { CustomDashboardWidgetComponent } from "../../widget/types";
@@ -9,15 +9,15 @@ import {
     dispatchAndWaitFor,
     placeholdersActions,
     selectSettings,
-    uiActions,
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../model";
 import { useDashboardDrop } from "../useDashboardDrop";
 import { WidgetDropZoneBox } from "./WidgetDropZoneBox";
-import { isPlaceholderWidget, KPI_PLACEHOLDER_WIDGET_ID } from "../../../widgets/placeholders/types";
+import { isPlaceholderWidget } from "../../../widgets/placeholders/types";
 import { isInsightDraggableListItem, isKpiPlaceholderDraggableItem } from "../types";
 import { getSizeInfo } from "../../../model/layout";
+import { useKpiPlaceholderDropHandler } from "./useKpiPlaceholderDropHandler";
 
 export const WidgetDropZone: CustomDashboardWidgetComponent = (props) => {
     const { widget } = props;
@@ -27,6 +27,8 @@ export const WidgetDropZone: CustomDashboardWidgetComponent = (props) => {
 
     const dispatch = useDashboardDispatch();
     const settings = useDashboardSelector(selectSettings);
+
+    const handleKpiPlaceholderDrop = useKpiPlaceholderDropHandler();
 
     const [, dropRef] = useDashboardDrop(
         ["insightListItem", "kpi-placeholder"],
@@ -61,25 +63,11 @@ export const WidgetDropZone: CustomDashboardWidgetComponent = (props) => {
                     });
                 }
                 if (isKpiPlaceholderDraggableItem(item)) {
-                    const sizeInfo = getSizeInfo(settings, "kpi");
-                    dispatch(uiActions.selectWidget(idRef(KPI_PLACEHOLDER_WIDGET_ID)));
-                    dispatch(uiActions.setConfigurationPanelOpened(true));
-                    dispatch(uiActions.setKpiDateDatasetAutoOpen(true));
-                    dispatch(
-                        placeholdersActions.setWidgetPlaceholder({
-                            itemIndex,
-                            sectionIndex,
-                            size: {
-                                height: sizeInfo.height.default!,
-                                width: sizeInfo.width.default!,
-                            },
-                            type: "kpi",
-                        }),
-                    );
+                    handleKpiPlaceholderDrop(sectionIndex, itemIndex);
                 }
             },
         },
-        [dispatch, settings, sectionIndex, itemIndex],
+        [dispatch, settings, sectionIndex, itemIndex, handleKpiPlaceholderDrop],
     );
 
     return (

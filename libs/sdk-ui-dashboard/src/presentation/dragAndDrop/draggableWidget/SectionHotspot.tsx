@@ -8,17 +8,16 @@ import {
     placeholdersActions,
     selectIsWidgetPlaceholderShown,
     selectSettings,
-    uiActions,
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../model";
 import { useDashboardDrop } from "../useDashboardDrop";
 import { SectionDropZoneBox } from "./SectionDropZoneBox";
 import { DashboardLayoutSectionBorderLine } from "./DashboardLayoutSectionBorder";
-import { idRef, insightRef, insightTitle } from "@gooddata/sdk-model";
+import { insightRef, insightTitle } from "@gooddata/sdk-model";
 import { isInsightDraggableListItem, isKpiPlaceholderDraggableItem } from "../../dragAndDrop/types";
 import { getSizeInfo } from "../../../model/layout";
-import { KPI_PLACEHOLDER_WIDGET_ID } from "../../../widgets/placeholders/types";
+import { useKpiPlaceholderDropHandler } from "./useKpiPlaceholderDropHandler";
 
 export type RowPosition = "above" | "below";
 
@@ -33,6 +32,8 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
     const dispatch = useDashboardDispatch();
     const settings = useDashboardSelector(selectSettings);
     const isWidgetPlaceholderShown = useDashboardSelector(selectIsWidgetPlaceholderShown);
+
+    const handleKpiPlaceholderDrop = useKpiPlaceholderDropHandler();
 
     const [{ canDrop, isOver }, dropRef] = useDashboardDrop(
         ["insightListItem", "kpi-placeholder"],
@@ -66,23 +67,8 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
                     );
                 }
                 if (isKpiPlaceholderDraggableItem(item)) {
-                    const sizeInfo = getSizeInfo(settings, "kpi");
-
                     dispatchAndWaitFor(dispatch, addLayoutSection(index, {})).then(() => {
-                        dispatch(uiActions.selectWidget(idRef(KPI_PLACEHOLDER_WIDGET_ID)));
-                        dispatch(uiActions.setConfigurationPanelOpened(true));
-                        dispatch(uiActions.setKpiDateDatasetAutoOpen(true));
-                        dispatch(
-                            placeholdersActions.setWidgetPlaceholder({
-                                itemIndex: 0,
-                                sectionIndex: index,
-                                size: {
-                                    height: sizeInfo.height.default!,
-                                    width: sizeInfo.width.default!,
-                                },
-                                type: "kpi",
-                            }),
-                        );
+                        handleKpiPlaceholderDrop(index, 0);
                     });
                 }
             },
@@ -92,7 +78,7 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
                 }
             },
         },
-        [dispatch, isWidgetPlaceholderShown, settings],
+        [dispatch, isWidgetPlaceholderShown, settings, handleKpiPlaceholderDrop, index],
     );
 
     if (!canDrop) {
