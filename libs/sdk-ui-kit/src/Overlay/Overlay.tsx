@@ -97,6 +97,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
     private isComponentMounted: boolean;
     private clickedInside: boolean;
     private id = uuid();
+    private alignmentTimeoutId: number;
     static contextType: React.Context<OverlayController> = OverlayContext;
 
     constructor(props: IOverlayProps<T>) {
@@ -113,6 +114,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
 
         this.isComponentMounted = false;
         this.clickedInside = false;
+        this.alignmentTimeoutId = 0;
 
         bindAll(
             this,
@@ -135,9 +137,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
 
         this.addListeners(this.props);
 
-        setTimeout(() => {
-            this.align();
-        }, ALIGN_TIMEOUT_MS);
+        this.alignWithTimeout();
     }
 
     public UNSAFE_componentWillReceiveProps(nextProps: IOverlayProps<T>): void {
@@ -155,13 +155,13 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
     }
 
     public componentDidUpdate(): void {
-        setTimeout(() => {
-            this.align();
-        }, ALIGN_TIMEOUT_MS);
+        this.alignWithTimeout();
     }
 
     public componentWillUnmount(): void {
         this.isComponentMounted = false;
+
+        this.clearAlignmentTimeout();
 
         window.removeEventListener("resize", this.resizeHandler);
 
@@ -229,6 +229,20 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
         } else {
             this.props.onAlign(optimalAlign.alignment);
         }
+    };
+
+    private clearAlignmentTimeout = () => {
+        if (this.alignmentTimeoutId) {
+            window.clearTimeout(this.alignmentTimeoutId);
+        }
+    };
+
+    private alignWithTimeout = () => {
+        this.clearAlignmentTimeout();
+
+        this.alignmentTimeoutId = window.setTimeout(() => {
+            this.align();
+        }, ALIGN_TIMEOUT_MS);
     };
 
     private onMaskClick = (e: React.MouseEvent<HTMLDivElement>) => {
