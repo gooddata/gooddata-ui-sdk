@@ -51,7 +51,7 @@ class WrappedColorPicker extends Component<IColorPickerProps & WrappedComponentP
         const { intl } = this.props;
 
         return (
-            <div className="color-picker-container">
+            <div className="color-picker-container" aria-label="Color picker">
                 <ColorPickerMatrix
                     initColor={this.state.draftHslColor}
                     onColorSelected={this.onColorSelected}

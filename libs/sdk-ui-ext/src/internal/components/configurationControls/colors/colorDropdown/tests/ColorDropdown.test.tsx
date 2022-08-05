@@ -1,18 +1,16 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { cleanup, waitFor, fireEvent } from "@testing-library/react";
 import noop from "lodash/noop";
 import cloneDeep from "lodash/cloneDeep";
 import { IColor } from "@gooddata/sdk-model";
 import { colorPalette } from "../../../../../tests/mocks/testColorHelper";
+import { setupComponent } from "../../../../../tests/testHelper";
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider";
-import ColorDropdown, { IColorDropdownOwnProps, IconPosition } from "../ColorDropdown";
-import { ColorPicker } from "@gooddata/sdk-ui-kit";
-
-import ColorPaletteItem from "../ColorPaletteItem";
-import ColorPalette from "../ColorPalette";
-import CustomColorButton from "../CustomColorButton";
+import ColorDropdown, { IColorDropdownOwnProps, IconPosition, ISelectableChild } from "../ColorDropdown";
 import { IColoredItemContentProps } from "../../coloredItemsList/ColoredItemContent";
+
+export type IMockItemProps = IColoredItemContentProps & ISelectableChild;
 
 const defaultProps: IColorDropdownOwnProps = {
     selectedColorItem: {
@@ -24,15 +22,20 @@ const defaultProps: IColorDropdownOwnProps = {
     onColorSelected: noop,
 };
 
-class MockItem extends React.PureComponent<IColoredItemContentProps> {
+class MockItem extends React.PureComponent<IMockItemProps> {
     public render() {
-        return <button className="buttonitem">test</button>;
+        return (
+            <button data-is-selected={this.props.isSelected} data-icon-position={this.props.position}>
+                test
+            </button>
+        );
     }
 }
 
 function createComponent(customProps: Partial<IColorDropdownOwnProps> = {}) {
     const props: IColorDropdownOwnProps = { ...cloneDeep(defaultProps), ...customProps };
-    return mount<IColorDropdownOwnProps>(
+
+    return setupComponent(
         <InternalIntlWrapper>
             <ColorDropdown {...props}>
                 <MockItem color={{ r: 255, g: 0, b: 0 }} text="sometext" />
@@ -42,58 +45,67 @@ function createComponent(customProps: Partial<IColorDropdownOwnProps> = {}) {
 }
 
 describe("ColorDropdown", () => {
+    afterEach(cleanup);
+
     it("should render ColorDropdown control", () => {
-        const wrapper = createComponent();
-        expect(wrapper.find(ColorDropdown).length).toBe(1);
+        const { getByText } = createComponent();
+        expect(getByText("test")).toBeInTheDocument();
     });
 
-    it("should render ColorPalette control when on item button click", () => {
-        const wrapper = createComponent();
-        wrapper.find(".buttonitem").simulate("click");
-        expect(wrapper.find(ColorPalette).length).toBe(1);
+    it("should render ColorPalette control when on item button click", async () => {
+        const { getByText, queryByLabelText, user } = createComponent();
+        await user.click(getByText("test"));
+        await waitFor(() => expect(queryByLabelText("Color palette")).toBeInTheDocument());
     });
 
     it(
         "should inject isSelected=true into child when ColorPalette control" +
             +"is shown after item button click",
-        () => {
-            const wrapper = createComponent();
-            expect(wrapper.find(MockItem).prop("isSelected")).toBeFalsy();
-            wrapper.find(".buttonitem").simulate("click");
-            expect(wrapper.find(MockItem).prop("isSelected")).toBeTruthy();
+        async () => {
+            const { getByText, queryByLabelText, user } = createComponent();
+
+            expect(getByText("test")).toHaveAttribute("data-is-selected", "false");
+            await user.click(getByText("test"));
+            await waitFor(() => {
+                expect(queryByLabelText("Color palette")).toBeInTheDocument();
+                expect(getByText("test")).toHaveAttribute("data-is-selected", "true");
+            });
         },
     );
 
     it(
         "should inject position=IconPosition.Down into child when ColorPalette control" +
             +"is shown after item button click",
-        () => {
-            const wrapper = createComponent();
-            wrapper.find(".buttonitem").simulate("click");
-            expect(wrapper.find(MockItem).prop("position")).toEqual(IconPosition.Down);
+        async () => {
+            const { getByText, user } = createComponent();
+
+            await user.click(getByText("test"));
+            await waitFor(() => {
+                expect(getByText("test")).toHaveAttribute("data-icon-position", IconPosition.Down.toString());
+            });
         },
     );
 
-    it("should render ColorPalette and select ColorPaletteItem with guid 04 after item button click", () => {
-        const wrapper = createComponent();
-        const expectedColorItem = {
-            guid: "04",
-            fill: {
-                r: 194,
-                g: 153,
-                b: 121,
-            },
-        };
+    it("should render ColorPalette and select ColorPaletteItem with guid 04 after item button click", async () => {
+        const { fill } = colorPalette[3]; // selected by default within component
+        const expectedColor = { r: 194, g: 153, b: 121 };
+        const { queryByLabelText, getByText, user } = createComponent();
 
-        wrapper.find(".buttonitem").simulate("click");
-        const selectedItem = wrapper.find(ColorPaletteItem).find({ selected: true });
-        expect(selectedItem.prop("paletteItem")).toEqual(expectedColorItem);
+        await user.click(getByText("test"));
+        await waitFor(() => {
+            expect(queryByLabelText(`rgb(${fill.r},${fill.g},${fill.b})`)).toHaveClass(
+                "gd-color-list-item-active",
+            );
+            expect(queryByLabelText(`rgb(${fill.r},${fill.g},${fill.b})`)).toHaveStyle({
+                backgroundColor: `rgb(${expectedColor.r}, ${expectedColor.g}, ${expectedColor.b})`,
+            });
+        });
     });
 
     it(
         "should render ColorPalette and not select any ColorPaletteItem after item button click" +
             "when selectedColorItem is RGBColor",
-        () => {
+        async () => {
             const selectedColorItem: IColor = {
                 type: "rgb",
                 value: {
@@ -102,125 +114,135 @@ describe("ColorDropdown", () => {
                     b: 226,
                 },
             };
+            const { getByRole, queryByLabelText, user } = createComponent({ selectedColorItem });
 
-            const wrapper = createComponent({ selectedColorItem });
-            wrapper.find(".buttonitem").simulate("click");
-            const selectedItem = wrapper.find(ColorPaletteItem).find({ selected: true });
-            expect(selectedItem.length).toBe(0);
+            await user.click(getByRole("button"));
+            await waitFor(() => {
+                expect(queryByLabelText("Color palette")).toBeInTheDocument();
+                expect(
+                    queryByLabelText(
+                        `rgb(${selectedColorItem.value.r},${selectedColorItem.value.g},${selectedColorItem.value.b})`,
+                    ),
+                ).not.toBeInTheDocument();
+            });
         },
     );
 
-    it("should call onColorSelected once when colorItem clicked and return type guid and given guid value", () => {
+    it("should call onColorSelected once when colorItem clicked and return type guid and given guid value", async () => {
         const onColorSelected = jest.fn();
-        const wrapper = createComponent({ onColorSelected });
-        wrapper.find(".buttonitem").simulate("click");
-        jest.useFakeTimers();
+        const { guid, fill } = colorPalette[2];
+        const { getByRole, queryByLabelText, user } = createComponent({ onColorSelected });
 
-        const selectedItem = wrapper.find(ColorPaletteItem).find({ paletteItem: colorPalette[2] });
-        selectedItem.find("div").simulate("click");
-
-        jest.runAllTimers();
-        expect(onColorSelected).toHaveBeenNthCalledWith(1, { type: "guid", value: "03" });
+        await user.click(getByRole("button"));
+        await user.click(queryByLabelText(`rgb(${fill.r},${fill.g},${fill.b})`));
+        await waitFor(() => {
+            expect(onColorSelected).toBeCalledWith(expect.objectContaining({ type: "guid", value: guid }));
+        });
     });
 
-    it("should not render CustomColorButton when showCustomPicker props is false after item button click", () => {
-        const wrapper = createComponent();
-        wrapper.find(".buttonitem").simulate("click");
-        expect(wrapper.find(CustomColorButton).length).toBe(0);
+    it("should not render CustomColorButton when showCustomPicker props is false after item button click", async () => {
+        const { getByRole, queryByText, user } = createComponent();
+
+        await user.click(getByRole("button"));
+        await waitFor(() => {
+            expect(queryByText("Custom color")).not.toBeInTheDocument();
+        });
     });
 
-    it("should render CustomColorButton when showCustomPicker props is true after item button click", () => {
-        const wrapper = createComponent({ showCustomPicker: true });
-        wrapper.find(".buttonitem").simulate("click");
-        expect(wrapper.find(CustomColorButton).length).toBe(1);
+    it("should render CustomColorButton when showCustomPicker props is true after item button click", async () => {
+        const { getByRole, getByText, user } = createComponent({ showCustomPicker: true });
+
+        await user.click(getByRole("button"));
+        await waitFor(() => {
+            expect(getByText("Custom color")).toBeInTheDocument();
+        });
     });
 
-    it("should render ColorPicker when CustomColorButton button click", () => {
-        const wrapper = createComponent({ showCustomPicker: true });
-        wrapper.find(".buttonitem").simulate("click");
+    it("should render ColorPicker when CustomColorButton button click", async () => {
+        const { getByRole, getByText, findByText, queryByLabelText, user } = createComponent({
+            showCustomPicker: true,
+        });
 
-        const customColorButtonButton = wrapper.find("button").find(".s-custom-section-button");
-        customColorButtonButton.simulate("click");
+        await user.click(getByRole("button"));
+        expect(await findByText("Custom color")).toBeInTheDocument();
 
-        expect(wrapper.find(ColorPicker).length).toBe(1);
-        expect(wrapper.find(ColorPalette).length).toBe(0);
+        await user.click(getByText("Custom color"));
+        await waitFor(() => {
+            expect(queryByLabelText("Color picker")).toBeInTheDocument();
+            expect(queryByLabelText("Color palette")).not.toBeInTheDocument();
+        });
     });
 
     it(
         "should render ColorPicker when CustomColorButton click" +
             "and initialRgbColor should be color with 04 in rgb(194, 153, 121)",
-        () => {
+        async () => {
             const expectedColor = {
                 r: 194,
                 g: 153,
                 b: 121,
             };
-            const wrapper = createComponent({ showCustomPicker: true });
-            wrapper.find(".buttonitem").simulate("click");
+            const { getByRole, queryByLabelText, findByText, user } = createComponent({
+                showCustomPicker: true,
+            });
 
-            const customColorButtonButton = wrapper.find("button").find(".s-custom-section-button");
-            customColorButtonButton.simulate("click");
+            await user.click(getByRole("button"));
+            expect(await findByText("Custom color")).toBeInTheDocument();
 
-            expect(wrapper.find(ColorPicker).prop("initialRgbColor")).toEqual(expectedColor);
+            expect(
+                queryByLabelText(`rgb(${expectedColor.r},${expectedColor.g},${expectedColor.b})`),
+            ).toHaveClass("gd-color-list-item-active");
         },
     );
 
-    it("should inject isSelected=true into child when ColorPicker control shown", () => {
-        const wrapper = createComponent({ showCustomPicker: true });
-        wrapper.find(".buttonitem").simulate("click");
+    it("should inject isSelected=true into child when ColorPicker control shown", async () => {
+        const { getByRole, getByText, user } = createComponent({ showCustomPicker: true });
 
-        const customColorButtonButton = wrapper.find("button").find(".s-custom-section-button");
-        customColorButtonButton.simulate("click");
-
-        expect(wrapper.find(MockItem).prop("isSelected")).toBeTruthy();
+        await user.click(getByRole("button"));
+        await user.click(getByText("Custom color"));
+        expect(getByText("test")).toHaveAttribute("data-is-selected", "true");
     });
 
-    it("should inject position=IconPosition.Right into child when ColorPicker control shown", () => {
-        const wrapper = createComponent({ showCustomPicker: true });
-        wrapper.find(".buttonitem").simulate("click");
+    it("should inject position=IconPosition.Right into child when ColorPicker control shown", async () => {
+        const { getByRole, getByText, user } = createComponent({ showCustomPicker: true });
 
-        const customColorButtonButton = wrapper.find("button").find(".s-custom-section-button");
-        customColorButtonButton.simulate("click");
-
-        expect(wrapper.find(MockItem).prop("position")).toEqual(IconPosition.Right);
+        await user.click(getByRole("button"));
+        await user.click(getByText("Custom color"));
+        expect(getByRole("button")).toHaveAttribute("data-icon-position", IconPosition.Right.toString());
     });
 
-    it("should render ColorPalette when ColorPicker cancel button click", () => {
-        const wrapper = createComponent({ showCustomPicker: true });
-        wrapper.find(".buttonitem").simulate("click");
+    it("should render ColorPalette when ColorPicker cancel button click", async () => {
+        const { getByRole, getByText, queryByLabelText, user } = createComponent({ showCustomPicker: true });
 
-        const customColorButtonButton = wrapper.find("button").find(".s-custom-section-button");
-        customColorButtonButton.simulate("click");
-
-        const cancelButton = wrapper.find(".s-cancel");
-        cancelButton.simulate("click");
-
-        expect(wrapper.find(ColorPicker).length).toBe(0);
-        expect(wrapper.find(ColorPalette).length).toBe(1);
+        await user.click(getByRole("button"));
+        await user.click(getByText("Custom color"));
+        await user.click(getByText("Cancel"));
+        await waitFor(() => {
+            expect(queryByLabelText("Color picker")).not.toBeInTheDocument();
+            expect(queryByLabelText("Color palette")).toBeInTheDocument();
+        });
     });
 
     it(
         "should call onColorSelected once when ColorPicker select color" +
             " and return type rgb and given rgb value",
-        () => {
+        async () => {
             const onColorSelected = jest.fn();
-            const wrapper = createComponent({ showCustomPicker: true, onColorSelected });
-            wrapper.find(".buttonitem").simulate("click");
-            jest.useFakeTimers();
+            const { getByRole, getByText, getByPlaceholderText, user } = createComponent({
+                showCustomPicker: true,
+                onColorSelected,
+            });
 
-            const customColorButtonButton = wrapper.find("button").find(".s-custom-section-button");
-            customColorButtonButton.simulate("click");
+            await user.click(getByRole("button"));
+            await user.click(getByText("Custom color"));
 
-            const pickerInputField = wrapper.find("HexColorInput").find("input");
-            pickerInputField.simulate("change", { target: { value: "#ff0000" } });
-
-            const confirmButton = wrapper.find(".s-ok");
-            confirmButton.simulate("click");
-            jest.runAllTimers();
-
-            expect(onColorSelected).toHaveBeenNthCalledWith(1, {
-                type: "rgb",
-                value: { r: 255, g: 0, b: 0 },
+            fireEvent.change(getByPlaceholderText("#color"), { target: { value: "" } });
+            await user.type(getByPlaceholderText("#color"), "#ff0000");
+            await user.click(getByText("OK"));
+            await waitFor(() => {
+                expect(onColorSelected).toBeCalledWith(
+                    expect.objectContaining({ type: "rgb", value: { r: 255, g: 0, b: 0 } }),
+                );
             });
         },
     );

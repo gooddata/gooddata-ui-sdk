@@ -1,11 +1,15 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { cleanup, waitFor } from "@testing-library/react";
 import noop from "lodash/noop";
 import cloneDeep from "lodash/cloneDeep";
 import ColorPalette, { IColorPaletteProps } from "../ColorPalette";
-import ColorPaletteItem from "../ColorPaletteItem";
-import { getLargePalette, colorPalette } from "../../../../../tests/mocks/testColorHelper";
+import {
+    getLargePalette,
+    colorPalette,
+    colorPaletteWithOneColor,
+} from "../../../../../tests/mocks/testColorHelper";
+import { setupComponent } from "../../../../../tests/testHelper";
 
 const defaultProps: IColorPaletteProps = {
     selectedColorGuid: undefined,
@@ -15,55 +19,56 @@ const defaultProps: IColorPaletteProps = {
 
 function createComponent(customProps: Partial<IColorPaletteProps> = {}) {
     const props: IColorPaletteProps = { ...cloneDeep(defaultProps), ...customProps };
-    return mount<IColorPaletteProps>(<ColorPalette {...props} />);
+    return setupComponent(<ColorPalette {...props} />);
 }
 
 describe("ColorPalette", () => {
-    it("should render ColorPalette control", () => {
-        const wrapper = createComponent();
-        expect(wrapper.find(ColorPalette).length).toBe(1);
-    });
+    afterEach(cleanup);
 
-    it("should render small ColorPalette control", () => {
-        const wrapper = createComponent();
-        expect(wrapper.find("div").first().hasClass("gd-color-drop-down-list")).toBeTruthy();
-        expect(wrapper.find("div").first().hasClass("gd-color-drop-down-list-large")).toBeFalsy();
+    it("should render small ColorPalette", () => {
+        const { getByLabelText } = createComponent();
+        expect(getByLabelText("Color palette")).toHaveClass("gd-color-drop-down-list");
     });
 
     it("should render large ColorPalette control", () => {
-        const wrapper = createComponent({ colorPalette: getLargePalette() });
-        expect(wrapper.find("div").first().hasClass("gd-color-drop-down-list")).toBeFalsy();
-        expect(wrapper.find("div").first().hasClass("gd-color-drop-down-list-large")).toBeTruthy();
+        const { getByLabelText } = createComponent({ colorPalette: getLargePalette() });
+        expect(getByLabelText("Color palette")).toHaveClass("gd-color-drop-down-list-large");
     });
 
-    it("should render 5 ColorPaletteItem controls", () => {
-        const wrapper = createComponent();
-        expect(wrapper.find(ColorPaletteItem).length).toBe(5);
+    it("should render ColorPalette control with 5 colors", () => {
+        const { queryAllByLabelText } = createComponent();
+        expect(queryAllByLabelText(/rgb*/i)).toHaveLength(5);
     });
 
-    it("should render 5 ColorPaletteItem controls any has to be selected", () => {
-        const wrapper = createComponent();
-        const selectedItem = wrapper.find(ColorPaletteItem).find({ selected: true });
-        expect(selectedItem.length).toBe(0);
+    it("should render single color colorPalette with selected color", () => {
+        const { guid } = colorPaletteWithOneColor[0];
+        const { getByLabelText } = createComponent({
+            colorPalette: colorPaletteWithOneColor,
+            selectedColorGuid: guid,
+        });
+        expect(getByLabelText(/rgb*/i)).toHaveClass("gd-color-list-item-active");
     });
 
-    it("should render 5 ColorPaletteItem controls one has to be selected", () => {
-        const wrapper = createComponent({ selectedColorGuid: "04" });
-        const selectedItem = wrapper.find(ColorPaletteItem).find({ selected: true });
-        expect(selectedItem.length).toBe(1);
+    it("should render single color colorPalette with no selected color", () => {
+        const { queryByLabelText } = createComponent({ colorPalette: colorPaletteWithOneColor });
+        expect(queryByLabelText(/rgb*/i)).not.toHaveClass("gd-color-list-item-active");
     });
 
-    it("should render 5 ColorPaletteItem controls any to be selected by fake guid", () => {
-        const wrapper = createComponent({ selectedColorGuid: "fakegid" });
-        const selectedItem = wrapper.find(ColorPaletteItem).find({ selected: true });
-        expect(selectedItem.length).toBe(0);
+    it("should render single color colorPalette where selection is not done by invalid guid", () => {
+        const { queryByLabelText } = createComponent({
+            colorPalette: colorPaletteWithOneColor,
+            selectedColorGuid: "fakegid",
+        });
+        expect(queryByLabelText(/rgb*/i)).not.toHaveClass("gd-color-list-item-active");
     });
 
-    it("should call onSelect when item clicked", () => {
+    it("should call onSelect when item clicked", async () => {
         const onColorSelected = jest.fn();
-        const wrapper = createComponent({ onColorSelected });
-        const selectedItem = wrapper.find(ColorPaletteItem).find({ paletteItem: colorPalette[3] });
-        selectedItem.find("div").simulate("click");
-        expect(onColorSelected).toHaveBeenNthCalledWith(1, { type: "guid", value: "04" });
+        const { fill, guid } = colorPalette[4];
+        const { getByLabelText, user } = createComponent({ onColorSelected });
+        await user.click(getByLabelText(`rgb(${fill.r},${fill.g},${fill.b})`));
+        await waitFor(() =>
+            expect(onColorSelected).toBeCalledWith(expect.objectContaining({ type: "guid", value: guid })),
+        );
     });
 });

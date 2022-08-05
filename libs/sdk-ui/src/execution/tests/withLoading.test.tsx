@@ -1,7 +1,8 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { withExecutionLoading, IWithExecutionLoading, WithLoadingResult } from "../withExecutionLoading";
-import { shallow } from "enzyme";
+import { render } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { IDummyPromise, createDummyPromise } from "../../base/react/tests/toolkit";
 import { DataViewFacade } from "../../base";
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
@@ -19,10 +20,15 @@ const renderEnhancedComponent = <T, E>(
         const { result, error, reload, isLoading } = props;
         return (
             <div>
-                <button className="Refetch" onClick={reload} />
-                {isLoading && <div className="Loading" />}
-                {result && <div className="Result">{result}</div>}
-                {error && <div className="Error">{error.message}</div>}
+                <button onClick={reload}>Refetch</button>
+                {isLoading && <div>Loading</div>}
+                {result && <div>Result</div>}
+                {error && (
+                    <div>
+                        <span>Error</span>
+                        {error?.cause?.message}
+                    </div>
+                )}
             </div>
         );
     };
@@ -33,48 +39,47 @@ const renderEnhancedComponent = <T, E>(
         exportTitle: "TestComponent",
     })(CoreComponent as any);
 
-    return shallow(<Component />);
+    return render(<Component />);
 };
 
 describe("withLoading", () => {
     const RESULT = EmptyDataViewFacade;
-    const ERROR = new Error("ERROR");
+    const ERROR = new Error("ERROR_MESSAGE");
 
     it("should start loading immediately and inject isLoading prop", () => {
-        const wrapper = renderEnhancedComponent({ result: RESULT, delay: 100 });
-        expect(wrapper.prop("isLoading")).toBe(true);
+        const { getByText } = renderEnhancedComponent({ result: RESULT, delay: 100 });
+        expect(getByText("Loading")).toBeInTheDocument();
     });
 
     it("should not start loading immediately if loadOnMount is set to false", () => {
-        const wrapper = renderEnhancedComponent({ result: RESULT, delay: 100 }, { loadOnMount: false });
-        expect(wrapper.prop("isLoading")).toBe(false);
+        const { queryByText } = renderEnhancedComponent(
+            { result: RESULT, delay: 100 },
+            { loadOnMount: false },
+        );
+        expect(queryByText("Loading")).not.toBeInTheDocument();
     });
 
     it("should stop loading when promise is resolved and inject result prop", async () => {
-        const wrapper = renderEnhancedComponent({ result: RESULT, delay: 100 });
+        const { queryByText } = renderEnhancedComponent({ result: RESULT, delay: 100 });
         await createDummyPromise({ delay: 150 });
-        expect(wrapper.prop("isLoading")).toBe(false);
-        expect(wrapper.prop("result")).toBe(RESULT);
+        expect(queryByText("Loading")).not.toBeInTheDocument();
+        expect(queryByText("Result")).toBeInTheDocument();
     });
 
     it("should stop loading when promise is rejected and inject error prop", async () => {
-        const wrapper = renderEnhancedComponent({ willResolve: false, error: ERROR, delay: 100 });
+        const { queryByText } = renderEnhancedComponent({ willResolve: false, error: ERROR, delay: 100 });
         await createDummyPromise({ delay: 150 });
-        expect(wrapper.prop("isLoading")).toBe(false);
-        expect(wrapper.prop("error").cause).toBe(ERROR);
-    });
-
-    it("should inject fetch handler", () => {
-        const wrapper = renderEnhancedComponent({ delay: 100 });
-        expect(wrapper.prop("reload")).toEqual(expect.any(Function));
+        expect(queryByText("Loading")).not.toBeInTheDocument();
+        expect(queryByText("ERROR_MESSAGE")).toBeInTheDocument();
+        expect(queryByText("Error")).toBeInTheDocument();
     });
 
     it("should start loading again after invoking injected fetch function", async () => {
-        const wrapper = renderEnhancedComponent({ delay: 100 });
+        const { getByText } = renderEnhancedComponent({ delay: 100 });
         await createDummyPromise({ delay: 150 });
-        wrapper.dive().find(".Refetch").simulate("click");
-
-        expect(wrapper.prop("isLoading")).toBe(true);
+        userEvent.setup();
+        await userEvent.click(getByText("Refetch"));
+        expect(getByText("Loading")).toBeInTheDocument();
     });
 
     it("should invoke onLoadingStart, onLoadingChanged and onLoadingFinish events", async () => {

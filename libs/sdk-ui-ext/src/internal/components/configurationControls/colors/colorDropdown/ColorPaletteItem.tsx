@@ -22,6 +22,7 @@ export default class ColorPaletteItem extends React.PureComponent<IColorPaletteI
     public render() {
         return (
             <div
+                aria-label={this.getRgbStringFromPaletteItem()}
                 ref={this.itemRef}
                 onClick={this.onColorSelected}
                 style={{
