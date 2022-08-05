@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { IKpiWidget, widgetRef } from "@gooddata/sdk-model";
 
 import { DateDatasetFilter, useKpiWidgetRelatedDateDatasets } from "../../../common";
@@ -41,7 +41,11 @@ export const KpiWidgetDateDatasetFilter: React.FC<{
                 preselectDateDataset(widgetRef(widget), first.dataSet.ref);
             }
         }
-    }, [result, isKpiDateDatasetAutoOpen, dispatch, widget]);
+    }, [result, isKpiDateDatasetAutoOpen, dispatch, widget, preselectDateDataset]);
+
+    const handleDateDatasetChanged = useCallback(() => {
+        dispatch(uiActions.setKpiDateDatasetAutoOpen(false));
+    }, [dispatch]);
 
     useEffect(() => {
         return () => {
@@ -59,6 +63,7 @@ export const KpiWidgetDateDatasetFilter: React.FC<{
                 isDatasetsLoading={status === "loading" || status === "pending" || isWaitingForPreselect}
                 relatedDateDatasets={result}
                 shouldPickDateDataset={isKpiDateDatasetAutoOpen}
+                onDateDatasetChanged={handleDateDatasetChanged}
             />
         </div>
     );

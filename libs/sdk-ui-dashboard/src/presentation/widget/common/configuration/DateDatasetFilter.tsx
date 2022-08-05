@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { ICatalogDateDataset, IWidget } from "@gooddata/sdk-model";
 
 import { DateFilterCheckbox } from "./DateFilterCheckbox";
@@ -19,6 +19,7 @@ interface IDateDatasetFilterProps {
     dateFromVisualization?: ICatalogDateDataset;
     dateFilterCheckboxDisabled: boolean;
     shouldPickDateDataset?: boolean;
+    onDateDatasetChanged?: (id: string) => void;
 }
 
 export const DateDatasetFilter: React.FC<IDateDatasetFilterProps> = (props) => {
@@ -29,6 +30,7 @@ export const DateDatasetFilter: React.FC<IDateDatasetFilterProps> = (props) => {
         dateFromVisualization,
         isDatasetsLoading,
         shouldPickDateDataset,
+        onDateDatasetChanged,
     } = props;
 
     const catalogDatasetsMap = useDashboardSelector(selectAllCatalogDateDatasetsMap);
@@ -41,10 +43,18 @@ export const DateDatasetFilter: React.FC<IDateDatasetFilterProps> = (props) => {
         !!widget.dateDataSet || shouldPickDateDataset,
     );
 
-    const { handleDateDatasetChanged, handleDateFilterEnabled, status } = useDateFilterConfigurationHandling(
-        widget,
-        relatedDateDatasets,
-        setIsDateFilterEnabled,
+    const {
+        handleDateDatasetChanged: handleDateDatasetChangedCore,
+        handleDateFilterEnabled,
+        status,
+    } = useDateFilterConfigurationHandling(widget, relatedDateDatasets, setIsDateFilterEnabled);
+
+    const handleDateDatasetChanged = useCallback(
+        (id: string) => {
+            onDateDatasetChanged?.(id);
+            handleDateDatasetChangedCore(id);
+        },
+        [handleDateDatasetChangedCore, onDateDatasetChanged],
     );
 
     const isFilterLoading = status === "loading";
