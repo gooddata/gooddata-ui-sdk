@@ -9,7 +9,7 @@ import {
     placeholdersActions,
     uiActions,
 } from "../../../model";
-import { getSizeInfo } from "../../../model/layout";
+import { getSizeInfo } from "../../../_staging/layout/getSizeInfo";
 import { KPI_PLACEHOLDER_WIDGET_ID } from "../../../widgets/placeholders/types";
 
 export function useKpiPlaceholderDropHandler() {

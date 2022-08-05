@@ -19,3 +19,4 @@ export * from "./presentation/widget/kpi/common/filterUtils";
 export * from "./model/utils/alertsUtils";
 export * from "./_staging/dashboard/fluidLayout/config";
 export * from "./model/layout/sizing";
+export * from "./_staging/layout/getSizeInfo";

@@ -17,7 +17,7 @@ import { SectionDropZoneBox } from "./SectionDropZoneBox";
 import { DashboardLayoutSectionBorderLine } from "./DashboardLayoutSectionBorder";
 import { insightRef, insightTitle } from "@gooddata/sdk-model";
 import { isInsightDraggableListItem, isKpiPlaceholderDraggableItem } from "../../dragAndDrop/types";
-import { getSizeInfo } from "../../../model/layout";
+import { getSizeInfo } from "../../../_staging/layout/getSizeInfo";
 import { useKpiPlaceholderDropHandler } from "./useKpiPlaceholderDropHandler";
 
 export type RowPosition = "above" | "below";
