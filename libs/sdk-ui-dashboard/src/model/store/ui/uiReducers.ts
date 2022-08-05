@@ -105,6 +105,10 @@ const setConfigurationPanelOpened: UiReducer<PayloadAction<boolean>> = (state, a
     state.configurationPanelOpened = action.payload;
 };
 
+const setKpiDateDatasetAutoOpen: UiReducer<PayloadAction<boolean>> = (state, action) => {
+    state.kpiDateDatasetAutoOpen = action.payload;
+};
+
 export const uiReducers = {
     openScheduleEmailDialog,
     closeScheduleEmailDialog,
@@ -130,4 +134,5 @@ export const uiReducers = {
     selectWidget,
     clearWidgetSelection,
     setConfigurationPanelOpened,
+    setKpiDateDatasetAutoOpen,
 };

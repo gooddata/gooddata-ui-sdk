@@ -212,6 +212,7 @@ export {
     selectIsInViewMode,
     selectSelectedWidgetRef,
     selectConfigurationPanelOpened,
+    selectKpiDateDatasetAutoOpen,
 } from "./ui/uiSelectors";
 export { uiActions } from "./ui";
 export { LegacyDashboardsState } from "./legacyDashboards/legacyDashboardsState";

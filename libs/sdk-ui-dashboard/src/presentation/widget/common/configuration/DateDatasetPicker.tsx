@@ -1,6 +1,6 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
-import { ICatalogDateDataset, isInsightWidget, IWidget, ObjRef } from "@gooddata/sdk-model";
+import { ICatalogDateDataset, isInsightWidget, IWidget } from "@gooddata/sdk-model";
 import { FormattedMessage } from "react-intl";
 import Measure from "react-measure";
 import { DateDatasetDropdown } from "./DateDatasetDropdown";
@@ -8,7 +8,6 @@ import { getUnrelatedDateDataset } from "./utils";
 
 export interface IDateDatasetPickerProps {
     autoOpen?: boolean;
-    autoOpenChanged: (widgetRef: ObjRef, autoOpen: boolean) => void;
     widget: IWidget;
     relatedDateDatasets: ICatalogDateDataset[] | undefined;
     selectedDateDataset?: ICatalogDateDataset;
@@ -30,7 +29,6 @@ export const DateDatasetPicker: React.FC<IDateDatasetPickerProps> = (props) => {
         widget,
         dateFromVisualization,
         autoOpen,
-        autoOpenChanged,
         isLoading,
         width,
         onDateDatasetChange,
@@ -43,7 +41,6 @@ export const DateDatasetPicker: React.FC<IDateDatasetPickerProps> = (props) => {
     const getDateFilter = (measureRef: React.Ref<HTMLDivElement> | undefined, width: number) => (
         <div className="subcategory-dropdown" ref={measureRef}>
             <DateDatasetDropdown
-                autoOpenChanged={autoOpenChanged}
                 autoOpen={autoOpen}
                 widgetRef={widget.ref}
                 className="s-filter-date-dropdown"

@@ -37,6 +37,7 @@ export interface UiState {
     activeHeaderIndex: number | null;
     selectedWidgetRef: ObjRef | undefined;
     configurationPanelOpened: boolean;
+    kpiDateDatasetAutoOpen: boolean;
 }
 
 export const uiInitialState: UiState = {
@@ -70,4 +71,5 @@ export const uiInitialState: UiState = {
     activeHeaderIndex: null,
     selectedWidgetRef: undefined,
     configurationPanelOpened: true,
+    kpiDateDatasetAutoOpen: false,
 };

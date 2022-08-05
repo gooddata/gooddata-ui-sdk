@@ -71,6 +71,7 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
                     dispatchAndWaitFor(dispatch, addLayoutSection(index, {})).then(() => {
                         dispatch(uiActions.selectWidget(idRef(KPI_PLACEHOLDER_WIDGET_ID)));
                         dispatch(uiActions.setConfigurationPanelOpened(true));
+                        dispatch(uiActions.setKpiDateDatasetAutoOpen(true));
                         dispatch(
                             placeholdersActions.setWidgetPlaceholder({
                                 itemIndex: 0,

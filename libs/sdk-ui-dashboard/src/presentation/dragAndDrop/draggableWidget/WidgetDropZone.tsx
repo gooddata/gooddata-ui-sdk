@@ -64,6 +64,7 @@ export const WidgetDropZone: CustomDashboardWidgetComponent = (props) => {
                     const sizeInfo = getSizeInfo(settings, "kpi");
                     dispatch(uiActions.selectWidget(idRef(KPI_PLACEHOLDER_WIDGET_ID)));
                     dispatch(uiActions.setConfigurationPanelOpened(true));
+                    dispatch(uiActions.setKpiDateDatasetAutoOpen(true));
                     dispatch(
                         placeholdersActions.setWidgetPlaceholder({
                             itemIndex,

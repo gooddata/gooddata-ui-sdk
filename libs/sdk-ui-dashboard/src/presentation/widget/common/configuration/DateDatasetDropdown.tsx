@@ -72,7 +72,6 @@ const DateDatasetsListItem: React.FC<IDateDatasetsListItemProps> = ({
 
 export interface IDateDatasetDropdownProps {
     autoOpen?: boolean;
-    autoOpenChanged: (widgetRef: ObjRef, autoOpen: boolean) => void;
     widgetRef: ObjRef;
     relatedDateDatasets: ICatalogDateDataset[];
     activeDateDataset?: ICatalogDateDataset;
@@ -102,7 +101,6 @@ export const DateDatasetDropdown: React.FC<IDateDatasetDropdownProps> = (props) 
         isLoading = false,
         autoOpen = false,
         onDateDatasetChange,
-        autoOpenChanged,
         activeDateDataset,
         unrelatedDateDataset,
         width,
@@ -203,7 +201,6 @@ export const DateDatasetDropdown: React.FC<IDateDatasetDropdownProps> = (props) 
                                             return;
                                         }
                                         closeDropdown();
-                                        autoOpenChanged(widgetRef, false);
                                         onDateDatasetChange(item.id);
                                     }}
                                 />

@@ -5309,6 +5309,9 @@ export const selectIsWhiteLabeled: OutputSelector<DashboardState, boolean, (res:
 // @alpha (undocumented)
 export const selectIsWidgetPlaceholderShown: OutputSelector<DashboardState, boolean, (res: IWidgetPlaceholderSpec | undefined) => boolean>;
 
+// @internal (undocumented)
+export const selectKpiDateDatasetAutoOpen: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
+
 // @alpha
 export const selectLayout: OutputSelector<DashboardState, IDashboardLayout<ExtendedDashboardWidget>, (res: LayoutState) => IDashboardLayout<ExtendedDashboardWidget>>;
 
@@ -5584,6 +5587,10 @@ setConfigurationPanelOpened: CaseReducer<UiState, {
 payload: boolean;
 type: string;
 }>;
+setKpiDateDatasetAutoOpen: CaseReducer<UiState, {
+payload: boolean;
+type: string;
+}>;
 }>;
 
 // @alpha (undocumented)
@@ -5605,6 +5612,8 @@ export interface UiState {
         openedWidgetRef: ObjRef | undefined;
         highlightedWidgetRef: ObjRef | undefined;
     };
+    // (undocumented)
+    kpiDateDatasetAutoOpen: boolean;
     // (undocumented)
     menuButton: {
         itemsVisibility: IMenuButtonItemsVisibility;

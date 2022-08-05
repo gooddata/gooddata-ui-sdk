@@ -1,7 +1,6 @@
 // (C) 2022 GoodData Corporation
 import React, { useState } from "react";
 import { ICatalogDateDataset, IWidget } from "@gooddata/sdk-model";
-import noop from "lodash/noop";
 
 import { DateFilterCheckbox } from "./DateFilterCheckbox";
 import { useDashboardSelector, selectAllCatalogDateDatasetsMap } from "../../../../model";
@@ -19,6 +18,7 @@ interface IDateDatasetFilterProps {
 
     dateFromVisualization?: ICatalogDateDataset;
     dateFilterCheckboxDisabled: boolean;
+    shouldPickDateDataset?: boolean;
 }
 
 export const DateDatasetFilter: React.FC<IDateDatasetFilterProps> = (props) => {
@@ -28,6 +28,7 @@ export const DateDatasetFilter: React.FC<IDateDatasetFilterProps> = (props) => {
         dateFilterCheckboxDisabled,
         dateFromVisualization,
         isDatasetsLoading,
+        shouldPickDateDataset,
     } = props;
 
     const catalogDatasetsMap = useDashboardSelector(selectAllCatalogDateDatasetsMap);
@@ -36,7 +37,9 @@ export const DateDatasetFilter: React.FC<IDateDatasetFilterProps> = (props) => {
     const { selectedDateDatasetHiddenByObjectAvailability, status: visibleDateDatasetsStatus } =
         useIsSelectedDatasetHidden(selectedDateDataset?.dataSet.ref);
 
-    const [isDateFilterEnabled, setIsDateFilterEnabled] = useState(!!widget.dateDataSet);
+    const [isDateFilterEnabled, setIsDateFilterEnabled] = useState(
+        !!widget.dateDataSet || shouldPickDateDataset,
+    );
 
     const { handleDateDatasetChanged, handleDateFilterEnabled, status } = useDateFilterConfigurationHandling(
         widget,
@@ -83,8 +86,7 @@ export const DateDatasetFilter: React.FC<IDateDatasetFilterProps> = (props) => {
                     selectedDateDatasetHidden={selectedDateDatasetHiddenByObjectAvailability}
                     unrelatedDateDataset={unrelatedDateDataset}
                     onDateDatasetChange={handleDateDatasetChanged}
-                    autoOpenChanged={noop} // TODO
-                    autoOpen={false} // TODO
+                    autoOpen={shouldPickDateDataset}
                     isLoading={isDropdownLoading}
                 />
             )}
