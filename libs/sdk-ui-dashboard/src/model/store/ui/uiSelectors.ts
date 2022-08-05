@@ -51,6 +51,22 @@ export const selectIsShareDialogOpen = createSelector(selectSelf, (state) => sta
 export const selectIsDeleteDialogOpen = createSelector(selectSelf, (state) => state.deleteDialog.open);
 
 /**
+ * @internal
+ */
+export const selectIsKpiDeleteDialogOpen = createSelector(
+    selectSelf,
+    (state) => !!state.kpiDeleteDialog.widgetCoordinates,
+);
+
+/**
+ * @internal
+ */
+export const selectKpiDeleteDialogWidgetCoordinates = createSelector(
+    selectSelf,
+    (state) => state.kpiDeleteDialog.widgetCoordinates,
+);
+
+/**
  * @alpha
  */
 export const selectFilterBarExpanded = createSelector(selectSelf, (state) => state.filterBar.expanded);

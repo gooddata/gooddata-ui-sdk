@@ -2,7 +2,7 @@
 import { Action, AnyAction, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import { ObjRef } from "@gooddata/sdk-model";
 import { UiState } from "./uiState";
-import { IMenuButtonItemsVisibility, RenderMode } from "../../../types";
+import { ILayoutCoordinates, IMenuButtonItemsVisibility, RenderMode } from "../../../types";
 
 type UiReducer<A extends Action = AnyAction> = CaseReducer<UiState, A>;
 
@@ -52,6 +52,14 @@ const openDeleteDialog: UiReducer = (state) => {
 
 const closeDeleteDialog: UiReducer = (state) => {
     state.deleteDialog.open = false;
+};
+
+const openKpiDeleteDialog: UiReducer<PayloadAction<ILayoutCoordinates>> = (state, action) => {
+    state.kpiDeleteDialog.widgetCoordinates = action.payload;
+};
+
+const closeKpiDeleteDialog: UiReducer = (state) => {
+    state.kpiDeleteDialog.widgetCoordinates = undefined;
 };
 
 const setFilterBarExpanded: UiReducer<PayloadAction<boolean>> = (state, action) => {
@@ -126,6 +134,8 @@ export const uiReducers = {
     closeShareDialog,
     openDeleteDialog,
     closeDeleteDialog,
+    openKpiDeleteDialog,
+    closeKpiDeleteDialog,
     setMenuButtonItemsVisibility,
     setRenderMode,
     setEditRenderMode,

@@ -213,6 +213,9 @@ export {
     selectSelectedWidgetRef,
     selectConfigurationPanelOpened,
     selectKpiDateDatasetAutoOpen,
+    selectIsDeleteDialogOpen,
+    selectIsKpiDeleteDialogOpen,
+    selectKpiDeleteDialogWidgetCoordinates,
 } from "./ui/uiSelectors";
 export { uiActions } from "./ui";
 export { LegacyDashboardsState } from "./legacyDashboards/legacyDashboardsState";

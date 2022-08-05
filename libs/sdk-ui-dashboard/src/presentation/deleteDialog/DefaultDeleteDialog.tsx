@@ -9,11 +9,11 @@ import {
     dispatchAndWaitFor,
     selectEnableKPIDashboardDrillToDashboard,
     selectEnableKPIDashboardScheduleRecipients,
+    selectIsDeleteDialogOpen,
     uiActions,
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../model";
-import { selectIsDeleteDialogOpen } from "../../model/store/ui/uiSelectors";
 import { selectSupportsKpiWidgetCapability } from "../../model/store/backendCapabilities/backendCapabilitiesSelectors";
 
 const deleteMessages = defineMessages({

@@ -3384,6 +3384,12 @@ export interface IInsightMenuSubmenu {
 }
 
 // @alpha
+export interface ILayoutCoordinates {
+    itemIndex: number;
+    sectionIndex: number;
+}
+
+// @alpha
 export interface ILegacyDashboard {
     readonly identifier: string;
     readonly ref: ObjRef;
@@ -5252,6 +5258,9 @@ export const selectIsDashboardLoading: OutputSelector<DashboardState, boolean, (
 // @public (undocumented)
 export const selectIsDashboardSaving: OutputSelector<DashboardState, boolean, (res: SavingState) => boolean>;
 
+// @internal (undocumented)
+export const selectIsDeleteDialogOpen: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
+
 // @public
 export const selectIsEmbedded: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
@@ -5278,6 +5287,9 @@ export const selectIsKpiAlertHighlightedByWidgetRef: (ref: ObjRef | undefined) =
 
 // @alpha (undocumented)
 export const selectIsKpiAlertOpenedByWidgetRef: (ref: ObjRef | undefined) => (state: DashboardState) => boolean;
+
+// @internal (undocumented)
+export const selectIsKpiDeleteDialogOpen: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
 
 // @alpha
 export const selectIsLayoutEmpty: OutputSelector<DashboardState, boolean, (res: ExtendedDashboardWidget[]) => boolean>;
@@ -5311,6 +5323,9 @@ export const selectIsWidgetPlaceholderShown: OutputSelector<DashboardState, bool
 
 // @internal (undocumented)
 export const selectKpiDateDatasetAutoOpen: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
+
+// @internal (undocumented)
+export const selectKpiDeleteDialogWidgetCoordinates: OutputSelector<DashboardState, ILayoutCoordinates | undefined, (res: UiState) => ILayoutCoordinates | undefined>;
 
 // @alpha
 export const selectLayout: OutputSelector<DashboardState, IDashboardLayout<ExtendedDashboardWidget>, (res: LayoutState) => IDashboardLayout<ExtendedDashboardWidget>>;
@@ -5391,13 +5406,7 @@ export const selectValidConfiguredDrillsByWidgetRef: (ref: ObjRef) => OutputSele
 export const selectWidgetByRef: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IKpiWidget | IInsightWidget | ICustomWidget | undefined, (res: ObjRefMap<ExtendedDashboardWidget>) => IKpiWidget | IInsightWidget | ICustomWidget | undefined>;
 
 // @alpha
-export const selectWidgetCoordinatesByRef: (ref: ObjRef) => OutputSelector<DashboardState, {
-sectionIndex: number;
-itemIndex: number;
-}, (res1: IKpiWidget | IInsightWidget | ICustomWidget | undefined, res2: IDashboardLayout<ExtendedDashboardWidget>) => {
-sectionIndex: number;
-itemIndex: number;
-}>;
+export const selectWidgetCoordinatesByRef: (ref: ObjRef) => OutputSelector<DashboardState, ILayoutCoordinates, (res1: IKpiWidget | IInsightWidget | ICustomWidget | undefined, res2: IDashboardLayout<ExtendedDashboardWidget>) => ILayoutCoordinates>;
 
 // @alpha
 export const selectWidgetDrills: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IDrillToLegacyDashboard[] | InsightDrillDefinition[], (res: IKpiWidget | IInsightWidget | undefined) => IDrillToLegacyDashboard[] | InsightDrillDefinition[]>;
@@ -5564,6 +5573,11 @@ openShareDialog: CaseReducer<UiState, AnyAction>;
 closeShareDialog: CaseReducer<UiState, AnyAction>;
 openDeleteDialog: CaseReducer<UiState, AnyAction>;
 closeDeleteDialog: CaseReducer<UiState, AnyAction>;
+openKpiDeleteDialog: CaseReducer<UiState, {
+payload: ILayoutCoordinates;
+type: string;
+}>;
+closeKpiDeleteDialog: CaseReducer<UiState, AnyAction>;
 setMenuButtonItemsVisibility: CaseReducer<UiState, {
 payload: IMenuButtonItemsVisibility;
 type: string;
@@ -5614,6 +5628,10 @@ export interface UiState {
     };
     // (undocumented)
     kpiDateDatasetAutoOpen: boolean;
+    // (undocumented)
+    kpiDeleteDialog: {
+        widgetCoordinates: ILayoutCoordinates | undefined;
+    };
     // (undocumented)
     menuButton: {
         itemsVisibility: IMenuButtonItemsVisibility;

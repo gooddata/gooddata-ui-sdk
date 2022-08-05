@@ -13,9 +13,9 @@ import {
     selectSeparators,
     selectDisableKpiDashboardHeadlineUnderline,
     useDashboardDispatch,
-    eagerRemoveSectionItem,
     selectWidgetCoordinatesByRef,
     selectFilterContextFilters,
+    uiActions,
 } from "../../../../model";
 import { DashboardItemHeadline, DashboardItemKpi } from "../../../presentationComponents";
 import { useDashboardComponentsContext } from "../../../dashboardContexts";
@@ -65,8 +65,8 @@ export const EditableDashboardKpi = (props: IDashboardKpiProps) => {
     const dispatch = useDashboardDispatch();
     const coordinates = useDashboardSelector(selectWidgetCoordinatesByRef(widgetRef(kpiWidget)));
     const onWidgetDelete = useCallback(() => {
-        dispatch(eagerRemoveSectionItem(coordinates.sectionIndex, coordinates.itemIndex));
-    }, [dispatch, coordinates.sectionIndex, coordinates.itemIndex]);
+        dispatch(uiActions.openKpiDeleteDialog(coordinates));
+    }, [dispatch, coordinates]);
 
     const { error, result, status } = useKpiExecutionDataView({
         backend,
