@@ -1,6 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { render, cleanup, fireEvent, waitFor } from "@testing-library/react";
+import { render, cleanup, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import noop from "lodash/noop";
 import cloneDeep from "lodash/cloneDeep";
 import ColorPalette, { IColorPaletteProps } from "../ColorPalette";
@@ -14,7 +15,10 @@ const defaultProps: IColorPaletteProps = {
 
 function createComponent(customProps: Partial<IColorPaletteProps> = {}) {
     const props: IColorPaletteProps = { ...cloneDeep(defaultProps), ...customProps };
-    return render(<ColorPalette {...props} />);
+    return {
+        user: userEvent.setup(),
+        ...render(<ColorPalette {...props} />),
+    };
 }
 
 describe("ColorPalette", () => {
@@ -33,9 +37,7 @@ describe("ColorPalette", () => {
     it("should render 5 ColorPaletteItem controls one has to be selected", () => {
         const { fill, guid } = colorPalette[3];
         const { getByTitle } = createComponent({ selectedColorGuid: guid });
-        expect(
-            getByTitle(`rgb(${fill.r},${fill.g},${fill.b})`).classList.contains("gd-color-list-item-active"),
-        ).toBeTruthy();
+        expect(getByTitle(`rgb(${fill.r},${fill.g},${fill.b})`)).toHaveClass("gd-color-list-item-active");
     });
 
     it("should render 5 ColorPaletteItem controls any has to be selected", () => {
@@ -54,8 +56,8 @@ describe("ColorPalette", () => {
         const { fill, guid } = colorPalette[4];
 
         const onColorSelected = jest.fn();
-        const { getByTitle } = createComponent({ onColorSelected });
-        fireEvent.click(getByTitle(`rgb(${fill.r},${fill.g},${fill.b})`));
+        const { getByTitle, user } = createComponent({ onColorSelected });
+        await user.click(getByTitle(`rgb(${fill.r},${fill.g},${fill.b})`));
 
         await waitFor(() =>
             expect(onColorSelected).toBeCalledWith(expect.objectContaining({ type: "guid", value: guid })),
