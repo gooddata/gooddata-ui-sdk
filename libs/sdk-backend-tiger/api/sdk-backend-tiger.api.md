@@ -5,6 +5,7 @@
 ```ts
 
 import { AnonymousAuthProvider } from '@gooddata/sdk-backend-base';
+import { ApiEntitlement } from '@gooddata/api-client-tiger';
 import { AuthenticationFlow } from '@gooddata/sdk-backend-spi';
 import { DeclarativeAnalytics } from '@gooddata/api-client-tiger';
 import { DeclarativeModel } from '@gooddata/api-client-tiger';
@@ -278,6 +279,7 @@ export type TigerSpecificFunctions = {
     getPdm?: (dataSourceId: string) => Promise<PhysicalDataModel>;
     getDependentEntitiesGraph?: (workspaceId: string) => Promise<DependentEntitiesGraphResponse>;
     getDependentEntitiesGraphFromEntryPoints?: (workspaceId: string, dependentEntitiesGraphRequest: DependentEntitiesGraphRequest) => Promise<DependentEntitiesGraphResponse>;
+    resolveAllEntitlements?: () => Promise<ApiEntitlement[]>;
 };
 
 // @public

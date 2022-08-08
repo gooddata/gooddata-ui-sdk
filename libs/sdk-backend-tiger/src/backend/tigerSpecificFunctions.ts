@@ -28,6 +28,7 @@ import {
     JsonApiWorkspaceInDocument,
     DependentEntitiesRequest,
     DependentEntitiesResponse,
+    ApiEntitlement,
 } from "@gooddata/api-client-tiger";
 import { convertApiError } from "../utils/errorHandling";
 import uniq from "lodash/uniq";
@@ -280,6 +281,7 @@ export type TigerSpecificFunctions = {
         workspaceId: string,
         dependentEntitiesGraphRequest: DependentEntitiesGraphRequest,
     ) => Promise<DependentEntitiesGraphResponse>;
+    resolveAllEntitlements?: () => Promise<ApiEntitlement[]>;
 };
 
 const getDataSourceErrorMessage = (error: unknown) => {
@@ -857,5 +859,8 @@ export const buildTigerSpecificFunctions = (
         } catch (error) {
             throw convertApiError(error);
         }
+    },
+    resolveAllEntitlements: async () => {
+        return authApiCall(async (sdk) => sdk.actions.resolveAllEntitlements().then((res) => res.data));
     },
 });
