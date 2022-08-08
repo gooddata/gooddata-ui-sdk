@@ -6,7 +6,7 @@ import {
     selectSettings,
     useDashboardDispatch,
     useDashboardSelector,
-    placeholdersActions,
+    uiActions,
     selectWidgetPlaceholder,
     IWidgetPlaceholderSpec,
 } from "../../../model";
@@ -62,7 +62,7 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
                         type: "widget",
                     };
                     if (stringify(placeholderSpec) !== stringify(widgetPlaceholder)) {
-                        dispatch(placeholdersActions.setWidgetPlaceholder(placeholderSpec));
+                        dispatch(uiActions.setWidgetPlaceholder(placeholderSpec));
                     }
                 }
                 if (isKpiPlaceholderDraggableItem(item)) {
@@ -77,7 +77,7 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
                         type: "widget",
                     };
                     if (stringify(placeholderSpec) !== stringify(widgetPlaceholder)) {
-                        dispatch(placeholdersActions.setWidgetPlaceholder(placeholderSpec));
+                        dispatch(uiActions.setWidgetPlaceholder(placeholderSpec));
                     }
                 }
             },

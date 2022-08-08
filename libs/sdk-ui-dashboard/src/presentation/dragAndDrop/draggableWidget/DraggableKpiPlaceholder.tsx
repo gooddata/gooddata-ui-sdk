@@ -1,11 +1,7 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
-import {
-    placeholdersActions,
-    selectIsInEditMode,
-    useDashboardDispatch,
-    useDashboardSelector,
-} from "../../../model";
+
+import { uiActions, selectIsInEditMode, useDashboardDispatch, useDashboardSelector } from "../../../model";
 import { useDashboardDrag } from "../useDashboardDrag";
 import {
     CustomDashboardKpiPlaceholderComponent,
@@ -32,7 +28,7 @@ export const DraggableKpiPlaceholder: React.FC<DraggableKpiPlaceholderProps> = (
         hideDefaultPreview: false,
         dragEnd: (_, monitor) => {
             if (!monitor.didDrop()) {
-                dispatch(placeholdersActions.clearWidgetPlaceholder());
+                dispatch(uiActions.clearWidgetPlaceholder());
             }
         },
     });

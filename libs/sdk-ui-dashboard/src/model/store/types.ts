@@ -17,7 +17,6 @@ import { IDrillTargets } from "./drillTargets/drillTargetsTypes";
 import { IExecutionResultEnvelope } from "./executionResults/types";
 import { UiState } from "./ui/uiState";
 import { LegacyDashboardsState } from "./legacyDashboards/legacyDashboardsState";
-import { PlaceholdersState } from "./placeholders/placeholdersState";
 import { RenderModeState } from "./renderMode/renderModeState";
 
 /*
@@ -68,11 +67,6 @@ export interface DashboardState {
      * Ui state controllable from the outside.
      */
     ui: UiState;
-
-    /**
-     * State of temporary placeholders.
-     */
-    placeholders: PlaceholdersState;
 
     /**
      * Part of state where execution results of the individual widgets are stored.

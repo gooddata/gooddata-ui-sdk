@@ -4,7 +4,6 @@ import cx from "classnames";
 import { getDropZoneDebugStyle } from "../debug";
 import {
     addLayoutSection,
-    placeholdersActions,
     selectIsWidgetPlaceholderShown,
     selectSettings,
     uiActions,
@@ -92,7 +91,7 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
             },
             hover: () => {
                 if (isWidgetPlaceholderShown) {
-                    dispatch(placeholdersActions.clearWidgetPlaceholder());
+                    dispatch(uiActions.clearWidgetPlaceholder());
                 }
             },
         },

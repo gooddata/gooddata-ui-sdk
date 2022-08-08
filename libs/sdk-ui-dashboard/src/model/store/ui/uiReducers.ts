@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 import { Action, AnyAction, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import { ObjRef } from "@gooddata/sdk-model";
-import { UiState } from "./uiState";
+import { IWidgetPlaceholderSpec, UiState } from "./uiState";
 import { ILayoutCoordinates, IMenuButtonItemsVisibility } from "../../../types";
 
 type UiReducer<A extends Action = AnyAction> = CaseReducer<UiState, A>;
@@ -101,6 +101,14 @@ const setKpiDateDatasetAutoOpen: UiReducer<PayloadAction<boolean>> = (state, act
     state.kpiDateDatasetAutoOpen = action.payload;
 };
 
+const setWidgetPlaceholder: UiReducer<PayloadAction<IWidgetPlaceholderSpec>> = (state, action) => {
+    state.widgetPlaceholder = action.payload;
+};
+
+const clearWidgetPlaceholder: UiReducer = (state) => {
+    state.widgetPlaceholder = undefined;
+};
+
 export const uiReducers = {
     openScheduleEmailDialog,
     closeScheduleEmailDialog,
@@ -125,4 +133,6 @@ export const uiReducers = {
     clearWidgetSelection,
     setConfigurationPanelOpened,
     setKpiDateDatasetAutoOpen,
+    setWidgetPlaceholder,
+    clearWidgetPlaceholder,
 };

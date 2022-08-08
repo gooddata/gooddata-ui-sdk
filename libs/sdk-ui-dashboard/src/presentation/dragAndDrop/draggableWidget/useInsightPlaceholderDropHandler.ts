@@ -6,7 +6,6 @@ import {
     selectSettings,
     useDashboardDispatch,
     useDashboardSelector,
-    placeholdersActions,
     addSectionItem,
     useDashboardCommandProcessing,
     uiActions,
@@ -23,12 +22,12 @@ export function useInsightPlaceholderDropHandler() {
         successEvent: "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED",
         onSuccess: (event) => {
             const ref = event.payload.itemsAdded[0].widget!.ref;
-            dispatch(placeholdersActions.clearWidgetPlaceholder());
+            dispatch(uiActions.clearWidgetPlaceholder());
             dispatch(uiActions.selectWidget(ref));
             dispatch(uiActions.setConfigurationPanelOpened(true));
         },
         onError: () => {
-            dispatch(placeholdersActions.clearWidgetPlaceholder());
+            dispatch(uiActions.clearWidgetPlaceholder());
         },
     });
 

@@ -163,3 +163,16 @@ export const selectKpiDateDatasetAutoOpen = createSelector(
     selectSelf,
     (state) => state.kpiDateDatasetAutoOpen,
 );
+
+/**
+ * @alpha
+ */
+export const selectWidgetPlaceholder = createSelector(selectSelf, (state) => state.widgetPlaceholder);
+
+/**
+ * @alpha
+ */
+export const selectIsWidgetPlaceholderShown = createSelector(
+    selectWidgetPlaceholder,
+    (placeholder) => !!placeholder,
+);

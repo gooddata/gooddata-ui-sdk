@@ -1982,7 +1982,6 @@ export interface DashboardState {
     meta: DashboardMetaState;
     // (undocumented)
     permissions: PermissionsState;
-    placeholders: PlaceholdersState;
     // @internal
     _queryCache: {
         [queryName: string]: any;
@@ -4378,21 +4377,6 @@ export interface PermissionsState {
 }
 
 // @internal
-export const placeholdersActions: CaseReducerActions<    {
-setWidgetPlaceholder: CaseReducer<PlaceholdersState, {
-payload: IWidgetPlaceholderSpec;
-type: string;
-}>;
-clearWidgetPlaceholder: CaseReducer<PlaceholdersState, AnyAction>;
-}>;
-
-// @alpha (undocumented)
-export interface PlaceholdersState {
-    // (undocumented)
-    widgetPlaceholder: IWidgetPlaceholderSpec | undefined;
-}
-
-// @internal
 export type QueryActions<TQuery extends IDashboardQuery, TResult> = CaseReducerActions<AllQueryCacheReducers<TQuery, TResult>>;
 
 // @alpha
@@ -5478,7 +5462,7 @@ export const selectWidgetCoordinatesByRef: (ref: ObjRef) => OutputSelector<Dashb
 export const selectWidgetDrills: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IDrillToLegacyDashboard[] | InsightDrillDefinition[], (res: IKpiWidget | IInsightWidget | undefined) => IDrillToLegacyDashboard[] | InsightDrillDefinition[]>;
 
 // @alpha (undocumented)
-export const selectWidgetPlaceholder: OutputSelector<DashboardState, IWidgetPlaceholderSpec | undefined, (res: PlaceholdersState) => IWidgetPlaceholderSpec | undefined>;
+export const selectWidgetPlaceholder: OutputSelector<DashboardState, IWidgetPlaceholderSpec | undefined, (res: UiState) => IWidgetPlaceholderSpec | undefined>;
 
 // @internal
 export const selectWidgets: OutputSelector<DashboardState, ExtendedDashboardWidget[], (res: IDashboardLayout<ExtendedDashboardWidget>) => ExtendedDashboardWidget[]>;
@@ -5664,6 +5648,11 @@ setKpiDateDatasetAutoOpen: CaseReducer<UiState, {
 payload: boolean;
 type: string;
 }>;
+setWidgetPlaceholder: CaseReducer<UiState, {
+payload: IWidgetPlaceholderSpec;
+type: string;
+}>;
+clearWidgetPlaceholder: CaseReducer<UiState, AnyAction>;
 }>;
 
 // @alpha (undocumented)
@@ -5712,6 +5701,8 @@ export interface UiState {
     shareDialog: {
         open: boolean;
     };
+    // (undocumented)
+    widgetPlaceholder: IWidgetPlaceholderSpec | undefined;
 }
 
 // @alpha

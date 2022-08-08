@@ -2,13 +2,7 @@
 import { useCallback } from "react";
 import { idRef } from "@gooddata/sdk-model";
 
-import {
-    selectSettings,
-    useDashboardDispatch,
-    useDashboardSelector,
-    placeholdersActions,
-    uiActions,
-} from "../../../model";
+import { selectSettings, useDashboardDispatch, useDashboardSelector, uiActions } from "../../../model";
 import { getSizeInfo } from "../../../_staging/layout/sizing";
 import { KPI_PLACEHOLDER_WIDGET_ID } from "../../../widgets/placeholders/types";
 
@@ -23,7 +17,7 @@ export function useKpiPlaceholderDropHandler() {
             dispatch(uiActions.setConfigurationPanelOpened(true));
             dispatch(uiActions.setKpiDateDatasetAutoOpen(true));
             dispatch(
-                placeholdersActions.setWidgetPlaceholder({
+                uiActions.setWidgetPlaceholder({
                     itemIndex,
                     sectionIndex,
                     size: {

@@ -204,7 +204,7 @@ export {
     selectIsExecutionResultReadyForExportByRef,
 } from "./executionResults/executionResultsSelectors";
 export { IExecutionResultEnvelope } from "./executionResults/types";
-export { UiState } from "./ui/uiState";
+export { UiState, IWidgetPlaceholderSpec } from "./ui/uiState";
 export {
     selectIsScheduleEmailDialogOpen,
     selectIsScheduleEmailManagementDialogOpen,
@@ -221,18 +221,14 @@ export {
     selectIsDeleteDialogOpen,
     selectIsKpiDeleteDialogOpen,
     selectKpiDeleteDialogWidgetCoordinates,
+    selectIsWidgetPlaceholderShown,
+    selectWidgetPlaceholder,
 } from "./ui/uiSelectors";
 export { uiActions } from "./ui";
 export { RenderModeState } from "./renderMode/renderModeState";
 export { selectIsInEditMode, selectIsInViewMode, selectRenderMode } from "./renderMode/renderModeSelectors";
 export { renderModeActions } from "./renderMode";
 export { LegacyDashboardsState } from "./legacyDashboards/legacyDashboardsState";
-export { PlaceholdersState, IWidgetPlaceholderSpec } from "./placeholders/placeholdersState";
-export {
-    selectWidgetPlaceholder,
-    selectIsWidgetPlaceholderShown,
-} from "./placeholders/placeholdersSelectors";
-export { placeholdersActions } from "./placeholders";
 
 export { queryAndWaitFor } from "./_infra/queryAndWaitFor";
 export { dispatchAndWaitFor } from "./_infra/dispatchAndWaitFor";
