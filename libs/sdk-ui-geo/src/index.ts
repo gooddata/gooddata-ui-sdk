@@ -30,6 +30,7 @@ export {
 } from "./GeoChart";
 export { GeoPushpinChart, getGeoChartDimensions } from "./GeoPushpinChart";
 
+export { MapboxTokenProvider, useMapboxToken } from "./core/MapboxTokenProvider";
 export { CoreGeoChart } from "./core/CoreGeoChart";
 export {
     IGeoChartInnerProps,
