@@ -31,8 +31,8 @@ describe("ColorPaletteItem", () => {
     afterEach(cleanup);
 
     it("should render ColorPaletteItem control", () => {
-        const { getByTitle } = createComponent();
-        expect(getByTitle(/rgb*/i)).toBeInTheDocument();
+        const { getByLabelText } = createComponent();
+        expect(getByLabelText(/rgb*/i)).toBeInTheDocument();
     });
 
     it("should render ColorPaletteItem with red background", () => {
@@ -43,22 +43,24 @@ describe("ColorPaletteItem", () => {
 
     it("should render unselected ColorPaletteItem", () => {
         const { fill } = defaultProps.paletteItem;
-        const { getByTitle } = createComponent();
-        expect(getByTitle(`rgb(${fill.r},${fill.g},${fill.b})`)).not.toHaveClass("gd-color-list-item-active");
+        const { getByLabelText } = createComponent();
+        expect(getByLabelText(`rgb(${fill.r},${fill.g},${fill.b})`)).not.toHaveClass(
+            "gd-color-list-item-active",
+        );
     });
 
     it("should render selected ColorPaletteItem", () => {
         const { fill } = defaultProps.paletteItem;
-        const { getByTitle } = createComponent({ selected: true });
-        expect(getByTitle(`rgb(${fill.r},${fill.g},${fill.b})`)).toHaveClass("gd-color-list-item-active");
+        const { getByLabelText } = createComponent({ selected: true });
+        expect(getByLabelText(`rgb(${fill.r},${fill.g},${fill.b})`)).toHaveClass("gd-color-list-item-active");
     });
 
     it("should call onSelect when ColorPaletteItem clicked", async () => {
         const { fill, guid } = defaultProps.paletteItem;
         const onColorSelected = jest.fn();
 
-        const { getByTitle, user } = createComponent({ onColorSelected });
-        await user.click(getByTitle(`rgb(${fill.r},${fill.g},${fill.b})`));
+        const { getByLabelText, user } = createComponent({ onColorSelected });
+        await user.click(getByLabelText(`rgb(${fill.r},${fill.g},${fill.b})`));
 
         await waitFor(() =>
             expect(onColorSelected).toBeCalledWith(expect.objectContaining({ type: "guid", value: guid })),

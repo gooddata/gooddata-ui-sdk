@@ -25,19 +25,19 @@ describe("ColorPalette", () => {
     afterEach(cleanup);
 
     it("should render small ColorPalette control", () => {
-        const { getAllByTitle } = createComponent();
-        expect(getAllByTitle(/rgb*/i).length).toBe(5);
+        const { getAllByLabelText } = createComponent();
+        expect(getAllByLabelText(/rgb*/i).length).toBe(5);
     });
 
     it("should render large ColorPalette control", () => {
-        const { getAllByTitle } = createComponent({ colorPalette: getLargePalette() });
-        expect(getAllByTitle(/rgb*/i).length).toBe(20);
+        const { getAllByLabelText } = createComponent({ colorPalette: getLargePalette() });
+        expect(getAllByLabelText(/rgb*/i).length).toBe(20);
     });
 
     it("should render 5 ColorPaletteItem controls one has to be selected", () => {
         const { fill, guid } = colorPalette[3];
-        const { getByTitle } = createComponent({ selectedColorGuid: guid });
-        expect(getByTitle(`rgb(${fill.r},${fill.g},${fill.b})`)).toHaveClass("gd-color-list-item-active");
+        const { getByLabelText } = createComponent({ selectedColorGuid: guid });
+        expect(getByLabelText(`rgb(${fill.r},${fill.g},${fill.b})`)).toHaveClass("gd-color-list-item-active");
     });
 
     it("should render 5 ColorPaletteItem controls any has to be selected", () => {
@@ -56,8 +56,8 @@ describe("ColorPalette", () => {
         const { fill, guid } = colorPalette[4];
 
         const onColorSelected = jest.fn();
-        const { getByTitle, user } = createComponent({ onColorSelected });
-        await user.click(getByTitle(`rgb(${fill.r},${fill.g},${fill.b})`));
+        const { getByLabelText, user } = createComponent({ onColorSelected });
+        await user.click(getByLabelText(`rgb(${fill.r},${fill.g},${fill.b})`));
 
         await waitFor(() =>
             expect(onColorSelected).toBeCalledWith(expect.objectContaining({ type: "guid", value: guid })),
