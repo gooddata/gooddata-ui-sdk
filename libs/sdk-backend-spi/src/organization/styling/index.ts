@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
 
-import { IThemeMetadataObject, ObjRef } from "@gooddata/sdk-model";
+import { IThemeMetadataObject, IThemeDefinition, ObjRef } from "@gooddata/sdk-model";
 
 /**
  * This service provides access to organization styling settings such as theme.
@@ -36,4 +36,25 @@ export interface IOrganizationStylingService {
      * @returns promise
      */
     clearActiveTheme(): Promise<void>;
+
+    /**
+     * Create new theme on organization level.
+     *
+     * @returns promise
+     */
+    createTheme(theme: IThemeDefinition): Promise<IThemeMetadataObject>;
+
+    /**
+     * Update existing theme on organization level.
+     *
+     * @returns promise
+     */
+    updateTheme(theme: IThemeDefinition): Promise<IThemeMetadataObject>;
+
+    /**
+     * Delete theme on organization level.
+     *
+     * @returns promise
+     */
+    deleteTheme(themeRef: ObjRef): Promise<void>;
 }

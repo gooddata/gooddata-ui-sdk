@@ -2430,6 +2430,14 @@ export interface IThemeDashboardTitle {
     color?: ThemeColor;
 }
 
+// @alpha
+export interface IThemeDefinition extends Partial<IMetadataObject> {
+    // (undocumented)
+    readonly theme: ITheme;
+    // (undocumented)
+    readonly type: "theme";
+}
+
 // @beta
 export interface IThemeKpi {
     primaryMeasureColor?: ThemeColor;
@@ -2447,7 +2455,9 @@ export interface IThemeKpiValue {
 // @alpha
 export interface IThemeMetadataObject extends IMetadataObject {
     // (undocumented)
-    theme: ITheme;
+    readonly theme: ITheme;
+    // (undocumented)
+    readonly type: "theme";
 }
 
 // @beta

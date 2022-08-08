@@ -27,6 +27,8 @@ export interface IStylingPickerProps {
     className?: string;
     onApply?: (ref: ObjRef) => void;
     onListActionClick?: () => void;
+    onItemEdit?: (modifiedItem: StylingPickerItem) => void;
+    onItemDelete?: (ref: ObjRef) => void;
     locale?: string;
 }
 
@@ -44,6 +46,8 @@ const StylingPickerCore: React.FC<IStylingPickerProps> = (props) => {
         footerMobileMessage,
         onApply,
         onListActionClick,
+        onItemEdit,
+        onItemDelete,
         className,
     } = props;
     const [currentItemRef, setCurrentItemRef] = useState<ObjRef>(selectedItemRef || null);
@@ -57,10 +61,7 @@ const StylingPickerCore: React.FC<IStylingPickerProps> = (props) => {
         setCurrentItemRef(ref);
     }, []);
 
-    const showFooterButtons = useMemo(
-        () => customItems.length > 0 && !!(selectedItemRef || currentItemRef),
-        [customItems, selectedItemRef, currentItemRef],
-    );
+    const showFooterButtons = useMemo(() => customItems.length > 0, [customItems]);
 
     const isApplyButtonDisabled = useMemo(
         () => areObjRefsEqual(currentItemRef, selectedItemRef),
@@ -87,6 +88,8 @@ const StylingPickerCore: React.FC<IStylingPickerProps> = (props) => {
                 onListActionClick={onListActionClick}
                 selectedItemRef={currentItemRef}
                 onItemClick={onItemClick}
+                onItemEdit={onItemEdit}
+                onItemDelete={onItemDelete}
             />
             <ContentDivider />
             <StylingPickerFooter

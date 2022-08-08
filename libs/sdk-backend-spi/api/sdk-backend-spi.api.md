@@ -76,6 +76,7 @@ import { isKpiWithComparison } from '@gooddata/sdk-model';
 import { isKpiWithoutComparison } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
 import { ITheme as ITheme_2 } from '@gooddata/sdk-model';
+import { IThemeDefinition } from '@gooddata/sdk-model';
 import { IThemeMetadataObject } from '@gooddata/sdk-model';
 import { IUser as IUser_2 } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
@@ -978,9 +979,12 @@ export interface IOrganizations {
 // @public
 export interface IOrganizationStylingService {
     clearActiveTheme(): Promise<void>;
+    createTheme(theme: IThemeDefinition): Promise<IThemeMetadataObject>;
+    deleteTheme(themeRef: ObjRef): Promise<void>;
     getActiveTheme(): Promise<ObjRef | undefined>;
     getThemes(): Promise<IThemeMetadataObject[]>;
     setActiveTheme(themeRef: ObjRef): Promise<void>;
+    updateTheme(theme: IThemeDefinition): Promise<IThemeMetadataObject>;
 }
 
 // @public

@@ -1,9 +1,13 @@
 // (C) 2022 GoodData Corporation
 
-import { JsonApiThemeOutWithLinks } from "@gooddata/api-client-tiger";
+import { JsonApiThemeOutWithLinks, JsonApiThemeOutDocument } from "@gooddata/api-client-tiger";
 import { idRef, IThemeMetadataObject } from "@gooddata/sdk-model";
 
-export const convertTheme = ({ id, attributes, links }: JsonApiThemeOutWithLinks): IThemeMetadataObject => ({
+export const convertThemeWithLinks = ({
+    id,
+    attributes,
+    links,
+}: JsonApiThemeOutWithLinks): IThemeMetadataObject => ({
     id,
     ref: idRef(id),
     title: attributes.name,
@@ -15,3 +19,8 @@ export const convertTheme = ({ id, attributes, links }: JsonApiThemeOutWithLinks
     unlisted: false,
     deprecated: false,
 });
+
+export const convertTheme = ({
+    data: { id, attributes, type },
+    links,
+}: JsonApiThemeOutDocument): IThemeMetadataObject => convertThemeWithLinks({ id, attributes, links, type });

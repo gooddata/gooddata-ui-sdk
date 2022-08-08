@@ -17,6 +17,8 @@ interface IStylingPickerBodyProps {
     onListActionClick?: () => void;
     selectedItemRef: ObjRef;
     onItemClick: (ref: ObjRef) => void;
+    onItemEdit?: (item: StylingPickerItem) => void;
+    onItemDelete?: (ref: ObjRef) => void;
 }
 
 export const StylingPickerBody: React.FC<IStylingPickerBodyProps> = ({
@@ -28,6 +30,8 @@ export const StylingPickerBody: React.FC<IStylingPickerBodyProps> = ({
     onListActionClick,
     selectedItemRef,
     onItemClick,
+    onItemEdit,
+    onItemDelete,
 }) => {
     const intl = useIntl();
 
@@ -60,6 +64,8 @@ export const StylingPickerBody: React.FC<IStylingPickerBodyProps> = ({
                             items={customItems}
                             emptyMessageElement={emptyMessage()}
                             onItemClick={onItemClick}
+                            onItemEdit={isMobile ? undefined : onItemEdit}
+                            onItemDelete={isMobile ? undefined : onItemDelete}
                             selectedItemRef={selectedItemRef}
                         />
                     </div>
