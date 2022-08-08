@@ -1,7 +1,7 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { newMeasure, newRelativeDateFilter, modifySimpleMeasure } from "@gooddata/sdk-model";
-import { mount } from "enzyme";
+import { render } from "@testing-library/react";
 import { PlaceholdersProvider, IPlaceholdersProviderProps } from "../context";
 import { newComposedPlaceholder, newPlaceholder } from "../factory";
 import { IComposedPlaceholder } from "../base";
@@ -11,7 +11,7 @@ const createComponent = (
     componentProps: IComponentWithUsePlaceholderHookProps,
     providerProps?: IPlaceholdersProviderProps,
 ) =>
-    mount(
+    render(
         <PlaceholdersProvider {...providerProps}>
             <ComponentWithUsePlaceholderHook {...componentProps} />
         </PlaceholdersProvider>,
@@ -29,13 +29,21 @@ const ComponentWithUsePlaceholderHook = (props: IComponentWithUsePlaceholderHook
 };
 
 interface IComponentWithResultProps {
-    result: object;
+    result: any;
 }
 
 const ComponentWithResult = ({ result }: IComponentWithResultProps) => {
     return (
         <div>
-            <pre>{JSON.stringify(result)}</pre>
+            {result.length ? (
+                <>
+                    {result.map((res: any) => (
+                        <div>{res.measure.localIdentifier}</div>
+                    ))}
+                </>
+            ) : (
+                <div>{result.measure.localIdentifier}</div>
+            )}
         </div>
     );
 };
@@ -54,8 +62,8 @@ describe("useComposedPlaceholder", () => {
         );
         const expectedMeasure = modifySimpleMeasure(testMeasure, (m) => m.filters(testFilter));
 
-        const Component = createComponent({ placeholder: composedPlaceholder });
-        expect(Component.find(ComponentWithResult).prop("result")).toEqual(expectedMeasure);
+        const { queryByText } = createComponent({ placeholder: composedPlaceholder });
+        expect(queryByText(expectedMeasure.measure.localIdentifier)).toBeInTheDocument();
     });
 
     it("should resolve composed placeholder value with custom resolution context", () => {
@@ -66,11 +74,11 @@ describe("useComposedPlaceholder", () => {
         });
         const expectedMeasure = modifySimpleMeasure(testMeasure, (m) => m.format(testFormat));
 
-        const Component = createComponent({
+        const { queryByText } = createComponent({
             placeholder: composedPlaceholder,
             resolutionContext: { customFormat: testFormat },
         });
-        expect(Component.find(ComponentWithResult).prop("result")).toEqual(expectedMeasure);
+        expect(queryByText(expectedMeasure.measure.localIdentifier)).toBeInTheDocument();
     });
 
     it("should resolve composed placeholder value with custom resolution context and multiple composed placeholders", () => {
@@ -87,15 +95,12 @@ describe("useComposedPlaceholder", () => {
 
         const expectedMeasure1 = modifySimpleMeasure(testMeasure1, (m) => m.format(testFormat));
         const expectedMeasure2 = modifySimpleMeasure(testMeasure2, (m) => m.format(testFormat));
-
-        const Component = createComponent({
+        const { queryByText } = createComponent({
             placeholder: composedPlaceholder3,
             resolutionContext: { customFormat: testFormat },
         });
 
-        expect(Component.find(ComponentWithResult).prop("result")).toEqual([
-            expectedMeasure1,
-            expectedMeasure2,
-        ]);
+        expect(queryByText(expectedMeasure1.measure.localIdentifier)).toBeInTheDocument();
+        expect(queryByText(expectedMeasure2.measure.localIdentifier)).toBeInTheDocument();
     });
 });
