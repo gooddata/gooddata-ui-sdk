@@ -54,9 +54,9 @@ in some saga or reducer.
 
 When you need to load some data for your component/hook from the backend (except executions), you might be tempted
 to just use the `useBackend` hook and call it directly. While this will work and is not inherently wrong,
-often, a better solution is to write a Query for this. That way the results are
+often, a better solution is to write a Query for this. That way the results
 
--   cached automatically between Query runs improving performance for repeated queries for the same items
--   reusable from anywhere in the component
+-   can be cached automatically between Query runs improving performance for repeated queries for the same items (see `createCachedQueryService`)
+-   are reusable from anywhere in the Dashboard component
 
 To make using the Query simpler in your component/hook, there is the `useDashboardQueryProcessing` hook.

@@ -4,6 +4,7 @@ import { QueryInsightAttributesMetaService } from "./queryInsightAttributesMeta"
 import { QueryWidgetFiltersService } from "./queryWidgetFilters";
 import { QueryDateDatasetsForMeasureService } from "./queryMeasureDateDatasets";
 import { QueryWidgetBrokenAlertService } from "./queryWidgetBrokenAlerts";
+import { QueryWidgetAlertCountService } from "./queryWidgetAlertCount";
 
 export const AllQueryServices = [
     QueryDateDatasetsForInsightService,
@@ -11,4 +12,5 @@ export const AllQueryServices = [
     QueryWidgetFiltersService,
     QueryDateDatasetsForMeasureService,
     QueryWidgetBrokenAlertService,
+    QueryWidgetAlertCountService,
 ];

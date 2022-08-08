@@ -1,9 +1,8 @@
 // (C) 2022 GoodData Corporation
-import React from "react";
+import React, { useEffect } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import { IKpiWidget, ObjRef, widgetRef } from "@gooddata/sdk-model";
-import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { Typography } from "@gooddata/sdk-ui-kit";
 
 import { AttributeFilterConfiguration } from "../../../common";
@@ -14,6 +13,11 @@ import { KpiConfigurationPanelHeader } from "./KpiConfigurationPanelHeader";
 import { KpiConfigurationMessages } from "./KpiConfigurationMessages";
 import { KpiDrillConfiguration } from "./KpiDrill/KpiDrillConfiguration";
 import { safeSerializeObjRef } from "../../../../../_staging/metadata/safeSerializeObjRef";
+import {
+    QueryWidgetAlertCount,
+    queryWidgetAlertCount,
+    useDashboardQueryProcessing,
+} from "../../../../../model";
 
 interface IKpiConfigurationPanelCoreProps {
     widget?: IKpiWidget;
@@ -27,24 +31,19 @@ export const KpiConfigurationPanelCore: React.FC<IKpiConfigurationPanelCoreProps
     const ref = widget && widgetRef(widget);
     const metric = widget?.kpi.metric;
 
-    const backend = useBackendStrict();
-    const workspace = useWorkspaceStrict();
+    const {
+        run: runAlertNumberQuery,
+        result: numberOfAlerts,
+        status,
+    } = useDashboardQueryProcessing<QueryWidgetAlertCount, number, Parameters<typeof queryWidgetAlertCount>>({
+        queryCreator: queryWidgetAlertCount,
+    });
 
-    const { result: numberOfAlerts, status } = useCancelablePromise(
-        {
-            promise: ref
-                ? async () => {
-                      const res = await backend
-                          .workspace(workspace)
-                          .dashboards()
-                          .getWidgetAlertsCountForWidgets([ref]);
-
-                      return res[0]?.alertCount;
-                  }
-                : null,
-        },
-        [backend, workspace, safeSerializeObjRef(ref)],
-    );
+    useEffect(() => {
+        if (ref) {
+            runAlertNumberQuery(ref);
+        }
+    }, [safeSerializeObjRef(ref)]);
 
     const isNumOfAlertsLoaded = status === "success";
 

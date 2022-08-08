@@ -75,3 +75,34 @@ export function queryWidgetBrokenAlerts(widgetRef: ObjRef, correlationId?: strin
         },
     };
 }
+
+/**
+ * Given a reference to a KPI widget, this query will obtain the total number of alerts all the users have set on it.
+ *
+ * @alpha
+ */
+export interface QueryWidgetAlertCount extends IDashboardQuery {
+    readonly type: "GDC.DASH/QUERY.WIDGET.ALERT_COUNT";
+    readonly payload: {
+        readonly widgetRef: ObjRef;
+    };
+}
+
+/**
+ * Creates action through which you can query dashboard component for information about the total number of alerts
+ * all the users have set on a given KPI widget.
+ *
+ * @param widgetRef - reference to the KPI widget
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ * @alpha
+ */
+export function queryWidgetAlertCount(widgetRef: ObjRef, correlationId?: string): QueryWidgetAlertCount {
+    return {
+        type: "GDC.DASH/QUERY.WIDGET.ALERT_COUNT",
+        correlationId,
+        payload: {
+            widgetRef,
+        },
+    };
+}
