@@ -180,7 +180,7 @@ export const InsightList: React.FC<IInsightListProps> = ({
                             isSelected={isSelected}
                             updated={insightUpdated(insightListSourceItem.insight)}
                             isLocked={insightIsLocked(insightListSourceItem.insight)}
-                            onClick={() => onSelect && onSelect(insight)}
+                            onClick={() => onSelect?.(insight)}
                         />
                     );
                 })

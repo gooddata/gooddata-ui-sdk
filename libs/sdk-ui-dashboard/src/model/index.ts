@@ -77,6 +77,8 @@ export {
     IParentWithConnectingAttributes,
 } from "./types/attributeFilterTypes";
 
+export { DRILL_TO_URL_PLACEHOLDER } from "./types/drillTypes";
+
 export * from "./react";
 export * from "./commands";
 export * from "./events";

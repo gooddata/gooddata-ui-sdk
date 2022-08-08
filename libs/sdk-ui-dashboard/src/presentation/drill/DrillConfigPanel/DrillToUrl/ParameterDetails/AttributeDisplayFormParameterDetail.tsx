@@ -4,7 +4,7 @@ import { IntlShape, useIntl } from "react-intl";
 import { LRUCache } from "@gooddata/util";
 import { IAttributeElement, ObjRef, objRefToString } from "@gooddata/sdk-model";
 import { ParameterDetail } from "./ParameterDetail";
-import { AttributeDisplayFormType } from "../../../../types";
+import { AttributeDisplayFormType } from "../../../types";
 import { useBackendStrict } from "@gooddata/sdk-ui";
 import { IAnalyticalBackend, IElementsQueryResult } from "@gooddata/sdk-backend-spi";
 

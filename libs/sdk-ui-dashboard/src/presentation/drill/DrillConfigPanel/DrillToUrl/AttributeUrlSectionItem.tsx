@@ -26,9 +26,9 @@ export const AttributeUrlSectionItem: React.FC<IAttributeUrlSectionItemProps> = 
 
     invariant(isDrillToAttributeUrl(item), "must match");
 
-    const x = useDashboardSelector(selectAllCatalogDisplayFormsMap);
-    const displayForm = x.get(item.target.displayForm);
-    const hyperlinkDisplayForm = x.get(item.target.hyperlinkDisplayForm);
+    const displayForms = useDashboardSelector(selectAllCatalogDisplayFormsMap);
+    const displayForm = displayForms.get(item.target.displayForm);
+    const hyperlinkDisplayForm = displayForms.get(item.target.hyperlinkDisplayForm);
 
     return (
         <div className={className} onClick={onClickHandler}>

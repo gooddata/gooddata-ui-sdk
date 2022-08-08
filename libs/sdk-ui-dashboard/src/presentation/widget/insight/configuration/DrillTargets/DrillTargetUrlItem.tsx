@@ -2,9 +2,13 @@
 import React, { useState } from "react";
 import { IntlShape, useIntl } from "react-intl";
 import { Button, Dropdown } from "@gooddata/sdk-ui-kit";
-import { areObjRefsEqual, IAttributeDescriptor, isCatalogAttribute, ObjRef } from "@gooddata/sdk-model";
 import {
-    IAttributeDisplayForm,
+    IAttributeDescriptor,
+    IAttributeDisplayFormMetadataObject,
+    isCatalogAttribute,
+    ObjRef,
+} from "@gooddata/sdk-model";
+import {
     isDrillToAttributeUrlConfig,
     isDrillToCustomUrlConfig,
     UrlDrillTarget,
@@ -15,40 +19,43 @@ import { useClientWorkspaceIdentifiers } from "@gooddata/sdk-ui";
 import { AttributeUrlSection } from "../../../../drill/DrillConfigPanel/DrillToUrl/AttributeUrlSection";
 import {
     selectAllCatalogAttributesMap,
+    selectAllCatalogDisplayFormsMap,
     selectDrillTargetsByWidgetRef,
     selectSelectedWidgetRef,
     useDashboardSelector,
+    selectImplicitDrillsToUrlByWidgetRef,
 } from "../../../../../model";
 import invariant from "ts-invariant";
-import { selectImplicitDrillsToUrlByWidgetRef } from "../../../../../model/store/widgetDrills/widgetDrillSelectors";
+import { ObjRefMap } from "../../../../../_staging/metadata/objRefMap";
 
 const getButtonValue = (
     urlDrillTarget: UrlDrillTarget,
-    attributeDisplayForms: IAttributeDisplayForm[],
+    attributeDisplayForms: ObjRefMap<IAttributeDisplayFormMetadataObject>,
     attributeDisplayFormsLoading: boolean,
     intl: IntlShape,
 ) => {
     if (isDrillToCustomUrlConfig(urlDrillTarget) && urlDrillTarget.customUrl) {
         return urlDrillTarget.customUrl;
-    } else if (isDrillToAttributeUrlConfig(urlDrillTarget) && urlDrillTarget.drillToAttributeDisplayForm) {
+    } else if (
+        isDrillToAttributeUrlConfig(urlDrillTarget) &&
+        urlDrillTarget.drillToAttributeDisplayForm &&
+        urlDrillTarget.insightAttributeDisplayForm
+    ) {
         if (attributeDisplayFormsLoading) {
             return intl.formatMessage({ id: "dropdown.loading" });
         }
-        const attributeDisplayForm = attributeDisplayForms.find((displayForm) =>
-            areObjRefsEqual(displayForm.ref, urlDrillTarget.drillToAttributeDisplayForm),
+        const drillToAttributeDisplayForm = attributeDisplayForms.get(
+            urlDrillTarget.drillToAttributeDisplayForm,
+        );
+        const insightAttributeDisplayForm = attributeDisplayForms.get(
+            urlDrillTarget.insightAttributeDisplayForm,
         );
 
-        if (!attributeDisplayForm) {
-            return "";
-        }
-
-        return `${attributeDisplayForm.attributeTitle} (${attributeDisplayForm.displayFormTitle})`;
+        return `${insightAttributeDisplayForm?.title} (${drillToAttributeDisplayForm?.title})`;
     } else {
         return intl.formatMessage({ id: "configurationPanel.drillIntoUrl.defaultButtonValue" });
     }
 };
-
-export interface IDrillUrlItemStateProps {}
 
 const dropdownAlignPoints = [
     {
@@ -63,38 +70,16 @@ export interface DrillUrlItemProps {
     urlDrillTarget?: UrlDrillTarget;
     attributes: IAttributeDescriptor[];
     onSelect: (selectedTarget: UrlDrillTarget) => void;
-    // documentationLink?: string;
-    // attributeDisplayForms: IAttributeDisplayForm[];
-    // attributeUrlDisplayForms: IAttributeDisplayForm[];
-    // attributeDisplayFormsLoading: boolean;
-    // enableClientIdParameter: boolean;
-    // enableDataProductIdParameter: boolean;
-    // enableWidgetIdParameter: boolean;
-    // invalidAttributeDisplayFormIdentifiers: string[];
-    // supportsAttributeHyperlinks: boolean;
 }
 
 export const DrillTargetUrlItem: React.FunctionComponent<DrillUrlItemProps> = (props) => {
-    const {
-        onSelect,
-        urlDrillTarget,
-        // documentationLink,
-        // attributeDisplayForms,
-        // attributeUrlDisplayForms,
-        // attributeDisplayFormsLoading,
-        // invalidAttributeDisplayFormIdentifiers,
-        // enableClientIdParameter,
-        // enableDataProductIdParameter,
-        // enableWidgetIdParameter,
-        // supportsAttributeHyperlinks,
-    } = props;
+    const { onSelect, urlDrillTarget } = props;
 
-    const attributeDisplayFormsLoading = false;
-    const attributeUrlDisplayForms: IAttributeDisplayForm[] = [];
-    const supportsAttributeHyperlinks = true;
+    const attributeDisplayFormsLoading = false; // todo
+    const supportsAttributeHyperlinks = true; // todo
     const widgetRef = useDashboardSelector(selectSelectedWidgetRef);
     invariant(widgetRef, "mush have selected widget");
-    const attributeUrlDisplayFormsNew = useDashboardSelector(selectImplicitDrillsToUrlByWidgetRef(widgetRef));
+    const attributeUrlDisplayForms = useDashboardSelector(selectImplicitDrillsToUrlByWidgetRef(widgetRef));
     const drillTargets = useDashboardSelector(selectDrillTargetsByWidgetRef(widgetRef));
     const allAttributes = useDashboardSelector(selectAllCatalogAttributesMap);
 
@@ -126,17 +111,13 @@ export const DrillTargetUrlItem: React.FunctionComponent<DrillUrlItemProps> = (p
     };
 
     const { client, dataProduct } = useClientWorkspaceIdentifiers();
+    const displayForms = useDashboardSelector(selectAllCatalogDisplayFormsMap);
 
     if (!urlDrillTarget) {
         return null;
     }
 
-    const buttonValue = getButtonValue(
-        urlDrillTarget,
-        attributeUrlDisplayForms,
-        attributeDisplayFormsLoading,
-        intl,
-    );
+    const buttonValue = getButtonValue(urlDrillTarget, displayForms, attributeDisplayFormsLoading, intl);
 
     return (
         <>
@@ -154,7 +135,7 @@ export const DrillTargetUrlItem: React.FunctionComponent<DrillUrlItemProps> = (p
                     <div className="gd-menu-wrapper gd-drill-to-url-body gd-drill-to-url-list s-gd-drill-to-url-body">
                         {supportsAttributeHyperlinks && (
                             <AttributeUrlSection
-                                attributeDisplayForms={attributeUrlDisplayFormsNew}
+                                attributeDisplayForms={attributeUrlDisplayForms}
                                 onSelect={(insightAttributeDisplayForm, drillToAttributeDisplayForm) => {
                                     onAttributeUrlHandler(
                                         insightAttributeDisplayForm,

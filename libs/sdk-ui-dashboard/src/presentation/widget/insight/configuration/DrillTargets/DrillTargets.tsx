@@ -1,12 +1,7 @@
 // (C) 2020-2022 GoodData Corporation
 import React from "react";
 import { IDrillToInsight, IInsight, InsightDrillDefinition } from "@gooddata/sdk-model";
-import {
-    DRILL_TARGET_TYPE,
-    IDrillConfigItem,
-    isDrillToUrlConfig,
-    UrlDrillTarget,
-} from "../../../../drill/types";
+import { DRILL_TARGET_TYPE, IDrillConfigItem, isDrillToUrlConfig } from "../../../../drill/types";
 import { DrillTargetInsightItem } from "./DrillTargetInsightItem";
 import { DrillTargetUrlItem } from "./DrillTargetUrlItem";
 
@@ -41,8 +36,8 @@ export const DrillTargets: React.FunctionComponent<IDrillTargetsProps> = (props)
     //     props.onSetup(drillConfigItem, { dashboard });
     // };
     //
-    const onCustomUrlTargetSelect = (selectedUrlDrillTarget: UrlDrillTarget) => {
-        console.log(selectedUrlDrillTarget);
+    const onCustomUrlTargetSelect = () => {
+        return;
         // const drillConfigItem: IDrillToUrlConfig = {
         //     ...props.item,
         //     drillTargetType: DRILL_TARGET_TYPE.DRILL_TO_URL,

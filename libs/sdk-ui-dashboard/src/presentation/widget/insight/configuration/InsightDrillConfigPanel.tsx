@@ -11,7 +11,6 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../../model";
-import { IAvailableDrillTargetItem } from "../../../drill/DrillSelect/types";
 import { DrillOriginSelector } from "./DrillOriginSelector/DrillOriginSelector";
 import invariant from "ts-invariant";
 import { getMappedConfigForWidget } from "./getMappedConfigForWidget";
@@ -75,8 +74,8 @@ export const InsightDrillConfigPanel: React.FunctionComponent<IDrillConfigPanelP
         addIncompleteItem(incompleteItem);
     };
 
-    const onOriginSelect = (selectedItem: IAvailableDrillTargetItem) => {
-        console.log(selectedItem); // TODO
+    const onOriginSelect = () => {
+        // TODO
         // if (isAvailableDrillTargetMeasure(selectedItem)) {
         //     const incompleteMeasureItem: IDrillConfigItem = {
         //         type: "measure",
@@ -125,7 +124,6 @@ export const InsightDrillConfigPanel: React.FunctionComponent<IDrillConfigPanelP
                 drillConfigItems={mergedItems}
                 // onDelete={onDeleteItem}
                 onSetup={(drill: InsightDrillDefinition, changedItem: IDrillConfigItem) => {
-                    console.log(drill);
                     dispatch(modifyDrillsForInsightWidget(widgetRef, [drill]));
                     deleteIncompleteItem(changedItem);
                 }}

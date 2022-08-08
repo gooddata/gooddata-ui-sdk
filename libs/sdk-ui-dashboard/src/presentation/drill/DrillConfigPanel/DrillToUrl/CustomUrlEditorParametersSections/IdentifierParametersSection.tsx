@@ -9,8 +9,8 @@ import { InsightIdParameterDetail } from "../ParameterDetails/InsightIdParameter
 import { ClientIdParameterDetail } from "../ParameterDetails/ClientIdParameterDetail";
 import { DataProductIdParameterDetail } from "../ParameterDetails/DataProductIdParameterDetail";
 import { Parameter } from "./Parameter";
-import { DRILL_TO_URL_PLACEHOLDER } from "../../../../../model/commandHandlers/drill/resolveDrillToCustomUrl";
 import { IIdentifierParametersSectionProps } from "../types";
+import { DRILL_TO_URL_PLACEHOLDER } from "../../../../../model";
 
 interface IIdentifierParameter {
     titleIntlKey: string;

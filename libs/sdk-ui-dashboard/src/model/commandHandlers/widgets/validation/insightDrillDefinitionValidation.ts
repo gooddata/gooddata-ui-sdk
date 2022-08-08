@@ -32,7 +32,6 @@ export function validateDrillDefinition(
     let item = drillDefinition;
     // validate drill targets
     if (!validationData.drillTargets?.availableDrillTargets) {
-        console.log("a");
         throw invalidArgumentsProvided(ctx, cmd, `Drill targets not set`);
     }
 
@@ -40,7 +39,6 @@ export function validateDrillDefinition(
     try {
         item = validateDrillDefinitionOrigin(item, validationData.drillTargets.availableDrillTargets);
     } catch (ex) {
-        console.log(ex);
         const messageDetail = (ex as Error).message;
 
         throw invalidArgumentsProvided(
@@ -60,12 +58,10 @@ export function validateDrillDefinition(
     try {
         item = validateInsightDrillDefinition(item, validationContext);
     } catch (ex) {
-        console.log(ex);
         const messageDetail = (ex as Error).message;
         throw invalidArgumentsProvided(ctx, cmd, `Invalid InsightDrillDefinition. Error: ${messageDetail}`);
     }
 
-    console.log(item);
     return item;
 }
 

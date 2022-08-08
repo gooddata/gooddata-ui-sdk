@@ -9,7 +9,7 @@ import {
     Overlay,
 } from "@gooddata/sdk-ui-kit";
 import { ParametersPanel } from "./CustomUrlEditorParameters";
-import { isDrillToCustomUrlConfig, UrlDrillTarget } from "../../../types";
+import { isDrillToCustomUrlConfig, UrlDrillTarget } from "../../types";
 import { IAttributeDisplayFormMetadataObject } from "@gooddata/sdk-model";
 
 export interface IUrlInputProps {
@@ -83,12 +83,12 @@ interface IFormattingRules {
 }
 
 const IDENTIFIER_RULE: IFormattingRule = {
-    regex: /{workspace_id}|{project_id}|{insight_id}|{widget_id}|{dashboard_id}|{client_id}|{data_product_id}/,
+    regex: /\{workspace_id\}|\{project_id\}|\{insight_id\}|\{widget_id\}|\{dashboard_id\}|\{client_id\}|\{data_product_id\}/,
     token: "identifier",
 };
-const INVALID_IDENTIFIER_RULE: IFormattingRule = { regex: /{[^}{]*?}/, token: "invalid-identifier" };
+const INVALID_IDENTIFIER_RULE: IFormattingRule = { regex: /\{[^}{]*\}/, token: "invalid-identifier" };
 const INVALID_DISPLAY_FORMS_RULE: IFormattingRule = {
-    regex: /{attribute_title\(.*?\)}/,
+    regex: /\{attribute_title\(.*?\)\}/,
     token: "invalid-attribute",
 };
 const DEFAULT_RULES: IFormattingRule[] = [
@@ -143,7 +143,7 @@ const insertPlaceholderAtCursor = (text: string, placeholder: string, cursor: IC
     `${text.substring(0, cursor.from)}${placeholder}${text.substring(cursor.to)}`;
 
 const assertValidUrl = (url: string) =>
-    /^[A-Za-z0-9.\-+]+:|^{attribute_title\(/.test(url) ? url : `https://${url}`;
+    /^[A-Za-z0-9.\-+]+:|^\{attribute_title\(/.test(url) ? url : `https://${url}`;
 
 const getWarningTextForInvalidParameters = (parameters: string[]): React.ReactElement => {
     const invalidParameters = parameters.map((parameter) => `"${parameter}"`).join(", ");

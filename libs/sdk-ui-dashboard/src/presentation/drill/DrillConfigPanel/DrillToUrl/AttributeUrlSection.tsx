@@ -1,7 +1,7 @@
 // (C) 2020-2022 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
-import { areObjRefsEqual, isDrillToAttributeUrl, ObjRef } from "@gooddata/sdk-model";
+import { areObjRefsEqual, isDrillToAttributeUrl, ObjRef, objRefToString } from "@gooddata/sdk-model";
 
 import { AttributeUrlSectionItem } from "./AttributeUrlSectionItem";
 import { DropdownSectionHeader } from "./DropdownSectionHeader";
@@ -36,9 +36,6 @@ export const AttributeUrlSection: React.FC<AttributeUrlSectionProps> = (props) =
         return null;
     }
 
-    console.log(selected);
-    console.log(attributeDisplayForms);
-
     return (
         <>
             <DropdownSectionHeader className="s-drill-to-attribute-url-section-title">
@@ -56,13 +53,16 @@ export const AttributeUrlSection: React.FC<AttributeUrlSectionProps> = (props) =
                         }
                         return (
                             <AttributeUrlSectionItem
+                                key={objRefToString(item.drillDefinition.target.displayForm)}
                                 item={item.drillDefinition}
                                 isSelected={areObjRefsEqual(
                                     item.drillDefinition.target.hyperlinkDisplayForm,
                                     selected || undefined,
                                 )}
                                 onClickHandler={
-                                    (e) => console.log(e)
+                                    () => {
+                                        /**/
+                                    }
                                     // onClickHandler(
                                     //     e,
                                     //     item.ref,

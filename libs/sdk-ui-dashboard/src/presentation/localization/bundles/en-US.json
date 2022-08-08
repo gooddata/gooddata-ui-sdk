@@ -1537,11 +1537,6 @@
         "comment": "",
         "limit": 0
     },
-    "configurationPanel.drillIntoUrl.invalidRedirectError": {
-        "value": "Failed to load URL.",
-        "comment": "The text of error notification shown to the user when it is not possible to redirect him to the target URL due to an invalid drill configuration.",
-        "limit": 0
-    },
     "configurationPanel.drillIntoUrl.defaultButtonValue": {
         "value": "Choose URL",
         "comment": "Default value of 'Drill into URL' dropdown button before a value is selected.",
@@ -1555,26 +1550,6 @@
     "configurationPanel.drillIntoUrl.customUrlSectionTitle": {
         "value": "Custom URL",
         "comment": "Title of 'Drill into URL' dropdown section.",
-        "limit": 0
-    },
-    "configurationPanel.drillIntoUrl.customUrlAddButtonLabel": {
-        "value": "Add custom URL",
-        "comment": "Label of the button in 'Drill into URL' dropdown that is used for adding of the custom URL.",
-        "limit": 0
-    },
-    "configurationPanel.drillIntoUrl.customUrlEditButtonLabel": {
-        "value": "Edit custom URL",
-        "comment": "Label of the button in 'Drill into URL' dropdown that is used for editing of the custom URL.",
-        "limit": 0
-    },
-    "configurationPanel.drillIntoUrl.editor.addUrlTitle": {
-        "value": "Add custom URL",
-        "comment": "Title of Drill to URL 'Custom URL' editor when URL is not defined.",
-        "limit": 0
-    },
-    "configurationPanel.drillIntoUrl.editor.editUrlTitle": {
-        "value": "Edit custom URL",
-        "comment": "Title of Drill to URL 'Custom URL' editor when URL is defined.",
         "limit": 0
     },
     "configurationPanel.drillIntoUrl.editor.textAreaLabel": {
@@ -1617,21 +1592,6 @@
         "comment": "Translate only uppercase words In '...AND {count} MORE'. Info about number of other values not shown in parameter detail in 'Custom URL' editor.",
         "limit": 0
     },
-    "configurationPanel.drillIntoUrl.editor.defaultDisplayFormTypeLabel": {
-        "value": "Attribute label value",
-        "comment": "Type label of default display form in parameter detail in 'Custom URL' editor.",
-        "limit": 0
-    },
-    "configurationPanel.drillIntoUrl.editor.urlDisplayFormTypeLabel": {
-        "value": "Attribute URL value",
-        "comment": "Type label of URL display form in parameter detail in 'Custom URL' editor.",
-        "limit": 0
-    },
-    "configurationPanel.drillIntoUrl.editor.geoDisplayFormTypeLabel": {
-        "value": "Attribute geo value",
-        "comment": "Type label of geo display form in parameter detail in 'Custom URL' editor.",
-        "limit": 0
-    },
     "configurationPanel.drillIntoUrl.editor.identifierTypeLabel": {
         "value": "Identifier",
         "comment": "Type label of identifier in parameter detail in 'Custom URL' editor.",
@@ -1651,47 +1611,6 @@
     "configurationPanel.drillIntoUrl.editor.identifierParametersSectionLabel": {
         "value": "Identifiers",
         "comment": "Label of the parameters section that contains identifiers in Drill to URL 'Custom URL' editor.",
-        "limit": 0
-    },
-    "configurationPanel.drillIntoUrl.editor.projectIdParameterLabel": {
-        "value": "Project ID",
-        "comment": "Label of the insight parameter in Drill to URL 'Custom URL' editor.",
-        "limit": 0
-    },
-    "configurationPanel.drillIntoUrl.editor.workspaceIdParameterLabel": {
-        "value": "Workspace ID",
-        "comment": "Label of the insight parameter in Drill to URL 'Custom URL' editor.",
-        "limit": 0
-    },
-    "configurationPanel.drillIntoUrl.editor.insightIdParameterLabel|insight": {
-        "value": "Insight ID",
-        "comment": "Label of the insight parameter in Drill to URL 'Custom URL' editor.",
-        "limit": 0
-    },
-    "configurationPanel.drillIntoUrl.editor.insightIdParameterLabel|report": {
-        "value": "Report ID",
-        "comment": "Label of the report parameter in Drill to URL 'Custom URL' editor.",
-        "translate": false,
-        "limit": 0
-    },
-    "configurationPanel.drillIntoUrl.editor.widgetIdParameterLabel": {
-        "value": "Widget ID",
-        "comment": "Label of the insight parameter in Drill to URL 'Custom URL' editor.",
-        "limit": 0
-    },
-    "configurationPanel.drillIntoUrl.editor.dashboardIdParameterLabel": {
-        "value": "Dashboard ID",
-        "comment": "Label of the insight parameter in Drill to URL 'Custom URL' editor.",
-        "limit": 0
-    },
-    "configurationPanel.drillIntoUrl.editor.clientIdParameterLabel": {
-        "value": "Client ID",
-        "comment": "Label of the insight parameter in Drill to URL 'Custom URL' editor.",
-        "limit": 0
-    },
-    "configurationPanel.drillIntoUrl.editor.dataProductIdParameterLabel": {
-        "value": "Data product ID",
-        "comment": "Label of the insight parameter in Drill to URL 'Custom URL' editor.",
         "limit": 0
     },
     "configurationPanel.drillIntoUrl.editor.applyButtonLabel": {
@@ -1717,6 +1636,27 @@
     "configurationPanel.drillIntoUrl.editor.invalidAttributeDisplayForms": {
         "value": "Invalid parameters: {invalidParameters}",
         "comment": "Help button label in Drill to URL 'Custom URL' editor. Do not translate '{invalidParameters}' placeholder.",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.selectInsight|insight": {
+        "value": "Choose insight…",
+        "comment": "Hint guiding users that drill target insight in select box has to be selected. Use '…' as one character, not 3 dots ('...').",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.selectInsight|report": {
+        "value": "Choose report…",
+        "comment": "Hint guiding users that drill target report in select box has to be selected. Use '…' as one character, not 3 dots ('...').",
+        "translate": false,
+        "limit": 0
+    },
+    "dropdown.loading": {
+        "value": "Loading…",
+        "comment": "Use '…' as one character, not 3 dots ('...').",
+        "limit": 0
+    },
+    "visualization.emptyValue": {
+        "value": "empty value",
+        "comment": "",
         "limit": 0
     },
     "gs.date.date-dataset.recommended": {
