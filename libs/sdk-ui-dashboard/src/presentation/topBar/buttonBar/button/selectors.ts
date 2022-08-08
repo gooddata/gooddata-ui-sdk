@@ -1,32 +1,26 @@
 // (C) 2022 GoodData Corporation
-
 import { createSelector } from "@reduxjs/toolkit";
+
 import {
     DashboardState,
     selectCanManageACL,
     selectCanManageAnalyticalDashboard,
     selectCanManageWorkspace,
+    selectDashboardEditModeDevRollout,
     selectDashboardLockStatus,
     selectDashboardRef,
+    selectEnableAnalyticalDashboardPermissions,
+    selectIsDashboardDirty,
+    selectIsDashboardLoading,
+    selectIsDashboardPrivate,
+    selectIsInEditMode,
     selectIsLayoutEmpty,
+    selectIsNewDashboard,
     selectIsReadOnly,
     selectListedDashboardsMap,
-    selectIsInEditMode,
-} from "../../../../model";
-import {
-    selectDashboardEditModeDevRollout,
-    selectEnableAnalyticalDashboardPermissions,
-} from "../../../../model/store/config/configSelectors";
-import { selectIsDashboardLoading } from "../../../../model/store/loading/loadingSelectors";
-import {
-    selectIsDashboardDirty,
-    selectIsDashboardPrivate,
-    selectIsNewDashboard,
-} from "../../../../model/store/meta/metaSelectors";
-import {
     selectSupportsAccessControlCapability,
     selectSupportsHierarchicalWorkspacesCapability,
-} from "../../../../model/store/backendCapabilities/backendCapabilitiesSelectors";
+} from "../../../../model";
 
 export const selectIsEditModeEnable = createSelector(
     selectDashboardEditModeDevRollout,

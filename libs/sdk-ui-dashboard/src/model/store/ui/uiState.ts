@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 import { ObjRef } from "@gooddata/sdk-model";
 
-import { ILayoutCoordinates, IMenuButtonItemsVisibility, RenderMode } from "../../../types";
+import { ILayoutCoordinates, IMenuButtonItemsVisibility } from "../../../types";
 
 /**
  * @alpha
@@ -39,7 +39,6 @@ export interface UiState {
     menuButton: {
         itemsVisibility: IMenuButtonItemsVisibility;
     };
-    renderMode: RenderMode;
     activeHeaderIndex: number | null;
     selectedWidgetRef: ObjRef | undefined;
     configurationPanelOpened: boolean;
@@ -76,7 +75,6 @@ export const uiInitialState: UiState = {
     menuButton: {
         itemsVisibility: {},
     },
-    renderMode: "view",
     activeHeaderIndex: null,
     selectedWidgetRef: undefined,
     configurationPanelOpened: true,

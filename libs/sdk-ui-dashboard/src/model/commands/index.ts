@@ -68,7 +68,7 @@ import {
 } from "./drill";
 import { AddDrillTargets } from "./drillTargets";
 import { RequestAsyncRender, ResolveAsyncRender } from "./render";
-import { ChangeRenderMode } from "./ui";
+import { ChangeRenderMode } from "./renderMode";
 
 export { DashboardCommandType, IDashboardCommand, CommandProcessingMeta } from "./base";
 export {
@@ -297,7 +297,14 @@ export {
     resolveAsyncRender,
 } from "./render";
 
-export { changeRenderMode, ChangeRenderMode, ChangeRenderModePayload, RenderModeChangeOptions } from "./ui";
+export {
+    changeRenderMode,
+    cancelEditRenderMode,
+    switchToEditRenderMode,
+    ChangeRenderMode,
+    ChangeRenderModePayload,
+    RenderModeChangeOptions,
+} from "./renderMode";
 
 export { AddDrillTargets, AddDrillTargetsPayload, addDrillTargets } from "./drillTargets";
 

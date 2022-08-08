@@ -11,6 +11,8 @@ export {
     selectSupportsElementsQueryParentFiltering,
     selectSupportsElementUris,
     selectSupportsKpiWidgetCapability,
+    selectSupportsAccessControlCapability,
+    selectSupportsHierarchicalWorkspacesCapability,
 } from "./backendCapabilities/backendCapabilitiesSelectors";
 export { ConfigState } from "./config/configState";
 export {
@@ -47,6 +49,9 @@ export {
     selectShouldHidePixelPerfectExperience,
     selectDisableKpiDashboardHeadlineUnderline,
     selectIsWhiteLabeled,
+    selectEnableAnalyticalDashboardPermissions,
+    selectDashboardEditModeDevRollout,
+    selectIsSaveAsNewButtonHidden,
 } from "./config/configSelectors";
 export { PermissionsState } from "./permissions/permissionsState";
 export {
@@ -178,6 +183,8 @@ export {
     selectPersistedDashboard,
     selectDashboardLockStatus,
     selectIsNewDashboard,
+    selectIsDashboardDirty,
+    selectIsDashboardPrivate,
 } from "./meta/metaSelectors";
 export {
     selectListedDashboards,
@@ -208,9 +215,6 @@ export {
     selectIsKpiAlertHighlightedByWidgetRef,
     selectMenuButtonItemsVisibility,
     selectScheduleEmailDialogDefaultAttachment,
-    selectRenderMode,
-    selectIsInEditMode,
-    selectIsInViewMode,
     selectSelectedWidgetRef,
     selectConfigurationPanelOpened,
     selectKpiDateDatasetAutoOpen,
@@ -219,6 +223,9 @@ export {
     selectKpiDeleteDialogWidgetCoordinates,
 } from "./ui/uiSelectors";
 export { uiActions } from "./ui";
+export { RenderModeState } from "./renderMode/renderModeState";
+export { selectIsInEditMode, selectIsInViewMode, selectRenderMode } from "./renderMode/renderModeSelectors";
+export { renderModeActions } from "./renderMode";
 export { LegacyDashboardsState } from "./legacyDashboards/legacyDashboardsState";
 export { PlaceholdersState, IWidgetPlaceholderSpec } from "./placeholders/placeholdersState";
 export {

@@ -3,9 +3,13 @@
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures";
 import { selectRenderMode } from "../../../store";
-import { changeRenderMode, initializeDashboard } from "../../../commands";
+import {
+    changeRenderMode,
+    initializeDashboard,
+    cancelEditRenderMode,
+    switchToEditRenderMode,
+} from "../../../commands";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
-import { cancelEditRenderMode, switchToEditRenderMode } from "../../../commands/ui";
 
 describe("changeRenderModeHandler", () => {
     let Tester: DashboardTester;

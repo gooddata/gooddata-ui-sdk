@@ -56,7 +56,7 @@ import { resolveAsyncRenderHandler } from "./render/resolveAsyncRenderHandler";
 import { DashboardContext } from "../types/commonTypes";
 import { dispatchDashboardEvent } from "../store/_infra/eventDispatcher";
 import { commandRejected } from "../events/general";
-import { changeRenderModeHandler } from "./ui/changeRenderModeHandler";
+import { changeRenderModeHandler } from "./renderMode/changeRenderModeHandler";
 import { changeAttributeDisplayFormHandler } from "./filterContext/attributeFilter/changeAttributeDisplayFormHandler";
 import { removeDrillForKpiWidgetHandler } from "./widgets/removeDrillForKpiWidgetHandler";
 import { setDrillForKpiWidgetHandler } from "./widgets/setDrillForKpiWidgetHandler";

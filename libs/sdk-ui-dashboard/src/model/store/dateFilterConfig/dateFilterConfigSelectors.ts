@@ -6,7 +6,7 @@ import { IDateFilterOptionsByType } from "@gooddata/sdk-ui-filters";
 
 import { convertDateFilterConfigToDateFilterOptions } from "../../../_staging/dateFilterConfig/dateFilterConfigConverters";
 import { DashboardState } from "../types";
-import { selectIsInEditMode } from "../ui/uiSelectors";
+import { selectIsInEditMode } from "../renderMode/renderModeSelectors";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,

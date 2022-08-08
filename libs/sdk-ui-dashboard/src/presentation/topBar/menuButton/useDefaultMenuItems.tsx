@@ -1,29 +1,29 @@
 // (C) 2022 GoodData Corporation
-
+import { useCallback, useMemo, useRef } from "react";
 import { useIntl } from "react-intl";
+import { isProtectedDataError } from "@gooddata/sdk-backend-spi";
+import { useToastMessage } from "@gooddata/sdk-ui-kit";
+
 import {
     exportDashboardToPdf,
     selectCanCreateAnalyticalDashboard,
     selectCanExportReport,
     selectEnableKPIDashboardExportPDF,
-    selectIsLayoutEmpty,
-    selectIsReadOnly,
-    selectMenuButtonItemsVisibility,
     selectIsInEditMode,
     selectIsInViewMode,
+    selectIsLayoutEmpty,
+    selectIsNewDashboard,
+    selectIsReadOnly,
+    selectIsSaveAsNewButtonHidden,
+    selectMenuButtonItemsVisibility,
     uiActions,
     useDashboardCommandProcessing,
     useDashboardDispatch,
     useDashboardScheduledEmails,
     useDashboardSelector,
 } from "../../../model";
-import { selectIsNewDashboard } from "../../../model/store/meta/metaSelectors";
-import { useToastMessage } from "@gooddata/sdk-ui-kit";
-import { useCallback, useMemo, useRef } from "react";
 import { downloadFile } from "../../../_staging/fileUtils/downloadFile";
-import { isProtectedDataError } from "@gooddata/sdk-backend-spi";
 import { IMenuButtonItem } from "../../topBar/types";
-import { selectIsSaveAsNewButtonHidden } from "../../../model/store/config/configSelectors";
 import { messages } from "../../../locales";
 
 /**

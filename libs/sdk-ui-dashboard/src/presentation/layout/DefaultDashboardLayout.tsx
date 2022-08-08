@@ -18,6 +18,7 @@ import {
     ExtendedDashboardWidget,
     selectInsightsMap,
     selectEnableWidgetCustomHeight,
+    selectRenderMode,
     selectWidgetPlaceholder,
 } from "../../model";
 import { useDashboardComponentsContext } from "../dashboardContexts";
@@ -33,7 +34,6 @@ import {
 } from "./DefaultDashboardLayoutRenderer";
 import { RenderModeAwareDashboardLayoutSectionHeaderRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionHeaderRenderer";
 import { getMemoizedWidgetSanitizer } from "./DefaultDashboardLayoutUtils";
-import { selectRenderMode } from "../../model/store/ui/uiSelectors";
 import { SectionHotspot } from "../dragAndDrop";
 import { newKpiPlaceholderWidget, newPlaceholderWidget } from "../../widgets/placeholders/types";
 

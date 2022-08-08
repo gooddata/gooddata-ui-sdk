@@ -18,6 +18,7 @@ import { IExecutionResultEnvelope } from "./executionResults/types";
 import { UiState } from "./ui/uiState";
 import { LegacyDashboardsState } from "./legacyDashboards/legacyDashboardsState";
 import { PlaceholdersState } from "./placeholders/placeholdersState";
+import { RenderModeState } from "./renderMode/renderModeState";
 
 /*
  * This explicit typing is unfortunate but cannot find better way. Normally the typings get inferred from store,
@@ -57,6 +58,11 @@ export interface DashboardState {
     drillTargets: EntityState<IDrillTargets>;
     listedDashboards: EntityState<IListedDashboard>;
     accessibleDashboards: EntityState<IListedDashboard>;
+
+    /**
+     * State controlling how exactly the dashboard is rendered.
+     */
+    renderMode: RenderModeState;
 
     /**
      * Ui state controllable from the outside.

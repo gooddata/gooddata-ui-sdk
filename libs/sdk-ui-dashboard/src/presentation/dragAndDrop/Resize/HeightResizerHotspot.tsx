@@ -1,21 +1,19 @@
 // (C) 2021-2022 GoodData Corporation
 import React, { useEffect, useMemo, useState } from "react";
-import { useDashboardDrag } from "../useDashboardDrag";
-
 import { IWidget, ScreenSize } from "@gooddata/sdk-model";
-import { useDashboardDispatch, useDashboardSelector } from "../../../model/react";
-import { selectInsightsMap } from "../../../model/store/insights/insightsSelectors";
+import { fluidLayoutDescriptor } from "@gooddata/sdk-ui-ext";
+import isEqual from "lodash/fp/isEqual";
+import isEmpty from "lodash/isEmpty";
+
+import { useDashboardDrag } from "../useDashboardDrag";
+import { resizeHeight, selectInsightsMap, useDashboardDispatch, useDashboardSelector } from "../../../model";
+import { getMaxHeight, getMinHeight } from "../../../model/layout";
 import {
     IDashboardLayoutItemFacade,
     IDashboardLayoutSectionFacade,
 } from "../../../_staging/dashboard/fluidLayout/facade/interfaces";
 import { HeightResizer } from "./HeightResizer";
 
-import { fluidLayoutDescriptor } from "@gooddata/sdk-ui-ext";
-import isEqual from "lodash/fp/isEqual";
-import isEmpty from "lodash/isEmpty";
-import { resizeHeight } from "../../../model";
-import { getMaxHeight, getMinHeight } from "../../../model/layout";
 import { useResizeContext } from "../LayoutResizeContext";
 
 export type HeightResizerHotspotProps = {

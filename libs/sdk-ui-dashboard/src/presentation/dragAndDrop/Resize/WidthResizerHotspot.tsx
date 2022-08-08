@@ -4,12 +4,11 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useDashboardDrag } from "../useDashboardDrag";
 
 import { WidthResizer } from "./WidthResizer";
-import { useDashboardDispatch, useDashboardSelector, resizeWidth } from "../../../model";
+import { selectInsightsMap, useDashboardDispatch, useDashboardSelector, resizeWidth } from "../../../model";
+import { getMinWidth } from "../../../model/layout";
 import { useResizeWidthItemStatus, useResizeHandlers } from "../LayoutResizeContext";
-import { selectInsightsMap } from "../../../model/store/insights/insightsSelectors";
 import { IDashboardLayoutItemFacade } from "../../../_staging/dashboard/fluidLayout/facade/interfaces";
 import { getSizeAndXCoords } from "../DragLayerPreview/WidthResizerDragPreview";
-import { getMinWidth } from "../../../model/layout";
 import { getDashboardLayoutItemMaxGridWidth } from "../../layout/DefaultDashboardLayoutRenderer/utils/sizing";
 
 export type WidthResizerHotspotProps = {

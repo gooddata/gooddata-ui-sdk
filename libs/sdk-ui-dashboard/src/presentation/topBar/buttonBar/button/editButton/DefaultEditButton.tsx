@@ -1,13 +1,17 @@
 // (C) 2022 GoodData Corporation
-
 import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
 import { Button, useMediaQuery } from "@gooddata/sdk-ui-kit";
-import { IEditButtonProps } from "./types";
-import { selectIsInEditMode, useDashboardDispatch, useDashboardSelector } from "../../../../../model";
-import { switchToEditRenderMode } from "../../../../../model/commands/ui";
-import { selectIsDashboardLoading } from "../../../../../model/store/loading/loadingSelectors";
+
+import {
+    selectIsDashboardLoading,
+    selectIsInEditMode,
+    switchToEditRenderMode,
+    useDashboardDispatch,
+    useDashboardSelector,
+} from "../../../../../model";
 import { selectCanEnterEditMode } from "../selectors";
+import { IEditButtonProps } from "./types";
 
 /**
  * @internal

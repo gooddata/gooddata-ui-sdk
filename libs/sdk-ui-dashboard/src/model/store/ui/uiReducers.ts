@@ -2,7 +2,7 @@
 import { Action, AnyAction, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import { ObjRef } from "@gooddata/sdk-model";
 import { UiState } from "./uiState";
-import { ILayoutCoordinates, IMenuButtonItemsVisibility, RenderMode } from "../../../types";
+import { ILayoutCoordinates, IMenuButtonItemsVisibility } from "../../../types";
 
 type UiReducer<A extends Action = AnyAction> = CaseReducer<UiState, A>;
 
@@ -85,18 +85,6 @@ const setMenuButtonItemsVisibility: UiReducer<PayloadAction<IMenuButtonItemsVisi
     state.menuButton.itemsVisibility = action.payload;
 };
 
-const setRenderMode: UiReducer<PayloadAction<RenderMode>> = (state, action) => {
-    state.renderMode = action.payload;
-};
-
-const setEditRenderMode: UiReducer = (state) => {
-    state.renderMode = "edit";
-};
-
-const setViewRenderMode: UiReducer = (state) => {
-    state.renderMode = "view";
-};
-
 const setActiveHeaderIndex: UiReducer<PayloadAction<number | null>> = (state, action) => {
     state.activeHeaderIndex = action.payload;
 };
@@ -137,9 +125,6 @@ export const uiReducers = {
     openKpiDeleteDialog,
     closeKpiDeleteDialog,
     setMenuButtonItemsVisibility,
-    setRenderMode,
-    setEditRenderMode,
-    setViewRenderMode,
     setActiveHeaderIndex,
     selectWidget,
     clearWidgetSelection,
