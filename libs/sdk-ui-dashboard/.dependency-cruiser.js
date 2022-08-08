@@ -67,7 +67,6 @@ options = {
         depCruiser.moduleWithDependencies("dragAndDrop", "src/presentation/dragAndDrop", [
             "src/_staging/*",
             "src/model",
-            "src/model/layout",
             "src/presentation/layout/constants.ts",
             "src/presentation/layout/DefaultDashboardLayoutRenderer/utils/sizing.ts",
             "src/model/react",
@@ -96,7 +95,6 @@ options = {
         depCruiser.moduleWithDependencies("layout", "src/presentation/layout", [
             "src/_staging/*",
             "src/model",
-            "src/model/layout",
             "src/model/react/DashboardStoreProvider.tsx",
             "src/presentation/constants",
             "src/presentation/dragAndDrop",
@@ -119,9 +117,7 @@ options = {
             "src/converters",
             "src/logUserInteraction",
             "src/model",
-            "src/model/commands/ui.ts",
             "src/model/events/widget.ts",
-            "src/model/layout",
             "src/model/react",
             "src/widgets/placeholders/types.ts",
             "src/types.ts",
@@ -146,7 +142,6 @@ options = {
             "src/presentation/constants/*",
             "src/presentation/componentDefinition",
             "src/model",
-            "src/model/commands/ui.ts",
             "src/types.ts",
         ]),
         depCruiser.moduleWithDependencies("widget", "src/presentation/widget", [

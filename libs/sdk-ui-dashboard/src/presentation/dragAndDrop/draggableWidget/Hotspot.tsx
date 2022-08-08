@@ -13,7 +13,7 @@ import {
 import stringify from "json-stable-stringify";
 import { useDashboardDrop } from "../useDashboardDrop";
 import { isInsightDraggableListItem, isKpiPlaceholderDraggableItem } from "../types";
-import { getSizeInfo } from "../../../_staging/layout/getSizeInfo";
+import { getSizeInfo } from "../../../_staging/layout/sizing";
 import { useKpiPlaceholderDropHandler } from "./useKpiPlaceholderDropHandler";
 import { useInsightPlaceholderDropHandler } from "./useInsightPlaceholderDropHandler";
 

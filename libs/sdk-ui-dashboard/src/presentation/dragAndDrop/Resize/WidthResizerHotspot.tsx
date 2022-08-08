@@ -5,7 +5,7 @@ import { useDashboardDrag } from "../useDashboardDrag";
 
 import { WidthResizer } from "./WidthResizer";
 import { selectInsightsMap, useDashboardDispatch, useDashboardSelector, resizeWidth } from "../../../model";
-import { getMinWidth } from "../../../model/layout";
+import { getMinWidth } from "../../../_staging/layout/sizing";
 import { useResizeWidthItemStatus, useResizeHandlers } from "../LayoutResizeContext";
 import { IDashboardLayoutItemFacade } from "../../../_staging/dashboard/fluidLayout/facade/interfaces";
 import { getSizeAndXCoords } from "../DragLayerPreview/WidthResizerDragPreview";

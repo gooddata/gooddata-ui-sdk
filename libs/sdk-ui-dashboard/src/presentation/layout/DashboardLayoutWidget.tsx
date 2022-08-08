@@ -29,7 +29,7 @@ import {
 import { ObjRefMap } from "../../_staging/metadata/objRefMap";
 import { useDashboardComponentsContext } from "../dashboardContexts";
 import { Hotspot, WidthResizerHotspot, ResizeOverlay, useResizeItemStatus } from "../dragAndDrop";
-import { getDashboardLayoutWidgetDefaultHeight } from "../../model/layout";
+import { getDashboardLayoutWidgetDefaultHeight } from "../../_staging/layout/sizing";
 import { isAnyPlaceholderWidget } from "../../widgets/placeholders/types";
 import { DEFAULT_COLUMN_CLIENT_WIDTH, DEFAULT_WIDTH_RESIZER_HEIGHT } from "./constants";
 

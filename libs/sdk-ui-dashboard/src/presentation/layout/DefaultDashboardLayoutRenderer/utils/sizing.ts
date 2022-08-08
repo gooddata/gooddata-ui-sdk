@@ -28,8 +28,9 @@ import {
     getDashboardLayoutWidgetMaxGridHeight,
     getDashboardLayoutWidgetMinGridHeight,
     getDashboardLayoutWidgetMinGridWidth,
-} from "../../../../model/layout";
-import { getSizeInfo, MeasurableWidgetContent } from "../../../../_staging/layout/getSizeInfo";
+    getSizeInfo,
+    MeasurableWidgetContent,
+} from "../../../../_staging/layout/sizing";
 import {
     ALL_SCREENS,
     DASHBOARD_LAYOUT_CONTAINER_WIDTHS,

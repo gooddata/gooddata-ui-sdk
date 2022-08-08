@@ -7,7 +7,7 @@ import isEmpty from "lodash/isEmpty";
 
 import { useDashboardDrag } from "../useDashboardDrag";
 import { resizeHeight, selectInsightsMap, useDashboardDispatch, useDashboardSelector } from "../../../model";
-import { getMaxHeight, getMinHeight } from "../../../model/layout";
+import { getMaxHeight, getMinHeight } from "../../../_staging/layout/sizing";
 import {
     IDashboardLayoutItemFacade,
     IDashboardLayoutSectionFacade,

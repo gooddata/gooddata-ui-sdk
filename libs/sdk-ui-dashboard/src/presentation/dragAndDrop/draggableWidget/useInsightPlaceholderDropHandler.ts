@@ -11,7 +11,7 @@ import {
     useDashboardCommandProcessing,
     uiActions,
 } from "../../../model";
-import { getSizeInfo } from "../../../_staging/layout/getSizeInfo";
+import { getSizeInfo } from "../../../_staging/layout/sizing";
 
 export function useInsightPlaceholderDropHandler() {
     const dispatch = useDashboardDispatch();

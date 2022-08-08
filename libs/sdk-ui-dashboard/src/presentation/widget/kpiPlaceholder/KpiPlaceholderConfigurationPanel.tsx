@@ -15,7 +15,7 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../model";
-import { getSizeInfo } from "../../../_staging/layout/getSizeInfo";
+import { getSizeInfo } from "../../../_staging/layout/sizing";
 
 import { KpiConfigurationPanelCore } from "../kpi/EditableDashboardKpi/KpiConfigurationPanel/KpiConfigurationPanelCore";
 import { KpiPlaceholderWidget } from "../../../widgets/placeholders/types";

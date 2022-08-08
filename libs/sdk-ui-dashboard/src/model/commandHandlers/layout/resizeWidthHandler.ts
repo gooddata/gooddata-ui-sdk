@@ -6,7 +6,7 @@ import { put, select } from "redux-saga/effects";
 import { ResizeWidth } from "../../commands/layout";
 import { invalidArgumentsProvided } from "../../events/general";
 
-import { getMinWidth } from "../../layout/sizing";
+import { getMinWidth } from "../../../_staging/layout/sizing";
 import { selectInsightsMap } from "../../store/insights/insightsSelectors";
 import { layoutActions } from "../../store/layout";
 import { selectLayout } from "../../store/layout/layoutSelectors";

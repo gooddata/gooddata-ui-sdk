@@ -9,7 +9,7 @@ import {
     DashboardLayoutSectionItemsHeightResized,
     layoutSectionItemsHeightResized,
 } from "../../events/layout";
-import { getMaxHeight, getMinHeight } from "../../layout/sizing";
+import { getMaxHeight, getMinHeight } from "../../../_staging/layout/sizing";
 import { selectInsightsMap } from "../../store/insights/insightsSelectors";
 import { layoutActions } from "../../store/layout";
 import { selectLayout } from "../../store/layout/layoutSelectors";
