@@ -55,7 +55,7 @@ interface IComponentWithResultProps {
 const ComponentWithResult = ({ result }: IComponentWithResultProps) => {
     return (
         <div>
-            <pre>{result && result.measure.localIdentifier}</pre>
+            <pre>{result?.measure?.localIdentifier}</pre>
         </div>
     );
 };

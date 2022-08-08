@@ -41,8 +41,8 @@ interface IComponentWithResultProps {
 const ComponentWithResult = ({ result }: IComponentWithResultProps) => {
     return (
         <div>
-            {result.map((res) => (
-                <div>{res.measure.localIdentifier}</div>
+            {result.map((res, i) => (
+                <div key={i}>{res.measure.localIdentifier}</div>
             ))}
         </div>
     );
