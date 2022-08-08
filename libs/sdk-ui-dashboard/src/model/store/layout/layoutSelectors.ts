@@ -20,6 +20,7 @@ import { selectFilterContextFilters } from "../filterContext/filterContextSelect
 import { filterContextItemsToDashboardFiltersByWidget } from "../../../converters";
 import { createMemoizedSelector } from "../_infra/selectors";
 import isEmpty from "lodash/isEmpty";
+import { ILayoutCoordinates } from "../../../types";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -242,28 +243,24 @@ export const selectAllCustomWidgets = createSelector(selectAllWidgets, (allWidge
  * @alpha
  */
 export const selectWidgetCoordinatesByRef = createMemoizedSelector((ref: ObjRef) => {
-    return createSelector(
-        selectWidgetByRef(ref),
-        selectLayout,
-        (widget, layout): { sectionIndex: number; itemIndex: number } => {
-            invariant(widget, `widget with ref ${objRefToString(ref)} does not exist in the state`);
+    return createSelector(selectWidgetByRef(ref), selectLayout, (widget, layout): ILayoutCoordinates => {
+        invariant(widget, `widget with ref ${objRefToString(ref)} does not exist in the state`);
 
-            for (let sectionIndex = 0; sectionIndex < layout.sections.length; sectionIndex++) {
-                const section = layout.sections[sectionIndex];
+        for (let sectionIndex = 0; sectionIndex < layout.sections.length; sectionIndex++) {
+            const section = layout.sections[sectionIndex];
 
-                for (let itemIndex = 0; itemIndex < section.items.length; itemIndex++) {
-                    const item = section.items[itemIndex];
+            for (let itemIndex = 0; itemIndex < section.items.length; itemIndex++) {
+                const item = section.items[itemIndex];
 
-                    if (areObjRefsEqual(item.widget?.ref, ref)) {
-                        return {
-                            sectionIndex,
-                            itemIndex,
-                        };
-                    }
+                if (areObjRefsEqual(item.widget?.ref, ref)) {
+                    return {
+                        sectionIndex,
+                        itemIndex,
+                    };
                 }
             }
+        }
 
-            invariant(false, `widget with ref ${objRefToString(ref)} does not exist in the state`);
-        },
-    );
+        invariant(false, `widget with ref ${objRefToString(ref)} does not exist in the state`);
+    });
 });

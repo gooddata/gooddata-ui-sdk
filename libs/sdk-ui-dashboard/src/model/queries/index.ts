@@ -1,7 +1,8 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { QueryInsightAttributesMeta, QueryInsightDateDatasets } from "./insights";
 import { QueryWidgetBrokenAlerts, QueryWidgetFilters } from "./widgets";
+import { QueryMeasureDateDatasets } from "./kpis";
 
 export { IDashboardQuery, DashboardQueryType } from "./base";
 export {
@@ -26,6 +27,7 @@ export {
  */
 export type DashboardQueries =
     | QueryInsightDateDatasets
+    | QueryMeasureDateDatasets
     | QueryInsightAttributesMeta
     | QueryWidgetFilters
     | QueryWidgetBrokenAlerts;

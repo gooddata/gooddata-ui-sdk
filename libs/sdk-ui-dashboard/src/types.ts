@@ -241,3 +241,18 @@ export interface ILegacyDashboard {
      */
     readonly tabs: ILegacyDashboardTab[];
 }
+
+/**
+ * Coordinates of an item in a layout.
+ * @alpha
+ */
+export interface ILayoutCoordinates {
+    /**
+     * 0-based index of the section the item is in.
+     */
+    sectionIndex: number;
+    /**
+     * 0-based index of the item within the section.
+     */
+    itemIndex: number;
+}

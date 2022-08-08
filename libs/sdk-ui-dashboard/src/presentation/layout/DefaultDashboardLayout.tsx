@@ -35,7 +35,7 @@ import { RenderModeAwareDashboardLayoutSectionHeaderRenderer } from "./DefaultDa
 import { getMemoizedWidgetSanitizer } from "./DefaultDashboardLayoutUtils";
 import { selectRenderMode } from "../../model/store/ui/uiSelectors";
 import { SectionHotspot } from "../dragAndDrop";
-import { newInsightPlaceholderWidget } from "../../widgets/placeholders/types";
+import { newKpiPlaceholderWidget, newPlaceholderWidget } from "../../widgets/placeholders/types";
 
 /**
  * Get dashboard layout for exports.
@@ -131,11 +131,18 @@ export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Elemen
                                 gridWidth: widgetPlaceholder.size.width,
                             },
                         },
-                        widget: newInsightPlaceholderWidget(
-                            widgetPlaceholder.sectionIndex,
-                            widgetPlaceholder.itemIndex,
-                            widgetPlaceholder.itemIndex === section.facade().items().count(),
-                        ),
+                        widget:
+                            widgetPlaceholder.type === "widget"
+                                ? newPlaceholderWidget(
+                                      widgetPlaceholder.sectionIndex,
+                                      widgetPlaceholder.itemIndex,
+                                      widgetPlaceholder.itemIndex === section.facade().items().count(),
+                                  )
+                                : newKpiPlaceholderWidget(
+                                      widgetPlaceholder.sectionIndex,
+                                      widgetPlaceholder.itemIndex,
+                                      widgetPlaceholder.itemIndex === section.facade().items().count(),
+                                  ),
                     },
                     widgetPlaceholder.itemIndex,
                 ),
@@ -172,7 +179,7 @@ export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Elemen
                 sectionHeaderRenderer={RenderModeAwareDashboardLayoutSectionHeaderRenderer}
                 renderMode={renderMode}
             />
-            <SectionHotspot index={-1} targetPosition="below" />
+            <SectionHotspot index={transformedLayout.sections.length} targetPosition="below" />
         </>
     );
 };

@@ -8,6 +8,7 @@ export type DraggableContentItemType =
     | "attributeFilter"
     | "attributeFilter-placeholder"
     | "insightListItem"
+    | "kpi-placeholder"
     | "widget"
     | "custom";
 
@@ -62,6 +63,20 @@ export function isAttributeFilterPlaceholderDraggableItem(
 /**
  * @internal
  */
+export type KpiPlaceholderDraggableItem = {
+    type: "kpi-placeholder";
+};
+
+/**
+ * @internal
+ */
+export function isKpiPlaceholderDraggableItem(item: any): item is KpiPlaceholderDraggableItem {
+    return item.type === "kpi-placeholder";
+}
+
+/**
+ * @internal
+ */
 export type InsightDraggableListItem = {
     type: "insightListItem";
     insight: IInsight;
@@ -97,6 +112,7 @@ export type DraggableContentItem =
     | AttributeFilterDraggableItem
     | AttributeFilterPlaceholderDraggableItem
     | InsightDraggableListItem
+    | KpiPlaceholderDraggableItem
     | CustomDraggableItem
     | WidgetDraggableItem;
 
@@ -122,6 +138,7 @@ export type DraggableItemComponentTypeMapping = {
     attributeFilter: AttributeFilterDraggableItem;
     "attributeFilter-placeholder": AttributeFilterPlaceholderDraggableItem;
     insightListItem: InsightDraggableListItem;
+    "kpi-placeholder": KpiPlaceholderDraggableItem;
     custom: CustomDraggableItem;
     widget: WidgetDraggableItem;
 };
@@ -174,6 +191,19 @@ export type CustomDashboardAttributeFilterPlaceholderComponentProps = {
  */
 export type CustomDashboardAttributeFilterPlaceholderComponent =
     React.ComponentType<CustomDashboardAttributeFilterPlaceholderComponentProps>;
+
+/**
+ * @internal
+ */
+export type CustomDashboardKpiPlaceholderComponentProps = {
+    disabled: boolean;
+};
+
+/**
+ * @internal
+ */
+export type CustomDashboardKpiPlaceholderComponent =
+    React.ComponentType<CustomDashboardKpiPlaceholderComponentProps>;
 
 /**
  * @internal

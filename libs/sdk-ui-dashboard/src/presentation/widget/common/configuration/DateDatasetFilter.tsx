@@ -1,7 +1,6 @@
 // (C) 2022 GoodData Corporation
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { ICatalogDateDataset, IWidget } from "@gooddata/sdk-model";
-import noop from "lodash/noop";
 
 import { DateFilterCheckbox } from "./DateFilterCheckbox";
 import { useDashboardSelector, selectAllCatalogDateDatasetsMap } from "../../../../model";
@@ -14,11 +13,13 @@ const CONFIG_PANEL_DATE_FILTER_WIDTH = 159;
 
 interface IDateDatasetFilterProps {
     widget: IWidget;
-    relatedDateDatasets: ICatalogDateDataset[] | undefined;
+    relatedDateDatasets: readonly ICatalogDateDataset[] | undefined;
     isDatasetsLoading: boolean;
 
     dateFromVisualization?: ICatalogDateDataset;
     dateFilterCheckboxDisabled: boolean;
+    shouldPickDateDataset?: boolean;
+    onDateDatasetChanged?: (id: string) => void;
 }
 
 export const DateDatasetFilter: React.FC<IDateDatasetFilterProps> = (props) => {
@@ -28,6 +29,8 @@ export const DateDatasetFilter: React.FC<IDateDatasetFilterProps> = (props) => {
         dateFilterCheckboxDisabled,
         dateFromVisualization,
         isDatasetsLoading,
+        shouldPickDateDataset,
+        onDateDatasetChanged,
     } = props;
 
     const catalogDatasetsMap = useDashboardSelector(selectAllCatalogDateDatasetsMap);
@@ -36,12 +39,22 @@ export const DateDatasetFilter: React.FC<IDateDatasetFilterProps> = (props) => {
     const { selectedDateDatasetHiddenByObjectAvailability, status: visibleDateDatasetsStatus } =
         useIsSelectedDatasetHidden(selectedDateDataset?.dataSet.ref);
 
-    const [isDateFilterEnabled, setIsDateFilterEnabled] = useState(!!widget.dateDataSet);
+    const [isDateFilterEnabled, setIsDateFilterEnabled] = useState(
+        !!widget.dateDataSet || shouldPickDateDataset,
+    );
 
-    const { handleDateDatasetChanged, handleDateFilterEnabled, status } = useDateFilterConfigurationHandling(
-        widget,
-        relatedDateDatasets,
-        setIsDateFilterEnabled,
+    const {
+        handleDateDatasetChanged: handleDateDatasetChangedCore,
+        handleDateFilterEnabled,
+        status,
+    } = useDateFilterConfigurationHandling(widget, relatedDateDatasets, setIsDateFilterEnabled);
+
+    const handleDateDatasetChanged = useCallback(
+        (id: string) => {
+            onDateDatasetChanged?.(id);
+            handleDateDatasetChangedCore(id);
+        },
+        [handleDateDatasetChangedCore, onDateDatasetChanged],
     );
 
     const isFilterLoading = status === "loading";
@@ -83,8 +96,7 @@ export const DateDatasetFilter: React.FC<IDateDatasetFilterProps> = (props) => {
                     selectedDateDatasetHidden={selectedDateDatasetHiddenByObjectAvailability}
                     unrelatedDateDataset={unrelatedDateDataset}
                     onDateDatasetChange={handleDateDatasetChanged}
-                    autoOpenChanged={noop} // TODO
-                    autoOpen={false} // TODO
+                    autoOpen={shouldPickDateDataset}
                     isLoading={isDropdownLoading}
                 />
             )}

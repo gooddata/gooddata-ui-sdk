@@ -3579,6 +3579,8 @@ export class Overlay<T = HTMLElement> extends React_2.Component<IOverlayProps<T>
     // (undocumented)
     shouldComponentUpdate(nextProps: IOverlayProps<T>, nextState: IOverlayState): boolean;
     // (undocumented)
+    UNSAFE_componentWillMount(): void;
+    // (undocumented)
     UNSAFE_componentWillReceiveProps(nextProps: IOverlayProps<T>): void;
 }
 

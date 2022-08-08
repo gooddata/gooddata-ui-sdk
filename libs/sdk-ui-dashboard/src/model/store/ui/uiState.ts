@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 import { ObjRef } from "@gooddata/sdk-model";
 
-import { IMenuButtonItemsVisibility, RenderMode } from "../../../types";
+import { ILayoutCoordinates, IMenuButtonItemsVisibility, RenderMode } from "../../../types";
 
 /**
  * @alpha
@@ -23,6 +23,12 @@ export interface UiState {
     deleteDialog: {
         open: boolean;
     };
+    kpiDeleteDialog: {
+        /**
+         * Undefined means the dialog should be closed
+         */
+        widgetCoordinates: ILayoutCoordinates | undefined;
+    };
     filterBar: {
         expanded: boolean;
     };
@@ -37,6 +43,7 @@ export interface UiState {
     activeHeaderIndex: number | null;
     selectedWidgetRef: ObjRef | undefined;
     configurationPanelOpened: boolean;
+    kpiDateDatasetAutoOpen: boolean;
 }
 
 export const uiInitialState: UiState = {
@@ -56,6 +63,9 @@ export const uiInitialState: UiState = {
     deleteDialog: {
         open: false,
     },
+    kpiDeleteDialog: {
+        widgetCoordinates: undefined,
+    },
     filterBar: {
         expanded: false,
     },
@@ -70,4 +80,5 @@ export const uiInitialState: UiState = {
     activeHeaderIndex: null,
     selectedWidgetRef: undefined,
     configurationPanelOpened: true,
+    kpiDateDatasetAutoOpen: false,
 };

@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import cx from "classnames";
 import flatMap from "lodash/flatMap";
 import sortBy from "lodash/sortBy";
@@ -12,7 +12,6 @@ import {
     IAlignPoint,
     NoData,
     SingleSelectListItem,
-    Typography,
 } from "@gooddata/sdk-ui-kit";
 import { IKpiWidget, ObjRef, widgetRef } from "@gooddata/sdk-model";
 import {
@@ -126,87 +125,68 @@ const KpiDrillConfigurationCore: React.FC<IKpiDrillConfigurationProps> = (props)
         : intl.formatMessage({ id: "configurationPanel.selectDashboard" });
 
     return (
-        <div>
-            <Typography tagName="h3">
-                <FormattedMessage id="configurationPanel.drillIntoDashboard" />
-            </Typography>
-
-            <div className="drill-to-dropdown-container">
-                <Dropdown
-                    className="drill-to-dropdown s-drill-to-dropdown"
-                    closeOnParentScroll
-                    closeOnMouseDrag
-                    alignPoints={alignPoints}
-                    renderButton={({ isOpen, toggleDropdown }) => (
-                        <DrillToDropdownButton
-                            title={buttonValue}
-                            value={buttonValue}
-                            selection={selectedDrillToItem}
-                            isOpen={isOpen}
-                            onClick={toggleDropdown}
-                        />
-                    )}
-                    renderBody={({ closeDropdown }) => (
-                        <DropdownList
-                            isLoading={!dashboards}
-                            renderNoData={({ hasNoMatchingData }) => (
-                                <NoData
-                                    hasNoMatchingData={hasNoMatchingData}
-                                    noDataLabel={intl.formatMessage({
-                                        id: "configurationPanel.noLinkableDashboards",
-                                    })}
-                                />
-                            )}
-                            className="configuration-dropdown s-drill-to-list"
-                            width={CONFIG_PANEL_DRILL_WIDTH}
-                            items={drillToItems}
-                            renderItem={({ item }) => {
-                                const selected =
-                                    selectedDrillToItem && selectedDrillToItem.title === item.title;
-
-                                return (
-                                    <SingleSelectListItem
-                                        title={item.title}
-                                        isSelected={!!selected}
-                                        type={item.type}
-                                        onClick={() => {
-                                            onDrillToSelect(item);
-                                            closeDropdown();
-                                        }}
-                                    />
-                                );
-                            }}
-                        />
-                    )}
-                />
-                {drillToItem ? (
-                    <Button
-                        className="gd-button-link-dimmed gd-button-icon-only gd-icon-cross button-remove-drill-to s-button-remove-drill-to"
-                        onClick={onDrillToRemove}
+        <div className="drill-to-dropdown-container">
+            <Dropdown
+                className="drill-to-dropdown s-drill-to-dropdown"
+                closeOnParentScroll
+                closeOnMouseDrag
+                alignPoints={alignPoints}
+                renderButton={({ isOpen, toggleDropdown }) => (
+                    <DrillToDropdownButton
+                        title={buttonValue}
+                        value={buttonValue}
+                        selection={selectedDrillToItem}
+                        isOpen={isOpen}
+                        onClick={toggleDropdown}
                     />
-                ) : null}
-            </div>
+                )}
+                renderBody={({ closeDropdown }) => (
+                    <DropdownList
+                        isLoading={!dashboards}
+                        renderNoData={({ hasNoMatchingData }) => (
+                            <NoData
+                                hasNoMatchingData={hasNoMatchingData}
+                                noDataLabel={intl.formatMessage({
+                                    id: "configurationPanel.noLinkableDashboards",
+                                })}
+                            />
+                        )}
+                        className="configuration-dropdown s-drill-to-list"
+                        width={CONFIG_PANEL_DRILL_WIDTH}
+                        items={drillToItems}
+                        renderItem={({ item }) => {
+                            const selected = selectedDrillToItem && selectedDrillToItem.title === item.title;
+
+                            return (
+                                <SingleSelectListItem
+                                    title={item.title}
+                                    isSelected={!!selected}
+                                    type={item.type}
+                                    onClick={() => {
+                                        onDrillToSelect(item);
+                                        closeDropdown();
+                                    }}
+                                />
+                            );
+                        }}
+                    />
+                )}
+            />
+            {drillToItem ? (
+                <Button
+                    className="gd-button-link-dimmed gd-button-icon-only gd-icon-cross button-remove-drill-to s-button-remove-drill-to"
+                    onClick={onDrillToRemove}
+                />
+            ) : null}
         </div>
     );
 };
 
 export const KpiDrillConfiguration: React.FC<IKpiDrillConfigurationProps> = (props) => {
-    const { widget } = props;
-
     const isHidden = useDashboardSelector(selectShouldHidePixelPerfectExperience);
 
     if (isHidden) {
         return null;
-    }
-
-    if (!widget.kpi.metric) {
-        return (
-            <div>
-                <Typography tagName="h3" className="is-disabled">
-                    <FormattedMessage id="configurationPanel.drillIntoDashboard" />
-                </Typography>
-            </div>
-        );
     }
 
     return <KpiDrillConfigurationCore {...props} />;
