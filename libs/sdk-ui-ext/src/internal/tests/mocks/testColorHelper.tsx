@@ -1,10 +1,31 @@
 // (C) 2019-2022 GoodData Corporation
 import { DefaultColorPalette } from "@gooddata/sdk-ui";
+import cloneDeep from "lodash/cloneDeep";
 import { IColorPalette } from "@gooddata/sdk-model";
 
 export function getLargePalette(): IColorPalette {
-    return DefaultColorPalette;
+    const largePalette = cloneDeep(DefaultColorPalette);
+
+    for (let i = 0; i < DefaultColorPalette.length; i++) {
+        const itemClon = cloneDeep(DefaultColorPalette[i]);
+        itemClon.guid = i + "_" + itemClon.guid;
+        itemClon.fill.r = itemClon.fill.r + 1;
+        largePalette.push(itemClon);
+    }
+
+    return largePalette;
 }
+
+export const colorPaletteWithOneColor = [
+    {
+        guid: "01",
+        fill: {
+            r: 195,
+            g: 49,
+            b: 73,
+        },
+    },
+];
 
 export const colorPalette = [
     {

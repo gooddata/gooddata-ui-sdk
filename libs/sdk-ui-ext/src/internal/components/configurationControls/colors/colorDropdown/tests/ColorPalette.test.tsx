@@ -5,7 +5,11 @@ import userEvent from "@testing-library/user-event";
 import noop from "lodash/noop";
 import cloneDeep from "lodash/cloneDeep";
 import ColorPalette, { IColorPaletteProps } from "../ColorPalette";
-import { getLargePalette, colorPalette } from "../../../../../tests/mocks/testColorHelper";
+import {
+    getLargePalette,
+    colorPalette,
+    colorPaletteWithOneColor,
+} from "../../../../../tests/mocks/testColorHelper";
 
 const defaultProps: IColorPaletteProps = {
     selectedColorGuid: undefined,
@@ -24,41 +28,48 @@ function createComponent(customProps: Partial<IColorPaletteProps> = {}) {
 describe("ColorPalette", () => {
     afterEach(cleanup);
 
-    it("should render small ColorPalette control", () => {
-        const { getAllByLabelText } = createComponent();
-        expect(getAllByLabelText(/rgb*/i).length).toBe(5);
+    it("should render small ColorPalette", () => {
+        const { getByLabelText } = createComponent();
+        expect(getByLabelText("Color palette")).toHaveClass("gd-color-drop-down-list");
     });
 
     it("should render large ColorPalette control", () => {
-        const { getAllByLabelText } = createComponent({ colorPalette: getLargePalette() });
-        expect(getAllByLabelText(/rgb*/i).length).toBe(20);
+        const { getByLabelText } = createComponent({ colorPalette: getLargePalette() });
+        expect(getByLabelText("Color palette")).toHaveClass("gd-color-drop-down-list-large");
     });
 
-    it("should render 5 ColorPaletteItem controls one has to be selected", () => {
-        const { fill, guid } = colorPalette[3];
-        const { getByLabelText } = createComponent({ selectedColorGuid: guid });
-        expect(getByLabelText(`rgb(${fill.r},${fill.g},${fill.b})`)).toHaveClass("gd-color-list-item-active");
+    it("should render ColorPalette control with 5 colors", () => {
+        const { queryAllByLabelText } = createComponent();
+        expect(queryAllByLabelText(/rgb*/i)).toHaveLength(5);
     });
 
-    it("should render 5 ColorPaletteItem controls any has to be selected", () => {
-        const { container } = createComponent();
-        expect(container.getElementsByClassName("gd-color-list-item-active").length).toBe(0);
+    it("should render single color colorPalette with selected color", () => {
+        const { guid } = colorPaletteWithOneColor[0];
+        const { getByLabelText } = createComponent({
+            colorPalette: colorPaletteWithOneColor,
+            selectedColorGuid: guid,
+        });
+        expect(getByLabelText(/rgb*/i)).toHaveClass("gd-color-list-item-active");
     });
 
-    it("should render 5 ColorPaletteItem controls any to be selected by fake guid", () => {
-        const { container } = createComponent({ selectedColorGuid: "fakegid" });
-        expect(
-            container.getElementsByClassName("gd-color-list-item-active s-color-list-item-fakegid").length,
-        ).toBe(0);
+    it("should render single color colorPalette with no selected color", () => {
+        const { queryByLabelText } = createComponent({ colorPalette: colorPaletteWithOneColor });
+        expect(queryByLabelText(/rgb*/i)).not.toHaveClass("gd-color-list-item-active");
+    });
+
+    it("should render single color colorPalette where selection is not done by invalid guid", () => {
+        const { queryByLabelText } = createComponent({
+            colorPalette: colorPaletteWithOneColor,
+            selectedColorGuid: "fakegid",
+        });
+        expect(queryByLabelText(/rgb*/i)).not.toHaveClass("gd-color-list-item-active");
     });
 
     it("should call onSelect when item clicked", async () => {
-        const { fill, guid } = colorPalette[4];
-
         const onColorSelected = jest.fn();
+        const { fill, guid } = colorPalette[4];
         const { getByLabelText, user } = createComponent({ onColorSelected });
         await user.click(getByLabelText(`rgb(${fill.r},${fill.g},${fill.b})`));
-
         await waitFor(() =>
             expect(onColorSelected).toBeCalledWith(expect.objectContaining({ type: "guid", value: guid })),
         );

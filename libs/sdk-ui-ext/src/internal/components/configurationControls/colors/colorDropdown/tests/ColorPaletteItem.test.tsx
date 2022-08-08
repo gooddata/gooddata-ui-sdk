@@ -37,22 +37,18 @@ describe("ColorPaletteItem", () => {
 
     it("should render ColorPaletteItem with red background", () => {
         const { fill } = defaultProps.paletteItem;
-        const { container } = createComponent();
-        expect(container.firstChild).toHaveStyle(`backgroundColor: rgb(${fill.r},${fill.g},${fill.b})`);
+        const { getByLabelText } = createComponent();
+        expect(getByLabelText(/rgb*/i)).toHaveStyle(`backgroundColor: rgb(${fill.r},${fill.g},${fill.b})`);
     });
 
     it("should render unselected ColorPaletteItem", () => {
-        const { fill } = defaultProps.paletteItem;
         const { getByLabelText } = createComponent();
-        expect(getByLabelText(`rgb(${fill.r},${fill.g},${fill.b})`)).not.toHaveClass(
-            "gd-color-list-item-active",
-        );
+        expect(getByLabelText(/rgb*/i)).not.toHaveClass("gd-color-list-item-active");
     });
 
     it("should render selected ColorPaletteItem", () => {
-        const { fill } = defaultProps.paletteItem;
         const { getByLabelText } = createComponent({ selected: true });
-        expect(getByLabelText(`rgb(${fill.r},${fill.g},${fill.b})`)).toHaveClass("gd-color-list-item-active");
+        expect(getByLabelText(/rgb*/i)).toHaveClass("gd-color-list-item-active");
     });
 
     it("should call onSelect when ColorPaletteItem clicked", async () => {
