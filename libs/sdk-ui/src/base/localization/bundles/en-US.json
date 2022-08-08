@@ -356,8 +356,23 @@
         "comment": "Don't translate placeholder '{limit}'.",
         "limit": 0
     },
+    "gs.list.limitReached": {
+        "value": "You have reached the limit of {limit} selected values",
+        "comment": "Don't translate placeholder '{limit}'.",
+        "limit": 0
+    },
+    "gs.list.cannotSelectMoreValues": {
+        "value": "You cannot select more than {limit} values.",
+        "comment": "Don't translate placeholder '{limit}'.",
+        "limit": 0
+    },
     "gs.list.noItemsFound": {
         "value": "No items found.",
+        "comment": "",
+        "limit": 0
+    },
+    "gs.list.noResultsMatch": {
+        "value": "No results match",
         "comment": "",
         "limit": 0
     },

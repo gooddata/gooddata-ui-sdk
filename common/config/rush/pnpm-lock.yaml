@@ -24256,7 +24256,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-kit.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-HtHu3ixRwcWV0X0NWMbm+86J+kERXoA4nKQruS+1/Mlb5DJCktLc4m1A+Kik/DO7TjIqOzdG/6J5u6cW5WPLCw==, tarball: file:projects/sdk-ui-kit.tgz}
+    resolution: {integrity: sha512-DVd62bEONF6FGZ9IUz0eTnvZEqqmGnzjl9ul5SUZST2A+0j6ceK+6i8cYbKfzy/KePfJNutK0msZ3aez9S5gKg==, tarball: file:projects/sdk-ui-kit.tgz}
     id: file:projects/sdk-ui-kit.tgz
     name: '@rush-temp/sdk-ui-kit'
     version: 0.0.0
@@ -24327,6 +24327,7 @@ packages:
       raf: 3.4.1
       react: 17.0.2
       react-codemirror2: 7.2.1_codemirror@5.65.2+react@17.0.2
+      react-content-loader: 6.2.0_react@17.0.2
       react-day-picker: 8.0.7_4781667a0ce088dd5680677bceac5559
       react-dom: 17.0.2_react@17.0.2
       react-helmet: 6.1.0_react@17.0.2

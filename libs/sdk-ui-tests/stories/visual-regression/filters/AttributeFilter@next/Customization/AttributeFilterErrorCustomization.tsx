@@ -43,7 +43,7 @@ storiesOf(`${FilterStories}@next/AttributeFilterBase/Customization/FilterError`)
                     workspace={ReferenceWorkspaceId}
                     filter={newNegativeAttributeFilter("NOT_EXIST", [])}
                     onApply={action("on-apply")}
-                    FilterError={CustomErrorComponent}
+                    ErrorComponent={CustomErrorComponent}
                 />
             </div>
         );
@@ -56,7 +56,7 @@ storiesOf(`${FilterStories}@next/AttributeFilterBase/Customization/FilterError`)
                     workspace={ReferenceWorkspaceId}
                     filter={newNegativeAttributeFilter("NOT_EXIST", [])}
                     onApply={action("on-apply")}
-                    FilterError={DefaultError}
+                    ErrorComponent={DefaultError}
                 />
             </div>
         );

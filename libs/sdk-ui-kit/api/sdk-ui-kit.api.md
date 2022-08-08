@@ -65,6 +65,9 @@ export type ArrowOffset = number[];
 export type ArrowOffsets = Record<string, ArrowOffset>;
 
 // @internal (undocumented)
+export function AsyncList<T>(props: IAsyncListProps<T>): JSX.Element;
+
+// @internal (undocumented)
 export class AutoSize extends Component<IAutoSizeProps> {
     // (undocumented)
     componentDidMount(): void;
@@ -768,6 +771,26 @@ export interface IAppHeaderState {
 }
 
 // @internal (undocumented)
+export interface IAsyncListProps<T> {
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    height?: number;
+    isLoading?: boolean;
+    isLoadingNextPage?: boolean;
+    // (undocumented)
+    itemHeight?: number;
+    // (undocumented)
+    items: T[];
+    nextPageItemPlaceholdersCount?: number;
+    onLoadNextPage?: () => void;
+    // (undocumented)
+    renderItem: (props: IRenderListItemProps<T>) => JSX.Element;
+    // (undocumented)
+    width?: number;
+}
+
+// @internal (undocumented)
 export interface IAutoSizeChildren {
     // (undocumented)
     height: number;
@@ -1363,7 +1386,7 @@ export interface IDropdownListProps<T> extends IListProps<T> {
     // (undocumented)
     renderNoData?: (props: IDropdownListNoDataRenderProps) => React_2.ReactNode;
     // (undocumented)
-    scrollToSelected?: boolean;
+    scrollToItem?: T;
     // (undocumented)
     searchFieldSize?: "small" | "normal";
     // (undocumented)
@@ -1902,88 +1925,77 @@ export interface IInsightListItemProps {
 }
 
 // @internal (undocumented)
-export interface IInvertableListProps<T> {
+export interface IInvertableSelectItem {
     // (undocumented)
-    actionsAsCheckboxes?: boolean;
+    isSelected?: boolean;
+    // (undocumented)
+    onClick?: () => void;
+    // (undocumented)
+    onMouseOut?: () => void;
+    // (undocumented)
+    onMouseOver?: () => void;
+    // (undocumented)
+    onOnly?: () => void;
+    // (undocumented)
+    title?: string;
+}
+
+// @internal (undocumented)
+export interface IInvertableSelectProps<T> {
     // (undocumented)
     className?: string;
     // (undocumented)
-    filteredItemsCount: number;
+    getItemKey: (item: T) => string;
     // (undocumented)
-    getItemKey?: (item: T) => string;
+    getItemTitle: (item: T) => string;
     // (undocumented)
-    height: number;
+    height?: number;
     // (undocumented)
-    intl: IntlShape;
-    // (undocumented)
-    isInverted?: boolean;
+    isInverted: boolean;
     // (undocumented)
     isLoading?: boolean;
     // (undocumented)
-    isMobile?: boolean;
+    isLoadingNextPage?: boolean;
     // (undocumented)
-    itemHeight: number;
+    itemHeight?: number;
     // (undocumented)
     items: T[];
     // (undocumented)
-    itemsCount: number;
+    nextPageItemPlaceholdersCount?: number;
     // (undocumented)
-    maxSelectionSize: number;
+    onLoadNextPage?: () => void;
     // (undocumented)
-    noItemsFound?: boolean;
+    onSearch?: (search: string) => void;
     // (undocumented)
-    onScrollEnd?: (visibleRowsStartIndex: number, visibleRowsEndIndex: number) => void;
+    onSelect?: (items: T[], isInverted: boolean) => void;
     // (undocumented)
-    onSearch: (searchString: string) => void;
-    // (undocumented)
-    onSelect?: (items: T[], selectAll: boolean) => void;
-    // (undocumented)
-    renderItem: (props: IInvertableListRenderItemProps<T>) => React_2.ReactNode;
-    // (undocumented)
-    renderLimitHit?: (props: {
-        limit: number;
-        bounce: boolean;
-    }) => React_2.ReactNode;
-    // (undocumented)
-    renderLoading?: (props: {
-        height: number;
-    }) => React_2.ReactNode;
-    // (undocumented)
-    renderNoItems?: (props: {
-        height: number;
-    }) => React_2.ReactNode;
+    renderItem: (props: IInvertableSelectRenderItemProps<T>) => JSX.Element;
     // (undocumented)
     searchPlaceholder?: string;
     // (undocumented)
     searchString?: string;
     // (undocumented)
-    selectedItems?: T[];
+    selectedItems: T[];
     // (undocumented)
-    showSearchField?: boolean;
+    selectedItemsLimit?: number;
     // (undocumented)
-    smallSearch?: boolean;
+    totalItemsCount?: number;
     // (undocumented)
-    tagName?: string;
-    // (undocumented)
-    width: number;
+    width?: number;
 }
 
 // @internal (undocumented)
-export interface IInvertableListRenderItemProps<T> {
+export interface IInvertableSelectRenderItemProps<T> {
     // (undocumented)
     isSelected: boolean;
     // (undocumented)
     item: T;
     // (undocumented)
-    onSelect: (item: T) => void;
+    onDeselect: () => void;
     // (undocumented)
-    onSelectOnly: (item: T) => void;
-}
-
-// @internal (undocumented)
-export interface IInvertableListState {
+    onSelect: () => void;
     // (undocumented)
-    notifyLimitHit: boolean;
+    onSelectOnly: () => void;
 }
 
 // @internal (undocumented)
@@ -2279,9 +2291,9 @@ export interface IListProps<T> {
     // (undocumented)
     onScrollStart?: ScrollCallback;
     // (undocumented)
-    renderItem: (props: IRenderItemProps<T>) => React_2.ReactNode;
+    renderItem: (props: IRenderListItemProps<T>) => JSX.Element;
     // (undocumented)
-    scrollToSelected?: boolean;
+    scrollToItem?: T;
     // (undocumented)
     width?: number;
 }
@@ -2455,58 +2467,6 @@ export interface IMessagesProps {
 export interface IMessagesState {
     // (undocumented)
     shouldShowMore: boolean;
-}
-
-// @internal (undocumented)
-export interface IMultiSelectListProps<T> {
-    // (undocumented)
-    filteredItemsCount?: number;
-    // (undocumented)
-    height?: number;
-    // (undocumented)
-    intl: IntlShape;
-    // (undocumented)
-    isInverted?: boolean;
-    // (undocumented)
-    isMobile?: boolean;
-    // (undocumented)
-    isSearching?: boolean;
-    // (undocumented)
-    isSelected?: (item: T) => boolean;
-    // (undocumented)
-    itemHeight?: number;
-    // (undocumented)
-    items?: T[];
-    // (undocumented)
-    itemsCount?: number;
-    // (undocumented)
-    listClassNames?: string;
-    // (undocumented)
-    maxSelectionSize?: number;
-    // (undocumented)
-    onScrollEnd?: (visibleRowsStartIndex: number, visibleRowsEndIndex: number) => void;
-    // (undocumented)
-    onSelectAll?: () => void;
-    // (undocumented)
-    onSelectNone?: () => void;
-    // (undocumented)
-    renderItem: (props: IMultiSelectRenderItemProps<T>) => React_2.ReactNode;
-    // (undocumented)
-    selectAllCheckbox?: boolean;
-    // (undocumented)
-    selectedItems?: T[];
-    // (undocumented)
-    tagName?: string;
-    // (undocumented)
-    width?: number;
-}
-
-// @internal (undocumented)
-export interface IMultiSelectRenderItemProps<T> {
-    // (undocumented)
-    isSelected: boolean;
-    // (undocumented)
-    item: T;
 }
 
 // @internal (undocumented)
@@ -2760,13 +2720,10 @@ export interface INumericInputProps {
 }
 
 // @internal (undocumented)
-export class InvertableList<T> extends Component<IInvertableListProps<T>, IInvertableListState> {
-    constructor(props: IInvertableListProps<T>);
-    // (undocumented)
-    static defaultProps: Partial<IInvertableListProps<any>>;
-    // (undocumented)
-    render(): JSX.Element;
-}
+export function InvertableSelect<T>(props: IInvertableSelectProps<T>): JSX.Element;
+
+// @internal (undocumented)
+export function InvertableSelectItem(props: IInvertableSelectItem): JSX.Element;
 
 // @internal (undocumented)
 export interface IOffset {
@@ -2907,7 +2864,7 @@ export interface IRegion {
 }
 
 // @internal (undocumented)
-export interface IRenderItemProps<T> {
+export interface IRenderListItemProps<T> {
     // (undocumented)
     height: number;
     // (undocumented)
@@ -3477,12 +3434,7 @@ export class LegacySingleSelectListItem extends Component<ILegacySingleSelectLis
 }
 
 // @internal (undocumented)
-export class List<T> extends Component<IListProps<T>> {
-    // (undocumented)
-    componentWillUnmount(): void;
-    // (undocumented)
-    render(): JSX.Element;
-}
+export function List<T>(props: IListProps<T>): JSX.Element;
 
 // @internal (undocumented)
 export const LOADING_HEIGHT = 100;
@@ -3521,11 +3473,6 @@ export const Messages: React_2.FC<IMessagesProps>;
 
 // @internal (undocumented)
 export type MessageType = "success" | "progress" | "error" | "warning";
-
-// @internal (undocumented)
-export const MultiSelectList: React_2.FC<WithIntlProps<IMultiSelectListProps<unknown>>> & {
-    WrappedComponent: React_2.ComponentType<IMultiSelectListProps<unknown>>;
-};
 
 // @internal (undocumented)
 export const NoData: React_2.FC<INoDataProps>;

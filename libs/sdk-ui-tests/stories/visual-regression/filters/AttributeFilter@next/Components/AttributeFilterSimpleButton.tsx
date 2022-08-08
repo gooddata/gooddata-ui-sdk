@@ -6,7 +6,7 @@ import { storiesOf } from "../../../../_infra/storyRepository";
 import { wrapWithTheme } from "../../../themeWrapper";
 
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
-import { AttributeFilterSimpleButton } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Components/AttributeFilterSimpleButton";
+import { AttributeFilterSimpleDropdownButton } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Components/DropdownButton/AttributeFilterSimpleDropdownButton";
 import { action } from "@storybook/addon-actions";
 
 const attributeTitle = "Product";
@@ -16,81 +16,81 @@ const AttributeFilterButtonExamples = (): JSX.Element => {
         <InternalIntlWrapper>
             <div style={{ width: 500 }}>
                 <div className="library-component screenshot-target">
-                    <h4>AttributeFilterSimpleButton closed</h4>
-                    <AttributeFilterSimpleButton
+                    <h4>AttributeFilterSimpleDropdownButton closed</h4>
+                    <AttributeFilterSimpleDropdownButton
                         isOpen={false}
                         title={attributeTitle}
-                        subtitleText={"All"}
-                        subtitleItemCount={10}
+                        subtitle={"All"}
+                        selectedItemsCount={10}
                         isFiltering={false}
                         isLoaded={true}
                         isLoading={false}
                         onClick={action("onClick")}
                     />
-                    <h4>AttributeFilterSimpleButton opened</h4>
-                    <AttributeFilterSimpleButton
+                    <h4>AttributeFilterSimpleDropdownButton opened</h4>
+                    <AttributeFilterSimpleDropdownButton
                         isOpen={true}
                         title={attributeTitle}
-                        subtitleText={"All"}
-                        subtitleItemCount={10}
+                        subtitle={"All"}
+                        selectedItemsCount={10}
                         isFiltering={false}
                         isLoaded={true}
                         isLoading={false}
                         onClick={action("onClick")}
                     />
-                    <h4>AttributeFilterSimpleButton filtering</h4>
-                    <AttributeFilterSimpleButton
+                    <h4>AttributeFilterSimpleDropdownButton filtering</h4>
+                    <AttributeFilterSimpleDropdownButton
                         isOpen={false}
                         title={attributeTitle}
-                        subtitleText={"All"}
-                        subtitleItemCount={10}
+                        subtitle={"All"}
+                        selectedItemsCount={10}
                         isFiltering={true}
                         isLoaded={true}
                         isLoading={false}
                         onClick={action("onClick")}
                     />
-                    <h4>AttributeFilterSimpleButton loading</h4>
-                    <AttributeFilterSimpleButton
+                    <h4>AttributeFilterSimpleDropdownButton loading</h4>
+                    <AttributeFilterSimpleDropdownButton
                         isOpen={false}
                         title={attributeTitle}
-                        subtitleText={"All"}
-                        subtitleItemCount={10}
+                        subtitle={"All"}
+                        selectedItemsCount={10}
                         isFiltering={false}
                         isLoaded={false}
                         isLoading={true}
                         onClick={action("onClick")}
                     />
-                    <h4>AttributeFilterSimpleButton long subtitle and item count 3</h4>
-                    <AttributeFilterSimpleButton
+                    <h4>AttributeFilterSimpleDropdownButton long subtitle and item count 3</h4>
+                    <AttributeFilterSimpleDropdownButton
                         isOpen={false}
                         title={attributeTitle}
-                        subtitleText={"All except Educationally, PhoenixSoft, WonderKid"}
-                        subtitleItemCount={3}
+                        subtitle={"All except Educationally, PhoenixSoft, WonderKid"}
+                        selectedItemsCount={3}
                         isFiltering={false}
                         isLoaded={true}
                         isLoading={false}
                         onClick={action("onClick")}
                     />
-                    <h4>AttributeFilterSimpleButton shortened title</h4>
+                    <h4>AttributeFilterSimpleDropdownButton shortened title</h4>
                     <div style={{ width: 100 }}>
-                        <AttributeFilterSimpleButton
+                        <AttributeFilterSimpleDropdownButton
                             isOpen={false}
                             title={"Long Attribute name"}
-                            subtitleText={"All except Educationally, PhoenixSoft, WonderKid"}
-                            subtitleItemCount={3}
+                            subtitle={"All except Educationally, PhoenixSoft, WonderKid"}
+                            selectedItemsCount={3}
                             isFiltering={false}
                             isLoaded={true}
                             isLoading={false}
                             onClick={action("onClick")}
                         />
                     </div>
-                    <h4>AttributeFilterSimpleButton not fit in container</h4>
+                    <h4>AttributeFilterSimpleDropdownButton not fit in container</h4>
                     <div style={{ width: 60 }}>
-                        <AttributeFilterSimpleButton
+                        <AttributeFilterSimpleDropdownButton
                             isOpen={false}
                             title={attributeTitle}
-                            subtitleText={"All except Educationally, PhoenixSoft, WonderKid"}
-                            subtitleItemCount={3}
+                            subtitle={"All except Educationally, PhoenixSoft, WonderKid"}
+                            selectedItemsCount={3}
                             isFiltering={false}
                             isLoaded={true}
                             isLoading={false}
@@ -103,6 +103,6 @@ const AttributeFilterButtonExamples = (): JSX.Element => {
     );
 };
 
-storiesOf(`${FilterStories}@next/Components/AttributeFilterSimpleButton`)
+storiesOf(`${FilterStories}@next/Components/AttributeFilterSimpleDropdownButton`)
     .add("full-featured", () => <AttributeFilterButtonExamples />, {})
     .add("themed", () => wrapWithTheme(<AttributeFilterButtonExamples />), {});

@@ -68,6 +68,9 @@ export const initialState: Omit<AttributeFilterState, "displayFormRef" | "elemen
             offset: 0,
             limit: 550,
             search: "",
+            limitingAttributeFilters: [],
+            limitingDateFilters: [],
+            limitingMeasures: [],
         },
         initialPageLoad: {
             status: "pending",

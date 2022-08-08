@@ -6,7 +6,7 @@ import { storiesOf } from "../../../../_infra/storyRepository";
 import { wrapWithTheme } from "../../../themeWrapper";
 
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
-import { AttributeFilterDropdownButtons } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Components/AttributeFilterDropdownButtons";
+import { AttributeFilterDropdownActions } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Components/Dropdown/AttributeFilterDropdownActions";
 import { action } from "@storybook/addon-actions";
 
 const AttributeFilterButtonsExamples = (): JSX.Element => {
@@ -14,16 +14,16 @@ const AttributeFilterButtonsExamples = (): JSX.Element => {
         <InternalIntlWrapper>
             <div style={{ width: 400 }}>
                 <div className="library-component screenshot-target">
-                    <h4>AttributeFilterDropdownButtons</h4>
-                    <AttributeFilterDropdownButtons
-                        onApplyButtonClicked={action("onApplyButtonClicked")}
-                        onCloseButtonClicked={action("onCloseButtonClicked")}
+                    <h4>AttributeFilterDropdownActions</h4>
+                    <AttributeFilterDropdownActions
+                        onApplyButtonClick={action("onApplyButtonClick")}
+                        onCloseButtonClick={action("onCloseButtonClick")}
                         isApplyDisabled={false}
                     />
-                    <h4>AttributeFilterDropdownButtons apply disabled</h4>
-                    <AttributeFilterDropdownButtons
-                        onApplyButtonClicked={action("onApplyButtonClicked")}
-                        onCloseButtonClicked={action("onCloseButtonClicked")}
+                    <h4>AttributeFilterDropdownActions apply disabled</h4>
+                    <AttributeFilterDropdownActions
+                        onApplyButtonClick={action("onApplyButtonClicked")}
+                        onCloseButtonClick={action("onCloseButtonClicked")}
                         isApplyDisabled={true}
                     />
                 </div>
@@ -32,6 +32,6 @@ const AttributeFilterButtonsExamples = (): JSX.Element => {
     );
 };
 
-storiesOf(`${FilterStories}@next/Components/AttributeFilterDropdownButtons`)
+storiesOf(`${FilterStories}@next/Components/AttributeFilterDropdownActions`)
     .add("full-featured", () => <AttributeFilterButtonsExamples />, {})
     .add("themed", () => wrapWithTheme(<AttributeFilterButtonsExamples />), {});

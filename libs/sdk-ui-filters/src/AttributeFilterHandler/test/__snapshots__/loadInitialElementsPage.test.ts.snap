@@ -183,9 +183,9 @@ Array [
     ],
     "options": Object {
       "limit": 550,
-      "limitingAttributeFilters": undefined,
-      "limitingDateFilters": undefined,
-      "limitingMeasures": undefined,
+      "limitingAttributeFilters": Array [],
+      "limitingDateFilters": Array [],
+      "limitingMeasures": Array [],
       "offset": 0,
       "order": undefined,
       "search": "",

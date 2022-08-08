@@ -1,33 +1,41 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
-import { AttributeFilterBase } from "./AttributeFilterBase";
+import { AttributeFilterBase, IAttributeFilterBaseProps } from "./AttributeFilterBase";
 import {
-    AttributeFilterSimpleButton,
-    AttributeFilterSimpleButtonWithSelection,
-} from "./Components/AttributeFilterSimpleButton";
-import { IAttributeFilterBaseProps } from "./types";
+    AttributeFilterSimpleDropdownButton,
+    AttributeFilterSimpleDropdownButtonWithSelection,
+} from "./Components/DropdownButton/AttributeFilterSimpleDropdownButton";
 
 /**
- * @internal
+ * @alpha
  */
 export interface IAttributeFilterProps extends IAttributeFilterBaseProps {
     titleWithSelection?: boolean;
-    fullscreenOnMobile?: boolean; //not handled
-    FilterLoading?: React.ComponentType; //TODO it will be part of IAttributeFilterBaseProps
+    fullscreenOnMobile?: boolean; //TODO: not handled
 }
 
 /**
  * AttributeFilter is a component that renders a dropdown populated with attribute values
  * for specified attribute display form.
  *
- * @internal
+ * @alpha
  */
 export const AttributeFilter: React.FC<IAttributeFilterProps> = (props) => {
     const { titleWithSelection, ...baseProps } = props;
 
-    const ButtonComponent = titleWithSelection
-        ? AttributeFilterSimpleButtonWithSelection
-        : AttributeFilterSimpleButton;
+    const DropdownButtonComponent = titleWithSelection
+        ? AttributeFilterSimpleDropdownButtonWithSelection
+        : AttributeFilterSimpleDropdownButton;
 
-    return <AttributeFilterBase {...baseProps} FilterButton={ButtonComponent} />;
+    return (
+        <AttributeFilterBase
+            {...baseProps}
+            DropdownButtonComponent={props.DropdownButtonComponent ?? DropdownButtonComponent}
+            LoadingComponent={props.LoadingComponent ?? LoadingComponent}
+        />
+    );
 };
+
+function LoadingComponent() {
+    return <AttributeFilterSimpleDropdownButton isLoading />;
+}

@@ -1,26 +1,17 @@
 // (C) 2022 GoodData Corporation
-import React, { useContext, useMemo } from "react";
-import { DefaultResult } from "../hooks/attributeFilterHandlerDefaultResult";
-import { DefaultContextOwnState } from "./AttributeFilterContextDefaultOwnState";
-import { useBackend, useWorkspace } from "@gooddata/sdk-ui";
-import { useFilterPlaceholderResolver } from "../hooks/useFilterPlaceholderResolver";
-import { useParentFiltersPlaceholderResolver } from "../hooks/useParentFiltersPlaceholderResolver";
-import { useAttributeFilterHandler } from "../hooks/useAttributeFilterHandler";
-import {
-    IAttributeFilterContext,
-    IAttributeFilterContextOwnState,
-    IAttributeFilterProviderProps,
-    useOwnPropsResolverProps,
-} from "./types";
+import React, { useContext } from "react";
+import { IAttributeElement, IAttributeFilter, Identifier } from "@gooddata/sdk-model";
+import { AttributeFiltersOrPlaceholders, IPlaceholder } from "@gooddata/sdk-ui";
+import { OnApplyCallbackType, ParentFilterOverAttributeType } from "../types";
+import { useAttributeFilterController } from "../hooks/useAttributeFilterController";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
-export const AttributeFilterContextDefaultState: IAttributeFilterContext = {
-    ...DefaultResult,
-    ...DefaultContextOwnState,
-};
+/**
+ * @internal
+ */
+export type IAttributeFilterContext = ReturnType<typeof useAttributeFilterController>;
 
-export const AttributeFilterContext = React.createContext<IAttributeFilterContext>(
-    AttributeFilterContextDefaultState,
-);
+export const AttributeFilterContext = React.createContext<IAttributeFilterContext>(null);
 
 AttributeFilterContext.displayName = "AttributeFilterContext";
 
@@ -32,70 +23,30 @@ export const useAttributeFilterContext = (): IAttributeFilterContext => useConte
 /**
  * @internal
  */
+export interface IAttributeFilterProviderProps {
+    backend?: IAnalyticalBackend;
+    workspace?: string;
+
+    title?: string;
+    filter?: IAttributeFilter;
+    identifier?: Identifier;
+    connectToPlaceholder?: IPlaceholder<IAttributeFilter>;
+    parentFilters?: AttributeFiltersOrPlaceholders;
+    parentFilterOverAttribute?: ParentFilterOverAttributeType;
+
+    onApply?: OnApplyCallbackType;
+
+    hiddenElements?: string[];
+    staticElements?: IAttributeElement[];
+}
+
+/**
+ * @internal
+ */
 export const AttributeFilterContextProvider: React.FC<IAttributeFilterProviderProps> = (props) => {
-    const {
-        filter: inputFilter,
-        connectToPlaceholder,
-        identifier,
-        onApply,
-        parentFilters,
-        parentFilterOverAttribute,
-        children,
-        title,
-    } = props;
+    const { children } = props;
 
-    const backend = useBackend();
-    const workspace = useWorkspace();
+    const controller = useAttributeFilterController(props);
 
-    const { filter, onFilterPlaceholderApply } = useFilterPlaceholderResolver(
-        inputFilter,
-        connectToPlaceholder,
-        identifier,
-        onApply,
-    );
-
-    const { limitingAttributeFilters } = useParentFiltersPlaceholderResolver(
-        parentFilters,
-        parentFilterOverAttribute,
-    );
-
-    const handlerResult = useAttributeFilterHandler({
-        backend,
-        workspace,
-        filter,
-        limitingAttributeFilters,
-    });
-
-    const ownState = useOwnStateResolver({ title, handlerResult: handlerResult, onFilterPlaceholderApply });
-
-    const contextValue: IAttributeFilterContext = {
-        ...handlerResult,
-        ...ownState,
-    };
-
-    return <AttributeFilterContext.Provider value={contextValue}>{children}</AttributeFilterContext.Provider>;
-};
-
-const useOwnStateResolver = (props: useOwnPropsResolverProps): IAttributeFilterContextOwnState => {
-    const { title, handlerResult: handlerState, onFilterPlaceholderApply } = props;
-    const initStatus = handlerState.initialization.status;
-    const attributeTitle = handlerState.attribute.data?.title;
-    const isWorkingSelectionChanged = handlerState.isWorkingSelectionChanged();
-    const isWorkingSelectionEmpty = handlerState.isWorkingSelectionEmpty();
-
-    const attributeFilterTitle = useMemo(() => {
-        return title || initStatus === "success" ? attributeTitle : "";
-    }, [initStatus, title, attributeTitle]);
-
-    const isApplyDisabled = useMemo(() => {
-        //TODO isApplyDisabled || hasNoData || hasNoMatchingData || !!bodyProps.error;
-        // isApplyDisabled has to by provided from props too
-        return isWorkingSelectionChanged || isWorkingSelectionEmpty;
-    }, [isWorkingSelectionChanged, isWorkingSelectionEmpty]);
-
-    return {
-        attributeFilterTitle,
-        isApplyDisabled,
-        onFilterPlaceholderApply,
-    };
+    return <AttributeFilterContext.Provider value={controller}>{children}</AttributeFilterContext.Provider>;
 };

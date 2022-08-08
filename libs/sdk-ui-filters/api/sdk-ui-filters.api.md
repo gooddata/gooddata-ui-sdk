@@ -21,6 +21,7 @@ import { IDateFilter } from '@gooddata/sdk-model';
 import { IElementsQueryAttributeFilter } from '@gooddata/sdk-backend-spi';
 import { IElementsQueryOptions } from '@gooddata/sdk-backend-spi';
 import { IElementsQueryResult } from '@gooddata/sdk-backend-spi';
+import { IInvertableSelectRenderItemProps } from '@gooddata/sdk-ui-kit';
 import { ILocale } from '@gooddata/sdk-ui';
 import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureValueFilter } from '@gooddata/sdk-model';
@@ -58,6 +59,12 @@ export const AttributeFilter: React_2.ComponentType<IAttributeFilterProps>;
 
 // @public (undocumented)
 export const AttributeFilterButton: React_2.FC<IAttributeFilterButtonOwnProps>;
+
+// @alpha (undocumented)
+export const AttributeFilterButtonV2: React_2.FC<IAttributeFilterButtonPropsV2>;
+
+// @alpha
+export const AttributeFilterV2: React_2.FC<IAttributeFilterPropsV2>;
 
 // @public (undocumented)
 export type AttributeListItem = IAttributeElement | EmptyListItem;
@@ -293,6 +300,35 @@ export interface IAttributeElementsProps {
     workspace?: string;
 }
 
+// @alpha (undocumented)
+export interface IAttributeFilterBaseProps {
+    backend?: IAnalyticalBackend;
+    connectToPlaceholder?: IPlaceholder<IAttributeFilter>;
+    DropdownActionsComponent?: React_2.ComponentType<IAttributeFilterDropdownActionsProps>;
+    DropdownBodyComponent?: React_2.ComponentType<IAttributeFilterDropdownBodyProps>;
+    DropdownButtonComponent?: React_2.ComponentType<IAttributeFilterDropdownButtonProps>;
+    DropdownContentComponent?: React_2.ComponentType<IAttributeFilterDropdownContentProps>;
+    ElementsSelectComponent?: React_2.ComponentType<IAttributeFilterElementsSelectProps>;
+    ElementsSelectErrorComponent?: React_2.ComponentType;
+    ElementsSelectItemComponent?: React_2.ComponentType<IAttributeFilterElementsSelectItemProps>;
+    ElementsSelectLoadingComponent?: React_2.ComponentType<IAttributeFilterElementsSelectLoadingProps>;
+    ElementsSelectNoDataComponent?: React_2.ComponentType;
+    ElementsSelectNoMatchingDataComponent?: React_2.ComponentType<IAttributeFilterElementsSelectNoMatchingDataProps>;
+    ElementsSelectParentItemsFilteredComponent?: React_2.ComponentType<IAttributeFilterElementsSelectParentItemsFilteredProps>;
+    ErrorComponent?: React_2.ComponentType<IAttributeFilterErrorProps>;
+    filter?: IAttributeFilter;
+    // @deprecated
+    identifier?: string;
+    LoadingComponent?: React_2.ComponentType<IAttributeFilterErrorProps>;
+    locale?: string;
+    onApply?: OnApplyCallbackType;
+    onError?: (error: any) => void;
+    parentFilterOverAttribute?: ParentFilterOverAttributeType;
+    parentFilters?: AttributeFiltersOrPlaceholders;
+    title?: string;
+    workspace?: string;
+}
+
 // @public (undocumented)
 export interface IAttributeFilterButtonOwnProps {
     backend?: IAnalyticalBackend;
@@ -319,6 +355,116 @@ export interface IAttributeFilterButtonOwnProps {
 
 // @public (undocumented)
 export type IAttributeFilterButtonProps = IAttributeFilterButtonOwnProps & WrappedComponentProps;
+
+// @alpha (undocumented)
+export type IAttributeFilterButtonPropsV2 = IAttributeFilterBaseProps;
+
+// @alpha (undocumented)
+export interface IAttributeFilterDropdownActionsProps {
+    // (undocumented)
+    isApplyDisabled?: boolean;
+    // (undocumented)
+    onApplyButtonClick: () => void;
+    // (undocumented)
+    onCloseButtonClick: () => void;
+}
+
+// @alpha (undocumented)
+export interface IAttributeFilterDropdownBodyProps {
+    // (undocumented)
+    onApplyButtonClick: () => void;
+    // (undocumented)
+    onCloseButtonClick: () => void;
+}
+
+// @alpha (undocumented)
+export interface IAttributeFilterDropdownButtonProps {
+    // (undocumented)
+    isFiltering?: boolean;
+    // (undocumented)
+    isLoaded?: boolean;
+    // (undocumented)
+    isLoading?: boolean;
+    // (undocumented)
+    isOpen?: boolean;
+    // (undocumented)
+    onClick?: () => void;
+    // (undocumented)
+    selectedItemsCount?: number;
+    // (undocumented)
+    subtitle?: string;
+    // (undocumented)
+    title?: string;
+}
+
+// @alpha (undocumented)
+export interface IAttributeFilterDropdownContentProps {
+    // (undocumented)
+    error?: any;
+    // (undocumented)
+    hasNoData: boolean;
+    // (undocumented)
+    hasNoMatchingData: boolean;
+    // (undocumented)
+    parentFilterTitles?: string[];
+    // (undocumented)
+    showItemsFilteredMessage?: boolean;
+}
+
+// @alpha (undocumented)
+export type IAttributeFilterElementsSelectItemProps = IInvertableSelectRenderItemProps<IAttributeElement>;
+
+// @alpha (undocumented)
+export interface IAttributeFilterElementsSelectLoadingProps {
+    // (undocumented)
+    height: number;
+}
+
+// @alpha (undocumented)
+export interface IAttributeFilterElementsSelectNoMatchingDataProps {
+    // (undocumented)
+    parentFilterTitles: string[];
+}
+
+// @alpha (undocumented)
+export interface IAttributeFilterElementsSelectParentItemsFilteredProps {
+    // (undocumented)
+    parentFilterTitles: string[];
+    // (undocumented)
+    showItemsFilteredMessage: boolean;
+}
+
+// @alpha (undocumented)
+export interface IAttributeFilterElementsSelectProps {
+    // (undocumented)
+    isInverted: boolean;
+    // (undocumented)
+    isLoading: boolean;
+    // (undocumented)
+    isLoadingNextPage: boolean;
+    // (undocumented)
+    items: IAttributeElement[];
+    // (undocumented)
+    nextPageSize: number;
+    // (undocumented)
+    onLoadNextPage?: () => void;
+    // (undocumented)
+    onSearch: (searchString: string) => void;
+    // (undocumented)
+    onSelect: (selectedItems: IAttributeElement[], isInverted: boolean) => void;
+    // (undocumented)
+    searchString: string;
+    // (undocumented)
+    selectedItems: IAttributeElement[];
+    // (undocumented)
+    totalItemsCount: number;
+}
+
+// @alpha (undocumented)
+export interface IAttributeFilterErrorProps {
+    // (undocumented)
+    message?: string;
+}
 
 // @alpha
 export type IAttributeFilterHandler = IMultiSelectAttributeFilterHandler | ISingleSelectAttributeFilterHandler;
@@ -365,6 +511,14 @@ export interface IAttributeFilterProps {
     title?: string;
     titleWithSelection?: boolean;
     workspace?: string;
+}
+
+// @alpha (undocumented)
+export interface IAttributeFilterPropsV2 extends IAttributeFilterBaseProps {
+    // (undocumented)
+    fullscreenOnMobile?: boolean;
+    // (undocumented)
+    titleWithSelection?: boolean;
 }
 
 // @alpha
@@ -756,6 +910,9 @@ export function newAttributeFilterHandler(backend: IAnalyticalBackend, workspace
 // @alpha (undocumented)
 export function newAttributeFilterHandler(backend: IAnalyticalBackend, workspace: string, attributeFilter: IAttributeFilter, options: IMultiSelectAttributeFilterHandlerOptions): IMultiSelectAttributeFilterHandler;
 
+// @alpha (undocumented)
+export type OnApplyCallbackType = (filter: IAttributeFilter, isInverted: boolean) => void;
+
 // @alpha
 export type OnInitCancelCallbackPayload = CallbackPayloadWithCorrelation;
 
@@ -837,6 +994,9 @@ export type OnSelectionChangedCallbackPayload<T> = {
 export type OnSelectionCommittedCallbackPayload<T> = {
     selection: T;
 };
+
+// @alpha (undocumented)
+export type ParentFilterOverAttributeType = ObjRef | ((parentFilter: IAttributeFilter, index: number) => ObjRef);
 
 // @beta (undocumented)
 export const RankingFilter: React_2.FC<IRankingFilterProps>;

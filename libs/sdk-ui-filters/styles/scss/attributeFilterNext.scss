@@ -295,6 +295,13 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
     vertical-align: bottom;
 }
 
+.gd-attribute-filter-dropdown__next {
+    display: inline-block;
+    & + & {
+        margin-left: 10px;
+    }
+}
+
 .gd-attribute-filter-dropdown-all-items-filtered__next {
     padding: 10px;
     text-align: center;

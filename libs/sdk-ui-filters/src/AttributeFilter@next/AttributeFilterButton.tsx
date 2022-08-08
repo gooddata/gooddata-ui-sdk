@@ -1,14 +1,26 @@
 // (C) 2021-2022 GoodData Corporation
 import React from "react";
-import { AttributeFilterBase } from "./AttributeFilterBase";
-import { AttributeFilterButton as AttributeFilterButtonComponent } from "./Components/AttributeFilterButton";
-import { IAttributeFilterBaseProps } from "./types";
+import { AttributeFilterBase, IAttributeFilterBaseProps } from "./AttributeFilterBase";
+import { AttributeFilterDropdownButton } from "./Components/DropdownButton/AttributeFilterDropdownButton";
 
+/**
+ * @alpha
+ */
 export type IAttributeFilterButtonProps = IAttributeFilterBaseProps;
 
 /**
- * @internal
+ * @alpha
  */
 export const AttributeFilterButton: React.FC<IAttributeFilterButtonProps> = (props) => {
-    return <AttributeFilterBase {...props} FilterButton={AttributeFilterButtonComponent} />;
+    return (
+        <AttributeFilterBase
+            {...props}
+            DropdownButtonComponent={props.DropdownButtonComponent ?? AttributeFilterDropdownButton}
+            LoadingComponent={props.LoadingComponent ?? LoadingComponent}
+        />
+    );
 };
+
+function LoadingComponent() {
+    return <AttributeFilterDropdownButton isLoading />;
+}

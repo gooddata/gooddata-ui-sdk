@@ -1,11 +1,11 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { PropsWithChildren } from "react";
 import { mount, ReactWrapper } from "enzyme";
 import moment from "moment";
 import { createIntlMock, withIntl } from "@gooddata/sdk-ui";
 
 import { TimePickerProps, WrappedTimepicker } from "../Timepicker";
-import { List, SingleSelectListItem } from "../../List";
+import { IListProps, List, SingleSelectListItem } from "../../List";
 import { DropdownButton, Dropdown, DropdownList, IDropdownProps } from "../../Dropdown";
 
 describe("TimePicker", () => {
@@ -110,7 +110,7 @@ describe("TimePicker", () => {
                 });
                 openTimePicker(component);
 
-                const dropdownBody = component.find(List);
+                const dropdownBody = component.find(List as React.VFC<IListProps<any>>);
                 expect(dropdownBody.props().maxVisibleItemsCount).toBe(maxVisibleItemsCount);
             });
 

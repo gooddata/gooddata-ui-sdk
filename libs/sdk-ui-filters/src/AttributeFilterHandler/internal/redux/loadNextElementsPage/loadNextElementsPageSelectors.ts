@@ -31,7 +31,7 @@ export const selectLoadNextElementsPageError = createSelector(
  * @internal
  */
 export const selectLoadNextElementsPageOptions = createSelector(
-    selectLoadElementsOptions,
+    selectLastLoadedElementsOptions,
     (options): ILoadElementsOptions => {
         return {
             ...options,
