@@ -288,8 +288,16 @@ export interface IGeoSegmentItem extends IGeoAttributeItem {
     uris: string[];
 }
 
+// @alpha (undocumented)
+export const MapboxTokenProvider: React_2.FC<{
+    token: string;
+}>;
+
 // @public (undocumented)
 export type PushpinSizeOption = "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
+
+// @alpha (undocumented)
+export function useMapboxToken(): string;
 
 // @public (undocumented)
 export type ZoomChangedCallback = (zoom: number) => void;
