@@ -66,12 +66,12 @@ const setFilterBarExpanded: UiReducer<PayloadAction<boolean>> = (state, action) 
     state.filterBar.expanded = action.payload;
 };
 
-const closeKpiAlertDialog: UiReducer = (state) => {
-    state.kpiAlerts.openedWidgetRef = undefined;
-};
-
 const openKpiAlertDialog: UiReducer<PayloadAction<ObjRef>> = (state, action) => {
     state.kpiAlerts.openedWidgetRef = action.payload;
+};
+
+const closeKpiAlertDialog: UiReducer = (state) => {
+    state.kpiAlerts.openedWidgetRef = undefined;
 };
 
 const highlightKpiAlert: UiReducer<PayloadAction<ObjRef>> = (state, action) => {

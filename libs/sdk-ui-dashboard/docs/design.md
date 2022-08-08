@@ -170,7 +170,7 @@ Event is a type of action that describes what has happened in the dashboard. The
 All of these events always travel through the model and will be dispatched to registered event handlers - the handlers
 are typical functions provided by the client code.
 
-All events start with `GDC.DASH/EVT.` prefix that is followed with dot-sperated segments of the event name all
+All events start with `GDC.DASH/EVT.` prefix that is followed with dot-separated segments of the event name all
 in upper case. For instance `GDC.DASH/EVT.LOADED`.
 
 Events are always named in past tense because they describe what has already happened. Events that describe command
