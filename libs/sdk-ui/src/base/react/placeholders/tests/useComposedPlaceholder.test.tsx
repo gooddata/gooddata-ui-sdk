@@ -1,6 +1,12 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { newMeasure, newRelativeDateFilter, modifySimpleMeasure } from "@gooddata/sdk-model";
+import {
+    newMeasure,
+    newRelativeDateFilter,
+    modifySimpleMeasure,
+    IMeasure,
+    IMeasureDefinition,
+} from "@gooddata/sdk-model";
 import { render } from "@testing-library/react";
 import { PlaceholdersProvider, IPlaceholdersProviderProps } from "../context";
 import { newComposedPlaceholder, newPlaceholder } from "../factory";
@@ -25,25 +31,19 @@ interface IComponentWithUsePlaceholderHookProps {
 const ComponentWithUsePlaceholderHook = (props: IComponentWithUsePlaceholderHookProps) => {
     const result = useComposedPlaceholder(props.placeholder, props.resolutionContext);
 
-    return <ComponentWithResult result={result} />;
+    return <ComponentWithResult result={result.length ? result : [result]} />;
 };
 
 interface IComponentWithResultProps {
-    result: any;
+    result: IMeasure<IMeasureDefinition>[];
 }
 
 const ComponentWithResult = ({ result }: IComponentWithResultProps) => {
     return (
         <div>
-            {result.length ? (
-                <>
-                    {result.map((res: any) => (
-                        <div>{res.measure.localIdentifier}</div>
-                    ))}
-                </>
-            ) : (
-                <div>{result.measure.localIdentifier}</div>
-            )}
+            {result.map((res) => (
+                <div>{res.measure.localIdentifier}</div>
+            ))}
         </div>
     );
 };
