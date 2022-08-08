@@ -5651,10 +5651,6 @@ setMenuButtonItemsVisibility: CaseReducer<UiState, {
 payload: IMenuButtonItemsVisibility;
 type: string;
 }>;
-setActiveHeaderIndex: CaseReducer<UiState, {
-payload: number | null;
-type: string;
-}>;
 selectWidget: CaseReducer<UiState, {
 payload: ObjRef;
 type: string;
@@ -5672,8 +5668,6 @@ type: string;
 
 // @alpha (undocumented)
 export interface UiState {
-    // (undocumented)
-    activeHeaderIndex: number | null;
     // (undocumented)
     configurationPanelOpened: boolean;
     // (undocumented)

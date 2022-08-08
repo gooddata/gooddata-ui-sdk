@@ -39,7 +39,6 @@ export interface UiState {
     menuButton: {
         itemsVisibility: IMenuButtonItemsVisibility;
     };
-    activeHeaderIndex: number | null;
     selectedWidgetRef: ObjRef | undefined;
     configurationPanelOpened: boolean;
     kpiDateDatasetAutoOpen: boolean;
@@ -75,7 +74,6 @@ export const uiInitialState: UiState = {
     menuButton: {
         itemsVisibility: {},
     },
-    activeHeaderIndex: null,
     selectedWidgetRef: undefined,
     configurationPanelOpened: true,
     kpiDateDatasetAutoOpen: false,

@@ -146,11 +146,6 @@ export const selectMenuButtonItemsVisibility = createSelector(
 /**
  * @internal
  */
-export const selectActiveHeaderIndex = createSelector(selectSelf, (state) => state.activeHeaderIndex ?? null);
-
-/**
- * @internal
- */
 export const selectSelectedWidgetRef = createSelector(selectSelf, (state) => state.selectedWidgetRef);
 
 /**

@@ -16,8 +16,8 @@ export interface IEditableLabelWithBubbleProps {
     placeholderMessage: string;
     warningLimit: number;
     onSubmit: (value: string) => void;
-    onEditingStart: () => void;
-    onCancel: () => void;
+    onEditingStart?: () => void;
+    onCancel?: () => void;
     children?: React.ReactNode;
 }
 
@@ -51,13 +51,13 @@ export function EditableLabelWithBubble({
 
     const onStart = useCallback(() => {
         setEditing(true);
-        onEditingStart();
+        onEditingStart?.();
     }, [onEditingStart]);
 
     const onCancelCallback = useCallback(() => {
         setEditing(true);
         setCurrentValue(value);
-        onCancel();
+        onCancel?.();
     }, [onCancel, value]);
 
     const onSubmitCallback = useCallback(

@@ -85,10 +85,6 @@ const setMenuButtonItemsVisibility: UiReducer<PayloadAction<IMenuButtonItemsVisi
     state.menuButton.itemsVisibility = action.payload;
 };
 
-const setActiveHeaderIndex: UiReducer<PayloadAction<number | null>> = (state, action) => {
-    state.activeHeaderIndex = action.payload;
-};
-
 const selectWidget: UiReducer<PayloadAction<ObjRef>> = (state, action) => {
     state.selectedWidgetRef = action.payload;
 };
@@ -125,7 +121,6 @@ export const uiReducers = {
     openKpiDeleteDialog,
     closeKpiDeleteDialog,
     setMenuButtonItemsVisibility,
-    setActiveHeaderIndex,
     selectWidget,
     clearWidgetSelection,
     setConfigurationPanelOpened,
