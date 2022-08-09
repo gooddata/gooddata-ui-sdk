@@ -1,14 +1,15 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { waitFor } from "@testing-library/react";
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
 import noop from "lodash/noop";
+
 import NameSubsection from "../NameSubsection";
-import NamePositionControl from "../NamePositionControl";
-import ConfigSubsection from "../../../configurationControls/ConfigSubsection";
+
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider";
 import { IConfigItemSubsection } from "../../../../interfaces/ConfigurationPanel";
+import { setupComponent } from "../../../../tests/testHelper";
 
 const defaultProps: IConfigItemSubsection = {
     disabled: true,
@@ -20,7 +21,7 @@ const defaultProps: IConfigItemSubsection = {
 
 function createComponent(customProps: Partial<IConfigItemSubsection> = {}) {
     const props: IConfigItemSubsection = { ...cloneDeep(defaultProps), ...customProps };
-    return mount<IConfigItemSubsection, null>(
+    return setupComponent(
         <InternalIntlWrapper>
             <NameSubsection {...props} />
         </InternalIntlWrapper>,
@@ -29,65 +30,74 @@ function createComponent(customProps: Partial<IConfigItemSubsection> = {}) {
 
 describe("LegendSection render", () => {
     it("should render legend section", () => {
-        const wrapper = createComponent();
-        expect(wrapper.find(NameSubsection).length).toBe(1);
+        const { getByText } = createComponent();
+        expect(getByText("name")).toBeInTheDocument();
     });
 
-    it("should ConfigSubsection.toggleDisabled prop be true when NameSubsection disabled is true and xaxis is visible", () => {
+    it("should ConfigSubsection be disabled when NameSubsection disabled is true and xaxis is visible", () => {
         const xaxisVisible = set({}, "controls.xaxis.visible", true);
 
-        const wrapper = createComponent({
+        const { getByRole } = createComponent({
             disabled: true,
             configPanelDisabled: false,
             properties: xaxisVisible,
         });
 
-        const node = wrapper.find(ConfigSubsection);
-        expect(node.prop("toggleDisabled")).toBe(true);
+        expect(getByRole("checkbox")).toBeDisabled();
     });
 
-    it("should NamePositionControl.disabled prop be true when NameSubsection disabled is true and xaxis is visible", () => {
+    it("should NamePositionControl be disabled when NameSubsection disabled is true and xaxis is visible", () => {
         const xaxisVisible = set({}, "controls.xaxis.visible", true);
 
-        const wrapper = createComponent({
+        const { getByTitle } = createComponent({
             disabled: true,
             configPanelDisabled: false,
             properties: xaxisVisible,
         });
 
-        const node = wrapper.find(NamePositionControl);
-        expect(node.prop("disabled")).toBe(true);
+        expect(getByTitle("auto (default)")).toHaveClass("disabled");
     });
 
-    it("should ConfigSubsection.toggleDisabled prop be true when xaxis is not visible then", () => {
+    it("should ConfigSubsection be disabled when xaxis is not visible", () => {
         const xaxisVisible = set({}, "controls.xaxis.visible", false);
 
-        const wrapper = createComponent({
+        const { getByRole } = createComponent({
             disabled: false,
             configPanelDisabled: false,
             properties: xaxisVisible,
         });
 
-        const node = wrapper.find(ConfigSubsection);
-        expect(node.prop("toggleDisabled")).toBe(true);
+        expect(getByRole("checkbox")).toBeDisabled();
     });
 });
 
 describe("Toggle switch", () => {
-    it("should call pushData when click on toggle switch with valuePath set", () => {
+    it("should call pushData when click on toggle switch with valuePath set", async () => {
         const pushData = jest.fn();
-        const event = { target: { checked: true } };
         const xaxisVisible = set({}, "controls.xaxis.visible", true);
         const axisLabelsEnabled = set(xaxisVisible, "controls.xaxis.labelsEnabled", false);
 
-        const wrapper = createComponent({
+        const { getByText, user } = createComponent({
             disabled: false,
             configPanelDisabled: false,
             properties: axisLabelsEnabled,
             pushData,
         });
 
-        wrapper.find(".s-checkbox-toggle").simulate("change", event);
-        expect(pushData).toHaveBeenCalledTimes(1);
+        await user.click(getByText("auto (default)"));
+
+        await user.click(getByText("center"));
+
+        await waitFor(() => {
+            expect(pushData).toBeCalledWith(
+                expect.objectContaining({
+                    properties: {
+                        controls: {
+                            xaxis: { name: { position: "center" }, labelsEnabled: false, visible: true },
+                        },
+                    },
+                }),
+            );
+        });
     });
 });

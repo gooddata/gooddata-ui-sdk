@@ -83,7 +83,7 @@ export class ConfigSection extends React.Component<IConfigSectionProps, IConfigS
 
     private renderToggleSwitch() {
         if (this.props.canBeToggled) {
-            const { toggledOn, toggleDisabled, showDisabledMessage } = this.props;
+            const { toggledOn, toggleDisabled, showDisabledMessage, id } = this.props;
 
             return (
                 <DisabledBubbleMessage
@@ -92,6 +92,7 @@ export class ConfigSection extends React.Component<IConfigSectionProps, IConfigS
                 >
                     <label className={this.getToggleLabelClassNames()}>
                         <input
+                            aria-label={id}
                             type="checkbox"
                             checked={toggledOn}
                             disabled={toggleDisabled}

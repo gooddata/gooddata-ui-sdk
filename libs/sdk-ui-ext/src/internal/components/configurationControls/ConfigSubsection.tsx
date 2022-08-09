@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import cloneDeep from "lodash/cloneDeep";
@@ -7,6 +7,7 @@ import set from "lodash/set";
 import DisabledBubbleMessage from "../DisabledBubbleMessage";
 
 import { getTranslation } from "../../utils/translations";
+import { AxisType } from "../../interfaces/AxisType";
 
 export interface IConfigSubsectionOwnProps {
     valuePath?: string;
@@ -17,6 +18,7 @@ export interface IConfigSubsectionOwnProps {
     showDisabledMessage?: boolean;
     properties?: any;
     pushData?(data: any): void;
+    axisType?: AxisType;
 }
 
 export interface IConfigSubsectionState {
@@ -59,7 +61,7 @@ class ConfigSubsection extends React.Component<IConfigSubsectionProps, IConfigSu
 
     private renderToggleSwitch() {
         if (this.props.canBeToggled) {
-            const { toggledOn, toggleDisabled, showDisabledMessage } = this.props;
+            const { toggledOn, toggleDisabled, showDisabledMessage, title, intl, axisType } = this.props;
             return (
                 <DisabledBubbleMessage
                     className="input-checkbox-toggle"
@@ -67,6 +69,7 @@ class ConfigSubsection extends React.Component<IConfigSubsectionProps, IConfigSu
                 >
                     <label className="s-checkbox-toggle-label">
                         <input
+                            aria-label={`${axisType} ${getTranslation(title, intl)}`}
                             type="checkbox"
                             checked={toggledOn}
                             disabled={toggleDisabled}

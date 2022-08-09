@@ -1,21 +1,18 @@
-// (C) 2019 GoodData Corporation
-import { IInsightDefinition, newMeasure } from "@gooddata/sdk-model";
-import { shallow } from "enzyme";
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
+import { IInsightDefinition, newMeasure } from "@gooddata/sdk-model";
 import { DefaultLocale, VisualizationTypes } from "@gooddata/sdk-ui";
-import { insightWithSingleAttribute, insightWithSingleMeasure } from "../../../tests/mocks/testMocks";
-import NameSubsection from "../../configurationControls/axis/NameSubsection";
-import ConfigSection from "../../configurationControls/ConfigSection";
+
 import BubbleChartConfigurationPanel from "../BubbleChartConfigurationPanel";
 import { IConfigurationPanelContentProps } from "../ConfigurationPanelContent";
 
+import { insightWithSingleAttribute, insightWithSingleMeasure } from "../../../tests/mocks/testMocks";
+import { setupComponent } from "../../../tests/testHelper";
+
 describe("BubbleChartConfigurationPanel", () => {
     function createComponent(props: IConfigurationPanelContentProps) {
-        return shallow<IConfigurationPanelContentProps, null>(<BubbleChartConfigurationPanel {...props} />, {
-            lifecycleExperimental: true,
-        });
+        return setupComponent(<BubbleChartConfigurationPanel {...props} />);
     }
-
     function newInsight(measureBucket: string): IInsightDefinition {
         return {
             insight: {
@@ -33,7 +30,6 @@ describe("BubbleChartConfigurationPanel", () => {
             },
         };
     }
-
     it("should render configuration panel with enabled controls", () => {
         const props: IConfigurationPanelContentProps = {
             insight: insightWithSingleMeasure,
@@ -42,9 +38,10 @@ describe("BubbleChartConfigurationPanel", () => {
             locale: DefaultLocale,
         };
 
-        const wrapper = createComponent(props);
-        const section = wrapper.find(ConfigSection).first();
-        expect(section.props().toggleDisabled).toEqual(false);
+        const { getByLabelText } = createComponent(props);
+
+        expect(getByLabelText("xaxis_section")).toBeInTheDocument();
+        expect(getByLabelText("yaxis_section")).toBeInTheDocument();
     });
 
     it("should render configuration panel with disabled controls when it has no measures", () => {
@@ -55,9 +52,10 @@ describe("BubbleChartConfigurationPanel", () => {
             locale: DefaultLocale,
         };
 
-        const wrapper = createComponent(props);
-        const section = wrapper.find(ConfigSection).first();
-        expect(section.props().toggleDisabled).toEqual(true);
+        const { getByLabelText } = createComponent(props);
+
+        expect(getByLabelText("xaxis_section")).toBeDisabled();
+        expect(getByLabelText("yaxis_section")).toBeDisabled();
     });
 
     it("should render configuration panel with disabled controls when it is in error state", () => {
@@ -68,9 +66,10 @@ describe("BubbleChartConfigurationPanel", () => {
             locale: DefaultLocale,
         };
 
-        const wrapper = createComponent(props);
-        const section = wrapper.find(ConfigSection).first();
-        expect(section.props().toggleDisabled).toEqual(true);
+        const { getByLabelText } = createComponent(props);
+
+        expect(getByLabelText("xaxis_section")).toBeDisabled();
+        expect(getByLabelText("yaxis_section")).toBeDisabled();
     });
 
     it("should render configuration panel with disabled controls when it is loading", () => {
@@ -81,9 +80,10 @@ describe("BubbleChartConfigurationPanel", () => {
             locale: DefaultLocale,
         };
 
-        const wrapper = createComponent(props);
-        const section = wrapper.find(ConfigSection).first();
-        expect(section.props().toggleDisabled).toEqual(true);
+        const { getByLabelText } = createComponent(props);
+
+        expect(getByLabelText("xaxis_section")).toBeDisabled();
+        expect(getByLabelText("yaxis_section")).toBeDisabled();
     });
 
     describe("axis name configuration", () => {
@@ -97,7 +97,7 @@ describe("BubbleChartConfigurationPanel", () => {
             },
         };
 
-        it("should render configuration panel with enabled name sections", () => {
+        it("should render configuration panel with enabled name sections", async () => {
             const insight: IInsightDefinition = {
                 insight: {
                     title: "My Insight",
@@ -144,21 +144,19 @@ describe("BubbleChartConfigurationPanel", () => {
                 },
             };
 
-            const wrapper = createComponent({
+            const { getByLabelText, getByText, user } = createComponent({
                 ...defaultProps,
                 insight,
             });
 
-            const axisSections = wrapper.find(NameSubsection);
+            await user.click(getByText("X-Axis"));
+            expect(getByLabelText("xaxis name")).toBeEnabled();
 
-            const xAxisSection = axisSections.at(0);
-            expect(xAxisSection.props().disabled).toEqual(false);
-
-            const yAxisSection = axisSections.at(1);
-            expect(yAxisSection.props().disabled).toEqual(false);
+            await user.click(getByText("Y-Axis"));
+            expect(getByLabelText("yaxis name")).toBeEnabled();
         });
 
-        it("should render configuration panel with disabled name sections", () => {
+        it("should render configuration panel with disabled name sections", async () => {
             const insight: IInsightDefinition = {
                 insight: {
                     title: "My Insight",
@@ -170,21 +168,19 @@ describe("BubbleChartConfigurationPanel", () => {
                 },
             };
 
-            const wrapper = createComponent({
+            const { getByLabelText, getByText, user } = createComponent({
                 ...defaultProps,
                 insight,
             });
 
-            const axisSections = wrapper.find(NameSubsection);
+            await user.click(getByText("X-Axis"));
+            expect(getByLabelText("xaxis name")).toBeDisabled();
 
-            const xAxisSection = axisSections.at(0);
-            expect(xAxisSection.props().disabled).toBe(true);
-
-            const yAxisSection = axisSections.at(1);
-            expect(yAxisSection.props().disabled).toBe(true);
+            await user.click(getByText("Y-Axis"));
+            expect(getByLabelText("yaxis name")).toBeDisabled();
         });
 
-        it("should render configuration panel with enabled X axis name section and disabled Y axis name section", () => {
+        it("should render configuration panel with enabled X axis name section and disabled Y axis name section", async () => {
             const insight: IInsightDefinition = {
                 insight: {
                     title: "My Insight",
@@ -214,18 +210,16 @@ describe("BubbleChartConfigurationPanel", () => {
                 },
             };
 
-            const wrapper = createComponent({
+            const { getByLabelText, getByText, user } = createComponent({
                 ...defaultProps,
                 insight,
             });
 
-            const axisSections = wrapper.find(NameSubsection);
+            await user.click(getByText("X-Axis"));
+            expect(getByLabelText("xaxis name")).toBeEnabled();
 
-            const xAxisSection = axisSections.at(0);
-            expect(xAxisSection.props().disabled).toEqual(false);
-
-            const yAxisSection = axisSections.at(1);
-            expect(yAxisSection.props().disabled).toEqual(true);
+            await user.click(getByText("Y-Axis"));
+            expect(getByLabelText("yaxis name")).toBeDisabled();
         });
 
         it.each([
@@ -233,28 +227,30 @@ describe("BubbleChartConfigurationPanel", () => {
             [true, false, "secondary_measures"],
         ])(
             "should render configuration panel with X axis name section is disabled=%s and Y axis name section is disabled=%s",
-            (
+            async (
                 expectedXAxisSectionDisabled: boolean,
                 expectedYAxisSectionDisabled: boolean,
                 measureIdentifier: string,
             ) => {
-                const wrapper = createComponent({
+                const { getByLabelText, getByText, user } = createComponent({
                     ...defaultProps,
                     insight: newInsight(measureIdentifier),
                 });
 
-                const axisSections = wrapper.find(NameSubsection);
+                await user.click(getByText("X-Axis"));
+                expectedXAxisSectionDisabled
+                    ? expect(getByLabelText("xaxis name")).toBeDisabled()
+                    : expect(getByLabelText("xaxis name")).toBeEnabled();
 
-                const xAxisSection = axisSections.at(0);
-                expect(xAxisSection.props().disabled).toEqual(expectedXAxisSectionDisabled);
-
-                const yAxisSection = axisSections.at(1);
-                expect(yAxisSection.props().disabled).toEqual(expectedYAxisSectionDisabled);
+                await user.click(getByText("Y-Axis"));
+                expectedYAxisSectionDisabled
+                    ? expect(getByLabelText("yaxis name")).toBeDisabled()
+                    : expect(getByLabelText("yaxis name")).toBeEnabled();
             },
         );
 
-        it("should not render name sections in configuration panel", () => {
-            const wrapper = createComponent({
+        it("should not render name sections in configuration panel", async () => {
+            const { queryByLabelText, getByText, user } = createComponent({
                 ...defaultProps,
                 featureFlags: {
                     enableAxisNameConfiguration: false,
@@ -262,8 +258,8 @@ describe("BubbleChartConfigurationPanel", () => {
                 insight: insightWithSingleAttribute,
             });
 
-            const axisSections = wrapper.find(NameSubsection);
-            expect(axisSections.exists()).toEqual(false);
+            await user.click(getByText("X-Axis"));
+            expect(queryByLabelText("xaxis")).not.toBeInTheDocument();
         });
     });
 });

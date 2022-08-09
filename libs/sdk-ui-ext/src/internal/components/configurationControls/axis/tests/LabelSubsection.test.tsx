@@ -1,14 +1,14 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { waitFor } from "@testing-library/react";
 import noop from "lodash/noop";
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
+
 import LabelSubsection, { ILabelSubsection } from "../LabelSubsection";
-import LabelRotationControl from "../LabelRotationControl";
-import { LabelFormatControl } from "../LabelFormatControl";
-import ConfigSubsection from "../../../configurationControls/ConfigSubsection";
+
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider";
+import { setupComponent } from "../../../../tests/testHelper";
 
 const defaultProps: ILabelSubsection = {
     disabled: true,
@@ -21,7 +21,7 @@ const defaultProps: ILabelSubsection = {
 
 function createComponent(customProps: Partial<ILabelSubsection> = {}) {
     const props: ILabelSubsection = { ...cloneDeep(defaultProps), ...customProps };
-    return mount<ILabelSubsection, null>(
+    return setupComponent(
         <InternalIntlWrapper>
             <LabelSubsection {...props} />
         </InternalIntlWrapper>,
@@ -30,93 +30,98 @@ function createComponent(customProps: Partial<ILabelSubsection> = {}) {
 
 describe("LabelSection render", () => {
     it("should render label section", () => {
-        const wrapper = createComponent();
-        expect(wrapper.find(LabelSubsection).length).toBe(1);
+        const { queryByText } = createComponent();
+        expect(queryByText("labels")).toBeInTheDocument();
     });
 
     it(
         "When LabelSubsection disabled true and xaxis is visible then " +
-            "ConfigSubsection.toggleDisabled props should be true",
+            "ConfigSubsection should be disabled",
         () => {
             const xaxisVisible = set({}, "controls.xaxis.visible", true);
 
-            const wrapper = createComponent({
+            const { getByRole } = createComponent({
                 disabled: true,
                 configPanelDisabled: false,
                 properties: xaxisVisible,
             });
 
-            const node = wrapper.find(ConfigSubsection);
-            expect(node.prop("toggleDisabled")).toBe(true);
+            expect(getByRole("checkbox")).toBeDisabled();
         },
     );
 
     it(
         "When LabelSubsection disabled true and xaxis is visible then " +
-            "LabelRotationControl.disabled props should be true",
+            "LabelRotationControl should be disabled",
         () => {
             const xaxisVisible = set({}, "controls.xaxis.visible", true);
 
-            const wrapper = createComponent({
+            const { queryByTitle } = createComponent({
                 disabled: true,
                 configPanelDisabled: false,
                 properties: xaxisVisible,
             });
 
-            const node = wrapper.find(LabelRotationControl);
-            expect(node.prop("disabled")).toBe(true);
+            expect(queryByTitle("auto (default)")).toHaveClass("disabled");
         },
     );
 
-    it("When xaxis is not visible then " + "ConfigSubsection.toggleDisabled props should be true", () => {
+    it("When xaxis is not visible then " + "ConfigSubsection should be disabled", () => {
         const xaxisVisible = set({}, "controls.xaxis.visible", false);
 
-        const wrapper = createComponent({
+        const { getByRole } = createComponent({
             disabled: false,
             configPanelDisabled: false,
             properties: xaxisVisible,
         });
 
-        const node = wrapper.find(ConfigSubsection);
-        expect(node.prop("toggleDisabled")).toBe(true);
+        expect(getByRole("checkbox")).toBeDisabled();
     });
 
     it("should not render LabelFormatControl when showFormat prop is false", () => {
-        const wrapper = createComponent({
+        const { queryByText } = createComponent({
             disabled: false,
             configPanelDisabled: false,
             showFormat: false,
         });
 
-        expect(wrapper.find(LabelFormatControl).exists()).toBe(false);
+        expect(queryByText("Format")).not.toBeInTheDocument();
     });
 
     it("should render LabelFormatControl when showFormat prop is true", () => {
-        const wrapper = createComponent({
+        const { getByText } = createComponent({
             disabled: false,
             configPanelDisabled: false,
             showFormat: true,
         });
 
-        expect(wrapper.find(LabelFormatControl).exists()).toBe(true);
+        expect(getByText("Format")).toBeInTheDocument();
     });
 });
 
 describe("Toggle switch", () => {
-    it("should call pushData when click on toggle switch with valuePath set", () => {
+    it("should call pushData when click on toggle switch with valuePath set", async () => {
         const pushData = jest.fn();
-        const event = { target: { checked: true } };
         const xaxisVisible = set({}, "controls.xaxis.visible", true);
         const axisLabelsEnabled = set(xaxisVisible, "controls.xaxis.labelsEnabled", false);
 
-        const wrapper = createComponent({
+        const { getByRole, user } = createComponent({
             disabled: false,
             configPanelDisabled: false,
             properties: axisLabelsEnabled,
             pushData,
         });
 
-        wrapper.find(".s-checkbox-toggle").simulate("change", event);
-        expect(pushData).toHaveBeenCalledTimes(1);
+        await user.click(getByRole("checkbox"));
+
+        await waitFor(() => {
+            expect(pushData).toBeCalledWith(
+                expect.objectContaining({
+                    properties: {
+                        controls: { xaxis: { labelsEnabled: true, visible: true } },
+                    },
+                }),
+            );
+        });
     });
 });

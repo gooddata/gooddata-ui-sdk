@@ -1,7 +1,8 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { shallow } from "enzyme";
+import { render } from "@testing-library/react";
 import { DefaultLocale } from "@gooddata/sdk-ui";
+
 import ConfigurationPanelContent, {
     IConfigurationPanelContentProps,
 } from "../../configurationPanels/ConfigurationPanelContent";
@@ -17,7 +18,7 @@ class DummyConfigurationPanel extends ConfigurationPanelContent {
     }
 
     protected renderConfigurationPanel() {
-        return <div className="configuration_panel" />;
+        return <div>Configuration Panel</div>;
     }
 }
 
@@ -27,13 +28,11 @@ describe("ConfigurationPanelContent", () => {
             locale: DefaultLocale,
         },
     ) {
-        return shallow<IConfigurationPanelContentProps, null>(<DummyConfigurationPanel {...props} />, {
-            lifecycleExperimental: true,
-        });
+        return render(<DummyConfigurationPanel {...props} />);
     }
 
     it("should render dummy configuration panel", () => {
-        const wrapper = createComponent();
-        expect(wrapper.find("div.configuration_panel").length).toBe(1);
+        const { getByText } = createComponent();
+        expect(getByText("Configuration Panel")).toBeInTheDocument();
     });
 });

@@ -24,6 +24,7 @@ class LabelSubsection extends React.PureComponent<ILabelSubsection & WrappedComp
 
         return (
             <ConfigSubsection
+                axisType={this.props.axis}
                 title={messages.axisLabels.id}
                 valuePath={`${this.props.axis}.labelsEnabled`}
                 properties={this.props.properties}

@@ -14,6 +14,7 @@ class NameSubsection extends React.PureComponent<IConfigItemSubsection & Wrapped
 
         return (
             <ConfigSubsection
+                axisType={axis}
                 title={messages.axisName.id}
                 valuePath={`${axis}.name.visible`}
                 properties={properties}

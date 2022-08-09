@@ -1,10 +1,20 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
 import noop from "lodash/noop";
-import { shallow } from "enzyme";
-import { testUtils } from "@gooddata/util";
+import { render, screen, waitFor } from "@testing-library/react";
+import { IDrillableItem } from "@gooddata/sdk-ui";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
+import { IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 
 import { BaseVisualization, IBaseVisualizationProps } from "../BaseVisualization";
+import { AbstractPluggableVisualization } from "../pluggableVisualizations/AbstractPluggableVisualization";
+import { CatalogViaTypeToClassMap, IVisualizationCatalog } from "../VisualizationCatalog";
+
+import { DummyVisConstruct } from "../pluggableVisualizations/tests/visConstruct.fixture";
+import { BaseChartDescriptor } from "../pluggableVisualizations/baseChart/BaseChartDescriptor";
+
+import { IVisualizationMeta, PluggableVisualizationFactory } from "../../interfaces/VisualizationDescriptor";
 import {
     IBucketItem,
     IReferencePoint,
@@ -12,21 +22,9 @@ import {
     IVisProps,
     IDrillDownContext,
 } from "../../interfaces/Visualization";
-
 import * as testMocks from "../../tests/mocks/testMocks";
-import { emptyReferencePoint } from "../../tests/mocks/referencePointMocks";
+import { emptyReferencePoint, justViewByReferencePoint } from "../../tests/mocks/referencePointMocks";
 
-import { AbstractPluggableVisualization } from "../pluggableVisualizations/AbstractPluggableVisualization";
-import { VisualizationTypes, IDrillableItem } from "@gooddata/sdk-ui";
-import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { CatalogViaTypeToClassMap, IVisualizationCatalog } from "../VisualizationCatalog";
-import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
-import { IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { DummyVisConstruct } from "../pluggableVisualizations/tests/visConstruct.fixture";
-import { BaseChartDescriptor } from "../pluggableVisualizations/baseChart/BaseChartDescriptor";
-import { IVisualizationMeta, PluggableVisualizationFactory } from "../../interfaces/VisualizationDescriptor";
-
-const { delay } = testUtils;
 const pluggableVisualizationGetExecutionMock = jest.fn(() => ({} as IPreparedExecution));
 
 class DummyClass extends AbstractPluggableVisualization {
@@ -106,7 +104,7 @@ describe("BaseVisualization", () => {
     };
 
     function createComponent(props: IBaseVisualizationProps) {
-        return shallow(<BaseVisualization {...props} />, { lifecycleExperimental: true });
+        return render(<BaseVisualization {...props} />);
     }
 
     function getDummyComponent(customProps?: Partial<IBaseVisualizationProps>) {
@@ -182,6 +180,7 @@ describe("BaseVisualization", () => {
 
         return {
             component,
+            visualizationCatalog,
             columnConstructorCall,
             columnAddBucketItemsCall,
             tableConstructorCall,
@@ -192,9 +191,9 @@ describe("BaseVisualization", () => {
     }
 
     it("should render div for all visualizations", () => {
-        const wrapper = createComponent(defaultProps);
+        const { getByLabelText } = createComponent(defaultProps);
 
-        expect(wrapper.find("div.gd-base-visualization").length).toBe(1);
+        expect(getByLabelText("base-visualization")).toBeInTheDocument();
     });
 
     describe("feature flags in visualization instance", () => {
@@ -257,63 +256,82 @@ describe("BaseVisualization", () => {
             },
         };
 
-        it("should process new derived bucket items and call onNewDerivedBucketItemsPlaced", () => {
+        it("should process new derived bucket items and call onNewDerivedBucketItemsPlaced", async () => {
             const onNewDerivedBucketItemsPlaced = jest.fn();
             const onExtendedReferencePointChanged = jest.fn();
 
-            const { tableAddBucketItemsCall, component } = getDummyComponent();
+            const {
+                tableAddBucketItemsCall,
+                component: { rerender },
+            } = getDummyComponent();
 
-            component.setProps({
-                newDerivedBucketItems: [newDerivedBucketItem],
-                onExtendedReferencePointChanged,
-                onNewDerivedBucketItemsPlaced,
-            });
+            rerender(
+                <BaseVisualization
+                    {...defaultProps}
+                    newDerivedBucketItems={[newDerivedBucketItem]}
+                    onExtendedReferencePointChanged={onExtendedReferencePointChanged}
+                    onNewDerivedBucketItemsPlaced={onNewDerivedBucketItemsPlaced}
+                />,
+            );
 
-            return delay().then(() => {
+            screen.logTestingPlaygroundURL();
+            await waitFor(() => {
                 expect(tableAddBucketItemsCall).toHaveBeenCalledTimes(1);
                 expect(onNewDerivedBucketItemsPlaced).toHaveBeenCalledTimes(1);
                 expect(onExtendedReferencePointChanged).toHaveBeenCalledTimes(0);
             });
         });
 
-        it("should NOT call onNewDerivedBucketItemsPlaced when newDerivedBucketItems are empty", () => {
+        it("should NOT call onNewDerivedBucketItemsPlaced when newDerivedBucketItems are empty", async () => {
             const onNewDerivedBucketItemsPlaced = jest.fn();
             const onExtendedReferencePointChanged = jest.fn();
 
-            const { tableAddBucketItemsCall, component } = getDummyComponent({
+            const {
+                tableAddBucketItemsCall,
+                component: { rerender },
+            } = getDummyComponent({
                 referencePoint: emptyReferencePoint,
                 newDerivedBucketItems: [newDerivedBucketItem],
             });
 
-            component.setProps({
-                referencePoint: referencePointWithMeasure,
-                newDerivedBucketItems: [],
-                onNewDerivedBucketItemsPlaced,
-                onExtendedReferencePointChanged,
-            });
+            rerender(
+                <BaseVisualization
+                    {...defaultProps}
+                    referencePoint={referencePointWithMeasure}
+                    newDerivedBucketItems={[]}
+                    onExtendedReferencePointChanged={onExtendedReferencePointChanged}
+                    onNewDerivedBucketItemsPlaced={onNewDerivedBucketItemsPlaced}
+                />,
+            );
 
-            return delay().then(() => {
+            await waitFor(() => {
                 expect(tableAddBucketItemsCall).toHaveBeenCalledTimes(0);
                 expect(onNewDerivedBucketItemsPlaced).toHaveBeenCalledTimes(0);
                 expect(onExtendedReferencePointChanged).toHaveBeenCalledTimes(1);
             });
         });
 
-        it("should NOT process when newDerivedBucketItems are unchanged", () => {
+        it("should NOT process when newDerivedBucketItems are unchanged", async () => {
             const onNewDerivedBucketItemsPlaced = jest.fn();
             const onExtendedReferencePointChanged = jest.fn();
 
-            const { tableAddBucketItemsCall, component } = getDummyComponent({
+            const {
+                tableAddBucketItemsCall,
+                component: { rerender },
+            } = getDummyComponent({
                 newDerivedBucketItems: [newDerivedBucketItem],
             });
 
-            component.setProps({
-                newDerivedBucketItems: [newDerivedBucketItem],
-                onNewDerivedBucketItemsPlaced,
-                onExtendedReferencePointChanged,
-            });
+            rerender(
+                <BaseVisualization
+                    {...defaultProps}
+                    newDerivedBucketItems={[newDerivedBucketItem]}
+                    onExtendedReferencePointChanged={onExtendedReferencePointChanged}
+                    onNewDerivedBucketItemsPlaced={onNewDerivedBucketItemsPlaced}
+                />,
+            );
 
-            return delay().then(() => {
+            await waitFor(() => {
                 expect(tableAddBucketItemsCall).toHaveBeenCalledTimes(0);
                 expect(onNewDerivedBucketItemsPlaced).toHaveBeenCalledTimes(0);
                 expect(onExtendedReferencePointChanged).toHaveBeenCalledTimes(0);
@@ -337,19 +355,26 @@ describe("BaseVisualization", () => {
         });
     });
 
-    it("should call update on visualization and include custom props if supported", () => {
-        const { component, tableUpdateCall } = getDummyComponent();
+    it("should call update on visualization and include custom props if supported", async () => {
+        const {
+            component: { rerender },
+            tableUpdateCall,
+            visualizationCatalog,
+        } = getDummyComponent();
 
         const totalsEditAllowed = true;
         const drillableItems: IDrillableItem[] = [];
 
-        component.setProps({
-            type: VisualizationTypes.TABLE,
-            totalsEditAllowed,
-            drillableItems,
-        });
+        rerender(
+            <BaseVisualization
+                {...defaultProps}
+                {...visualizationCatalog}
+                totalsEditAllowed={totalsEditAllowed}
+                drillableItems={drillableItems}
+            />,
+        );
 
-        return delay().then(() => {
+        await waitFor(() => {
             expect(tableUpdateCall).toHaveBeenCalledWith({
                 custom: {
                     drillableItems,
@@ -362,36 +387,47 @@ describe("BaseVisualization", () => {
         });
     });
 
-    it("should setup new visualization when type changes and get new reference point", () => {
-        const { component, columnConstructorCall } = getDummyComponent();
+    it("should setup new visualization when type changes and get new reference point", async () => {
+        const {
+            component: { rerender },
+            columnConstructorCall,
+        } = getDummyComponent();
         const onColumnBucketsChange = jest.fn();
 
-        component.setProps({
-            visualizationClass: testMocks.dummyColumnVisualizationClass,
-            onExtendedReferencePointChanged: onColumnBucketsChange,
-            referencePoint: {},
-        });
+        rerender(
+            <BaseVisualization
+                {...defaultProps}
+                visualizationClass={testMocks.dummyColumnVisualizationClass}
+                onExtendedReferencePointChanged={onColumnBucketsChange}
+            />,
+        );
 
-        return delay().then(() => {
+        await waitFor(() => {
             expect(onColumnBucketsChange).toHaveBeenCalledTimes(1);
             expect(columnConstructorCall).toHaveBeenCalledTimes(1);
         });
     });
 
-    it("should call onExtendedReferencePointChanged", () => {
-        const { component, tableConstructorCall } = getDummyComponent();
+    it("should call onExtendedReferencePointChanged", async () => {
+        const {
+            component: { rerender },
+            tableConstructorCall,
+        } = getDummyComponent();
         const onExtendedReferencePointChanged = jest.fn();
 
-        component.setProps({
-            onExtendedReferencePointChanged,
-            referencePoint: {},
-        });
+        rerender(
+            <BaseVisualization
+                {...defaultProps}
+                onExtendedReferencePointChanged={onExtendedReferencePointChanged}
+                referencePoint={justViewByReferencePoint}
+            />,
+        );
 
-        return delay().then(() => {
+        await waitFor(() => {
             expect(onExtendedReferencePointChanged).toHaveBeenCalledTimes(1);
             expect(onExtendedReferencePointChanged).toHaveBeenCalledWith(
                 expect.objectContaining({
-                    referencePoint: {},
+                    referencePoint: justViewByReferencePoint,
                 }),
                 expect.objectContaining({
                     availableSorts: [],
@@ -449,38 +485,38 @@ describe("BaseVisualization", () => {
             visualizationCatalog = defaultVisualizationsCatalog;
         });
 
-        it("should not call getExtendedReferencePoint if vis type is unknown", () => {
+        it("should not call getExtendedReferencePoint if vis type is unknown", async () => {
             createComponent({
                 ...defaultProps,
                 visualizationClass: testMocks.dummyUnknownTypeVisualizationClass,
                 visualizationCatalog,
             });
 
-            return delay().then(() => {
+            await waitFor(() => {
                 expect(getExtendedReferencePointMock).toHaveBeenCalledTimes(0);
             });
         });
 
-        it("should not call getExtendedReferencePoint if referencePoint is not provided", () => {
+        it("should not call getExtendedReferencePoint if referencePoint is not provided", async () => {
             createComponent({
                 ...defaultProps,
                 referencePoint: null,
                 visualizationCatalog,
             });
 
-            return delay().then(() => {
+            await waitFor(() => {
                 expect(getExtendedReferencePointMock).toHaveBeenCalledTimes(0);
             });
         });
 
-        it("should not call getExtendedReferencePoint if no callback is provided", () => {
+        it("should not call getExtendedReferencePoint if no callback is provided", async () => {
             createComponent({
                 ...defaultProps,
                 visualizationCatalog,
                 onExtendedReferencePointChanged: null,
             });
 
-            return delay().then(() => {
+            await waitFor(() => {
                 expect(getExtendedReferencePointMock).toHaveBeenCalledTimes(0);
             });
         });
@@ -488,7 +524,6 @@ describe("BaseVisualization", () => {
 
     it("should call onExportReady", async () => {
         const { onExportReady } = getDummyComponent();
-        await delay();
         expect(onExportReady).toHaveBeenCalledTimes(1);
     });
 

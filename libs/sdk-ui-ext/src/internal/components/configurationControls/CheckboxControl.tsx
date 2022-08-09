@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import cloneDeep from "lodash/cloneDeep";
@@ -31,11 +31,12 @@ class CheckboxControl extends React.Component<ICheckboxControlProps & WrappedCom
     }
 
     public render() {
-        const { checked, disabled, labelText, showDisabledMessage, intl } = this.props;
+        const { checked, disabled, labelText, showDisabledMessage, intl, valuePath } = this.props;
         return (
             <DisabledBubbleMessage showDisabledMessage={showDisabledMessage}>
                 <label className="input-checkbox-label">
                     <input
+                        aria-label={valuePath}
                         checked={checked}
                         disabled={disabled}
                         type="checkbox"

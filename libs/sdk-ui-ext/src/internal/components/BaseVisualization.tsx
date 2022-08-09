@@ -111,7 +111,9 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
     }
 
     public componentWillUnmount(): void {
-        this.visualization.unmount();
+        if (this.visualization) {
+            this.visualization.unmount();
+        }
     }
 
     public UNSAFE_componentWillReceiveProps(nextProps: IBaseVisualizationProps): void {
@@ -170,6 +172,7 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
     public render() {
         return (
             <div
+                aria-label="base-visualization"
                 key={this.visElementId}
                 style={{ height: "100%" }}
                 className={this.getClassName()}
