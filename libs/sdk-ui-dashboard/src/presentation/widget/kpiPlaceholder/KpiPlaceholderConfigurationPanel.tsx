@@ -16,7 +16,7 @@ import {
 } from "../../../model";
 import { getSizeInfo } from "../../../_staging/layout/sizing";
 
-import { KpiConfigurationPanelCore } from "../kpi/EditableDashboardKpi/KpiConfigurationPanel/KpiConfigurationPanelCore";
+import { KpiConfigurationPanelCore } from "../kpi/EditModeDashboardKpi/KpiConfigurationPanel/KpiConfigurationPanelCore";
 import { KpiPlaceholderWidget } from "../../../widgets/placeholders/types";
 
 interface IKpiPlaceholderConfigurationPanelProps {

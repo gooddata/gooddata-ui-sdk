@@ -10,9 +10,9 @@ import {
     LegacyDashboardInsightMenuButton,
     DefaultDashboardInsightMenu,
     LegacyDashboardInsightMenu,
-    RenderModeAwareDashboardKpi,
     DefaultInsightBody,
     RenderModeAwareDashboardInsight,
+    DefaultDashboardKpi,
 } from "../../widget";
 import { IDashboardProps } from "../types";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -115,7 +115,7 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
     const kpiProvider = useCallback<KpiComponentProvider>(
         (kpi, widget) => {
             const userSpecified = KpiComponentProvider?.(kpi, widget);
-            return userSpecified ?? RenderModeAwareDashboardKpi;
+            return userSpecified ?? DefaultDashboardKpi;
         },
         [KpiComponentProvider],
     );

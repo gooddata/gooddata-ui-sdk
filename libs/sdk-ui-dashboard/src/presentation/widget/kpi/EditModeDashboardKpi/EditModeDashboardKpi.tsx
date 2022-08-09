@@ -25,7 +25,7 @@ import { KpiConfigurationPanel } from "./KpiConfigurationPanel/KpiConfigurationP
 import { getKpiResult, KpiRenderer, useKpiData, useKpiExecutionDataView } from "../common";
 import { IDashboardKpiProps } from "../types";
 
-export const EditableDashboardKpi = (props: IDashboardKpiProps) => {
+export const EditModeDashboardKpi = (props: IDashboardKpiProps) => {
     const {
         kpiWidget,
 

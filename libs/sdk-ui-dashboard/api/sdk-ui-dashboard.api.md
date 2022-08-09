@@ -2153,8 +2153,8 @@ export const DefaultDashboardInsightMenu: (props: IDashboardInsightMenuProps) =>
 // @internal (undocumented)
 export const DefaultDashboardInsightMenuButton: (props: IDashboardInsightMenuButtonProps) => JSX.Element;
 
-// @public
-export const DefaultDashboardKpi: (props: IDashboardKpiProps) => JSX.Element;
+// @internal (undocumented)
+export const DefaultDashboardKpi: ComponentType<IDashboardKpiProps>;
 
 // @alpha (undocumented)
 export const DefaultDashboardLayout: (props: IDashboardLayoutProps) => JSX.Element;
@@ -4722,9 +4722,6 @@ export function renderModeAware<T extends ComponentType<any>>(components: {
 
 // @internal (undocumented)
 export const RenderModeAwareDashboardInsight: ComponentType<IDashboardInsightProps>;
-
-// @internal (undocumented)
-export const RenderModeAwareDashboardKpi: ComponentType<IDashboardKpiProps>;
 
 // @internal (undocumented)
 export const RenderModeAwareTitle: ComponentType<PropsWithChildren<ITitleProps> | (ITitleProps & RefAttributes<Component<ITitleProps, any, any>>)>;
