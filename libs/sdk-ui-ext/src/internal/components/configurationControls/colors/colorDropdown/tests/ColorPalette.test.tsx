@@ -1,7 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { render, cleanup, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { cleanup, waitFor } from "@testing-library/react";
 import noop from "lodash/noop";
 import cloneDeep from "lodash/cloneDeep";
 import ColorPalette, { IColorPaletteProps } from "../ColorPalette";
@@ -10,6 +9,7 @@ import {
     colorPalette,
     colorPaletteWithOneColor,
 } from "../../../../../tests/mocks/testColorHelper";
+import { setupComponent } from "../../../../../tests/testHelper";
 
 const defaultProps: IColorPaletteProps = {
     selectedColorGuid: undefined,
@@ -19,10 +19,7 @@ const defaultProps: IColorPaletteProps = {
 
 function createComponent(customProps: Partial<IColorPaletteProps> = {}) {
     const props: IColorPaletteProps = { ...cloneDeep(defaultProps), ...customProps };
-    return {
-        user: userEvent.setup(),
-        ...render(<ColorPalette {...props} />),
-    };
+    return setupComponent(<ColorPalette {...props} />);
 }
 
 describe("ColorPalette", () => {

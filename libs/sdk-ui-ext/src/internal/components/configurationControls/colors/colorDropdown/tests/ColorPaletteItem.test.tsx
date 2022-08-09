@@ -1,10 +1,10 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { render, cleanup, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { cleanup, waitFor } from "@testing-library/react";
 import noop from "lodash/noop";
 import cloneDeep from "lodash/cloneDeep";
 import ColorPaletteItem, { IColorPaletteItemProps } from "../ColorPaletteItem";
+import { setupComponent } from "../../../../../tests/testHelper";
 
 const defaultProps: IColorPaletteItemProps = {
     selected: false,
@@ -21,10 +21,7 @@ const defaultProps: IColorPaletteItemProps = {
 
 function createComponent(customProps: Partial<IColorPaletteItemProps> = {}) {
     const props: IColorPaletteItemProps = { ...cloneDeep(defaultProps), ...customProps };
-    return {
-        user: userEvent.setup(),
-        ...render(<ColorPaletteItem {...props} />),
-    };
+    return setupComponent(<ColorPaletteItem {...props} />);
 }
 
 describe("ColorPaletteItem", () => {

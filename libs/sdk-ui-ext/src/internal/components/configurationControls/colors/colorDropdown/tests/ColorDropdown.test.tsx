@@ -1,11 +1,11 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { render, cleanup, waitFor, fireEvent } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { cleanup, waitFor, fireEvent } from "@testing-library/react";
 import noop from "lodash/noop";
 import cloneDeep from "lodash/cloneDeep";
 import { IColor } from "@gooddata/sdk-model";
 import { colorPalette } from "../../../../../tests/mocks/testColorHelper";
+import { setupComponent } from "../../../../../tests/testHelper";
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider";
 import ColorDropdown, { IColorDropdownOwnProps, IconPosition, ISelectableChild } from "../ColorDropdown";
 import { IColoredItemContentProps } from "../../coloredItemsList/ColoredItemContent";
@@ -35,16 +35,13 @@ class MockItem extends React.PureComponent<IMockItemProps> {
 function createComponent(customProps: Partial<IColorDropdownOwnProps> = {}) {
     const props: IColorDropdownOwnProps = { ...cloneDeep(defaultProps), ...customProps };
 
-    return {
-        user: userEvent.setup(),
-        ...render(
-            <InternalIntlWrapper>
-                <ColorDropdown {...props}>
-                    <MockItem color={{ r: 255, g: 0, b: 0 }} text="sometext" />
-                </ColorDropdown>
-            </InternalIntlWrapper>,
-        ),
-    };
+    return setupComponent(
+        <InternalIntlWrapper>
+            <ColorDropdown {...props}>
+                <MockItem color={{ r: 255, g: 0, b: 0 }} text="sometext" />
+            </ColorDropdown>
+        </InternalIntlWrapper>,
+    );
 }
 
 describe("ColorDropdown", () => {
