@@ -1,18 +1,19 @@
 // (C) 2019-2022 GoodData Corporation
 import React, { useCallback } from "react";
 import { IMeasure, IMeasureDefinition, newMeasure } from "@gooddata/sdk-model";
-import { render } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+
 import { PlaceholdersProvider, IPlaceholdersProviderProps } from "../context";
 import { newPlaceholder } from "../factory";
 import { IPlaceholder } from "../base";
 import { usePlaceholder } from "../hooks";
 
+import { setupComponent } from "../../../tests/testHelper";
+
 const createComponent = (
     componentProps: IComponentWithUsePlaceholderHookProps,
     providerProps?: IPlaceholdersProviderProps,
 ) =>
-    render(
+    setupComponent(
         <PlaceholdersProvider {...providerProps}>
             <ComponentWithUsePlaceholderHook {...componentProps} />
         </PlaceholdersProvider>,
@@ -61,7 +62,6 @@ const ComponentWithResult = ({ result }: IComponentWithResultProps) => {
 };
 
 describe("usePlaceholder", () => {
-    const user = userEvent.setup();
     it("should resolve default placeholder value", () => {
         const measure = newMeasure("test-measure");
         const singleValuePlaceholder = newPlaceholder(measure);
@@ -73,7 +73,7 @@ describe("usePlaceholder", () => {
     it("should update placeholder value", async () => {
         const measure = newMeasure("updated-measure");
         const singleValuePlaceholder = newPlaceholder();
-        const { queryByText, getByText } = createComponent({
+        const { queryByText, getByText, user } = createComponent({
             placeholder: singleValuePlaceholder,
             onSetPlaceholder: () => measure,
         });

@@ -1,15 +1,15 @@
-// (C) 2019 GoodData Corporation
-import { dummyBackend, dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
-import { DataViewFacade } from "../../base/results/facade";
-import { IAttribute, IFilter, IMeasure } from "@gooddata/sdk-model";
-import { shallow } from "enzyme";
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { createDummyPromise } from "../../base/react/tests/toolkit";
-import { DataViewWindow, WithLoadingResult } from "../withExecutionLoading";
-import { IWithExecution, withExecution } from "../withExecution";
+import { dummyBackend, dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
+import { IAttribute, IFilter, IMeasure } from "@gooddata/sdk-model";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { withEventing } from "@gooddata/sdk-backend-base";
 
+import { DataViewWindow, WithLoadingResult } from "../withExecutionLoading";
+import { IWithExecution, withExecution } from "../withExecution";
+
+import { createDummyPromise } from "../../base/react/tests/toolkit";
+import { setupComponent } from "../../base/tests/testHelper";
 interface IDummyComponentProps {
     attributes?: IAttribute[];
     measures?: IMeasure[];
@@ -23,14 +23,16 @@ const renderEnhancedComponent = (
     hocConfig?: Omit<IWithExecution<IDummyComponentProps>, "execution" | "exportTitle">,
     backend: IAnalyticalBackend = DummyBackendEmptyData,
 ) => {
-    const CoreComponent: React.FC<WithLoadingResult & IDummyComponentProps> = (props) => {
+    const CoreComponent: React.FC<IDummyComponentProps & WithLoadingResult> = (props) => {
         const { result, error, reload, isLoading } = props;
         return (
             <div>
-                <button className="Refetch" onClick={reload} />
-                {isLoading && <div className="Loading" />}
-                {result && <div className="Result">{result}</div>}
-                {error && <div className="Error">{error.message}</div>}
+                <button className="Refetch" onClick={reload}>
+                    Refetch
+                </button>
+                {isLoading && <div className="Loading"> Loading </div>}
+                {result && <div className="Result"> Result </div>}
+                {error && <div className="Error"> {error.message} </div>}
             </div>
         );
     };
@@ -48,38 +50,31 @@ const renderEnhancedComponent = (
         exportTitle: "TestComponent",
     })(CoreComponent);
 
-    return shallow(<Component attributes={[]} measures={[]} filters={[]} />);
+    return setupComponent(<Component attributes={[]} measures={[]} filters={[]} />);
 };
 
 describe("withExecution", () => {
     it("should start loading immediately and inject isLoading prop", () => {
-        const wrapper = renderEnhancedComponent();
-        expect(wrapper.prop("isLoading")).toBe(true);
+        const { queryByText } = renderEnhancedComponent();
+        expect(queryByText("Loading")).toBeInTheDocument();
     });
 
     it("should not start loading immediately if loadOnMount is set to false", () => {
-        const wrapper = renderEnhancedComponent({ loadOnMount: false });
-        expect(wrapper.prop("isLoading")).toBe(false);
+        const { queryByText } = renderEnhancedComponent({ loadOnMount: false });
+        expect(queryByText("Loading")).not.toBeInTheDocument();
     });
 
     it("should stop loading when execution is resolved and inject data view facade", async () => {
-        const wrapper = renderEnhancedComponent();
+        const { queryByText } = renderEnhancedComponent();
         await createDummyPromise({ delay: 100 });
-        expect(wrapper.prop("isLoading")).toBe(false);
-        expect(wrapper.prop("result")).toBeInstanceOf(DataViewFacade);
-    });
-
-    it("should inject fetch handler", () => {
-        const wrapper = renderEnhancedComponent();
-        expect(wrapper.prop("reload")).toEqual(expect.any(Function));
+        expect(queryByText("Loading")).not.toBeInTheDocument();
+        expect(queryByText("Result")).toBeInTheDocument();
     });
 
     it("should start loading again after invoking injected fetch function", async () => {
-        const wrapper = renderEnhancedComponent();
-        await createDummyPromise({ delay: 150 });
-        wrapper.dive().find(".Refetch").simulate("click");
-
-        expect(wrapper.prop("isLoading")).toBe(true);
+        const { getByText, queryByText, user } = renderEnhancedComponent();
+        user.click(getByText("Refetch"));
+        expect(queryByText("Loading")).toBeInTheDocument();
     });
 
     it("should invoke onLoadingStart, onLoadingChanged and onLoadingFinish events", async () => {

@@ -1,12 +1,11 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { render } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import { dummyBackend, dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
 import { IRawExecuteProps, RawExecute } from "../RawExecute";
 import { createDummyPromise } from "../../base/react/tests/toolkit";
 import { DataViewFacade } from "../../base/results/facade";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { setupComponent } from "../../base/tests/testHelper";
 
 const DummyBackendEmptyData = dummyBackendEmptyData();
 const makeChild = () => jest.fn((_) => <div />);
@@ -15,7 +14,7 @@ const renderDummyExecutor = (
     props: Omit<IRawExecuteProps, "execution" | "children"> = {},
     backend: IAnalyticalBackend = DummyBackendEmptyData,
 ) => {
-    return render(
+    return setupComponent(
         <RawExecute execution={backend.workspace("dummy").execution().forItems([])} {...props}>
             {child}
         </RawExecute>,
@@ -75,9 +74,8 @@ describe("RawExecute", () => {
 
     it("should start loading after invoking injected reload function", async () => {
         const child = jest.fn(({ reload }) => <button onClick={reload}>Reload</button>);
-        const { getByText } = renderDummyExecutor(child, { loadOnMount: false });
-        userEvent.setup();
-        await userEvent.click(getByText("Reload"));
+        const { getByText, user } = renderDummyExecutor(child, { loadOnMount: false });
+        await user.click(getByText("Reload"));
 
         expect(child).toHaveBeenCalledWith({
             isLoading: false,

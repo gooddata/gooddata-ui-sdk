@@ -1,13 +1,14 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
-import { shallow } from "enzyme";
+import { render } from "@testing-library/react";
+
 import { KpiError } from "../KpiError";
 
 describe("KpiError", () => {
     it("should render with correct message", () => {
         const message = "ERROR!";
-        const wrapper = shallow(<KpiError message={message} />);
+        const { queryByText } = render(<KpiError message={message} />);
 
-        expect(wrapper.find(".gdc-kpi-error").text()).toBe(message);
+        expect(queryByText("ERROR!")).toBeInTheDocument();
     });
 });

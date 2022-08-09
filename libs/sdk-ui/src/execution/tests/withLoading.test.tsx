@@ -1,12 +1,12 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { withExecutionLoading, IWithExecutionLoading, WithLoadingResult } from "../withExecutionLoading";
-import { render } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { IDummyPromise, createDummyPromise } from "../../base/react/tests/toolkit";
-import { DataViewFacade } from "../../base";
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import { emptyDef } from "@gooddata/sdk-model";
+import { withExecutionLoading, IWithExecutionLoading, WithLoadingResult } from "../withExecutionLoading";
+
+import { IDummyPromise, createDummyPromise } from "../../base/react/tests/toolkit";
+import { DataViewFacade } from "../../base";
+import { setupComponent } from "../../base/tests/testHelper";
 
 const EmptyDataViewFacade = DataViewFacade.for(dummyDataView(emptyDef("testWorkspace")));
 
@@ -39,7 +39,7 @@ const renderEnhancedComponent = <T, E>(
         exportTitle: "TestComponent",
     })(CoreComponent as any);
 
-    return render(<Component />);
+    return setupComponent(<Component />);
 };
 
 describe("withLoading", () => {
@@ -75,10 +75,9 @@ describe("withLoading", () => {
     });
 
     it("should start loading again after invoking injected fetch function", async () => {
-        const { getByText } = renderEnhancedComponent({ delay: 100 });
+        const { getByText, user } = renderEnhancedComponent({ delay: 100 });
         await createDummyPromise({ delay: 150 });
-        userEvent.setup();
-        await userEvent.click(getByText("Refetch"));
+        await user.click(getByText("Refetch"));
         expect(getByText("Loading")).toBeInTheDocument();
     });
 
