@@ -11,6 +11,7 @@ import {
     HeaderBadge,
 } from "@gooddata/sdk-ui-kit";
 import { wrapWithTheme } from "../../themeWrapper";
+import { IntlProvider } from "react-intl";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "./styles.scss";
@@ -331,6 +332,7 @@ const messages = {
     "gs.header.documentation": "Documentation",
     "gs.header.visitSupportPortal": "Visit Support Portal",
     "gs.header.submitTicket": "Submit Ticket",
+    "gs.header.helpMenu.manage.ws": "Managing workspaces and workspace hierarchy",
     "gs.header.account": "Account",
     "gs.header.logout": "Logout",
     "gs.header.projectPicker.demo": "Demo data",
@@ -361,4 +363,63 @@ const screenshotProps = {
 
 storiesOf(`${UiKit}/AppHeader`)
     .add("full-featured", () => <WithIntl />, { screenshots: screenshotProps })
-    .add("themed", () => wrapWithTheme(<WithIntl />), { screenshot: screenshotProps.openedProjectPicker });
+    .add("themed", () => wrapWithTheme(<WithIntl />), { screenshot: screenshotProps.openedProjectPicker })
+    .add(
+        "dropdown help menu should be bottom top left position when enough space for max-width help content",
+        () => {
+            return (
+                <IntlProvider locale="en-US" messages={messages}>
+                    <div className="screenshot-target">
+                        <AppHeader
+                            className="s-default-header"
+                            helpMenuItems={[
+                                {
+                                    key: "gs.header.helpMenu.manage.ws",
+                                    href: "https://www.gooddata.com/developers/cloud-native/doc/hosted/manage-deployment/manage-workspaces/",
+                                },
+                                ...info.headerHelpItems,
+                            ]}
+                            helpMenuDropdownAlignPoints={"bl tl"}
+                            badges={[
+                                <HeaderBadge
+                                    backgroundColor="rgba(20,178,226,0.3)"
+                                    color="#14B2E2"
+                                    key="first"
+                                >
+                                    Community
+                                </HeaderBadge>,
+                            ]}
+                            workspacePicker={null}
+                            userName={"undefined"}
+                        />
+                    </div>
+                </IntlProvider>
+            );
+        },
+        { screenshot: screenshotProps.openedHelp },
+    )
+    .add(
+        "dropdown help menu should be bottom top right position when not enough space for max-width help content ",
+        () => {
+            return (
+                <IntlProvider locale="en-US" messages={messages}>
+                    <div className="screenshot-target">
+                        <AppHeader
+                            className="s-default-header"
+                            helpMenuItems={[
+                                {
+                                    key: "gs.header.helpMenu.manage.ws",
+                                    href: "https://www.gooddata.com/developers/cloud-native/doc/hosted/manage-deployment/manage-workspaces/",
+                                },
+                                ...info.headerHelpItems,
+                            ]}
+                            helpMenuDropdownAlignPoints={"bl tl"}
+                            workspacePicker={null}
+                            userName={"undefined"}
+                        />
+                    </div>
+                </IntlProvider>
+            );
+        },
+        { screenshot: screenshotProps.openedHelp },
+    );
