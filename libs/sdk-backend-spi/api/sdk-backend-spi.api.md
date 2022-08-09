@@ -31,6 +31,8 @@ import { ICatalogFact as ICatalogFact_2 } from '@gooddata/sdk-model';
 import { ICatalogGroup as ICatalogGroup_2 } from '@gooddata/sdk-model';
 import { ICatalogMeasure as ICatalogMeasure_2 } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
+import { IColorPaletteDefinition } from '@gooddata/sdk-model';
+import { IColorPaletteMetadataObject } from '@gooddata/sdk-model';
 import { IDashboard as IDashboard_2 } from '@gooddata/sdk-model';
 import { IDashboardDefinition as IDashboardDefinition_2 } from '@gooddata/sdk-model';
 import { IDashboardLayout as IDashboardLayout_2 } from '@gooddata/sdk-model';
@@ -978,12 +980,19 @@ export interface IOrganizations {
 
 // @public
 export interface IOrganizationStylingService {
+    clearActiveColorPalette(): Promise<void>;
     clearActiveTheme(): Promise<void>;
+    createColorPalette(colorPalette: IColorPaletteDefinition): Promise<IColorPaletteMetadataObject>;
     createTheme(theme: IThemeDefinition): Promise<IThemeMetadataObject>;
+    deleteColorPalette(colorPaletteRef: ObjRef): Promise<void>;
     deleteTheme(themeRef: ObjRef): Promise<void>;
+    getActiveColorPalette(): Promise<ObjRef | undefined>;
     getActiveTheme(): Promise<ObjRef | undefined>;
+    getColorPalettes(): Promise<IColorPaletteMetadataObject[]>;
     getThemes(): Promise<IThemeMetadataObject[]>;
+    setActiveColorPalette(colorPaletteRef: ObjRef): Promise<void>;
     setActiveTheme(themeRef: ObjRef): Promise<void>;
+    updateColorPalette(colorPalette: IColorPaletteDefinition): Promise<IColorPaletteMetadataObject>;
     updateTheme(theme: IThemeDefinition): Promise<IThemeMetadataObject>;
 }
 

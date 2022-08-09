@@ -66,6 +66,8 @@ import {
     IOrganizationDescriptor,
     IThemeMetadataObject,
     IThemeDefinition,
+    IColorPaletteDefinition,
+    IColorPaletteMetadataObject,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual";
 import isEmpty from "lodash/isEmpty";
@@ -454,40 +456,52 @@ class DummyOrganization implements IOrganization {
     }
 
     styling(): IOrganizationStylingService {
+        const resolveTheme = (theme: IThemeDefinition): Promise<IThemeMetadataObject> => {
+            return Promise.resolve({
+                type: "theme",
+                id: "theme_id",
+                title: "Theme 1",
+                description: "",
+                production: true,
+                deprecated: false,
+                unlisted: false,
+                ref: idRef("theme_id"),
+                uri: "theme_uri",
+                theme: theme.theme,
+            });
+        };
+
+        const resolveColorPalette = (
+            colorPalette: IColorPaletteDefinition,
+        ): Promise<IColorPaletteMetadataObject> =>
+            Promise.resolve({
+                type: "colorPalette",
+                id: "color_palette_id",
+                title: "Color Palette 1",
+                description: "",
+                production: true,
+                deprecated: false,
+                unlisted: false,
+                ref: idRef("color_palette_id"),
+                uri: "color_palette_uri",
+                colorPalette: colorPalette.colorPalette,
+            });
+
         return {
             getThemes: () => Promise.resolve([]),
             getActiveTheme: () => Promise.resolve(undefined),
             setActiveTheme: () => Promise.resolve(),
             clearActiveTheme: () => Promise.resolve(),
-            createTheme: (theme: IThemeDefinition): Promise<IThemeMetadataObject> => {
-                return Promise.resolve({
-                    type: "theme",
-                    id: "theme_id",
-                    title: "Theme 1",
-                    description: "",
-                    production: true,
-                    deprecated: false,
-                    unlisted: false,
-                    ref: idRef("theme_id"),
-                    uri: "",
-                    theme: theme.theme,
-                });
-            },
-            updateTheme: (theme: IThemeDefinition): Promise<IThemeMetadataObject> => {
-                return Promise.resolve({
-                    type: "theme",
-                    id: "theme_id",
-                    title: "Theme 1",
-                    description: "",
-                    production: true,
-                    deprecated: false,
-                    unlisted: false,
-                    ref: idRef("theme_id"),
-                    uri: "theme_uri",
-                    theme: theme.theme,
-                });
-            },
+            createTheme: resolveTheme,
+            updateTheme: resolveTheme,
             deleteTheme: () => Promise.resolve(),
+            getColorPalettes: () => Promise.resolve([]),
+            getActiveColorPalette: () => Promise.resolve(undefined),
+            setActiveColorPalette: () => Promise.resolve(),
+            clearActiveColorPalette: () => Promise.resolve(),
+            createColorPalette: resolveColorPalette,
+            updateColorPalette: resolveColorPalette,
+            deleteColorPalette: () => Promise.resolve(),
         };
     }
 }

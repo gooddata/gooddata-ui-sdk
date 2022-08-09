@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import isEmpty from "lodash/fp/isEmpty";
 import has from "lodash/has";
 import {
@@ -48,7 +48,8 @@ export namespace GdcMetadata {
         | "visualizationClass"
         | "visualizationObject"
         | "visualizationWidget"
-        | "theme";
+        | "theme"
+        | "colorPalette";
 
     export interface IObjectMeta {
         category?: ObjectCategory;

@@ -17,6 +17,7 @@ import {
     JsonApiLabelOutList,
     JsonApiMetricOutList,
     JsonApiThemeOutList,
+    JsonApiColorPaletteOutList,
     JsonApiVisualizationObjectOutList,
 } from "./generated/metadata-json-api";
 
@@ -62,17 +63,27 @@ export type MetadataGetEntitiesThemeParams = {
 };
 
 /**
+ * Color palette get entities params
+ *
+ * @internal
+ */
+export type MetadataGetEntitiesColorPaletteParams = {
+    filter?: string;
+};
+
+/**
  * Common parameters for all API client getEntities* parameters.
  *
  * Note: the different generated client functions are actually incorrect. They list page, size, include, sort in
- * the params but they are not picked from there anyway. They need to be passed in options as query parameters.
+ * the params, but they are not picked from there anyway. They need to be passed in options as query parameters.
  *
  * @internal
  */
 export type MetadataGetEntitiesParams =
     | MetadataGetEntitiesWorkspaceParams
     | MetadataGetEntitiesUserParams
-    | MetadataGetEntitiesThemeParams;
+    | MetadataGetEntitiesThemeParams
+    | MetadataGetEntitiesColorPaletteParams;
 
 /**
  * Common parameters for all API client getEntities* parameters.
@@ -106,7 +117,8 @@ export type MetadataGetEntitiesResult =
     | JsonApiFactOutList
     | JsonApiFilterContextOutList
     | JsonApiApiTokenOutList
-    | JsonApiThemeOutList;
+    | JsonApiThemeOutList
+    | JsonApiColorPaletteOutList;
 
 /**
  * All API client getEntities* functions follow this signature.
@@ -129,7 +141,7 @@ export class MetadataUtilities {
      * retrieve all pages from the metadata.
      *
      * The parameters are passed to the function as is. The options will be used as a 'template'. If the options specify
-     * page `size`, it will be retained and used for paging. Otherwise the size will be set to a default value (250). The
+     * page `size`, it will be retained and used for paging. Otherwise, the size will be set to a default value (250). The
      * `page` number will be added dynamically upon each page request.
      *
      * @param client - API client to use, this is required so that function can correctly bind 'this' for
@@ -173,7 +185,7 @@ export class MetadataUtilities {
     /**
      * This function merges multiple pages containing metadata entities into a single page. The entity data from different
      * pages are concatenated. The side-loaded entities are concatenated and their uniqueness is ensured so that same
-     * entity sideloaded on multiple pages only appears once.
+     * entity side-loaded on multiple pages only appears once.
      *
      * The merges result WILL NOT contain any links section.
      *

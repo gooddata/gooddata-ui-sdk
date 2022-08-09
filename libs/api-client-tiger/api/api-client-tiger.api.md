@@ -6453,6 +6453,11 @@ export interface MetadataConfigurationParameters {
 }
 
 // @internal
+export type MetadataGetEntitiesColorPaletteParams = {
+    filter?: string;
+};
+
+// @internal
 export type MetadataGetEntitiesFn<T extends MetadataGetEntitiesResult, P extends MetadataGetEntitiesParams> = (params: P, options: MetadataGetEntitiesOptions) => AxiosPromise<T>;
 
 // @internal
@@ -6468,10 +6473,10 @@ export type MetadataGetEntitiesOptions = {
 };
 
 // @internal
-export type MetadataGetEntitiesParams = MetadataGetEntitiesWorkspaceParams | MetadataGetEntitiesUserParams | MetadataGetEntitiesThemeParams;
+export type MetadataGetEntitiesParams = MetadataGetEntitiesWorkspaceParams | MetadataGetEntitiesUserParams | MetadataGetEntitiesThemeParams | MetadataGetEntitiesColorPaletteParams;
 
 // @internal
-export type MetadataGetEntitiesResult = JsonApiVisualizationObjectOutList | JsonApiAnalyticalDashboardOutList | JsonApiDashboardPluginOutList | JsonApiDatasetOutList | JsonApiAttributeOutList | JsonApiLabelOutList | JsonApiMetricOutList | JsonApiFactOutList | JsonApiFilterContextOutList | JsonApiApiTokenOutList | JsonApiThemeOutList;
+export type MetadataGetEntitiesResult = JsonApiVisualizationObjectOutList | JsonApiAnalyticalDashboardOutList | JsonApiDashboardPluginOutList | JsonApiDatasetOutList | JsonApiAttributeOutList | JsonApiLabelOutList | JsonApiMetricOutList | JsonApiFactOutList | JsonApiFilterContextOutList | JsonApiApiTokenOutList | JsonApiThemeOutList | JsonApiColorPaletteOutList;
 
 // @internal
 export type MetadataGetEntitiesThemeParams = {

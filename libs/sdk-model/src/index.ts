@@ -332,6 +332,8 @@ export {
     isRgbColor,
     colorPaletteItemToRgb,
     colorPaletteToColors,
+    IColorPaletteMetadataObject,
+    IColorPaletteDefinition,
 } from "./colors";
 
 export {
