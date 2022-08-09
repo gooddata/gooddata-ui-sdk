@@ -65,20 +65,21 @@ function transformDimension(
                  */
                 return {
                     measureGroupHeader: {
-                        items: h.measureGroupHeaders.map((m) => {
-                            const ref = simpleMeasureRefs[m.localIdentifier];
-                            const identifier = isIdentifierRef(ref) ? ref.identifier : undefined;
+                        items:
+                            h.measureGroupHeaders?.map((m) => {
+                                const ref = simpleMeasureRefs[m.localIdentifier];
+                                const identifier = isIdentifierRef(ref) ? ref.identifier : undefined;
 
-                            return {
-                                measureHeaderItem: {
-                                    localIdentifier: m.localIdentifier,
-                                    name: m.name ?? m.localIdentifier,
-                                    format: m.format ?? DEFAULT_FORMAT,
-                                    identifier,
-                                    ref,
-                                },
-                            };
-                        }),
+                                return {
+                                    measureHeaderItem: {
+                                        localIdentifier: m.localIdentifier,
+                                        name: m.name ?? m.localIdentifier,
+                                        format: m.format ?? DEFAULT_FORMAT,
+                                        identifier,
+                                        ref,
+                                    },
+                                };
+                            }) || [],
                     },
                 };
             }

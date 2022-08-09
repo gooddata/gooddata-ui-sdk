@@ -25,6 +25,39 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from './base';
 
 /**
+ *
+ * @export
+ * @interface ApiEntitlement
+ */
+export interface ApiEntitlement {
+    /**
+     *
+     * @type {string}
+     * @memberof ApiEntitlement
+     */
+    name: ApiEntitlementNameEnum;
+    /**
+     *
+     * @type {string}
+     * @memberof ApiEntitlement
+     */
+    value?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof ApiEntitlement
+     */
+    expiry?: string;
+}
+
+export const ApiEntitlementNameEnum = {
+    CUSTOM_THEMING: "CustomTheming",
+    TIER: "Tier",
+} as const;
+
+export type ApiEntitlementNameEnum = typeof ApiEntitlementNameEnum[keyof typeof ApiEntitlementNameEnum];
+
+/**
  * Identifier of a user or user-group.
  * @export
  * @interface AssigneeIdentifier
@@ -320,6 +353,25 @@ export const DeclarativeColumnDataTypeEnum = {
 export type DeclarativeColumnDataTypeEnum =
     typeof DeclarativeColumnDataTypeEnum[keyof typeof DeclarativeColumnDataTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface DeclarativeCspDirective
+ */
+export interface DeclarativeCspDirective {
+    /**
+     *
+     * @type {string}
+     * @memberof DeclarativeCspDirective
+     */
+    directive: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof DeclarativeCspDirective
+     */
+    sources: Array<string>;
+}
 /**
  *
  * @export
@@ -931,6 +983,12 @@ export interface DeclarativeOrganizationInfo {
      * @memberof DeclarativeOrganizationInfo
      */
     themes?: Array<DeclarativeTheme>;
+    /**
+     * A list of CSP directives.
+     * @type {Array<DeclarativeCspDirective>}
+     * @memberof DeclarativeOrganizationInfo
+     */
+    cspDirectives?: Array<DeclarativeCspDirective>;
 }
 /**
  * Definition of a permission assigned to a user/user-group.
@@ -1039,6 +1097,7 @@ export interface DeclarativeSingleWorkspacePermission {
 export const DeclarativeSingleWorkspacePermissionNameEnum = {
     MANAGE: "MANAGE",
     ANALYZE: "ANALYZE",
+    EXPORT: "EXPORT",
     VIEW: "VIEW",
 } as const;
 
@@ -1575,6 +1634,28 @@ export interface DependentEntitiesResponse {
      */
     graph: DependentEntitiesGraph;
 }
+/**
+ *
+ * @export
+ * @interface EntitlementsRequest
+ */
+export interface EntitlementsRequest {
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof EntitlementsRequest
+     */
+    entitlementsName: Array<EntitlementsRequestEntitlementsNameEnum>;
+}
+
+export const EntitlementsRequestEntitlementsNameEnum = {
+    CUSTOM_THEMING: "CustomTheming",
+    TIER: "Tier",
+} as const;
+
+export type EntitlementsRequestEntitlementsNameEnum =
+    typeof EntitlementsRequestEntitlementsNameEnum[keyof typeof EntitlementsRequestEntitlementsNameEnum];
+
 /**
  *
  * @export
@@ -2642,6 +2723,246 @@ export type JsonApiAttributeOutWithLinksTypeEnum =
  */
 export type JsonApiAttributeToOneLinkage = JsonApiAttributeLinkage;
 
+/**
+ * JSON:API representation of colorPalette entity.
+ * @export
+ * @interface JsonApiColorPaletteIn
+ */
+export interface JsonApiColorPaletteIn {
+    /**
+     * Object type
+     * @type {string}
+     * @memberof JsonApiColorPaletteIn
+     */
+    type: JsonApiColorPaletteInTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiColorPaletteIn
+     */
+    id: string;
+    /**
+     *
+     * @type {JsonApiColorPaletteOutAttributes}
+     * @memberof JsonApiColorPaletteIn
+     */
+    attributes: JsonApiColorPaletteOutAttributes;
+}
+
+export const JsonApiColorPaletteInTypeEnum = {
+    COLOR_PALETTE: "colorPalette",
+} as const;
+
+export type JsonApiColorPaletteInTypeEnum =
+    typeof JsonApiColorPaletteInTypeEnum[keyof typeof JsonApiColorPaletteInTypeEnum];
+
+/**
+ *
+ * @export
+ * @interface JsonApiColorPaletteInDocument
+ */
+export interface JsonApiColorPaletteInDocument {
+    /**
+     *
+     * @type {JsonApiColorPaletteIn}
+     * @memberof JsonApiColorPaletteInDocument
+     */
+    data: JsonApiColorPaletteIn;
+}
+/**
+ * JSON:API representation of colorPalette entity.
+ * @export
+ * @interface JsonApiColorPaletteOut
+ */
+export interface JsonApiColorPaletteOut {
+    /**
+     * Object type
+     * @type {string}
+     * @memberof JsonApiColorPaletteOut
+     */
+    type: JsonApiColorPaletteOutTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiColorPaletteOut
+     */
+    id: string;
+    /**
+     *
+     * @type {JsonApiColorPaletteOutAttributes}
+     * @memberof JsonApiColorPaletteOut
+     */
+    attributes: JsonApiColorPaletteOutAttributes;
+}
+
+export const JsonApiColorPaletteOutTypeEnum = {
+    COLOR_PALETTE: "colorPalette",
+} as const;
+
+export type JsonApiColorPaletteOutTypeEnum =
+    typeof JsonApiColorPaletteOutTypeEnum[keyof typeof JsonApiColorPaletteOutTypeEnum];
+
+/**
+ *
+ * @export
+ * @interface JsonApiColorPaletteOutAttributes
+ */
+export interface JsonApiColorPaletteOutAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiColorPaletteOutAttributes
+     */
+    name: string;
+    /**
+     *
+     * @type {object}
+     * @memberof JsonApiColorPaletteOutAttributes
+     */
+    content: object;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiColorPaletteOutDocument
+ */
+export interface JsonApiColorPaletteOutDocument {
+    /**
+     *
+     * @type {JsonApiColorPaletteOut}
+     * @memberof JsonApiColorPaletteOutDocument
+     */
+    data: JsonApiColorPaletteOut;
+    /**
+     *
+     * @type {ObjectLinks}
+     * @memberof JsonApiColorPaletteOutDocument
+     */
+    links?: ObjectLinks;
+}
+/**
+ * A JSON:API document with a list of resources
+ * @export
+ * @interface JsonApiColorPaletteOutList
+ */
+export interface JsonApiColorPaletteOutList {
+    /**
+     *
+     * @type {Array<JsonApiColorPaletteOutWithLinks>}
+     * @memberof JsonApiColorPaletteOutList
+     */
+    data: Array<JsonApiColorPaletteOutWithLinks>;
+    /**
+     *
+     * @type {ListLinks}
+     * @memberof JsonApiColorPaletteOutList
+     */
+    links?: ListLinks;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiColorPaletteOutWithLinks
+ */
+export interface JsonApiColorPaletteOutWithLinks {
+    /**
+     * Object type
+     * @type {string}
+     * @memberof JsonApiColorPaletteOutWithLinks
+     */
+    type: JsonApiColorPaletteOutWithLinksTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiColorPaletteOutWithLinks
+     */
+    id: string;
+    /**
+     *
+     * @type {JsonApiColorPaletteOutAttributes}
+     * @memberof JsonApiColorPaletteOutWithLinks
+     */
+    attributes: JsonApiColorPaletteOutAttributes;
+    /**
+     *
+     * @type {ObjectLinks}
+     * @memberof JsonApiColorPaletteOutWithLinks
+     */
+    links?: ObjectLinks;
+}
+
+export const JsonApiColorPaletteOutWithLinksTypeEnum = {
+    COLOR_PALETTE: "colorPalette",
+} as const;
+
+export type JsonApiColorPaletteOutWithLinksTypeEnum =
+    typeof JsonApiColorPaletteOutWithLinksTypeEnum[keyof typeof JsonApiColorPaletteOutWithLinksTypeEnum];
+
+/**
+ * JSON:API representation of patching colorPalette entity.
+ * @export
+ * @interface JsonApiColorPalettePatch
+ */
+export interface JsonApiColorPalettePatch {
+    /**
+     * Object type
+     * @type {string}
+     * @memberof JsonApiColorPalettePatch
+     */
+    type: JsonApiColorPalettePatchTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiColorPalettePatch
+     */
+    id: string;
+    /**
+     *
+     * @type {JsonApiColorPalettePatchAttributes}
+     * @memberof JsonApiColorPalettePatch
+     */
+    attributes: JsonApiColorPalettePatchAttributes;
+}
+
+export const JsonApiColorPalettePatchTypeEnum = {
+    COLOR_PALETTE: "colorPalette",
+} as const;
+
+export type JsonApiColorPalettePatchTypeEnum =
+    typeof JsonApiColorPalettePatchTypeEnum[keyof typeof JsonApiColorPalettePatchTypeEnum];
+
+/**
+ *
+ * @export
+ * @interface JsonApiColorPalettePatchAttributes
+ */
+export interface JsonApiColorPalettePatchAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiColorPalettePatchAttributes
+     */
+    name?: string;
+    /**
+     *
+     * @type {object}
+     * @memberof JsonApiColorPalettePatchAttributes
+     */
+    content?: object;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiColorPalettePatchDocument
+ */
+export interface JsonApiColorPalettePatchDocument {
+    /**
+     *
+     * @type {JsonApiColorPalettePatch}
+     * @memberof JsonApiColorPalettePatchDocument
+     */
+    data: JsonApiColorPalettePatch;
+}
 /**
  * JSON:API representation of cookieSecurityConfiguration entity.
  * @export
@@ -6095,10 +6416,10 @@ export interface JsonApiOrganizationSettingIn {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceSettingInAttributes}
+     * @type {JsonApiOrganizationSettingOutAttributes}
      * @memberof JsonApiOrganizationSettingIn
      */
-    attributes?: JsonApiWorkspaceSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingOutAttributes;
 }
 
 export const JsonApiOrganizationSettingInTypeEnum = {
@@ -6141,10 +6462,10 @@ export interface JsonApiOrganizationSettingOut {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceSettingInAttributes}
+     * @type {JsonApiOrganizationSettingOutAttributes}
      * @memberof JsonApiOrganizationSettingOut
      */
-    attributes?: JsonApiWorkspaceSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingOutAttributes;
 }
 
 export const JsonApiOrganizationSettingOutTypeEnum = {
@@ -6154,6 +6475,19 @@ export const JsonApiOrganizationSettingOutTypeEnum = {
 export type JsonApiOrganizationSettingOutTypeEnum =
     typeof JsonApiOrganizationSettingOutTypeEnum[keyof typeof JsonApiOrganizationSettingOutTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiOrganizationSettingOutAttributes
+ */
+export interface JsonApiOrganizationSettingOutAttributes {
+    /**
+     *
+     * @type {object}
+     * @memberof JsonApiOrganizationSettingOutAttributes
+     */
+    content?: object;
+}
 /**
  *
  * @export
@@ -6212,10 +6546,10 @@ export interface JsonApiOrganizationSettingOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceSettingInAttributes}
+     * @type {JsonApiOrganizationSettingOutAttributes}
      * @memberof JsonApiOrganizationSettingOutWithLinks
      */
-    attributes?: JsonApiWorkspaceSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingOutAttributes;
     /**
      *
      * @type {ObjectLinks}
@@ -6251,10 +6585,10 @@ export interface JsonApiOrganizationSettingPatch {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceSettingInAttributes}
+     * @type {JsonApiOrganizationSettingOutAttributes}
      * @memberof JsonApiOrganizationSettingPatch
      */
-    attributes?: JsonApiWorkspaceSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingOutAttributes;
 }
 
 export const JsonApiOrganizationSettingPatchTypeEnum = {
@@ -6297,10 +6631,10 @@ export interface JsonApiThemeIn {
     id: string;
     /**
      *
-     * @type {JsonApiThemeOutAttributes}
+     * @type {JsonApiColorPaletteOutAttributes}
      * @memberof JsonApiThemeIn
      */
-    attributes: JsonApiThemeOutAttributes;
+    attributes: JsonApiColorPaletteOutAttributes;
 }
 
 export const JsonApiThemeInTypeEnum = {
@@ -6342,10 +6676,10 @@ export interface JsonApiThemeOut {
     id: string;
     /**
      *
-     * @type {JsonApiThemeOutAttributes}
+     * @type {JsonApiColorPaletteOutAttributes}
      * @memberof JsonApiThemeOut
      */
-    attributes: JsonApiThemeOutAttributes;
+    attributes: JsonApiColorPaletteOutAttributes;
 }
 
 export const JsonApiThemeOutTypeEnum = {
@@ -6354,25 +6688,6 @@ export const JsonApiThemeOutTypeEnum = {
 
 export type JsonApiThemeOutTypeEnum = typeof JsonApiThemeOutTypeEnum[keyof typeof JsonApiThemeOutTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiThemeOutAttributes
- */
-export interface JsonApiThemeOutAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiThemeOutAttributes
-     */
-    name: string;
-    /**
-     *
-     * @type {object}
-     * @memberof JsonApiThemeOutAttributes
-     */
-    content: object;
-}
 /**
  *
  * @export
@@ -6431,10 +6746,10 @@ export interface JsonApiThemeOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiThemeOutAttributes}
+     * @type {JsonApiColorPaletteOutAttributes}
      * @memberof JsonApiThemeOutWithLinks
      */
-    attributes: JsonApiThemeOutAttributes;
+    attributes: JsonApiColorPaletteOutAttributes;
     /**
      *
      * @type {ObjectLinks}
@@ -6470,10 +6785,10 @@ export interface JsonApiThemePatch {
     id: string;
     /**
      *
-     * @type {JsonApiThemePatchAttributes}
+     * @type {JsonApiColorPalettePatchAttributes}
      * @memberof JsonApiThemePatch
      */
-    attributes: JsonApiThemePatchAttributes;
+    attributes: JsonApiColorPalettePatchAttributes;
 }
 
 export const JsonApiThemePatchTypeEnum = {
@@ -6483,25 +6798,6 @@ export const JsonApiThemePatchTypeEnum = {
 export type JsonApiThemePatchTypeEnum =
     typeof JsonApiThemePatchTypeEnum[keyof typeof JsonApiThemePatchTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiThemePatchAttributes
- */
-export interface JsonApiThemePatchAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiThemePatchAttributes
-     */
-    name?: string;
-    /**
-     *
-     * @type {object}
-     * @memberof JsonApiThemePatchAttributes
-     */
-    content?: object;
-}
 /**
  *
  * @export
@@ -7097,10 +7393,10 @@ export interface JsonApiUserSettingIn {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceSettingInAttributes}
+     * @type {JsonApiOrganizationSettingOutAttributes}
      * @memberof JsonApiUserSettingIn
      */
-    attributes?: JsonApiWorkspaceSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingOutAttributes;
 }
 
 export const JsonApiUserSettingInTypeEnum = {
@@ -7143,10 +7439,10 @@ export interface JsonApiUserSettingOut {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceSettingInAttributes}
+     * @type {JsonApiOrganizationSettingOutAttributes}
      * @memberof JsonApiUserSettingOut
      */
-    attributes?: JsonApiWorkspaceSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingOutAttributes;
 }
 
 export const JsonApiUserSettingOutTypeEnum = {
@@ -7214,10 +7510,10 @@ export interface JsonApiUserSettingOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceSettingInAttributes}
+     * @type {JsonApiOrganizationSettingOutAttributes}
      * @memberof JsonApiUserSettingOutWithLinks
      */
-    attributes?: JsonApiWorkspaceSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingOutAttributes;
     /**
      *
      * @type {ObjectLinks}
@@ -8244,6 +8540,7 @@ export interface JsonApiWorkspaceOutMeta {
 export const JsonApiWorkspaceOutMetaPermissionsEnum = {
     MANAGE: "MANAGE",
     ANALYZE: "ANALYZE",
+    EXPORT: "EXPORT",
     VIEW: "VIEW",
 } as const;
 
@@ -8418,10 +8715,10 @@ export interface JsonApiWorkspaceSettingIn {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceSettingInAttributes}
+     * @type {JsonApiOrganizationSettingOutAttributes}
      * @memberof JsonApiWorkspaceSettingIn
      */
-    attributes?: JsonApiWorkspaceSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingOutAttributes;
 }
 
 export const JsonApiWorkspaceSettingInTypeEnum = {
@@ -8431,19 +8728,6 @@ export const JsonApiWorkspaceSettingInTypeEnum = {
 export type JsonApiWorkspaceSettingInTypeEnum =
     typeof JsonApiWorkspaceSettingInTypeEnum[keyof typeof JsonApiWorkspaceSettingInTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiWorkspaceSettingInAttributes
- */
-export interface JsonApiWorkspaceSettingInAttributes {
-    /**
-     *
-     * @type {object}
-     * @memberof JsonApiWorkspaceSettingInAttributes
-     */
-    content?: object;
-}
 /**
  *
  * @export
@@ -8477,10 +8761,10 @@ export interface JsonApiWorkspaceSettingOut {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceSettingInAttributes}
+     * @type {JsonApiOrganizationSettingOutAttributes}
      * @memberof JsonApiWorkspaceSettingOut
      */
-    attributes?: JsonApiWorkspaceSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingOutAttributes;
 }
 
 export const JsonApiWorkspaceSettingOutTypeEnum = {
@@ -8548,10 +8832,10 @@ export interface JsonApiWorkspaceSettingOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceSettingInAttributes}
+     * @type {JsonApiOrganizationSettingOutAttributes}
      * @memberof JsonApiWorkspaceSettingOutWithLinks
      */
-    attributes?: JsonApiWorkspaceSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingOutAttributes;
     /**
      *
      * @type {ObjectLinks}
@@ -8587,10 +8871,10 @@ export interface JsonApiWorkspaceSettingPatch {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceSettingInAttributes}
+     * @type {JsonApiOrganizationSettingOutAttributes}
      * @memberof JsonApiWorkspaceSettingPatch
      */
-    attributes?: JsonApiWorkspaceSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingOutAttributes;
 }
 
 export const JsonApiWorkspaceSettingPatchTypeEnum = {
@@ -8993,6 +9277,82 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Resolves values of available entitlements for the organization.
+         * @summary Values for all public entitlements.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        resolveAllEntitlements: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/actions/resolveEntitlements`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Resolves values for requested entitlements in the organization.
+         * @summary Values for requested public entitlements.
+         * @param {EntitlementsRequest} entitlementsRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        resolveRequestedEntitlements: async (
+            entitlementsRequest: EntitlementsRequest,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'entitlementsRequest' is not null or undefined
+            assertParamExists("resolveRequestedEntitlements", "entitlementsRequest", entitlementsRequest);
+            const localVarPath = `/api/v1/actions/resolveEntitlements`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof entitlementsRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(entitlementsRequest !== undefined ? entitlementsRequest : {})
+                : entitlementsRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Resolves values for all settings in a workspace by current user, workspace, organization, or default settings.
          * @summary Values for all settings.
          * @param {string} workspaceId
@@ -9170,6 +9530,35 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Resolves values of available entitlements for the organization.
+         * @summary Values for all public entitlements.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async resolveAllEntitlements(
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ApiEntitlement>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.resolveAllEntitlements(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Resolves values for requested entitlements in the organization.
+         * @summary Values for requested public entitlements.
+         * @param {EntitlementsRequest} entitlementsRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async resolveRequestedEntitlements(
+            entitlementsRequest: EntitlementsRequest,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ApiEntitlement>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.resolveRequestedEntitlements(
+                entitlementsRequest,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Resolves values for all settings in a workspace by current user, workspace, organization, or default settings.
          * @summary Values for all settings.
          * @param {string} workspaceId
@@ -9289,6 +9678,30 @@ export const ActionsApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
+         * Resolves values of available entitlements for the organization.
+         * @summary Values for all public entitlements.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        resolveAllEntitlements(options?: AxiosRequestConfig): AxiosPromise<Array<ApiEntitlement>> {
+            return localVarFp.resolveAllEntitlements(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Resolves values for requested entitlements in the organization.
+         * @summary Values for requested public entitlements.
+         * @param {ActionsApiResolveRequestedEntitlementsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        resolveRequestedEntitlements(
+            requestParameters: ActionsApiResolveRequestedEntitlementsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<Array<ApiEntitlement>> {
+            return localVarFp
+                .resolveRequestedEntitlements(requestParameters.entitlementsRequest, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * Resolves values for all settings in a workspace by current user, workspace, organization, or default settings.
          * @summary Values for all settings.
          * @param {ActionsApiWorkspaceResolveAllSettingsRequest} requestParameters Request parameters.
@@ -9382,6 +9795,28 @@ export interface ActionsApiInterface {
         requestParameters: ActionsApiRegisterUploadNotificationRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
+
+    /**
+     * Resolves values of available entitlements for the organization.
+     * @summary Values for all public entitlements.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    resolveAllEntitlements(options?: AxiosRequestConfig): AxiosPromise<Array<ApiEntitlement>>;
+
+    /**
+     * Resolves values for requested entitlements in the organization.
+     * @summary Values for requested public entitlements.
+     * @param {ActionsApiResolveRequestedEntitlementsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    resolveRequestedEntitlements(
+        requestParameters: ActionsApiResolveRequestedEntitlementsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<Array<ApiEntitlement>>;
 
     /**
      * Resolves values for all settings in a workspace by current user, workspace, organization, or default settings.
@@ -9478,6 +9913,20 @@ export interface ActionsApiRegisterUploadNotificationRequest {
      * @memberof ActionsApiRegisterUploadNotification
      */
     readonly dataSourceId: string;
+}
+
+/**
+ * Request parameters for resolveRequestedEntitlements operation in ActionsApi.
+ * @export
+ * @interface ActionsApiResolveRequestedEntitlementsRequest
+ */
+export interface ActionsApiResolveRequestedEntitlementsRequest {
+    /**
+     *
+     * @type {EntitlementsRequest}
+     * @memberof ActionsApiResolveRequestedEntitlements
+     */
+    readonly entitlementsRequest: EntitlementsRequest;
 }
 
 /**
@@ -9595,6 +10044,36 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     ) {
         return ActionsApiFp(this.configuration)
             .registerUploadNotification(requestParameters.dataSourceId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Resolves values of available entitlements for the organization.
+     * @summary Values for all public entitlements.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public resolveAllEntitlements(options?: AxiosRequestConfig) {
+        return ActionsApiFp(this.configuration)
+            .resolveAllEntitlements(options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Resolves values for requested entitlements in the organization.
+     * @summary Values for requested public entitlements.
+     * @param {ActionsApiResolveRequestedEntitlementsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public resolveRequestedEntitlements(
+        requestParameters: ActionsApiResolveRequestedEntitlementsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .resolveRequestedEntitlements(requestParameters.entitlementsRequest, options)
             .then((request) => request(this.axios, this.basePath));
     }
 
@@ -9766,6 +10245,56 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             localVarRequestOptions.data = needsSerialization
                 ? JSON.stringify(jsonApiApiTokenInDocument !== undefined ? jsonApiApiTokenInDocument : {})
                 : jsonApiApiTokenInDocument || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {JsonApiColorPaletteInDocument} jsonApiColorPaletteInDocument
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createEntityColorPalettes: async (
+            jsonApiColorPaletteInDocument: JsonApiColorPaletteInDocument,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'jsonApiColorPaletteInDocument' is not null or undefined
+            assertParamExists(
+                "createEntityColorPalettes",
+                "jsonApiColorPaletteInDocument",
+                jsonApiColorPaletteInDocument,
+            );
+            const localVarPath = `/api/v1/entities/colorPalettes`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof jsonApiColorPaletteInDocument !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      jsonApiColorPaletteInDocument !== undefined ? jsonApiColorPaletteInDocument : {},
+                  )
+                : jsonApiColorPaletteInDocument || "";
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -10650,6 +11179,51 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        deleteEntityColorPalettes: async (
+            id: string,
+            filter?: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists("deleteEntityColorPalettes", "id", id);
+            const localVarPath = `/api/v1/entities/colorPalettes/{id}`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} id
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         deleteEntityCspDirectives: async (
             id: string,
             filter?: string,
@@ -11302,7 +11876,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {Array<'visualizationObjects' | 'analyticalDashboards' | 'labels' | 'metrics' | 'datasets' | 'filterContexts' | 'dashboardPlugins' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -11392,7 +11966,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -11457,7 +12031,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {Array<'datasets' | 'labels' | 'dataset' | 'defaultView' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -11537,7 +12111,63 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllEntitiesColorPalettes: async (
+            filter?: string,
+            page?: number,
+            size?: number,
+            sort?: Array<string>,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/entities/colorPalettes`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter["page"] = page;
+            }
+
+            if (size !== undefined) {
+                localVarQueryParameter["size"] = size;
+            }
+
+            if (sort) {
+                localVarQueryParameter["sort"] = sort;
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {number} [page] Zero-based page index (0..N)
+         * @param {number} [size] The size of the page to be returned
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -11595,7 +12225,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -11670,7 +12300,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {Array<'permissions' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -11733,7 +12363,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -11795,7 +12425,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {Array<'permissions' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -11860,7 +12490,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {Array<'attributes' | 'facts' | 'datasets' | 'references' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -11940,7 +12570,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -11999,7 +12629,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {Array<'datasets' | 'dataset' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -12082,7 +12712,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {Array<'attributes' | 'datasets' | 'labels' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -12165,7 +12795,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {Array<'attributes' | 'attribute' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -12248,7 +12878,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -12328,7 +12958,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -12384,7 +13014,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -12441,7 +13071,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {Array<'userGroups' | 'parents' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -12503,7 +13133,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -12566,7 +13196,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {Array<'userGroups' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -12630,7 +13260,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -12713,7 +13343,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {Array<'workspaceDataFilters' | 'workspaceDataFilter' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -12797,7 +13427,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {Array<'workspaceDataFilterSettings' | 'filterSettings' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -12879,7 +13509,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -12955,7 +13585,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {Array<'workspaces' | 'parent' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {Array<'config' | 'permissions' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -13245,6 +13875,51 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 localVarHeaderParameter["X-GDC-VALIDATE-RELATIONS"] = String(
                     JSON.stringify(xGDCVALIDATERELATIONS),
                 );
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} id
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEntityColorPalettes: async (
+            id: string,
+            filter?: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists("getEntityColorPalettes", "id", id);
+            const localVarPath = `/api/v1/entities/colorPalettes/{id}`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
             }
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -14633,6 +15308,69 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          *
          * @param {string} id
+         * @param {JsonApiColorPalettePatchDocument} jsonApiColorPalettePatchDocument
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchEntityColorPalettes: async (
+            id: string,
+            jsonApiColorPalettePatchDocument: JsonApiColorPalettePatchDocument,
+            filter?: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists("patchEntityColorPalettes", "id", id);
+            // verify required parameter 'jsonApiColorPalettePatchDocument' is not null or undefined
+            assertParamExists(
+                "patchEntityColorPalettes",
+                "jsonApiColorPalettePatchDocument",
+                jsonApiColorPalettePatchDocument,
+            );
+            const localVarPath = `/api/v1/entities/colorPalettes/{id}`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof jsonApiColorPalettePatchDocument !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      jsonApiColorPalettePatchDocument !== undefined ? jsonApiColorPalettePatchDocument : {},
+                  )
+                : jsonApiColorPalettePatchDocument || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} id
          * @param {JsonApiCookieSecurityConfigurationPatchDocument} jsonApiCookieSecurityConfigurationPatchDocument
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
@@ -15787,6 +16525,69 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          *
          * @param {string} id
+         * @param {JsonApiColorPaletteInDocument} jsonApiColorPaletteInDocument
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateEntityColorPalettes: async (
+            id: string,
+            jsonApiColorPaletteInDocument: JsonApiColorPaletteInDocument,
+            filter?: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists("updateEntityColorPalettes", "id", id);
+            // verify required parameter 'jsonApiColorPaletteInDocument' is not null or undefined
+            assertParamExists(
+                "updateEntityColorPalettes",
+                "jsonApiColorPaletteInDocument",
+                jsonApiColorPaletteInDocument,
+            );
+            const localVarPath = `/api/v1/entities/colorPalettes/{id}`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "PUT", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof jsonApiColorPaletteInDocument !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      jsonApiColorPaletteInDocument !== undefined ? jsonApiColorPaletteInDocument : {},
+                  )
+                : jsonApiColorPaletteInDocument || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} id
          * @param {JsonApiCookieSecurityConfigurationInDocument} jsonApiCookieSecurityConfigurationInDocument
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
@@ -16911,6 +17712,24 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         },
         /**
          *
+         * @param {JsonApiColorPaletteInDocument} jsonApiColorPaletteInDocument
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createEntityColorPalettes(
+            jsonApiColorPaletteInDocument: JsonApiColorPaletteInDocument,
+            options?: AxiosRequestConfig,
+        ): Promise<
+            (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiColorPaletteOutDocument>
+        > {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createEntityColorPalettes(
+                jsonApiColorPaletteInDocument,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
          * @param {JsonApiCspDirectiveInDocument} jsonApiCspDirectiveInDocument
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -17242,6 +18061,25 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        async deleteEntityColorPalettes(
+            id: string,
+            filter?: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteEntityColorPalettes(
+                id,
+                filter,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} id
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         async deleteEntityCspDirectives(
             id: string,
             filter?: string,
@@ -17522,7 +18360,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {Array<'visualizationObjects' | 'analyticalDashboards' | 'labels' | 'metrics' | 'datasets' | 'filterContexts' | 'dashboardPlugins' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -17568,7 +18406,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -17598,7 +18436,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {Array<'datasets' | 'labels' | 'dataset' | 'defaultView' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -17632,7 +18470,32 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAllEntitiesColorPalettes(
+            filter?: string,
+            page?: number,
+            size?: number,
+            sort?: Array<string>,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiColorPaletteOutList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAllEntitiesColorPalettes(
+                filter,
+                page,
+                size,
+                sort,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {number} [page] Zero-based page index (0..N)
+         * @param {number} [size] The size of the page to be returned
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -17659,7 +18522,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -17693,7 +18556,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {Array<'permissions' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -17724,7 +18587,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -17753,7 +18616,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {Array<'permissions' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -17784,7 +18647,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {Array<'attributes' | 'facts' | 'datasets' | 'references' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -17818,7 +18681,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -17846,7 +18709,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {Array<'datasets' | 'dataset' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -17883,7 +18746,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {Array<'attributes' | 'datasets' | 'labels' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -17920,7 +18783,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {Array<'attributes' | 'attribute' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -17957,7 +18820,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -17991,7 +18854,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -18018,7 +18881,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -18044,7 +18907,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {Array<'userGroups' | 'parents' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -18072,7 +18935,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -18100,7 +18963,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {Array<'userGroups' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -18130,7 +18993,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -18169,7 +19032,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {Array<'workspaceDataFilters' | 'workspaceDataFilter' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -18212,7 +19075,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {Array<'workspaceDataFilterSettings' | 'filterSettings' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -18250,7 +19113,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -18285,7 +19148,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {Array<'workspaces' | 'parent' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {Array<'config' | 'permissions' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -18419,6 +19282,27 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 filter,
                 include,
                 xGDCVALIDATERELATIONS,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} id
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getEntityColorPalettes(
+            id: string,
+            filter?: string,
+            options?: AxiosRequestConfig,
+        ): Promise<
+            (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiColorPaletteOutDocument>
+        > {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEntityColorPalettes(
+                id,
+                filter,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -19060,6 +19944,30 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         /**
          *
          * @param {string} id
+         * @param {JsonApiColorPalettePatchDocument} jsonApiColorPalettePatchDocument
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async patchEntityColorPalettes(
+            id: string,
+            jsonApiColorPalettePatchDocument: JsonApiColorPalettePatchDocument,
+            filter?: string,
+            options?: AxiosRequestConfig,
+        ): Promise<
+            (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiColorPaletteOutDocument>
+        > {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchEntityColorPalettes(
+                id,
+                jsonApiColorPalettePatchDocument,
+                filter,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} id
          * @param {JsonApiCookieSecurityConfigurationPatchDocument} jsonApiCookieSecurityConfigurationPatchDocument
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
@@ -19509,6 +20417,30 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 userId,
                 id,
                 jsonApiApiTokenInDocument,
+                filter,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} id
+         * @param {JsonApiColorPaletteInDocument} jsonApiColorPaletteInDocument
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateEntityColorPalettes(
+            id: string,
+            jsonApiColorPaletteInDocument: JsonApiColorPaletteInDocument,
+            filter?: string,
+            options?: AxiosRequestConfig,
+        ): Promise<
+            (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiColorPaletteOutDocument>
+        > {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateEntityColorPalettes(
+                id,
+                jsonApiColorPaletteInDocument,
                 filter,
                 options,
             );
@@ -19988,6 +20920,20 @@ export const EntitiesApiFactory = function (
         },
         /**
          *
+         * @param {EntitiesApiCreateEntityColorPalettesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createEntityColorPalettes(
+            requestParameters: EntitiesApiCreateEntityColorPalettesRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<JsonApiColorPaletteOutDocument> {
+            return localVarFp
+                .createEntityColorPalettes(requestParameters.jsonApiColorPaletteInDocument, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
          * @param {EntitiesApiCreateEntityCspDirectivesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -20265,6 +21211,20 @@ export const EntitiesApiFactory = function (
                     requestParameters.filter,
                     options,
                 )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {EntitiesApiDeleteEntityColorPalettesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteEntityColorPalettes(
+            requestParameters: EntitiesApiDeleteEntityColorPalettesRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .deleteEntityColorPalettes(requestParameters.id, requestParameters.filter, options)
                 .then((request) => request(axios, basePath));
         },
         /**
@@ -20563,6 +21523,26 @@ export const EntitiesApiFactory = function (
                     requestParameters.size,
                     requestParameters.sort,
                     requestParameters.xGDCVALIDATERELATIONS,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {EntitiesApiGetAllEntitiesColorPalettesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllEntitiesColorPalettes(
+            requestParameters: EntitiesApiGetAllEntitiesColorPalettesRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<JsonApiColorPaletteOutList> {
+            return localVarFp
+                .getAllEntitiesColorPalettes(
+                    requestParameters.filter,
+                    requestParameters.page,
+                    requestParameters.size,
+                    requestParameters.sort,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -21114,6 +22094,20 @@ export const EntitiesApiFactory = function (
         },
         /**
          *
+         * @param {EntitiesApiGetEntityColorPalettesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEntityColorPalettes(
+            requestParameters: EntitiesApiGetEntityColorPalettesRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<JsonApiColorPaletteOutDocument> {
+            return localVarFp
+                .getEntityColorPalettes(requestParameters.id, requestParameters.filter, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
          * @param {EntitiesApiGetEntityCookieSecurityConfigurationsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -21586,6 +22580,25 @@ export const EntitiesApiFactory = function (
         },
         /**
          *
+         * @param {EntitiesApiPatchEntityColorPalettesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchEntityColorPalettes(
+            requestParameters: EntitiesApiPatchEntityColorPalettesRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<JsonApiColorPaletteOutDocument> {
+            return localVarFp
+                .patchEntityColorPalettes(
+                    requestParameters.id,
+                    requestParameters.jsonApiColorPalettePatchDocument,
+                    requestParameters.filter,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
          * @param {EntitiesApiPatchEntityCookieSecurityConfigurationsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -21919,6 +22932,25 @@ export const EntitiesApiFactory = function (
                     requestParameters.userId,
                     requestParameters.id,
                     requestParameters.jsonApiApiTokenInDocument,
+                    requestParameters.filter,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {EntitiesApiUpdateEntityColorPalettesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateEntityColorPalettes(
+            requestParameters: EntitiesApiUpdateEntityColorPalettesRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<JsonApiColorPaletteOutDocument> {
+            return localVarFp
+                .updateEntityColorPalettes(
+                    requestParameters.id,
+                    requestParameters.jsonApiColorPaletteInDocument,
                     requestParameters.filter,
                     options,
                 )
@@ -22278,6 +23310,18 @@ export interface EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiCreateEntityColorPalettesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    createEntityColorPalettes(
+        requestParameters: EntitiesApiCreateEntityColorPalettesRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<JsonApiColorPaletteOutDocument>;
+
+    /**
+     *
      * @param {EntitiesApiCreateEntityCspDirectivesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -22465,6 +23509,18 @@ export interface EntitiesApiInterface {
      */
     deleteEntityApiTokens(
         requestParameters: EntitiesApiDeleteEntityApiTokensRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
+
+    /**
+     *
+     * @param {EntitiesApiDeleteEntityColorPalettesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    deleteEntityColorPalettes(
+        requestParameters: EntitiesApiDeleteEntityColorPalettesRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 
@@ -22671,6 +23727,18 @@ export interface EntitiesApiInterface {
         requestParameters: EntitiesApiGetAllEntitiesAttributesRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiAttributeOutList>;
+
+    /**
+     *
+     * @param {EntitiesApiGetAllEntitiesColorPalettesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    getAllEntitiesColorPalettes(
+        requestParameters: EntitiesApiGetAllEntitiesColorPalettesRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<JsonApiColorPaletteOutList>;
 
     /**
      *
@@ -22980,6 +24048,18 @@ export interface EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiGetEntityColorPalettesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    getEntityColorPalettes(
+        requestParameters: EntitiesApiGetEntityColorPalettesRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<JsonApiColorPaletteOutDocument>;
+
+    /**
+     *
      * @param {EntitiesApiGetEntityCookieSecurityConfigurationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -23281,6 +24361,18 @@ export interface EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiPatchEntityColorPalettesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    patchEntityColorPalettes(
+        requestParameters: EntitiesApiPatchEntityColorPalettesRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<JsonApiColorPaletteOutDocument>;
+
+    /**
+     *
      * @param {EntitiesApiPatchEntityCookieSecurityConfigurationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -23482,6 +24574,18 @@ export interface EntitiesApiInterface {
         requestParameters: EntitiesApiUpdateEntityApiTokensRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiApiTokenOutDocument>;
+
+    /**
+     *
+     * @param {EntitiesApiUpdateEntityColorPalettesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    updateEntityColorPalettes(
+        requestParameters: EntitiesApiUpdateEntityColorPalettesRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<JsonApiColorPaletteOutDocument>;
 
     /**
      *
@@ -23732,6 +24836,20 @@ export interface EntitiesApiCreateEntityApiTokensRequest {
      * @memberof EntitiesApiCreateEntityApiTokens
      */
     readonly jsonApiApiTokenInDocument: JsonApiApiTokenInDocument;
+}
+
+/**
+ * Request parameters for createEntityColorPalettes operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiCreateEntityColorPalettesRequest
+ */
+export interface EntitiesApiCreateEntityColorPalettesRequest {
+    /**
+     *
+     * @type {JsonApiColorPaletteInDocument}
+     * @memberof EntitiesApiCreateEntityColorPalettes
+     */
+    readonly jsonApiColorPaletteInDocument: JsonApiColorPaletteInDocument;
 }
 
 /**
@@ -24080,6 +25198,27 @@ export interface EntitiesApiDeleteEntityApiTokensRequest {
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiDeleteEntityApiTokens
+     */
+    readonly filter?: string;
+}
+
+/**
+ * Request parameters for deleteEntityColorPalettes operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiDeleteEntityColorPalettesRequest
+ */
+export interface EntitiesApiDeleteEntityColorPalettesRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiDeleteEntityColorPalettes
+     */
+    readonly id: string;
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiDeleteEntityColorPalettes
      */
     readonly filter?: string;
 }
@@ -24485,7 +25624,7 @@ export interface EntitiesApiGetAllEntitiesAnalyticalDashboardsRequest {
     readonly size?: number;
 
     /**
-     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
      * @type {Array<string>}
      * @memberof EntitiesApiGetAllEntitiesAnalyticalDashboards
      */
@@ -24534,7 +25673,7 @@ export interface EntitiesApiGetAllEntitiesApiTokensRequest {
     readonly size?: number;
 
     /**
-     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
      * @type {Array<string>}
      * @memberof EntitiesApiGetAllEntitiesApiTokens
      */
@@ -24590,7 +25729,7 @@ export interface EntitiesApiGetAllEntitiesAttributesRequest {
     readonly size?: number;
 
     /**
-     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
      * @type {Array<string>}
      * @memberof EntitiesApiGetAllEntitiesAttributes
      */
@@ -24602,6 +25741,41 @@ export interface EntitiesApiGetAllEntitiesAttributesRequest {
      * @memberof EntitiesApiGetAllEntitiesAttributes
      */
     readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+/**
+ * Request parameters for getAllEntitiesColorPalettes operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiGetAllEntitiesColorPalettesRequest
+ */
+export interface EntitiesApiGetAllEntitiesColorPalettesRequest {
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiGetAllEntitiesColorPalettes
+     */
+    readonly filter?: string;
+
+    /**
+     * Zero-based page index (0..N)
+     * @type {number}
+     * @memberof EntitiesApiGetAllEntitiesColorPalettes
+     */
+    readonly page?: number;
+
+    /**
+     * The size of the page to be returned
+     * @type {number}
+     * @memberof EntitiesApiGetAllEntitiesColorPalettes
+     */
+    readonly size?: number;
+
+    /**
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @type {Array<string>}
+     * @memberof EntitiesApiGetAllEntitiesColorPalettes
+     */
+    readonly sort?: Array<string>;
 }
 
 /**
@@ -24632,7 +25806,7 @@ export interface EntitiesApiGetAllEntitiesCspDirectivesRequest {
     readonly size?: number;
 
     /**
-     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
      * @type {Array<string>}
      * @memberof EntitiesApiGetAllEntitiesCspDirectives
      */
@@ -24681,7 +25855,7 @@ export interface EntitiesApiGetAllEntitiesDashboardPluginsRequest {
     readonly size?: number;
 
     /**
-     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
      * @type {Array<string>}
      * @memberof EntitiesApiGetAllEntitiesDashboardPlugins
      */
@@ -24723,7 +25897,7 @@ export interface EntitiesApiGetAllEntitiesDataSourceIdentifiersRequest {
     readonly size?: number;
 
     /**
-     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
      * @type {Array<string>}
      * @memberof EntitiesApiGetAllEntitiesDataSourceIdentifiers
      */
@@ -24772,7 +25946,7 @@ export interface EntitiesApiGetAllEntitiesDataSourceTablesRequest {
     readonly size?: number;
 
     /**
-     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
      * @type {Array<string>}
      * @memberof EntitiesApiGetAllEntitiesDataSourceTables
      */
@@ -24807,7 +25981,7 @@ export interface EntitiesApiGetAllEntitiesDataSourcesRequest {
     readonly size?: number;
 
     /**
-     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
      * @type {Array<string>}
      * @memberof EntitiesApiGetAllEntitiesDataSources
      */
@@ -24870,7 +26044,7 @@ export interface EntitiesApiGetAllEntitiesDatasetsRequest {
     readonly size?: number;
 
     /**
-     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
      * @type {Array<string>}
      * @memberof EntitiesApiGetAllEntitiesDatasets
      */
@@ -24912,7 +26086,7 @@ export interface EntitiesApiGetAllEntitiesEntitlementsRequest {
     readonly size?: number;
 
     /**
-     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
      * @type {Array<string>}
      * @memberof EntitiesApiGetAllEntitiesEntitlements
      */
@@ -24968,7 +26142,7 @@ export interface EntitiesApiGetAllEntitiesFactsRequest {
     readonly size?: number;
 
     /**
-     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
      * @type {Array<string>}
      * @memberof EntitiesApiGetAllEntitiesFacts
      */
@@ -25031,7 +26205,7 @@ export interface EntitiesApiGetAllEntitiesFilterContextsRequest {
     readonly size?: number;
 
     /**
-     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
      * @type {Array<string>}
      * @memberof EntitiesApiGetAllEntitiesFilterContexts
      */
@@ -25094,7 +26268,7 @@ export interface EntitiesApiGetAllEntitiesLabelsRequest {
     readonly size?: number;
 
     /**
-     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
      * @type {Array<string>}
      * @memberof EntitiesApiGetAllEntitiesLabels
      */
@@ -25157,7 +26331,7 @@ export interface EntitiesApiGetAllEntitiesMetricsRequest {
     readonly size?: number;
 
     /**
-     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
      * @type {Array<string>}
      * @memberof EntitiesApiGetAllEntitiesMetrics
      */
@@ -25199,7 +26373,7 @@ export interface EntitiesApiGetAllEntitiesOrganizationSettingsRequest {
     readonly size?: number;
 
     /**
-     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
      * @type {Array<string>}
      * @memberof EntitiesApiGetAllEntitiesOrganizationSettings
      */
@@ -25234,7 +26408,7 @@ export interface EntitiesApiGetAllEntitiesThemesRequest {
     readonly size?: number;
 
     /**
-     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
      * @type {Array<string>}
      * @memberof EntitiesApiGetAllEntitiesThemes
      */
@@ -25276,7 +26450,7 @@ export interface EntitiesApiGetAllEntitiesUserGroupsRequest {
     readonly size?: number;
 
     /**
-     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
      * @type {Array<string>}
      * @memberof EntitiesApiGetAllEntitiesUserGroups
      */
@@ -25318,7 +26492,7 @@ export interface EntitiesApiGetAllEntitiesUserSettingsRequest {
     readonly size?: number;
 
     /**
-     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
      * @type {Array<string>}
      * @memberof EntitiesApiGetAllEntitiesUserSettings
      */
@@ -25360,7 +26534,7 @@ export interface EntitiesApiGetAllEntitiesUsersRequest {
     readonly size?: number;
 
     /**
-     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
      * @type {Array<string>}
      * @memberof EntitiesApiGetAllEntitiesUsers
      */
@@ -25416,7 +26590,7 @@ export interface EntitiesApiGetAllEntitiesVisualizationObjectsRequest {
     readonly size?: number;
 
     /**
-     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
      * @type {Array<string>}
      * @memberof EntitiesApiGetAllEntitiesVisualizationObjects
      */
@@ -25479,7 +26653,7 @@ export interface EntitiesApiGetAllEntitiesWorkspaceDataFilterSettingsRequest {
     readonly size?: number;
 
     /**
-     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
      * @type {Array<string>}
      * @memberof EntitiesApiGetAllEntitiesWorkspaceDataFilterSettings
      */
@@ -25542,7 +26716,7 @@ export interface EntitiesApiGetAllEntitiesWorkspaceDataFiltersRequest {
     readonly size?: number;
 
     /**
-     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
      * @type {Array<string>}
      * @memberof EntitiesApiGetAllEntitiesWorkspaceDataFilters
      */
@@ -25598,7 +26772,7 @@ export interface EntitiesApiGetAllEntitiesWorkspaceSettingsRequest {
     readonly size?: number;
 
     /**
-     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
      * @type {Array<string>}
      * @memberof EntitiesApiGetAllEntitiesWorkspaceSettings
      */
@@ -25647,7 +26821,7 @@ export interface EntitiesApiGetAllEntitiesWorkspacesRequest {
     readonly size?: number;
 
     /**
-     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
      * @type {Array<string>}
      * @memberof EntitiesApiGetAllEntitiesWorkspaces
      */
@@ -25780,6 +26954,27 @@ export interface EntitiesApiGetEntityAttributesRequest {
      * @memberof EntitiesApiGetEntityAttributes
      */
     readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+/**
+ * Request parameters for getEntityColorPalettes operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiGetEntityColorPalettesRequest
+ */
+export interface EntitiesApiGetEntityColorPalettesRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiGetEntityColorPalettes
+     */
+    readonly id: string;
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiGetEntityColorPalettes
+     */
+    readonly filter?: string;
 }
 
 /**
@@ -26597,6 +27792,34 @@ export interface EntitiesApiPatchEntityAnalyticalDashboardsRequest {
 }
 
 /**
+ * Request parameters for patchEntityColorPalettes operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiPatchEntityColorPalettesRequest
+ */
+export interface EntitiesApiPatchEntityColorPalettesRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiPatchEntityColorPalettes
+     */
+    readonly id: string;
+
+    /**
+     *
+     * @type {JsonApiColorPalettePatchDocument}
+     * @memberof EntitiesApiPatchEntityColorPalettes
+     */
+    readonly jsonApiColorPalettePatchDocument: JsonApiColorPalettePatchDocument;
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiPatchEntityColorPalettes
+     */
+    readonly filter?: string;
+}
+
+/**
  * Request parameters for patchEntityCookieSecurityConfigurations operation in EntitiesApi.
  * @export
  * @interface EntitiesApiPatchEntityCookieSecurityConfigurationsRequest
@@ -27196,6 +28419,34 @@ export interface EntitiesApiUpdateEntityApiTokensRequest {
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiUpdateEntityApiTokens
+     */
+    readonly filter?: string;
+}
+
+/**
+ * Request parameters for updateEntityColorPalettes operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiUpdateEntityColorPalettesRequest
+ */
+export interface EntitiesApiUpdateEntityColorPalettesRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiUpdateEntityColorPalettes
+     */
+    readonly id: string;
+
+    /**
+     *
+     * @type {JsonApiColorPaletteInDocument}
+     * @memberof EntitiesApiUpdateEntityColorPalettes
+     */
+    readonly jsonApiColorPaletteInDocument: JsonApiColorPaletteInDocument;
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiUpdateEntityColorPalettes
      */
     readonly filter?: string;
 }
@@ -27803,6 +29054,22 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiCreateEntityColorPalettesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public createEntityColorPalettes(
+        requestParameters: EntitiesApiCreateEntityColorPalettesRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .createEntityColorPalettes(requestParameters.jsonApiColorPaletteInDocument, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
      * @param {EntitiesApiCreateEntityCspDirectivesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -28104,6 +29371,22 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.filter,
                 options,
             )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {EntitiesApiDeleteEntityColorPalettesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public deleteEntityColorPalettes(
+        requestParameters: EntitiesApiDeleteEntityColorPalettesRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .deleteEntityColorPalettes(requestParameters.id, requestParameters.filter, options)
             .then((request) => request(this.axios, this.basePath));
     }
 
@@ -28436,6 +29719,28 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.size,
                 requestParameters.sort,
                 requestParameters.xGDCVALIDATERELATIONS,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {EntitiesApiGetAllEntitiesColorPalettesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public getAllEntitiesColorPalettes(
+        requestParameters: EntitiesApiGetAllEntitiesColorPalettesRequest = {},
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .getAllEntitiesColorPalettes(
+                requestParameters.filter,
+                requestParameters.page,
+                requestParameters.size,
+                requestParameters.sort,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -29044,6 +30349,22 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiGetEntityColorPalettesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public getEntityColorPalettes(
+        requestParameters: EntitiesApiGetEntityColorPalettesRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .getEntityColorPalettes(requestParameters.id, requestParameters.filter, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
      * @param {EntitiesApiGetEntityCookieSecurityConfigurationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -29556,6 +30877,27 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiPatchEntityColorPalettesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public patchEntityColorPalettes(
+        requestParameters: EntitiesApiPatchEntityColorPalettesRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .patchEntityColorPalettes(
+                requestParameters.id,
+                requestParameters.jsonApiColorPalettePatchDocument,
+                requestParameters.filter,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
      * @param {EntitiesApiPatchEntityCookieSecurityConfigurationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -29922,6 +31264,27 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.userId,
                 requestParameters.id,
                 requestParameters.jsonApiApiTokenInDocument,
+                requestParameters.filter,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {EntitiesApiUpdateEntityColorPalettesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public updateEntityColorPalettes(
+        requestParameters: EntitiesApiUpdateEntityColorPalettesRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .updateEntityColorPalettes(
+                requestParameters.id,
+                requestParameters.jsonApiColorPaletteInDocument,
                 requestParameters.filter,
                 options,
             )

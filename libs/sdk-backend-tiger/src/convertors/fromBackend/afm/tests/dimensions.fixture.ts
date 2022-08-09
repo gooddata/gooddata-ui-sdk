@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import { ResultDimension } from "@gooddata/api-client-tiger";
 
 export const mockDimensions: ResultDimension[] = [
@@ -13,6 +13,7 @@ export const mockDimensions: ResultDimension[] = [
                 ],
             },
         ],
+        localIdentifier: "headers1",
     },
     {
         headers: [
@@ -27,6 +28,7 @@ export const mockDimensions: ResultDimension[] = [
                 },
             },
         ],
+        localIdentifier: "headers2",
     },
 ];
 
@@ -54,6 +56,7 @@ export const mockMultipleDimensions: ResultDimension[] = [
                 },
             },
         ],
+        localIdentifier: "headers1",
     },
     {
         headers: [
@@ -66,6 +69,7 @@ export const mockMultipleDimensions: ResultDimension[] = [
                 ],
             },
         ],
+        localIdentifier: "headers2",
     },
     {
         headers: [
@@ -80,5 +84,6 @@ export const mockMultipleDimensions: ResultDimension[] = [
                 },
             },
         ],
+        localIdentifier: "headers3",
     },
 ];

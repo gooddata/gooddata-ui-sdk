@@ -1,5 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 import { IWorkspaceStylingService } from "@gooddata/sdk-backend-spi";
+import { ApiEntitlementNameEnum } from "@gooddata/api-client-tiger";
 import { IColorPaletteItem, ITheme, IThemeMetadataObject } from "@gooddata/sdk-model";
 
 import { TigerAuthenticatedCallGuard } from "../../../types";
@@ -18,9 +19,16 @@ export class TigerWorkspaceStyling implements IWorkspaceStylingService {
      *
      * @returns boolean
      */
-    private isThemable(activeThemeId: string, enableTheming: boolean): boolean {
-        // TODO INE: add check for license entitlements
-        return activeThemeId !== "" && enableTheming;
+    private async isThemable(activeThemeId: string, enableTheming: boolean): Promise<boolean> {
+        const isCustomThemingIncludedInEntitlements = await this.authCall(async (client) =>
+            client.actions
+                .resolveRequestedEntitlements({
+                    entitlementsRequest: { entitlementsName: [ApiEntitlementNameEnum.CUSTOM_THEMING] },
+                })
+                .then((res) => res?.data?.length === 1),
+        );
+
+        return isCustomThemingIncludedInEntitlements && enableTheming && activeThemeId !== "";
     }
 
     public getColorPalette = async (): Promise<IColorPaletteItem[]> => {

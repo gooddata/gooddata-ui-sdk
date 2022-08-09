@@ -3,9 +3,9 @@
 import {
     AfmObjectIdentifier,
     AttributeExecutionResultHeader,
-    AttributeHeader,
+    AttributeHeaderOut,
     ExecutionResultHeader,
-    ResultDimension,
+    ResultDimensionHeader,
     MeasureExecutionResultHeader,
     TotalExecutionResultHeader,
 } from "../generated/afm-rest-api";
@@ -18,10 +18,8 @@ import {
     JsonApiVisualizationObjectOutWithLinksTypeEnum,
 } from "../generated/metadata-json-api";
 
-export type ResultDimensionHeader = ResultDimension["headers"][number];
-
-export function isAttributeHeader(header: ResultDimensionHeader): header is AttributeHeader {
-    return header && (header as AttributeHeader).attributeHeader !== undefined;
+export function isAttributeHeader(header: ResultDimensionHeader): header is AttributeHeaderOut {
+    return header && (header as AttributeHeaderOut).attributeHeader !== undefined;
 }
 
 export const isAfmObjectIdentifier = (value: unknown): value is AfmObjectIdentifier => {

@@ -3,7 +3,7 @@ import { IWorkspacePermissionsService } from "@gooddata/sdk-backend-spi";
 import { IWorkspacePermissions } from "@gooddata/sdk-model";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 
-type TigerPermissionType = "MANAGE" | "VIEW" | "ANALYZE";
+type TigerPermissionType = "MANAGE" | "VIEW" | "ANALYZE" | "EXPORT";
 
 export class TigerWorkspacePermissionsFactory implements IWorkspacePermissionsService {
     constructor(public readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}

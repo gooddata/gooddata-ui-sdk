@@ -282,6 +282,62 @@
                 }
             }
         },
+        "/api/v1/actions/workspaces/{workspaceId}/execution/afm/execute/result/{resultId}/metadata": {
+            "get": {
+                "tags": ["actions"],
+                "summary": "Get a single execution result's metadata.",
+                "description": "The resource provides execution result's metadata as AFM and resultSpec used in execution request and an executionResponse",
+                "operationId": "retrieveExecutionMetadata",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "resultId",
+                        "in": "path",
+                        "description": "Result ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "a9b28f9dc55f37ea9f4a5fb0c76895923591e781"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Execution result's metadata was found and returned.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultCacheMetadata"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Execution result was not found.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["ANALYZE"],
+                    "description": "Permissions required to analyze data."
+                }
+            }
+        },
         "/api/v1/actions/workspaces/{workspaceId}/execution/afm/execute/result/{resultId}": {
             "get": {
                 "tags": ["actions"],
@@ -490,7 +546,7 @@
                         "example": "fact"
                     }
                 },
-                "description": "Identifier of primary label of attribute owning requested label, or null if the primary label is excluded."
+                "description": "Object identifier."
             },
             "ElementsRequest": {
                 "required": ["label"],
@@ -1568,64 +1624,61 @@
                     }
                 }
             },
-            "AttributeHeader": {
+            "AttributeHeaderOut": {
                 "required": ["attributeHeader"],
                 "type": "object",
                 "properties": {
                     "attributeHeader": {
-                        "$ref": "#/components/schemas/AttributeHeaderOut"
-                    }
-                }
-            },
-            "AttributeHeaderOut": {
-                "required": [
-                    "attribute",
-                    "attributeName",
-                    "label",
-                    "labelName",
-                    "localIdentifier",
-                    "primaryLabel"
-                ],
-                "type": "object",
-                "properties": {
-                    "localIdentifier": {
-                        "pattern": "^[.a-zA-Z0-9_-]+$",
-                        "type": "string"
-                    },
-                    "label": {
-                        "$ref": "#/components/schemas/RestApiIdentifier"
-                    },
-                    "labelName": {
-                        "type": "string"
-                    },
-                    "attribute": {
-                        "$ref": "#/components/schemas/RestApiIdentifier"
-                    },
-                    "attributeName": {
-                        "type": "string"
-                    },
-                    "granularity": {
-                        "type": "string",
-                        "enum": [
-                            "MINUTE",
-                            "HOUR",
-                            "DAY",
-                            "WEEK",
-                            "MONTH",
-                            "QUARTER",
-                            "YEAR",
-                            "MINUTE_OF_HOUR",
-                            "HOUR_OF_DAY",
-                            "DAY_OF_WEEK",
-                            "DAY_OF_MONTH",
-                            "DAY_OF_YEAR",
-                            "WEEK_OF_YEAR",
-                            "MONTH_OF_YEAR",
-                            "QUARTER_OF_YEAR"
-                        ]
-                    },
-                    "primaryLabel": {
-                        "$ref": "#/components/schemas/RestApiIdentifier"
+                        "required": [
+                            "attribute",
+                            "attributeName",
+                            "label",
+                            "labelName",
+                            "localIdentifier",
+                            "primaryLabel"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "localIdentifier": {
+                                "pattern": "^[.a-zA-Z0-9_-]+$",
+                                "type": "string"
+                            },
+                            "label": {
+                                "$ref": "#/components/schemas/RestApiIdentifier"
+                            },
+                            "labelName": {
+                                "type": "string"
+                            },
+                            "attribute": {
+                                "$ref": "#/components/schemas/RestApiIdentifier"
+                            },
+                            "attributeName": {
+                                "type": "string"
+                            },
+                            "granularity": {
+                                "type": "string",
+                                "enum": [
+                                    "MINUTE",
+                                    "HOUR",
+                                    "DAY",
+                                    "WEEK",
+                                    "MONTH",
+                                    "QUARTER",
+                                    "YEAR",
+                                    "MINUTE_OF_HOUR",
+                                    "HOUR_OF_DAY",
+                                    "DAY_OF_WEEK",
+                                    "DAY_OF_MONTH",
+                                    "DAY_OF_YEAR",
+                                    "WEEK_OF_YEAR",
+                                    "MONTH_OF_YEAR",
+                                    "QUARTER_OF_YEAR"
+                                ]
+                            },
+                            "primaryLabel": {
+                                "$ref": "#/components/schemas/RestApiIdentifier"
+                            }
+                        }
                     }
                 }
             },
@@ -1653,8 +1706,7 @@
                     }
                 }
             },
-            "MeasureGroupHeader": {
-                "required": ["measureGroupHeaders"],
+            "MeasureGroupHeaders": {
                 "type": "object",
                 "properties": {
                     "measureGroupHeaders": {
@@ -1681,26 +1733,30 @@
                 }
             },
             "ResultDimension": {
-                "required": ["headers"],
+                "required": ["headers", "localIdentifier"],
                 "type": "object",
                 "properties": {
                     "headers": {
                         "type": "array",
                         "items": {
-                            "oneOf": [
-                                {
-                                    "$ref": "#/components/schemas/AttributeHeader"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/MeasureGroupHeader"
-                                }
-                            ]
+                            "$ref": "#/components/schemas/ResultDimensionHeader"
                         }
+                    },
+                    "localIdentifier": {
+                        "type": "string"
                     }
                 }
             },
             "ResultDimensionHeader": {
-                "type": "object"
+                "type": "object",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/MeasureGroupHeaders"
+                    },
+                    {
+                        "$ref": "#/components/schemas/AttributeHeaderOut"
+                    }
+                ]
             },
             "AfmValidObjectsQuery": {
                 "required": ["afm", "types"],
@@ -1734,6 +1790,75 @@
                     }
                 },
                 "description": "All objects of specified types valid with respect to given AFM."
+            },
+            "ResultCacheMetadata": {
+                "required": ["afm", "executionResponse", "resultSpec"],
+                "type": "object",
+                "properties": {
+                    "afm": {
+                        "$ref": "#/components/schemas/AFM"
+                    },
+                    "executionResponse": {
+                        "$ref": "#/components/schemas/ExecutionResponse"
+                    },
+                    "resultSpec": {
+                        "$ref": "#/components/schemas/ResultSpec"
+                    }
+                },
+                "description": "All execution result's metadata used for calculation including ExecutionResponse"
+            },
+            "Problem": {
+                "required": ["status", "traceId", "type"],
+                "type": "object",
+                "properties": {
+                    "instance": {
+                        "type": "string",
+                        "description": "An relative URI that identifies the specific occurrence of the problem. It may yield further information if dereferenced.",
+                        "format": "uri"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "An relative URI that identifies the problem type. When dereferenced, it should provide human-readable documentation for the problem type (e.g., using HTML).",
+                        "format": "uri"
+                    },
+                    "traceId": {
+                        "type": "string",
+                        "description": "Unique trace id used in open-tracing (semantics of transactions in distributed systems). Can be used to correlate client error with concrete request processing in the system.",
+                        "example": "5202292772879600441"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "A short, summary of the problem type. Written in english and readable for engineers (usually not suited for non technical stakeholders and not localized).",
+                        "example": "Service Unavailable"
+                    },
+                    "status": {
+                        "$ref": "#/components/schemas/StatusType"
+                    },
+                    "detail": {
+                        "type": "string",
+                        "description": "A human readable explanation specific to this occurrence of the problem.",
+                        "example": "Connection to database timed out"
+                    }
+                },
+                "description": "Contains information about the error."
+            },
+            "StatusType": {
+                "maximum": 600,
+                "exclusiveMaximum": true,
+                "minimum": 100,
+                "type": "object",
+                "properties": {
+                    "statusCode": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "reasonPhrase": {
+                        "type": "string"
+                    }
+                },
+                "description": "The HTTP status code generated by the origin server for this occurrence of the problem.",
+                "format": "int32",
+                "example": 503
             },
             "AttributeExecutionResultHeader": {
                 "required": ["attributeHeader"],
@@ -1945,59 +2070,6 @@
                     }
                 },
                 "description": "Header containing the information related to a subtotal."
-            },
-            "Problem": {
-                "required": ["status", "traceId", "type"],
-                "type": "object",
-                "properties": {
-                    "instance": {
-                        "type": "string",
-                        "description": "An relative URI that identifies the specific occurrence of the problem. It may yield further information if dereferenced.",
-                        "format": "uri"
-                    },
-                    "type": {
-                        "type": "string",
-                        "description": "An relative URI that identifies the problem type. When dereferenced, it should provide human-readable documentation for the problem type (e.g., using HTML).",
-                        "format": "uri"
-                    },
-                    "traceId": {
-                        "type": "string",
-                        "description": "Unique trace id used in open-tracing (semantics of transactions in distributed systems). Can be used to correlate client error with concrete request processing in the system.",
-                        "example": "5202292772879600441"
-                    },
-                    "title": {
-                        "type": "string",
-                        "description": "A short, summary of the problem type. Written in english and readable for engineers (usually not suited for non technical stakeholders and not localized).",
-                        "example": "Service Unavailable"
-                    },
-                    "status": {
-                        "$ref": "#/components/schemas/StatusType"
-                    },
-                    "detail": {
-                        "type": "string",
-                        "description": "A human readable explanation specific to this occurrence of the problem.",
-                        "example": "Connection to database timed out"
-                    }
-                },
-                "description": "Contains information about the error."
-            },
-            "StatusType": {
-                "maximum": 600,
-                "exclusiveMaximum": true,
-                "minimum": 100,
-                "type": "object",
-                "properties": {
-                    "statusCode": {
-                        "type": "integer",
-                        "format": "int32"
-                    },
-                    "reasonPhrase": {
-                        "type": "string"
-                    }
-                },
-                "description": "The HTTP status code generated by the origin server for this occurrence of the problem.",
-                "format": "int32",
-                "example": 503
             }
         }
     }
