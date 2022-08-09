@@ -500,67 +500,67 @@ export interface AttributeFilterElements {
 /**
  *
  * @export
- * @interface AttributeHeader
- */
-export interface AttributeHeader {
-    /**
-     *
-     * @type {AttributeHeaderOut}
-     * @memberof AttributeHeader
-     */
-    attributeHeader: AttributeHeaderOut;
-}
-/**
- *
- * @export
  * @interface AttributeHeaderOut
  */
 export interface AttributeHeaderOut {
     /**
      *
-     * @type {string}
+     * @type {AttributeHeaderOutAttributeHeader}
      * @memberof AttributeHeaderOut
+     */
+    attributeHeader: AttributeHeaderOutAttributeHeader;
+}
+/**
+ *
+ * @export
+ * @interface AttributeHeaderOutAttributeHeader
+ */
+export interface AttributeHeaderOutAttributeHeader {
+    /**
+     *
+     * @type {string}
+     * @memberof AttributeHeaderOutAttributeHeader
      */
     localIdentifier: string;
     /**
      *
      * @type {RestApiIdentifier}
-     * @memberof AttributeHeaderOut
+     * @memberof AttributeHeaderOutAttributeHeader
      */
     label: RestApiIdentifier;
     /**
      *
      * @type {string}
-     * @memberof AttributeHeaderOut
+     * @memberof AttributeHeaderOutAttributeHeader
      */
     labelName: string;
     /**
      *
      * @type {RestApiIdentifier}
-     * @memberof AttributeHeaderOut
+     * @memberof AttributeHeaderOutAttributeHeader
      */
     attribute: RestApiIdentifier;
     /**
      *
      * @type {string}
-     * @memberof AttributeHeaderOut
+     * @memberof AttributeHeaderOutAttributeHeader
      */
     attributeName: string;
     /**
      *
      * @type {string}
-     * @memberof AttributeHeaderOut
+     * @memberof AttributeHeaderOutAttributeHeader
      */
-    granularity?: AttributeHeaderOutGranularityEnum;
+    granularity?: AttributeHeaderOutAttributeHeaderGranularityEnum;
     /**
      *
      * @type {RestApiIdentifier}
-     * @memberof AttributeHeaderOut
+     * @memberof AttributeHeaderOutAttributeHeader
      */
     primaryLabel: RestApiIdentifier;
 }
 
-export const AttributeHeaderOutGranularityEnum = {
+export const AttributeHeaderOutAttributeHeaderGranularityEnum = {
     MINUTE: "MINUTE",
     HOUR: "HOUR",
     DAY: "DAY",
@@ -578,8 +578,8 @@ export const AttributeHeaderOutGranularityEnum = {
     QUARTER_OF_YEAR: "QUARTER_OF_YEAR",
 } as const;
 
-export type AttributeHeaderOutGranularityEnum =
-    typeof AttributeHeaderOutGranularityEnum[keyof typeof AttributeHeaderOutGranularityEnum];
+export type AttributeHeaderOutAttributeHeaderGranularityEnum =
+    typeof AttributeHeaderOutAttributeHeaderGranularityEnum[keyof typeof AttributeHeaderOutAttributeHeaderGranularityEnum];
 
 /**
  *
@@ -1139,15 +1139,15 @@ export interface MeasureExecutionResultHeader {
 /**
  *
  * @export
- * @interface MeasureGroupHeader
+ * @interface MeasureGroupHeaders
  */
-export interface MeasureGroupHeader {
+export interface MeasureGroupHeaders {
     /**
      *
      * @type {Array<MeasureHeaderOut>}
-     * @memberof MeasureGroupHeader
+     * @memberof MeasureGroupHeaders
      */
-    measureGroupHeaders: Array<MeasureHeaderOut>;
+    measureGroupHeaders?: Array<MeasureHeaderOut>;
 }
 /**
  *
@@ -1662,7 +1662,7 @@ export type RelativeDateFilterRelativeDateFilterGranularityEnum =
     typeof RelativeDateFilterRelativeDateFilterGranularityEnum[keyof typeof RelativeDateFilterRelativeDateFilterGranularityEnum];
 
 /**
- * Identifier of primary label of attribute owning requested label, or null if the primary label is excluded.
+ * Object identifier.
  * @export
  * @interface RestApiIdentifier
  */
@@ -1681,6 +1681,31 @@ export interface RestApiIdentifier {
     type: string;
 }
 /**
+ * All execution result\'s metadata used for calculation including ExecutionResponse
+ * @export
+ * @interface ResultCacheMetadata
+ */
+export interface ResultCacheMetadata {
+    /**
+     *
+     * @type {AFM}
+     * @memberof ResultCacheMetadata
+     */
+    afm: AFM;
+    /**
+     *
+     * @type {ExecutionResponse}
+     * @memberof ResultCacheMetadata
+     */
+    executionResponse: ExecutionResponse;
+    /**
+     *
+     * @type {ResultSpec}
+     * @memberof ResultCacheMetadata
+     */
+    resultSpec: ResultSpec;
+}
+/**
  *
  * @export
  * @interface ResultDimension
@@ -1688,11 +1713,23 @@ export interface RestApiIdentifier {
 export interface ResultDimension {
     /**
      *
-     * @type {Array<AttributeHeader | MeasureGroupHeader>}
+     * @type {Array<ResultDimensionHeader>}
      * @memberof ResultDimension
      */
-    headers: Array<AttributeHeader | MeasureGroupHeader>;
+    headers: Array<ResultDimensionHeader>;
+    /**
+     *
+     * @type {string}
+     * @memberof ResultDimension
+     */
+    localIdentifier: string;
 }
+/**
+ * @type ResultDimensionHeader
+ * @export
+ */
+export type ResultDimensionHeader = AttributeHeaderOut | MeasureGroupHeaders;
+
 /**
  * Specifies how the result data will be formatted (```dimensions```) and which additional data shall be computed (```totals```).
  * @export
@@ -2292,6 +2329,50 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
+         * @summary Get a single execution result\'s metadata.
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        retrieveExecutionMetadata: async (
+            workspaceId: string,
+            resultId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("retrieveExecutionMetadata", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("retrieveExecutionMetadata", "resultId", resultId);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/afm/execute/result/{resultId}/metadata`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Gets a single execution result.
          * @summary Get a single execution result
          * @param {string} workspaceId Workspace identifier
@@ -2474,6 +2555,26 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
+         * @summary Get a single execution result\'s metadata.
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async retrieveExecutionMetadata(
+            workspaceId: string,
+            resultId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResultCacheMetadata>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.retrieveExecutionMetadata(
+                workspaceId,
+                resultId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Gets a single execution result.
          * @summary Get a single execution result
          * @param {string} workspaceId Workspace identifier
@@ -2599,6 +2700,21 @@ export const ActionsApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
+         * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
+         * @summary Get a single execution result\'s metadata.
+         * @param {ActionsApiRetrieveExecutionMetadataRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        retrieveExecutionMetadata(
+            requestParameters: ActionsApiRetrieveExecutionMetadataRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ResultCacheMetadata> {
+            return localVarFp
+                .retrieveExecutionMetadata(requestParameters.workspaceId, requestParameters.resultId, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * Gets a single execution result.
          * @summary Get a single execution result
          * @param {ActionsApiRetrieveResultRequest} requestParameters Request parameters.
@@ -2680,6 +2796,19 @@ export interface ActionsApiInterface {
         requestParameters: ActionsApiExplainAFMRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<any>;
+
+    /**
+     * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
+     * @summary Get a single execution result\'s metadata.
+     * @param {ActionsApiRetrieveExecutionMetadataRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    retrieveExecutionMetadata(
+        requestParameters: ActionsApiRetrieveExecutionMetadataRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ResultCacheMetadata>;
 
     /**
      * Gets a single execution result.
@@ -2832,6 +2961,27 @@ export interface ActionsApiExplainAFMRequest {
 }
 
 /**
+ * Request parameters for retrieveExecutionMetadata operation in ActionsApi.
+ * @export
+ * @interface ActionsApiRetrieveExecutionMetadataRequest
+ */
+export interface ActionsApiRetrieveExecutionMetadataRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiRetrieveExecutionMetadata
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Result ID
+     * @type {string}
+     * @memberof ActionsApiRetrieveExecutionMetadata
+     */
+    readonly resultId: string;
+}
+
+/**
  * Request parameters for retrieveResult operation in ActionsApi.
  * @export
  * @interface ActionsApiRetrieveResultRequest
@@ -2961,6 +3111,23 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
                 requestParameters.explainType,
                 options,
             )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
+     * @summary Get a single execution result\'s metadata.
+     * @param {ActionsApiRetrieveExecutionMetadataRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public retrieveExecutionMetadata(
+        requestParameters: ActionsApiRetrieveExecutionMetadataRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .retrieveExecutionMetadata(requestParameters.workspaceId, requestParameters.resultId, options)
             .then((request) => request(this.axios, this.basePath));
     }
 
