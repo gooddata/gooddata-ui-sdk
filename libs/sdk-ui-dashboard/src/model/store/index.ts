@@ -50,8 +50,9 @@ export {
     selectDisableKpiDashboardHeadlineUnderline,
     selectIsWhiteLabeled,
     selectEnableAnalyticalDashboardPermissions,
-    selectDashboardEditModeDevRollout,
     selectIsSaveAsNewButtonHidden,
+    selectAllowUnfinishedFeatures,
+    selectDashboardEditModeDevRollout,
 } from "./config/configSelectors";
 export { PermissionsState } from "./permissions/permissionsState";
 export {

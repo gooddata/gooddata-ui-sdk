@@ -4976,6 +4976,9 @@ export const selectAllInsightWidgets: OutputSelector<DashboardState, IInsightWid
 // @alpha
 export const selectAllKpiWidgets: OutputSelector<DashboardState, IKpiWidget[], (res: ExtendedDashboardWidget[]) => IKpiWidget[]>;
 
+// @internal
+export const selectAllowUnfinishedFeatures: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
+
 // @alpha
 export const selectAnalyticalWidgetByRef: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IKpiWidget | IInsightWidget | undefined, (res: ObjRefMap<ExtendedDashboardWidget>) => IKpiWidget | IInsightWidget | undefined>;
 
