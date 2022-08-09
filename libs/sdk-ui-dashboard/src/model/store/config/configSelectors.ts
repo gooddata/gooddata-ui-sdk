@@ -359,3 +359,13 @@ export const selectShouldHidePixelPerfectExperience = createSelector(selectConfi
 export const selectDisableKpiDashboardHeadlineUnderline = createSelector(selectConfig, (state) => {
     return !!(state.settings?.disableKpiDashboardHeadlineUnderline ?? false);
 });
+
+/**
+ * Returns whether unfinished features are allowed.
+ *
+ * @internal
+ */
+export const selectAllowUnfinishedFeatures = createSelector(
+    selectConfig,
+    (state) => state.allowUnfinishedFeatures || false,
+);
