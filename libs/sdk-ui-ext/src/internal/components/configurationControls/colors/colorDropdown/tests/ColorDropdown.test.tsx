@@ -114,9 +114,9 @@ describe("ColorDropdown", () => {
                     b: 226,
                 },
             };
-            const { getByRole, queryByLabelText, user } = createComponent({ selectedColorItem });
+            const { getByText, queryByLabelText, user } = createComponent({ selectedColorItem });
 
-            await user.click(getByRole("button"));
+            await user.click(getByText("test"));
             await waitFor(() => {
                 expect(queryByLabelText("Color palette")).toBeInTheDocument();
                 expect(
@@ -131,9 +131,9 @@ describe("ColorDropdown", () => {
     it("should call onColorSelected once when colorItem clicked and return type guid and given guid value", async () => {
         const onColorSelected = jest.fn();
         const { guid, fill } = colorPalette[2];
-        const { getByRole, queryByLabelText, user } = createComponent({ onColorSelected });
+        const { getByText, queryByLabelText, user } = createComponent({ onColorSelected });
 
-        await user.click(getByRole("button"));
+        await user.click(getByText("test"));
         await user.click(queryByLabelText(`rgb(${fill.r},${fill.g},${fill.b})`));
         await waitFor(() => {
             expect(onColorSelected).toBeCalledWith(expect.objectContaining({ type: "guid", value: guid }));
@@ -141,29 +141,29 @@ describe("ColorDropdown", () => {
     });
 
     it("should not render CustomColorButton when showCustomPicker props is false after item button click", async () => {
-        const { getByRole, queryByText, user } = createComponent();
+        const { getByText, queryByText, user } = createComponent();
 
-        await user.click(getByRole("button"));
+        await user.click(getByText("test"));
         await waitFor(() => {
             expect(queryByText("Custom color")).not.toBeInTheDocument();
         });
     });
 
     it("should render CustomColorButton when showCustomPicker props is true after item button click", async () => {
-        const { getByRole, getByText, user } = createComponent({ showCustomPicker: true });
+        const { getByText, user } = createComponent({ showCustomPicker: true });
 
-        await user.click(getByRole("button"));
+        await user.click(getByText("test"));
         await waitFor(() => {
             expect(getByText("Custom color")).toBeInTheDocument();
         });
     });
 
     it("should render ColorPicker when CustomColorButton button click", async () => {
-        const { getByRole, getByText, findByText, queryByLabelText, user } = createComponent({
+        const { getByText, findByText, queryByLabelText, user } = createComponent({
             showCustomPicker: true,
         });
 
-        await user.click(getByRole("button"));
+        await user.click(getByText("test"));
         expect(await findByText("Custom color")).toBeInTheDocument();
 
         await user.click(getByText("Custom color"));
@@ -182,11 +182,11 @@ describe("ColorDropdown", () => {
                 g: 153,
                 b: 121,
             };
-            const { getByRole, queryByLabelText, findByText, user } = createComponent({
+            const { getByText, queryByLabelText, findByText, user } = createComponent({
                 showCustomPicker: true,
             });
 
-            await user.click(getByRole("button"));
+            await user.click(getByText("test"));
             expect(await findByText("Custom color")).toBeInTheDocument();
 
             expect(
@@ -196,25 +196,25 @@ describe("ColorDropdown", () => {
     );
 
     it("should inject isSelected=true into child when ColorPicker control shown", async () => {
-        const { getByRole, getByText, user } = createComponent({ showCustomPicker: true });
+        const { getByText, user } = createComponent({ showCustomPicker: true });
 
-        await user.click(getByRole("button"));
+        await user.click(getByText("test"));
         await user.click(getByText("Custom color"));
         expect(getByText("test")).toHaveAttribute("data-is-selected", "true");
     });
 
     it("should inject position=IconPosition.Right into child when ColorPicker control shown", async () => {
-        const { getByRole, getByText, user } = createComponent({ showCustomPicker: true });
+        const { getByText, user } = createComponent({ showCustomPicker: true });
 
-        await user.click(getByRole("button"));
+        await user.click(getByText("test"));
         await user.click(getByText("Custom color"));
-        expect(getByRole("button")).toHaveAttribute("data-icon-position", IconPosition.Right.toString());
+        expect(getByText("test")).toHaveAttribute("data-icon-position", IconPosition.Right.toString());
     });
 
     it("should render ColorPalette when ColorPicker cancel button click", async () => {
-        const { getByRole, getByText, queryByLabelText, user } = createComponent({ showCustomPicker: true });
+        const { getByText, queryByLabelText, user } = createComponent({ showCustomPicker: true });
 
-        await user.click(getByRole("button"));
+        await user.click(getByText("test"));
         await user.click(getByText("Custom color"));
         await user.click(getByText("Cancel"));
         await waitFor(() => {
@@ -228,12 +228,12 @@ describe("ColorDropdown", () => {
             " and return type rgb and given rgb value",
         async () => {
             const onColorSelected = jest.fn();
-            const { getByRole, getByText, getByPlaceholderText, user } = createComponent({
+            const { getByText, getByPlaceholderText, user } = createComponent({
                 showCustomPicker: true,
                 onColorSelected,
             });
 
-            await user.click(getByRole("button"));
+            await user.click(getByText("test"));
             await user.click(getByText("Custom color"));
 
             fireEvent.change(getByPlaceholderText("#color"), { target: { value: "" } });

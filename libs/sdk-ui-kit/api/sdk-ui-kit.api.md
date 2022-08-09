@@ -406,6 +406,7 @@ export class EditableLabelInner extends Component<IEditableLabelInnerProps, IEdi
         scrollToEndOnEditingStart: boolean;
         textareaInOverlay: boolean;
         autofocus: boolean;
+        isEditableLabelWidthBasedOnText: boolean;
     };
     // (undocumented)
     edit: (_e?: React_2.MouseEvent<HTMLDivElement>) => void;
@@ -1437,6 +1438,8 @@ export interface IEditableLabelProps {
     children?: React_2.ReactNode;
     // (undocumented)
     className?: string;
+    // (undocumented)
+    isEditableLabelWidthBasedOnText?: boolean;
     // (undocumented)
     maxLength?: number;
     // (undocumented)
