@@ -6,6 +6,11 @@ import { ILayoutCoordinates, IMenuButtonItemsVisibility } from "../../../types";
 /**
  * @alpha
  */
+export type IWidgetPlaceholderType = "widget" | "insight" | "kpi";
+
+/**
+ * @alpha
+ */
 export interface IWidgetPlaceholderSpec {
     sectionIndex: number;
     itemIndex: number;
@@ -13,7 +18,7 @@ export interface IWidgetPlaceholderSpec {
         width: number;
         height: number;
     };
-    type: "widget" | "insight" | "kpi";
+    type: IWidgetPlaceholderType;
 }
 
 /**

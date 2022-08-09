@@ -204,7 +204,7 @@ export {
     selectIsExecutionResultReadyForExportByRef,
 } from "./executionResults/executionResultsSelectors";
 export { IExecutionResultEnvelope } from "./executionResults/types";
-export { UiState, IWidgetPlaceholderSpec } from "./ui/uiState";
+export { UiState, IWidgetPlaceholderSpec, IWidgetPlaceholderType } from "./ui/uiState";
 export {
     selectIsScheduleEmailDialogOpen,
     selectIsScheduleEmailManagementDialogOpen,

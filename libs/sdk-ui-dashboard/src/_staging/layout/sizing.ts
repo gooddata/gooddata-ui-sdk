@@ -25,6 +25,7 @@ import {
 } from "@gooddata/sdk-ui-ext";
 
 import { ObjRefMap } from "../metadata/objRefMap";
+import { KPI_WITHOUT_COMPARISON_SIZE_INFO, KPI_WITH_COMPARISON_SIZE_INFO } from "./constants";
 
 /**
  * @internal
@@ -71,23 +72,7 @@ function getKpiSizeInfo(settings: ISettings, kpi?: MeasurableWidgetContent): IVi
     if (!isKpi(kpi)) {
         return KPI_WIDGET_SIZE_INFO_DEFAULT;
     }
-    return {
-        width: {
-            min: 2,
-            default: 2,
-        },
-        height: isKpiWithoutComparison(kpi)
-            ? {
-                  default: 8,
-                  min: 6,
-                  max: 40,
-              }
-            : {
-                  default: 11,
-                  min: 10,
-                  max: 40,
-              },
-    };
+    return isKpiWithoutComparison(kpi) ? KPI_WITHOUT_COMPARISON_SIZE_INFO : KPI_WITH_COMPARISON_SIZE_INFO;
 }
 
 /**

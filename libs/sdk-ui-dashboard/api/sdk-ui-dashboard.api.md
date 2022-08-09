@@ -4057,8 +4057,11 @@ export interface IWidgetPlaceholderSpec {
         height: number;
     };
     // (undocumented)
-    type: "widget" | "insight" | "kpi";
+    type: IWidgetPlaceholderType;
 }
+
+// @alpha (undocumented)
+export type IWidgetPlaceholderType = "widget" | "insight" | "kpi";
 
 // @alpha (undocumented)
 export interface IXlsxExportConfig {
