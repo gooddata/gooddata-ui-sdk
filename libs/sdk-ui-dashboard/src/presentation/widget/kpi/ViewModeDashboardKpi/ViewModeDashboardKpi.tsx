@@ -9,6 +9,6 @@ import { DefaultDashboardKpiWithDrills } from "./DefaultDashboardKpiWithDrills";
  *
  * @public
  */
-export const DefaultDashboardKpi = (props: IDashboardKpiProps): JSX.Element => {
+export const ViewModeDashboardKpi = (props: IDashboardKpiProps): JSX.Element => {
     return <DefaultDashboardKpiWithDrills {...props} />;
 };

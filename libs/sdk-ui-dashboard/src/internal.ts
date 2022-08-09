@@ -12,7 +12,7 @@ export * from "./presentation/presentationComponents";
 export * from "./presentation/scheduledEmail";
 export * from "./presentation/scheduledEmail/DefaultScheduledEmailDialog/ScheduledMailDialogRenderer/ScheduledMailDialogRenderer";
 export { PLATFORM_DATE_FORMAT } from "./presentation/scheduledEmail/DefaultScheduledEmailDialog/constants";
-export * from "./presentation/widget/kpi/DefaultDashboardKpi/KpiAlerts";
+export * from "./presentation/widget/kpi/ViewModeDashboardKpi/KpiAlerts";
 export * from "./presentation/widget/kpi/common/KpiContent";
 export * from "./presentation/widget/kpi/common/types";
 export * from "./presentation/widget/kpi/common/filterUtils";

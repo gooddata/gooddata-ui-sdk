@@ -2145,7 +2145,7 @@ export const DefaultDashboardAttributeFilter: (props: IDashboardAttributeFilterP
 export const DefaultDashboardDateFilter: (props: IDashboardDateFilterProps) => JSX.Element;
 
 // @public
-export const DefaultDashboardInsight: (props: IDashboardInsightProps) => JSX.Element;
+export const DefaultDashboardInsight: ComponentType<IDashboardInsightProps>;
 
 // @alpha (undocumented)
 export const DefaultDashboardInsightMenu: (props: IDashboardInsightMenuProps) => JSX.Element;
@@ -2153,8 +2153,8 @@ export const DefaultDashboardInsightMenu: (props: IDashboardInsightMenuProps) =>
 // @internal (undocumented)
 export const DefaultDashboardInsightMenuButton: (props: IDashboardInsightMenuButtonProps) => JSX.Element;
 
-// @public
-export const DefaultDashboardKpi: (props: IDashboardKpiProps) => JSX.Element;
+// @internal (undocumented)
+export const DefaultDashboardKpi: ComponentType<IDashboardKpiProps>;
 
 // @alpha (undocumented)
 export const DefaultDashboardLayout: (props: IDashboardLayoutProps) => JSX.Element;
@@ -4719,12 +4719,6 @@ setViewRenderMode: CaseReducer<RenderModeState, AnyAction>;
 export function renderModeAware<T extends ComponentType<any>>(components: {
     view: T;
 } & Partial<Record<RenderMode, T>>): ComponentType<ComponentPropsWithRef<T>>;
-
-// @internal (undocumented)
-export const RenderModeAwareDashboardInsight: ComponentType<IDashboardInsightProps>;
-
-// @internal (undocumented)
-export const RenderModeAwareDashboardKpi: ComponentType<IDashboardKpiProps>;
 
 // @internal (undocumented)
 export const RenderModeAwareTitle: ComponentType<PropsWithChildren<ITitleProps> | (ITitleProps & RefAttributes<Component<ITitleProps, any, any>>)>;
