@@ -1,8 +1,8 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { mount, ReactWrapper } from "enzyme";
 import { DropdownList, IDropdownListNoDataRenderProps, IDropdownListProps } from "../DropdownList";
-import { IRenderItemProps, List } from "../../List";
+import { IRenderListItemProps, List } from "../../List";
 import { Input } from "../../Form";
 import { LoadingMask } from "../../LoadingMask";
 import { withIntl } from "@gooddata/sdk-ui";
@@ -13,7 +13,7 @@ import { componentMock } from "./testUtils";
 type IDropdownListMockProps = IDropdownListProps<string>;
 
 const noDataMock = componentMock<IDropdownListNoDataRenderProps>();
-const itemMock = componentMock<IRenderItemProps<string>>();
+const itemMock = componentMock<IRenderListItemProps<string>>();
 const itemRenderer = itemMock.componentWithProps(({ item }) => ({ children: item }));
 const mockItems = Array.from(Array(10)).map((_, i): string => `${i}`);
 

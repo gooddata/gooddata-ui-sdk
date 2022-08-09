@@ -6,15 +6,14 @@ import { storiesOf } from "../../../../_infra/storyRepository";
 import { wrapWithTheme } from "../../../themeWrapper";
 
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
-import { AttributeFilterDropdownBody } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Components/AttributeFilterDropdownBody";
-import {
-    AttributeFilterContext,
-    AttributeFilterContextDefaultState,
-} from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Context/AttributeFilterContext";
+// import { AttributeFilterDropdownBody } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Components/Dropdown/AttributeFilterDropdownBody";
+// import {
+//     AttributeFilterContext,
+// } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Context/AttributeFilterContext";
 import { AttributeFilterDefaultComponents } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Context/AttributeFilterDefaultComponents";
 import { AttributeFilterComponentsProvider } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Context/AttributeFilterComponentsContext";
-import { action } from "@storybook/addon-actions";
-import { stateWithEmptySelection, stateWithSelectionAndSearch } from "./mocks/handlerStateMocks";
+// import { action } from "@storybook/addon-actions";
+// import { stateWithEmptySelection, stateWithSelectionAndSearch } from "./mocks/handlerStateMocks";
 
 const DefaultComponentsWrapper: React.FC = (props) => {
     const { children } = props;
@@ -32,7 +31,7 @@ const AttributeFilterButtonDefaultDropdownBodyExamples = (): JSX.Element => {
             <DefaultComponentsWrapper>
                 <div style={{ width: 500 }}>
                     <div className="library-component screenshot-target">
-                        <h4>AttributeFilterButtonDefaultDropdownBody</h4>
+                        {/* <h4>AttributeFilterButtonDefaultDropdownBody</h4>
                         <div style={{ width: 245, border: "1px solid black" }}>
                             <AttributeFilterContext.Provider
                                 value={{ ...AttributeFilterContextDefaultState, ...stateWithEmptySelection }}
@@ -57,7 +56,7 @@ const AttributeFilterButtonDefaultDropdownBodyExamples = (): JSX.Element => {
                                     closeDropdown={action("closeDropdown")}
                                 />
                             </AttributeFilterContext.Provider>
-                        </div>
+                        </div> */}
                         {/* TODO fix this stories when parent titles implemented */}
                         {/* <h4>AttributeFilterButtonDefaultDropdownBody all elements filtered</h4>
                         <div style={{ width: 245, border: "1px solid black" }}>

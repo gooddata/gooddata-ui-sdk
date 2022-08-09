@@ -79,9 +79,9 @@ Array [
     ],
     "options": Object {
       "limit": 2,
-      "limitingAttributeFilters": undefined,
-      "limitingDateFilters": undefined,
-      "limitingMeasures": undefined,
+      "limitingAttributeFilters": Array [],
+      "limitingDateFilters": Array [],
+      "limitingMeasures": Array [],
       "offset": 2,
       "order": undefined,
       "search": "",

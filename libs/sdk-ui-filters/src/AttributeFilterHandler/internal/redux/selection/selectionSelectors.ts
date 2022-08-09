@@ -49,7 +49,7 @@ export const selectInvertableWorkingSelection = createSelector(
  */
 export const selectInvertableCommittedSelection = createSelector(
     selectCommittedSelection,
-    selectIsWorkingSelectionInverted,
+    selectIsCommittedSelectionInverted,
     (keys, isInverted): InvertableAttributeElementSelection => ({
         keys,
         isInverted,
@@ -60,9 +60,13 @@ export const selectInvertableCommittedSelection = createSelector(
  * @internal
  */
 export const selectIsWorkingSelectionChanged = createSelector(
-    selectCommittedSelection,
+    selectIsWorkingSelectionInverted,
     selectWorkingSelection,
-    isEqual,
+    selectIsCommittedSelectionInverted,
+    selectCommittedSelection,
+    (isWorkingSelectionInverted, workingSelection, isCommitedSelectionInverted, commitedSelection) =>
+        isWorkingSelectionInverted !== isCommitedSelectionInverted ||
+        !isEqual([...commitedSelection].sort(), [...workingSelection].sort()),
 );
 
 /**

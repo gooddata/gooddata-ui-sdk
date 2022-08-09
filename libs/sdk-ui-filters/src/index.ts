@@ -134,3 +134,23 @@ export {
     ISingleSelectAttributeFilterHandler,
     IMultiSelectAttributeFilterHandler,
 } from "./AttributeFilterHandler";
+
+export {
+    AttributeFilter as AttributeFilterV2,
+    IAttributeFilterProps as IAttributeFilterPropsV2,
+    AttributeFilterButton as AttributeFilterButtonV2,
+    IAttributeFilterButtonProps as IAttributeFilterButtonPropsV2,
+    IAttributeFilterBaseProps,
+    IAttributeFilterErrorProps,
+    IAttributeFilterDropdownActionsProps,
+    IAttributeFilterDropdownButtonProps,
+    IAttributeFilterDropdownBodyProps,
+    IAttributeFilterDropdownContentProps,
+    IAttributeFilterElementsSelectProps,
+    IAttributeFilterElementsSelectItemProps,
+    IAttributeFilterElementsSelectLoadingProps,
+    IAttributeFilterElementsSelectNoMatchingDataProps,
+    IAttributeFilterElementsSelectParentItemsFilteredProps,
+    OnApplyCallbackType,
+    ParentFilterOverAttributeType,
+} from "./AttributeFilter@next";

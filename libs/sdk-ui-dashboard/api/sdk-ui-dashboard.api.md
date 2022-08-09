@@ -97,7 +97,7 @@ import { IntlShape } from 'react-intl';
 import { IPositiveAttributeFilter } from '@gooddata/sdk-model';
 import { IPushData } from '@gooddata/sdk-ui';
 import { IRelativeDateFilter } from '@gooddata/sdk-model';
-import { IRenderItemProps } from '@gooddata/sdk-ui-kit';
+import { IRenderListItemProps } from '@gooddata/sdk-ui-kit';
 import { IScheduledMail } from '@gooddata/sdk-model';
 import { IScheduledMailDefinition } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-model';
@@ -3351,7 +3351,7 @@ export interface IInsightListProps {
     // (undocumented)
     onSelect?: (insight: IInsight) => void;
     // (undocumented)
-    renderItem?: (props: IRenderItemProps<IInsight>) => React.ReactNode;
+    renderItem?: (props: IRenderListItemProps<IInsight>) => JSX.Element;
     // (undocumented)
     searchAutofocus?: boolean;
     // (undocumented)

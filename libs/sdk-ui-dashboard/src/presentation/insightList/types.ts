@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
-import { IRenderItemProps } from "@gooddata/sdk-ui-kit";
 import { IInsight, ObjRef } from "@gooddata/sdk-model";
+import { IRenderListItemProps } from "@gooddata/sdk-ui-kit";
 
 /**
  * @internal
@@ -9,7 +9,7 @@ export interface IInsightListProps {
     height?: number;
     searchAutofocus?: boolean;
     noDataButton?: INoDataButton;
-    renderItem?: (props: IRenderItemProps<IInsight>) => React.ReactNode;
+    renderItem?: (props: IRenderListItemProps<IInsight>) => JSX.Element;
     selectedRef?: ObjRef;
     onSelect?: (insight: IInsight) => void;
 }

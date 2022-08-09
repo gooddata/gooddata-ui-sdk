@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { useCallback } from "react";
 import cx from "classnames";
 import { injectIntl, WrappedComponentProps } from "react-intl";
@@ -47,7 +47,7 @@ export interface IDropdownListProps<T> extends IListProps<T> {
     footer?: React.ReactNode | ((closeDropdown: () => void) => React.ReactNode);
     closeDropdown?: () => void;
 
-    scrollToSelected?: boolean;
+    scrollToItem?: T;
 }
 
 /**
@@ -107,7 +107,7 @@ export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element {
 
         renderNoData = defaultNoData,
 
-        scrollToSelected,
+        scrollToItem,
         ...listProps
     } = props;
 
@@ -161,7 +161,7 @@ export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element {
                                 items={items}
                                 itemsCount={itemsCount}
                                 itemHeight={isMobile ? Math.max(mobileItemHeight, itemHeight) : itemHeight}
-                                scrollToSelected={scrollToSelected}
+                                scrollToItem={scrollToItem}
                                 {...listProps}
                             />
                         );

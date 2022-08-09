@@ -40,7 +40,7 @@ storiesOf(`${FilterStories}@next/AttributeFilterBase/Customization/FilterDropdow
                     workspace={ReferenceWorkspaceId}
                     filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
                     onApply={action("on-apply")}
-                    FilterDropdownBody={CustomComponent}
+                    DropdownBodyComponent={CustomComponent}
                 />
             </div>
         );

@@ -2,11 +2,11 @@
 import React from "react";
 import { AttributeFilterBase } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/AttributeFilterBase";
 import { AttributeFilterDefaultComponents } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Context/AttributeFilterDefaultComponents";
+import { IAttributeFilterDropdownActionsProps } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Components/types";
 import {
-    IAttributeFilterDropdownButtonsProps,
+    AttributeFilterDeleteButton,
     IAttributeFilterDeleteButtonProps,
-} from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Components/types";
-import { AttributeFilterDeleteButton } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Components/AttributeFilterDeleteButton";
+} from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Components/Addons/AttributeFilterDeleteButton";
 
 import { storiesOf } from "../../../../_infra/storyRepository";
 import { action } from "@storybook/addon-actions";
@@ -21,24 +21,24 @@ import { ReferenceWorkspaceId, StorybookBackend } from "../../../../_infra/backe
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 const backend = StorybookBackend();
 
-const CustomComponent = (props: IAttributeFilterDropdownButtonsProps) => {
-    const { onApplyButtonClicked, onCloseButtonClicked, isApplyDisabled } = props;
+const CustomComponent = (props: IAttributeFilterDropdownActionsProps) => {
+    const { onApplyButtonClick, onCloseButtonClick, isApplyDisabled } = props;
     return (
         <>
-            <button onClick={onApplyButtonClicked} disabled={isApplyDisabled}>
+            <button onClick={onApplyButtonClick} disabled={isApplyDisabled}>
                 Apply
             </button>
-            <button onClick={onCloseButtonClicked}>Close</button>
+            <button onClick={onCloseButtonClick}>Close</button>
         </>
     );
 };
 
 function WithDeleteButton(deleteProps: IAttributeFilterDeleteButtonProps) {
-    return function Component(props: IAttributeFilterDropdownButtonsProps) {
+    return function Component(props: IAttributeFilterDropdownActionsProps) {
         return (
             <>
                 <AttributeFilterDeleteButton onDelete={deleteProps.onDelete} />
-                <AttributeFilterDefaultComponents.AttributeFilterDropdownButtons {...props} />
+                <AttributeFilterDefaultComponents.AttributeFilterDropdownActions {...props} />
             </>
         );
     };
@@ -53,7 +53,7 @@ storiesOf(`${FilterStories}@next/AttributeFilterBase/Customization/FilterDropdow
                     workspace={ReferenceWorkspaceId}
                     filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
                     onApply={action("onApply")}
-                    FilterDropdownButtons={CustomComponent}
+                    DropdownActionsComponent={CustomComponent}
                 />
             </div>
         );
@@ -67,7 +67,7 @@ storiesOf(`${FilterStories}@next/AttributeFilterBase/Customization/FilterDropdow
                     workspace={ReferenceWorkspaceId}
                     filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
                     onApply={action("onApply")}
-                    FilterDropdownButtons={AttributeFilterDropdownButtons}
+                    DropdownActionsComponent={AttributeFilterDropdownButtons}
                 />
             </div>
         );

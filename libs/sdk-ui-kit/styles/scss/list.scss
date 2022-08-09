@@ -52,6 +52,7 @@ $menu-item-icon-width: 30px;
     font-size: 12px;
     padding-top: 5px;
     border-top: 1px solid $gd-border-color;
+    font-family: $gd-font-primary;
 
     span {
         flex: 0 0 auto;
@@ -75,7 +76,12 @@ $menu-item-icon-width: 30px;
     }
 }
 
+.gd-list-all-checkbox-checked {
+    font-weight: bold;
+}
+
 .gd-list-actions {
+    font-family: $gd-font-primary;
     margin: 0 10px 10px;
     line-height: 1;
     font-size: 12px;

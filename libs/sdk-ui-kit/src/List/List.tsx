@@ -1,24 +1,44 @@
 // (C) 2007-2022 GoodData Corporation
-import React, { Component } from "react";
+import React, { useEffect, useCallback, useMemo } from "react";
 import { Table, Column, Cell } from "fixed-data-table-2";
 import cx from "classnames";
-import memoize from "lodash/memoize";
-
-const preventDefault = (e: Event) => e.preventDefault();
 
 // it configures max number of records due to
 // inefficiency with virtual memory allocation
 // that causes application crash (TNT-787)
 const MAX_NUMBER_OF_ROWS = 1000000;
 
-function isTouchDevice() {
-    return "ontouchstart" in document.documentElement;
+const BORDER_HEIGHT = 1;
+const HALF_ROW = 0.5;
+export const MAX_VISIBLE_ITEMS_COUNT = 10;
+export const DEFAULT_ITEM_HEIGHT = 28;
+
+/**
+ * @internal
+ */
+export interface IListProps<T> {
+    className?: string;
+    compensateBorder?: boolean;
+
+    height?: number;
+    width?: number;
+
+    items?: T[];
+    itemsCount?: number;
+    itemHeight?: number;
+    maxVisibleItemsCount?: number;
+    itemHeightGetter?: (index: number) => number;
+    renderItem: (props: IRenderListItemProps<T>) => JSX.Element;
+
+    scrollToItem?: T;
+    onScrollStart?: ScrollCallback;
+    onScrollEnd?: ScrollCallback;
 }
 
 /**
  * @internal
  */
-export interface IRenderItemProps<T> {
+export interface IRenderListItemProps<T> {
     rowIndex: number;
     item: T;
     width: number;
@@ -35,154 +55,149 @@ export type ScrollCallback = (visibleRowsStartIndex: number, visibleRowsEndIndex
 /**
  * @internal
  */
-export interface IListProps<T> {
-    className?: string;
+export function List<T>(props: IListProps<T>): JSX.Element {
+    const {
+        className = "",
+        compensateBorder = true,
 
-    height?: number;
-    width?: number;
+        width = 200,
+        height,
 
-    items?: T[];
-    itemsCount?: number;
-    itemHeight?: number;
-    itemHeightGetter?: (index: number) => number;
-    maxVisibleItemsCount?: number;
-    renderItem: (props: IRenderItemProps<T>) => React.ReactNode;
+        items = [],
+        itemsCount = items.length,
+        itemHeight = DEFAULT_ITEM_HEIGHT,
+        itemHeightGetter = null,
+        maxVisibleItemsCount = MAX_VISIBLE_ITEMS_COUNT,
+        renderItem,
 
-    onScrollStart?: ScrollCallback;
-    onScrollEnd?: ScrollCallback;
+        onScrollStart,
+        onScrollEnd,
 
-    compensateBorder?: boolean;
+        scrollToItem,
+    } = props;
 
-    scrollToSelected?: boolean;
-}
+    const currentItemsCount =
+        itemsCount > maxVisibleItemsCount ? maxVisibleItemsCount + HALF_ROW : itemsCount;
 
-const BORDER_HEIGHT = 1;
-export const MAX_VISIBLE_ITEMS_COUNT = 10;
-export const DEFAULT_ITEM_HEIGHT = 28;
-const HALF_ROW = 0.5;
+    const listHeight = height || currentItemsCount * itemHeight;
 
-/**
- * @internal
- */
-export class List<T> extends Component<IListProps<T>> {
-    public componentWillUnmount(): void {
-        this.enablePageScrolling();
-    }
+    const scrollToItemRowIndex = useMemo(() => {
+        if (!scrollToItem) {
+            return undefined;
+        }
 
-    public render(): JSX.Element {
-        const {
-            className = "",
+        return items.indexOf(scrollToItem) + 1;
+    }, [items, scrollToItem]);
 
-            width = 200,
-            height,
-
-            compensateBorder = true,
-
-            items = [],
-            itemsCount = items.length,
-            itemHeight = DEFAULT_ITEM_HEIGHT,
-            itemHeightGetter = null,
-            maxVisibleItemsCount = MAX_VISIBLE_ITEMS_COUNT,
-            renderItem,
-
-            onScrollStart,
-            onScrollEnd,
-
-            scrollToSelected,
-        } = this.props;
-
-        const currentItemsCount =
-            itemsCount > maxVisibleItemsCount ? maxVisibleItemsCount + HALF_ROW : itemsCount;
-
-        const listHeight = height || currentItemsCount * itemHeight;
-
-        // compensates for https://github.com/facebook/fixed-data-table/blob/5373535d98b08b270edd84d7ce12833a4478c6b6/src/FixedDataTableNew.react.js#L872
-        const compensatedListHeight = compensateBorder ? listHeight + BORDER_HEIGHT * 2 : listHeight;
-        const classNames = cx("gd-list", className);
-
-        const getScrollRange = (scrollY: number): [number, number] => {
-            // vertical scroll position returned by fixed-data-table
-            // is converted to index of first visible item
+    const getVisibleScrollRange = useCallback(
+        (scrollY: number): [number, number] => {
             const rowIndex = Math.floor(scrollY / itemHeight);
             const visibleRange = Math.ceil(listHeight / itemHeight);
 
             return [rowIndex, rowIndex + visibleRange];
+        },
+        [itemHeight, listHeight],
+    );
+
+    const handleScrollStart = useCallback(
+        (_, y: number) => {
+            if (onScrollStart) {
+                const [startIndex, endIndex] = getVisibleScrollRange(y);
+                onScrollStart(startIndex, endIndex);
+            }
+        },
+        [onScrollStart, getVisibleScrollRange],
+    );
+
+    const handleScrollEnd = useCallback(
+        (_, y: number) => {
+            if (onScrollEnd) {
+                const [startIndex, endIndex] = getVisibleScrollRange(y);
+                onScrollEnd(startIndex, endIndex);
+            }
+        },
+        [onScrollEnd, getVisibleScrollRange],
+    );
+
+    useEffect(() => {
+        return () => {
+            enablePageScrolling();
         };
+    }, []);
 
-        const getItemIndex = memoize((items) => {
-            const rowIndex = items.findIndex((item: any) => item?.selected);
+    const styles = useMemo(() => {
+        return {
+            width,
+        };
+    }, [width]);
 
-            return rowIndex + 1;
-        });
-
-        return (
-            <div
-                className={classNames}
-                onMouseOver={this.disablePageScrolling}
-                onMouseOut={this.enablePageScrolling}
-                style={{ width }}
+    return (
+        <div
+            className={cx("gd-list gd-infinite-list", className)}
+            style={styles}
+            onMouseOver={disablePageScrolling}
+            onMouseOut={enablePageScrolling}
+        >
+            <Table
+                width={width}
+                // compensates for https://github.com/facebook/fixed-data-table/blob/5373535d98b08b270edd84d7ce12833a4478c6b6/src/FixedDataTableNew.react.js#L872
+                height={compensateBorder ? listHeight + BORDER_HEIGHT * 2 : listHeight}
+                headerHeight={0}
+                rowHeight={itemHeight}
+                rowHeightGetter={itemHeightGetter}
+                bufferRowCount={0}
+                rowsCount={Math.min(itemsCount, MAX_NUMBER_OF_ROWS)}
+                onScrollStart={handleScrollStart}
+                onScrollEnd={handleScrollEnd}
+                scrollToRow={scrollToItemRowIndex}
+                touchScrollEnabled={isTouchDevice()}
             >
-                <Table
-                    width={width}
-                    height={compensatedListHeight}
-                    headerHeight={0}
-                    rowHeight={itemHeight}
-                    rowHeightGetter={itemHeightGetter}
-                    rowsCount={Math.min(itemsCount, MAX_NUMBER_OF_ROWS)}
-                    onScrollStart={(_x: number, y: number) => {
-                        if (onScrollStart) {
-                            const [startIndex, endIndex] = getScrollRange(y);
-                            onScrollStart(startIndex, endIndex);
-                        }
+                <Column
+                    flexGrow={1}
+                    width={1}
+                    cell={({
+                        columnKey,
+                        height,
+                        width,
+                        rowIndex,
+                    }: {
+                        columnKey: string;
+                        height: number;
+                        width: number;
+                        rowIndex: number;
+                    }) => {
+                        const item = items[rowIndex];
+                        return (
+                            <Cell width={width} height={height} rowIndex={rowIndex} columnKey={columnKey}>
+                                {renderItem({
+                                    rowIndex,
+                                    item,
+                                    width,
+                                    height,
+                                    isFirst: rowIndex === 0,
+                                    isLast: rowIndex === itemsCount - 1,
+                                })}
+                            </Cell>
+                        );
                     }}
-                    onScrollEnd={(_x: number, y: number) => {
-                        if (onScrollEnd) {
-                            const [startIndex, endIndex] = getScrollRange(y);
-                            onScrollEnd(startIndex, endIndex);
-                        }
-                    }}
-                    touchScrollEnabled={isTouchDevice()}
-                    scrollToRow={scrollToSelected && getItemIndex(items)}
-                >
-                    <Column
-                        flexGrow={1}
-                        width={1}
-                        cell={({
-                            columnKey,
-                            height,
-                            width,
-                            rowIndex,
-                        }: {
-                            columnKey: string;
-                            height: number;
-                            width: number;
-                            rowIndex: number;
-                        }) => {
-                            const item = items[rowIndex];
-                            return (
-                                <Cell width={width} height={height} rowIndex={rowIndex} columnKey={columnKey}>
-                                    {renderItem({
-                                        rowIndex,
-                                        item,
-                                        width,
-                                        height,
-                                        isFirst: rowIndex === 0,
-                                        isLast: rowIndex === itemsCount - 1,
-                                    })}
-                                </Cell>
-                            );
-                        }}
-                    />
-                </Table>
-            </div>
-        );
-    }
+                />
+            </Table>
+        </div>
+    );
+}
 
-    private disablePageScrolling = () => {
-        document.body.addEventListener("wheel", preventDefault, { passive: false });
-    };
+function preventDefault(e: Event) {
+    e.preventDefault();
+}
 
-    private enablePageScrolling = () => {
-        document.body.removeEventListener("wheel", preventDefault);
-    };
+function isTouchDevice() {
+    return "ontouchstart" in document.documentElement;
+}
+
+function disablePageScrolling() {
+    document.body.addEventListener("wheel", preventDefault, { passive: false });
+}
+
+function enablePageScrolling() {
+    document.body.removeEventListener("wheel", preventDefault);
 }

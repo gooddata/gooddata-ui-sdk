@@ -68,7 +68,7 @@ export const DashboardList: React.FC<IDashboardListProps> = ({ selected, dashboa
                     itemHeight={ITEM_HEIGHT}
                     showSearch={true}
                     items={items}
-                    scrollToSelected={true}
+                    scrollToItem={selectedDashboard}
                     onSearch={setSearchString}
                     renderItem={({ item }) => {
                         const isSelected = selectedDashboard && item.selected;

@@ -1,11 +1,11 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
 import { AttributeFilterBase } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/AttributeFilterBase";
-import { AttributeFilterConfigurationButton } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Components/AttributeFilterConfigurationButton";
 import {
-    IAttributeFilterDropdownContentProps,
+    AttributeFilterConfigurationButton,
     IAttributeFilterConfigurationButtonProps,
-} from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Components/types";
+} from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Components/Addons/AttributeFilterConfigurationButton";
+import { IAttributeFilterDropdownContentProps } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Components/types";
 import { AttributeFilterDefaultComponents } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Context/AttributeFilterDefaultComponents";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
@@ -55,7 +55,7 @@ storiesOf(`${FilterStories}@next/AttributeFilterBase/Customization/FilterDropdow
                     workspace={ReferenceWorkspaceId}
                     filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
                     onApply={action("on-apply")}
-                    FilterDropdownContent={WithDefaultComponent}
+                    DropdownContentComponent={WithDefaultComponent}
                 />
             </div>
         );
@@ -68,7 +68,7 @@ storiesOf(`${FilterStories}@next/AttributeFilterBase/Customization/FilterDropdow
                     workspace={ReferenceWorkspaceId}
                     filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
                     onApply={action("on-apply")}
-                    FilterDropdownContent={CustomComponent}
+                    DropdownContentComponent={CustomComponent}
                 />
             </div>
         );
@@ -83,7 +83,7 @@ storiesOf(`${FilterStories}@next/AttributeFilterBase/Customization/FilterDropdow
                     workspace={ReferenceWorkspaceId}
                     filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
                     onApply={action("on-apply")}
-                    FilterDropdownContent={FilterDropdownContent}
+                    DropdownContentComponent={FilterDropdownContent}
                 />
             </div>
         );
