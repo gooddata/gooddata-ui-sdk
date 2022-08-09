@@ -33,6 +33,7 @@ export class EditableLabelInner extends Component<IEditableLabelInnerProps, IEdi
         scrollToEndOnEditingStart: true,
         textareaInOverlay: false,
         autofocus: false,
+        isEditableLabelWidthBasedOnText: false,
     };
     private readonly root: RefObject<any>;
     private readonly textarea: RefObject<HTMLTextAreaElement>;
@@ -249,7 +250,9 @@ export class EditableLabelInner extends Component<IEditableLabelInnerProps, IEdi
         return this.props.textareaInOverlay
             ? this.renderTextAreaInOverlay()
             : this.renderTextarea(
-                  this.root.current ? { width: this.root.current.getBoundingClientRect().width } : {},
+                  this.root.current && this.props.isEditableLabelWidthBasedOnText
+                      ? { width: this.root.current.getBoundingClientRect().width }
+                      : {},
               );
     }
 
