@@ -1638,6 +1638,31 @@
         "comment": "Help button label in Drill to URL 'Custom URL' editor. Do not translate '{invalidParameters}' placeholder.",
         "limit": 0
     },
+    "configurationPanel.drillIntoUrl.customUrlAddButtonLabel": {
+        "value": "Add custom URL",
+        "comment": "Label of the button in 'Drill into URL' dropdown that is used for adding of the custom URL.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.customUrlEditButtonLabel": {
+        "value": "Edit custom URL",
+        "comment": "Label of the button in 'Drill into URL' dropdown that is used for editing of the custom URL.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.defaultDisplayFormTypeLabel": {
+        "value": "Attribute label value",
+        "comment": "Type label of default display form in parameter detail in 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.geoDisplayFormTypeLabel": {
+        "value": "Attribute geo value",
+        "comment": "Type label of geo display form in parameter detail in 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.urlDisplayFormTypeLabel": {
+        "value": "Attribute URL value",
+        "comment": "Type label of URL display form in parameter detail in 'Custom URL' editor.",
+        "limit": 0
+    },
     "configurationPanel.drillConfig.selectInsight|insight": {
         "value": "Choose insight…",
         "comment": "Hint guiding users that drill target insight in select box has to be selected. Use '…' as one character, not 3 dots ('...').",

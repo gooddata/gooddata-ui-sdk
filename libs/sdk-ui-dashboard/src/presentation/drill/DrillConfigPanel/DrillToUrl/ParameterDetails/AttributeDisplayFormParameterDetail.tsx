@@ -1,6 +1,6 @@
 // (C) 2020-2022 GoodData Corporation
 import React, { useState, useEffect } from "react";
-import { IntlShape, useIntl } from "react-intl";
+import { defineMessages, IntlShape, useIntl } from "react-intl";
 import { LRUCache } from "@gooddata/util";
 import { IAttributeElement, ObjRef, objRefToString } from "@gooddata/sdk-model";
 import { ParameterDetail } from "./ParameterDetail";
@@ -15,13 +15,19 @@ const DISPLAY_FORM_ELEMENTS_LIMIT = 3;
 const requestCache = new LRUCache<IElementsQueryResult>({ maxSize: MAX_CACHED_REQUESTS });
 
 const getDisplayFormLabel = (type: string | undefined) => {
+    const messages = defineMessages({
+        hyperlink: { id: "configurationPanel.drillIntoUrl.editor.urlDisplayFormTypeLabel" },
+        pushpin: { id: "configurationPanel.drillIntoUrl.editor.geoDisplayFormTypeLabel" },
+        default: { id: "configurationPanel.drillIntoUrl.editor.defaultDisplayFormTypeLabel" },
+    });
+
     switch (type) {
         case AttributeDisplayFormType.HYPERLINK:
-            return "configurationPanel.drillIntoUrl.editor.urlDisplayFormTypeLabel";
+            return messages.hyperlink;
         case AttributeDisplayFormType.GEO_PUSHPIN:
-            return "configurationPanel.drillIntoUrl.editor.geoDisplayFormTypeLabel";
+            return messages.pushpin;
         default:
-            return "configurationPanel.drillIntoUrl.editor.defaultDisplayFormTypeLabel";
+            return messages.default;
     }
 };
 
@@ -113,7 +119,7 @@ export const AttributeDisplayFormParameterDetail: React.FC<IAttributeDisplayForm
         <ParameterDetail
             title={title}
             label={label}
-            typeName={intl.formatMessage({ id: getDisplayFormLabel(type) })}
+            typeName={intl.formatMessage(getDisplayFormLabel(type))}
             isLoading={isLoading}
             useEllipsis={type !== AttributeDisplayFormType.HYPERLINK}
             values={values ? values : []}

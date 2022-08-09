@@ -1,5 +1,8 @@
 // (C) 2022 GoodData Corporation
 
+/**
+ * @internal
+ */
 export enum DRILL_TO_URL_PLACEHOLDER {
     PROJECT_ID = "{project_id}",
     WORKSPACE_ID = "{workspace_id}",

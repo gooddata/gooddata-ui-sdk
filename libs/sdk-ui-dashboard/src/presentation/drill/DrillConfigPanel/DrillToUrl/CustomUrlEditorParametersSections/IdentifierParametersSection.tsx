@@ -10,7 +10,11 @@ import { ClientIdParameterDetail } from "../ParameterDetails/ClientIdParameterDe
 import { DataProductIdParameterDetail } from "../ParameterDetails/DataProductIdParameterDetail";
 import { Parameter } from "./Parameter";
 import { IIdentifierParametersSectionProps } from "../types";
-import { DRILL_TO_URL_PLACEHOLDER } from "../../../../../model";
+import {
+    DRILL_TO_URL_PLACEHOLDER,
+    selectEnableRenamingProjectToWorkspace,
+    useDashboardSelector,
+} from "../../../../../model";
 
 interface IIdentifierParameter {
     titleIntlKey: string;
@@ -75,7 +79,7 @@ export const IdentifierParametersSection: React.FC<IIdentifierParametersSectionP
     onAdd,
     intl,
 }) => {
-    const enableRenamingProjectToWorkspace = false; // TODO: use translation with | maybe?
+    const enableRenamingProjectToWorkspace = useDashboardSelector(selectEnableRenamingProjectToWorkspace);
 
     return (
         <>

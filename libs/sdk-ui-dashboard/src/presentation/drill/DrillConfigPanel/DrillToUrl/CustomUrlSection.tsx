@@ -32,11 +32,13 @@ const UrlDropdownOption = ({
 
 const EditButton = ({ urlValue, toggleModal }: { urlValue?: string; toggleModal: ToggleModalCallback }) => {
     const intl = useIntl();
-    const buttonTitle = intl.formatMessage({
-        id: urlValue
-            ? "configurationPanel.drillIntoUrl.customUrlEditButtonLabel"
-            : "configurationPanel.drillIntoUrl.customUrlAddButtonLabel",
-    });
+    const buttonTitle = urlValue
+        ? intl.formatMessage({
+              id: "configurationPanel.drillIntoUrl.customUrlEditButtonLabel",
+          })
+        : intl.formatMessage({
+              id: "configurationPanel.drillIntoUrl.customUrlAddButtonLabel",
+          });
     const buttonIconLeft = urlValue ? undefined : "gd-icon-add";
     return (
         <Button

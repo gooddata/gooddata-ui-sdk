@@ -12,8 +12,6 @@ export const DropdownSectionHeader: React.FC<IDropdownSectionHeaderProps> = ({ c
         tagName="h3"
         className={cx("gd-drill-to-url-section-title gd-list-item gd-list-item-header", className)}
     >
-        <span>
-            <span>{children}</span>
-        </span>
+        <span>{children}</span>
     </Typography>
 );

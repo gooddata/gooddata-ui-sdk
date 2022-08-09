@@ -2273,6 +2273,24 @@ export interface Drill extends IDashboardCommand {
 // @alpha
 export function drill(drillEvent: IDashboardDrillEvent, drillContext: DashboardDrillContext, correlationId?: string): Drill;
 
+// @internal (undocumented)
+export enum DRILL_TO_URL_PLACEHOLDER {
+    // (undocumented)
+    CLIENT_ID = "{client_id}",
+    // (undocumented)
+    DASHBOARD_ID = "{dashboard_id}",
+    // (undocumented)
+    DATA_PRODUCT_ID = "{data_product_id}",
+    // (undocumented)
+    INSIGHT_ID = "{insight_id}",
+    // (undocumented)
+    PROJECT_ID = "{project_id}",
+    // (undocumented)
+    WIDGET_ID = "{widget_id}",
+    // (undocumented)
+    WORKSPACE_ID = "{workspace_id}"
+}
+
 // @alpha (undocumented)
 export interface DrillDown extends IDashboardCommand {
     // (undocumented)
@@ -5200,6 +5218,9 @@ export const selectImplicitDrillsByAvailableDrillTargets: (availableDrillTargets
 
 // @internal (undocumented)
 export const selectImplicitDrillsDownByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res1: IDrillTargets | undefined, res2: (ICatalogAttribute | ICatalogDateAttribute)[], res3: boolean) => IImplicitDrillWithPredicates[]>;
+
+// @internal (undocumented)
+export const selectImplicitDrillsToUrlByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res1: IDrillTargets | undefined, res2: ICatalogAttribute[], res3: boolean) => IImplicitDrillWithPredicates[]>;
 
 // @internal
 export const selectInsightAttributesMeta: (query: QueryInsightAttributesMeta) => Selector<DashboardState, QueryCacheEntryResult<InsightAttributesMeta> | undefined>;
