@@ -19,11 +19,12 @@ import {
     CustomScheduledEmailDialogComponent,
     CustomScheduledEmailManagementDialogComponent,
 } from "../scheduledEmail/types";
-import { CustomDashboardDateFilterComponent, CustomFilterBarComponent } from "../filterBar/types";
+import { CustomFilterBarComponent } from "../filterBar/types";
 import { CustomSaveAsDialogComponent } from "../saveAs/types";
 import { CustomShareDialogComponent } from "../shareDialog/types";
 import {
     AttributeFilterComponentProvider,
+    DateFilterComponentProvider,
     InsightBodyComponentProvider,
     InsightComponentProvider,
     InsightMenuButtonComponentProvider,
@@ -55,7 +56,7 @@ interface IDashboardComponentsContext {
     ShareDialogComponent: CustomShareDialogComponent;
     SaveAsDialogComponent: CustomSaveAsDialogComponent;
     DashboardAttributeFilterComponentProvider: AttributeFilterComponentProvider;
-    DashboardDateFilterComponent: CustomDashboardDateFilterComponent;
+    DashboardDateFilterComponentProvider: DateFilterComponentProvider;
     FilterBarComponent: CustomFilterBarComponent;
     SidebarComponent: CustomSidebarComponent;
 }
@@ -90,9 +91,9 @@ const DashboardComponentsContext = createContext<IDashboardComponentsContext>({
     ShareDialogComponent: ThrowMissingComponentError("ShareDialogComponent"),
     SaveAsDialogComponent: ThrowMissingComponentError("SaveAsDialogComponent"),
     DashboardAttributeFilterComponentProvider: ThrowMissingComponentError(
-        "DashboardAttributeFilterComponentFactory",
+        "DashboardAttributeFilterComponentProvider",
     ),
-    DashboardDateFilterComponent: ThrowMissingComponentError("DashboardDateFilterComponent"),
+    DashboardDateFilterComponentProvider: ThrowMissingComponentError("DashboardDateFilterComponentProvider"),
     FilterBarComponent: ThrowMissingComponentError("FilterBarComponent"),
     SidebarComponent: ThrowMissingComponentError("SidebarComponent"),
 });

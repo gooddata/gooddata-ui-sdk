@@ -12,7 +12,7 @@ import {
     DashboardModelCustomizationFns,
     DashboardState,
 } from "../../model";
-import { CustomDashboardDateFilterComponent, CustomFilterBarComponent } from "../filterBar";
+import { CustomFilterBarComponent } from "../filterBar";
 import { CustomDashboardLayoutComponent } from "../layout";
 import {
     CustomScheduledEmailDialogComponent,
@@ -36,6 +36,7 @@ import {
     OptionalInsightBodyComponentProvider,
     OptionalKpiComponentProvider,
     OptionalWidgetComponentProvider,
+    OptionalDateFilterComponentProvider,
 } from "../dashboardContexts";
 import { CustomSidebarComponent } from "./DashboardSidebar/types";
 
@@ -267,7 +268,7 @@ export interface IDashboardCustomComponentProps {
      *
      * @alpha
      */
-    DashboardDateFilterComponent?: CustomDashboardDateFilterComponent;
+    DashboardDateFilterComponentProvider?: OptionalDateFilterComponentProvider;
 
     /**
      * Specify component to use for rendering the filter bar.

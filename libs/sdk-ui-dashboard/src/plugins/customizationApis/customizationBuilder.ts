@@ -17,7 +17,7 @@ import { DefaultKpiCustomizer } from "./kpiCustomizer";
 import { DefaultWidgetCustomizer } from "./widgetCustomizer";
 import { DefaultLayoutCustomizer } from "./layoutCustomizer";
 import { DefaultFilterBarCustomizer } from "./filterBarCustomizer";
-import { NotImplemented } from "@gooddata/sdk-backend-spi";
+import { DefaultFiltersCustomizer } from "./filtersCustomizer";
 
 /**
  * @internal
@@ -31,11 +31,13 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
     private readonly filterBarCustomizer: DefaultFilterBarCustomizer = new DefaultFilterBarCustomizer(
         this.logger,
     );
+    private readonly filtersCustomizer: DefaultFiltersCustomizer = new DefaultFiltersCustomizer(this.logger);
 
     private sealCustomizers = (): void => {
         this.insightCustomizer.sealCustomizer();
         this.kpiCustomizer.sealCustomizer();
         this.widgetCustomizer.sealCustomizer();
+        this.filtersCustomizer.sealCustomizer();
         this.layoutCustomizer.sealCustomizer();
     };
 
@@ -60,7 +62,7 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
     };
 
     public filters = (): IFiltersCustomizer => {
-        throw new NotImplemented("Not implemented yet");
+        return this.filtersCustomizer;
     };
 
     public onBeforePluginRegister = (plugin: IDashboardPluginContract_V1): void => {
@@ -90,6 +92,10 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
             InsightBodyComponentProvider: this.insightCustomizer.getInsightBodyComponentProvider(),
             KpiComponentProvider: this.kpiCustomizer.getKpiProvider(),
             WidgetComponentProvider: this.widgetCustomizer.getWidgetComponentProvider(),
+            DashboardAttributeFilterComponentProvider: this.filtersCustomizer
+                .attribute()
+                .getAttributeFilterProvider(),
+            DashboardDateFilterComponentProvider: this.filtersCustomizer.date().getDateFilterProvider(),
             customizationFns: {
                 existingDashboardTransformFn: this.layoutCustomizer.getExistingDashboardTransformFn(),
             },

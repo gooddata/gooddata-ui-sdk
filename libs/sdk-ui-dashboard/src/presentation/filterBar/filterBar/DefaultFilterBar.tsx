@@ -21,7 +21,7 @@ import {
     DraggableAttributeFilter,
 } from "../../dragAndDrop";
 import { AttributesDropdown } from "../attributeFilter/addAttributeFilter/AttributesDropdown";
-import { DashboardDateFilter, HiddenDashboardDateFilter } from "../dateFilter";
+import { HiddenDashboardDateFilter } from "../dateFilter";
 import { IDashboardDateFilterConfig, IFilterBarProps } from "../types";
 import { DefaultFilterBarContainer } from "./DefaultFilterBarContainer";
 import {
@@ -82,7 +82,8 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
     const dateFilterOptions = useDashboardSelector(selectEffectiveDateFilterOptions);
     const dateFilterMode = useDashboardSelector(selectEffectiveDateFilterMode);
     const isExport = useDashboardSelector(selectIsExport);
-    const { DashboardAttributeFilterComponentProvider } = useDashboardComponentsContext();
+    const { DashboardAttributeFilterComponentProvider, DashboardDateFilterComponentProvider } =
+        useDashboardComponentsContext();
 
     if (isExport) {
         return <HiddenFilterBar {...props} />;
@@ -94,6 +95,8 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
         customFilterName,
     };
 
+    const CustomDateFilterComponent = DashboardDateFilterComponentProvider(dateFilter);
+
     return (
         <DefaultFilterBarContainer>
             <div className="dash-filters-date dash-filters-attribute">
@@ -101,7 +104,7 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                     <HiddenDashboardDateFilter />
                 ) : (
                     <>
-                        <DashboardDateFilter
+                        <CustomDateFilterComponent
                             filter={dateFilter}
                             onFilterChanged={onDateFilterChanged}
                             config={dateFilterComponentConfig}

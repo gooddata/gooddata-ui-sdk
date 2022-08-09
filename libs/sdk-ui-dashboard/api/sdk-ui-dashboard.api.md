@@ -1019,9 +1019,6 @@ export interface DashboardCopySavedPayload {
     readonly dashboard: IDashboard;
 }
 
-// @internal (undocumented)
-export const DashboardDateFilter: (props: IDashboardDateFilterProps) => JSX.Element;
-
 // @public
 export interface DashboardDateFilterSelectionChanged extends IDashboardEvent {
     // (undocumented)
@@ -2874,7 +2871,7 @@ export interface IDashboardCustomComponentProps {
     // @alpha
     DashboardAttributeFilterComponentProvider?: OptionalAttributeFilterComponentProvider;
     // @alpha
-    DashboardDateFilterComponent?: CustomDashboardDateFilterComponent;
+    DashboardDateFilterComponentProvider?: OptionalDateFilterComponentProvider;
     // @alpha
     ErrorComponent?: ComponentType<IErrorProps>;
     // @alpha
@@ -4350,7 +4347,7 @@ export type OnWidgetDrill = (drillEvent: IDashboardDrillEvent, drillContext: Das
 export type OptionalAttributeFilterComponentProvider = OptionalProvider<AttributeFilterComponentProvider>;
 
 // @alpha (undocumented)
-export type OptionalDateFilterComponentProvider = OptionalProvider<AttributeFilterComponentProvider>;
+export type OptionalDateFilterComponentProvider = OptionalProvider<DateFilterComponentProvider>;
 
 // @alpha (undocumented)
 export type OptionalInsightBodyComponentProvider = OptionalProvider<InsightBodyComponentProvider>;
