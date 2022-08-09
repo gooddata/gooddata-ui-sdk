@@ -5,7 +5,6 @@ import invariant from "ts-invariant";
 
 import {
     addSectionItem,
-    placeholdersActions,
     removeLayoutSection,
     selectAllCatalogMeasuresMap,
     selectLayout,
@@ -15,7 +14,7 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../model";
-import { getSizeInfo } from "../../../_staging/layout/getSizeInfo";
+import { getSizeInfo } from "../../../_staging/layout/sizing";
 
 import { KpiConfigurationPanelCore } from "../kpi/EditableDashboardKpi/KpiConfigurationPanel/KpiConfigurationPanelCore";
 import { KpiPlaceholderWidget } from "../../../widgets/placeholders/types";
@@ -40,7 +39,7 @@ export const KpiPlaceholderConfigurationPanel: React.FC<IKpiPlaceholderConfigura
         successEvent: "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED",
         onSuccess: (event) => {
             const ref = event.payload.itemsAdded[0].widget!.ref;
-            dispatch(placeholdersActions.clearWidgetPlaceholder());
+            dispatch(uiActions.clearWidgetPlaceholder());
             dispatch(uiActions.selectWidget(ref));
             dispatch(uiActions.setConfigurationPanelOpened(true));
         },
@@ -81,7 +80,7 @@ export const KpiPlaceholderConfigurationPanel: React.FC<IKpiPlaceholderConfigura
 
     const handlePanelClosed = useCallback(() => {
         dispatch(uiActions.setConfigurationPanelOpened(false));
-        dispatch(placeholdersActions.clearWidgetPlaceholder());
+        dispatch(uiActions.clearWidgetPlaceholder());
         // also try removing the section if it is empty, it means it was just added for this KPI
         if (section.items.length === 0) {
             dispatch(removeLayoutSection(widget.sectionIndex));

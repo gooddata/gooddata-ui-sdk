@@ -1,18 +1,14 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
-import { useDashboardDrag } from "../useDashboardDrag";
 import classNames from "classnames";
-import {
-    useDashboardSelector,
-    selectIsInEditMode,
-    useDashboardDispatch,
-    placeholdersActions,
-} from "../../../model";
+import { IInsight } from "@gooddata/sdk-model";
+
+import { useDashboardSelector, selectIsInEditMode, useDashboardDispatch, uiActions } from "../../../model";
+import { useDashboardDrag } from "../useDashboardDrag";
 import {
     CustomDashboardInsightListItemComponent,
     CustomDashboardInsightListItemComponentProps,
 } from "../types";
-import { IInsight } from "@gooddata/sdk-model";
 
 type DraggableInsightProps = {
     ListItemComponent: CustomDashboardInsightListItemComponent;
@@ -38,7 +34,7 @@ export function DraggableInsightListItem({
             hideDefaultPreview: false,
             dragEnd: (_, monitor) => {
                 if (!monitor.didDrop()) {
-                    dispatch(placeholdersActions.clearWidgetPlaceholder());
+                    dispatch(uiActions.clearWidgetPlaceholder());
                 }
             },
         },

@@ -133,7 +133,7 @@ describe("sizing", () => {
             const settings = {
                 enableKDWidgetCustomHeight,
             };
-            it("should get minimum width for uknown visType", () => {
+            it("should get minimum width for unknown visType", () => {
                 expect(getDashboardLayoutWidgetMinGridWidth(settings, "insight")).toBe(4);
             });
 

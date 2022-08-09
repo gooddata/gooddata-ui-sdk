@@ -6,12 +6,11 @@ import {
     selectSettings,
     useDashboardDispatch,
     useDashboardSelector,
-    placeholdersActions,
     addSectionItem,
     useDashboardCommandProcessing,
     uiActions,
 } from "../../../model";
-import { getSizeInfo } from "../../../_staging/layout/getSizeInfo";
+import { getSizeInfo } from "../../../_staging/layout/sizing";
 
 export function useInsightPlaceholderDropHandler() {
     const dispatch = useDashboardDispatch();
@@ -23,12 +22,12 @@ export function useInsightPlaceholderDropHandler() {
         successEvent: "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED",
         onSuccess: (event) => {
             const ref = event.payload.itemsAdded[0].widget!.ref;
-            dispatch(placeholdersActions.clearWidgetPlaceholder());
+            dispatch(uiActions.clearWidgetPlaceholder());
             dispatch(uiActions.selectWidget(ref));
             dispatch(uiActions.setConfigurationPanelOpened(true));
         },
         onError: () => {
-            dispatch(placeholdersActions.clearWidgetPlaceholder());
+            dispatch(uiActions.clearWidgetPlaceholder());
         },
     });
 

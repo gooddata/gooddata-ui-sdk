@@ -11,6 +11,8 @@ export {
     selectSupportsElementsQueryParentFiltering,
     selectSupportsElementUris,
     selectSupportsKpiWidgetCapability,
+    selectSupportsAccessControlCapability,
+    selectSupportsHierarchicalWorkspacesCapability,
 } from "./backendCapabilities/backendCapabilitiesSelectors";
 export { ConfigState } from "./config/configState";
 export {
@@ -47,6 +49,9 @@ export {
     selectShouldHidePixelPerfectExperience,
     selectDisableKpiDashboardHeadlineUnderline,
     selectIsWhiteLabeled,
+    selectEnableAnalyticalDashboardPermissions,
+    selectDashboardEditModeDevRollout,
+    selectIsSaveAsNewButtonHidden,
 } from "./config/configSelectors";
 export { PermissionsState } from "./permissions/permissionsState";
 export {
@@ -178,6 +183,8 @@ export {
     selectPersistedDashboard,
     selectDashboardLockStatus,
     selectIsNewDashboard,
+    selectIsDashboardDirty,
+    selectIsDashboardPrivate,
 } from "./meta/metaSelectors";
 export {
     selectListedDashboards,
@@ -197,7 +204,7 @@ export {
     selectIsExecutionResultReadyForExportByRef,
 } from "./executionResults/executionResultsSelectors";
 export { IExecutionResultEnvelope } from "./executionResults/types";
-export { UiState } from "./ui/uiState";
+export { UiState, IWidgetPlaceholderSpec, IWidgetPlaceholderType } from "./ui/uiState";
 export {
     selectIsScheduleEmailDialogOpen,
     selectIsScheduleEmailManagementDialogOpen,
@@ -208,24 +215,20 @@ export {
     selectIsKpiAlertHighlightedByWidgetRef,
     selectMenuButtonItemsVisibility,
     selectScheduleEmailDialogDefaultAttachment,
-    selectRenderMode,
-    selectIsInEditMode,
-    selectIsInViewMode,
     selectSelectedWidgetRef,
     selectConfigurationPanelOpened,
     selectKpiDateDatasetAutoOpen,
     selectIsDeleteDialogOpen,
     selectIsKpiDeleteDialogOpen,
     selectKpiDeleteDialogWidgetCoordinates,
+    selectIsWidgetPlaceholderShown,
+    selectWidgetPlaceholder,
 } from "./ui/uiSelectors";
 export { uiActions } from "./ui";
+export { RenderModeState } from "./renderMode/renderModeState";
+export { selectIsInEditMode, selectIsInViewMode, selectRenderMode } from "./renderMode/renderModeSelectors";
+export { renderModeActions } from "./renderMode";
 export { LegacyDashboardsState } from "./legacyDashboards/legacyDashboardsState";
-export { PlaceholdersState, IWidgetPlaceholderSpec } from "./placeholders/placeholdersState";
-export {
-    selectWidgetPlaceholder,
-    selectIsWidgetPlaceholderShown,
-} from "./placeholders/placeholdersSelectors";
-export { placeholdersActions } from "./placeholders";
 
 export { queryAndWaitFor } from "./_infra/queryAndWaitFor";
 export { dispatchAndWaitFor } from "./_infra/dispatchAndWaitFor";

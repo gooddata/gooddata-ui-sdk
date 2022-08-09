@@ -3,22 +3,24 @@
 import React, { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Bubble, BubbleHoverTrigger, Button } from "@gooddata/sdk-ui-kit";
+import noop from "lodash/noop";
+
 import {
+    cancelEditRenderMode,
     dispatchAndWaitFor,
     saveDashboard,
+    selectEnableAnalyticalDashboardPermissions,
+    selectIsDashboardDirty,
+    selectIsNewDashboard,
     selectIsDashboardSaving,
     selectIsLayoutEmpty,
     selectIsInEditMode,
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../../../model";
-import { ISaveButtonProps } from "./types";
-import { cancelEditRenderMode } from "../../../../../model/commands/ui";
-import { selectCanSaveDashboard, selectIsPrivateDashboard } from "../selectors";
-import { selectEnableAnalyticalDashboardPermissions } from "../../../../../model/store/config/configSelectors";
-import { selectIsDashboardDirty, selectIsNewDashboard } from "../../../../../model/store/meta/metaSelectors";
-import noop from "lodash/noop";
 import { messages } from "../../../../../locales";
+import { selectCanSaveDashboard, selectIsPrivateDashboard } from "../selectors";
+import { ISaveButtonProps } from "./types";
 
 /**
  * @internal

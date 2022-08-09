@@ -15,6 +15,7 @@ import {
     ExtendedDashboardWidget,
     selectEnableWidgetCustomHeight,
     selectInsightsMap,
+    selectIsInEditMode,
     selectSettings,
     useDashboardSelector,
 } from "../../model";
@@ -28,9 +29,8 @@ import {
 import { ObjRefMap } from "../../_staging/metadata/objRefMap";
 import { useDashboardComponentsContext } from "../dashboardContexts";
 import { Hotspot, WidthResizerHotspot, ResizeOverlay, useResizeItemStatus } from "../dragAndDrop";
-import { getDashboardLayoutWidgetDefaultHeight } from "../../model/layout";
+import { getDashboardLayoutWidgetDefaultHeight } from "../../_staging/layout/sizing";
 import { isAnyPlaceholderWidget } from "../../widgets/placeholders/types";
-import { selectIsInEditMode } from "../../model/store/ui/uiSelectors";
 import { DEFAULT_COLUMN_CLIENT_WIDTH, DEFAULT_WIDTH_RESIZER_HEIGHT } from "./constants";
 
 function calculateWidgetMinHeight(

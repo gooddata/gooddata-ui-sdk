@@ -324,6 +324,9 @@ export const ButtonBar: (props: IButtonBarProps) => JSX.Element;
 // @internal (undocumented)
 export const CancelButton: (props: ICancelButtonProps) => JSX.Element;
 
+// @internal
+export function cancelEditRenderMode(correlationId?: string): ChangeRenderMode;
+
 // @alpha (undocumented)
 export interface CatalogState {
     // (undocumented)
@@ -1799,7 +1802,7 @@ export abstract class DashboardPluginV1 implements IDashboardPluginContract_V1 {
 }
 
 // @alpha (undocumented)
-export type DashboardQueries = QueryInsightDateDatasets | QueryMeasureDateDatasets | QueryInsightAttributesMeta | QueryWidgetFilters | QueryWidgetBrokenAlerts;
+export type DashboardQueries = QueryInsightDateDatasets | QueryMeasureDateDatasets | QueryInsightAttributesMeta | QueryWidgetFilters | QueryWidgetBrokenAlerts | QueryWidgetAlertCount;
 
 // @alpha
 export interface DashboardQueryCompleted<TQuery extends IDashboardQuery, TResult> extends IDashboardEvent {
@@ -1850,7 +1853,7 @@ export interface DashboardQueryStartedPayload {
 }
 
 // @alpha (undocumented)
-export type DashboardQueryType = "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS" | "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META" | "GDC.DASH/QUERY.MEASURE.DATE.DATASETS" | "GDC.DASH/QUERY.WIDGET.FILTERS" | "GDC.DASH/QUERY.WIDGET.BROKEN_ALERTS";
+export type DashboardQueryType = "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS" | "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META" | "GDC.DASH/QUERY.MEASURE.DATE.DATASETS" | "GDC.DASH/QUERY.WIDGET.FILTERS" | "GDC.DASH/QUERY.WIDGET.BROKEN_ALERTS" | "GDC.DASH/QUERY.WIDGET.ALERT_COUNT";
 
 // @alpha
 export interface DashboardRenamed extends IDashboardEvent {
@@ -1979,11 +1982,11 @@ export interface DashboardState {
     meta: DashboardMetaState;
     // (undocumented)
     permissions: PermissionsState;
-    placeholders: PlaceholdersState;
     // @internal
     _queryCache: {
         [queryName: string]: any;
     };
+    renderMode: RenderModeState;
     // (undocumented)
     saving: SavingState;
     ui: UiState;
@@ -4054,8 +4057,11 @@ export interface IWidgetPlaceholderSpec {
         height: number;
     };
     // (undocumented)
-    type: "widget" | "insight" | "kpi";
+    type: IWidgetPlaceholderType;
 }
+
+// @alpha (undocumented)
+export type IWidgetPlaceholderType = "widget" | "insight" | "kpi";
 
 // @alpha (undocumented)
 export interface IXlsxExportConfig {
@@ -4374,21 +4380,6 @@ export interface PermissionsState {
 }
 
 // @internal
-export const placeholdersActions: CaseReducerActions<    {
-setWidgetPlaceholder: CaseReducer<PlaceholdersState, {
-payload: IWidgetPlaceholderSpec;
-type: string;
-}>;
-clearWidgetPlaceholder: CaseReducer<PlaceholdersState, AnyAction>;
-}>;
-
-// @alpha (undocumented)
-export interface PlaceholdersState {
-    // (undocumented)
-    widgetPlaceholder: IWidgetPlaceholderSpec | undefined;
-}
-
-// @internal
 export type QueryActions<TQuery extends IDashboardQuery, TResult> = CaseReducerActions<AllQueryCacheReducers<TQuery, TResult>>;
 
 // @alpha
@@ -4512,6 +4503,19 @@ export interface QueryProcessingSuccessState<TResult> {
     // (undocumented)
     status: "success";
 }
+
+// @alpha
+export interface QueryWidgetAlertCount extends IDashboardQuery {
+    // (undocumented)
+    readonly payload: {
+        readonly widgetRef: ObjRef;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/QUERY.WIDGET.ALERT_COUNT";
+}
+
+// @alpha
+export function queryWidgetAlertCount(widgetRef: ObjRef, correlationId?: string): QueryWidgetAlertCount;
 
 // @alpha
 export interface QueryWidgetBrokenAlerts extends IDashboardQuery {
@@ -4702,6 +4706,16 @@ export interface RenameDashboardPayload {
 export type RenderMode = "view" | "edit";
 
 // @internal
+export const renderModeActions: CaseReducerActions<    {
+setRenderMode: CaseReducer<RenderModeState, {
+payload: RenderMode;
+type: string;
+}>;
+setEditRenderMode: CaseReducer<RenderModeState, AnyAction>;
+setViewRenderMode: CaseReducer<RenderModeState, AnyAction>;
+}>;
+
+// @internal
 export function renderModeAware<T extends ComponentType<any>>(components: {
     view: T;
 } & Partial<Record<RenderMode, T>>): ComponentType<ComponentPropsWithRef<T>>;
@@ -4719,6 +4733,12 @@ export const RenderModeAwareTitle: ComponentType<PropsWithChildren<ITitleProps> 
 export interface RenderModeChangeOptions {
     // (undocumented)
     readonly resetDashboard: boolean;
+}
+
+// @alpha (undocumented)
+export interface RenderModeState {
+    // (undocumented)
+    renderMode: RenderMode;
 }
 
 // @alpha
@@ -5070,6 +5090,9 @@ export const selectCurrentUserRef: OutputSelector<DashboardState, ObjRef, (res: 
 // @public
 export const selectDashboardDescription: OutputSelector<DashboardState, string, (res: DashboardDescriptor) => string>;
 
+// @internal
+export const selectDashboardEditModeDevRollout: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
+
 // @public
 export const selectDashboardId: OutputSelector<DashboardState, string | undefined, (res: IDashboard<IDashboardWidget> | undefined) => string | undefined>;
 
@@ -5159,6 +5182,9 @@ export const selectEffectiveDateFilterOptions: OutputSelector<DashboardState, ID
 
 // @alpha
 export const selectEffectiveDateFilterTitle: OutputSelector<DashboardState, string | undefined, (res1: boolean, res2: IDashboardDateFilterConfig_2 | undefined) => string | undefined>;
+
+// @internal
+export const selectEnableAnalyticalDashboardPermissions: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
 // @public
 export const selectEnableClickableAttributeURL: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
@@ -5277,8 +5303,14 @@ export const selectInsightsMap: OutputSelector<DashboardState, ObjRefMap<IInsigh
 // @internal
 export const selectIsCircularDependency: (currentFilterLocalId: string, neighborFilterLocalid: string) => OutputSelector<DashboardState, boolean, (res: string[]) => boolean>;
 
+// @internal
+export const selectIsDashboardDirty: OutputSelector<DashboardState, boolean, (res1: boolean, res2: IDashboardLayout<ExtendedDashboardWidget>, res3: boolean, res4: boolean, res5: boolean) => boolean>;
+
 // @internal (undocumented)
 export const selectIsDashboardLoading: OutputSelector<DashboardState, boolean, (res: LoadingState) => boolean>;
+
+// @alpha
+export const selectIsDashboardPrivate: OutputSelector<DashboardState, boolean, (res: ShareStatus) => boolean>;
 
 // @public (undocumented)
 export const selectIsDashboardSaving: OutputSelector<DashboardState, boolean, (res: SavingState) => boolean>;
@@ -5302,10 +5334,10 @@ export const selectIsExecutionResultReadyForExportByRef: (ref: ObjRef) => Output
 export const selectIsExport: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
 // @internal (undocumented)
-export const selectIsInEditMode: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
+export const selectIsInEditMode: OutputSelector<DashboardState, boolean, (res: RenderModeState) => boolean>;
 
 // @internal (undocumented)
-export const selectIsInViewMode: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
+export const selectIsInViewMode: OutputSelector<DashboardState, boolean, (res: RenderModeState) => boolean>;
 
 // @alpha (undocumented)
 export const selectIsKpiAlertHighlightedByWidgetRef: (ref: ObjRef | undefined) => (state: DashboardState) => boolean;
@@ -5327,6 +5359,9 @@ export const selectIsReadOnly: OutputSelector<DashboardState, boolean, (res: Res
 
 // @alpha (undocumented)
 export const selectIsSaveAsDialogOpen: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
+
+// @internal
+export const selectIsSaveAsNewButtonHidden: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
 // @internal (undocumented)
 export const selectIsSaveAsNewButtonVisible: OutputSelector<DashboardState, boolean, (res1: boolean, res2: boolean, res3: boolean, res4: boolean, res5: boolean, res6: boolean) => boolean>;
@@ -5395,7 +5430,7 @@ export const selectPersistedDashboard: OutputSelector<DashboardState, IDashboard
 export const selectPlatformEdition: OutputSelector<DashboardState, PlatformEdition, (res: ResolvedDashboardConfig) => PlatformEdition>;
 
 // @internal (undocumented)
-export const selectRenderMode: OutputSelector<DashboardState, RenderMode, (res: UiState) => RenderMode>;
+export const selectRenderMode: OutputSelector<DashboardState, RenderMode, (res: RenderModeState) => RenderMode>;
 
 // @alpha (undocumented)
 export const selectScheduleEmailDialogDefaultAttachment: OutputSelector<DashboardState, UriRef | IdentifierRef | undefined, (res: UiState) => UriRef | IdentifierRef | undefined>;
@@ -5415,11 +5450,17 @@ export const selectShouldHidePixelPerfectExperience: OutputSelector<DashboardSta
 // @internal
 export const selectStash: OutputSelector<DashboardState, Record<string, ExtendedDashboardItem<ExtendedDashboardWidget>[]>, (res: LayoutState) => Record<string, ExtendedDashboardItem<ExtendedDashboardWidget>[]>>;
 
+// @internal
+export const selectSupportsAccessControlCapability: OutputSelector<DashboardState, boolean, (res: IBackendCapabilities) => boolean>;
+
 // @public
 export const selectSupportsElementsQueryParentFiltering: OutputSelector<DashboardState, boolean, (res: IBackendCapabilities) => boolean>;
 
 // @internal
 export const selectSupportsElementUris: OutputSelector<DashboardState, boolean, (res: IBackendCapabilities) => boolean>;
+
+// @internal
+export const selectSupportsHierarchicalWorkspacesCapability: OutputSelector<DashboardState, boolean, (res: IBackendCapabilities) => boolean>;
 
 // @internal
 export const selectSupportsKpiWidgetCapability: OutputSelector<DashboardState, boolean, (res: IBackendCapabilities) => boolean>;
@@ -5437,7 +5478,7 @@ export const selectWidgetCoordinatesByRef: (ref: ObjRef) => OutputSelector<Dashb
 export const selectWidgetDrills: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IDrillToLegacyDashboard[] | InsightDrillDefinition[], (res: IKpiWidget | IInsightWidget | undefined) => IDrillToLegacyDashboard[] | InsightDrillDefinition[]>;
 
 // @alpha (undocumented)
-export const selectWidgetPlaceholder: OutputSelector<DashboardState, IWidgetPlaceholderSpec | undefined, (res: PlaceholdersState) => IWidgetPlaceholderSpec | undefined>;
+export const selectWidgetPlaceholder: OutputSelector<DashboardState, IWidgetPlaceholderSpec | undefined, (res: UiState) => IWidgetPlaceholderSpec | undefined>;
 
 // @internal
 export const selectWidgets: OutputSelector<DashboardState, ExtendedDashboardWidget[], (res: IDashboardLayout<ExtendedDashboardWidget>) => ExtendedDashboardWidget[]>;
@@ -5539,6 +5580,9 @@ export function singleEventTypeHandler(type: (DashboardEvents | ICustomDashboard
 // @alpha
 export type StashedDashboardItemsId = string;
 
+// @internal
+export function switchToEditRenderMode(correlationId?: string): ChangeRenderMode;
+
 // @internal (undocumented)
 export const Title: (props: ITitleProps) => JSX.Element;
 
@@ -5607,16 +5651,6 @@ setMenuButtonItemsVisibility: CaseReducer<UiState, {
 payload: IMenuButtonItemsVisibility;
 type: string;
 }>;
-setRenderMode: CaseReducer<UiState, {
-payload: RenderMode;
-type: string;
-}>;
-setEditRenderMode: CaseReducer<UiState, AnyAction>;
-setViewRenderMode: CaseReducer<UiState, AnyAction>;
-setActiveHeaderIndex: CaseReducer<UiState, {
-payload: number | null;
-type: string;
-}>;
 selectWidget: CaseReducer<UiState, {
 payload: ObjRef;
 type: string;
@@ -5630,12 +5664,15 @@ setKpiDateDatasetAutoOpen: CaseReducer<UiState, {
 payload: boolean;
 type: string;
 }>;
+setWidgetPlaceholder: CaseReducer<UiState, {
+payload: IWidgetPlaceholderSpec;
+type: string;
+}>;
+clearWidgetPlaceholder: CaseReducer<UiState, AnyAction>;
 }>;
 
 // @alpha (undocumented)
 export interface UiState {
-    // (undocumented)
-    activeHeaderIndex: number | null;
     // (undocumented)
     configurationPanelOpened: boolean;
     // (undocumented)
@@ -5662,8 +5699,6 @@ export interface UiState {
         itemsVisibility: IMenuButtonItemsVisibility;
     };
     // (undocumented)
-    renderMode: RenderMode;
-    // (undocumented)
     saveAsDialog: {
         open: boolean;
     };
@@ -5682,6 +5717,8 @@ export interface UiState {
     shareDialog: {
         open: boolean;
     };
+    // (undocumented)
+    widgetPlaceholder: IWidgetPlaceholderSpec | undefined;
 }
 
 // @alpha

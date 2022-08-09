@@ -4,9 +4,9 @@ import invariant from "ts-invariant";
 
 import { isKpiPlaceholderWidget } from "../../../widgets/placeholders/types";
 import {
-    placeholdersActions,
     removeLayoutSection,
     selectLayout,
+    uiActions,
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../model";
@@ -28,7 +28,7 @@ export const DefaultDashboardKpiPlaceholderWidget: CustomDashboardWidgetComponen
 
     useEffect(() => {
         if (!isSelected) {
-            dispatch(placeholdersActions.clearWidgetPlaceholder());
+            dispatch(uiActions.clearWidgetPlaceholder());
             // also try removing the section if it is empty, it means it was just added for this KPI
             if (section.items.length === 0) {
                 dispatch(removeLayoutSection(widget.sectionIndex));

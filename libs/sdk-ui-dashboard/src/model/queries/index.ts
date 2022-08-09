@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 
 import { QueryInsightAttributesMeta, QueryInsightDateDatasets } from "./insights";
-import { QueryWidgetBrokenAlerts, QueryWidgetFilters } from "./widgets";
+import { QueryWidgetBrokenAlerts, QueryWidgetFilters, QueryWidgetAlertCount } from "./widgets";
 import { QueryMeasureDateDatasets } from "./kpis";
 
 export { IDashboardQuery, DashboardQueryType } from "./base";
@@ -20,6 +20,8 @@ export {
     queryWidgetFilters,
     QueryWidgetBrokenAlerts,
     queryWidgetBrokenAlerts,
+    QueryWidgetAlertCount,
+    queryWidgetAlertCount,
 } from "./widgets";
 
 /**
@@ -30,4 +32,5 @@ export type DashboardQueries =
     | QueryMeasureDateDatasets
     | QueryInsightAttributesMeta
     | QueryWidgetFilters
-    | QueryWidgetBrokenAlerts;
+    | QueryWidgetBrokenAlerts
+    | QueryWidgetAlertCount;

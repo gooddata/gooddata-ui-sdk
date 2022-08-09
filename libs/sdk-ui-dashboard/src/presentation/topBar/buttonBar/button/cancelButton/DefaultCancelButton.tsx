@@ -1,16 +1,16 @@
 // (C) 2021-2022 GoodData Corporation
-
 import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
 import { Button } from "@gooddata/sdk-ui-kit";
+
 import {
+    cancelEditRenderMode,
     selectIsDashboardSaving,
     selectIsInEditMode,
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../../../model";
 import { ICancelButtonProps } from "./types";
-import { cancelEditRenderMode } from "../../../../../model/commands/ui";
 
 /**
  * @internal

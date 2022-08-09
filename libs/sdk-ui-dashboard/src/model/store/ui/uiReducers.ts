@@ -1,8 +1,8 @@
 // (C) 2021-2022 GoodData Corporation
 import { Action, AnyAction, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import { ObjRef } from "@gooddata/sdk-model";
-import { UiState } from "./uiState";
-import { ILayoutCoordinates, IMenuButtonItemsVisibility, RenderMode } from "../../../types";
+import { IWidgetPlaceholderSpec, UiState } from "./uiState";
+import { ILayoutCoordinates, IMenuButtonItemsVisibility } from "../../../types";
 
 type UiReducer<A extends Action = AnyAction> = CaseReducer<UiState, A>;
 
@@ -66,12 +66,12 @@ const setFilterBarExpanded: UiReducer<PayloadAction<boolean>> = (state, action) 
     state.filterBar.expanded = action.payload;
 };
 
-const closeKpiAlertDialog: UiReducer = (state) => {
-    state.kpiAlerts.openedWidgetRef = undefined;
-};
-
 const openKpiAlertDialog: UiReducer<PayloadAction<ObjRef>> = (state, action) => {
     state.kpiAlerts.openedWidgetRef = action.payload;
+};
+
+const closeKpiAlertDialog: UiReducer = (state) => {
+    state.kpiAlerts.openedWidgetRef = undefined;
 };
 
 const highlightKpiAlert: UiReducer<PayloadAction<ObjRef>> = (state, action) => {
@@ -83,22 +83,6 @@ const setMenuButtonItemsVisibility: UiReducer<PayloadAction<IMenuButtonItemsVisi
     action,
 ) => {
     state.menuButton.itemsVisibility = action.payload;
-};
-
-const setRenderMode: UiReducer<PayloadAction<RenderMode>> = (state, action) => {
-    state.renderMode = action.payload;
-};
-
-const setEditRenderMode: UiReducer = (state) => {
-    state.renderMode = "edit";
-};
-
-const setViewRenderMode: UiReducer = (state) => {
-    state.renderMode = "view";
-};
-
-const setActiveHeaderIndex: UiReducer<PayloadAction<number | null>> = (state, action) => {
-    state.activeHeaderIndex = action.payload;
 };
 
 const selectWidget: UiReducer<PayloadAction<ObjRef>> = (state, action) => {
@@ -115,6 +99,14 @@ const setConfigurationPanelOpened: UiReducer<PayloadAction<boolean>> = (state, a
 
 const setKpiDateDatasetAutoOpen: UiReducer<PayloadAction<boolean>> = (state, action) => {
     state.kpiDateDatasetAutoOpen = action.payload;
+};
+
+const setWidgetPlaceholder: UiReducer<PayloadAction<IWidgetPlaceholderSpec>> = (state, action) => {
+    state.widgetPlaceholder = action.payload;
+};
+
+const clearWidgetPlaceholder: UiReducer = (state) => {
+    state.widgetPlaceholder = undefined;
 };
 
 export const uiReducers = {
@@ -137,12 +129,10 @@ export const uiReducers = {
     openKpiDeleteDialog,
     closeKpiDeleteDialog,
     setMenuButtonItemsVisibility,
-    setRenderMode,
-    setEditRenderMode,
-    setViewRenderMode,
-    setActiveHeaderIndex,
     selectWidget,
     clearWidgetSelection,
     setConfigurationPanelOpened,
     setKpiDateDatasetAutoOpen,
+    setWidgetPlaceholder,
+    clearWidgetPlaceholder,
 };

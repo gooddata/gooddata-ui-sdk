@@ -6,14 +6,14 @@ import {
     selectSettings,
     useDashboardDispatch,
     useDashboardSelector,
-    placeholdersActions,
+    uiActions,
     selectWidgetPlaceholder,
     IWidgetPlaceholderSpec,
 } from "../../../model";
 import stringify from "json-stable-stringify";
 import { useDashboardDrop } from "../useDashboardDrop";
 import { isInsightDraggableListItem, isKpiPlaceholderDraggableItem } from "../types";
-import { getSizeInfo } from "../../../_staging/layout/getSizeInfo";
+import { getSizeInfo } from "../../../_staging/layout/sizing";
 import { useKpiPlaceholderDropHandler } from "./useKpiPlaceholderDropHandler";
 import { useInsightPlaceholderDropHandler } from "./useInsightPlaceholderDropHandler";
 
@@ -62,7 +62,7 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
                         type: "widget",
                     };
                     if (stringify(placeholderSpec) !== stringify(widgetPlaceholder)) {
-                        dispatch(placeholdersActions.setWidgetPlaceholder(placeholderSpec));
+                        dispatch(uiActions.setWidgetPlaceholder(placeholderSpec));
                     }
                 }
                 if (isKpiPlaceholderDraggableItem(item)) {
@@ -77,7 +77,7 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
                         type: "widget",
                     };
                     if (stringify(placeholderSpec) !== stringify(widgetPlaceholder)) {
-                        dispatch(placeholdersActions.setWidgetPlaceholder(placeholderSpec));
+                        dispatch(uiActions.setWidgetPlaceholder(placeholderSpec));
                     }
                 }
             },

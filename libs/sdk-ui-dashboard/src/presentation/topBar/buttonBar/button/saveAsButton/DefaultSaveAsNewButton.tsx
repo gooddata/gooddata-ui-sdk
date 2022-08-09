@@ -5,7 +5,9 @@ import { useIntl } from "react-intl";
 import { Button } from "@gooddata/sdk-ui-kit";
 import {
     selectCanCreateAnalyticalDashboard,
+    selectDashboardEditModeDevRollout,
     selectEnableKPIDashboardSaveAsNew,
+    selectIsSaveAsNewButtonHidden,
     selectIsExport,
     uiActions,
     useDashboardDispatch,
@@ -13,10 +15,6 @@ import {
 } from "../../../../../model";
 import { ISaveAsNewButtonProps } from "./types";
 import { selectCanEnterEditModeAndIsLoaded } from "../selectors";
-import {
-    selectDashboardEditModeDevRollout,
-    selectIsSaveAsNewButtonHidden,
-} from "../../../../../model/store/config/configSelectors";
 import { createSelector } from "@reduxjs/toolkit";
 
 /**

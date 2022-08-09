@@ -4,7 +4,6 @@ import cx from "classnames";
 import { getDropZoneDebugStyle } from "../debug";
 import {
     addLayoutSection,
-    placeholdersActions,
     selectIsWidgetPlaceholderShown,
     selectSettings,
     uiActions,
@@ -17,7 +16,7 @@ import { SectionDropZoneBox } from "./SectionDropZoneBox";
 import { DashboardLayoutSectionBorderLine } from "./DashboardLayoutSectionBorder";
 import { insightRef, insightTitle } from "@gooddata/sdk-model";
 import { isInsightDraggableListItem, isKpiPlaceholderDraggableItem } from "../../dragAndDrop/types";
-import { getSizeInfo } from "../../../_staging/layout/getSizeInfo";
+import { getSizeInfo } from "../../../_staging/layout/sizing";
 import { useKpiPlaceholderDropHandler } from "./useKpiPlaceholderDropHandler";
 
 export type RowPosition = "above" | "below";
@@ -92,7 +91,7 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
             },
             hover: () => {
                 if (isWidgetPlaceholderShown) {
-                    dispatch(placeholdersActions.clearWidgetPlaceholder());
+                    dispatch(uiActions.clearWidgetPlaceholder());
                 }
             },
         },

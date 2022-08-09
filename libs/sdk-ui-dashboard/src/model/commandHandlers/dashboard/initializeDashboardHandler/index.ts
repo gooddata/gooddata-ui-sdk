@@ -22,6 +22,7 @@ import { BatchAction, batchActions } from "redux-batched-actions";
 import { loadUser } from "./loadUser";
 import { userActions } from "../../../store/user";
 import { uiActions } from "../../../store/ui";
+import { renderModeActions } from "../../../store/renderMode";
 import { loadDashboardList } from "./loadDashboardList";
 import { listedDashboardsActions } from "../../../store/listedDashboards";
 import { backendCapabilitiesActions } from "../../../store/backendCapabilities";
@@ -157,7 +158,7 @@ function* loadExistingDashboard(
             accessibleDashboardsActions.setAccessibleDashboards(accessibleDashboards),
             legacyDashboardsActions.setLegacyDashboards(legacyDashboards),
             uiActions.setMenuButtonItemsVisibility(config.menuButtonItemsVisibility),
-            uiActions.setRenderMode(config.initialRenderMode),
+            renderModeActions.setRenderMode(config.initialRenderMode),
         ],
         "@@GDC.DASH/BATCH.INIT.EXISTING",
     );
@@ -216,7 +217,7 @@ function* initializeNewDashboard(
                 isUsingDashboardOverrides: false,
             }),
             uiActions.setMenuButtonItemsVisibility(config.menuButtonItemsVisibility),
-            uiActions.setRenderMode(config.initialRenderMode),
+            renderModeActions.setRenderMode(config.initialRenderMode),
         ],
         "@@GDC.DASH/BATCH.INIT.NEW",
     );

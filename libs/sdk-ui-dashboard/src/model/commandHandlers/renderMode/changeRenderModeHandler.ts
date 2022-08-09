@@ -2,12 +2,12 @@
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import { DashboardContext } from "../../types/commonTypes";
-import { ChangeRenderMode } from "../../commands/ui";
-import { DashboardRenderModeChanged, renderModeChanged } from "../../events/ui";
-import { uiActions } from "../../store/ui";
+import { ChangeRenderMode, resetDashboard as resetDashboardCommand } from "../../commands";
+import { DashboardRenderModeChanged } from "../../events";
+import { renderModeChanged } from "../../events/renderMode";
+import { renderModeActions } from "../../store/renderMode";
 import { selectDashboardEditModeDevRollout } from "../../store/config/configSelectors";
 import { resetDashboardHandler } from "../dashboard/resetDashboardHandler";
-import { resetDashboard as resetDashboardCommand } from "../../commands";
 
 export function* changeRenderModeHandler(
     ctx: DashboardContext,
@@ -21,7 +21,7 @@ export function* changeRenderModeHandler(
     const editModeEnabled = yield select(selectDashboardEditModeDevRollout);
 
     if (renderMode === "view" || editModeEnabled) {
-        yield put(uiActions.setRenderMode(renderMode));
+        yield put(renderModeActions.setRenderMode(renderMode));
 
         if (renderModeChangeOptions.resetDashboard) {
             yield call(resetDashboardHandler, ctx, resetDashboardCommand(correlationId));

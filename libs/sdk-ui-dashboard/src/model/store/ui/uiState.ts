@@ -1,7 +1,25 @@
 // (C) 2021-2022 GoodData Corporation
 import { ObjRef } from "@gooddata/sdk-model";
 
-import { ILayoutCoordinates, IMenuButtonItemsVisibility, RenderMode } from "../../../types";
+import { ILayoutCoordinates, IMenuButtonItemsVisibility } from "../../../types";
+
+/**
+ * @alpha
+ */
+export type IWidgetPlaceholderType = "widget" | "insight" | "kpi";
+
+/**
+ * @alpha
+ */
+export interface IWidgetPlaceholderSpec {
+    sectionIndex: number;
+    itemIndex: number;
+    size: {
+        width: number;
+        height: number;
+    };
+    type: IWidgetPlaceholderType;
+}
 
 /**
  * @alpha
@@ -39,11 +57,10 @@ export interface UiState {
     menuButton: {
         itemsVisibility: IMenuButtonItemsVisibility;
     };
-    renderMode: RenderMode;
-    activeHeaderIndex: number | null;
     selectedWidgetRef: ObjRef | undefined;
     configurationPanelOpened: boolean;
     kpiDateDatasetAutoOpen: boolean;
+    widgetPlaceholder: IWidgetPlaceholderSpec | undefined;
 }
 
 export const uiInitialState: UiState = {
@@ -76,9 +93,8 @@ export const uiInitialState: UiState = {
     menuButton: {
         itemsVisibility: {},
     },
-    renderMode: "view",
-    activeHeaderIndex: null,
     selectedWidgetRef: undefined,
     configurationPanelOpened: true,
     kpiDateDatasetAutoOpen: false,
+    widgetPlaceholder: undefined,
 };
