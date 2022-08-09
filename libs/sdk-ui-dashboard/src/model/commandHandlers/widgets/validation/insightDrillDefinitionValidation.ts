@@ -59,7 +59,6 @@ export function validateDrillDefinition(
         item = validateInsightDrillDefinition(item, validationContext);
     } catch (ex) {
         const messageDetail = (ex as Error).message;
-
         throw invalidArgumentsProvided(ctx, cmd, `Invalid InsightDrillDefinition. Error: ${messageDetail}`);
     }
 

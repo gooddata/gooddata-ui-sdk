@@ -1,5 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 import { DashboardDrillDefinition, DashboardDrillContext, IDashboardDrillEvent } from "../../../types";
+import { IAvailableDrillTargetAttribute, IAvailableDrillTargetMeasure } from "@gooddata/sdk-ui";
 
 /**
  * These types are also used as s-classes for testing e.g. .s-drill-to-dashboard
@@ -25,3 +26,5 @@ export interface DrillSelectContext {
     drillContext?: DashboardDrillContext;
     correlationId?: string;
 }
+
+export type IAvailableDrillTargetItem = IAvailableDrillTargetAttribute | IAvailableDrillTargetMeasure;

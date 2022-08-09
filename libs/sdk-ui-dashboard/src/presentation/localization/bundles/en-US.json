@@ -1471,6 +1471,77 @@
         "comment": "",
         "limit": 0
     },
+    "configurationPanel.interactions": {
+        "value": "Interactions",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.interactions": {
+        "value": "Drill interactions",
+        "comment": "Header of a section where user can set drilling for some visualization widget containing some visualization (chart, table, etc). Interactions here stands for user interactions.",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.addInteraction": {
+        "value": "Add interaction",
+        "comment": "Use imperative. Button label that is related to \"Interactions\" section. This button adds some drilling to a widget.",
+        "limit": 30
+    },
+    "configurationPanel.drillConfig.clickHint": {
+        "value": "When I click on",
+        "comment": "Hint guiding users how to understand interaction (drilling) setting. Example in sentence: \"WHEN I CLICK ON on value of measure 'Number of user accounts', drill into detail.\"",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.measureValue._measure": {
+        "value": "Value of measure",
+        "comment": "Hint guiding users how to understand interaction (drilling) setting. Example in sentence: \"When I click on VALUE OF MEASURE 'Number of user accounts', drill into detail.\"",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.measureValue._metric": {
+        "value": "Value of metric",
+        "comment": "Hint guiding users how to understand interaction (drilling) setting. Example in sentence: \"When I click on VALUE OF METRIC 'Number of user accounts', drill into detail.\"",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.attributeValue": {
+        "value": "Value of attribute",
+        "comment": "Hint guiding users how to understand interaction (drilling) setting. Example in sentence: \"When I click on VALUE OF ATTRIBUTE 'Account', drill into detail.\"",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.selectTarget": {
+        "value": "I want to",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.clickHintItem": {
+        "value": "When I click on <addon>(value of)</addon>",
+        "comment": "Do not translate <addon...> and </addon>, but translate (value of)",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.drillIntoDashboard": {
+        "value": "Drill into dashboard",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.drillIntoInsight|insight": {
+        "value": "Drill into insight",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.drillIntoInsight|report": {
+        "value": "Drill into report",
+        "comment": "",
+        "translate": false,
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.drillIntoUrl": {
+        "value": "Drill into URL",
+        "comment": "Name of an option in dropdown that is used to select type of dashboard drill.",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.select": {
+        "value": "Choose action…",
+        "comment": "Hint guiding users that drill actions in select box has to be selected. Use '…' as one character, not 3 dots ('...').",
+        "limit": 0
+    },
     "configurationPanel.unlistedDashboardTab": {
         "value": "Unlisted dashboard",
         "comment": "",
@@ -1483,6 +1554,153 @@
     },
     "configurationPanel.visualprops.hideTitle": {
         "value": "Hide title",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.defaultButtonValue": {
+        "value": "Choose URL",
+        "comment": "Default value of 'Drill into URL' dropdown button before a value is selected.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.attributeUrlSectionTitle": {
+        "value": "Hyperlink in attribute label",
+        "comment": "Title of 'Drill into URL' dropdown section.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.customUrlSectionTitle": {
+        "value": "Custom URL",
+        "comment": "Title of 'Drill into URL' dropdown section.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.textAreaLabel": {
+        "value": "URL",
+        "comment": "Label of the textarea in Drill to URL 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.parametersPanelLabel": {
+        "value": "Parameters",
+        "comment": "Label of the panel in Drill to URL 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.parametersPanelTooltip": {
+        "value": "Parameters are placeholders that are replaced by dynamic values during drilling.",
+        "comment": "Tooltip displayed when user hovers over question mark icon next to label of the parameters panel in Drill to URL 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.addParameterButtonLabel": {
+        "value": "Add",
+        "comment": "Label of the button that adds a parameter to URL in Drill to URL 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.parameterDetailType": {
+        "value": "Type",
+        "comment": "Title of type section in parameter detail in 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.parameterDetailLabel": {
+        "value": "Label",
+        "comment": "Title of label section in parameter detail in 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.parameterDetailValues": {
+        "value": "{numberOfValues, plural, one {Value} other {Values}}",
+        "comment": "Translate only uppercase words in '{numberOfValues, plural, one {VALUE} other {VALUES}}'. Title of values section in parameter detail in 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.parameterDetailMoreValues": {
+        "value": "...and {count} more",
+        "comment": "Translate only uppercase words In '...AND {count} MORE'. Info about number of other values not shown in parameter detail in 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.identifierTypeLabel": {
+        "value": "Identifier",
+        "comment": "Type label of identifier in parameter detail in 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.insightParametersSectionLabel|insight": {
+        "value": "Insight",
+        "comment": "Label of the parameters section that contains attributes and measures in Drill to URL 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.insightParametersSectionLabel|report": {
+        "value": "Report",
+        "comment": "Label of the parameters section that contains attributes and measures in Drill to URL 'Custom URL' editor.",
+        "translate": false,
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.identifierParametersSectionLabel": {
+        "value": "Identifiers",
+        "comment": "Label of the parameters section that contains identifiers in Drill to URL 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.applyButtonLabel": {
+        "value": "Apply",
+        "comment": "Label of the button that applies changes in Drill to URL 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.cancelButtonLabel": {
+        "value": "Cancel",
+        "comment": "Label of the button that cancels changes in Drill to URL 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.textAreaPlaceholder": {
+        "value": "Enter URL and add parameters from the right panel.",
+        "comment": "Placeholder of textarea in Drill to URL 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.helpButtonLabel": {
+        "value": "How to create custom URLs?",
+        "comment": "Help button label in Drill to URL 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.invalidAttributeDisplayForms": {
+        "value": "Invalid parameters: {invalidParameters}",
+        "comment": "Help button label in Drill to URL 'Custom URL' editor. Do not translate '{invalidParameters}' placeholder.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.customUrlAddButtonLabel": {
+        "value": "Add custom URL",
+        "comment": "Label of the button in 'Drill into URL' dropdown that is used for adding of the custom URL.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.customUrlEditButtonLabel": {
+        "value": "Edit custom URL",
+        "comment": "Label of the button in 'Drill into URL' dropdown that is used for editing of the custom URL.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.defaultDisplayFormTypeLabel": {
+        "value": "Attribute label value",
+        "comment": "Type label of default display form in parameter detail in 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.geoDisplayFormTypeLabel": {
+        "value": "Attribute geo value",
+        "comment": "Type label of geo display form in parameter detail in 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.urlDisplayFormTypeLabel": {
+        "value": "Attribute URL value",
+        "comment": "Type label of URL display form in parameter detail in 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.selectInsight|insight": {
+        "value": "Choose insight…",
+        "comment": "Hint guiding users that drill target insight in select box has to be selected. Use '…' as one character, not 3 dots ('...').",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.selectInsight|report": {
+        "value": "Choose report…",
+        "comment": "Hint guiding users that drill target report in select box has to be selected. Use '…' as one character, not 3 dots ('...').",
+        "translate": false,
+        "limit": 0
+    },
+    "dropdown.loading": {
+        "value": "Loading…",
+        "comment": "Use '…' as one character, not 3 dots ('...').",
+        "limit": 0
+    },
+    "visualization.emptyValue": {
+        "value": "empty value",
         "comment": "",
         "limit": 0
     },

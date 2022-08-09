@@ -5,6 +5,7 @@ import compact from "lodash/compact";
 
 import { IInsightMenuItem } from "../types";
 import { createInsightConfigurationScreen } from "../../insight/configuration/InsightConfiguration";
+import { createInsightInteractionsScreen } from "../../insight/configuration/InsightInteractions";
 
 /**
  * @internal
@@ -27,6 +28,16 @@ export function getDefaultInsightEditMenuItems(
             disabled: false,
             className: "s-configuration-panel-submenu",
             renderSubmenu: () => createInsightConfigurationScreen(widget),
+        },
+        {
+            type: "submenu",
+            itemId: "InteractionPanelSubmenu",
+            tooltip: "",
+            itemName: intl.formatMessage({ id: "configurationPanel.interactions" }),
+            icon: "gd-icon-settings",
+            disabled: false,
+            className: "s-configuration-panel-submenu",
+            renderSubmenu: () => createInsightInteractionsScreen(widget),
         },
     ]);
 }

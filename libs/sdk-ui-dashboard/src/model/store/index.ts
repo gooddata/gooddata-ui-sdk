@@ -98,6 +98,7 @@ export {
     // Local drills for drill dialog
     selectImplicitDrillsByAvailableDrillTargets,
     selectDrillableItemsByAvailableDrillTargets,
+    selectImplicitDrillsToUrlByWidgetRef,
     IImplicitDrillWithPredicates,
 } from "./widgetDrills/widgetDrillSelectors";
 export { selectLegacyDashboards } from "./legacyDashboards/legacyDashboardsSelectors";

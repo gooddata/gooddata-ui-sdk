@@ -150,18 +150,26 @@ export interface IDrillConfigItemBase {
 }
 
 export type IDrillConfigItem = IDrillToDashboardConfig | IDrillToInsightConfig | IDrillToUrlConfig;
+export type IDrillConfigItemTarget =
+    | IDrillToDashboardConfigTarget
+    | IDrillToInsightConfigTarget
+    | IDrillToUrlConfigTarget;
 
-export interface IDrillToDashboardConfig extends IDrillConfigItemBase {
+export interface IDrillToDashboardConfigTarget {
     dashboard?: ObjRef;
 }
+
+export type IDrillToDashboardConfig = IDrillConfigItemBase & IDrillToDashboardConfigTarget;
 
 export function isDrillToDashboardConfig(item: IDrillConfigItem): item is IDrillToDashboardConfig {
     return !isEmpty(item) && (item as IDrillToDashboardConfig).dashboard !== undefined;
 }
 
-export interface IDrillToInsightConfig extends IDrillConfigItemBase {
+export interface IDrillToInsightConfigTarget {
     insightRef?: ObjRef;
 }
+
+export type IDrillToInsightConfig = IDrillConfigItemBase & IDrillToInsightConfigTarget;
 
 export function isDrillToInsightConfig(item: IDrillConfigItem): item is IDrillToInsightConfig {
     return !isEmpty(item) && (item as IDrillToInsightConfig).insightRef !== undefined;
@@ -186,9 +194,11 @@ export function isDrillToAttributeUrlConfig(item: UrlDrillTarget): item is IDril
 
 export type UrlDrillTarget = IDrillToCustomUrlConfig | IDrillToAttributeUrlConfig;
 
-export interface IDrillToUrlConfig extends IDrillConfigItemBase {
+export interface IDrillToUrlConfigTarget {
     urlDrillTarget?: UrlDrillTarget;
 }
+
+export type IDrillToUrlConfig = IDrillConfigItemBase & IDrillToUrlConfigTarget;
 
 export function isDrillToUrlConfig(item: IDrillConfigItem): item is IDrillToUrlConfig {
     return !isEmpty(item) && (item as IDrillToUrlConfig).urlDrillTarget !== undefined;
