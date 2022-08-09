@@ -10,18 +10,18 @@ import {
 } from "../../../model";
 import { useDashboardDrag } from "../useDashboardDrag";
 import {
-    CustomDashboardKpiPlaceholderComponent,
-    CustomDashboardKpiPlaceholderComponentProps,
+    CustomDashboardKpiCreatePanelItemComponent,
+    CustomDashboardKpiCreatePanelItemComponentProps,
 } from "../types";
 
-type DraggableKpiPlaceholderProps = {
-    PlaceholderComponent: CustomDashboardKpiPlaceholderComponent;
-    placeholderComponentProps: CustomDashboardKpiPlaceholderComponentProps;
+type DraggableKpiCreatePanelItemProps = {
+    CreatePanelItemComponent: CustomDashboardKpiCreatePanelItemComponent;
+    createPanelItemComponentProps: CustomDashboardKpiCreatePanelItemComponentProps;
 };
 
-export const DraggableKpiPlaceholder: React.FC<DraggableKpiPlaceholderProps> = ({
-    PlaceholderComponent,
-    placeholderComponentProps,
+export const DraggableKpiCreatePanelItem: React.FC<DraggableKpiCreatePanelItemProps> = ({
+    CreatePanelItemComponent,
+    createPanelItemComponentProps,
 }) => {
     const dispatch = useDashboardDispatch();
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
@@ -31,7 +31,7 @@ export const DraggableKpiPlaceholder: React.FC<DraggableKpiPlaceholderProps> = (
         dragItem: {
             type: "kpi-placeholder",
         },
-        canDrag: isInEditMode && !placeholderComponentProps.disabled,
+        canDrag: isInEditMode && !createPanelItemComponentProps.disabled,
         hideDefaultPreview: false,
         dragEnd: (_, monitor) => {
             if (!monitor.didDrop()) {
@@ -49,7 +49,7 @@ export const DraggableKpiPlaceholder: React.FC<DraggableKpiPlaceholderProps> = (
 
     return (
         <div ref={dragRef}>
-            <PlaceholderComponent {...placeholderComponentProps} />
+            <CreatePanelItemComponent {...createPanelItemComponentProps} />
         </div>
     );
 };

@@ -5,10 +5,10 @@ import partition from "lodash/partition";
 import {
     areObjRefsEqual,
     FilterContextItem,
-    ICatalogAttribute,
     IDashboardAttributeFilter,
     IDashboardDateFilter,
     isDashboardDateFilter,
+    ObjRef,
 } from "@gooddata/sdk-model";
 
 import {
@@ -23,7 +23,7 @@ import {
 export type FilterBarAttributeFilterPlaceholder = {
     type: "attributeFilterPlaceholder";
     filterIndex: number;
-    attribute?: ICatalogAttribute;
+    displayForm?: ObjRef;
 };
 
 /**
@@ -64,7 +64,7 @@ export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
     },
     {
         addAttributeFilterPlaceholder: (index: number) => void;
-        selectAttributeFilter: (attribute: ICatalogAttribute) => void;
+        selectAttributeFilter: (displayForm: ObjRef) => void;
         closeAttributeSelection: () => void;
     },
 ] {
@@ -85,13 +85,13 @@ export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
     const closeAttributeSelection = useCallback(
         function () {
             // close after select attribute should not clear placeholder
-            if (addedAttributeFilter?.attribute) {
+            if (addedAttributeFilter?.displayForm) {
                 return;
             }
 
             clearAddedFilter();
         },
-        [addedAttributeFilter?.attribute, clearAddedFilter],
+        [addedAttributeFilter?.displayForm, clearAddedFilter],
     );
 
     const attributeFiltersWithPlaceholder = useMemo(() => {
@@ -101,11 +101,11 @@ export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
         }));
 
         const containsAddedAttributeDisplayForm =
-            addedAttributeFilter?.attribute &&
+            addedAttributeFilter?.displayForm &&
             attributeFilters.some((attributeFilter) =>
                 areObjRefsEqual(
                     attributeFilter.attributeFilter.displayForm,
-                    addedAttributeFilter.attribute?.defaultDisplayForm,
+                    addedAttributeFilter.displayForm,
                 ),
             );
 
@@ -119,16 +119,16 @@ export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
     }, [addedAttributeFilter, attributeFilters]);
 
     const selectAttributeFilter = useCallback(
-        function (attribute: ICatalogAttribute) {
+        function (displayForm: ObjRef) {
             if (!addedAttributeFilter) {
                 return;
             }
 
-            setAddedAttributeFilter((f) => ({ ...(f as FilterBarAttributeFilterPlaceholder), attribute }));
+            setAddedAttributeFilter((f) => ({ ...(f as FilterBarAttributeFilterPlaceholder), displayForm }));
 
             dispatchAndWaitFor(
                 dispatch,
-                addAttributeFilterAction(attribute.defaultDisplayForm, addedAttributeFilter.filterIndex),
+                addAttributeFilterAction(displayForm, addedAttributeFilter.filterIndex),
             ).finally(clearAddedFilter);
         },
         [addedAttributeFilter, clearAddedFilter, dispatch],

@@ -7,7 +7,6 @@ import { isDashboardWidget } from "@gooddata/sdk-model";
 import { CustomDashboardWidgetComponent, IDashboardWidgetProps } from "./types";
 import { WidgetDropZone } from "../../dragAndDrop";
 import { isKpiPlaceholderWidget, isPlaceholderWidget } from "../../../widgets/placeholders/types";
-import { DefaultDashboardKpiPlaceholderWidget } from "../kpiPlaceholder";
 
 const BadWidgetType: React.FC = () => {
     return <div>Missing renderer</div>;
@@ -21,7 +20,7 @@ const MissingWidget: React.FC = () => {
  * @internal
  */
 export const DashboardWidget = (props: IDashboardWidgetProps): JSX.Element => {
-    const { WidgetComponentProvider } = useDashboardComponentsContext();
+    const { WidgetComponentProvider, KpiWidgetComponentSet } = useDashboardComponentsContext();
     const {
         widget,
         // @ts-expect-error Don't expose index prop on public interface (we need it only for css class for KD tests)
@@ -49,7 +48,7 @@ export const DashboardWidget = (props: IDashboardWidgetProps): JSX.Element => {
         }
 
         if (isKpiPlaceholderWidget(widget)) {
-            return DefaultDashboardKpiPlaceholderWidget;
+            return KpiWidgetComponentSet.creating.CreatingPlaceholderComponent;
         }
 
         if (isDashboardWidget(widget)) {

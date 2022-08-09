@@ -3,7 +3,7 @@ import React from "react";
 import { Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage } from "react-intl";
 import { useDashboardSelector, selectHasCatalogMeasures, selectIsWhiteLabeled } from "../../../../model";
-import { DraggableKpiPlaceholder, AddKpiWidgetButton } from "../../../dragAndDrop";
+import { DraggableAttributeFilterCreatePanelItem, AddKpiWidgetButton } from "../../../dragAndDrop";
 
 const bubbleAlignPoints: IAlignPoint[] = [{ align: "cr cl", offset: { x: -20, y: 0 } }];
 
@@ -31,9 +31,9 @@ export const CreatableKpi: React.FC = () => {
 
     return (
         <BubbleHoverTrigger eventsOnBubble={true} className="s-add-kpi-bubble-trigger">
-            <DraggableKpiPlaceholder
-                PlaceholderComponent={AddKpiWidgetButton}
-                placeholderComponentProps={{ disabled }}
+            <DraggableAttributeFilterCreatePanelItem
+                CreatePanelItemComponent={AddKpiWidgetButton}
+                createPanelItemComponentProps={{ disabled }}
             />
             {tooltip && <Bubble alignPoints={bubbleAlignPoints}>{tooltip}</Bubble>}
         </BubbleHoverTrigger>

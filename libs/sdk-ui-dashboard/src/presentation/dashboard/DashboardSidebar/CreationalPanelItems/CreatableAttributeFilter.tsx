@@ -2,7 +2,7 @@
 import React from "react";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage } from "react-intl";
-import { DraggableAttributeFilterPlaceholder } from "../../../dragAndDrop";
+import { DraggableAttributeFilterCreatePanelItem } from "../../../dragAndDrop";
 import { AddAttributeFilterPlaceholder } from "../../../filterBar";
 import { useDashboardSelector, selectHasCatalogAttributes, selectIsWhiteLabeled } from "../../../../model";
 
@@ -31,9 +31,9 @@ export function CreatableAttributeFilter() {
 
     return (
         <BubbleHoverTrigger eventsOnBubble={true} className="s-add-attribute-filter-bubble-trigger">
-            <DraggableAttributeFilterPlaceholder
-                PlaceholderComponent={AddAttributeFilterPlaceholder}
-                placeholderComponentProps={{ disabled }}
+            <DraggableAttributeFilterCreatePanelItem
+                CreatePanelItemComponent={AddAttributeFilterPlaceholder}
+                createPanelItemComponentProps={{ disabled }}
             />
 
             {tooltip && (

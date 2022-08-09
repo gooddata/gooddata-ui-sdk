@@ -4,19 +4,19 @@ import { useDashboardDrag } from "../useDashboardDrag";
 import classNames from "classnames";
 import { useDashboardSelector, selectIsInEditMode } from "../../../model";
 import {
-    CustomDashboardAttributeFilterPlaceholderComponent,
-    CustomDashboardAttributeFilterPlaceholderComponentProps,
+    CustomDashboardAttributeFilterCreatePanelItemComponent,
+    CustomDashboardAttributeFilterCreatePanelItemComponentProps,
 } from "../types";
 
-type DraggableAttributeFilterPlaceholderProps = {
-    PlaceholderComponent: CustomDashboardAttributeFilterPlaceholderComponent;
-    placeholderComponentProps: CustomDashboardAttributeFilterPlaceholderComponentProps;
+type DraggableAttributeFilterCreatePanelItemProps = {
+    CreatePanelItemComponent: CustomDashboardAttributeFilterCreatePanelItemComponent;
+    createPanelItemComponentProps: CustomDashboardAttributeFilterCreatePanelItemComponentProps;
 };
 
-export function DraggableAttributeFilterPlaceholder({
-    PlaceholderComponent,
-    placeholderComponentProps,
-}: DraggableAttributeFilterPlaceholderProps) {
+export function DraggableAttributeFilterCreatePanelItem({
+    CreatePanelItemComponent: PlaceholderComponent,
+    createPanelItemComponentProps: placeholderComponentProps,
+}: DraggableAttributeFilterCreatePanelItemProps) {
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
     const [{ isDragging }, dragRef] = useDashboardDrag({
         dragItem: {

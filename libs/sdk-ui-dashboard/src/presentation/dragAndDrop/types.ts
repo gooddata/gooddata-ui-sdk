@@ -182,28 +182,28 @@ export type DraggableItemInternalTypeMapping = {
 /**
  * @internal
  */
-export type CustomDashboardAttributeFilterPlaceholderComponentProps = {
+export type CustomDashboardAttributeFilterCreatePanelItemComponentProps = {
     disabled: boolean;
 };
 
 /**
  * @internal
  */
-export type CustomDashboardAttributeFilterPlaceholderComponent =
-    React.ComponentType<CustomDashboardAttributeFilterPlaceholderComponentProps>;
+export type CustomDashboardAttributeFilterCreatePanelItemComponent =
+    React.ComponentType<CustomDashboardAttributeFilterCreatePanelItemComponentProps>;
 
 /**
  * @internal
  */
-export type CustomDashboardKpiPlaceholderComponentProps = {
+export type CustomDashboardKpiCreatePanelItemComponentProps = {
     disabled: boolean;
 };
 
 /**
  * @internal
  */
-export type CustomDashboardKpiPlaceholderComponent =
-    React.ComponentType<CustomDashboardKpiPlaceholderComponentProps>;
+export type CustomDashboardKpiCreatePanelItemComponent =
+    React.ComponentType<CustomDashboardKpiCreatePanelItemComponentProps>;
 
 /**
  * @internal

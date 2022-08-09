@@ -20,7 +20,6 @@ import {
     AttributeFilterDropZoneHint,
     DraggableAttributeFilter,
 } from "../../dragAndDrop";
-import { AttributesDropdown } from "../attributeFilter/addAttributeFilter/AttributesDropdown";
 import { HiddenDashboardDateFilter } from "../dateFilter";
 import { IDashboardDateFilterConfig, IFilterBarProps } from "../types";
 import { DefaultFilterBarContainer } from "./DefaultFilterBarContainer";
@@ -82,7 +81,7 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
     const dateFilterOptions = useDashboardSelector(selectEffectiveDateFilterOptions);
     const dateFilterMode = useDashboardSelector(selectEffectiveDateFilterMode);
     const isExport = useDashboardSelector(selectIsExport);
-    const { DashboardAttributeFilterComponentProvider, DashboardDateFilterComponentProvider } =
+    const { AttributeFilterComponentSet, DashboardDateFilterComponentProvider } =
         useDashboardComponentsContext();
 
     if (isExport) {
@@ -121,8 +120,10 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
             </div>
             {attributeFiltersWithPlaceholder.map((filterOrPlaceholder) => {
                 if (isFilterBarAttributeFilterPlaceholder(filterOrPlaceholder)) {
+                    const CreatingPlaceholderComponent =
+                        AttributeFilterComponentSet.creating.CreatingPlaceholderComponent;
                     return (
-                        <AttributesDropdown
+                        <CreatingPlaceholderComponent
                             key={filterOrPlaceholder.filterIndex}
                             onClose={closeAttributeSelection}
                             onSelect={selectAttributeFilter}
@@ -130,7 +131,8 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                     );
                 } else {
                     const { filter, filterIndex } = filterOrPlaceholder;
-                    const CustomAttributeFilterComponent = DashboardAttributeFilterComponentProvider(filter);
+                    const CustomAttributeFilterComponent =
+                        AttributeFilterComponentSet.MainComponentProvider(filter);
 
                     return (
                         <DraggableAttributeFilter

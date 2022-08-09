@@ -1,17 +1,25 @@
 // (C) 2022 GoodData Corporation
 import { ComponentType } from "react";
-import { IDashboardAttributeFilterProps } from "../filterBar/types";
+import {
+    IDashboardAttributeFilterProps,
+    IDashboardAttributeFilterPlaceholderProps,
+} from "../filterBar/types";
 import { IDashboardKpiProps, IDashboardWidgetProps } from "../widget/types";
 import { AttributeFilterDraggableItem, CustomDraggableItem } from "../dragAndDrop/types";
+import {
+    AttributeFilterComponentProvider,
+    KpiComponentProvider,
+    WidgetComponentProvider,
+} from "../dashboardContexts/types";
 
 /**
  * @internal
  */
-export interface CustomComponentBase<TMainProps> {
+export interface CustomComponentBase<TMainProps, TProviderParams extends any[]> {
     /**
      * The main body of the component that is shown by default in view and edit modes.
      */
-    MainComponent: ComponentType<TMainProps>;
+    MainComponentProvider: (...params: TProviderParams) => ComponentType<TMainProps>;
 }
 
 /**
@@ -67,6 +75,13 @@ export type AttributeFilterDraggableComponent = {
 /**
  * @internal
  */
+export type KpiDraggableComponent = {
+    type: "kpi";
+};
+
+/**
+ * @internal
+ */
 export type CustomDraggableComponent = {
     DraggingComponent: CustomDraggingComponent;
     type: "custom";
@@ -77,7 +92,7 @@ export type CustomDraggableComponent = {
  * @internal
  */
 export type DraggableComponent = {
-    dragging: AttributeFilterDraggableComponent | CustomDraggableComponent;
+    dragging: AttributeFilterDraggableComponent | KpiDraggableComponent | CustomDraggableComponent;
 };
 
 /**
@@ -102,7 +117,20 @@ export type CreatableByDragComponent = DraggableComponent & {
         /**
          * Component used to render the item in the left drawer menu used to create a new instance of this component on the dashboard
          */
-        DrawerItemComponent: ComponentType;
+        CreatePanelItemComponent: ComponentType;
+
+        /**
+         * The lower the priority, the earlier the component is shown in the drawer.
+         *
+         * @remarks
+         * For example item with priority 0 is shown before item with priority 5
+         */
+        priority?: number;
+
+        /**
+         * Draggable item type for the creating item.
+         */
+        type: string;
     };
 };
 
@@ -110,12 +138,12 @@ export type CreatableByDragComponent = DraggableComponent & {
  * Capability saying the component displays something else than the Main component while it is being configured for the first time after being created.
  * @internal
  */
-export type CreatablePlaceholderComponent = {
+export type CreatablePlaceholderComponent<TProps> = {
     creating: {
         /**
          * Component used to render the item before the initial configuration is done.
          */
-        CreatingPlaceholderComponent: ComponentType;
+        CreatingPlaceholderComponent: ComponentType<TProps>;
     };
 };
 
@@ -144,26 +172,35 @@ export type ConfigurableWidget = {
  * Definition of attribute filter components
  * @internal
  */
-export type AttributeFilterComponentSet = CustomComponentBase<IDashboardAttributeFilterProps> &
+export type AttributeFilterComponentSet = CustomComponentBase<
+    IDashboardAttributeFilterProps,
+    Parameters<AttributeFilterComponentProvider>
+> &
     DraggableComponent &
-    CreatablePlaceholderComponent &
+    CreatablePlaceholderComponent<IDashboardAttributeFilterPlaceholderProps> &
     CreatableByDragComponent;
 
 /**
  * Definition of KPI widget
  * @internal
  */
-export type KpiWidgetComponentSet = CustomComponentBase<IDashboardKpiProps> &
+export type KpiWidgetComponentSet = CustomComponentBase<
+    IDashboardKpiProps,
+    Parameters<KpiComponentProvider>
+> &
     DraggableComponent &
     CreatableByDragComponent &
-    CreatablePlaceholderComponent &
+    CreatablePlaceholderComponent<IDashboardWidgetProps> &
     ConfigurableWidget;
 
 /**
  * Definition of widget
  * @internal
  */
-export type CustomWidgetComponentSet = CustomComponentBase<IDashboardWidgetProps> &
+export type CustomWidgetComponentSet = CustomComponentBase<
+    IDashboardWidgetProps,
+    Parameters<WidgetComponentProvider>
+> &
     DraggableComponent &
     Partial<ConfigurableWidget> &
     Partial<CreatableByDragComponent>;

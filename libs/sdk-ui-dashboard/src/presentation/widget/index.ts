@@ -15,4 +15,5 @@ export {
 export * from "./insight";
 export * from "./insightMenu";
 export * from "./kpi";
+export * from "./kpiPlaceholder";
 export * from "./widget";

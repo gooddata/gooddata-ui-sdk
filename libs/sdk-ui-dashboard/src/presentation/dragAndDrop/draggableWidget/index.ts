@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
 export * from "./DraggableInsightListItem";
-export * from "./DraggableKpiPlaceholder";
+export * from "./DraggableKpiCreatePanelItem";
 export * from "./AddKpiWidgetButton";
 export * from "./SectionHotspot";
 export * from "./Hotspot";

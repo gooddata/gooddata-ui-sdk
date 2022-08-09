@@ -265,7 +265,7 @@ export function applyDateFilter(filter: IDateFilter, correlationId?: string): Ch
 export type AttributeFilterComponentProvider = (filter: IDashboardAttributeFilter) => CustomDashboardAttributeFilterComponent;
 
 // @internal
-export type AttributeFilterComponentSet = CustomComponentBase<IDashboardAttributeFilterProps> & DraggableComponent & CreatablePlaceholderComponent & CreatableByDragComponent;
+export type AttributeFilterComponentSet = CustomComponentBase<IDashboardAttributeFilterProps, Parameters<AttributeFilterComponentProvider>> & DraggableComponent & CreatablePlaceholderComponent<IDashboardAttributeFilterPlaceholderProps> & CreatableByDragComponent;
 
 // @internal (undocumented)
 export type AttributeFilterDraggableComponent = {
@@ -292,7 +292,7 @@ export type AttributeFilterPlaceholderDraggableItem = {
 export type AttributeFilterSelectionType = "IN" | "NOT_IN";
 
 // @internal (undocumented)
-export function AttributesDropdown({ className, bodyClassName, onClose, onSelect, }: IAttributesDropdownProps): JSX.Element;
+export function AttributesDropdown({ className, bodyClassName, onClose, onSelect, }: IDashboardAttributeFilterPlaceholderProps): JSX.Element;
 
 // @alpha (undocumented)
 export interface BackendCapabilitiesState {
@@ -622,14 +622,16 @@ export type ConnectingAttributeMatrix = IConnectingAttribute[][][];
 // @internal
 export type CreatableByDragComponent = DraggableComponent & {
     creating: {
-        DrawerItemComponent: ComponentType;
+        CreatePanelItemComponent: ComponentType;
+        priority?: number;
+        type: string;
     };
 };
 
 // @internal
-export type CreatablePlaceholderComponent = {
+export type CreatablePlaceholderComponent<TProps> = {
     creating: {
-        CreatingPlaceholderComponent: ComponentType;
+        CreatingPlaceholderComponent: ComponentType<TProps>;
     };
 };
 
@@ -673,20 +675,23 @@ export type CustomButtonBarComponent = ComponentType<IButtonBarProps>;
 export type CustomCancelButtonComponent = ComponentType<ICancelButtonProps>;
 
 // @internal (undocumented)
-export interface CustomComponentBase<TMainProps> {
-    MainComponent: ComponentType<TMainProps>;
+export interface CustomComponentBase<TMainProps, TProviderParams extends any[]> {
+    MainComponentProvider: (...params: TProviderParams) => ComponentType<TMainProps>;
 }
 
 // @alpha (undocumented)
 export type CustomDashboardAttributeFilterComponent = ComponentType<IDashboardAttributeFilterProps>;
 
 // @internal (undocumented)
-export type CustomDashboardAttributeFilterPlaceholderComponent = React.ComponentType<CustomDashboardAttributeFilterPlaceholderComponentProps>;
+export type CustomDashboardAttributeFilterCreatePanelItemComponent = React.ComponentType<CustomDashboardAttributeFilterCreatePanelItemComponentProps>;
 
 // @internal (undocumented)
-export type CustomDashboardAttributeFilterPlaceholderComponentProps = {
+export type CustomDashboardAttributeFilterCreatePanelItemComponentProps = {
     disabled: boolean;
 };
+
+// @internal (undocumented)
+export type CustomDashboardAttributeFilterPlaceholderComponent = ComponentType<IDashboardAttributeFilterPlaceholderProps>;
 
 // @alpha (undocumented)
 export type CustomDashboardDateFilterComponent = ComponentType<IDashboardDateFilterProps>;
@@ -716,10 +721,10 @@ export type CustomDashboardInsightMenuComponent = ComponentType<IDashboardInsigh
 export type CustomDashboardKpiComponent = ComponentType<IDashboardKpiProps>;
 
 // @internal (undocumented)
-export type CustomDashboardKpiPlaceholderComponent = React.ComponentType<CustomDashboardKpiPlaceholderComponentProps>;
+export type CustomDashboardKpiCreatePanelItemComponent = React.ComponentType<CustomDashboardKpiCreatePanelItemComponentProps>;
 
 // @internal (undocumented)
-export type CustomDashboardKpiPlaceholderComponentProps = {
+export type CustomDashboardKpiCreatePanelItemComponentProps = {
     disabled: boolean;
 };
 
@@ -787,7 +792,7 @@ export type CustomTitleComponent = ComponentType<ITitleProps>;
 export type CustomTopBarComponent = ComponentType<ITopBarProps>;
 
 // @internal
-export type CustomWidgetComponentSet = CustomComponentBase<IDashboardWidgetProps> & DraggableComponent & Partial<ConfigurableWidget> & Partial<CreatableByDragComponent>;
+export type CustomWidgetComponentSet = CustomComponentBase<IDashboardWidgetProps, Parameters<WidgetComponentProvider>> & DraggableComponent & Partial<ConfigurableWidget> & Partial<CreatableByDragComponent>;
 
 // @internal (undocumented)
 export const Dashboard: React_2.FC<IDashboardProps>;
@@ -2153,6 +2158,9 @@ export const DefaultDashboardInsightMenuButton: (props: IDashboardInsightMenuBut
 // @internal (undocumented)
 export const DefaultDashboardKpi: ComponentType<IDashboardKpiProps>;
 
+// @internal (undocumented)
+export const DefaultDashboardKpiPlaceholderWidget: CustomDashboardWidgetComponent;
+
 // @alpha (undocumented)
 export const DefaultDashboardLayout: (props: IDashboardLayoutProps) => JSX.Element;
 
@@ -2227,7 +2235,7 @@ export function dispatchAndWaitFor<TCommand extends DashboardCommands, TResult>(
 
 // @internal
 export type DraggableComponent = {
-    dragging: AttributeFilterDraggableComponent | CustomDraggableComponent;
+    dragging: AttributeFilterDraggableComponent | KpiDraggableComponent | CustomDraggableComponent;
 };
 
 // @internal (undocumented)
@@ -2726,18 +2734,6 @@ export interface IAttributeFiltersCustomizer {
     withCustomProvider(provider: OptionalAttributeFilterComponentProvider): IAttributeFiltersCustomizer;
 }
 
-// @internal (undocumented)
-export interface IAttributesDropdownProps {
-    // (undocumented)
-    bodyClassName?: string;
-    // (undocumented)
-    className?: string;
-    // (undocumented)
-    onClose: () => void;
-    // (undocumented)
-    onSelect: (item: ICatalogAttribute) => void;
-}
-
 // @alpha
 export interface IBrokenAlertFilterBasicInfo<TFilter extends FilterContextItem = FilterContextItem> {
     // (undocumented)
@@ -2838,6 +2834,18 @@ export interface IDashboardAttributeFilterParentItem {
     selectedConnectingAttribute: ObjRef;
     // (undocumented)
     title: string;
+}
+
+// @internal (undocumented)
+export interface IDashboardAttributeFilterPlaceholderProps {
+    // (undocumented)
+    bodyClassName?: string;
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    onClose: () => void;
+    // (undocumented)
+    onSelect: (displayForm: ObjRef) => void;
 }
 
 // @alpha (undocumented)
@@ -4088,6 +4096,11 @@ export type KpiAlertDialogOpenedPayload = UserInteractionPayloadWithDataBase<"kp
 export type KpiComponentProvider = (kpi: IKpi, widget: IKpiWidget) => CustomDashboardKpiComponent;
 
 // @internal (undocumented)
+export type KpiDraggableComponent = {
+    type: "kpi";
+};
+
+// @internal (undocumented)
 export type KpiPlaceholderDraggableItem = {
     type: "kpi-placeholder";
 };
@@ -4111,7 +4124,7 @@ export interface KpiWidgetComparison {
 }
 
 // @internal
-export type KpiWidgetComponentSet = CustomComponentBase<IDashboardKpiProps> & DraggableComponent & CreatableByDragComponent & CreatablePlaceholderComponent & ConfigurableWidget;
+export type KpiWidgetComponentSet = CustomComponentBase<IDashboardKpiProps, Parameters<KpiComponentProvider>> & DraggableComponent & CreatableByDragComponent & CreatablePlaceholderComponent<IDashboardWidgetProps> & ConfigurableWidget;
 
 // @alpha (undocumented)
 export type LayoutStash = Record<string, ExtendedDashboardItem[]>;
