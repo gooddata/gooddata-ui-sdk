@@ -255,6 +255,18 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@testing-library/jest-dom",
+      "allowedCategories": [ "production", "tools" ]
+    },
+    {
+      "name": "@testing-library/react",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@testing-library/user-event",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@types/blessed",
       "allowedCategories": [ "tools" ]
     },
@@ -429,6 +441,10 @@
     {
       "name": "@types/tar",
       "allowedCategories": [ "tools" ]
+    },
+    {
+      "name": "@types/testing-library__jest-dom",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "@types/tinycolor2",
@@ -625,6 +641,10 @@
     {
       "name": "eslint-plugin-jest",
       "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
+      "name": "eslint-plugin-jest-dom",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "eslint-plugin-no-only-tests",

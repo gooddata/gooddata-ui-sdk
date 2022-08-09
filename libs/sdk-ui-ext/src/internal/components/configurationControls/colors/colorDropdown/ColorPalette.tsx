@@ -14,7 +14,11 @@ export interface IColorPaletteProps {
 
 export default class ColorPalette extends React.PureComponent<IColorPaletteProps> {
     public render() {
-        return <div className={this.getClassNames()}>{this.renderItems()}</div>;
+        return (
+            <div aria-label="Color palette" className={this.getClassNames()}>
+                {this.renderItems()}
+            </div>
+        );
     }
 
     private getClassNames(): string {

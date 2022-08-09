@@ -1,7 +1,8 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React, { useCallback } from "react";
-import { newMeasure } from "@gooddata/sdk-model";
-import { mount } from "enzyme";
+import { IMeasure, IMeasureDefinition, newMeasure } from "@gooddata/sdk-model";
+import { render, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { PlaceholdersProvider, IPlaceholdersProviderProps } from "../context";
 import { newPlaceholder } from "../factory";
 import { IPlaceholder } from "../base";
@@ -11,7 +12,7 @@ const createComponent = (
     componentProps: IComponentWithUsePlaceholderHookProps,
     providerProps?: IPlaceholdersProviderProps,
 ) =>
-    mount(
+    render(
         <PlaceholdersProvider {...providerProps}>
             <ComponentWithUsePlaceholderHook {...componentProps} />
         </PlaceholdersProvider>,
@@ -45,51 +46,49 @@ interface ISetPlaceholderValueButtonProps {
 }
 
 const SetPlaceholderValueButton = ({ onClick }: ISetPlaceholderValueButtonProps) => {
-    return <button onClick={onClick}>Set placeholder value</button>;
+    return <button onClick={onClick}>Placeholder</button>;
 };
 
 interface IComponentWithResultProps {
-    results: object[];
+    results: IMeasure<IMeasureDefinition>[];
 }
 const ComponentWithResult = ({ results }: IComponentWithResultProps) => {
     return (
         <div>
-            <pre>{JSON.stringify(results)}</pre>
+            {results.map((res, i) => (
+                <div key={i}>{res?.measure?.localIdentifier}</div>
+            ))}
         </div>
     );
 };
 
 describe("usePlaceholders", () => {
-    it("should return undefined with no default placeholder values", () => {
-        const singleValuePlaceholder = newPlaceholder();
-        const multiValuePlaceholder = newPlaceholder();
-        const Component = createComponent({ placeholders: [singleValuePlaceholder, multiValuePlaceholder] });
-
-        expect(Component.find(ComponentWithResult).prop("results")).toEqual([undefined, undefined]);
-    });
-
     it("should resolve default placeholder values", () => {
         const measure = newMeasure("test-measure");
         const singleValuePlaceholder = newPlaceholder(measure);
         const multiValuePlaceholder = newPlaceholder([]);
-        const Component = createComponent({ placeholders: [singleValuePlaceholder, multiValuePlaceholder] });
-
-        expect(Component.find(ComponentWithResult).prop("results")).toEqual([measure, []]);
+        const { queryByText } = createComponent({
+            placeholders: [singleValuePlaceholder, multiValuePlaceholder],
+        });
+        expect(queryByText(measure.measure.localIdentifier)).toBeInTheDocument();
     });
 
-    it("should update placeholder values", () => {
+    it("should update placeholder values", async () => {
         const measure = newMeasure("updated-measure");
         const measure2 = newMeasure("updated-measure2");
         const singleValuePlaceholder = newPlaceholder();
-        const multiValuePlaceholder = newPlaceholder([]);
+        const multiValuePlaceholder = newPlaceholder();
 
-        const Component = createComponent({
+        const { getByText, queryByText } = createComponent({
             placeholders: [singleValuePlaceholder, multiValuePlaceholder],
-            onSetPlaceholders: () => [measure, [measure2]],
+            onSetPlaceholders: () => [measure, measure2],
         });
+        const user = userEvent.setup();
 
-        expect(Component.find(ComponentWithResult).prop("results")).toEqual([undefined, []]);
-        Component.find(SetPlaceholderValueButton).simulate("click");
-        expect(Component.find(ComponentWithResult).prop("results")).toEqual([measure, [measure2]]);
+        await user.click(getByText("Placeholder"));
+        await waitFor(() => {
+            expect(queryByText(measure.measure.localIdentifier)).toBeInTheDocument();
+            expect(queryByText(measure2.measure.localIdentifier)).toBeInTheDocument();
+        });
     });
 });
