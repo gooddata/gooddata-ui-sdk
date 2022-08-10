@@ -197,6 +197,7 @@ export {
     MetadataGetEntitiesOptions,
     MetadataGetEntitiesParams,
     MetadataGetEntitiesThemeParams,
+    MetadataGetEntitiesColorPaletteParams,
     MetadataGetEntitiesWorkspaceParams,
     MetadataGetEntitiesUserParams,
 } from "./metadataUtilities";

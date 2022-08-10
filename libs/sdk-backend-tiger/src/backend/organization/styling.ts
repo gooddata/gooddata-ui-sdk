@@ -3,15 +3,32 @@
 import { v4 as uuidv4 } from "uuid";
 import { AxiosResponse } from "axios";
 
-import { jsonApiHeaders, JsonApiThemeOutDocument, MetadataUtilities } from "@gooddata/api-client-tiger";
+import {
+    JsonApiColorPaletteOutDocument,
+    jsonApiHeaders,
+    JsonApiThemeOutDocument,
+    MetadataUtilities,
+} from "@gooddata/api-client-tiger";
 import { IOrganizationStylingService } from "@gooddata/sdk-backend-spi";
-import { idRef, IThemeMetadataObject, ObjRef, IThemeDefinition } from "@gooddata/sdk-model";
+import {
+    idRef,
+    IThemeMetadataObject,
+    ObjRef,
+    IThemeDefinition,
+    IColorPaletteMetadataObject,
+    IColorPaletteDefinition,
+} from "@gooddata/sdk-model";
 import { objRefToIdentifier } from "../../utils/api";
 import {
     convertTheme as convertThemeFromBackend,
     convertThemeWithLinks,
 } from "../../convertors/fromBackend/ThemeConverter";
+import {
+    convertColorPalette as convertColorPaletteFromBackend,
+    convertColorPaletteWithLinks,
+} from "../../convertors/fromBackend/ColorPaletteConverter";
 import { convertTheme as convertThemeToBackend } from "../../convertors/toBackend/ThemeConverter";
+import { convertColorPalette as convertColorPaletteToBackend } from "../../convertors/toBackend/ColorPaletteConverter";
 import { JsonApiId } from "../../convertors/fromBackend/ObjRefConverter";
 import { TigerAuthenticatedCallGuard } from "../../types";
 
@@ -26,10 +43,10 @@ export class OrganizationStylingService implements IOrganizationStylingService {
         );
     }
 
-    public async getActiveTheme(): Promise<ObjRef | undefined> {
+    private async getActiveSetting(setting: string): Promise<ObjRef | undefined> {
         return await this.authCall((client) =>
             client.entities
-                .getAllEntitiesOrganizationSettings({ filter: "id==activeTheme" })
+                .getAllEntitiesOrganizationSettings({ filter: `id==${setting}` })
                 .then((result) => {
                     const { data } = result;
 
@@ -41,6 +58,8 @@ export class OrganizationStylingService implements IOrganizationStylingService {
                 }),
         );
     }
+
+    public getActiveTheme = () => this.getActiveSetting("activeTheme");
 
     public async setActiveTheme(themeRef: ObjRef): Promise<void> {
         const themeId = await objRefToIdentifier(themeRef, this.authCall);
@@ -123,5 +142,100 @@ export class OrganizationStylingService implements IOrganizationStylingService {
                 id,
             }),
         );
+    }
+
+    public async getColorPalettes(): Promise<IColorPaletteMetadataObject[]> {
+        return await this.authCall((client) =>
+            MetadataUtilities.getAllPagesOf(client, client.entities.getAllEntitiesColorPalettes, {})
+                .then(MetadataUtilities.mergeEntitiesResults)
+                .then((colorPalettes) => colorPalettes.data.map(convertColorPaletteWithLinks)),
+        );
+    }
+
+    public getActiveColorPalette = () => this.getActiveSetting("activeColorPalette");
+
+    public async setActiveColorPalette(colorPaletteRef: ObjRef): Promise<void> {
+        const colorPaletteId = await objRefToIdentifier(colorPaletteRef, this.authCall);
+
+        // It is not possible to PUT activeColorPalette if it does not exist already,
+        // therefore we first clear it and POST a new one
+        await this.clearActiveColorPalette();
+        await this.authCall((client) =>
+            client.entities.createEntityOrganizationSettings({
+                jsonApiOrganizationSettingInDocument: {
+                    data: {
+                        type: "organizationSetting",
+                        id: "activeColorPalette",
+                        attributes: {
+                            content: { id: colorPaletteId, type: "colorPalette" },
+                        },
+                    },
+                },
+            }),
+        );
+    }
+
+    public async clearActiveColorPalette(): Promise<void> {
+        await this.authCall((client) =>
+            client.entities.deleteEntityOrganizationSettings({
+                id: "activeColorPalette",
+            }),
+        );
+    }
+
+    public async createColorPalette(
+        colorPalette: IColorPaletteDefinition,
+    ): Promise<IColorPaletteMetadataObject> {
+        return await this.authCall((client) =>
+            client.entities
+                .createEntityColorPalettes(
+                    {
+                        jsonApiColorPaletteInDocument: {
+                            data: convertColorPaletteToBackend(uuidv4(), colorPalette),
+                        },
+                    },
+                    {
+                        headers: jsonApiHeaders,
+                    },
+                )
+                .then(this.parseColorPaletteResult),
+        );
+    }
+
+    public async updateColorPalette(
+        colorPalette: IColorPaletteDefinition,
+    ): Promise<IColorPaletteMetadataObject> {
+        if (!colorPalette.ref) {
+            return this.createColorPalette(colorPalette);
+        }
+        const id = await objRefToIdentifier(colorPalette.ref, this.authCall);
+        return await this.authCall((client) =>
+            client.entities
+                .updateEntityColorPalettes(
+                    {
+                        id,
+                        jsonApiColorPaletteInDocument: {
+                            data: convertColorPaletteToBackend(id, colorPalette),
+                        },
+                    },
+                    {
+                        headers: jsonApiHeaders,
+                    },
+                )
+                .then(this.parseColorPaletteResult),
+        );
+    }
+
+    public async deleteColorPalette(colorPaletteRef: ObjRef): Promise<void> {
+        const id = await objRefToIdentifier(colorPaletteRef, this.authCall);
+        await this.authCall((client) => client.entities.deleteEntityColorPalettes({ id }));
+    }
+
+    private parseColorPaletteResult(
+        result: AxiosResponse<JsonApiColorPaletteOutDocument>,
+    ): IColorPaletteMetadataObject {
+        const { data } = result;
+
+        return convertColorPaletteFromBackend(data);
     }
 }

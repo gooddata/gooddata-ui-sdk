@@ -1,6 +1,12 @@
 // (C) 2022 GoodData Corporation
 
-import { IThemeMetadataObject, IThemeDefinition, ObjRef } from "@gooddata/sdk-model";
+import {
+    IThemeMetadataObject,
+    IThemeDefinition,
+    ObjRef,
+    IColorPaletteMetadataObject,
+    IColorPaletteDefinition,
+} from "@gooddata/sdk-model";
 
 /**
  * This service provides access to organization styling settings such as theme.
@@ -57,4 +63,54 @@ export interface IOrganizationStylingService {
      * @returns promise
      */
     deleteTheme(themeRef: ObjRef): Promise<void>;
+
+    /**
+     * Request all color palettes defined on organization level.
+     *
+     * @returns promise of array of color palette metadata objects
+     */
+    getColorPalettes(): Promise<IColorPaletteMetadataObject[]>;
+
+    /**
+     * Request active color palette setting from organization.
+     *
+     * @returns promise of color palette object reference
+     */
+    getActiveColorPalette(): Promise<ObjRef | undefined>;
+
+    /**
+     * Set active color palette setting in organization.
+     *
+     * @param colorPaletteRef - active color palette reference
+     * @returns promise
+     */
+    setActiveColorPalette(colorPaletteRef: ObjRef): Promise<void>;
+
+    /**
+     * Clear active color palette setting from organization.
+     *
+     * @returns promise
+     */
+    clearActiveColorPalette(): Promise<void>;
+
+    /**
+     * Create new color palette on organization level.
+     *
+     * @returns promise
+     */
+    createColorPalette(colorPalette: IColorPaletteDefinition): Promise<IColorPaletteMetadataObject>;
+
+    /**
+     * Update existing color palette on organization level.
+     *
+     * @returns promise
+     */
+    updateColorPalette(colorPalette: IColorPaletteDefinition): Promise<IColorPaletteMetadataObject>;
+
+    /**
+     * Delete color palette on organization level.
+     *
+     * @returns promise
+     */
+    deleteColorPalette(colorPaletteRef: ObjRef): Promise<void>;
 }

@@ -1,12 +1,18 @@
 // (C) 2019-2022 GoodData Corporation
 import { IWorkspaceStylingService } from "@gooddata/sdk-backend-spi";
 import { ApiEntitlementNameEnum } from "@gooddata/api-client-tiger";
-import { IColorPaletteItem, ITheme, IThemeMetadataObject } from "@gooddata/sdk-model";
+import {
+    IColorPaletteItem,
+    IColorPaletteMetadataObject,
+    ITheme,
+    IThemeMetadataObject,
+} from "@gooddata/sdk-model";
 
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { getSettingsForCurrentUser } from "../settings";
 import { DefaultColorPalette } from "./mocks/colorPalette";
 import { DefaultTheme } from "./mocks/theme";
+import { unwrapColorPaletteContent } from "../../../convertors/fromBackend/ColorPaletteConverter";
 
 export class TigerWorkspaceStyling implements IWorkspaceStylingService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -19,7 +25,7 @@ export class TigerWorkspaceStyling implements IWorkspaceStylingService {
      *
      * @returns boolean
      */
-    private async isThemable(activeThemeId: string, enableTheming: boolean): Promise<boolean> {
+    private async isStylizable(activeStyleId: string, enableTheming: boolean): Promise<boolean> {
         const isCustomThemingIncludedInEntitlements = await this.authCall(async (client) =>
             client.actions
                 .resolveRequestedEntitlements({
@@ -28,11 +34,33 @@ export class TigerWorkspaceStyling implements IWorkspaceStylingService {
                 .then((res) => res?.data?.length === 1),
         );
 
-        return isCustomThemingIncludedInEntitlements && enableTheming && activeThemeId !== "";
+        return isCustomThemingIncludedInEntitlements && enableTheming && activeStyleId !== "";
     }
 
     public getColorPalette = async (): Promise<IColorPaletteItem[]> => {
-        return this.authCall(async () => DefaultColorPalette);
+        const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
+        const activeColorPaletteId =
+            (userSettings.activeColorPalette as IColorPaletteMetadataObject)?.id ?? "";
+        const enableTheming = userSettings.enableTheming ?? false;
+
+        return (await this.isStylizable(activeColorPaletteId, enableTheming))
+            ? this.authCall(async (client) =>
+                  client.entities
+                      .getAllEntitiesColorPalettes({
+                          filter: `id=="${activeColorPaletteId}"`,
+                      })
+                      .then((colorPalettes) => {
+                          if (colorPalettes.data.data.length !== 0) {
+                              return unwrapColorPaletteContent(colorPalettes.data.data[0].attributes.content);
+                          }
+                          return DefaultColorPalette;
+                      })
+                      .catch(() => {
+                          // Failed theme loading should not break application
+                          return DefaultColorPalette;
+                      }),
+              )
+            : DefaultColorPalette;
     };
 
     public getTheme = async (): Promise<ITheme> => {
@@ -40,7 +68,7 @@ export class TigerWorkspaceStyling implements IWorkspaceStylingService {
         const activeThemeId = (userSettings.activeTheme as IThemeMetadataObject)?.id ?? "";
         const enableTheming = userSettings.enableTheming ?? false;
 
-        return this.isThemable(activeThemeId, enableTheming)
+        return (await this.isStylizable(activeThemeId, enableTheming))
             ? this.authCall(async (client) =>
                   client.entities
                       .getAllEntitiesThemes({

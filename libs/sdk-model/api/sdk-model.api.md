@@ -673,12 +673,28 @@ export interface IColorMappingItem {
 // @public
 export type IColorPalette = IColorPaletteItem[];
 
+// @alpha
+export interface IColorPaletteDefinition extends Partial<IMetadataObject> {
+    // (undocumented)
+    readonly colorPalette: IColorPalette;
+    // (undocumented)
+    readonly type: "colorPalette";
+}
+
 // @public
 export interface IColorPaletteItem {
     // (undocumented)
     fill: IRgbColorValue;
     // (undocumented)
     guid: string;
+}
+
+// @alpha
+export interface IColorPaletteMetadataObject extends IMetadataObject {
+    // (undocumented)
+    readonly colorPalette: IColorPalette;
+    // (undocumented)
+    readonly type: "colorPalette";
 }
 
 // @public
@@ -2944,7 +2960,7 @@ export function newTotal(type: TotalType, measureOrId: IMeasure | Identifier, at
 export function newTwoDimensional(dim1Input: DimensionItem[], dim2Input: DimensionItem[]): IDimension[];
 
 // @public
-export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme"
+export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette"
 /**
 * @deprecated will be removed in the next major release, use "insight" instead
 */

@@ -47,6 +47,7 @@ export type ObjectType =
     | "variable"
     | "analyticalDashboard"
     | "theme"
+    | "colorPalette"
     /**
      * @deprecated will be removed in the next major release, use "insight" instead
      */

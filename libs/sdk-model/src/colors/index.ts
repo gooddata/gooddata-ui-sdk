@@ -1,6 +1,7 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 import isEmpty from "lodash/isEmpty";
+import { IMetadataObject } from "../ldm/metadata";
 
 /**
  * RGB Color value specification.
@@ -68,6 +69,26 @@ export interface IRgbColor {
  * @public
  */
 export type IColor = IColorFromPalette | IRgbColor;
+
+/**
+ * Color palette metadata object
+ *
+ * @alpha
+ */
+export interface IColorPaletteMetadataObject extends IMetadataObject {
+    readonly type: "colorPalette";
+    readonly colorPalette: IColorPalette;
+}
+
+/**
+ * Color palette definition represents modified or created theme
+ *
+ * @alpha
+ */
+export interface IColorPaletteDefinition extends Partial<IMetadataObject> {
+    readonly type: "colorPalette";
+    readonly colorPalette: IColorPalette;
+}
 
 //
 // Type guards
