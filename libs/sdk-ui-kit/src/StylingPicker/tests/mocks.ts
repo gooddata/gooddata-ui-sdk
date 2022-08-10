@@ -1,18 +1,12 @@
 // (C) 2022 GoodData Corporation
 
-import { idRef, IThemeMetadataObject } from "@gooddata/sdk-model";
+import { idRef, ITheme } from "@gooddata/sdk-model";
+import { IStylingPickerItem } from "../../Dialog/StylingEditorDialog";
 
-export const defaultThemeMock: IThemeMetadataObject = {
-    id: "default-theme",
+export const defaultItemMock: IStylingPickerItem<ITheme> = {
     ref: idRef("default-theme"),
-    uri: "",
-    type: "theme",
-    description: "",
-    production: false,
-    deprecated: false,
-    unlisted: false,
-    title: "Default theme",
-    theme: {
+    name: "Default theme",
+    content: {
         palette: {
             primary: {
                 base: "#14b2e2",
@@ -28,18 +22,11 @@ export const defaultThemeMock: IThemeMetadataObject = {
     },
 };
 
-export const customThemesMock: IThemeMetadataObject[] = [
+export const customItemsMock: IStylingPickerItem<ITheme>[] = [
     {
-        id: "theme1",
         ref: idRef("theme1"),
-        uri: "",
-        type: "theme",
-        description: "",
-        production: false,
-        deprecated: false,
-        unlisted: false,
-        title: "First theme",
-        theme: {
+        name: "First theme",
+        content: {
             palette: {
                 complementary: {
                     c0: "#292727",
@@ -57,16 +44,9 @@ export const customThemesMock: IThemeMetadataObject[] = [
         },
     },
     {
-        id: "theme2",
         ref: idRef("theme2"),
-        uri: "",
-        type: "theme",
-        description: "",
-        production: false,
-        deprecated: false,
-        unlisted: false,
-        title: "Second theme",
-        theme: {
+        name: "Second theme",
+        content: {
             palette: {
                 complementary: {
                     c0: "#122330",
@@ -85,127 +65,115 @@ export const customThemesMock: IThemeMetadataObject[] = [
     },
 ];
 
-export const fullyDefinedThemeMock: IThemeMetadataObject = {
-    id: "full-theme",
-    ref: idRef("full-theme"),
-    uri: "",
-    type: "theme",
-    description: "",
-    production: false,
-    deprecated: false,
-    unlisted: false,
-    title: "Full theme",
-    theme: {
-        analyticalDesigner: {
+export const fullyDefinedThemeMock: ITheme = {
+    analyticalDesigner: {
+        title: {
+            color: "#000",
+        },
+    },
+    button: {
+        borderRadius: "15",
+        dropShadow: true,
+        textCapitalization: true,
+    },
+    dashboards: {
+        content: {
+            backgroundColor: "#dfdfdf",
+            kpiWidget: {
+                backgroundColor: "#1b4096",
+                borderColor: "#000",
+                borderRadius: "4",
+                borderWidth: "1",
+                dropShadow: false,
+                kpi: {
+                    primaryMeasureColor: "#fff",
+                    secondaryInfoColor: "#eba12a",
+                },
+                title: {
+                    color: "#fff",
+                    textAlign: "left",
+                },
+            },
+            widget: {
+                borderColor: "#1b4096",
+                borderRadius: "50",
+                borderWidth: "1",
+                dropShadow: false,
+                title: {
+                    color: "#101010",
+                    textAlign: "center",
+                },
+            },
+        },
+        filterBar: {
+            backgroundColor: "#f0f0f0",
+            filterButton: {
+                backgroundColor: "#dfdfdf",
+            },
+        },
+        navigation: {
+            backgroundColor: "#f0f0f0",
+            borderColor: "#1b4096",
+            item: {
+                color: "#101010",
+                hoverColor: "#000",
+                selectedBackgroundColor: "#1b4096",
+                selectedColor: "#fff",
+            },
             title: {
                 color: "#000",
             },
         },
-        button: {
-            borderRadius: "15",
-            dropShadow: true,
-            textCapitalization: true,
-        },
-        dashboards: {
-            content: {
-                backgroundColor: "#dfdfdf",
-                kpiWidget: {
-                    backgroundColor: "#1b4096",
-                    borderColor: "#000",
-                    borderRadius: "4",
-                    borderWidth: "1",
-                    dropShadow: false,
-                    kpi: {
-                        primaryMeasureColor: "#fff",
-                        secondaryInfoColor: "#eba12a",
-                    },
-                    title: {
-                        color: "#fff",
-                        textAlign: "left",
-                    },
-                },
-                widget: {
-                    borderColor: "#1b4096",
-                    borderRadius: "50",
-                    borderWidth: "1",
-                    dropShadow: false,
-                    title: {
-                        color: "#101010",
-                        textAlign: "center",
-                    },
-                },
-            },
-            filterBar: {
-                backgroundColor: "#f0f0f0",
-                filterButton: {
-                    backgroundColor: "#dfdfdf",
-                },
-            },
-            navigation: {
-                backgroundColor: "#f0f0f0",
-                borderColor: "#1b4096",
-                item: {
-                    color: "#101010",
-                    hoverColor: "#000",
-                    selectedBackgroundColor: "#1b4096",
-                    selectedColor: "#fff",
-                },
-                title: {
-                    color: "#000",
-                },
-            },
-            section: {
-                description: {
-                    color: "#101010",
-                },
-                title: {
-                    color: "#000000",
-                    lineColor: "#dde4eb",
-                },
+        section: {
+            description: {
+                color: "#101010",
             },
             title: {
-                color: "#ff0000",
+                color: "#000000",
+                lineColor: "#dde4eb",
             },
         },
-        modal: {
-            borderColor: "#14b2e2",
-            borderRadius: "50px",
-            borderWidth: "15",
-            dropShadow: false,
-            outsideBackgroundColor: "#ffffbf",
-            title: {
-                color: "#1b4096",
-                lineColor: "#000",
-            },
+        title: {
+            color: "#ff0000",
         },
-        palette: {
-            error: {
-                base: "#ff2e5f",
-            },
-            info: {
-                base: "#00f",
-                contrast: "rgba(255,0,0,0.5)",
-                dark: "rgb(0,0,125)",
-                light: "rgb(100,100,255)",
-            },
-            primary: {
-                base: "#eba12a",
-            },
-            success: {
-                base: "#13ed4d",
-            },
-            warning: {
-                base: "#ddff19",
-            },
+    },
+    modal: {
+        borderColor: "#14b2e2",
+        borderRadius: "50px",
+        borderWidth: "15",
+        dropShadow: false,
+        outsideBackgroundColor: "#ffffbf",
+        title: {
+            color: "#1b4096",
+            lineColor: "#000",
         },
-        tooltip: {
-            backgroundColor: "#101010",
-            color: "#fff",
+    },
+    palette: {
+        error: {
+            base: "#ff2e5f",
         },
-        typography: {
-            font: "local('Trebuchet MS')",
-            fontBold:
-                "url(https://cdn.jsdelivr.net/npm/roboto-font@0.1.0/fonts/Roboto/roboto-bold-webfont.ttf)",
+        info: {
+            base: "#00f",
+            contrast: "rgba(255,0,0,0.5)",
+            dark: "rgb(0,0,125)",
+            light: "rgb(100,100,255)",
         },
+        primary: {
+            base: "#eba12a",
+        },
+        success: {
+            base: "#13ed4d",
+        },
+        warning: {
+            base: "#ddff19",
+        },
+    },
+    tooltip: {
+        backgroundColor: "#101010",
+        color: "#fff",
+    },
+    typography: {
+        font: "local('Trebuchet MS')",
+        fontBold: "url(https://cdn.jsdelivr.net/npm/roboto-font@0.1.0/fonts/Roboto/roboto-bold-webfont.ttf)",
     },
 };

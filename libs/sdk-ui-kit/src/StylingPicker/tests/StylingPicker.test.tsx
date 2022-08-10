@@ -4,15 +4,17 @@ import React from "react";
 import { mount } from "enzyme";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { IStylingPickerProps, StylingPicker } from "../StylingPicker";
-import { defaultThemeMock, customThemesMock } from "./mocks";
+import { defaultItemMock, customItemsMock } from "./mocks";
 import * as useMediaQuery from "../../responsive/useMediaQuery";
+import { ITheme } from "@gooddata/sdk-model";
 
 describe("StylingPicker", () => {
-    const renderComponent = (props: Partial<IStylingPickerProps>) => {
+    const renderComponent = (props: Partial<IStylingPickerProps<ITheme>>) => {
         const defaultProps = {
             title: "Styling picker",
-            defaultItem: defaultThemeMock,
-            customItems: customThemesMock,
+            defaultItem: defaultItemMock,
+            customItems: customItemsMock,
+            itemToColorPreview: (): string[] => [],
             emptyMessage: () => <span className="s-empty-message-test" />,
         };
 
@@ -62,7 +64,7 @@ describe("StylingPicker", () => {
     });
 
     it("should select provided selected item", () => {
-        const selectedItemRef = customThemesMock[0].ref;
+        const selectedItemRef = customItemsMock[0].ref;
         const component = renderComponent({ selectedItemRef });
 
         expect(component.find(".s-styling-picker-list-item-first_theme input").prop("checked")).toBe(true);
@@ -75,14 +77,14 @@ describe("StylingPicker", () => {
     });
 
     it("should render footer buttons when selected item is different from basic item", () => {
-        const selectedItemRef = customThemesMock[0].ref;
+        const selectedItemRef = customItemsMock[0].ref;
         const component = renderComponent({ selectedItemRef });
 
         expect(component.find(".s-styling-picker-footer-buttons")).toExist();
     });
 
     it("should disable footer buttons when currently selected item is the same as provided selected item", () => {
-        const selectedItemRef = customThemesMock[0].ref;
+        const selectedItemRef = customItemsMock[0].ref;
         const component = renderComponent({ selectedItemRef });
 
         expect(component.find(".s-cancel").hasClass("disabled")).toBe(true);
@@ -90,7 +92,7 @@ describe("StylingPicker", () => {
     });
 
     it("should enable footer buttons after click on item that is not the same as provided selected item", () => {
-        const selectedItemRef = customThemesMock[0].ref;
+        const selectedItemRef = customItemsMock[0].ref;
         const component = renderComponent({ selectedItemRef });
 
         expect(component.find(".s-cancel").hasClass("disabled")).toBe(true);
@@ -103,7 +105,7 @@ describe("StylingPicker", () => {
     });
 
     it("should reset list selection to provided selected item when cancel button is clicked", () => {
-        const selectedItemRef = customThemesMock[0].ref;
+        const selectedItemRef = customItemsMock[0].ref;
         const component = renderComponent({ selectedItemRef });
 
         expect(component.find(".s-styling-picker-list-item-first_theme input").prop("checked")).toBe(true);
@@ -168,7 +170,7 @@ describe("StylingPicker", () => {
         component.find(".s-styling-picker-list-item-first_theme input").simulate("click");
         component.find(".s-apply").simulate("click");
 
-        expect(onApply).toHaveBeenCalledWith(customThemesMock[0].ref);
+        expect(onApply).toHaveBeenCalledWith(customItemsMock[0].ref);
     });
 
     it("should not render list action link on mobile device", () => {

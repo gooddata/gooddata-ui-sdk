@@ -1,6 +1,14 @@
 // (C) 2022 GoodData Corporation
 
-import { idRef, IThemeDefinition } from "@gooddata/sdk-model";
+import {
+    idRef,
+    IThemeDefinition,
+    IColorPaletteDefinition,
+    colorPaletteToColors,
+    ITheme,
+    IColorPalette,
+} from "@gooddata/sdk-model";
+import { DefaultColorPalette } from "@gooddata/sdk-ui";
 
 /**
  * Dummy theme metadata object which represents the default colors of GD.
@@ -44,8 +52,7 @@ export const defaultThemeMetadataObject: IThemeDefinition = {
  *
  * @internal
  */
-export const getColorsPreviewFromTheme = (themeDef: IThemeDefinition): string[] => {
-    const { theme } = themeDef;
+export const getColorsPreviewFromTheme = (theme: ITheme): string[] => {
     const { theme: defaultTheme } = defaultThemeMetadataObject;
 
     const color1 =
@@ -68,4 +75,36 @@ export const getColorsPreviewFromTheme = (themeDef: IThemeDefinition): string[] 
     const color6 = theme.palette?.complementary?.c7 || defaultTheme.palette.complementary.c7;
 
     return [color1, color2, color3, color4, color5, color6];
+};
+
+/**
+ * Dummy theme metadata object which represents the default colors of GD.
+ *
+ * This object is used as default when rendering theme as a sequence of colored elements in styling
+ * picker. It's properties are also used as defaults when some custom theme is missing a crucial
+ * property for the same rendering purposes.
+ *
+ * @internal
+ */
+export const defaultColorPaletteMetadataObject: IColorPaletteDefinition = {
+    id: "default-color-palette",
+    ref: idRef("default-color-palette"),
+    uri: "",
+    type: "colorPalette",
+    description: "",
+    production: false,
+    deprecated: false,
+    unlisted: false,
+    title: "Indigo",
+    colorPalette: DefaultColorPalette,
+};
+
+/**
+ * This function transforms a color palette into an array of max ten colors which is used
+ * to render the color palette in styling picker.
+ *
+ * @internal
+ */
+export const getColorsPreviewFromColorPalette = (colorPalette: IColorPalette): string[] => {
+    return colorPaletteToColors(colorPalette).slice(0, 10);
 };

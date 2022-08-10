@@ -4,4 +4,4 @@ export { ColorPreview, IColorPreviewProps } from "./ColorPreview";
 export { StylingExample, IStylingExampleProps } from "./StylingExample";
 export { BubbleHeaderSeparator, IBubbleHeaderSeparatorProps } from "./BubbleHeaderSeparator";
 export { StylingEditorDialogFooter, IStylingEditorDialogFooterProps } from "./StylingEditorDialogFooter";
-export { StylingPickerItem } from "./StylingEditorDialog";
+export { IStylingPickerItem, StylingPickerItemContent } from "./StylingEditorDialog";

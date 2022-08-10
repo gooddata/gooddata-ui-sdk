@@ -1,27 +1,32 @@
 // (C) 2022 GoodData Corporation
+import { ITheme } from "@gooddata/sdk-model";
 
 import { mount } from "enzyme";
 import React from "react";
-import { IStylingEditorDialogProps, StylingEditorDialog, StylingExample } from "../StylingEditorDialog";
-import { IThemeMetadataObject } from "@gooddata/sdk-model";
+import {
+    IStylingEditorDialogProps,
+    StylingEditorDialog,
+    StylingExample,
+    IStylingPickerItem,
+} from "../StylingEditorDialog";
 
 describe("Styling editor dialog", () => {
-    const theme = (color: string): IThemeMetadataObject => {
+    const theme = (color: string): IStylingPickerItem<ITheme> => {
         return {
-            title: `Theme ${color}`,
-            theme: {
+            name: `Theme ${color}`,
+            content: {
                 palette: {
                     primary: {
                         base: color,
                     },
                 },
             },
-        } as IThemeMetadataObject;
+        };
     };
 
-    const referenceTheme = (color: string) => JSON.stringify(theme(color).theme, null, 4);
+    const referenceTheme = (color: string) => JSON.stringify(theme(color).content, null, 4);
 
-    const getWrapper = (customProps: Partial<IStylingEditorDialogProps> = {}) => {
+    const getWrapper = (customProps: Partial<IStylingEditorDialogProps<ITheme>> = {}) => {
         const defaultProps = {
             title: "Dialog title",
             link: {
@@ -29,7 +34,7 @@ describe("Styling editor dialog", () => {
                 url: "#",
             },
             tooltip: "Tooltip to describe examples usage.",
-            stylingContent: theme("red"),
+            stylingItem: theme("red"),
             examples: [theme("green"), theme("blue")],
             exampleToColorPreview: () => ["#313441", "#FFFFFF", "#14B2E2", "#464E56", "#94A1AD", "#E2E7EC"],
         };
@@ -72,8 +77,8 @@ describe("Styling editor dialog", () => {
         expect(wrapper.find(".s-gd-styling-editor-dialog-content-examples")).not.toExist();
     });
 
-    it("should render empty fields if stylingContent not provided", () => {
-        const wrapper = getWrapper({ stylingContent: undefined });
+    it("should render empty fields if stylingItem not provided", () => {
+        const wrapper = getWrapper({ stylingItem: undefined });
         expect(wrapper.find(".s-input-field").hostNodes()).toHaveValue("");
         expect(wrapper.find(".s-textarea-field").hostNodes()).toHaveValue("");
     });

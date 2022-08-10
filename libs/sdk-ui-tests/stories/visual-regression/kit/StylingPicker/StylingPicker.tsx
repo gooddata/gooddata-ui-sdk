@@ -1,8 +1,13 @@
 // (C) 2022 GoodData Corporation
 
 import React from "react";
-import { idRef } from "@gooddata/sdk-model";
-import { defaultThemeMetadataObject, StylingPicker } from "@gooddata/sdk-ui-kit";
+import { idRef, ITheme } from "@gooddata/sdk-model";
+import {
+    defaultThemeMetadataObject,
+    getColorsPreviewFromTheme,
+    IStylingPickerItem,
+    StylingPicker,
+} from "@gooddata/sdk-ui-kit";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
 import { action } from "@storybook/addon-actions";
 import { storiesOf } from "../../../_infra/storyRepository";
@@ -20,6 +25,11 @@ const emptyMessage = () => (
 const footerHelpLink = "https://gooddata.com";
 const footerHelpTitle = "How to create a custom theme?";
 const footerMessage = "To create theme please use your computer.";
+const defaultItem: IStylingPickerItem<ITheme> = {
+    ref: defaultThemeMetadataObject.ref,
+    content: defaultThemeMetadataObject.theme,
+    name: defaultThemeMetadataObject.title,
+};
 
 const StylingPickerTest: React.FC = () => {
     return (
@@ -33,8 +43,9 @@ const StylingPickerTest: React.FC = () => {
                         footerHelpTitle={footerHelpTitle}
                         footerMobileMessage={footerMessage}
                         emptyMessage={emptyMessage}
-                        defaultItem={defaultThemeMetadataObject}
+                        defaultItem={defaultItem}
                         customItems={customThemeItems}
+                        itemToColorPreview={getColorsPreviewFromTheme}
                         selectedItemRef={idRef("theme2")}
                         onApply={action("onApply")}
                         onListActionClick={action("onListActionClick")}
@@ -49,8 +60,9 @@ const StylingPickerTest: React.FC = () => {
                         footerHelpTitle={footerHelpTitle}
                         footerMobileMessage={footerMessage}
                         emptyMessage={emptyMessage}
-                        defaultItem={defaultThemeMetadataObject}
+                        defaultItem={defaultItem}
                         customItems={customThemeItems.slice(0, 2)}
+                        itemToColorPreview={getColorsPreviewFromTheme}
                         onApply={action("onApply")}
                         onListActionClick={action("onListActionClick")}
                         onItemEdit={action("onItemEdit")}
@@ -63,8 +75,9 @@ const StylingPickerTest: React.FC = () => {
                         titleTooltip="Theme customize the look of Dashboards and Analytical Designer. Default theme is inherited by all workspaces within the organization. You can select non default theme for individual workspaces through API."
                         footerMobileMessage={footerMessage}
                         emptyMessage={emptyMessage}
-                        defaultItem={defaultThemeMetadataObject}
+                        defaultItem={defaultItem}
                         customItems={[]}
+                        itemToColorPreview={getColorsPreviewFromTheme}
                         onApply={action("onApply")}
                         onListActionClick={action("onListActionClick")}
                     />

@@ -951,7 +951,7 @@ export type InsightDrillDefinition = m.InsightDrillDefinition;
 export type InsightOrdering = "id" | "title" | "updated";
 
 // @public (undocumented)
-export type InsightReferenceTypes = Exclude<ObjectType, "insight" | "tag">;
+export type InsightReferenceTypes = Exclude<ObjectType, "insight" | "tag" | "colorPalette">;
 
 // @public
 export interface IObjectExpressionToken {
@@ -1916,7 +1916,7 @@ export type SupportedDashboardReferenceTypes = "insight" | "dashboardPlugin";
 export type SupportedInsightReferenceTypes = Exclude<InsightReferenceTypes, "displayForm" | "variable">;
 
 // @alpha
-export type SupportedWidgetReferenceTypes = Exclude<ObjectType, "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable">;
+export type SupportedWidgetReferenceTypes = Exclude<ObjectType, "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "colorPalette">;
 
 // @beta @deprecated
 export type ThemeColor = m.ThemeColor;

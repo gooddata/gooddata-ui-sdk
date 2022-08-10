@@ -16,6 +16,8 @@ import { IAccessControlAware } from '@gooddata/sdk-model';
 import { IAccessGrantee } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAuditableUsers } from '@gooddata/sdk-model';
+import { IColorPalette } from '@gooddata/sdk-model';
+import { IColorPaletteDefinition } from '@gooddata/sdk-model';
 import { IMeasureSortTarget } from '@gooddata/sdk-model';
 import { IntlShape } from 'react-intl';
 import { ISeparators } from '@gooddata/sdk-ui';
@@ -325,6 +327,9 @@ export const DEFAULT_ITEM_HEIGHT = 28;
 export const DEFAULT_MOBILE_ITEM_HEIGHT = 40;
 
 // @internal
+export const defaultColorPaletteMetadataObject: IColorPaletteDefinition;
+
+// @internal
 export const defaultThemeMetadataObject: IThemeDefinition;
 
 // @internal (undocumented)
@@ -545,7 +550,10 @@ export function generateHeaderStaticHelpMenuItems(documentationUrl?: string, com
 export function generateSupportUrl(projectId?: string, sessionId?: string, userEmail?: string, url?: string): string;
 
 // @internal
-export const getColorsPreviewFromTheme: (themeDef: IThemeDefinition) => string[];
+export const getColorsPreviewFromColorPalette: (colorPalette: IColorPalette) => string[];
+
+// @internal
+export const getColorsPreviewFromTheme: (theme: ITheme) => string[];
 
 // @internal
 export function getDateTimeConfig(date: string, options?: IDateTimeConfigOptions): IInsightListItemDateConfig;
@@ -3151,15 +3159,15 @@ export interface IStylingEditorDialogFooterProps extends IDialogBaseProps {
 }
 
 // @internal (undocumented)
-export interface IStylingEditorDialogProps extends IStylingEditorDialogFooterProps {
+export interface IStylingEditorDialogProps<T> extends IStylingEditorDialogFooterProps {
     // (undocumented)
-    examples?: StylingPickerItem[];
+    examples?: IStylingPickerItem<T>[];
     // (undocumented)
-    exampleToColorPreview?: (example: StylingPickerItem) => string[];
+    exampleToColorPreview?: (example: T) => string[];
     // (undocumented)
     locale?: string;
     // (undocumented)
-    stylingContent?: StylingPickerItem;
+    stylingItem?: IStylingPickerItem<T>;
     // (undocumented)
     title: string;
     // (undocumented)
@@ -3177,13 +3185,23 @@ export interface IStylingExampleProps {
 }
 
 // @internal (undocumented)
-export interface IStylingPickerProps {
+export interface IStylingPickerItem<T extends StylingPickerItemContent> {
+    // (undocumented)
+    content: T;
+    // (undocumented)
+    name?: string;
+    // (undocumented)
+    ref?: ObjRef;
+}
+
+// @internal (undocumented)
+export interface IStylingPickerProps<T> {
     // (undocumented)
     className?: string;
     // (undocumented)
-    customItems: StylingPickerItem[];
+    customItems: IStylingPickerItem<T>[];
     // (undocumented)
-    defaultItem: StylingPickerItem;
+    defaultItem: IStylingPickerItem<T>;
     // (undocumented)
     emptyMessage: () => JSX.Element;
     // (undocumented)
@@ -3195,13 +3213,15 @@ export interface IStylingPickerProps {
     // (undocumented)
     isLoading?: boolean;
     // (undocumented)
+    itemToColorPreview: (itemContent: T) => string[];
+    // (undocumented)
     locale?: string;
     // (undocumented)
     onApply?: (ref: ObjRef) => void;
     // (undocumented)
     onItemDelete?: (ref: ObjRef) => void;
     // (undocumented)
-    onItemEdit?: (modifiedItem: StylingPickerItem) => void;
+    onItemEdit?: (modifiedItem: IStylingPickerItem<T>) => void;
     // (undocumented)
     onListActionClick?: () => void;
     // (undocumented)
@@ -3713,7 +3733,7 @@ export class Spinner extends PureComponent<ISpinnerProps> {
 export type SpinnerSize = "large" | "small";
 
 // @internal (undocumented)
-export const StylingEditorDialog: (props: IStylingEditorDialogProps) => JSX.Element;
+export const StylingEditorDialog: <T extends StylingPickerItemContent>(props: IStylingEditorDialogProps<T>) => JSX.Element;
 
 // @internal (undocumented)
 export const StylingEditorDialogFooter: (props: IStylingEditorDialogFooterProps) => JSX.Element;
@@ -3722,13 +3742,10 @@ export const StylingEditorDialogFooter: (props: IStylingEditorDialogFooterProps)
 export const StylingExample: (props: IStylingExampleProps) => JSX.Element;
 
 // @internal (undocumented)
-export class StylingPicker extends React_2.PureComponent<IStylingPickerProps> {
-    // (undocumented)
-    render(): JSX.Element;
-}
+export const StylingPicker: <T extends StylingPickerItemContent>(props: IStylingPickerProps<T>) => JSX.Element;
 
 // @internal (undocumented)
-export type StylingPickerItem = IThemeDefinition;
+export type StylingPickerItemContent = ITheme | IColorPalette;
 
 // @internal (undocumented)
 export const SubMenu: React_2.FC<ISubMenuProps>;
