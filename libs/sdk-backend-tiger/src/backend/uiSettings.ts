@@ -82,6 +82,8 @@ export const DefaultUiSettings: ISettings = {
     enableReversedStacking: true,
     enableSeparateTotalLabels: true,
 
+    ["msf.enableTenantCustomModel"]: false,
+
     ...DefaultFeatureFlags,
 };
 
