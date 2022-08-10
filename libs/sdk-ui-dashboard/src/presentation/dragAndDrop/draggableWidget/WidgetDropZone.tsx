@@ -6,7 +6,7 @@ import { CustomDashboardWidgetComponent } from "../../widget/types";
 import { selectSettings, useDashboardDispatch, useDashboardSelector } from "../../../model";
 import { useDashboardDrop } from "../useDashboardDrop";
 import { WidgetDropZoneBox } from "./WidgetDropZoneBox";
-import { isPlaceholderWidget } from "../../../widgets/placeholders/types";
+import { isPlaceholderWidget } from "../../../widgets";
 import {
     isInsightDraggableListItem,
     isInsightPlaceholderDraggableItem,

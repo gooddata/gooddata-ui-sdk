@@ -37,6 +37,7 @@ import {
     OptionalKpiComponentProvider,
     OptionalWidgetComponentProvider,
     OptionalDateFilterComponentProvider,
+    InsightComponentSetProvider,
 } from "../dashboardContexts";
 import { CustomSidebarComponent } from "./DashboardSidebar/types";
 
@@ -164,6 +165,16 @@ export interface IDashboardCustomComponentProps {
      * @alpha
      */
     InsightMenuComponentProvider?: OptionalInsightMenuComponentProvider;
+
+    /**
+     * Specify function to obtain insight component set.
+     *
+     * @remarks
+     * If not provided, the default implementation {@link DefaultDashboardInsightComponentSetFactory} will be used.
+     *
+     * @internal
+     */
+    InsightComponentSetProvider?: InsightComponentSetProvider;
 
     /**
      * Specify function to obtain custom component to use for rendering a KPI.

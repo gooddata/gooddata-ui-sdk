@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import invariant from "ts-invariant";
 
-import { isKpiPlaceholderWidget } from "../../../widgets/placeholders/types";
+import { isKpiPlaceholderWidget } from "../../../widgets";
 import {
     removeLayoutSection,
     selectLayout,

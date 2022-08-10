@@ -6,11 +6,7 @@ import { DefaultDashboardWidget } from "./DefaultDashboardWidget";
 import { isDashboardWidget } from "@gooddata/sdk-model";
 import { CustomDashboardWidgetComponent, IDashboardWidgetProps } from "./types";
 import { WidgetDropZone } from "../../dragAndDrop";
-import {
-    isInsightPlaceholderWidget,
-    isKpiPlaceholderWidget,
-    isPlaceholderWidget,
-} from "../../../widgets/placeholders/types";
+import { isInsightPlaceholderWidget, isKpiPlaceholderWidget, isPlaceholderWidget } from "../../../widgets";
 
 const BadWidgetType: React.FC = () => {
     return <div>Missing renderer</div>;

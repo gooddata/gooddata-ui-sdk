@@ -4,7 +4,7 @@ import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 
 export interface AddAKpiPlaceholderProps {
-    disabled: boolean;
+    disabled?: boolean;
 }
 
 export const AddKpiWidgetButton: React.FC<AddAKpiPlaceholderProps> = ({ disabled }) => {

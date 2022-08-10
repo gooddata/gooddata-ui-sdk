@@ -17,7 +17,7 @@ import {
     isInsightPlaceholderDraggableItem,
     isKpiPlaceholderDraggableItem,
 } from "../types";
-import { getSizeInfo } from "../../../_staging/layout/sizing";
+import { getInsightPlaceholderSizeInfo, getSizeInfo } from "../../../_staging/layout/sizing";
 import { useKpiPlaceholderDropHandler } from "./useKpiPlaceholderDropHandler";
 import { useInsightListItemDropHandler } from "./useInsightListItemDropHandler";
 import { useInsightPlaceholderDropHandler } from "./useInsightPlaceholderDropHandler";
@@ -76,6 +76,21 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
                 }
                 if (isKpiPlaceholderDraggableItem(item)) {
                     const sizeInfo = getSizeInfo(settings, "kpi");
+                    const placeholderSpec: IWidgetPlaceholderSpec = {
+                        itemIndex: targetItemIndex,
+                        sectionIndex,
+                        size: {
+                            height: sizeInfo.height.default!,
+                            width: sizeInfo.width.default!,
+                        },
+                        type: "widget",
+                    };
+                    if (stringify(placeholderSpec) !== stringify(widgetPlaceholder)) {
+                        dispatch(uiActions.setWidgetPlaceholder(placeholderSpec));
+                    }
+                }
+                if (isInsightPlaceholderDraggableItem(item)) {
+                    const sizeInfo = getInsightPlaceholderSizeInfo(settings);
                     const placeholderSpec: IWidgetPlaceholderSpec = {
                         itemIndex: targetItemIndex,
                         sectionIndex,

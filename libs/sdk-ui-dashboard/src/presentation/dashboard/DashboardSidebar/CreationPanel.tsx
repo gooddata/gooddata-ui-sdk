@@ -17,18 +17,20 @@ interface ICreationPanelProps {
 export const CreationPanel: React.FC<ICreationPanelProps> = ({ isSticky = false }) => {
     const supportsKpis = useDashboardSelector(selectSupportsKpiWidgetCapability);
 
-    const { KpiWidgetComponentSet, AttributeFilterComponentSet } = useDashboardComponentsContext();
+    const { KpiWidgetComponentSet, AttributeFilterComponentSet, InsightWidgetComponentSet } =
+        useDashboardComponentsContext();
 
     const addItemPanelItems = useMemo(() => {
         const items = compact([
             supportsKpis && KpiWidgetComponentSet.creating,
             AttributeFilterComponentSet.creating,
+            InsightWidgetComponentSet.creating,
         ]);
 
         return sortBy(items, (item) => item.priority ?? 0).map(({ CreatePanelItemComponent, type }) => (
             <CreatePanelItemComponent key={type} />
         ));
-    }, [AttributeFilterComponentSet, KpiWidgetComponentSet, supportsKpis]);
+    }, [AttributeFilterComponentSet, KpiWidgetComponentSet, InsightWidgetComponentSet, supportsKpis]);
 
     return (
         <div className="configuration-panel creation-panel">

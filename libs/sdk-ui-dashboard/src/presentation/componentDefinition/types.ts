@@ -125,6 +125,18 @@ export type DropTarget = {
 };
 
 /**
+ * @internal
+ */
+export interface ICreatePanelItemComponentProps {
+    disabled?: boolean;
+}
+
+/**
+ * @internal
+ */
+export type CustomCreatePanelItemComponent = ComponentType<ICreatePanelItemComponentProps>;
+
+/**
  * Capability saying the component can be created by dragging it from the side drawer.
  * @internal
  */
@@ -133,7 +145,7 @@ export type CreatableByDragComponent = DraggableComponent & {
         /**
          * Component used to render the item in the left drawer menu used to create a new instance of this component on the dashboard
          */
-        CreatePanelItemComponent: ComponentType;
+        CreatePanelItemComponent: CustomCreatePanelItemComponent;
 
         /**
          * The lower the priority, the earlier the component is shown in the drawer.

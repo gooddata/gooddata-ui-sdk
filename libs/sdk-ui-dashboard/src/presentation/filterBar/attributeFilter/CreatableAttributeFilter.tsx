@@ -36,7 +36,7 @@ export function CreatableAttributeFilter() {
         <BubbleHoverTrigger eventsOnBubble={true} className="s-add-attribute-filter-bubble-trigger">
             <DraggableAttributeFilterCreatePanelItem
                 CreatePanelItemComponent={AddAttributeFilterPlaceholder}
-                createPanelItemComponentProps={{ disabled }}
+                disabled={disabled}
             />
 
             {tooltip && (

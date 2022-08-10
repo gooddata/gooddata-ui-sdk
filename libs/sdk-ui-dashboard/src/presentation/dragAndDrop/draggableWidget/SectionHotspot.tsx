@@ -15,9 +15,14 @@ import { useDashboardDrop } from "../useDashboardDrop";
 import { SectionDropZoneBox } from "./SectionDropZoneBox";
 import { DashboardLayoutSectionBorderLine } from "./DashboardLayoutSectionBorder";
 import { insightRef, insightTitle } from "@gooddata/sdk-model";
-import { isInsightDraggableListItem, isKpiPlaceholderDraggableItem } from "../../dragAndDrop/types";
+import {
+    isInsightDraggableListItem,
+    isInsightPlaceholderDraggableItem,
+    isKpiPlaceholderDraggableItem,
+} from "../../dragAndDrop/types";
 import { getSizeInfo } from "../../../_staging/layout/sizing";
 import { useKpiPlaceholderDropHandler } from "./useKpiPlaceholderDropHandler";
+import { useInsightPlaceholderDropHandler } from "./useInsightPlaceholderDropHandler";
 
 export type RowPosition = "above" | "below";
 
@@ -33,6 +38,7 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
     const settings = useDashboardSelector(selectSettings);
     const isWidgetPlaceholderShown = useDashboardSelector(selectIsWidgetPlaceholderShown);
 
+    const handleInsightPlaceholderDrop = useInsightPlaceholderDropHandler();
     const handleKpiPlaceholderDrop = useKpiPlaceholderDropHandler();
 
     const { run: addNewSectionWithInsight } = useDashboardCommandProcessing({
@@ -46,7 +52,17 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
         },
     });
 
-    const { run: addNewSectionWithKpi } = useDashboardCommandProcessing({
+    const { run: addNewSectionWithInsightPlaceholder } = useDashboardCommandProcessing({
+        commandCreator: addLayoutSection,
+        errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
+        successEvent: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
+        onSuccess: (event) => {
+            const newSectionIndex = event.payload.index;
+            handleInsightPlaceholderDrop(newSectionIndex, 0);
+        },
+    });
+
+    const { run: addNewSectionWithKpiPlaceholder } = useDashboardCommandProcessing({
         commandCreator: addLayoutSection,
         errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
         successEvent: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
@@ -57,7 +73,7 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
     });
 
     const [{ canDrop, isOver }, dropRef] = useDashboardDrop(
-        ["insightListItem", "kpi-placeholder"],
+        ["insightListItem", "kpi-placeholder", "insight-placeholder"],
         {
             drop: (item) => {
                 if (isInsightDraggableListItem(item)) {
@@ -86,7 +102,10 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
                     ]);
                 }
                 if (isKpiPlaceholderDraggableItem(item)) {
-                    addNewSectionWithKpi(index, {});
+                    addNewSectionWithKpiPlaceholder(index, {});
+                }
+                if (isInsightPlaceholderDraggableItem(item)) {
+                    addNewSectionWithInsightPlaceholder(index, {});
                 }
             },
             hover: () => {
@@ -102,7 +121,8 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
             handleKpiPlaceholderDrop,
             index,
             addNewSectionWithInsight,
-            addNewSectionWithKpi,
+            addNewSectionWithInsightPlaceholder,
+            addNewSectionWithKpiPlaceholder,
         ],
     );
 

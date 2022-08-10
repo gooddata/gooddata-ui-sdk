@@ -16,17 +16,23 @@ import {
     CustomDashboardInsightListItemComponentProps,
 } from "../types";
 
-type DraggableInsightProps = {
+/**
+ * @internal
+ */
+export interface IDraggableInsightListItemProps {
     ListItemComponent: CustomDashboardInsightListItemComponent;
     listItemComponentProps: CustomDashboardInsightListItemComponentProps;
     insight: IInsight;
-};
+}
 
+/**
+ * @internal
+ */
 export function DraggableInsightListItem({
     ListItemComponent,
     listItemComponentProps,
     insight,
-}: DraggableInsightProps) {
+}: IDraggableInsightListItemProps) {
     const dispatch = useDashboardDispatch();
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
     const { deselectWidgets } = useWidgetSelection();

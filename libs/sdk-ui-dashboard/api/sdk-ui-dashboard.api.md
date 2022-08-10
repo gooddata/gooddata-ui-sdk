@@ -625,7 +625,7 @@ export function CreatableAttributeFilter(): JSX.Element;
 // @internal
 export type CreatableByDragComponent = DraggableComponent & {
     creating: {
-        CreatePanelItemComponent: ComponentType;
+        CreatePanelItemComponent: CustomCreatePanelItemComponent;
         priority?: number;
         type: string;
     };
@@ -682,6 +682,9 @@ export interface CustomComponentBase<TMainProps, TProviderParams extends any[]> 
     MainComponentProvider: (...params: TProviderParams) => ComponentType<TMainProps>;
 }
 
+// @internal (undocumented)
+export type CustomCreatePanelItemComponent = ComponentType<ICreatePanelItemComponentProps>;
+
 // @alpha (undocumented)
 export type CustomDashboardAttributeFilterComponent = ComponentType<IDashboardAttributeFilterProps>;
 
@@ -690,7 +693,7 @@ export type CustomDashboardAttributeFilterCreatePanelItemComponent = React.Compo
 
 // @internal (undocumented)
 export type CustomDashboardAttributeFilterCreatePanelItemComponentProps = {
-    disabled: boolean;
+    disabled?: boolean;
 };
 
 // @internal (undocumented)
@@ -701,6 +704,14 @@ export type CustomDashboardDateFilterComponent = ComponentType<IDashboardDateFil
 
 // @public (undocumented)
 export type CustomDashboardInsightComponent = ComponentType<IDashboardInsightProps>;
+
+// @internal (undocumented)
+export type CustomDashboardInsightCreatePanelItemComponent = React.ComponentType<CustomDashboardInsightCreatePanelItemComponentProps>;
+
+// @internal (undocumented)
+export type CustomDashboardInsightCreatePanelItemComponentProps = {
+    disabled?: boolean;
+};
 
 // @internal (undocumented)
 export type CustomDashboardInsightListItemComponent = React.ComponentType<CustomDashboardInsightListItemComponentProps>;
@@ -728,7 +739,7 @@ export type CustomDashboardKpiCreatePanelItemComponent = React.ComponentType<Cus
 
 // @internal (undocumented)
 export type CustomDashboardKpiCreatePanelItemComponentProps = {
-    disabled: boolean;
+    disabled?: boolean;
 };
 
 // @alpha (undocumented)
@@ -2260,6 +2271,9 @@ export type DraggableContentItem = AttributeFilterDraggableItem | AttributeFilte
 export type DraggableContentItemType = "attributeFilter" | "attributeFilter-placeholder" | "insightListItem" | "insight-placeholder" | "kpi-placeholder" | "widget" | "custom";
 
 // @internal (undocumented)
+export const DraggableCreatePanelItem: React_2.FC<IDraggableCreatePanelItemProps>;
+
+// @internal (undocumented)
 export type DraggableInternalItem = HeightResizerDragItem | WidthResizerDragItem;
 
 // @internal (undocumented)
@@ -2792,6 +2806,12 @@ export interface IConnectingAttribute {
     title: string;
 }
 
+// @internal (undocumented)
+export interface ICreatePanelItemComponentProps {
+    // (undocumented)
+    disabled?: boolean;
+}
+
 // @alpha (undocumented)
 export interface ICsvExportConfig {
     // (undocumented)
@@ -2903,6 +2923,8 @@ export interface IDashboardCustomComponentProps {
     // @alpha
     InsightBodyComponentProvider?: OptionalInsightBodyComponentProvider;
     InsightComponentProvider?: OptionalInsightComponentProvider;
+    // @internal
+    InsightComponentSetProvider?: InsightComponentSetProvider;
     // @alpha
     InsightMenuButtonComponentProvider?: OptionalInsightMenuButtonComponentProvider;
     // @alpha
@@ -3248,6 +3270,24 @@ export interface IDateFiltersCustomizer {
     withCustomProvider(provider: OptionalDateFilterComponentProvider): IDateFiltersCustomizer;
 }
 
+// @internal (undocumented)
+export interface IDraggableCreatePanelItemProps {
+    // (undocumented)
+    canDrag: boolean;
+    // (undocumented)
+    Component: CustomCreatePanelItemComponent;
+    // (undocumented)
+    disabled?: boolean;
+    // (undocumented)
+    dragItem: DraggableItem;
+    // (undocumented)
+    hideDefaultPreview?: boolean;
+    // (undocumented)
+    onDragEnd?: (didDrop: boolean) => void;
+    // (undocumented)
+    onDragStart?: () => void;
+}
+
 // @alpha
 export interface IDrillDownContext {
     // (undocumented)
@@ -3551,6 +3591,9 @@ export interface INoDataButton {
     value?: string;
 }
 
+// @internal (undocumented)
+export const INSIGHT_PLACEHOLDER_WIDGET_ID = "__insightPlaceholder__";
+
 // @alpha (undocumented)
 export interface InsightAttributesMeta {
     attributes: ReadonlyArray<IAttributeMetadataObject>;
@@ -3563,6 +3606,12 @@ export type InsightBodyComponentProvider = (insight: IInsight, widget: IInsightW
 
 // @public (undocumented)
 export type InsightComponentProvider = (insight: IInsight, widget: IInsightWidget) => CustomDashboardInsightComponent;
+
+// @internal (undocumented)
+export type InsightComponentSetFactory = (insightProvider: InsightComponentProvider) => InsightWidgetComponentSet;
+
+// @internal (undocumented)
+export type InsightComponentSetProvider = (insightProvider: InsightComponentProvider, defaultFactory: InsightComponentSetFactory) => InsightWidgetComponentSet;
 
 // @alpha
 export interface InsightDateDatasets {
@@ -3652,6 +3701,9 @@ export interface IResolvedFilterValues {
     // (undocumented)
     dateFilters: ResolvedDateFilterValues;
 }
+
+// @alpha
+export function isAnyPlaceholderWidget(obj: unknown): obj is PlaceholderWidget | InsightPlaceholderWidget | KpiPlaceholderWidget;
 
 // @internal (undocumented)
 export function isAttributeFilterDraggableItem(item: any): item is AttributeFilterDraggableItem;
@@ -4039,8 +4091,17 @@ export function isInsightDraggableListItem(item: any): item is InsightDraggableL
 // @internal (undocumented)
 export function isInsightPlaceholderDraggableItem(item: any): item is InsightPlaceholderDraggableItem;
 
+// @alpha
+export function isInsightPlaceholderWidget(obj: unknown): obj is InsightPlaceholderWidget;
+
 // @internal (undocumented)
 export function isKpiPlaceholderDraggableItem(item: any): item is KpiPlaceholderDraggableItem;
+
+// @alpha
+export function isKpiPlaceholderWidget(obj: unknown): obj is KpiPlaceholderWidget;
+
+// @alpha
+export function isPlaceholderWidget(obj: unknown): obj is PlaceholderWidget;
 
 // @alpha (undocumented)
 export interface ITitleProps {
@@ -4119,6 +4180,9 @@ export interface IXlsxExportConfig {
     showFilters?: boolean;
     title?: string;
 }
+
+// @internal (undocumented)
+export const KPI_PLACEHOLDER_WIDGET_ID = "__kpiPlaceholder__";
 
 // @alpha (undocumented)
 export type KpiAlertDialogOpenedPayload = UserInteractionPayloadWithDataBase<"kpiAlertDialogOpened", {
@@ -4311,6 +4375,15 @@ export function newDisplayFormMap(items: ReadonlyArray<IAttributeDisplayFormMeta
 // @alpha
 export const newDrillToSameDashboardHandler: (dashboardRef: ObjRef) => DashboardEventHandler<DashboardDrillToDashboardResolved>;
 
+// @alpha (undocumented)
+export function newInsightPlaceholderWidget(sectionIndex: number, itemIndex: number, isLastInSection: boolean): InsightPlaceholderWidget;
+
+// @alpha (undocumented)
+export function newKpiPlaceholderWidget(sectionIndex: number, itemIndex: number, isLastInSection: boolean): KpiPlaceholderWidget;
+
+// @alpha (undocumented)
+export function newPlaceholderWidget(sectionIndex: number, itemIndex: number, isLastInSection: boolean): InsightPlaceholderWidget;
+
 // @public
 export interface ObjectAvailabilityConfig {
     excludeObjectsWithTags?: string[];
@@ -4431,6 +4504,21 @@ export type OptionalWidgetComponentProvider = OptionalProvider<WidgetComponentPr
 export interface PermissionsState {
     // (undocumented)
     permissions?: IWorkspacePermissions;
+}
+
+// @internal (undocumented)
+export const PLACEHOLDER_WIDGET_ID = "__placeholder__";
+
+// @alpha (undocumented)
+export interface PlaceholderWidget extends ICustomWidget {
+    // (undocumented)
+    readonly customType: "placeholder";
+    // (undocumented)
+    readonly isLastInSection: boolean;
+    // (undocumented)
+    readonly itemIndex: number;
+    // (undocumented)
+    readonly sectionIndex: number;
 }
 
 // @internal

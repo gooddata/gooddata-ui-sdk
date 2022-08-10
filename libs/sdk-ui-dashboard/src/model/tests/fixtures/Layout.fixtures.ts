@@ -18,7 +18,7 @@ import {
     KpiPlaceholderWidget,
     newInsightPlaceholderWidget,
     newKpiPlaceholderWidget,
-} from "../../../widgets/placeholders/types";
+} from "../../../widgets";
 
 export const TestSectionHeader: IDashboardLayoutSectionHeader = {
     title: "Test Section",

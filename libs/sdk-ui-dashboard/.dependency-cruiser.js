@@ -75,7 +75,7 @@ options = {
             "src/presentation/layout/constants.ts",
             "src/presentation/layout/DefaultDashboardLayoutRenderer/utils/sizing.ts",
             "src/presentation/widget/types.ts",
-            "src/widgets/placeholders/types.ts",
+            "src/widgets",
         ]),
         depCruiser.moduleWithDependencies("drill", "src/presentation/drill", [
             "src/_staging/*",
@@ -105,7 +105,7 @@ options = {
             "src/presentation/presentationComponents",
             "src/presentation/widget",
             "src/types.ts",
-            "src/widgets/placeholders/types.ts",
+            "src/widgets",
         ]),
         depCruiser.moduleWithDependencies("logUserInteraction", "src/logUserInteraction", ["src/model"]),
         depCruiser.moduleWithDependencies("model", "src/model", [
@@ -120,7 +120,7 @@ options = {
             "src/model",
             "src/model/events/widget.ts",
             "src/types.ts",
-            "src/widgets/placeholders/types.ts",
+            "src/widgets",
         ]),
         depCruiser.moduleWithDependencies("scheduledEmail", "src/presentation/scheduledEmail", [
             "src/_staging/*",
@@ -163,7 +163,7 @@ options = {
             "src/presentation/localization",
             "src/presentation/presentationComponents",
             "src/types.ts",
-            "src/widgets/placeholders/types.ts",
+            "src/widgets",
         ]),
     ],
     options: depCruiser.DefaultOptions,

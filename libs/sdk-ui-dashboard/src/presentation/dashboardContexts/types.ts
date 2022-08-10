@@ -22,6 +22,7 @@ import {
     IKpi,
     IDashboardDateFilter,
 } from "@gooddata/sdk-model";
+import { InsightWidgetComponentSet } from "../componentDefinition/types";
 
 /**
  * @public
@@ -136,3 +137,18 @@ export type AttributeFilterComponentProvider = (
  * @alpha
  */
 export type OptionalAttributeFilterComponentProvider = OptionalProvider<AttributeFilterComponentProvider>;
+
+/**
+ * @internal
+ */
+export type InsightComponentSetFactory = (
+    insightProvider: InsightComponentProvider,
+) => InsightWidgetComponentSet;
+
+/**
+ * @internal
+ */
+export type InsightComponentSetProvider = (
+    insightProvider: InsightComponentProvider,
+    defaultFactory: InsightComponentSetFactory,
+) => InsightWidgetComponentSet;

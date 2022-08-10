@@ -1,39 +1,37 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
-import { useDashboardDrag } from "../useDashboardDrag";
-import classNames from "classnames";
-import { useDashboardSelector, selectIsInEditMode } from "../../../model";
-import {
-    CustomDashboardAttributeFilterCreatePanelItemComponent,
-    CustomDashboardAttributeFilterCreatePanelItemComponentProps,
-} from "../types";
 
-type DraggableAttributeFilterCreatePanelItemProps = {
+import { selectIsInEditMode, useDashboardSelector } from "../../../model";
+import { CustomDashboardAttributeFilterCreatePanelItemComponent, DraggableItem } from "../types";
+import { DraggableCreatePanelItem } from "../DraggableCreatePanelItem";
+
+/**
+ * @internal
+ */
+export interface IDraggableAttributeFilterCreatePanelItemProps {
     CreatePanelItemComponent: CustomDashboardAttributeFilterCreatePanelItemComponent;
-    createPanelItemComponentProps: CustomDashboardAttributeFilterCreatePanelItemComponentProps;
+    disabled?: boolean;
+}
+
+const dragItem: DraggableItem = {
+    type: "attributeFilter-placeholder",
 };
 
-export function DraggableAttributeFilterCreatePanelItem({
-    CreatePanelItemComponent: PlaceholderComponent,
-    createPanelItemComponentProps: placeholderComponentProps,
-}: DraggableAttributeFilterCreatePanelItemProps) {
+/**
+ * @internal
+ */
+export const DraggableAttributeFilterCreatePanelItem: React.FC<
+    IDraggableAttributeFilterCreatePanelItemProps
+> = ({ CreatePanelItemComponent, disabled }) => {
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
-    const [{ isDragging }, dragRef] = useDashboardDrag({
-        dragItem: {
-            type: "attributeFilter-placeholder",
-        },
-        canDrag: isInEditMode && !placeholderComponentProps.disabled,
-        hideDefaultPreview: false,
-    });
 
     return (
-        <div
-            className={classNames({
-                "is-dragging": isDragging,
-            })}
-            ref={dragRef}
-        >
-            <PlaceholderComponent {...placeholderComponentProps} />
-        </div>
+        <DraggableCreatePanelItem
+            Component={CreatePanelItemComponent}
+            disabled={disabled}
+            canDrag={isInEditMode && !disabled}
+            dragItem={dragItem}
+            hideDefaultPreview={false}
+        />
     );
-}
+};

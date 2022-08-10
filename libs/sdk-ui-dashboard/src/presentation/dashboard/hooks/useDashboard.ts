@@ -67,6 +67,7 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         InsightMenuButtonComponentProvider,
         insightMenuItemsProvider,
         InsightMenuComponentProvider,
+        InsightComponentSetProvider,
         KpiComponentProvider,
     } = props;
 
@@ -150,8 +151,11 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
     }, [dashboard]);
 
     const insightWidgetComponentSet = useMemo<InsightWidgetComponentSet>(() => {
+        if (InsightComponentSetProvider) {
+            return InsightComponentSetProvider(insightProvider, DefaultDashboardInsightComponentSetFactory);
+        }
         return DefaultDashboardInsightComponentSetFactory(insightProvider);
-    }, [insightProvider]);
+    }, [InsightComponentSetProvider, insightProvider]);
 
     const kpiWidgetComponentSet = useMemo<KpiWidgetComponentSet>(() => {
         return DefaultDashboardKpiComponentSetFactory(kpiProvider);
