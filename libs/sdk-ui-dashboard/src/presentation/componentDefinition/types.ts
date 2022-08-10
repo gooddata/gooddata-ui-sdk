@@ -4,10 +4,11 @@ import {
     IDashboardAttributeFilterProps,
     IDashboardAttributeFilterPlaceholderProps,
 } from "../filterBar/types";
-import { IDashboardKpiProps, IDashboardWidgetProps } from "../widget/types";
+import { IDashboardInsightProps, IDashboardKpiProps, IDashboardWidgetProps } from "../widget/types";
 import { AttributeFilterDraggableItem, CustomDraggableItem } from "../dragAndDrop/types";
 import {
     AttributeFilterComponentProvider,
+    InsightComponentProvider,
     KpiComponentProvider,
     WidgetComponentProvider,
 } from "../dashboardContexts/types";
@@ -75,6 +76,14 @@ export type AttributeFilterDraggableComponent = {
 /**
  * @internal
  */
+export type InsightDraggableComponent = {
+    DraggingComponent?: undefined;
+    type: "insight";
+};
+
+/**
+ * @internal
+ */
 export type KpiDraggableComponent = {
     DraggingComponent?: undefined;
     type: "kpi";
@@ -93,7 +102,11 @@ export type CustomDraggableComponent = {
  * @internal
  */
 export type DraggableComponent = {
-    dragging: AttributeFilterDraggableComponent | KpiDraggableComponent | CustomDraggableComponent;
+    dragging:
+        | AttributeFilterDraggableComponent
+        | KpiDraggableComponent
+        | InsightDraggableComponent
+        | CustomDraggableComponent;
 };
 
 /**
@@ -192,6 +205,19 @@ export type KpiWidgetComponentSet = CustomComponentBase<
     DraggableComponent &
     CreatableByDragComponent &
     CreatablePlaceholderComponent<IDashboardWidgetProps> &
+    ConfigurableWidget;
+
+/**
+ * Definition of Insight widget
+ * @internal
+ */
+export type InsightWidgetComponentSet = CustomComponentBase<
+    IDashboardInsightProps,
+    Parameters<InsightComponentProvider>
+> &
+    DraggableComponent &
+    Partial<CreatableByDragComponent> &
+    Partial<CreatablePlaceholderComponent<IDashboardWidgetProps>> &
     ConfigurableWidget;
 
 /**

@@ -22,8 +22,8 @@ function isDisplayFormEqual(displayForm: IAttributeDisplayFormMetadataObject, id
 }
 
 const selectFilterDisplayForm = (filter: IDashboardAttributeFilter) =>
-    createSelector(selectCatalogAttributeDisplayForms, (displayFroms) =>
-        displayFroms.find((displayForm) =>
+    createSelector(selectCatalogAttributeDisplayForms, (displayForms) =>
+        displayForms.find((displayForm) =>
             isDisplayFormEqual(displayForm, filter.attributeFilter.displayForm),
         ),
     );

@@ -2,6 +2,7 @@
 export * from "./DefaultInsightBody";
 export { DashboardInsight } from "./DashboardInsight";
 export { DefaultDashboardInsight } from "./DefaultDashboardInsight";
+export { DefaultDashboardInsightComponentSetFactory } from "./DefaultDashboardInsightComponentSetFactory";
 export {
     IDashboardInsightProps,
     CustomDashboardInsightComponent,

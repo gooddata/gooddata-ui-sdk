@@ -619,6 +619,9 @@ export type ConfigurableWidget = {
 // @internal
 export type ConnectingAttributeMatrix = IConnectingAttribute[][][];
 
+// @internal (undocumented)
+export function CreatableAttributeFilter(): JSX.Element;
+
 // @internal
 export type CreatableByDragComponent = DraggableComponent & {
     creating: {
@@ -2143,11 +2146,17 @@ export function DefaultCancelButton({ isVisible, onCancelClick }: ICancelButtonP
 // @alpha
 export const DefaultDashboardAttributeFilter: (props: IDashboardAttributeFilterProps) => JSX.Element;
 
+// @internal (undocumented)
+export function DefaultDashboardAttributeFilterComponentSetFactory(attributeFilterProvider: AttributeFilterComponentProvider): AttributeFilterComponentSet;
+
 // @alpha
 export const DefaultDashboardDateFilter: (props: IDashboardDateFilterProps) => JSX.Element;
 
 // @public
 export const DefaultDashboardInsight: ComponentType<IDashboardInsightProps>;
+
+// @internal (undocumented)
+export function DefaultDashboardInsightComponentSetFactory(insightProvider: InsightComponentProvider): InsightWidgetComponentSet;
 
 // @alpha (undocumented)
 export const DefaultDashboardInsightMenu: (props: IDashboardInsightMenuProps) => JSX.Element;
@@ -2157,6 +2166,9 @@ export const DefaultDashboardInsightMenuButton: (props: IDashboardInsightMenuBut
 
 // @internal (undocumented)
 export const DefaultDashboardKpi: ComponentType<IDashboardKpiProps>;
+
+// @internal (undocumented)
+export function DefaultDashboardKpiComponentSetFactory(kpiProvider: KpiComponentProvider): KpiWidgetComponentSet;
 
 // @internal (undocumented)
 export const DefaultDashboardKpiPlaceholderWidget: CustomDashboardWidgetComponent;
@@ -2235,7 +2247,7 @@ export function dispatchAndWaitFor<TCommand extends DashboardCommands, TResult>(
 
 // @internal
 export type DraggableComponent = {
-    dragging: AttributeFilterDraggableComponent | KpiDraggableComponent | CustomDraggableComponent;
+    dragging: AttributeFilterDraggableComponent | KpiDraggableComponent | InsightDraggableComponent | CustomDraggableComponent;
 };
 
 // @internal (undocumented)
@@ -3561,6 +3573,12 @@ export interface InsightDateDatasets {
 }
 
 // @internal (undocumented)
+export type InsightDraggableComponent = {
+    DraggingComponent?: undefined;
+    type: "insight";
+};
+
+// @internal (undocumented)
 export type InsightDraggableListItem = {
     type: "insightListItem";
     insight: IInsight;
@@ -3592,6 +3610,9 @@ export interface InsightPlaceholderWidget extends ICustomWidget {
 
 // @alpha
 export function insightSelectDateDataset(queryResult: InsightDateDatasets): ICatalogDateDataset | undefined;
+
+// @internal
+export type InsightWidgetComponentSet = CustomComponentBase<IDashboardInsightProps, Parameters<InsightComponentProvider>> & DraggableComponent & Partial<CreatableByDragComponent> & Partial<CreatablePlaceholderComponent<IDashboardWidgetProps>> & ConfigurableWidget;
 
 // @internal (undocumented)
 export interface IParentWithConnectingAttributes {
@@ -4097,6 +4118,7 @@ export type KpiComponentProvider = (kpi: IKpi, widget: IKpiWidget) => CustomDash
 
 // @internal (undocumented)
 export type KpiDraggableComponent = {
+    DraggingComponent?: undefined;
     type: "kpi";
 };
 

@@ -88,6 +88,7 @@ options = {
         depCruiser.moduleWithDependencies("filterBar", "src/presentation/filterBar", [
             "src/_staging/*",
             "src/model",
+            "src/presentation/componentDefinition",
             "src/presentation/constants",
             "src/presentation/dashboardContexts",
             "src/presentation/dragAndDrop",

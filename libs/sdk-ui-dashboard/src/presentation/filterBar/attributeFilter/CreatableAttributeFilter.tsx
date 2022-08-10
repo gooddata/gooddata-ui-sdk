@@ -2,10 +2,13 @@
 import React from "react";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage } from "react-intl";
-import { DraggableAttributeFilterCreatePanelItem } from "../../../dragAndDrop";
-import { AddAttributeFilterPlaceholder } from "../../../filterBar";
-import { useDashboardSelector, selectHasCatalogAttributes, selectIsWhiteLabeled } from "../../../../model";
+import { DraggableAttributeFilterCreatePanelItem } from "../../dragAndDrop";
+import { AddAttributeFilterPlaceholder } from "./addAttributeFilter";
+import { useDashboardSelector, selectHasCatalogAttributes, selectIsWhiteLabeled } from "../../../model";
 
+/**
+ * @internal
+ */
 export function CreatableAttributeFilter() {
     const hasAttributes = useDashboardSelector(selectHasCatalogAttributes);
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);

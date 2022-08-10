@@ -33,7 +33,11 @@ import {
     WidgetComponentProvider,
 } from "./types";
 import { CustomSidebarComponent } from "../dashboard/DashboardSidebar/types";
-import { AttributeFilterComponentSet, KpiWidgetComponentSet } from "../componentDefinition/types";
+import {
+    AttributeFilterComponentSet,
+    InsightWidgetComponentSet,
+    KpiWidgetComponentSet,
+} from "../componentDefinition/types";
 
 /**
  * @internal
@@ -60,6 +64,7 @@ interface IDashboardComponentsContext {
     DashboardDateFilterComponentProvider: DateFilterComponentProvider;
     FilterBarComponent: CustomFilterBarComponent;
     SidebarComponent: CustomSidebarComponent;
+    InsightWidgetComponentSet: InsightWidgetComponentSet;
     KpiWidgetComponentSet: KpiWidgetComponentSet;
     AttributeFilterComponentSet: AttributeFilterComponentSet;
 }
@@ -99,6 +104,7 @@ const DashboardComponentsContext = createContext<IDashboardComponentsContext>({
     DashboardDateFilterComponentProvider: ThrowMissingComponentError("DashboardDateFilterComponentProvider"),
     FilterBarComponent: ThrowMissingComponentError("FilterBarComponent"),
     SidebarComponent: ThrowMissingComponentError("SidebarComponent"),
+    InsightWidgetComponentSet: null as any, // TODO how to throw here
     KpiWidgetComponentSet: null as any, // TODO how to throw here
     AttributeFilterComponentSet: null as any, // TODO how to throw here
 });

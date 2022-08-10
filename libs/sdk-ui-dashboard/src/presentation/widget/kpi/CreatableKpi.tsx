@@ -2,11 +2,14 @@
 import React from "react";
 import { Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage } from "react-intl";
-import { useDashboardSelector, selectHasCatalogMeasures, selectIsWhiteLabeled } from "../../../../model";
-import { DraggableAttributeFilterCreatePanelItem, AddKpiWidgetButton } from "../../../dragAndDrop";
+import { useDashboardSelector, selectHasCatalogMeasures, selectIsWhiteLabeled } from "../../../model";
+import { AddKpiWidgetButton, DraggableKpiCreatePanelItem } from "../../dragAndDrop";
 
 const bubbleAlignPoints: IAlignPoint[] = [{ align: "cr cl", offset: { x: -20, y: 0 } }];
 
+/**
+ * @internal
+ */
 export const CreatableKpi: React.FC = () => {
     const hasMeasures = useDashboardSelector(selectHasCatalogMeasures);
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
@@ -31,7 +34,7 @@ export const CreatableKpi: React.FC = () => {
 
     return (
         <BubbleHoverTrigger eventsOnBubble={true} className="s-add-kpi-bubble-trigger">
-            <DraggableAttributeFilterCreatePanelItem
+            <DraggableKpiCreatePanelItem
                 CreatePanelItemComponent={AddKpiWidgetButton}
                 createPanelItemComponentProps={{ disabled }}
             />

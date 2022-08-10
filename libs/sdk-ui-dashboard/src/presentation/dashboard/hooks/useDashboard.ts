@@ -3,7 +3,11 @@ import { useCallback, useMemo } from "react";
 import { idRef, IdentifierRef, UriRef } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { useThemeIsLoading } from "@gooddata/sdk-ui-theme-provider";
-import { AttributesDropdown, DefaultDashboardAttributeFilter, DefaultDashboardDateFilter } from "../../filterBar";
+import {
+    DefaultDashboardAttributeFilter,
+    DefaultDashboardDateFilter,
+    DefaultDashboardAttributeFilterComponentSetFactory,
+} from "../../filterBar";
 import {
     DefaultDashboardWidget,
     DefaultDashboardInsightMenuButton,
@@ -13,7 +17,8 @@ import {
     DefaultInsightBody,
     DefaultDashboardInsight,
     DefaultDashboardKpi,
-    DefaultDashboardKpiPlaceholderWidget,
+    DefaultDashboardInsightComponentSetFactory,
+    DefaultDashboardKpiComponentSetFactory,
 } from "../../widget";
 import { IDashboardProps } from "../types";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -27,10 +32,11 @@ import {
     KpiComponentProvider,
     DateFilterComponentProvider,
 } from "../../dashboardContexts";
-import { AttributeFilterComponentSet, KpiWidgetComponentSet } from "../../componentDefinition";
-import { CreatableKpi } from "../DashboardSidebar/CreationalPanelItems/CreatableKpi";
-import { CreatableAttributeFilter } from "../DashboardSidebar/CreationalPanelItems/CreatableAttributeFilter";
-import { DefaultAttributeFilterDraggingComponent } from "../../dragAndDrop";
+import {
+    AttributeFilterComponentSet,
+    InsightWidgetComponentSet,
+    KpiWidgetComponentSet,
+} from "../../componentDefinition";
 
 interface IUseDashboardResult {
     backend: IAnalyticalBackend;
@@ -45,6 +51,7 @@ interface IUseDashboardResult {
     insightMenuButtonProvider: InsightMenuButtonComponentProvider;
     insightMenuProvider: InsightMenuComponentProvider;
     kpiProvider: KpiComponentProvider;
+    insightWidgetComponentSet: InsightWidgetComponentSet;
     kpiWidgetComponentSet: KpiWidgetComponentSet;
     attributeFilterComponentSet: AttributeFilterComponentSet;
 }
@@ -142,39 +149,16 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         return typeof dashboard === "string" ? idRef(dashboard) : dashboard;
     }, [dashboard]);
 
+    const insightWidgetComponentSet = useMemo<InsightWidgetComponentSet>(() => {
+        return DefaultDashboardInsightComponentSetFactory(insightProvider);
+    }, [insightProvider]);
+
     const kpiWidgetComponentSet = useMemo<KpiWidgetComponentSet>(() => {
-        return {
-            MainComponentProvider: kpiProvider,
-            creating: {
-                CreatingPlaceholderComponent: DefaultDashboardKpiPlaceholderWidget,
-                CreatePanelItemComponent: CreatableKpi,
-                type: "kpi-placeholder",
-                priority: 5,
-            },
-            dragging: {
-                DraggingComponent: undefined, // TODO when adding widget moving
-                type: "kpi",
-            },
-            configuration: {
-                WidgetConfigPanelComponent: () => null,
-            },
-        };
+        return DefaultDashboardKpiComponentSetFactory(kpiProvider);
     }, [kpiProvider]);
 
     const attributeFilterComponentSet = useMemo<AttributeFilterComponentSet>(() => {
-        return {
-            MainComponentProvider: attributeFilterProvider,
-            creating: {
-                CreatingPlaceholderComponent: AttributesDropdown,
-                CreatePanelItemComponent: CreatableAttributeFilter,
-                type: "attributeFilter-placeholder",
-                priority: 10,
-            },
-            dragging: {
-                DraggingComponent: DefaultAttributeFilterDraggingComponent,
-                type: "attributeFilter",
-            },
-        };
+        return DefaultDashboardAttributeFilterComponentSetFactory(attributeFilterProvider);
     }, [attributeFilterProvider]);
 
     const isThemeLoading = useThemeIsLoading();
@@ -193,6 +177,7 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         insightMenuButtonProvider,
         insightMenuProvider,
         kpiProvider,
+        insightWidgetComponentSet,
         kpiWidgetComponentSet,
         attributeFilterComponentSet,
     };
