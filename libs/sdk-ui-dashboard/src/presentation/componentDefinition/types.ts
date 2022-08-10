@@ -12,6 +12,8 @@ import {
     KpiComponentProvider,
     WidgetComponentProvider,
 } from "../dashboardContexts/types";
+import { IInsightWidget, IKpiWidget } from "@gooddata/sdk-model";
+import { ICustomWidget } from "../../model";
 
 /**
  * @internal
@@ -164,21 +166,25 @@ export type CreatablePlaceholderComponent<TProps> = {
 /**
  * @internal
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface WidgetConfigPanelProps {
-    // TODO define when config component will be defined
+export type CustomWidgetConfigPanelComponent<TWidget> = ComponentType<WidgetConfigPanelProps<TWidget>>;
+
+/**
+ * @internal
+ */
+export interface WidgetConfigPanelProps<TWidget> {
+    widget: TWidget;
 }
 
 /**
  * Capability saying the component can be configured in edit mode.
  * @internal
  */
-export type ConfigurableWidget = {
+export type ConfigurableWidget<TWidget> = {
     configuration: {
         /**
          * Component used to render the insides of the configuration panel.
          */
-        WidgetConfigPanelComponent: ComponentType<WidgetConfigPanelProps>;
+        WidgetConfigPanelComponent: CustomWidgetConfigPanelComponent<TWidget>;
     };
 };
 
@@ -205,7 +211,7 @@ export type KpiWidgetComponentSet = CustomComponentBase<
     DraggableComponent &
     CreatableByDragComponent &
     CreatablePlaceholderComponent<IDashboardWidgetProps> &
-    ConfigurableWidget;
+    ConfigurableWidget<IKpiWidget>;
 
 /**
  * Definition of Insight widget
@@ -218,7 +224,7 @@ export type InsightWidgetComponentSet = CustomComponentBase<
     DraggableComponent &
     Partial<CreatableByDragComponent> &
     Partial<CreatablePlaceholderComponent<IDashboardWidgetProps>> &
-    ConfigurableWidget;
+    ConfigurableWidget<IInsightWidget>;
 
 /**
  * Definition of widget
@@ -229,5 +235,5 @@ export type CustomWidgetComponentSet = CustomComponentBase<
     Parameters<WidgetComponentProvider>
 > &
     DraggableComponent &
-    Partial<ConfigurableWidget> &
+    Partial<ConfigurableWidget<ICustomWidget>> &
     Partial<CreatableByDragComponent>;

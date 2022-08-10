@@ -3,6 +3,7 @@ import { KpiWidgetComponentSet } from "../../componentDefinition";
 import { KpiComponentProvider } from "../../dashboardContexts";
 import { DefaultDashboardKpiPlaceholderWidget } from "../kpiPlaceholder";
 import { CreatableKpi } from "./CreatableKpi";
+import { DefaultKpiConfigurationPanel } from "./DefaultKpiConfigurationPanel/DefaultKpiConfigurationPanel";
 
 /**
  * @internal
@@ -23,7 +24,7 @@ export function DefaultDashboardKpiComponentSetFactory(
             type: "kpi",
         },
         configuration: {
-            WidgetConfigPanelComponent: () => null,
+            WidgetConfigPanelComponent: DefaultKpiConfigurationPanel,
         },
     };
 }

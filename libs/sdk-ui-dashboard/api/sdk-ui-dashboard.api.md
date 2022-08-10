@@ -610,9 +610,9 @@ export interface ConfigState {
 }
 
 // @internal
-export type ConfigurableWidget = {
+export type ConfigurableWidget<TWidget> = {
     configuration: {
-        WidgetConfigPanelComponent: ComponentType<WidgetConfigPanelProps>;
+        WidgetConfigPanelComponent: CustomWidgetConfigPanelComponent<TWidget>;
     };
 };
 
@@ -795,7 +795,10 @@ export type CustomTitleComponent = ComponentType<ITitleProps>;
 export type CustomTopBarComponent = ComponentType<ITopBarProps>;
 
 // @internal
-export type CustomWidgetComponentSet = CustomComponentBase<IDashboardWidgetProps, Parameters<WidgetComponentProvider>> & DraggableComponent & Partial<ConfigurableWidget> & Partial<CreatableByDragComponent>;
+export type CustomWidgetComponentSet = CustomComponentBase<IDashboardWidgetProps, Parameters<WidgetComponentProvider>> & DraggableComponent & Partial<ConfigurableWidget<ICustomWidget>> & Partial<CreatableByDragComponent>;
+
+// @internal (undocumented)
+export type CustomWidgetConfigPanelComponent<TWidget> = ComponentType<WidgetConfigPanelProps<TWidget>>;
 
 // @internal (undocumented)
 export const Dashboard: React_2.FC<IDashboardProps>;
@@ -3612,7 +3615,7 @@ export interface InsightPlaceholderWidget extends ICustomWidget {
 export function insightSelectDateDataset(queryResult: InsightDateDatasets): ICatalogDateDataset | undefined;
 
 // @internal
-export type InsightWidgetComponentSet = CustomComponentBase<IDashboardInsightProps, Parameters<InsightComponentProvider>> & DraggableComponent & Partial<CreatableByDragComponent> & Partial<CreatablePlaceholderComponent<IDashboardWidgetProps>> & ConfigurableWidget;
+export type InsightWidgetComponentSet = CustomComponentBase<IDashboardInsightProps, Parameters<InsightComponentProvider>> & DraggableComponent & Partial<CreatableByDragComponent> & Partial<CreatablePlaceholderComponent<IDashboardWidgetProps>> & ConfigurableWidget<IInsightWidget>;
 
 // @internal (undocumented)
 export interface IParentWithConnectingAttributes {
@@ -4146,7 +4149,7 @@ export interface KpiWidgetComparison {
 }
 
 // @internal
-export type KpiWidgetComponentSet = CustomComponentBase<IDashboardKpiProps, Parameters<KpiComponentProvider>> & DraggableComponent & CreatableByDragComponent & CreatablePlaceholderComponent<IDashboardWidgetProps> & ConfigurableWidget;
+export type KpiWidgetComponentSet = CustomComponentBase<IDashboardKpiProps, Parameters<KpiComponentProvider>> & DraggableComponent & CreatableByDragComponent & CreatablePlaceholderComponent<IDashboardWidgetProps> & ConfigurableWidget<IKpiWidget>;
 
 // @alpha (undocumented)
 export type LayoutStash = Record<string, ExtendedDashboardItem[]>;
@@ -6418,7 +6421,9 @@ export function useWidgetSelection(widgetRef?: ObjRef): IUseWidgetSelectionResul
 export type WidgetComponentProvider = (widget: ExtendedDashboardWidget) => CustomDashboardWidgetComponent;
 
 // @internal (undocumented)
-export interface WidgetConfigPanelProps {
+export interface WidgetConfigPanelProps<TWidget> {
+    // (undocumented)
+    widget: TWidget;
 }
 
 // @internal (undocumented)

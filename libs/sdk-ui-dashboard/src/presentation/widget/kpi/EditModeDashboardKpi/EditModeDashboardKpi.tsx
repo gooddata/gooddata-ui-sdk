@@ -22,7 +22,6 @@ import { DashboardItemHeadline, DashboardItemKpi } from "../../../presentationCo
 import { useDashboardComponentsContext } from "../../../dashboardContexts";
 
 import { ConfigurationBubble } from "../../common";
-import { KpiConfigurationPanel } from "./KpiConfigurationPanel/KpiConfigurationPanel";
 import { getKpiResult, KpiRenderer, useKpiData, useKpiExecutionDataView } from "../common";
 import { IDashboardKpiProps } from "../types";
 
@@ -40,10 +39,12 @@ export const EditModeDashboardKpi = (props: IDashboardKpiProps) => {
     } = props;
 
     const intl = useIntl();
-    const { ErrorComponent, LoadingComponent } = useDashboardComponentsContext({
+    const { ErrorComponent, LoadingComponent, KpiWidgetComponentSet } = useDashboardComponentsContext({
         ErrorComponent: CustomErrorComponent,
         LoadingComponent: CustomLoadingComponent,
     });
+
+    const KpiConfigurationComponent = KpiWidgetComponentSet.configuration.WidgetConfigPanelComponent;
 
     const backend = useBackendStrict(customBackend);
     const workspace = useWorkspaceStrict(customWorkspace);
@@ -103,16 +104,20 @@ export const EditModeDashboardKpi = (props: IDashboardKpiProps) => {
                 "content-loading": isLoading,
                 "content-loaded": !isLoading,
             })}
-            renderBeforeContent={() => {
-                if (isSelected && hasConfigPanelOpen) {
-                    return (
-                        <ConfigurationBubble>
-                            <KpiConfigurationPanel widget={kpiWidget} />
-                        </ConfigurationBubble>
-                    );
-                }
-                return null;
-            }}
+            renderBeforeContent={
+                KpiConfigurationComponent
+                    ? () => {
+                          if (isSelected && hasConfigPanelOpen) {
+                              return (
+                                  <ConfigurationBubble>
+                                      <KpiConfigurationComponent widget={kpiWidget} />
+                                  </ConfigurationBubble>
+                              );
+                          }
+                          return null;
+                      }
+                    : undefined
+            }
             renderAfterContent={() => {
                 if (isSelected) {
                     return (
