@@ -30,6 +30,7 @@ import {
 import { AttributeFilterComponentSet, KpiWidgetComponentSet } from "../../componentDefinition";
 import { CreatableKpi } from "../DashboardSidebar/CreationalPanelItems/CreatableKpi";
 import { CreatableAttributeFilter } from "../DashboardSidebar/CreationalPanelItems/CreatableAttributeFilter";
+import { DefaultAttributeFilterDraggingComponent } from "../../dragAndDrop";
 
 interface IUseDashboardResult {
     backend: IAnalyticalBackend;
@@ -151,7 +152,7 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
                 priority: 5,
             },
             dragging: {
-                DraggingComponent: () => null, // TODO when adding widget moving
+                DraggingComponent: undefined, // TODO when adding widget moving
                 type: "kpi",
             },
             configuration: {
@@ -170,7 +171,7 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
                 priority: 10,
             },
             dragging: {
-                DraggingComponent: () => null, // TODO
+                DraggingComponent: DefaultAttributeFilterDraggingComponent,
                 type: "attributeFilter",
             },
         };

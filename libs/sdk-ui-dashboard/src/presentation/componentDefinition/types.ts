@@ -76,6 +76,7 @@ export type AttributeFilterDraggableComponent = {
  * @internal
  */
 export type KpiDraggableComponent = {
+    DraggingComponent?: undefined;
     type: "kpi";
 };
 

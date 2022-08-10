@@ -69,6 +69,7 @@ options = {
             "src/_staging/*",
             "src/model",
             "src/presentation/componentDefinition",
+            "src/presentation/dashboardContexts",
             "src/presentation/filterBar",
             "src/presentation/filterBar/types.ts",
             "src/presentation/layout/constants.ts",
