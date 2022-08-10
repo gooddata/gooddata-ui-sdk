@@ -7,8 +7,13 @@ import { selectSettings, useDashboardDispatch, useDashboardSelector } from "../.
 import { useDashboardDrop } from "../useDashboardDrop";
 import { WidgetDropZoneBox } from "./WidgetDropZoneBox";
 import { isPlaceholderWidget } from "../../../widgets/placeholders/types";
-import { isInsightDraggableListItem, isKpiPlaceholderDraggableItem } from "../types";
+import {
+    isInsightDraggableListItem,
+    isInsightPlaceholderDraggableItem,
+    isKpiPlaceholderDraggableItem,
+} from "../types";
 import { useKpiPlaceholderDropHandler } from "./useKpiPlaceholderDropHandler";
+import { useInsightListItemDropHandler } from "./useInsightListItemDropHandler";
 import { useInsightPlaceholderDropHandler } from "./useInsightPlaceholderDropHandler";
 
 export const WidgetDropZone: CustomDashboardWidgetComponent = (props) => {
@@ -20,22 +25,34 @@ export const WidgetDropZone: CustomDashboardWidgetComponent = (props) => {
     const dispatch = useDashboardDispatch();
     const settings = useDashboardSelector(selectSettings);
 
+    const handleInsightListItemDrop = useInsightListItemDropHandler();
     const handleInsightPlaceholderDrop = useInsightPlaceholderDropHandler();
     const handleKpiPlaceholderDrop = useKpiPlaceholderDropHandler();
 
     const [, dropRef] = useDashboardDrop(
-        ["insightListItem", "kpi-placeholder"],
+        ["insightListItem", "kpi-placeholder", "insight-placeholder"],
         {
             drop: (item) => {
                 if (isInsightDraggableListItem(item)) {
-                    handleInsightPlaceholderDrop(sectionIndex, itemIndex, item.insight);
+                    handleInsightListItemDrop(sectionIndex, itemIndex, item.insight);
                 }
                 if (isKpiPlaceholderDraggableItem(item)) {
                     handleKpiPlaceholderDrop(sectionIndex, itemIndex);
                 }
+                if (isInsightPlaceholderDraggableItem(item)) {
+                    handleInsightPlaceholderDrop(sectionIndex, itemIndex);
+                }
             },
         },
-        [dispatch, settings, sectionIndex, itemIndex, handleKpiPlaceholderDrop],
+        [
+            dispatch,
+            settings,
+            sectionIndex,
+            itemIndex,
+            handleInsightListItemDrop,
+            handleInsightPlaceholderDrop,
+            handleKpiPlaceholderDrop,
+        ],
     );
 
     return (

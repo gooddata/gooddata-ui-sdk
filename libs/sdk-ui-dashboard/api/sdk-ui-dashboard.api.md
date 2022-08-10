@@ -2254,10 +2254,10 @@ export type DraggableComponent = {
 };
 
 // @internal (undocumented)
-export type DraggableContentItem = AttributeFilterDraggableItem | AttributeFilterPlaceholderDraggableItem | InsightDraggableListItem | KpiPlaceholderDraggableItem | CustomDraggableItem | WidgetDraggableItem;
+export type DraggableContentItem = AttributeFilterDraggableItem | AttributeFilterPlaceholderDraggableItem | InsightDraggableListItem | InsightPlaceholderDraggableItem | KpiPlaceholderDraggableItem | CustomDraggableItem | WidgetDraggableItem;
 
 // @internal (undocumented)
-export type DraggableContentItemType = "attributeFilter" | "attributeFilter-placeholder" | "insightListItem" | "kpi-placeholder" | "widget" | "custom";
+export type DraggableContentItemType = "attributeFilter" | "attributeFilter-placeholder" | "insightListItem" | "insight-placeholder" | "kpi-placeholder" | "widget" | "custom";
 
 // @internal (undocumented)
 export type DraggableInternalItem = HeightResizerDragItem | WidthResizerDragItem;
@@ -2273,6 +2273,7 @@ export type DraggableItemComponentTypeMapping = {
     attributeFilter: AttributeFilterDraggableItem;
     "attributeFilter-placeholder": AttributeFilterPlaceholderDraggableItem;
     insightListItem: InsightDraggableListItem;
+    "insight-placeholder": InsightPlaceholderDraggableItem;
     "kpi-placeholder": KpiPlaceholderDraggableItem;
     custom: CustomDraggableItem;
     widget: WidgetDraggableItem;
@@ -3599,6 +3600,11 @@ export type InsightMenuComponentProvider = (insight: IInsight, widget: IInsightW
 // @alpha (undocumented)
 export type InsightMenuItemsProvider = (insight: IInsight, widget: IInsightWidget, defaultItems: IInsightMenuItem[], closeMenu: () => void, renderMode: RenderMode) => IInsightMenuItem[];
 
+// @internal (undocumented)
+export type InsightPlaceholderDraggableItem = {
+    type: "insight-placeholder";
+};
+
 // @alpha (undocumented)
 export interface InsightPlaceholderWidget extends ICustomWidget {
     // (undocumented)
@@ -4029,6 +4035,9 @@ export interface ISidebarProps {
 
 // @internal (undocumented)
 export function isInsightDraggableListItem(item: any): item is InsightDraggableListItem;
+
+// @internal (undocumented)
+export function isInsightPlaceholderDraggableItem(item: any): item is InsightPlaceholderDraggableItem;
 
 // @internal (undocumented)
 export function isKpiPlaceholderDraggableItem(item: any): item is KpiPlaceholderDraggableItem;

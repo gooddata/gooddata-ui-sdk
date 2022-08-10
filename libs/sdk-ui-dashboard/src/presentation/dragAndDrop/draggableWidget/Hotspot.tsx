@@ -12,9 +12,14 @@ import {
 } from "../../../model";
 import stringify from "json-stable-stringify";
 import { useDashboardDrop } from "../useDashboardDrop";
-import { isInsightDraggableListItem, isKpiPlaceholderDraggableItem } from "../types";
+import {
+    isInsightDraggableListItem,
+    isInsightPlaceholderDraggableItem,
+    isKpiPlaceholderDraggableItem,
+} from "../types";
 import { getSizeInfo } from "../../../_staging/layout/sizing";
 import { useKpiPlaceholderDropHandler } from "./useKpiPlaceholderDropHandler";
+import { useInsightListItemDropHandler } from "./useInsightListItemDropHandler";
 import { useInsightPlaceholderDropHandler } from "./useInsightPlaceholderDropHandler";
 
 interface IHotspotProps {
@@ -34,18 +39,22 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
     // for "next" we need to add the item after the current index, for "prev" on the current one
     const targetItemIndex = dropZoneType === "next" ? itemIndex + 1 : itemIndex;
 
+    const handleInsightListItemDrop = useInsightListItemDropHandler();
     const handleInsightPlaceholderDrop = useInsightPlaceholderDropHandler();
     const handleKpiPlaceholderDrop = useKpiPlaceholderDropHandler();
 
     const [{ canDrop, isOver }, dropRef] = useDashboardDrop(
-        ["insightListItem", "kpi-placeholder"],
+        ["insightListItem", "kpi-placeholder", "insight-placeholder"],
         {
             drop: (item) => {
                 if (isInsightDraggableListItem(item)) {
-                    handleInsightPlaceholderDrop(sectionIndex, targetItemIndex, item.insight);
+                    handleInsightListItemDrop(sectionIndex, targetItemIndex, item.insight);
                 }
                 if (isKpiPlaceholderDraggableItem(item)) {
                     handleKpiPlaceholderDrop(sectionIndex, targetItemIndex);
+                }
+                if (isInsightPlaceholderDraggableItem(item)) {
+                    handleInsightPlaceholderDrop(sectionIndex, targetItemIndex);
                 }
             },
             hover: (item) => {
@@ -88,8 +97,9 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
             settings,
             targetItemIndex,
             sectionIndex,
-            handleKpiPlaceholderDrop,
+            handleInsightListItemDrop,
             handleInsightPlaceholderDrop,
+            handleKpiPlaceholderDrop,
         ],
     );
 
