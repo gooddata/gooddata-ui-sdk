@@ -1,18 +1,20 @@
 // (C) 2019-2022 GoodData Corporation
 import React, { useCallback } from "react";
 import { IMeasure, IMeasureDefinition, newMeasure } from "@gooddata/sdk-model";
-import { render, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { waitFor } from "@testing-library/react";
+
 import { PlaceholdersProvider, IPlaceholdersProviderProps } from "../context";
 import { newPlaceholder } from "../factory";
 import { IPlaceholder } from "../base";
 import { usePlaceholders } from "../hooks";
 
+import { setupComponent } from "../../../tests/testHelper";
+
 const createComponent = (
     componentProps: IComponentWithUsePlaceholderHookProps,
     providerProps?: IPlaceholdersProviderProps,
 ) =>
-    render(
+    setupComponent(
         <PlaceholdersProvider {...providerProps}>
             <ComponentWithUsePlaceholderHook {...componentProps} />
         </PlaceholdersProvider>,
@@ -79,11 +81,10 @@ describe("usePlaceholders", () => {
         const singleValuePlaceholder = newPlaceholder();
         const multiValuePlaceholder = newPlaceholder();
 
-        const { getByText, queryByText } = createComponent({
+        const { getByText, queryByText, user } = createComponent({
             placeholders: [singleValuePlaceholder, multiValuePlaceholder],
             onSetPlaceholders: () => [measure, measure2],
         });
-        const user = userEvent.setup();
 
         await user.click(getByText("Placeholder"));
         await waitFor(() => {
