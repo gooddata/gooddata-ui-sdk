@@ -26,6 +26,7 @@ export interface DashboardLayoutGridRowProps<TWidget> {
     itemRenderer?: IDashboardLayoutItemRenderer<TWidget>;
     widgetRenderer: IDashboardLayoutWidgetRenderer<TWidget>;
     gridRowRenderer?: IDashboardLayoutGridRowRenderer<TWidget>;
+    getLayoutDimensions: () => DOMRect;
     items: IDashboardLayoutItemFacade<TWidget>[];
     renderMode: RenderMode;
 }
@@ -38,6 +39,7 @@ export function DashboardLayoutGridRow<TWidget>(props: DashboardLayoutGridRowPro
         gridRowRenderer,
         itemRenderer,
         widgetRenderer,
+        getLayoutDimensions,
         screen,
         items,
         renderMode,
@@ -79,6 +81,7 @@ export function DashboardLayoutGridRow<TWidget>(props: DashboardLayoutGridRowPro
                         items={items}
                         screen={screen}
                         getContainerDimensions={getContainerDimensions}
+                        getLayoutDimensions={getLayoutDimensions}
                     />
                 )}
             </Row>

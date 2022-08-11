@@ -1744,9 +1744,14 @@
         "comment": "",
         "limit": 0
     },
-    "layout.widget.under.limit": {
+    "layout.widget.width.min": {
         "value": "Widget is at the minimal width",
         "comment": "Shown as red text inside of widget if resized under min limit.",
+        "limit": 0
+    },
+    "layout.widget.width.max": {
+        "value": "Widget is at the maximal width",
+        "comment": "Shown as red text inside of widget if resized under max limit.",
         "limit": 0
     },
     "layout.widget.height.min": {

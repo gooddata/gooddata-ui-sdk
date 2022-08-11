@@ -112,8 +112,11 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
                                         <DashboardConfigProvider menuButtonConfig={props.menuButtonConfig}>
                                             <DndProvider backend={HTML5Backend}>
                                                 <LayoutResizeStateProvider>
-                                                    <DragLayerComponent />
-                                                    <DashboardLoading {...props} />
+                                                    {/* we need wrapping element for drag layer and dashboard for proper rendering in flex layout */}
+                                                    <div className="component-root">
+                                                        <DragLayerComponent />
+                                                        <DashboardLoading {...props} />
+                                                    </div>
                                                 </LayoutResizeStateProvider>
                                             </DndProvider>
                                         </DashboardConfigProvider>

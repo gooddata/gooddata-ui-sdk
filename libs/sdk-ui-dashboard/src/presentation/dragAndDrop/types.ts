@@ -151,7 +151,7 @@ export interface HeightResizerDragItem {
     sectionIndex: number;
     itemIndexes: number[];
     widgetHeights: number[];
-    initialScrollTop: number;
+    initialLayoutDimensions: DOMRect;
     minLimit: number;
     maxLimit: number;
 }

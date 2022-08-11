@@ -3,13 +3,13 @@ import { IWidget, ScreenSize } from "@gooddata/sdk-model";
 import React, { useEffect, useMemo, useState } from "react";
 import { useDashboardDrag } from "../useDashboardDrag";
 
-import { WidthResizer } from "./WidthResizer";
-import { selectInsightsMap, useDashboardDispatch, useDashboardSelector, resizeWidth } from "../../../model";
-import { getMinWidth } from "../../../_staging/layout/sizing";
-import { useResizeWidthItemStatus, useResizeHandlers } from "../LayoutResizeContext";
+import { resizeWidth, selectInsightsMap, useDashboardDispatch, useDashboardSelector } from "../../../model";
 import { IDashboardLayoutItemFacade } from "../../../_staging/dashboard/fluidLayout/facade/interfaces";
-import { getSizeAndXCoords } from "../DragLayerPreview/WidthResizerDragPreview";
+import { getMinWidth } from "../../../_staging/layout/sizing";
 import { getDashboardLayoutItemMaxGridWidth } from "../../layout/DefaultDashboardLayoutRenderer/utils/sizing";
+import { getSizeAndXCoords } from "../DragLayerPreview/WidthResizerDragPreview";
+import { useResizeHandlers, useResizeWidthItemStatus } from "../LayoutResizeContext";
+import { WidthResizer } from "./WidthResizer";
 
 export type WidthResizerHotspotProps = {
     item: IDashboardLayoutItemFacade<unknown>;
@@ -28,7 +28,7 @@ export function WidthResizerHotspot({
 }: WidthResizerHotspotProps) {
     const dispatch = useDashboardDispatch();
     const insightsMap = useDashboardSelector(selectInsightsMap);
-    const { resizeStart, resizeEnd } = useResizeHandlers();
+    const { resizeStart, resizeEnd, getScrollCorrection } = useResizeHandlers();
 
     const widget = useMemo(() => item.widget() as IWidget, [item]);
     const widgetIdentifier = widget.identifier;
@@ -62,11 +62,13 @@ export function WidthResizerHotspot({
                 };
             },
             dragEnd: (dragItem, monitor) => {
+                const scrollCorrection = getScrollCorrection();
+
                 const { limitedSize } = getSizeAndXCoords(
                     dragItem,
                     monitor.getInitialClientOffset()!.x,
                     monitor.getDifferenceFromInitialOffset()!.x,
-                    document.documentElement.scrollLeft,
+                    scrollCorrection.x,
                 );
 
                 dispatch(resizeWidth(sectionIndex, itemIndex, limitedSize));

@@ -2,12 +2,13 @@
 import React from "react";
 import cx from "classnames";
 import { FormattedMessage, defineMessages } from "react-intl";
-import { ReachedHeightResizingLimit } from "../DragLayerPreview/types";
+import { ReachedResizingLimit } from "../DragLayerPreview/types";
 
 const messages = defineMessages({
     minHeight: { id: "layout.widget.height.min" },
     maxHeight: { id: "layout.widget.height.max" },
-    underLimit: { id: "layout.widget.under.limit" },
+    minWidth: { id: "layout.widget.width.min" },
+    maxWidth: { id: "layout.widget.width.max" },
 });
 
 enum ResizeOverlayStatus {
@@ -20,24 +21,35 @@ enum ResizeOverlayStatus {
 export interface ResizeOverlayProps {
     isResizingColumnOrRow: boolean;
     isActive: boolean;
-    isUnderWidthMinLimit: boolean;
-    reachedHeightLimit: ReachedHeightResizingLimit;
+    reachedWidthLimit: ReachedResizingLimit;
+    reachedHeightLimit: ReachedResizingLimit;
 }
 
-function getMessage(reachedHeightLimit: ReachedHeightResizingLimit) {
+function getMessage({
+    reachedHeightLimit,
+    reachedWidthLimit,
+}: {
+    reachedHeightLimit: ReachedResizingLimit;
+    reachedWidthLimit: ReachedResizingLimit;
+}) {
     if (reachedHeightLimit === "min") {
         return messages.minHeight;
     }
     if (reachedHeightLimit === "max") {
         return messages.maxHeight;
     }
-    return messages.underLimit;
+    if (reachedWidthLimit === "min") {
+        return messages.minWidth;
+    }
+    if (reachedWidthLimit === "max") {
+        return messages.maxWidth;
+    }
 }
 
 function getStatus({
     isResizingColumnOrRow,
     isActive,
-    isUnderWidthMinLimit,
+    reachedWidthLimit,
     reachedHeightLimit,
 }: ResizeOverlayProps) {
     let status = ResizeOverlayStatus.None;
@@ -45,7 +57,7 @@ function getStatus({
         status = ResizeOverlayStatus.Grey;
         if (isActive) {
             status = ResizeOverlayStatus.Active;
-            if (isUnderWidthMinLimit || reachedHeightLimit !== "none") {
+            if (reachedWidthLimit !== "none" || reachedHeightLimit !== "none") {
                 status = ResizeOverlayStatus.Error;
             }
         }
@@ -68,7 +80,10 @@ export function ResizeOverlay(props: ResizeOverlayProps) {
         error: isInError,
     });
 
-    const message = getMessage(props.reachedHeightLimit);
+    const message = getMessage({
+        reachedHeightLimit: props.reachedHeightLimit,
+        reachedWidthLimit: props.reachedWidthLimit,
+    });
 
     const errorText = (
         <div className="gd-resize-overlay-text">

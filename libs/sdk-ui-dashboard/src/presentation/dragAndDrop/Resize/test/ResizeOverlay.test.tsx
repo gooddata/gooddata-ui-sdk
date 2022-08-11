@@ -8,7 +8,7 @@ import { IntlWrapper } from "../../../localization";
 const defaultProps: ResizeOverlayProps = {
     isResizingColumnOrRow: false,
     isActive: false,
-    isUnderWidthMinLimit: false,
+    reachedWidthLimit: "none",
     reachedHeightLimit: "none",
 };
 
@@ -44,28 +44,38 @@ describe("ResizeOverlay", () => {
         const wrapper = createComponent({
             isResizingColumnOrRow: true,
             isActive: true,
-            isUnderWidthMinLimit: true,
+            reachedWidthLimit: "min",
         });
         const overlay = wrapper.find(".gd-resize-overlay.error");
         expect(overlay).toExist();
     });
 
-    it("should render overlay with width error description when in error state", () => {
+    it("should render overlay with width min error description when in error state", () => {
         const wrapper = createComponent({
             isResizingColumnOrRow: true,
             isActive: true,
-            isUnderWidthMinLimit: true,
+            reachedWidthLimit: "min",
         });
         const message = wrapper.find(".gd-resize-overlay-text");
         expect(message).toExist();
         expect(message.text()).toBe("Widget is at the minimal width");
     });
 
+    it("should render overlay with width max error description when in error state", () => {
+        const wrapper = createComponent({
+            isResizingColumnOrRow: true,
+            isActive: true,
+            reachedWidthLimit: "max",
+        });
+        const message = wrapper.find(".gd-resize-overlay-text");
+        expect(message).toExist();
+        expect(message.text()).toBe("Widget is at the maximal width");
+    });
+
     it("should render overlay with height error description when in error state", () => {
         const wrapper = createComponent({
             isResizingColumnOrRow: true,
             isActive: true,
-            isUnderWidthMinLimit: false,
             reachedHeightLimit: "max",
         });
         const message = wrapper.find(".gd-resize-overlay-text");
