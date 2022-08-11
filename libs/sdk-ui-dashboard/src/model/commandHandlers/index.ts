@@ -62,6 +62,7 @@ import { removeDrillForKpiWidgetHandler } from "./widgets/removeDrillForKpiWidge
 import { setDrillForKpiWidgetHandler } from "./widgets/setDrillForKpiWidgetHandler";
 import { resizeHeightHandler } from "./layout/resizeHeightHandler";
 import { resizeWidthHandler } from "./layout/resizeWidthHandler";
+import { refreshInsightWidgetHandler } from "./widgets/refreshInsightWidgetHandler";
 
 function* notImplementedCommand(ctx: DashboardContext, cmd: IDashboardCommand): SagaIterator<void> {
     yield dispatchDashboardEvent(commandRejected(ctx, cmd.correlationId));
@@ -113,7 +114,7 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_INSIGHT": notImplementedCommand,
     "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILLS": modifyDrillsForInsightWidgetHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILLS": removeDrillsForInsightWidgetHandler,
-    "GDC.DASH/CMD.INSIGHT_WIDGET.REFRESH": notImplementedCommand,
+    "GDC.DASH/CMD.INSIGHT_WIDGET.REFRESH": refreshInsightWidgetHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT": exportInsightWidgetHandler,
     "GDC.DASH/CMD.ALERT.CREATE": createAlertHandler,
     "GDC.DASH/CMD.ALERT.UPDATE": updateAlertHandler,

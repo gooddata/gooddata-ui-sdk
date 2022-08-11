@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { createSlice } from "@reduxjs/toolkit";
 import { insightsAdapter } from "./insightsEntityAdapter";
@@ -9,6 +9,7 @@ const insightsSlice = createSlice({
     reducers: {
         setInsights: insightsAdapter.setAll,
         addInsights: insightsAdapter.addMany,
+        upsertInsight: insightsAdapter.upsertOne,
     },
 });
 
