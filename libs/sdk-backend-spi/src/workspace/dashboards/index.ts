@@ -50,7 +50,7 @@ export interface IDashboardWithReferences {
  */
 export type SupportedWidgetReferenceTypes = Exclude<
     ObjectType,
-    "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable"
+    "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "colorPalette"
 >;
 
 //

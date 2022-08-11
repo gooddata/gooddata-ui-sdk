@@ -6,19 +6,19 @@ import cx from "classnames";
 import { ObjRef } from "@gooddata/sdk-model";
 import { stringUtils } from "@gooddata/util";
 import { ShortenedText } from "../ShortenedText";
-import { getColorsPreviewFromTheme } from "./utils";
-import { ColorPreview, StylingPickerItem } from "../Dialog";
+import { ColorPreview, IStylingPickerItem, StylingPickerItemContent } from "../Dialog";
 import { IOnOpenedChangeParams, Menu } from "../Menu";
 import { Item, ItemsWrapper, Separator } from "../List";
 import { Button } from "../Button";
 import { Bubble, BubbleHoverTrigger } from "../Bubble";
 
-interface IStylingPickerListItemProps {
-    item: StylingPickerItem;
+interface IStylingPickerListItemProps<T> {
+    item: IStylingPickerItem<T>;
+    itemToColorPreview: (itemContent: T) => string[];
     isSelected: boolean;
     isDeletable?: boolean;
     onClick: (ref: ObjRef) => void;
-    onEdit?: (item: StylingPickerItem) => void;
+    onEdit?: (item: IStylingPickerItem<T>) => void;
     onDelete?: (ref: ObjRef) => void;
 }
 
@@ -27,18 +27,19 @@ const TEXT_TOOLTIP_ALIGN_POINTS = [
     { align: "bc tc", offset: { x: 0, y: 0 } },
 ];
 
-export const StylingPickerListItem: React.FC<IStylingPickerListItemProps> = ({
+export const StylingPickerListItem = <T extends StylingPickerItemContent>({
     item,
+    itemToColorPreview,
     isSelected,
     isDeletable,
     onClick,
     onEdit,
     onDelete,
-}) => {
+}: IStylingPickerListItemProps<T>): JSX.Element => {
     const intl = useIntl();
 
-    const { title, ref } = item;
-    const colorsPreview = getColorsPreviewFromTheme(item);
+    const { name, ref, content } = item;
+    const colorsPreview = itemToColorPreview(content);
 
     const [opened, setOpened] = useState(false);
 
@@ -52,7 +53,7 @@ export const StylingPickerListItem: React.FC<IStylingPickerListItemProps> = ({
             className={cx(
                 "gd-styling-picker-list-item",
                 "s-styling-picker-list-item",
-                `s-styling-picker-list-item-${stringUtils.simplifyText(title)}`,
+                `s-styling-picker-list-item-${stringUtils.simplifyText(name)}`,
                 {
                     "is-selected": isSelected,
                 },
@@ -69,7 +70,7 @@ export const StylingPickerListItem: React.FC<IStylingPickerListItemProps> = ({
                         className="gd-styling-picker-list-item-text-shortened"
                         tooltipAlignPoints={TEXT_TOOLTIP_ALIGN_POINTS}
                     >
-                        {title}
+                        {name}
                     </ShortenedText>
                 </span>
             </label>

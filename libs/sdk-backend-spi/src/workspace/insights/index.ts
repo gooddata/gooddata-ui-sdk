@@ -120,7 +120,7 @@ export interface IWorkspaceInsightsService {
 /**
  * @public
  */
-export type InsightReferenceTypes = Exclude<ObjectType, "insight" | "tag">;
+export type InsightReferenceTypes = Exclude<ObjectType, "insight" | "tag" | "colorPalette">;
 
 /**
  * List of currently supported types of references that can be retrieved using the {@link IWorkspaceInsightsService.getInsightReferencedObjects} function.

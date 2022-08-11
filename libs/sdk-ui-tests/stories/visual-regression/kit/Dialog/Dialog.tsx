@@ -14,7 +14,6 @@ import { wrapWithTheme } from "../../themeWrapper";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "./styles.scss";
-import { IThemeMetadataObject } from "@gooddata/sdk-model";
 
 class DialogExamples extends PureComponent {
     state = {
@@ -202,21 +201,19 @@ class DialogExamples extends PureComponent {
                 }}
                 locale="en-US"
                 tooltip="Tooltip to describe examples usage."
-                stylingContent={
-                    {
-                        title: "Red theme",
-                        theme: theme("red"),
-                    } as IThemeMetadataObject
-                }
+                stylingItem={{
+                    name: "Red theme",
+                    content: theme("red"),
+                }}
                 examples={[
                     {
-                        title: "Green theme",
-                        theme: theme("green"),
-                    } as IThemeMetadataObject,
+                        name: "Green theme",
+                        content: theme("green"),
+                    },
                     {
-                        title: "Blue theme",
-                        theme: theme("blue"),
-                    } as IThemeMetadataObject,
+                        name: "Blue theme",
+                        content: theme("blue"),
+                    },
                 ]}
                 exampleToColorPreview={() => [
                     "#313441",

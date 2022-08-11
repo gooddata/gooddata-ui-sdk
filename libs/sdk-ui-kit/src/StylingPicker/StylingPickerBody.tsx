@@ -3,29 +3,31 @@
 import React from "react";
 import { useIntl } from "react-intl";
 import { ObjRef } from "@gooddata/sdk-model";
-import { DialogListHeader, StylingPickerItem } from "../Dialog";
+import { DialogListHeader, IStylingPickerItem, StylingPickerItemContent } from "../Dialog";
 import { DialogListLoading } from "../Dialog/DialogList/DialogListLoading";
 import { StylingPickerList } from "./StylingPickerList";
 import { StylingPickerListItem } from "./StylingPickerListItem";
 
-interface IStylingPickerBodyProps {
+interface IStylingPickerBodyProps<T> {
     isMobile: boolean;
-    defaultItem: StylingPickerItem;
-    customItems: StylingPickerItem[];
+    defaultItem: IStylingPickerItem<T>;
+    customItems: IStylingPickerItem<T>[];
+    itemToColorPreview: (itemContent: T) => string[];
     emptyMessage: () => JSX.Element;
     isLoading?: boolean;
     onListActionClick?: () => void;
     initiallySelectedItemRef: ObjRef;
     selectedItemRef: ObjRef;
     onItemClick: (ref: ObjRef) => void;
-    onItemEdit?: (item: StylingPickerItem) => void;
+    onItemEdit?: (item: IStylingPickerItem<T>) => void;
     onItemDelete?: (ref: ObjRef) => void;
 }
 
-export const StylingPickerBody: React.FC<IStylingPickerBodyProps> = ({
+export const StylingPickerBody = <T extends StylingPickerItemContent>({
     isMobile,
     defaultItem,
     customItems,
+    itemToColorPreview,
     emptyMessage,
     isLoading,
     onListActionClick,
@@ -34,7 +36,7 @@ export const StylingPickerBody: React.FC<IStylingPickerBodyProps> = ({
     onItemClick,
     onItemEdit,
     onItemDelete,
-}) => {
+}: IStylingPickerBodyProps<T>) => {
     const intl = useIntl();
 
     return (
@@ -47,6 +49,7 @@ export const StylingPickerBody: React.FC<IStylingPickerBodyProps> = ({
                         <DialogListHeader title={intl.formatMessage({ id: "stylingPicker.title.basic" })} />
                         <StylingPickerListItem
                             item={defaultItem}
+                            itemToColorPreview={itemToColorPreview}
                             isSelected={!selectedItemRef}
                             onClick={() => onItemClick(null)}
                         />
@@ -64,6 +67,7 @@ export const StylingPickerBody: React.FC<IStylingPickerBodyProps> = ({
                         />
                         <StylingPickerList
                             items={customItems}
+                            itemToColorPreview={itemToColorPreview}
                             emptyMessageElement={emptyMessage()}
                             onItemClick={onItemClick}
                             onItemEdit={isMobile ? undefined : onItemEdit}

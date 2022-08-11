@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import cx from "classnames";
 import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
-import { ContentDivider, StylingPickerItem } from "../Dialog";
+import { ContentDivider, IStylingPickerItem, StylingPickerItemContent } from "../Dialog";
 import { useMediaQuery } from "../responsive";
 import { StylingPickerHeader } from "./StylingPickerHeader";
 import { StylingPickerFooter } from "./StylingPickerFooter";
@@ -13,10 +13,11 @@ import { StylingPickerBody } from "./StylingPickerBody";
 /**
  * @internal
  */
-export interface IStylingPickerProps {
+export interface IStylingPickerProps<T> {
     title: string;
-    defaultItem: StylingPickerItem;
-    customItems: StylingPickerItem[];
+    defaultItem: IStylingPickerItem<T>;
+    customItems: IStylingPickerItem<T>[];
+    itemToColorPreview: (itemContent: T) => string[];
     emptyMessage: () => JSX.Element;
     selectedItemRef?: ObjRef;
     isLoading?: boolean;
@@ -27,16 +28,19 @@ export interface IStylingPickerProps {
     className?: string;
     onApply?: (ref: ObjRef) => void;
     onListActionClick?: () => void;
-    onItemEdit?: (modifiedItem: StylingPickerItem) => void;
+    onItemEdit?: (modifiedItem: IStylingPickerItem<T>) => void;
     onItemDelete?: (ref: ObjRef) => void;
     locale?: string;
 }
 
-const StylingPickerCore: React.FC<IStylingPickerProps> = (props) => {
+const StylingPickerCore = <T extends StylingPickerItemContent>(
+    props: IStylingPickerProps<T>,
+): JSX.Element => {
     const {
         title,
         defaultItem,
         customItems,
+        itemToColorPreview,
         emptyMessage,
         selectedItemRef,
         isLoading,
@@ -84,6 +88,7 @@ const StylingPickerCore: React.FC<IStylingPickerProps> = (props) => {
                 isMobile={isMobileDevice}
                 defaultItem={defaultItem}
                 customItems={customItems}
+                itemToColorPreview={itemToColorPreview}
                 emptyMessage={emptyMessage}
                 isLoading={isLoading}
                 onListActionClick={onListActionClick}
@@ -111,12 +116,12 @@ const StylingPickerCore: React.FC<IStylingPickerProps> = (props) => {
 /**
  * @internal
  */
-export class StylingPicker extends React.PureComponent<IStylingPickerProps> {
-    public render() {
-        return (
-            <IntlWrapper locale={this.props.locale}>
-                <StylingPickerCore {...this.props} />
-            </IntlWrapper>
-        );
-    }
-}
+export const StylingPicker = <T extends StylingPickerItemContent>(
+    props: IStylingPickerProps<T>,
+): JSX.Element => {
+    return (
+        <IntlWrapper locale={props.locale}>
+            <StylingPickerCore {...props} />
+        </IntlWrapper>
+    );
+};

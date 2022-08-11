@@ -4,7 +4,7 @@ import { Dialog } from "../Dialog";
 import { Typography } from "../../Typography";
 import cx from "classnames";
 import { StylingExample } from "./StylingExample";
-import { IThemeDefinition } from "@gooddata/sdk-model";
+import { IColorPalette, ITheme, ObjRef } from "@gooddata/sdk-model";
 import { BubbleHeaderSeparator } from "./BubbleHeaderSeparator";
 import { StylingEditorDialogFooter, IStylingEditorDialogFooterProps } from "./StylingEditorDialogFooter";
 import { IntlWrapper } from "@gooddata/sdk-ui";
@@ -14,37 +14,48 @@ import { Message } from "../../Messages";
 /**
  * @internal
  */
-export type StylingPickerItem = IThemeDefinition;
+export type StylingPickerItemContent = ITheme | IColorPalette;
 
 /**
  * @internal
  */
-export interface IStylingEditorDialogProps extends IStylingEditorDialogFooterProps {
+export interface IStylingPickerItem<T extends StylingPickerItemContent> {
+    name?: string;
+    ref?: ObjRef;
+    content: T;
+}
+
+/**
+ * @internal
+ */
+export interface IStylingEditorDialogProps<T> extends IStylingEditorDialogFooterProps {
     title: string;
     tooltip?: string;
-    stylingContent?: StylingPickerItem;
-    examples?: StylingPickerItem[];
-    exampleToColorPreview?: (example: StylingPickerItem) => string[];
+    stylingItem?: IStylingPickerItem<T>;
+    examples?: IStylingPickerItem<T>[];
+    exampleToColorPreview?: (example: T) => string[];
     locale?: string;
 }
 
 /**
  * @internal
  */
-export const StylingEditorDialog = (props: IStylingEditorDialogProps) => {
+export const StylingEditorDialog = <T extends StylingPickerItemContent>(
+    props: IStylingEditorDialogProps<T>,
+) => {
     return (
         <IntlWrapper locale={props.locale}>
-            <StylingEditorDialogCore {...props} />
+            <StylingEditorDialogCore<T> {...props} />
         </IntlWrapper>
     );
 };
 
-const StylingEditorDialogCore = (props: IStylingEditorDialogProps) => {
+const StylingEditorDialogCore = <T extends StylingPickerItemContent>(props: IStylingEditorDialogProps<T>) => {
     const {
         title,
         tooltip,
         link,
-        stylingContent,
+        stylingItem,
         examples,
         exampleToColorPreview,
         onClose,
@@ -54,9 +65,10 @@ const StylingEditorDialogCore = (props: IStylingEditorDialogProps) => {
         showProgressIndicator,
     } = props;
     const providedExamples = !!examples && examples.length !== 0 && !!exampleToColorPreview;
-    const [nameField, setNameField] = useState(stylingContent?.title ?? "");
+    const [nameField, setNameField] = useState(stylingItem?.name ?? "");
+
     const [definitionField, setDefinitionField] = useState(
-        stylingContent?.theme ? JSON.stringify(stylingContent?.theme, null, 4) : "",
+        stylingItem?.content ? JSON.stringify(stylingItem.content, null, 4) : "",
     );
     const [invalidDefinition, setInvalidDefinition] = useState(false);
     const isSubmitDisabled = useMemo(
@@ -81,15 +93,16 @@ const StylingEditorDialogCore = (props: IStylingEditorDialogProps) => {
     };
 
     const getFinalStylingItem = (
-        original: StylingPickerItem,
+        original: IStylingPickerItem<T>,
         definition: string,
-        title: string,
-    ): StylingPickerItem => ({
-        ...(original ? original : {}),
-        type: "theme",
-        theme: JSON.parse(definition),
-        title,
-    });
+        name: string,
+    ): IStylingPickerItem<T> => {
+        return {
+            ...(original ? original : {}),
+            content: JSON.parse(definition),
+            name,
+        };
+    };
 
     return (
         <Dialog
@@ -154,11 +167,11 @@ const StylingEditorDialogCore = (props: IStylingEditorDialogProps) => {
                             {examples.map((example, index) => (
                                 <StylingExample
                                     key={index}
-                                    name={example.title}
-                                    colors={exampleToColorPreview(example)}
+                                    name={example.name}
+                                    colors={exampleToColorPreview(example.content)}
                                     onClick={() => {
-                                        setNameField(example.title);
-                                        setDefinitionField(JSON.stringify(example.theme, null, 4));
+                                        setNameField(example.name);
+                                        setDefinitionField(JSON.stringify(example.content, null, 4));
                                     }}
                                 />
                             ))}
@@ -172,7 +185,7 @@ const StylingEditorDialogCore = (props: IStylingEditorDialogProps) => {
                 link={link}
                 onSubmit={() =>
                     validateDefinition(definitionField)
-                        ? onSubmit(getFinalStylingItem(stylingContent, definitionField, nameField))
+                        ? onSubmit(getFinalStylingItem(stylingItem, definitionField, nameField))
                         : undefined
                 }
                 onCancel={onCancel}

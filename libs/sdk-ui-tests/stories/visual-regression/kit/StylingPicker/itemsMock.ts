@@ -1,19 +1,13 @@
 // (C) 2022 GoodData Corporation
 
-import { idRef, IThemeMetadataObject } from "@gooddata/sdk-model";
+import { idRef, ITheme } from "@gooddata/sdk-model";
+import { IStylingPickerItem } from "@gooddata/sdk-ui-kit";
 
-export const customThemeItems: IThemeMetadataObject[] = [
+export const customThemeItems: IStylingPickerItem<ITheme>[] = [
     {
-        id: "theme1",
         ref: idRef("theme1"),
-        uri: "",
-        type: "theme",
-        description: "",
-        production: false,
-        deprecated: false,
-        unlisted: false,
-        title: "My first theme",
-        theme: {
+        name: "My first theme",
+        content: {
             palette: {
                 complementary: {
                     c0: "#292727",
@@ -31,16 +25,9 @@ export const customThemeItems: IThemeMetadataObject[] = [
         },
     },
     {
-        id: "theme2",
         ref: idRef("theme2"),
-        uri: "",
-        type: "theme",
-        description: "",
-        production: false,
-        deprecated: false,
-        unlisted: false,
-        title: "My second theme with a longer name than usual so that we can see the shortened text in action",
-        theme: {
+        name: "My second theme with a longer name than usual so that we can see the shortened text in action",
+        content: {
             palette: {
                 complementary: {
                     c0: "#122330",
@@ -58,16 +45,9 @@ export const customThemeItems: IThemeMetadataObject[] = [
         },
     },
     {
-        id: "theme3",
         ref: idRef("theme3"),
-        uri: "",
-        type: "theme",
-        description: "",
-        production: false,
-        deprecated: false,
-        unlisted: false,
-        title: "My third theme",
-        theme: {
+        name: "My third theme",
+        content: {
             palette: {
                 complementary: {
                     c0: "#FFFFFF",
@@ -85,16 +65,9 @@ export const customThemeItems: IThemeMetadataObject[] = [
         },
     },
     {
-        id: "theme4",
         ref: idRef("theme4"),
-        uri: "",
-        type: "theme",
-        description: "",
-        production: false,
-        deprecated: false,
-        unlisted: false,
-        title: "My fourth theme",
-        theme: {
+        name: "My fourth theme",
+        content: {
             palette: {
                 complementary: {
                     c0: "#FFFFFF",
