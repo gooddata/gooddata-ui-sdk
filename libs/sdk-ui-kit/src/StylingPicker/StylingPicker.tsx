@@ -50,7 +50,8 @@ const StylingPickerCore: React.FC<IStylingPickerProps> = (props) => {
         onItemDelete,
         className,
     } = props;
-    const [currentItemRef, setCurrentItemRef] = useState<ObjRef>(selectedItemRef || null);
+    const initiallySelectedItemRef = selectedItemRef || null;
+    const [currentItemRef, setCurrentItemRef] = useState<ObjRef>(initiallySelectedItemRef);
     const isMobileDevice = useMediaQuery("mobileDevice");
 
     useEffect(() => {
@@ -86,6 +87,7 @@ const StylingPickerCore: React.FC<IStylingPickerProps> = (props) => {
                 emptyMessage={emptyMessage}
                 isLoading={isLoading}
                 onListActionClick={onListActionClick}
+                initiallySelectedItemRef={initiallySelectedItemRef}
                 selectedItemRef={currentItemRef}
                 onItemClick={onItemClick}
                 onItemEdit={onItemEdit}

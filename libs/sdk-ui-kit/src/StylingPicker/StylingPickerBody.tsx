@@ -15,6 +15,7 @@ interface IStylingPickerBodyProps {
     emptyMessage: () => JSX.Element;
     isLoading?: boolean;
     onListActionClick?: () => void;
+    initiallySelectedItemRef: ObjRef;
     selectedItemRef: ObjRef;
     onItemClick: (ref: ObjRef) => void;
     onItemEdit?: (item: StylingPickerItem) => void;
@@ -28,6 +29,7 @@ export const StylingPickerBody: React.FC<IStylingPickerBodyProps> = ({
     emptyMessage,
     isLoading,
     onListActionClick,
+    initiallySelectedItemRef,
     selectedItemRef,
     onItemClick,
     onItemEdit,
@@ -66,6 +68,7 @@ export const StylingPickerBody: React.FC<IStylingPickerBodyProps> = ({
                             onItemClick={onItemClick}
                             onItemEdit={isMobile ? undefined : onItemEdit}
                             onItemDelete={isMobile ? undefined : onItemDelete}
+                            initiallySelectedItemRef={initiallySelectedItemRef}
                             selectedItemRef={selectedItemRef}
                         />
                     </div>

@@ -16,6 +16,7 @@ import { Bubble, BubbleHoverTrigger } from "../Bubble";
 interface IStylingPickerListItemProps {
     item: StylingPickerItem;
     isSelected: boolean;
+    isDeletable?: boolean;
     onClick: (ref: ObjRef) => void;
     onEdit?: (item: StylingPickerItem) => void;
     onDelete?: (ref: ObjRef) => void;
@@ -29,6 +30,7 @@ const TEXT_TOOLTIP_ALIGN_POINTS = [
 export const StylingPickerListItem: React.FC<IStylingPickerListItemProps> = ({
     item,
     isSelected,
+    isDeletable,
     onClick,
     onEdit,
     onDelete,
@@ -92,12 +94,12 @@ export const StylingPickerListItem: React.FC<IStylingPickerListItemProps> = ({
                         <Separator />
                         <Item
                             className="s-styling-item-menu-item-delete"
-                            onClick={() => onDelete?.(ref)}
-                            disabled={isSelected}
+                            onClick={() => isDeletable && onDelete?.(ref)}
+                            disabled={!isDeletable}
                         >
                             <BubbleHoverTrigger showDelay={0} hideDelay={0}>
                                 {intl.formatMessage({ id: "stylingPicker.item.delete" })}
-                                {isSelected && (
+                                {!isDeletable && (
                                     <Bubble className="bubble-primary">
                                         {intl.formatMessage({ id: "stylingPicker.item.delete.tooltip" })}
                                     </Bubble>
