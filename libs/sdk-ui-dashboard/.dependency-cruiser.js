@@ -154,6 +154,7 @@ options = {
             "src/presentation/drill/DrillConfigPanel/*",
             "src/presentation/drill/types.ts",
             "src/presentation/insightList",
+            "src/presentation/dashboardList",
             "src/presentation/localization",
             "src/presentation/presentationComponents",
             "src/types.ts",
