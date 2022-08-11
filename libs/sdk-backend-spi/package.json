@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-backend-spi",
-    "version": "8.11.0-alpha.35",
+    "version": "8.11.0-alpha.36",
     "author": "GoodData",
     "description": "GoodData Backend SPI abstraction interfaces",
     "repository": {
@@ -48,7 +48,7 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
     },
     "dependencies": {
-        "@gooddata/sdk-model": "^8.11.0-alpha.35",
+        "@gooddata/sdk-model": "^8.11.0-alpha.36",
         "lodash": "^4.17.19",
         "ts-invariant": "^0.7.3",
         "tslib": "^2.0.0"
