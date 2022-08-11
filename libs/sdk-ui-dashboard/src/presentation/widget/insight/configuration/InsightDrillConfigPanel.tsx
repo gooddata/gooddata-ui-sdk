@@ -17,6 +17,7 @@ import { getMappedConfigForWidget } from "./getMappedConfigForWidget";
 import { useDrillTargetTypeItems } from "./useDrillTargetTypeItems";
 import { IDrillConfigItem, isAvailableDrillTargetMeasure } from "../../../drill/types";
 import { IAvailableDrillTargetItem } from "../../../drill/DrillSelect/types";
+import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 
 const mergeDrillConfigItems = (
     drillConfigItems: IDrillConfigItem[],
@@ -46,6 +47,33 @@ const addOrUpdateDrillConfigItem = (drillConfigItems: IDrillConfigItem[], newIte
     } else {
         return [...drillConfigItems, newItem];
     }
+};
+
+const getUnusedDrillTargets = (
+    availableDrillTargets: IAvailableDrillTargets | undefined,
+    mergedItems: IDrillConfigItem[],
+) => {
+    const availableDrillTargetMeasures = availableDrillTargets?.measures?.filter(
+        (measure) =>
+            !mergedItems.some(
+                (item) =>
+                    item.type === "measure" &&
+                    item.localIdentifier === measure.measure.measureHeaderItem.localIdentifier,
+            ),
+    );
+    const availableDrillTargetAttributes = availableDrillTargets?.attributes?.filter(
+        (attribute) =>
+            !mergedItems.some(
+                (item) =>
+                    item.type === "attribute" &&
+                    item.localIdentifier === attribute.attribute.attributeHeader.localIdentifier,
+            ),
+    );
+
+    return {
+        measures: availableDrillTargetMeasures,
+        attributes: availableDrillTargetAttributes,
+    };
 };
 
 export interface IDrillConfigPanelProps {
@@ -113,22 +141,6 @@ export const InsightDrillConfigPanel: React.FunctionComponent<IDrillConfigPanelP
     const dispatch = useDashboardDispatch();
     const mergedItems = mergeDrillConfigItems(drillItems, incompleteItems);
 
-    const availableDrillTargetMeasures = configItems?.availableDrillTargets?.measures?.filter((measure) =>
-        mergedItems.some(
-            (item) =>
-                item.type === "measure" &&
-                item.localIdentifier === measure.measure.measureHeaderItem.localIdentifier,
-        ),
-    );
-    const availableDrillTargetAttributes = configItems?.availableDrillTargets?.attributes?.filter(
-        (attribute) =>
-            mergedItems.some(
-                (item) =>
-                    item.type === "attribute" &&
-                    item.localIdentifier === attribute.attribute.attributeHeader.localIdentifier,
-            ),
-    );
-
     return (
         <div className="configuration-category s-drill-config-panel">
             <Typography tagName="h3">
@@ -148,10 +160,7 @@ export const InsightDrillConfigPanel: React.FunctionComponent<IDrillConfigPanelP
             />
             {configItems?.availableDrillTargets && (
                 <DrillOriginSelector
-                    items={{
-                        measures: availableDrillTargetMeasures,
-                        attributes: availableDrillTargetAttributes,
-                    }}
+                    items={getUnusedDrillTargets(configItems?.availableDrillTargets, mergedItems)}
                     onSelect={onOriginSelect}
                 />
             )}
