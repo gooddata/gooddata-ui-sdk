@@ -1748,6 +1748,7 @@ export interface IWorkspacesQuery {
     query(): Promise<IWorkspacesQueryResult>;
     withLimit(limit: number): IWorkspacesQuery;
     withOffset(offset: number): IWorkspacesQuery;
+    withParent(workspaceId: string | undefined): IWorkspacesQuery;
     withSearch(search: string): IWorkspacesQuery;
 }
 
