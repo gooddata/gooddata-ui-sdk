@@ -6,11 +6,10 @@ import {
     selectSettings,
     useDashboardDispatch,
     useDashboardSelector,
-    uiActions,
     selectWidgetPlaceholder,
-    IWidgetPlaceholderSpec,
+    addSectionItem,
+    removeSectionItem,
 } from "../../../model";
-import stringify from "json-stable-stringify";
 import { useDashboardDrop } from "../useDashboardDrop";
 import {
     isInsightDraggableListItem,
@@ -21,6 +20,7 @@ import { getInsightPlaceholderSizeInfo, getSizeInfo } from "../../../_staging/la
 import { useKpiPlaceholderDropHandler } from "./useKpiPlaceholderDropHandler";
 import { useInsightListItemDropHandler } from "./useInsightListItemDropHandler";
 import { useInsightPlaceholderDropHandler } from "./useInsightPlaceholderDropHandler";
+import { newPlaceholderWidget } from "../../../widgets";
 
 interface IHotspotProps {
     sectionIndex: number;
@@ -43,12 +43,18 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
     const handleInsightPlaceholderDrop = useInsightPlaceholderDropHandler();
     const handleKpiPlaceholderDrop = useKpiPlaceholderDropHandler();
 
+    const needsToAddWidgetDropzone =
+        !widgetPlaceholder || // first placeholder ever
+        widgetPlaceholder.sectionIndex !== sectionIndex || // or different section
+        (dropZoneType === "prev" && widgetPlaceholder.itemIndex !== itemIndex - 1) || // or not immediately before for prev hotspot
+        (dropZoneType === "next" && widgetPlaceholder.itemIndex !== itemIndex + 1); // or not immediately after for next hotspot
+
     const [{ canDrop, isOver }, dropRef] = useDashboardDrop(
         ["insightListItem", "kpi-placeholder", "insight-placeholder"],
         {
             drop: (item) => {
                 if (isInsightDraggableListItem(item)) {
-                    handleInsightListItemDrop(sectionIndex, targetItemIndex, item.insight);
+                    handleInsightListItemDrop(item.insight);
                 }
                 if (isKpiPlaceholderDraggableItem(item)) {
                     handleKpiPlaceholderDrop(sectionIndex, targetItemIndex);
@@ -58,51 +64,75 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
                 }
             },
             hover: (item) => {
+                if (!needsToAddWidgetDropzone) {
+                    return;
+                }
+
+                // we will definitely be adding a new placeholder, so remove the current one if any
+                if (widgetPlaceholder) {
+                    dispatch(removeSectionItem(widgetPlaceholder.sectionIndex, widgetPlaceholder.itemIndex));
+                }
+
                 if (isInsightDraggableListItem(item)) {
                     const { insight } = item;
                     const sizeInfo = getSizeInfo(settings, "insight", insight);
-                    const placeholderSpec: IWidgetPlaceholderSpec = {
-                        itemIndex: targetItemIndex,
-                        sectionIndex,
-                        size: {
-                            height: sizeInfo.height.default!,
-                            width: sizeInfo.width.default!,
-                        },
-                        type: "widget",
-                    };
-                    if (stringify(placeholderSpec) !== stringify(widgetPlaceholder)) {
-                        dispatch(uiActions.setWidgetPlaceholder(placeholderSpec));
-                    }
+                    const placeholderSpec = newPlaceholderWidget(
+                        sectionIndex, // TODO get rid of this, get the coords using widget ref
+                        targetItemIndex,
+                        false, // TODO how to get this? should WidgetDropZone get this instead?
+                    );
+                    dispatch(
+                        addSectionItem(sectionIndex, targetItemIndex, {
+                            type: "IDashboardLayoutItem",
+                            size: {
+                                xl: {
+                                    gridHeight: sizeInfo.height.default!,
+                                    gridWidth: sizeInfo.width.default!,
+                                },
+                            },
+                            widget: placeholderSpec,
+                        }),
+                    );
                 }
                 if (isKpiPlaceholderDraggableItem(item)) {
                     const sizeInfo = getSizeInfo(settings, "kpi");
-                    const placeholderSpec: IWidgetPlaceholderSpec = {
-                        itemIndex: targetItemIndex,
-                        sectionIndex,
-                        size: {
-                            height: sizeInfo.height.default!,
-                            width: sizeInfo.width.default!,
-                        },
-                        type: "widget",
-                    };
-                    if (stringify(placeholderSpec) !== stringify(widgetPlaceholder)) {
-                        dispatch(uiActions.setWidgetPlaceholder(placeholderSpec));
-                    }
+                    const placeholderSpec = newPlaceholderWidget(
+                        sectionIndex, // TODO get rid of this, get the coords using widget ref
+                        targetItemIndex,
+                        false, // TODO how to get this? should WidgetDropZone get this instead?
+                    );
+                    dispatch(
+                        addSectionItem(sectionIndex, targetItemIndex, {
+                            type: "IDashboardLayoutItem",
+                            size: {
+                                xl: {
+                                    gridHeight: sizeInfo.height.default!,
+                                    gridWidth: sizeInfo.width.default!,
+                                },
+                            },
+                            widget: placeholderSpec,
+                        }),
+                    );
                 }
                 if (isInsightPlaceholderDraggableItem(item)) {
                     const sizeInfo = getInsightPlaceholderSizeInfo(settings);
-                    const placeholderSpec: IWidgetPlaceholderSpec = {
-                        itemIndex: targetItemIndex,
-                        sectionIndex,
-                        size: {
-                            height: sizeInfo.height.default!,
-                            width: sizeInfo.width.default!,
-                        },
-                        type: "widget",
-                    };
-                    if (stringify(placeholderSpec) !== stringify(widgetPlaceholder)) {
-                        dispatch(uiActions.setWidgetPlaceholder(placeholderSpec));
-                    }
+                    const placeholderSpec = newPlaceholderWidget(
+                        sectionIndex, // TODO get rid of this, get the coords using widget ref
+                        targetItemIndex,
+                        false, // TODO how to get this? should WidgetDropZone get this instead?
+                    );
+                    dispatch(
+                        addSectionItem(sectionIndex, targetItemIndex, {
+                            type: "IDashboardLayoutItem",
+                            size: {
+                                xl: {
+                                    gridHeight: sizeInfo.height.default!,
+                                    gridWidth: sizeInfo.width.default!,
+                                },
+                            },
+                            widget: placeholderSpec,
+                        }),
+                    );
                 }
             },
         },

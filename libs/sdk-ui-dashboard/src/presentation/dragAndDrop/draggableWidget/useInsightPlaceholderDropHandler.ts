@@ -2,8 +2,14 @@
 import { useCallback } from "react";
 import { idRef } from "@gooddata/sdk-model";
 
-import { useDashboardDispatch, uiActions, useDashboardSelector, selectSettings } from "../../../model";
-import { INSIGHT_PLACEHOLDER_WIDGET_ID } from "../../../widgets";
+import {
+    useDashboardDispatch,
+    uiActions,
+    useDashboardSelector,
+    selectSettings,
+    addSectionItem,
+} from "../../../model";
+import { INSIGHT_PLACEHOLDER_WIDGET_ID, newInsightPlaceholderWidget } from "../../../widgets";
 import { getInsightPlaceholderSizeInfo } from "../../../_staging/layout/sizing";
 
 export function useInsightPlaceholderDropHandler() {
@@ -16,14 +22,19 @@ export function useInsightPlaceholderDropHandler() {
             dispatch(uiActions.selectWidget(idRef(INSIGHT_PLACEHOLDER_WIDGET_ID)));
             dispatch(uiActions.setConfigurationPanelOpened(true));
             dispatch(
-                uiActions.setWidgetPlaceholder({
-                    itemIndex,
-                    sectionIndex,
+                addSectionItem(sectionIndex, sectionIndex, {
+                    type: "IDashboardLayoutItem",
                     size: {
-                        height: sizeInfo.height.default!,
-                        width: sizeInfo.width.default!,
+                        xl: {
+                            gridHeight: sizeInfo.height.default!,
+                            gridWidth: sizeInfo.width.default!,
+                        },
                     },
-                    type: "insight",
+                    widget: newInsightPlaceholderWidget(
+                        sectionIndex, // TODO get rid of this, get the coords using widget ref
+                        itemIndex,
+                        false, // TODO how to get this? should WidgetDropZone get this instead?
+                    ),
                 }),
             );
         },

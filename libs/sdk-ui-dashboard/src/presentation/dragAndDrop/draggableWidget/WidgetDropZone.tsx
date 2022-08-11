@@ -34,7 +34,7 @@ export const WidgetDropZone: CustomDashboardWidgetComponent = (props) => {
         {
             drop: (item) => {
                 if (isInsightDraggableListItem(item)) {
-                    handleInsightListItemDrop(sectionIndex, itemIndex, item.insight);
+                    handleInsightListItemDrop(item.insight);
                 }
                 if (isKpiPlaceholderDraggableItem(item)) {
                     handleKpiPlaceholderDrop(sectionIndex, itemIndex);

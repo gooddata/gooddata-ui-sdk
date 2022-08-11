@@ -1,5 +1,9 @@
 // (C) 2022 GoodData Corporation
-import { newAbsoluteDateFilter, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+import {
+    IInsightWidgetDefinition,
+    newAbsoluteDateFilter,
+    newPositiveAttributeFilter,
+} from "@gooddata/sdk-model";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
@@ -34,7 +38,7 @@ import {
     addAttributeFilter,
 } from "../../../commands";
 import { selectIsDashboardDirty } from "../metaSelectors";
-import { ExtendedDashboardItem, ICustomWidgetDefinition } from "../../../types/layoutTypes";
+import { ExtendedDashboardItem } from "../../../types/layoutTypes";
 
 describe("selectIsDashboardDirty", () => {
     let Tester: DashboardTester;
@@ -48,9 +52,13 @@ describe("selectIsDashboardDirty", () => {
         expect(Tester.select(selectIsDashboardDirty)).toBe(false);
     });
 
-    const customWidget: ExtendedDashboardItem<ICustomWidgetDefinition> = {
+    // we have to use insight widget as custom widgets are currently ignored by the dirty selector: they cannot be saved to the backend anyway
+    const insightWidget: ExtendedDashboardItem<IInsightWidgetDefinition> = {
         size: { xl: { gridWidth: 12 } },
         type: "IDashboardLayoutItem",
+        widget: {
+            ...ComplexDashboardWidgets.SecondSection.FirstTable,
+        },
     };
 
     type Scenario = [name: string, command: any, event: string];
@@ -71,7 +79,7 @@ describe("selectIsDashboardDirty", () => {
         ["section move", moveLayoutSection(0, 1, TestCorrelation), "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_MOVED"],
         [
             "section addition",
-            addLayoutSection(0, undefined, [customWidget], false, TestCorrelation),
+            addLayoutSection(0, undefined, [insightWidget], false, TestCorrelation),
             "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
         ],
         // widget manipulations
@@ -83,12 +91,12 @@ describe("selectIsDashboardDirty", () => {
         ],
         [
             "widget addition",
-            addSectionItem(0, 0, customWidget, false, TestCorrelation),
+            addSectionItem(0, 0, insightWidget, false, TestCorrelation),
             "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED",
         ],
         [
             "widget replacement",
-            replaceSectionItem(0, 0, customWidget, TestCorrelation),
+            replaceSectionItem(0, 0, insightWidget, TestCorrelation),
             "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED",
         ],
         // kpi manipulations

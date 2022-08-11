@@ -12,7 +12,7 @@ import {
 import invariant from "ts-invariant";
 import { DashboardState } from "../types";
 import isUndefined from "lodash/isUndefined";
-import { selectLayout } from "../layout/layoutSelectors";
+import { selectBasicLayout } from "../layout/layoutSelectors";
 import {
     selectFilterContextAttributeFilters,
     selectFilterContextDateFilter,
@@ -361,7 +361,7 @@ export const selectIsTitleChanged = createSelector(
  */
 export const selectIsLayoutChanged = createSelector(
     selectPersistedDashboardLayout,
-    selectLayout,
+    selectBasicLayout,
     (persistedLayout, currentLayout) => {
         return !isEqual(currentLayout, persistedLayout);
     },
@@ -374,7 +374,7 @@ export const selectIsLayoutChanged = createSelector(
  */
 export const selectIsDashboardDirty = createSelector(
     selectIsNewDashboard,
-    selectLayout,
+    selectBasicLayout,
     selectIsFiltersChanged,
     selectIsTitleChanged,
     selectIsLayoutChanged,

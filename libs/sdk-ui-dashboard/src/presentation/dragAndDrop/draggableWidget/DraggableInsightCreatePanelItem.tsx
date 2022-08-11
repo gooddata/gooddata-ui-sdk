@@ -1,7 +1,13 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
 
-import { uiActions, selectIsInEditMode, useDashboardDispatch, useDashboardSelector } from "../../../model";
+import {
+    eagerRemoveSectionItem,
+    selectIsInEditMode,
+    selectWidgetPlaceholder,
+    useDashboardDispatch,
+    useDashboardSelector,
+} from "../../../model";
 import { useDashboardDrag } from "../useDashboardDrag";
 import {
     CustomDashboardInsightCreatePanelItemComponent,
@@ -25,19 +31,25 @@ export const DraggableInsightCreatePanelItem: React.FC<IDraggableInsightCreatePa
 }) => {
     const dispatch = useDashboardDispatch();
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
+    const widgetPlaceholder = useDashboardSelector(selectWidgetPlaceholder);
 
-    const [, dragRef] = useDashboardDrag({
-        dragItem: {
-            type: "insight-placeholder",
+    const [, dragRef] = useDashboardDrag(
+        {
+            dragItem: {
+                type: "insight-placeholder",
+            },
+            canDrag: isInEditMode && !createPanelItemComponentProps.disabled,
+            hideDefaultPreview: false,
+            dragEnd: (_, monitor) => {
+                if (!monitor.didDrop() && widgetPlaceholder) {
+                    dispatch(
+                        eagerRemoveSectionItem(widgetPlaceholder.sectionIndex, widgetPlaceholder.itemIndex),
+                    );
+                }
+            },
         },
-        canDrag: isInEditMode && !createPanelItemComponentProps.disabled,
-        hideDefaultPreview: false,
-        dragEnd: (_, monitor) => {
-            if (!monitor.didDrop()) {
-                dispatch(uiActions.clearWidgetPlaceholder());
-            }
-        },
-    });
+        [widgetPlaceholder],
+    );
     return (
         <div ref={dragRef}>
             <CreatePanelItemComponent {...createPanelItemComponentProps} />

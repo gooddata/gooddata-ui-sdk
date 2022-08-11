@@ -4,10 +4,9 @@ import { ObjRef } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 
 import {
-    addSectionItem,
-    removeLayoutSection,
+    eagerRemoveSectionItem,
+    replaceSectionItem,
     selectAllCatalogMeasuresMap,
-    selectLayout,
     selectSettings,
     uiActions,
     useDashboardCommandProcessing,
@@ -30,16 +29,14 @@ export const KpiPlaceholderConfigurationPanel: React.FC<IKpiPlaceholderConfigura
 
     const settings = useDashboardSelector(selectSettings);
     const measuresMap = useDashboardSelector(selectAllCatalogMeasuresMap);
-    const layout = useDashboardSelector(selectLayout);
-    const section = layout.sections[widget.sectionIndex];
 
-    const addKpiProcessing = useDashboardCommandProcessing({
-        commandCreator: addSectionItem,
+    const replaceKpiProcessing = useDashboardCommandProcessing({
+        commandCreator: replaceSectionItem,
         errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
-        successEvent: "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED",
+        successEvent: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED",
         onSuccess: (event) => {
-            const ref = event.payload.itemsAdded[0].widget!.ref;
-            dispatch(uiActions.clearWidgetPlaceholder());
+            const ref = event.payload.items[0].widget!.ref;
+
             dispatch(uiActions.selectWidget(ref));
             dispatch(uiActions.setConfigurationPanelOpened(true));
         },
@@ -52,7 +49,8 @@ export const KpiPlaceholderConfigurationPanel: React.FC<IKpiPlaceholderConfigura
 
             const sizeInfo = getSizeInfo(settings, "kpi");
 
-            addKpiProcessing.run(widget.sectionIndex, widget.itemIndex, {
+            // replace the placeholder that is already in place
+            replaceKpiProcessing.run(widget.sectionIndex, widget.itemIndex, {
                 type: "IDashboardLayoutItem",
                 size: {
                     xl: {
@@ -75,17 +73,13 @@ export const KpiPlaceholderConfigurationPanel: React.FC<IKpiPlaceholderConfigura
                 },
             });
         },
-        [measuresMap, settings, addKpiProcessing, widget.sectionIndex, widget.itemIndex],
+        [measuresMap, settings, replaceKpiProcessing, widget.sectionIndex, widget.itemIndex],
     );
 
     const handlePanelClosed = useCallback(() => {
         dispatch(uiActions.setConfigurationPanelOpened(false));
-        dispatch(uiActions.clearWidgetPlaceholder());
-        // also try removing the section if it is empty, it means it was just added for this KPI
-        if (section.items.length === 0) {
-            dispatch(removeLayoutSection(widget.sectionIndex));
-        }
-    }, [dispatch, section.items.length, widget.sectionIndex]);
+        dispatch(eagerRemoveSectionItem(widget.sectionIndex, widget.itemIndex));
+    }, [dispatch, widget.itemIndex, widget.sectionIndex]);
 
     return <KpiConfigurationPanelCore onMeasureChange={handleMeasureChanged} onClose={handlePanelClosed} />;
 };

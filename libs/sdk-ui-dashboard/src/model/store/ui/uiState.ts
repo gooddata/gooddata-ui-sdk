@@ -6,24 +6,6 @@ import { ILayoutCoordinates, IMenuButtonItemsVisibility } from "../../../types";
 /**
  * @alpha
  */
-export type IWidgetPlaceholderType = "widget" | "insight" | "kpi";
-
-/**
- * @alpha
- */
-export interface IWidgetPlaceholderSpec {
-    sectionIndex: number;
-    itemIndex: number;
-    size: {
-        width: number;
-        height: number;
-    };
-    type: IWidgetPlaceholderType;
-}
-
-/**
- * @alpha
- */
 export interface UiState {
     scheduleEmailManagementDialog: {
         open: boolean;
@@ -60,7 +42,6 @@ export interface UiState {
     selectedWidgetRef: ObjRef | undefined;
     configurationPanelOpened: boolean;
     kpiDateDatasetAutoOpen: boolean;
-    widgetPlaceholder: IWidgetPlaceholderSpec | undefined;
     insightListLastUpdateRequested: number;
 }
 
@@ -97,6 +78,5 @@ export const uiInitialState: UiState = {
     selectedWidgetRef: undefined,
     configurationPanelOpened: true,
     kpiDateDatasetAutoOpen: false,
-    widgetPlaceholder: undefined,
     insightListLastUpdateRequested: 0,
 };
