@@ -9,7 +9,7 @@ import { IDrillTargetType } from "./useDrillTargetTypeItems";
 
 export interface IDrillTargetProps {
     onSelect: (target: DRILL_TARGET_TYPE) => void;
-    selection: DRILL_TARGET_TYPE;
+    selection?: DRILL_TARGET_TYPE;
     enabledDrillTargetTypeItems: IDrillTargetType[];
 }
 
@@ -17,20 +17,20 @@ const ITEM_HEIGHT = 25;
 const DROPDOWN_BODY_WIDTH = 200;
 
 const getTargetBySelection = (
-    selection: DRILL_TARGET_TYPE,
+    selection: DRILL_TARGET_TYPE | undefined,
     targets: IDrillTargetType[],
 ): IDrillTargetType | undefined => {
     return targets.find((target: IDrillTargetType) => target.id === selection);
 };
 
-const getIconClassNameBySelection = (selection: DRILL_TARGET_TYPE) => {
+const getIconClassNameBySelection = (selection: DRILL_TARGET_TYPE | undefined) => {
     const icons = {
         [DRILL_TARGET_TYPE.DRILL_TO_DASHBOARD]: "icon-drill-to-dashboard",
         [DRILL_TARGET_TYPE.DRILL_TO_INSIGHT]: "icon-drill-to-insight",
         [DRILL_TARGET_TYPE.DRILL_TO_URL]: "icon-hyperlink-disabled",
     };
 
-    return icons[selection];
+    return selection ? icons[selection] : undefined;
 };
 
 export const DrillTargetType: React.FunctionComponent<IDrillTargetProps> = (props) => {

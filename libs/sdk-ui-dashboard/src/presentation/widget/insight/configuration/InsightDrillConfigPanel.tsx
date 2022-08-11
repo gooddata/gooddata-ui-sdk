@@ -15,7 +15,9 @@ import { DrillOriginSelector } from "./DrillOriginSelector/DrillOriginSelector";
 import invariant from "ts-invariant";
 import { getMappedConfigForWidget } from "./getMappedConfigForWidget";
 import { useDrillTargetTypeItems } from "./useDrillTargetTypeItems";
-import { IDrillConfigItem } from "../../../drill/types";
+import { IDrillConfigItem, isAvailableDrillTargetMeasure } from "../../../drill/types";
+import { IAvailableDrillTargetItem } from "../../../drill/DrillSelect/types";
+import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 
 const mergeDrillConfigItems = (
     drillConfigItems: IDrillConfigItem[],
@@ -47,6 +49,33 @@ const addOrUpdateDrillConfigItem = (drillConfigItems: IDrillConfigItem[], newIte
     }
 };
 
+const getUnusedDrillTargets = (
+    availableDrillTargets: IAvailableDrillTargets | undefined,
+    mergedItems: IDrillConfigItem[],
+) => {
+    const availableDrillTargetMeasures = availableDrillTargets?.measures?.filter(
+        (measure) =>
+            !mergedItems.some(
+                (item) =>
+                    item.type === "measure" &&
+                    item.localIdentifier === measure.measure.measureHeaderItem.localIdentifier,
+            ),
+    );
+    const availableDrillTargetAttributes = availableDrillTargets?.attributes?.filter(
+        (attribute) =>
+            !mergedItems.some(
+                (item) =>
+                    item.type === "attribute" &&
+                    item.localIdentifier === attribute.attribute.attributeHeader.localIdentifier,
+            ),
+    );
+
+    return {
+        measures: availableDrillTargetMeasures,
+        attributes: availableDrillTargetAttributes,
+    };
+};
+
 export interface IDrillConfigPanelProps {
     widgetRef: ObjRef;
 }
@@ -74,31 +103,30 @@ export const InsightDrillConfigPanel: React.FunctionComponent<IDrillConfigPanelP
         addIncompleteItem(incompleteItem);
     };
 
-    const onOriginSelect = () => {
-        // TODO
-        // if (isAvailableDrillTargetMeasure(selectedItem)) {
-        //     const incompleteMeasureItem: IDrillConfigItem = {
-        //         type: "measure",
-        //         localIdentifier: selectedItem.measure.measureHeaderItem.localIdentifier,
-        //         title: selectedItem.measure.measureHeaderItem.name,
-        //         attributes: selectedItem.attributes,
-        //         drillTargetType: undefined,
-        //         complete: false,
-        //     };
-        //
-        //     addIncompleteItem(incompleteMeasureItem);
-        // } else {
-        //     const incompleteAttributeItem: IDrillConfigItem = {
-        //         type: "attribute",
-        //         localIdentifier: selectedItem.attribute.attributeHeader.localIdentifier,
-        //         title: selectedItem.attribute.attributeHeader.formOf.name,
-        //         attributes: selectedItem.intersectionAttributes,
-        //         drillTargetType: undefined,
-        //         complete: false,
-        //     };
-        //
-        //     addIncompleteItem(incompleteAttributeItem);
-        // }
+    const onOriginSelect = (selectedItem: IAvailableDrillTargetItem) => {
+        if (isAvailableDrillTargetMeasure(selectedItem)) {
+            const incompleteMeasureItem: IDrillConfigItem = {
+                type: "measure",
+                localIdentifier: selectedItem.measure.measureHeaderItem.localIdentifier,
+                title: selectedItem.measure.measureHeaderItem.name,
+                attributes: selectedItem.attributes,
+                drillTargetType: undefined,
+                complete: false,
+            };
+
+            addIncompleteItem(incompleteMeasureItem);
+        } else {
+            const incompleteAttributeItem: IDrillConfigItem = {
+                type: "attribute",
+                localIdentifier: selectedItem.attribute.attributeHeader.localIdentifier,
+                title: selectedItem.attribute.attributeHeader.formOf.name,
+                attributes: selectedItem.intersectionAttributes,
+                drillTargetType: undefined,
+                complete: false,
+            };
+
+            addIncompleteItem(incompleteAttributeItem);
+        }
     };
 
     const configItems = useDashboardSelector(selectDrillTargetsByWidgetRef(widgetRef));
@@ -131,7 +159,10 @@ export const InsightDrillConfigPanel: React.FunctionComponent<IDrillConfigPanelP
                 enabledDrillTargetTypeItems={enabledDrillTargetTypeItems}
             />
             {configItems?.availableDrillTargets && (
-                <DrillOriginSelector items={configItems?.availableDrillTargets} onSelect={onOriginSelect} />
+                <DrillOriginSelector
+                    items={getUnusedDrillTargets(configItems?.availableDrillTargets, mergedItems)}
+                    onSelect={onOriginSelect}
+                />
             )}
         </div>
     );

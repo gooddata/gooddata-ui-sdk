@@ -13,7 +13,11 @@ import {
     isLocalIdRef,
     ObjRefInScope,
 } from "@gooddata/sdk-model";
-import { IAvailableDrillTargetMeasure, IAvailableDrillTargets } from "@gooddata/sdk-ui";
+import {
+    IAvailableDrillTargetAttribute,
+    IAvailableDrillTargetMeasure,
+    IAvailableDrillTargets,
+} from "@gooddata/sdk-ui";
 import {
     DRILL_TARGET_TYPE,
     IDrillConfigItem,
@@ -34,12 +38,24 @@ const localIdOrDie = (ref: ObjRefInScope): string => {
     throw new Error("invalid invariant");
 };
 
-const getTitleFromDrillableItemPushData = (items: IAvailableDrillTargets, measureId: string): string => {
+const getTitleFromDrillableItemPushData = (items: IAvailableDrillTargets, itemId: string): string => {
     const measureItems = items.measures || [];
-    const res = measureItems.find(
-        (x: IAvailableDrillTargetMeasure) => x.measure.measureHeaderItem.localIdentifier === measureId,
+    const measureResult = measureItems.find(
+        (measureResult: IAvailableDrillTargetMeasure) =>
+            measureResult.measure.measureHeaderItem.localIdentifier === itemId,
     );
-    return res ? res.measure.measureHeaderItem.name : "";
+
+    if (!measureResult) {
+        const attributeItems = items.attributes || [];
+        const attributeResult = attributeItems.find(
+            (attributeItem: IAvailableDrillTargetAttribute) =>
+                attributeItem.attribute.attributeHeader.localIdentifier === itemId,
+        );
+
+        return attributeResult ? attributeResult.attribute.attributeHeader.formOf.name : "";
+    }
+
+    return measureResult.measure.measureHeaderItem.name;
 };
 
 const getAttributes = (
@@ -83,7 +99,7 @@ const createInsightConfig = (
         : localIdOrDie(drillData.origin?.measure);
 
     return {
-        type: "measure",
+        type: isDrillFromAttribute(drillData.origin) ? "attribute" : "measure",
         localIdentifier,
         title: getTitleFromDrillableItemPushData(supportedItemsForWidget, localIdentifier),
         attributes: getAttributes(supportedItemsForWidget, localIdentifier),
@@ -102,7 +118,7 @@ const createDashboardConfig = (
         : localIdOrDie(drillData.origin?.measure);
 
     return {
-        type: "measure",
+        type: isDrillFromAttribute(drillData.origin) ? "attribute" : "measure",
         localIdentifier,
         title: getTitleFromDrillableItemPushData(supportedItemsForWidget, localIdentifier),
         attributes: getAttributes(supportedItemsForWidget, localIdentifier),
@@ -121,7 +137,7 @@ const createUrlConfig = (
         : localIdOrDie(drillData.origin?.measure);
 
     return {
-        type: "measure",
+        type: isDrillFromAttribute(drillData.origin) ? "attribute" : "measure",
         localIdentifier,
         title: getTitleFromDrillableItemPushData(supportedItemsForWidget, localIdentifier),
         attributes: getAttributes(supportedItemsForWidget, localIdentifier),

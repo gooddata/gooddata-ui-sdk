@@ -30,12 +30,14 @@ const DROPDOWN_ALIGN_POINTS = [
 ];
 
 export const DrillOriginSelector: React.FunctionComponent<IDrillOriginSelectorProps> = (props) => {
+    const { items } = props;
+
     const onSelect = (selected: IAvailableDrillTargetItem) => {
         props.onSelect(selected);
     };
     const intl = useIntl();
 
-    if (!props.items.measures?.length && !props.items.attributes?.length) {
+    if (!items.measures?.length && !items.attributes?.length) {
         return null;
     }
 
@@ -57,7 +59,7 @@ export const DrillOriginSelector: React.FunctionComponent<IDrillOriginSelectorPr
             )}
             renderBody={({ closeDropdown }) => (
                 <DrillOriginSelectorBody
-                    supportedItems={props.items}
+                    supportedItems={items}
                     onSelect={onSelect}
                     onCloseDropdown={closeDropdown}
                 />

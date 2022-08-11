@@ -35,6 +35,7 @@ import {
     DashboardDrillToLegacyDashboardResolved,
     DashboardDrillCommand,
 } from "../../model";
+import { IAvailableDrillTargetItem } from "./DrillSelect/types";
 
 /**
  * @alpha
@@ -140,10 +141,10 @@ export enum DRILL_TARGET_TYPE {
 }
 
 export interface IDrillConfigItemBase {
-    type: string;
+    type: "measure" | "attribute";
     title: string;
     localIdentifier: string;
-    drillTargetType: DRILL_TARGET_TYPE;
+    drillTargetType?: DRILL_TARGET_TYPE;
     complete: boolean;
     warning?: string;
     attributes: IAvailableDrillTargetMeasure["attributes"];
@@ -223,4 +224,10 @@ export interface IDefinitionValidationData {
     supportedDrillableItems: IAvailableDrillTargets;
     dashboardsList: IListedDashboard[];
     attributeDisplayForms?: IAttributeDisplayForm[];
+}
+
+export function isAvailableDrillTargetMeasure(
+    obj: IAvailableDrillTargetItem,
+): obj is IAvailableDrillTargetMeasure {
+    return !isEmpty(obj) && (obj as IAvailableDrillTargetMeasure).measure !== undefined;
 }
