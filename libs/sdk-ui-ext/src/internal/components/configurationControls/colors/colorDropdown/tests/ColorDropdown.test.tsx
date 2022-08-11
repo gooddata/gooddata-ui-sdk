@@ -1,6 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { cleanup, waitFor, fireEvent } from "@testing-library/react";
+import { waitFor } from "@testing-library/react";
 import noop from "lodash/noop";
 import cloneDeep from "lodash/cloneDeep";
 import { IColor } from "@gooddata/sdk-model";
@@ -45,8 +45,6 @@ function createComponent(customProps: Partial<IColorDropdownOwnProps> = {}) {
 }
 
 describe("ColorDropdown", () => {
-    afterEach(cleanup);
-
     it("should render ColorDropdown control", () => {
         const { getByText } = createComponent();
         expect(getByText("test")).toBeInTheDocument();
@@ -236,7 +234,7 @@ describe("ColorDropdown", () => {
             await user.click(getByText("test"));
             await user.click(getByText("Custom color"));
 
-            fireEvent.change(getByPlaceholderText("#color"), { target: { value: "" } });
+            await user.clear(getByPlaceholderText("#color"));
             await user.type(getByPlaceholderText("#color"), "#ff0000");
             await user.click(getByText("OK"));
             await waitFor(() => {

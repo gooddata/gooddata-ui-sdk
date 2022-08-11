@@ -1,10 +1,11 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { shallow } from "enzyme";
+import { waitFor } from "@testing-library/react";
 import { DefaultLocale } from "@gooddata/sdk-ui";
 import noop from "lodash/noop";
 import { ConfigSection, IConfigSectionOwnProps } from "../ConfigSection";
-import { createInternalIntl } from "../../../utils/internalIntlProvider";
+import { createInternalIntl, InternalIntlWrapper } from "../../../utils/internalIntlProvider";
+import { setupComponent } from "../../../tests/testHelper";
 
 describe("ConfigSection", () => {
     const defaultProps = {
@@ -18,127 +19,114 @@ describe("ConfigSection", () => {
 
     function createComponent(customProps: Partial<IConfigSectionOwnProps> = {}) {
         const props = { ...defaultProps, ...customProps };
-        return shallow<IConfigSectionOwnProps, null>(
-            <ConfigSection {...props}>
-                <div className="child" />
-            </ConfigSection>,
-            { lifecycleExperimental: true },
+        return setupComponent(
+            <InternalIntlWrapper>
+                <ConfigSection {...props}>
+                    <div>child</div>
+                </ConfigSection>
+            </InternalIntlWrapper>,
         );
     }
 
     describe("Rendering", () => {
         it("should render config section", () => {
-            const wrapper = createComponent();
-
-            expect(wrapper.find(".adi-bucket-item").length).toBe(1);
+            const { getByLabelText } = createComponent();
+            expect(getByLabelText("Configuration section")).toBeInTheDocument();
         });
 
         it("should render children when not collapsed", () => {
-            const wrapper = createComponent({
+            const { getByText } = createComponent({
                 propertiesMeta: { id: { collapsed: false } },
             });
-
-            expect(wrapper.find(".child").length).toBe(1);
+            expect(getByText("child")).toBeInTheDocument();
         });
 
         it("should not render children when collapsed", () => {
-            const wrapper = createComponent();
-
-            expect(wrapper.find(".child").length).toBe(0);
+            const { queryByText } = createComponent();
+            expect(queryByText("child")).not.toBeInTheDocument();
         });
 
-        it('should update "collapsed" in component state on new props', () => {
-            const wrapper = createComponent();
-            expect(wrapper.state("collapsed")).toEqual(true);
+        it('should update "collapsed" in state when clicked on header', async () => {
+            const { getByText, queryByText, user } = createComponent();
 
-            wrapper.setProps({
-                propertiesMeta: { id: { collapsed: false } },
-            });
-            expect(wrapper.state("collapsed")).toEqual(false);
+            expect(queryByText("child")).not.toBeInTheDocument();
+            await user.click(getByText("Legend"));
+            expect(getByText("child")).toBeInTheDocument();
         });
 
-        it('should update "collapsed" in state when clicked on header', () => {
-            const wrapper = createComponent();
-            expect(wrapper.state("collapsed")).toEqual(true);
-
-            wrapper.find(".adi-bucket-item-header").simulate("click");
-            expect(wrapper.state("collapsed")).toEqual(false);
-        });
-
-        it("should call pushData when header clicked", () => {
+        it("should call pushData when header clicked", async () => {
             const pushData = jest.fn();
-            const wrapper = createComponent({ pushData });
+            const { getByText, user } = createComponent({ pushData });
 
-            wrapper.find(".adi-bucket-item-header").simulate("click");
-            expect(pushData).toHaveBeenCalledTimes(1);
+            await user.click(getByText("Legend"));
+            await waitFor(() => {
+                expect(pushData).toHaveBeenCalledTimes(1);
+            });
         });
     });
 
     describe("Toggle switch", () => {
         it("should't render toggle switch by default", () => {
-            const wrapper = createComponent();
-
-            expect(wrapper.find(".input-checkbox-toggle").length).toBe(0);
+            const { queryByRole } = createComponent();
+            expect(queryByRole("checkbox")).not.toBeInTheDocument();
         });
 
         it('should render toggle switch when property "canBeToggled" is set on true', () => {
-            const wrapper = createComponent({ canBeToggled: true });
-
-            expect(wrapper.find(".input-checkbox-toggle").length).toBe(1);
-            expect(wrapper.find(".s-checkbox-toggle").props().disabled).toBeFalsy();
+            const { getByRole } = createComponent({ canBeToggled: true });
+            expect(getByRole("checkbox")).toBeInTheDocument();
         });
 
-        it("should call pushData when click on toggle switch with valuePath set", () => {
+        it("should call pushData when click on toggle switch with valuePath set", async () => {
             const pushData = jest.fn();
-            const event = { target: { checked: true } };
-
-            const wrapper = createComponent({
+            const { getByRole, user } = createComponent({
                 canBeToggled: true,
                 valuePath: "path",
                 properties: {},
                 pushData,
             });
 
-            wrapper.find(".s-checkbox-toggle").simulate("change", event);
-            expect(pushData).toHaveBeenCalledTimes(1);
+            await user.click(getByRole("checkbox"));
+            await waitFor(() => {
+                expect(pushData).toHaveBeenCalledTimes(1);
+            });
         });
 
-        it("shouldn't call pushData when click on toggle switch with undefined valuePath", () => {
+        it("shouldn't call pushData when click on toggle switch with undefined valuePath", async () => {
             const pushData = jest.fn();
-            const event = { target: { checked: true } };
-
-            const wrapper = createComponent({
+            const { getByRole, user } = createComponent({
                 canBeToggled: true,
                 properties: {},
                 pushData,
             });
 
-            wrapper.find(".s-checkbox-toggle").simulate("change", event);
-            expect(pushData).toHaveBeenCalledTimes(0);
+            await user.click(getByRole("checkbox"));
+            await waitFor(() => {
+                expect(pushData).toHaveBeenCalledTimes(0);
+            });
         });
 
         it("should disable toggle switch", () => {
-            const wrapper = createComponent({
+            const { getByRole } = createComponent({
                 canBeToggled: true,
                 toggleDisabled: true,
             });
 
-            expect(wrapper.find(".s-checkbox-toggle").props().disabled).toBeTruthy();
+            expect(getByRole("checkbox")).toBeDisabled();
         });
 
         it("should check toggle switch by default", () => {
-            const wrapper = createComponent({
+            const { getByRole } = createComponent({
                 canBeToggled: true,
             });
-            expect(wrapper.find(".s-checkbox-toggle").props().checked).toBeTruthy();
+            expect(getByRole("checkbox")).toBeChecked();
         });
 
         it('should uncheck toggle switch by property "toggledOn"', () => {
-            const wrapper = createComponent({
+            const { getByRole } = createComponent({
                 canBeToggled: true,
                 toggledOn: false,
             });
-            expect(wrapper.find(".s-checkbox-toggle").props().checked).toBeFalsy();
+            expect(getByRole("checkbox")).not.toBeChecked();
         });
     });
 });

@@ -1,9 +1,8 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
 import noop from "lodash/noop";
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider";
-
+import { setupComponent } from "../../../tests/testHelper";
 import CheckboxControl, { ICheckboxControlProps } from "../CheckboxControl";
 
 describe("CheckboxControl", () => {
@@ -17,7 +16,7 @@ describe("CheckboxControl", () => {
 
     function createComponent(customProps: Partial<ICheckboxControlProps> = {}) {
         const props = { ...defaultProps, ...customProps };
-        return mount(
+        return setupComponent(
             <InternalIntlWrapper>
                 <CheckboxControl {...props} />
             </InternalIntlWrapper>,
@@ -25,46 +24,38 @@ describe("CheckboxControl", () => {
     }
 
     it("should render checkbox control", () => {
-        const wrapper = createComponent();
-
-        expect(wrapper.find(".input-checkbox-label").length).toBe(1);
+        const { getByRole } = createComponent();
+        expect(getByRole("checkbox")).toBeInTheDocument();
     });
 
     it("should be unchecked by default", () => {
-        const wrapper = createComponent();
-
-        expect(wrapper.find(".input-checkbox").props().checked).toBeFalsy();
+        const { getByRole } = createComponent();
+        expect(getByRole("checkbox")).not.toBeChecked();
     });
 
     it("should be enabled by default", () => {
-        const wrapper = createComponent();
-
-        expect(wrapper.find(".input-checkbox").props().disabled).toBeFalsy();
+        const { getByRole } = createComponent();
+        expect(getByRole("checkbox")).toBeEnabled();
     });
 
     it("should render checked checkbox", () => {
-        const wrapper = createComponent({ checked: true });
-
-        expect(wrapper.find(".input-checkbox").props().checked).toBeTruthy();
+        const { getByRole } = createComponent({ checked: true });
+        expect(getByRole("checkbox")).toBeChecked();
     });
 
     it("should render disabled checkbox", () => {
-        const wrapper = createComponent({ disabled: true });
-
-        expect(wrapper.find(".input-checkbox").props().disabled).toBeTruthy();
+        const { getByRole } = createComponent({ disabled: true });
+        expect(getByRole("checkbox")).toBeDisabled();
     });
 
-    it("should call pushData when checkbox value changes", () => {
+    it("should call pushData when checkbox value changes", async () => {
         const pushData = jest.fn();
-        const event = { target: { checked: true } };
-
-        const wrapper = createComponent({
+        const { getByRole, user } = createComponent({
             properties: {},
             pushData,
         });
 
-        wrapper.find(".input-checkbox").simulate("change", event);
-
+        await user.click(getByRole("checkbox"));
         expect(pushData).toHaveBeenCalledTimes(1);
     });
 });

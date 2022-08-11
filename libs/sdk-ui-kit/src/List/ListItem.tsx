@@ -127,7 +127,7 @@ export class SingleSelectListItem extends Component<ISingleSelectListItemProps, 
     private renderIcon = (icon: string) => {
         if (icon) {
             const iconClasses = cx("gd-list-icon", icon);
-            return <span className={iconClasses} />;
+            return <span role="icon" className={iconClasses} />;
         }
 
         return null;
@@ -136,6 +136,7 @@ export class SingleSelectListItem extends Component<ISingleSelectListItemProps, 
     private renderSeparatorItem = () => {
         return (
             <div
+                role="item-separator"
                 className={cx(
                     "gd-list-item",
                     "gd-list-item-separator",
@@ -148,7 +149,10 @@ export class SingleSelectListItem extends Component<ISingleSelectListItemProps, 
 
     private renderHeaderItem = () => {
         return (
-            <div className={cx("gd-list-item", "gd-list-item-header", "s-list-header", this.props.className)}>
+            <div
+                role="item-header"
+                className={cx("gd-list-item", "gd-list-item-header", "s-list-header", this.props.className)}
+            >
                 {this.props.title}
             </div>
         );
@@ -160,7 +164,7 @@ export class SingleSelectListItem extends Component<ISingleSelectListItemProps, 
         }
 
         return (
-            <div className="gd-list-item-bubble s-list-item-info">
+            <div role="item-info" className="gd-list-item-bubble s-list-item-info">
                 <BubbleHoverTrigger tagName="div" showDelay={200} hideDelay={0}>
                     <div className="inlineBubbleHelp" />
                     <Bubble

@@ -1,9 +1,9 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { waitFor } from "@testing-library/react";
 import ConfigSubsection, { IConfigSubsectionOwnProps } from "../ConfigSubsection";
-import DisabledBubbleMessage from "../../DisabledBubbleMessage";
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider";
+import { setupComponent } from "../../../tests/testHelper";
 
 describe("ConfigSubsection", () => {
     const defaultProps = {
@@ -15,10 +15,10 @@ describe("ConfigSubsection", () => {
 
     function createComponent(customProps: Partial<IConfigSubsectionOwnProps> = {}) {
         const props = { ...defaultProps, ...customProps };
-        return mount(
+        return setupComponent(
             <InternalIntlWrapper>
                 <ConfigSubsection {...props}>
-                    <div className="child" />
+                    <div>child</div>
                 </ConfigSubsection>
             </InternalIntlWrapper>,
         );
@@ -26,62 +26,58 @@ describe("ConfigSubsection", () => {
 
     describe("Rendering", () => {
         it("should render config subsection", () => {
-            const wrapper = createComponent();
-
-            expect(wrapper.find(".s-configuration-subsection-properties-legend-title").length).toBe(1);
+            const { getByLabelText } = createComponent();
+            expect(getByLabelText("Configuration subsection")).toBeInTheDocument();
         });
     });
 
     describe("Toggle switch", () => {
         it("should't render toggle switch by default", () => {
-            const wrapper = createComponent();
-
-            expect(wrapper.find(".input-checkbox-toggle").length).toBe(0);
+            const { queryByRole } = createComponent();
+            expect(queryByRole("checkbox")).not.toBeInTheDocument();
         });
 
         it('should render toggle switch when property "canBeToggled" is set on true', () => {
-            const wrapper = createComponent({ canBeToggled: true });
-
-            expect(wrapper.find(DisabledBubbleMessage).hasClass("input-checkbox-toggle")).toBe(true);
-            expect(wrapper.find(".s-checkbox-toggle").props().disabled).toBeFalsy();
+            const { getByRole } = createComponent({ canBeToggled: true });
+            expect(getByRole("checkbox")).toBeEnabled();
         });
 
-        it("should call pushData when click on toggle switch and", () => {
+        it("should call pushData when click on toggle switch and", async () => {
             const pushData = jest.fn();
-            const event = { target: { checked: true } };
-
-            const wrapper = createComponent({
+            const { getByRole, user } = createComponent({
                 canBeToggled: true,
                 properties: {},
                 pushData,
             });
 
-            wrapper.find(".s-checkbox-toggle").simulate("change", event);
-            expect(pushData).toHaveBeenCalledTimes(1);
+            await user.click(getByRole("checkbox"));
+            await waitFor(() => {
+                expect(pushData).toHaveBeenCalledTimes(1);
+            });
         });
 
         it("should disable toggle switch", () => {
-            const wrapper = createComponent({
+            const { getByRole } = createComponent({
                 canBeToggled: true,
                 toggleDisabled: true,
             });
 
-            expect(wrapper.find(".s-checkbox-toggle").props().disabled).toBeTruthy();
+            expect(getByRole("checkbox")).toBeDisabled();
         });
 
         it("should check toggle switch by default", () => {
-            const wrapper = createComponent({
+            const { getByRole } = createComponent({
                 canBeToggled: true,
             });
-            expect(wrapper.find(".s-checkbox-toggle").props().checked).toBeTruthy();
+            expect(getByRole("checkbox")).toBeChecked();
         });
 
         it('should uncheck toggle switch by property "toggledOn"', () => {
-            const wrapper = createComponent({
+            const { getByRole } = createComponent({
                 canBeToggled: true,
                 toggledOn: false,
             });
-            expect(wrapper.find(".s-checkbox-toggle").props().checked).toBeFalsy();
+            expect(getByRole("checkbox")).not.toBeChecked();
         });
     });
 });

@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { useMemo, CSSProperties } from "react";
 import cx from "classnames";
 
@@ -33,7 +33,7 @@ export const LoadingMask: React.FC<ILoadingMaskProps> = (props) => {
 
     const spinnerSize: SpinnerSize = size ? size : "large";
     return (
-        <div style={style} className={cx("s-isLoading", "loading-mask", className)}>
+        <div style={style} aria-label="loading" className={cx("s-isLoading", "loading-mask", className)}>
             <div className={cx("gd-spinner", spinnerSize)} />
         </div>
     );

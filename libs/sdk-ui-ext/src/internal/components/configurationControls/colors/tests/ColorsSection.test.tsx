@@ -1,12 +1,12 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { IColor } from "@gooddata/sdk-model";
-import { mount } from "enzyme";
 import React from "react";
+import { waitFor } from "@testing-library/react";
 import { DefaultColorPalette } from "@gooddata/sdk-ui";
 import { IColorConfiguration } from "../../../../interfaces/Colors";
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider";
+import { setupComponent } from "../../../../tests/testHelper";
 
-import ColoredItemsList from "../coloredItemsList/ColoredItemsList";
 import ColorsSection, { COLOR_MAPPING_CHANGED, IColorsSectionProps } from "../ColorsSection";
 import cloneDeep from "lodash/cloneDeep";
 import noop from "lodash/noop";
@@ -49,7 +49,7 @@ const defaultProps: IColorsSectionProps = {
 
 function createComponent(customProps: Partial<IColorsSectionProps> = {}) {
     const props: IColorsSectionProps = { ...cloneDeep(defaultProps), ...customProps };
-    return mount<IColorsSectionProps>(
+    return setupComponent(
         <InternalIntlWrapper>
             <ColorsSection {...props} />
         </InternalIntlWrapper>,
@@ -57,25 +57,35 @@ function createComponent(customProps: Partial<IColorsSectionProps> = {}) {
 }
 
 describe("ColorsSection", () => {
-    it("should render ColoredItemsList control in normal state", () => {
-        const wrapper = createComponent();
-        expect(wrapper.find(ColoredItemsList).length).toBe(1);
+    it("should render ColorSection control with 2 colors", () => {
+        const { getByText, getAllByRole } = createComponent();
+
+        expect(getByText("Colors")).toBeInTheDocument();
+        expect(getAllByRole("row")).toHaveLength(3); // including header row
     });
 
-    it("should NOT render ColoredItemsList control when no measure", () => {
-        const wrapper = createComponent({
+    it("should NOT render ColoredItemsList when no measure, unsupported color message is visible", () => {
+        const { queryByRole } = createComponent({
             hasMeasures: false,
         });
-        expect(wrapper.find(ColoredItemsList).length).toBe(0);
-        expect(wrapper.find(".gd-color-unsupported").length).toBe(1);
+
+        expect(queryByRole("row")).not.toBeInTheDocument();
+    });
+
+    it("should render error message when no measure", () => {
+        const { getByText } = createComponent({
+            hasMeasures: false,
+        });
+
+        expect(getByText(/There are no colors for this configuration of the insight/i)).toBeInTheDocument();
     });
 
     it("should render Reset Colors button", () => {
-        const wrapper = createComponent();
-        expect(wrapper.find("Button.s-reset-colors-button").length).toBe(1);
+        const { getByText } = createComponent();
+        expect(getByText("Reset Colors")).toBeInTheDocument();
     });
 
-    it("should call pushData on Reset Colors button click", () => {
+    it("should call pushData on Reset Colors button click", async () => {
         const pushData = jest.fn();
         const color1: IColor = {
             type: "guid",
@@ -93,29 +103,33 @@ describe("ColorsSection", () => {
             },
         };
         const references = { aaa: "/a1" };
-        const wrapper = createComponent({
+        const { getByText, user } = createComponent({
             pushData,
             properties,
             references,
         });
-        wrapper.find("Button.s-reset-colors-button").simulate("click");
-        expect(pushData).toHaveBeenCalledWith({
-            messageId: COLOR_MAPPING_CHANGED,
-            properties: {
-                controls: {
-                    colorMapping: undefined,
-                    test: 1,
-                },
-            },
-            references: {},
+
+        await user.click(getByText("Reset Colors"));
+        await waitFor(() => {
+            expect(pushData).toBeCalledWith(
+                expect.objectContaining({
+                    messageId: COLOR_MAPPING_CHANGED,
+                    properties: {
+                        controls: {
+                            colorMapping: undefined,
+                            test: 1,
+                        },
+                    },
+                    references: {},
+                }),
+            );
         });
     });
 
     it("should contain loading element when in loading state", () => {
-        const wrapper = createComponent({
+        const { getByLabelText } = createComponent({
             isLoading: true,
         });
-        expect(wrapper.find(ColoredItemsList).length).toBe(1);
-        expect(wrapper.find(".s-isLoading").length).toBe(1);
+        expect(getByLabelText("loading")).toBeInTheDocument();
     });
 });

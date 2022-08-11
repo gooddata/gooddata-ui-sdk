@@ -1,9 +1,9 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
 import noop from "lodash/noop";
 import PushpinViewportControl, { IPushpinViewportControl } from "../PushpinViewportControl";
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider";
+import { setupComponent } from "../../../tests/testHelper";
 
 describe("PushpinViewportControl", () => {
     const defaultProps = {
@@ -14,7 +14,7 @@ describe("PushpinViewportControl", () => {
 
     function createComponent(customProps: Partial<IPushpinViewportControl> = {}) {
         const props = { ...defaultProps, ...customProps };
-        return mount(
+        return setupComponent(
             <InternalIntlWrapper>
                 <PushpinViewportControl {...props} />
             </InternalIntlWrapper>,
@@ -22,27 +22,21 @@ describe("PushpinViewportControl", () => {
     }
 
     describe("Rendering", () => {
-        const buttonSelector = ".s-pushpin-viewport-control .dropdown-button";
-        const buttonTextSelector = ".s-pushpin-viewport-control .dropdown-button .gd-button-text";
-
         it("should render PushpinViewportControl", () => {
-            const wrapper = createComponent();
-
-            expect(wrapper.find(PushpinViewportControl).length).toBe(1);
+            const { getByText } = createComponent();
+            expect(getByText("Default viewport")).toBeInTheDocument();
         });
 
         it("should render disabled PushpinViewportControl", () => {
-            const wrapper = createComponent({
+            const { getByRole } = createComponent({
                 disabled: true,
             });
-
-            expect(wrapper.find(`${buttonSelector}.disabled`).length).toBe(1);
+            expect(getByRole("button")).toHaveClass("disabled");
         });
 
         it("should have `Include all data` by default", () => {
-            const wrapper = createComponent();
-
-            expect(wrapper.find(buttonTextSelector).text()).toEqual("Include all data");
+            const { getByText } = createComponent();
+            expect(getByText("Include all data")).toBeInTheDocument();
         });
 
         it.each([
@@ -55,7 +49,7 @@ describe("PushpinViewportControl", () => {
             ["America (South)", "continent_sa"],
             ["World", "world"],
         ])("should render %s as selected viewport item", (expectedText: string, area: string) => {
-            const wrapper = createComponent({
+            const { getByText } = createComponent({
                 properties: {
                     controls: {
                         viewport: {
@@ -64,8 +58,7 @@ describe("PushpinViewportControl", () => {
                     },
                 },
             });
-
-            expect(wrapper.find(buttonTextSelector).text()).toEqual(expectedText);
+            expect(getByText(expectedText)).toBeInTheDocument();
         });
     });
 });
