@@ -37,7 +37,9 @@ export class OrganizationStylingService implements IOrganizationStylingService {
 
     public async getThemes(): Promise<IThemeMetadataObject[]> {
         return await this.authCall((client) =>
-            MetadataUtilities.getAllPagesOf(client, client.entities.getAllEntitiesThemes, {})
+            MetadataUtilities.getAllPagesOf(client, client.entities.getAllEntitiesThemes, {
+                sort: ["name"],
+            })
                 .then(MetadataUtilities.mergeEntitiesResults)
                 .then((themes) => themes.data.map(convertThemeWithLinks)),
         );
@@ -146,7 +148,9 @@ export class OrganizationStylingService implements IOrganizationStylingService {
 
     public async getColorPalettes(): Promise<IColorPaletteMetadataObject[]> {
         return await this.authCall((client) =>
-            MetadataUtilities.getAllPagesOf(client, client.entities.getAllEntitiesColorPalettes, {})
+            MetadataUtilities.getAllPagesOf(client, client.entities.getAllEntitiesColorPalettes, {
+                sort: ["name"],
+            })
                 .then(MetadataUtilities.mergeEntitiesResults)
                 .then((colorPalettes) => colorPalettes.data.map(convertColorPaletteWithLinks)),
         );
