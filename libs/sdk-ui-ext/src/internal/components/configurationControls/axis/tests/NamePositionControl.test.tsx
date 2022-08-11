@@ -1,13 +1,14 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { waitFor } from "@testing-library/react";
 import set from "lodash/set";
 import noop from "lodash/noop";
 
-import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider";
 import NamePositionControl from "../NamePositionControl";
-import DropdownControl from "../../DropdownControl";
+
+import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider";
 import { IConfigItemSubsection } from "../../../../interfaces/ConfigurationPanel";
+import { setupComponent } from "../../../../tests/testHelper";
 
 const defaultProps: IConfigItemSubsection = {
     disabled: true,
@@ -19,7 +20,7 @@ const defaultProps: IConfigItemSubsection = {
 
 function createComponent(customProps: Partial<IConfigItemSubsection> = {}) {
     const props: IConfigItemSubsection = { ...defaultProps, ...customProps };
-    return mount<IConfigItemSubsection, null>(
+    return setupComponent(
         <InternalIntlWrapper>
             <NamePositionControl {...props} />
         </InternalIntlWrapper>,
@@ -28,44 +29,56 @@ function createComponent(customProps: Partial<IConfigItemSubsection> = {}) {
 
 describe("NamePositionControl render", () => {
     it("should render", () => {
-        const wrapper = createComponent();
-        expect(wrapper.find(NamePositionControl).length).toBe(1);
+        const { getByText } = createComponent();
+        expect(getByText("Position")).toBeInTheDocument();
     });
 
-    it("should DropdownControl.disabled be true when NamePositionControl disabled is true", () => {
-        const xaxisVisible = set({}, "controls.xaxis.visible", true);
-
-        const wrapper = createComponent({
-            disabled: true,
-            properties: xaxisVisible,
-        });
-
-        const node = wrapper.find(DropdownControl);
-        expect(node.prop("disabled")).toBe(true);
-    });
-
-    it("should DropdownControl.disabled be true when NamePositionControl disabled is false and xaxis is not visible", () => {
+    it("should be disabled when xaxis is not visible", () => {
         const xaxisVisible = set({}, "controls.xaxis.visible", false);
 
-        const wrapper = createComponent({
+        const { getByTitle } = createComponent({
             disabled: false,
             properties: xaxisVisible,
         });
 
-        const node = wrapper.find(DropdownControl);
-        expect(node.prop("disabled")).toBe(true);
+        expect(getByTitle("auto (default)")).toHaveClass("disabled");
     });
 
-    it(" should DropdownControl.disabled be true when NamePositionControl disabled is false and xaxis is visible and axisLabelsEnabled is false", () => {
+    it("should be disabled when xaxis is visible and axisLabelsEnabled is false", () => {
         const xaxisVisible = set({}, "controls.xaxis.visible", true);
         const axisLabelsEnabled = set(xaxisVisible, "controls.xaxis.labelsEnabled", false);
 
-        const wrapper = createComponent({
-            disabled: true,
+        const { getByTitle } = createComponent({
             properties: axisLabelsEnabled,
         });
 
-        const node = wrapper.find(DropdownControl);
-        expect(node.prop("disabled")).toBe(true);
+        expect(getByTitle("auto (default)")).toHaveClass("disabled");
+    });
+
+    it("should call pushData when click on list item", async () => {
+        const pushData = jest.fn();
+        const xaxisVisible = set({}, "controls.xaxis.visible", true);
+        const properties = set(xaxisVisible, "controls.xaxis.labelsEnabled", true);
+
+        const { getByText, user } = createComponent({
+            disabled: false,
+            properties,
+            pushData,
+        });
+
+        await user.click(getByText("auto (default)"));
+
+        await user.click(getByText("left"));
+        await waitFor(() => {
+            expect(pushData).toBeCalledWith(
+                expect.objectContaining({
+                    properties: {
+                        controls: {
+                            xaxis: { name: { position: "left" }, labelsEnabled: true, visible: true },
+                        },
+                    },
+                }),
+            );
+        });
     });
 });

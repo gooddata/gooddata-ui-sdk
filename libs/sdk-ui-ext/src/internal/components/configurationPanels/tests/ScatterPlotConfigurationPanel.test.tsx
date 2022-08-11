@@ -1,13 +1,13 @@
-// (C) 2019 GoodData Corporation
-import { IInsightDefinition, newMeasure } from "@gooddata/sdk-model";
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { shallow } from "enzyme";
-import { insightWithSingleAttribute } from "../../../tests/mocks/testMocks";
+import { IInsightDefinition, newMeasure } from "@gooddata/sdk-model";
+import { DefaultLocale, VisualizationTypes } from "@gooddata/sdk-ui";
+
 import ScatterPlotConfigurationPanel from "../ScatterPlotConfigurationPanel";
 import { IConfigurationPanelContentProps } from "../ConfigurationPanelContent";
-import ConfigSection from "../../configurationControls/ConfigSection";
-import NameSubsection from "../../configurationControls/axis/NameSubsection";
-import { DefaultLocale, VisualizationTypes } from "@gooddata/sdk-ui";
+
+import { insightWithSingleAttribute } from "../../../tests/mocks/testMocks";
+import { setupComponent } from "../../../tests/testHelper";
 
 describe("ScatterPlotConfigurationPanel", () => {
     function createComponent(
@@ -15,9 +15,7 @@ describe("ScatterPlotConfigurationPanel", () => {
             locale: DefaultLocale,
         },
     ) {
-        return shallow<IConfigurationPanelContentProps, null>(<ScatterPlotConfigurationPanel {...props} />, {
-            lifecycleExperimental: true,
-        });
+        return setupComponent(<ScatterPlotConfigurationPanel {...props} />);
     }
 
     function newInsight(measureBucket: string): IInsightDefinition {
@@ -39,9 +37,11 @@ describe("ScatterPlotConfigurationPanel", () => {
     }
 
     it("should render three sections in configuration panel for bubble chart", () => {
-        const wrapper = createComponent();
+        const { getByText } = createComponent();
 
-        expect(wrapper.find(ConfigSection).length).toBe(3);
+        expect(getByText("X-Axis")).toBeInTheDocument();
+        expect(getByText("Y-Axis")).toBeInTheDocument();
+        expect(getByText("Canvas")).toBeInTheDocument();
     });
 
     describe("axis name configuration", () => {
@@ -55,7 +55,7 @@ describe("ScatterPlotConfigurationPanel", () => {
             },
         };
 
-        it("should render configuration panel with enabled name sections", () => {
+        it("should render configuration panel with enabled name sections", async () => {
             const insight: IInsightDefinition = {
                 insight: {
                     title: "My Insight",
@@ -102,21 +102,19 @@ describe("ScatterPlotConfigurationPanel", () => {
                 },
             };
 
-            const wrapper = createComponent({
+            const { getByLabelText, getByText, user } = createComponent({
                 ...defaultProps,
                 insight,
             });
 
-            const axisSections = wrapper.find(NameSubsection);
+            await user.click(getByText("X-Axis"));
+            expect(getByLabelText("xaxis name")).toBeEnabled();
 
-            const xAxisSection = axisSections.at(0);
-            expect(xAxisSection.props().disabled).toEqual(false);
-
-            const yAxisSection = axisSections.at(1);
-            expect(yAxisSection.props().disabled).toEqual(false);
+            await user.click(getByText("Y-Axis"));
+            expect(getByLabelText("yaxis name")).toBeEnabled();
         });
 
-        it("should render configuration panel with disabled name sections", () => {
+        it("should render configuration panel with disabled name sections", async () => {
             const insight: IInsightDefinition = {
                 insight: {
                     title: "My Insight",
@@ -128,18 +126,16 @@ describe("ScatterPlotConfigurationPanel", () => {
                 },
             };
 
-            const wrapper = createComponent({
+            const { getByLabelText, getByText, user } = createComponent({
                 ...defaultProps,
                 insight,
             });
 
-            const axisSections = wrapper.find(NameSubsection);
+            await user.click(getByText("X-Axis"));
+            expect(getByLabelText("xaxis name")).toBeDisabled();
 
-            const xAxisSection = axisSections.at(0);
-            expect(xAxisSection.props().disabled).toBe(true);
-
-            const yAxisSection = axisSections.at(1);
-            expect(yAxisSection.props().disabled).toBe(true);
+            await user.click(getByText("Y-Axis"));
+            expect(getByLabelText("yaxis name")).toBeDisabled();
         });
 
         it.each([
@@ -147,28 +143,30 @@ describe("ScatterPlotConfigurationPanel", () => {
             [true, false, "secondary_measures"],
         ])(
             "should render configuration panel with X axis name section is disabled=%s and Y axis name section is disabled=%s",
-            (
+            async (
                 expectedXAxisSectionDisabled: boolean,
                 expectedYAxisSectionDisabled: boolean,
                 measureIdentifier: string,
             ) => {
-                const wrapper = createComponent({
+                const { getByLabelText, getByText, user } = createComponent({
                     ...defaultProps,
                     insight: newInsight(measureIdentifier),
                 });
 
-                const axisSections = wrapper.find(NameSubsection);
+                await user.click(getByText("X-Axis"));
+                expectedXAxisSectionDisabled
+                    ? expect(getByLabelText("xaxis name")).toBeDisabled()
+                    : expect(getByLabelText("xaxis name")).toBeEnabled();
 
-                const xAxisSection = axisSections.at(0);
-                expect(xAxisSection.props().disabled).toEqual(expectedXAxisSectionDisabled);
-
-                const yAxisSection = axisSections.at(1);
-                expect(yAxisSection.props().disabled).toEqual(expectedYAxisSectionDisabled);
+                await user.click(getByText("Y-Axis"));
+                expectedYAxisSectionDisabled
+                    ? expect(getByLabelText("yaxis name")).toBeDisabled()
+                    : expect(getByLabelText("yaxis name")).toBeEnabled();
             },
         );
 
-        it("should not render name sections in configuration panel", () => {
-            const wrapper = createComponent({
+        it("should not render name sections in configuration panel", async () => {
+            const { queryByLabelText, getByText, user } = createComponent({
                 ...defaultProps,
                 featureFlags: {
                     enableAxisNameConfiguration: false,
@@ -176,8 +174,8 @@ describe("ScatterPlotConfigurationPanel", () => {
                 insight: insightWithSingleAttribute,
             });
 
-            const axisSections = wrapper.find(NameSubsection);
-            expect(axisSections.exists()).toEqual(false);
+            await user.click(getByText("X-Axis"));
+            expect(queryByLabelText("xaxis")).not.toBeInTheDocument();
         });
     });
 });

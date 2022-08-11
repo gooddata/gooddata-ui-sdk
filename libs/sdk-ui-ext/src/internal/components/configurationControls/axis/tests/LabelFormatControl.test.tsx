@@ -1,12 +1,14 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
 import noop from "lodash/noop";
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
+import { waitFor } from "@testing-library/react";
+
+import { ILabelFormatControl, LabelFormatControl } from "../LabelFormatControl";
 
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider";
-import { ILabelFormatControl, LabelFormatControl } from "../LabelFormatControl";
+import { setupComponent } from "../../../../tests/testHelper";
 
 const defaultProps: ILabelFormatControl = {
     disabled: true,
@@ -18,67 +20,81 @@ const defaultProps: ILabelFormatControl = {
 
 function createComponent(customProps: Partial<ILabelFormatControl> = {}) {
     const props: ILabelFormatControl = { ...cloneDeep(defaultProps), ...customProps };
-    return mount<ILabelFormatControl, null>(
+    return setupComponent(
         <InternalIntlWrapper>
             <LabelFormatControl {...props} />
         </InternalIntlWrapper>,
     );
 }
 
-describe("LabelRotationControl render", () => {
-    const FORMAT_DROPDOWN_BUTTON_SELECTOR = ".s-auto__default_";
-
+describe("LabelFormatControl render", () => {
     it("should render", () => {
-        const wrapper = createComponent();
+        const { queryByText } = createComponent();
 
-        expect(wrapper.find(LabelFormatControl).exists()).toBe(true);
-    });
-
-    it("should be disabled when disabled prop is true", () => {
-        const xaxisVisible = set({}, "controls.xaxis.visible", true);
-        const properties = set(xaxisVisible, "controls.xaxis.labelsEnabled", true);
-
-        const wrapper = createComponent({
-            disabled: true,
-            properties: properties,
-        });
-
-        expect(wrapper.find(FORMAT_DROPDOWN_BUTTON_SELECTOR).hasClass("disabled")).toBe(true);
+        expect(queryByText("Format")).toBeInTheDocument();
     });
 
     it("should be disabled when xaxis is not visible", () => {
         const xaxisVisible = set({}, "controls.xaxis.visible", false);
         const properties = set(xaxisVisible, "controls.xaxis.labelsEnabled", true);
 
-        const wrapper = createComponent({
+        const { queryByTitle } = createComponent({
             disabled: false,
             properties: properties,
         });
 
-        expect(wrapper.find(FORMAT_DROPDOWN_BUTTON_SELECTOR).hasClass("disabled")).toBe(true);
+        expect(queryByTitle("auto (default)")).toHaveClass("disabled");
     });
 
     it("should be disabled when xaxis labels are not enabled", () => {
         const xaxisVisible = set({}, "controls.xaxis.visible", true);
         const properties = set(xaxisVisible, "controls.xaxis.labelsEnabled", false);
 
-        const wrapper = createComponent({
+        const { queryByTitle } = createComponent({
             disabled: false,
             properties: properties,
         });
 
-        expect(wrapper.find(FORMAT_DROPDOWN_BUTTON_SELECTOR).hasClass("disabled")).toBe(true);
+        expect(queryByTitle("auto (default)")).toHaveClass("disabled");
     });
 
-    it("should not be disabled when control is not disabled, xaxis is visible and xaxis labels are enabled", () => {
+    it("should not be disabled when control is not disabled, xaxis is visible and xaxis labels are enabled", async () => {
         const xaxisVisible = set({}, "controls.xaxis.visible", true);
         const properties = set(xaxisVisible, "controls.xaxis.labelsEnabled", true);
 
-        const wrapper = createComponent({
+        const { queryByText, queryByTitle, getByText, user } = createComponent({
             disabled: false,
             properties: properties,
         });
 
-        expect(wrapper.find(FORMAT_DROPDOWN_BUTTON_SELECTOR).hasClass("disabled")).toBe(false);
+        await user.click(getByText("auto (default)"));
+
+        expect(queryByText("inherit")).toBeInTheDocument();
+        expect(queryByTitle("auto (default)")).not.toHaveClass("disabled");
+    });
+
+    it("should call pushData when click on list item", async () => {
+        const pushData = jest.fn();
+        const xaxisVisible = set({}, "controls.xaxis.visible", true);
+        const properties = set(xaxisVisible, "controls.xaxis.labelsEnabled", true);
+
+        const { getByText, user } = createComponent({
+            disabled: false,
+            properties,
+            pushData,
+        });
+
+        await user.click(getByText("auto (default)"));
+
+        await user.click(getByText("inherit"));
+        await waitFor(() => {
+            expect(pushData).toBeCalledWith(
+                expect.objectContaining({
+                    properties: {
+                        controls: { xaxis: { format: "inherit", labelsEnabled: true, visible: true } },
+                    },
+                }),
+            );
+        });
     });
 });

@@ -1,13 +1,13 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
 import noop from "lodash/noop";
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
+import { waitFor } from "@testing-library/react";
 
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider";
 import LabelRotationControl, { ILabelRotationControl } from "../LabelRotationControl";
-import DropdownControl from "../../DropdownControl";
+import { setupComponent } from "../../../../tests/testHelper";
 
 const defaultProps: ILabelRotationControl = {
     disabled: true,
@@ -19,7 +19,7 @@ const defaultProps: ILabelRotationControl = {
 
 function createComponent(customProps: Partial<ILabelRotationControl> = {}) {
     const props: ILabelRotationControl = { ...cloneDeep(defaultProps), ...customProps };
-    return mount<ILabelRotationControl, null>(
+    return setupComponent(
         <InternalIntlWrapper>
             <LabelRotationControl {...props} />
         </InternalIntlWrapper>,
@@ -28,52 +28,86 @@ function createComponent(customProps: Partial<ILabelRotationControl> = {}) {
 
 describe("LabelRotationControl render", () => {
     it("should render", () => {
-        const wrapper = createComponent();
-        expect(wrapper.find(LabelRotationControl).length).toBe(1);
+        const { queryByText } = createComponent();
+        expect(queryByText("Rotation")).toBeInTheDocument();
     });
 
-    it("When LabelRotationControl disabled true" + "DropdownControl.disabled props should be true", () => {
+    it("When LabelRotationControl disabled true" + "should be disable", () => {
         const xaxisVisible = set({}, "controls.xaxis.visible", true);
 
-        const wrapper = createComponent({
+        const { queryByTitle } = createComponent({
             disabled: true,
             properties: xaxisVisible,
         });
 
-        const node = wrapper.find(DropdownControl);
-        expect(node.prop("disabled")).toBe(true);
+        expect(queryByTitle("auto (default)")).toHaveClass("disabled");
+    });
+
+    it("When LabelRotationControl disabled false and xaxis is not visible" + "should be disable", () => {
+        const xaxisVisible = set({}, "controls.xaxis.visible", false);
+
+        const { queryByTitle } = createComponent({
+            disabled: false,
+            properties: xaxisVisible,
+        });
+
+        expect(queryByTitle("auto (default)")).toHaveClass("disabled");
     });
 
     it(
-        "When LabelRotationControl disabled false and xaxis is not visible" +
-            "DropdownControl.disabled props should be true",
-        () => {
-            const xaxisVisible = set({}, "controls.xaxis.visible", false);
-
-            const wrapper = createComponent({
-                disabled: false,
-                properties: xaxisVisible,
-            });
-
-            const node = wrapper.find(DropdownControl);
-            expect(node.prop("disabled")).toBe(true);
-        },
-    );
-
-    it(
         "When LabelRotationControl disabled false and xaxis is visible and axisLabelsEnabled is false" +
-            "(it is switch off) than DropdownControl.disabled props should be true",
+            "(it is switch off) than should be disable",
         () => {
             const xaxisVisible = set({}, "controls.xaxis.visible", true);
             const axisLabelsEnabled = set(xaxisVisible, "controls.xaxis.labelsEnabled", false);
 
-            const wrapper = createComponent({
+            const { queryByTitle } = createComponent({
                 disabled: true,
                 properties: axisLabelsEnabled,
             });
 
-            const node = wrapper.find(DropdownControl);
-            expect(node.prop("disabled")).toBe(true);
+            expect(queryByTitle("auto (default)")).toHaveClass("disabled");
         },
     );
+
+    it(
+        "When LabelRotationControl disabled false and xaxisis visible and axisLabelsEnabled is true" +
+            "should not be disable",
+        () => {
+            const xaxisVisible = set({}, "controls.xaxis.visible", true);
+            const properties = set(xaxisVisible, "controls.xaxis.labelsEnabled", true);
+
+            const { queryByTitle } = createComponent({
+                disabled: false,
+                properties: properties,
+            });
+
+            expect(queryByTitle("auto (default)")).not.toHaveClass("disabled");
+        },
+    );
+
+    it("should call pushData when click on list item", async () => {
+        const pushData = jest.fn();
+        const xaxisVisible = set({}, "controls.xaxis.visible", true);
+        const properties = set(xaxisVisible, "controls.xaxis.labelsEnabled", true);
+
+        const { getByText, user } = createComponent({
+            disabled: false,
+            properties,
+            pushData,
+        });
+
+        await user.click(getByText("auto (default)"));
+
+        await user.click(getByText("30°"));
+        await waitFor(() => {
+            expect(pushData).toBeCalledWith(
+                expect.objectContaining({
+                    properties: {
+                        controls: { xaxis: { rotation: "30", labelsEnabled: true, visible: true } },
+                    },
+                }),
+            );
+        });
+    });
 });

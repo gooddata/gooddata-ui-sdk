@@ -1,16 +1,14 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
-import { shallow, ShallowWrapper } from "enzyme";
-import { IConfigurationPanelContentProps } from "../ConfigurationPanelContent";
-import GeoPushpinConfigurationPanel from "../GeoPushpinConfigurationPanel";
-import CheckboxControl from "../../configurationControls/CheckboxControl";
-import PushpinSizeControl from "../../configurationControls/PushpinSizeControl";
-import PushpinViewportControl from "../../configurationControls/PushpinViewportControl";
-import LegendSection from "../../configurationControls/legend/LegendSection";
-import ColorsSection from "../../configurationControls/colors/ColorsSection";
-import { BucketNames, DefaultLocale, VisualizationTypes } from "@gooddata/sdk-ui";
+import { BucketNames, DefaultLocale, VisualizationTypes, DefaultColorPalette } from "@gooddata/sdk-ui";
 import { ExamplesMd } from "@gooddata/live-examples-workspace";
 import { IInsightDefinition, modifyMeasure, newBucket, newInsightDefinition } from "@gooddata/sdk-model";
+
+import { IConfigurationPanelContentProps } from "../ConfigurationPanelContent";
+import GeoPushpinConfigurationPanel from "../GeoPushpinConfigurationPanel";
+
+import { setupComponent } from "../../../tests/testHelper";
+import { IColorConfiguration } from "../../../interfaces/Colors";
 
 const Location = ExamplesMd.City.Location;
 const Size = ExamplesMd.Population.Sum;
@@ -37,9 +35,29 @@ const DefaultInsight: IInsightDefinition = newInsightDefinition("local:pushpin",
     ]);
 });
 
+const colors: IColorConfiguration = {
+    colorPalette: DefaultColorPalette,
+    colorAssignments: [
+        {
+            headerItem: { attributeHeaderItem: { uri: "/ahi1", name: "Color 1" } },
+            color: {
+                type: "guid",
+                value: "4",
+            },
+        },
+        {
+            headerItem: { attributeHeaderItem: { uri: "/ahi2", name: "Color 2" } },
+            color: {
+                type: "guid",
+                value: "5",
+            },
+        },
+    ],
+};
+
 describe("GeoPushpinConfigurationPanel", () => {
-    function createComponent(props: IConfigurationPanelContentProps): ShallowWrapper {
-        return shallow<IConfigurationPanelContentProps, null>(<GeoPushpinConfigurationPanel {...props} />);
+    function createComponent(props: IConfigurationPanelContentProps) {
+        return setupComponent(<GeoPushpinConfigurationPanel {...props} />);
     }
 
     const defaultProps: IConfigurationPanelContentProps = {
@@ -66,86 +84,76 @@ describe("GeoPushpinConfigurationPanel", () => {
                 expectedStatus: boolean,
                 insight: IInsightDefinition,
             ) => {
-                const wrapper = createComponent({
+                const { getByLabelText } = createComponent({
                     ...defaultProps,
                     insight,
                 });
 
-                const isDisabled = await wrapper.find(LegendSection).prop("controlsDisabled");
-                expect(isDisabled).toEqual(expectedStatus);
+                if (expectedStatus) {
+                    expect(getByLabelText("legend_section")).toBeDisabled();
+                } else {
+                    expect(getByLabelText("legend_section")).toBeEnabled();
+                }
             },
         );
     });
 
     describe("Map section", () => {
         it("should render config panel with Default viewport dropdown is disabled", async () => {
-            const wrapper = createComponent({
+            const { getByText, getByTitle, user } = createComponent({
                 ...defaultProps,
                 insight: InsightWithoutLocation,
             });
 
-            const isDisabled = await wrapper.find(PushpinViewportControl).prop("disabled");
-            expect(isDisabled).toEqual(true);
+            await user.click(getByText("Map"));
+            expect(getByTitle("Include all data")).toHaveClass("disabled");
         });
 
         it("should render config panel with Default viewport dropdown is enabled", async () => {
-            const wrapper = createComponent(defaultProps);
+            const { getByText, getByTitle, user } = createComponent(defaultProps);
 
-            const isDisabled = await wrapper.find(PushpinViewportControl).prop("disabled");
-            expect(isDisabled).toEqual(false);
+            await user.click(getByText("Map"));
+            expect(getByTitle("Include all data")).not.toHaveClass("disabled");
         });
     });
 
     describe("Points section", () => {
         it("should render config panel with groupNearbyPoints checkbox is disabled", async () => {
-            const wrapper = createComponent(defaultProps);
+            const { getByText, getByLabelText, user } = createComponent(defaultProps);
 
-            const isDisabled = await wrapper.find(CheckboxControl).prop("disabled");
-            expect(isDisabled).toEqual(true);
+            await user.click(getByText("Points"));
+            expect(getByLabelText("points.groupNearbyPoints")).toBeDisabled();
         });
 
         it("should render config panel with groupNearbyPoints checkbox is enabled", async () => {
-            const wrapper = createComponent({
+            const { getByText, getByLabelText, user } = createComponent({
                 ...defaultProps,
                 insight: InsightForClustering,
             });
 
-            const isDisabled = await wrapper.find(CheckboxControl).prop("disabled");
-            expect(isDisabled).toEqual(false);
-        });
-
-        it("should render config panel with Point size section is disabled", async () => {
-            const wrapper = createComponent({
-                ...defaultProps,
-                insight: InsightForClustering,
-            });
-
-            const isDisabled = await wrapper.find(PushpinSizeControl).prop("disabled");
-            expect(isDisabled).toEqual(true);
-        });
-
-        it("should render config panel with Point size section is enabled", async () => {
-            const wrapper = createComponent(defaultProps);
-
-            const isDisabled = await wrapper.find(PushpinSizeControl).prop("disabled");
-            expect(isDisabled).toEqual(false);
+            await user.click(getByText("Points"));
+            expect(getByLabelText("points.groupNearbyPoints")).toBeEnabled();
         });
     });
 
     it("should render config panel with Color section is enabled", async () => {
-        const wrapper = createComponent(defaultProps);
+        const { queryByText, user } = createComponent({ ...defaultProps, colors });
 
-        const isDisabled = await wrapper.find(ColorsSection).prop("controlsDisabled");
-        expect(isDisabled).toEqual(false);
+        await user.click(queryByText("Colors"));
+        expect(queryByText("Color 1")).toBeInTheDocument();
+        expect(
+            queryByText("There are no colors for this configuration of the insight"),
+        ).not.toBeInTheDocument();
     });
 
     it("should render config panel with Color section is disabled", async () => {
-        const wrapper = createComponent({
+        const { queryByText, user } = createComponent({
             ...defaultProps,
             insight: InsightWithoutLocation,
         });
+        await user.click(queryByText("Colors"));
 
-        const isDisabled = await wrapper.find(ColorsSection).prop("controlsDisabled");
-        expect(isDisabled).toEqual(true);
+        expect(queryByText("There are no colors for this configuration of the insight")).toBeInTheDocument();
+        expect(queryByText("Color 1")).not.toBeInTheDocument();
     });
 });

@@ -1,22 +1,18 @@
-// (C) 2019 GoodData Corporation
-import { IAttribute, IInsightDefinition, IMeasure } from "@gooddata/sdk-model";
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { shallow } from "enzyme";
-import { insightWithSingleAttribute } from "../../../tests/mocks/testMocks";
+import { IAttribute, IInsightDefinition, IMeasure } from "@gooddata/sdk-model";
+import { VisualizationTypes, DefaultLocale } from "@gooddata/sdk-ui";
+
 import BaseChartConfigurationPanel from "../BaseChartConfigurationPanel";
 import { IConfigurationPanelContentProps } from "../ConfigurationPanelContent";
-import NameSubsection from "../../configurationControls/axis/NameSubsection";
-import { VisualizationTypes, DefaultLocale } from "@gooddata/sdk-ui";
+
+import { setupComponent } from "../../../tests/testHelper";
+import { insightWithSingleAttribute } from "../../../tests/mocks/testMocks";
 
 describe("BaseChartConfigurationPanel", () => {
     describe("axis name configuration", () => {
         function createComponent(props: IConfigurationPanelContentProps) {
-            return shallow<IConfigurationPanelContentProps, null>(
-                <BaseChartConfigurationPanel {...props} />,
-                {
-                    lifecycleExperimental: true,
-                },
-            );
+            return setupComponent(<BaseChartConfigurationPanel {...props} />);
         }
 
         const productAttribute: IAttribute = {
@@ -65,7 +61,7 @@ describe("BaseChartConfigurationPanel", () => {
             },
         };
 
-        it("should render configuration panel with enabled name sections in single axis chart", () => {
+        it("should render configuration panel with enabled name sections in single axis chart", async () => {
             const insight: IInsightDefinition = {
                 insight: {
                     title: "My Insight",
@@ -86,21 +82,19 @@ describe("BaseChartConfigurationPanel", () => {
                 },
             };
 
-            const wrapper = createComponent({
+            const { getByLabelText, getByText, user } = createComponent({
                 ...defaultProps,
                 insight,
             });
 
-            const axisSections = wrapper.find(NameSubsection);
+            await user.click(getByText("X-Axis"));
+            expect(getByLabelText("xaxis name")).toBeEnabled();
 
-            const xAxisSection = axisSections.at(0);
-            expect(xAxisSection.props().disabled).toEqual(false);
-
-            const yAxisSection = axisSections.at(1);
-            expect(yAxisSection.props().disabled).toEqual(false);
+            await user.click(getByText("Y-Axis"));
+            expect(getByLabelText("yaxis name")).toBeEnabled();
         });
 
-        it("should render configuration panel with enabled name sections in dual axis chart", () => {
+        it("should render configuration panel with enabled name sections in dual axis chart", async () => {
             const insight: IInsightDefinition = {
                 insight: {
                     title: "My Insight",
@@ -121,7 +115,7 @@ describe("BaseChartConfigurationPanel", () => {
                 },
             };
 
-            const wrapper = createComponent({
+            const { getByLabelText, getByText, user } = createComponent({
                 ...defaultProps,
                 insight,
                 axis: "dual",
@@ -134,19 +128,17 @@ describe("BaseChartConfigurationPanel", () => {
                 },
             });
 
-            const axisSections = wrapper.find(NameSubsection);
+            await user.click(getByText("X-Axis"));
+            expect(getByLabelText("xaxis name")).toBeEnabled();
 
-            const xAxisSection = axisSections.at(0);
-            expect(xAxisSection.props().disabled).toEqual(false);
+            await user.click(getByText("Y-Axis (Left)"));
+            expect(getByLabelText("yaxis name")).toBeEnabled();
 
-            const yAxisSection = axisSections.at(1);
-            expect(yAxisSection.props().disabled).toEqual(false);
-
-            const secondaryYAxisSection = axisSections.at(2);
-            expect(secondaryYAxisSection.props().disabled).toEqual(false);
+            await user.click(getByText("Y-Axis (Right)"));
+            expect(getByLabelText("yaxis name")).toBeEnabled();
         });
 
-        it("should render configuration panel with enabled X axis name section and disabled Y axis name section in single axis chart", () => {
+        it("should render configuration panel with enabled X axis name section and disabled Y axis name section in single axis chart", async () => {
             const insight: IInsightDefinition = {
                 insight: {
                     title: "My Insight",
@@ -167,21 +159,19 @@ describe("BaseChartConfigurationPanel", () => {
                 },
             };
 
-            const wrapper = createComponent({
+            const { getByLabelText, getByText, user } = createComponent({
                 ...defaultProps,
                 insight,
             });
 
-            const axisSections = wrapper.find(NameSubsection);
+            await user.click(getByText("X-Axis"));
+            expect(getByLabelText("xaxis name")).toBeEnabled();
 
-            const xAxisSection = axisSections.at(0);
-            expect(xAxisSection.props().disabled).toEqual(false);
-
-            const yAxisSection = axisSections.at(1);
-            expect(yAxisSection.props().disabled).toEqual(true); // because of 2 measures on Y axis
+            await user.click(getByText("Y-Axis"));
+            expect(getByLabelText("yaxis name")).toBeDisabled(); // because of 2 measures on Y axis
         });
 
-        it("should render configuration panel with disabled X axis name section and disabled Y axis name section in group-category chart", () => {
+        it("should render configuration panel with disabled X axis name section and disabled Y axis name section in group-category chart", async () => {
             const insight: IInsightDefinition = {
                 insight: {
                     title: "My Insight",
@@ -202,22 +192,20 @@ describe("BaseChartConfigurationPanel", () => {
                 },
             };
 
-            const wrapper = createComponent({
+            const { getByLabelText, getByText, user } = createComponent({
                 ...defaultProps,
                 insight,
             });
 
-            const axisSections = wrapper.find(NameSubsection);
+            await user.click(getByText("X-Axis"));
+            expect(getByLabelText("xaxis name")).toBeDisabled(); // because of 2 attributes on X axis
 
-            const xAxisSection = axisSections.at(0);
-            expect(xAxisSection.props().disabled).toEqual(true); // because of 2 attributes on X axis
-
-            const yAxisSection = axisSections.at(1);
-            expect(yAxisSection.props().disabled).toEqual(true); // because of 2 measures on Y axis
+            await user.click(getByText("Y-Axis"));
+            expect(getByLabelText("yaxis name")).toBeDisabled(); // because of 2 measures on Y axis
         });
 
-        it("should not render name sections in configuration panel", () => {
-            const wrapper = createComponent({
+        it("should not render name sections in configuration panel", async () => {
+            const { queryByTestId, getByText, user } = createComponent({
                 ...defaultProps,
                 featureFlags: {
                     enableAxisNameConfiguration: false,
@@ -225,8 +213,8 @@ describe("BaseChartConfigurationPanel", () => {
                 insight: insightWithSingleAttribute,
             });
 
-            const axisSections = wrapper.find(NameSubsection);
-            expect(axisSections.exists()).toEqual(false);
+            await user.click(getByText("X-Axis"));
+            expect(queryByTestId("xaxis")).not.toBeInTheDocument();
         });
     });
 });
