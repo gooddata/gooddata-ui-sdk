@@ -109,6 +109,10 @@ const clearWidgetPlaceholder: UiReducer = (state) => {
     state.widgetPlaceholder = undefined;
 };
 
+const requestInsightListUpdate: UiReducer = (state) => {
+    state.insightListLastUpdateRequested = +new Date();
+};
+
 export const uiReducers = {
     openScheduleEmailDialog,
     closeScheduleEmailDialog,
@@ -135,4 +139,5 @@ export const uiReducers = {
     setKpiDateDatasetAutoOpen,
     setWidgetPlaceholder,
     clearWidgetPlaceholder,
+    requestInsightListUpdate,
 };

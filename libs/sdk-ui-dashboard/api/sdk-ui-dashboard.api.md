@@ -5443,6 +5443,9 @@ export const selectInsightAttributesMeta: (query: QueryInsightAttributesMeta) =>
 // @alpha
 export const selectInsightByRef: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IInsight | undefined, (res: ObjRefMap<IInsight>) => IInsight | undefined>;
 
+// @internal (undocumented)
+export const selectInsightListLastUpdateRequested: OutputSelector<DashboardState, number, (res: UiState) => number>;
+
 // @alpha
 export const selectInsightRefs: OutputSelector<DashboardState, ObjRef[], (res: IInsight[]) => ObjRef[]>;
 
@@ -5821,6 +5824,7 @@ payload: IWidgetPlaceholderSpec;
 type: string;
 }>;
 clearWidgetPlaceholder: CaseReducer<UiState, AnyAction>;
+requestInsightListUpdate: CaseReducer<UiState, AnyAction>;
 }>;
 
 // @alpha (undocumented)
@@ -5835,6 +5839,8 @@ export interface UiState {
     filterBar: {
         expanded: boolean;
     };
+    // (undocumented)
+    insightListLastUpdateRequested: number;
     // (undocumented)
     kpiAlerts: {
         openedWidgetRef: ObjRef | undefined;

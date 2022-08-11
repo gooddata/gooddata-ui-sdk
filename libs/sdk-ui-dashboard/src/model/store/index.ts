@@ -224,6 +224,7 @@ export {
     selectKpiDeleteDialogWidgetCoordinates,
     selectIsWidgetPlaceholderShown,
     selectWidgetPlaceholder,
+    selectInsightListLastUpdateRequested,
 } from "./ui/uiSelectors";
 export { uiActions } from "./ui";
 export { RenderModeState } from "./renderMode/renderModeState";
