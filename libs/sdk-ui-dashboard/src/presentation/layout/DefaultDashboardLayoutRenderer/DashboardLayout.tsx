@@ -80,12 +80,12 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
         [debug, sectionRenderer],
     );
 
+    const getLayoutDimensions = useCallback(function (): DOMRect {
+        return layoutRef?.current ? layoutRef.current.getBoundingClientRect() : emptyDOMRect;
+    }, []);
+
     const widgetRendererWrapped = useCallback<IDashboardLayoutWidgetRenderer<TWidget>>(
         (renderProps) => {
-            function getLayoutDimensions(): DOMRect {
-                return layoutRef?.current ? layoutRef.current.getBoundingClientRect() : emptyDOMRect;
-            }
-
             const isResizedByLayoutSizingStrategy = resizedItemPositions.some((position) =>
                 isEqual(position, [renderProps.item.section().index(), renderProps.item.index()]),
             );
@@ -134,6 +134,7 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
                                             widgetRenderer={widgetRendererWrapped}
                                             screen={screen}
                                             renderMode={renderMode}
+                                            getLayoutDimensions={getLayoutDimensions}
                                         />
                                     );
                                 })}

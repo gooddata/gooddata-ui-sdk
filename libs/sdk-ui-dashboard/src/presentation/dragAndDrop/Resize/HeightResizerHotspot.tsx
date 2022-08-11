@@ -21,6 +21,7 @@ export type HeightResizerHotspotProps = {
     items: IDashboardLayoutItemFacade<unknown>[];
     screen: ScreenSize;
     getContainerDimensions: () => DOMRect | undefined;
+    getLayoutDimensions: () => DOMRect;
 };
 
 export function HeightResizerHotspot({
@@ -28,17 +29,20 @@ export function HeightResizerHotspot({
     items,
     screen,
     getContainerDimensions,
+    getLayoutDimensions,
 }: HeightResizerHotspotProps) {
     const dispatch = useDashboardDispatch();
     const insightsMap = useDashboardSelector(selectInsightsMap);
-    const { resizeDirection, resizeItemIdentifiers, resizeStart, resizeEnd } = useResizeContext();
+    const { resizeDirection, resizeItemIdentifiers, resizeStart, resizeEnd, getScrollCorrection } =
+        useResizeContext();
     const widgets = useMemo(() => items.map((item) => item.widget() as IWidget), [items]);
     const widgetIdentifiers = widgets.map((widget) => widget.identifier);
 
     const [{ isDragging }, dragRef] = useDashboardDrag(
         {
             dragItem: () => {
-                const initialScrollTop = document.documentElement.scrollTop;
+                const initialLayoutDimensions = getLayoutDimensions();
+
                 const minLimit = getMinHeight(widgets, insightsMap);
                 const maxLimit = getMaxHeight(widgets, insightsMap);
                 const heightsGR = getHeightsGR(items, screen, getContainerDimensions()?.height ?? 100);
@@ -47,21 +51,22 @@ export function HeightResizerHotspot({
                     type: "internal-height-resizer",
                     sectionIndex: section.index(),
                     itemIndexes: items.map((item) => item.index()),
-                    initialScrollTop,
+                    initialLayoutDimensions,
                     widgetHeights: heightsGR,
                     minLimit,
                     maxLimit,
                 };
             },
             dragEnd: (item, monitor) => {
-                const { sectionIndex, itemIndexes, widgetHeights, initialScrollTop } = item;
+                const scrollCorrection = getScrollCorrection();
+
+                const { sectionIndex, itemIndexes, widgetHeights } = item;
                 const minLimit = getMinHeight(widgets, insightsMap);
                 const maxLimit = getMaxHeight(widgets, insightsMap);
                 const newHeightGR = getNewHeightGR(
                     widgetHeights,
                     monitor.getDifferenceFromInitialOffset()?.y || 0,
-                    document.documentElement.scrollTop,
-                    initialScrollTop,
+                    scrollCorrection.y,
                     minLimit,
                     maxLimit,
                 );
@@ -122,14 +127,12 @@ export function getHeightsGR(
 export function getNewHeightGR(
     widgetHeights: number[],
     offsetYPX: number,
-    currentScrollTop: number,
-    initialScrollTop: number,
+    scrollCorrectionY: number,
     minLimit: number,
     maxLimit: number,
 ): number {
     const currentWidth = Math.max(...widgetHeights);
-    const totalDelta = offsetYPX + (currentScrollTop - initialScrollTop);
-    const deltaHeightGR = fluidLayoutDescriptor.toGridHeight(totalDelta);
+    const deltaHeightGR = fluidLayoutDescriptor.toGridHeight(offsetYPX - scrollCorrectionY);
 
     return Math.min(maxLimit, Math.max(minLimit, currentWidth + deltaHeightGR));
 }

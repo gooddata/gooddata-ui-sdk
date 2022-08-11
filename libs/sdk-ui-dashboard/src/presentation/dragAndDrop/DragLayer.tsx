@@ -1,11 +1,13 @@
 // (C) 2022 GoodData Corporation
-import React, { CSSProperties, FC, useMemo } from "react";
+import React, { CSSProperties, FC, useCallback, useEffect, useMemo, useRef } from "react";
 import { useDragLayer } from "react-dnd";
-import { HeightResizerDragPreview } from "./DragLayerPreview/HeightResizerDragPreview";
-import { DraggableInternalItemType, DraggableItemType, isDraggableInternalItemType } from "./types";
 import { ContentDragPreview } from "./DragLayerPreview/ContentDragPreview";
-import { useScrolling } from "./Resize/useScrolling";
+import { HeightResizerDragPreview } from "./DragLayerPreview/HeightResizerDragPreview";
 import { WidthResizerDragPreview } from "./DragLayerPreview/WidthResizerDragPreview";
+import { useScrollCorrection } from "./Resize/useScrollCorrection";
+import { DraggableInternalItemType, DraggableItemType, isDraggableInternalItemType } from "./types";
+import { emptyDOMRect } from "../layout/constants";
+import { useResizeHandlers } from "./LayoutResizeContext";
 
 const previewComponentsMap: Record<DraggableInternalItemType, any> = {
     "internal-height-resizer": HeightResizerDragPreview,
@@ -13,6 +15,9 @@ const previewComponentsMap: Record<DraggableInternalItemType, any> = {
 };
 
 export const DragLayerComponent: FC = () => {
+    const dragLayerRef = useRef<HTMLDivElement>(null);
+    const { setScrollCorrection } = useResizeHandlers();
+
     const dragLayerProperties = useDragLayer((monitor) => ({
         item: monitor.getItem(),
         itemType: monitor.getItemType() as DraggableItemType,
@@ -24,9 +29,19 @@ export const DragLayerComponent: FC = () => {
 
     const { itemType, isDragging } = dragLayerProperties;
 
+    const getDragLayerPosition = useCallback(() => {
+        return dragLayerRef.current?.getBoundingClientRect() ?? (emptyDOMRect as DOMRect);
+    }, [dragLayerRef.current]);
+
+    const isResizing = itemType === "internal-height-resizer" || itemType === "internal-width-resizer";
+    const { scrollCorrection } = useScrollCorrection(getDragLayerPosition, isDragging && isResizing);
+
+    useEffect(() => {
+        setScrollCorrection(scrollCorrection);
+    }, [scrollCorrection, setScrollCorrection]);
+
     const layerStyles: CSSProperties = useMemo(() => {
-        const isHeightResizing = itemType === "internal-height-resizer";
-        const position = isHeightResizing ? "relative" : "fixed";
+        const position = isResizing ? "relative" : "fixed";
 
         return {
             position,
@@ -39,25 +54,21 @@ export const DragLayerComponent: FC = () => {
         };
     }, [itemType]);
 
-    useScrolling(isDragging);
     if (!isDragging) {
         return null;
     }
-
-    const documentDimensions = {
-        scrollLeft: document.documentElement.scrollLeft,
-        scrollTop: document.documentElement.scrollTop,
-        scrollWidth: document.body.scrollWidth,
-        scrollHeight: document.body.scrollHeight,
-    };
 
     const Component = isDraggableInternalItemType(itemType)
         ? previewComponentsMap[itemType]
         : ContentDragPreview;
 
+    const previewProps = isDraggableInternalItemType(itemType)
+        ? { ...dragLayerProperties, getDragLayerPosition, scrollCorrection }
+        : dragLayerProperties;
+
     return (
-        <div style={layerStyles}>
-            <Component {...dragLayerProperties} documentDimensions={documentDimensions} />
+        <div style={layerStyles} ref={dragLayerRef}>
+            <Component {...previewProps} />
         </div>
     );
 };

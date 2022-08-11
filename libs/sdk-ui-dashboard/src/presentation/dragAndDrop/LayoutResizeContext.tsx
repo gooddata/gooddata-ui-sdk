@@ -1,20 +1,21 @@
 // (C) 2022 GoodData Corporation
-import React, { createContext, ReactNode, useCallback, useContext, useState } from "react";
+import React, { createContext, ReactNode, useCallback, useContext, useRef, useState } from "react";
 import noop from "lodash/noop";
-import { ReachedHeightResizingLimit } from "./DragLayerPreview/types";
+import { ReachedResizingLimit } from "./DragLayerPreview/types";
 import { emptyDOMRect } from "../layout/constants";
+import { XYCoord } from "react-dnd";
 
 type ResizeDirection = "height" | "width" | "none";
 type WidthState = {
     initialIndex: number;
     currentIndex: number;
-    limitReached: boolean;
+    limitReached: ReachedResizingLimit;
 };
 
 export type LayoutResizeState = {
     resizeDirection: ResizeDirection;
     resizeItemIdentifiers: string[];
-    heightLimitReached: ReachedHeightResizingLimit;
+    heightLimitReached: ReachedResizingLimit;
     widthState: null | WidthState;
     initialDashboardDimensions: DOMRect;
 };
@@ -33,9 +34,11 @@ export type LayoutResizeHandlers = {
         resizeIdentifiers: string[],
         getDashboardDimensions?: () => DOMRect,
     ) => void;
-    toggleHeightLimitReached: (limit: ReachedHeightResizingLimit) => void;
-    setWidthState: (widthState: WidthState) => void;
     resizeEnd: () => void;
+    setScrollCorrection: (scrollCorrection: XYCoord) => void;
+    getScrollCorrection: () => XYCoord;
+    setWidthState: (widthState: WidthState) => void;
+    toggleHeightLimitReached: (limit: ReachedResizingLimit) => void;
 };
 
 export type LayoutResizeContext = LayoutResizeState & LayoutResizeHandlers;
@@ -46,10 +49,12 @@ const LayoutResizeStateContext = createContext<LayoutResizeContext>({
     heightLimitReached: "none",
     widthState: null,
     initialDashboardDimensions: emptyDOMRect,
-    toggleHeightLimitReached: noop,
-    setWidthState: noop,
     resizeStart: noop,
     resizeEnd: noop,
+    setScrollCorrection: noop,
+    getScrollCorrection: () => ({ x: 0, y: 0 }),
+    setWidthState: noop,
+    toggleHeightLimitReached: noop,
 });
 
 export type LayoutResizeStateProviderProps = {
@@ -57,6 +62,7 @@ export type LayoutResizeStateProviderProps = {
 };
 
 export function LayoutResizeStateProvider({ children }: LayoutResizeStateProviderProps) {
+    const scrollingCorrectionRef = useRef<XYCoord>({ x: 0, y: 0 });
     const [resizeState, setResizeState] = useState<LayoutResizeState>(initState);
 
     const resizeStart = useCallback(
@@ -66,17 +72,17 @@ export function LayoutResizeStateProvider({ children }: LayoutResizeStateProvide
             getDashboardDimensions?: () => DOMRect,
         ) => {
             setResizeState({
+                heightLimitReached: "none",
+                initialDashboardDimensions: getDashboardDimensions ? getDashboardDimensions() : emptyDOMRect,
                 resizeDirection: direction,
                 resizeItemIdentifiers: identifiers,
-                heightLimitReached: "none",
                 widthState: null,
-                initialDashboardDimensions: getDashboardDimensions ? getDashboardDimensions() : emptyDOMRect,
             });
         },
         [],
     );
 
-    const toggleHeightLimitReached = useCallback((heightLimitReached: ReachedHeightResizingLimit) => {
+    const toggleHeightLimitReached = useCallback((heightLimitReached: ReachedResizingLimit) => {
         setResizeState((state) => ({
             ...state,
             heightLimitReached,
@@ -90,6 +96,14 @@ export function LayoutResizeStateProvider({ children }: LayoutResizeStateProvide
         }));
     }, []);
 
+    const setScrollCorrection = useCallback((scrollCorrection: XYCoord) => {
+        scrollingCorrectionRef.current = scrollCorrection;
+    }, []);
+
+    const getScrollCorrection = useCallback(() => {
+        return scrollingCorrectionRef.current;
+    }, []);
+
     const resizeEnd = useCallback(() => {
         setResizeState(initState);
     }, []);
@@ -100,6 +114,8 @@ export function LayoutResizeStateProvider({ children }: LayoutResizeStateProvide
                 ...resizeState,
                 resizeStart,
                 resizeEnd,
+                setScrollCorrection,
+                getScrollCorrection,
                 setWidthState,
                 toggleHeightLimitReached,
             }}
@@ -121,6 +137,8 @@ export function useResizeHandlers(): LayoutResizeHandlers {
         toggleHeightLimitReached: context.toggleHeightLimitReached,
         resizeEnd: context.resizeEnd,
         setWidthState: context.setWidthState,
+        setScrollCorrection: context.setScrollCorrection,
+        getScrollCorrection: context.getScrollCorrection,
     };
 }
 
@@ -130,7 +148,7 @@ export function useResizeItemStatus(identifier: string) {
         isActive: context.resizeItemIdentifiers.includes(identifier),
         isResizingColumnOrRow: context.resizeDirection !== "none",
         heightLimitReached: context.heightLimitReached,
-        widthLimitReached: context.widthState?.limitReached ?? false,
+        widthLimitReached: context.widthState?.limitReached ?? "none",
         initialDashboardDimensions: context.initialDashboardDimensions,
     };
 }

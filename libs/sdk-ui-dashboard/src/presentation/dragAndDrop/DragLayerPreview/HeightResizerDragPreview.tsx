@@ -2,30 +2,30 @@
 import React, { useEffect, useState } from "react";
 
 import { HeightResizer } from "../Resize/HeightResizer";
-import { DragPreviewProps, ReachedHeightResizingLimit } from "./types";
+import { DragResizeProps, ReachedResizingLimit } from "./types";
 import { fluidLayoutDescriptor } from "@gooddata/sdk-ui-ext";
 
 import { HeightResizerDragItem } from "../types";
 import { useResizeHandlers } from "../LayoutResizeContext";
 import { getLimitedSize } from "./sizeLimiting";
 
-export type HeightResizerDragPreviewProps = DragPreviewProps<HeightResizerDragItem>;
+export type HeightResizerDragPreviewProps = DragResizeProps<HeightResizerDragItem>;
 
 export const HeightResizerDragPreview = (props: HeightResizerDragPreviewProps) => {
-    const { item, initialOffset, differenceFromInitialOffset, documentDimensions } = props;
-    const [hasReachedLimit, setReachedLimit] = useState<ReachedHeightResizingLimit>("none");
+    const { item, initialOffset, differenceFromInitialOffset, scrollCorrection, getDragLayerPosition } =
+        props;
 
     const { toggleHeightLimitReached } = useResizeHandlers();
+    const [hasReachedLimit, setReachedLimit] = useState<ReachedResizingLimit>("none");
     useEffect(() => {
         toggleHeightLimitReached(hasReachedLimit);
     }, [hasReachedLimit, toggleHeightLimitReached]);
 
-    const currentOffsetY = differenceFromInitialOffset.y;
+    const dragLayerOffset = getDragLayerPosition();
     const currentUnlimitedHeightGR = getNewHeightGR(
         item.widgetHeights,
-        currentOffsetY,
-        documentDimensions.scrollTop,
-        item.initialScrollTop,
+        differenceFromInitialOffset.y,
+        scrollCorrection.y,
     );
 
     useEffect(() => {
@@ -40,10 +40,10 @@ export const HeightResizerDragPreview = (props: HeightResizerDragPreviewProps) =
         }
     }, [currentUnlimitedHeightGR, item.minLimit, item.maxLimit, hasReachedLimit]);
 
-    const top = getLimitedYCoord(item, initialOffset.y, currentOffsetY, documentDimensions.scrollTop);
+    const top = getLimitedYCoord(item, initialOffset.y, differenceFromInitialOffset.y, scrollCorrection.y);
     const style = {
-        top: `${top + 4}px`,
-        left: `${initialOffset.x}px`,
+        top: `${top + 4 - dragLayerOffset.y + scrollCorrection.y}px`,
+        left: `${initialOffset.x - dragLayerOffset.x + scrollCorrection.x}px`,
         right: `30px`,
     };
 
@@ -59,20 +59,15 @@ function getPrimaryHeightGR(heightsGR: number[]): number {
     return Math.max(...heightsGR);
 }
 
-function hasHeightReachedLimit(heightGR: number, min: number, max: number): ReachedHeightResizingLimit {
+function hasHeightReachedLimit(heightGR: number, min: number, max: number): ReachedResizingLimit {
     if (heightGR < min) return "min";
     if (heightGR > max) return "max";
     return "none";
 }
 
-function getNewHeightGR(
-    widgetHeights: number[],
-    offsetYPX: number,
-    currentScrollTop: number,
-    initialScrollTop: number,
-): number {
+function getNewHeightGR(widgetHeights: number[], offsetYPX: number, scrollingCorrectionY: number): number {
     const primaryHeightGR = getPrimaryHeightGR(widgetHeights);
-    const totalDelta = offsetYPX + (currentScrollTop - initialScrollTop);
+    const totalDelta = offsetYPX - scrollingCorrectionY;
     const deltaHeightGR = fluidLayoutDescriptor.toGridHeight(totalDelta);
     return primaryHeightGR + deltaHeightGR;
 }
@@ -81,17 +76,14 @@ export function getLimitedYCoord(
     item: HeightResizerDragItem,
     initialSourceClientOffsetY: number,
     differenceFromInitialOffsetY: number,
-    currentScrollTop: number,
+    scrollingCorrectionY: number,
 ): number {
-    const { minLimit, maxLimit, initialScrollTop } = item;
+    const { minLimit, maxLimit } = item;
 
-    const absoluteY = initialSourceClientOffsetY + initialScrollTop;
-    const deltaSize = fluidLayoutDescriptor.toGridHeight(
-        differenceFromInitialOffsetY + (currentScrollTop - initialScrollTop),
-    );
+    const deltaSize = fluidLayoutDescriptor.toGridHeight(differenceFromInitialOffsetY - scrollingCorrectionY);
     const curPrimaryHeightGR = getPrimaryHeightGR(item.widgetHeights);
     const newSizeLimited = getLimitedSize(minLimit, maxLimit, curPrimaryHeightGR, deltaSize);
     const deltaY = fluidLayoutDescriptor.toHeightInPx(newSizeLimited - curPrimaryHeightGR);
 
-    return absoluteY + deltaY;
+    return initialSourceClientOffsetY + deltaY;
 }

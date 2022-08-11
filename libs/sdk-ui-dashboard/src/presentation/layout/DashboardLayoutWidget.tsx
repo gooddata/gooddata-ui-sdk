@@ -172,7 +172,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                     <ResizeOverlay
                         isActive={isActive}
                         isResizingColumnOrRow={isResizingColumnOrRow}
-                        isUnderWidthMinLimit={widthLimitReached}
+                        reachedWidthLimit={widthLimitReached}
                         reachedHeightLimit={heightLimitReached}
                     />
                     <Hotspot

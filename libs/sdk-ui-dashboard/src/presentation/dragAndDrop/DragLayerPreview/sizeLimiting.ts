@@ -1,5 +1,6 @@
 // (C) 2022 GoodData Corporation
 import clamp from "lodash/clamp";
+import { ReachedResizingLimit } from "./types";
 
 export function getLimitedSize(
     minimumSize: number,
@@ -9,6 +10,20 @@ export function getLimitedSize(
 ): number {
     const newSize = originalSize + deltaSize;
     return clamp(newSize, minimumSize, maximumSize);
+}
+
+function getLimitReached(
+    unlimitedSize: number,
+    limitedSize: number,
+    maximumSize: number,
+): ReachedResizingLimit {
+    const isLimited = limitedSize !== unlimitedSize;
+
+    if (!isLimited) {
+        return "none";
+    }
+
+    return unlimitedSize > maximumSize ? "max" : "min";
 }
 
 export function applySizeLimitation(
@@ -24,5 +39,6 @@ export function applySizeLimitation(
         limitedSize,
         unlimitedSize,
         isLimited: limitedSize !== unlimitedSize,
+        limitReached: getLimitReached(unlimitedSize, limitedSize, maximumSize),
     };
 }

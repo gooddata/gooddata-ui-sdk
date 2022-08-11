@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import { XYCoord } from "react-dnd";
 import { WidthResizer } from "../Resize/WidthResizer";
-import { DragPreviewProps } from "./types";
+import { DragResizeProps } from "./types";
 import { WidthResizerDragItem } from "../types";
 import { applySizeLimitation } from "./sizeLimiting";
 import { useResizeHandlers } from "../LayoutResizeContext";
@@ -21,28 +21,34 @@ export interface IWidthResizerDragPreviewDispatchProps {
 export type IWidthResizerDragPreviewProps = IWidthResizerDragPreviewDispatchProps &
     IWidthResizerDragPreviewOwnProps;
 
-export type WidthResizerDragPreviewProps = DragPreviewProps<WidthResizerDragItem>;
+export type WidthResizerDragPreviewProps = DragResizeProps<WidthResizerDragItem>;
 
 export function WidthResizerDragPreview(props: WidthResizerDragPreviewProps) {
     const { setWidthState } = useResizeHandlers();
 
-    const { item, differenceFromInitialOffset, initialOffset } = props;
+    const { item, differenceFromInitialOffset, initialOffset, scrollCorrection, getDragLayerPosition } =
+        props;
     const { gridColumnHeightInPx } = item;
-    const scrollLeft = document.documentElement.scrollLeft;
-
-    const sizeAndCoords = getSizeAndXCoords(item, initialOffset.x, differenceFromInitialOffset.x, scrollLeft);
+    const sizeAndCoords = getSizeAndXCoords(
+        item,
+        initialOffset.x,
+        differenceFromInitialOffset.x,
+        scrollCorrection.x,
+    );
 
     const style = getWidthResizerStyle({
         gridColumnHeightInPx,
         initialOffset,
         limitedX: sizeAndCoords.limitedX,
+        dragLayerOffset: getDragLayerPosition(),
+        scrollCorrection,
     });
 
     useEffect(() => {
         setWidthState({
             initialIndex: sizeAndCoords.initialIndex,
             currentIndex: sizeAndCoords.currentIndex,
-            limitReached: sizeAndCoords.isLimited,
+            limitReached: sizeAndCoords.limitReached,
         });
     }, [sizeAndCoords.initialIndex, sizeAndCoords.currentIndex, sizeAndCoords.isLimited, setWidthState]);
 
@@ -57,24 +63,25 @@ export function getSizeAndXCoords(
     item: WidthResizerDragItem,
     initialSourceClientOffsetX: number,
     differenceFromInitialOffsetX: number,
-    documentScrollLeft: number,
+    scrollCorrectionX: number,
 ) {
     const { minLimit, maxLimit, currentWidth, initialLayoutDimensions, gridColumnWidth } = item;
 
-    const absoluteX = initialSourceClientOffsetX + documentScrollLeft;
-    const deltaSize = getDiffInGridColumns(differenceFromInitialOffsetX, gridColumnWidth);
+    const deltaSize = getDiffInGridColumns(differenceFromInitialOffsetX - scrollCorrectionX, gridColumnWidth);
     const sizeLimitation = applySizeLimitation(minLimit, maxLimit, currentWidth, deltaSize);
     const deltaSizeLimited = sizeLimitation.limitedSize - currentWidth;
     const deltaXLimited = deltaSizeLimited * gridColumnWidth;
     const deltaXUnlimited = deltaSize * gridColumnWidth;
 
-    const initialIndex = Math.round((absoluteX - initialLayoutDimensions.left) / gridColumnWidth);
+    const initialIndex = Math.round(
+        (initialSourceClientOffsetX - initialLayoutDimensions.left) / gridColumnWidth,
+    );
     const currentIndex = initialIndex + deltaSizeLimited;
 
     return {
         ...sizeLimitation,
-        limitedX: absoluteX + deltaXLimited,
-        unlimitedX: absoluteX + deltaXUnlimited,
+        limitedX: initialSourceClientOffsetX + deltaXLimited,
+        unlimitedX: initialSourceClientOffsetX + deltaXUnlimited,
         initialIndex,
         currentIndex,
     };
@@ -88,15 +95,19 @@ function getWidthResizerStyle({
     initialOffset,
     limitedX,
     gridColumnHeightInPx,
+    dragLayerOffset,
+    scrollCorrection,
 }: {
     initialOffset: XYCoord;
     limitedX: number;
     gridColumnHeightInPx: number;
+    dragLayerOffset: XYCoord;
+    scrollCorrection: XYCoord;
 }): React.CSSProperties {
     return {
         position: "absolute",
-        top: `${initialOffset.y}px`,
-        left: `${limitedX}px`,
+        top: `${initialOffset.y - dragLayerOffset.y + scrollCorrection.y}px`,
+        left: `${limitedX - dragLayerOffset.x + scrollCorrection.x}px`,
         height: `${gridColumnHeightInPx}px`,
     };
 }

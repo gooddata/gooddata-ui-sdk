@@ -2665,7 +2665,7 @@ export interface HeadlessDashboardConfig {
 // @internal (undocumented)
 export interface HeightResizerDragItem {
     // (undocumented)
-    initialScrollTop: number;
+    initialLayoutDimensions: DOMRect;
     // (undocumented)
     itemIndexes: number[];
     // (undocumented)

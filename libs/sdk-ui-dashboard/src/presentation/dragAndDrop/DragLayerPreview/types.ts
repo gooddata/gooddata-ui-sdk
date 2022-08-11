@@ -1,8 +1,8 @@
 // (C) 2022 GoodData Corporation
 import { XYCoord } from "react-dnd";
-import { DraggableItem } from "../types";
+import { DraggableInternalItem, DraggableItem } from "../types";
 
-export type ReachedHeightResizingLimit = "min" | "max" | "none";
+export type ReachedResizingLimit = "min" | "max" | "none";
 
 export type DragPreviewProps<TDraggableItem extends DraggableItem> = {
     itemType: TDraggableItem["type"];
@@ -10,10 +10,10 @@ export type DragPreviewProps<TDraggableItem extends DraggableItem> = {
     currentOffset: XYCoord;
     initialOffset: XYCoord;
     differenceFromInitialOffset: XYCoord;
-    documentDimensions: {
-        scrollLeft: number;
-        scrollTop: number;
-        scrollWidth: number;
-        scrollHeight: number;
-    };
 };
+
+export type DragResizeProps<TDraggableItem extends DraggableInternalItem> =
+    DragPreviewProps<TDraggableItem> & {
+        getDragLayerPosition: () => XYCoord;
+        scrollCorrection: XYCoord;
+    };
