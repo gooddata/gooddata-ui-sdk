@@ -3,7 +3,7 @@ import React from "react";
 import { DropdownButton } from "@gooddata/sdk-ui-kit";
 
 export interface IButtonWithTypeIcon {
-    icon: string;
+    icon?: string;
     value: string;
     className?: string;
     isOpen: boolean;

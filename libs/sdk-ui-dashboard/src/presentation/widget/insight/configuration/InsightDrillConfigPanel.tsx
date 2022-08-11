@@ -15,7 +15,8 @@ import { DrillOriginSelector } from "./DrillOriginSelector/DrillOriginSelector";
 import invariant from "ts-invariant";
 import { getMappedConfigForWidget } from "./getMappedConfigForWidget";
 import { useDrillTargetTypeItems } from "./useDrillTargetTypeItems";
-import { IDrillConfigItem } from "../../../drill/types";
+import { IDrillConfigItem, isAvailableDrillTargetMeasure } from "../../../drill/types";
+import { IAvailableDrillTargetItem } from "../../../drill/DrillSelect/types";
 
 const mergeDrillConfigItems = (
     drillConfigItems: IDrillConfigItem[],
@@ -74,31 +75,30 @@ export const InsightDrillConfigPanel: React.FunctionComponent<IDrillConfigPanelP
         addIncompleteItem(incompleteItem);
     };
 
-    const onOriginSelect = () => {
-        // TODO
-        // if (isAvailableDrillTargetMeasure(selectedItem)) {
-        //     const incompleteMeasureItem: IDrillConfigItem = {
-        //         type: "measure",
-        //         localIdentifier: selectedItem.measure.measureHeaderItem.localIdentifier,
-        //         title: selectedItem.measure.measureHeaderItem.name,
-        //         attributes: selectedItem.attributes,
-        //         drillTargetType: undefined,
-        //         complete: false,
-        //     };
-        //
-        //     addIncompleteItem(incompleteMeasureItem);
-        // } else {
-        //     const incompleteAttributeItem: IDrillConfigItem = {
-        //         type: "attribute",
-        //         localIdentifier: selectedItem.attribute.attributeHeader.localIdentifier,
-        //         title: selectedItem.attribute.attributeHeader.formOf.name,
-        //         attributes: selectedItem.intersectionAttributes,
-        //         drillTargetType: undefined,
-        //         complete: false,
-        //     };
-        //
-        //     addIncompleteItem(incompleteAttributeItem);
-        // }
+    const onOriginSelect = (selectedItem: IAvailableDrillTargetItem) => {
+        if (isAvailableDrillTargetMeasure(selectedItem)) {
+            const incompleteMeasureItem: IDrillConfigItem = {
+                type: "measure",
+                localIdentifier: selectedItem.measure.measureHeaderItem.localIdentifier,
+                title: selectedItem.measure.measureHeaderItem.name,
+                attributes: selectedItem.attributes,
+                drillTargetType: undefined,
+                complete: false,
+            };
+
+            addIncompleteItem(incompleteMeasureItem);
+        } else {
+            const incompleteAttributeItem: IDrillConfigItem = {
+                type: "attribute",
+                localIdentifier: selectedItem.attribute.attributeHeader.localIdentifier,
+                title: selectedItem.attribute.attributeHeader.formOf.name,
+                attributes: selectedItem.intersectionAttributes,
+                drillTargetType: undefined,
+                complete: false,
+            };
+
+            addIncompleteItem(incompleteAttributeItem);
+        }
     };
 
     const configItems = useDashboardSelector(selectDrillTargetsByWidgetRef(widgetRef));
@@ -112,6 +112,22 @@ export const InsightDrillConfigPanel: React.FunctionComponent<IDrillConfigPanelP
 
     const dispatch = useDashboardDispatch();
     const mergedItems = mergeDrillConfigItems(drillItems, incompleteItems);
+
+    const availableDrillTargetMeasures = configItems?.availableDrillTargets?.measures?.filter((measure) =>
+        mergedItems.some(
+            (item) =>
+                item.type === "measure" &&
+                item.localIdentifier === measure.measure.measureHeaderItem.localIdentifier,
+        ),
+    );
+    const availableDrillTargetAttributes = configItems?.availableDrillTargets?.attributes?.filter(
+        (attribute) =>
+            mergedItems.some(
+                (item) =>
+                    item.type === "attribute" &&
+                    item.localIdentifier === attribute.attribute.attributeHeader.localIdentifier,
+            ),
+    );
 
     return (
         <div className="configuration-category s-drill-config-panel">
@@ -131,7 +147,13 @@ export const InsightDrillConfigPanel: React.FunctionComponent<IDrillConfigPanelP
                 enabledDrillTargetTypeItems={enabledDrillTargetTypeItems}
             />
             {configItems?.availableDrillTargets && (
-                <DrillOriginSelector items={configItems?.availableDrillTargets} onSelect={onOriginSelect} />
+                <DrillOriginSelector
+                    items={{
+                        measures: availableDrillTargetMeasures,
+                        attributes: availableDrillTargetAttributes,
+                    }}
+                    onSelect={onOriginSelect}
+                />
             )}
         </div>
     );
