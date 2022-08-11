@@ -10,7 +10,7 @@ import {
     useDashboardSelector,
 } from "../../../../model";
 import { KpiConfigurationPanelCore } from "./KpiConfigurationPanelCore";
-import { CustomWidgetConfigPanelComponent } from "../../../componentDefinition/types";
+import { CustomWidgetConfigPanelComponent } from "../../../componentDefinition";
 
 /**
  * @internal

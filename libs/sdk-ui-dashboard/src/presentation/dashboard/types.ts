@@ -37,9 +37,9 @@ import {
     OptionalKpiComponentProvider,
     OptionalWidgetComponentProvider,
     OptionalDateFilterComponentProvider,
-    InsightComponentSetProvider,
 } from "../dashboardContexts";
 import { CustomSidebarComponent } from "./DashboardSidebar/types";
+import { InsightComponentSetProvider } from "../componentDefinition/types";
 
 /**
  * These props allow you to specify custom components or custom component providers that the Dashboard

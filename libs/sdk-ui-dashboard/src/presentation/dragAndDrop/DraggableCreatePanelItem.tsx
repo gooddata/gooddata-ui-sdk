@@ -4,7 +4,7 @@ import cx from "classnames";
 
 import { useDashboardDrag } from "./useDashboardDrag";
 import { DraggableItem } from "./types";
-import { CustomCreatePanelItemComponent } from "../componentDefinition/types";
+import { CustomCreatePanelItemComponent } from "../componentDefinition";
 
 /**
  * @internal

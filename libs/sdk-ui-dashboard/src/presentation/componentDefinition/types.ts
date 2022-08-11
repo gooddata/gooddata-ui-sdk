@@ -249,3 +249,10 @@ export type CustomWidgetComponentSet = CustomComponentBase<
     DraggableComponent &
     Partial<ConfigurableWidget<ICustomWidget>> &
     Partial<CreatableByDragComponent>;
+
+/**
+ * @internal
+ */
+export type InsightComponentSetProvider = (
+    defaultComponentSet: InsightWidgetComponentSet,
+) => InsightWidgetComponentSet;

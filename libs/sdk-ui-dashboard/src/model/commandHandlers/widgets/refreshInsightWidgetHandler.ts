@@ -4,7 +4,8 @@ import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 
 import { RefreshInsightWidget } from "../../commands";
-import { selectInsightByRef, selectWidgetsMap } from "../../store";
+import { selectWidgetsMap } from "../../store/layout/layoutSelectors";
+import { selectInsightByRef } from "../../store/insights/insightsSelectors";
 import { DashboardContext } from "../../types/commonTypes";
 import { validateExistingInsightWidget } from "./validation/widgetValidations";
 import { insightsActions } from "../../store/insights";
