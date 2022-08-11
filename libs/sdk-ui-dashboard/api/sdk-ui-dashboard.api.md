@@ -3608,10 +3608,7 @@ export type InsightBodyComponentProvider = (insight: IInsight, widget: IInsightW
 export type InsightComponentProvider = (insight: IInsight, widget: IInsightWidget) => CustomDashboardInsightComponent;
 
 // @internal (undocumented)
-export type InsightComponentSetFactory = (insightProvider: InsightComponentProvider) => InsightWidgetComponentSet;
-
-// @internal (undocumented)
-export type InsightComponentSetProvider = (insightProvider: InsightComponentProvider, defaultFactory: InsightComponentSetFactory) => InsightWidgetComponentSet;
+export type InsightComponentSetProvider = (defaultComponentSet: InsightWidgetComponentSet) => InsightWidgetComponentSet;
 
 // @alpha
 export interface InsightDateDatasets {

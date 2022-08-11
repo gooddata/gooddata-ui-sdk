@@ -151,10 +151,10 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
     }, [dashboard]);
 
     const insightWidgetComponentSet = useMemo<InsightWidgetComponentSet>(() => {
-        if (InsightComponentSetProvider) {
-            return InsightComponentSetProvider(insightProvider, DefaultDashboardInsightComponentSetFactory);
-        }
-        return DefaultDashboardInsightComponentSetFactory(insightProvider);
+        const defaultComponentSet = DefaultDashboardInsightComponentSetFactory(insightProvider);
+        return InsightComponentSetProvider
+            ? InsightComponentSetProvider(defaultComponentSet)
+            : defaultComponentSet;
     }, [InsightComponentSetProvider, insightProvider]);
 
     const kpiWidgetComponentSet = useMemo<KpiWidgetComponentSet>(() => {

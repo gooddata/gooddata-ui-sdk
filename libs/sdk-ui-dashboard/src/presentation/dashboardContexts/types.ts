@@ -141,14 +141,6 @@ export type OptionalAttributeFilterComponentProvider = OptionalProvider<Attribut
 /**
  * @internal
  */
-export type InsightComponentSetFactory = (
-    insightProvider: InsightComponentProvider,
-) => InsightWidgetComponentSet;
-
-/**
- * @internal
- */
 export type InsightComponentSetProvider = (
-    insightProvider: InsightComponentProvider,
-    defaultFactory: InsightComponentSetFactory,
+    defaultComponentSet: InsightWidgetComponentSet,
 ) => InsightWidgetComponentSet;
