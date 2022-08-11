@@ -244,6 +244,11 @@ export interface ISettings {
      */
     enableTheming?: boolean;
 
+    /**
+     * Enable custom non-production dataset in AD/Modeler
+     */
+    ["msf.enableTenantCustomModel"]?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

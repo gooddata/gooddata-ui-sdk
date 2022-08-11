@@ -2025,6 +2025,7 @@ export interface ISeparators {
 
 // @public
 export interface ISettings {
+    ["msf.enableTenantCustomModel"]?: boolean;
     // (undocumented)
     [key: string]: number | boolean | string | object | undefined;
     ADCatalogGroupsExpanded?: boolean;
