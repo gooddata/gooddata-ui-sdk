@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-import React, { useMemo } from "react";
+import React, { useCallback } from "react";
 
 import {
     uiActions,
@@ -29,8 +29,8 @@ export const DraggableKpiCreatePanelItem: React.FC<IDraggableKpiCreatePanelItemP
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
     const { deselectWidgets } = useWidgetSelection();
 
-    const handleDragEnd = useMemo<IDraggableCreatePanelItemProps["onDragEnd"]>(
-        () => (didDrop) => {
+    const handleDragEnd = useCallback<Required<IDraggableCreatePanelItemProps>["onDragEnd"]>(
+        (didDrop) => {
             if (!didDrop) {
                 dispatch(uiActions.clearWidgetPlaceholder());
             }
