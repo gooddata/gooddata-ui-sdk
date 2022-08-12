@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
 import noop from "lodash/noop";
@@ -90,6 +90,23 @@ export const EditModeDashboardKpi = (props: IDashboardKpiProps) => {
         widgetRef(kpiWidget),
     );
 
+    const renderBeforeContent = useMemo(() => {
+        const hasConfigComponent = !!KpiConfigurationComponent;
+        const shouldHaveConfigRendered = isSelected && hasConfigPanelOpen;
+
+        if (!hasConfigComponent || !shouldHaveConfigRendered) {
+            return undefined;
+        }
+
+        return function KpiConfiguration() {
+            return (
+                <ConfigurationBubble>
+                    <KpiConfigurationComponent widget={kpiWidget} />
+                </ConfigurationBubble>
+            );
+        };
+    }, [KpiConfigurationComponent, hasConfigPanelOpen, isSelected, kpiWidget]);
+
     useEffect(() => {
         if (error) {
             onError?.(error);
@@ -104,20 +121,7 @@ export const EditModeDashboardKpi = (props: IDashboardKpiProps) => {
                 "content-loading": isLoading,
                 "content-loaded": !isLoading,
             })}
-            renderBeforeContent={
-                KpiConfigurationComponent
-                    ? () => {
-                          if (isSelected && hasConfigPanelOpen) {
-                              return (
-                                  <ConfigurationBubble>
-                                      <KpiConfigurationComponent widget={kpiWidget} />
-                                  </ConfigurationBubble>
-                              );
-                          }
-                          return null;
-                      }
-                    : undefined
-            }
+            renderBeforeContent={renderBeforeContent}
             renderAfterContent={() => {
                 if (isSelected) {
                     return (
