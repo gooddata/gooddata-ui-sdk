@@ -3,7 +3,11 @@ import { useCallback, useMemo } from "react";
 import { idRef, IdentifierRef, UriRef } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { useThemeIsLoading } from "@gooddata/sdk-ui-theme-provider";
-import { DefaultDashboardAttributeFilter, DefaultDashboardDateFilter } from "../../filterBar";
+import {
+    DefaultDashboardAttributeFilter,
+    DefaultDashboardDateFilter,
+    DefaultDashboardAttributeFilterComponentSetFactory,
+} from "../../filterBar";
 import {
     DefaultDashboardWidget,
     DefaultDashboardInsightMenuButton,
@@ -13,6 +17,8 @@ import {
     DefaultInsightBody,
     DefaultDashboardInsight,
     DefaultDashboardKpi,
+    DefaultDashboardInsightComponentSetFactory,
+    DefaultDashboardKpiComponentSetFactory,
 } from "../../widget";
 import { IDashboardProps } from "../types";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -26,6 +32,11 @@ import {
     KpiComponentProvider,
     DateFilterComponentProvider,
 } from "../../dashboardContexts";
+import {
+    AttributeFilterComponentSet,
+    InsightWidgetComponentSet,
+    KpiWidgetComponentSet,
+} from "../../componentDefinition";
 
 interface IUseDashboardResult {
     backend: IAnalyticalBackend;
@@ -40,6 +51,9 @@ interface IUseDashboardResult {
     insightMenuButtonProvider: InsightMenuButtonComponentProvider;
     insightMenuProvider: InsightMenuComponentProvider;
     kpiProvider: KpiComponentProvider;
+    insightWidgetComponentSet: InsightWidgetComponentSet;
+    kpiWidgetComponentSet: KpiWidgetComponentSet;
+    attributeFilterComponentSet: AttributeFilterComponentSet;
 }
 
 export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
@@ -53,6 +67,7 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         InsightMenuButtonComponentProvider,
         insightMenuItemsProvider,
         InsightMenuComponentProvider,
+        InsightComponentSetProvider,
         KpiComponentProvider,
     } = props;
 
@@ -135,6 +150,21 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         return typeof dashboard === "string" ? idRef(dashboard) : dashboard;
     }, [dashboard]);
 
+    const insightWidgetComponentSet = useMemo<InsightWidgetComponentSet>(() => {
+        const defaultComponentSet = DefaultDashboardInsightComponentSetFactory(insightProvider);
+        return InsightComponentSetProvider
+            ? InsightComponentSetProvider(defaultComponentSet)
+            : defaultComponentSet;
+    }, [InsightComponentSetProvider, insightProvider]);
+
+    const kpiWidgetComponentSet = useMemo<KpiWidgetComponentSet>(() => {
+        return DefaultDashboardKpiComponentSetFactory(kpiProvider);
+    }, [kpiProvider]);
+
+    const attributeFilterComponentSet = useMemo<AttributeFilterComponentSet>(() => {
+        return DefaultDashboardAttributeFilterComponentSetFactory(attributeFilterProvider);
+    }, [attributeFilterProvider]);
+
     const isThemeLoading = useThemeIsLoading();
     const hasThemeProvider = isThemeLoading !== undefined;
 
@@ -151,5 +181,8 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         insightMenuButtonProvider,
         insightMenuProvider,
         kpiProvider,
+        insightWidgetComponentSet,
+        kpiWidgetComponentSet,
+        attributeFilterComponentSet,
     };
 };

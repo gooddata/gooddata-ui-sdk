@@ -8,14 +8,14 @@ import {
     uiActions,
     useDashboardDispatch,
     useDashboardSelector,
-} from "../../../../../model";
+} from "../../../../model";
 import { KpiConfigurationPanelCore } from "./KpiConfigurationPanelCore";
+import { CustomWidgetConfigPanelComponent } from "../../../componentDefinition";
 
-interface IKpiConfigurationPanelProps {
-    widget: IKpiWidget;
-}
-
-export const KpiConfigurationPanel: React.FC<IKpiConfigurationPanelProps> = (props) => {
+/**
+ * @internal
+ */
+export const DefaultKpiConfigurationPanel: CustomWidgetConfigPanelComponent<IKpiWidget> = (props) => {
     const { widget } = props;
 
     const dispatch = useDashboardDispatch();

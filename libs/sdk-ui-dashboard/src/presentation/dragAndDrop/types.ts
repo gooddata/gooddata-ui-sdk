@@ -8,6 +8,7 @@ export type DraggableContentItemType =
     | "attributeFilter"
     | "attributeFilter-placeholder"
     | "insightListItem"
+    | "insight-placeholder"
     | "kpi-placeholder"
     | "widget"
     | "custom";
@@ -77,6 +78,20 @@ export function isKpiPlaceholderDraggableItem(item: any): item is KpiPlaceholder
 /**
  * @internal
  */
+export type InsightPlaceholderDraggableItem = {
+    type: "insight-placeholder";
+};
+
+/**
+ * @internal
+ */
+export function isInsightPlaceholderDraggableItem(item: any): item is InsightPlaceholderDraggableItem {
+    return item.type === "insight-placeholder";
+}
+
+/**
+ * @internal
+ */
 export type InsightDraggableListItem = {
     type: "insightListItem";
     insight: IInsight;
@@ -112,6 +127,7 @@ export type DraggableContentItem =
     | AttributeFilterDraggableItem
     | AttributeFilterPlaceholderDraggableItem
     | InsightDraggableListItem
+    | InsightPlaceholderDraggableItem
     | KpiPlaceholderDraggableItem
     | CustomDraggableItem
     | WidgetDraggableItem;
@@ -138,6 +154,7 @@ export type DraggableItemComponentTypeMapping = {
     attributeFilter: AttributeFilterDraggableItem;
     "attributeFilter-placeholder": AttributeFilterPlaceholderDraggableItem;
     insightListItem: InsightDraggableListItem;
+    "insight-placeholder": InsightPlaceholderDraggableItem;
     "kpi-placeholder": KpiPlaceholderDraggableItem;
     custom: CustomDraggableItem;
     widget: WidgetDraggableItem;
@@ -178,32 +195,6 @@ export type DraggableItemInternalTypeMapping = {
     "internal-width-resizer": WidthResizerDragItem;
     "internal-height-resizer": HeightResizerDragItem;
 };
-
-/**
- * @internal
- */
-export type CustomDashboardAttributeFilterPlaceholderComponentProps = {
-    disabled: boolean;
-};
-
-/**
- * @internal
- */
-export type CustomDashboardAttributeFilterPlaceholderComponent =
-    React.ComponentType<CustomDashboardAttributeFilterPlaceholderComponentProps>;
-
-/**
- * @internal
- */
-export type CustomDashboardKpiPlaceholderComponentProps = {
-    disabled: boolean;
-};
-
-/**
- * @internal
- */
-export type CustomDashboardKpiPlaceholderComponent =
-    React.ComponentType<CustomDashboardKpiPlaceholderComponentProps>;
 
 /**
  * @internal

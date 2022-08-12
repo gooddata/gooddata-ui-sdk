@@ -47,6 +47,13 @@ export function getSizeInfo(
     return getVisualizationSizeInfo(settings, widgetContent);
 }
 
+/**
+ * @internal
+ */
+export function getInsightPlaceholderSizeInfo(settings: ISettings): IVisualizationSizeInfo {
+    return getVisualizationSizeInfo(settings);
+}
+
 function getVisualizationSizeInfo(
     settings: ISettings,
     insight?: MeasurableWidgetContent,

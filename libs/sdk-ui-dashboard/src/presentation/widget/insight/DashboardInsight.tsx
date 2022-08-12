@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React, { useMemo } from "react";
 
 import { useDashboardComponentsContext } from "../../dashboardContexts";
@@ -9,10 +9,10 @@ import { IDashboardInsightProps } from "./types";
  */
 export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => {
     const { insight, widget } = props;
-    const { InsightComponentProvider } = useDashboardComponentsContext();
+    const { InsightWidgetComponentSet } = useDashboardComponentsContext();
     const InsightComponent = useMemo(
-        () => InsightComponentProvider(insight, widget),
-        [InsightComponentProvider, insight, widget],
+        () => InsightWidgetComponentSet.MainComponentProvider(insight, widget),
+        [InsightWidgetComponentSet, insight, widget],
     );
 
     return <InsightComponent {...props} />;

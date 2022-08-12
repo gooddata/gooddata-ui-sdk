@@ -9,6 +9,7 @@ import debounce from "lodash/debounce";
 
 import { AddAttributeFilterButton } from "./AddAttributeFilterButton";
 import { useDashboardSelector, selectCatalogAttributes } from "../../../../model";
+import { IDashboardAttributeFilterPlaceholderProps } from "../types";
 
 interface IAttributeListItemProps {
     item?: ICatalogAttribute;
@@ -91,22 +92,12 @@ function AttributeListItem({ item, isMobile, onClick }: IAttributeListItemProps)
 /**
  * @internal
  */
-export interface IAttributesDropdownProps {
-    className?: string;
-    bodyClassName?: string;
-    onSelect: (item: ICatalogAttribute) => void;
-    onClose: () => void;
-}
-
-/**
- * @internal
- */
 export function AttributesDropdown({
     className,
     bodyClassName,
     onClose,
     onSelect,
-}: IAttributesDropdownProps) {
+}: IDashboardAttributeFilterPlaceholderProps) {
     const intl = useIntl();
     const [searchQuery, setSearchQuery] = useState("");
 
@@ -171,7 +162,7 @@ export function AttributesDropdown({
                                 <AttributeListItem
                                     item={item}
                                     onClick={() => {
-                                        onSelect(item);
+                                        onSelect(item.defaultDisplayForm.ref);
                                         closeDropdown();
                                     }}
                                 />

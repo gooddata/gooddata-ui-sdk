@@ -21,7 +21,7 @@ import {
     setDrillForKpiWidget,
     useDashboardDispatch,
     useDashboardSelector,
-} from "../../../../../../model";
+} from "../../../../../model";
 import { CONFIG_PANEL_INNER_WIDTH } from "../constants";
 
 const alignPoints: IAlignPoint[] = [{ align: "bl tl" }, { align: "tl bl" }];

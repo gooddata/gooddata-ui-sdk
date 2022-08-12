@@ -4,4 +4,4 @@ export * from "./AttributeFilterDropZone";
 export * from "./AttributeFilterDropZoneHint";
 export * from "./DefaultAttributeFilterDraggingComponent";
 export * from "./DraggableAttributeFilter";
-export * from "./DraggableAttributeFilterPlaceholder";
+export * from "./DraggableAttributeFilterCreatePanelItem";

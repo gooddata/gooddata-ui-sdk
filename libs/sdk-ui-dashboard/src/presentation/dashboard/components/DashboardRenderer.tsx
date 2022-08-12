@@ -51,6 +51,9 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
         insightMenuButtonProvider,
         insightMenuProvider,
         kpiProvider,
+        insightWidgetComponentSet,
+        kpiWidgetComponentSet,
+        attributeFilterComponentSet,
     } = useDashboard(props);
 
     const dashboardRender = (
@@ -108,6 +111,9 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
                                         SidebarComponent={
                                             props.SidebarComponent ?? RenderModeAwareDashboardSidebar
                                         }
+                                        InsightWidgetComponentSet={insightWidgetComponentSet}
+                                        KpiWidgetComponentSet={kpiWidgetComponentSet}
+                                        AttributeFilterComponentSet={attributeFilterComponentSet}
                                     >
                                         <DashboardConfigProvider menuButtonConfig={props.menuButtonConfig}>
                                             <DndProvider backend={HTML5Backend}>

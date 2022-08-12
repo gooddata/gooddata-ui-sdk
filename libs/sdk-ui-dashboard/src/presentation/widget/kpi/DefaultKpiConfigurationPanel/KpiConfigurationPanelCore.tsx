@@ -5,19 +5,15 @@ import cx from "classnames";
 import { IKpiWidget, ObjRef, widgetRef } from "@gooddata/sdk-model";
 import { Typography } from "@gooddata/sdk-ui-kit";
 
-import { AttributeFilterConfiguration } from "../../../common";
+import { AttributeFilterConfiguration } from "../../common";
 import { KpiComparison } from "./KpiComparison/KpiComparison";
 import { KpiWidgetDateDatasetFilter } from "./KpiWidgetDateDatasetFilter";
 import { KpiMetricDropdown } from "./KpiMetricDropdown/KpiMetricDropdown";
 import { KpiConfigurationPanelHeader } from "./KpiConfigurationPanelHeader";
 import { KpiConfigurationMessages } from "./KpiConfigurationMessages";
 import { KpiDrillConfiguration } from "./KpiDrill/KpiDrillConfiguration";
-import { safeSerializeObjRef } from "../../../../../_staging/metadata/safeSerializeObjRef";
-import {
-    QueryWidgetAlertCount,
-    queryWidgetAlertCount,
-    useDashboardQueryProcessing,
-} from "../../../../../model";
+import { safeSerializeObjRef } from "../../../../_staging/metadata/safeSerializeObjRef";
+import { QueryWidgetAlertCount, queryWidgetAlertCount, useDashboardQueryProcessing } from "../../../../model";
 
 interface IKpiConfigurationPanelCoreProps {
     widget?: IKpiWidget;

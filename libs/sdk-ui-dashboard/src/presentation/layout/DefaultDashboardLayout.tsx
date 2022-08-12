@@ -9,6 +9,7 @@ import {
     IDashboardLayoutItem,
 } from "@gooddata/sdk-model";
 import { LRUCache } from "@gooddata/util";
+import invariant from "ts-invariant";
 
 import {
     useDashboardSelector,
@@ -20,6 +21,7 @@ import {
     selectEnableWidgetCustomHeight,
     selectRenderMode,
     selectWidgetPlaceholder,
+    IWidgetPlaceholderSpec,
 } from "../../model";
 import { useDashboardComponentsContext } from "../dashboardContexts";
 
@@ -35,7 +37,14 @@ import {
 import { RenderModeAwareDashboardLayoutSectionHeaderRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionHeaderRenderer";
 import { getMemoizedWidgetSanitizer } from "./DefaultDashboardLayoutUtils";
 import { SectionHotspot } from "../dragAndDrop";
-import { newKpiPlaceholderWidget, newPlaceholderWidget } from "../../widgets/placeholders/types";
+import {
+    InsightPlaceholderWidget,
+    KpiPlaceholderWidget,
+    newInsightPlaceholderWidget,
+    newKpiPlaceholderWidget,
+    newPlaceholderWidget,
+    PlaceholderWidget,
+} from "../../widgets";
 
 /**
  * Get dashboard layout for exports.
@@ -81,6 +90,24 @@ const itemKeyGetter: IDashboardLayoutItemKeyGetter<ExtendedDashboardWidget> = (k
     }
     return keyGetterProps.item.index().toString();
 };
+
+function widgetForPlaceholderForSpec(
+    widgetPlaceholder: IWidgetPlaceholderSpec,
+    isLast: boolean,
+): PlaceholderWidget | InsightPlaceholderWidget | KpiPlaceholderWidget {
+    const { itemIndex, sectionIndex } = widgetPlaceholder;
+
+    switch (widgetPlaceholder.type) {
+        case "insight":
+            return newInsightPlaceholderWidget(sectionIndex, itemIndex, isLast);
+        case "kpi":
+            return newKpiPlaceholderWidget(sectionIndex, itemIndex, isLast);
+        case "widget":
+            return newPlaceholderWidget(sectionIndex, itemIndex, isLast);
+        default:
+            invariant(false, "unknown placeholder type");
+    }
+}
 
 /**
  * @alpha
@@ -131,18 +158,10 @@ export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Elemen
                                 gridWidth: widgetPlaceholder.size.width,
                             },
                         },
-                        widget:
-                            widgetPlaceholder.type === "widget"
-                                ? newPlaceholderWidget(
-                                      widgetPlaceholder.sectionIndex,
-                                      widgetPlaceholder.itemIndex,
-                                      widgetPlaceholder.itemIndex === section.facade().items().count(),
-                                  )
-                                : newKpiPlaceholderWidget(
-                                      widgetPlaceholder.sectionIndex,
-                                      widgetPlaceholder.itemIndex,
-                                      widgetPlaceholder.itemIndex === section.facade().items().count(),
-                                  ),
+                        widget: widgetForPlaceholderForSpec(
+                            widgetPlaceholder,
+                            widgetPlaceholder.itemIndex === section.facade().items().count(),
+                        ),
                     },
                     widgetPlaceholder.itemIndex,
                 ),

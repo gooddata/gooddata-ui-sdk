@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import invariant from "ts-invariant";
 
-import { isKpiPlaceholderWidget } from "../../../widgets/placeholders/types";
+import { isKpiPlaceholderWidget } from "../../../widgets";
 import {
     removeLayoutSection,
     selectLayout,
@@ -16,6 +16,9 @@ import { ConfigurationBubble } from "../common";
 import { CustomDashboardWidgetComponent } from "../widget/types";
 import { KpiPlaceholderConfigurationPanel } from "./KpiPlaceholderConfigurationPanel";
 
+/**
+ * @internal
+ */
 export const DefaultDashboardKpiPlaceholderWidget: CustomDashboardWidgetComponent = (props) => {
     const { widget, screen } = props;
     invariant(isKpiPlaceholderWidget(widget));

@@ -61,6 +61,7 @@ export interface UiState {
     configurationPanelOpened: boolean;
     kpiDateDatasetAutoOpen: boolean;
     widgetPlaceholder: IWidgetPlaceholderSpec | undefined;
+    insightListLastUpdateRequested: number;
 }
 
 export const uiInitialState: UiState = {
@@ -97,4 +98,5 @@ export const uiInitialState: UiState = {
     configurationPanelOpened: true,
     kpiDateDatasetAutoOpen: false,
     widgetPlaceholder: undefined,
+    insightListLastUpdateRequested: 0,
 };

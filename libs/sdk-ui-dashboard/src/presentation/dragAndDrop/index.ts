@@ -4,6 +4,7 @@ export * from "./draggableAttributeFilter";
 export * from "./draggableWidget";
 export * from "./DragLayer";
 export * from "./DeleteDropZone";
+export * from "./DraggableCreatePanelItem";
 export * from "./types";
 export * from "./useDashboardDrop";
 export * from "./LayoutResizeContext";

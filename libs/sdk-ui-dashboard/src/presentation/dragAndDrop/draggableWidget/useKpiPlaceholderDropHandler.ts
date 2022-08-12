@@ -4,7 +4,7 @@ import { idRef } from "@gooddata/sdk-model";
 
 import { selectSettings, useDashboardDispatch, useDashboardSelector, uiActions } from "../../../model";
 import { getSizeInfo } from "../../../_staging/layout/sizing";
-import { KPI_PLACEHOLDER_WIDGET_ID } from "../../../widgets/placeholders/types";
+import { KPI_PLACEHOLDER_WIDGET_ID } from "../../../widgets";
 
 export function useKpiPlaceholderDropHandler() {
     const dispatch = useDashboardDispatch();

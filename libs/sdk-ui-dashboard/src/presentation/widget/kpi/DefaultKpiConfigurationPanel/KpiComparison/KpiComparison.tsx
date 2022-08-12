@@ -7,7 +7,7 @@ import {
     IKpiWidget,
     widgetRef,
 } from "@gooddata/sdk-model";
-import { changeKpiWidgetComparison, useDashboardDispatch } from "../../../../../../model";
+import { changeKpiWidgetComparison, useDashboardDispatch } from "../../../../../model";
 import { KpiComparisonTypeDropdown } from "./KpiComparisonTypeDropdown";
 import { KpiComparisonDirectionDropdown } from "./KpiComparisonDirectionDropdown";
 

@@ -1,59 +1,32 @@
 // (C) 2022 GoodData Corporation
 import { useCallback } from "react";
-import { IInsight, insightRef, insightTitle } from "@gooddata/sdk-model";
+import { idRef } from "@gooddata/sdk-model";
 
-import {
-    selectSettings,
-    useDashboardDispatch,
-    useDashboardSelector,
-    addSectionItem,
-    useDashboardCommandProcessing,
-    uiActions,
-} from "../../../model";
-import { getSizeInfo } from "../../../_staging/layout/sizing";
+import { useDashboardDispatch, uiActions, useDashboardSelector, selectSettings } from "../../../model";
+import { INSIGHT_PLACEHOLDER_WIDGET_ID } from "../../../widgets";
+import { getInsightPlaceholderSizeInfo } from "../../../_staging/layout/sizing";
 
 export function useInsightPlaceholderDropHandler() {
     const dispatch = useDashboardDispatch();
     const settings = useDashboardSelector(selectSettings);
 
-    const { run: addInsightAndClearPlaceholder } = useDashboardCommandProcessing({
-        commandCreator: addSectionItem,
-        errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
-        successEvent: "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED",
-        onSuccess: (event) => {
-            const ref = event.payload.itemsAdded[0].widget!.ref;
-            dispatch(uiActions.clearWidgetPlaceholder());
-            dispatch(uiActions.selectWidget(ref));
-            dispatch(uiActions.setConfigurationPanelOpened(true));
-        },
-        onError: () => {
-            dispatch(uiActions.clearWidgetPlaceholder());
-        },
-    });
-
     return useCallback(
-        (sectionIndex: number, itemIndex: number, insight: IInsight) => {
-            const sizeInfo = getSizeInfo(settings, "insight", insight);
-            addInsightAndClearPlaceholder(sectionIndex, itemIndex, {
-                type: "IDashboardLayoutItem",
-                widget: {
-                    type: "insight",
-                    insight: insightRef(insight),
-                    ignoreDashboardFilters: [],
-                    drills: [],
-                    title: insightTitle(insight),
-                    description: "",
-                    configuration: { hideTitle: false },
-                    properties: {},
-                },
-                size: {
-                    xl: {
-                        gridHeight: sizeInfo.height.default,
-                        gridWidth: sizeInfo.width.default!,
+        (sectionIndex: number, itemIndex: number) => {
+            const sizeInfo = getInsightPlaceholderSizeInfo(settings);
+            dispatch(uiActions.selectWidget(idRef(INSIGHT_PLACEHOLDER_WIDGET_ID)));
+            dispatch(uiActions.setConfigurationPanelOpened(true));
+            dispatch(
+                uiActions.setWidgetPlaceholder({
+                    itemIndex,
+                    sectionIndex,
+                    size: {
+                        height: sizeInfo.height.default!,
+                        width: sizeInfo.width.default!,
                     },
-                },
-            });
+                    type: "insight",
+                }),
+            );
         },
-        [addInsightAndClearPlaceholder, settings],
+        [dispatch, settings],
     );
 }

@@ -552,3 +552,56 @@ export function insightWidgetExportResolved(
 export const isDashboardInsightWidgetExportResolved = eventGuard<DashboardInsightWidgetExportResolved>(
     "GDC.DASH/EVT.INSIGHT_WIDGET.EXPORT_RESOLVED",
 );
+
+//
+//
+//
+
+/**
+ * Payload of the {@link DashboardInsightWidgetRefreshed} event.
+ * @alpha
+ */
+export interface DashboardInsightWidgetRefreshedPayload {
+    /**
+     * The new value of the insight.
+     */
+    insight: IInsight;
+}
+
+/**
+ * This event is emitted after an insight widget is refreshed.
+ *
+ * @alpha
+ */
+export interface DashboardInsightWidgetRefreshed extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.REFRESHED";
+    readonly payload: DashboardInsightWidgetRefreshedPayload;
+}
+
+/**
+ * @alpha
+ */
+export function insightWidgetRefreshed(
+    ctx: DashboardContext,
+    insight: IInsight,
+    correlationId?: string,
+): DashboardInsightWidgetRefreshed {
+    return {
+        type: "GDC.DASH/EVT.INSIGHT_WIDGET.REFRESHED",
+        ctx,
+        correlationId,
+        payload: {
+            insight,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardInsightWidgetRefreshed}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardInsightWidgetRefreshed = eventGuard<DashboardInsightWidgetRefreshed>(
+    "GDC.DASH/EVT.INSIGHT_WIDGET.REFRESHED",
+);

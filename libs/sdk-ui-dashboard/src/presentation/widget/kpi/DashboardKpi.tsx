@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React, { useMemo } from "react";
 import { useDashboardComponentsContext } from "../../dashboardContexts";
 import { IDashboardKpiProps } from "./types";
@@ -7,11 +7,11 @@ import { IDashboardKpiProps } from "./types";
  * @internal
  */
 export const DashboardKpi = (props: IDashboardKpiProps): JSX.Element => {
-    const { KpiComponentProvider } = useDashboardComponentsContext();
+    const { KpiWidgetComponentSet } = useDashboardComponentsContext();
     const { kpiWidget } = props;
     const KpiComponent = useMemo(
-        () => KpiComponentProvider(kpiWidget.kpi, kpiWidget),
-        [KpiComponentProvider, kpiWidget],
+        () => KpiWidgetComponentSet.MainComponentProvider(kpiWidget.kpi, kpiWidget),
+        [KpiWidgetComponentSet, kpiWidget],
     );
 
     return <KpiComponent {...props} />;

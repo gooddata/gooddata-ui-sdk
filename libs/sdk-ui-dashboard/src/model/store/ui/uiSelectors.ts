@@ -176,3 +176,11 @@ export const selectIsWidgetPlaceholderShown = createSelector(
     selectWidgetPlaceholder,
     (placeholder) => !!placeholder,
 );
+
+/**
+ * @internal
+ */
+export const selectInsightListLastUpdateRequested = createSelector(
+    selectSelf,
+    (state) => state.insightListLastUpdateRequested,
+);

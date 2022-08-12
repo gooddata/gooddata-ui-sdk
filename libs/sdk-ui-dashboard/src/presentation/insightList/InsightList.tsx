@@ -17,7 +17,11 @@ import { IInsightsQueryOptions } from "@gooddata/sdk-backend-spi";
 import { InsightListItem, DropdownList } from "@gooddata/sdk-ui-kit";
 
 import { InsightListNoData } from "./InsightListNoData";
-import { selectCurrentUserRef, useDashboardSelector } from "../../model";
+import {
+    selectCurrentUserRef,
+    selectInsightListLastUpdateRequested,
+    useDashboardSelector,
+} from "../../model";
 import { IInsightListProps } from "./types";
 import { messages } from "../../locales";
 
@@ -63,6 +67,7 @@ export const InsightList: React.FC<IInsightListProps> = ({
     const [selectedTabId, setSelectedTabId] = useState(messages.tabsMy.id);
     const userRef = useDashboardSelector(selectCurrentUserRef);
     const userUri = isUriRef(userRef) ? userRef.uri : undefined;
+    const insightListLastUpdateRequested = useDashboardSelector(selectInsightListLastUpdateRequested);
 
     const params = pagesToLoad.map((pageNumber) => ({
         limit: ITEMS_PER_PAGE,
@@ -98,8 +103,8 @@ export const InsightList: React.FC<IInsightListProps> = ({
             return backend.workspace(workspaceId).insights().getInsights(options);
         },
         params,
-        [backend, pagesToLoad, search, selectedTabId],
-        [search, selectedTabId, pagesToLoad.length === 0],
+        [backend, pagesToLoad, search, selectedTabId, insightListLastUpdateRequested],
+        [search, selectedTabId, pagesToLoad.length === 0, insightListLastUpdateRequested],
     );
 
     useEffect(() => {

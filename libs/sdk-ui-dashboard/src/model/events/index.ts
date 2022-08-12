@@ -59,6 +59,7 @@ import {
     DashboardInsightWidgetVisPropertiesChanged,
     DashboardInsightWidgetExportRequested,
     DashboardInsightWidgetExportResolved,
+    DashboardInsightWidgetRefreshed,
 } from "./insight";
 import {
     DashboardWidgetExecutionStarted,
@@ -259,6 +260,8 @@ export {
     DashboardInsightWidgetExportRequestedPayload,
     DashboardInsightWidgetExportResolved,
     DashboardInsightWidgetExportResolvedPayload,
+    DashboardInsightWidgetRefreshed,
+    DashboardInsightWidgetRefreshedPayload,
     isDashboardInsightWidgetChanged,
     isDashboardInsightWidgetDrillsModified,
     isDashboardInsightWidgetDrillsRemoved,
@@ -268,6 +271,7 @@ export {
     isDashboardInsightWidgetVisPropertiesChanged,
     isDashboardInsightWidgetExportRequested,
     isDashboardInsightWidgetExportResolved,
+    isDashboardInsightWidgetRefreshed,
 } from "./insight";
 
 export {
@@ -443,6 +447,7 @@ export type DashboardEvents =
     | DashboardInsightWidgetChanged
     | DashboardInsightWidgetExportRequested
     | DashboardInsightWidgetExportResolved
+    | DashboardInsightWidgetRefreshed
     | DashboardWidgetExecutionStarted
     | DashboardWidgetExecutionSucceeded
     | DashboardWidgetExecutionFailed

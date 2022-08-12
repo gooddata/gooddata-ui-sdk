@@ -2,7 +2,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { IKpiWidget, widgetRef } from "@gooddata/sdk-model";
 
-import { DateDatasetFilter } from "../../../common";
+import { DateDatasetFilter } from "../../common";
 import {
     enableKpiWidgetDateFilter,
     MeasureDateDatasets,
@@ -14,7 +14,7 @@ import {
     useDashboardDispatch,
     useDashboardQueryProcessing,
     useDashboardSelector,
-} from "../../../../../model";
+} from "../../../../model";
 
 export const KpiWidgetDateDatasetFilter: React.FC<{
     widget: IKpiWidget;

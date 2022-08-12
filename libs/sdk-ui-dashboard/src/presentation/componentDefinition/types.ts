@@ -1,17 +1,32 @@
 // (C) 2022 GoodData Corporation
 import { ComponentType } from "react";
-import { IDashboardAttributeFilterProps } from "../filterBar/types";
-import { IDashboardKpiProps, IDashboardWidgetProps } from "../widget/types";
-import { AttributeFilterDraggableItem, CustomDraggableItem } from "../dragAndDrop/types";
+import {
+    IDashboardAttributeFilterProps,
+    IDashboardAttributeFilterPlaceholderProps,
+} from "../filterBar/types";
+import { IDashboardInsightProps, IDashboardKpiProps, IDashboardWidgetProps } from "../widget/types";
+import {
+    AttributeFilterDraggableItem,
+    CustomDraggableItem,
+    DraggableContentItemType,
+} from "../dragAndDrop/types";
+import {
+    AttributeFilterComponentProvider,
+    InsightComponentProvider,
+    KpiComponentProvider,
+    WidgetComponentProvider,
+} from "../dashboardContexts/types";
+import { IInsightWidget, IKpiWidget } from "@gooddata/sdk-model";
+import { ICustomWidget } from "../../model";
 
 /**
  * @internal
  */
-export interface CustomComponentBase<TMainProps> {
+export interface CustomComponentBase<TMainProps, TProviderParams extends any[]> {
     /**
      * The main body of the component that is shown by default in view and edit modes.
      */
-    MainComponent: ComponentType<TMainProps>;
+    MainComponentProvider: (...params: TProviderParams) => ComponentType<TMainProps>;
 }
 
 /**
@@ -67,6 +82,22 @@ export type AttributeFilterDraggableComponent = {
 /**
  * @internal
  */
+export type InsightDraggableComponent = {
+    DraggingComponent?: undefined;
+    type: "insight";
+};
+
+/**
+ * @internal
+ */
+export type KpiDraggableComponent = {
+    DraggingComponent?: undefined;
+    type: "kpi";
+};
+
+/**
+ * @internal
+ */
 export type CustomDraggableComponent = {
     DraggingComponent: CustomDraggingComponent;
     type: "custom";
@@ -77,7 +108,11 @@ export type CustomDraggableComponent = {
  * @internal
  */
 export type DraggableComponent = {
-    dragging: AttributeFilterDraggableComponent | CustomDraggableComponent;
+    dragging:
+        | AttributeFilterDraggableComponent
+        | KpiDraggableComponent
+        | InsightDraggableComponent
+        | CustomDraggableComponent;
 };
 
 /**
@@ -94,6 +129,18 @@ export type DropTarget = {
 };
 
 /**
+ * @internal
+ */
+export interface ICreatePanelItemComponentProps {
+    disabled?: boolean;
+}
+
+/**
+ * @internal
+ */
+export type CustomCreatePanelItemComponent = ComponentType<ICreatePanelItemComponentProps>;
+
+/**
  * Capability saying the component can be created by dragging it from the side drawer.
  * @internal
  */
@@ -102,7 +149,20 @@ export type CreatableByDragComponent = DraggableComponent & {
         /**
          * Component used to render the item in the left drawer menu used to create a new instance of this component on the dashboard
          */
-        DrawerItemComponent: ComponentType;
+        CreatePanelListItemComponent: CustomCreatePanelItemComponent;
+
+        /**
+         * The lower the priority, the earlier the component is shown in the drawer.
+         *
+         * @remarks
+         * For example item with priority 0 is shown before item with priority 5
+         */
+        priority?: number;
+
+        /**
+         * Draggable item type for the creating item.
+         */
+        type: DraggableContentItemType;
     };
 };
 
@@ -110,33 +170,37 @@ export type CreatableByDragComponent = DraggableComponent & {
  * Capability saying the component displays something else than the Main component while it is being configured for the first time after being created.
  * @internal
  */
-export type CreatablePlaceholderComponent = {
+export type CreatablePlaceholderComponent<TProps> = {
     creating: {
         /**
          * Component used to render the item before the initial configuration is done.
          */
-        CreatingPlaceholderComponent: ComponentType;
+        CreatingPlaceholderComponent: ComponentType<TProps>;
     };
 };
 
 /**
  * @internal
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface WidgetConfigPanelProps {
-    // TODO define when config component will be defined
+export type CustomWidgetConfigPanelComponent<TWidget> = ComponentType<WidgetConfigPanelProps<TWidget>>;
+
+/**
+ * @internal
+ */
+export interface WidgetConfigPanelProps<TWidget> {
+    widget: TWidget;
 }
 
 /**
  * Capability saying the component can be configured in edit mode.
  * @internal
  */
-export type ConfigurableWidget = {
+export type ConfigurableWidget<TWidget> = {
     configuration: {
         /**
          * Component used to render the insides of the configuration panel.
          */
-        WidgetConfigPanelComponent: ComponentType<WidgetConfigPanelProps>;
+        WidgetConfigPanelComponent: CustomWidgetConfigPanelComponent<TWidget>;
     };
 };
 
@@ -144,26 +208,55 @@ export type ConfigurableWidget = {
  * Definition of attribute filter components
  * @internal
  */
-export type AttributeFilterComponentSet = CustomComponentBase<IDashboardAttributeFilterProps> &
+export type AttributeFilterComponentSet = CustomComponentBase<
+    IDashboardAttributeFilterProps,
+    Parameters<AttributeFilterComponentProvider>
+> &
     DraggableComponent &
-    CreatablePlaceholderComponent &
+    CreatablePlaceholderComponent<IDashboardAttributeFilterPlaceholderProps> &
     CreatableByDragComponent;
 
 /**
  * Definition of KPI widget
  * @internal
  */
-export type KpiWidgetComponentSet = CustomComponentBase<IDashboardKpiProps> &
+export type KpiWidgetComponentSet = CustomComponentBase<
+    IDashboardKpiProps,
+    Parameters<KpiComponentProvider>
+> &
     DraggableComponent &
     CreatableByDragComponent &
-    CreatablePlaceholderComponent &
-    ConfigurableWidget;
+    CreatablePlaceholderComponent<IDashboardWidgetProps> &
+    ConfigurableWidget<IKpiWidget>;
+
+/**
+ * Definition of Insight widget
+ * @internal
+ */
+export type InsightWidgetComponentSet = CustomComponentBase<
+    IDashboardInsightProps,
+    Parameters<InsightComponentProvider>
+> &
+    DraggableComponent &
+    Partial<CreatableByDragComponent> &
+    Partial<CreatablePlaceholderComponent<IDashboardWidgetProps>> &
+    ConfigurableWidget<IInsightWidget>;
 
 /**
  * Definition of widget
  * @internal
  */
-export type CustomWidgetComponentSet = CustomComponentBase<IDashboardWidgetProps> &
+export type CustomWidgetComponentSet = CustomComponentBase<
+    IDashboardWidgetProps,
+    Parameters<WidgetComponentProvider>
+> &
     DraggableComponent &
-    Partial<ConfigurableWidget> &
+    Partial<ConfigurableWidget<ICustomWidget>> &
     Partial<CreatableByDragComponent>;
+
+/**
+ * @internal
+ */
+export type InsightComponentSetProvider = (
+    defaultComponentSet: InsightWidgetComponentSet,
+) => InsightWidgetComponentSet;
