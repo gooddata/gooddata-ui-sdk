@@ -7,8 +7,9 @@ import {
     useDashboardSelector,
     selectIsInEditMode,
     useDashboardDispatch,
-    uiActions,
     useWidgetSelection,
+    eagerRemoveSectionItem,
+    selectWidgetPlaceholder,
 } from "../../../model";
 import { useDashboardDrag } from "../useDashboardDrag";
 import {
@@ -36,6 +37,7 @@ export function DraggableInsightListItem({
     const dispatch = useDashboardDispatch();
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
     const { deselectWidgets } = useWidgetSelection();
+    const widgetPlaceholder = useDashboardSelector(selectWidgetPlaceholder);
 
     const [{ isDragging }, dragRef] = useDashboardDrag(
         {
@@ -46,12 +48,14 @@ export function DraggableInsightListItem({
             canDrag: isInEditMode,
             hideDefaultPreview: false,
             dragEnd: (_, monitor) => {
-                if (!monitor.didDrop()) {
-                    dispatch(uiActions.clearWidgetPlaceholder());
+                if (!monitor.didDrop() && widgetPlaceholder) {
+                    dispatch(
+                        eagerRemoveSectionItem(widgetPlaceholder.sectionIndex, widgetPlaceholder.itemIndex),
+                    );
                 }
             },
         },
-        [isInEditMode, insight],
+        [isInEditMode, insight, widgetPlaceholder],
     );
 
     // deselect all widgets when starting the drag

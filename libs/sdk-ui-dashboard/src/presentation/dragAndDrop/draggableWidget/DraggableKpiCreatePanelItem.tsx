@@ -2,11 +2,12 @@
 import React, { useCallback } from "react";
 
 import {
-    uiActions,
     selectIsInEditMode,
     useDashboardDispatch,
     useDashboardSelector,
     useWidgetSelection,
+    eagerRemoveSectionItem,
+    selectWidgetPlaceholder,
 } from "../../../model";
 import { DraggableItem } from "../types";
 import { DraggableCreatePanelItem, IDraggableCreatePanelItemProps } from "../DraggableCreatePanelItem";
@@ -28,14 +29,15 @@ export const DraggableKpiCreatePanelItem: React.FC<IDraggableKpiCreatePanelItemP
     const dispatch = useDashboardDispatch();
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
     const { deselectWidgets } = useWidgetSelection();
+    const widgetPlaceholder = useDashboardSelector(selectWidgetPlaceholder);
 
     const handleDragEnd = useCallback<Required<IDraggableCreatePanelItemProps>["onDragEnd"]>(
         (didDrop) => {
-            if (!didDrop) {
-                dispatch(uiActions.clearWidgetPlaceholder());
+            if (!didDrop && widgetPlaceholder) {
+                dispatch(eagerRemoveSectionItem(widgetPlaceholder.sectionIndex, widgetPlaceholder.itemIndex));
             }
         },
-        [dispatch],
+        [dispatch, widgetPlaceholder],
     );
 
     return (

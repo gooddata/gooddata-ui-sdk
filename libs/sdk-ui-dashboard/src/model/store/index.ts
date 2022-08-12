@@ -124,6 +124,9 @@ export {
     selectIsLayoutEmpty,
     selectWidgetDrills,
     selectWidgetCoordinatesByRef,
+    selectWidgetPlaceholder,
+    selectInsightWidgetPlaceholder,
+    selectKpiWidgetPlaceholder,
 } from "./layout/layoutSelectors";
 export { DateFilterConfigState } from "./dateFilterConfig/dateFilterConfigState";
 export {
@@ -205,7 +208,7 @@ export {
     selectIsExecutionResultReadyForExportByRef,
 } from "./executionResults/executionResultsSelectors";
 export { IExecutionResultEnvelope } from "./executionResults/types";
-export { UiState, IWidgetPlaceholderSpec, IWidgetPlaceholderType } from "./ui/uiState";
+export { UiState } from "./ui/uiState";
 export {
     selectIsScheduleEmailDialogOpen,
     selectIsScheduleEmailManagementDialogOpen,
@@ -222,8 +225,6 @@ export {
     selectIsDeleteDialogOpen,
     selectIsKpiDeleteDialogOpen,
     selectKpiDeleteDialogWidgetCoordinates,
-    selectIsWidgetPlaceholderShown,
-    selectWidgetPlaceholder,
     selectInsightListLastUpdateRequested,
 } from "./ui/uiSelectors";
 export { uiActions } from "./ui";

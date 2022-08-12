@@ -9,7 +9,6 @@ import {
     IDashboardLayoutItem,
 } from "@gooddata/sdk-model";
 import { LRUCache } from "@gooddata/util";
-import invariant from "ts-invariant";
 
 import {
     useDashboardSelector,
@@ -20,8 +19,6 @@ import {
     selectInsightsMap,
     selectEnableWidgetCustomHeight,
     selectRenderMode,
-    selectWidgetPlaceholder,
-    IWidgetPlaceholderSpec,
 } from "../../model";
 import { useDashboardComponentsContext } from "../dashboardContexts";
 
@@ -37,14 +34,6 @@ import {
 import { RenderModeAwareDashboardLayoutSectionHeaderRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionHeaderRenderer";
 import { getMemoizedWidgetSanitizer } from "./DefaultDashboardLayoutUtils";
 import { SectionHotspot } from "../dragAndDrop";
-import {
-    InsightPlaceholderWidget,
-    KpiPlaceholderWidget,
-    newInsightPlaceholderWidget,
-    newKpiPlaceholderWidget,
-    newPlaceholderWidget,
-    PlaceholderWidget,
-} from "../../widgets";
 
 /**
  * Get dashboard layout for exports.
@@ -91,24 +80,6 @@ const itemKeyGetter: IDashboardLayoutItemKeyGetter<ExtendedDashboardWidget> = (k
     return keyGetterProps.item.index().toString();
 };
 
-function widgetForPlaceholderForSpec(
-    widgetPlaceholder: IWidgetPlaceholderSpec,
-    isLast: boolean,
-): PlaceholderWidget | InsightPlaceholderWidget | KpiPlaceholderWidget {
-    const { itemIndex, sectionIndex } = widgetPlaceholder;
-
-    switch (widgetPlaceholder.type) {
-        case "insight":
-            return newInsightPlaceholderWidget(sectionIndex, itemIndex, isLast);
-        case "kpi":
-            return newKpiPlaceholderWidget(sectionIndex, itemIndex, isLast);
-        case "widget":
-            return newPlaceholderWidget(sectionIndex, itemIndex, isLast);
-        default:
-            invariant(false, "unknown placeholder type");
-    }
-}
-
 /**
  * @alpha
  */
@@ -123,7 +94,6 @@ export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Elemen
     const insights = useDashboardSelector(selectInsightsMap);
     const isExport = useDashboardSelector(selectIsExport);
     const renderMode = useDashboardSelector(selectRenderMode);
-    const widgetPlaceholder = useDashboardSelector(selectWidgetPlaceholder);
 
     const getInsightByRef = useCallback(
         (insightRef: ObjRef): IInsight | undefined => {
@@ -143,33 +113,12 @@ export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Elemen
             return getDashboardLayoutForExport(layout);
         }
 
-        let builder = DashboardLayoutBuilder.for(layout).modifySections((section) =>
-            section.modifyItems(sanitizeWidgets(getInsightByRef, enableWidgetCustomHeight)),
-        );
-
-        if (widgetPlaceholder) {
-            builder = builder.modifySection(widgetPlaceholder.sectionIndex, (section) =>
-                section.addItem(
-                    {
-                        type: "IDashboardLayoutItem",
-                        size: {
-                            xl: {
-                                gridHeight: widgetPlaceholder.size.height,
-                                gridWidth: widgetPlaceholder.size.width,
-                            },
-                        },
-                        widget: widgetForPlaceholderForSpec(
-                            widgetPlaceholder,
-                            widgetPlaceholder.itemIndex === section.facade().items().count(),
-                        ),
-                    },
-                    widgetPlaceholder.itemIndex,
-                ),
-            );
-        }
-
-        return builder.build();
-    }, [layout, isExport, getInsightByRef, enableWidgetCustomHeight, sanitizeWidgets, widgetPlaceholder]);
+        return DashboardLayoutBuilder.for(layout)
+            .modifySections((section) =>
+                section.modifyItems(sanitizeWidgets(getInsightByRef, enableWidgetCustomHeight)),
+            )
+            .build();
+    }, [layout, isExport, getInsightByRef, enableWidgetCustomHeight, sanitizeWidgets]);
 
     const widgetRenderer = useCallback<IDashboardLayoutWidgetRenderer<ExtendedDashboardWidget>>(
         (renderProps) => {

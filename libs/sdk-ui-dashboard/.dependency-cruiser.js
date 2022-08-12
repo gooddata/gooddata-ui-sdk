@@ -111,6 +111,7 @@ options = {
         depCruiser.moduleWithDependencies("model", "src/model", [
             "src/_staging/*",
             "src/converters",
+            "src/widgets",
             "src/types.ts",
         ]),
         depCruiser.moduleWithDependencies("presentation", "src/presentation", [

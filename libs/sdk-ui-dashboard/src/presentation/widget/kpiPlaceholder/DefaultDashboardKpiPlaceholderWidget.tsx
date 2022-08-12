@@ -1,16 +1,9 @@
 // (C) 2022 GoodData Corporation
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import invariant from "ts-invariant";
 
 import { isKpiPlaceholderWidget } from "../../../widgets";
-import {
-    removeLayoutSection,
-    selectLayout,
-    uiActions,
-    useDashboardDispatch,
-    useDashboardSelector,
-    useWidgetSelection,
-} from "../../../model";
+import { eagerRemoveSectionItem, useDashboardDispatch, useWidgetSelection } from "../../../model";
 import { DashboardItem, DashboardItemContent } from "../../presentationComponents";
 import { ConfigurationBubble } from "../common";
 import { CustomDashboardWidgetComponent } from "../widget/types";
@@ -25,20 +18,23 @@ export const DefaultDashboardKpiPlaceholderWidget: CustomDashboardWidgetComponen
 
     const dispatch = useDashboardDispatch();
 
-    const layout = useDashboardSelector(selectLayout);
-    const section = layout.sections[widget.sectionIndex];
-
     const { isSelectable, isSelected } = useWidgetSelection(widget.ref);
 
+    // keep information if this widget has been selected in the past
+    const wasSelected = useRef(isSelected);
     useEffect(() => {
-        if (!isSelected) {
-            dispatch(uiActions.clearWidgetPlaceholder());
-            // also try removing the section if it is empty, it means it was just added for this KPI
-            if (section.items.length === 0) {
-                dispatch(removeLayoutSection(widget.sectionIndex));
-            }
+        if (isSelected) {
+            wasSelected.current = true;
         }
-    }, [dispatch, isSelected, section.items.length, widget.sectionIndex]);
+    }, [isSelected]);
+
+    useEffect(() => {
+        // if the widget was selected in the past and is now not selected, it has just been unselected
+        // -> remove its widget placeholder
+        if (wasSelected.current && !isSelected) {
+            dispatch(eagerRemoveSectionItem(widget.sectionIndex, widget.itemIndex));
+        }
+    }, [dispatch, isSelected, widget.itemIndex, widget.sectionIndex]);
 
     return (
         <DashboardItem className="is-selected is-placeholder is-edit-mode" screen={screen}>

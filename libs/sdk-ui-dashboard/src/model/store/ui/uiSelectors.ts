@@ -165,19 +165,6 @@ export const selectKpiDateDatasetAutoOpen = createSelector(
 );
 
 /**
- * @alpha
- */
-export const selectWidgetPlaceholder = createSelector(selectSelf, (state) => state.widgetPlaceholder);
-
-/**
- * @alpha
- */
-export const selectIsWidgetPlaceholderShown = createSelector(
-    selectWidgetPlaceholder,
-    (placeholder) => !!placeholder,
-);
-
-/**
  * @internal
  */
 export const selectInsightListLastUpdateRequested = createSelector(

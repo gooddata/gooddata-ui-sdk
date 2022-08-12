@@ -1,12 +1,12 @@
 // (C) 2021-2022 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
-import { ICustomWidget, newCustomWidget } from "../../model";
+import { ICustomWidget, newCustomWidget } from "../../model/types/layoutTypes";
 
 /**
  * @alpha
  */
 export interface KpiPlaceholderWidget extends ICustomWidget {
-    readonly customType: "kpiPlaceholder";
+    readonly customType: "gd-kpi-placeholder";
     readonly sectionIndex: number;
     readonly itemIndex: number;
     readonly isLastInSection: boolean;
@@ -19,7 +19,7 @@ export interface KpiPlaceholderWidget extends ICustomWidget {
  * @alpha
  */
 export function isKpiPlaceholderWidget(obj: unknown): obj is KpiPlaceholderWidget {
-    return !isEmpty(obj) && (obj as KpiPlaceholderWidget).customType === "kpiPlaceholder";
+    return !isEmpty(obj) && (obj as KpiPlaceholderWidget).customType === "gd-kpi-placeholder";
 }
 
 /**
@@ -35,7 +35,7 @@ export function newKpiPlaceholderWidget(
     itemIndex: number,
     isLastInSection: boolean,
 ): KpiPlaceholderWidget {
-    return newCustomWidget(KPI_PLACEHOLDER_WIDGET_ID, "kpiPlaceholder", {
+    return newCustomWidget(KPI_PLACEHOLDER_WIDGET_ID, "gd-kpi-placeholder", {
         sectionIndex,
         itemIndex,
         isLastInSection,
@@ -46,7 +46,7 @@ export function newKpiPlaceholderWidget(
  * @alpha
  */
 export interface InsightPlaceholderWidget extends ICustomWidget {
-    readonly customType: "insightPlaceholder";
+    readonly customType: "gd-insight-placeholder";
     readonly sectionIndex: number;
     readonly itemIndex: number;
     readonly isLastInSection: boolean;
@@ -59,7 +59,7 @@ export interface InsightPlaceholderWidget extends ICustomWidget {
  * @alpha
  */
 export function isInsightPlaceholderWidget(obj: unknown): obj is InsightPlaceholderWidget {
-    return !isEmpty(obj) && (obj as InsightPlaceholderWidget).customType === "insightPlaceholder";
+    return !isEmpty(obj) && (obj as InsightPlaceholderWidget).customType === "gd-insight-placeholder";
 }
 
 /**
@@ -75,7 +75,7 @@ export function newInsightPlaceholderWidget(
     itemIndex: number,
     isLastInSection: boolean,
 ): InsightPlaceholderWidget {
-    return newCustomWidget(INSIGHT_PLACEHOLDER_WIDGET_ID, "insightPlaceholder", {
+    return newCustomWidget(INSIGHT_PLACEHOLDER_WIDGET_ID, "gd-insight-placeholder", {
         sectionIndex,
         itemIndex,
         isLastInSection,
@@ -86,7 +86,7 @@ export function newInsightPlaceholderWidget(
  * @alpha
  */
 export interface PlaceholderWidget extends ICustomWidget {
-    readonly customType: "placeholder";
+    readonly customType: "gd-widget-placeholder";
     readonly sectionIndex: number;
     readonly itemIndex: number;
     readonly isLastInSection: boolean;
@@ -99,7 +99,7 @@ export interface PlaceholderWidget extends ICustomWidget {
  * @alpha
  */
 export function isPlaceholderWidget(obj: unknown): obj is PlaceholderWidget {
-    return !isEmpty(obj) && (obj as PlaceholderWidget).customType === "placeholder";
+    return !isEmpty(obj) && (obj as PlaceholderWidget).customType === "gd-widget-placeholder";
 }
 
 /**
@@ -115,7 +115,7 @@ export function newPlaceholderWidget(
     itemIndex: number,
     isLastInSection: boolean,
 ): InsightPlaceholderWidget {
-    return newCustomWidget(PLACEHOLDER_WIDGET_ID, "placeholder", {
+    return newCustomWidget(PLACEHOLDER_WIDGET_ID, "gd-widget-placeholder", {
         sectionIndex,
         itemIndex,
         isLastInSection,

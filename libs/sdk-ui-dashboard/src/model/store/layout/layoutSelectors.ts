@@ -21,6 +21,7 @@ import { filterContextItemsToDashboardFiltersByWidget } from "../../../converter
 import { createMemoizedSelector } from "../_infra/selectors";
 import isEmpty from "lodash/isEmpty";
 import { ILayoutCoordinates } from "../../../types";
+import { isInsightPlaceholderWidget, isKpiPlaceholderWidget, isPlaceholderWidget } from "../../../widgets";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -263,4 +264,25 @@ export const selectWidgetCoordinatesByRef = createMemoizedSelector((ref: ObjRef)
 
         invariant(false, `widget with ref ${objRefToString(ref)} does not exist in the state`);
     });
+});
+
+/**
+ * @internal
+ */
+export const selectWidgetPlaceholder = createSelector(selectAllCustomWidgets, (customWidgets) => {
+    return customWidgets.find(isPlaceholderWidget);
+});
+
+/**
+ * @internal
+ */
+export const selectInsightWidgetPlaceholder = createSelector(selectAllCustomWidgets, (customWidgets) => {
+    return customWidgets.find(isInsightPlaceholderWidget);
+});
+
+/**
+ * @internal
+ */
+export const selectKpiWidgetPlaceholder = createSelector(selectAllCustomWidgets, (customWidgets) => {
+    return customWidgets.find(isKpiPlaceholderWidget);
 });

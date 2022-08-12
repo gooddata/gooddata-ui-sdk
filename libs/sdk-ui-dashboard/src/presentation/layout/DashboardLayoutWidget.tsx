@@ -179,11 +179,13 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                         dropZoneType="prev"
                         itemIndex={item.index()}
                         sectionIndex={item.section().index()}
+                        isLastInSection={false}
                     />
                     <Hotspot
                         dropZoneType="next"
                         itemIndex={item.index()}
                         sectionIndex={item.section().index()}
+                        isLastInSection={item.isLast()}
                     />
                     <WidthResizerHotspot
                         item={item}

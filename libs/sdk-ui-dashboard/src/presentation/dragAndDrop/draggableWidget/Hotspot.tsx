@@ -1,36 +1,59 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
 import cx from "classnames";
+import invariant from "ts-invariant";
+
 import { getDropZoneDebugStyle } from "../debug";
 import {
     selectSettings,
     useDashboardDispatch,
     useDashboardSelector,
-    uiActions,
     selectWidgetPlaceholder,
-    IWidgetPlaceholderSpec,
+    addSectionItem,
+    removeSectionItem,
 } from "../../../model";
-import stringify from "json-stable-stringify";
 import { useDashboardDrop } from "../useDashboardDrop";
 import {
+    InsightDraggableListItem,
+    InsightPlaceholderDraggableItem,
     isInsightDraggableListItem,
     isInsightPlaceholderDraggableItem,
     isKpiPlaceholderDraggableItem,
+    KpiPlaceholderDraggableItem,
 } from "../types";
 import { getInsightPlaceholderSizeInfo, getSizeInfo } from "../../../_staging/layout/sizing";
 import { useKpiPlaceholderDropHandler } from "./useKpiPlaceholderDropHandler";
 import { useInsightListItemDropHandler } from "./useInsightListItemDropHandler";
 import { useInsightPlaceholderDropHandler } from "./useInsightPlaceholderDropHandler";
+import { newPlaceholderWidget } from "../../../widgets";
+import { ISettings } from "@gooddata/sdk-model";
 
 interface IHotspotProps {
     sectionIndex: number;
     itemIndex: number;
+    isLastInSection: boolean;
     classNames?: string;
     dropZoneType: "prev" | "next";
 }
 
+function getDraggableItemSizeInfo(
+    settings: ISettings,
+    item: InsightDraggableListItem | InsightPlaceholderDraggableItem | KpiPlaceholderDraggableItem,
+) {
+    if (isInsightDraggableListItem(item)) {
+        return getSizeInfo(settings, "insight", item.insight);
+    }
+    if (isKpiPlaceholderDraggableItem(item)) {
+        return getSizeInfo(settings, "kpi");
+    }
+    if (isInsightPlaceholderDraggableItem(item)) {
+        return getInsightPlaceholderSizeInfo(settings);
+    }
+    invariant(false, "unsupported draggable item");
+}
+
 export const Hotspot: React.FC<IHotspotProps> = (props) => {
-    const { itemIndex, sectionIndex, classNames, dropZoneType } = props;
+    const { itemIndex, sectionIndex, isLastInSection, classNames, dropZoneType } = props;
 
     const dispatch = useDashboardDispatch();
     const settings = useDashboardSelector(selectSettings);
@@ -43,67 +66,52 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
     const handleInsightPlaceholderDrop = useInsightPlaceholderDropHandler();
     const handleKpiPlaceholderDrop = useKpiPlaceholderDropHandler();
 
+    const needsToAddWidgetDropzone =
+        !widgetPlaceholder || // first placeholder ever
+        widgetPlaceholder.sectionIndex !== sectionIndex || // or different section
+        (dropZoneType === "prev" && widgetPlaceholder.itemIndex !== itemIndex - 1) || // or not immediately before for prev hotspot
+        (dropZoneType === "next" && widgetPlaceholder.itemIndex !== itemIndex + 1); // or not immediately after for next hotspot
+
     const [{ canDrop, isOver }, dropRef] = useDashboardDrop(
         ["insightListItem", "kpi-placeholder", "insight-placeholder"],
         {
             drop: (item) => {
                 if (isInsightDraggableListItem(item)) {
-                    handleInsightListItemDrop(sectionIndex, targetItemIndex, item.insight);
+                    handleInsightListItemDrop(item.insight);
                 }
                 if (isKpiPlaceholderDraggableItem(item)) {
-                    handleKpiPlaceholderDrop(sectionIndex, targetItemIndex);
+                    handleKpiPlaceholderDrop(sectionIndex, targetItemIndex, isLastInSection);
                 }
                 if (isInsightPlaceholderDraggableItem(item)) {
-                    handleInsightPlaceholderDrop(sectionIndex, targetItemIndex);
+                    handleInsightPlaceholderDrop(sectionIndex, targetItemIndex, isLastInSection);
                 }
             },
             hover: (item) => {
-                if (isInsightDraggableListItem(item)) {
-                    const { insight } = item;
-                    const sizeInfo = getSizeInfo(settings, "insight", insight);
-                    const placeholderSpec: IWidgetPlaceholderSpec = {
-                        itemIndex: targetItemIndex,
-                        sectionIndex,
-                        size: {
-                            height: sizeInfo.height.default!,
-                            width: sizeInfo.width.default!,
-                        },
-                        type: "widget",
-                    };
-                    if (stringify(placeholderSpec) !== stringify(widgetPlaceholder)) {
-                        dispatch(uiActions.setWidgetPlaceholder(placeholderSpec));
-                    }
+                if (!needsToAddWidgetDropzone) {
+                    return;
                 }
-                if (isKpiPlaceholderDraggableItem(item)) {
-                    const sizeInfo = getSizeInfo(settings, "kpi");
-                    const placeholderSpec: IWidgetPlaceholderSpec = {
-                        itemIndex: targetItemIndex,
-                        sectionIndex,
-                        size: {
-                            height: sizeInfo.height.default!,
-                            width: sizeInfo.width.default!,
-                        },
-                        type: "widget",
-                    };
-                    if (stringify(placeholderSpec) !== stringify(widgetPlaceholder)) {
-                        dispatch(uiActions.setWidgetPlaceholder(placeholderSpec));
-                    }
+
+                // we will definitely be adding a new placeholder, so remove the current one if any
+                if (widgetPlaceholder) {
+                    dispatch(removeSectionItem(widgetPlaceholder.sectionIndex, widgetPlaceholder.itemIndex));
                 }
-                if (isInsightPlaceholderDraggableItem(item)) {
-                    const sizeInfo = getInsightPlaceholderSizeInfo(settings);
-                    const placeholderSpec: IWidgetPlaceholderSpec = {
-                        itemIndex: targetItemIndex,
-                        sectionIndex,
+
+                const placeholderSpec = newPlaceholderWidget(sectionIndex, targetItemIndex, isLastInSection);
+
+                const sizeInfo = getDraggableItemSizeInfo(settings, item);
+
+                dispatch(
+                    addSectionItem(sectionIndex, targetItemIndex, {
+                        type: "IDashboardLayoutItem",
                         size: {
-                            height: sizeInfo.height.default!,
-                            width: sizeInfo.width.default!,
+                            xl: {
+                                gridHeight: sizeInfo.height.default!,
+                                gridWidth: sizeInfo.width.default!,
+                            },
                         },
-                        type: "widget",
-                    };
-                    if (stringify(placeholderSpec) !== stringify(widgetPlaceholder)) {
-                        dispatch(uiActions.setWidgetPlaceholder(placeholderSpec));
-                    }
-                }
+                        widget: placeholderSpec,
+                    }),
+                );
             },
         },
         [
