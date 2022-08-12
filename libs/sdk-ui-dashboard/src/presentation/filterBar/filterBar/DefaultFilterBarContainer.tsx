@@ -10,13 +10,20 @@ import { BulletsBar } from "../../dragAndDrop";
 import { ShowAllFiltersButton } from "./ShowAllFiltersButton";
 import { useRowsCalculator, CalculatedRows } from "./hooks/useRowsCalculator";
 import { useFilterBarState } from "./hooks/useFilterBarState";
+import { useFilterExpansionByDragAndDrop } from "./hooks/useFilterExpansionByDragAndDrop";
 
 const DefaultFilterBarContainerCore: React.FC = ({ children }) => {
     const { rows, height, isFilterBarExpanded, scrollable, setFilterBarExpanded, setCalculatedRows } =
         useFilterBarState();
 
+    const dropRef = useFilterExpansionByDragAndDrop(
+        rows.length > 1,
+        isFilterBarExpanded,
+        setFilterBarExpanded,
+    );
+
     return (
-        <div className="dash-filters-wrapper s-gd-dashboard-filter-bar">
+        <div className="dash-filters-wrapper s-gd-dashboard-filter-bar" ref={dropRef}>
             <div
                 style={{ height }}
                 className={cx("dash-filters-visible", {
