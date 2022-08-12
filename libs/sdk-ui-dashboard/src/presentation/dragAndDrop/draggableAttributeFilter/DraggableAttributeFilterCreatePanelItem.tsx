@@ -2,14 +2,15 @@
 import React from "react";
 
 import { selectIsInEditMode, useDashboardSelector } from "../../../model";
-import { CustomDashboardAttributeFilterCreatePanelItemComponent, DraggableItem } from "../types";
+import { DraggableItem } from "../types";
 import { DraggableCreatePanelItem } from "../DraggableCreatePanelItem";
+import { CustomCreatePanelItemComponent } from "../../componentDefinition";
 
 /**
  * @internal
  */
 export interface IDraggableAttributeFilterCreatePanelItemProps {
-    CreatePanelItemComponent: CustomDashboardAttributeFilterCreatePanelItemComponent;
+    CreatePanelItemComponent: CustomCreatePanelItemComponent;
     disabled?: boolean;
 }
 

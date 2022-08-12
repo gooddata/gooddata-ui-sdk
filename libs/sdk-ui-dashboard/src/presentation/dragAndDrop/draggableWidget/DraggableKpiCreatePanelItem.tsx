@@ -8,11 +8,12 @@ import {
     useDashboardSelector,
     useWidgetSelection,
 } from "../../../model";
-import { CustomDashboardKpiCreatePanelItemComponent, DraggableItem } from "../types";
+import { DraggableItem } from "../types";
 import { DraggableCreatePanelItem, IDraggableCreatePanelItemProps } from "../DraggableCreatePanelItem";
+import { CustomCreatePanelItemComponent } from "../../componentDefinition";
 
 interface IDraggableKpiCreatePanelItemProps {
-    CreatePanelItemComponent: CustomDashboardKpiCreatePanelItemComponent;
+    CreatePanelItemComponent: CustomCreatePanelItemComponent;
     disabled?: boolean;
 }
 

@@ -689,14 +689,6 @@ export type CustomCreatePanelItemComponent = ComponentType<ICreatePanelItemCompo
 export type CustomDashboardAttributeFilterComponent = ComponentType<IDashboardAttributeFilterProps>;
 
 // @internal (undocumented)
-export type CustomDashboardAttributeFilterCreatePanelItemComponent = React.ComponentType<CustomDashboardAttributeFilterCreatePanelItemComponentProps>;
-
-// @internal (undocumented)
-export type CustomDashboardAttributeFilterCreatePanelItemComponentProps = {
-    disabled?: boolean;
-};
-
-// @internal (undocumented)
 export type CustomDashboardAttributeFilterPlaceholderComponent = ComponentType<IDashboardAttributeFilterPlaceholderProps>;
 
 // @alpha (undocumented)
@@ -704,14 +696,6 @@ export type CustomDashboardDateFilterComponent = ComponentType<IDashboardDateFil
 
 // @public (undocumented)
 export type CustomDashboardInsightComponent = ComponentType<IDashboardInsightProps>;
-
-// @internal (undocumented)
-export type CustomDashboardInsightCreatePanelItemComponent = React.ComponentType<CustomDashboardInsightCreatePanelItemComponentProps>;
-
-// @internal (undocumented)
-export type CustomDashboardInsightCreatePanelItemComponentProps = {
-    disabled?: boolean;
-};
 
 // @internal (undocumented)
 export type CustomDashboardInsightListItemComponent = React.ComponentType<CustomDashboardInsightListItemComponentProps>;
@@ -733,14 +717,6 @@ export type CustomDashboardInsightMenuComponent = ComponentType<IDashboardInsigh
 
 // @public (undocumented)
 export type CustomDashboardKpiComponent = ComponentType<IDashboardKpiProps>;
-
-// @internal (undocumented)
-export type CustomDashboardKpiCreatePanelItemComponent = React.ComponentType<CustomDashboardKpiCreatePanelItemComponentProps>;
-
-// @internal (undocumented)
-export type CustomDashboardKpiCreatePanelItemComponentProps = {
-    disabled?: boolean;
-};
 
 // @alpha (undocumented)
 export type CustomDashboardLayoutComponent = ComponentType<IDashboardLayoutProps>;

@@ -199,45 +199,6 @@ export type DraggableItemInternalTypeMapping = {
 /**
  * @internal
  */
-export type CustomDashboardAttributeFilterCreatePanelItemComponentProps = {
-    disabled?: boolean;
-};
-
-/**
- * @internal
- */
-export type CustomDashboardAttributeFilterCreatePanelItemComponent =
-    React.ComponentType<CustomDashboardAttributeFilterCreatePanelItemComponentProps>;
-
-/**
- * @internal
- */
-export type CustomDashboardKpiCreatePanelItemComponentProps = {
-    disabled?: boolean;
-};
-
-/**
- * @internal
- */
-export type CustomDashboardKpiCreatePanelItemComponent =
-    React.ComponentType<CustomDashboardKpiCreatePanelItemComponentProps>;
-
-/**
- * @internal
- */
-export type CustomDashboardInsightCreatePanelItemComponentProps = {
-    disabled?: boolean;
-};
-
-/**
- * @internal
- */
-export type CustomDashboardInsightCreatePanelItemComponent =
-    React.ComponentType<CustomDashboardInsightCreatePanelItemComponentProps>;
-
-/**
- * @internal
- */
 export type CustomDashboardInsightListItemComponentProps = {
     isLocked?: boolean;
     title?: string;
