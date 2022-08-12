@@ -20,9 +20,9 @@ import {
     JsonApiDataSourceInAttributesTypeEnum,
     OrganizationUtilities,
     JsonApiDataSourceIdentifierOutWithLinks,
-    JsonApiDataSourceIdentifierOutList,
     TestDefinitionRequestTypeEnum,
     JsonApiDataSourceOutDocument,
+    JsonApiDataSourceIdentifierOutDocument,
     DeclarativeTables,
     DeclarativeAnalytics,
     JsonApiWorkspaceInDocument,
@@ -34,7 +34,6 @@ import { convertApiError } from "../utils/errorHandling";
 import uniq from "lodash/uniq";
 import toLower from "lodash/toLower";
 import { UnexpectedError, ErrorConverter, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { AxiosResponse } from "axios";
 import isEmpty from "lodash/isEmpty";
 import { AuthenticatedAsyncCall } from "@gooddata/sdk-backend-base";
 
@@ -266,6 +265,7 @@ export type TigerSpecificFunctions = {
     putWorkspaceLayout?: (requestParameters: PutWorkspaceLayoutRequest) => Promise<void>;
     getAllDataSources?: () => Promise<IDataSourceConnectionInfo[]>;
     getDataSourceById?: (id: string) => Promise<IDataSourceApiResult>;
+    getDataSourceIdentifierById?: (id: string) => Promise<IDataSourceApiResult>;
     createDataSource?: (requestData: IDataSourceUpsertRequest) => Promise<IDataSourceApiResult>;
     updateDataSource?: (id: string, requestData: IDataSourceUpsertRequest) => Promise<IDataSourceApiResult>;
     deleteDataSource?: (id: string) => Promise<IDataSourceDeletedResponse>;
@@ -292,9 +292,9 @@ const getDataSourceErrorMessage = (error: unknown) => {
 };
 
 const dataSourceResponseAsDataSourceConnectionInfo = (
-    response: AxiosResponse<JsonApiDataSourceOutDocument>,
+    response: JsonApiDataSourceOutDocument,
 ): IDataSourceConnectionInfo => {
-    const { id, meta, attributes } = response.data.data;
+    const { id, meta, attributes } = response.data;
     const { name, url, type, schema, username } = attributes;
     return {
         id,
@@ -307,10 +307,28 @@ const dataSourceResponseAsDataSourceConnectionInfo = (
     };
 };
 
-const dataSourceIdentifierAsDataSourceConnectionInfo = (
+const dataSourceIdentifierOutWithLinksAsDataSourceConnectionInfo = (
     response: JsonApiDataSourceIdentifierOutWithLinks,
 ): IDataSourceConnectionInfo => {
     const { id, meta, attributes } = response;
+    const { name, type, schema } = attributes;
+    return {
+        id,
+        type,
+        name,
+        schema,
+        username: undefined,
+        url: undefined,
+        permissions: meta?.permissions ?? [],
+    };
+};
+
+const dataSourceIdentifierOutDocumentAsDataSourceConnectionInfo = (
+    response: JsonApiDataSourceIdentifierOutDocument,
+): IDataSourceConnectionInfo => {
+    const {
+        data: { attributes, id, meta },
+    } = response;
     const { name, type, schema } = attributes;
     return {
         id,
@@ -378,7 +396,7 @@ export const buildTigerSpecificFunctions = (
                 const result = await sdk.entities.getEntityOrganizations({ id: organizationId });
                 return result.data?.data?.attributes?.allowedOrigins || [];
             });
-        } catch (error) {
+        } catch (error: any) {
             return [];
         }
     },
@@ -391,7 +409,7 @@ export const buildTigerSpecificFunctions = (
                 });
                 return result.data.data?.meta?.permissions || [];
             });
-        } catch (error) {
+        } catch (error: any) {
             const toleratedCodes = [404, 403];
             if (
                 toleratedCodes.includes(error?.response?.status) ||
@@ -424,8 +442,8 @@ export const buildTigerSpecificFunctions = (
                 });
                 return sanitizeOrigins(result.data?.data?.attributes?.allowedOrigins || []);
             });
-        } catch (error) {
-            if (error.response.status === 400) {
+        } catch (error: any) {
+            if (error.response?.status === 400) {
                 const message = error?.response?.data?.detail
                     ? error?.response?.data?.detail
                     : "Server error";
@@ -484,7 +502,7 @@ export const buildTigerSpecificFunctions = (
                     bearerToken: result.data.data?.attributes?.bearerToken,
                 };
             });
-        } catch (error) {
+        } catch (error: any) {
             throw convertApiError(error);
         }
     },
@@ -493,7 +511,7 @@ export const buildTigerSpecificFunctions = (
             await authApiCall(async (sdk) => {
                 await sdk.entities.deleteEntityApiTokens({ userId: userId, id: tokenId });
             });
-        } catch (error) {
+        } catch (error: any) {
             throw convertApiError(error);
         }
     },
@@ -518,7 +536,7 @@ export const buildTigerSpecificFunctions = (
                     })
                     .then((axiosResponse) => axiosResponse.data);
             });
-        } catch (error) {
+        } catch (error: any) {
             throw convertApiError(error);
         }
     },
@@ -530,11 +548,11 @@ export const buildTigerSpecificFunctions = (
                         dataSourceId,
                         scanRequest,
                     })
-                    .then((res: AxiosResponse) => {
+                    .then((res) => {
                         return res?.data;
                     });
             });
-        } catch (error) {
+        } catch (error: any) {
             throw convertApiError(error);
         }
     },
@@ -565,7 +583,7 @@ export const buildTigerSpecificFunctions = (
                 });
                 return result.data.data.id;
             });
-        } catch (error) {
+        } catch (error: any) {
             throw convertApiError(error);
         }
     },
@@ -574,7 +592,7 @@ export const buildTigerSpecificFunctions = (
             return await authApiCall(async (sdk) => {
                 await sdk.declarativeLayout.setPdmLayout(requestParameters);
             });
-        } catch (error) {
+        } catch (error: any) {
             throw convertApiError(error);
         }
     },
@@ -594,7 +612,7 @@ export const buildTigerSpecificFunctions = (
                 });
                 return result.data.data.id;
             });
-        } catch (error) {
+        } catch (error: any) {
             throw convertApiError(error);
         }
     },
@@ -614,7 +632,7 @@ export const buildTigerSpecificFunctions = (
                     },
                 });
             });
-        } catch (error) {
+        } catch (error: any) {
             throw convertApiError(error);
         }
     },
@@ -623,7 +641,7 @@ export const buildTigerSpecificFunctions = (
             return await authApiCall(async (sdk) => {
                 await sdk.entities.deleteEntityWorkspaces({ id });
             });
-        } catch (error) {
+        } catch (error: any) {
             throw convertApiError(error);
         }
     },
@@ -648,7 +666,7 @@ export const buildTigerSpecificFunctions = (
                 const result = await sdk.declarativeLayout.getLogicalModel({ workspaceId, includeParents });
                 return result.data;
             });
-        } catch (error) {
+        } catch (error: any) {
             throw convertApiError(error);
         }
     },
@@ -657,7 +675,7 @@ export const buildTigerSpecificFunctions = (
             return await authApiCall(async (sdk) => {
                 await sdk.declarativeLayout.putWorkspaceLayout(requestParameters);
             });
-        } catch (error) {
+        } catch (error: any) {
             throw convertApiError(error);
         }
     },
@@ -671,7 +689,7 @@ export const buildTigerSpecificFunctions = (
                     expiry: entitlement.attributes?.expiry,
                 }));
             });
-        } catch (error) {
+        } catch (error: any) {
             throw convertApiError(error);
         }
     },
@@ -683,10 +701,25 @@ export const buildTigerSpecificFunctions = (
                         id,
                     })
                     .then((axiosResponse) => ({
-                        data: dataSourceResponseAsDataSourceConnectionInfo(axiosResponse),
+                        data: dataSourceResponseAsDataSourceConnectionInfo(axiosResponse.data),
                     }));
             });
-        } catch (error) {
+        } catch (error: any) {
+            return { errorMessage: getDataSourceErrorMessage(error) };
+        }
+    },
+    getDataSourceIdentifierById: async (id: string) => {
+        try {
+            return await authApiCall(async (sdk) => {
+                return sdk.entities
+                    .getEntityDataSourceIdentifiers({
+                        id,
+                    })
+                    .then((axiosResponse) => ({
+                        data: dataSourceIdentifierOutDocumentAsDataSourceConnectionInfo(axiosResponse.data),
+                    }));
+            });
+        } catch (error: any) {
             return { errorMessage: getDataSourceErrorMessage(error) };
         }
     },
@@ -713,10 +746,10 @@ export const buildTigerSpecificFunctions = (
                         },
                     })
                     .then((axiosResponse) => ({
-                        data: dataSourceResponseAsDataSourceConnectionInfo(axiosResponse),
+                        data: dataSourceResponseAsDataSourceConnectionInfo(axiosResponse.data),
                     }));
             });
-        } catch (error) {
+        } catch (error: any) {
             return { errorMessage: getDataSourceErrorMessage(error) };
         }
     },
@@ -744,10 +777,10 @@ export const buildTigerSpecificFunctions = (
                         },
                     })
                     .then((axiosResponse) => ({
-                        data: dataSourceResponseAsDataSourceConnectionInfo(axiosResponse),
+                        data: dataSourceResponseAsDataSourceConnectionInfo(axiosResponse.data),
                     }));
             });
-        } catch (error) {
+        } catch (error: any) {
             return { errorMessage: getDataSourceErrorMessage(error) };
         }
     },
@@ -759,7 +792,7 @@ export const buildTigerSpecificFunctions = (
                 });
                 return { successful: true };
             });
-        } catch (error) {
+        } catch (error: any) {
             return { errorMessage: getDataSourceErrorMessage(error) };
         }
     },
@@ -777,7 +810,7 @@ export const buildTigerSpecificFunctions = (
                           });
                 return await promise.then((axiosResponse) => axiosResponse.data);
             });
-        } catch (error) {
+        } catch (error: any) {
             return {
                 successful: false,
                 error: getDataSourceErrorMessage(error),
@@ -786,7 +819,7 @@ export const buildTigerSpecificFunctions = (
     },
     getDataSourceSchemata: async (dataSourceId: string) => {
         return await authApiCall(async (sdk) => {
-            return await sdk.scanModel.getDataSourceSchemata({ dataSourceId }).then((res: AxiosResponse) => {
+            return await sdk.scanModel.getDataSourceSchemata({ dataSourceId }).then((res) => {
                 return res?.data.schemaNames;
             });
         });
@@ -797,7 +830,7 @@ export const buildTigerSpecificFunctions = (
                 .getPdmLayout({
                     dataSourceId,
                 })
-                .then((res: AxiosResponse) => {
+                .then((res) => {
                     return res?.data;
                 });
         });
@@ -813,8 +846,8 @@ export const buildTigerSpecificFunctions = (
                 },
             )
                 .then(OrganizationUtilities.mergeEntitiesResults)
-                .then((res: JsonApiDataSourceIdentifierOutList) => {
-                    return res.data.map(dataSourceIdentifierAsDataSourceConnectionInfo);
+                .then((res) => {
+                    return res.data.map(dataSourceIdentifierOutWithLinksAsDataSourceConnectionInfo);
                 });
         });
     },
@@ -833,11 +866,11 @@ export const buildTigerSpecificFunctions = (
                     .getDependentEntitiesGraph({
                         workspaceId,
                     })
-                    .then((res: AxiosResponse) => {
+                    .then((res) => {
                         return res?.data;
                     });
             });
-        } catch (error) {
+        } catch (error: any) {
             throw convertApiError(error);
         }
     },
@@ -852,11 +885,11 @@ export const buildTigerSpecificFunctions = (
                         workspaceId,
                         dependentEntitiesRequest: dependentEntitiesGraphRequest,
                     })
-                    .then((res: AxiosResponse) => {
+                    .then((res) => {
                         return res?.data;
                     });
             });
-        } catch (error) {
+        } catch (error: any) {
             throw convertApiError(error);
         }
     },
