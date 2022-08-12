@@ -9,9 +9,10 @@ import {
     uiActions,
     useDashboardDispatch,
     useDashboardSelector,
+    useWidgetSelection,
 } from "../../../model";
 import { DashboardItem, DashboardItemContent } from "../../presentationComponents";
-import { ConfigurationBubble, useWidgetSelection } from "../common";
+import { ConfigurationBubble } from "../common";
 import { CustomDashboardWidgetComponent } from "../widget/types";
 import { KpiPlaceholderConfigurationPanel } from "./KpiPlaceholderConfigurationPanel";
 

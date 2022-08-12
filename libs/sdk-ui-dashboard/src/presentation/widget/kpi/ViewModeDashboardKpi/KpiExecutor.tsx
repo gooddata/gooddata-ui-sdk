@@ -40,6 +40,7 @@ import {
     selectIsKpiAlertHighlightedByWidgetRef,
     selectEnableWidgetCustomHeight,
     selectDateFormat,
+    useWidgetSelection,
 } from "../../../../model";
 import { DashboardItemHeadline } from "../../../presentationComponents";
 import { IDashboardFilter, OnFiredDashboardDrillEvent } from "../../../../types";
@@ -49,7 +50,6 @@ import { useKpiAlertOperations } from "./useKpiAlertOperations";
 import { DashboardItemWithKpiAlert, evaluateAlertTriggered } from "./KpiAlerts";
 import { useWidgetBrokenAlertsQuery } from "../../common/useWidgetBrokenAlertsQuery";
 import { invariant } from "ts-invariant";
-import { useWidgetSelection } from "../../common";
 import {
     dashboardFilterToFilterContextItem,
     getAlertThresholdInfo,

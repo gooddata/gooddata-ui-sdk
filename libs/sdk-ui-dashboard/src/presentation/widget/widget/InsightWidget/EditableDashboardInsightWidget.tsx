@@ -12,7 +12,7 @@ import {
 } from "../../../presentationComponents";
 import { DashboardInsight } from "../../insight";
 import { useDashboardComponentsContext } from "../../../dashboardContexts";
-import { useWidgetSelection } from "../../common";
+import { useWidgetSelection } from "../../../../model";
 import { useEditableInsightMenu } from "./useEditableInsightMenu";
 import { IDefaultDashboardInsightWidgetProps } from "./types";
 import { DashboardWidgetInsightGuard } from "./DashboardWidgetInsightGuard";
