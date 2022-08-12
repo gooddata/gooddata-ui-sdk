@@ -48,7 +48,7 @@ export const DashboardWidget = (props: IDashboardWidgetProps): JSX.Element => {
             return WidgetDropZone;
         }
 
-        if (isKpiPlaceholderWidget(widget)) {
+        if (isKpiPlaceholderWidget(widget) && KpiWidgetComponentSet.creating) {
             return KpiWidgetComponentSet.creating.CreatingPlaceholderComponent;
         }
 

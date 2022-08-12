@@ -37,10 +37,10 @@ export const WidgetDropZone: CustomDashboardWidgetComponent = (props) => {
                     handleInsightListItemDrop(item.insight);
                 }
                 if (isKpiPlaceholderDraggableItem(item)) {
-                    handleKpiPlaceholderDrop(sectionIndex, itemIndex);
+                    handleKpiPlaceholderDrop(sectionIndex, itemIndex, isLastInSection);
                 }
                 if (isInsightPlaceholderDraggableItem(item)) {
-                    handleInsightPlaceholderDrop(sectionIndex, itemIndex);
+                    handleInsightPlaceholderDrop(sectionIndex, itemIndex, isLastInSection);
                 }
             },
         },
@@ -49,6 +49,7 @@ export const WidgetDropZone: CustomDashboardWidgetComponent = (props) => {
             settings,
             sectionIndex,
             itemIndex,
+            isLastInSection,
             handleInsightListItemDrop,
             handleInsightPlaceholderDrop,
             handleKpiPlaceholderDrop,

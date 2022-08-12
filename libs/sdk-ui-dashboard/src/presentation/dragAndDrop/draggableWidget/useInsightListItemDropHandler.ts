@@ -11,7 +11,6 @@ import {
     uiActions,
     selectWidgetPlaceholder,
     replaceSectionItem,
-    DashboardItemDefinition,
 } from "../../../model";
 import { getSizeInfo } from "../../../_staging/layout/sizing";
 
@@ -36,7 +35,7 @@ export function useInsightListItemDropHandler() {
             invariant(widgetPlaceholder, "cannot drop onto placeholder, there is none");
 
             const sizeInfo = getSizeInfo(settings, "insight", insight);
-            const dashItem: DashboardItemDefinition = {
+            replaceInsightOntoPlaceholder(widgetPlaceholder.sectionIndex, widgetPlaceholder.itemIndex, {
                 type: "IDashboardLayoutItem",
                 widget: {
                     type: "insight",
@@ -54,12 +53,7 @@ export function useInsightListItemDropHandler() {
                         gridWidth: sizeInfo.width.default!,
                     },
                 },
-            };
-            replaceInsightOntoPlaceholder(
-                widgetPlaceholder.sectionIndex,
-                widgetPlaceholder.itemIndex,
-                dashItem,
-            );
+            });
         },
         [replaceInsightOntoPlaceholder, settings, widgetPlaceholder],
     );

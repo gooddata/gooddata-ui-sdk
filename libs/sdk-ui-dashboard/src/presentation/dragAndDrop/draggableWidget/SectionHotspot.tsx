@@ -115,11 +115,7 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
                                     gridWidth: sizeInfo.width.default!,
                                 },
                             },
-                            widget: newKpiPlaceholderWidget(
-                                index, // TODO get rid of this, get the coords using widget ref
-                                0,
-                                true,
-                            ),
+                            widget: newKpiPlaceholderWidget(index, 0, true),
                         },
                     ]);
                 }
@@ -134,11 +130,7 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
                                     gridWidth: sizeInfo.width.default!,
                                 },
                             },
-                            widget: newInsightPlaceholderWidget(
-                                index, // TODO get rid of this, get the coords using widget ref
-                                0,
-                                true,
-                            ),
+                            widget: newInsightPlaceholderWidget(index, 0, true),
                         },
                     ]);
                 }

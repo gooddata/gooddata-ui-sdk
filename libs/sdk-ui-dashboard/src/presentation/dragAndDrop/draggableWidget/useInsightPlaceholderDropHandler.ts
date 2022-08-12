@@ -17,7 +17,7 @@ export function useInsightPlaceholderDropHandler() {
     const settings = useDashboardSelector(selectSettings);
 
     return useCallback(
-        (sectionIndex: number, itemIndex: number) => {
+        (sectionIndex: number, itemIndex: number, isLastInSection: boolean) => {
             const sizeInfo = getInsightPlaceholderSizeInfo(settings);
             dispatch(uiActions.selectWidget(idRef(INSIGHT_PLACEHOLDER_WIDGET_ID)));
             dispatch(uiActions.setConfigurationPanelOpened(true));
@@ -30,11 +30,7 @@ export function useInsightPlaceholderDropHandler() {
                             gridWidth: sizeInfo.width.default!,
                         },
                     },
-                    widget: newInsightPlaceholderWidget(
-                        sectionIndex, // TODO get rid of this, get the coords using widget ref
-                        itemIndex,
-                        false, // TODO how to get this? should WidgetDropZone get this instead?
-                    ),
+                    widget: newInsightPlaceholderWidget(sectionIndex, itemIndex, isLastInSection),
                 }),
             );
         },

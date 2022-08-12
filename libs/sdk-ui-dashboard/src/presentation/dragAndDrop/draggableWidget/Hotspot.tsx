@@ -1,6 +1,8 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
 import cx from "classnames";
+import invariant from "ts-invariant";
+
 import { getDropZoneDebugStyle } from "../debug";
 import {
     selectSettings,
@@ -12,25 +14,46 @@ import {
 } from "../../../model";
 import { useDashboardDrop } from "../useDashboardDrop";
 import {
+    InsightDraggableListItem,
+    InsightPlaceholderDraggableItem,
     isInsightDraggableListItem,
     isInsightPlaceholderDraggableItem,
     isKpiPlaceholderDraggableItem,
+    KpiPlaceholderDraggableItem,
 } from "../types";
 import { getInsightPlaceholderSizeInfo, getSizeInfo } from "../../../_staging/layout/sizing";
 import { useKpiPlaceholderDropHandler } from "./useKpiPlaceholderDropHandler";
 import { useInsightListItemDropHandler } from "./useInsightListItemDropHandler";
 import { useInsightPlaceholderDropHandler } from "./useInsightPlaceholderDropHandler";
 import { newPlaceholderWidget } from "../../../widgets";
+import { ISettings } from "@gooddata/sdk-model";
 
 interface IHotspotProps {
     sectionIndex: number;
     itemIndex: number;
+    isLastInSection: boolean;
     classNames?: string;
     dropZoneType: "prev" | "next";
 }
 
+function getDraggableItemSizeInfo(
+    settings: ISettings,
+    item: InsightDraggableListItem | InsightPlaceholderDraggableItem | KpiPlaceholderDraggableItem,
+) {
+    if (isInsightDraggableListItem(item)) {
+        return getSizeInfo(settings, "insight", item.insight);
+    }
+    if (isKpiPlaceholderDraggableItem(item)) {
+        return getSizeInfo(settings, "kpi");
+    }
+    if (isInsightPlaceholderDraggableItem(item)) {
+        return getInsightPlaceholderSizeInfo(settings);
+    }
+    invariant(false, "unsupported draggable item");
+}
+
 export const Hotspot: React.FC<IHotspotProps> = (props) => {
-    const { itemIndex, sectionIndex, classNames, dropZoneType } = props;
+    const { itemIndex, sectionIndex, isLastInSection, classNames, dropZoneType } = props;
 
     const dispatch = useDashboardDispatch();
     const settings = useDashboardSelector(selectSettings);
@@ -57,10 +80,10 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
                     handleInsightListItemDrop(item.insight);
                 }
                 if (isKpiPlaceholderDraggableItem(item)) {
-                    handleKpiPlaceholderDrop(sectionIndex, targetItemIndex);
+                    handleKpiPlaceholderDrop(sectionIndex, targetItemIndex, isLastInSection);
                 }
                 if (isInsightPlaceholderDraggableItem(item)) {
-                    handleInsightPlaceholderDrop(sectionIndex, targetItemIndex);
+                    handleInsightPlaceholderDrop(sectionIndex, targetItemIndex, isLastInSection);
                 }
             },
             hover: (item) => {
@@ -73,67 +96,22 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
                     dispatch(removeSectionItem(widgetPlaceholder.sectionIndex, widgetPlaceholder.itemIndex));
                 }
 
-                if (isInsightDraggableListItem(item)) {
-                    const { insight } = item;
-                    const sizeInfo = getSizeInfo(settings, "insight", insight);
-                    const placeholderSpec = newPlaceholderWidget(
-                        sectionIndex, // TODO get rid of this, get the coords using widget ref
-                        targetItemIndex,
-                        false, // TODO how to get this? should WidgetDropZone get this instead?
-                    );
-                    dispatch(
-                        addSectionItem(sectionIndex, targetItemIndex, {
-                            type: "IDashboardLayoutItem",
-                            size: {
-                                xl: {
-                                    gridHeight: sizeInfo.height.default!,
-                                    gridWidth: sizeInfo.width.default!,
-                                },
+                const placeholderSpec = newPlaceholderWidget(sectionIndex, targetItemIndex, isLastInSection);
+
+                const sizeInfo = getDraggableItemSizeInfo(settings, item);
+
+                dispatch(
+                    addSectionItem(sectionIndex, targetItemIndex, {
+                        type: "IDashboardLayoutItem",
+                        size: {
+                            xl: {
+                                gridHeight: sizeInfo.height.default!,
+                                gridWidth: sizeInfo.width.default!,
                             },
-                            widget: placeholderSpec,
-                        }),
-                    );
-                }
-                if (isKpiPlaceholderDraggableItem(item)) {
-                    const sizeInfo = getSizeInfo(settings, "kpi");
-                    const placeholderSpec = newPlaceholderWidget(
-                        sectionIndex, // TODO get rid of this, get the coords using widget ref
-                        targetItemIndex,
-                        false, // TODO how to get this? should WidgetDropZone get this instead?
-                    );
-                    dispatch(
-                        addSectionItem(sectionIndex, targetItemIndex, {
-                            type: "IDashboardLayoutItem",
-                            size: {
-                                xl: {
-                                    gridHeight: sizeInfo.height.default!,
-                                    gridWidth: sizeInfo.width.default!,
-                                },
-                            },
-                            widget: placeholderSpec,
-                        }),
-                    );
-                }
-                if (isInsightPlaceholderDraggableItem(item)) {
-                    const sizeInfo = getInsightPlaceholderSizeInfo(settings);
-                    const placeholderSpec = newPlaceholderWidget(
-                        sectionIndex, // TODO get rid of this, get the coords using widget ref
-                        targetItemIndex,
-                        false, // TODO how to get this? should WidgetDropZone get this instead?
-                    );
-                    dispatch(
-                        addSectionItem(sectionIndex, targetItemIndex, {
-                            type: "IDashboardLayoutItem",
-                            size: {
-                                xl: {
-                                    gridHeight: sizeInfo.height.default!,
-                                    gridWidth: sizeInfo.width.default!,
-                                },
-                            },
-                            widget: placeholderSpec,
-                        }),
-                    );
-                }
+                        },
+                        widget: placeholderSpec,
+                    }),
+                );
             },
         },
         [

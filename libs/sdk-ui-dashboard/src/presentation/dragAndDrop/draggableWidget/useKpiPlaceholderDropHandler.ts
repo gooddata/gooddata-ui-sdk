@@ -32,7 +32,7 @@ export function useKpiPlaceholderDropHandler() {
     });
 
     return useCallback(
-        (sectionIndex: number, itemIndex: number) => {
+        (sectionIndex: number, itemIndex: number, isLastInSection: boolean) => {
             const sizeInfo = getSizeInfo(settings, "kpi");
             invariant(widgetPlaceholder, "cannot drop onto placeholder, there is none");
             replaceKpiOntoPlaceholder(widgetPlaceholder.sectionIndex, widgetPlaceholder.itemIndex, {
@@ -43,11 +43,7 @@ export function useKpiPlaceholderDropHandler() {
                         gridWidth: sizeInfo.width.default!,
                     },
                 },
-                widget: newKpiPlaceholderWidget(
-                    sectionIndex, // TODO get rid of this, get the coords using widget ref
-                    itemIndex,
-                    false, // TODO how to get this? should WidgetDropZone get this instead?
-                ),
+                widget: newKpiPlaceholderWidget(sectionIndex, itemIndex, isLastInSection),
             });
         },
         [replaceKpiOntoPlaceholder, settings, widgetPlaceholder],
