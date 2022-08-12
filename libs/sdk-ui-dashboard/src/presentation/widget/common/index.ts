@@ -6,4 +6,3 @@ export * from "./useInsightWidgetDataView";
 export * from "./useCustomWidgetExecutionDataView";
 export * from "./useCustomWidgetInsightDataView";
 export * from "./configuration";
-export * from "./useWidgetSelection";

@@ -1,7 +1,13 @@
 // (C) 2022 GoodData Corporation
-import React from "react";
+import React, { useEffect } from "react";
 
-import { uiActions, selectIsInEditMode, useDashboardDispatch, useDashboardSelector } from "../../../model";
+import {
+    uiActions,
+    selectIsInEditMode,
+    useDashboardDispatch,
+    useDashboardSelector,
+    useWidgetSelection,
+} from "../../../model";
 import { useDashboardDrag } from "../useDashboardDrag";
 import {
     CustomDashboardKpiPlaceholderComponent,
@@ -19,8 +25,9 @@ export const DraggableKpiPlaceholder: React.FC<DraggableKpiPlaceholderProps> = (
 }) => {
     const dispatch = useDashboardDispatch();
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
+    const { deselectWidgets } = useWidgetSelection();
 
-    const [, dragRef] = useDashboardDrag({
+    const [{ isDragging }, dragRef] = useDashboardDrag({
         dragItem: {
             type: "kpi-placeholder",
         },
@@ -32,6 +39,14 @@ export const DraggableKpiPlaceholder: React.FC<DraggableKpiPlaceholderProps> = (
             }
         },
     });
+
+    // deselect all widgets when starting the drag
+    useEffect(() => {
+        if (isDragging) {
+            deselectWidgets();
+        }
+    }, [deselectWidgets, isDragging]);
+
     return (
         <div ref={dragRef}>
             <PlaceholderComponent {...placeholderComponentProps} />

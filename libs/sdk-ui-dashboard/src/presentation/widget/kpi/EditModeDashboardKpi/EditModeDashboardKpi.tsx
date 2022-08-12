@@ -16,11 +16,12 @@ import {
     selectWidgetCoordinatesByRef,
     selectFilterContextFilters,
     uiActions,
+    useWidgetSelection,
 } from "../../../../model";
 import { DashboardItemHeadline, DashboardItemKpi } from "../../../presentationComponents";
 import { useDashboardComponentsContext } from "../../../dashboardContexts";
 
-import { ConfigurationBubble, useWidgetSelection } from "../../common";
+import { ConfigurationBubble } from "../../common";
 import { KpiConfigurationPanel } from "./KpiConfigurationPanel/KpiConfigurationPanel";
 import { getKpiResult, KpiRenderer, useKpiData, useKpiExecutionDataView } from "../common";
 import { IDashboardKpiProps } from "../types";

@@ -4042,6 +4042,16 @@ export interface IUseInsightWidgetDataView {
     insightWidget?: IInsightWidget;
 }
 
+// @internal (undocumented)
+export interface IUseWidgetSelectionResult {
+    closeConfigPanel: () => void;
+    deselectWidgets: (e?: MouseEvent_2) => void;
+    hasConfigPanelOpen: boolean;
+    isSelectable: boolean;
+    isSelected: boolean;
+    onSelected: (e?: MouseEvent_2) => void;
+}
+
 // @alpha (undocumented)
 export interface IWidgetPlaceholderSpec {
     // (undocumented)
@@ -6365,6 +6375,9 @@ export function useWidgetExecutionsHandler(widgetRef: ObjRef): {
 
 // @public
 export function useWidgetFilters(widget: ExtendedDashboardWidget | undefined, insight?: IInsightDefinition): QueryProcessingState<IFilter[]>;
+
+// @internal (undocumented)
+export function useWidgetSelection(widgetRef?: ObjRef): IUseWidgetSelectionResult;
 
 // @public (undocumented)
 export type WidgetComponentProvider = (widget: ExtendedDashboardWidget) => CustomDashboardWidgetComponent;
