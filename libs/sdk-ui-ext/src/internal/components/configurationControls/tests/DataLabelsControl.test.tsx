@@ -1,17 +1,15 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
 import noop from "lodash/noop";
 import DataLabelsControl, { IDataLabelsControlProps } from "../DataLabelsControl";
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider";
 import { IDataLabelsVisible } from "@gooddata/sdk-ui-charts";
+import { setupComponent } from "../../../tests/testHelper";
 
 describe("DataLabelsControl", () => {
     const HIDE_LABEL = "hide";
     const VISIBLE_LABEL = "show";
     const AUTO_LABEL = "auto (default)";
-    const dataLabelsButtonSelector = ".s-data-labels-config .dropdown-button";
-    const dataLabelsButtonTextSelector = ".s-data-labels-config .dropdown-button .gd-button-text:first-child";
 
     const defaultProps = {
         properties: {},
@@ -21,7 +19,7 @@ describe("DataLabelsControl", () => {
 
     function createComponent(customProps: Partial<IDataLabelsControlProps> = {}) {
         const props = { ...defaultProps, ...customProps };
-        return mount(
+        return setupComponent(
             <InternalIntlWrapper>
                 <DataLabelsControl {...props} />
             </InternalIntlWrapper>,
@@ -41,37 +39,24 @@ describe("DataLabelsControl", () => {
 
     describe("Rendering", () => {
         it("should render data labels control", () => {
-            const wrapper = createComponent();
-
-            expect(wrapper.find(DataLabelsControl).length).toBe(1);
+            const { getByText } = createComponent();
+            expect(getByText("Data Labels")).toBeInTheDocument();
         });
 
         it("should render dropdown as disabled when disabled", () => {
-            const wrapper = createComponent({
+            const { getByRole } = createComponent({
                 isDisabled: true,
             });
-
-            expect(wrapper.find(`${dataLabelsButtonSelector}.disabled`).length).toBe(1);
-        });
-
-        it("should pass showDisabledMessage property to the dropdown control", () => {
-            const wrapper = createComponent({
-                showDisabledMessage: true,
-            });
-
-            const dropdown = wrapper.find("DropdownControl").first();
-
-            expect(dropdown.prop("showDisabledMessage")).toBeTruthy();
+            expect(getByRole("button")).toHaveClass("disabled");
         });
 
         it("should have `auto` by default", () => {
-            const wrapper = createComponent();
-
-            expect(wrapper.find(dataLabelsButtonTextSelector).first().text()).toEqual(AUTO_LABEL);
+            const { queryByText } = createComponent();
+            expect(queryByText(AUTO_LABEL)).toBeInTheDocument();
         });
 
         it("should show value that was passed", () => {
-            const wrapper = createComponent({
+            const { queryByText } = createComponent({
                 properties: {
                     controls: {
                         dataLabels: {
@@ -81,7 +66,7 @@ describe("DataLabelsControl", () => {
                 },
             });
 
-            expect(wrapper.find(dataLabelsButtonTextSelector).first().text()).toEqual(VISIBLE_LABEL);
+            expect(queryByText(VISIBLE_LABEL)).toBeInTheDocument();
         });
 
         it.each([
@@ -92,7 +77,8 @@ describe("DataLabelsControl", () => {
         ])(
             "should render dropdowns based on the provided values (visible: %s, totalsVisible: %s)",
             (visible: IDataLabelsVisible, totalsVisible: IDataLabelsVisible) => {
-                const wrapper = createComponent({
+                const { getAllByRole } = createComponent({
+                    enableSeparateTotalLabels: true,
                     properties: {
                         controls: {
                             dataLabels: {
@@ -102,12 +88,9 @@ describe("DataLabelsControl", () => {
                         },
                     },
                 });
-
-                expect(wrapper.find(dataLabelsButtonTextSelector).at(0).text()).toEqual(
-                    visibleValueToText(visible),
-                );
-
-                // once FF enableSeparateTotalLabels is enabled by default then add totalsVisible test here
+                const buttons = getAllByRole("button");
+                expect(buttons[0]).toHaveTextContent(visibleValueToText(visible));
+                expect(buttons[1]).toHaveTextContent(visibleValueToText(totalsVisible));
             },
         );
     });

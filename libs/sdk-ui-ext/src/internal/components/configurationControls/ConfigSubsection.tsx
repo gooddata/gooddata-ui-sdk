@@ -47,7 +47,7 @@ class ConfigSubsection extends React.Component<IConfigSubsectionProps, IConfigSu
         const className = `configuration-subsection ${this.getTestClassName()}`;
 
         return (
-            <div className={className}>
+            <div className={className} aria-label="Configuration subsection">
                 <fieldset>
                     <legend>
                         <span className="legend-title">{getTranslation(title, intl)}</span>

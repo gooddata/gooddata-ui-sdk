@@ -1,11 +1,11 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { waitFor } from "@testing-library/react";
 import noop from "lodash/noop";
-import { Dropdown } from "@gooddata/sdk-ui-kit";
 import DropdownControl, { IDropdownControlProps } from "../DropdownControl";
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider";
 import { IDropdownItem } from "../../../interfaces/Dropdown";
+import { setupComponent } from "../../../tests/testHelper";
 
 describe("DropdownControl", () => {
     const defaultProps = {
@@ -17,7 +17,7 @@ describe("DropdownControl", () => {
 
     function createComponent(customProps: Partial<IDropdownControlProps> = {}) {
         const props = { ...defaultProps, ...customProps };
-        return mount(
+        return setupComponent(
             <InternalIntlWrapper>
                 <DropdownControl {...props} />
             </InternalIntlWrapper>,
@@ -25,21 +25,19 @@ describe("DropdownControl", () => {
     }
 
     it("should render dropdown control", () => {
-        const wrapper = createComponent();
+        const { getByRole } = createComponent();
 
-        expect(wrapper.find(Dropdown).length).toBe(1);
+        expect(getByRole("button")).toHaveClass("dropdown-button");
     });
 
     it("should be enabled by default", () => {
-        const wrapper = createComponent();
-
-        expect(wrapper.find("button").hasClass("disabled")).toBeFalsy();
+        const { getByRole } = createComponent();
+        expect(getByRole("button")).not.toHaveClass("disabled");
     });
 
     it("should render disabled button", () => {
-        const wrapper = createComponent({ disabled: true });
-
-        expect(wrapper.find("button").hasClass("disabled")).toBeTruthy();
+        const { getByRole } = createComponent({ disabled: true });
+        expect(getByRole("button")).toHaveClass("disabled");
     });
 
     describe("rendered list items", () => {
@@ -47,7 +45,7 @@ describe("DropdownControl", () => {
             {
                 title: "My item",
                 value: "42",
-                icon: "s-icon",
+                icon: "se-icon",
             },
         ];
 
@@ -72,15 +70,17 @@ describe("DropdownControl", () => {
         ];
 
         it.each([
-            ["item with icon", iconItems, ".s-icon"],
-            ["separator item", separatorItems, ".s-list-separator"],
-            ["header item", headerItems, ".s-list-header"],
-            ["item with info", itemsWithInfo, ".s-list-item-info"],
-        ])("should render %s", (_testType, items: IDropdownItem[], expectedSelector: string) => {
-            const wrapper = createComponent({ items });
+            ["item with icon", iconItems, "icon"],
+            ["separator item", separatorItems, "item-separator"],
+            ["header item", headerItems, "item-header"],
+            ["item with info", itemsWithInfo, "item-info"],
+        ])("should render %s", async (_testType, items: IDropdownItem[], role: string) => {
+            const { getByRole, user } = createComponent({ items });
 
-            wrapper.find("button").simulate("click");
-            expect(wrapper.find(expectedSelector).length).toBe(1);
+            await user.click(getByRole("button"));
+            await waitFor(() => {
+                expect(getByRole(role)).toBeInTheDocument();
+            });
         });
     });
 });

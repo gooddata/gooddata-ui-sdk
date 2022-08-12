@@ -69,7 +69,7 @@ export class ConfigSection extends React.Component<IConfigSectionProps, IConfigS
         const configSectionClassName = `adi-bucket-configuration ${className}`;
 
         return (
-            <div className={this.getSectionClassNames()}>
+            <div className={this.getSectionClassNames()} aria-label="Configuration section">
                 <div className={this.getHeaderClassNames()} onClick={this.toggleCollapsed}>
                     {getTranslation(title, intl) + (subtitle ? ` (${getTranslation(subtitle, intl)})` : "")}
                 </div>

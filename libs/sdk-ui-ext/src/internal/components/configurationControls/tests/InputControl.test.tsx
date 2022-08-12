@@ -1,9 +1,10 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { shallow } from "enzyme";
+import { waitFor, fireEvent } from "@testing-library/react";
 import noop from "lodash/noop";
 import { InputControl, IInputControlProps } from "../InputControl";
-import { createInternalIntl } from "../../../utils/internalIntlProvider";
+import { createInternalIntl, InternalIntlWrapper } from "../../../utils/internalIntlProvider";
+import { setupComponent } from "../../../tests/testHelper";
 
 describe("InputControl", () => {
     const defaultProps = {
@@ -18,124 +19,109 @@ describe("InputControl", () => {
 
     function createComponent(customProps: Partial<IInputControlProps> = {}) {
         const props = { ...defaultProps, ...customProps };
-        return shallow<InputControl, null>(<InputControl {...props} />, { lifecycleExperimental: true });
+        return setupComponent(
+            <InternalIntlWrapper>
+                <InputControl {...props} />
+            </InternalIntlWrapper>,
+        );
     }
 
     it("should render input control", () => {
-        const wrapper = createComponent();
-
-        expect(wrapper.find(".input-label-text").length).toBe(1);
+        const { getByRole } = createComponent();
+        expect(getByRole("textbox")).toBeInTheDocument();
     });
 
     it("should be enabled by default", () => {
-        const wrapper = createComponent();
-
-        expect(wrapper.find(".gd-input-field").props().disabled).toBeFalsy();
+        const { getByRole } = createComponent();
+        expect(getByRole("textbox")).toBeEnabled();
     });
 
     it("should render disabled checkbox", () => {
-        const wrapper = createComponent({ disabled: true });
-
-        expect(wrapper.find(".gd-input-field").props().disabled).toBeTruthy();
+        const { getByRole } = createComponent({ disabled: true });
+        expect(getByRole("textbox")).toBeDisabled();
     });
 
     it("should render label provided by props", () => {
         // pick something in the dictionary
-        const wrapper = createComponent({ labelText: "properties.canvas.title" });
-        expect(wrapper.find(".input-label-text").text()).toEqual("Canvas");
+        const { getByText } = createComponent({ labelText: "properties.canvas.title" });
+        expect(getByText("Canvas")).toBeInTheDocument();
     });
 
     it("should render input control with given value", () => {
-        const wrapper = createComponent({
+        const { getByRole } = createComponent({
             value: "foo",
         });
-
-        expect(wrapper.find(".gd-input-field").props().value).toEqual("foo");
+        expect(getByRole("textbox")).toHaveValue("foo");
     });
 
-    it("should pushData when press Enter and value in state is different than in props", () => {
+    it("should pushData when press Enter and value in state is different than in props", async () => {
         const pushData = jest.fn();
-
-        const wrapper = createComponent({
+        const { getByRole, user } = createComponent({
             value: "foo",
             pushData,
         });
 
-        wrapper.setState({
-            value: "bar",
-        });
-
-        wrapper.find(".gd-input-field").simulate("keypress", { key: "Enter" });
-        expect(pushData).toHaveBeenCalledTimes(1);
-        expect(pushData).toHaveBeenCalledWith({
-            properties: { controls: { valuePath: "bar" } },
+        await user.clear(getByRole("textbox"));
+        await user.type(getByRole("textbox"), "bar");
+        await user.keyboard("{enter}");
+        await waitFor(() => {
+            expect(pushData).toHaveBeenCalledTimes(1);
+            expect(pushData).toHaveBeenCalledWith({ properties: { controls: { valuePath: "bar" } } });
         });
     });
 
-    it("should not call pushData when value is the same", () => {
+    it("should not call pushData when value is the same", async () => {
         const pushData = jest.fn();
-
-        const wrapper = createComponent({
+        const { getByRole, user } = createComponent({
             value: "4",
             pushData,
         });
 
-        wrapper.setState({
-            value: "4",
-        });
-
-        wrapper.find(".gd-input-field").simulate("blur");
+        await user.clear(getByRole("textbox"));
+        await user.type(getByRole("textbox"), "4");
+        fireEvent.blur(getByRole("textbox"));
         expect(pushData).toHaveBeenCalledTimes(0);
     });
 
-    it("should pushData when focus is changed and value in state is different than in props", () => {
+    it("should pushData when focus is changed and value in state is different than in props", async () => {
         const pushData = jest.fn();
-
-        const wrapper = createComponent({
+        const { getByRole, user } = createComponent({
             value: "foo",
             pushData,
         });
 
-        wrapper.setState({
-            value: "bar",
-        });
-
-        wrapper.find(".gd-input-field").simulate("blur");
+        await user.clear(getByRole("textbox"));
+        await user.type(getByRole("textbox"), "bar");
+        fireEvent.blur(getByRole("textbox"));
         expect(pushData).toHaveBeenCalledTimes(1);
     });
 
-    it("should pushData with value", () => {
+    it("should pushData with value", async () => {
         const pushData = jest.fn();
-
-        const wrapper = createComponent({
+        const { getByRole, user } = createComponent({
             value: "foo",
             pushData,
         });
 
-        wrapper.setState({
-            value: "4",
-        });
-
-        wrapper.find(".gd-input-field").simulate("blur");
+        await user.clear(getByRole("textbox"));
+        await user.type(getByRole("textbox"), "4");
+        fireEvent.blur(getByRole("textbox"));
         expect(pushData).toHaveBeenCalledWith({
             properties: { controls: { valuePath: "4" } },
         });
     });
 
-    it("should remove trailing dot when type:number", () => {
+    it("should remove trailing dot when type:number", async () => {
         const pushData = jest.fn();
-
-        const wrapper = createComponent({
+        const { getByRole, user } = createComponent({
             type: "number",
             value: "foo",
             pushData,
         });
 
-        wrapper.setState({
-            value: "4.",
-        });
-
-        wrapper.find(".gd-input-field").simulate("blur");
+        await user.clear(getByRole("textbox"));
+        await user.type(getByRole("textbox"), "4.");
+        fireEvent.blur(getByRole("textbox"));
         expect(pushData).toHaveBeenCalledWith({
             properties: { controls: { valuePath: "4" } },
         });

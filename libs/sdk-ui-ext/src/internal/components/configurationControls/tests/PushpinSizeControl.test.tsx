@@ -1,11 +1,10 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
 import noop from "lodash/noop";
-import { DropdownButton } from "@gooddata/sdk-ui-kit";
 
 import PushpinSizeControl, { IPushpinSizeControl } from "../PushpinSizeControl";
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider";
+import { setupComponent } from "../../../tests/testHelper";
 
 describe("PushpinSizeControl", () => {
     const defaultProps = {
@@ -16,7 +15,7 @@ describe("PushpinSizeControl", () => {
 
     function createComponent(customProps: Partial<IPushpinSizeControl> = {}) {
         const props = { ...defaultProps, ...customProps };
-        return mount(
+        return setupComponent(
             <InternalIntlWrapper>
                 <PushpinSizeControl {...props} />
             </InternalIntlWrapper>,
@@ -25,20 +24,19 @@ describe("PushpinSizeControl", () => {
 
     describe("Rendering", () => {
         it("should render PushpinSizeControl", () => {
-            const wrapper = createComponent();
-
-            expect(wrapper.find(PushpinSizeControl).length).toBe(1);
+            const { getByText } = createComponent();
+            expect(getByText("Point Size")).toBeInTheDocument();
         });
 
         it("should render disabled PushpinSizeControl", () => {
-            const wrapper = createComponent({
+            const { getAllByRole } = createComponent({
                 disabled: true,
             });
-            const smallestDropdown = wrapper.find(DropdownButton).first();
-            const largestDropdown = wrapper.find(DropdownButton).last();
 
-            expect(smallestDropdown.prop("disabled")).toBe(true);
-            expect(largestDropdown.prop("disabled")).toBe(true);
+            const buttons = getAllByRole("button");
+            buttons.forEach((item) => {
+                expect(item).toHaveClass("disabled");
+            });
         });
     });
 });

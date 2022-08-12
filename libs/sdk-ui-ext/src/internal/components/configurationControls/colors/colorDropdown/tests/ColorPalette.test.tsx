@@ -1,6 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { cleanup, waitFor } from "@testing-library/react";
+import { waitFor } from "@testing-library/react";
 import noop from "lodash/noop";
 import cloneDeep from "lodash/cloneDeep";
 import ColorPalette, { IColorPaletteProps } from "../ColorPalette";
@@ -23,8 +23,6 @@ function createComponent(customProps: Partial<IColorPaletteProps> = {}) {
 }
 
 describe("ColorPalette", () => {
-    afterEach(cleanup);
-
     it("should render small ColorPalette", () => {
         const { getByLabelText } = createComponent();
         expect(getByLabelText("Color palette")).toHaveClass("gd-color-drop-down-list");

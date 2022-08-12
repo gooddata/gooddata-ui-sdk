@@ -1,6 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { cleanup, waitFor } from "@testing-library/react";
+import { waitFor } from "@testing-library/react";
 import noop from "lodash/noop";
 import cloneDeep from "lodash/cloneDeep";
 import ColorPaletteItem, { IColorPaletteItemProps } from "../ColorPaletteItem";
@@ -25,8 +25,6 @@ function createComponent(customProps: Partial<IColorPaletteItemProps> = {}) {
 }
 
 describe("ColorPaletteItem", () => {
-    afterEach(cleanup);
-
     it("should render ColorPaletteItem control", () => {
         const { getByLabelText } = createComponent();
         expect(getByLabelText(/rgb*/i)).toBeInTheDocument();
