@@ -15,7 +15,7 @@ function getIgnoreIndexes(
     targetIndex: number,
 ) {
     if (placement === "outside") {
-        return [targetIndex];
+        return position === "next" ? [targetIndex] : [targetIndex - 1];
     }
 
     if (position === "next") {
@@ -54,19 +54,24 @@ export function AttributeFilterDropZoneHint({
                 return isAttributeFilterPlaceholderDraggableItem(item);
             },
             drop: (item) => {
+                const targetIndexPositionCorrection =
+                    placement === "inside" && hintPosition === "next" ? 1 : 0;
+
                 if (isAttributeFilterDraggableItem(item)) {
                     const identifier = item.filter.attributeFilter.localIdentifier!;
-                    dispatch(moveAttributeFilter(identifier, targetIndex));
+                    const originalIndex = item.filterIndex;
+                    const originalPositionCorrection = originalIndex < targetIndex ? -1 : 0;
+                    const index = targetIndex + targetIndexPositionCorrection + originalPositionCorrection;
+                    dispatch(moveAttributeFilter(identifier, index));
                 }
 
                 if (isAttributeFilterPlaceholderDraggableItem(item) && onAddAttributePlaceholder) {
-                    const index =
-                        placement === "inside" && hintPosition === "next" ? targetIndex + 1 : targetIndex;
+                    const index = targetIndex + targetIndexPositionCorrection;
                     return onAddAttributePlaceholder(index);
                 }
             },
         },
-        [inactiveIndexes, targetIndex],
+        [inactiveIndexes, targetIndex, placement, hintPosition],
     );
 
     const isActive = canDrop && isOver;

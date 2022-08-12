@@ -34,7 +34,7 @@ export const ContentDragPreview: FC<DragPreviewProps<DraggableContentItem>> = (p
         if (!(itemType in previewComponentsMap)) {
             if (DEBUG_SHOW_DROP_ZONES) {
                 // eslint-disable-next-line no-console
-                console.error(`DND: dnd item ${itemType} not handled by CustomDragLayer`);
+                console.warn(`DND: dnd item ${itemType} not handled by CustomDragLayer`);
             }
             return null;
         }

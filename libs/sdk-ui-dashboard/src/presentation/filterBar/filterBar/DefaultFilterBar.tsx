@@ -153,7 +153,7 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                     placement="outside"
                     hintPosition="prev"
                     acceptPlaceholder={false}
-                    targetIndex={attributeFiltersCount - 1}
+                    targetIndex={attributeFiltersCount}
                 />
             </div>
         </DefaultFilterBarContainer>
