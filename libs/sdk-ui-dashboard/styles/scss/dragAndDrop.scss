@@ -267,10 +267,7 @@
         }
     }
 
-    .gd-fluid-layout-row-header & {
-        height: 100%;
-        background-color: var(--gd-palette-complementary-0, white);
-    }
+    background-color: var(--gd-palette-complementary-0, white);
 }
 
 .row-hotspot-container {
@@ -493,7 +490,7 @@
     }
 
     &.bottom {
-        bottom: -2px;
+        bottom: -23px;
     }
 
     &.active {
@@ -502,7 +499,7 @@
 }
 
 .gd-fluid-layout-row-header .new-row-dropzone .gd-fluidlayout-row-separator.bottom {
-    bottom: -2px;
+    bottom: -23px;
 }
 
 .kpi-placeholder {
