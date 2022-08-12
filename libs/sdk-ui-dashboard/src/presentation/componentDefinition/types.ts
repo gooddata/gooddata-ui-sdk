@@ -5,7 +5,11 @@ import {
     IDashboardAttributeFilterPlaceholderProps,
 } from "../filterBar/types";
 import { IDashboardInsightProps, IDashboardKpiProps, IDashboardWidgetProps } from "../widget/types";
-import { AttributeFilterDraggableItem, CustomDraggableItem } from "../dragAndDrop/types";
+import {
+    AttributeFilterDraggableItem,
+    CustomDraggableItem,
+    DraggableContentItemType,
+} from "../dragAndDrop/types";
 import {
     AttributeFilterComponentProvider,
     InsightComponentProvider,
@@ -145,7 +149,7 @@ export type CreatableByDragComponent = DraggableComponent & {
         /**
          * Component used to render the item in the left drawer menu used to create a new instance of this component on the dashboard
          */
-        CreatePanelItemComponent: CustomCreatePanelItemComponent;
+        CreatePanelListItemComponent: CustomCreatePanelItemComponent;
 
         /**
          * The lower the priority, the earlier the component is shown in the drawer.
@@ -158,7 +162,7 @@ export type CreatableByDragComponent = DraggableComponent & {
         /**
          * Draggable item type for the creating item.
          */
-        type: string;
+        type: DraggableContentItemType;
     };
 };
 

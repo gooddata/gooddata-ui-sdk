@@ -15,7 +15,7 @@ export function DefaultDashboardAttributeFilterComponentSetFactory(
         MainComponentProvider: attributeFilterProvider,
         creating: {
             CreatingPlaceholderComponent: AttributesDropdown,
-            CreatePanelItemComponent: CreatableAttributeFilter,
+            CreatePanelListItemComponent: CreatableAttributeFilter,
             type: "attributeFilter-placeholder",
             priority: 10,
         },

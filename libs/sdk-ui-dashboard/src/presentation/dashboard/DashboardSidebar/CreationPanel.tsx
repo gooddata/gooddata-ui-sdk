@@ -27,8 +27,8 @@ export const CreationPanel: React.FC<ICreationPanelProps> = ({ isSticky = false 
             InsightWidgetComponentSet.creating,
         ]);
 
-        return sortBy(items, (item) => item.priority ?? 0).map(({ CreatePanelItemComponent, type }) => (
-            <CreatePanelItemComponent key={type} />
+        return sortBy(items, (item) => item.priority ?? 0).map(({ CreatePanelListItemComponent, type }) => (
+            <CreatePanelListItemComponent key={type} />
         ));
     }, [AttributeFilterComponentSet, KpiWidgetComponentSet, InsightWidgetComponentSet, supportsKpis]);
 

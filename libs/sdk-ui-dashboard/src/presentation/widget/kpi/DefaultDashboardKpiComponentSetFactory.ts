@@ -15,7 +15,7 @@ export function DefaultDashboardKpiComponentSetFactory(
         MainComponentProvider: kpiProvider,
         creating: {
             CreatingPlaceholderComponent: DefaultDashboardKpiPlaceholderWidget,
-            CreatePanelItemComponent: CreatableKpi,
+            CreatePanelListItemComponent: CreatableKpi,
             type: "kpi-placeholder",
             priority: 5,
         },

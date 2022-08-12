@@ -625,9 +625,9 @@ export function CreatableAttributeFilter(): JSX.Element;
 // @internal
 export type CreatableByDragComponent = DraggableComponent & {
     creating: {
-        CreatePanelItemComponent: CustomCreatePanelItemComponent;
+        CreatePanelListItemComponent: CustomCreatePanelItemComponent;
         priority?: number;
-        type: string;
+        type: DraggableContentItemType;
     };
 };
 
