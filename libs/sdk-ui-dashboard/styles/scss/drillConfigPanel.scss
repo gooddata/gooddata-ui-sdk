@@ -298,7 +298,7 @@
         height: 16px;
         margin-right: 4px;
         vertical-align: bottom;
-        //background-image: url("assets/drill-to-dashboard.svg");
+        background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/drill-to-dashboard.svg");
     }
 
     .gd-icon-drill-to-insight::before {
@@ -310,7 +310,7 @@
         height: 16px;
         margin-right: 4px;
         vertical-align: bottom;
-        //background-image: url("assets/drill-to-insight.svg");
+        background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/drill-to-insight.svg");
     }
 
     .gd-icon-hyperlink-disabled::before {

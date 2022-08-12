@@ -25,9 +25,9 @@ const getTargetBySelection = (
 
 const getIconClassNameBySelection = (selection: DRILL_TARGET_TYPE | undefined) => {
     const icons = {
-        [DRILL_TARGET_TYPE.DRILL_TO_DASHBOARD]: "icon-drill-to-dashboard",
-        [DRILL_TARGET_TYPE.DRILL_TO_INSIGHT]: "icon-drill-to-insight",
-        [DRILL_TARGET_TYPE.DRILL_TO_URL]: "icon-hyperlink-disabled",
+        [DRILL_TARGET_TYPE.DRILL_TO_DASHBOARD]: "gd-icon-drill-to-dashboard",
+        [DRILL_TARGET_TYPE.DRILL_TO_INSIGHT]: "gd-icon-drill-to-insight",
+        [DRILL_TARGET_TYPE.DRILL_TO_URL]: "gd-icon-hyperlink-disabled",
     };
 
     return selection ? icons[selection] : undefined;

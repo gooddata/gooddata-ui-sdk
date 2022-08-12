@@ -4,11 +4,18 @@ import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 import { stringUtils } from "@gooddata/util";
 import { DRILL_TARGET_TYPE, IDrillConfigItem } from "../../../drill/types";
-import { DrillMeasureItem } from "./DrillMeasureItem";
+import { DrillOriginItem } from "./DrillOriginItem";
 import { IDrillTargetType } from "./useDrillTargetTypeItems";
 import { DrillTargetType } from "./DrillTargetType";
 import { DrillTargets } from "./DrillTargets/DrillTargets";
-import { InsightDrillDefinition } from "@gooddata/sdk-model";
+import { areObjRefsEqual, InsightDrillDefinition, isAttributeDescriptor } from "@gooddata/sdk-model";
+import {
+    selectDrillTargetsByWidgetRef,
+    selectSelectedWidgetRef,
+    useDashboardSelector,
+    selectCatalogDateDatasets,
+} from "../../../../model";
+import invariant from "ts-invariant";
 
 export interface IDrillConfigItemProps {
     item: IDrillConfigItem;
@@ -48,6 +55,27 @@ const DrillConfigItem: React.FunctionComponent<IDrillConfigItemProps> = ({
         // "drill-config-target-with-warning": !!item.warning,
     });
 
+    const widgetRef = useDashboardSelector(selectSelectedWidgetRef);
+    invariant(widgetRef, "mush have widget selected");
+    const drillTargets = useDashboardSelector(selectDrillTargetsByWidgetRef(widgetRef));
+    const dateAttributes = useDashboardSelector(selectCatalogDateDatasets);
+    const attributeTarget = drillTargets?.availableDrillTargets?.attributes?.find(
+        (attribute) => attribute.attribute.attributeHeader.localIdentifier === item.localIdentifier,
+    );
+
+    const isFromDateAttribute = !!(
+        attributeTarget &&
+        isAttributeDescriptor(attributeTarget.attribute) &&
+        dateAttributes.some((attribute) =>
+            attribute.dateAttributes.some((dateAttribute) =>
+                areObjRefsEqual(
+                    dateAttribute.attribute.ref,
+                    attributeTarget.attribute.attributeHeader.formOf.ref,
+                ),
+            ),
+        )
+    );
+
     return (
         <div className={classNames}>
             <div className="drill-config-item-intro">
@@ -58,10 +86,12 @@ const DrillConfigItem: React.FunctionComponent<IDrillConfigItemProps> = ({
                     }}
                 />
             </div>
-            <DrillMeasureItem
+            <DrillOriginItem
+                type={item.type}
                 title={item.title}
                 localIdentifier={item.localIdentifier}
                 onDelete={onDeleteClick}
+                isDateAttribute={isFromDateAttribute}
             />
             <div className={targetClassNames}>
                 <div className="drill-config-target-box">
