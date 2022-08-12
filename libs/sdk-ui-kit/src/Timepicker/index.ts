@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 
 export * from "./typings";
-export { Timepicker, ITimepickerOwnProps, normalizeTime } from "./Timepicker";
+export { Timepicker, ITimepickerOwnProps, normalizeTime, formatTime } from "./Timepicker";

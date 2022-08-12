@@ -93,7 +93,7 @@ export function ResizeOverlay(props: ResizeOverlayProps) {
 
     return (
         <>
-            <div className={classes} />
+            <div role="resize-overlay" className={classes} />
             {isInError ? errorText : null}
         </>
     );

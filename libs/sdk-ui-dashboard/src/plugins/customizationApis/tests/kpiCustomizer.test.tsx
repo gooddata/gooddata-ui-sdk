@@ -8,7 +8,7 @@ import {
 } from "../../../presentation";
 import { idRef, measureItem, IKpiWidget, IKpi } from "@gooddata/sdk-model";
 import { ReferenceMd } from "@gooddata/reference-workspace";
-import { mount } from "enzyme";
+import { render } from "@testing-library/react";
 import invariant from "ts-invariant";
 import { DefaultKpiCustomizer } from "../kpiCustomizer";
 import { DashboardCustomizationLogger } from "../customizationLogging";
@@ -101,8 +101,8 @@ function renderToHtml(customizer: DefaultKpiCustomizer, widget: IKpiWidget) {
     // this should not happen; if it does something is seriously hosed in the customizer
     invariant(Component);
 
-    const wrapper = mount(<Component {...dummyProps} />);
-    return wrapper.html();
+    const { container } = render(<Component {...dummyProps} />);
+    return container.innerHTML;
 }
 
 describe("KPI customizer", () => {

@@ -1,11 +1,12 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
-import { mount, ReactWrapper } from "enzyme";
+import { waitFor, screen, configure } from "@testing-library/react";
 import noop from "lodash/noop";
 import { DefaultLocale, withIntl } from "@gooddata/sdk-ui";
 
 import KpiAlertDialog, { IKpiAlertDialogProps } from "../KpiAlertDialog";
 import { translations } from "../../../../../../localization";
+import { setupComponent } from "../../../../../../../tests/testHelper";
 
 const DEFAULT_DATE_FORMAT = "MM/dd/yyyy";
 
@@ -20,132 +21,52 @@ const defaultProps: IKpiAlertDialogProps = {
 };
 
 function renderKpiAlertDialog(options: Partial<IKpiAlertDialogProps>) {
+    const customProps = {
+        isThresholdRepresentingPercent: true,
+        ...options,
+    };
     const Wrapped: React.ComponentType<IKpiAlertDialogProps> = withIntl(
         KpiAlertDialog,
         undefined,
         translations[DefaultLocale],
     );
-    return mount(<Wrapped {...defaultProps} {...options} />);
+
+    return setupComponent(<Wrapped {...defaultProps} {...customProps} />);
 }
 
-function changeInput(input: ReactWrapper, value: string) {
-    input.simulate("change", { target: { value } });
-}
+configure({ defaultHidden: true });
 
 describe("KpiAlertDialog", () => {
-    function findPortalInWrapper(wrapper: ReactWrapper) {
-        return wrapper.find(".s-portal-scroll-anchor").childAt(0);
-    }
+    it("should not try to save alert when input threshold empty", async () => {
+        const onAlertDialogSaveClick = jest.fn();
+        const { user } = renderKpiAlertDialog({ onAlertDialogSaveClick });
 
-    function findButtonInPortal(wrapper: ReactWrapper) {
-        const portalWrapper = findPortalInWrapper(wrapper);
-        return portalWrapper.find("button.s-save_button");
-    }
-
-    function renderComponent(customProps: Partial<IKpiAlertDialogProps> = {}) {
-        const wrapper = renderKpiAlertDialog({
-            isThresholdRepresentingPercent: true,
-            ...customProps,
+        await user.click(screen.getByText("Set alert"));
+        await waitFor(() => {
+            expect(onAlertDialogSaveClick).not.toHaveBeenCalled();
         });
-
-        const kpiAlertDialog = wrapper.find(KpiAlertDialog);
-        const portalWrapper = findPortalInWrapper(wrapper);
-        const input = portalWrapper.find(".s-threshold-input input");
-        const button = portalWrapper.find("button.s-save_button");
-
-        return {
-            kpiAlertDialog,
-            input,
-            button,
-            wrapper,
-        };
-    }
-
-    it("should have disabled save button when threshold is empty", () => {
-        const { input, wrapper } = renderComponent();
-
-        changeInput(input, "");
-        const button = findButtonInPortal(wrapper);
-        expect(button.hasClass("disabled")).toEqual(true);
     });
 
-    it("should have disabled save button when threshold is invalid", () => {
-        const { input, wrapper } = renderComponent();
-
-        changeInput(input, "foo!bar");
-        const button = findButtonInPortal(wrapper);
-        expect(button.hasClass("disabled")).toEqual(true);
-    });
-
-    it("should have enabled save button when threshold is valid", () => {
-        const { input, wrapper } = renderComponent();
-
-        changeInput(input, "123");
-        const button = findButtonInPortal(wrapper);
-        expect(button.hasClass("disabled")).toEqual(false);
-    });
-
-    it("should switch save button state from enabled to disabled when invalid threshold inserted", () => {
-        const { input, wrapper } = renderComponent();
-        let button;
-
-        expect(input.text()).toEqual("");
-        button = findButtonInPortal(wrapper);
-        expect(button.hasClass("disabled")).toEqual(true);
-
-        changeInput(input, "123.45");
-        button = findButtonInPortal(wrapper);
-        expect(button.hasClass("disabled")).toEqual(false);
-
-        changeInput(input, "123.45.");
-        button = findButtonInPortal(wrapper);
-        expect(button.hasClass("disabled")).toEqual(true);
-    });
-
-    it("should switch save button state from disabled to enabled when valid threshold inserted", () => {
-        const { input, wrapper } = renderComponent();
-        let button;
-
-        expect(input.text()).toEqual("");
-        button = findButtonInPortal(wrapper);
-        expect(button.hasClass("disabled")).toEqual(true);
-
-        changeInput(input, "123.45.");
-        button = findButtonInPortal(wrapper);
-        expect(button.hasClass("disabled")).toEqual(true);
-
-        changeInput(input, "123.45");
-        button = findButtonInPortal(wrapper);
-        expect(button.hasClass("disabled")).toEqual(false);
-    });
-
-    it("should not try to save alert when input threshold empty", () => {
+    it("should not try to save alert when threshold is invalid", async () => {
         const onAlertDialogSaveClick = jest.fn();
-        const { input, button } = renderComponent({ onAlertDialogSaveClick });
+        const { user } = renderKpiAlertDialog({ onAlertDialogSaveClick });
 
-        button.simulate("click");
+        await user.type(screen.getByRole("textbox"), "foo!bar");
+        await user.click(screen.getByText("Set alert"));
 
-        expect(input.text()).toEqual("");
-        expect(onAlertDialogSaveClick).not.toHaveBeenCalled();
+        await waitFor(() => {
+            expect(onAlertDialogSaveClick).not.toHaveBeenCalled();
+        });
     });
 
-    it("should not try to save alert when threshold is invalid", () => {
+    it("should try to save alert with threshold divided by 100", async () => {
         const onAlertDialogSaveClick = jest.fn();
-        const { input, button } = renderComponent({ onAlertDialogSaveClick });
+        const { user } = renderKpiAlertDialog({ onAlertDialogSaveClick });
+        await user.type(screen.getByRole("textbox"), "12.0045");
+        await user.click(screen.getByText("Set alert"));
 
-        changeInput(input, "foo!bar");
-        button.simulate("click");
-
-        expect(onAlertDialogSaveClick).not.toHaveBeenCalled();
-    });
-
-    it("should try to save alert with threshold divided by 100", () => {
-        const onAlertDialogSaveClick = jest.fn();
-        const { input, button } = renderComponent({ onAlertDialogSaveClick });
-
-        changeInput(input, "12.0045");
-        button.simulate("click");
-
-        expect(onAlertDialogSaveClick).toHaveBeenCalledWith(0.120045, "aboveThreshold");
+        await waitFor(() => {
+            expect(onAlertDialogSaveClick).toHaveBeenCalledWith(0.120045, "aboveThreshold");
+        });
     });
 });

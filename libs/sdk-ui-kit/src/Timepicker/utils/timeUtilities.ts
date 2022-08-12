@@ -1,10 +1,13 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import moment from "moment";
 
 export const HOURS_IN_DAY = 24;
 export const TIME_ANCHOR = 30;
 const TIME_FORMAT: string = "hh:mm A";
 
+/**
+ * @internal
+ */
 export function formatTime(h: number, m: number, format?: string): string {
     return moment()
         .hours(h)

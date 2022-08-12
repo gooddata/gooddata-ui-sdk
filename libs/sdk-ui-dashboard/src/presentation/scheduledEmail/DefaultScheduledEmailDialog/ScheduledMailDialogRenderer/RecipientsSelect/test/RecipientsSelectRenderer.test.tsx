@@ -1,12 +1,14 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import noop from "lodash/noop";
-import { ReactWrapper, mount } from "enzyme";
+import { screen } from "@testing-library/react";
 import { IUser, uriRef } from "@gooddata/sdk-model";
 
 import { IRecipientsSelectRendererProps, RecipientsSelectRenderer } from "../RecipientsSelectRenderer";
+
 import { IScheduleEmailRecipient } from "../../../interfaces";
 import { IntlWrapper } from "../../../../../localization/IntlWrapper";
+import { setupComponent } from "../../../../../../tests/testHelper";
 
 const author: IScheduleEmailRecipient = {
     user: {
@@ -14,6 +16,15 @@ const author: IScheduleEmailRecipient = {
         ref: uriRef("/gdc/user"),
         email: "user@gooddata.com",
         fullName: "John Doe",
+    },
+};
+
+const extraUser: IScheduleEmailRecipient = {
+    user: {
+        login: "extraUser@gooddata.com",
+        ref: uriRef("/gdc/extraUser"),
+        email: "extraUser@gooddata.com",
+        fullName: "Adam Bradley",
     },
 };
 
@@ -39,7 +50,7 @@ const options: IScheduleEmailRecipient[] = [
 ];
 
 describe("RecipientsSelect", () => {
-    function renderComponent(customProps: Partial<IRecipientsSelectRendererProps> = {}): ReactWrapper {
+    function renderComponent(customProps: Partial<IRecipientsSelectRendererProps> = {}) {
         const defaultProps = {
             options,
             value: [author],
@@ -52,7 +63,7 @@ describe("RecipientsSelect", () => {
             ...customProps,
         };
 
-        return mount(
+        return setupComponent(
             <IntlWrapper>
                 <RecipientsSelectRenderer {...defaultProps} />
             </IntlWrapper>,
@@ -60,53 +71,28 @@ describe("RecipientsSelect", () => {
     }
 
     it("should render single Select component", () => {
-        const component = renderComponent();
+        renderComponent();
 
-        expect(component).toExist();
-        expect(component.find(".s-gd-recipients-value .single-value")).toHaveLength(1);
+        expect(screen.getByText(`${author.user.fullName}`)).toBeInTheDocument();
     });
 
     it("should render multiple Select component", () => {
-        const component = renderComponent({ isMulti: true });
+        renderComponent({ isMulti: true, value: [author, extraUser] });
 
-        expect(component).toExist();
-        expect(component.find(".s-gd-recipients-value .multiple-value")).toHaveLength(1);
-    });
-
-    it("should render Owner value in recipient component", () => {
-        const singleSelectComponent = renderComponent();
-        const multipleSelectComponent = renderComponent({ isMulti: true });
-
-        expect(singleSelectComponent.find(".s-gd-recipient-value-item").text()).toEqual("John Doe");
-        expect(multipleSelectComponent.find(".s-gd-recipient-value-item").text()).toEqual("John Doe");
+        expect(screen.getByText(`${author.user.fullName}`)).toBeInTheDocument();
+        expect(screen.getByText(`${extraUser.user.email}`)).toBeInTheDocument();
     });
 
     it("should render Owner user without icon remove", () => {
-        const selectComponent = renderComponent();
-        expect(selectComponent.find(".s-gd-recipient-remove")).toHaveLength(0);
+        renderComponent();
+        expect(screen.queryByLabelText("remove-icon")).not.toBeInTheDocument();
     });
 
-    it("should shorten Owner user label if it's so long", () => {
-        const selectComponent = renderComponent();
-        expect(selectComponent.find(".s-gd-recipient-value-item .gd-recipient-label")).toHaveLength(1);
-    });
+    it("should change input when adding new value", async () => {
+        const { user } = renderComponent({ isMulti: true });
+        await user.type(screen.getByRole("combobox"), "extraUser@gooddata.com");
 
-    it("should trigger onChange action when input new value", () => {
-        const onChange = jest.fn();
-        const recipientComponent = renderComponent({ isMulti: true, onChange });
-        const inputContainer = recipientComponent.find(".s-gd-recipient-input input");
-        inputContainer.simulate("keyDown", { key: "ArrowDown", keyCode: 40 });
-        inputContainer.simulate("keyDown", { key: "Enter", keyCode: 13 });
-
-        expect(inputContainer).toExist();
-        expect(onChange).toHaveBeenCalledTimes(1);
-    });
-
-    it("should max width be added in owner container", () => {
-        const recipientComponent = renderComponent({ isMulti: true });
-        const owner = recipientComponent.find(".gd-owner-user");
-        const ownerStyle = owner.props().style;
-
-        expect(ownerStyle).toEqual({ maxWidth: "100%" });
+        expect(screen.getByText(`${author.user.fullName}`)).toBeInTheDocument();
+        expect(screen.getByDisplayValue(`${extraUser.user.email}`)).toBeInTheDocument();
     });
 });

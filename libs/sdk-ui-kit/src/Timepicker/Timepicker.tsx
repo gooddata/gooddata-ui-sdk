@@ -17,7 +17,7 @@ const DEFAULT_WIDTH = 199;
 const MINUTES_IN_HOUR = 60;
 const MAX_VISIBLE_ITEMS_COUNT = 10;
 
-export { normalizeTime };
+export { normalizeTime, formatTime };
 
 /**
  * @internal
