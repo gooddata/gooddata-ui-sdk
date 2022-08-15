@@ -21,6 +21,8 @@ export {
     getDateTimeConfig,
 } from "./InsightListItemDate";
 export { List, IListProps, ScrollCallback, IRenderListItemProps } from "./List";
+export { MultiSelectList, IMultiSelectListProps, IMultiSelectRenderItemProps } from "./MultiSelectList";
+export { IMultiSelectListItemProps, MultiSelectListItem } from "./MultiSelectListItem";
 export { AsyncList, IAsyncListProps } from "./AsyncList";
 export {
     IInvertableSelectItem,
