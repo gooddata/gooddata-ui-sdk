@@ -1,6 +1,6 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { render, screen } from "@testing-library/react";
 import { ColorFormats } from "tinycolor2";
 
 import { HueColorPicker, IHueColorPickerProps } from "../HueColorPicker";
@@ -18,13 +18,13 @@ function renderHueColorPicker(options?: Partial<IHueColorPickerProps>) {
         ...options,
     };
 
-    return mount(<HueColorPicker {...args} />);
+    return render(<HueColorPicker {...args} />);
 }
 
 describe("HueColorPicker", () => {
     it("should render Hue color picker with proper pointer", () => {
-        const huePicker = renderHueColorPicker();
+        renderHueColorPicker();
 
-        expect(huePicker.find(".hue-picker").length).toEqual(1);
+        expect(screen.getByRole("hue-picker")).toBeInTheDocument();
     });
 });

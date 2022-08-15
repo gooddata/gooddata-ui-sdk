@@ -1,6 +1,7 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { ColorFormats } from "tinycolor2";
 
 import { HexColorInput, IHexColorInputProps } from "../HexColorInput";
@@ -18,51 +19,42 @@ function renderInput(options?: Partial<IHexColorInputProps>) {
         ...options,
     };
 
-    return mount(<HexColorInput {...args} />);
+    return render(<HexColorInput {...args} />);
 }
 
 describe("HexColorInput", () => {
-    it("should call onInputChanged with valid hex color", () => {
+    it("should call onInputChanged with valid hex color", async () => {
         const changedMock = jest.fn();
         const expectedHslColor: ColorFormats.HSL = {
             h: 0,
             s: 0,
             l: 1,
         };
+        renderInput({ onInputChanged: changedMock });
 
-        const input = renderInput({ onInputChanged: changedMock });
-        input.find("input").simulate("change", {
-            target: {
-                value: "#ffffff",
-            },
-        });
+        await userEvent.clear(screen.getByRole("textbox"));
+        await userEvent.type(screen.getByRole("textbox"), "#ffffff");
 
         expect(changedMock).toHaveBeenCalledTimes(1);
         expect(changedMock).toHaveBeenCalledWith(expectedHslColor);
     });
 
-    it("shouldn't call onInputChanged with invalid hex color", () => {
+    it("shouldn't call onInputChanged with invalid hex color", async () => {
         const changedMock = jest.fn();
+        renderInput({ onInputChanged: changedMock });
 
-        const input = renderInput({ onInputChanged: changedMock });
-        input.find("input").simulate("change", {
-            target: {
-                value: "nonsence",
-            },
-        });
+        await userEvent.clear(screen.getByRole("textbox"));
+        await userEvent.type(screen.getByRole("textbox"), "nonsence");
 
         expect(changedMock).not.toHaveBeenCalled();
     });
 
-    it("shouldn't call onInputChanged with too short but valid hex color", () => {
+    it("shouldn't call onInputChanged with too short but valid hex color", async () => {
         const changedMock = jest.fn();
+        renderInput({ onInputChanged: changedMock });
 
-        const input = renderInput({ onInputChanged: changedMock });
-        input.find("input").simulate("change", {
-            target: {
-                value: "#fff",
-            },
-        });
+        await userEvent.clear(screen.getByRole("textbox"));
+        await userEvent.type(screen.getByRole("textbox"), "#fff");
 
         expect(changedMock).not.toHaveBeenCalled();
     });

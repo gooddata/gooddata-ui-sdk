@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { addCssToStylesheet } from "../addCssToStylesheet";
 import { removeFromDom } from "../../utils/domUtilities";
 
@@ -28,13 +28,13 @@ describe("addCssToStylesheet", () => {
         sheets.push(addCssToStylesheet("css-beta", "body {background: red }"));
         sheets.push(addCssToStylesheet("css-beta", "html {padding: 10px; }"));
 
-        expect(getElement("css-beta").textContent).toEqual("body {background: red }html {padding: 10px; }");
+        expect(getElement("css-beta")).toHaveTextContent("body {background: red }html {padding: 10px; }");
     });
 
     it("should clear the stylesheet when asked", () => {
         sheets.push(addCssToStylesheet("css-delta", "body {background: pink }"));
         sheets.push(addCssToStylesheet("css-delta", "html {padding: 5px; }", true));
 
-        expect(getElement("css-delta").textContent).toEqual("html {padding: 5px; }");
+        expect(getElement("css-delta")).toHaveTextContent("html {padding: 5px; }");
     });
 });

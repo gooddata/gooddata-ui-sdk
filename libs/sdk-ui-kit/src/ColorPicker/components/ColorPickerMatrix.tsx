@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { PureComponent, ReactNode } from "react";
 import cx from "classnames";
 import { ColorFormats } from "tinycolor2";
@@ -55,6 +55,7 @@ class ColorPickerRow extends PureComponent<IColorPickerRowProps> {
 
                     return (
                         <div
+                            role="color"
                             tabIndex={-1}
                             key={this.props.lightness + saturation}
                             className={this.getCellClassNames(newColor)}

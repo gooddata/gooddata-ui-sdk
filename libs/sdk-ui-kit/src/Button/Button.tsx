@@ -71,6 +71,6 @@ export class Button extends React.Component<IButtonProps> {
             return null;
         }
 
-        return <span className={cx("gd-button-icon", icon)} />;
+        return <span className={cx("gd-button-icon", icon)} role="button-icon" />;
     }
 }

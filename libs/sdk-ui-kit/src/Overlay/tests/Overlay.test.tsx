@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { Component, forwardRef, createRef } from "react";
 
 import { mount } from "enzyme";
@@ -110,7 +110,7 @@ describe("Overlay", () => {
     it("should render overlay with custom zIndex", () => {
         renderOverlayComponent({ zIndex: 5001 });
         const overlay = getOverlayComponent()[0];
-        expect((overlay as any).style.zIndex).toEqual("5001");
+        expect(overlay).toHaveStyle({ zIndex: 5001 });
     });
 
     describe("Align to fixed node", () => {
