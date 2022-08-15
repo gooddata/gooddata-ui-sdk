@@ -11,6 +11,9 @@ import {
     uiActions,
     selectWidgetPlaceholder,
     replaceSectionItem,
+    enableInsightWidgetDateFilter,
+    DashboardCommandFailed,
+    ChangeInsightWidgetFilterSettings,
 } from "../../../model";
 import { getSizeInfo } from "../../../_staging/layout/sizing";
 
@@ -18,6 +21,18 @@ export function useInsightListItemDropHandler() {
     const dispatch = useDashboardDispatch();
     const settings = useDashboardSelector(selectSettings);
     const widgetPlaceholder = useDashboardSelector(selectWidgetPlaceholder);
+
+    const { run: preselectDateDataset } = useDashboardCommandProcessing({
+        commandCreator: enableInsightWidgetDateFilter,
+        errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
+        successEvent: "GDC.DASH/EVT.INSIGHT_WIDGET.FILTER_SETTINGS_CHANGED",
+        onSuccess: (event) => {
+            dispatch(uiActions.setWidgetLoadingAdditionalDataStopped(event.payload.ref));
+        },
+        onError: (event: DashboardCommandFailed<ChangeInsightWidgetFilterSettings>) => {
+            dispatch(uiActions.setWidgetLoadingAdditionalDataStopped(event.payload.command.payload.ref));
+        },
+    });
 
     const { run: replaceInsightOntoPlaceholder } = useDashboardCommandProcessing({
         commandCreator: replaceSectionItem,
@@ -27,6 +42,8 @@ export function useInsightListItemDropHandler() {
             const ref = event.payload.items[0].widget!.ref;
             dispatch(uiActions.selectWidget(ref));
             dispatch(uiActions.setConfigurationPanelOpened(true));
+            dispatch(uiActions.setWidgetLoadingAdditionalDataStarted(ref));
+            preselectDateDataset(ref, "default");
         },
     });
 
