@@ -51,8 +51,9 @@ export interface FilterOpEnableDateFilter extends FilterOp {
 
     /**
      * Ref of date data set to use in date filters applied on the content of the widget.
+     * If passed "default", the default date dataset will be resolved and used.
      */
-    dateDataset: ObjRef;
+    dateDataset: ObjRef | "default";
 }
 
 /**

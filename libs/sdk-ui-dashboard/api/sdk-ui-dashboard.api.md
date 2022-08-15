@@ -2491,10 +2491,10 @@ export const EditableTitle: CustomTitleComponent;
 export const EditButton: (props: IEditButtonProps) => JSX.Element;
 
 // @alpha
-export function enableInsightWidgetDateFilter(ref: ObjRef, dateDataset: ObjRef, correlationId?: string): ChangeInsightWidgetFilterSettings;
+export function enableInsightWidgetDateFilter(ref: ObjRef, dateDataset: ObjRef | "default", correlationId?: string): ChangeInsightWidgetFilterSettings;
 
 // @alpha
-export function enableKpiWidgetDateFilter(ref: ObjRef, dateDataset: ObjRef, correlationId?: string): ChangeKpiWidgetFilterSettings;
+export function enableKpiWidgetDateFilter(ref: ObjRef, dateDataset: ObjRef | "default", correlationId?: string): ChangeKpiWidgetFilterSettings;
 
 // @alpha (undocumented)
 export interface ExportDashboardToPdf extends IDashboardCommand {
@@ -2584,7 +2584,7 @@ export interface FilterOpDisableDateFilter extends FilterOp {
 
 // @alpha
 export interface FilterOpEnableDateFilter extends FilterOp {
-    dateDataset: ObjRef;
+    dateDataset: ObjRef | "default";
     // (undocumented)
     type: "enableDateFilter";
 }

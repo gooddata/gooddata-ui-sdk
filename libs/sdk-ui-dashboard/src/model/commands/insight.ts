@@ -128,7 +128,7 @@ export function replaceInsightWidgetFilterSettings(
  * be enabled and the provided date data set will be used for date-filtering widget's insight.
  *
  * @param ref - reference of the insight widget to modify
- * @param dateDataset - date data set to use for filtering the insight
+ * @param dateDataset - date data set to use for filtering the insight, if "default" is provided, the default date dataset will be resolved and used
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
@@ -136,7 +136,7 @@ export function replaceInsightWidgetFilterSettings(
  */
 export function enableInsightWidgetDateFilter(
     ref: ObjRef,
-    dateDataset: ObjRef,
+    dateDataset: ObjRef | "default",
     correlationId?: string,
 ): ChangeInsightWidgetFilterSettings {
     return {
