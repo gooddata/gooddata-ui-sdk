@@ -1,0 +1,89 @@
+# (C) 2020 GoodData Corporation
+# This file is used to produce GD.UI Web Components artifacts for the usage with Tiger, Panther and Bear.
+#
+# Repository is registered on GitLab using the "CI/CD for external repo" so after the successful merge or PRs in Github,
+# this pipeline definition is executed. It's not in any way blocking the existing delivery and deployment in Gitflow delivery process.
+#
+# It produces docker image which is stored in GitLab CR.
+# Delivery is managed by the CI / CD pipeline in gooddata/gdc-nas repository.
+---
+default:
+  image: $AWS_ECR_URL/infra/tools:$BUILD_IMAGE_VERSION
+
+variables:
+  AWS_ECR_URL: '441851189095.dkr.ecr.eu-central-1.amazonaws.com'
+  BUILD_IMAGE_VERSION: "3.0.2"
+
+stages:
+  - build
+  - artifacts
+  - generate-update
+
+.release:
+  # We want to avoid unnecessary builds and only create a new Docker image
+  # for every release commit on master branch.
+  # Changes condition is not strictly needed, but should be fine as we update
+  # package.json in every release anyway.
+  # Commit message condition is needed to avoid creating a new Docker image on
+  # every single merge commit to master - that would be a waste.
+  if: '$CI_COMMIT_BRANCH == "master" && $CI_COMMIT_MESSAGE =~ /^Release .+$/'
+  changes:
+    - libs/sdk-ui-components/**/*
+
+.with-buildx:
+  before_script:
+    - mkdir -p $HOME/.docker
+    - cp ${CI_PROJECT_DIR}/libs/sdk-ui-web-components/Dockerfile $HOME/.docker/config.json
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker buildx create --use --name=eks_builder --platform=linux/amd64,linux/arm64
+      --node eks-builder0 --driver=kubernetes
+      --driver-opt="namespace=gitlab-managed-apps,nodeselector=role=ci,qemu.install=true,replicas=3"
+
+build-web-components:
+  image: node:16
+  stage: build
+  cache:
+    key: build-web-components
+    paths:
+      - common/temp/node_modules
+      - common/temp/pnpm-store
+  variables:
+    KUBERNETES_MEMORY_REQUEST: 4Gi
+    KUBERNETES_MEMORY_LIMIT: 6Gi
+  script:
+    - npm i -g @microsoft/rush
+    - rush install
+    - rush build --to @gooddata/sdk-ui-web-components
+    - tar czvf ${CI_PROJECT_DIR}/libs/sdk-ui-web-components/web-components.tar.gz -C ${CI_PROJECT_DIR}/libs/sdk-ui-web-components/esm .
+  dependencies: []
+  artifacts:
+    paths:
+      - ${CI_PROJECT_DIR}/libs/sdk-ui-web-components/web-components.tar.gz
+  rules:
+    - <<: *.release
+
+docker-build-web-components:
+  extends:
+    - .with-buildx
+  stage: artifacts
+  variables:
+    IMAGE_ID: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
+    KUBERNETES_MEMORY_REQUEST: 200Mi
+  script:
+    - cd ${CI_PROJECT_DIR}/libs/sdk-ui-web-components
+    - docker buildx build --push --cache-from $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+      -t $IMAGE_ID -t $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG -f Dockerfile .
+  dependencies:
+    - build-web-components
+  rules:
+    - <<: *.release
+
+generate-update:
+  stage: generate-update
+  variables:
+    KUBERNETES_MEMORY_REQUEST: 100Mi
+  script:
+    - /scripts/update-ext-image-version.rb web-components
+  dependencies: []
+  rules:
+    - <<: *.release
