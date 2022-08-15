@@ -4,7 +4,8 @@ import { Button } from "../../Button";
 import React from "react";
 import { useIntl } from "react-intl";
 import { IDialogBaseProps } from "../typings";
-import { LoadingSpinner } from "../../LoadingSpinner/LoadingSpinner";
+import { LoadingSpinner } from "../../LoadingSpinner";
+import { Bubble, BubbleHoverTrigger } from "../../Bubble";
 
 /**
  * @internal
@@ -16,13 +17,21 @@ export interface IStylingEditorDialogFooterProps extends IDialogBaseProps {
     };
     disableSubmit?: boolean;
     showProgressIndicator?: boolean;
+    errorMessage?: string;
 }
 
 /**
  * @internal
  */
 export const StylingEditorDialogFooter = (props: IStylingEditorDialogFooterProps) => {
-    const { link, disableSubmit = false, showProgressIndicator = false, onSubmit, onCancel } = props;
+    const {
+        link,
+        disableSubmit = false,
+        showProgressIndicator = false,
+        errorMessage,
+        onSubmit,
+        onCancel,
+    } = props;
     const intl = useIntl();
 
     return (
@@ -45,12 +54,19 @@ export const StylingEditorDialogFooter = (props: IStylingEditorDialogFooterProps
                 value={intl.formatMessage({ id: "cancel" })}
                 onClick={() => onCancel()}
             />
-            <Button
-                className="gd-button-action s-dialog-submit-button"
-                value={intl.formatMessage({ id: "save" })}
-                onClick={() => onSubmit()}
-                disabled={disableSubmit}
-            />
+            <BubbleHoverTrigger className="gd-button" showDelay={0} hideDelay={0}>
+                <Button
+                    className="gd-button-action s-dialog-submit-button"
+                    value={intl.formatMessage({ id: "save" })}
+                    onClick={() => onSubmit()}
+                    disabled={disableSubmit}
+                />
+                {errorMessage && disableSubmit && (
+                    <Bubble className="bubble-negative" alignPoints={[{ align: "tc br" }]}>
+                        {errorMessage}
+                    </Bubble>
+                )}
+            </BubbleHoverTrigger>
         </div>
     );
 };

@@ -1710,9 +1710,24 @@
         "comment": "",
         "limit": 0
     },
+    "stylingEditor.dialog.name.required": {
+        "value": "Name is required.",
+        "comment": "",
+        "limit": 0
+    },
     "stylingEditor.dialog.definition": {
         "value": "Definition",
         "comment": "Name of the text field to describe an object.",
+        "limit": 0
+    },
+    "stylingEditor.dialog.definition.required": {
+        "value": "Definition is required",
+        "comment": "",
+        "limit": 0
+    },
+    "stylingEditor.dialog.definition.invalid": {
+        "value": "Definition must be a valid JSON object.",
+        "comment": "",
         "limit": 0
     },
     "stylingEditor.dialog.examples": {

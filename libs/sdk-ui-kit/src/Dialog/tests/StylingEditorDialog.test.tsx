@@ -61,17 +61,6 @@ describe("Styling editor dialog", () => {
         expect(wrapper.find(".s-textarea-field").hostNodes()).toHaveValue(referenceTheme("blue"));
     });
 
-    it("should show error with invalid definition field on save and remove error after the fix", () => {
-        const wrapper = getWrapper();
-        expect(wrapper.find(".s-gd-styling-editor-dialog-content-form-error")).not.toExist();
-        wrapper.find(".s-textarea-field").simulate("change", { target: { value: "Not a JSON" } });
-        expect(wrapper.find(".s-textarea-field")).toHaveValue("Not a JSON");
-        wrapper.find(".s-dialog-submit-button").first().simulate("click");
-        expect(wrapper.find(".s-gd-styling-editor-dialog-content-form-error")).toExist();
-        wrapper.find(".s-textarea-field").simulate("change", { target: { value: "{}" } });
-        expect(wrapper.find(".s-gd-styling-editor-dialog-content-form-error")).not.toExist();
-    });
-
     it("should not render examples if not provided", () => {
         const wrapper = getWrapper({ examples: undefined });
         expect(wrapper.find(".s-gd-styling-editor-dialog-content-examples")).not.toExist();
@@ -81,6 +70,40 @@ describe("Styling editor dialog", () => {
         const wrapper = getWrapper({ stylingItem: undefined });
         expect(wrapper.find(".s-input-field").hostNodes()).toHaveValue("");
         expect(wrapper.find(".s-textarea-field").hostNodes()).toHaveValue("");
+    });
+
+    it("should disable save if no changes are provided (ignore white-spacing)", () => {
+        const wrapper = getWrapper();
+        expect(wrapper.find(".s-dialog-submit-button").first()).toBeDisabled();
+        wrapper.find(".s-textarea-field").simulate("change", {
+            target: { value: JSON.stringify(theme("red").content) },
+        });
+        expect(wrapper.find(".s-dialog-submit-button").first()).toBeDisabled();
+    });
+
+    it("should disable save if no Name or Definition is provided", () => {
+        const wrapper = getWrapper({ stylingItem: undefined });
+        wrapper.find(".s-textarea-field").simulate("change", { target: { value: "{}" } });
+        expect(wrapper.find(".s-dialog-submit-button").first()).toBeDisabled();
+        wrapper.find(".s-input-field").simulate("change", { target: { value: "Name" } });
+        expect(wrapper.find(".s-dialog-submit-button").first()).not.toBeDisabled();
+        wrapper.find(".s-textarea-field").simulate("change", { target: { value: "" } });
+        expect(wrapper.find(".s-dialog-submit-button").first()).toBeDisabled();
+    });
+
+    it("should disable save if Definition is invalid JSON", () => {
+        const wrapper = getWrapper();
+        wrapper.find(".s-textarea-field").simulate("change", { target: { value: "invalid {}" } });
+        expect(wrapper.find(".s-dialog-submit-button").first()).toBeDisabled();
+        wrapper.find(".s-textarea-field").simulate("change", { target: { value: "{}" } });
+        expect(wrapper.find(".s-dialog-submit-button").first()).not.toBeDisabled();
+    });
+
+    it("should enable save after click Post Example", () => {
+        const wrapper = getWrapper({ stylingItem: undefined });
+        expect(wrapper.find(".s-dialog-submit-button").first()).toBeDisabled();
+        wrapper.find(".s-gd-styling-example-label-action").at(0).simulate("click");
+        expect(wrapper.find(".s-dialog-submit-button").first()).not.toBeDisabled();
     });
 
     it("should render progress indicator if flag provided", () => {

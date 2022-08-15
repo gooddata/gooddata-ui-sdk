@@ -3218,6 +3218,8 @@ export interface IStylingEditorDialogFooterProps extends IDialogBaseProps {
     // (undocumented)
     disableSubmit?: boolean;
     // (undocumented)
+    errorMessage?: string;
+    // (undocumented)
     link: {
         text: string;
         url: string;

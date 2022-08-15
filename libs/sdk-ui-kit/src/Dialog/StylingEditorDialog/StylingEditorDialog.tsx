@@ -9,7 +9,6 @@ import { BubbleHeaderSeparator } from "./BubbleHeaderSeparator";
 import { StylingEditorDialogFooter, IStylingEditorDialogFooterProps } from "./StylingEditorDialogFooter";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { useIntl } from "react-intl";
-import { Message } from "../../Messages";
 
 /**
  * @internal
@@ -64,33 +63,55 @@ const StylingEditorDialogCore = <T extends StylingPickerItemContent>(props: ISty
         disableSubmit,
         showProgressIndicator,
     } = props;
-    const providedExamples = !!examples && examples.length !== 0 && !!exampleToColorPreview;
-    const [nameField, setNameField] = useState(stylingItem?.name ?? "");
-
-    const [definitionField, setDefinitionField] = useState(
-        stylingItem?.content ? JSON.stringify(stylingItem.content, null, 4) : "",
-    );
-    const [invalidDefinition, setInvalidDefinition] = useState(false);
-    const isSubmitDisabled = useMemo(
-        () => nameField === "" || definitionField === "" || invalidDefinition || disableSubmit,
-        [nameField, definitionField, invalidDefinition, disableSubmit],
-    );
     const intl = useIntl();
-    const validateDefinition = (value: string): boolean => {
+    const providedExamples = !!examples && examples.length !== 0 && !!exampleToColorPreview;
+    const initialNameField = stylingItem?.name ?? "";
+    const initialDefinitionField = stylingItem?.content ? JSON.stringify(stylingItem?.content, null, 4) : "";
+    const [nameField, setNameField] = useState(initialNameField);
+    const [definitionField, setDefinitionField] = useState(initialDefinitionField);
+
+    const fieldsChanged = useMemo(() => {
         try {
-            JSON.parse(value);
+            const parsedDefinition = JSON.parse(definitionField);
+            const formattedDefinition = JSON.stringify(parsedDefinition, null, 4);
+            return nameField !== initialNameField || formattedDefinition !== initialDefinitionField;
+        } catch (e) {
+            // initial state of the fields is presumed to be valid,
+            // so if JSON throws error, definition was changed
+            return true;
+        }
+    }, [nameField, initialNameField, definitionField, initialDefinitionField]);
+
+    const validName = useMemo(() => nameField !== "", [nameField]);
+
+    const validDefinition = useMemo(() => {
+        try {
+            JSON.parse(definitionField);
             return true;
         } catch (e) {
-            setInvalidDefinition(true);
             return false;
         }
-    };
-    const handleDefinitionFieldChange = (value: string) => {
-        if (invalidDefinition && validateDefinition(value)) {
-            setInvalidDefinition(false);
+    }, [definitionField]);
+
+    const validFields = useMemo(() => validName && validDefinition, [validName, validDefinition]);
+
+    const isSubmitDisabled = useMemo(
+        () => !validFields || !fieldsChanged || disableSubmit,
+        [validFields, fieldsChanged, disableSubmit],
+    );
+
+    const errorMessage = useMemo((): string | undefined => {
+        if (!validName) {
+            return intl.formatMessage({ id: "stylingEditor.dialog.name.required" });
         }
-        setDefinitionField(value);
-    };
+        if (definitionField === "") {
+            return intl.formatMessage({ id: "stylingEditor.dialog.definition.required" });
+        }
+        if (!validDefinition) {
+            return intl.formatMessage({ id: "stylingEditor.dialog.definition.invalid" });
+        }
+        return undefined;
+    }, [validName, validDefinition, definitionField]);
 
     const getFinalStylingItem = (
         original: IStylingPickerItem<T>,
@@ -127,30 +148,15 @@ const StylingEditorDialogCore = <T extends StylingPickerItemContent>(props: ISty
                             onChange={(e) => setNameField(e.target.value)}
                         />
                     </label>
-                    <label
-                        className={cx("gd-styling-editor-dialog-content-form-textarea", {
-                            "gd-styling-editor-dialog-content-form-invalid": invalidDefinition,
-                        })}
-                    >
+                    <label className="gd-styling-editor-dialog-content-form-textarea">
                         {intl.formatMessage({ id: "stylingEditor.dialog.definition" })}
                         <textarea
                             className="gd-input-field s-textarea-field"
                             wrap={"off"}
                             value={definitionField}
-                            onChange={(e) => handleDefinitionFieldChange(e.target.value)}
+                            onChange={(e) => setDefinitionField(e.target.value)}
                         />
                     </label>
-                    {invalidDefinition && (
-                        <Message
-                            className={cx(
-                                "gd-styling-editor-dialog-content-form-error",
-                                "s-gd-styling-editor-dialog-content-form-error",
-                            )}
-                            type="error"
-                        >
-                            <strong>Invalid definition.</strong> Please provide valid JSON object.
-                        </Message>
-                    )}
                 </form>
                 {providedExamples && (
                     <div
@@ -183,11 +189,8 @@ const StylingEditorDialogCore = <T extends StylingPickerItemContent>(props: ISty
                 disableSubmit={isSubmitDisabled}
                 showProgressIndicator={showProgressIndicator}
                 link={link}
-                onSubmit={() =>
-                    validateDefinition(definitionField)
-                        ? onSubmit(getFinalStylingItem(stylingItem, definitionField, nameField))
-                        : undefined
-                }
+                errorMessage={errorMessage}
+                onSubmit={() => onSubmit(getFinalStylingItem(stylingItem, definitionField, nameField))}
                 onCancel={onCancel}
             />
         </Dialog>
