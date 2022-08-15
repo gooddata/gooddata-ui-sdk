@@ -21,7 +21,7 @@ const DashboardInsightMenuBody: React.FC<IDashboardInsightMenuProps> = (props) =
             title={submenu.itemName}
             onBack={() => setSubmenu(null)}
         >
-            <DashboardInsightMenuSubmenu submenu={submenu} setSubmenu={setSubmenu} />
+            <submenu.SubmenuComponent widget={widget} />
         </DashboardInsightSubmenuContainer>
     ) : (
         <DashboardInsightMenuContainer onClose={onClose} widget={widget}>
@@ -78,12 +78,4 @@ const DashboardInsightMenuRoot: React.FC<DashboardInsightMenuRootProps> = ({ ite
             })}
         </>
     );
-};
-
-type DashboardInsightMenuSubmenuProps = {
-    submenu: IInsightMenuSubmenu;
-    setSubmenu: React.Dispatch<React.SetStateAction<IInsightMenuSubmenu | null>>;
-};
-const DashboardInsightMenuSubmenu: React.FC<DashboardInsightMenuSubmenuProps> = ({ submenu }) => {
-    return <>{submenu.renderSubmenu()}</>;
 };

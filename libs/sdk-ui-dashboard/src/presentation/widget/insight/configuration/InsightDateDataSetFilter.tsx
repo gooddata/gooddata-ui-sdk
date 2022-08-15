@@ -27,12 +27,14 @@
 // } from "../../modules/Widgets";
 import React, { useEffect } from "react";
 import { DateDatasetFilter } from "../../common";
-import { IInsightWidget, isInsightWidget } from "@gooddata/sdk-model";
+import { IInsightWidget, isInsightWidget, widgetRef } from "@gooddata/sdk-model";
 import {
     MeasureDateDatasets,
     queryDateDatasetsForInsight,
     QueryInsightDateDatasets,
+    selectIsWidgetLoadingAdditionalDataByWidgetRef,
     useDashboardQueryProcessing,
+    useDashboardSelector,
 } from "../../../../model";
 
 export interface IConfigurationPanelProps {
@@ -52,6 +54,10 @@ export default function InsightDateDataSetFilter({ widget }: IConfigurationPanel
         queryCreator: queryDateDatasetsForInsight,
     });
 
+    const isLoadingAdditionalData = useDashboardSelector(
+        selectIsWidgetLoadingAdditionalDataByWidgetRef(widgetRef(widget)),
+    );
+
     useEffect(() => {
         queryDateDatasets(widget.insight);
     }, [queryDateDatasets, widget.insight]);
@@ -61,8 +67,9 @@ export default function InsightDateDataSetFilter({ widget }: IConfigurationPanel
             <DateDatasetFilter
                 widget={widget}
                 dateFilterCheckboxDisabled={false}
-                isDatasetsLoading={status === "running" || status === "pending"}
+                isDatasetsLoading={status === "running" || status === "pending" || isLoadingAdditionalData}
                 relatedDateDatasets={result?.dateDatasetsOrdered}
+                isLoadingAdditionalData={isLoadingAdditionalData}
             />
         );
     }

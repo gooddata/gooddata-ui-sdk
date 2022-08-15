@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
-import { ObjRef } from "@gooddata/sdk-model";
+import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
 import { selectWidgetsMap } from "../layout/layoutSelectors";
 import { DashboardState } from "../types";
 import { createMemoizedSelector } from "../_infra/selectors";
@@ -170,4 +170,18 @@ export const selectKpiDateDatasetAutoOpen = createSelector(
 export const selectInsightListLastUpdateRequested = createSelector(
     selectSelf,
     (state) => state.insightListLastUpdateRequested,
+);
+
+const selectWidgetsLoadingAdditionalData = createSelector(
+    selectSelf,
+    (state) => state.widgetsLoadingAdditionalData,
+);
+
+/**
+ * @internal
+ */
+export const selectIsWidgetLoadingAdditionalDataByWidgetRef = createMemoizedSelector((ref: ObjRef) =>
+    createSelector(selectWidgetsLoadingAdditionalData, (widgetsLoading) => {
+        return widgetsLoading.some((loadingRef) => areObjRefsEqual(loadingRef, ref));
+    }),
 );

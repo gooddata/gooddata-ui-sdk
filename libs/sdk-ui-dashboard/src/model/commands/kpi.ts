@@ -188,7 +188,7 @@ export function replaceKpiWidgetFilterSettings(
  * be enabled and the provided date data set will be used for date-filtering widget's KPI.
  *
  * @param ref - reference of the KPI widget to modify
- * @param dateDataset - date data set to use for filtering the KPI
+ * @param dateDataset - date data set to use for filtering the insight, if "default" is provided, the default date dataset will be resolved and used
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
@@ -196,7 +196,7 @@ export function replaceKpiWidgetFilterSettings(
  */
 export function enableKpiWidgetDateFilter(
     ref: ObjRef,
-    dateDataset: ObjRef,
+    dateDataset: ObjRef | "default",
     correlationId?: string,
 ): ChangeKpiWidgetFilterSettings {
     return {

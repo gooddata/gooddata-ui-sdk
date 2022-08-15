@@ -7,7 +7,11 @@ import {
     isDashboardAttributeFilterReference,
     IAnalyticalWidget,
     ICatalogDateDataset,
+    isInsightWidget,
+    isKpiWidget,
 } from "@gooddata/sdk-model";
+import invariant from "ts-invariant";
+
 import { DashboardContext } from "../../../types/commonTypes";
 import { IDashboardCommand } from "../../../commands";
 import {
@@ -22,6 +26,14 @@ import { SagaIterator } from "redux-saga";
 import { call, SagaReturnType, select } from "redux-saga/effects";
 import { selectFilterContextAttributeFilters } from "../../../store/filterContext/filterContextSelectors";
 import { selectAllCatalogDateDatasetsMap } from "../../../store/catalog/catalogSelectors";
+import { query } from "../../../store/_infra/queryCall";
+import {
+    InsightDateDatasets,
+    insightSelectDateDataset,
+    MeasureDateDatasets,
+    queryDateDatasetsForInsight,
+    queryDateDatasetsForMeasure,
+} from "../../../queries";
 
 function toAttributeDisplayFormRefs(references: IDashboardFilterReference[]) {
     return references.filter(isDashboardAttributeFilterReference).map((reference) => reference.displayForm);
@@ -109,18 +121,32 @@ function* enableDateFilter(
     widget: IAnalyticalWidget,
     op: FilterOpEnableDateFilter,
 ): SagaIterator<FilterOpResult> {
-    const dateDataSet: SagaReturnType<typeof validators.dateDatasetValidator> = yield call(
-        validators.dateDatasetValidator,
-        ctx,
-        cmd,
-        widget,
-        op.dateDataset,
-    );
+    let dateDatasetToUse: ICatalogDateDataset | undefined;
+
+    if (op.dateDataset === "default") {
+        if (isInsightWidget(widget)) {
+            const queryResult: InsightDateDatasets = yield call(
+                query,
+                queryDateDatasetsForInsight(widget.insight),
+            );
+            dateDatasetToUse = insightSelectDateDataset(queryResult);
+        } else if (isKpiWidget(widget)) {
+            const queryResult: MeasureDateDatasets = yield call(
+                query,
+                queryDateDatasetsForMeasure(widget.kpi.metric),
+            );
+            dateDatasetToUse = queryResult.dateDatasetsOrdered[0];
+        } else {
+            invariant(false, "Cannot use default date dataset for custom widgets");
+        }
+    } else {
+        dateDatasetToUse = yield call(validators.dateDatasetValidator, ctx, cmd, widget, op.dateDataset);
+    }
 
     const result: SagaReturnType<typeof changeDateFilterIgnore> = yield call(
         changeDateFilterIgnore,
         widget,
-        dateDataSet,
+        dateDatasetToUse,
     );
     return result;
 }

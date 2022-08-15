@@ -2491,10 +2491,10 @@ export const EditableTitle: CustomTitleComponent;
 export const EditButton: (props: IEditButtonProps) => JSX.Element;
 
 // @alpha
-export function enableInsightWidgetDateFilter(ref: ObjRef, dateDataset: ObjRef, correlationId?: string): ChangeInsightWidgetFilterSettings;
+export function enableInsightWidgetDateFilter(ref: ObjRef, dateDataset: ObjRef | "default", correlationId?: string): ChangeInsightWidgetFilterSettings;
 
 // @alpha
-export function enableKpiWidgetDateFilter(ref: ObjRef, dateDataset: ObjRef, correlationId?: string): ChangeKpiWidgetFilterSettings;
+export function enableKpiWidgetDateFilter(ref: ObjRef, dateDataset: ObjRef | "default", correlationId?: string): ChangeKpiWidgetFilterSettings;
 
 // @alpha (undocumented)
 export interface ExportDashboardToPdf extends IDashboardCommand {
@@ -2584,7 +2584,7 @@ export interface FilterOpDisableDateFilter extends FilterOp {
 
 // @alpha
 export interface FilterOpEnableDateFilter extends FilterOp {
-    dateDataset: ObjRef;
+    dateDataset: ObjRef | "default";
     // (undocumented)
     type: "enableDateFilter";
 }
@@ -2631,9 +2631,7 @@ export type FiltersInfo = {
 export type FluidLayoutCustomizationFn = (layout: IDashboardLayout<ExtendedDashboardWidget>, customizer: IFluidLayoutCustomizer) => void;
 
 // @internal (undocumented)
-export function getDefaultInsightEditMenuItems(intl: IntlShape, config: {
-    widget: IInsightWidget;
-}): IInsightMenuItem[];
+export function getDefaultInsightEditMenuItems(intl: IntlShape): IInsightMenuItem[];
 
 // @internal (undocumented)
 export function getDefaultInsightMenuItems(intl: IntlShape, config: {
@@ -3452,7 +3450,9 @@ export interface IInsightMenuSubmenu {
     // (undocumented)
     itemName: string;
     // (undocumented)
-    renderSubmenu: () => JSX.Element;
+    SubmenuComponent: ComponentType<{
+        widget: IInsightWidget;
+    }>;
     tooltip?: string;
     // (undocumented)
     type: "submenu";
@@ -5495,6 +5495,9 @@ export const selectIsShareDialogOpen: OutputSelector<DashboardState, boolean, (r
 export const selectIsWhiteLabeled: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
 // @internal (undocumented)
+export const selectIsWidgetLoadingAdditionalDataByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, boolean, (res: ObjRef[]) => boolean>;
+
+// @internal (undocumented)
 export const selectKpiDateDatasetAutoOpen: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
 
 // @internal (undocumented)
@@ -5781,6 +5784,14 @@ payload: boolean;
 type: string;
 }>;
 requestInsightListUpdate: CaseReducer<UiState, AnyAction>;
+setWidgetLoadingAdditionalDataStarted: CaseReducer<UiState, {
+payload: ObjRef;
+type: string;
+}>;
+setWidgetLoadingAdditionalDataStopped: CaseReducer<UiState, {
+payload: ObjRef;
+type: string;
+}>;
 }>;
 
 // @alpha (undocumented)
@@ -5831,6 +5842,8 @@ export interface UiState {
     shareDialog: {
         open: boolean;
     };
+    // (undocumented)
+    widgetsLoadingAdditionalData: ObjRef[];
 }
 
 // @alpha

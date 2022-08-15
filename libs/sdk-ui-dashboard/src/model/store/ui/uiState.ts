@@ -43,6 +43,7 @@ export interface UiState {
     configurationPanelOpened: boolean;
     kpiDateDatasetAutoOpen: boolean;
     insightListLastUpdateRequested: number;
+    widgetsLoadingAdditionalData: ObjRef[];
 }
 
 export const uiInitialState: UiState = {
@@ -79,4 +80,5 @@ export const uiInitialState: UiState = {
     configurationPanelOpened: true,
     kpiDateDatasetAutoOpen: false,
     insightListLastUpdateRequested: 0,
+    widgetsLoadingAdditionalData: [],
 };

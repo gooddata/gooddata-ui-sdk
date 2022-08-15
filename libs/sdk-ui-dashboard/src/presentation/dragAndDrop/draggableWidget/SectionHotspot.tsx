@@ -4,7 +4,10 @@ import cx from "classnames";
 import { getDropZoneDebugStyle } from "../debug";
 import {
     addLayoutSection,
+    ChangeInsightWidgetFilterSettings,
+    DashboardCommandFailed,
     eagerRemoveSectionItem,
+    enableInsightWidgetDateFilter,
     selectSettings,
     selectWidgetPlaceholder,
     uiActions,
@@ -43,6 +46,18 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
     const settings = useDashboardSelector(selectSettings);
     const widgetPlaceholder = useDashboardSelector(selectWidgetPlaceholder);
 
+    const { run: preselectDateDataset } = useDashboardCommandProcessing({
+        commandCreator: enableInsightWidgetDateFilter,
+        errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
+        successEvent: "GDC.DASH/EVT.INSIGHT_WIDGET.FILTER_SETTINGS_CHANGED",
+        onSuccess: (event) => {
+            dispatch(uiActions.setWidgetLoadingAdditionalDataStopped(event.payload.ref));
+        },
+        onError: (event: DashboardCommandFailed<ChangeInsightWidgetFilterSettings>) => {
+            dispatch(uiActions.setWidgetLoadingAdditionalDataStopped(event.payload.command.payload.ref));
+        },
+    });
+
     const { run: addNewSectionWithInsight } = useDashboardCommandProcessing({
         commandCreator: addLayoutSection,
         errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
@@ -51,6 +66,8 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
             const ref = event.payload.section.items[0].widget!.ref;
             dispatch(uiActions.selectWidget(ref));
             dispatch(uiActions.setConfigurationPanelOpened(true));
+            dispatch(uiActions.setWidgetLoadingAdditionalDataStarted(ref));
+            preselectDateDataset(ref, "default");
         },
     });
 
@@ -68,10 +85,12 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
         commandCreator: addLayoutSection,
         errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
         successEvent: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
-        onSuccess: () => {
+        onSuccess: (event) => {
+            const ref = event.payload.section.items[0].widget!.ref;
             dispatch(uiActions.selectWidget(idRef(KPI_PLACEHOLDER_WIDGET_ID)));
             dispatch(uiActions.setConfigurationPanelOpened(true));
             dispatch(uiActions.setKpiDateDatasetAutoOpen(true));
+            dispatch(uiActions.setWidgetLoadingAdditionalDataStarted(ref));
         },
     });
 

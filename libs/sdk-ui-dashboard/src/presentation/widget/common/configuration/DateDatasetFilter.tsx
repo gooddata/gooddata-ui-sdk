@@ -19,6 +19,7 @@ interface IDateDatasetFilterProps {
     dateFromVisualization?: ICatalogDateDataset;
     dateFilterCheckboxDisabled: boolean;
     shouldPickDateDataset?: boolean;
+    isLoadingAdditionalData?: boolean;
     onDateDatasetChanged?: (id: string) => void;
 }
 
@@ -31,6 +32,7 @@ export const DateDatasetFilter: React.FC<IDateDatasetFilterProps> = (props) => {
         isDatasetsLoading,
         shouldPickDateDataset,
         onDateDatasetChanged,
+        isLoadingAdditionalData,
     } = props;
 
     const catalogDatasetsMap = useDashboardSelector(selectAllCatalogDateDatasetsMap);
@@ -40,7 +42,7 @@ export const DateDatasetFilter: React.FC<IDateDatasetFilterProps> = (props) => {
         useIsSelectedDatasetHidden(selectedDateDataset?.dataSet.ref);
 
     const [isDateFilterEnabled, setIsDateFilterEnabled] = useState(
-        !!widget.dateDataSet || shouldPickDateDataset,
+        !!widget.dateDataSet || shouldPickDateDataset || isLoadingAdditionalData,
     );
 
     const {

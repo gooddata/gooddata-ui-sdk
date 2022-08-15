@@ -40,7 +40,7 @@ export interface IInsightMenuSubmenu {
     type: "submenu";
     itemId: string;
     itemName: string;
-    renderSubmenu: () => JSX.Element;
+    SubmenuComponent: ComponentType<{ widget: IInsightWidget }>;
     /**
      * If specified, the value is shown on hover of the item as a tooltip.
      */
