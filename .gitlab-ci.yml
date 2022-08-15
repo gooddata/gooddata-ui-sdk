@@ -66,7 +66,7 @@ build-web-components:
     paths:
       - ${CI_PROJECT_DIR}/libs/sdk-ui-web-components/web-components.tar.gz
   rules:
-    - <<: *release
+    - <<: *.release
 
 docker-build-web-components:
   extends:
@@ -82,7 +82,7 @@ docker-build-web-components:
   dependencies:
     - build-web-components
   rules:
-    - <<: *release
+    - <<: *.release
 
 generate-update:
   stage: generate-update
