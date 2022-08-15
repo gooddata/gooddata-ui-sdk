@@ -835,14 +835,6 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "node-sass",
-      "allowedCategories": [ "production", "tools" ]
-    },
-    {
-      "name": "node-sass-magic-importer",
-      "allowedCategories": [ "production", "tools" ]
-    },
-    {
       "name": "normalize.css",
       "allowedCategories": [ "production" ]
     },
