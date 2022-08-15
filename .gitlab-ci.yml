@@ -50,12 +50,6 @@ build-web-components:
   variables:
     KUBERNETES_MEMORY_REQUEST: 4Gi
     KUBERNETES_MEMORY_LIMIT: 6Gi
-  secrets:
-    NPM_AUTH_TOKEN:
-      vault: v2/na1/int/911/jenkins_ng_slave/data/npm-auth-token/secret@secret
-      file: false
-  before_script:
-    - echo "//registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN" > $HOME/.npmrc
   script:
     - npm i -g @microsoft/rush
     - rush install
