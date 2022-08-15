@@ -92,4 +92,4 @@ generate-update:
     - /scripts/update-ext-image-version.rb web-components
   dependencies: []
   rules:
-    - <<: *release
+    - <<: *.release
