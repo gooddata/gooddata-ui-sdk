@@ -186,7 +186,7 @@ packages:
     resolution: {integrity: sha512-hoyByceqwKirw7w3Z7gnIIZC3Wx3J484Y3L/cMpXFbr7d9ZQj2mODrirNzcJa+SM3UlpWXYvKV4RlRpFXlWgXg==}
     engines: {node: '>=6.0.0'}
     dependencies:
-      '@jridgewell/trace-mapping': 0.3.4
+      '@jridgewell/trace-mapping': 0.3.15
     dev: false
 
   /@babel/cli/7.17.6_@babel+core@7.17.9:
@@ -197,7 +197,7 @@ packages:
       '@babel/core': ^7.0.0-0
     dependencies:
       '@babel/core': 7.17.9
-      '@jridgewell/trace-mapping': 0.3.4
+      '@jridgewell/trace-mapping': 0.3.15
       commander: 4.1.1
       convert-source-map: 1.8.0
       fs-readdir-recursive: 1.1.0
@@ -2955,13 +2955,6 @@ packages:
 
   /@jridgewell/trace-mapping/0.3.15:
     resolution: {integrity: sha512-oWZNOULl+UbhsgB51uuZzglikfIKSUBO/M9W2OfEjn7cmqoAiCgmv9lyACTUacZwBz0ITnJ2NqjU8Tx0DHL88g==}
-    dependencies:
-      '@jridgewell/resolve-uri': 3.0.5
-      '@jridgewell/sourcemap-codec': 1.4.11
-    dev: false
-
-  /@jridgewell/trace-mapping/0.3.4:
-    resolution: {integrity: sha512-vFv9ttIedivx0ux3QSjhgtCVjPZd5l46ZOMDSCwnH1yUO2e964gO8LZGyv2QkqcgR6TnBU1v+1IFqmeoG+0UJQ==}
     dependencies:
       '@jridgewell/resolve-uri': 3.0.5
       '@jridgewell/sourcemap-codec': 1.4.11
@@ -15118,11 +15111,11 @@ packages:
   /moment-timezone/0.5.34:
     resolution: {integrity: sha512-3zAEHh2hKUs3EXLESx/wsgw6IQdusOT8Bxm3D9UrHPQR7zlMmzwybC8zHEM1tQ4LJwP7fcxrWr8tuBg05fFCbg==}
     dependencies:
-      moment: 2.29.2
+      moment: 2.29.4
     dev: false
 
-  /moment/2.29.2:
-    resolution: {integrity: sha512-UgzG4rvxYpN15jgCmVJwac49h9ly9NurikMWGPdVxm8GZD6XjkKPxDTjQQ43gtGgnV3X0cAyWDdP2Wexoquifg==}
+  /moment/2.29.4:
+    resolution: {integrity: sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==}
     dev: false
 
   /monocle-ts/2.3.13_fp-ts@2.11.9:
@@ -19705,7 +19698,7 @@ packages:
       highlight-es: 1.0.3
       is-jquery-obj: 0.1.1
       lodash: 4.17.21
-      moment: 2.29.2
+      moment: 2.29.4
       mustache: 2.3.2
       os-family: 1.1.0
       parse5: 2.2.3
@@ -19816,7 +19809,7 @@ packages:
       log-update-async-hook: 2.0.6
       make-dir: 3.1.0
       mime-db: 1.52.0
-      moment: 2.29.2
+      moment: 2.29.4
       moment-duration-format-commonjs: 1.0.1
       mustache: 2.3.2
       nanoid: 3.3.2
@@ -23059,7 +23052,7 @@ packages:
       jest: 27.5.1_ts-node@10.7.0
       jest-junit: 3.7.0
       lodash: 4.17.21
-      moment: 2.29.2
+      moment: 2.29.4
       npm-run-all: 4.1.5
       prettier: 2.5.1
       prettier-loader: 3.3.0_prettier@2.5.1+webpack@5.72.0
@@ -23609,7 +23602,7 @@ packages:
       jest-junit: 3.7.0
       json-stable-stringify: 1.0.1
       lodash: 4.17.21
-      moment: 2.29.2
+      moment: 2.29.4
       prettier: 2.5.1
       raf: 3.4.1
       react: 17.0.2
@@ -23778,7 +23771,7 @@ packages:
       jest-junit: 3.7.0
       kefir: 3.8.8
       lodash: 4.17.21
-      moment: 2.29.2
+      moment: 2.29.4
       moment-timezone: 0.5.34
       prettier: 2.5.1
       raf: 3.4.1
@@ -24116,7 +24109,7 @@ packages:
       json-stable-stringify: 1.0.1
       lodash: 4.17.21
       mapbox-gl: 2.8.0
-      moment: 2.29.2
+      moment: 2.29.4
       prettier: 2.5.1
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
