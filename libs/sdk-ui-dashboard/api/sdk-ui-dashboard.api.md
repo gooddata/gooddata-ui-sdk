@@ -5495,6 +5495,9 @@ export const selectIsShareDialogOpen: OutputSelector<DashboardState, boolean, (r
 export const selectIsWhiteLabeled: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
 // @internal (undocumented)
+export const selectIsWidgetLoadingAdditionalDataByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, boolean, (res: ObjRef[]) => boolean>;
+
+// @internal (undocumented)
 export const selectKpiDateDatasetAutoOpen: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
 
 // @internal (undocumented)
@@ -5781,6 +5784,14 @@ payload: boolean;
 type: string;
 }>;
 requestInsightListUpdate: CaseReducer<UiState, AnyAction>;
+setWidgetLoadingAdditionalDataStarted: CaseReducer<UiState, {
+payload: ObjRef;
+type: string;
+}>;
+setWidgetLoadingAdditionalDataStopped: CaseReducer<UiState, {
+payload: ObjRef;
+type: string;
+}>;
 }>;
 
 // @alpha (undocumented)
@@ -5831,6 +5842,8 @@ export interface UiState {
     shareDialog: {
         open: boolean;
     };
+    // (undocumented)
+    widgetsLoadingAdditionalData: ObjRef[];
 }
 
 // @alpha

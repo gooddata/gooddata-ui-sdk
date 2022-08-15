@@ -1,6 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 import { Action, AnyAction, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
-import { ObjRef } from "@gooddata/sdk-model";
+import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
 import { UiState } from "./uiState";
 import { ILayoutCoordinates, IMenuButtonItemsVisibility } from "../../../types";
 
@@ -105,6 +105,16 @@ const requestInsightListUpdate: UiReducer = (state) => {
     state.insightListLastUpdateRequested = +new Date();
 };
 
+const setWidgetLoadingAdditionalDataStarted: UiReducer<PayloadAction<ObjRef>> = (state, action) => {
+    state.widgetsLoadingAdditionalData.push(action.payload);
+};
+
+const setWidgetLoadingAdditionalDataStopped: UiReducer<PayloadAction<ObjRef>> = (state, action) => {
+    state.widgetsLoadingAdditionalData = state.widgetsLoadingAdditionalData.filter(
+        (item) => !areObjRefsEqual(item, action.payload),
+    );
+};
+
 export const uiReducers = {
     openScheduleEmailDialog,
     closeScheduleEmailDialog,
@@ -130,4 +140,6 @@ export const uiReducers = {
     setConfigurationPanelOpened,
     setKpiDateDatasetAutoOpen,
     requestInsightListUpdate,
+    setWidgetLoadingAdditionalDataStarted,
+    setWidgetLoadingAdditionalDataStopped,
 };

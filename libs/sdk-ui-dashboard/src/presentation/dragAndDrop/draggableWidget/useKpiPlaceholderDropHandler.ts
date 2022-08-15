@@ -24,10 +24,12 @@ export function useKpiPlaceholderDropHandler() {
         commandCreator: replaceSectionItem,
         errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
         successEvent: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED",
-        onSuccess: () => {
+        onSuccess: (event) => {
+            const ref = event.payload.items[0].widget!.ref;
             dispatch(uiActions.selectWidget(idRef(KPI_PLACEHOLDER_WIDGET_ID)));
             dispatch(uiActions.setConfigurationPanelOpened(true));
             dispatch(uiActions.setKpiDateDatasetAutoOpen(true));
+            dispatch(uiActions.setWidgetLoadingAdditionalDataStarted(ref));
         },
     });
 

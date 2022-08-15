@@ -68,10 +68,12 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
         commandCreator: addLayoutSection,
         errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
         successEvent: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
-        onSuccess: () => {
+        onSuccess: (event) => {
+            const ref = event.payload.section.items[0].widget!.ref;
             dispatch(uiActions.selectWidget(idRef(KPI_PLACEHOLDER_WIDGET_ID)));
             dispatch(uiActions.setConfigurationPanelOpened(true));
             dispatch(uiActions.setKpiDateDatasetAutoOpen(true));
+            dispatch(uiActions.setWidgetLoadingAdditionalDataStarted(ref));
         },
     });
 

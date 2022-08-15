@@ -226,6 +226,7 @@ export {
     selectIsKpiDeleteDialogOpen,
     selectKpiDeleteDialogWidgetCoordinates,
     selectInsightListLastUpdateRequested,
+    selectIsWidgetLoadingAdditionalDataByWidgetRef,
 } from "./ui/uiSelectors";
 export { uiActions } from "./ui";
 export { RenderModeState } from "./renderMode/renderModeState";
