@@ -63,7 +63,13 @@ export const StylingPickerListItem = <T extends StylingPickerItemContent>({
                 className="input-radio-label gd-styling-picker-list-item-content"
                 onClick={() => onClick(ref)}
             >
-                <input type="radio" className="input-radio" readOnly={true} checked={isSelected} />
+                <input
+                    aria-label={stringUtils.simplifyText(name)}
+                    type="radio"
+                    className="input-radio"
+                    readOnly={true}
+                    checked={isSelected}
+                />
                 <ColorPreview className="gd-styling-picker-list-item-colors" colors={colorsPreview} />
                 <span className="input-label-text gd-styling-picker-list-item-text">
                     <ShortenedText

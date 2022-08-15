@@ -1,12 +1,14 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import noop from "lodash/noop";
+
 import { Message } from "../Message";
 import { IMessageProps } from "../typings";
 
 function renderMessage(options: Partial<IMessageProps>, children: JSX.Element = null) {
-    return mount(
+    return render(
         <Message type={"success"} {...options}>
             {children}
         </Message>,
@@ -31,41 +33,41 @@ function renderMessageComponent(options = {}) {
 }
 
 describe("Message", () => {
-    describe("message with component", () => {
-        it("should show message with custom component", () => {
-            const wrapper = renderMessage(
-                {
-                    type: "error",
-                },
-                renderMessageComponent(),
-            );
+    it("should show message with custom component", () => {
+        renderMessage(
+            {
+                type: "error",
+            },
+            renderMessageComponent(),
+        );
 
-            expect(wrapper.find(".link")).toHaveLength(1);
-        });
+        expect(screen.getByText("fake link")).toBeInTheDocument();
+    });
 
-        it("should create message with custom component containing link and click on it once", () => {
-            const onClick = jest.fn();
-            const wrapper = renderMessage(
-                {
-                    type: "error",
-                },
-                renderMessageComponent({ onClick }),
-            );
+    it("should create message with custom component containing link and click on it once", async () => {
+        const onClick = jest.fn();
+        renderMessage(
+            {
+                type: "error",
+            },
+            renderMessageComponent({ onClick }),
+        );
 
-            wrapper.find(".link").simulate("click");
+        await userEvent.click(screen.getByText("fake link"));
+        await waitFor(() => {
             expect(onClick).toHaveBeenCalledTimes(1);
         });
     });
 
-    describe("close", () => {
-        it("should show close button and be able to click", () => {
-            const onClose = jest.fn();
-            const wrapper = renderMessage({
-                type: "error",
-                onClose,
-            });
+    it("should show close button and be able to click", async () => {
+        const onClose = jest.fn();
+        renderMessage({
+            type: "error",
+            onClose,
+        });
 
-            wrapper.find(".gd-message-dismiss").simulate("click");
+        await userEvent.click(screen.getByLabelText("dismiss"));
+        await waitFor(() => {
             expect(onClose).toHaveBeenCalledTimes(1);
         });
     });

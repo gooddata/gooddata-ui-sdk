@@ -1,146 +1,115 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
-import { Menu } from "../Menu";
+import { IMenuProps, Menu } from "../Menu";
 import { SubMenu } from "../SubMenu";
-
-// Enzyme object unmount method needs to be called explicitly after each test
-// because top level Menu mounts its content to document.body with React Portals.
-// If we forget about this it will leave stray elements in .body which might
-// cause trouble, especially with snapshots tests that snapshot document.body.
 
 const Toggler = () => <button>toggler</button>;
 
 const MenuContent = (props: React.HTMLAttributes<HTMLElement>) => {
-    const { className = "content", ...restProps } = props;
+    const { role = "content", ...restProps } = props;
     return (
-        <ul className={className} {...restProps}>
+        <ul role={role} {...restProps}>
             <li>1</li>
             <li>2</li>
         </ul>
     );
 };
-const MenuItem = () => <p>Menu Item</p>;
 
-const isContentRenderedInBody = () => Boolean(document.querySelector("body .content"));
+const renderComponent = (customProps: any = {}) => {
+    const defaultProps: Partial<IMenuProps> = {
+        toggler: <Toggler />,
+    };
+    return render(
+        <Menu {...defaultProps} {...customProps.menu}>
+            <MenuContent {...customProps.menuContent} />
+        </Menu>,
+    );
+};
+
+const isContentRenderedInBody = () => screen.queryByRole("content");
+
+const MenuItem = () => <p>Menu Item</p>;
 
 describe("Menu renderer", () => {
     it("should render the toggler", () => {
-        const wrapper = mount(
-            <Menu toggler={<Toggler />}>
-                <MenuContent />
-            </Menu>,
-        );
+        renderComponent();
 
-        expect(wrapper.contains(<Toggler />)).toBeTruthy();
-        wrapper.unmount();
+        expect(screen.getByText("toggler")).toBeInTheDocument();
     });
 
     it("should render the menu content to body", () => {
-        const wrapper = mount(
-            <Menu toggler={<Toggler />} opened={true}>
-                <MenuContent />
-            </Menu>,
-        );
+        renderComponent({ menu: { opened: true } });
 
-        expect(isContentRenderedInBody()).toBeTruthy();
-        wrapper.unmount();
+        expect(isContentRenderedInBody()).toBeInTheDocument();
+        expect(screen.getByText("1")).toBeInTheDocument();
     });
 
     it("should render the menu content to portal target", () => {
         const portalTarget = document.createElement("section");
-        const wrapper = mount(
-            <Menu toggler={<Toggler />} portalTarget={portalTarget} opened={true}>
-                <MenuContent className="content-portaled" />
-            </Menu>,
-        );
+        const props = {
+            menu: {
+                opened: true,
+                portalTarget,
+            },
+            menuContent: {
+                className: "content-portaled",
+            },
+        };
+        renderComponent(props);
 
+        expect(isContentRenderedInBody()).not.toBeInTheDocument();
         expect(portalTarget.querySelector(".content-portaled")).toBeTruthy();
-        wrapper.unmount();
     });
 });
 
 describe("Menu toggling", () => {
-    it("should toggle menu when toggler is clicked", () => {
-        const wrapper = mount(
-            <Menu toggler={<Toggler />}>
-                <MenuContent />
-            </Menu>,
-        );
+    it("should toggle menu when toggler is clicked", async () => {
+        renderComponent();
 
-        expect(isContentRenderedInBody()).toBeFalsy();
-        wrapper.find(Toggler).simulate("mousedown");
-        wrapper.find(Toggler).simulate("click");
-        expect(isContentRenderedInBody()).toBeTruthy();
-        wrapper.find(Toggler).simulate("mousedown");
-        wrapper.find(Toggler).simulate("click");
-        expect(isContentRenderedInBody()).toBeFalsy();
+        expect(isContentRenderedInBody()).not.toBeInTheDocument();
 
-        wrapper.unmount();
+        await userEvent.click(screen.getByText("toggler"));
+
+        expect(screen.getByText("1")).toBeInTheDocument();
+        expect(isContentRenderedInBody()).toBeInTheDocument();
+
+        await userEvent.click(screen.getByText("toggler"));
+
+        await waitFor(() => {
+            expect(screen.queryByText("1")).not.toBeInTheDocument();
+        });
+        expect(isContentRenderedInBody()).not.toBeInTheDocument();
     });
 
-    it("should close when we click outside of menu", () => {
-        const outsideElement = document.createElement("button");
+    it("should close when we click outside of menu", async () => {
+        const outsideElement: HTMLElement = document.createElement("button");
+        outsideElement.setAttribute("aria-label", "outside");
         document.body.appendChild(outsideElement);
+        renderComponent();
 
-        const wrapper = mount(
-            <Menu toggler={<Toggler />}>
-                <MenuContent />
-            </Menu>,
-        );
+        expect(isContentRenderedInBody()).not.toBeInTheDocument();
 
-        expect(isContentRenderedInBody()).toBeFalsy();
-        wrapper.find(Toggler).simulate("mousedown");
-        wrapper.find(Toggler).simulate("click");
-        expect(isContentRenderedInBody()).toBeTruthy();
-        outsideElement.dispatchEvent(new MouseEvent("mousedown"));
-        expect(isContentRenderedInBody()).toBeFalsy();
+        await userEvent.click(screen.getByText("toggler"));
+
+        expect(screen.getByText("1")).toBeInTheDocument();
+        expect(isContentRenderedInBody()).toBeInTheDocument();
+
+        await userEvent.click(screen.getByLabelText("outside"));
+
+        expect(isContentRenderedInBody()).not.toBeInTheDocument();
+        expect(screen.queryByText("1")).not.toBeInTheDocument();
 
         outsideElement.remove();
-        wrapper.unmount();
-    });
-
-    it("should open/close when we change opened prop", () => {
-        const wrapper = mount(
-            <Menu toggler={<Toggler />} opened={false}>
-                <MenuContent />
-            </Menu>,
-        );
-
-        expect(isContentRenderedInBody()).toBeFalsy();
-        expect(wrapper.props().opened).toBe(false);
-
-        wrapper.setProps({ opened: true });
-
-        expect(isContentRenderedInBody()).toBeTruthy();
-        expect(wrapper.props().opened).toBe(true);
-
-        wrapper.setProps({ opened: false });
-
-        expect(isContentRenderedInBody()).toBeFalsy();
-        expect(wrapper.props().opened).toBe(false);
-
-        wrapper.unmount();
     });
 });
 
-function snapshotComponentAndPortalTarget(Component: React.ReactElement<any>, portalTarget?: HTMLElement) {
-    const wrapper = mount(Component);
+function snapshotComponentAndPortalTarget(Component: React.ReactElement<any>, _portalTarget?: HTMLElement) {
+    const { baseElement } = render(Component);
 
-    // We just want to snapshot final rendered HTML without any React components.
-    // - Passing React elements into snapshot will not snapshot the outputted html
-    //   but it will snapshot react elements structure
-    // - Passing just wrapper.html() into snapshot will have the result unformatted
-    //   on one line.
-    // - So we do this to have formatted final html in snapshot.
-    const el = document.createElement("div");
-    el.innerHTML = wrapper.html();
-
-    expect(el).toMatchSnapshot();
-    expect(portalTarget || document.querySelector("body")).toMatchSnapshot();
-
-    wrapper.unmount();
+    expect(baseElement).toMatchSnapshot();
 }
 
 describe("Menu snapshot", () => {

@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React, { Component } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
@@ -72,6 +72,7 @@ export class Tabs extends Component<ITabsProps, ITabsState> {
 
         return (
             <div
+                aria-label={stringUtils.simplifyText(tab.id)}
                 className={tabClassName}
                 key={tab.id}
                 onClick={() => {

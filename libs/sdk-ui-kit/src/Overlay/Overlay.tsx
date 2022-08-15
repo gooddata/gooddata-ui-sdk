@@ -178,7 +178,11 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
         // Need stop propagation of events from Portal thats new behavior of react 16
         // https://github.com/facebook/react/issues/11387
         return (
-            <span className="s-portal-scroll-anchor" ref={this.containerRef}>
+            <span
+                aria-label="portal-scroll-anchor"
+                className="s-portal-scroll-anchor"
+                ref={this.containerRef}
+            >
                 <Portal node={this.portalNode}>
                     {/* Do not prevent onScroll events - see ONE-4189 for details */}
                     <div

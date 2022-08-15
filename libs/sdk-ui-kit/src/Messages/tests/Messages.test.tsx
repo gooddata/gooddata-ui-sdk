@@ -1,6 +1,8 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { screen, waitFor, render } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+
 import { Messages } from "../Messages";
 import { IMessage, IMessagesProps } from "../typings";
 
@@ -24,36 +26,43 @@ const mockError: Array<IMessage> = [
 ];
 
 function renderMessages(options: Partial<IMessagesProps>) {
-    return mount(<Messages messages={[]} {...options} />);
+    return render(<Messages messages={[]} {...options} />);
 }
 
 describe("Messages", () => {
     describe("message close", () => {
-        it("should call callback on message close", () => {
+        it("should call callback on message close", async () => {
             const onMessageClose = jest.fn();
-            const wrapper = renderMessages({
+            renderMessages({
                 messages: mockMessages,
                 onMessageClose,
             });
 
-            wrapper.find(".gd-message-dismiss").simulate("click");
-            expect(onMessageClose).toHaveBeenCalledWith(mockMessages[0].id);
+            await userEvent.click(screen.getByLabelText("dismiss"));
+
+            await waitFor(() => {
+                expect(onMessageClose).toBeCalledWith(expect.stringContaining(mockMessages[0].id));
+            });
         });
     });
 
-    it("Show More", () => {
+    it("Show More", async () => {
         const onMessageClose = jest.fn();
-        const wrapper = renderMessages({
+        renderMessages({
             messages: mockError,
             onMessageClose,
         });
-        const showMore = wrapper.find(".gd-message-text-showmorelink");
-        const errorDetail = wrapper.find(".gd-message-text-content").text();
 
-        expect(showMore.text()).toMatch("Show More");
-        expect(errorDetail).toMatch("");
-        showMore.simulate("click");
-        expect(showMore.text()).toMatch("Show Less");
-        expect(errorDetail).toMatch("test");
+        expect(screen.getByText("Show More")).toBeInTheDocument();
+        expect(screen.queryByText("Show Less")).not.toBeInTheDocument();
+        expect(screen.getByText(mockError[0].errorDetail)).toBeInTheDocument();
+
+        await userEvent.click(screen.getByText("Show More"));
+
+        expect(await screen.findByText("Show Less")).toBeInTheDocument();
+
+        await waitFor(() => {
+            expect(screen.queryByText("Show More")).not.toBeInTheDocument();
+        });
     });
 });

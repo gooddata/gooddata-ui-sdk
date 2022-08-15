@@ -1,7 +1,8 @@
 // (C) 2020-2022 GoodData Corporation
 import React from "react";
 import cx from "classnames";
-import { mount } from "enzyme";
+import { render, fireEvent, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
 import * as SyntaxHighlightingInput from "../SyntaxHighlightingInput";
 
@@ -18,7 +19,7 @@ const defaultProps: SyntaxHighlightingInput.ISyntaxHighlightingInputProps = {
 }));
 
 const renderComponent = (props?: Partial<SyntaxHighlightingInput.ISyntaxHighlightingInputProps>) => {
-    return mount(<SyntaxHighlightingInput.SyntaxHighlightingInput {...defaultProps} {...props} />);
+    return render(<SyntaxHighlightingInput.SyntaxHighlightingInput {...defaultProps} {...props} />);
 };
 
 const multiLineValue = "01234\n01234\n01234";
@@ -56,9 +57,9 @@ describe("SyntaxHighlightingInput", () => {
     });
 
     it("should render CodeMirrorInput component", () => {
-        const wrapper = renderComponent();
+        renderComponent();
 
-        expect(wrapper.find(".s-input-syntax-highlighting-input")).toHaveLength(1);
+        expect(screen.getByRole("textbox")).toBeInTheDocument();
     });
 
     it("should render correct value and classname", () => {
@@ -67,29 +68,32 @@ describe("SyntaxHighlightingInput", () => {
             value: "this is a text content",
             className: "this-is-a-classname",
         };
-        const wrapper = renderComponent(props);
-        const value = wrapper.find("textarea").text();
+        renderComponent(props);
 
-        expect(value).toEqual(props.value);
-        expect(wrapper.find(`textarea.${props.className}`)).toHaveLength(1);
+        expect(screen.getByText("this is a text content")).toBeInTheDocument();
+        expect(document.querySelector(`textarea.${props.className}`)).toBeInTheDocument();
     });
 
     it("should call onChangeHandler function on value change", async () => {
         const onChange = jest.fn();
         const newValue = "new text content";
-        const wrapper = renderComponent({ onChange });
+        renderComponent({ onChange });
 
-        wrapper.find("textarea").simulate("change", { target: { value: newValue } });
-        expect(onChange).toHaveBeenCalledTimes(1);
+        fireEvent.change(screen.getByRole("textbox"), { target: { value: newValue } });
+        await waitFor(() => {
+            expect(onChange).toBeCalledWith(expect.stringContaining(newValue));
+        });
     });
 
     describe("onCursor", () => {
-        it("should call onCursor function with expected parameters on cursor position change", () => {
+        it("should call onCursor function with expected parameters on cursor position change", async () => {
             const onCursor = jest.fn();
-            const wrapper = renderComponent({ onCursor, value: multiLineValue });
-            wrapper.find("textarea").simulate("change", { target: { value: multiLineValue } });
+            renderComponent({ onCursor, value: multiLineValue });
 
-            expect(onCursor).toHaveBeenCalledWith(8, 8);
+            await userEvent.type(screen.getByRole("textbox"), multiLineValue);
+            await waitFor(() => {
+                expect(onCursor).toHaveBeenCalledWith(8, 8);
+            });
         });
     });
 });

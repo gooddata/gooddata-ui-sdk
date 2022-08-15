@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 
@@ -30,7 +30,11 @@ export const Message: React.FC<IMessageProps> = ({
                 {children}
                 {onClose && (
                     <div className="gd-message-dismiss-container">
-                        <a className="gd-message-dismiss gd-icon-cross" onClick={onClose} />
+                        <a
+                            aria-label="dismiss"
+                            className="gd-message-dismiss gd-icon-cross"
+                            onClick={onClose}
+                        />
                     </div>
                 )}
             </div>

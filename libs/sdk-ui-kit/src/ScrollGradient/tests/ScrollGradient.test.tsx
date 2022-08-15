@@ -1,7 +1,6 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
-import { act } from "react-dom/test-utils";
-import { mount } from "enzyme";
+import { render, screen, fireEvent, act } from "@testing-library/react";
 
 import { ScrollGradient } from "../ScrollGradient";
 import { IScrollGradientProps } from "../typings";
@@ -11,14 +10,15 @@ import { useGradientColor } from "../hooks/useGradientColor";
 import { useContentHeight } from "../hooks/useContentHeight";
 
 function renderScrollGradient(height: number, options: Partial<IScrollGradientProps>) {
-    return mount(
+    return render(
         <div style={{ width: 200, maxHeight: 200, display: "flex" }}>
             <ScrollGradient {...options}>
-                <div style={{ width: "100%", height }} />
+                <div style={{ width: "100%", height }}>Scroll Gradient</div>
             </ScrollGradient>
         </div>,
     );
 }
+
 function renderRightInScrollable(): [() => ReturnType<typeof useRightInScrollable>, () => void] {
     let data: ReturnType<typeof useRightInScrollable>;
 
@@ -27,14 +27,15 @@ function renderRightInScrollable(): [() => ReturnType<typeof useRightInScrollabl
         return null;
     }
 
-    const wrapper = mount(
+    const { unmount } = render(
         <div>
             <HookComponent />
         </div>,
     );
 
-    return [() => data, () => wrapper.unmount()];
+    return [() => data, () => unmount()];
 }
+
 function renderScrollEvent(
     content: HTMLElement,
     size: number,
@@ -46,14 +47,15 @@ function renderScrollEvent(
         return null;
     }
 
-    const wrapper = mount(
+    const { unmount } = render(
         <div>
             <HookComponent />
         </div>,
     );
 
-    return [() => data, () => wrapper.unmount()];
+    return [() => data, () => unmount()];
 }
+
 function renderGradientColor(color: string): [() => ReturnType<typeof useGradientColor>, () => void] {
     let data: ReturnType<typeof useGradientColor>;
 
@@ -62,14 +64,15 @@ function renderGradientColor(color: string): [() => ReturnType<typeof useGradien
         return null;
     }
 
-    const wrapper = mount(
+    const { unmount } = render(
         <div>
             <HookComponent />
         </div>,
     );
 
-    return [() => data, () => wrapper.unmount()];
+    return [() => data, () => unmount()];
 }
+
 function renderContentHeight(element: HTMLElement): [() => ReturnType<typeof useContentHeight>, () => void] {
     let data: ReturnType<typeof useContentHeight>;
 
@@ -78,13 +81,13 @@ function renderContentHeight(element: HTMLElement): [() => ReturnType<typeof use
         return null;
     }
 
-    const wrapper = mount(
+    const { unmount } = render(
         <div>
             <HookComponent />
         </div>,
     );
 
-    return [() => data, () => wrapper.unmount()];
+    return [() => data, () => unmount()];
 }
 
 describe("ScrollGradient", () => {
@@ -99,31 +102,15 @@ describe("ScrollGradient", () => {
         });
 
         it("render component", () => {
-            const wrapper = renderScrollGradient(800, { onScroll });
-
-            const top = wrapper.find(".gd-gradient-top");
-            expect(top.length).toBe(1);
-            expect(top.prop("style")).not.toHaveProperty("right", 0);
-
-            const bottom = wrapper.find(".gd-gradient-bottom");
-            expect(bottom.length).toBe(1);
-            expect(bottom.prop("style")).not.toHaveProperty("right", 0);
-
-            const content = wrapper.find(".gd-gradient-content");
-            expect(content.length).toBe(1);
-
-            const wr = wrapper.find(".gd-gradient-wrapper");
-            expect(wr.length).toBe(1);
+            renderScrollGradient(800, { onScroll });
+            expect(screen.getByText("Scroll Gradient")).toBeInTheDocument();
+            expect(document.querySelector(".gd-gradient-wrapper")).toBeInTheDocument();
         });
 
-        it("propagate scroll handler", () => {
-            const wrapper = renderScrollGradient(800, { onScroll });
-
+        it("propagate scroll handler", async () => {
+            renderScrollGradient(800, { onScroll });
             expect(onScroll).not.toHaveBeenCalled();
-
-            const content = wrapper.find(".gd-gradient-content");
-            content.simulate("scroll");
-
+            fireEvent.scroll(document.querySelector(".gd-gradient-content"), { target: { scrollY: 100 } });
             expect(onScroll).toHaveBeenCalled();
         });
 

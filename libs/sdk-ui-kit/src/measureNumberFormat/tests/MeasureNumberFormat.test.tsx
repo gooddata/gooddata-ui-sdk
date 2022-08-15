@@ -1,12 +1,13 @@
 // (C) 2020-2022 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import noop from "lodash/noop";
 import cx from "classnames";
 import { ISeparators, withIntl } from "@gooddata/sdk-ui";
 
 import { MeasureNumberFormat, IMeasureNumberFormatOwnProps } from "../MeasureNumberFormat";
-import MeasureNumberFormatFragment from "./fragments/MeasureNumberFormatFragment";
+
 import { IFormatTemplate, IToggleButtonProps } from "../typings";
 
 // CodeMirror window method requirements
@@ -60,73 +61,148 @@ const defaultProps: IMeasureNumberFormatOwnProps = {
 
 const renderComponent = (props?: Partial<IMeasureNumberFormatOwnProps>) => {
     const Wrapped = withIntl(MeasureNumberFormat);
-    return new MeasureNumberFormatFragment(mount(<Wrapped {...defaultProps} {...props} />), ".toggle-button");
+    return render(<Wrapped {...defaultProps} {...props} />);
 };
 
 describe("Measure number format", () => {
+    const getCodeMirrorInstance = (): CodeMirror.Editor => {
+        return (document.querySelector(".CodeMirror") as any).CodeMirror;
+    };
+
+    const setCustomFormatValue = (value: string) => {
+        const codeMirrorEditor = getCodeMirrorInstance();
+        codeMirrorEditor.setValue(value);
+    };
+
+    const togglePresetsDropdown = async () => {
+        await userEvent.click(screen.getByText("Format: Custom"));
+    };
+
+    const selectPreset = async (value: string) => {
+        await userEvent.click(screen.getByText(value));
+    };
+
+    const expectOpenPresets = () => {
+        expect(screen.getByText("Currency")).toBeInTheDocument();
+    };
+
+    const expectClosePresets = () => {
+        expect(screen.queryByText("Currency")).not.toBeInTheDocument();
+    };
+
+    const clickOnCancel = async () => {
+        await userEvent.click(screen.getByText("Cancel"));
+    };
+
+    const clickOnApply = async () => {
+        await userEvent.click(screen.getByText("Apply"));
+    };
+
     it("should render given button component", () => {
-        const component = renderComponent();
-
-        expect(component.getPresetsDropdownToggleButton().exists()).toEqual(true);
+        renderComponent();
+        expect(screen.getByText("Format: Custom")).toBeInTheDocument();
     });
 
-    it("should toggle presets dropdown on toggle button click", () => {
-        const component = renderComponent();
-        const toggleButton = component.getPresetsDropdownToggleButton();
+    it("should toggle presets dropdown on toggle button click", async () => {
+        renderComponent();
 
-        toggleButton.simulate("click");
-        expect(component.getPresetsDropdownToggleButton().hasClass("opened")).toEqual(true);
-        expect(component.isPresetsDropdownOpen()).toEqual(true);
+        await togglePresetsDropdown();
+        expectOpenPresets();
 
-        toggleButton.simulate("click");
-        expect(component.getPresetsDropdownToggleButton().hasClass("closed")).toEqual(true);
-        expect(component.isPresetsDropdownOpen()).toEqual(false);
+        await togglePresetsDropdown();
+        expectClosePresets();
     });
 
-    it("should call 'setFormat' callback with format when preset is selected", () => {
+    it("should call 'setFormat' callback with format when preset is selected", async () => {
         const setFormat = jest.fn();
-        const component = renderComponent({ setFormat });
+        renderComponent({ setFormat });
 
-        component.openPresetsDropdown().selectPreset("Currency");
-        expect(component.isPresetsDropdownOpen()).toEqual(false);
-        expect(setFormat).toHaveBeenCalledWith(presets[0].format);
+        await togglePresetsDropdown();
+        await selectPreset("Currency");
+
+        expect(screen.getByText("Format: Currency")).toBeInTheDocument();
+
+        await waitFor(() => {
+            expect(setFormat).toBeCalledWith(expect.stringContaining("€ #,##0.0"));
+        });
     });
 
-    describe("custom format dialog", () => {
-        it("should close the presets dropdown and open the dialog when custom preset is selected", () => {
+    describe("custom format", () => {
+        it("should close the presets dropdown and open the dialog when custom preset is selected", async () => {
             const setFormat = jest.fn();
-            const component = renderComponent({ setFormat });
+            renderComponent({ setFormat });
 
-            component.openPresetsDropdown().selectCustomFormat();
-            expect(component.isPresetsDropdownOpen()).toEqual(false);
-            expect(component.isCustomFormatDialogOpen()).toEqual(true);
+            await togglePresetsDropdown();
+            await selectPreset("Custom");
+
+            expect(screen.getByText("Custom format")).toBeInTheDocument();
         });
 
-        it("should close the dialog when cancel is clicked on", () => {
-            const component = renderComponent();
+        it("should close the dialog when cancel is clicked on", async () => {
+            renderComponent();
 
-            component.openPresetsDropdown().selectCustomFormat().clickCustomFormatCancel();
-            expect(component.isCustomFormatDialogOpen()).toEqual(false);
+            await togglePresetsDropdown();
+            await selectPreset("Custom");
+            await clickOnCancel();
+
+            expect(screen.queryByText("Custom format")).not.toBeInTheDocument();
         });
 
-        describe("custom format preview", () => {
-            it("should not display formatted number when no format is provided", () => {
-                const component = renderComponent();
+        it("apply button should be enabled once custom format is modified", async () => {
+            renderComponent();
 
-                component.openPresetsDropdown().selectCustomFormat();
-                expect(component.getPreviewFormattedNumber()).toEqual("");
+            await togglePresetsDropdown();
+            await selectPreset("Custom");
+
+            expect(screen.getByText("Custom format")).toBeInTheDocument();
+
+            setCustomFormatValue("test");
+
+            expect(screen.getByText("Apply").closest("button")).not.toHaveClass("disabled");
+        });
+
+        it("should call 'setFormat' callback with custom format when format is set and apply button clicked", async () => {
+            const setFormat = jest.fn();
+            renderComponent({ setFormat });
+
+            await togglePresetsDropdown();
+            await selectPreset("Custom");
+
+            setCustomFormatValue("test");
+
+            await clickOnApply();
+            await waitFor(() => {
+                expect(setFormat).toBeCalledWith(expect.stringContaining("test"));
             });
         });
+        it("should display formatted number", async () => {
+            renderComponent();
 
-        it("should render documentation link with given url", () => {
-            const component = renderComponent({ documentationLink: "https://www.gooddata.com" });
+            await togglePresetsDropdown();
+            await selectPreset("Custom");
+            setCustomFormatValue("#.##");
 
-            component.openPresetsDropdown().selectCustomFormat();
-            expect(component.getDocumentationLink().exists()).toEqual(true);
-            expect(component.getDocumentationLink().props().href).toEqual("https://www.gooddata.com");
+            expect(screen.getByText("-1234,57")).toBeInTheDocument();
+        });
+
+        it("should render documentation link with given url", async () => {
+            const documentationLink = "https://www.gooddata.com";
+            renderComponent({ documentationLink });
+
+            await togglePresetsDropdown();
+            await selectPreset("Custom");
+
+            expect(screen.getByLabelText("custom-format-documentation-link")).toHaveAttribute(
+                "href",
+                documentationLink,
+            );
         });
 
         describe("custom format templates", () => {
+            const openTemplatesDrodown = async () => {
+                await userEvent.click(screen.getByText("Templates"));
+            };
+
             const templates: IFormatTemplate[] = [
                 {
                     name: "Percentage",
@@ -140,55 +216,19 @@ describe("Measure number format", () => {
                 },
             ];
 
-            it("should not render templates button if no templates were provided", () => {
-                const component = renderComponent();
-
-                component.openPresetsDropdown().selectCustomFormat();
-                expect(component.getTemplatesDropdownToggleButton().exists()).toEqual(false);
+            it("should not render templates button if no templates were provided", async () => {
+                renderComponent();
+                expect(screen.queryByText("Templates")).not.toBeInTheDocument();
             });
 
-            it("should open templates dropdown containing given templates upon toggle button click", () => {
-                const component = renderComponent({ templates });
+            it("should open templates dropdown containing given templates upon toggle button click", async () => {
+                renderComponent({ templates });
+                await togglePresetsDropdown();
+                await selectPreset("Custom");
+                await openTemplatesDrodown();
 
-                component.openPresetsDropdown().selectCustomFormat();
-
-                const toggleButton = component.getTemplatesDropdownToggleButton();
-
-                toggleButton.simulate("click");
-                expect(component.isTemplatesDropdownOpen()).toEqual(true);
-                expect(component.getTemplateByName("Percentage").exists()).toEqual(true);
-                expect(component.getTemplateByName("Currency").exists()).toEqual(true);
-            });
-
-            it("should display template preview when hover over help icon", () => {
-                const templateName = "Currency";
-                const component = renderComponent({ templates });
-
-                const templateHelpIcon = component
-                    .openPresetsDropdown()
-                    .selectCustomFormat()
-                    .openTemplatesDropdown()
-                    .getTemplateHelpIcon(templateName);
-
-                templateHelpIcon.simulate("mouseenter");
-                expect(component.isTemplatePreviewBubbleOpen(templateName)).toEqual(true);
-
-                const templatePreviewFormattedValues =
-                    component.getTemplatePreviewBubbleFormattedValues(templateName);
-                const expectedTemplatePreviewFormattedValues = [
-                    "€ -1 234 567,9",
-                    "€ -1 234,6",
-                    "€ -1,2",
-                    "€ 0,0",
-                    "€ 1,2",
-                    "€ 1 234,6",
-                    "€ 1 234 567,9",
-                ];
-
-                expect(expectedTemplatePreviewFormattedValues).toEqual(templatePreviewFormattedValues);
-
-                templateHelpIcon.simulate("mouseleave");
-                expect(component.isTemplatePreviewBubbleOpen(templateName)).toEqual(false);
+                expect(screen.getByText("Currency")).toBeInTheDocument();
+                expect(screen.getByText("Percentage")).toBeInTheDocument();
             });
         });
     });

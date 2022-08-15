@@ -1,9 +1,7 @@
 // (C) 2007-2022 GoodData Corporation
 import React, { Component, forwardRef, createRef } from "react";
-
-import { mount } from "enzyme";
 import ReactDOM, { unmountComponentAtNode } from "react-dom";
-import { Portal } from "react-portal";
+import { render, screen } from "@testing-library/react";
 
 import { Overlay } from "../Overlay";
 
@@ -88,29 +86,24 @@ describe("Overlay", () => {
 
     function renderOverlayComponent(props = {}) {
         const options = { className: "foo-bar", ...props };
-        return mount(<Overlay {...options} />);
-    }
-
-    function getOverlayComponent() {
-        return document.querySelectorAll(".foo-bar");
+        return render(<Overlay {...options}>Overlay</Overlay>);
     }
 
     it("should render overlay with custom className", () => {
         renderOverlayComponent();
-        const overlay = getOverlayComponent();
-        expect(overlay.length).toEqual(1);
+        expect(screen.getByText("Overlay")).toBeInTheDocument();
+        expect(document.querySelector(".foo-bar")).toBeInTheDocument();
     });
 
     it("should render overlay with custom containerClassName", () => {
         const containerClassName = "custom-container-className";
         renderOverlayComponent({ containerClassName });
-        expect(document.querySelectorAll(`.${containerClassName}`).length).toEqual(1);
+        expect(document.querySelector(`.${containerClassName}`)).toBeInTheDocument();
     });
 
     it("should render overlay with custom zIndex", () => {
         renderOverlayComponent({ zIndex: 5001 });
-        const overlay = getOverlayComponent()[0];
-        expect(overlay).toHaveStyle({ zIndex: 5001 });
+        expect(screen.getByText("Overlay")).toHaveStyle({ zIndex: 5001 });
     });
 
     describe("Align to fixed node", () => {
@@ -329,26 +322,14 @@ describe("Overlay", () => {
 
     describe("Portal DOM node", () => {
         it("should create node when Overlay constructed", () => {
-            const wrapper = renderOverlayComponent();
-            const portal: any = wrapper.find(Portal);
-            const portalNode = portal.instance().props.node;
-
-            expect(document.body.contains(portalNode)).toEqual(true);
+            renderOverlayComponent();
+            expect(screen.getByLabelText("portal-scroll-anchor")).toBeInTheDocument();
         });
 
         it("should remove node asynchronously after component unmount", () => {
-            jest.useFakeTimers();
-
-            const wrapper = renderOverlayComponent();
-            const portal: any = wrapper.find(Portal);
-            const portalNode = portal.instance().props.node;
-
-            wrapper.unmount();
-            jest.runAllTimers();
-
-            expect(document.body.contains(portalNode)).toEqual(false);
-
-            jest.useRealTimers();
+            const { unmount } = renderOverlayComponent();
+            unmount();
+            expect(screen.queryByLabelText("portal-scroll-anchor")).not.toBeInTheDocument();
         });
     });
 });

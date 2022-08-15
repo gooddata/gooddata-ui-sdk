@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React, { Component } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import cx from "classnames";
@@ -202,7 +202,7 @@ export class LegacyMultiSelectList<T> extends Component<
             const labelClasses = cx("input-checkbox-label", "s-select-all-checkbox");
 
             const checkbox = (
-                <label className={labelClasses}>
+                <label role="select-all-checkbox" className={labelClasses}>
                     <input
                         readOnly
                         type="checkbox"
@@ -290,7 +290,7 @@ export class LegacyMultiSelectList<T> extends Component<
             ));
 
         return (
-            <div className="gd-list-status-bar s-list-status-bar">
+            <div role="list-status-bar" className="gd-list-status-bar s-list-status-bar">
                 {attributeName}
                 {is}
                 {allOrNone}
