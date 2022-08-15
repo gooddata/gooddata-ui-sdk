@@ -145,7 +145,6 @@ export function List<T>(props: IListProps<T>): JSX.Element {
                 headerHeight={0}
                 rowHeight={itemHeight}
                 rowHeightGetter={itemHeightGetter}
-                bufferRowCount={0}
                 rowsCount={Math.min(itemsCount, MAX_NUMBER_OF_ROWS)}
                 onScrollStart={handleScrollStart}
                 onScrollEnd={handleScrollEnd}

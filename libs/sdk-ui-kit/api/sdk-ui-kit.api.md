@@ -2481,6 +2481,74 @@ export interface IMessagesState {
 }
 
 // @internal (undocumented)
+export interface IMultiSelectListItemProps {
+    // (undocumented)
+    isSelected?: boolean;
+    // (undocumented)
+    onClick?: () => void;
+    // (undocumented)
+    onMouseOut?: () => void;
+    // (undocumented)
+    onMouseOver?: () => void;
+    // (undocumented)
+    onOnly?: () => void;
+    // (undocumented)
+    title?: string;
+}
+
+// @internal (undocumented)
+export interface IMultiSelectListProps<T> {
+    // (undocumented)
+    filteredItemsCount?: number;
+    // (undocumented)
+    height?: number;
+    // (undocumented)
+    intl: IntlShape;
+    // (undocumented)
+    isInverted?: boolean;
+    // (undocumented)
+    isMobile?: boolean;
+    // (undocumented)
+    isSearching?: boolean;
+    // (undocumented)
+    isSelected?: (item: T) => boolean;
+    // (undocumented)
+    itemHeight?: number;
+    // (undocumented)
+    items?: T[];
+    // (undocumented)
+    itemsCount?: number;
+    // (undocumented)
+    listClassNames?: string;
+    // (undocumented)
+    maxSelectionSize?: number;
+    // (undocumented)
+    onScrollEnd?: (visibleRowsStartIndex: number, visibleRowsEndIndex: number) => void;
+    // (undocumented)
+    onSelectAll?: () => void;
+    // (undocumented)
+    onSelectNone?: () => void;
+    // (undocumented)
+    renderItem: (props: IMultiSelectRenderItemProps<T>) => JSX.Element;
+    // (undocumented)
+    selectAllCheckbox?: boolean;
+    // (undocumented)
+    selectedItems?: T[];
+    // (undocumented)
+    tagName?: string;
+    // (undocumented)
+    width?: number;
+}
+
+// @internal (undocumented)
+export interface IMultiSelectRenderItemProps<T> {
+    // (undocumented)
+    isSelected: boolean;
+    // (undocumented)
+    item: T;
+}
+
+// @internal (undocumented)
 export const INFO_TEXT_COLOR = "#909293";
 
 // @internal (undocumented)
@@ -3496,6 +3564,17 @@ export const Messages: React_2.FC<IMessagesProps>;
 
 // @internal (undocumented)
 export type MessageType = "success" | "progress" | "error" | "warning";
+
+// @internal (undocumented)
+export const MultiSelectList: React_2.FC<WithIntlProps<IMultiSelectListProps<unknown>>> & {
+    WrappedComponent: React_2.ComponentType<IMultiSelectListProps<unknown>>;
+};
+
+// @internal (undocumented)
+export class MultiSelectListItem extends PureComponent<IMultiSelectListItemProps> {
+    // (undocumented)
+    render(): JSX.Element;
+}
 
 // @internal (undocumented)
 export const NoData: React_2.FC<INoDataProps>;
