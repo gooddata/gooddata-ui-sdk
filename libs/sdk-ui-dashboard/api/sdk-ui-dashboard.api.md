@@ -2631,9 +2631,7 @@ export type FiltersInfo = {
 export type FluidLayoutCustomizationFn = (layout: IDashboardLayout<ExtendedDashboardWidget>, customizer: IFluidLayoutCustomizer) => void;
 
 // @internal (undocumented)
-export function getDefaultInsightEditMenuItems(intl: IntlShape, config: {
-    widget: IInsightWidget;
-}): IInsightMenuItem[];
+export function getDefaultInsightEditMenuItems(intl: IntlShape): IInsightMenuItem[];
 
 // @internal (undocumented)
 export function getDefaultInsightMenuItems(intl: IntlShape, config: {
@@ -3452,7 +3450,9 @@ export interface IInsightMenuSubmenu {
     // (undocumented)
     itemName: string;
     // (undocumented)
-    renderSubmenu: () => JSX.Element;
+    SubmenuComponent: ComponentType<{
+        widget: IInsightWidget;
+    }>;
     tooltip?: string;
     // (undocumented)
     type: "submenu";
