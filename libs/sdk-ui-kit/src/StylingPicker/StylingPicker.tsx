@@ -54,13 +54,20 @@ const StylingPickerCore = <T extends StylingPickerItemContent>(
         onItemDelete,
         className,
     } = props;
+    const isMobileDevice = useMediaQuery("mobileDevice");
+
     const initiallySelectedItemRef = selectedItemRef || null;
     const [currentItemRef, setCurrentItemRef] = useState<ObjRef>(initiallySelectedItemRef);
-    const isMobileDevice = useMediaQuery("mobileDevice");
 
     useEffect(() => {
         setCurrentItemRef(selectedItemRef);
     }, [selectedItemRef]);
+
+    useEffect(() => {
+        if (!customItems.find((ci) => areObjRefsEqual(ci.ref, currentItemRef))) {
+            setCurrentItemRef(initiallySelectedItemRef);
+        }
+    }, [currentItemRef, customItems, customItems.length, initiallySelectedItemRef]);
 
     const onItemClick = useCallback((ref: ObjRef) => {
         setCurrentItemRef(ref);
