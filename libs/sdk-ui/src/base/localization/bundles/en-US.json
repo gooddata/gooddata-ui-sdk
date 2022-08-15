@@ -1419,6 +1419,11 @@
         "comment": "Tooltip text of button for deleting filter",
         "limit": 0
     },
+    "attributesDropdown.display_as": {
+        "value": "Display as: {title}",
+        "comment": "Label shown on dropdown button that changes form of the attribute used in insight. For example 'Display as: Shortened name'",
+        "limit": 0
+    },
     "shareDialog.share.grantee.title": {
         "value": "Share with users and groups",
         "comment": "Title of dialog used for sharing of private dashboard with other users or user groups.",

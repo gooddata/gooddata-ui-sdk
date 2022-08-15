@@ -18,6 +18,7 @@ import { IAbsoluteDateFilterForm } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilterPreset } from '@gooddata/sdk-model';
 import { IAllTimeDateFilterOption } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
+import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeElement } from '@gooddata/sdk-model';
 import { IAttributeFilter } from '@gooddata/sdk-model';
 import { IAttributeMetadataObject } from '@gooddata/sdk-model';
@@ -1101,6 +1102,8 @@ export const useAttributeFilterController: (props: IAttributeFilterCoreProps) =>
     searchString: string;
     isFilteredByParentFilters: boolean;
     parentFilterAttributes: IAttributeMetadataObject[];
+    displayForms: IAttributeDisplayFormMetadataObject[];
+    currentDisplayFormRef: ObjRef;
 };
 
 // @alpha (undocumented)
