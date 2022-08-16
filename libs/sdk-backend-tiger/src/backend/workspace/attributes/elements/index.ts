@@ -117,12 +117,11 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
                       },
                   };
         } else if (uris) {
+            // uris on tiger just use requested label (TNT-990)
             return {
                 exactFilter: uris,
-                // filtering by uris on tiger forces filtering by primary label value
-                // this is way how we load non-primary label by primary label values list in uris option (related to NAS-137)
                 filterBy: {
-                    labelType: FilterByLabelTypeEnum.PRIMARY,
+                    labelType: FilterByLabelTypeEnum.REQUESTED,
                 },
             };
         }
