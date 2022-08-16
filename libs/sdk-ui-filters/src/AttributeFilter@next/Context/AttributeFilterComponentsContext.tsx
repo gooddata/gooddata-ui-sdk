@@ -1,91 +1,50 @@
 // (C) 2022 GoodData Corporation
 import React, { createContext, useContext } from "react";
 import { ThrowMissingComponentError } from "../utils";
-import {
-    IAttributeFilterDropdownBodyProps,
-    IAttributeFilterDropdownContentProps,
-    IAttributeFilterDropdownActionsProps,
-    IAttributeFilterErrorProps,
-    IAttributeFilterElementsSelectItemProps,
-    IAttributeFilterDropdownButtonProps,
-    IAttributeFilterElementsSelectNoMatchingDataProps,
-    IAttributeFilterElementsSelectParentItemsFilteredProps,
-    IAttributeFilterElementsSelectProps,
-    IAttributeFilterElementsSelectLoadingProps,
-} from "../Components/types";
+import { IAttributeFilterCustomComponentProps } from "../types";
 
-/**
- * @internal
- */
-export interface IAtributeFilterComponentsContext {
-    AttributeFilterLoading: React.ComponentType;
-    AttributeFilterError: React.ComponentType<IAttributeFilterErrorProps>;
-    AttributeFilterDropdownButton: React.ComponentType<IAttributeFilterDropdownButtonProps>;
-    AttributeFilterDropdownBody: React.ComponentType<IAttributeFilterDropdownBodyProps>;
-    AttributeFilterDropdownActions: React.ComponentType<IAttributeFilterDropdownActionsProps>;
-    AttributeFilterDropdownContent: React.ComponentType<IAttributeFilterDropdownContentProps>;
-    AttributeFilterElementsSelect: React.ComponentType<IAttributeFilterElementsSelectProps>;
-    AttributeFilterElementsSelectItem: React.ComponentType<IAttributeFilterElementsSelectItemProps>;
-    AttributeFilterElementsSelectLoading: React.ComponentType<IAttributeFilterElementsSelectLoadingProps>;
-    AttributeFilterElementsSelectError: React.ComponentType;
-    AttributeFilterElementsSelectNoData: React.ComponentType;
-    AttributeFilterElementsSelectNoMatchingData: React.ComponentType<IAttributeFilterElementsSelectNoMatchingDataProps>;
-    AttributeFilterElementsSelectParentItemsFiltered: React.ComponentType<IAttributeFilterElementsSelectParentItemsFilteredProps>;
-}
-
-const AttributeFilterComponentsContext = createContext<IAtributeFilterComponentsContext>({
-    AttributeFilterError: ThrowMissingComponentError(
-        "AttributeFilterError",
+const AttributeFilterComponentsContext = createContext<IAttributeFilterCustomComponentProps>({
+    ErrorComponent: ThrowMissingComponentError("ErrorComponent", "AttributeFilterComponentsContext"),
+    LoadingComponent: ThrowMissingComponentError("LoadingComponent", "AttributeFilterComponentsContext"),
+    DropdownButtonComponent: ThrowMissingComponentError(
+        "DropdownButtonComponent",
         "AttributeFilterComponentsContext",
     ),
-    AttributeFilterLoading: ThrowMissingComponentError(
-        "AttributeFilterLoading",
+    DropdownBodyComponent: ThrowMissingComponentError(
+        "DropdownBodyComponent",
         "AttributeFilterComponentsContext",
     ),
-    AttributeFilterDropdownButton: ThrowMissingComponentError(
-        "AttributeFilterDropdownButton",
+    DropdownActionsComponent: ThrowMissingComponentError(
+        "DropdownActionsComponent",
         "AttributeFilterComponentsContext",
     ),
-    AttributeFilterDropdownBody: ThrowMissingComponentError(
-        "AttributeFilterDropdownBody",
+    ElementsSearchBarComponent: ThrowMissingComponentError(
+        "ElementsSearchBarComponent",
         "AttributeFilterComponentsContext",
     ),
-    AttributeFilterDropdownActions: ThrowMissingComponentError(
-        "AttributeFilterDropdownActions",
+    ElementsSelectComponent: ThrowMissingComponentError(
+        "ElementsSelectComponent",
         "AttributeFilterComponentsContext",
     ),
-    AttributeFilterDropdownContent: ThrowMissingComponentError(
-        "AttributeFilterDropdownContent",
+    ElementsSelectLoadingComponent: ThrowMissingComponentError(
+        "ElementsSelectLoadingComponent",
         "AttributeFilterComponentsContext",
     ),
-    AttributeFilterElementsSelect: ThrowMissingComponentError(
-        "AttributeFilterElementsSelect",
+    ElementsSelectItemComponent: ThrowMissingComponentError(
+        "ElementsSelectItemComponent",
         "AttributeFilterComponentsContext",
     ),
-    AttributeFilterElementsSelectLoading: ThrowMissingComponentError(
-        "AttributeFilterElementsSelectLoading",
+    ElementsSelectErrorComponent: ThrowMissingComponentError(
+        "ElementsSelectErrorComponent",
         "AttributeFilterComponentsContext",
     ),
-    AttributeFilterElementsSelectItem: ThrowMissingComponentError(
-        "AttributeFilterElementsSelectItem",
+    EmptyResultComponent: ThrowMissingComponentError(
+        "EmptyResultComponent",
         "AttributeFilterComponentsContext",
     ),
-    AttributeFilterElementsSelectError: ThrowMissingComponentError(
-        "AttributeFilterElementsSelectError",
-        "AttributeFilterComponentsContext",
-    ),
-    AttributeFilterElementsSelectNoData: ThrowMissingComponentError(
-        "AttributeFilterElementsSelectNoData",
-        "AttributeFilterComponentsContext",
-    ),
-    AttributeFilterElementsSelectNoMatchingData: ThrowMissingComponentError(
-        "AttributeFilterElementsSelectNoMatchingData",
-        "AttributeFilterComponentsContext",
-    ),
-    AttributeFilterElementsSelectParentItemsFiltered: ThrowMissingComponentError(
-        "AttributeFilterElementsSelectParentItemsFiltered",
-        "AttributeFilterComponentsContext",
-    ),
+    StatusBarComponent: ThrowMissingComponentError("StatusBarComponent", "AttributeFilterComponentsContext"),
+    FilterError: ThrowMissingComponentError("FilterError", "AttributeFilterComponentsContext"),
+    FilterLoading: ThrowMissingComponentError("FilterLoading", "AttributeFilterComponentsContext"),
 });
 
 AttributeFilterComponentsContext.displayName = "AttributeFilterComponentsContext";
@@ -93,14 +52,14 @@ AttributeFilterComponentsContext.displayName = "AttributeFilterComponentsContext
 /**
  * @internal
  */
-export const useAttributeFilterComponentsContext = (): IAtributeFilterComponentsContext => {
+export const useAttributeFilterComponentsContext = (): IAttributeFilterCustomComponentProps => {
     return useContext(AttributeFilterComponentsContext);
 };
 
 /**
  * @internal
  */
-export const AttributeFilterComponentsProvider: React.FC<IAtributeFilterComponentsContext> = (props) => {
+export const AttributeFilterComponentsProvider: React.FC<IAttributeFilterCustomComponentProps> = (props) => {
     const { children, ...components } = props;
 
     return (

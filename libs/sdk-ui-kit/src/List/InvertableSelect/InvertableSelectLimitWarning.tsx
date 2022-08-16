@@ -3,11 +3,17 @@ import React from "react";
 import { Message } from "../../Messages";
 import { FormattedMessage } from "react-intl";
 
-interface IInvertableSelectLimitWarningProps {
+/**
+ * @internal
+ */
+export interface IInvertableSelectLimitWarningProps {
     limit: number;
     selectedItemsCount: number;
 }
 
+/**
+ * @internal
+ */
 export function InvertableSelectLimitWarning(props: IInvertableSelectLimitWarningProps) {
     const { limit, selectedItemsCount } = props;
 

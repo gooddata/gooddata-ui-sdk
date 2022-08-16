@@ -2,8 +2,17 @@
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-export const AttributeFilterElementsSelectError: React.VFC = () => (
-    <div className="gd-message error">
+/**
+ * @alpha
+ */
+export interface IAttributeFilterElementsSelectErrorProps {
+    height: number;
+}
+
+export const AttributeFilterElementsSelectError: React.VFC = ({
+    height,
+}: IAttributeFilterElementsSelectErrorProps) => (
+    <div className="gd-message error" style={{ height }}>
         <FormattedMessage id="gs.list.error" />
     </div>
 );

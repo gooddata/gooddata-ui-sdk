@@ -5,13 +5,13 @@ import { useAttributeFilterComponentsContext } from "../Context/AttributeFilterC
 import { useAttributeFilterContext } from "../Context/AttributeFilterContext";
 
 export const AttributeFilterRenderer: React.VFC = () => {
-    const { AttributeFilterLoading, AttributeFilterError } = useAttributeFilterComponentsContext();
+    const { LoadingComponent, ErrorComponent } = useAttributeFilterComponentsContext();
     const { isInitializing, initError } = useAttributeFilterContext();
 
     if (isInitializing) {
-        return <AttributeFilterLoading />;
+        return <LoadingComponent />;
     } else if (initError) {
-        return <AttributeFilterError message={initError.message} />;
+        return <ErrorComponent message={initError.message} />;
     } else {
         return <AttributeFilterDropdown />;
     }

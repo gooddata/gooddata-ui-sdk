@@ -3,13 +3,14 @@ import React from "react";
 
 import { FilterStories } from "../../../../_infra/storyGroups";
 import { storiesOf } from "../../../../_infra/storyRepository";
-
-import { IAttributeElement } from "@gooddata/sdk-model";
-import { action } from "@storybook/addon-actions";
-
-import { AttributeFilterElementsSelectItem } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Components/ElementsSelect/AttributeFilterElementsSelectItem";
 import { wrapWithTheme } from "../../../themeWrapper";
-import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
+
+import { action } from "@storybook/addon-actions";
+import { IntlWrapper } from "@gooddata/sdk-ui";
+import { IAttributeElement } from "@gooddata/sdk-model";
+import { AttributeFilterElementsSelectItem } from "@gooddata/sdk-ui-filters/dist/internal";
+
+import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 
 const item: IAttributeElement = {
     title: "Item title",
@@ -23,10 +24,10 @@ const longTitleItem: IAttributeElement = {
 
 const AttributeFilterElementsSelectItemExamples = (): JSX.Element => {
     return (
-        <InternalIntlWrapper>
+        <IntlWrapper>
             <div style={{ width: 300 }}>
                 <div className="library-component-light screenshot-target">
-                    <h4>AttributeFilterItem unselected</h4>
+                    <h4>AttributeFilterElementsSelectItem unselected</h4>
                     <AttributeFilterElementsSelectItem
                         item={item}
                         isSelected={false}
@@ -34,7 +35,7 @@ const AttributeFilterElementsSelectItemExamples = (): JSX.Element => {
                         onDeselect={action("onDeselect")}
                         onSelectOnly={action("onSelectOnly")}
                     />
-                    <h4>AttributeFilterItem selected</h4>
+                    <h4>AttributeFilterElementsSelectItem selected</h4>
                     <AttributeFilterElementsSelectItem
                         item={item}
                         isSelected={true}
@@ -42,7 +43,7 @@ const AttributeFilterElementsSelectItemExamples = (): JSX.Element => {
                         onDeselect={action("onDeselect")}
                         onSelectOnly={action("onSelectOnly")}
                     />
-                    <h4>AttributeFilterItem long title </h4>
+                    <h4>AttributeFilterElementsSelectItem long title </h4>
                     <AttributeFilterElementsSelectItem
                         item={longTitleItem}
                         isSelected={false}
@@ -52,7 +53,7 @@ const AttributeFilterElementsSelectItemExamples = (): JSX.Element => {
                     />
                 </div>
             </div>
-        </InternalIntlWrapper>
+        </IntlWrapper>
     );
 };
 

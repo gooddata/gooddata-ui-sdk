@@ -7,7 +7,7 @@ import { Input } from "../../Form";
 /**
  * @internal
  */
-export interface IInvertableSelectSearchProps {
+export interface IInvertableSelectSearchBarProps {
     searchString?: string;
     searchPlaceholder?: string;
     onSearch: (searchString: string) => void;
@@ -16,7 +16,7 @@ export interface IInvertableSelectSearchProps {
 /**
  * @internal
  */
-export function InvertableSelectSearch(props: IInvertableSelectSearchProps) {
+export function InvertableSelectSearchBar(props: IInvertableSelectSearchBarProps) {
     const { searchString, onSearch, searchPlaceholder } = props;
     const intl = useIntl();
 

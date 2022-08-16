@@ -2,6 +2,9 @@
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
+/**
+ * @internal
+ */
 export function InvertableSelectNoResultsMatch() {
     return (
         <div className="gd-list-noResults">

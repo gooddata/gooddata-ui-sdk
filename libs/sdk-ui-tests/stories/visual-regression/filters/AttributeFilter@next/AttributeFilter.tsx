@@ -1,16 +1,19 @@
 // (C) 2007-2019 GoodData Corporation
-import { AttributeFilter } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/AttributeFilter";
 import React from "react";
-import { storiesOf } from "../../../_infra/storyRepository";
-import { action } from "@storybook/addon-actions";
-// import { LongPostInteractionTimeout } from "../../../_infra/backstopWrapper";
-import { FilterStories } from "../../../_infra/storyGroups";
 
-import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
-import { ReferenceMd } from "@gooddata/reference-workspace";
-import { newNegativeAttributeFilter, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+import { storiesOf } from "../../../_infra/storyRepository";
+import { FilterStories } from "../../../_infra/storyGroups";
 import { ReferenceWorkspaceId, StorybookBackend } from "../../../_infra/backend";
 import { wrapWithTheme } from "../../themeWrapper";
+// import { LongPostInteractionTimeout } from "../../../_infra/backstopWrapper";
+import { ElementUris } from "./fixtures";
+
+import { action } from "@storybook/addon-actions";
+import { AttributeFilterV2 } from "@gooddata/sdk-ui-filters";
+import { ReferenceMd } from "@gooddata/reference-workspace";
+import { newNegativeAttributeFilter, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+
+import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 
 const wrapperStyle = { width: 400, height: 600, padding: "1em 1em" };
 const backend = StorybookBackend();
@@ -28,7 +31,7 @@ storiesOf(`${FilterStories}@next/AttributeFilter`)
         () => {
             return (
                 <div style={wrapperStyle} className="screenshot-target">
-                    <AttributeFilter
+                    <AttributeFilterV2
                         backend={backend}
                         workspace={ReferenceWorkspaceId}
                         filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [])}
@@ -61,7 +64,7 @@ storiesOf(`${FilterStories}@next/AttributeFilter`)
                             width: 160,
                         }}
                     >
-                        <AttributeFilter
+                        <AttributeFilterV2
                             backend={backend}
                             workspace={ReferenceWorkspaceId}
                             filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [])}
@@ -73,22 +76,22 @@ storiesOf(`${FilterStories}@next/AttributeFilter`)
             );
         },
         /* {
-            screenshots: {
-                closed: {},
-                opened: { clickSelector: ".s-product", postInteractionWait: LongPostInteractionTimeout },
-                "select-all": {
-                    clickSelectors: [".s-product", ".s-select_all"],
-                    postInteractionWait: LongPostInteractionTimeout,
-                },
+        screenshots: {
+            closed: {},
+            opened: { clickSelector: ".s-product", postInteractionWait: LongPostInteractionTimeout },
+            "select-all": {
+                clickSelectors: [".s-product", ".s-select_all"],
+                postInteractionWait: LongPostInteractionTimeout,
             },
-        },*/
+        },
+    },*/
     )
     .add(
         "empty default selection - localized",
         () => {
             return (
                 <div style={wrapperStyle} className="screenshot-target">
-                    <AttributeFilter
+                    <AttributeFilterV2
                         backend={backend}
                         workspace={ReferenceWorkspaceId}
                         locale="de-DE"
@@ -114,12 +117,12 @@ storiesOf(`${FilterStories}@next/AttributeFilter`)
         () => {
             return (
                 <div style={wrapperStyle} className="screenshot-target">
-                    <AttributeFilter
+                    <AttributeFilterV2
                         backend={backend}
                         workspace={ReferenceWorkspaceId}
                         filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [
-                            "WonderKid",
-                            "Explorer",
+                            ElementUris.WonderKid,
+                            ElementUris.Explorer,
                         ])}
                         onApply={action("on-apply")}
                     />
@@ -140,19 +143,18 @@ storiesOf(`${FilterStories}@next/AttributeFilter`)
             },
         },*/
     )
-
     .add(
         "title with pre-selected elements - positive AttributeFilter",
         () => {
             return (
                 <div style={wrapperStyle} className="screenshot-target">
-                    <AttributeFilter
+                    <AttributeFilterV2
                         backend={backend}
                         workspace={ReferenceWorkspaceId}
                         filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [
-                            "WonderKid",
-                            "Explorer",
-                            "TouchAll",
+                            ElementUris.WonderKid,
+                            ElementUris.Explorer,
+                            ElementUris.TouchAll,
                         ])}
                         onApply={action("on-apply")}
                         titleWithSelection={true}
@@ -183,13 +185,13 @@ storiesOf(`${FilterStories}@next/AttributeFilter`)
         () => {
             return (
                 <div style={wrapperStyle} className="screenshot-target">
-                    <AttributeFilter
+                    <AttributeFilterV2
                         backend={backend}
                         workspace={ReferenceWorkspaceId}
                         filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [
-                            "WonderKid",
-                            "Explorer",
-                            "TouchAll",
+                            ElementUris.WonderKid,
+                            ElementUris.Explorer,
+                            ElementUris.TouchAll,
                         ])}
                         onApply={action("on-apply")}
                         titleWithSelection={true}
@@ -216,11 +218,75 @@ storiesOf(`${FilterStories}@next/AttributeFilter`)
         },*/
     )
     .add(
+        "all elements selected in negative selection",
+        () => {
+            return (
+                <div style={wrapperStyle} className="screenshot-target">
+                    <AttributeFilterV2
+                        backend={backend}
+                        workspace={ReferenceWorkspaceId}
+                        filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [
+                            ElementUris.CompuSci,
+                            ElementUris.Educationly,
+                            ElementUris.Explorer,
+                            ElementUris["Grammar Plus"],
+                            ElementUris.PhoenixSoft,
+                            ElementUris.TouchAll,
+                            ElementUris.WonderKid,
+                        ])}
+                        onApply={action("on-apply")}
+                    />
+                </div>
+            );
+        },
+        /* {
+            screenshots: {
+                opened: { clickSelector: ".s-product", postInteractionWait: LongPostInteractionTimeout },
+                "select-all": {
+                    clickSelectors: [".s-product", ".s-select_all"],
+                    postInteractionWait: LongPostInteractionTimeout,
+                },
+                clear: {
+                    clickSelectors: [".s-product", ".s-clear"],
+                    postInteractionWait: LongPostInteractionTimeout,
+                },
+            },
+        },*/
+    )
+    .add(
+        "attibute filter error",
+        () => {
+            return (
+                <div style={wrapperStyle} className="screenshot-target">
+                    <AttributeFilterV2
+                        backend={backend}
+                        workspace={ReferenceWorkspaceId}
+                        filter={newNegativeAttributeFilter("NON_EXISTING", [])}
+                        onApply={action("on-apply")}
+                    />
+                </div>
+            );
+        },
+        /* {
+            screenshots: {
+                opened: { clickSelector: ".s-product", postInteractionWait: LongPostInteractionTimeout },
+                "select-all": {
+                    clickSelectors: [".s-product", ".s-select_all"],
+                    postInteractionWait: LongPostInteractionTimeout,
+                },
+                clear: {
+                    clickSelectors: [".s-product", ".s-clear"],
+                    postInteractionWait: LongPostInteractionTimeout,
+                },
+            },
+        },*/
+    )
+    .add(
         "themed",
         () => {
             return wrapWithTheme(
                 <div style={wrapperStyle} className="screenshot-target">
-                    <AttributeFilter
+                    <AttributeFilterV2
                         backend={backend}
                         workspace={ReferenceWorkspaceId}
                         filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [])}

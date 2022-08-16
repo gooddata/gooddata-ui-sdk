@@ -3,7 +3,13 @@ import {
     ElementsQueryOptionsElementsSpecification,
     IElementsQueryAttributeFilter,
 } from "@gooddata/sdk-backend-spi";
-import { IAttributeElement, IMeasure, IRelativeDateFilter, SortDirection } from "@gooddata/sdk-model";
+import {
+    IAttributeElement,
+    IAttributeMetadataObject,
+    IMeasure,
+    IRelativeDateFilter,
+    SortDirection,
+} from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import {
     CallbackRegistration,
@@ -259,6 +265,14 @@ export interface IAttributeElementLoader {
      * Returns error, if it was thrown during the next elements page load, undefined otherwise.
      */
     getNextElementsPageError(): GoodDataSdkError | undefined;
+
+    /**
+     * Returns metadata of the attributes set by {@link IAttributeElementLoader.setLimitingAttributeFilters}.
+     *
+     * Note that these attributes will be available only after successful initialization,
+     * or after successful {@link IAttributeElementLoader.loadInitialElementsPage} load.
+     */
+    getLimitingAttributeFiltersAttributes(): IAttributeMetadataObject[];
 
     /**
      * Registers a callback that will be fired when the initial elements page load starts.

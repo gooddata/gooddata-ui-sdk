@@ -2,21 +2,24 @@
 import { useCallback, useEffect } from "react";
 import isEqual from "lodash/isEqual";
 import debounce from "lodash/debounce";
-import { IAttributeElement } from "@gooddata/sdk-model";
-import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { IAttributeElement, IAttributeFilter } from "@gooddata/sdk-model";
+import { useBackendStrict, useWorkspaceStrict, GoodDataSdkError } from "@gooddata/sdk-ui";
 
+import { IMultiSelectAttributeFilterHandler } from "../../AttributeFilterHandler";
+import { IAttributeFilterCoreProps, OnApplyCallbackType } from "../types";
 import { useResolveFilterInput } from "./useResolveFilterInput";
 import { useResolveParentFiltersInput } from "./useResolveParentFiltersInput";
 import { useAttributeFilterHandler } from "./useAttributeFilterHandler";
-import { IUseAttributeFilterControllerProps } from "./types";
 import { useAttributeFilterControllerData } from "./useAttributeFilterControllerData";
+import { PARENT_FILTERS_CORRELATION, RESET_CORRELATION, SEARCH_CORRELATION } from "./constants";
+import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 
 /**
  * Use this hook if you want to implement your custom attribute filter.
  *
  * @alpha
  */
-export const useAttributeFilterController = (props: IUseAttributeFilterControllerProps) => {
+export const useAttributeFilterController = (props: IAttributeFilterCoreProps) => {
     const {
         backend: backendInput,
         workspace: workspaceInput,
@@ -26,7 +29,8 @@ export const useAttributeFilterController = (props: IUseAttributeFilterControlle
         connectToPlaceholder,
         parentFilters,
         parentFilterOverAttribute,
-        onApply: onApplyInput,
+        onApply,
+        onError,
 
         hiddenElements,
         staticElements,
@@ -41,91 +45,146 @@ export const useAttributeFilterController = (props: IUseAttributeFilterControlle
         identifier,
     );
 
-    const { limitingAttributeFilters: limitingAttributeFiltersInput } = useResolveParentFiltersInput(
-        parentFilters,
-        parentFilterOverAttribute,
-    );
+    const limitingAttributeFilters = useResolveParentFiltersInput(parentFilters, parentFilterOverAttribute);
 
-    const attributeFilterHandler = useAttributeFilterHandler({
+    const handler = useAttributeFilterHandler({
         backend,
         filter,
         workspace,
         hiddenElements,
         staticElements,
     });
+    const attributeFilterControllerData = useAttributeFilterControllerData(handler, props);
+
+    useOnError(handler, { onError });
+    useInitOrReload(handler, { filter, limitingAttributeFilters });
+    const callbacks = useCallbacks(handler, { onApply, setConnectedPlaceholderValue });
+
+    return {
+        ...attributeFilterControllerData,
+        ...callbacks,
+    };
+};
+
+//
+
+function useOnError(
+    handler: IMultiSelectAttributeFilterHandler,
+    props: { onError?: (error: GoodDataSdkError) => void },
+) {
+    const { onError } = props;
 
     useEffect(() => {
-        attributeFilterHandler.setLimitingAttributeFilters(limitingAttributeFiltersInput);
-        attributeFilterHandler.init();
+        function handleError(payload: { error: GoodDataSdkError }) {
+            onError?.(payload.error);
+        }
+
+        const callbackUnsubscribeFunctions = [
+            handler.onInitError(handleError),
+            handler.onLoadAttributeError(handleError),
+            handler.onLoadInitialElementsPageError(handleError),
+            handler.onLoadNextElementsPageError(handleError),
+            handler.onLoadCustomElementsError(handleError),
+        ];
+
+        return () => {
+            callbackUnsubscribeFunctions.forEach((unsubscribe) => {
+                unsubscribe();
+            });
+        };
+    }, [handler, onError]);
+}
+
+//
+
+function useInitOrReload(
+    handler: IMultiSelectAttributeFilterHandler,
+    props: {
+        filter: IAttributeFilter;
+        limitingAttributeFilters?: IElementsQueryAttributeFilter[];
+    },
+) {
+    const { filter, limitingAttributeFilters } = props;
+    useEffect(() => {
+        if (limitingAttributeFilters.length > 0) {
+            handler.setLimitingAttributeFilters(limitingAttributeFilters);
+        }
+        handler.init();
+
         // Change of the parent filters is resolved in the useEffect bellow,
         // it does not need full reinit.
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [attributeFilterHandler]);
+    }, [handler]);
 
     useEffect(() => {
-        if (!isEqual(filter, attributeFilterHandler.getFilter())) {
-            attributeFilterHandler.init();
-        } else if (
-            !isEqual(limitingAttributeFiltersInput, attributeFilterHandler.getLimitingAttributeFilters())
-        ) {
-            attributeFilterHandler.setLimitingAttributeFilters(limitingAttributeFiltersInput);
-            attributeFilterHandler.loadInitialElementsPage();
+        if (!isEqual(filter, handler.getFilter())) {
+            handler.init();
+        } else if (!isEqual(limitingAttributeFilters, handler.getLimitingAttributeFilters())) {
+            handler.changeSelection({ keys: [], isInverted: true });
+            handler.setLimitingAttributeFilters(limitingAttributeFilters);
+            handler.loadInitialElementsPage(PARENT_FILTERS_CORRELATION);
         }
-    }, [filter, limitingAttributeFiltersInput, attributeFilterHandler]);
+    }, [filter, limitingAttributeFilters, handler]);
+}
 
+//
+
+function useCallbacks(
+    handler: IMultiSelectAttributeFilterHandler,
+    props: {
+        setConnectedPlaceholderValue: (filter: IAttributeFilter) => void;
+        onApply: OnApplyCallbackType;
+    },
+) {
+    const { onApply: onApplyInput, setConnectedPlaceholderValue } = props;
     const onSelect = useCallback(
         (selectedItems: IAttributeElement[], isInverted: boolean) => {
             const keys = selectedItems.map((item) => item.uri);
-            attributeFilterHandler.changeSelection({ keys, isInverted });
+            handler.changeSelection({ keys, isInverted });
         },
-        [attributeFilterHandler],
+        [handler],
     );
-
-    const attributeFilterControllerData = useAttributeFilterControllerData(attributeFilterHandler, props);
-    const { searchString } = attributeFilterControllerData;
 
     // Rule is not working with debounce
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const onSearch = useCallback(
         debounce((search: string) => {
-            if (searchString !== search) {
-                attributeFilterHandler.setSearch(search);
+            if (handler.getSearch() !== search) {
+                handler.setSearch(search);
             }
 
-            attributeFilterHandler.loadInitialElementsPage();
+            handler.loadInitialElementsPage(SEARCH_CORRELATION);
         }, 200),
-        [attributeFilterHandler, searchString],
+        [handler],
     );
 
     const onLoadNextElementsPage = useCallback(() => {
-        attributeFilterHandler.loadNextElementsPage();
-    }, [attributeFilterHandler]);
+        handler.loadNextElementsPage();
+    }, [handler]);
 
     const onReset = useCallback(() => {
-        attributeFilterHandler.revertSelection();
+        handler.revertSelection();
 
-        if (searchString.length > 0) {
-            attributeFilterHandler.setSearch("");
-            attributeFilterHandler.loadInitialElementsPage();
+        if (handler.getSearch().length > 0) {
+            handler.setSearch("");
+            handler.loadInitialElementsPage(RESET_CORRELATION);
         }
-    }, [attributeFilterHandler, searchString]);
+    }, [handler]);
 
     const onApply = useCallback(() => {
-        attributeFilterHandler.commitSelection();
-        const nextFilter = attributeFilterHandler.getFilter();
-        const isInverted = attributeFilterHandler.getCommittedSelection()?.isInverted;
+        handler.commitSelection();
+        const nextFilter = handler.getFilter();
+        const isInverted = handler.getCommittedSelection()?.isInverted;
 
         setConnectedPlaceholderValue(nextFilter);
         onApplyInput?.(nextFilter, isInverted);
-    }, [onApplyInput, setConnectedPlaceholderValue, attributeFilterHandler]);
+    }, [onApplyInput, setConnectedPlaceholderValue, handler]);
 
     return {
-        ...attributeFilterControllerData,
-
-        onLoadNextElementsPage,
-        onSelect,
-        onSearch,
-        onReset,
         onApply,
+        onLoadNextElementsPage,
+        onSearch,
+        onSelect,
+        onReset,
     };
-};
+}

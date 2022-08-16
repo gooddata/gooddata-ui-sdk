@@ -35,6 +35,7 @@ export interface AttributeFilterState {
         };
         lastLoadedOptions?: ILoadElementsOptions;
         currentOptions: ILoadElementsOptions;
+        limitingAttributeFiltersAttributes: IAttributeMetadataObject[];
     };
     selection: {
         commited: {
@@ -78,6 +79,7 @@ export const initialState: Omit<AttributeFilterState, "displayFormRef" | "elemen
         nextPageLoad: {
             status: "pending",
         },
+        limitingAttributeFiltersAttributes: [],
     },
     config: {},
     selection: {

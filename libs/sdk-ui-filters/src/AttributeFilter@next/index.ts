@@ -1,19 +1,29 @@
 // (C) 2021-2022 GoodData Corporation
-export { ParentFilterOverAttributeType, OnApplyCallbackType } from "./types";
 export {
-    IAttributeFilterElementsSelectProps,
-    IAttributeFilterDropdownButtonProps,
-    IAttributeFilterDropdownActionsProps,
+    ParentFilterOverAttributeType,
+    OnApplyCallbackType,
+    IAttributeFilterBaseProps,
+    IAttributeFilterCoreProps,
+    IAttributeFilterCustomComponentProps,
+} from "./types";
+export {
     IAttributeFilterErrorProps,
-    IAttributeFilterDropdownContentProps,
+    IAttributeFilterDropdownButtonProps,
     IAttributeFilterDropdownBodyProps,
+    IAttributeFilterDropdownActionsProps,
+    IAttributeFilterElementsSearchBarProps,
+    IAttributeFilterElementsSelectProps,
     IAttributeFilterElementsSelectItemProps,
-    IAttributeFilterElementsSelectNoMatchingDataProps,
-    IAttributeFilterElementsSelectParentItemsFilteredProps,
+    IAttributeFilterElementsSelectErrorProps,
     IAttributeFilterElementsSelectLoadingProps,
+    IAttributeFilterEmptyResultProps,
+    IAttributeFilterStatusBarProps,
 } from "./Components/types";
-export { IAttributeFilterBaseProps } from "./AttributeFilterBase";
 export { AttributeFilter, IAttributeFilterProps } from "./AttributeFilter";
 export { AttributeFilterButton, IAttributeFilterButtonProps } from "./AttributeFilterButton";
 export { useAttributeFilterController } from "./hooks/useAttributeFilterController";
-export { useAttributeFilterHandler } from "./hooks/useAttributeFilterHandler";
+export {
+    useAttributeFilterHandler,
+    IUseAttributeFilterHandlerProps,
+} from "./hooks/useAttributeFilterHandler";
+export { useAttributeFilterContext, IAttributeFilterContext } from "./Context/AttributeFilterContext";

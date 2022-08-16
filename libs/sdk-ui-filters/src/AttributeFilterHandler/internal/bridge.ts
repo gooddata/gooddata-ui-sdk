@@ -74,6 +74,7 @@ import {
     selectIsWorkingSelectionEmpty,
     selectOffset,
     selectIsLoadElementsOptionsChanged,
+    selectLimitingAttributeFiltersAttributes,
 } from "./redux";
 import { newAttributeFilterCallbacks } from "./callbacks";
 import { AttributeFilterHandlerConfig } from "./types";
@@ -370,6 +371,10 @@ export class AttributeFilterReduxBridge {
 
     getTotalCountWithCurrentSettings = (): number => {
         return this.redux.select(selectElementsTotalCountWithCurrentSettings);
+    };
+
+    getLimitingAttributeFiltersAttributes = (): IAttributeMetadataObject[] => {
+        return this.redux.select(selectLimitingAttributeFiltersAttributes);
     };
 
     //

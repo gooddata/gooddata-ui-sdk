@@ -17,6 +17,9 @@ export interface IInvertableSelectAllCheckboxProps {
     isPartialSelection: boolean;
 }
 
+/**
+ * @internal
+ */
 export function InvertableSelectAllCheckbox(props: IInvertableSelectAllCheckboxProps) {
     const { checked, onChange, isFiltered, loadedItemsCount, totalItemsCount, isPartialSelection } = props;
 

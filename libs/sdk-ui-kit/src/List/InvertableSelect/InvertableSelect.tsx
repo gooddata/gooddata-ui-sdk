@@ -6,11 +6,12 @@ import { LoadingMask } from "../../LoadingMask";
 import { IRenderListItemProps } from "../List";
 import { AsyncList } from "../AsyncList";
 import { useInvertableSelect } from "./useInvertableSelect";
-import { InvertableSelectSearch } from "./InvertableSelectSearch";
+import { InvertableSelectSearchBar } from "./InvertableSelectSearchBar";
 import { InvertableSelectAllCheckbox } from "./InvertableSelectAllCheckbox";
-import { InvertableSelectNoResultsMatch } from "./InvertableSelectNoResultsMatch";
 import { InvertableSelectStatusBar } from "./InvertableSelectStatusBar";
-import { InvertableSelectLimitWarning } from "./InvertableSelectLimitWarning";
+import { InvertableSelectNoResultsMatch } from "./InvertableSelectNoResultsMatch";
+import { ErrorComponent } from "@gooddata/sdk-ui";
+import { InvertableSelectItem } from "./InvertableSelectItem";
 
 /**
  * @internal
@@ -26,6 +27,48 @@ export interface IInvertableSelectRenderItemProps<T> {
 /**
  * @internal
  */
+export interface IInvertableSelectRenderLoadingProps {
+    height?: number;
+}
+
+/**
+ * @internal
+ */
+export interface IInvertableSelectRenderErrorProps {
+    error?: any;
+    height?: number;
+}
+
+/**
+ * @internal
+ */
+export interface IInvertableSelectRenderNoDataProps {
+    error?: any;
+    height?: number;
+}
+
+/**
+ * @internal
+ */
+export interface IInvertableSelectRenderSearchBarProps {
+    searchString?: string;
+    searchPlaceholder?: string;
+    onSearch: (searchString: string) => void;
+}
+
+/**
+ * @internal
+ */
+export interface IInvertableSelectRenderStatusBarProps<T> {
+    isInverted: boolean;
+    getItemTitle: (item: T) => string;
+    selectedItems: T[];
+    selectedItemsLimit?: number;
+}
+
+/**
+ * @internal
+ */
 export interface IInvertableSelectProps<T> {
     className?: string;
     width?: number;
@@ -34,7 +77,6 @@ export interface IInvertableSelectProps<T> {
     items: T[];
     totalItemsCount?: number;
     itemHeight?: number;
-    renderItem: (props: IInvertableSelectRenderItemProps<T>) => JSX.Element;
     getItemTitle: (item: T) => string;
     getItemKey: (item: T) => string;
 
@@ -47,10 +89,19 @@ export interface IInvertableSelectProps<T> {
     searchPlaceholder?: string;
     onSearch?: (search: string) => void;
 
+    error?: any;
+
     isLoading?: boolean;
     nextPageItemPlaceholdersCount?: number;
     isLoadingNextPage?: boolean;
     onLoadNextPage?: () => void;
+
+    renderError?: (props: IInvertableSelectRenderErrorProps) => JSX.Element;
+    renderLoading?: (props: IInvertableSelectRenderLoadingProps) => JSX.Element;
+    renderSearchBar?: (props: IInvertableSelectRenderSearchBarProps) => JSX.Element;
+    renderNoData?: (props: IInvertableSelectRenderNoDataProps) => JSX.Element;
+    renderItem?: (props: IInvertableSelectRenderItemProps<T>) => JSX.Element;
+    renderStatusBar?: (props: IInvertableSelectRenderStatusBarProps<T>) => JSX.Element;
 }
 
 /**
@@ -65,7 +116,7 @@ export function InvertableSelect<T>(props: IInvertableSelectProps<T>) {
         items,
         totalItemsCount,
         itemHeight,
-        renderItem,
+
         getItemTitle,
 
         isInverted = true,
@@ -76,17 +127,25 @@ export function InvertableSelect<T>(props: IInvertableSelectProps<T>) {
         searchString,
         searchPlaceholder,
 
+        error,
         isLoading,
         nextPageItemPlaceholdersCount,
         isLoadingNextPage,
         onLoadNextPage,
+
+        renderError = defaultError,
+        renderLoading = defaultLoading,
+        renderSearchBar = defaultSearchBar,
+        renderNoData = defaultNoData,
+        renderItem = defaultItem,
+        renderStatusBar = defaultStatusBar,
     } = props;
 
     const {
-        deselectItems,
         onSelectAllCheckboxChange,
         selectOnly,
         selectItems,
+        deselectItems,
         selectionState,
         getIsItemSelected,
     } = useInvertableSelect(props);
@@ -110,13 +169,11 @@ export function InvertableSelect<T>(props: IInvertableSelectProps<T>) {
 
     return (
         <>
-            <InvertableSelectSearch
-                searchPlaceholder={searchPlaceholder}
-                onSearch={onSearch}
-                searchString={searchString}
-            />
+            {renderSearchBar({ onSearch, searchPlaceholder, searchString })}
             {isLoading ? (
-                <LoadingMask height={props.height} />
+                renderLoading({ height })
+            ) : error ? (
+                renderError({ height, error })
             ) : (
                 <>
                     {items.length > 0 && (
@@ -144,20 +201,51 @@ export function InvertableSelect<T>(props: IInvertableSelectProps<T>) {
                             onLoadNextPage={onLoadNextPage}
                         />
                     )}
-                    {searchString.length > 0 && items.length === 0 && <InvertableSelectNoResultsMatch />}
+                    {items.length === 0 && renderNoData?.({ height })}
                 </>
             )}
-            <InvertableSelectStatusBar
-                isInverted={isInverted}
-                selectedItems={selectedItems}
-                getItemTitle={getItemTitle}
-            />
-            {selectedItems.length >= selectedItemsLimit && (
-                <InvertableSelectLimitWarning
-                    limit={selectedItemsLimit}
-                    selectedItemsCount={selectedItems.length}
-                />
-            )}
+            {renderStatusBar({ getItemTitle, isInverted, selectedItems, selectedItemsLimit })}
         </>
+    );
+}
+
+function defaultError(props: IInvertableSelectRenderErrorProps): JSX.Element {
+    const { error } = props;
+    return <ErrorComponent message={error?.message} />;
+}
+
+function defaultLoading(props: IInvertableSelectRenderLoadingProps): JSX.Element {
+    const { height } = props;
+    return <LoadingMask height={height} />;
+}
+
+function defaultSearchBar(props: IInvertableSelectRenderSearchBarProps): JSX.Element {
+    const { onSearch, searchPlaceholder, searchString } = props;
+    return (
+        <InvertableSelectSearchBar
+            searchPlaceholder={searchPlaceholder}
+            onSearch={onSearch}
+            searchString={searchString}
+        />
+    );
+}
+
+function defaultNoData(): JSX.Element {
+    return <InvertableSelectNoResultsMatch />;
+}
+
+function defaultItem<T>(props: IInvertableSelectRenderItemProps<T>): JSX.Element {
+    return <InvertableSelectItem {...props} />;
+}
+
+function defaultStatusBar<T>(props: IInvertableSelectRenderStatusBarProps<T>): JSX.Element {
+    const { isInverted, selectedItems, getItemTitle, selectedItemsLimit } = props;
+    return (
+        <InvertableSelectStatusBar
+            isInverted={isInverted}
+            selectedItems={selectedItems}
+            getItemTitle={getItemTitle}
+            selectedItemsLimit={selectedItemsLimit}
+        />
     );
 }

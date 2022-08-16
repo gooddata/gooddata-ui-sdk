@@ -65,7 +65,7 @@ export function loadElementsFromBackend(
         loader = loader.withOptions(loaderOptions);
     }
 
-    if (limitingDateFilters) {
+    if (limitingDateFilters?.length) {
         loader = loader.withDateFilters(limitingDateFilters);
     }
 
@@ -80,7 +80,7 @@ export function loadElementsFromBackend(
         loader = loader.withAttributeFilters(effectiveLimitingAttributeFilters);
     }
 
-    if (limitingMeasures) {
+    if (limitingMeasures?.length) {
         loader = loader.withMeasures(limitingMeasures);
     }
 

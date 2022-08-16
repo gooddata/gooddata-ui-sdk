@@ -1,13 +1,10 @@
 // (C) 2022 GoodData Corporation
 import React, { useContext } from "react";
-import { IAttributeElement, IAttributeFilter, Identifier } from "@gooddata/sdk-model";
-import { AttributeFiltersOrPlaceholders, IPlaceholder } from "@gooddata/sdk-ui";
-import { OnApplyCallbackType, ParentFilterOverAttributeType } from "../types";
+import { IAttributeFilterCoreProps } from "../types";
 import { useAttributeFilterController } from "../hooks/useAttributeFilterController";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 /**
- * @internal
+ * @alpha
  */
 export type IAttributeFilterContext = ReturnType<typeof useAttributeFilterController>;
 
@@ -16,34 +13,14 @@ export const AttributeFilterContext = React.createContext<IAttributeFilterContex
 AttributeFilterContext.displayName = "AttributeFilterContext";
 
 /**
- * @internal
+ * @alpha
  */
 export const useAttributeFilterContext = (): IAttributeFilterContext => useContext(AttributeFilterContext);
 
 /**
  * @internal
  */
-export interface IAttributeFilterProviderProps {
-    backend?: IAnalyticalBackend;
-    workspace?: string;
-
-    title?: string;
-    filter?: IAttributeFilter;
-    identifier?: Identifier;
-    connectToPlaceholder?: IPlaceholder<IAttributeFilter>;
-    parentFilters?: AttributeFiltersOrPlaceholders;
-    parentFilterOverAttribute?: ParentFilterOverAttributeType;
-
-    onApply?: OnApplyCallbackType;
-
-    hiddenElements?: string[];
-    staticElements?: IAttributeElement[];
-}
-
-/**
- * @internal
- */
-export const AttributeFilterContextProvider: React.FC<IAttributeFilterProviderProps> = (props) => {
+export const AttributeFilterContextProvider: React.FC<IAttributeFilterCoreProps> = (props) => {
     const { children } = props;
 
     const controller = useAttributeFilterController(props);

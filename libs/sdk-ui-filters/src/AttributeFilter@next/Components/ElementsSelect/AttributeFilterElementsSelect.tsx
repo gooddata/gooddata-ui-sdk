@@ -1,5 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import React from "react";
+import React, { useMemo } from "react";
 import { useIntl } from "react-intl";
 import { InvertableSelect, useMediaQuery } from "@gooddata/sdk-ui-kit";
 import { IAttributeElement } from "@gooddata/sdk-model";
@@ -21,6 +21,7 @@ export const AttributeFilterElementsSelect: React.FC<IAttributeFilterElementsSel
     const {
         items,
         totalItemsCount,
+        totalItemsCountWithCurrentSettings,
 
         isInverted,
         selectedItems,
@@ -33,48 +34,93 @@ export const AttributeFilterElementsSelect: React.FC<IAttributeFilterElementsSel
         isLoadingNextPage,
         nextPageSize,
         onLoadNextPage,
+        error,
+
+        isFilteredByParentFilters,
+
+        parentFilterTitles,
     } = props;
 
     const intl = useIntl();
     const isMobile = useMediaQuery("mobileDevice");
 
     const {
-        // TODO
-        // AttributeFilterListLoading,
-        AttributeFilterElementsSelectItem,
+        ElementsSelectLoadingComponent,
+        ElementsSelectItemComponent,
+        ElementsSelectErrorComponent,
+        EmptyResultComponent,
+        ElementsSearchBarComponent,
+        StatusBarComponent,
     } = useAttributeFilterComponentsContext();
 
     const itemHeight = isMobile ? MOBILE_LIST_ITEM_HEIGHT : ITEM_HEIGHT;
+    const height = useMemo(() => {
+        return isLoading || (!isLoading && items.length === 0)
+            ? 100
+            : itemHeight * Math.min(VISIBLE_ITEMS_COUNT, totalItemsCountWithCurrentSettings);
+    }, [isLoading, items, itemHeight, totalItemsCountWithCurrentSettings]);
 
     return (
-        <InvertableSelect<IAttributeElement>
-            className="gd-attribute-filter-list"
-            width={INTERNAL_LIST_WIDTH}
-            height={isLoading ? 100 : itemHeight * Math.min(VISIBLE_ITEMS_COUNT, totalItemsCount)}
-            items={items}
-            totalItemsCount={totalItemsCount}
-            itemHeight={itemHeight}
-            getItemKey={getElementKey}
-            getItemTitle={(item) => {
-                return getElementTitle(item, intl);
-            }}
-            renderItem={(props) => {
-                return <AttributeFilterElementsSelectItem {...props} />;
-            }}
-            isInverted={isInverted}
-            selectedItems={selectedItems}
-            selectedItemsLimit={MAX_SELECTION_SIZE}
-            onSelect={onSelect}
-            searchString={searchString}
-            onSearch={onSearch}
-            isLoading={isLoading}
-            // TODO:
-            // renderLoading={(props: { height: number }) => {
-            //     return <AttributeFilterListLoading height={props.height} />;
-            // }}
-            isLoadingNextPage={isLoadingNextPage}
-            nextPageItemPlaceholdersCount={nextPageSize}
-            onLoadNextPage={onLoadNextPage}
-        />
+        <>
+            <InvertableSelect<IAttributeElement>
+                className="gd-attribute-filter-list"
+                width={INTERNAL_LIST_WIDTH}
+                height={height}
+                items={items}
+                totalItemsCount={totalItemsCountWithCurrentSettings}
+                itemHeight={itemHeight}
+                getItemKey={getElementKey}
+                getItemTitle={(item) => {
+                    return getElementTitle(item, intl);
+                }}
+                isInverted={isInverted}
+                selectedItems={selectedItems}
+                selectedItemsLimit={MAX_SELECTION_SIZE}
+                onSelect={onSelect}
+                searchString={searchString}
+                onSearch={onSearch}
+                isLoading={isLoading}
+                error={error}
+                isLoadingNextPage={isLoadingNextPage}
+                nextPageItemPlaceholdersCount={nextPageSize}
+                onLoadNextPage={onLoadNextPage}
+                renderItem={(props) => {
+                    return <ElementsSelectItemComponent {...props} />;
+                }}
+                renderError={({ height }) => {
+                    return <ElementsSelectErrorComponent height={height} />;
+                }}
+                renderLoading={(props) => {
+                    return <ElementsSelectLoadingComponent height={props.height} />;
+                }}
+                renderNoData={({ height }) => {
+                    return (
+                        <EmptyResultComponent
+                            height={height}
+                            isFilteredByParentFilters={isFilteredByParentFilters}
+                            searchString={searchString}
+                            totalItemsCount={totalItemsCount}
+                            parentFilterTitles={parentFilterTitles}
+                        />
+                    );
+                }}
+                renderSearchBar={({ onSearch, searchString }) => {
+                    return <ElementsSearchBarComponent onSearch={onSearch} searchString={searchString} />;
+                }}
+                renderStatusBar={({ getItemTitle, isInverted, selectedItems, selectedItemsLimit }) => {
+                    return (
+                        <StatusBarComponent
+                            getItemTitle={getItemTitle}
+                            isFilteredByParentFilters={isFilteredByParentFilters}
+                            isInverted={isInverted}
+                            parentFilterTitles={parentFilterTitles}
+                            selectedItems={selectedItems}
+                            totalElementsCountWithCurrentSettings={totalItemsCountWithCurrentSettings}
+                            selectedItemsLimit={selectedItemsLimit}
+                        />
+                    );
+                }}
+            />
+        </>
     );
 };
