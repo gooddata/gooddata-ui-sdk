@@ -3,34 +3,22 @@ import React from "react";
 import cx from "classnames";
 import { getDropZoneDebugStyle } from "../debug";
 import {
-    addLayoutSection,
-    ChangeInsightWidgetFilterSettings,
-    DashboardCommandFailed,
     eagerRemoveSectionItem,
-    enableInsightWidgetDateFilter,
-    selectSettings,
     selectWidgetPlaceholder,
-    uiActions,
-    useDashboardCommandProcessing,
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../model";
 import { useDashboardDrop } from "../useDashboardDrop";
 import { SectionDropZoneBox } from "./SectionDropZoneBox";
 import { DashboardLayoutSectionBorderLine } from "./DashboardLayoutSectionBorder";
-import { idRef, insightRef, insightTitle } from "@gooddata/sdk-model";
 import {
     isInsightDraggableListItem,
     isInsightPlaceholderDraggableItem,
     isKpiPlaceholderDraggableItem,
 } from "../../dragAndDrop/types";
-import { getInsightPlaceholderSizeInfo, getSizeInfo } from "../../../_staging/layout/sizing";
-import {
-    INSIGHT_PLACEHOLDER_WIDGET_ID,
-    KPI_PLACEHOLDER_WIDGET_ID,
-    newInsightPlaceholderWidget,
-    newKpiPlaceholderWidget,
-} from "../../../widgets";
+import { useNewSectionInsightListItemDropHandler } from "./useNewSectionInsightListItemDropHandler";
+import { useNewSectionInsightPlaceholderDropHandler } from "./useNewSectionInsightPlaceholderDropHandler";
+import { useNewSectionKpiPlaceholderDropHandler } from "./useNewSectionKpiPlaceholderDropHandler";
 
 export type RowPosition = "above" | "below";
 
@@ -43,115 +31,24 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
     const { index, targetPosition } = props;
 
     const dispatch = useDashboardDispatch();
-    const settings = useDashboardSelector(selectSettings);
     const widgetPlaceholder = useDashboardSelector(selectWidgetPlaceholder);
 
-    const { run: preselectDateDataset } = useDashboardCommandProcessing({
-        commandCreator: enableInsightWidgetDateFilter,
-        errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
-        successEvent: "GDC.DASH/EVT.INSIGHT_WIDGET.FILTER_SETTINGS_CHANGED",
-        onSuccess: (event) => {
-            dispatch(uiActions.setWidgetLoadingAdditionalDataStopped(event.payload.ref));
-        },
-        onError: (event: DashboardCommandFailed<ChangeInsightWidgetFilterSettings>) => {
-            dispatch(uiActions.setWidgetLoadingAdditionalDataStopped(event.payload.command.payload.ref));
-        },
-    });
-
-    const { run: addNewSectionWithInsight } = useDashboardCommandProcessing({
-        commandCreator: addLayoutSection,
-        errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
-        successEvent: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
-        onSuccess: (event) => {
-            const ref = event.payload.section.items[0].widget!.ref;
-            dispatch(uiActions.selectWidget(ref));
-            dispatch(uiActions.setConfigurationPanelOpened(true));
-            dispatch(uiActions.setWidgetLoadingAdditionalDataStarted(ref));
-            preselectDateDataset(ref, "default");
-        },
-    });
-
-    const { run: addNewSectionWithInsightPlaceholder } = useDashboardCommandProcessing({
-        commandCreator: addLayoutSection,
-        errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
-        successEvent: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
-        onSuccess: () => {
-            dispatch(uiActions.selectWidget(idRef(INSIGHT_PLACEHOLDER_WIDGET_ID)));
-            dispatch(uiActions.setConfigurationPanelOpened(true));
-        },
-    });
-
-    const { run: addNewSectionWithKpiPlaceholder } = useDashboardCommandProcessing({
-        commandCreator: addLayoutSection,
-        errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
-        successEvent: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
-        onSuccess: (event) => {
-            const ref = event.payload.section.items[0].widget!.ref;
-            dispatch(uiActions.selectWidget(idRef(KPI_PLACEHOLDER_WIDGET_ID)));
-            dispatch(uiActions.setConfigurationPanelOpened(true));
-            dispatch(uiActions.setKpiDateDatasetAutoOpen(true));
-            dispatch(uiActions.setWidgetLoadingAdditionalDataStarted(ref));
-        },
-    });
+    const handleInsightListItemDrop = useNewSectionInsightListItemDropHandler(index);
+    const handleKpiPlaceholderDrop = useNewSectionKpiPlaceholderDropHandler(index);
+    const handleInsightPlaceholderDrop = useNewSectionInsightPlaceholderDropHandler(index);
 
     const [{ canDrop, isOver }, dropRef] = useDashboardDrop(
         ["insightListItem", "kpi-placeholder", "insight-placeholder"],
         {
             drop: (item) => {
                 if (isInsightDraggableListItem(item)) {
-                    const { insight } = item;
-                    const sizeInfo = getSizeInfo(settings, "insight", insight);
-                    addNewSectionWithInsight(index, {}, [
-                        {
-                            type: "IDashboardLayoutItem",
-                            widget: {
-                                type: "insight",
-                                insight: insightRef(insight),
-                                ignoreDashboardFilters: [],
-                                drills: [],
-                                title: insightTitle(insight),
-                                description: "",
-                                configuration: { hideTitle: false },
-                                properties: {},
-                            },
-                            size: {
-                                xl: {
-                                    gridHeight: sizeInfo.height.default,
-                                    gridWidth: sizeInfo.width.default!,
-                                },
-                            },
-                        },
-                    ]);
+                    handleInsightListItemDrop(item.insight);
                 }
                 if (isKpiPlaceholderDraggableItem(item)) {
-                    const sizeInfo = getSizeInfo(settings, "kpi");
-                    addNewSectionWithKpiPlaceholder(index, {}, [
-                        {
-                            type: "IDashboardLayoutItem",
-                            size: {
-                                xl: {
-                                    gridHeight: sizeInfo.height.default!,
-                                    gridWidth: sizeInfo.width.default!,
-                                },
-                            },
-                            widget: newKpiPlaceholderWidget(index, 0, true),
-                        },
-                    ]);
+                    handleKpiPlaceholderDrop();
                 }
                 if (isInsightPlaceholderDraggableItem(item)) {
-                    const sizeInfo = getInsightPlaceholderSizeInfo(settings);
-                    addNewSectionWithInsightPlaceholder(index, {}, [
-                        {
-                            type: "IDashboardLayoutItem",
-                            size: {
-                                xl: {
-                                    gridHeight: sizeInfo.height.default!,
-                                    gridWidth: sizeInfo.width.default!,
-                                },
-                            },
-                            widget: newInsightPlaceholderWidget(index, 0, true),
-                        },
-                    ]);
+                    handleInsightPlaceholderDrop();
                 }
             },
             hover: () => {
@@ -165,11 +62,10 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
         [
             dispatch,
             widgetPlaceholder,
-            settings,
             index,
-            addNewSectionWithInsight,
-            addNewSectionWithInsightPlaceholder,
-            addNewSectionWithKpiPlaceholder,
+            handleInsightListItemDrop,
+            handleKpiPlaceholderDrop,
+            handleInsightPlaceholderDrop,
         ],
     );
 
