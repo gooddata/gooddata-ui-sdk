@@ -1,22 +1,18 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { IntlShape } from "react-intl";
 import noop from "lodash/noop";
-import { mount, ReactWrapper } from "enzyme";
+import { waitFor, screen } from "@testing-library/react";
+
+import { TEXT_INDEX } from "./testUtils";
+import { RepeatExecuteOnSelect, IRepeatExecuteOnSelectProps } from "../RepeatExecuteOnSelect";
 
 import { REPEAT_EXECUTE_ON } from "../../../constants";
 import { getDate, getIntlDayName, getWeek } from "../../../utils/datetime";
-import { RepeatExecuteOnSelect, IRepeatExecuteOnSelectProps } from "../RepeatExecuteOnSelect";
+
 import { IntlWrapper } from "../../../../../localization/IntlWrapper";
 import { createInternalIntl } from "../../../../../localization/createInternalIntl";
-
-import {
-    getDropdownTitle,
-    openDropdown,
-    selectDropdownItem,
-    REPEAT_EXECUTE_ON_INDEX,
-    TEXT_INDEX,
-} from "./testUtils";
+import { setupComponent } from "../../../../../../tests/testHelper";
 
 describe("RepeatExecuteOnSelect", () => {
     const intl: IntlShape = createInternalIntl();
@@ -24,7 +20,7 @@ describe("RepeatExecuteOnSelect", () => {
     const titleDayOfMonth = `on day ${getDate(now)}`;
     const titleDayOfWeek = `on the ${TEXT_INDEX[getWeek(now)]} ${getIntlDayName(intl, now)}`;
 
-    function renderComponent(customProps: Partial<IRepeatExecuteOnSelectProps> = {}): ReactWrapper {
+    function renderComponent(customProps: Partial<IRepeatExecuteOnSelectProps> = {}) {
         const defaultProps = {
             repeatExecuteOn: REPEAT_EXECUTE_ON.DAY_OF_MONTH,
             startDate: now,
@@ -32,7 +28,7 @@ describe("RepeatExecuteOnSelect", () => {
             ...customProps,
         };
 
-        return mount(
+        return setupComponent(
             <IntlWrapper>
                 <RepeatExecuteOnSelect {...defaultProps} />
             </IntlWrapper>,
@@ -40,28 +36,29 @@ describe("RepeatExecuteOnSelect", () => {
     }
 
     it("should render component", () => {
-        const component = renderComponent();
-        expect(component).toExist();
+        renderComponent();
+
+        expect(screen.getByText(titleDayOfMonth)).toBeInTheDocument();
     });
 
     it.each([
         [REPEAT_EXECUTE_ON.DAY_OF_WEEK, titleDayOfWeek],
         [REPEAT_EXECUTE_ON.DAY_OF_MONTH, titleDayOfMonth],
     ])("should render correct title for %s", (repeatExecuteOn: string, expectedTitle: string) => {
-        const component = renderComponent({
+        renderComponent({
             repeatExecuteOn,
         });
-        expect(getDropdownTitle(component)).toBe(expectedTitle);
+        expect(screen.getByText(expectedTitle)).toBeInTheDocument();
     });
 
-    it("should trigger onChange", () => {
+    it("should trigger onChange", async () => {
         const onChange = jest.fn();
-        const component = renderComponent({ onChange });
-
-        openDropdown(component);
-        selectDropdownItem(component, REPEAT_EXECUTE_ON_INDEX[REPEAT_EXECUTE_ON.DAY_OF_WEEK]);
-
-        expect(onChange).toHaveBeenCalledTimes(1);
-        expect(onChange).toHaveBeenCalledWith(REPEAT_EXECUTE_ON.DAY_OF_WEEK);
+        const { user } = renderComponent({ onChange });
+        await user.click(screen.getByText(titleDayOfMonth));
+        await user.click(screen.getByText(titleDayOfWeek));
+        await waitFor(() => {
+            expect(onChange).toHaveBeenCalledTimes(1);
+            expect(onChange).toBeCalledWith(expect.stringContaining(REPEAT_EXECUTE_ON.DAY_OF_WEEK));
+        });
     });
 });

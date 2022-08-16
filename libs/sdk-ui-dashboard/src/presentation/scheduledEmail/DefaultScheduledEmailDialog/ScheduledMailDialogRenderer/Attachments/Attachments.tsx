@@ -21,7 +21,7 @@ export interface IAttachmentsProps {
 }
 
 const AttachmentItem: React.FC<{ format: string }> = ({ format, children }) => (
-    <div className="gd-dashboard-attachment s-gd-dashboard-attachment">
+    <div aria-label="dashboard-attachment" className="gd-dashboard-attachment s-gd-dashboard-attachment">
         <span className="gd-dashboard-attachment-format">{format}</span>
         <span className="gd-dashboard-attachment-name">{children}</span>
     </div>

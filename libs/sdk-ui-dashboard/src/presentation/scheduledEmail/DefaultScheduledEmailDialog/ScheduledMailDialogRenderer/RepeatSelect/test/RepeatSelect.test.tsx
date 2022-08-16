@@ -1,26 +1,23 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { mount, ReactWrapper } from "enzyme";
+import { IntlShape } from "react-intl";
+import { screen, waitFor } from "@testing-library/react";
 import noop from "lodash/noop";
 
+import { TEXT_INDEX } from "./testUtils";
 import { RepeatSelect, IRepeatSelectData, IRepeatSelectProps } from "../RepeatSelect";
-import { RepeatExecuteOnSelect } from "../RepeatExecuteOnSelect";
-import { RepeatFrequencySelect } from "../RepeatFrequencySelect";
-import { RepeatPeriodSelect } from "../RepeatPeriodSelect";
-import { RepeatTypeSelect } from "../RepeatTypeSelect";
-import { REPEAT_EXECUTE_ON, REPEAT_FREQUENCIES, REPEAT_TYPES } from "../../../constants";
-import { IntlWrapper } from "../../../../../localization/IntlWrapper";
 
-import {
-    openDropdown,
-    REPEAT_EXECUTE_ON_INDEX,
-    REPEAT_FREQUENCY_INDEX,
-    REPEAT_TYPE_INDEX,
-    selectDropdownItem,
-} from "./testUtils";
+import { REPEAT_EXECUTE_ON, REPEAT_FREQUENCIES, REPEAT_TYPES } from "../../../constants";
+import { getDate, getIntlDayName, getWeek } from "../../../utils/datetime";
+import { IntlWrapper } from "../../../../../localization/IntlWrapper";
+import { createInternalIntl } from "../../../../../localization/createInternalIntl";
+import { setupComponent } from "../../../../../../tests/testHelper";
 
 describe("RepeatSelect", () => {
     const now = new Date();
+    const intl: IntlShape = createInternalIntl();
+    const titleDayOfMonth = `on day ${getDate(now)}`;
+    const titleDayOfMonthString = `on the ${TEXT_INDEX[getWeek(now)]} ${getIntlDayName(intl, now)}`;
     const DEFAULT_REPEAT_DATA: IRepeatSelectData = {
         repeatExecuteOn: REPEAT_EXECUTE_ON.DAY_OF_MONTH,
         repeatFrequency: REPEAT_FREQUENCIES.DAY,
@@ -28,7 +25,7 @@ describe("RepeatSelect", () => {
         repeatType: REPEAT_TYPES.DAILY,
     };
 
-    function renderComponent(customProps: Partial<IRepeatSelectProps> = {}): ReactWrapper {
+    function renderComponent(customProps: Partial<IRepeatSelectProps> = {}) {
         const defaultProps = {
             label: "Repeats:",
             startDate: now,
@@ -37,21 +34,18 @@ describe("RepeatSelect", () => {
             ...customProps,
         };
 
-        return mount(
+        return setupComponent(
             <IntlWrapper>
                 <RepeatSelect {...defaultProps} />
             </IntlWrapper>,
         );
     }
 
-    let component: ReactWrapper;
-    afterEach(() => {
-        component.unmount();
-    });
-
     it("should render component", () => {
-        component = renderComponent();
-        expect(component).toExist();
+        renderComponent();
+
+        expect(screen.getByText("Repeats:")).toBeInTheDocument();
+        expect(screen.getByText("Daily")).toBeInTheDocument();
     });
 
     describe("Toggle components", () => {
@@ -63,11 +57,17 @@ describe("RepeatSelect", () => {
         ])(
             "should %s repeat options when repeat type is %s",
             (_expectedAction: string, repeatType: string, expectedExists: boolean) => {
-                component = renderComponent({
+                renderComponent({
                     repeatType,
                 });
-                expect(component.find(RepeatPeriodSelect).exists()).toBe(expectedExists);
-                expect(component.find(RepeatFrequencySelect).exists()).toBe(expectedExists);
+
+                if (expectedExists) {
+                    expect(screen.queryByRole("textbox")).toBeInTheDocument();
+                    expect(screen.queryByText("day")).toBeInTheDocument();
+                } else {
+                    expect(screen.queryByRole("textbox")).not.toBeInTheDocument();
+                    expect(screen.queryByText("day")).not.toBeInTheDocument();
+                }
             },
         );
 
@@ -78,43 +78,69 @@ describe("RepeatSelect", () => {
         ])(
             "should %s repeat execute dropdown when repeat frequency is %s",
             (_expectedAction: string, repeatFrequency: string, expectedExists: boolean) => {
-                component = renderComponent({
+                renderComponent({
                     repeatFrequency,
                     repeatType: REPEAT_TYPES.CUSTOM,
                 });
-                expect(component.find(RepeatExecuteOnSelect).exists()).toBe(expectedExists);
+
+                if (expectedExists) {
+                    expect(screen.queryByText(titleDayOfMonth)).toBeInTheDocument();
+                } else {
+                    expect(screen.queryByText(titleDayOfMonth)).not.toBeInTheDocument();
+                }
             },
         );
     });
 
     describe("onChange event", () => {
+        const titleTypeDaily = "Daily";
+        const titleTypeWeekly = `Weekly on ${getIntlDayName(intl, now)}`;
+        const titleTypeMonthly = `Monthly on the ${TEXT_INDEX[getWeek(now)]} ${getIntlDayName(intl, now)}`;
+        const titleTypeCustom = "Custom";
+
         it.each([
-            [REPEAT_TYPES.DAILY, REPEAT_TYPES.WEEKLY],
-            [REPEAT_TYPES.WEEKLY, REPEAT_TYPES.DAILY],
-            [REPEAT_TYPES.MONTHLY, REPEAT_TYPES.DAILY],
-            [REPEAT_TYPES.CUSTOM, REPEAT_TYPES.DAILY],
-        ])("should trigger onChange with selected repeat type is %s", (selected: string, current: string) => {
+            [REPEAT_TYPES.DAILY, REPEAT_TYPES.WEEKLY, titleTypeDaily],
+            [REPEAT_TYPES.WEEKLY, REPEAT_TYPES.DAILY, titleTypeWeekly],
+            [REPEAT_TYPES.MONTHLY, REPEAT_TYPES.DAILY, titleTypeMonthly],
+            [REPEAT_TYPES.CUSTOM, REPEAT_TYPES.DAILY, titleTypeCustom],
+        ])(
+            "should trigger onChange with selected repeat type is %s",
+            async (selected: string, current: string, title: string) => {
+                const onChange = jest.fn();
+                const { user } = renderComponent({ repeatType: current, onChange });
+                await user.click(screen.getByRole("button"));
+                await user.click(screen.getByText(title));
+
+                await waitFor(() => {
+                    expect(onChange).toBeCalledWith(
+                        expect.objectContaining({
+                            ...DEFAULT_REPEAT_DATA,
+                            repeatType: selected,
+                        }),
+                    );
+                });
+            },
+        );
+
+        it("should trigger onChange with selected repeat period", async () => {
             const onChange = jest.fn();
-            component = renderComponent({ repeatType: current, onChange });
-
-            openDropdown(component.find(RepeatTypeSelect));
-            selectDropdownItem(component, REPEAT_TYPE_INDEX[selected]);
-            expect(onChange).toHaveBeenCalledWith({
-                ...DEFAULT_REPEAT_DATA,
-                repeatType: selected,
-            });
-        });
-
-        it("should trigger onChange with selected repeat period", () => {
-            const onChange = jest.fn();
-            component = renderComponent({ repeatType: REPEAT_TYPES.CUSTOM, onChange });
-
-            const repeatPeriodField = component.find(RepeatPeriodSelect).find(".gd-input-field");
-            repeatPeriodField.simulate("change", { target: { value: "10" } });
-            expect(onChange).toHaveBeenCalledWith({
-                ...DEFAULT_REPEAT_DATA,
-                repeatPeriod: 10,
+            const { user } = renderComponent({
                 repeatType: REPEAT_TYPES.CUSTOM,
+                onChange,
+            });
+
+            await user.clear(screen.getByRole("textbox"));
+            await user.type(screen.getByRole("textbox"), "10");
+            expect(screen.getByDisplayValue("10")).toBeInTheDocument();
+
+            await waitFor(() => {
+                expect(onChange).toBeCalledWith(
+                    expect.objectContaining({
+                        ...DEFAULT_REPEAT_DATA,
+                        repeatPeriod: 10,
+                        repeatType: REPEAT_TYPES.CUSTOM,
+                    }),
+                );
             });
         });
 
@@ -124,59 +150,81 @@ describe("RepeatSelect", () => {
             [REPEAT_FREQUENCIES.MONTH, REPEAT_FREQUENCIES.DAY],
         ])(
             "should trigger onChange with selected repeat frequency is %s",
-            (selected: string, current: string) => {
+            async (selected: string, current: string) => {
                 const onChange = jest.fn();
-                component = renderComponent({
+                const { user } = renderComponent({
                     repeatFrequency: current,
                     repeatType: REPEAT_TYPES.CUSTOM,
                     onChange,
                 });
-
-                openDropdown(component.find(RepeatFrequencySelect));
-                selectDropdownItem(component, REPEAT_FREQUENCY_INDEX[selected]);
-                expect(onChange).toHaveBeenCalledWith({
-                    ...DEFAULT_REPEAT_DATA,
-                    repeatFrequency: selected,
-                    repeatType: REPEAT_TYPES.CUSTOM,
+                await user.click(screen.getByText(current));
+                await user.click(screen.getByText(selected));
+                await waitFor(() => {
+                    expect(onChange).toBeCalledWith(
+                        expect.objectContaining({
+                            ...DEFAULT_REPEAT_DATA,
+                            repeatFrequency: selected,
+                            repeatType: REPEAT_TYPES.CUSTOM,
+                        }),
+                    );
                 });
             },
         );
 
         it.each([
-            [REPEAT_EXECUTE_ON.DAY_OF_WEEK, REPEAT_EXECUTE_ON.DAY_OF_MONTH],
-            [REPEAT_EXECUTE_ON.DAY_OF_MONTH, REPEAT_EXECUTE_ON.DAY_OF_WEEK],
-        ])("should trigger onChange with repeat execute on %s", (selected: string, current: string) => {
-            const onChange = jest.fn();
-            component = renderComponent({
-                repeatExecuteOn: current,
-                repeatFrequency: REPEAT_FREQUENCIES.MONTH,
-                repeatType: REPEAT_TYPES.CUSTOM,
-                onChange,
-            });
+            [
+                REPEAT_EXECUTE_ON.DAY_OF_WEEK,
+                REPEAT_EXECUTE_ON.DAY_OF_MONTH,
+                titleDayOfMonth,
+                titleDayOfMonthString,
+            ],
+            [
+                REPEAT_EXECUTE_ON.DAY_OF_MONTH,
+                REPEAT_EXECUTE_ON.DAY_OF_WEEK,
+                titleDayOfMonthString,
+                titleDayOfMonth,
+            ],
+        ])(
+            "should trigger onChange with repeat execute on %s",
+            async (selected: string, current: string, selectedDropdown: string, currentDropdown: string) => {
+                const onChange = jest.fn();
+                const { user } = renderComponent({
+                    repeatExecuteOn: current,
+                    repeatFrequency: REPEAT_FREQUENCIES.MONTH,
+                    repeatType: REPEAT_TYPES.CUSTOM,
+                    onChange,
+                });
+                await user.click(screen.getByText(selectedDropdown));
+                await user.click(screen.getByText(currentDropdown));
 
-            openDropdown(component.find(RepeatExecuteOnSelect));
-            selectDropdownItem(component, REPEAT_EXECUTE_ON_INDEX[selected]);
-            expect(onChange).toHaveBeenCalledWith({
-                ...DEFAULT_REPEAT_DATA,
-                repeatExecuteOn: selected,
-                repeatFrequency: REPEAT_FREQUENCIES.MONTH,
-                repeatType: REPEAT_TYPES.CUSTOM,
-            });
-        });
+                await waitFor(() => {
+                    expect(onChange).toBeCalledWith(
+                        expect.objectContaining({
+                            ...DEFAULT_REPEAT_DATA,
+                            repeatExecuteOn: selected,
+                            repeatFrequency: REPEAT_FREQUENCIES.MONTH,
+                            repeatType: REPEAT_TYPES.CUSTOM,
+                        }),
+                    );
+                });
+            },
+        );
 
-        it("should reset repeatData when repeatType is changed", () => {
+        it("should reset repeatData when repeatType is changed", async () => {
             const onChange = jest.fn();
-            component = renderComponent({
+            const { user } = renderComponent({
                 repeatExecuteOn: REPEAT_EXECUTE_ON.DAY_OF_WEEK,
                 repeatFrequency: REPEAT_FREQUENCIES.MONTH,
                 repeatPeriod: 10,
                 repeatType: REPEAT_TYPES.CUSTOM,
                 onChange,
             });
+            await user.click(screen.getByText("Custom"));
+            await user.click(screen.getByText("Daily"));
 
-            openDropdown(component.find(RepeatTypeSelect));
-            selectDropdownItem(component, REPEAT_TYPE_INDEX[REPEAT_TYPES.DAILY]);
-            expect(onChange).toHaveBeenCalledWith(DEFAULT_REPEAT_DATA);
+            await waitFor(() => {
+                expect(onChange).toBeCalledWith(expect.objectContaining(DEFAULT_REPEAT_DATA));
+            });
         });
     });
 });

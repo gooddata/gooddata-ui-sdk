@@ -1,19 +1,21 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { DefaultInsightCustomizer } from "../insightCustomizer";
 import React from "react";
+import invariant from "ts-invariant";
+import includes from "lodash/includes";
+import { render } from "@testing-library/react";
+import { IInsight, insightTags, insightTitle, IInsightWidget } from "@gooddata/sdk-model";
+import { recordedInsight } from "@gooddata/sdk-backend-mockingbird";
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
+
+import { DefaultInsightCustomizer } from "../insightCustomizer";
+import { DashboardCustomizationLogger } from "../customizationLogging";
+
 import {
     IDashboardInsightProps,
     InsightComponentProvider,
     OptionalInsightComponentProvider,
 } from "../../../presentation";
-import { IInsight, insightTags, insightTitle, IInsightWidget } from "@gooddata/sdk-model";
-import { recordedInsight } from "@gooddata/sdk-backend-mockingbird";
-import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { mount } from "enzyme";
-import invariant from "ts-invariant";
-import includes from "lodash/includes";
-import { DashboardCustomizationLogger } from "../customizationLogging";
 
 //
 //
@@ -102,8 +104,9 @@ function renderToHtml(customizer: DefaultInsightCustomizer, insight: IInsight) {
     // this should not happen; if it does something is seriously hosed in the customizer
     invariant(Component);
 
-    const wrapper = mount(<Component {...dummyProps} />);
-    return wrapper.html();
+    const { container } = render(<Component {...dummyProps} />);
+
+    return container.innerHTML;
 }
 
 describe("insight customizer", () => {
@@ -137,7 +140,6 @@ describe("insight customizer", () => {
         it("should use last registered component if insight has both tags", () => {
             Customizer.withTag("tag2", createTestComponent("forTag2"));
             Customizer.withTag("tag1", createTestComponent("forTag1"));
-
             // component for tag1 was registered last, so the insight that has both tags must be rendered
             // using that component
             expect(renderToHtml(Customizer, TestInsightWithBothTags)).toMatchSnapshot();

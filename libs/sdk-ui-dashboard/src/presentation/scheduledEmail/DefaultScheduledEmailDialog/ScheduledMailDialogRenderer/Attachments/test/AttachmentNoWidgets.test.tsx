@@ -1,13 +1,14 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { mount, ReactWrapper } from "enzyme";
+import { render, screen } from "@testing-library/react";
 
 import { AttachmentNoWidgets, IAttachmentProps } from "../AttachmentNoWidgets";
+
 import { IntlWrapper } from "../../../../../localization/IntlWrapper";
 
 describe("AttachmentNoWidgets", () => {
     const FILE_NAME = "ABC.pdf";
-    function renderComponent(customProps: Partial<IAttachmentProps> = {}): ReactWrapper {
+    function renderComponent(customProps: Partial<IAttachmentProps> = {}) {
         const defaultProps = {
             includeFilterContext: false,
             isMobile: false,
@@ -16,7 +17,7 @@ describe("AttachmentNoWidgets", () => {
             ...customProps,
         };
 
-        return mount(
+        return render(
             <IntlWrapper>
                 <AttachmentNoWidgets {...defaultProps} />
             </IntlWrapper>,
@@ -24,18 +25,14 @@ describe("AttachmentNoWidgets", () => {
     }
 
     it("should render component", () => {
-        const component = renderComponent();
-        expect(component).toExist();
+        renderComponent();
+
+        expect(screen.getByText(`${FILE_NAME} (with currently set filters)`)).toBeInTheDocument();
     });
 
     it("should render label", () => {
         const label = "attachments";
-        const component = renderComponent({ label });
-        expect(component.find("label.gd-label").text()).toBe(label);
-    });
-
-    it("should render fileName", () => {
-        const component = renderComponent();
-        expect(component.find(".s-attachment-name").text()).toBe(`${FILE_NAME} (with currently set filters)`);
+        renderComponent({ label });
+        expect(screen.getByText(label)).toBeInTheDocument();
     });
 });

@@ -1,17 +1,22 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { mount, ReactWrapper } from "enzyme";
+import { render, screen } from "@testing-library/react";
+import { formatTime } from "@gooddata/sdk-ui-kit";
+import format from "date-fns/format";
 import noop from "lodash/noop";
-import { Datepicker, Timepicker } from "@gooddata/sdk-ui-kit";
 
 import { DateTime, IDateTimeProps } from "../DateTime";
+
 import { IntlWrapper } from "../../../../localization/IntlWrapper";
 
+const date = new Date();
+const dateFormat = "MM/dd/yyyy";
+
 describe("DateTime", () => {
-    function renderComponent(customProps: Partial<IDateTimeProps> = {}): ReactWrapper {
+    function renderComponent(customProps: Partial<IDateTimeProps> = {}) {
         const defaultProps = {
-            date: new Date(),
-            dateFormat: "MM/dd/yyyy",
+            date,
+            dateFormat,
             label: "",
             locale: "en-US",
             timezone: "",
@@ -20,7 +25,7 @@ describe("DateTime", () => {
             ...customProps,
         };
 
-        return mount(
+        return render(
             <IntlWrapper>
                 <DateTime {...defaultProps} />
             </IntlWrapper>,
@@ -28,25 +33,27 @@ describe("DateTime", () => {
     }
 
     it("should render component", () => {
-        const component = renderComponent();
-        expect(component).toExist();
+        renderComponent();
+        const currentDate = format(date, dateFormat);
+        expect(screen.getByDisplayValue(currentDate)).toBeInTheDocument();
     });
 
     it("should render label", () => {
         const label = "First occurrence";
-        const component = renderComponent({ label });
-        expect(component.find("label.gd-label").text()).toBe(label);
+        renderComponent({ label });
+        expect(screen.getByText(label)).toBeInTheDocument();
     });
 
     it("should render date time picker", () => {
-        const component = renderComponent();
-        expect(component.find(Datepicker).exists()).toBe(true);
-        expect(component.find(Timepicker).exists()).toBe(true);
+        const TIME_FORMAT: string = "hh:mm A";
+        const currentTime = formatTime(date.getHours(), date.getMinutes(), TIME_FORMAT);
+        renderComponent();
+        expect(screen.getByText(currentTime)).toBeInTheDocument();
     });
 
     it("should render timezone", () => {
         const timezone = "UTC-07:00 Pacific Standard Time";
-        const component = renderComponent({ timezone });
-        expect(component.find(".s-gd-schedule-email-dialog-datetime-timezone").text()).toBe(timezone);
+        renderComponent({ timezone });
+        expect(screen.getByText(timezone)).toBeInTheDocument();
     });
 });

@@ -280,7 +280,9 @@ export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSel
                 <div style={this.getStyle()} className="gd-recipient-label">
                     {label}
                 </div>
-                <div className="s-gd-recipient-remove">{removeIcon}</div>
+                <div aria-label="remove-icon" className="s-gd-recipient-remove">
+                    {removeIcon}
+                </div>
             </div>
         );
     };

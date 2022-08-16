@@ -1,20 +1,20 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import noop from "lodash/noop";
-import { mount, ReactWrapper } from "enzyme";
+import { waitFor, screen } from "@testing-library/react";
+
+import { RepeatFrequencySelect, IRepeatFrequencySelectProps } from "../RepeatFrequencySelect";
 
 import { REPEAT_FREQUENCIES } from "../../../constants";
-import { RepeatFrequencySelect, IRepeatFrequencySelectProps } from "../RepeatFrequencySelect";
 import { IntlWrapper } from "../../../../../localization/IntlWrapper";
-
-import { getDropdownTitle, openDropdown, selectDropdownItem, REPEAT_FREQUENCY_INDEX } from "./testUtils";
+import { setupComponent } from "../../../../../../tests/testHelper";
 
 describe("RepeatFrequencySelect", () => {
     const titleFrequencyDay = "day";
     const titleFrequencyWeek = "week";
     const titleFrequencyMonth = "month";
 
-    function renderComponent(customProps: Partial<IRepeatFrequencySelectProps> = {}): ReactWrapper {
+    function renderComponent(customProps: Partial<IRepeatFrequencySelectProps> = {}) {
         const defaultProps = {
             repeatFrequency: REPEAT_FREQUENCIES.DAY,
             repeatPeriod: 1,
@@ -22,7 +22,7 @@ describe("RepeatFrequencySelect", () => {
             ...customProps,
         };
 
-        return mount(
+        return setupComponent(
             <IntlWrapper>
                 <RepeatFrequencySelect {...defaultProps} />
             </IntlWrapper>,
@@ -30,8 +30,8 @@ describe("RepeatFrequencySelect", () => {
     }
 
     it("should render component", () => {
-        const component = renderComponent();
-        expect(component).toExist();
+        renderComponent();
+        expect(screen.getByText(titleFrequencyDay)).toBeInTheDocument();
     });
 
     it.each([
@@ -39,10 +39,10 @@ describe("RepeatFrequencySelect", () => {
         [REPEAT_FREQUENCIES.WEEK, titleFrequencyWeek],
         [REPEAT_FREQUENCIES.MONTH, titleFrequencyMonth],
     ])("should render correct title for %s", (repeatFrequency: string, expectedTitle: string) => {
-        const component = renderComponent({
+        renderComponent({
             repeatFrequency,
         });
-        expect(getDropdownTitle(component)).toBe(expectedTitle);
+        expect(screen.getByText(expectedTitle)).toBeInTheDocument();
     });
 
     it.each([
@@ -50,21 +50,22 @@ describe("RepeatFrequencySelect", () => {
         [REPEAT_FREQUENCIES.WEEK, "weeks"],
         [REPEAT_FREQUENCIES.MONTH, "months"],
     ])("should render title in plural for %s", (repeatFrequency: string, expectedTitle: string) => {
-        const component = renderComponent({
+        renderComponent({
             repeatFrequency,
             repeatPeriod: 2,
         });
-        expect(getDropdownTitle(component)).toBe(expectedTitle);
+        expect(screen.getByText(expectedTitle)).toBeInTheDocument();
     });
 
-    it("should trigger onChange", () => {
+    it("should trigger onChange", async () => {
         const onChange = jest.fn();
-        const component = renderComponent({ onChange });
+        const { user } = renderComponent({ onChange });
 
-        openDropdown(component);
-        selectDropdownItem(component, REPEAT_FREQUENCY_INDEX[REPEAT_FREQUENCIES.WEEK]);
-
-        expect(onChange).toHaveBeenCalledTimes(1);
-        expect(onChange).toHaveBeenCalledWith(REPEAT_FREQUENCIES.WEEK);
+        await user.click(screen.getByText(titleFrequencyDay));
+        await user.click(screen.getByText(titleFrequencyWeek));
+        await waitFor(() => {
+            expect(onChange).toHaveBeenCalledTimes(1);
+            expect(onChange).toBeCalledWith(expect.stringContaining(REPEAT_FREQUENCIES.WEEK));
+        });
     });
 });

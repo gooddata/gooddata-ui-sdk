@@ -1,6 +1,7 @@
 // (C) 2019 GoodData Corporation
 /* eslint-disable @typescript-eslint/no-var-requires */
 import "jest-enzyme";
+import "@testing-library/jest-dom/extend-expect";
 import * as raf from "raf";
 
 const enzyme = require("enzyme");

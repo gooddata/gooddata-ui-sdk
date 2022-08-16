@@ -515,6 +515,9 @@ export class FlexDimensions extends Component<IFlexDimensionsProps, IFlexDimensi
 }
 
 // @internal (undocumented)
+export function formatTime(h: number, m: number, format?: string): string;
+
+// @internal (undocumented)
 export class FullScreenOverlay extends Overlay<IOverlayState> {
     constructor(props: IOverlayProps<any>);
     // (undocumented)

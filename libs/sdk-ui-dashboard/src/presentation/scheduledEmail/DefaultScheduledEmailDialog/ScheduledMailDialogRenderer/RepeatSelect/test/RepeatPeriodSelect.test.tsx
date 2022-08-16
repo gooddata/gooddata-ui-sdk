@@ -1,20 +1,22 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { mount, ReactWrapper } from "enzyme";
 import noop from "lodash/noop";
+import { waitFor, screen } from "@testing-library/react";
 
 import { RepeatPeriodSelect, IRepeatPeriodSelectProps } from "../RepeatPeriodSelect";
+
 import { IntlWrapper } from "../../../../../localization/IntlWrapper";
+import { setupComponent } from "../../../../../../tests/testHelper";
 
 describe("RepeatPeriodSelect", () => {
-    function renderComponent(customProps: Partial<IRepeatPeriodSelectProps> = {}): ReactWrapper {
+    function renderComponent(customProps: Partial<IRepeatPeriodSelectProps> = {}) {
         const defaultProps = {
             repeatPeriod: 1,
             onChange: noop,
             ...customProps,
         };
 
-        return mount(
+        return setupComponent(
             <IntlWrapper>
                 <RepeatPeriodSelect {...defaultProps} />
             </IntlWrapper>,
@@ -22,35 +24,34 @@ describe("RepeatPeriodSelect", () => {
     }
 
     it("should render component", () => {
-        const component = renderComponent();
-        expect(component).toExist();
+        renderComponent();
+
+        expect(screen.getByDisplayValue("1")).toBeInTheDocument();
     });
 
     it("should render correct period", () => {
         const repeatPeriod = 5;
-        const component = renderComponent({
+        renderComponent({
+            repeatPeriod,
+        });
+        expect(screen.getByDisplayValue(`${repeatPeriod}`)).toBeInTheDocument();
+    });
+
+    it("should change input value when valid value is provided", async () => {
+        const repeatPeriod = 5;
+        const { user } = renderComponent({
             repeatPeriod,
         });
 
-        const input = component.find(".gd-input-field");
-        const value = input.props().value;
-        expect(value).toBe(repeatPeriod);
-    });
+        await user.type(screen.getByDisplayValue(`${repeatPeriod}`), "test");
+        await waitFor(() => {
+            expect(screen.queryByDisplayValue("test")).not.toBeInTheDocument();
+        });
 
-    it("should trigger onChange", () => {
-        const repeatPeriod = 5;
-        const onChange = jest.fn();
-        const component = renderComponent({ repeatPeriod, onChange });
-
-        const input = component.find(".gd-input-field");
-        input.simulate("change", { target: { value: "test" } });
-        expect(onChange).toHaveBeenCalledTimes(0);
-
-        input.simulate("change", { target: { value: "0" } });
-        expect(onChange).toHaveBeenCalledTimes(0);
-
-        input.simulate("change", { target: { value: "2" } });
-        expect(onChange).toHaveBeenCalledTimes(1);
-        expect(onChange).toHaveBeenCalledWith(2);
+        await user.clear(screen.getByRole("textbox"));
+        await user.type(screen.getByRole("textbox"), "2");
+        await waitFor(() => {
+            expect(screen.queryByDisplayValue("2")).toBeInTheDocument();
+        });
     });
 });

@@ -1,19 +1,20 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { mount, ReactWrapper } from "enzyme";
+import { screen, within, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import noop from "lodash/noop";
 import { uriRef } from "@gooddata/sdk-model";
+import { newInsightWidget } from "@gooddata/sdk-backend-base";
 
-import { RecipientsSelect } from "../RecipientsSelect/RecipientsSelect";
 import {
     ScheduledMailDialogRenderer,
     IScheduledMailDialogRendererOwnProps,
 } from "../ScheduledMailDialogRenderer";
-import { DateTime } from "../DateTime";
+
 import { getUserTimezone, ITimezone } from "../../utils/timezone";
 import { useWorkspaceUsers } from "../../useWorkspaceUsers";
 import { IntlWrapper } from "../../../../localization/IntlWrapper";
-import { newInsightWidget } from "@gooddata/sdk-backend-base";
+import { setupComponent } from "../../../../../tests/testHelper";
 
 jest.mock("../../useWorkspaceUsers", () => ({
     useWorkspaceUsers: (): ReturnType<typeof useWorkspaceUsers> => ({
@@ -48,97 +49,78 @@ describe("ScheduledMailDialogRenderer", () => {
             ...customProps,
         };
 
-        return mount(
+        return setupComponent(
             <IntlWrapper>
                 <ScheduledMailDialogRenderer {...defaultProps} />
             </IntlWrapper>,
         );
     }
 
-    function clickButtonCancel(wrapper: ReactWrapper) {
-        wrapper.find("button.s-cancel").simulate("click");
-    }
-
-    function clickButtonSchedule(wrapper: ReactWrapper) {
-        wrapper.find("button.s-schedule").simulate("click");
-    }
-
-    function selectTime(wrapper: ReactWrapper, hour: string, minute: string, subfix: string) {
-        wrapper.find(".gd-schedule-email-dialog-datetime-time button").simulate("click");
-        wrapper.find(`.s-${hour}_${minute}_${subfix}`).simulate("click");
-    }
-
-    function selectRepeatPeriod(wrapper: ReactWrapper, period: string) {
-        wrapper.find(".s-gd-schedule-email-dialog-repeat-type button").simulate("click");
-        wrapper.find(`.s-${period}`).simulate("click");
-    }
-
-    function userEntersSubject(wrapper: ReactWrapper, subject: string) {
-        const input: ReactWrapper = wrapper.find(".s-gd-schedule-email-dialog-subject input");
-        input.getDOMNode().setAttribute("value", subject);
-        input.simulate("change");
-    }
-
     it("should render timezone", () => {
-        const component = renderComponent();
-        const dateTimeComponent = component.find(DateTime);
-        expect(dateTimeComponent).toExist();
+        renderComponent();
+        expect(screen.getByText("First occurrence:")).toBeInTheDocument();
 
         const timezone: ITimezone = getUserTimezone();
-        expect(dateTimeComponent.find(".s-gd-schedule-email-dialog-datetime-timezone").text()).toBe(
-            timezone.title,
-        );
+        expect(screen.getByText(timezone.title)).toBeInTheDocument();
     });
 
-    it("should trigger onCancel on click Cancel", () => {
+    it("should trigger onCancel on click Cancel", async () => {
         const onCancel = jest.fn();
-        const wrapper = renderComponent({ onCancel });
-
-        clickButtonCancel(wrapper);
-
+        const { user } = renderComponent({ onCancel });
+        await user.click(screen.getByText("Cancel"));
         expect(onCancel).toHaveBeenCalledTimes(1);
     });
 
-    it("should generate scheduled mail with default values", () => {
+    it("should generate scheduled mail with default values", async () => {
+        const user = userEvent.setup({
+            advanceTimers: () => jest.runOnlyPendingTimers(),
+        });
         const onSubmit = jest.fn();
         jest.useFakeTimers().setSystemTime(new Date("2022-01-02 12:13").getTime());
 
-        const wrapper = renderComponent({ onSubmit });
+        renderComponent({ onSubmit });
 
-        clickButtonSchedule(wrapper);
+        await user.click(screen.getByText("Schedule"));
 
-        expect(onSubmit.mock.calls[0][0]).toMatchObject({
-            bcc: [],
-            body: "Hello,\n\nYour scheduled email is ready. You can download the dashboard in attachments.",
-            description: "Daily at 12:30 PM",
-            subject: "Dashboard title",
-            title: "Dashboard title",
-            to: ["user@gooddata.com"],
-            unlisted: true,
-            when: {
-                recurrence: "0:0:0:1*12:30:0",
-                startDate: "2022-01-02",
-            },
-            attachments: [
-                {
-                    format: "pdf",
-                    dashboard,
+        await waitFor(() => {
+            expect(onSubmit.mock.calls[0][0]).toMatchObject({
+                bcc: [],
+                body: "Hello,\n\nYour scheduled email is ready. You can download the dashboard in attachments.",
+                description: "Daily at 12:30 PM",
+                subject: "Dashboard title",
+                title: "Dashboard title",
+                to: ["user@gooddata.com"],
+                unlisted: true,
+                when: {
+                    recurrence: "0:0:0:1*12:30:0",
+                    startDate: "2022-01-02",
                 },
-            ],
+                attachments: [
+                    {
+                        format: "pdf",
+                        dashboard,
+                    },
+                ],
+            });
         });
 
         jest.useRealTimers();
     });
 
-    it("should generate scheduled mail with changed values", () => {
+    it("should generate scheduled mail with changed values", async () => {
+        const user = userEvent.setup({
+            advanceTimers: () => jest.runOnlyPendingTimers(),
+        });
         jest.useFakeTimers().setSystemTime(new Date("2022-01-02 12:13").getTime());
         const onSubmit = jest.fn();
-        const wrapper = renderComponent({ onSubmit });
+        renderComponent({ onSubmit });
 
-        selectTime(wrapper, "02", "00", "am");
-        selectRepeatPeriod(wrapper, "weekly_on_sunday");
-        userEntersSubject(wrapper, "new subject");
-        clickButtonSchedule(wrapper);
+        await user.click(screen.getByText("12:30 PM"));
+        await user.click(screen.getByText("02:00 AM"));
+        await user.click(screen.getByText("Daily"));
+        await user.click(screen.getByText("Weekly on Sunday"));
+        await user.type(screen.getByPlaceholderText("Dashboard title"), "new subject");
+        await user.click(screen.getByText("Schedule"));
 
         expect(onSubmit.mock.calls[0][0]).toMatchObject({
             bcc: [],
@@ -162,29 +144,10 @@ describe("ScheduledMailDialogRenderer", () => {
         jest.useRealTimers();
     });
 
-    it("should render recipient component in schedule email dialog", () => {
-        const component = renderComponent();
-        expect(component.find(RecipientsSelect)).toHaveLength(1);
-    });
-
     it("should render subject in schedule email dialog", () => {
         const onSubmit = jest.fn();
-        const wrapper = renderComponent({ onSubmit, dashboardTitle: "test" });
-        const subjectInput = wrapper.find(".s-gd-schedule-email-dialog-subject input");
-        const valueInput = subjectInput.prop("placeholder");
-        expect(valueInput?.length).toBeLessThan(255);
-    });
-
-    it("should render subject in schedule email dialog with long text", () => {
-        const onSubmit = jest.fn();
-        const wrapper = renderComponent({
-            onSubmit,
-            dashboardTitle:
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        });
-        const subjectInput = wrapper.find(".s-gd-schedule-email-dialog-subject input");
-        const valueInput = subjectInput.prop("placeholder");
-        expect(valueInput?.length).toBe(255);
+        renderComponent({ onSubmit, dashboardTitle: "test" });
+        expect(screen.getByPlaceholderText("test")).toBeInTheDocument();
     });
 
     describe("default attachment", () => {
@@ -200,42 +163,48 @@ describe("ScheduledMailDialogRenderer", () => {
         );
 
         it("should not render default csv attachment selected when FF is false", () => {
-            const wrapper = renderComponent({
+            renderComponent({
                 enableWidgetExportScheduling: false,
                 defaultAttachment: widgetRef2,
                 dashboardInsightWidgets: [insightWidget1, insightWidget2],
             });
 
-            expect(wrapper.find(".s-gd-dashboard-attachment")).not.toExist();
+            expect(screen.queryByLabelText("dashboard-attachment")).not.toBeInTheDocument();
         });
 
         it("should not render default csv attachment selected when default attachment is not provided", () => {
-            const wrapper = renderComponent({
+            renderComponent({
                 enableWidgetExportScheduling: true,
                 dashboardInsightWidgets: [insightWidget1, insightWidget2],
             });
 
-            expect(wrapper.find(".s-gd-dashboard-attachment").text()).toEqual("pdfDashboard title");
+            const attachment = screen.getByLabelText("dashboard-attachment");
+            expect(within(attachment).getByText("pdf")).toBeInTheDocument();
+            expect(within(attachment).getByText("Dashboard title")).toBeInTheDocument();
         });
 
         it("should not render default csv attachment selected when default attachment is not valid", () => {
-            const wrapper = renderComponent({
+            renderComponent({
                 enableWidgetExportScheduling: true,
                 defaultAttachment: uriRef("invalidWidgetUri"),
                 dashboardInsightWidgets: [insightWidget1, insightWidget2],
             });
 
-            expect(wrapper.find(".s-gd-dashboard-attachment").text()).toEqual("pdfDashboard title");
+            const attachment = screen.getByLabelText("dashboard-attachment");
+            expect(within(attachment).getByText("pdf")).toBeInTheDocument();
+            expect(within(attachment).getByText("Dashboard title")).toBeInTheDocument();
         });
 
         it("should render default csv attachment selected when provided", () => {
-            const wrapper = renderComponent({
+            renderComponent({
                 enableWidgetExportScheduling: true,
                 defaultAttachment: widgetRef2,
                 dashboardInsightWidgets: [insightWidget1, insightWidget2],
             });
 
-            expect(wrapper.find(".s-gd-dashboard-attachment").text()).toEqual("csvWidget 2");
+            const attachment = screen.getByLabelText("dashboard-attachment");
+            expect(within(attachment).getByText("csv")).toBeInTheDocument();
+            expect(within(attachment).getByText("Widget 2")).toBeInTheDocument();
         });
     });
 });

@@ -1,20 +1,17 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { render } from "@testing-library/react";
 
-import { IntlWrapper } from "../../../../../localization";
 import KpiValue, { IKpiValueProps } from "../KpiValue";
 
+import { IntlWrapper } from "../../../../../localization";
+
 function renderKpiValue(props: IKpiValueProps) {
-    const wrapper = mount(
+    return render(
         <IntlWrapper>
             <KpiValue {...props} />
         </IntlWrapper>,
     );
-    return {
-        wrapper,
-        component: wrapper.find(KpiValue).instance(),
-    };
 }
 
 const requiredKpiValueProps: IKpiValueProps = {
@@ -33,9 +30,8 @@ describe("KpiValue drill underline", () => {
             ...requiredKpiValueProps,
             disableKpiDrillUnderline: false,
         };
-
-        const { wrapper } = renderKpiValue(kpiValueProps);
-        expect(wrapper.find(".s-kpi-value").hasClass("kpi-link-style-underline")).toBe(true);
+        renderKpiValue(kpiValueProps);
+        expect(document.querySelector(".kpi-link-style-underline")).toBeInTheDocument();
     });
 
     it("Should be hidden underline when disableKpiDrillUnderline is set to true", () => {
@@ -44,7 +40,7 @@ describe("KpiValue drill underline", () => {
             disableKpiDrillUnderline: true,
         };
 
-        const { wrapper } = renderKpiValue(kpiValueProps);
-        expect(wrapper.find(".s-kpi-value").hasClass("kpi-link-style-underline")).toBe(false);
+        renderKpiValue(kpiValueProps);
+        expect(document.querySelector(".kpi-link-style-underline")).not.toBeInTheDocument();
     });
 });

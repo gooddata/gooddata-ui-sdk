@@ -1,20 +1,17 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { render, screen } from "@testing-library/react";
 
-import { IntlWrapper } from "../../../../../localization";
 import KpiPop, { IKpiPopProps } from "../KpiPop";
 
+import { IntlWrapper } from "../../../../../localization";
+
 function renderKpiPop(props: IKpiPopProps) {
-    const wrapper = mount(
+    return render(
         <IntlWrapper>
             <KpiPop {...props} />
         </IntlWrapper>,
     );
-    return {
-        wrapper,
-        component: wrapper.find(KpiPop).instance(),
-    };
 }
 
 const requiredKpiPopProps: IKpiPopProps = {
@@ -33,21 +30,9 @@ const requiredKpiPopProps: IKpiPopProps = {
 };
 
 describe("KpiPop's module functions", () => {
-    const { wrapper } = renderKpiPop(requiredKpiPopProps);
-
-    it("should return kpiPop section", () => {
-        expect(wrapper.find(".headline-compare-section")).toHaveLength(1);
-    });
-
-    it("should return kpiPop previous period", () => {
-        expect(wrapper.find(".kpi-pop-period")).toHaveLength(1);
-    });
-
-    it("should return kpiPop percentage", () => {
-        expect(wrapper.find(".kpi-pop-change")).toHaveLength(1);
-    });
-
-    it("should return kpiPop percentage with responsive css class", () => {
-        expect(wrapper.find(".kpi-pop-change").html().includes("is-kpi-neutral")).toBe(true);
+    it("should return kpiPop, previous period, percentage sections", () => {
+        renderKpiPop(requiredKpiPopProps);
+        expect(screen.getByText("change")).toBeInTheDocument();
+        expect(screen.getByText("prev. year")).toBeInTheDocument();
     });
 });
