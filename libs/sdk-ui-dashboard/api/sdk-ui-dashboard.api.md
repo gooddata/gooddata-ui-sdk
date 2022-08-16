@@ -3274,7 +3274,7 @@ export interface IDraggableCreatePanelItemProps {
     // (undocumented)
     onDragEnd?: (didDrop: boolean) => void;
     // (undocumented)
-    onDragStart?: () => void;
+    onDragStart?: (item: DraggableItem) => void;
 }
 
 // @alpha
