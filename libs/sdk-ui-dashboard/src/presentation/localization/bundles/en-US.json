@@ -1039,8 +1039,8 @@
         "limit": 0
     },
     "attributesDropdown.noData": {
-        "value": "This attribute does not have any value.",
-        "comment": "",
+        "value": "This attribute has no values.",
+        "comment": "This message is displayed when when there are no items available because the attribute has no elements.",
         "limit": 0
     },
     "attributesDropdown.configuration": {

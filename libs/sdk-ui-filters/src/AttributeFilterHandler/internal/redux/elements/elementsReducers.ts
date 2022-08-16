@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 import { PayloadAction } from "@reduxjs/toolkit";
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
-import { IMeasure, IRelativeDateFilter, SortDirection } from "@gooddata/sdk-model";
+import { IAttributeMetadataObject, IMeasure, IRelativeDateFilter, SortDirection } from "@gooddata/sdk-model";
 
 import { AttributeFilterReducer } from "../store/state";
 
@@ -43,6 +43,12 @@ const setLimitingAttributeFilters: AttributeFilterReducer<
     state.elements.currentOptions.limitingAttributeFilters = action.payload.filters;
 };
 
+const setLimitingAttributeFiltersAttributes: AttributeFilterReducer<
+    PayloadAction<{ attributes: IAttributeMetadataObject[] }>
+> = (state, action) => {
+    state.elements.limitingAttributeFiltersAttributes = action.payload.attributes;
+};
+
 const setLimitingMeasures: AttributeFilterReducer<PayloadAction<{ filters: IMeasure[] }>> = (
     state,
     action,
@@ -70,4 +76,5 @@ export const elementsReducers = {
     setLimitingAttributeFilters,
     setLimitingMeasures,
     setLimitingDateFilters,
+    setLimitingAttributeFiltersAttributes,
 };

@@ -5,13 +5,15 @@ import { FilterStories } from "../../../../_infra/storyGroups";
 import { storiesOf } from "../../../../_infra/storyRepository";
 import { wrapWithTheme } from "../../../themeWrapper";
 
-import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
-import { AttributeFilterDropdownActions } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Components/Dropdown/AttributeFilterDropdownActions";
 import { action } from "@storybook/addon-actions";
+import { IntlWrapper } from "@gooddata/sdk-ui";
+import { AttributeFilterDropdownActions } from "@gooddata/sdk-ui-filters/dist/internal";
+
+import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 
 const AttributeFilterButtonsExamples = (): JSX.Element => {
     return (
-        <InternalIntlWrapper>
+        <IntlWrapper>
             <div style={{ width: 400 }}>
                 <div className="library-component screenshot-target">
                     <h4>AttributeFilterDropdownActions</h4>
@@ -28,7 +30,7 @@ const AttributeFilterButtonsExamples = (): JSX.Element => {
                     />
                 </div>
             </div>
-        </InternalIntlWrapper>
+        </IntlWrapper>
     );
 };
 

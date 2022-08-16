@@ -308,10 +308,6 @@ export class AttributeFilterLoader implements IAttributeFilterLoader {
     };
 
     setLimitingAttributeFilters = (filters: IElementsQueryAttributeFilter[]): void => {
-        invariant(
-            this.config.backend.capabilities.supportsElementsQueryParentFiltering,
-            "Current backend implementation does not support limitingAttributeFilters.",
-        );
         this.bridge.setLimitingAttributeFilters(filters);
     };
 
@@ -341,6 +337,10 @@ export class AttributeFilterLoader implements IAttributeFilterLoader {
 
     getTotalElementsCountWithCurrentSettings = (): number => {
         return this.bridge.getTotalCountWithCurrentSettings();
+    };
+
+    getLimitingAttributeFiltersAttributes = (): IAttributeMetadataObject[] => {
+        return this.bridge.getLimitingAttributeFiltersAttributes();
     };
 
     getFilter = (): IAttributeFilter => {

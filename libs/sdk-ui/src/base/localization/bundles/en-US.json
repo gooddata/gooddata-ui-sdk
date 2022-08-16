@@ -357,7 +357,7 @@
         "limit": 0
     },
     "gs.list.limitReached": {
-        "value": "You have reached the limit of {limit} selected values",
+        "value": "You have reached the limit of {limit} selected values.",
         "comment": "Don't translate placeholder '{limit}'.",
         "limit": 0
     },
@@ -1384,13 +1384,8 @@
         "limit": 0,
         "translate": false
     },
-    "attributesDropdown.allItemsFiltered": {
-        "value": "All items are filtered out",
-        "comment": "This message is displayed when there are no items available because they were filtered out by parent filters",
-        "limit": 0
-    },
     "attributesDropdown.itemsFiltered.tooltip": {
-        "value": "Items are filtered by: <strong>{filters}</strong>",
+        "value": "Values are filtered by: <strong>{filters}</strong>",
         "comment": "Do not translate HTML markup enclosed in <> and {filters} placeholder as it will be replaced by list of filter names.",
         "limit": 0
     },
@@ -1400,8 +1395,28 @@
         "limit": 0
     },
     "attributesDropdown.noData": {
-        "value": "This attribute does not have any value.",
-        "comment": "",
+        "value": "This attribute has no values.",
+        "comment": "This message is displayed when when there are no items available because the attribute has no elements.",
+        "limit": 0
+    },
+    "attributesDropdown.noResultsMatch": {
+        "value": "No results match.",
+        "comment": "This message is displayed when when there are no items available because they were filtered out by search.",
+        "limit": 0
+    },
+    "attributesDropdown.allItemsFiltered": {
+        "value": "All values are filtered out.",
+        "comment": "This message is displayed when there are no items available because they were filtered out by parent filters.",
+        "limit": 0
+    },
+    "attributesDropdown.configuration": {
+        "value": "Configuration",
+        "comment": "Configuration button label in attribute filter dropdown",
+        "limit": 0
+    },
+    "attributesDropdown.removeTooltip": {
+        "value": "Remove from dashboard",
+        "comment": "Tooltip text of button for deleting filter",
         "limit": 0
     },
     "shareDialog.share.grantee.title": {

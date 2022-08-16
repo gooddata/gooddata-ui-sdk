@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-import React from "react";
+import React, { useMemo } from "react";
 import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext";
 import { useAttributeFilterContext } from "../../Context/AttributeFilterContext";
 import { IAttributeFilterDropdownBodyProps } from "./types";
@@ -10,29 +10,52 @@ import { IAttributeFilterDropdownBodyProps } from "./types";
 export const AttributeFilterDropdownBody: React.FC<IAttributeFilterDropdownBodyProps> = (props) => {
     const { onApplyButtonClick, onCloseButtonClick } = props;
 
-    const { AttributeFilterDropdownActions, AttributeFilterDropdownContent } =
-        useAttributeFilterComponentsContext();
+    const { DropdownActionsComponent, ElementsSelectComponent } = useAttributeFilterComponentsContext();
 
     const {
         initialElementsPageError,
         nextElementsPageError,
-        hasNoData,
-        hasNoMatchingData,
-        parentFilterTitles,
-        showItemsFilteredMessage,
         isApplyDisabled,
+        isWorkingSelectionInverted,
+        isLoadingInitialElementsPage,
+        isLoadingNextElementsPage,
+        onLoadNextElementsPage,
+        elements,
+        onSearch,
+        onSelect,
+        nextElementsPageSize,
+        searchString,
+        totalElementsCount,
+        totalElementsCountWithCurrentSettings,
+        workingSelectionElements,
+        parentFilterAttributes,
+        isFilteredByParentFilters,
     } = useAttributeFilterContext();
+
+    const parentFilterTitles = useMemo(() => {
+        return parentFilterAttributes.map((attr) => attr.title);
+    }, [parentFilterAttributes]);
 
     return (
         <div className="gd-attribute-filter-overlay__next">
-            <AttributeFilterDropdownContent
-                error={initialElementsPageError ?? nextElementsPageError}
-                hasNoData={hasNoData}
-                hasNoMatchingData={hasNoMatchingData}
+            <ElementsSelectComponent
+                isInverted={isWorkingSelectionInverted}
+                isLoading={isLoadingInitialElementsPage}
+                isLoadingNextPage={isLoadingNextElementsPage}
+                items={elements}
+                onLoadNextPage={onLoadNextElementsPage}
+                onSearch={onSearch}
+                onSelect={onSelect}
+                nextPageSize={nextElementsPageSize}
+                searchString={searchString}
+                selectedItems={workingSelectionElements}
+                totalItemsCount={totalElementsCount}
+                totalItemsCountWithCurrentSettings={totalElementsCountWithCurrentSettings}
                 parentFilterTitles={parentFilterTitles}
-                showItemsFilteredMessage={showItemsFilteredMessage}
+                isFilteredByParentFilters={isFilteredByParentFilters}
+                error={initialElementsPageError ?? nextElementsPageError}
             />
-            <AttributeFilterDropdownActions
+            <DropdownActionsComponent
                 onApplyButtonClick={onApplyButtonClick}
                 onCloseButtonClick={onCloseButtonClick}
                 isApplyDisabled={isApplyDisabled}

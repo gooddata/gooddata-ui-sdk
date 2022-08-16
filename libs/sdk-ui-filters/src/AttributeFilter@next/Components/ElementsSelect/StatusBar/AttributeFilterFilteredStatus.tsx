@@ -3,37 +3,31 @@ import React, { useMemo } from "react";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage } from "react-intl";
 
-const ALIGN_POINTS = [{ align: "bc tl" }, { align: "tc bl" }];
-const ARROW_OFFSETS = { "bc tl": [-100, 10], "tc bl": [-100, -10] };
+const ALIGN_POINTS = [{ align: "cr cl" }];
+const ARROW_OFFSETS = { "cr cl": [-100, 0] };
 
 /**
  * @alpha
  */
-export interface IAttributeFilterElementsSelectParentItemsFilteredProps {
+export interface IAttributeFilterFilteredStatusProps {
     parentFilterTitles: string[];
-    showItemsFilteredMessage: boolean;
 }
 
 /**
  * @internal
  */
-export const AttributeFilterElementsSelectParentItemsFiltered: React.FC<
-    IAttributeFilterElementsSelectParentItemsFilteredProps
-> = (props) => {
-    const { parentFilterTitles, showItemsFilteredMessage } = props;
+export const AttributeFilterFilteredStatus: React.FC<IAttributeFilterFilteredStatusProps> = (props) => {
+    const { parentFilterTitles } = props;
 
     const tooltipText = useMemo(() => {
         return parentFilterTitles ? parentFilterTitles.join(", ") : "";
     }, [parentFilterTitles]);
 
-    if (!parentFilterTitles || !showItemsFilteredMessage) {
-        return null;
-    }
-
     return (
         <div className="gd-attribute-filter-dropdown-items-filtered__next s-attribute-filter-dropdown-items-filtered">
             <BubbleHoverTrigger showDelay={0} hideDelay={0}>
                 <div className="gd-filtered-message__next">
+                    &nbsp;
                     <FormattedMessage id="attributesDropdown.itemsFiltered" />
                     <span className="gd-icon-circle-question" />
                 </div>

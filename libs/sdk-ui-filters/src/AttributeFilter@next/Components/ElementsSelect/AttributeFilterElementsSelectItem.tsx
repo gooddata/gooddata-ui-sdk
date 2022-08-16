@@ -2,14 +2,9 @@
 import React, { useCallback } from "react";
 import cx from "classnames";
 import camelCase from "lodash/camelCase";
-import { FormattedMessage } from "react-intl";
-import { IInvertableSelectRenderItemProps } from "@gooddata/sdk-ui-kit";
-import { IAttributeElement } from "@gooddata/sdk-model";
-
-/**
- * @alpha
- */
-export type IAttributeFilterElementsSelectItemProps = IInvertableSelectRenderItemProps<IAttributeElement>;
+import { FormattedMessage, useIntl } from "react-intl";
+import { getElementTitle } from "../../utils";
+import { IAttributeFilterElementsSelectItemProps } from "./types";
 
 /**
  * @internal
@@ -18,6 +13,7 @@ export const AttributeFilterElementsSelectItem: React.VFC<IAttributeFilterElemen
     props,
 ) => {
     const { item, isSelected, onSelect, onSelectOnly, onDeselect } = props;
+    const intl = useIntl();
 
     const onItemClick = useCallback(() => {
         if (isSelected) {
@@ -51,7 +47,7 @@ export const AttributeFilterElementsSelectItem: React.VFC<IAttributeFilterElemen
         <div className={classes} onClick={onItemClick}>
             <label className="input-checkbox-label">
                 <input type="checkbox" className="input-checkbox" readOnly checked={isSelected} />
-                <span className="input-label-text">{item.title}</span>
+                <span className="input-label-text">{getElementTitle(item, intl)}</span>
             </label>
             <span className="gd-list-item-only" onClick={onOnlyItemClick}>
                 <FormattedMessage id="gs.list.only" />

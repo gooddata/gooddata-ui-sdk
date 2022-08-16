@@ -132,3 +132,11 @@ export const selectLoadElementsOptions = createSelector(
 export const selectLastLoadedElementsOptions = createSelector(selectState, (state): ILoadElementsOptions => {
     return state.elements.lastLoadedOptions;
 });
+
+/**
+ * @internal
+ */
+export const selectLimitingAttributeFiltersAttributes = createSelector(
+    selectState,
+    (state) => state.elements.limitingAttributeFiltersAttributes,
+);

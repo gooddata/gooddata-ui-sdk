@@ -16,8 +16,7 @@ const ALIGN_POINTS = [
  * @internal
  */
 export const AttributeFilterDropdown: React.VFC = () => {
-    const { AttributeFilterDropdownButton, AttributeFilterDropdownBody } =
-        useAttributeFilterComponentsContext();
+    const { DropdownButtonComponent, DropdownBodyComponent } = useAttributeFilterComponentsContext();
 
     const {
         title,
@@ -39,7 +38,7 @@ export const AttributeFilterDropdown: React.VFC = () => {
             enableEventPropagation={true}
             alignPoints={ALIGN_POINTS}
             renderButton={({ toggleDropdown, isOpen }) => (
-                <AttributeFilterDropdownButton
+                <DropdownButtonComponent
                     title={title}
                     subtitle={subtitle}
                     isFiltering={isFiltering}
@@ -56,7 +55,7 @@ export const AttributeFilterDropdown: React.VFC = () => {
                 }
             }}
             renderBody={({ closeDropdown }) => (
-                <AttributeFilterDropdownBody
+                <DropdownBodyComponent
                     onApplyButtonClick={() => {
                         onApply();
                         closeDropdown();

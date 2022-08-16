@@ -1955,9 +1955,19 @@ export interface IInvertableSelectItem {
 }
 
 // @internal (undocumented)
+export interface IInvertableSelectLimitWarningProps {
+    // (undocumented)
+    limit: number;
+    // (undocumented)
+    selectedItemsCount: number;
+}
+
+// @internal (undocumented)
 export interface IInvertableSelectProps<T> {
     // (undocumented)
     className?: string;
+    // (undocumented)
+    error?: any;
     // (undocumented)
     getItemKey: (item: T) => string;
     // (undocumented)
@@ -1983,7 +1993,17 @@ export interface IInvertableSelectProps<T> {
     // (undocumented)
     onSelect?: (items: T[], isInverted: boolean) => void;
     // (undocumented)
-    renderItem: (props: IInvertableSelectRenderItemProps<T>) => JSX.Element;
+    renderError?: (props: IInvertableSelectRenderErrorProps) => JSX.Element;
+    // (undocumented)
+    renderItem?: (props: IInvertableSelectRenderItemProps<T>) => JSX.Element;
+    // (undocumented)
+    renderLoading?: (props: IInvertableSelectRenderLoadingProps) => JSX.Element;
+    // (undocumented)
+    renderNoData?: (props: IInvertableSelectRenderNoDataProps) => JSX.Element;
+    // (undocumented)
+    renderSearchBar?: (props: IInvertableSelectRenderSearchBarProps) => JSX.Element;
+    // (undocumented)
+    renderStatusBar?: (props: IInvertableSelectRenderStatusBarProps<T>) => JSX.Element;
     // (undocumented)
     searchPlaceholder?: string;
     // (undocumented)
@@ -1999,6 +2019,14 @@ export interface IInvertableSelectProps<T> {
 }
 
 // @internal (undocumented)
+export interface IInvertableSelectRenderErrorProps {
+    // (undocumented)
+    error?: any;
+    // (undocumented)
+    height?: number;
+}
+
+// @internal (undocumented)
 export interface IInvertableSelectRenderItemProps<T> {
     // (undocumented)
     isSelected: boolean;
@@ -2010,6 +2038,66 @@ export interface IInvertableSelectRenderItemProps<T> {
     onSelect: () => void;
     // (undocumented)
     onSelectOnly: () => void;
+}
+
+// @internal (undocumented)
+export interface IInvertableSelectRenderLoadingProps {
+    // (undocumented)
+    height?: number;
+}
+
+// @internal (undocumented)
+export interface IInvertableSelectRenderNoDataProps {
+    // (undocumented)
+    error?: any;
+    // (undocumented)
+    height?: number;
+}
+
+// @internal (undocumented)
+export interface IInvertableSelectRenderSearchBarProps {
+    // (undocumented)
+    onSearch: (searchString: string) => void;
+    // (undocumented)
+    searchPlaceholder?: string;
+    // (undocumented)
+    searchString?: string;
+}
+
+// @internal (undocumented)
+export interface IInvertableSelectRenderStatusBarProps<T> {
+    // (undocumented)
+    getItemTitle: (item: T) => string;
+    // (undocumented)
+    isInverted: boolean;
+    // (undocumented)
+    selectedItems: T[];
+    // (undocumented)
+    selectedItemsLimit?: number;
+}
+
+// @internal (undocumented)
+export interface IInvertableSelectSearchBarProps {
+    // (undocumented)
+    onSearch: (searchString: string) => void;
+    // (undocumented)
+    searchPlaceholder?: string;
+    // (undocumented)
+    searchString?: string;
+}
+
+// @internal (undocumented)
+export interface IInvertableSelectStatusBarProps<T> {
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    getItemTitle: (item: T) => string;
+    // (undocumented)
+    isInverted: boolean;
+    // (undocumented)
+    selectedItems: T[];
+    // (undocumented)
+    selectedItemsLimit: number;
 }
 
 // @internal (undocumented)
@@ -2806,6 +2894,15 @@ export function InvertableSelect<T>(props: IInvertableSelectProps<T>): JSX.Eleme
 
 // @internal (undocumented)
 export function InvertableSelectItem(props: IInvertableSelectItem): JSX.Element;
+
+// @internal (undocumented)
+export function InvertableSelectLimitWarning(props: IInvertableSelectLimitWarningProps): JSX.Element;
+
+// @internal (undocumented)
+export function InvertableSelectSearchBar(props: IInvertableSelectSearchBarProps): JSX.Element;
+
+// @internal (undocumented)
+export function InvertableSelectStatusBar<T>(props: IInvertableSelectStatusBarProps<T>): JSX.Element;
 
 // @internal (undocumented)
 export interface IOffset {

@@ -1,17 +1,17 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
-import { AttributeFilterBase, IAttributeFilterBaseProps } from "./AttributeFilterBase";
+import { AttributeFilterBase } from "./AttributeFilterBase";
 import {
     AttributeFilterSimpleDropdownButton,
     AttributeFilterSimpleDropdownButtonWithSelection,
 } from "./Components/DropdownButton/AttributeFilterSimpleDropdownButton";
+import { IAttributeFilterBaseProps } from "./types";
 
 /**
  * @alpha
  */
 export interface IAttributeFilterProps extends IAttributeFilterBaseProps {
     titleWithSelection?: boolean;
-    fullscreenOnMobile?: boolean; //TODO: not handled
 }
 
 /**
@@ -31,7 +31,8 @@ export const AttributeFilter: React.FC<IAttributeFilterProps> = (props) => {
         <AttributeFilterBase
             {...baseProps}
             DropdownButtonComponent={props.DropdownButtonComponent ?? DropdownButtonComponent}
-            LoadingComponent={props.LoadingComponent ?? LoadingComponent}
+            LoadingComponent={props.FilterLoading ?? props.LoadingComponent ?? LoadingComponent}
+            ErrorComponent={props.FilterError ?? props.ErrorComponent}
         />
     );
 };

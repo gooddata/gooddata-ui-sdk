@@ -15,13 +15,9 @@ export const useResolveParentFiltersInput = (
 ) => {
     const resolvedParentFilters = useResolveValueWithPlaceholders(parentFilters);
 
-    const limitingAttributeFilters = useMemo(() => {
+    return useMemo(() => {
         return getParentFiltersWithOverAttribute(resolvedParentFilters, overAttribute);
     }, [resolvedParentFilters, overAttribute]);
-
-    return {
-        limitingAttributeFilters,
-    };
 };
 
 const getParentFiltersWithOverAttribute = (

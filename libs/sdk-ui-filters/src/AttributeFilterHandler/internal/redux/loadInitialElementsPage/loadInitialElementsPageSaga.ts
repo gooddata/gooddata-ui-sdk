@@ -1,10 +1,12 @@
 // (C) 2022 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { put, call, takeLatest, select, cancelled, SagaReturnType } from "redux-saga/effects";
+import { getAttributeFilterContext } from "../common/sagas";
 
 import { elementsSaga } from "../elements/elementsSaga";
 import { selectLoadElementsOptions } from "../elements/elementsSelectors";
 import { actions } from "../store/slice";
+import { loadLimitingAttributeFiltersAttributes } from "./loadLimitingAttributeFiltersAttributes";
 
 /**
  * @internal
@@ -24,6 +26,8 @@ export function* loadInitialElementsPageSaga(
         | ReturnType<typeof actions.loadInitialElementsPageRequest>
         | ReturnType<typeof actions.loadInitialElementsPageCancelRequest>,
 ): SagaIterator<void> {
+    const context: SagaReturnType<typeof getAttributeFilterContext> = yield call(getAttributeFilterContext);
+
     if (actions.loadInitialElementsPageCancelRequest.match(action)) {
         // Saga was triggered by cancel request - do nothing, just jump to finally statement
         return;
@@ -41,7 +45,15 @@ export function* loadInitialElementsPageSaga(
         );
 
         const result: SagaReturnType<typeof elementsSaga> = yield call(elementsSaga, loadOptions);
+        const limitingAttributeFiltersAttributes = yield call(
+            loadLimitingAttributeFiltersAttributes,
+            context,
+            loadOptions.limitingAttributeFilters ?? [],
+        );
 
+        yield put(
+            actions.setLimitingAttributeFiltersAttributes({ attributes: limitingAttributeFiltersAttributes }),
+        );
         yield put(actions.loadInitialElementsPageSuccess({ ...result, correlation }));
     } catch (error) {
         yield put(
