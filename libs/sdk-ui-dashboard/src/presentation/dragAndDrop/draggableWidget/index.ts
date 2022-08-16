@@ -5,3 +5,4 @@ export * from "./AddKpiWidgetButton";
 export * from "./SectionHotspot";
 export * from "./Hotspot";
 export * from "./WidgetDropZone";
+export * from "./EmptyDashboardDropZone";

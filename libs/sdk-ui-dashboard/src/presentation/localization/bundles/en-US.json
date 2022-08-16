@@ -1793,5 +1793,27 @@
         "value": "Delete",
         "comment": "",
         "limit": 0
+    },
+    "newDashboard.title|insight": {
+        "value": "Drag insight here",
+        "comment": "",
+        "limit": 0
+    },
+    "newDashboard.title|report": {
+        "value": "Drag report here",
+        "comment": "",
+        "translate": false,
+        "limit": 0
+    },
+    "newDashboard.dropInsight|insight": {
+        "value": "Drop insight",
+        "comment": "A placeholder showed when user drags new insight into a dashboard canvas by cursor (drag and drop).",
+        "limit": 0
+    },
+    "newDashboard.dropInsight|report": {
+        "value": "Drop report",
+        "comment": "A placeholder showed when user drags new report into a dashboard canvas by cursor (drag and drop).",
+        "translate": false,
+        "limit": 0
     }
 }

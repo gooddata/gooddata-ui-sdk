@@ -33,7 +33,7 @@ import {
 } from "./DefaultDashboardLayoutRenderer";
 import { RenderModeAwareDashboardLayoutSectionHeaderRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionHeaderRenderer";
 import { getMemoizedWidgetSanitizer } from "./DefaultDashboardLayoutUtils";
-import { SectionHotspot } from "../dragAndDrop";
+import { EmptyDashboardDropZone, SectionHotspot } from "../dragAndDrop";
 
 /**
  * Get dashboard layout for exports.
@@ -134,9 +134,15 @@ export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Elemen
         [onError, onDrill, onFiltersChange],
     );
 
-    return isLayoutEmpty ? (
-        <EmptyDashboardError ErrorComponent={ErrorComponent} />
-    ) : (
+    if (isLayoutEmpty) {
+        return renderMode === "edit" ? (
+            <EmptyDashboardDropZone />
+        ) : (
+            <EmptyDashboardError ErrorComponent={ErrorComponent} />
+        );
+    }
+
+    return (
         <>
             <DashboardLayout
                 className={isExport ? "export-mode" : ""}
