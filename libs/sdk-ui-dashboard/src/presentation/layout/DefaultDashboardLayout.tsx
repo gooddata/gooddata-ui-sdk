@@ -36,7 +36,6 @@ import { RenderModeAwareDashboardLayoutSectionHeaderRenderer } from "./DefaultDa
 import { getMemoizedWidgetSanitizer } from "./DefaultDashboardLayoutUtils";
 import { EmptyDashboardDropZone, SectionHotspot } from "../dragAndDrop";
 import { isInitialPlaceholderWidget } from "../../widgets";
-import { DashboardLayoutSectionBorderLine } from "../dragAndDrop/draggableWidget/DashboardLayoutSectionBorder";
 
 /**
  * Get dashboard layout for exports.
@@ -162,10 +161,8 @@ export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Elemen
                 sectionHeaderRenderer={RenderModeAwareDashboardLayoutSectionHeaderRenderer}
                 renderMode={renderMode}
             />
-            {shouldRenderSectionHotspot ? (
+            {!!shouldRenderSectionHotspot && (
                 <SectionHotspot index={transformedLayout.sections.length} targetPosition="below" />
-            ) : (
-                <DashboardLayoutSectionBorderLine position="top" status="muted" />
             )}
         </>
     );

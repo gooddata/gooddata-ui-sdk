@@ -2,8 +2,7 @@
 import React from "react";
 import { IDashboardLayoutSectionRenderer } from "./interfaces";
 import cx from "classnames";
-import { DashboardLayoutSectionBorder } from "../../dragAndDrop/draggableWidget/DashboardLayoutSectionBorder";
-import { DashboardLayoutSectionBorderStatus } from "../../dragAndDrop/draggableWidget/DashboardLayoutSectionBorder/types";
+import { DashboardLayoutSectionBorder, DashboardLayoutSectionBorderStatus } from "../../dragAndDrop";
 import { selectActiveSectionIndex, selectIsDraggingWidget, useDashboardSelector } from "../../../model";
 
 const isHiddenStyle = { height: 0, width: 0, overflow: "hidden", flex: 0 };
