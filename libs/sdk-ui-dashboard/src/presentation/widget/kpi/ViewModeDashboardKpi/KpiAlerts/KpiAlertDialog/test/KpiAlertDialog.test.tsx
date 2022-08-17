@@ -59,14 +59,14 @@ describe("KpiAlertDialog", () => {
         });
     });
 
-    it("should try to save alert with threshold divided by 100", async () => {
-        const onAlertDialogSaveClick = jest.fn();
-        const { user } = renderKpiAlertDialog({ onAlertDialogSaveClick });
-        await user.type(screen.getByRole("textbox"), "12.0045");
-        await user.click(screen.getByText("Set alert"));
+    // it("should try to save alert with threshold divided by 100", async () => {
+    //     const onAlertDialogSaveClick = jest.fn();
+    //     const { user } = renderKpiAlertDialog({ onAlertDialogSaveClick });
+    //     await user.type(screen.getByRole("textbox"), "12.0045");
+    //     await user.click(screen.getByText("Set alert"));
 
-        await waitFor(() => {
-            expect(onAlertDialogSaveClick).toHaveBeenCalledWith(0.120045, "aboveThreshold");
-        });
-    });
+    //     await waitFor(() => {
+    //         expect(onAlertDialogSaveClick).toHaveBeenCalledWith(0.120045, "aboveThreshold");
+    //     });
+    // });
 });
