@@ -3657,7 +3657,7 @@ export interface InsightPlaceholderWidget extends ICustomWidget {
 // @alpha
 export function insightSelectDateDataset(queryResult: InsightDateDatasets): ICatalogDateDataset | undefined;
 
-// @alpha (undocumented)
+// @internal
 export class InsightWidgetBuilder {
     constructor(insight: IInsight);
     // (undocumented)
@@ -3679,7 +3679,7 @@ export class InsightWidgetBuilder {
     // (undocumented)
     type: string;
     // (undocumented)
-    withConfiguration(config: IInsightWidgetConfiguration): void;
+    withConfiguration(config: IInsightWidgetConfiguration): this;
     // (undocumented)
     withDescription(description: string): this;
     // (undocumented)
@@ -3687,7 +3687,7 @@ export class InsightWidgetBuilder {
     // (undocumented)
     withIgnoredDashboardFilters(ignoredDashboardFilters: IDashboardFilterReference[]): this;
     // (undocumented)
-    withProperties(props: VisualizationProperties): void;
+    withProperties(props: VisualizationProperties): this;
     // (undocumented)
     withTitle(title: string): this;
 }

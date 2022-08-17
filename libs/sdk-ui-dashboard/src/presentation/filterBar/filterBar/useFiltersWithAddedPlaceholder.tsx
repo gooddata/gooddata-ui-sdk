@@ -1,6 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import partition from "lodash/partition";
 import {
     areObjRefsEqual,
@@ -75,9 +75,23 @@ export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
     const selectedFilterIndex = useDashboardSelector(selectSelectedFilterIndex);
 
     const [[dateFilter], attributeFilters] = partition(filters, isDashboardDateFilter);
-    const [addedAttributeFilter, setAddedAttributeFilter] = useState<
-        FilterBarAttributeFilterPlaceholder | undefined
-    >();
+    const [selectedDisplayForm, setSelectedDisplayForm] = useState<ObjRef | undefined>();
+
+    const addedAttributeFilter: FilterBarAttributeFilterPlaceholder | undefined = useMemo(() => {
+        if (selectedFilterIndex !== undefined) {
+            if (selectedDisplayForm) {
+                return {
+                    ...({
+                        type: "attributeFilterPlaceholder",
+                        filterIndex: selectedFilterIndex,
+                    } as FilterBarAttributeFilterPlaceholder),
+                    selectedDisplayForm,
+                };
+            }
+            return { type: "attributeFilterPlaceholder", filterIndex: selectedFilterIndex };
+        }
+        return undefined;
+    }, [selectedFilterIndex, selectedDisplayForm]);
 
     const addAttributeFilterPlaceholder = useCallback(
         function (index: number) {
@@ -87,27 +101,20 @@ export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
     );
 
     const clearAddedFilter = useCallback(() => {
+        setSelectedDisplayForm(undefined);
         dispatch(uiActions.clearFilterIndexSelection());
     }, [dispatch]);
-
-    useEffect(() => {
-        if (selectedFilterIndex !== undefined) {
-            setAddedAttributeFilter({ type: "attributeFilterPlaceholder", filterIndex: selectedFilterIndex });
-            return;
-        }
-        setAddedAttributeFilter(undefined);
-    }, [addAttributeFilterPlaceholder, clearAddedFilter, selectedFilterIndex]);
 
     const closeAttributeSelection = useCallback(
         function () {
             // close after select attribute should not clear placeholder
-            if (addedAttributeFilter?.displayForm) {
+            if (selectedDisplayForm) {
                 return;
             }
 
             clearAddedFilter();
         },
-        [addedAttributeFilter?.displayForm, clearAddedFilter],
+        [selectedDisplayForm, clearAddedFilter],
     );
 
     const attributeFiltersWithPlaceholder = useMemo(() => {
@@ -117,12 +124,9 @@ export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
         }));
 
         const containsAddedAttributeDisplayForm =
-            addedAttributeFilter?.displayForm &&
+            selectedDisplayForm &&
             attributeFilters.some((attributeFilter) =>
-                areObjRefsEqual(
-                    attributeFilter.attributeFilter.displayForm,
-                    addedAttributeFilter.displayForm,
-                ),
+                areObjRefsEqual(attributeFilter.attributeFilter.displayForm, selectedDisplayForm),
             );
 
         if (addedAttributeFilter === undefined || containsAddedAttributeDisplayForm) {
@@ -132,7 +136,7 @@ export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
         filterObjects.splice(addedAttributeFilter.filterIndex, 0, addedAttributeFilter);
 
         return filterObjects;
-    }, [addedAttributeFilter, attributeFilters]);
+    }, [addedAttributeFilter, attributeFilters, selectedDisplayForm]);
 
     const selectAttributeFilter = useCallback(
         function (displayForm: ObjRef) {
@@ -140,7 +144,7 @@ export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
                 return;
             }
 
-            setAddedAttributeFilter((f) => ({ ...(f as FilterBarAttributeFilterPlaceholder), displayForm }));
+            setSelectedDisplayForm(displayForm);
 
             dispatchAndWaitFor(
                 dispatch,

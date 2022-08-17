@@ -12,7 +12,13 @@ import {
 } from "@gooddata/sdk-model";
 
 /**
- * @alpha
+ * Builder for a {@link @gooddata/sdk-model#IDashboardWidget} object.
+ *
+ * @remarks
+ * The builder without any modifications returns a widget with all mandatory data. To apply
+ * additional information use builder functions.
+ *
+ * @internal
  */
 export class InsightWidgetBuilder {
     insight: ObjRef;
@@ -51,10 +57,12 @@ export class InsightWidgetBuilder {
 
     withConfiguration(config: IInsightWidgetConfiguration) {
         this.configuration = config;
+        return this;
     }
 
     withProperties(props: VisualizationProperties) {
         this.properties = props;
+        return this;
     }
 
     build() {
