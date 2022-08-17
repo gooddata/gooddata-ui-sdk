@@ -177,6 +177,12 @@ export interface IWorkspacesQuery {
     withOffset(offset: number): IWorkspacesQuery;
 
     /**
+     * Sets a identifier of the parent workspace to get its children, otherwise the root workspace.
+     * @param workspaceId - identifier of the parent workspace
+     */
+    withParent(workspaceId: string | undefined): IWorkspacesQuery;
+
+    /**
      * Sets a text to search.
      * @param search - text to search
      */

@@ -1,6 +1,11 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { ServerPaging } from "@gooddata/sdk-backend-base";
-import { IWorkspacesQueryFactory, IWorkspacesQuery, IWorkspacesQueryResult } from "@gooddata/sdk-backend-spi";
+import {
+    IWorkspacesQueryFactory,
+    IWorkspacesQuery,
+    IWorkspacesQueryResult,
+    NotSupported,
+} from "@gooddata/sdk-backend-spi";
 import { convertUserProject } from "../../convertors/toBackend/WorkspaceConverter";
 import { BearAuthenticatedCallGuard } from "../../types/auth";
 import { userLoginMd5FromAuthenticatedPrincipal } from "../../utils/api";
@@ -33,6 +38,10 @@ class BearWorkspaceQuery implements IWorkspacesQuery {
     public withOffset(offset: number): IWorkspacesQuery {
         this.offset = offset;
         return this;
+    }
+
+    public withParent(): IWorkspacesQuery {
+        throw new NotSupported("not supported");
     }
 
     public withSearch(search: string): IWorkspacesQuery {

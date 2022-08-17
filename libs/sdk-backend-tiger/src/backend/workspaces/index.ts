@@ -32,6 +32,7 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
     private limit: number = 100;
     private offset: number = 0;
     private search: string | undefined = undefined;
+    private parentWorkspaceId: string | undefined = undefined;
 
     constructor(
         private readonly authCall: TigerAuthenticatedCallGuard,
@@ -47,6 +48,11 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
 
     public withOffset(offset: number): IWorkspacesQuery {
         this.offset = offset;
+        return this;
+    }
+
+    public withParent(workspaceId: string): IWorkspacesQuery {
+        this.parentWorkspaceId = workspaceId;
         return this;
     }
 
@@ -91,9 +97,11 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
         search?: string,
     ): Promise<IWorkspacesQueryResult> {
         const allWorkspaces = await this.authCall((client) => {
+            const filterParam = this.parentWorkspaceId ? `parent.id==${this.parentWorkspaceId}` : undefined;
             return OrganizationUtilities.getAllPagesOf(client, client.entities.getAllEntitiesWorkspaces, {
                 sort: ["name"],
                 include: ["workspaces"],
+                filter: filterParam,
             })
                 .then(OrganizationUtilities.mergeEntitiesResults)
                 .then(this.resultToWorkspaceDescriptors)
