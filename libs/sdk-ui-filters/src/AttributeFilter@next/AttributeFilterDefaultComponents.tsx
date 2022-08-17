@@ -18,7 +18,7 @@ import { AttributeFilterStatusBar } from "./Components/ElementsSelect/StatusBar/
  */
 export const AttributeFilterDefaultComponents: Required<IAttributeFilterCustomComponentProps> = {
     ErrorComponent: AttributeFilterError,
-    LoadingComponent: AttributeFilterLoading,
+    LoadingComponent: undefined,
     DropdownButtonComponent: AttributeFilterDropdownButton,
     DropdownBodyComponent: AttributeFilterDropdownBody,
     DropdownActionsComponent: AttributeFilterDropdownActions,
