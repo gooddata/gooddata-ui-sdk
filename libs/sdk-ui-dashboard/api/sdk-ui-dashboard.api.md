@@ -5095,6 +5095,9 @@ export const selectAccessibleDashboards: (state: DashboardState) => IListedDashb
 // @alpha
 export const selectAccessibleDashboardsMap: OutputSelector<DashboardState, ObjRefMap<IListedDashboard>, (res: IListedDashboard[]) => ObjRefMap<IListedDashboard>>;
 
+// @internal (undocumented)
+export const selectActiveSectionIndex: OutputSelector<DashboardState, number | undefined, (res: UiState) => number | undefined>;
+
 // @alpha
 export const selectAlertByRef: ((ref: ObjRef) => (state: DashboardState) => IWidgetAlert | undefined) & MemoizedFunction;
 
@@ -5859,10 +5862,17 @@ setIsDraggingWidget: CaseReducer<UiState, {
 payload: boolean;
 type: string;
 }>;
+setActiveSectionIndex: CaseReducer<UiState, {
+payload: number;
+type: string;
+}>;
+clearActiveSectionIndex: CaseReducer<UiState, AnyAction>;
 }>;
 
 // @alpha (undocumented)
 export interface UiState {
+    // (undocumented)
+    activeSectionIndex: number | undefined;
     // (undocumented)
     configurationPanelOpened: boolean;
     // (undocumented)

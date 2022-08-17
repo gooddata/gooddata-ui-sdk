@@ -47,6 +47,7 @@ export interface UiState {
     filterAttributeSelectionOpen: boolean;
     selectedFilterIndex: number | undefined;
     isDraggingWidget: boolean;
+    activeSectionIndex: number | undefined;
 }
 
 export const uiInitialState: UiState = {
@@ -87,4 +88,5 @@ export const uiInitialState: UiState = {
     filterAttributeSelectionOpen: false,
     selectedFilterIndex: undefined,
     isDraggingWidget: false,
+    activeSectionIndex: undefined,
 };

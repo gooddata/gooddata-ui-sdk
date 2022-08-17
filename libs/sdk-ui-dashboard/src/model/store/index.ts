@@ -230,6 +230,7 @@ export {
     selectIsFilterAttributeSelectionOpen,
     selectSelectedFilterIndex,
     selectIsDraggingWidget,
+    selectActiveSectionIndex,
 } from "./ui/uiSelectors";
 export { uiActions } from "./ui";
 export { RenderModeState } from "./renderMode/renderModeState";
