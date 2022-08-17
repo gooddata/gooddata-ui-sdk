@@ -115,6 +115,18 @@ const setWidgetLoadingAdditionalDataStopped: UiReducer<PayloadAction<ObjRef>> = 
     );
 };
 
+const setFilterAttributeSelectionOpen: UiReducer<PayloadAction<boolean>> = (state, action) => {
+    state.filterAttributeSelectionOpen = action.payload;
+};
+
+const selectFilterIndex: UiReducer<PayloadAction<number>> = (state, action) => {
+    state.selectedFilterIndex = action.payload;
+};
+
+const clearFilterIndexSelection: UiReducer = (state) => {
+    state.selectedFilterIndex = undefined;
+};
+
 export const uiReducers = {
     openScheduleEmailDialog,
     closeScheduleEmailDialog,
@@ -142,4 +154,7 @@ export const uiReducers = {
     requestInsightListUpdate,
     setWidgetLoadingAdditionalDataStarted,
     setWidgetLoadingAdditionalDataStopped,
+    setFilterAttributeSelectionOpen,
+    selectFilterIndex,
+    clearFilterIndexSelection,
 };

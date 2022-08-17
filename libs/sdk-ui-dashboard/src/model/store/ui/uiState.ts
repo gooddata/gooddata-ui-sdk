@@ -44,6 +44,8 @@ export interface UiState {
     kpiDateDatasetAutoOpen: boolean;
     insightListLastUpdateRequested: number;
     widgetsLoadingAdditionalData: ObjRef[];
+    filterAttributeSelectionOpen: boolean;
+    selectedFilterIndex: number | undefined;
 }
 
 export const uiInitialState: UiState = {
@@ -81,4 +83,6 @@ export const uiInitialState: UiState = {
     kpiDateDatasetAutoOpen: false,
     insightListLastUpdateRequested: 0,
     widgetsLoadingAdditionalData: [],
+    filterAttributeSelectionOpen: false,
+    selectedFilterIndex: undefined,
 };

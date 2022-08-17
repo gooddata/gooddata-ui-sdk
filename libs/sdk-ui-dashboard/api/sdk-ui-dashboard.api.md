@@ -49,6 +49,7 @@ import { IDashboardAttributeFilter } from '@gooddata/sdk-model';
 import { IDashboardAttributeFilterParent } from '@gooddata/sdk-model';
 import { IDashboardDateFilter } from '@gooddata/sdk-model';
 import { IDashboardDateFilterConfig as IDashboardDateFilterConfig_2 } from '@gooddata/sdk-model';
+import { IDashboardFilterReference } from '@gooddata/sdk-model';
 import { IDashboardLayout } from '@gooddata/sdk-model';
 import { IDashboardLayoutItem } from '@gooddata/sdk-model';
 import { IDashboardLayoutSection } from '@gooddata/sdk-model';
@@ -80,6 +81,7 @@ import { IHeaderPredicate } from '@gooddata/sdk-ui';
 import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import { IInsightWidget } from '@gooddata/sdk-model';
+import { IInsightWidgetConfiguration } from '@gooddata/sdk-model';
 import { IInsightWidgetDefinition } from '@gooddata/sdk-model';
 import { IKpi } from '@gooddata/sdk-model';
 import { IKpiComparisonDirection } from '@gooddata/sdk-model';
@@ -3656,6 +3658,41 @@ export interface InsightPlaceholderWidget extends ICustomWidget {
 export function insightSelectDateDataset(queryResult: InsightDateDatasets): ICatalogDateDataset | undefined;
 
 // @internal
+export class InsightWidgetBuilder {
+    constructor(insight: IInsight);
+    // (undocumented)
+    build(): this;
+    // (undocumented)
+    configuration: IInsightWidgetConfiguration;
+    // (undocumented)
+    description: string;
+    // (undocumented)
+    drills: DrillDefinition[];
+    // (undocumented)
+    ignoredDashboardFilters: IDashboardFilterReference[];
+    // (undocumented)
+    insight: ObjRef;
+    // (undocumented)
+    properties: VisualizationProperties;
+    // (undocumented)
+    title: string;
+    // (undocumented)
+    type: string;
+    // (undocumented)
+    withConfiguration(config: IInsightWidgetConfiguration): this;
+    // (undocumented)
+    withDescription(description: string): this;
+    // (undocumented)
+    withDrills(drills: DrillDefinition[]): this;
+    // (undocumented)
+    withIgnoredDashboardFilters(ignoredDashboardFilters: IDashboardFilterReference[]): this;
+    // (undocumented)
+    withProperties(props: VisualizationProperties): this;
+    // (undocumented)
+    withTitle(title: string): this;
+}
+
+// @internal
 export type InsightWidgetComponentSet = CustomComponentBase<IDashboardInsightProps, Parameters<InsightComponentProvider>> & DraggableComponent & Partial<CreatableByDragComponent> & Partial<CreatablePlaceholderComponent<IDashboardWidgetProps>> & ConfigurableWidget<IInsightWidget>;
 
 // @internal (undocumented)
@@ -5449,6 +5486,9 @@ export const selectIsExecutionResultReadyForExportByRef: (ref: ObjRef) => Output
 // @internal
 export const selectIsExport: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
+// @alpha (undocumented)
+export const selectIsFilterAttributeSelectionOpen: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
+
 // @internal (undocumented)
 export const selectIsInEditMode: OutputSelector<DashboardState, boolean, (res: RenderModeState) => boolean>;
 
@@ -5553,6 +5593,9 @@ export const selectRenderMode: OutputSelector<DashboardState, RenderMode, (res: 
 
 // @alpha (undocumented)
 export const selectScheduleEmailDialogDefaultAttachment: OutputSelector<DashboardState, UriRef | IdentifierRef | undefined, (res: UiState) => UriRef | IdentifierRef | undefined>;
+
+// @alpha (undocumented)
+export const selectSelectedFilterIndex: OutputSelector<DashboardState, number | undefined, (res: UiState) => number | undefined>;
 
 // @internal (undocumented)
 export const selectSelectedWidgetRef: OutputSelector<DashboardState, UriRef | IdentifierRef | undefined, (res: UiState) => UriRef | IdentifierRef | undefined>;
@@ -5792,6 +5835,15 @@ setWidgetLoadingAdditionalDataStopped: CaseReducer<UiState, {
 payload: ObjRef;
 type: string;
 }>;
+setFilterAttributeSelectionOpen: CaseReducer<UiState, {
+payload: boolean;
+type: string;
+}>;
+selectFilterIndex: CaseReducer<UiState, {
+payload: number;
+type: string;
+}>;
+clearFilterIndexSelection: CaseReducer<UiState, AnyAction>;
 }>;
 
 // @alpha (undocumented)
@@ -5802,6 +5854,8 @@ export interface UiState {
     deleteDialog: {
         open: boolean;
     };
+    // (undocumented)
+    filterAttributeSelectionOpen: boolean;
     // (undocumented)
     filterBar: {
         expanded: boolean;
@@ -5836,6 +5890,8 @@ export interface UiState {
     scheduleEmailManagementDialog: {
         open: boolean;
     };
+    // (undocumented)
+    selectedFilterIndex: number | undefined;
     // (undocumented)
     selectedWidgetRef: ObjRef | undefined;
     // (undocumented)
