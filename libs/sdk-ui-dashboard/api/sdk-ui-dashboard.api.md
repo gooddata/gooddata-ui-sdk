@@ -3671,25 +3671,25 @@ export class InsightWidgetBuilder {
     // (undocumented)
     ignoredDashboardFilters: IDashboardFilterReference[];
     // (undocumented)
-    readonly insight: ObjRef;
+    insight: ObjRef;
     // (undocumented)
     properties: VisualizationProperties;
     // (undocumented)
-    setConfiguration(config: IInsightWidgetConfiguration): void;
-    // (undocumented)
-    setDescription(description: string): this;
-    // (undocumented)
-    setDrills(drills: DrillDefinition[]): this;
-    // (undocumented)
-    setIgnoredDashboardFilters(ignoredDashboardFilters: IDashboardFilterReference[]): this;
-    // (undocumented)
-    setProperties(props: VisualizationProperties): void;
-    // (undocumented)
-    setTitle(title: string): this;
-    // (undocumented)
     title: string;
     // (undocumented)
-    readonly type = "insight";
+    type: string;
+    // (undocumented)
+    withConfiguration(config: IInsightWidgetConfiguration): void;
+    // (undocumented)
+    withDescription(description: string): this;
+    // (undocumented)
+    withDrills(drills: DrillDefinition[]): this;
+    // (undocumented)
+    withIgnoredDashboardFilters(ignoredDashboardFilters: IDashboardFilterReference[]): this;
+    // (undocumented)
+    withProperties(props: VisualizationProperties): void;
+    // (undocumented)
+    withTitle(title: string): this;
 }
 
 // @internal

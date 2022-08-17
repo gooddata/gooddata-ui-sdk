@@ -6,6 +6,7 @@ import {
     IInsight,
     IInsightWidgetConfiguration,
     insightRef,
+    insightTitle,
     ObjRef,
     VisualizationProperties,
 } from "@gooddata/sdk-model";
@@ -25,33 +26,34 @@ export class InsightWidgetBuilder {
 
     constructor(insight: IInsight) {
         this.insight = insightRef(insight);
+        this.title = insightTitle(insight);
     }
 
-    setIgnoredDashboardFilters(ignoredDashboardFilters: IDashboardFilterReference[]) {
+    withIgnoredDashboardFilters(ignoredDashboardFilters: IDashboardFilterReference[]) {
         this.ignoredDashboardFilters = ignoredDashboardFilters;
         return this;
     }
 
-    setDrills(drills: DrillDefinition[]) {
+    withDrills(drills: DrillDefinition[]) {
         this.drills = drills;
         return this;
     }
 
-    setTitle(title: string) {
+    withTitle(title: string) {
         this.title = title;
         return this;
     }
 
-    setDescription(description: string) {
+    withDescription(description: string) {
         this.description = description;
         return this;
     }
 
-    setConfiguration(config: IInsightWidgetConfiguration) {
+    withConfiguration(config: IInsightWidgetConfiguration) {
         this.configuration = config;
     }
 
-    setProperties(props: VisualizationProperties) {
+    withProperties(props: VisualizationProperties) {
         this.properties = props;
     }
 

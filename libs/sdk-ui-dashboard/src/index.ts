@@ -25,3 +25,4 @@ export * from "./types";
 export * from "./converters";
 export * from "./plugins";
 export * from "./widgets";
+export * from "./tools";
