@@ -8,7 +8,7 @@ export const AttributeFilterRenderer: React.VFC = () => {
     const { LoadingComponent, ErrorComponent } = useAttributeFilterComponentsContext();
     const { isInitializing, initError } = useAttributeFilterContext();
 
-    if (isInitializing) {
+    if (isInitializing && LoadingComponent) {
         return <LoadingComponent />;
     } else if (initError) {
         return <ErrorComponent message={initError.message} />;

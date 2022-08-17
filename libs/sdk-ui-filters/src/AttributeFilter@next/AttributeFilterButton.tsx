@@ -17,12 +17,8 @@ export const AttributeFilterButton: React.FC<IAttributeFilterButtonProps> = (pro
         <AttributeFilterBase
             {...props}
             DropdownButtonComponent={props.DropdownButtonComponent ?? AttributeFilterDropdownButton}
-            LoadingComponent={props.FilterLoading ?? props.LoadingComponent ?? LoadingComponent}
+            LoadingComponent={props.FilterLoading ?? props.LoadingComponent}
             ErrorComponent={props.FilterError ?? props.ErrorComponent}
         />
     );
 };
-
-function LoadingComponent() {
-    return <AttributeFilterDropdownButton isLoading />;
-}
