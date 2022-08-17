@@ -185,3 +185,16 @@ export const selectIsWidgetLoadingAdditionalDataByWidgetRef = createMemoizedSele
         return widgetsLoading.some((loadingRef) => areObjRefsEqual(loadingRef, ref));
     }),
 );
+
+/**
+ * @alpha
+ */
+export const selectIsFilterAttributeSelectionOpen = createSelector(
+    selectSelf,
+    (state) => state.filterAttributeSelectionOpen,
+);
+
+/**
+ * @alpha
+ */
+export const selectSelectedFilterIndex = createSelector(selectSelf, (state) => state.selectedFilterIndex);

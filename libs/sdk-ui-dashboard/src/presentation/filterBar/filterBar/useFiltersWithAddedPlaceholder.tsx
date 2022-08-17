@@ -1,6 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import partition from "lodash/partition";
 import {
     areObjRefsEqual,
@@ -14,7 +14,10 @@ import {
 import {
     addAttributeFilter as addAttributeFilterAction,
     dispatchAndWaitFor,
+    selectSelectedFilterIndex,
+    uiActions,
     useDashboardDispatch,
+    useDashboardSelector,
 } from "../../../model";
 
 /**
@@ -69,18 +72,31 @@ export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
     },
 ] {
     const dispatch = useDashboardDispatch();
+    const selectedFilterIndex = useDashboardSelector(selectSelectedFilterIndex);
+
     const [[dateFilter], attributeFilters] = partition(filters, isDashboardDateFilter);
     const [addedAttributeFilter, setAddedAttributeFilter] = useState<
         FilterBarAttributeFilterPlaceholder | undefined
     >();
 
-    const addAttributeFilterPlaceholder = useCallback(function (index: number) {
-        setAddedAttributeFilter({ type: "attributeFilterPlaceholder", filterIndex: index });
-    }, []);
+    const addAttributeFilterPlaceholder = useCallback(
+        function (index: number) {
+            dispatch(uiActions.selectFilterIndex(index));
+        },
+        [dispatch],
+    );
 
     const clearAddedFilter = useCallback(() => {
+        dispatch(uiActions.clearFilterIndexSelection());
+    }, [dispatch]);
+
+    useEffect(() => {
+        if (selectedFilterIndex !== undefined) {
+            setAddedAttributeFilter({ type: "attributeFilterPlaceholder", filterIndex: selectedFilterIndex });
+            return;
+        }
         setAddedAttributeFilter(undefined);
-    }, []);
+    }, [addAttributeFilterPlaceholder, clearAddedFilter, selectedFilterIndex]);
 
     const closeAttributeSelection = useCallback(
         function () {
