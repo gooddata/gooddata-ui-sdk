@@ -12,7 +12,7 @@ import {
 } from "../../../presentationComponents";
 import { DashboardInsight } from "../../insight";
 import { useDashboardComponentsContext } from "../../../dashboardContexts";
-import { useWidgetSelection } from "../../../../model";
+import { selectIsDashboardSaving, useDashboardSelector, useWidgetSelection } from "../../../../model";
 import { useEditableInsightMenu } from "./useEditableInsightMenu";
 import { IDefaultDashboardInsightWidgetProps } from "./types";
 import { DashboardWidgetInsightGuard } from "./DashboardWidgetInsightGuard";
@@ -44,6 +44,9 @@ const EditableDashboardInsightWidgetCore: React.FC<
         () => InsightMenuComponentProvider(insight, widget),
         [InsightMenuComponentProvider, insight, widget],
     );
+
+    const isSaving = useDashboardSelector(selectIsDashboardSaving);
+    const isEditable = !isSaving;
 
     return (
         <DashboardItem
@@ -87,6 +90,8 @@ const EditableDashboardInsightWidgetCore: React.FC<
                         </>
                     );
                 }}
+                contentClassName={cx({ "is-editable": isEditable })}
+                visualizationClassName={cx({ "is-editable": isEditable })}
             >
                 {({ clientHeight, clientWidth }) => (
                     <DashboardInsight

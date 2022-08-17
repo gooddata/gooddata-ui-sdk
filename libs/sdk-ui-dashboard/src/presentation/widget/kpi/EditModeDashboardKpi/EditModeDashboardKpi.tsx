@@ -17,6 +17,7 @@ import {
     selectFilterContextFilters,
     uiActions,
     useWidgetSelection,
+    selectIsDashboardSaving,
 } from "../../../../model";
 import { DashboardItemHeadline, DashboardItemKpi } from "../../../presentationComponents";
 import { useDashboardComponentsContext } from "../../../dashboardContexts";
@@ -63,6 +64,8 @@ export const EditModeDashboardKpi = (props: IDashboardKpiProps) => {
     const separators = useDashboardSelector(selectSeparators);
     const disableDrillUnderline = useDashboardSelector(selectDisableKpiDashboardHeadlineUnderline);
     const isDrillable = kpiWidget.drills.length > 0;
+    const isSaving = useDashboardSelector(selectIsDashboardSaving);
+    const isEditable = !isSaving;
 
     const dispatch = useDashboardDispatch();
     const coordinates = useDashboardSelector(selectWidgetCoordinatesByRef(widgetRef(kpiWidget)));
@@ -120,7 +123,9 @@ export const EditModeDashboardKpi = (props: IDashboardKpiProps) => {
                 "kpi-with-pop": kpiWidget.kpi.comparisonType !== "none",
                 "content-loading": isLoading,
                 "content-loaded": !isLoading,
+                "is-editable": isEditable,
             })}
+            contentClassName={cx({ "is-editable": isEditable })}
             renderBeforeContent={renderBeforeContent}
             renderAfterContent={() => {
                 if (isSelected) {
