@@ -34,6 +34,8 @@ import {
 import { RenderModeAwareDashboardLayoutSectionHeaderRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionHeaderRenderer";
 import { getMemoizedWidgetSanitizer } from "./DefaultDashboardLayoutUtils";
 import { EmptyDashboardDropZone, SectionHotspot } from "../dragAndDrop";
+import { isPlaceholderWidget } from "../../widgets";
+import { DashboardLayoutSectionBorderLine } from "../dragAndDrop/draggableWidget/DashboardLayoutSectionBorder";
 
 /**
  * Get dashboard layout for exports.
@@ -142,6 +144,11 @@ export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Elemen
         );
     }
 
+    // do not render the tailing section hotspot if there is only one section in the layout and it has only placeholders in it
+    const shouldRenderSectionHotspot =
+        transformedLayout.sections.length > 1 ||
+        transformedLayout.sections[0].items.some((i) => !isPlaceholderWidget(i.widget));
+
     return (
         <>
             <DashboardLayout
@@ -153,7 +160,11 @@ export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Elemen
                 sectionHeaderRenderer={RenderModeAwareDashboardLayoutSectionHeaderRenderer}
                 renderMode={renderMode}
             />
-            <SectionHotspot index={transformedLayout.sections.length} targetPosition="below" />
+            {shouldRenderSectionHotspot ? (
+                <SectionHotspot index={transformedLayout.sections.length} targetPosition="below" />
+            ) : (
+                <DashboardLayoutSectionBorderLine position="top" status="muted" />
+            )}
         </>
     );
 };

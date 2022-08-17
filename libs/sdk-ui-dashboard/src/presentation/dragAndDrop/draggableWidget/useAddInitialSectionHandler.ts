@@ -1,0 +1,60 @@
+// (C) 2022 GoodData Corporation
+import { useCallback } from "react";
+import { IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
+
+import {
+    useDashboardSelector,
+    useDashboardDispatch,
+    selectIsLayoutEmpty,
+    addLayoutSection,
+    selectSettings,
+} from "../../../model";
+import {
+    DraggableItem,
+    isInsightDraggableListItem,
+    isInsightPlaceholderDraggableItem,
+    isKpiPlaceholderDraggableItem,
+} from "../types";
+import { newPlaceholderWidget } from "../../../widgets";
+import { getInsightPlaceholderSizeInfo, getSizeInfo } from "../../../_staging/layout/sizing";
+
+export function useAddInitialSectionHandler() {
+    const dispatch = useDashboardDispatch();
+    const settings = useDashboardSelector(selectSettings);
+    const isLayoutEmpty = useDashboardSelector(selectIsLayoutEmpty);
+
+    return useCallback(
+        (item: DraggableItem) => {
+            if (isLayoutEmpty) {
+                let sizeInfo: IVisualizationSizeInfo | undefined;
+                if (isInsightDraggableListItem(item)) {
+                    sizeInfo = getSizeInfo(settings, "insight", item.insight);
+                }
+                if (isInsightPlaceholderDraggableItem(item)) {
+                    sizeInfo = getInsightPlaceholderSizeInfo(settings);
+                }
+                if (isKpiPlaceholderDraggableItem(item)) {
+                    sizeInfo = getSizeInfo(settings, "kpi");
+                }
+
+                if (sizeInfo) {
+                    dispatch(
+                        addLayoutSection(0, undefined, [
+                            {
+                                type: "IDashboardLayoutItem",
+                                size: {
+                                    xl: {
+                                        gridHeight: sizeInfo.height.default!,
+                                        gridWidth: sizeInfo.width.default!,
+                                    },
+                                },
+                                widget: newPlaceholderWidget(0, 0, false),
+                            },
+                        ]),
+                    );
+                }
+            }
+        },
+        [dispatch, isLayoutEmpty, settings],
+    );
+}

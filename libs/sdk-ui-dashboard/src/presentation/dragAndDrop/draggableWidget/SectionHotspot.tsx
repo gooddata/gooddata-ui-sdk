@@ -10,7 +10,6 @@ import {
 } from "../../../model";
 import { useDashboardDrop } from "../useDashboardDrop";
 import { SectionDropZoneBox } from "./SectionDropZoneBox";
-import { DashboardLayoutSectionBorderLine } from "./DashboardLayoutSectionBorder";
 import {
     isInsightDraggableListItem,
     isInsightPlaceholderDraggableItem,
@@ -86,13 +85,7 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
             })}
         >
             <div className={cx("row-hotspot", { hidden: !canDrop })} style={{ ...debugStyle }} ref={dropRef}>
-                <div className="new-row-dropzone">
-                    {isOver ? (
-                        <SectionDropZoneBox isOver={isOver} />
-                    ) : (
-                        <DashboardLayoutSectionBorderLine position="top" status="muted" />
-                    )}
-                </div>
+                {!!isOver && <SectionDropZoneBox isOver={isOver} />}
             </div>
         </div>
     );

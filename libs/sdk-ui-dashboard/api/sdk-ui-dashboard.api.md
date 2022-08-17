@@ -5471,6 +5471,9 @@ export const selectIsDashboardSaving: OutputSelector<DashboardState, boolean, (r
 // @internal (undocumented)
 export const selectIsDeleteDialogOpen: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
 
+// @internal (undocumented)
+export const selectIsDraggingWidget: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
+
 // @public
 export const selectIsEmbedded: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
@@ -5844,6 +5847,10 @@ payload: number;
 type: string;
 }>;
 clearFilterIndexSelection: CaseReducer<UiState, AnyAction>;
+setIsDraggingWidget: CaseReducer<UiState, {
+payload: boolean;
+type: string;
+}>;
 }>;
 
 // @alpha (undocumented)
@@ -5862,6 +5869,8 @@ export interface UiState {
     };
     // (undocumented)
     insightListLastUpdateRequested: number;
+    // (undocumented)
+    isDraggingWidget: boolean;
     // (undocumented)
     kpiAlerts: {
         openedWidgetRef: ObjRef | undefined;

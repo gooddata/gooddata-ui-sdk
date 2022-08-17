@@ -229,6 +229,7 @@ export {
     selectIsWidgetLoadingAdditionalDataByWidgetRef,
     selectIsFilterAttributeSelectionOpen,
     selectSelectedFilterIndex,
+    selectIsDraggingWidget,
 } from "./ui/uiSelectors";
 export { uiActions } from "./ui";
 export { RenderModeState } from "./renderMode/renderModeState";

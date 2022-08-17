@@ -1,8 +1,6 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
-import { FormattedMessage } from "react-intl";
 import cx from "classnames";
-import { Typography } from "@gooddata/sdk-ui-kit";
 
 import { EmptyDashboardDropZoneBox } from "./EmptyDashboardDropZoneBox";
 import { useDashboardDrop } from "../useDashboardDrop";
@@ -67,7 +65,6 @@ export const EmptyDashboardDropZone: React.FC = () => {
         ],
     );
 
-    const message = <FormattedMessage id="newDashboard.dropInsight" />;
     const widgetCategory = widgetCategoryMapping[itemType];
 
     return (
@@ -80,16 +77,6 @@ export const EmptyDashboardDropZone: React.FC = () => {
         >
             <div className={cx("drag-info-placeholder-inner", { "can-drop": canDrop, "is-over": isOver })}>
                 <EmptyDashboardDropZoneBox />
-                <div className="drag-info-placeholder-drop-target s-drag-info-placeholder-drop-target">
-                    <div className="drop-target-inner">
-                        <Typography tagName="p" className="drop-target-message kpi-drop-target">
-                            {message}
-                        </Typography>
-                        <Typography tagName="p" className="drop-target-message visualization-drop-target">
-                            {message}
-                        </Typography>
-                    </div>
-                </div>
             </div>
         </div>
     );

@@ -8,10 +8,12 @@ import {
     useWidgetSelection,
     eagerRemoveSectionItem,
     selectWidgetPlaceholder,
+    uiActions,
 } from "../../../model";
 import { DraggableItem } from "../types";
 import { DraggableCreatePanelItem, IDraggableCreatePanelItemProps } from "../DraggableCreatePanelItem";
 import { CustomCreatePanelItemComponent } from "../../componentDefinition";
+import { useAddInitialSectionHandler } from "./useAddInitialSectionHandler";
 
 interface IDraggableKpiCreatePanelItemProps {
     CreatePanelItemComponent: CustomCreatePanelItemComponent;
@@ -31,11 +33,23 @@ export const DraggableKpiCreatePanelItem: React.FC<IDraggableKpiCreatePanelItemP
     const { deselectWidgets } = useWidgetSelection();
     const widgetPlaceholder = useDashboardSelector(selectWidgetPlaceholder);
 
+    const addInitialSectionHandler = useAddInitialSectionHandler();
+
+    const handleDragStart = useCallback(
+        (item: DraggableItem) => {
+            deselectWidgets();
+            addInitialSectionHandler(item);
+            dispatch(uiActions.setIsDraggingWidget(true));
+        },
+        [addInitialSectionHandler, deselectWidgets, dispatch],
+    );
+
     const handleDragEnd = useCallback<Required<IDraggableCreatePanelItemProps>["onDragEnd"]>(
         (didDrop) => {
             if (!didDrop && widgetPlaceholder) {
                 dispatch(eagerRemoveSectionItem(widgetPlaceholder.sectionIndex, widgetPlaceholder.itemIndex));
             }
+            dispatch(uiActions.setIsDraggingWidget(false));
         },
         [dispatch, widgetPlaceholder],
     );
@@ -48,7 +62,7 @@ export const DraggableKpiCreatePanelItem: React.FC<IDraggableKpiCreatePanelItemP
             dragItem={dragItem}
             hideDefaultPreview={false}
             onDragEnd={handleDragEnd}
-            onDragStart={deselectWidgets}
+            onDragStart={handleDragStart}
         />
     );
 };
