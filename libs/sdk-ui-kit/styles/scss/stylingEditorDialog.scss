@@ -113,7 +113,13 @@
     flex-direction: row;
 
     &-link {
+        display: flex;
         flex: 1;
+        align-items: center;
+
+        .gd-icon-circle-question {
+            color: $gd-color-state-blank;
+        }
 
         > a {
             // stylelint-disable-next-line declaration-no-important
@@ -163,12 +169,12 @@
         display: flex;
         align-items: center;
         overflow: hidden;
-        line-height: 14px;
+        line-height: 17px;
         white-space: nowrap;
         color: $gd-color-label;
         font-size: 14px;
         font-weight: 400;
-        margin-bottom: 10px;
+        margin-bottom: 7px;
         text-overflow: ellipsis;
         flex-direction: row;
 
