@@ -1731,7 +1731,7 @@
         "limit": 0
     },
     "stylingEditor.dialog.name.required": {
-        "value": "Name is required.",
+        "value": "Cannot save. Specify a name.",
         "comment": "",
         "limit": 0
     },
@@ -1741,17 +1741,17 @@
         "limit": 0
     },
     "stylingEditor.dialog.definition.required": {
-        "value": "Definition is required",
+        "value": "Cannot save. Specify a definition.",
         "comment": "",
         "limit": 0
     },
     "stylingEditor.dialog.definition.invalid": {
-        "value": "Definition must be a valid JSON object.",
+        "value": "Cannot save. The definition is not a valid JSON object.",
         "comment": "",
         "limit": 0
     },
     "stylingEditor.dialog.examples": {
-        "value": "Examples",
+        "value": "Templates",
         "comment": "",
         "limit": 0
     },
@@ -1771,7 +1771,7 @@
         "limit": 0
     },
     "stylingPicker.item.delete.tooltip": {
-        "value": "Default item cannot be deleted.",
+        "value": "Applied default item cannot be deleted.",
         "comment": "",
         "limit": 0
     }

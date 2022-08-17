@@ -37,8 +37,9 @@ export const StylingEditorDialogFooter = (props: IStylingEditorDialogFooterProps
     return (
         <div className="gd-styling-editor-dialog-footer">
             <div className="gd-styling-editor-dialog-footer-link">
+                <span className="gd-icon-circle-question" />
                 <a
-                    className="gd-button-link-dimmed gd-icon-circle-question"
+                    className="gd-button-link-dimmed"
                     href={link.url}
                     target="_blank"
                     rel="noreferrer noopener"
