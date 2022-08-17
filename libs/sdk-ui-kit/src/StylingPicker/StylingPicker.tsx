@@ -64,7 +64,8 @@ const StylingPickerCore = <T extends StylingPickerItemContent>(
     }, [selectedItemRef]);
 
     useEffect(() => {
-        if (!customItems.find((ci) => areObjRefsEqual(ci.ref, currentItemRef))) {
+        // currentItemRef == null represents basic default theme, skip this check
+        if (currentItemRef && !customItems.find((ci) => areObjRefsEqual(ci.ref, currentItemRef))) {
             setCurrentItemRef(initiallySelectedItemRef);
         }
     }, [currentItemRef, customItems, customItems.length, initiallySelectedItemRef]);
