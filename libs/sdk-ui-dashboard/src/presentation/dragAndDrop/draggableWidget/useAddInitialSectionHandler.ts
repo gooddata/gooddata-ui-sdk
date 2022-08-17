@@ -15,7 +15,7 @@ import {
     isInsightPlaceholderDraggableItem,
     isKpiPlaceholderDraggableItem,
 } from "../types";
-import { newPlaceholderWidget } from "../../../widgets";
+import { newInitialPlaceholderWidget } from "../../../widgets";
 import { getInsightPlaceholderSizeInfo, getSizeInfo } from "../../../_staging/layout/sizing";
 
 export function useAddInitialSectionHandler() {
@@ -39,7 +39,7 @@ export function useAddInitialSectionHandler() {
 
                 if (sizeInfo) {
                     dispatch(
-                        addLayoutSection(0, undefined, [
+                        addLayoutSection(0, {}, [
                             {
                                 type: "IDashboardLayoutItem",
                                 size: {
@@ -48,7 +48,7 @@ export function useAddInitialSectionHandler() {
                                         gridWidth: sizeInfo.width.default!,
                                     },
                                 },
-                                widget: newPlaceholderWidget(0, 0, false),
+                                widget: newInitialPlaceholderWidget(),
                             },
                         ]),
                     );

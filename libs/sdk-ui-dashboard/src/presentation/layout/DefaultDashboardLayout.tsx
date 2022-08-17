@@ -34,7 +34,7 @@ import {
 import { RenderModeAwareDashboardLayoutSectionHeaderRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionHeaderRenderer";
 import { getMemoizedWidgetSanitizer } from "./DefaultDashboardLayoutUtils";
 import { EmptyDashboardDropZone, SectionHotspot } from "../dragAndDrop";
-import { isPlaceholderWidget } from "../../widgets";
+import { isInitialPlaceholderWidget } from "../../widgets";
 import { DashboardLayoutSectionBorderLine } from "../dragAndDrop/draggableWidget/DashboardLayoutSectionBorder";
 
 /**
@@ -144,10 +144,10 @@ export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Elemen
         );
     }
 
-    // do not render the tailing section hotspot if there is only one section in the layout and it has only placeholders in it
+    // do not render the tailing section hotspot if there is only one section in the layout and it has only initial placeholders in it
     const shouldRenderSectionHotspot =
         transformedLayout.sections.length > 1 ||
-        transformedLayout.sections[0].items.some((i) => !isPlaceholderWidget(i.widget));
+        transformedLayout.sections[0].items.some((i) => !isInitialPlaceholderWidget(i.widget));
 
     return (
         <>

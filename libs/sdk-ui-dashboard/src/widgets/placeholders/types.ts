@@ -90,6 +90,7 @@ export interface PlaceholderWidget extends ICustomWidget {
     readonly sectionIndex: number;
     readonly itemIndex: number;
     readonly isLastInSection: boolean;
+    readonly isInitial?: boolean;
 }
 
 /**
@@ -100,6 +101,16 @@ export interface PlaceholderWidget extends ICustomWidget {
  */
 export function isPlaceholderWidget(obj: unknown): obj is PlaceholderWidget {
     return !isEmpty(obj) && (obj as PlaceholderWidget).customType === "gd-widget-placeholder";
+}
+
+/**
+ * Tests whether an object is a {@link PlaceholderWidget} and is initial.
+ *
+ * @param obj - object to test
+ * @internal
+ */
+export function isInitialPlaceholderWidget(obj: unknown): obj is PlaceholderWidget {
+    return isPlaceholderWidget(obj) && !!obj.isInitial;
 }
 
 /**
@@ -114,12 +125,24 @@ export function newPlaceholderWidget(
     sectionIndex: number,
     itemIndex: number,
     isLastInSection: boolean,
-): InsightPlaceholderWidget {
+): PlaceholderWidget {
     return newCustomWidget(PLACEHOLDER_WIDGET_ID, "gd-widget-placeholder", {
         sectionIndex,
         itemIndex,
         isLastInSection,
-    }) as InsightPlaceholderWidget;
+    }) as PlaceholderWidget;
+}
+
+/**
+ * @internal
+ */
+export function newInitialPlaceholderWidget(): PlaceholderWidget {
+    return newCustomWidget(PLACEHOLDER_WIDGET_ID, "gd-widget-placeholder", {
+        sectionIndex: 0,
+        itemIndex: 0,
+        isLastInSection: true,
+        isInitial: true,
+    }) as PlaceholderWidget;
 }
 
 /**

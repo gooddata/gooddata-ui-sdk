@@ -4111,6 +4111,9 @@ export interface ISidebarProps {
     DefaultSidebar: ComponentType<ISidebarProps>;
 }
 
+// @internal
+export function isInitialPlaceholderWidget(obj: unknown): obj is PlaceholderWidget;
+
 // @internal (undocumented)
 export function isInsightDraggableListItem(item: any): item is InsightDraggableListItem;
 
@@ -4383,6 +4386,9 @@ export function newDisplayFormMap(items: ReadonlyArray<IAttributeDisplayFormMeta
 // @alpha
 export const newDrillToSameDashboardHandler: (dashboardRef: ObjRef) => DashboardEventHandler<DashboardDrillToDashboardResolved>;
 
+// @internal (undocumented)
+export function newInitialPlaceholderWidget(): PlaceholderWidget;
+
 // @alpha (undocumented)
 export function newInsightPlaceholderWidget(sectionIndex: number, itemIndex: number, isLastInSection: boolean): InsightPlaceholderWidget;
 
@@ -4390,7 +4396,7 @@ export function newInsightPlaceholderWidget(sectionIndex: number, itemIndex: num
 export function newKpiPlaceholderWidget(sectionIndex: number, itemIndex: number, isLastInSection: boolean): KpiPlaceholderWidget;
 
 // @alpha (undocumented)
-export function newPlaceholderWidget(sectionIndex: number, itemIndex: number, isLastInSection: boolean): InsightPlaceholderWidget;
+export function newPlaceholderWidget(sectionIndex: number, itemIndex: number, isLastInSection: boolean): PlaceholderWidget;
 
 // @public
 export interface ObjectAvailabilityConfig {
@@ -4521,6 +4527,8 @@ export const PLACEHOLDER_WIDGET_ID = "__placeholder__";
 export interface PlaceholderWidget extends ICustomWidget {
     // (undocumented)
     readonly customType: "gd-widget-placeholder";
+    // (undocumented)
+    readonly isInitial?: boolean;
     // (undocumented)
     readonly isLastInSection: boolean;
     // (undocumented)

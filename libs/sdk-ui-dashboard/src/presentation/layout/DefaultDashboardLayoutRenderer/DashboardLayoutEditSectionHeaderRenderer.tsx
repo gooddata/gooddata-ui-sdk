@@ -6,8 +6,7 @@ import { IDashboardLayoutSectionHeaderRenderProps } from "./interfaces";
 import { SectionHeaderEditable } from "./EditableHeader/SectionHeaderEditable";
 import { emptyItemFacadeWithFullSize } from "./utils/emptyFacade";
 import { SectionHotspot } from "../../dragAndDrop";
-import { isPlaceholderWidget } from "../../../widgets";
-import { DashboardLayoutSectionBorderLine } from "../../dragAndDrop/draggableWidget/DashboardLayoutSectionBorder";
+import { isInitialPlaceholderWidget } from "../../../widgets";
 
 export function DashboardLayoutEditSectionHeaderRenderer(
     props: IDashboardLayoutSectionHeaderRenderProps<any>,
@@ -15,9 +14,8 @@ export function DashboardLayoutEditSectionHeaderRenderer(
     const { section, screen } = props;
     const sectionHeader = section.header();
 
-    // do not render the section hotspot if there is only one section in the layout and it has only placeholders in it
-    const shouldRenderHotspot =
-        section.index() > 0 || section.items().some((i) => !isPlaceholderWidget(i.widget()));
+    const isInitialDropzone =
+        section.index() === 0 && section.items().every((i) => isInitialPlaceholderWidget(i.widget()));
 
     return (
         <DashboardLayoutItemRenderer
@@ -29,18 +27,16 @@ export function DashboardLayoutEditSectionHeaderRenderer(
                 title={sectionHeader?.title}
                 description={sectionHeader?.description}
                 renderBeforeHeader={
-                    shouldRenderHotspot ? (
-                        <SectionHotspot index={section.index()} targetPosition="above" />
-                    ) : (
-                        <DashboardLayoutSectionBorderLine position="top" status="muted" />
-                    )
+                    !isInitialDropzone && <SectionHotspot index={section.index()} targetPosition="above" />
                 }
                 renderHeader={
-                    <SectionHeaderEditable
-                        title={sectionHeader?.title || ""}
-                        description={sectionHeader?.description || ""}
-                        index={section.index()}
-                    />
+                    !isInitialDropzone && (
+                        <SectionHeaderEditable
+                            title={sectionHeader?.title || ""}
+                            description={sectionHeader?.description || ""}
+                            index={section.index()}
+                        />
+                    )
                 }
             />
         </DashboardLayoutItemRenderer>
