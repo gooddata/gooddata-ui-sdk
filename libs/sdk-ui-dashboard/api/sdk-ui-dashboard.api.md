@@ -6573,6 +6573,12 @@ export function useShareButtonProps(): IShareButtonProps;
 // @alpha (undocumented)
 export const useTopBarProps: () => ITopBarProps;
 
+// @internal (undocumented)
+export function useWidgetDragEndHandler(): (didDrop: boolean) => void;
+
+// @internal (undocumented)
+export function useWidgetDragStartHandler(): (item: DraggableItem) => void;
+
 // @internal
 export function useWidgetExecutionsHandler(widgetRef: ObjRef): {
     onLoadingChanged: OnLoadingChanged;
