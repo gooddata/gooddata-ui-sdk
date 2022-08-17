@@ -135,14 +135,14 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({
                 const modifiedTheme = modifier(selectedTheme);
                 const preparedTheme = prepareTheme(modifiedTheme, enableComplementaryPalette);
                 setTheme(preparedTheme);
-                setIsLoading(false);
                 clearCssProperties();
                 setCssProperties(preparedTheme, isDarkTheme(preparedTheme));
+                setIsLoading(false);
             }
         };
 
         fetchData();
-    }, [themeParam, workspace, backend]);
+    }, [themeParam, workspace, backend, modifier, enableComplementaryPalette]);
 
     useEffect(() => {
         return () => {
@@ -150,7 +150,7 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({
                 clearCssProperties();
             }
         };
-    }, []);
+    }, [removeGlobalStylesOnUnmout]);
 
     return (
         <ThemeContextProvider theme={theme} themeIsLoading={isLoading}>
