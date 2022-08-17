@@ -6,6 +6,7 @@ import { IAttributeFilterCoreProps } from "../types";
 import { useAttributeFilterHandlerState } from "./useAttributeFilterHandlerState";
 import { useResolveAttributeFilterSubtitle } from "./useResolveAttributeFilterSubtitle";
 import { PARENT_FILTERS_CORRELATION } from "./constants";
+import { filterObjRef } from "@gooddata/sdk-model";
 
 /**
  * @internal
@@ -70,6 +71,8 @@ export function useAttributeFilterControllerData(
     const isFiltering = useIsFiltering(handler);
 
     const parentFilterAttributes = handler.getLimitingAttributeFiltersAttributes();
+    const displayForms = attribute?.displayForms ?? [];
+    const currentDisplayFormRef = filterObjRef(handlerState.attributeFilter);
 
     return {
         title,
@@ -104,6 +107,9 @@ export function useAttributeFilterControllerData(
         isFilteredByParentFilters,
 
         parentFilterAttributes,
+
+        displayForms,
+        currentDisplayFormRef,
     };
 }
 

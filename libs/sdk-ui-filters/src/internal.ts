@@ -64,3 +64,8 @@ export {
     IAttributeFilterErrorProps,
 } from "./AttributeFilter@next/Components/AttributeFilterError";
 export { AttributeFilterLoading } from "./AttributeFilter@next/Components/AttributeFilterLoading";
+
+export {
+    AttributeDisplayFormSelect,
+    IAttributeDisplayFormSelectProps,
+} from "./AttributeFilter@next/Components/Addons/AttributeDisplayFormSelect/AttributeDisplayFormSelect";
