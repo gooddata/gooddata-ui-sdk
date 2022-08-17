@@ -13,22 +13,13 @@ import {
 } from "./sectionHeaderHelper";
 import { changeLayoutSectionHeader, uiActions, useDashboardDispatch } from "../../../../model";
 
-export interface ISectionHeaderEditOwnProps {
+export interface ISectionHeaderEditableProps {
     title: string;
     description: string;
     index: number;
 }
 
-export interface ISectionHeaderEditDispatchProps {
-    rowHeaderTitleChanged: (rowId: string, title: string) => void;
-    rowHeaderDescriptionChanged: (rowId: string, description: string) => void;
-    rowHeaderFocused: (rowId: string) => void;
-    rowHeaderBlurred: (rowId: string) => void;
-}
-
-export type ISectionHeaderEditableProps = ISectionHeaderEditOwnProps & ISectionHeaderEditDispatchProps;
-
-export function SectionHeaderEditable(props: ISectionHeaderEditOwnProps): JSX.Element {
+export function SectionHeaderEditable(props: ISectionHeaderEditableProps): JSX.Element {
     const description = getDescription(props.description);
     const title = getTitle(props.title);
     const { index } = props;
