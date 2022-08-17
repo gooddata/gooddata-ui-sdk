@@ -125,7 +125,7 @@ const selectFilterIndex: UiReducer<PayloadAction<number>> = (state, action) => {
 
 const clearFilterIndexSelection: UiReducer = (state) => {
     state.selectedFilterIndex = undefined;
-}
+};
 
 const setIsDraggingWidget: UiReducer<PayloadAction<boolean>> = (state, action) => {
     state.isDraggingWidget = action.payload;
