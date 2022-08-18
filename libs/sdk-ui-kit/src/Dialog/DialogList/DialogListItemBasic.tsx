@@ -60,11 +60,12 @@ export const DialogListItemBasic: React.VFC<IDialogListItemComponentProps> = (pr
     }, [isDisabled, isDeletable, item]);
 
     return (
-        <div className={rootClassNames}>
+        <div role="dialog-list-item" className={rootClassNames}>
             {showDeleteButton && (
                 <div className="gd-dialog-list-item-delete">
                     <BubbleHoverTrigger showDelay={0} hideDelay={0}>
                         <span
+                            role="icon-delete"
                             className="gd-dialog-list-item-delete-icon s-dialog-list-item-delete-icon"
                             onClick={handleItemDelete}
                         />
@@ -76,7 +77,11 @@ export const DialogListItemBasic: React.VFC<IDialogListItemComponentProps> = (pr
                     </BubbleHoverTrigger>
                 </div>
             )}
-            <div className="gd-dialog-list-item-content s-dialog-list-item-content" onClick={handleItemClick}>
+            <div
+                role="dialog-list-item-content"
+                className="gd-dialog-list-item-content s-dialog-list-item-content"
+                onClick={handleItemClick}
+            >
                 {icon && <div className="gd-dialog-list-item-icon">{icon}</div>}
                 <div className="gd-dialog-list-item-text s-dialog-list-item-text">
                     <div className="gd-dialog-list-item-title s-dialog-list-item-title">

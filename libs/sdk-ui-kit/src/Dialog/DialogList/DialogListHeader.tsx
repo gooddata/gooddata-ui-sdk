@@ -45,7 +45,7 @@ export const DialogListHeader: React.VFC<IDialogListHeaderProps> = (props) => {
     const onClick = useCallback(() => !buttonDisabled && onButtonClick?.(), [buttonDisabled]);
 
     return (
-        <div className={headerClassNames}>
+        <div role="dialog-list-header" className={headerClassNames}>
             {title && (
                 <div>
                     <Typography tagName="h3">{title}</Typography>

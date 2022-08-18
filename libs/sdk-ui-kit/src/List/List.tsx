@@ -133,6 +133,7 @@ export function List<T>(props: IListProps<T>): JSX.Element {
 
     return (
         <div
+            role="list"
             className={cx("gd-list gd-infinite-list", className)}
             style={styles}
             onMouseOver={disablePageScrolling}

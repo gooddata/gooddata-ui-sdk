@@ -1,36 +1,39 @@
 // (C) 2022 GoodData Corporation
-
-import { mount } from "enzyme";
 import React from "react";
-
+import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { DialogListHeader, IDialogListHeaderProps } from "../DialogListHeader";
 
-const BUTTON_SELECTOR = ".s-dialog-list-header-button";
-
 describe("DialogListHeader", () => {
-    const render = (props?: IDialogListHeaderProps) => {
-        return mount(<DialogListHeader {...props} />);
+    const createComponent = (props?: IDialogListHeaderProps) => {
+        return render(<DialogListHeader {...props} />);
     };
 
-    it("should call onClick when clicked on button", () => {
+    it("should call onClick when clicked on button", async () => {
+        const buttonTitle = "Add";
         const onButtonClickMock = jest.fn();
-        const wrapper = render({ onButtonClick: onButtonClickMock, buttonTitle: "Add" });
+        createComponent({ onButtonClick: onButtonClickMock, buttonTitle });
 
-        wrapper.find(BUTTON_SELECTOR).hostNodes().simulate("click");
+        expect(screen.getByRole("dialog-list-header")).toBeInTheDocument();
 
-        expect(onButtonClickMock).toHaveBeenCalledTimes(1);
+        await userEvent.click(screen.getByText(buttonTitle));
+        await waitFor(() => {
+            expect(onButtonClickMock).toHaveBeenCalledTimes(1);
+        });
     });
 
-    it("should not call onClick when clicked on disabled button", () => {
+    it("should not call onClick when clicked on disabled button", async () => {
+        const buttonTitle = "Add";
         const onButtonClickMock = jest.fn();
-        const wrapper = render({
+        createComponent({
             onButtonClick: onButtonClickMock,
-            buttonTitle: "Add",
+            buttonTitle,
             buttonDisabled: true,
         });
 
-        wrapper.find(BUTTON_SELECTOR).hostNodes().simulate("click");
-
-        expect(onButtonClickMock).toHaveBeenCalledTimes(0);
+        await userEvent.click(screen.getByText(buttonTitle));
+        await waitFor(() => {
+            expect(onButtonClickMock).toHaveBeenCalledTimes(0);
+        });
     });
 });

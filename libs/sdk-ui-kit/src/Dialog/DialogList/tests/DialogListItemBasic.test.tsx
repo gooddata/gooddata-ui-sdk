@@ -1,77 +1,77 @@
 // (C) 2022 GoodData Corporation
-
-import { mount } from "enzyme";
 import React from "react";
-
+import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { DialogListItemBasic } from "../DialogListItemBasic";
 import { IDialogListItemComponentProps } from "../typings";
 
-const ITEM_SELECTOR = ".s-dialog-list-item-content";
-const DELETE_ICON_SELECTOR = ".s-dialog-list-item-delete-icon";
-
 describe("DialogListItemBasic", () => {
-    const render = (props?: IDialogListItemComponentProps) => {
-        return mount(<DialogListItemBasic {...props} />);
+    const createComponent = (props?: IDialogListItemComponentProps) => {
+        return render(<DialogListItemBasic {...props} />);
     };
 
-    it("should call onClick when clicked on item", () => {
+    it("should call onClick when clicked on item", async () => {
         const onClickMock = jest.fn();
-        const wrapper = render({
+        createComponent({
             item: { id: "id", title: "title", isClickable: true },
             onClick: onClickMock,
         });
 
-        wrapper.find(ITEM_SELECTOR).hostNodes().simulate("click");
-
-        expect(onClickMock).toHaveBeenCalledTimes(1);
+        await userEvent.click(screen.getByRole("dialog-list-item-content"));
+        await waitFor(() => {
+            expect(onClickMock).toHaveBeenCalledTimes(1);
+        });
     });
 
-    it("should not call onClick when clicked on disabled item", () => {
+    it("should not call onClick when clicked on disabled item", async () => {
         const onClickMock = jest.fn();
-        const wrapper = render({
+        createComponent({
             item: { id: "id", title: "title", isDisabled: true },
             onClick: onClickMock,
         });
 
-        wrapper.find(ITEM_SELECTOR).hostNodes().simulate("click");
-
-        expect(onClickMock).toHaveBeenCalledTimes(0);
+        await userEvent.click(screen.getByRole("dialog-list-item-content"));
+        await waitFor(() => {
+            expect(onClickMock).toHaveBeenCalledTimes(0);
+        });
     });
 
-    it("should not call onClick when clicked on item that is not clickable", () => {
+    it("should not call onClick when clicked on item that is not clickable", async () => {
         const onClickMock = jest.fn();
-        const wrapper = render({
+        createComponent({
             item: { id: "id", title: "title", isClickable: false },
             onClick: onClickMock,
         });
 
-        wrapper.find(ITEM_SELECTOR).hostNodes().simulate("click");
-
-        expect(onClickMock).toHaveBeenCalledTimes(0);
+        await userEvent.click(screen.getByRole("dialog-list-item-content"));
+        await waitFor(() => {
+            expect(onClickMock).toHaveBeenCalledTimes(0);
+        });
     });
 
-    it("should call onDelete when clicked on delete icon", () => {
+    it("should call onDelete when clicked on delete icon", async () => {
         const onDeleteMock = jest.fn();
-        const wrapper = render({ item: { id: "id", title: "title" }, onDelete: onDeleteMock });
+        createComponent({ item: { id: "id", title: "title" }, onDelete: onDeleteMock });
 
-        wrapper.find(DELETE_ICON_SELECTOR).hostNodes().simulate("click");
-
-        expect(onDeleteMock).toHaveBeenCalledTimes(1);
+        await userEvent.click(screen.getByRole("icon-delete"));
+        await waitFor(() => {
+            expect(onDeleteMock).toHaveBeenCalledTimes(1);
+        });
     });
 
-    it("should not render delete icon for disabled item", () => {
-        const wrapper = render({
+    it("should not createComponent delete icon for disabled item", () => {
+        createComponent({
             item: { id: "id", title: "title", isDisabled: true },
         });
 
-        expect(wrapper.find(DELETE_ICON_SELECTOR)).not.toExist();
+        expect(screen.queryByRole("icon-delete")).not.toBeInTheDocument();
     });
 
-    it("should not render delete icon for non-deletable item", () => {
-        const wrapper = render({
+    it("should not createComponent delete icon for non-deletable item", () => {
+        createComponent({
             item: { id: "id", title: "title", isDeletable: false },
         });
 
-        expect(wrapper.find(DELETE_ICON_SELECTOR)).not.toExist();
+        expect(screen.queryByRole("icon-delete")).not.toBeInTheDocument();
     });
 });
