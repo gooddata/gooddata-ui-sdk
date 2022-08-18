@@ -32,8 +32,8 @@ export const AttributeFilterElementsSelectItem: React.VFC<IAttributeFilterElemen
     );
 
     const classes = cx(
+        "gd-attribute-filter-elements-select-item__next",
         "gd-list-item",
-        "gd-attribute-filter-list-item__next",
         "has-only-visible",
         "s-attribute-filter-list-item",
         `s-attribute-filter-list-item-${camelCase(item.title)}`,

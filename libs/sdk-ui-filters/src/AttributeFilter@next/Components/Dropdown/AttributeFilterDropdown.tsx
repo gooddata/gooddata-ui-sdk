@@ -1,6 +1,8 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
-import { Dropdown } from "@gooddata/sdk-ui-kit";
+import { Dropdown, useMediaQuery } from "@gooddata/sdk-ui-kit";
+import cx from "classnames";
+
 import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext";
 import { useAttributeFilterContext } from "../../Context/AttributeFilterContext";
 
@@ -27,27 +29,33 @@ export const AttributeFilterDropdown: React.VFC = () => {
         committedSelectionElements,
         onReset,
         onApply,
+        fullscreenOnMobile,
     } = useAttributeFilterContext();
+
+    const isMobile = useMediaQuery("mobileDevice");
 
     return (
         <Dropdown
-            className="gd-attribute-filter-dropdown__next"
+            className="gd-attribute-filter__next"
             closeOnParentScroll={true}
             closeOnMouseDrag={true}
             closeOnOutsideClick={true}
             enableEventPropagation={true}
             alignPoints={ALIGN_POINTS}
+            fullscreenOnMobile={fullscreenOnMobile}
             renderButton={({ toggleDropdown, isOpen }) => (
-                <DropdownButtonComponent
-                    title={title}
-                    subtitle={subtitle}
-                    isFiltering={isFiltering}
-                    isLoaded={!isInitializing && !initError}
-                    isLoading={isInitializing}
-                    isOpen={isOpen}
-                    selectedItemsCount={committedSelectionElements.length}
-                    onClick={toggleDropdown}
-                />
+                <div className={cx({ "gd-is-mobile": fullscreenOnMobile && isMobile && isOpen })}>
+                    <DropdownButtonComponent
+                        title={title}
+                        subtitle={subtitle}
+                        isFiltering={isFiltering}
+                        isLoaded={!isInitializing && !initError}
+                        isLoading={isInitializing}
+                        isOpen={isOpen}
+                        selectedItemsCount={committedSelectionElements.length}
+                        onClick={toggleDropdown}
+                    />
+                </div>
             )}
             onOpenStateChanged={(isOpen) => {
                 if (!isOpen) {
@@ -55,13 +63,18 @@ export const AttributeFilterDropdown: React.VFC = () => {
                 }
             }}
             renderBody={({ closeDropdown }) => (
-                <DropdownBodyComponent
-                    onApplyButtonClick={() => {
-                        onApply();
-                        closeDropdown();
-                    }}
-                    onCloseButtonClick={closeDropdown}
-                />
+                <div
+                    className={cx({ "gd-is-mobile": fullscreenOnMobile && isMobile })}
+                    style={{ height: fullscreenOnMobile && isMobile ? "100%" : "auto" }}
+                >
+                    <DropdownBodyComponent
+                        onApplyButtonClick={() => {
+                            onApply();
+                            closeDropdown();
+                        }}
+                        onCloseButtonClick={closeDropdown}
+                    />
+                </div>
             )}
         />
     );

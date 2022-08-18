@@ -1,6 +1,7 @@
 // (C) 2007-2022 GoodData Corporation
 import React, { useCallback } from "react";
 import cx from "classnames";
+import Measure from "react-measure";
 
 import { LoadingMask } from "../../LoadingMask";
 import { IRenderListItemProps } from "../List";
@@ -73,6 +74,8 @@ export interface IInvertableSelectProps<T> {
     className?: string;
     width?: number;
     height?: number;
+    adaptiveWidth?: boolean;
+    adaptiveHeight?: boolean;
 
     items: T[];
     totalItemsCount?: number;
@@ -112,6 +115,8 @@ export function InvertableSelect<T>(props: IInvertableSelectProps<T>) {
         className,
         width,
         height,
+        adaptiveWidth,
+        adaptiveHeight,
 
         items,
         totalItemsCount,
@@ -168,44 +173,61 @@ export function InvertableSelect<T>(props: IInvertableSelectProps<T>) {
     );
 
     return (
-        <>
-            {renderSearchBar({ onSearch, searchPlaceholder, searchString })}
+        <div className="gd-invertable-select">
+            <div className="gd-invertable-select-search-bar">
+                {renderSearchBar({ onSearch, searchPlaceholder, searchString })}
+            </div>
             {isLoading ? (
-                renderLoading({ height })
+                <div className="gd-invertable-select-loading">{renderLoading({ height })}</div>
             ) : error ? (
-                renderError({ height, error })
+                <div className="gd-invertable-select-error">{renderError({ height, error })}</div>
             ) : (
                 <>
                     {items.length > 0 && (
-                        <div className="gd-list-actions gd-list-actions-invertable">
+                        <div className="gd-invertable-select-all-checkbox">
                             <InvertableSelectAllCheckbox
                                 checked={selectionState !== "none"}
                                 onChange={onSelectAllCheckboxChange}
                                 isFiltered={searchString?.length > 0}
                                 totalItemsCount={totalItemsCount}
                                 isPartialSelection={selectionState === "partial"}
-                                loadedItemsCount={items.length}
                             />
                         </div>
                     )}
                     {items.length > 0 && (
-                        <AsyncList
-                            className={cx("is-multiselect", className ? className : "")}
-                            width={width}
-                            height={height}
-                            items={items}
-                            itemHeight={itemHeight}
-                            renderItem={itemRenderer}
-                            nextPageItemPlaceholdersCount={nextPageItemPlaceholdersCount}
-                            isLoadingNextPage={isLoadingNextPage}
-                            onLoadNextPage={onLoadNextPage}
-                        />
+                        <Measure client>
+                            {({ measureRef, contentRect }) => {
+                                return (
+                                    <div className="gd-invertable-select-list" ref={measureRef}>
+                                        <AsyncList
+                                            className={cx(["is-multiselect", className])}
+                                            width={adaptiveWidth ? contentRect?.client.width : width}
+                                            height={
+                                                adaptiveHeight
+                                                    ? contentRect?.client.height
+                                                    : Math.min(items.length, 10) * itemHeight
+                                            }
+                                            items={items}
+                                            itemHeight={itemHeight}
+                                            renderItem={itemRenderer}
+                                            nextPageItemPlaceholdersCount={nextPageItemPlaceholdersCount}
+                                            isLoadingNextPage={isLoadingNextPage}
+                                            onLoadNextPage={onLoadNextPage}
+                                        />
+                                    </div>
+                                );
+                            }}
+                        </Measure>
                     )}
-                    {items.length === 0 && renderNoData?.({ height })}
+                    {items.length === 0 && (
+                        <div className="gd-invertable-select-no-data">{renderNoData?.({ height })}</div>
+                    )}
                 </>
             )}
-            {renderStatusBar({ getItemTitle, isInverted, selectedItems, selectedItemsLimit })}
-        </>
+            <div className="gd-invertable-select-status-bar">
+                {renderStatusBar({ getItemTitle, isInverted, selectedItems, selectedItemsLimit })}
+            </div>
+        </div>
     );
 }
 

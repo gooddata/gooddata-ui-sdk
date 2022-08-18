@@ -5,7 +5,7 @@ import { isLimitingAttributeFiltersEmpty } from "../utils";
 import { IAttributeFilterCoreProps } from "../types";
 import { useAttributeFilterHandlerState } from "./useAttributeFilterHandlerState";
 import { useResolveAttributeFilterSubtitle } from "./useResolveAttributeFilterSubtitle";
-import { PARENT_FILTERS_CORRELATION } from "./constants";
+import { MAX_SELECTION_SIZE, PARENT_FILTERS_CORRELATION } from "./constants";
 import { filterObjRef } from "@gooddata/sdk-model";
 
 /**
@@ -55,8 +55,8 @@ export function useAttributeFilterControllerData(
         ? Math.min(limit, totalElementsCountWithCurrentSettings - elements.length)
         : 0;
 
-    const isApplyDisabled =
-        !isWorkingSelectionChanged || (!isWorkingSelectionInverted && isWorkingSelectionEmpty);
+    const isApplyDisabled = workingSelectionElements.length > MAX_SELECTION_SIZE;
+    !isWorkingSelectionChanged || (!isWorkingSelectionInverted && isWorkingSelectionEmpty);
 
     const isParentFiltersEmpty = isLimitingAttributeFiltersEmpty(limitingAttributeFilters);
 

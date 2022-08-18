@@ -349,6 +349,7 @@ export interface IAttributeFilterCoreProps {
     backend?: IAnalyticalBackend;
     connectToPlaceholder?: IPlaceholder<IAttributeFilter>;
     filter?: IAttributeFilter;
+    fullscreenOnMobile?: boolean;
     hiddenElements?: string[];
     // @deprecated
     identifier?: Identifier;
@@ -423,6 +424,8 @@ export interface IAttributeFilterDropdownButtonProps {
 // @alpha (undocumented)
 export interface IAttributeFilterElementsSearchBarProps {
     // (undocumented)
+    isSmall?: boolean;
+    // (undocumented)
     onSearch: (text: string) => void;
     // (undocumented)
     searchString: string;
@@ -431,7 +434,7 @@ export interface IAttributeFilterElementsSearchBarProps {
 // @alpha (undocumented)
 export interface IAttributeFilterElementsSelectErrorProps {
     // (undocumented)
-    height: number;
+    error: GoodDataSdkError;
 }
 
 // @alpha (undocumented)
@@ -1104,6 +1107,7 @@ export const useAttributeFilterController: (props: IAttributeFilterCoreProps) =>
     parentFilterAttributes: IAttributeMetadataObject[];
     displayForms: IAttributeDisplayFormMetadataObject[];
     currentDisplayFormRef: ObjRef;
+    fullscreenOnMobile: boolean;
 };
 
 // @alpha (undocumented)

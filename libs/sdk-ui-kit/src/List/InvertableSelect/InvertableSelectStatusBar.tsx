@@ -3,7 +3,6 @@ import React, { useMemo } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
 import { InvertableSelectLimitWarning } from "./InvertableSelectLimitWarning";
-
 /**
  * @internal
  */
@@ -34,7 +33,7 @@ export function InvertableSelectStatusBar<T>(props: IInvertableSelectStatusBarPr
 
     return (
         <>
-            <div className={cx(["gd-list-status-bar", "s-list-status-bar", className])}>
+            <div className={cx([className, "gd-invertable-select-selection-status", "s-list-status-bar"])}>
                 <span>&nbsp;{intl.formatMessage({ id: "gs.list.is" })}&nbsp;</span>
                 {isAll && <b>{intl.formatMessage({ id: "gs.list.all" })}</b>}
                 {isNone && <b>{intl.formatMessage({ id: "gs.filterLabel.none" })}</b>}

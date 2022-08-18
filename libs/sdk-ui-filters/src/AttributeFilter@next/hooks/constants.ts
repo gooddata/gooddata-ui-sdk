@@ -15,3 +15,8 @@ export const RESET_CORRELATION: Correlation = "reset";
  * @internal
  */
 export const PARENT_FILTERS_CORRELATION: Correlation = "parentFilters";
+
+/**
+ * @internal
+ */
+export const MAX_SELECTION_SIZE = 500;

@@ -37,7 +37,7 @@ export const AttributeFilterDropdownBody: React.FC<IAttributeFilterDropdownBodyP
     }, [parentFilterAttributes]);
 
     return (
-        <div className="gd-attribute-filter-overlay__next">
+        <div className="gd-attribute-filter-dropdown-body__next">
             <ElementsSelectComponent
                 isInverted={isWorkingSelectionInverted}
                 isLoading={isLoadingInitialElementsPage}

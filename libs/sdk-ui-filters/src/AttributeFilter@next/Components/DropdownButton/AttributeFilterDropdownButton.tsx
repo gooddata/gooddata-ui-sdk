@@ -63,35 +63,35 @@ export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownBu
     return (
         <div
             className={cx(
-                "attribute-filter-button__next",
+                "gd-attribute-filter-dropdown-button__next",
                 "s-attribute-filter",
                 `s-${stringUtils.simplifyText(title)}`,
                 {
-                    "is-active": isOpen,
-                    "gd-attribute-filter-button-is-filtering__next": isFiltering,
-                    "is-loaded": isLoaded,
+                    "gd-is-filtering": isFiltering,
+                    "gd-is-active": isOpen,
+                    "gd-is-loaded": isLoaded,
                 },
             )}
             onClick={onClick}
         >
-            <div className="button-content">
-                <div className="button-title__next">
+            <div className="gd-attribute-filter-dropdown-button-content__next">
+                <div className="gd-attribute-filter-dropdown-button-title__next">
                     <ShortenedText
                         tooltipAlignPoints={ALIGN_POINT}
                         className={"s-attribute-filter-button-title"}
                     >
-                        {buttonTitle}
+                        {`${buttonTitle}${!isLoading && !isFiltering ? ":" : ""}`}
                     </ShortenedText>
                 </div>
-                <div className="button-subtitle__next">
+                <div className="gd-attribute-filter-dropdown-button-subtitle__next">
                     <span
-                        className="button-selected-items__next s-attribute-filter-button-subtitle"
+                        className="gd-attribute-filter-dropdown-button-selected-items__next s-attribute-filter-button-subtitle"
                         ref={subtitleSelectedItemsRef}
                     >
                         {buttonSubtitle}
                     </span>
                     {displayItemCount && (
-                        <span className="button-selected-items-count__next">{`(${selectedItemsCount})`}</span>
+                        <span className="gd-attribute-filter-dropdown-button-selected-items-count__next">{`(${selectedItemsCount})`}</span>
                     )}
                 </div>
             </div>

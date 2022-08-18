@@ -182,7 +182,7 @@ Array [
       },
     ],
     "options": Object {
-      "limit": 550,
+      "limit": 500,
       "limitingAttributeFilters": Array [],
       "limitingDateFilters": Array [],
       "limitingMeasures": Array [],

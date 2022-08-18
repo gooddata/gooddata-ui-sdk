@@ -1,5 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
-import React from "react";
+import React, { useMemo, CSSProperties } from "react";
 import { AttributeFilterEmptySearchResult } from "./AttributeFilterEmptySearchResult";
 import { AttributeFilterEmptyAttributeResult } from "./AttributeFilterEmptyAttributeResult";
 import { AttributeFilterAllValuesFilteredResult } from "./AttributeFilterEmptyFilteredResult";
@@ -27,18 +27,24 @@ export const AttributeFilterEmptyResult: React.VFC<IAttributeFilterEmptyResultPr
 }) => {
     let renderEmptyResult = null;
 
+    const style = useMemo<CSSProperties>(() => {
+        return {
+            height,
+        };
+    }, [height]);
+
     if (totalItemsCount === 0) {
-        renderEmptyResult = <AttributeFilterEmptyAttributeResult height={height} />;
+        renderEmptyResult = <AttributeFilterEmptyAttributeResult />;
     } else if (isFilteredByParentFilters) {
         renderEmptyResult = (
-            <AttributeFilterAllValuesFilteredResult parentFilterTitles={parentFilterTitles} height={height} />
+            <AttributeFilterAllValuesFilteredResult parentFilterTitles={parentFilterTitles} />
         );
     } else if (searchString.length > 0) {
-        renderEmptyResult = <AttributeFilterEmptySearchResult height={height} />;
+        renderEmptyResult = <AttributeFilterEmptySearchResult />;
     }
 
     return (
-        <div style={{ height, display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <div className="gd-attribute-filter-empty-result__next" style={style}>
             {renderEmptyResult}
         </div>
     );

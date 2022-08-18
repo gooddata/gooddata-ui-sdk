@@ -25,6 +25,7 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
         parentFilterOverAttribute,
         hiddenElements,
         staticElements,
+        fullscreenOnMobile = false,
         onApply,
         onError,
         ErrorComponent,
@@ -80,6 +81,7 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
                     onError={onError}
                     hiddenElements={hiddenElements}
                     staticElements={staticElements}
+                    fullscreenOnMobile={fullscreenOnMobile}
                 >
                     {children}
                 </AttributeFilterContextProvider>
