@@ -1,12 +1,12 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
-import { waitFor, screen, configure } from "@testing-library/react";
+import { configure, render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import noop from "lodash/noop";
 import { DefaultLocale, withIntl } from "@gooddata/sdk-ui";
 
 import KpiAlertDialog, { IKpiAlertDialogProps } from "../KpiAlertDialog";
 import { translations } from "../../../../../../localization";
-import { setupComponent } from "../../../../../../../tests/testHelper";
 
 const DEFAULT_DATE_FORMAT = "MM/dd/yyyy";
 
@@ -31,7 +31,7 @@ function renderKpiAlertDialog(options: Partial<IKpiAlertDialogProps>) {
         translations[DefaultLocale],
     );
 
-    return setupComponent(<Wrapped {...defaultProps} {...customProps} />);
+    return render(<Wrapped {...defaultProps} {...customProps} />);
 }
 
 configure({ defaultHidden: true });
@@ -39,9 +39,9 @@ configure({ defaultHidden: true });
 describe("KpiAlertDialog", () => {
     it("should not try to save alert when input threshold empty", async () => {
         const onAlertDialogSaveClick = jest.fn();
-        const { user } = renderKpiAlertDialog({ onAlertDialogSaveClick });
+        renderKpiAlertDialog({ onAlertDialogSaveClick });
 
-        await user.click(screen.getByText("Set alert"));
+        await userEvent.click(screen.getByText("Set alert"));
         await waitFor(() => {
             expect(onAlertDialogSaveClick).not.toHaveBeenCalled();
         });
@@ -49,10 +49,10 @@ describe("KpiAlertDialog", () => {
 
     it("should not try to save alert when threshold is invalid", async () => {
         const onAlertDialogSaveClick = jest.fn();
-        const { user } = renderKpiAlertDialog({ onAlertDialogSaveClick });
+        renderKpiAlertDialog({ onAlertDialogSaveClick });
 
-        await user.type(screen.getByRole("textbox"), "foo!bar");
-        await user.click(screen.getByText("Set alert"));
+        await userEvent.type(screen.getByRole("textbox"), "foo!bar");
+        await userEvent.click(screen.getByText("Set alert"));
 
         await waitFor(() => {
             expect(onAlertDialogSaveClick).not.toHaveBeenCalled();
@@ -61,9 +61,9 @@ describe("KpiAlertDialog", () => {
 
     // it("should try to save alert with threshold divided by 100", async () => {
     //     const onAlertDialogSaveClick = jest.fn();
-    //     const { user } = renderKpiAlertDialog({ onAlertDialogSaveClick });
-    //     await user.type(screen.getByRole("textbox"), "12.0045");
-    //     await user.click(screen.getByText("Set alert"));
+    //     renderKpiAlertDialog({ onAlertDialogSaveClick });
+    //     await userEvent.type(screen.getByRole("textbox"), "12.0045");
+    //     await userEvent.click(screen.getByText("Set alert"));
 
     //     await waitFor(() => {
     //         expect(onAlertDialogSaveClick).toHaveBeenCalledWith(0.120045, "aboveThreshold");

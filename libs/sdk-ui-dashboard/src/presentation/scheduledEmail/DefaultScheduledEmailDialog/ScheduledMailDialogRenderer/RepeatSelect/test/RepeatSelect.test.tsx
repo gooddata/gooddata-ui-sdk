@@ -1,7 +1,8 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { IntlShape } from "react-intl";
-import { screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import noop from "lodash/noop";
 
 import { TEXT_INDEX } from "./testUtils";
@@ -11,7 +12,6 @@ import { REPEAT_EXECUTE_ON, REPEAT_FREQUENCIES, REPEAT_TYPES } from "../../../co
 import { getDate, getIntlDayName, getWeek } from "../../../utils/datetime";
 import { IntlWrapper } from "../../../../../localization/IntlWrapper";
 import { createInternalIntl } from "../../../../../localization/createInternalIntl";
-import { setupComponent } from "../../../../../../tests/testHelper";
 
 describe("RepeatSelect", () => {
     const now = new Date();
@@ -34,7 +34,7 @@ describe("RepeatSelect", () => {
             ...customProps,
         };
 
-        return setupComponent(
+        return render(
             <IntlWrapper>
                 <RepeatSelect {...defaultProps} />
             </IntlWrapper>,
@@ -107,9 +107,9 @@ describe("RepeatSelect", () => {
             "should trigger onChange with selected repeat type is %s",
             async (selected: string, current: string, title: string) => {
                 const onChange = jest.fn();
-                const { user } = renderComponent({ repeatType: current, onChange });
-                await user.click(screen.getByRole("button"));
-                await user.click(screen.getByText(title));
+                renderComponent({ repeatType: current, onChange });
+                await userEvent.click(screen.getByRole("button"));
+                await userEvent.click(screen.getByText(title));
 
                 await waitFor(() => {
                     expect(onChange).toBeCalledWith(
@@ -124,13 +124,13 @@ describe("RepeatSelect", () => {
 
         it("should trigger onChange with selected repeat period", async () => {
             const onChange = jest.fn();
-            const { user } = renderComponent({
+            renderComponent({
                 repeatType: REPEAT_TYPES.CUSTOM,
                 onChange,
             });
 
-            await user.clear(screen.getByRole("textbox"));
-            await user.type(screen.getByRole("textbox"), "10");
+            await userEvent.clear(screen.getByRole("textbox"));
+            await userEvent.type(screen.getByRole("textbox"), "10");
             expect(screen.getByDisplayValue("10")).toBeInTheDocument();
 
             await waitFor(() => {
@@ -152,13 +152,13 @@ describe("RepeatSelect", () => {
             "should trigger onChange with selected repeat frequency is %s",
             async (selected: string, current: string) => {
                 const onChange = jest.fn();
-                const { user } = renderComponent({
+                renderComponent({
                     repeatFrequency: current,
                     repeatType: REPEAT_TYPES.CUSTOM,
                     onChange,
                 });
-                await user.click(screen.getByText(current));
-                await user.click(screen.getByText(selected));
+                await userEvent.click(screen.getByText(current));
+                await userEvent.click(screen.getByText(selected));
                 await waitFor(() => {
                     expect(onChange).toBeCalledWith(
                         expect.objectContaining({
@@ -188,14 +188,14 @@ describe("RepeatSelect", () => {
             "should trigger onChange with repeat execute on %s",
             async (selected: string, current: string, selectedDropdown: string, currentDropdown: string) => {
                 const onChange = jest.fn();
-                const { user } = renderComponent({
+                renderComponent({
                     repeatExecuteOn: current,
                     repeatFrequency: REPEAT_FREQUENCIES.MONTH,
                     repeatType: REPEAT_TYPES.CUSTOM,
                     onChange,
                 });
-                await user.click(screen.getByText(selectedDropdown));
-                await user.click(screen.getByText(currentDropdown));
+                await userEvent.click(screen.getByText(selectedDropdown));
+                await userEvent.click(screen.getByText(currentDropdown));
 
                 await waitFor(() => {
                     expect(onChange).toBeCalledWith(
@@ -212,15 +212,15 @@ describe("RepeatSelect", () => {
 
         it("should reset repeatData when repeatType is changed", async () => {
             const onChange = jest.fn();
-            const { user } = renderComponent({
+            renderComponent({
                 repeatExecuteOn: REPEAT_EXECUTE_ON.DAY_OF_WEEK,
                 repeatFrequency: REPEAT_FREQUENCIES.MONTH,
                 repeatPeriod: 10,
                 repeatType: REPEAT_TYPES.CUSTOM,
                 onChange,
             });
-            await user.click(screen.getByText("Custom"));
-            await user.click(screen.getByText("Daily"));
+            await userEvent.click(screen.getByText("Custom"));
+            await userEvent.click(screen.getByText("Daily"));
 
             await waitFor(() => {
                 expect(onChange).toBeCalledWith(expect.objectContaining(DEFAULT_REPEAT_DATA));

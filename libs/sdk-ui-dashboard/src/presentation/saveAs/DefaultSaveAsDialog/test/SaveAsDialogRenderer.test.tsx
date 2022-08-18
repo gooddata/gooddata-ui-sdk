@@ -1,13 +1,10 @@
 // (C) 2020-2022 GoodData Corporation
 import React from "react";
 import noop from "lodash/noop";
-import { waitFor, screen, fireEvent } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
 import { ISaveAsDialogRendererOwnProps, SaveAsDialogRenderer } from "../SaveAsDialogRenderer";
-
-import { setupComponent } from "../../../../tests/testHelper";
-
-// const SaveAsNewDashboardDialog = "s-dialog";
 
 describe("Test SaveAsNewDashboardDialog: ", () => {
     const defaultProps: ISaveAsDialogRendererOwnProps = {
@@ -22,7 +19,7 @@ describe("Test SaveAsNewDashboardDialog: ", () => {
     };
 
     function renderComponent(props = defaultProps) {
-        return setupComponent(<SaveAsDialogRenderer {...props} />);
+        return render(<SaveAsDialogRenderer {...props} />);
     }
 
     it("Should render correctly", () => {
@@ -40,9 +37,9 @@ describe("Test SaveAsNewDashboardDialog: ", () => {
     });
 
     it("Should get default title when focusing out the input with empty value", async () => {
-        const { user } = renderComponent();
+        renderComponent();
 
-        await user.clear(screen.getByDisplayValue(`Copy of ${defaultProps.dashboardTitle}`));
+        await userEvent.clear(screen.getByDisplayValue(`Copy of ${defaultProps.dashboardTitle}`));
 
         expect(screen.queryByDisplayValue(`Copy of ${defaultProps.dashboardTitle}`)).not.toBeInTheDocument();
 
@@ -54,9 +51,9 @@ describe("Test SaveAsNewDashboardDialog: ", () => {
 
     it("Should allow save as new dashboard when the title is not empty and the page is ready", async () => {
         const onSubmit = jest.fn();
-        const { user } = renderComponent({ ...defaultProps, onSubmit });
+        renderComponent({ ...defaultProps, onSubmit });
 
-        await user.click(screen.getByText("Create dashboard"));
+        await userEvent.click(screen.getByText("Create dashboard"));
 
         await waitFor(() => {
             expect(onSubmit).toHaveBeenCalled();
@@ -65,16 +62,16 @@ describe("Test SaveAsNewDashboardDialog: ", () => {
 
     it("Should not allow save as new dashboard when the title is empty and the page is not ready", async () => {
         const onSubmit = jest.fn();
-        const { user, rerender } = renderComponent({
+        const { rerender } = renderComponent({
             ...defaultProps,
             onSubmit,
         });
 
-        await user.clear(screen.getByDisplayValue(`Copy of ${defaultProps.dashboardTitle}`));
+        await userEvent.clear(screen.getByDisplayValue(`Copy of ${defaultProps.dashboardTitle}`));
 
         rerender(<SaveAsDialogRenderer {...defaultProps} isDashboardSaving={true} />);
 
-        await user.click(screen.getByText("Create dashboard"));
+        await userEvent.click(screen.getByText("Create dashboard"));
 
         await waitFor(() => {
             expect(onSubmit).not.toHaveBeenCalled();

@@ -1,6 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { screen, within, waitFor } from "@testing-library/react";
+import { render, screen, within, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import noop from "lodash/noop";
 import { uriRef } from "@gooddata/sdk-model";
@@ -14,7 +14,6 @@ import {
 import { getUserTimezone, ITimezone } from "../../utils/timezone";
 import { useWorkspaceUsers } from "../../useWorkspaceUsers";
 import { IntlWrapper } from "../../../../localization/IntlWrapper";
-import { setupComponent } from "../../../../../tests/testHelper";
 
 jest.mock("../../useWorkspaceUsers", () => ({
     useWorkspaceUsers: (): ReturnType<typeof useWorkspaceUsers> => ({
@@ -49,7 +48,7 @@ describe("ScheduledMailDialogRenderer", () => {
             ...customProps,
         };
 
-        return setupComponent(
+        return render(
             <IntlWrapper>
                 <ScheduledMailDialogRenderer {...defaultProps} />
             </IntlWrapper>,
@@ -66,9 +65,11 @@ describe("ScheduledMailDialogRenderer", () => {
 
     it("should trigger onCancel on click Cancel", async () => {
         const onCancel = jest.fn();
-        const { user } = renderComponent({ onCancel });
-        await user.click(screen.getByText("Cancel"));
-        expect(onCancel).toHaveBeenCalledTimes(1);
+        renderComponent({ onCancel });
+        await userEvent.click(screen.getByText("Cancel"));
+        await waitFor(() => {
+            expect(onCancel).toHaveBeenCalledTimes(1);
+        });
     });
 
     it("should generate scheduled mail with default values", async () => {
