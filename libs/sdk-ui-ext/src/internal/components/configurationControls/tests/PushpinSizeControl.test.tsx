@@ -1,10 +1,10 @@
 // (C) 2020-2022 GoodData Corporation
 import React from "react";
+import { render, screen } from "@testing-library/react";
 import noop from "lodash/noop";
 
 import PushpinSizeControl, { IPushpinSizeControl } from "../PushpinSizeControl";
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider";
-import { setupComponent } from "../../../tests/testHelper";
 
 describe("PushpinSizeControl", () => {
     const defaultProps = {
@@ -15,7 +15,7 @@ describe("PushpinSizeControl", () => {
 
     function createComponent(customProps: Partial<IPushpinSizeControl> = {}) {
         const props = { ...defaultProps, ...customProps };
-        return setupComponent(
+        return render(
             <InternalIntlWrapper>
                 <PushpinSizeControl {...props} />
             </InternalIntlWrapper>,
@@ -24,8 +24,8 @@ describe("PushpinSizeControl", () => {
 
     describe("Rendering", () => {
         it("should render PushpinSizeControl", () => {
-            const { getByText } = createComponent();
-            expect(getByText("Point Size")).toBeInTheDocument();
+            createComponent();
+            expect(screen.getByText("Point Size")).toBeInTheDocument();
         });
 
         it("should render disabled PushpinSizeControl", () => {

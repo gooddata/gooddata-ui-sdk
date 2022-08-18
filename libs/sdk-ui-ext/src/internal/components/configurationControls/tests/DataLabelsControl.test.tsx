@@ -1,10 +1,10 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
+import { render, screen } from "@testing-library/react";
 import noop from "lodash/noop";
 import DataLabelsControl, { IDataLabelsControlProps } from "../DataLabelsControl";
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider";
 import { IDataLabelsVisible } from "@gooddata/sdk-ui-charts";
-import { setupComponent } from "../../../tests/testHelper";
 
 describe("DataLabelsControl", () => {
     const HIDE_LABEL = "hide";
@@ -19,7 +19,7 @@ describe("DataLabelsControl", () => {
 
     function createComponent(customProps: Partial<IDataLabelsControlProps> = {}) {
         const props = { ...defaultProps, ...customProps };
-        return setupComponent(
+        return render(
             <InternalIntlWrapper>
                 <DataLabelsControl {...props} />
             </InternalIntlWrapper>,
@@ -39,24 +39,24 @@ describe("DataLabelsControl", () => {
 
     describe("Rendering", () => {
         it("should render data labels control", () => {
-            const { getByText } = createComponent();
-            expect(getByText("Data Labels")).toBeInTheDocument();
+            createComponent();
+            expect(screen.getByText("Data Labels")).toBeInTheDocument();
         });
 
         it("should render dropdown as disabled when disabled", () => {
-            const { getByRole } = createComponent({
+            createComponent({
                 isDisabled: true,
             });
-            expect(getByRole("button")).toHaveClass("disabled");
+            expect(screen.getByRole("button")).toHaveClass("disabled");
         });
 
         it("should have `auto` by default", () => {
-            const { queryByText } = createComponent();
-            expect(queryByText(AUTO_LABEL)).toBeInTheDocument();
+            createComponent();
+            expect(screen.queryByText(AUTO_LABEL)).toBeInTheDocument();
         });
 
         it("should show value that was passed", () => {
-            const { queryByText } = createComponent({
+            createComponent({
                 properties: {
                     controls: {
                         dataLabels: {
@@ -66,7 +66,7 @@ describe("DataLabelsControl", () => {
                 },
             });
 
-            expect(queryByText(VISIBLE_LABEL)).toBeInTheDocument();
+            expect(screen.queryByText(VISIBLE_LABEL)).toBeInTheDocument();
         });
 
         it.each([

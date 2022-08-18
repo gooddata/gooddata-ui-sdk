@@ -1,10 +1,10 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import noop from "lodash/noop";
 import cloneDeep from "lodash/cloneDeep";
 import ColorPaletteItem, { IColorPaletteItemProps } from "../ColorPaletteItem";
-import { setupComponent } from "../../../../../tests/testHelper";
 
 const defaultProps: IColorPaletteItemProps = {
     selected: false,
@@ -21,37 +21,39 @@ const defaultProps: IColorPaletteItemProps = {
 
 function createComponent(customProps: Partial<IColorPaletteItemProps> = {}) {
     const props: IColorPaletteItemProps = { ...cloneDeep(defaultProps), ...customProps };
-    return setupComponent(<ColorPaletteItem {...props} />);
+    return render(<ColorPaletteItem {...props} />);
 }
 
 describe("ColorPaletteItem", () => {
     it("should render ColorPaletteItem control", () => {
-        const { getByLabelText } = createComponent();
-        expect(getByLabelText(/rgb*/i)).toBeInTheDocument();
+        createComponent();
+        expect(screen.getByLabelText(/rgb*/i)).toBeInTheDocument();
     });
 
     it("should render ColorPaletteItem with red background", () => {
         const { fill } = defaultProps.paletteItem;
-        const { getByLabelText } = createComponent();
-        expect(getByLabelText(/rgb*/i)).toHaveStyle(`backgroundColor: rgb(${fill.r},${fill.g},${fill.b})`);
+        createComponent();
+        expect(screen.getByLabelText(/rgb*/i)).toHaveStyle(
+            `backgroundColor: rgb(${fill.r},${fill.g},${fill.b})`,
+        );
     });
 
     it("should render unselected ColorPaletteItem", () => {
-        const { getByLabelText } = createComponent();
-        expect(getByLabelText(/rgb*/i)).not.toHaveClass("gd-color-list-item-active");
+        createComponent();
+        expect(screen.getByLabelText(/rgb*/i)).not.toHaveClass("gd-color-list-item-active");
     });
 
     it("should render selected ColorPaletteItem", () => {
-        const { getByLabelText } = createComponent({ selected: true });
-        expect(getByLabelText(/rgb*/i)).toHaveClass("gd-color-list-item-active");
+        createComponent({ selected: true });
+        expect(screen.getByLabelText(/rgb*/i)).toHaveClass("gd-color-list-item-active");
     });
 
     it("should call onSelect when ColorPaletteItem clicked", async () => {
         const { fill, guid } = defaultProps.paletteItem;
         const onColorSelected = jest.fn();
 
-        const { getByLabelText, user } = createComponent({ onColorSelected });
-        await user.click(getByLabelText(`rgb(${fill.r},${fill.g},${fill.b})`));
+        createComponent({ onColorSelected });
+        await userEvent.click(screen.getByLabelText(`rgb(${fill.r},${fill.g},${fill.b})`));
 
         await waitFor(() =>
             expect(onColorSelected).toBeCalledWith(expect.objectContaining({ type: "guid", value: guid })),

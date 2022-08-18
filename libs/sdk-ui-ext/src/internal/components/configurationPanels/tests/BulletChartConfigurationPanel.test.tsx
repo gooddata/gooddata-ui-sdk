@@ -1,5 +1,7 @@
 // (C) 2020-2022 GoodData Corporation
 import React from "react";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { DefaultLocale, VisualizationTypes } from "@gooddata/sdk-ui";
 import { IBucket, IInsightDefinition } from "@gooddata/sdk-model";
 
@@ -8,7 +10,6 @@ import { IConfigurationPanelContentProps } from "../ConfigurationPanelContent";
 
 import { attributeItemA1, attributeItemA2 } from "../../../tests/mocks/visualizationObjectMocks";
 import { emptyInsight } from "../../../tests/mocks/testMocks";
-import { setupComponent } from "../../../tests/testHelper";
 
 function testInsight(buckets: IBucket[]): IInsightDefinition {
     return {
@@ -25,7 +26,7 @@ function testInsight(buckets: IBucket[]): IInsightDefinition {
 
 describe("BulletChartConfigurationPanel", () => {
     function createComponent(props: IConfigurationPanelContentProps) {
-        return setupComponent(<BulletChartConfigurationPanel {...props} />);
+        return render(<BulletChartConfigurationPanel {...props} />);
     }
 
     const testMeasure = {
@@ -62,10 +63,10 @@ describe("BulletChartConfigurationPanel", () => {
             locale: DefaultLocale,
         };
 
-        const { getByLabelText } = createComponent(props);
+        createComponent(props);
 
-        expect(getByLabelText("xaxis_section")).toBeEnabled();
-        expect(getByLabelText("yaxis_section")).toBeEnabled();
+        expect(screen.getByLabelText("xaxis_section")).toBeEnabled();
+        expect(screen.getByLabelText("yaxis_section")).toBeEnabled();
     });
 
     it("should render configuration panel with disabled controls when it has no measures", () => {
@@ -89,10 +90,10 @@ describe("BulletChartConfigurationPanel", () => {
             locale: DefaultLocale,
         };
 
-        const { getByLabelText } = createComponent(props);
+        createComponent(props);
 
-        expect(getByLabelText("xaxis_section")).toBeDisabled();
-        expect(getByLabelText("yaxis_section")).toBeDisabled();
+        expect(screen.getByLabelText("xaxis_section")).toBeDisabled();
+        expect(screen.getByLabelText("yaxis_section")).toBeDisabled();
     });
 
     it("should render configuration panel with disabled controls when it is in error state", () => {
@@ -116,10 +117,10 @@ describe("BulletChartConfigurationPanel", () => {
             locale: DefaultLocale,
         };
 
-        const { getByLabelText } = createComponent(props);
+        createComponent(props);
 
-        expect(getByLabelText("xaxis_section")).toBeDisabled();
-        expect(getByLabelText("yaxis_section")).toBeDisabled();
+        expect(screen.getByLabelText("xaxis_section")).toBeDisabled();
+        expect(screen.getByLabelText("yaxis_section")).toBeDisabled();
     });
 
     it("should render configuration panel with disabled controls when it is loading", () => {
@@ -143,10 +144,10 @@ describe("BulletChartConfigurationPanel", () => {
             locale: DefaultLocale,
         };
 
-        const { getByLabelText } = createComponent(props);
+        createComponent(props);
 
-        expect(getByLabelText("xaxis_section")).toBeDisabled();
-        expect(getByLabelText("yaxis_section")).toBeDisabled();
+        expect(screen.getByLabelText("xaxis_section")).toBeDisabled();
+        expect(screen.getByLabelText("yaxis_section")).toBeDisabled();
     });
 
     describe("axis name configuration", () => {
@@ -172,30 +173,30 @@ describe("BulletChartConfigurationPanel", () => {
                 },
             ]);
 
-            const { getByLabelText, getByText, user } = createComponent({
+            createComponent({
                 ...defaultProps,
                 insight,
             });
 
-            await user.click(getByText("X-Axis"));
-            expect(getByLabelText("xaxis name")).toBeEnabled();
+            await userEvent.click(screen.getByText("X-Axis"));
+            expect(screen.getByLabelText("xaxis name")).toBeEnabled();
 
-            await user.click(getByText("Y-Axis"));
-            expect(getByLabelText("yaxis name")).toBeEnabled();
+            await userEvent.click(screen.getByText("Y-Axis"));
+            expect(screen.getByLabelText("yaxis name")).toBeEnabled();
         });
 
         it("should render configuration panel with disabled name sections", async () => {
             const insight = emptyInsight;
-            const { getByLabelText, getByText, user } = createComponent({
+            createComponent({
                 ...defaultProps,
                 insight,
             });
 
-            await user.click(getByText("X-Axis"));
-            expect(getByLabelText("xaxis name")).toBeDisabled();
+            await userEvent.click(screen.getByText("X-Axis"));
+            expect(screen.getByLabelText("xaxis name")).toBeDisabled();
 
-            await user.click(getByText("Y-Axis"));
-            expect(getByLabelText("yaxis name")).toBeDisabled();
+            await userEvent.click(screen.getByText("Y-Axis"));
+            expect(screen.getByLabelText("yaxis name")).toBeDisabled();
         });
 
         it("should render configuration panel with enabled X axis name section and disabled Y axis name section", async () => {
@@ -206,20 +207,20 @@ describe("BulletChartConfigurationPanel", () => {
                 },
             ]);
 
-            const { getByLabelText, getByText, user } = createComponent({
+            createComponent({
                 ...defaultProps,
                 insight,
             });
 
-            await user.click(getByText("X-Axis"));
-            expect(getByLabelText("xaxis name")).toBeEnabled();
+            await userEvent.click(screen.getByText("X-Axis"));
+            expect(screen.getByLabelText("xaxis name")).toBeEnabled();
 
-            await user.click(getByText("Y-Axis"));
-            expect(getByLabelText("yaxis name")).toBeDisabled();
+            await userEvent.click(screen.getByText("Y-Axis"));
+            expect(screen.getByLabelText("yaxis name")).toBeDisabled();
         });
 
         it("should not render name sections in configuration panel", async () => {
-            const { queryByLabelText, getByText, user } = createComponent({
+            createComponent({
                 ...defaultProps,
                 featureFlags: {
                     enableAxisNameConfiguration: false,
@@ -227,8 +228,8 @@ describe("BulletChartConfigurationPanel", () => {
                 insight: emptyInsight,
             });
 
-            await user.click(getByText("X-Axis"));
-            expect(queryByLabelText("xaxis name")).not.toBeInTheDocument();
+            await userEvent.click(screen.getByText("X-Axis"));
+            expect(screen.queryByLabelText("xaxis name")).not.toBeInTheDocument();
         });
     });
 
@@ -251,13 +252,13 @@ describe("BulletChartConfigurationPanel", () => {
                     items: [],
                 },
             ]);
-            const { getByLabelText, getByText, user } = createComponent({
+            createComponent({
                 ...defaultProps,
                 insight,
             });
 
-            await user.click(getByText("Y-Axis"));
-            expect(getByLabelText("yaxis labels")).toBeDisabled();
+            await userEvent.click(screen.getByText("Y-Axis"));
+            expect(screen.getByLabelText("yaxis labels")).toBeDisabled();
         });
 
         it("should render labels configuration panel enabled if there is an attribute", async () => {
@@ -272,13 +273,13 @@ describe("BulletChartConfigurationPanel", () => {
                 },
             ]);
 
-            const { getByLabelText, getByText, user } = createComponent({
+            createComponent({
                 ...defaultProps,
                 insight,
             });
 
-            await user.click(getByText("Y-Axis"));
-            expect(getByLabelText("yaxis labels")).toBeEnabled();
+            await userEvent.click(screen.getByText("Y-Axis"));
+            expect(screen.getByLabelText("yaxis labels")).toBeEnabled();
         });
     });
 
@@ -305,13 +306,13 @@ describe("BulletChartConfigurationPanel", () => {
                 },
             ]);
 
-            const { getByLabelText, getByText, user } = createComponent({
+            createComponent({
                 ...defaultProps,
                 insight,
             });
 
-            await user.click(getByText("Y-Axis"));
-            expect(getByLabelText("yaxis name")).toBeEnabled();
+            await userEvent.click(screen.getByText("Y-Axis"));
+            expect(screen.getByLabelText("yaxis name")).toBeEnabled();
         });
 
         it("should render name configuration panel disabled if there are two attributes", async () => {
@@ -326,13 +327,13 @@ describe("BulletChartConfigurationPanel", () => {
                 },
             ]);
 
-            const { getByLabelText, getByText, user } = createComponent({
+            createComponent({
                 ...defaultProps,
                 insight,
             });
 
-            await user.click(getByText("Y-Axis"));
-            expect(getByLabelText("yaxis name")).toBeDisabled();
+            await userEvent.click(screen.getByText("Y-Axis"));
+            expect(screen.getByLabelText("yaxis name")).toBeDisabled();
         });
 
         it("should render name configuration panel enabled if there are two attributes and feature flag 'enableAxisNameViewByTwoAttributes' is true", async () => {
@@ -347,7 +348,7 @@ describe("BulletChartConfigurationPanel", () => {
                 },
             ]);
 
-            const { getByLabelText, getByText, user } = createComponent({
+            createComponent({
                 ...defaultProps,
                 featureFlags: {
                     ...defaultProps.featureFlags,
@@ -356,8 +357,8 @@ describe("BulletChartConfigurationPanel", () => {
                 insight,
             });
 
-            await user.click(getByText("Y-Axis"));
-            expect(getByLabelText("yaxis name")).toBeEnabled();
+            await userEvent.click(screen.getByText("Y-Axis"));
+            expect(screen.getByLabelText("yaxis name")).toBeEnabled();
         });
     });
 });

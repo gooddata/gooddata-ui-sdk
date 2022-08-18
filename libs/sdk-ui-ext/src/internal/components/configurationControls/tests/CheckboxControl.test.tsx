@@ -1,8 +1,9 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import noop from "lodash/noop";
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider";
-import { setupComponent } from "../../../tests/testHelper";
 import CheckboxControl, { ICheckboxControlProps } from "../CheckboxControl";
 
 describe("CheckboxControl", () => {
@@ -16,7 +17,7 @@ describe("CheckboxControl", () => {
 
     function createComponent(customProps: Partial<ICheckboxControlProps> = {}) {
         const props = { ...defaultProps, ...customProps };
-        return setupComponent(
+        return render(
             <InternalIntlWrapper>
                 <CheckboxControl {...props} />
             </InternalIntlWrapper>,
@@ -24,38 +25,38 @@ describe("CheckboxControl", () => {
     }
 
     it("should render checkbox control", () => {
-        const { getByRole } = createComponent();
-        expect(getByRole("checkbox")).toBeInTheDocument();
+        createComponent();
+        expect(screen.getByRole("checkbox")).toBeInTheDocument();
     });
 
     it("should be unchecked by default", () => {
-        const { getByRole } = createComponent();
-        expect(getByRole("checkbox")).not.toBeChecked();
+        createComponent();
+        expect(screen.getByRole("checkbox")).not.toBeChecked();
     });
 
     it("should be enabled by default", () => {
-        const { getByRole } = createComponent();
-        expect(getByRole("checkbox")).toBeEnabled();
+        createComponent();
+        expect(screen.getByRole("checkbox")).toBeEnabled();
     });
 
     it("should render checked checkbox", () => {
-        const { getByRole } = createComponent({ checked: true });
-        expect(getByRole("checkbox")).toBeChecked();
+        createComponent({ checked: true });
+        expect(screen.getByRole("checkbox")).toBeChecked();
     });
 
     it("should render disabled checkbox", () => {
-        const { getByRole } = createComponent({ disabled: true });
-        expect(getByRole("checkbox")).toBeDisabled();
+        createComponent({ disabled: true });
+        expect(screen.getByRole("checkbox")).toBeDisabled();
     });
 
     it("should call pushData when checkbox value changes", async () => {
         const pushData = jest.fn();
-        const { getByRole, user } = createComponent({
+        createComponent({
             properties: {},
             pushData,
         });
 
-        await user.click(getByRole("checkbox"));
+        await userEvent.click(screen.getByRole("checkbox"));
         expect(pushData).toHaveBeenCalledTimes(1);
     });
 });

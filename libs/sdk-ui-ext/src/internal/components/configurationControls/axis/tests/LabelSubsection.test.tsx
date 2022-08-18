@@ -1,6 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import noop from "lodash/noop";
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
@@ -8,7 +9,6 @@ import set from "lodash/set";
 import LabelSubsection, { ILabelSubsection } from "../LabelSubsection";
 
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider";
-import { setupComponent } from "../../../../tests/testHelper";
 
 const defaultProps: ILabelSubsection = {
     disabled: true,
@@ -21,7 +21,7 @@ const defaultProps: ILabelSubsection = {
 
 function createComponent(customProps: Partial<ILabelSubsection> = {}) {
     const props: ILabelSubsection = { ...cloneDeep(defaultProps), ...customProps };
-    return setupComponent(
+    return render(
         <InternalIntlWrapper>
             <LabelSubsection {...props} />
         </InternalIntlWrapper>,
@@ -30,8 +30,8 @@ function createComponent(customProps: Partial<ILabelSubsection> = {}) {
 
 describe("LabelSection render", () => {
     it("should render label section", () => {
-        const { queryByText } = createComponent();
-        expect(queryByText("labels")).toBeInTheDocument();
+        createComponent();
+        expect(screen.queryByText("labels")).toBeInTheDocument();
     });
 
     it(
@@ -40,13 +40,13 @@ describe("LabelSection render", () => {
         () => {
             const xaxisVisible = set({}, "controls.xaxis.visible", true);
 
-            const { getByRole } = createComponent({
+            createComponent({
                 disabled: true,
                 configPanelDisabled: false,
                 properties: xaxisVisible,
             });
 
-            expect(getByRole("checkbox")).toBeDisabled();
+            expect(screen.getByRole("checkbox")).toBeDisabled();
         },
     );
 
@@ -56,46 +56,46 @@ describe("LabelSection render", () => {
         () => {
             const xaxisVisible = set({}, "controls.xaxis.visible", true);
 
-            const { queryByTitle } = createComponent({
+            createComponent({
                 disabled: true,
                 configPanelDisabled: false,
                 properties: xaxisVisible,
             });
 
-            expect(queryByTitle("auto (default)")).toHaveClass("disabled");
+            expect(screen.queryByTitle("auto (default)")).toHaveClass("disabled");
         },
     );
 
     it("When xaxis is not visible then " + "ConfigSubsection should be disabled", () => {
         const xaxisVisible = set({}, "controls.xaxis.visible", false);
 
-        const { getByRole } = createComponent({
+        createComponent({
             disabled: false,
             configPanelDisabled: false,
             properties: xaxisVisible,
         });
 
-        expect(getByRole("checkbox")).toBeDisabled();
+        expect(screen.getByRole("checkbox")).toBeDisabled();
     });
 
     it("should not render LabelFormatControl when showFormat prop is false", () => {
-        const { queryByText } = createComponent({
+        createComponent({
             disabled: false,
             configPanelDisabled: false,
             showFormat: false,
         });
 
-        expect(queryByText("Format")).not.toBeInTheDocument();
+        expect(screen.queryByText("Format")).not.toBeInTheDocument();
     });
 
     it("should render LabelFormatControl when showFormat prop is true", () => {
-        const { getByText } = createComponent({
+        createComponent({
             disabled: false,
             configPanelDisabled: false,
             showFormat: true,
         });
 
-        expect(getByText("Format")).toBeInTheDocument();
+        expect(screen.getByText("Format")).toBeInTheDocument();
     });
 });
 
@@ -105,14 +105,14 @@ describe("Toggle switch", () => {
         const xaxisVisible = set({}, "controls.xaxis.visible", true);
         const axisLabelsEnabled = set(xaxisVisible, "controls.xaxis.labelsEnabled", false);
 
-        const { getByRole, user } = createComponent({
+        createComponent({
             disabled: false,
             configPanelDisabled: false,
             properties: axisLabelsEnabled,
             pushData,
         });
 
-        await user.click(getByRole("checkbox"));
+        await userEvent.click(screen.getByRole("checkbox"));
 
         await waitFor(() => {
             expect(pushData).toBeCalledWith(

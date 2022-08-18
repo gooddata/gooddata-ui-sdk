@@ -1,5 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { IInsightDefinition, newMeasure } from "@gooddata/sdk-model";
 import { DefaultLocale, VisualizationTypes } from "@gooddata/sdk-ui";
 
@@ -7,11 +9,10 @@ import BubbleChartConfigurationPanel from "../BubbleChartConfigurationPanel";
 import { IConfigurationPanelContentProps } from "../ConfigurationPanelContent";
 
 import { insightWithSingleAttribute, insightWithSingleMeasure } from "../../../tests/mocks/testMocks";
-import { setupComponent } from "../../../tests/testHelper";
 
 describe("BubbleChartConfigurationPanel", () => {
     function createComponent(props: IConfigurationPanelContentProps) {
-        return setupComponent(<BubbleChartConfigurationPanel {...props} />);
+        return render(<BubbleChartConfigurationPanel {...props} />);
     }
     function newInsight(measureBucket: string): IInsightDefinition {
         return {
@@ -38,10 +39,10 @@ describe("BubbleChartConfigurationPanel", () => {
             locale: DefaultLocale,
         };
 
-        const { getByLabelText } = createComponent(props);
+        createComponent(props);
 
-        expect(getByLabelText("xaxis_section")).toBeInTheDocument();
-        expect(getByLabelText("yaxis_section")).toBeInTheDocument();
+        expect(screen.getByLabelText("xaxis_section")).toBeInTheDocument();
+        expect(screen.getByLabelText("yaxis_section")).toBeInTheDocument();
     });
 
     it("should render configuration panel with disabled controls when it has no measures", () => {
@@ -52,10 +53,10 @@ describe("BubbleChartConfigurationPanel", () => {
             locale: DefaultLocale,
         };
 
-        const { getByLabelText } = createComponent(props);
+        createComponent(props);
 
-        expect(getByLabelText("xaxis_section")).toBeDisabled();
-        expect(getByLabelText("yaxis_section")).toBeDisabled();
+        expect(screen.getByLabelText("xaxis_section")).toBeDisabled();
+        expect(screen.getByLabelText("yaxis_section")).toBeDisabled();
     });
 
     it("should render configuration panel with disabled controls when it is in error state", () => {
@@ -66,10 +67,10 @@ describe("BubbleChartConfigurationPanel", () => {
             locale: DefaultLocale,
         };
 
-        const { getByLabelText } = createComponent(props);
+        createComponent(props);
 
-        expect(getByLabelText("xaxis_section")).toBeDisabled();
-        expect(getByLabelText("yaxis_section")).toBeDisabled();
+        expect(screen.getByLabelText("xaxis_section")).toBeDisabled();
+        expect(screen.getByLabelText("yaxis_section")).toBeDisabled();
     });
 
     it("should render configuration panel with disabled controls when it is loading", () => {
@@ -80,10 +81,10 @@ describe("BubbleChartConfigurationPanel", () => {
             locale: DefaultLocale,
         };
 
-        const { getByLabelText } = createComponent(props);
+        createComponent(props);
 
-        expect(getByLabelText("xaxis_section")).toBeDisabled();
-        expect(getByLabelText("yaxis_section")).toBeDisabled();
+        expect(screen.getByLabelText("xaxis_section")).toBeDisabled();
+        expect(screen.getByLabelText("yaxis_section")).toBeDisabled();
     });
 
     describe("axis name configuration", () => {
@@ -144,16 +145,16 @@ describe("BubbleChartConfigurationPanel", () => {
                 },
             };
 
-            const { getByLabelText, getByText, user } = createComponent({
+            createComponent({
                 ...defaultProps,
                 insight,
             });
 
-            await user.click(getByText("X-Axis"));
-            expect(getByLabelText("xaxis name")).toBeEnabled();
+            await userEvent.click(screen.getByText("X-Axis"));
+            expect(screen.getByLabelText("xaxis name")).toBeEnabled();
 
-            await user.click(getByText("Y-Axis"));
-            expect(getByLabelText("yaxis name")).toBeEnabled();
+            await userEvent.click(screen.getByText("Y-Axis"));
+            expect(screen.getByLabelText("yaxis name")).toBeEnabled();
         });
 
         it("should render configuration panel with disabled name sections", async () => {
@@ -168,16 +169,16 @@ describe("BubbleChartConfigurationPanel", () => {
                 },
             };
 
-            const { getByLabelText, getByText, user } = createComponent({
+            createComponent({
                 ...defaultProps,
                 insight,
             });
 
-            await user.click(getByText("X-Axis"));
-            expect(getByLabelText("xaxis name")).toBeDisabled();
+            await userEvent.click(screen.getByText("X-Axis"));
+            expect(screen.getByLabelText("xaxis name")).toBeDisabled();
 
-            await user.click(getByText("Y-Axis"));
-            expect(getByLabelText("yaxis name")).toBeDisabled();
+            await userEvent.click(screen.getByText("Y-Axis"));
+            expect(screen.getByLabelText("yaxis name")).toBeDisabled();
         });
 
         it("should render configuration panel with enabled X axis name section and disabled Y axis name section", async () => {
@@ -210,16 +211,16 @@ describe("BubbleChartConfigurationPanel", () => {
                 },
             };
 
-            const { getByLabelText, getByText, user } = createComponent({
+            createComponent({
                 ...defaultProps,
                 insight,
             });
 
-            await user.click(getByText("X-Axis"));
-            expect(getByLabelText("xaxis name")).toBeEnabled();
+            await userEvent.click(screen.getByText("X-Axis"));
+            expect(screen.getByLabelText("xaxis name")).toBeEnabled();
 
-            await user.click(getByText("Y-Axis"));
-            expect(getByLabelText("yaxis name")).toBeDisabled();
+            await userEvent.click(screen.getByText("Y-Axis"));
+            expect(screen.getByLabelText("yaxis name")).toBeDisabled();
         });
 
         it.each([
@@ -232,25 +233,25 @@ describe("BubbleChartConfigurationPanel", () => {
                 expectedYAxisSectionDisabled: boolean,
                 measureIdentifier: string,
             ) => {
-                const { getByLabelText, getByText, user } = createComponent({
+                createComponent({
                     ...defaultProps,
                     insight: newInsight(measureIdentifier),
                 });
 
-                await user.click(getByText("X-Axis"));
+                await userEvent.click(screen.getByText("X-Axis"));
                 expectedXAxisSectionDisabled
-                    ? expect(getByLabelText("xaxis name")).toBeDisabled()
-                    : expect(getByLabelText("xaxis name")).toBeEnabled();
+                    ? expect(screen.getByLabelText("xaxis name")).toBeDisabled()
+                    : expect(screen.getByLabelText("xaxis name")).toBeEnabled();
 
-                await user.click(getByText("Y-Axis"));
+                await userEvent.click(screen.getByText("Y-Axis"));
                 expectedYAxisSectionDisabled
-                    ? expect(getByLabelText("yaxis name")).toBeDisabled()
-                    : expect(getByLabelText("yaxis name")).toBeEnabled();
+                    ? expect(screen.getByLabelText("yaxis name")).toBeDisabled()
+                    : expect(screen.getByLabelText("yaxis name")).toBeEnabled();
             },
         );
 
         it("should not render name sections in configuration panel", async () => {
-            const { queryByLabelText, getByText, user } = createComponent({
+            createComponent({
                 ...defaultProps,
                 featureFlags: {
                     enableAxisNameConfiguration: false,
@@ -258,8 +259,8 @@ describe("BubbleChartConfigurationPanel", () => {
                 insight: insightWithSingleAttribute,
             });
 
-            await user.click(getByText("X-Axis"));
-            expect(queryByLabelText("xaxis")).not.toBeInTheDocument();
+            await userEvent.click(screen.getByText("X-Axis"));
+            expect(screen.queryByLabelText("xaxis")).not.toBeInTheDocument();
         });
     });
 });
