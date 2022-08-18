@@ -157,6 +157,7 @@ export {
     IAttributeFilterCoreProps,
     IAttributeFilterCustomComponentProps,
     useAttributeFilterController,
+    IUseAttributeFilterControllerProps,
     useAttributeFilterHandler,
     IUseAttributeFilterHandlerProps,
     useAttributeFilterContext,

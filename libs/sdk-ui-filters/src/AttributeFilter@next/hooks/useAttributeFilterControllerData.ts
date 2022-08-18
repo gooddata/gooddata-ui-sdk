@@ -2,21 +2,14 @@
 import { useState, useEffect } from "react";
 import { IMultiSelectAttributeFilterHandler } from "../../AttributeFilterHandler";
 import { isLimitingAttributeFiltersEmpty } from "../utils";
-import { IAttributeFilterCoreProps } from "../types";
 import { useAttributeFilterHandlerState } from "./useAttributeFilterHandlerState";
-import { useResolveAttributeFilterSubtitle } from "./useResolveAttributeFilterSubtitle";
 import { MAX_SELECTION_SIZE, PARENT_FILTERS_CORRELATION } from "./constants";
 import { filterObjRef } from "@gooddata/sdk-model";
 
 /**
  * @internal
  */
-export function useAttributeFilterControllerData(
-    handler: IMultiSelectAttributeFilterHandler,
-    ownProps: IAttributeFilterCoreProps,
-) {
-    const { title: titleInput } = ownProps;
-
+export function useAttributeFilterControllerData(handler: IMultiSelectAttributeFilterHandler) {
     const handlerState = useAttributeFilterHandlerState(handler);
 
     const initStatus = handlerState.initialization.status;
@@ -55,16 +48,12 @@ export function useAttributeFilterControllerData(
         ? Math.min(limit, totalElementsCountWithCurrentSettings - elements.length)
         : 0;
 
-    const isApplyDisabled = workingSelectionElements.length > MAX_SELECTION_SIZE;
-    !isWorkingSelectionChanged || (!isWorkingSelectionInverted && isWorkingSelectionEmpty);
+    const isApplyDisabled =
+        workingSelectionElements.length > MAX_SELECTION_SIZE ||
+        !isWorkingSelectionChanged ||
+        (!isWorkingSelectionInverted && isWorkingSelectionEmpty);
 
     const isParentFiltersEmpty = isLimitingAttributeFiltersEmpty(limitingAttributeFilters);
-
-    const title = titleInput ?? attribute?.title ?? "";
-    const subtitle = useResolveAttributeFilterSubtitle(
-        isCommittedSelectionInverted,
-        committedSelectionElements,
-    );
 
     const isFilteredByParentFilters = initialElementsPageStatus === "success" && !isParentFiltersEmpty;
 
@@ -74,9 +63,13 @@ export function useAttributeFilterControllerData(
     const displayForms = attribute?.displayForms ?? [];
     const currentDisplayFormRef = filterObjRef(handlerState.attributeFilter);
 
+    const offset = handlerState.elements.options.offset;
+
     return {
-        title,
-        subtitle,
+        attribute,
+
+        offset,
+        limit,
 
         isFiltering,
 
