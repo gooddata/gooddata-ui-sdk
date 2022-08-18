@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-import React, { useEffect } from "react";
+import React from "react";
 import cx from "classnames";
 
 import { useDashboardDrag } from "./useDashboardDrag";
@@ -13,7 +13,7 @@ export interface IDraggableCreatePanelItemProps {
     Component: CustomCreatePanelItemComponent;
     disabled?: boolean;
     canDrag: boolean;
-    onDragStart?: () => void;
+    onDragStart?: (item: DraggableItem) => void;
     onDragEnd?: (didDrop: boolean) => void;
     dragItem: DraggableItem;
     hideDefaultPreview?: boolean;
@@ -39,15 +39,10 @@ export const DraggableCreatePanelItem: React.FC<IDraggableCreatePanelItemProps> 
             dragEnd: (_, monitor) => {
                 onDragEnd?.(monitor.didDrop());
             },
+            dragStart: onDragStart,
         },
         [canDrag, onDragEnd, hideDefaultPreview, dragItem],
     );
-
-    useEffect(() => {
-        if (isDragging && onDragStart) {
-            onDragStart();
-        }
-    }, [onDragStart, isDragging]);
 
     return (
         <div ref={dragRef} className={cx({ "is-dragging": isDragging })}>

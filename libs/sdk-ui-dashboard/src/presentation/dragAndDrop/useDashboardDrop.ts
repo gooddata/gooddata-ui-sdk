@@ -12,6 +12,7 @@ const basicDropCollect = (monitor: DropTargetMonitor) => ({
     isOver: monitor.isOver(),
     canDrop: monitor.canDrop(),
     itemType: monitor.getItemType() as DraggableItemType,
+    item: monitor.getItem(),
 });
 
 export function useDashboardDrop<

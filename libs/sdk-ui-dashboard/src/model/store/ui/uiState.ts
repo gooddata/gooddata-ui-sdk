@@ -46,6 +46,8 @@ export interface UiState {
     widgetsLoadingAdditionalData: ObjRef[];
     filterAttributeSelectionOpen: boolean;
     selectedFilterIndex: number | undefined;
+    isDraggingWidget: boolean;
+    activeSectionIndex: number | undefined;
 }
 
 export const uiInitialState: UiState = {
@@ -85,4 +87,6 @@ export const uiInitialState: UiState = {
     widgetsLoadingAdditionalData: [],
     filterAttributeSelectionOpen: false,
     selectedFilterIndex: undefined,
+    isDraggingWidget: false,
+    activeSectionIndex: undefined,
 };

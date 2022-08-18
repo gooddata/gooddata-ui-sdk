@@ -127,6 +127,18 @@ const clearFilterIndexSelection: UiReducer = (state) => {
     state.selectedFilterIndex = undefined;
 };
 
+const setIsDraggingWidget: UiReducer<PayloadAction<boolean>> = (state, action) => {
+    state.isDraggingWidget = action.payload;
+};
+
+const setActiveSectionIndex: UiReducer<PayloadAction<number>> = (state, action) => {
+    state.activeSectionIndex = action.payload;
+};
+
+const clearActiveSectionIndex: UiReducer = (state) => {
+    state.activeSectionIndex = undefined;
+};
+
 export const uiReducers = {
     openScheduleEmailDialog,
     closeScheduleEmailDialog,
@@ -157,4 +169,7 @@ export const uiReducers = {
     setFilterAttributeSelectionOpen,
     selectFilterIndex,
     clearFilterIndexSelection,
+    setIsDraggingWidget,
+    setActiveSectionIndex,
+    clearActiveSectionIndex,
 };

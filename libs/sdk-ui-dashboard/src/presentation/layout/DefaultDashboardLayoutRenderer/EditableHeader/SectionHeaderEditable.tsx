@@ -11,24 +11,15 @@ import {
     MAX_DESCRIPTION_LENGTH,
     DESCRIPTION_LENGTH_WARNING_LIMIT,
 } from "./sectionHeaderHelper";
-import { changeLayoutSectionHeader, useDashboardDispatch } from "../../../../model";
+import { changeLayoutSectionHeader, uiActions, useDashboardDispatch } from "../../../../model";
 
-export interface ISectionHeaderEditOwnProps {
+export interface ISectionHeaderEditableProps {
     title: string;
     description: string;
     index: number;
 }
 
-export interface ISectionHeaderEditDispatchProps {
-    rowHeaderTitleChanged: (rowId: string, title: string) => void;
-    rowHeaderDescriptionChanged: (rowId: string, description: string) => void;
-    rowHeaderFocused: (rowId: string) => void;
-    rowHeaderBlurred: (rowId: string) => void;
-}
-
-export type ISectionHeaderEditableProps = ISectionHeaderEditOwnProps & ISectionHeaderEditDispatchProps;
-
-export function SectionHeaderEditable(props: ISectionHeaderEditOwnProps): JSX.Element {
+export function SectionHeaderEditable(props: ISectionHeaderEditableProps): JSX.Element {
     const description = getDescription(props.description);
     const title = getTitle(props.title);
     const { index } = props;
@@ -44,18 +35,28 @@ export function SectionHeaderEditable(props: ISectionHeaderEditOwnProps): JSX.El
         [dispatch, index],
     );
 
+    const onEditingStart = useCallback(() => {
+        dispatch(uiActions.setActiveSectionIndex(index));
+    }, [dispatch, index]);
+
+    const onEditingEnd = useCallback(() => {
+        dispatch(uiActions.clearActiveSectionIndex());
+    }, [dispatch]);
+
     const onTitleSubmit = useCallback(
         (title: string) => {
             changeTitle(title);
+            onEditingEnd();
         },
-        [changeTitle],
+        [changeTitle, onEditingEnd],
     );
 
     const onDescriptionSubmit = useCallback(
         (description: string) => {
             changeDescription(description);
+            onEditingEnd();
         },
-        [changeDescription],
+        [changeDescription, onEditingEnd],
     );
 
     return (
@@ -70,6 +71,8 @@ export function SectionHeaderEditable(props: ISectionHeaderEditOwnProps): JSX.El
                     placeholderMessage={intl.formatMessage({ id: "layout.header.add.title.placeholder" })}
                     alignTo={`.gd-title-for-${index}`}
                     onSubmit={onTitleSubmit}
+                    onEditingStart={onEditingStart}
+                    onCancel={onEditingEnd}
                 />
             </div>
             <div className="gd-editable-label-container gd-row-header-description-wrapper">
@@ -84,6 +87,8 @@ export function SectionHeaderEditable(props: ISectionHeaderEditOwnProps): JSX.El
                         id: "layout.header.add.description.placeholder",
                     })}
                     onSubmit={onDescriptionSubmit}
+                    onEditingStart={onEditingStart}
+                    onCancel={onEditingEnd}
                 />
             </div>
         </div>

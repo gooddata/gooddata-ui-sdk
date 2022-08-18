@@ -3274,7 +3274,7 @@ export interface IDraggableCreatePanelItemProps {
     // (undocumented)
     onDragEnd?: (didDrop: boolean) => void;
     // (undocumented)
-    onDragStart?: () => void;
+    onDragStart?: (item: DraggableItem) => void;
 }
 
 // @alpha
@@ -4111,6 +4111,9 @@ export interface ISidebarProps {
     DefaultSidebar: ComponentType<ISidebarProps>;
 }
 
+// @internal
+export function isInitialPlaceholderWidget(obj: unknown): obj is PlaceholderWidget;
+
 // @internal (undocumented)
 export function isInsightDraggableListItem(item: any): item is InsightDraggableListItem;
 
@@ -4383,6 +4386,9 @@ export function newDisplayFormMap(items: ReadonlyArray<IAttributeDisplayFormMeta
 // @alpha
 export const newDrillToSameDashboardHandler: (dashboardRef: ObjRef) => DashboardEventHandler<DashboardDrillToDashboardResolved>;
 
+// @internal (undocumented)
+export function newInitialPlaceholderWidget(): PlaceholderWidget;
+
 // @alpha (undocumented)
 export function newInsightPlaceholderWidget(sectionIndex: number, itemIndex: number, isLastInSection: boolean): InsightPlaceholderWidget;
 
@@ -4390,7 +4396,7 @@ export function newInsightPlaceholderWidget(sectionIndex: number, itemIndex: num
 export function newKpiPlaceholderWidget(sectionIndex: number, itemIndex: number, isLastInSection: boolean): KpiPlaceholderWidget;
 
 // @alpha (undocumented)
-export function newPlaceholderWidget(sectionIndex: number, itemIndex: number, isLastInSection: boolean): InsightPlaceholderWidget;
+export function newPlaceholderWidget(sectionIndex: number, itemIndex: number, isLastInSection: boolean): PlaceholderWidget;
 
 // @public
 export interface ObjectAvailabilityConfig {
@@ -4521,6 +4527,8 @@ export const PLACEHOLDER_WIDGET_ID = "__placeholder__";
 export interface PlaceholderWidget extends ICustomWidget {
     // (undocumented)
     readonly customType: "gd-widget-placeholder";
+    // (undocumented)
+    readonly isInitial?: boolean;
     // (undocumented)
     readonly isLastInSection: boolean;
     // (undocumented)
@@ -5087,6 +5095,9 @@ export const selectAccessibleDashboards: (state: DashboardState) => IListedDashb
 // @alpha
 export const selectAccessibleDashboardsMap: OutputSelector<DashboardState, ObjRefMap<IListedDashboard>, (res: IListedDashboard[]) => ObjRefMap<IListedDashboard>>;
 
+// @internal (undocumented)
+export const selectActiveSectionIndex: OutputSelector<DashboardState, number | undefined, (res: UiState) => number | undefined>;
+
 // @alpha
 export const selectAlertByRef: ((ref: ObjRef) => (state: DashboardState) => IWidgetAlert | undefined) & MemoizedFunction;
 
@@ -5471,6 +5482,9 @@ export const selectIsDashboardSaving: OutputSelector<DashboardState, boolean, (r
 // @internal (undocumented)
 export const selectIsDeleteDialogOpen: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
 
+// @internal (undocumented)
+export const selectIsDraggingWidget: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
+
 // @public
 export const selectIsEmbedded: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
@@ -5844,10 +5858,21 @@ payload: number;
 type: string;
 }>;
 clearFilterIndexSelection: CaseReducer<UiState, AnyAction>;
+setIsDraggingWidget: CaseReducer<UiState, {
+payload: boolean;
+type: string;
+}>;
+setActiveSectionIndex: CaseReducer<UiState, {
+payload: number;
+type: string;
+}>;
+clearActiveSectionIndex: CaseReducer<UiState, AnyAction>;
 }>;
 
 // @alpha (undocumented)
 export interface UiState {
+    // (undocumented)
+    activeSectionIndex: number | undefined;
     // (undocumented)
     configurationPanelOpened: boolean;
     // (undocumented)
@@ -5862,6 +5887,8 @@ export interface UiState {
     };
     // (undocumented)
     insightListLastUpdateRequested: number;
+    // (undocumented)
+    isDraggingWidget: boolean;
     // (undocumented)
     kpiAlerts: {
         openedWidgetRef: ObjRef | undefined;
@@ -6545,6 +6572,12 @@ export function useShareButtonProps(): IShareButtonProps;
 
 // @alpha (undocumented)
 export const useTopBarProps: () => ITopBarProps;
+
+// @internal (undocumented)
+export function useWidgetDragEndHandler(): (didDrop: boolean) => void;
+
+// @internal (undocumented)
+export function useWidgetDragStartHandler(): (item: DraggableItem) => void;
 
 // @internal
 export function useWidgetExecutionsHandler(widgetRef: ObjRef): {

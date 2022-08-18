@@ -6,12 +6,16 @@ import { IDashboardLayoutSectionHeaderRenderProps } from "./interfaces";
 import { SectionHeaderEditable } from "./EditableHeader/SectionHeaderEditable";
 import { emptyItemFacadeWithFullSize } from "./utils/emptyFacade";
 import { SectionHotspot } from "../../dragAndDrop";
+import { isInitialPlaceholderWidget } from "../../../widgets";
 
 export function DashboardLayoutEditSectionHeaderRenderer(
     props: IDashboardLayoutSectionHeaderRenderProps<any>,
 ): JSX.Element | null {
     const { section, screen } = props;
     const sectionHeader = section.header();
+
+    const isInitialDropzone =
+        section.index() === 0 && section.items().every((i) => isInitialPlaceholderWidget(i.widget()));
 
     return (
         <DashboardLayoutItemRenderer
@@ -22,13 +26,17 @@ export function DashboardLayoutEditSectionHeaderRenderer(
             <DashboardLayoutSectionHeader
                 title={sectionHeader?.title}
                 description={sectionHeader?.description}
-                renderBeforeHeader={<SectionHotspot index={section.index()} targetPosition="above" />}
+                renderBeforeHeader={
+                    !isInitialDropzone && <SectionHotspot index={section.index()} targetPosition="above" />
+                }
                 renderHeader={
-                    <SectionHeaderEditable
-                        title={sectionHeader?.title || ""}
-                        description={sectionHeader?.description || ""}
-                        index={section.index()}
-                    />
+                    !isInitialDropzone && (
+                        <SectionHeaderEditable
+                            title={sectionHeader?.title || ""}
+                            description={sectionHeader?.description || ""}
+                            index={section.index()}
+                        />
+                    )
                 }
             />
         </DashboardLayoutItemRenderer>

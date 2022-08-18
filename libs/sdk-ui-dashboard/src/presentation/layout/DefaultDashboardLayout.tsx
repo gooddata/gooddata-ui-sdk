@@ -31,9 +31,11 @@ import {
     IDashboardLayoutItemKeyGetter,
     IDashboardLayoutWidgetRenderer,
 } from "./DefaultDashboardLayoutRenderer";
+import { RenderModeAwareDashboardLayoutSectionRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionRenderer";
 import { RenderModeAwareDashboardLayoutSectionHeaderRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionHeaderRenderer";
 import { getMemoizedWidgetSanitizer } from "./DefaultDashboardLayoutUtils";
-import { SectionHotspot } from "../dragAndDrop";
+import { EmptyDashboardDropZone, SectionHotspot } from "../dragAndDrop";
+import { isInitialPlaceholderWidget } from "../../widgets";
 
 /**
  * Get dashboard layout for exports.
@@ -134,9 +136,20 @@ export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Elemen
         [onError, onDrill, onFiltersChange],
     );
 
-    return isLayoutEmpty ? (
-        <EmptyDashboardError ErrorComponent={ErrorComponent} />
-    ) : (
+    if (isLayoutEmpty) {
+        return renderMode === "edit" ? (
+            <EmptyDashboardDropZone />
+        ) : (
+            <EmptyDashboardError ErrorComponent={ErrorComponent} />
+        );
+    }
+
+    // do not render the tailing section hotspot if there is only one section in the layout and it has only initial placeholders in it
+    const shouldRenderSectionHotspot =
+        transformedLayout.sections.length > 1 ||
+        transformedLayout.sections[0].items.some((i) => !isInitialPlaceholderWidget(i.widget));
+
+    return (
         <>
             <DashboardLayout
                 className={isExport ? "export-mode" : ""}
@@ -144,10 +157,13 @@ export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Elemen
                 itemKeyGetter={itemKeyGetter}
                 widgetRenderer={widgetRenderer}
                 enableCustomHeight={enableWidgetCustomHeight}
+                sectionRenderer={RenderModeAwareDashboardLayoutSectionRenderer}
                 sectionHeaderRenderer={RenderModeAwareDashboardLayoutSectionHeaderRenderer}
                 renderMode={renderMode}
             />
-            <SectionHotspot index={transformedLayout.sections.length} targetPosition="below" />
+            {!!shouldRenderSectionHotspot && (
+                <SectionHotspot index={transformedLayout.sections.length} targetPosition="below" />
+            )}
         </>
     );
 };

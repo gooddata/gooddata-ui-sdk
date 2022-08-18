@@ -1,17 +1,12 @@
 // (C) 2022 GoodData Corporation
-import React, { useCallback } from "react";
+import React from "react";
 
-import {
-    selectIsInEditMode,
-    useDashboardDispatch,
-    useDashboardSelector,
-    useWidgetSelection,
-    eagerRemoveSectionItem,
-    selectWidgetPlaceholder,
-} from "../../../model";
+import { selectIsInEditMode, useDashboardSelector } from "../../../model";
 import { DraggableItem } from "../types";
-import { DraggableCreatePanelItem, IDraggableCreatePanelItemProps } from "../DraggableCreatePanelItem";
+import { DraggableCreatePanelItem } from "../DraggableCreatePanelItem";
 import { CustomCreatePanelItemComponent } from "../../componentDefinition";
+import { useWidgetDragStartHandler } from "./useWidgetDragStartHandler";
+import { useWidgetDragEndHandler } from "./useWidgetDragEndHandler";
 
 interface IDraggableKpiCreatePanelItemProps {
     CreatePanelItemComponent: CustomCreatePanelItemComponent;
@@ -26,19 +21,10 @@ export const DraggableKpiCreatePanelItem: React.FC<IDraggableKpiCreatePanelItemP
     CreatePanelItemComponent,
     disabled,
 }) => {
-    const dispatch = useDashboardDispatch();
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
-    const { deselectWidgets } = useWidgetSelection();
-    const widgetPlaceholder = useDashboardSelector(selectWidgetPlaceholder);
 
-    const handleDragEnd = useCallback<Required<IDraggableCreatePanelItemProps>["onDragEnd"]>(
-        (didDrop) => {
-            if (!didDrop && widgetPlaceholder) {
-                dispatch(eagerRemoveSectionItem(widgetPlaceholder.sectionIndex, widgetPlaceholder.itemIndex));
-            }
-        },
-        [dispatch, widgetPlaceholder],
-    );
+    const handleDragStart = useWidgetDragStartHandler();
+    const handleDragEnd = useWidgetDragEndHandler();
 
     return (
         <DraggableCreatePanelItem
@@ -48,7 +34,7 @@ export const DraggableKpiCreatePanelItem: React.FC<IDraggableKpiCreatePanelItemP
             dragItem={dragItem}
             hideDefaultPreview={false}
             onDragEnd={handleDragEnd}
-            onDragStart={deselectWidgets}
+            onDragStart={handleDragStart}
         />
     );
 };

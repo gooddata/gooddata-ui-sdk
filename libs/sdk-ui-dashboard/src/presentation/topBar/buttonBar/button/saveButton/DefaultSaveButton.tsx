@@ -11,7 +11,6 @@ import {
     saveDashboard,
     selectEnableAnalyticalDashboardPermissions,
     selectIsDashboardDirty,
-    selectIsNewDashboard,
     selectIsDashboardSaving,
     selectIsLayoutEmpty,
     selectIsInEditMode,
@@ -39,13 +38,12 @@ export function useSaveButtonProps(): ISaveButtonProps {
     const isSaving = useDashboardSelector(selectIsDashboardSaving);
     const arePermissionsEnabled = useDashboardSelector(selectEnableAnalyticalDashboardPermissions);
     const isPrivateDashboard = useDashboardSelector(selectIsPrivateDashboard);
-    const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
     const isEmptyDashboard = useDashboardSelector(selectIsLayoutEmpty);
     const canSaveDashboard = useDashboardSelector(selectCanSaveDashboard);
     const isDashboardDirty = useDashboardSelector(selectIsDashboardDirty);
 
     const isVisible = isEditing;
-    const isEnabled = isNewDashboard ? !isEmptyDashboard : isDashboardDirty;
+    const isEnabled = isDashboardDirty;
 
     const buttonValue = arePermissionsEnabled
         ? messages.controlButtonsSaveValue

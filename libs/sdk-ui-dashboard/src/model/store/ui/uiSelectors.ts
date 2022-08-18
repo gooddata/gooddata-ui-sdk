@@ -198,3 +198,13 @@ export const selectIsFilterAttributeSelectionOpen = createSelector(
  * @alpha
  */
 export const selectSelectedFilterIndex = createSelector(selectSelf, (state) => state.selectedFilterIndex);
+
+/**
+ * @internal
+ */
+export const selectIsDraggingWidget = createSelector(selectSelf, (state) => state.isDraggingWidget);
+
+/**
+ * @internal
+ */
+export const selectActiveSectionIndex = createSelector(selectSelf, (state) => state.activeSectionIndex);

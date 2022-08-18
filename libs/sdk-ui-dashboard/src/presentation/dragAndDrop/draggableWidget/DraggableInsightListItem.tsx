@@ -1,21 +1,16 @@
 // (C) 2022 GoodData Corporation
-import React, { useEffect } from "react";
+import React from "react";
 import classNames from "classnames";
 import { IInsight } from "@gooddata/sdk-model";
 
-import {
-    useDashboardSelector,
-    selectIsInEditMode,
-    useDashboardDispatch,
-    useWidgetSelection,
-    eagerRemoveSectionItem,
-    selectWidgetPlaceholder,
-} from "../../../model";
+import { useDashboardSelector, selectIsInEditMode } from "../../../model";
 import { useDashboardDrag } from "../useDashboardDrag";
 import {
     CustomDashboardInsightListItemComponent,
     CustomDashboardInsightListItemComponentProps,
 } from "../types";
+import { useWidgetDragStartHandler } from "./useWidgetDragStartHandler";
+import { useWidgetDragEndHandler } from "./useWidgetDragEndHandler";
 
 /**
  * @internal
@@ -34,10 +29,10 @@ export function DraggableInsightListItem({
     listItemComponentProps,
     insight,
 }: IDraggableInsightListItemProps) {
-    const dispatch = useDashboardDispatch();
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
-    const { deselectWidgets } = useWidgetSelection();
-    const widgetPlaceholder = useDashboardSelector(selectWidgetPlaceholder);
+
+    const handleDragStart = useWidgetDragStartHandler();
+    const handleDragEnd = useWidgetDragEndHandler();
 
     const [{ isDragging }, dragRef] = useDashboardDrag(
         {
@@ -48,22 +43,12 @@ export function DraggableInsightListItem({
             canDrag: isInEditMode,
             hideDefaultPreview: false,
             dragEnd: (_, monitor) => {
-                if (!monitor.didDrop() && widgetPlaceholder) {
-                    dispatch(
-                        eagerRemoveSectionItem(widgetPlaceholder.sectionIndex, widgetPlaceholder.itemIndex),
-                    );
-                }
+                handleDragEnd(monitor.didDrop());
             },
+            dragStart: handleDragStart,
         },
-        [isInEditMode, insight, widgetPlaceholder],
+        [isInEditMode, insight, handleDragStart, handleDragEnd],
     );
-
-    // deselect all widgets when starting the drag
-    useEffect(() => {
-        if (isDragging) {
-            deselectWidgets();
-        }
-    }, [deselectWidgets, isDragging]);
 
     return (
         <div className={classNames({ "is-dragging": isDragging })} ref={dragRef}>

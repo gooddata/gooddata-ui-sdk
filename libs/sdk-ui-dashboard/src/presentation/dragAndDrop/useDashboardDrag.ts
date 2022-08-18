@@ -1,19 +1,23 @@
 // (C) 2022 GoodData Corporation
 
 import { ConnectDragSource, DragSourceMonitor, useDrag } from "react-dnd";
-import { useEffect } from "react";
-import { DraggableItemType, DraggableItem } from "./types";
+import { useEffect, useRef } from "react";
+import { DraggableItem } from "./types";
 
 import { getEmptyImage } from "react-dnd-html5-backend";
 import isFunction from "lodash/isFunction";
 
-type CollectedProps = {
+type CollectedProps<TItem> = {
     isDragging: boolean;
+    item: TItem;
 };
 
-const basicDragCollect = (monitor: DragSourceMonitor<DraggableItemType, void>): CollectedProps => ({
-    isDragging: monitor.isDragging(),
-});
+function basicDragCollect<TItem>(monitor: DragSourceMonitor<TItem, void>): CollectedProps<TItem> {
+    return {
+        isDragging: monitor.isDragging(),
+        item: monitor.getItem(),
+    };
+}
 
 export function useDashboardDrag<DragObject extends DraggableItem>(
     {
@@ -21,15 +25,17 @@ export function useDashboardDrag<DragObject extends DraggableItem>(
         canDrag = true,
         hideDefaultPreview = true,
         dragEnd,
+        dragStart,
     }: {
         dragItem: DragObject | (() => DragObject);
         canDrag?: boolean | ((monitor: DragSourceMonitor<DragObject, void>) => boolean);
         hideDefaultPreview?: boolean;
         dragEnd?: (item: DragObject, monitor: DragSourceMonitor<DragObject, void>) => void;
+        dragStart?: (item: DragObject) => void;
     },
     deps: unknown[] = [],
 ) {
-    const [collectedProps, dragRef, dragPreviewRef] = useDrag<DragObject, void, CollectedProps>(
+    const [collectedProps, dragRef, dragPreviewRef] = useDrag<DragObject, void, CollectedProps<DragObject>>(
         () => {
             const item = isFunction(dragItem) ? dragItem() : dragItem;
             return {
@@ -44,6 +50,19 @@ export function useDashboardDrag<DragObject extends DraggableItem>(
         deps,
     );
 
+    const hasHandledStart = useRef(false);
+    useEffect(() => {
+        if (collectedProps.isDragging) {
+            if (!hasHandledStart.current && dragStart) {
+                const item = isFunction(dragItem) ? dragItem() : dragItem;
+                hasHandledStart.current = true;
+                dragStart(item);
+            }
+        } else {
+            hasHandledStart.current = false;
+        }
+    }, [collectedProps.isDragging]);
+
     useEffect(() => {
         if (hideDefaultPreview) {
             // this is the way how to hide native drag preview, custom preview is rendered by DragLayer
@@ -51,5 +70,5 @@ export function useDashboardDrag<DragObject extends DraggableItem>(
         }
     }, [dragPreviewRef, hideDefaultPreview]);
 
-    return [collectedProps, dragRef] as [CollectedProps, ConnectDragSource];
+    return [collectedProps, dragRef] as [CollectedProps<DragObject>, ConnectDragSource];
 }
