@@ -6,7 +6,7 @@ import {
     ISaveButtonProps,
     ISaveAsNewButtonProps,
     IShareButtonProps,
-} from "./button";
+} from "./button/types";
 
 /**
  * @alpha

@@ -21,6 +21,7 @@ import {
 import {
     CustomButtonBarComponent,
     CustomMenuButtonComponent,
+    CustomSaveButtonComponent,
     CustomTitleComponent,
     CustomTopBarComponent,
     IMenuButtonConfiguration,
@@ -310,6 +311,16 @@ export interface IDashboardCustomComponentProps {
      *
      */
     EmptyLayoutDropZoneBodyComponent?: CustomEmptyLayoutDropZoneBodyComponent;
+
+    /**
+     * Specify the component rendered as save button.
+     *
+     * @remarks
+     * If not provided, the default implementation {@link DefaultSaveButton} will be used.
+     *
+     * @internal
+     */
+    SaveButtonComponent?: CustomSaveButtonComponent;
 }
 
 /**

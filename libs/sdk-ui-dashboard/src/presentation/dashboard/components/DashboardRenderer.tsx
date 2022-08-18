@@ -24,7 +24,13 @@ import { DefaultDashboardLayout } from "../../layout";
 import { DefaultSaveAsDialog } from "../../saveAs";
 import { DefaultScheduledEmailDialog, DefaultScheduledEmailManagementDialog } from "../../scheduledEmail";
 import { DefaultShareDialog } from "../../shareDialog";
-import { DefaultButtonBar, DefaultMenuButton, DefaultTopBar, RenderModeAwareTitle } from "../../topBar";
+import {
+    DefaultButtonBar,
+    DefaultMenuButton,
+    DefaultSaveButton,
+    DefaultTopBar,
+    RenderModeAwareTitle,
+} from "../../topBar";
 import { defaultDashboardThemeModifier } from "../defaultDashboardThemeModifier";
 import { useDashboard } from "../hooks/useDashboard";
 import { IDashboardProps } from "../types";
@@ -122,6 +128,7 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
                                             props.EmptyLayoutDropZoneBodyComponent ??
                                             DefaultEmptyLayoutDropZoneBody
                                         }
+                                        SaveButtonComponent={props.SaveButtonComponent ?? DefaultSaveButton}
                                     >
                                         <DashboardConfigProvider menuButtonConfig={props.menuButtonConfig}>
                                             <DndProvider backend={HTML5Backend}>

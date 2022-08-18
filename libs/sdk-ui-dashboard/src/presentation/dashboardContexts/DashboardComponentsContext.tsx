@@ -14,6 +14,7 @@ import {
     CustomMenuButtonComponent,
     CustomTitleComponent,
     CustomTopBarComponent,
+    CustomSaveButtonComponent,
 } from "../topBar/types";
 import {
     CustomScheduledEmailDialogComponent,
@@ -68,6 +69,7 @@ interface IDashboardComponentsContext {
     KpiWidgetComponentSet: KpiWidgetComponentSet;
     AttributeFilterComponentSet: AttributeFilterComponentSet;
     EmptyLayoutDropZoneBodyComponent: CustomEmptyLayoutDropZoneBodyComponent;
+    SaveButtonComponent: CustomSaveButtonComponent;
 }
 
 const ThrowMissingComponentError = (componentName: string) => () => {
@@ -109,6 +111,7 @@ const DashboardComponentsContext = createContext<IDashboardComponentsContext>({
     KpiWidgetComponentSet: null as any, // TODO how to throw here
     AttributeFilterComponentSet: null as any, // TODO how to throw here
     EmptyLayoutDropZoneBodyComponent: ThrowMissingComponentError("EmptyLayoutDropZoneBodyComponent"),
+    SaveButtonComponent: ThrowMissingComponentError("SaveButtonComponent"),
 });
 DashboardComponentsContext.displayName = "DashboardComponentsContext";
 
