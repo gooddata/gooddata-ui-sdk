@@ -20,10 +20,8 @@ import {
     selectEnableWidgetCustomHeight,
     selectRenderMode,
 } from "../../model";
-import { useDashboardComponentsContext } from "../dashboardContexts";
 
 import { DashboardLayoutWidget } from "./DashboardLayoutWidget";
-import { EmptyDashboardError } from "./EmptyDashboardError";
 import { IDashboardLayoutProps } from "./types";
 import {
     DashboardLayout,
@@ -34,8 +32,9 @@ import {
 import { RenderModeAwareDashboardLayoutSectionRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionRenderer";
 import { RenderModeAwareDashboardLayoutSectionHeaderRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionHeaderRenderer";
 import { getMemoizedWidgetSanitizer } from "./DefaultDashboardLayoutUtils";
-import { EmptyDashboardDropZone, SectionHotspot } from "../dragAndDrop";
+import { SectionHotspot } from "../dragAndDrop";
 import { isInitialPlaceholderWidget } from "../../widgets";
+import { EmptyDashboardLayout } from "./EmptyDashboardLayout";
 
 /**
  * Get dashboard layout for exports.
@@ -86,9 +85,7 @@ const itemKeyGetter: IDashboardLayoutItemKeyGetter<ExtendedDashboardWidget> = (k
  * @alpha
  */
 export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Element => {
-    const { onFiltersChange, onDrill, onError, ErrorComponent: CustomError } = props;
-
-    const { ErrorComponent } = useDashboardComponentsContext({ ErrorComponent: CustomError });
+    const { onFiltersChange, onDrill, onError } = props;
 
     const layout = useDashboardSelector(selectLayout);
     const isLayoutEmpty = useDashboardSelector(selectIsLayoutEmpty);
@@ -137,11 +134,7 @@ export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Elemen
     );
 
     if (isLayoutEmpty) {
-        return renderMode === "edit" ? (
-            <EmptyDashboardDropZone />
-        ) : (
-            <EmptyDashboardError ErrorComponent={ErrorComponent} />
-        );
+        return <EmptyDashboardLayout />;
     }
 
     // do not render the tailing section hotspot if there is only one section in the layout and it has only initial placeholders in it
