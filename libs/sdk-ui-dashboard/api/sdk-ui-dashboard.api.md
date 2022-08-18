@@ -2932,6 +2932,8 @@ export interface IDashboardCustomComponentProps {
     MenuButtonComponent?: CustomMenuButtonComponent;
     // @alpha
     SaveAsDialogComponent?: CustomSaveAsDialogComponent;
+    // @internal
+    SaveButtonComponent?: CustomSaveButtonComponent;
     // @alpha
     ScheduledEmailDialogComponent?: CustomScheduledEmailDialogComponent;
     // @alpha
