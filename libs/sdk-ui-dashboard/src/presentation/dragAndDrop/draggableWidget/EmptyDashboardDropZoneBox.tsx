@@ -9,15 +9,6 @@ export const EmptyDashboardDropZoneBox: React.FC = () => {
             <Typography tagName="h2">
                 <FormattedMessage id="newDashboard.title" />
             </Typography>
-            {/*<Typography tagName="p">
-                <FormattedMessage id="newDashboard.subtitle" />
-            </Typography>
-             <div className="drag-info-placeholder-box-insight">
-                <Typography tagName="p">
-                    <span className="gd-icon-insight" />
-                    <FormattedMessage id="newDashboard.subtitle.insight" />
-                </Typography>
-            </div> */}
         </div>
     );
 };
