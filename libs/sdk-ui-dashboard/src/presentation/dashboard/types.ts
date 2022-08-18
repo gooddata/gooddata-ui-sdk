@@ -13,7 +13,7 @@ import {
     DashboardState,
 } from "../../model";
 import { CustomFilterBarComponent } from "../filterBar";
-import { CustomDashboardLayoutComponent } from "../layout";
+import { CustomDashboardLayoutComponent, CustomEmptyLayoutDropZoneBodyComponent } from "../layout";
 import {
     CustomScheduledEmailDialogComponent,
     CustomScheduledEmailManagementDialogComponent,
@@ -47,7 +47,7 @@ import { InsightComponentSetProvider } from "../componentDefinition/types";
  *
  * @remarks
  * IMPORTANT: while this interface is marked as public, you also need to heed the maturity annotations
- * on each property. A lot of these properties are at this moment alpha level.
+ * on each property. A lot of these properties are at this moment alpha or internal level.
  *
  * @public
  */
@@ -299,6 +299,17 @@ export interface IDashboardCustomComponentProps {
      * @alpha
      */
     SidebarComponent?: CustomSidebarComponent;
+
+    /**
+     * Specify the component rendered as the body of the drop zone when the layout is empty.
+     *
+     * @internal
+     *
+     * @privateRemarks
+     * We would ideally replace the whole EmptyLayoutComponent, however integrating with the drop zone is currently too complicated.
+     *
+     */
+    EmptyLayoutDropZoneBodyComponent?: CustomEmptyLayoutDropZoneBodyComponent;
 }
 
 /**

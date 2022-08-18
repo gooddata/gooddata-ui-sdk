@@ -744,6 +744,9 @@ export type CustomDraggingComponent = ComponentType<ICustomDraggingComponentProp
 // @internal (undocumented)
 export type CustomEditModeButtonComponent = ComponentType<IEditButtonProps>;
 
+// @internal (undocumented)
+export type CustomEmptyLayoutDropZoneBodyComponent = ComponentType;
+
 // @alpha (undocumented)
 export type CustomFilterBarComponent = ComponentType<IFilterBarProps>;
 
@@ -2905,6 +2908,8 @@ export interface IDashboardCustomComponentProps {
     DashboardAttributeFilterComponentProvider?: OptionalAttributeFilterComponentProvider;
     // @alpha
     DashboardDateFilterComponentProvider?: OptionalDateFilterComponentProvider;
+    // @internal
+    EmptyLayoutDropZoneBodyComponent?: CustomEmptyLayoutDropZoneBodyComponent;
     // @alpha
     ErrorComponent?: ComponentType<IErrorProps>;
     // @alpha
