@@ -7,11 +7,12 @@ import { IAttributeElement } from "@gooddata/sdk-model";
 import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext";
 import { getElementTitle, getElementKey } from "../../utils";
 import { IAttributeFilterElementsSelectProps } from "./types";
+import { usePrevious } from "@gooddata/sdk-ui";
+import { useAttributeFilterContext } from "../../Context/AttributeFilterContext";
+import { MAX_SELECTION_SIZE } from "../../hooks/constants";
 
-export const MAX_SELECTION_SIZE = 500;
 const ITEM_HEIGHT = 28;
 const MOBILE_LIST_ITEM_HEIGHT = 40;
-const INTERNAL_LIST_WIDTH = 245;
 const VISIBLE_ITEMS_COUNT = 10;
 
 /**
@@ -43,7 +44,7 @@ export const AttributeFilterElementsSelect: React.FC<IAttributeFilterElementsSel
 
     const intl = useIntl();
     const isMobile = useMediaQuery("mobileDevice");
-
+    const { fullscreenOnMobile } = useAttributeFilterContext();
     const {
         ElementsSelectLoadingComponent,
         ElementsSelectItemComponent,
@@ -53,19 +54,19 @@ export const AttributeFilterElementsSelect: React.FC<IAttributeFilterElementsSel
         StatusBarComponent,
     } = useAttributeFilterComponentsContext();
 
-    const itemHeight = isMobile ? MOBILE_LIST_ITEM_HEIGHT : ITEM_HEIGHT;
-    const height = useMemo(() => {
-        return isLoading || (!isLoading && items.length === 0)
-            ? 100
-            : itemHeight * Math.min(VISIBLE_ITEMS_COUNT, totalItemsCountWithCurrentSettings);
-    }, [isLoading, items, itemHeight, totalItemsCountWithCurrentSettings]);
+    const itemHeight = fullscreenOnMobile && isMobile ? MOBILE_LIST_ITEM_HEIGHT : ITEM_HEIGHT;
+
+    const previousItemsCount = usePrevious(totalItemsCountWithCurrentSettings);
+    const loadingHeight = useMemo(() => {
+        return Math.max((Math.min(previousItemsCount, VISIBLE_ITEMS_COUNT) || 1) * itemHeight, 20) + 32;
+    }, [previousItemsCount, itemHeight]);
 
     return (
         <>
             <InvertableSelect<IAttributeElement>
-                className="gd-attribute-filter-list"
-                width={INTERNAL_LIST_WIDTH}
-                height={height}
+                className="gd-attribute-filter-elements-select__next"
+                adaptiveWidth
+                adaptiveHeight={isMobile}
                 items={items}
                 totalItemsCount={totalItemsCountWithCurrentSettings}
                 itemHeight={itemHeight}
@@ -87,11 +88,11 @@ export const AttributeFilterElementsSelect: React.FC<IAttributeFilterElementsSel
                 renderItem={(props) => {
                     return <ElementsSelectItemComponent {...props} />;
                 }}
-                renderError={({ height }) => {
-                    return <ElementsSelectErrorComponent height={height} />;
+                renderError={() => {
+                    return <ElementsSelectErrorComponent error={error} />;
                 }}
-                renderLoading={(props) => {
-                    return <ElementsSelectLoadingComponent height={props.height} />;
+                renderLoading={() => {
+                    return <ElementsSelectLoadingComponent height={loadingHeight} />;
                 }}
                 renderNoData={({ height }) => {
                     return (
@@ -105,7 +106,13 @@ export const AttributeFilterElementsSelect: React.FC<IAttributeFilterElementsSel
                     );
                 }}
                 renderSearchBar={({ onSearch, searchString }) => {
-                    return <ElementsSearchBarComponent onSearch={onSearch} searchString={searchString} />;
+                    return (
+                        <ElementsSearchBarComponent
+                            onSearch={onSearch}
+                            searchString={searchString}
+                            isSmall={!(isMobile && fullscreenOnMobile)}
+                        />
+                    );
                 }}
                 renderStatusBar={({ getItemTitle, isInverted, selectedItems, selectedItemsLimit }) => {
                     return (

@@ -34,6 +34,8 @@ export const useAttributeFilterController = (props: IAttributeFilterCoreProps) =
 
         hiddenElements,
         staticElements,
+
+        fullscreenOnMobile,
     } = props;
 
     const backend = useBackendStrict(backendInput, "AttributeFilter");
@@ -61,6 +63,7 @@ export const useAttributeFilterController = (props: IAttributeFilterCoreProps) =
     const callbacks = useCallbacks(handler, { onApply, setConnectedPlaceholderValue });
 
     return {
+        fullscreenOnMobile,
         ...attributeFilterControllerData,
         ...callbacks,
     };

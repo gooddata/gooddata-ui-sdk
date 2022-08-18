@@ -11,7 +11,6 @@ export interface IInvertableSelectAllCheckboxProps {
     onChange: (value: boolean) => void;
 
     isFiltered: boolean;
-    loadedItemsCount: number;
     totalItemsCount: number;
 
     isPartialSelection: boolean;
@@ -21,7 +20,7 @@ export interface IInvertableSelectAllCheckboxProps {
  * @internal
  */
 export function InvertableSelectAllCheckbox(props: IInvertableSelectAllCheckboxProps) {
-    const { checked, onChange, isFiltered, loadedItemsCount, totalItemsCount, isPartialSelection } = props;
+    const { checked, onChange, isFiltered, totalItemsCount, isPartialSelection } = props;
 
     const intl = useIntl();
 
@@ -48,21 +47,14 @@ export function InvertableSelectAllCheckbox(props: IInvertableSelectAllCheckboxP
                 onChange={handleChange}
             />
             <span className="input-label-text">
-                <span
-                    className={cx(
-                        "gd-list-all-checkbox gd-list-actions-selection-size s-list-search-selection-size",
-                        { "gd-list-all-checkbox-checked": checked },
-                    )}
-                >
+                <span className={cx("gd-list-all-checkbox", { "gd-list-all-checkbox-checked": checked })}>
                     {intl.formatMessage({ id: "gs.list.all" })}
                     {isFiltered &&
                         ` ${intl.formatMessage({
                             id: "gs.list.searchResults",
                         })}`}
                 </span>
-                <span>{` (${
-                    isFiltered && loadedItemsCount < totalItemsCount ? loadedItemsCount + "/" : ""
-                }${totalItemsCount})`}</span>
+                <span className="gd-list-actions-selection-size s-list-search-selection-size">{`(${totalItemsCount})`}</span>
             </span>
         </label>
     );

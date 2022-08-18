@@ -4,22 +4,10 @@ import { useIntl } from "react-intl";
 import { NoData } from "@gooddata/sdk-ui-kit";
 
 /**
- * @alpha
- */
-export interface IAttributeFilterEmptyAttributeResultProps {
-    height: number;
-}
-
-/**
  * @internal
  */
-export const AttributeFilterEmptyAttributeResult: React.VFC<IAttributeFilterEmptyAttributeResultProps> = ({
-    height,
-}) => {
+export const AttributeFilterEmptyAttributeResult: React.VFC = () => {
     const intl = useIntl();
-    return (
-        <div style={{ height, display: "flex", justifyContent: "center", alignItems: "center" }}>
-            <NoData noDataLabel={intl.formatMessage({ id: "attributesDropdown.noData" })} />
-        </div>
-    );
+
+    return <NoData noDataLabel={intl.formatMessage({ id: "attributesDropdown.noData" })} />;
 };

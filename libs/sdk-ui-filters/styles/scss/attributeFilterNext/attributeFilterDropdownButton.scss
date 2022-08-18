@@ -1,0 +1,266 @@
+// (C) 2022 GoodData Corporation
+@import "./attributeFilterVariables";
+
+// .gd-attribute-filter-dropdown-simple-button__next
+
+.gd-attribute-filter-dropdown-button__next {
+    @include gd-font-base;
+
+    max-width: 185px;
+    position: relative;
+    height: 41px;
+    margin: 7px 11px 7px 0;
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 16px;
+    cursor: pointer;
+    user-select: none;
+
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        transition: all $transition-length;
+    }
+
+    &::before {
+        z-index: 1;
+        top: 8px;
+        left: -4px;
+        width: 7px;
+        height: 26px;
+        background: url($separator-icon) no-repeat;
+        opacity: 0;
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        border: 1px solid transparent;
+        background: $gd-dashboards-filterBar-filterButton-backgroundColor;
+        transform: translateZ(-1px);
+        border-radius: 3px;
+    }
+
+    &:hover {
+        &::after {
+            border-color: $gd-border-color;
+        }
+    }
+
+    &.gd-is-filtering {
+        &:not(.gd-is-active) {
+            background: $gd-palette-primary-dimmed;
+            border-radius: 3px;
+
+            &::before,
+            &::after {
+                display: none;
+            }
+        }
+    }
+
+    &:active,
+    &.gd-is-active {
+        &::after {
+            &,
+            .edit-mode-on & {
+                box-shadow: inset 0 1px 0 0 $button-normal-active-shadow;
+                border-color: var(--gd-palette-complementary-5, $button-normal-hover-border-color);
+
+                // refactor
+                // stylelint-disable-next-line max-line-length
+                @include gradient-linear(
+                    $button-normal-active-gradient-top,
+                    $button-normal-active-gradient-bottom
+                );
+            }
+        }
+
+        .gd-attribute-filter-dropdown-button-title__next,
+        .gd-attribute-filter-dropdown-button-subtitle__next {
+            &::after {
+                content: "\e613";
+            }
+        }
+    }
+}
+
+.gd-attribute-filter-dropdown-button-content__next {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    flex-direction: column;
+}
+
+.gd-is-mobile {
+    .gd-attribute-filter-dropdown-button-content__next {
+        padding-right: 20px;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .gd-attribute-filter-dropdown-button__next.gd-is-active {
+        width: 100%;
+        height: 47px;
+        max-width: none;
+        margin: 0;
+        font-size: 14px;
+
+        &::after {
+            background-color: #fff;
+            background-image: none;
+        }
+
+        .gd-attribute-filter-dropdown-button-subtitle__next {
+            &::after {
+                right: 0;
+            }
+        }
+    }
+}
+
+.gd-mobile-dropdown-overlay .gd-attribute-filter-button-mobile__next {
+    display: none;
+}
+
+.gd-mobile-dropdown-header .gd-attribute-filter-button-mobile__next {
+    display: block;
+    width: auto;
+    max-width: none;
+    height: auto;
+    margin: 0;
+    padding: 10px;
+    box-shadow: 0 1px 2px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.1));
+    line-height: 25px;
+    border-width: 1px 0;
+    border-top: 1px solid $gd-border-color;
+    border-bottom: 1px solid $gd-border-color;
+    font-size: nth(map-get($gd-typo, font-sizes), 4);
+    text-align: left;
+    background-color: $gd-color-white;
+
+    &::after {
+        display: none;
+    }
+
+    &::before {
+        right: 4px;
+    }
+}
+
+.gd-attribute-filter-button-mobile__next.gd-is-active {
+    .gd-attribute-filter-dropdown-button-title__next,
+    .gd-attribute-filter-dropdown-button-subtitle__next {
+        &::after {
+            content: "\e613";
+            position: absolute;
+            top: 50%;
+            right: -20px;
+            display: inline-block;
+            font-size: 18px;
+            transform: translateY(-50%);
+        }
+    }
+}
+
+.gd-attribute-filter-dropdown-button-title__next {
+    overflow: hidden;
+    color: $gd-color-link;
+
+    .gd-bubble-trigger,
+    .shortened {
+        display: inline-flex;
+    }
+
+    .shortened {
+        max-width: 100%;
+    }
+
+    .overlay & {
+        flex: 0 0 auto;
+        max-width: 100%;
+        margin-right: 5px;
+        color: $gd-color-label;
+
+        &::after {
+            content: ":";
+        }
+    }
+}
+
+.gd-attribute-filter-dropdown-button-title__next,
+.gd-attribute-filter-dropdown-button-subtitle__next {
+    max-width: 100%;
+    white-space: nowrap;
+
+    &::after {
+        content: "\e612";
+        display: none;
+        margin-left: 0.5em;
+        font-family: "Indigo", sans-serif;
+        font-weight: normal;
+        font-size: inherit;
+        vertical-align: top;
+        color: $gd-color-state-blank;
+        transition: $transition-length;
+    }
+
+    &:only-child::after {
+        display: inline-block;
+    }
+
+    .drag-preview &::after {
+        display: none;
+    }
+}
+
+.gd-attribute-filter-dropdown-button-subtitle__next {
+    display: inline-flex;
+    overflow: hidden;
+    font-weight: bold;
+    text-overflow: ellipsis;
+    color: $gd-color-dark;
+
+    .overlay & {
+        flex: 1 1 auto;
+        max-width: none;
+
+        &::after {
+            position: absolute;
+            top: 50%;
+            right: -20px;
+            font-size: 18px;
+            transform: translateY(-50%);
+        }
+    }
+
+    &::after {
+        display: inline-block;
+    }
+}
+
+.gd-attribute-filter-dropdown-button-selected-items__next {
+    display: inline-block;
+    flex: 0 1 auto;
+    overflow: hidden;
+    max-width: 120px;
+    text-overflow: ellipsis;
+    vertical-align: bottom;
+
+    .overlay & {
+        max-width: none;
+    }
+}
+
+.gd-attribute-filter-dropdown-button-selected-items-count__next {
+    display: inline-block;
+    flex: 0 0 auto;
+    vertical-align: bottom;
+}

@@ -67,7 +67,7 @@ export const initialState: Omit<AttributeFilterState, "displayFormRef" | "elemen
         cache: {},
         currentOptions: {
             offset: 0,
-            limit: 550,
+            limit: 500,
             search: "",
             limitingAttributeFilters: [],
             limitingDateFilters: [],

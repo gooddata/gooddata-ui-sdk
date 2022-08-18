@@ -4,6 +4,7 @@ import {
     IElementsQueryAttributeFilter,
     IElementsQueryOptions,
     IElementsQueryResult,
+    isValueBasedElementsQueryOptionsElements,
 } from "@gooddata/sdk-backend-spi";
 import {
     attributeElementsIsEmpty,
@@ -53,7 +54,10 @@ export function loadElementsFromBackend(
         loaderOptions.filter = search;
     }
     if (elements) {
-        loaderOptions.elements = elements;
+        loaderOptions.elements =
+            !backend.capabilities.supportsElementUris && !isValueBasedElementsQueryOptionsElements(elements)
+                ? { primaryValues: elements.uris }
+                : elements;
     }
     if (order) {
         loaderOptions.order = order;

@@ -31,10 +31,7 @@ export {
     AttributeFilterElementsSelectLoading,
     IAttributeFilterElementsSelectLoadingProps,
 } from "./AttributeFilter@next/Components/ElementsSelect/AttributeFilterElementsSelectLoading";
-export {
-    AttributeFilterEmptyAttributeResult,
-    IAttributeFilterEmptyAttributeResultProps,
-} from "./AttributeFilter@next/Components/ElementsSelect/EmptyResult/AttributeFilterEmptyAttributeResult";
+export { AttributeFilterEmptyAttributeResult } from "./AttributeFilter@next/Components/ElementsSelect/EmptyResult/AttributeFilterEmptyAttributeResult";
 export {
     AttributeFilterAllValuesFilteredResult,
     IAttributeFilterAllValuesFilteredResultProps,
@@ -43,10 +40,7 @@ export {
     AttributeFilterEmptyResult,
     IAttributeFilterEmptyResultProps,
 } from "./AttributeFilter@next/Components/ElementsSelect/EmptyResult/AttributeFilterEmptyResult";
-export {
-    AttributeFilterEmptySearchResult,
-    IAttributeFilterEmptySearchResultProps,
-} from "./AttributeFilter@next/Components/ElementsSelect/EmptyResult/AttributeFilterEmptySearchResult";
+export { AttributeFilterEmptySearchResult } from "./AttributeFilter@next/Components/ElementsSelect/EmptyResult/AttributeFilterEmptySearchResult";
 export {
     AttributeFilterFilteredStatus,
     IAttributeFilterFilteredStatusProps,

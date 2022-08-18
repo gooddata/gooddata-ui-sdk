@@ -1,0 +1,30 @@
+// (C) 2022 GoodData Corporation
+@import "./attributeFilterVariables";
+
+.gd-attribute-filter-elements-select-item__next {
+    min-height: 28px;
+}
+
+.gd-attribute-filter-elements-select__next.gd-list {
+    margin: 0;
+
+    .gd-list-item {
+        &:hover {
+            background-color: $is-focused-background;
+
+            &.is-selected {
+                color: $gd-color-text;
+                background-color: $is-selected-focused-background;
+            }
+
+            .input-label-text {
+                color: var(--gd-palette-complementary-9, inherit);
+            }
+        }
+
+        &.is-selected {
+            font-weight: bold;
+            color: $gd-color-text;
+        }
+    }
+}

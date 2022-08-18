@@ -230,6 +230,7 @@ Object {
         "canCalculateTotals": true,
         "supportsCsvUploader": true,
         "supportsCustomColorPalettes": true,
+        "supportsElementUris": true,
         "supportsElementsQueryParentFiltering": true,
         "supportsHierarchicalWorkspaces": false,
         "supportsKpiWidget": true,

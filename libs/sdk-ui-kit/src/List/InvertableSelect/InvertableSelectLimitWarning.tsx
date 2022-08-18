@@ -1,7 +1,8 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
-import { Message } from "../../Messages";
 import { FormattedMessage } from "react-intl";
+
+import { Message } from "../../Messages";
 
 /**
  * @internal
@@ -18,7 +19,7 @@ export function InvertableSelectLimitWarning(props: IInvertableSelectLimitWarnin
     const { limit, selectedItemsCount } = props;
 
     return (
-        <Message type="warning" className="gd-list-limitExceeded animation-fadeIn">
+        <Message type="warning" className="gd-invertable-list-limitExceeded">
             {selectedItemsCount === limit && (
                 <FormattedMessage id="gs.list.limitReached" values={{ limit }} />
             )}

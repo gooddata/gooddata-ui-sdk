@@ -26,16 +26,16 @@ export const AttributeFilterDropdownActions: React.VFC<IAttributeFilterDropdownA
     const applyText = intl.formatMessage({ id: "gs.list.apply" });
 
     return (
-        <div className="gd-attribute-filter-actions__next">
+        <div className="gd-attribute-filter-dropdown-actions__next">
             <Button
-                className="gd-button-secondary gd-button-small cancel-button s-cancel"
+                className="gd-attribute-filter-cancel-button__next gd-button-secondary gd-button-small cancel-button s-cancel"
                 onClick={onCloseButtonClick}
                 value={cancelText}
                 title={cancelText}
             />
             <Button
                 disabled={isApplyDisabled}
-                className="gd-button-action gd-button-small s-apply"
+                className="gd-attribute-filter-apply-button__next gd-button-action gd-button-small s-apply"
                 onClick={onApplyButtonClick}
                 value={applyText}
                 title={applyText}

@@ -8,6 +8,7 @@ import { InvertableSelectSearchBar } from "@gooddata/sdk-ui-kit";
 export interface IAttributeFilterElementsSearchBarProps {
     searchString: string;
     onSearch: (text: string) => void;
+    isSmall?: boolean;
 }
 
 /**
@@ -16,6 +17,7 @@ export interface IAttributeFilterElementsSearchBarProps {
 export const AttributeFilterElementsSearchBar: React.VFC<IAttributeFilterElementsSearchBarProps> = (
     props,
 ) => {
-    const { onSearch, searchString } = props;
-    return <InvertableSelectSearchBar onSearch={onSearch} searchString={searchString} />;
+    const { onSearch, searchString, isSmall } = props;
+
+    return <InvertableSelectSearchBar onSearch={onSearch} searchString={searchString} isSmall={isSmall} />;
 };

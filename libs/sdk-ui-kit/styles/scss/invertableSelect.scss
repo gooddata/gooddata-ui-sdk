@@ -1,0 +1,94 @@
+// (C) 2022 GoodData Corporation
+@import "./variables.scss";
+
+.gd-invertable-select {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+    flex-shrink: 1;
+}
+
+.gd-invertable-select-all-checkbox,
+.gd-invertable-select-search-bar,
+.gd-invertable-select-status-bar {
+    flex-shrink: 0;
+}
+
+.gd-invertable-select-list,
+.gd-invertable-select-loading,
+.gd-invertable-select-error,
+.gd-invertable-select-no-data {
+    height: 100%;
+    min-height: 0;
+    flex-shrink: 1;
+}
+
+.gd-invertable-select-search-input {
+    margin-bottom: 14px;
+}
+
+.gd-invertable-select-all-checkbox {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 0 10px 4px;
+    font-size: 12px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--gd-palette-complementary-3, #dde4eb);
+
+    .input-checkbox-label {
+        cursor: pointer;
+    }
+}
+
+.gd-invertable-list-limitExceeded {
+    margin: 0 10px 10px;
+}
+
+.gd-invertable-select-selection-status {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 25px;
+    min-width: 0;
+    margin: 5px 10px;
+    line-height: 20px;
+    font-size: 12px;
+    padding-top: 5px;
+    border-top: 1px solid $gd-border-color;
+    font-family: $gd-font-primary;
+
+    span,
+    b {
+        flex: 0 0 auto;
+        height: 20px;
+        min-width: 0;
+        line-height: 20px;
+        white-space: nowrap;
+    }
+
+    .gd-shortened-text {
+        flex: 0 1 auto;
+        overflow: hidden;
+        width: auto;
+        height: 20px;
+        white-space: nowrap;
+        max-width: inherit;
+        text-overflow: ellipsis;
+
+        &.gd-selection-list {
+            font-weight: bold;
+        }
+    }
+}
+
+.gd-invertable-select-error {
+    display: flex;
+    margin: 10px;
+
+    .gd-message {
+        width: 100%;
+    }
+}

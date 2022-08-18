@@ -4,7 +4,7 @@ import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage } from "react-intl";
 
 const ALIGN_POINTS = [{ align: "cr cl" }];
-const ARROW_OFFSETS = { "cr cl": [-100, 0] };
+const ARROW_OFFSETS = { "cr cl": [10, 0] };
 
 /**
  * @alpha
@@ -24,7 +24,7 @@ export const AttributeFilterFilteredStatus: React.FC<IAttributeFilterFilteredSta
     }, [parentFilterTitles]);
 
     return (
-        <div className="gd-attribute-filter-dropdown-items-filtered__next s-attribute-filter-dropdown-items-filtered">
+        <div className="gd-attribute-filter-filtered-status__next s-attribute-filter-dropdown-items-filtered">
             <BubbleHoverTrigger showDelay={0} hideDelay={0}>
                 <div className="gd-filtered-message__next">
                     &nbsp;

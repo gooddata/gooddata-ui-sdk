@@ -20,7 +20,15 @@ export const AttributeFilterSimpleDropdownButton: React.VFC<IAttributeFilterDrop
         buttonTitle = intl.formatMessage({ id: "filtering" });
     }
 
-    return <DropdownButton disabled={isLoading} isOpen={isOpen} value={buttonTitle} onClick={onClick} />;
+    return (
+        <DropdownButton
+            className="gd-attribute-filter-dropdown-simple-button__next"
+            disabled={isLoading}
+            isOpen={isOpen}
+            value={buttonTitle}
+            onClick={onClick}
+        />
+    );
 };
 
 /**
@@ -39,5 +47,12 @@ export const AttributeFilterSimpleDropdownButtonWithSelection: React.VFC<
         buttonTitle = intl.formatMessage({ id: "filtering" });
     }
 
-    return <DropdownButton isOpen={isOpen} value={buttonTitle} onClick={onClick} />;
+    return (
+        <DropdownButton
+            className="gd-attribute-filter-dropdown-simple-button__next"
+            isOpen={isOpen}
+            value={buttonTitle}
+            onClick={onClick}
+        />
+    );
 };

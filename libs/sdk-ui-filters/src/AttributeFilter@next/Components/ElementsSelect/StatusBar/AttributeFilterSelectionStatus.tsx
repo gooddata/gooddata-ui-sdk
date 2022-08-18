@@ -20,7 +20,7 @@ export const AttributeFilterSelectionStatus: React.FC<IAttributeFilterSelectionS
     const { isInverted, selectedItems, getItemTitle, selectedItemsLimit } = props;
     return (
         <InvertableSelectStatusBar
-            className="gd-attribute-filter-selection-status-bar__next"
+            className="gd-attribute-filter-selection-status__next"
             isInverted={isInverted}
             getItemTitle={getItemTitle}
             selectedItems={selectedItems}

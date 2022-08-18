@@ -135,6 +135,11 @@ export interface IAttributeFilterCoreProps {
     staticElements?: IAttributeElement[];
 
     /**
+     * Customize, whether the filter should take the entire screen on mobile devices.
+     */
+    fullscreenOnMobile?: boolean;
+
+    /**
      * Specify function which will be called when user clicks 'Apply' button.
      *
      * @remarks

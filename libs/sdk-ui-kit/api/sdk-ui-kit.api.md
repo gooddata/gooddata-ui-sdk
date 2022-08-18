@@ -1965,6 +1965,10 @@ export interface IInvertableSelectLimitWarningProps {
 // @internal (undocumented)
 export interface IInvertableSelectProps<T> {
     // (undocumented)
+    adaptiveHeight?: boolean;
+    // (undocumented)
+    adaptiveWidth?: boolean;
+    // (undocumented)
     className?: string;
     // (undocumented)
     error?: any;
@@ -2078,6 +2082,10 @@ export interface IInvertableSelectRenderStatusBarProps<T> {
 
 // @internal (undocumented)
 export interface IInvertableSelectSearchBarProps {
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    isSmall?: boolean;
     // (undocumented)
     onSearch: (searchString: string) => void;
     // (undocumented)
