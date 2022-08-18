@@ -1,2 +1,2 @@
 // (C) 2022 GoodData Corporation
-export { InsightWidgetBuilder } from "./InsightWidgetBuilder";
+export { newInsightWidget, InsightWidgetBuilder, InsightWidgetModifications } from "./InsightWidgetBuilder";

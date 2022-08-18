@@ -1,18 +1,41 @@
 // (C) 2022 GoodData Corporation
 
 import {
-    DrillDefinition,
     IDashboardFilterReference,
     IInsight,
+    IInsightWidgetBase,
     IInsightWidgetConfiguration,
+    InsightDrillDefinition,
     insightRef,
     insightTitle,
     ObjRef,
     VisualizationProperties,
 } from "@gooddata/sdk-model";
+import identity from "lodash/identity";
 
 /**
- * Builder for a {@link @gooddata/sdk-model#IDashboardWidget} object.
+ * @internal
+ */
+export type InsightWidgetModifications = (builder: InsightWidgetBuilder) => InsightWidgetBuilder;
+
+/**
+ * Creates a new insightWidget with specified identifier and title and with optional modifications.
+ *
+ * @param insight - the insight object to create widget for.
+ * @param modifications - optional modifications
+ *
+ * @internal
+ */
+export function newInsightWidget(insight: IInsight, modifications: InsightWidgetModifications = identity) {
+    const ref = insightRef(insight);
+    const title = insightTitle(insight);
+    const builder = new InsightWidgetBuilder(ref, title);
+
+    return modifications(builder).build();
+}
+
+/**
+ * Builder for a {@link @gooddata/sdk-model#IInsightWidgetBase} object.
  *
  * @remarks
  * The builder without any modifications returns a widget with all mandatory data. To apply
@@ -21,51 +44,53 @@ import {
  * @internal
  */
 export class InsightWidgetBuilder {
-    insight: ObjRef;
-    type: string = "insight";
-    ignoredDashboardFilters: IDashboardFilterReference[] = [];
-    drills: DrillDefinition[] = [];
-    title: string = "";
-    description: string = "";
-    configuration: IInsightWidgetConfiguration = { hideTitle: false };
-    properties: VisualizationProperties = {};
+    widget: { -readonly [K in keyof IInsightWidgetBase]: IInsightWidgetBase[K] } = {
+        insight: { uri: "" },
+        type: "insight",
+        ignoreDashboardFilters: [],
+        drills: [],
+        title: "",
+        description: "",
+        configuration: { hideTitle: false },
+        properties: {},
+    };
 
-    constructor(insight: IInsight) {
-        this.insight = insightRef(insight);
-        this.title = insightTitle(insight);
+    constructor(insightRef: ObjRef, title: string) {
+        this.widget.insight = insightRef;
+        this.widget.title = title;
     }
 
-    withIgnoredDashboardFilters(ignoredDashboardFilters: IDashboardFilterReference[]) {
-        this.ignoredDashboardFilters = ignoredDashboardFilters;
+    withIgnoreDashboardFilters(ignoreDashboardFilters: IDashboardFilterReference[]) {
+        this.widget.ignoreDashboardFilters = ignoreDashboardFilters;
         return this;
     }
 
-    withDrills(drills: DrillDefinition[]) {
-        this.drills = drills;
+    withDrills(drills: InsightDrillDefinition[]) {
+        this.widget.drills = drills;
         return this;
     }
 
     withTitle(title: string) {
-        this.title = title;
+        this.widget.title = title;
         return this;
     }
 
     withDescription(description: string) {
-        this.description = description;
+        this.widget.description = description;
         return this;
     }
 
-    withConfiguration(config: IInsightWidgetConfiguration) {
-        this.configuration = config;
+    withConfiguration(configuration: IInsightWidgetConfiguration) {
+        this.widget.configuration = configuration;
         return this;
     }
 
-    withProperties(props: VisualizationProperties) {
-        this.properties = props;
+    withProperties(properties: VisualizationProperties) {
+        this.widget.properties = properties;
         return this;
     }
 
-    build() {
-        return { ...this };
+    build(): IInsightWidgetBase {
+        return { ...this.widget };
     }
 }
