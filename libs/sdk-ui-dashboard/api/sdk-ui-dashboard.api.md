@@ -81,6 +81,7 @@ import { IHeaderPredicate } from '@gooddata/sdk-ui';
 import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import { IInsightWidget } from '@gooddata/sdk-model';
+import { IInsightWidgetBase } from '@gooddata/sdk-model';
 import { IInsightWidgetConfiguration } from '@gooddata/sdk-model';
 import { IInsightWidgetDefinition } from '@gooddata/sdk-model';
 import { IKpi } from '@gooddata/sdk-model';
@@ -3661,33 +3662,19 @@ export function insightSelectDateDataset(queryResult: InsightDateDatasets): ICat
 export class InsightWidgetBuilder {
     constructor(insight: IInsight);
     // (undocumented)
-    build(): this;
+    build(): IInsightWidgetBase;
     // (undocumented)
-    configuration: IInsightWidgetConfiguration;
+    widget: IInsightWidgetBase;
     // (undocumented)
-    description: string;
-    // (undocumented)
-    drills: DrillDefinition[];
-    // (undocumented)
-    ignoredDashboardFilters: IDashboardFilterReference[];
-    // (undocumented)
-    insight: ObjRef;
-    // (undocumented)
-    properties: VisualizationProperties;
-    // (undocumented)
-    title: string;
-    // (undocumented)
-    type: string;
-    // (undocumented)
-    withConfiguration(config: IInsightWidgetConfiguration): this;
+    withConfiguration(configuration: IInsightWidgetConfiguration): this;
     // (undocumented)
     withDescription(description: string): this;
     // (undocumented)
-    withDrills(drills: DrillDefinition[]): this;
+    withDrills(drills: InsightDrillDefinition[]): this;
     // (undocumented)
-    withIgnoredDashboardFilters(ignoredDashboardFilters: IDashboardFilterReference[]): this;
+    withIgnoreDashboardFilters(ignoreDashboardFilters: IDashboardFilterReference[]): this;
     // (undocumented)
-    withProperties(props: VisualizationProperties): this;
+    withProperties(properties: VisualizationProperties): this;
     // (undocumented)
     withTitle(title: string): this;
 }
