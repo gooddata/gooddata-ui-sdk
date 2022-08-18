@@ -1,10 +1,13 @@
 // (C) 2021-2022 GoodData Corporation
+import React from "react";
 import { IntlShape } from "react-intl";
 import compact from "lodash/compact";
 
 import { IInsightMenuItem } from "../types";
 import { InsightConfiguration } from "../../insight/configuration/InsightConfiguration";
 import { InsightInteractions } from "../../insight/configuration/InsightInteractions";
+
+import { Icon } from "@gooddata/sdk-ui-kit";
 
 /**
  * @internal
@@ -26,7 +29,7 @@ export function getDefaultInsightEditMenuItems(intl: IntlShape): IInsightMenuIte
             itemId: "InteractionPanelSubmenu",
             tooltip: "",
             itemName: intl.formatMessage({ id: "configurationPanel.interactions" }),
-            icon: "gd-icon-settings",
+            icon: <Icon.Interaction className="item-icon" />,
             disabled: false,
             className: "s-configuration-panel-submenu",
             SubmenuComponent: InsightInteractions,
