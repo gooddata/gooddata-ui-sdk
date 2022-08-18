@@ -21,7 +21,7 @@ import {
  * @internal
  */
 export class InsightWidgetBuilder {
-    widget: IInsightWidgetBase = {
+    widget: { -readonly [K in keyof IInsightWidgetBase]: IInsightWidgetBase[K] } = {
         insight: { uri: "" },
         type: "insight",
         ignoreDashboardFilters: [],
@@ -33,58 +33,37 @@ export class InsightWidgetBuilder {
     };
 
     constructor(insight: IInsight) {
-        this.widget = {
-            ...this.widget,
-            insight: insightRef(insight),
-            title: insightTitle(insight),
-        };
+        this.widget.insight = insightRef(insight);
+        this.widget.title = insightTitle(insight);
     }
 
     withIgnoreDashboardFilters(ignoreDashboardFilters: IDashboardFilterReference[]) {
-        this.widget = {
-            ...this.widget,
-            ignoreDashboardFilters,
-        };
+        this.widget.ignoreDashboardFilters = ignoreDashboardFilters;
         return this;
     }
 
     withDrills(drills: InsightDrillDefinition[]) {
-        this.widget = {
-            ...this.widget,
-            drills,
-        };
+        this.widget.drills = drills;
         return this;
     }
 
     withTitle(title: string) {
-        this.widget = {
-            ...this.widget,
-            title,
-        };
+        this.widget.title = title;
         return this;
     }
 
     withDescription(description: string) {
-        this.widget = {
-            ...this.widget,
-            description,
-        };
+        this.widget.description = description;
         return this;
     }
 
     withConfiguration(configuration: IInsightWidgetConfiguration) {
-        this.widget = {
-            ...this.widget,
-            configuration,
-        };
+        this.widget.configuration = configuration;
         return this;
     }
 
     withProperties(properties: VisualizationProperties) {
-        this.widget = {
-            ...this.widget,
-            properties,
-        };
+        this.widget.properties = properties;
         return this;
     }
 
