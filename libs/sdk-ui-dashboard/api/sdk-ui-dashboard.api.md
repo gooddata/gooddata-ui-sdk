@@ -3660,11 +3660,13 @@ export function insightSelectDateDataset(queryResult: InsightDateDatasets): ICat
 
 // @internal
 export class InsightWidgetBuilder {
-    constructor(insight: IInsight);
+    constructor(insightRef: ObjRef, title: string);
     // (undocumented)
     build(): IInsightWidgetBase;
     // (undocumented)
-    widget: IInsightWidgetBase;
+    widget: {
+        -readonly [K in keyof IInsightWidgetBase]: IInsightWidgetBase[K];
+    };
     // (undocumented)
     withConfiguration(configuration: IInsightWidgetConfiguration): this;
     // (undocumented)
@@ -3681,6 +3683,9 @@ export class InsightWidgetBuilder {
 
 // @internal
 export type InsightWidgetComponentSet = CustomComponentBase<IDashboardInsightProps, Parameters<InsightComponentProvider>> & DraggableComponent & Partial<CreatableByDragComponent> & Partial<CreatablePlaceholderComponent<IDashboardWidgetProps>> & ConfigurableWidget<IInsightWidget>;
+
+// @internal (undocumented)
+export type InsightWidgetModifications = (builder: InsightWidgetBuilder) => InsightWidgetBuilder;
 
 // @internal (undocumented)
 export interface IParentWithConnectingAttributes {
@@ -4372,6 +4377,9 @@ export const newDrillToSameDashboardHandler: (dashboardRef: ObjRef) => Dashboard
 
 // @alpha (undocumented)
 export function newInsightPlaceholderWidget(sectionIndex: number, itemIndex: number, isLastInSection: boolean): InsightPlaceholderWidget;
+
+// @internal
+export function newInsightWidget(insight: IInsight, modifications?: InsightWidgetModifications): IInsightWidgetBase;
 
 // @alpha (undocumented)
 export function newKpiPlaceholderWidget(sectionIndex: number, itemIndex: number, isLastInSection: boolean): KpiPlaceholderWidget;

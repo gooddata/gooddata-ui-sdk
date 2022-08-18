@@ -13,7 +13,10 @@ import {
 } from "@gooddata/sdk-model";
 import identity from "lodash/identity";
 
-type InsightWidgetModifications = (builder: InsightWidgetBuilder) => InsightWidgetBuilder;
+/**
+ * @internal
+ */
+export type InsightWidgetModifications = (builder: InsightWidgetBuilder) => InsightWidgetBuilder;
 
 /**
  * Creates a new insightWidget with specified identifier and title and with optional modifications.
@@ -40,7 +43,7 @@ export function newInsightWidget(insight: IInsight, modifications: InsightWidget
  *
  * @internal
  */
-class InsightWidgetBuilder {
+export class InsightWidgetBuilder {
     widget: { -readonly [K in keyof IInsightWidgetBase]: IInsightWidgetBase[K] } = {
         insight: { uri: "" },
         type: "insight",
