@@ -8,8 +8,28 @@ import {
     InsightDrillDefinition,
     insightRef,
     insightTitle,
+    ObjRef,
     VisualizationProperties,
 } from "@gooddata/sdk-model";
+import identity from "lodash/identity";
+
+type InsightWidgetModifications = (builder: InsightWidgetBuilder) => InsightWidgetBuilder;
+
+/**
+ * Creates a new insightWidget with specified identifier and title and with optional modifications.
+ *
+ * @param insight - the insight object to create widget for.
+ * @param modifications - optional modifications
+ *
+ * @internal
+ */
+export function newInsightWidget(insight: IInsight, modifications: InsightWidgetModifications = identity) {
+    const ref = insightRef(insight);
+    const title = insightTitle(insight);
+    const builder = new InsightWidgetBuilder(ref, title);
+
+    return modifications(builder).build();
+}
 
 /**
  * Builder for a {@link @gooddata/sdk-model#IInsightWidgetBase} object.
@@ -20,7 +40,7 @@ import {
  *
  * @internal
  */
-export class InsightWidgetBuilder {
+class InsightWidgetBuilder {
     widget: { -readonly [K in keyof IInsightWidgetBase]: IInsightWidgetBase[K] } = {
         insight: { uri: "" },
         type: "insight",
@@ -32,9 +52,9 @@ export class InsightWidgetBuilder {
         properties: {},
     };
 
-    constructor(insight: IInsight) {
-        this.widget.insight = insightRef(insight);
-        this.widget.title = insightTitle(insight);
+    constructor(insightRef: ObjRef, title: string) {
+        this.widget.insight = insightRef;
+        this.widget.title = title;
     }
 
     withIgnoreDashboardFilters(ignoreDashboardFilters: IDashboardFilterReference[]) {
