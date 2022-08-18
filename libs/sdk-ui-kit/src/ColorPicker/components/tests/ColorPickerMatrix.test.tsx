@@ -1,6 +1,7 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { ColorFormats } from "tinycolor2";
 
 import { ColorPickerMatrix, IColorPickerMatrixProps } from "../ColorPickerMatrix";
@@ -18,33 +19,30 @@ function renderColorPickerMatrix(options?: Partial<IColorPickerMatrixProps>) {
         ...options,
     };
 
-    return mount(<ColorPickerMatrix {...args} />);
+    return render(<ColorPickerMatrix {...args} />);
 }
 
 describe("ColorPickerMatrix", () => {
     it("should render 24 color cells based on initial color from lightest to darkest", () => {
-        const colorMatrix = renderColorPickerMatrix();
+        renderColorPickerMatrix();
 
-        expect(colorMatrix.find(".color-picker-cell").length).toEqual(24);
-        expect(colorMatrix.find(".color-picker-cell").first().prop("style").backgroundColor).toEqual(
-            "hsl(3, 10%, 70%)",
-        );
-        expect(colorMatrix.find(".color-picker-cell").last().prop("style").backgroundColor).toEqual(
-            "hsl(3, 100%, 30%)",
-        );
+        const colors = screen.getAllByRole("color");
+        expect(colors).toHaveLength(24);
+        expect(colors[0]).toHaveStyle({ backgroundColor: "hsl(3, 10%, 70%)" });
+        expect(colors[23]).toHaveStyle({ backgroundColor: "hsl(3, 100%, 30%)" });
     });
 
-    it("should set selected color", () => {
+    it("should set selected color", async () => {
         const selectColorMock = jest.fn();
         const expectedColor: ColorFormats.HSL = {
             h: 3,
             s: 0.1,
             l: 0.7,
         };
+        renderColorPickerMatrix({ onColorSelected: selectColorMock });
 
-        const colorMatrix = renderColorPickerMatrix({ onColorSelected: selectColorMock });
-
-        colorMatrix.find(".color-picker-cell").first().simulate("click");
+        const colors = screen.getAllByRole("color");
+        await userEvent.click(colors[0]);
 
         expect(selectColorMock).toHaveBeenCalledTimes(1);
         expect(selectColorMock.mock.calls[0][0]).toEqual(expectedColor);

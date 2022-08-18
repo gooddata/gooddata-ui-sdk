@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 /**
  * Copyright (c) 2015 Case Sandberg
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
@@ -65,6 +65,7 @@ export class HueColorPicker extends PureComponent<IHueColorPickerProps> {
     render(): ReactNode {
         return (
             <div
+                role="hue-picker"
                 className="hue-picker hue-horizontal s-hue-picker"
                 ref={this.hueContainer}
                 onMouseDown={this.handleMouseDown}

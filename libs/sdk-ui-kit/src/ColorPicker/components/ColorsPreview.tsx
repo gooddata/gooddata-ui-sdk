@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { PureComponent, ReactNode } from "react";
 import { ColorFormats } from "tinycolor2";
 
@@ -46,6 +46,7 @@ class ColorItem extends PureComponent<IColorItemProps> {
         return (
             <div className="color-picker-value-wrapper">
                 <div
+                    aria-label={this.props.id}
                     className={`color-value s-${this.props.id}`}
                     style={getColorStyle(this.props.hslColor)}
                 />

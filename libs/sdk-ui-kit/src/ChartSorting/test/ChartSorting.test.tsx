@@ -2,7 +2,8 @@
 import React from "react";
 import { IntlProvider } from "react-intl";
 import { pickCorrectWording, messagesMap } from "@gooddata/sdk-ui";
-import { mount } from "enzyme";
+import userEvent from "@testing-library/user-event";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import noop from "lodash/noop";
 import { ChartSortingOwnProps, ChartSortingWithIntl } from "../ChartSorting";
 import {
@@ -10,17 +11,7 @@ import {
     singleAreaAttributeSortConfig,
     multipleAttributesSortConfig,
 } from "./mock";
-import {
-    clickAttributeDropdown,
-    changeDropdownValue,
-    getTextValue,
-    findSelector,
-    buildAttributeButtonSelector,
-    changeMeasureDropdownValue,
-    clickMeasureDropdown,
-    clickApplyButton,
-    isApplyButtonEnabled,
-} from "./testHelpers";
+
 import { IBucketItemDescriptors } from "../types";
 
 const bucketItems: IBucketItemDescriptors = {
@@ -64,7 +55,7 @@ const renderComponent = (props?: Partial<ChartSortingOwnProps>) => {
         onCancel: noop,
     };
 
-    return mount(
+    return render(
         <IntlProvider key={DefaultLocale} locale={DefaultLocale} messages={messages}>
             <ChartSortingWithIntl {...defaultProps} {...props} />
         </IntlProvider>,
@@ -73,149 +64,148 @@ const renderComponent = (props?: Partial<ChartSortingOwnProps>) => {
 
 describe("ChartSorting", () => {
     describe("Attribute Normal Sort with no metrics", () => {
-        const component = renderComponent();
-
+        beforeEach(() => {
+            renderComponent();
+        });
         it("should render dialog with correct values", () => {
-            expect(getTextValue(component, buildAttributeButtonSelector(0))).toEqual("Z to A");
+            expect(screen.getByText("Z to A")).toBeInTheDocument();
         });
 
-        it("should set correct attribute dropdown value", () => {
-            clickAttributeDropdown(component, 0);
-            changeDropdownValue(component, "A to Z");
-
-            expect(getTextValue(component, buildAttributeButtonSelector(0))).toEqual("A to Z");
+        it("should set correct attribute dropdown value", async () => {
+            await userEvent.click(screen.getByText("Z to A"));
+            expect(screen.queryByText("A to Z")).toBeInTheDocument();
         });
     });
 
     describe("Chronological date sorts", () => {
-        const component = renderComponent({
-            bucketItems: {
-                ...bucketItems,
-                a1: {
-                    type: "chronologicalDate",
-                    name: "Activity",
+        beforeEach(() => {
+            renderComponent({
+                bucketItems: {
+                    ...bucketItems,
+                    a1: {
+                        type: "chronologicalDate",
+                        name: "Activity",
+                    },
                 },
-            },
+            });
         });
-
         it("should render dialog with correctly preselected value when config with just one chronological asc date is provided", () => {
-            expect(getTextValue(component, buildAttributeButtonSelector(0))).toEqual("Newest to oldest");
+            expect(screen.getByText("Newest to oldest")).toBeInTheDocument();
         });
 
-        it("should render dialog with correctly preselected value when config with just one chronological desc date is provided", () => {
-            clickAttributeDropdown(component, 0);
-            changeDropdownValue(component, "Oldest to newest");
-            expect(getTextValue(component, buildAttributeButtonSelector(0))).toEqual("Oldest to newest");
+        it("should render dialog with correctly preselected value when config with just one chronological desc date is provided", async () => {
+            await userEvent.click(screen.getByText("Newest to oldest"));
+            expect(screen.queryByText("Oldest to newest")).toBeInTheDocument();
         });
     });
 
     describe("Generic date sorts", () => {
-        const component = renderComponent({
-            bucketItems: {
-                ...bucketItems,
-                a1: {
-                    type: "genericDate",
-                    name: "Activity",
+        beforeEach(() => {
+            renderComponent({
+                bucketItems: {
+                    ...bucketItems,
+                    a1: {
+                        type: "genericDate",
+                        name: "Activity",
+                    },
                 },
-            },
+            });
         });
 
         it("should render dialog with correctly preselected value when config with just one chronological asc date is provided", () => {
-            expect(getTextValue(component, buildAttributeButtonSelector(0))).toEqual("Default");
+            expect(screen.getByText("Default")).toBeInTheDocument();
         });
     });
 
     describe("Attribute Area Sort with no metrics", () => {
-        const component = renderComponent({
-            ...singleAreaAttributeSortConfig,
+        beforeEach(() => {
+            renderComponent({
+                ...singleAreaAttributeSortConfig,
+            });
         });
 
         it("should render dialog with correct values and measure dropdown disabled", () => {
-            expect(findSelector(component, "Total")).toEqual(true);
-            expect(getTextValue(component, buildAttributeButtonSelector(0))).toEqual("Smallest to largest");
-            expect(component.find(".s-total").hostNodes().hasClass("disabled")).toEqual(true);
+            expect(screen.getByText("Total")).toBeInTheDocument();
+            expect(screen.getByText("Smallest to largest")).toBeInTheDocument();
+            expect(screen.getByText("Total").closest("button")).toHaveClass("disabled");
         });
 
-        it("should allow to set normal attribute sort item and hide measure dropdown", () => {
-            clickAttributeDropdown(component, 0);
+        it("should allow to set normal attribute sort item and hide measure dropdown", async () => {
+            await userEvent.click(screen.getByText("Smallest to largest"));
 
-            expect(findSelector(component, "A to Z")).toEqual(true);
-            expect(findSelector(component, "Smallest to Largest")).toEqual(true);
+            expect(screen.getByText("A to Z")).toBeInTheDocument();
+            expect(screen.getAllByText("Smallest to largest")[0]).toBeInTheDocument();
 
-            changeDropdownValue(component, "Z to A");
+            await userEvent.click(screen.getByText("Z to A"));
+            expect(screen.getByText("Z to A")).toBeInTheDocument();
 
-            expect(getTextValue(component, buildAttributeButtonSelector(0))).toEqual("Z to A");
-            expect(findSelector(component, "Sum of all metrics (total)")).toEqual(false);
+            expect(screen.queryByText("Sum of all metrics (total)")).not.toBeInTheDocument();
         });
     });
 
     describe("Attribute Area sort with multiple Metrics", () => {
-        const component = renderComponent({
-            ...multipleAttributesSortConfig,
+        beforeEach(() => {
+            renderComponent({
+                ...multipleAttributesSortConfig,
+            });
         });
 
         it("should render dialog with correct values", () => {
-            const firstAttribute = component.find(buildAttributeButtonSelector(0)).hostNodes().text();
-            const secondAttribute = component.find(buildAttributeButtonSelector(1)).hostNodes().text();
+            const sortAttributes = screen.getAllByLabelText(/sort-attribute/i);
 
-            expect(firstAttribute).toBe("Largest to smallest");
-            expect(secondAttribute).toBe("Smallest to largest");
+            expect(within(sortAttributes[0]).getByText("Largest to smallest")).toBeInTheDocument();
+            expect(within(sortAttributes[1]).getByText("Smallest to largest")).toBeInTheDocument();
         });
 
-        it("should allow to change metric dropdown", () => {
-            clickMeasureDropdown(component);
-
-            changeMeasureDropdownValue(component, "Timeline");
-
-            expect(component.find(".s-measure-dropdown-button-0").at(1).text()).toBe("Timeline (M2)");
+        it("should allow to change metric dropdown", async () => {
+            await userEvent.click(screen.getByText("Snapshot (M1)"));
+            await userEvent.click(screen.getByText("Timeline").closest("button"));
+            expect(screen.getByText("Timeline (M2)")).toBeInTheDocument();
         });
     });
 
     describe("onCancel", () => {
-        it("should call onCancel when Cancel button is clicked", () => {
+        it("should call onCancel when Cancel button is clicked", async () => {
             const onCancel = jest.fn();
-            const component = renderComponent({ onCancel });
+            renderComponent({ onCancel });
 
-            component.find(".s-sorting-dropdown-cancel").hostNodes().simulate("click");
-
+            await userEvent.click(screen.getByText("Cancel"));
             expect(onCancel).toHaveBeenCalled();
         });
     });
 
     describe("onApply", () => {
-        it("should not call onApply when disabled Apply button is clicked", () => {
+        it("should not call onApply when disabled Apply button is clicked", async () => {
             const onApply = jest.fn();
-            const component = renderComponent({ onApply });
-            clickApplyButton(component);
+            renderComponent({ onApply });
 
-            expect(isApplyButtonEnabled(component)).toBe(false);
+            await userEvent.click(screen.getByText(/Apply/i).closest("button"));
+            expect(screen.getByText(/Apply/i).closest("button")).toHaveClass("disabled");
             expect(onApply).not.toHaveBeenCalled();
         });
 
-        it("should call onApply when Apply button is clicked", () => {
+        it("should call onApply when Apply button is clicked", async () => {
             const onApply = jest.fn();
-            const component = renderComponent({ onApply });
+            renderComponent({ onApply });
 
-            clickAttributeDropdown(component, 0);
-            changeDropdownValue(component, "A to Z");
+            await userEvent.click(screen.getByText("Z to A"));
+            await userEvent.click(screen.getByText("A to Z"));
+            await userEvent.click(screen.getByText(/Apply/i).closest("button"));
 
-            clickApplyButton(component);
-
-            expect(isApplyButtonEnabled(component)).toBe(true);
+            expect(screen.getByText(/Apply/i).closest("button")).not.toHaveClass("disabled");
             expect(onApply).toHaveBeenCalled();
         });
 
-        it("should call onApply for simple normal attribute with correct SortItem payload", () => {
+        it("should call onApply for simple normal attribute with correct SortItem payload", async () => {
             const onApply = jest.fn();
-            const component = renderComponent({
+            renderComponent({
                 onApply,
                 ...singleNormalAttributeSortConfig,
             });
 
-            clickAttributeDropdown(component, 0);
-            changeDropdownValue(component, "A to Z");
-
-            clickApplyButton(component);
+            await userEvent.click(screen.getByText("Z to A"));
+            await userEvent.click(screen.getByText("A to Z"));
+            await userEvent.click(screen.getByText(/Apply/i).closest("button"));
 
             expect(onApply).toHaveBeenCalledWith([
                 {
@@ -227,16 +217,16 @@ describe("ChartSorting", () => {
             ]);
         });
 
-        it("should call onApply for simple area attribute with correct SortItem payload", () => {
+        it("should call onApply for simple area attribute with correct SortItem payload", async () => {
             const onApply = jest.fn();
-            const component = renderComponent({
+            renderComponent({
                 onApply,
                 ...singleAreaAttributeSortConfig,
             });
 
-            clickAttributeDropdown(component, 0);
-            changeDropdownValue(component, "Largest to smallest");
-            clickApplyButton(component);
+            await userEvent.click(screen.getByText("Smallest to largest"));
+            await userEvent.click(screen.getByText("Largest to smallest"));
+            await userEvent.click(screen.getByText(/Apply/i).closest("button"));
 
             expect(onApply).toHaveBeenCalledWith([
                 {
@@ -249,45 +239,52 @@ describe("ChartSorting", () => {
             ]);
         });
 
-        it("should call onApply for multiple attributes with correct SortItem payload", () => {
+        it("should call onApply for multiple attributes with correct SortItem payload", async () => {
             const onApply = jest.fn();
-            const component = renderComponent({
+            renderComponent({
                 onApply,
                 ...multipleAttributesSortConfig,
             });
-            clickAttributeDropdown(component, 1);
-            changeDropdownValue(component, "Largest to smallest");
-            clickApplyButton(component);
 
-            expect(onApply).toHaveBeenCalledWith([
-                {
-                    measureSortItem: {
-                        direction: "desc",
-                        locators: [
-                            {
-                                measureLocatorItem: {
-                                    measureIdentifier: "m1",
+            const secondAttribute = screen.getByText("Smallest to largest").closest("button");
+            await userEvent.click(secondAttribute);
+
+            const secondSort = screen.queryAllByText("Largest to smallest")[1];
+            await userEvent.click(secondSort);
+
+            await userEvent.click(screen.getByText(/Apply/i).closest("button"));
+            await waitFor(() => {
+                expect(onApply).toHaveBeenCalledWith([
+                    {
+                        measureSortItem: {
+                            direction: "desc",
+                            locators: [
+                                {
+                                    measureLocatorItem: {
+                                        measureIdentifier: "m1",
+                                    },
                                 },
-                            },
-                        ],
+                            ],
+                        },
                     },
-                },
-                {
-                    attributeSortItem: {
-                        attributeIdentifier: "a2",
-                        direction: "desc",
-                        aggregation: "sum",
+                    {
+                        attributeSortItem: {
+                            attributeIdentifier: "a2",
+                            direction: "desc",
+                            aggregation: "sum",
+                        },
                     },
-                },
-            ]);
+                ]);
+            });
         });
 
         it("should render when current sort does not match available sorts length", () => {
-            const component = renderComponent({
+            renderComponent({
                 availableSorts: multipleAttributesSortConfig.availableSorts,
                 currentSort: singleNormalAttributeSortConfig.currentSort,
             });
-            expect(component.find(".s-attribute-dropdown-button").hostNodes().length).toBe(1);
+
+            expect(screen.queryAllByLabelText(/sort-attribute/i).length).toBe(1);
         });
     });
 });

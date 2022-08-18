@@ -1,6 +1,6 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { render, screen } from "@testing-library/react";
 
 import { ColorsPreview, IColorsPreviewProps } from "../ColorsPreview";
 
@@ -19,12 +19,9 @@ describe("ColorsPreview", () => {
             },
         };
 
-        const colorsPreview = mount(<ColorsPreview {...props} />);
+        render(<ColorsPreview {...props} />);
 
-        expect(colorsPreview.find(".s-current-color").prop("style").backgroundColor).toEqual(
-            "hsl(0, 50%, 50%)",
-        );
-
-        expect(colorsPreview.find(".s-new-color").prop("style").backgroundColor).toEqual("hsl(20, 50%, 50%)");
+        expect(screen.getByLabelText("current-color")).toHaveStyle({ backgroundColor: "hsl(0, 50%, 50%)" });
+        expect(screen.getByLabelText("new-color")).toHaveStyle({ backgroundColor: "hsl(20, 50%, 50%)" });
     });
 });

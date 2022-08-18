@@ -334,6 +334,7 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
 
         return (
             <div
+                role="datepicker"
                 className={this.getComponentClasses()}
                 ref={this.setComponentRef}
                 onClick={this.handleWrapperClick}
@@ -351,7 +352,7 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
                 />
 
                 {isOpen && (
-                    <div ref={this.datePickerContainerRef}>
+                    <div role="datepicker-picker" ref={this.datePickerContainerRef}>
                         <DayPicker
                             classNames={classNamesProps}
                             locale={convertLocale(intl.locale)}

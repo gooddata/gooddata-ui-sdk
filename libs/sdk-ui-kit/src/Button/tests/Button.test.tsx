@@ -1,95 +1,83 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
-
+import { waitFor, render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { Button } from "../Button";
 import { IButtonProps } from "../typings";
 
 function renderButton(options: Partial<IButtonProps>) {
-    return mount(<Button {...options} />);
+    return render(<Button {...options} />);
 }
 
 describe("ReactButton", () => {
     describe("click on button", () => {
-        let onClick: IButtonProps["onClick"];
-        beforeEach(() => {
-            onClick = jest.fn();
-        });
-
-        it("should call onClick callback on click", () => {
-            const wrapper = renderButton({
+        it("should call onClick callback on click", async () => {
+            const onClick = jest.fn();
+            renderButton({
                 type: "primary",
                 disabled: false,
                 onClick,
             });
 
-            wrapper.find("button").simulate("click");
-            expect(onClick).toHaveBeenCalledTimes(1);
+            await userEvent.click(screen.getByRole("button"));
+            await waitFor(() => {
+                expect(onClick).toHaveBeenCalledTimes(1);
+            });
         });
 
-        it("should not call onClick callback on click when disabled", () => {
-            const wrapper = renderButton({
+        it("should not call onClick callback on click when disabled", async () => {
+            const onClick = jest.fn();
+            renderButton({
                 type: "primary",
                 disabled: true,
                 onClick,
             });
 
-            wrapper.find("button").simulate("click");
-            expect(onClick).not.toHaveBeenCalled();
-        });
-    });
-
-    describe("selenium class", () => {
-        it("should have correct selenium class", () => {
-            const wrapper = renderButton({
-                type: "primary",
-                disabled: false,
-                className: "s-button-class",
-                value: "My button",
+            await userEvent.click(screen.getByRole("button"));
+            await waitFor(() => {
+                expect(onClick).not.toHaveBeenCalled();
             });
-            const btn = wrapper.find("button");
-            expect(btn.hasClass("s-button-class")).toEqual(true);
-            expect(btn.hasClass("s-my_button")).toEqual(true);
         });
     });
 
     describe("render as link", () => {
         it("it should be possible to render as anchor", () => {
-            const wrapper = renderButton({
+            renderButton({
                 type: "link",
                 tagName: "a",
                 value: "My link",
             });
 
-            expect(wrapper.find("a")).toHaveLength(1);
+            expect(document.querySelector("a")).toBeInTheDocument();
         });
 
         it("it should be rendered as HTML button by default", () => {
-            const wrapper = renderButton({
+            renderButton({
                 type: "link",
                 value: "My link",
             });
 
-            expect(wrapper.find("button")).toHaveLength(1);
+            expect(screen.getByRole("button")).toBeInTheDocument();
         });
     });
 
     describe("render button value", () => {
         it("should render simple text value", () => {
-            const wrapper = renderButton({
-                value: "text value",
+            const BUTTON_TEXT = "text value";
+            renderButton({
+                value: BUTTON_TEXT,
             });
 
-            expect(wrapper.find(".gd-button-text")).toHaveLength(1);
+            expect(screen.getByText(BUTTON_TEXT)).toBeInTheDocument();
         });
 
         it("should render icon in button", () => {
-            const wrapper = renderButton({
+            renderButton({
                 value: "text value",
                 iconLeft: "gd-icon-class",
             });
 
-            expect(wrapper.find(".gd-icon-class")).toHaveLength(1);
+            expect(screen.getByRole("button-icon")).toBeInTheDocument();
         });
     });
 });

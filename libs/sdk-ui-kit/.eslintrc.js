@@ -11,6 +11,7 @@ module.exports = {
         "plugin:regexp/recommended",
         "plugin:react-hooks/recommended",
         "../../.eslintrc.react.js",
+        "plugin:jest-dom/recommended",
     ],
     parserOptions: { tsconfigRootDir: __dirname },
 };

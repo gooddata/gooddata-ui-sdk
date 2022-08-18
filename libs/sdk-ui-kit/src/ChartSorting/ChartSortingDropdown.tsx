@@ -45,7 +45,11 @@ export const ChartSortingDropdown: React.FC<ChartSortingProps> = ({
                     return null;
                 }
                 return (
-                    <div key={index} className={`gd-sort-attribute-item s-sort-attribute-item-${index}`}>
+                    <div
+                        aria-label={`sort-attribute-${index}`}
+                        key={index}
+                        className={`gd-sort-attribute-item s-sort-attribute-item-${index}`}
+                    >
                         {availableSorts.length > 1 && (
                             <div className="attribute-sorting-title">
                                 {getAttributeName(bucketItems, availableSort)}

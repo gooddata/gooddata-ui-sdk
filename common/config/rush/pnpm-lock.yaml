@@ -8625,7 +8625,7 @@ packages:
     dev: false
 
   /core-util-is/1.0.2:
-    resolution: {integrity: sha512-3lqz5YjWTYnW6dlDa5TLaTCcShfar1e40rmcJVwCBJC6mWlFuj0eCHIElmG1g5kyuJ/GD+8Wn4FFCcz4gJPfaQ==}
+    resolution: {integrity: sha1-tf1UIgqivFq1eqtxQMlAdUUDwac=}
     dev: false
 
   /core-util-is/1.0.3:
@@ -23683,7 +23683,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-kit.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-4FW/tO3D7p8mEHja3AfjP7UcTO7nRsFfJh9KrU/GHKEWW0dw2coXcPEcYnHSFEe/6giLLF5edTQWOUA1oBHywQ==, tarball: file:projects/sdk-ui-kit.tgz}
+    resolution: {integrity: sha512-pVIZ8XCqFwyTzy4wJ5mKFvuVTIQK5kjMBwJbQrqthgjvBQQ2fKqhwtiyTc+Akl1OyftVknx41OdgeOO+v2zUHw==, tarball: file:projects/sdk-ui-kit.tgz}
     id: file:projects/sdk-ui-kit.tgz
     name: '@rush-temp/sdk-ui-kit'
     version: 0.0.0
@@ -23699,6 +23699,7 @@ packages:
       '@microsoft/api-extractor': 7.20.1
       '@testing-library/jest-dom': 5.16.4
       '@testing-library/react': 12.1.5_react-dom@17.0.2+react@17.0.2
+      '@testing-library/user-event': 14.4.2
       '@types/codemirror': 0.0.95
       '@types/debounce-promise': 3.1.4
       '@types/enzyme': 3.10.11
@@ -23714,6 +23715,7 @@ packages:
       '@types/react-responsive': 8.0.5
       '@types/react-select': 3.1.2
       '@types/react-transition-group': 4.4.4
+      '@types/testing-library__jest-dom': 5.14.5
       '@types/tinycolor2': 1.4.3
       '@types/uuid': 8.3.4
       '@typescript-eslint/eslint-plugin': 5.18.0_53b148e638f33f2f6f1c65934f996443
@@ -23776,6 +23778,7 @@ packages:
       uuid: 8.3.2
     transitivePeerDependencies:
       - '@babel/core'
+      - '@testing-library/dom'
       - babel-jest
       - bufferutil
       - canvas
