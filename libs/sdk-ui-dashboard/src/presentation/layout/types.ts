@@ -20,3 +20,8 @@ export interface IDashboardLayoutProps {
  * @alpha
  */
 export type CustomDashboardLayoutComponent = ComponentType<IDashboardLayoutProps>;
+
+/**
+ * @internal
+ */
+export type CustomEmptyLayoutDropZoneBodyComponent = ComponentType;

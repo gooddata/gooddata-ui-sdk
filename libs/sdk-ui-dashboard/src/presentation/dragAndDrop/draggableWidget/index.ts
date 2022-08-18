@@ -9,3 +9,4 @@ export * from "./EmptyDashboardDropZone";
 export * from "./useWidgetDragStartHandler";
 export * from "./useWidgetDragEndHandler";
 export * from "./DashboardLayoutSectionBorder";
+export * from "./DefaultEmptyLayoutDropZoneBody";

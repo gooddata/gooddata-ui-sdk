@@ -8,7 +8,7 @@ import {
     UnexpectedSdkError,
 } from "@gooddata/sdk-ui";
 
-import { CustomDashboardLayoutComponent } from "../layout/types";
+import { CustomDashboardLayoutComponent, CustomEmptyLayoutDropZoneBodyComponent } from "../layout/types";
 import {
     CustomButtonBarComponent,
     CustomMenuButtonComponent,
@@ -67,6 +67,7 @@ interface IDashboardComponentsContext {
     InsightWidgetComponentSet: InsightWidgetComponentSet;
     KpiWidgetComponentSet: KpiWidgetComponentSet;
     AttributeFilterComponentSet: AttributeFilterComponentSet;
+    EmptyLayoutDropZoneBodyComponent: CustomEmptyLayoutDropZoneBodyComponent;
 }
 
 const ThrowMissingComponentError = (componentName: string) => () => {
@@ -107,6 +108,7 @@ const DashboardComponentsContext = createContext<IDashboardComponentsContext>({
     InsightWidgetComponentSet: null as any, // TODO how to throw here
     KpiWidgetComponentSet: null as any, // TODO how to throw here
     AttributeFilterComponentSet: null as any, // TODO how to throw here
+    EmptyLayoutDropZoneBodyComponent: ThrowMissingComponentError("EmptyLayoutDropZoneBodyComponent"),
 });
 DashboardComponentsContext.displayName = "DashboardComponentsContext";
 

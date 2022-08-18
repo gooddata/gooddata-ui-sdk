@@ -4,7 +4,6 @@ import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import { Typography } from "@gooddata/sdk-ui-kit";
 
-import { EmptyDashboardDropZoneBox } from "./EmptyDashboardDropZoneBox";
 import { useDashboardDrop } from "../useDashboardDrop";
 import {
     DraggableItemType,
@@ -16,6 +15,7 @@ import { useDashboardDispatch, useDashboardSelector, selectWidgetPlaceholder } f
 import { useInsightListItemDropHandler } from "./useInsightListItemDropHandler";
 import { useInsightPlaceholderDropHandler } from "./useInsightPlaceholderDropHandler";
 import { useKpiPlaceholderDropHandler } from "./useKpiPlaceholderDropHandler";
+import { useDashboardComponentsContext } from "../../dashboardContexts";
 
 const widgetCategoryMapping: Partial<{ [D in DraggableItemType]: string }> = {
     "insight-placeholder": "insight",
@@ -26,6 +26,8 @@ const widgetCategoryMapping: Partial<{ [D in DraggableItemType]: string }> = {
 export const EmptyDashboardDropZone: React.FC = () => {
     const dispatch = useDashboardDispatch();
     const widgetPlaceholder = useDashboardSelector(selectWidgetPlaceholder);
+
+    const { EmptyLayoutDropZoneBodyComponent } = useDashboardComponentsContext();
 
     const handleInsightListItemDrop = useInsightListItemDropHandler();
     const handleKpiPlaceholderDrop = useKpiPlaceholderDropHandler();
@@ -67,7 +69,7 @@ export const EmptyDashboardDropZone: React.FC = () => {
             ref={dropRef}
         >
             <div className={cx("drag-info-placeholder-inner", { "can-drop": canDrop, "is-over": isOver })}>
-                <EmptyDashboardDropZoneBox />
+                <EmptyLayoutDropZoneBodyComponent />
                 <div className="drag-info-placeholder-drop-target s-drag-info-placeholder-drop-target">
                     <div className="drop-target-inner">
                         <Typography tagName="p" className="drop-target-message kpi-drop-target">
