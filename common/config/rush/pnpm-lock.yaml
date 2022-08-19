@@ -8092,13 +8092,12 @@ packages:
       escape-string-regexp: 4.0.0
     dev: false
 
-  /clean-webpack-plugin/3.0.0_webpack@5.72.0:
-    resolution: {integrity: sha512-MciirUH5r+cYLGCOL5JX/ZLzOZbVr1ot3Fw+KcvbhUb6PM+yycqd9ZhIlcigQ5gl+XhppNmw3bEFuaaMNyLj3A==}
-    engines: {node: '>=8.9.0'}
+  /clean-webpack-plugin/4.0.0_webpack@5.72.0:
+    resolution: {integrity: sha512-WuWE1nyTNAyW5T7oNyys2EN0cfP2fdRxhxnIQWiAp0bMabPdHhoGxM8A6YL2GhqwgrPnnaemVE7nv5XJ2Fhh2w==}
+    engines: {node: '>=10.0.0'}
     peerDependencies:
-      webpack: '*'
+      webpack: '>=4.0.0 <6.0.0'
     dependencies:
-      '@types/webpack': 4.41.32
       del: 4.1.1
       webpack: 5.72.0
     dev: false
@@ -22168,7 +22167,7 @@ packages:
     dev: false
 
   file:projects/dashboard-plugin-tests.tgz:
-    resolution: {integrity: sha512-IK9vCGt+I1KaiZ5hAayvN3GGnY81o1hqBzfvKZ6AobyRVDCv57zLb1ceOwAJ0XwRWBXVX3QGl2N2nGSNB5xCLQ==, tarball: file:projects/dashboard-plugin-tests.tgz}
+    resolution: {integrity: sha512-TDbsWaKMSoD3vEeQfxCff1c//qzDvX62A/HIyC6SGWa/TpEDQHOvJ6qmpJwVmPuTePHVL4+w2tgaNM4DPlu+mQ==, tarball: file:projects/dashboard-plugin-tests.tgz}
     name: '@rush-temp/dashboard-plugin-tests'
     version: 0.0.0
     dependencies:
@@ -22201,7 +22200,7 @@ packages:
       axios: 0.21.4
       babel-loader: 8.2.4_acba72ea4bf9d339cdfcd8f55cdb7006
       circular-dependency-plugin: 5.2.2_webpack@5.72.0
-      clean-webpack-plugin: 3.0.0_webpack@5.72.0
+      clean-webpack-plugin: 4.0.0_webpack@5.72.0
       compression-webpack-plugin: 7.1.2_webpack@5.72.0
       concurrently: 6.5.1
       css-loader: 6.7.1_webpack@5.72.0
@@ -22454,7 +22453,7 @@ packages:
     dev: false
 
   file:projects/playground.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-cO1FVd3+RTahL++/FnXkOHAV0PBovMyVqudDO0w1WrGRp8kuHJDSoV4MH/EFZGiCZYzz7sr0oEGVhlvfH/Y1kg==, tarball: file:projects/playground.tgz}
+    resolution: {integrity: sha512-cD/oHJ5uK7tCe6HE8Xt9TP6xhlmCpVTSazMtsNOgytpJQ8ARdMVStii/cKuq3y+aGtkyKabc22Ae077aqHQF7w==, tarball: file:projects/playground.tgz}
     id: file:projects/playground.tgz
     name: '@rush-temp/playground'
     version: 0.0.0
@@ -22482,7 +22481,7 @@ packages:
       babel-plugin-lodash: 3.3.4
       babel-polyfill: 6.26.0
       babel-runtime: 6.26.0
-      clean-webpack-plugin: 3.0.0_webpack@5.72.0
+      clean-webpack-plugin: 4.0.0_webpack@5.72.0
       css-loader: 6.7.1_webpack@5.72.0
       dotenv-webpack: 7.1.0_webpack@5.72.0
       eslint: 8.12.0
@@ -22982,7 +22981,7 @@ packages:
     dev: false
 
   file:projects/sdk-examples.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-zfAGDs8rm8RXmxM38RC+OArRpzMhTtdkkDkvNSRdLqTPXLE0fc/f1+dII0bbq0ohWbt8keLPcn1Rq5uDdrkC/w==, tarball: file:projects/sdk-examples.tgz}
+    resolution: {integrity: sha512-IWRwZHe4/WhwodqLcB44nl+pNLdNCY7zBlnZFm6+Eo+aeY02kP/r5223F5pFIysE9V6ekpVkyDuJQ3iSsHudDQ==, tarball: file:projects/sdk-examples.tgz}
     id: file:projects/sdk-examples.tgz
     name: '@rush-temp/sdk-examples'
     version: 0.0.0
@@ -23021,7 +23020,7 @@ packages:
       babel-runtime: 6.26.0
       circular-dependency-plugin: 5.2.2_webpack@5.72.0
       classnames: 2.3.1
-      clean-webpack-plugin: 3.0.0_webpack@5.72.0
+      clean-webpack-plugin: 4.0.0_webpack@5.72.0
       commander: 8.3.0
       compression-webpack-plugin: 7.1.2_webpack@5.72.0
       css-loader: 6.7.1_webpack@5.72.0
@@ -23951,7 +23950,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-tests-e2e.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-7Khq8EniAjhJ1B+uvrUkx5/L0R/dJNEnEdJ6Kfesqh3WQF4EAy0a7xB1rBOp5vXfum8/LrGgrdVxRCQ80tOjVQ==, tarball: file:projects/sdk-ui-tests-e2e.tgz}
+    resolution: {integrity: sha512-yBnQ3IjHXvbvcjagAmRHJqX3yH5Lfr+hApa3q4FZU/a+OGAfGH9rx7T77S4a/KfUw1sP4/ugbkJJJPLCrGEv1g==, tarball: file:projects/sdk-ui-tests-e2e.tgz}
     id: file:projects/sdk-ui-tests-e2e.tgz
     name: '@rush-temp/sdk-ui-tests-e2e'
     version: 0.0.0
@@ -23985,7 +23984,7 @@ packages:
       babel-polyfill: 6.26.0
       babel-runtime: 6.26.0
       circular-dependency-plugin: 5.2.2_webpack@5.72.0
-      clean-webpack-plugin: 3.0.0_webpack@5.72.0
+      clean-webpack-plugin: 4.0.0_webpack@5.72.0
       compression-webpack-plugin: 7.1.2_webpack@5.72.0
       css-loader: 6.7.1_webpack@5.72.0
       cypress: 7.7.0
