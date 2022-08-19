@@ -62,7 +62,10 @@
     "gs.list.only": "Uniquement",
     "gs.list.selectAll": "Sélectionner tout",
     "gs.list.limitExceeded": "Désolé, vous avez dépassé la limite ({limit}).",
+    "gs.list.limitReached": "Vous avez atteint la limite de {limit} valeurs sélectionnées",
+    "gs.list.cannotSelectMoreValues": "Vous ne pouvez pas sélectionner plus de {limit} valeurs.",
     "gs.list.noItemsFound": "Éléments introuvables.",
+    "gs.list.noResultsMatch": "Aucun résultat",
     "gs.list.error": "Erreur lors du chargement des éléments de la liste",
     "gs.header.upsellButtonText": "Mise à niveau",
     "gs.header.countdown.numberOfDaysLeft": "{number} jours restants",
@@ -314,5 +317,15 @@
     "embedInsightDialog.complete.list.props.message": "Liste complète des propriétés d'incorporation",
     "error.overlay.login": "Connexion",
     "error.overlay.title": "Vous avez été déconnecté(e)",
-    "error.overlay.text": "Pour continuer à travailler, reconnectez-vous."
+    "error.overlay.text": "Pour continuer à travailler, reconnectez-vous.",
+    "stylingPicker.title.basic": "Basique",
+    "stylingPicker.title.custom": "Personnalisé",
+    "stylingPicker.title.create": "Créer",
+    "stylingEditor.dialog.name": "Nom",
+    "stylingEditor.dialog.definition": "Définition",
+    "stylingEditor.dialog.examples": "Exemples",
+    "stylingEditor.dialog.example.paste": "Coller",
+    "stylingPicker.item.edit": "Modifier",
+    "stylingPicker.item.delete": "Supprimer",
+    "stylingPicker.item.delete.tooltip": "L'élément par défaut ne peut pas être supprimé."
 }

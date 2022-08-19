@@ -62,7 +62,10 @@
     "gs.list.only": "Alleen",
     "gs.list.selectAll": "Selecteer alles",
     "gs.list.limitExceeded": "Sorry, u hebt de limiet ({limit}) overschreden.",
+    "gs.list.limitReached": "U hebt de limiet van {limit} geselecteerde waarden overschreden",
+    "gs.list.cannotSelectMoreValues": "U kunt niet meer dan {limit} waarden selecteren.",
     "gs.list.noItemsFound": "Geen items gevonden.",
+    "gs.list.noResultsMatch": "Geen overeenkomende resultaten",
     "gs.list.error": "Fout bij inlezen lijstitems",
     "gs.header.upsellButtonText": "Upgrade",
     "gs.header.countdown.numberOfDaysLeft": "Nog {number} dagen",
@@ -314,5 +317,15 @@
     "embedInsightDialog.complete.list.props.message": "Volledig lijst van ingesloten eigenschappen",
     "error.overlay.login": "Login",
     "error.overlay.title": "U bent afgemeld",
-    "error.overlay.text": "Meld u opnieuw aan om verder te werken."
+    "error.overlay.text": "Meld u opnieuw aan om verder te werken.",
+    "stylingPicker.title.basic": "Standaard",
+    "stylingPicker.title.custom": "Aangepast",
+    "stylingPicker.title.create": "Creëren",
+    "stylingEditor.dialog.name": "Naam",
+    "stylingEditor.dialog.definition": "Definitie",
+    "stylingEditor.dialog.examples": "Voorbeelden",
+    "stylingEditor.dialog.example.paste": "Plakken",
+    "stylingPicker.item.edit": "Bewerken",
+    "stylingPicker.item.delete": "Verwijderen",
+    "stylingPicker.item.delete.tooltip": "Standaarditem kan niet worden verwijderd."
 }

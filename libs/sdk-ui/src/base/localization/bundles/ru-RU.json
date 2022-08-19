@@ -62,7 +62,10 @@
     "gs.list.only": "Только",
     "gs.list.selectAll": "Выбрать все",
     "gs.list.limitExceeded": "К сожалению, вы превысили лимит ({limit}).",
+    "gs.list.limitReached": "Вы достигли лимита {limit} выбранных значений",
+    "gs.list.cannotSelectMoreValues": "Нельзя выбрать более {limit} значений.",
     "gs.list.noItemsFound": "Ничего не найдено.",
+    "gs.list.noResultsMatch": "Ничего не найдено",
     "gs.list.error": "Ошибка при загрузке элементов списка",
     "gs.header.upsellButtonText": "Улучшить",
     "gs.header.countdown.numberOfDaysLeft": "осталось {number} {number, plural, one {день} few {дня} many {дней} other {дней}}",
@@ -314,5 +317,15 @@
     "embedInsightDialog.complete.list.props.message": "Полный список свойств встраивания",
     "error.overlay.login": "Вход",
     "error.overlay.title": "Вы вышли из системы",
-    "error.overlay.text": "Войдите снова, чтобы продолжить работу."
+    "error.overlay.text": "Войдите снова, чтобы продолжить работу.",
+    "stylingPicker.title.basic": "Базовые",
+    "stylingPicker.title.custom": "Свои правила",
+    "stylingPicker.title.create": "Создать",
+    "stylingEditor.dialog.name": "Название",
+    "stylingEditor.dialog.definition": "Определение",
+    "stylingEditor.dialog.examples": "Примеры",
+    "stylingEditor.dialog.example.paste": "Вставить",
+    "stylingPicker.item.edit": "Изменить",
+    "stylingPicker.item.delete": "Удалить",
+    "stylingPicker.item.delete.tooltip": "Нельзя удалить элемент по умолчанию."
 }

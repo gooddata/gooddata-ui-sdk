@@ -62,7 +62,10 @@
     "gs.list.only": "Só",
     "gs.list.selectAll": "Selecionar tudo",
     "gs.list.limitExceeded": "Infelizmente, você excedeu o limite ({limit}).",
+    "gs.list.limitReached": "Você alcançou o limite de {limit} valores selecionados",
+    "gs.list.cannotSelectMoreValues": "Você não pode selecionar mais do que {limit} valores.",
     "gs.list.noItemsFound": "Nenhum item encontrado.",
+    "gs.list.noResultsMatch": "Nenhum resultado correspondente",
     "gs.list.error": "Erro ao carregar itens da lista",
     "gs.header.upsellButtonText": "Atualizar",
     "gs.header.countdown.numberOfDaysLeft": "{number} dias restantes",
@@ -314,5 +317,15 @@
     "embedInsightDialog.complete.list.props.message": "Lista completa de propriedades incorporadas",
     "error.overlay.login": "Login",
     "error.overlay.title": "Sua sessão foi encerrada",
-    "error.overlay.text": "Conecte-se novamente para continuar trabalhando."
+    "error.overlay.text": "Conecte-se novamente para continuar trabalhando.",
+    "stylingPicker.title.basic": "Básico",
+    "stylingPicker.title.custom": "Personalizado",
+    "stylingPicker.title.create": "Criar",
+    "stylingEditor.dialog.name": "Nome",
+    "stylingEditor.dialog.definition": "Definição",
+    "stylingEditor.dialog.examples": "Exemplos",
+    "stylingEditor.dialog.example.paste": "Colar",
+    "stylingPicker.item.edit": "Editar",
+    "stylingPicker.item.delete": "Excluir",
+    "stylingPicker.item.delete.tooltip": "Item padrão não pode ser excluído."
 }

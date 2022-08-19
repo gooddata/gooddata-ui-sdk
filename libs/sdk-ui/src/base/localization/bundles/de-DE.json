@@ -62,7 +62,10 @@
     "gs.list.only": "Nur",
     "gs.list.selectAll": "Alle auswählen",
     "gs.list.limitExceeded": "Leider haben Sie den Grenzwert ({limit}) überschritten.",
+    "gs.list.limitReached": "Sie haben das Limit von {limit} ausgewählten Werten erreicht.",
+    "gs.list.cannotSelectMoreValues": "Sie können nicht mehr als {limit} Werte auswählen.",
     "gs.list.noItemsFound": "Keine Elemente gefunden.",
+    "gs.list.noResultsMatch": "Keine passenden Ergebnisse",
     "gs.list.error": "Fehler beim Laden der Listenobjekte",
     "gs.header.upsellButtonText": "Upgrade",
     "gs.header.countdown.numberOfDaysLeft": "{number} Tage übrig",
@@ -314,5 +317,15 @@
     "embedInsightDialog.complete.list.props.message": "Vollständige Liste der Einbettungseigenschaften",
     "error.overlay.login": "Anmeldung",
     "error.overlay.title": "Sie wurden abgemeldet",
-    "error.overlay.text": "Bitte melden Sie sich erneut an, um Ihre Arbeit fortzusetzen."
+    "error.overlay.text": "Bitte melden Sie sich erneut an, um Ihre Arbeit fortzusetzen.",
+    "stylingPicker.title.basic": "Einfach",
+    "stylingPicker.title.custom": "Benutzerdefiniert",
+    "stylingPicker.title.create": "Erstellen",
+    "stylingEditor.dialog.name": "Name",
+    "stylingEditor.dialog.definition": "Definition",
+    "stylingEditor.dialog.examples": "Beispiele",
+    "stylingEditor.dialog.example.paste": "Einfügen",
+    "stylingPicker.item.edit": "Bearbeiten",
+    "stylingPicker.item.delete": "Löschen",
+    "stylingPicker.item.delete.tooltip": "Standardelemente können nicht gelöscht werden."
 }
