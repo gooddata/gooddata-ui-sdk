@@ -1,20 +1,20 @@
 // (C) 2022 GoodData Corporation
 @import "./attributeFilterVariables";
 
-// .gd-attribute-filter-dropdown-simple-button__next
-
 .gd-attribute-filter-dropdown-button__next {
     @include gd-font-base;
 
     max-width: 185px;
     position: relative;
-    height: 41px;
-    margin: 7px 11px 7px 0;
     padding: 5px 10px;
     font-size: 12px;
     line-height: 16px;
     cursor: pointer;
     user-select: none;
+
+    &.gd-is-draggable {
+        padding-left: 23px;
+    }
 
     &::before,
     &::after {
@@ -26,7 +26,7 @@
     &::before {
         z-index: 1;
         top: 8px;
-        left: -4px;
+        left: 9px;
         width: 7px;
         height: 26px;
         background: url($separator-icon) no-repeat;
@@ -47,6 +47,12 @@
     }
 
     &:hover {
+        &.gd-is-draggable {
+            &::before {
+                opacity: 1;
+            }
+        }
+
         &::after {
             border-color: $gd-border-color;
         }
@@ -66,6 +72,11 @@
 
     &:active,
     &.gd-is-active {
+        &.gd-is-draggable {
+            &::before {
+                opacity: 1;
+            }
+        }
         &::after {
             &,
             .edit-mode-on & {
@@ -88,6 +99,13 @@
             }
         }
     }
+}
+
+.gd-attribute-filter-dropdown-button-icon__next {
+    position: relative;
+    z-index: 1;
+    float: left;
+    padding-right: 5px;
 }
 
 .gd-attribute-filter-dropdown-button-content__next {

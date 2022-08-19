@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-import React, { useEffect, useRef, useState } from "react";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import { stringUtils } from "@gooddata/util";
 import cx from "classnames";
@@ -25,6 +25,10 @@ export interface IAttributeFilterDropdownButtonProps {
     isFiltering?: boolean;
     isLoaded?: boolean;
 
+    isDraggable?: boolean;
+
+    icon?: ReactNode;
+
     onClick?: () => void;
 }
 
@@ -32,7 +36,18 @@ export interface IAttributeFilterDropdownButtonProps {
  * @internal
  */
 export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownButtonProps> = (props) => {
-    const { isOpen, title, selectedItemsCount, subtitle, isFiltering, isLoading, isLoaded, onClick } = props;
+    const {
+        isOpen,
+        title,
+        selectedItemsCount,
+        subtitle,
+        isFiltering,
+        isLoading,
+        isLoaded,
+        isDraggable,
+        icon,
+        onClick,
+    } = props;
 
     const intl = useIntl();
     const subtitleSelectedItemsRef = useRef(null);
@@ -70,10 +85,12 @@ export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownBu
                     "gd-is-filtering": isFiltering,
                     "gd-is-active": isOpen,
                     "gd-is-loaded": isLoaded,
+                    "gd-is-draggable": isDraggable,
                 },
             )}
             onClick={onClick}
         >
+            {icon && <div className="gd-attribute-filter-dropdown-button-icon__next">{icon}</div>}
             <div className="gd-attribute-filter-dropdown-button-content__next">
                 <div className="gd-attribute-filter-dropdown-button-title__next">
                     <ShortenedText
