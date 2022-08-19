@@ -3333,6 +3333,8 @@ export interface IStylingEditorDialogFooterProps extends IDialogBaseProps {
         url: string;
     };
     // (undocumented)
+    onHelpClick?: () => void;
+    // (undocumented)
     showProgressIndicator?: boolean;
 }
 
@@ -3344,6 +3346,10 @@ export interface IStylingEditorDialogProps<T> extends IStylingEditorDialogFooter
     exampleToColorPreview?: (example: T) => string[];
     // (undocumented)
     locale?: string;
+    // (undocumented)
+    onExit?: (name: string, definition: string) => void;
+    // (undocumented)
+    onInvalidDefinition?: (ref: ObjRef) => void;
     // (undocumented)
     stylingItem?: IStylingPickerItem<T>;
     // (undocumented)
@@ -3397,9 +3403,15 @@ export interface IStylingPickerProps<T> {
     // (undocumented)
     onApply?: (ref: ObjRef) => void;
     // (undocumented)
+    onHelpClick?: () => void;
+    // (undocumented)
     onItemDelete?: (ref: ObjRef) => void;
     // (undocumented)
     onItemEdit?: (modifiedItem: IStylingPickerItem<T>) => void;
+    // (undocumented)
+    onItemMenuToggle?: (ref: ObjRef) => void;
+    // (undocumented)
+    onItemSelect?: (ref: ObjRef) => void;
     // (undocumented)
     onListActionClick?: () => void;
     // (undocumented)

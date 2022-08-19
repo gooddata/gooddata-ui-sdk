@@ -11,6 +11,7 @@ import { IOnOpenedChangeParams, Menu } from "../Menu";
 import { Item, ItemsWrapper, Separator } from "../List";
 import { Button } from "../Button";
 import { Bubble, BubbleHoverTrigger } from "../Bubble";
+import noop from "lodash/noop";
 
 interface IStylingPickerListItemProps<T> {
     item: IStylingPickerItem<T>;
@@ -20,6 +21,7 @@ interface IStylingPickerListItemProps<T> {
     onClick: (ref: ObjRef) => void;
     onEdit?: (item: IStylingPickerItem<T>) => void;
     onDelete?: (ref: ObjRef) => void;
+    onMenuToggle?: (ref: ObjRef) => void;
 }
 
 const TEXT_TOOLTIP_ALIGN_POINTS = [
@@ -35,6 +37,7 @@ export const StylingPickerListItem = <T extends StylingPickerItemContent>({
     onClick,
     onEdit,
     onDelete,
+    onMenuToggle = noop,
 }: IStylingPickerListItemProps<T>): JSX.Element => {
     const intl = useIntl();
 
@@ -44,7 +47,10 @@ export const StylingPickerListItem = <T extends StylingPickerItemContent>({
     const [opened, setOpened] = useState(false);
 
     const onOpenedChange = ({ opened }: IOnOpenedChangeParams) => setOpened(opened);
-    const toggleMenu = () => setOpened(!opened);
+    const toggleMenu = () => {
+        onMenuToggle(ref);
+        setOpened(!opened);
+    };
 
     const isMenuVisible = onEdit || onDelete;
 
@@ -59,16 +65,14 @@ export const StylingPickerListItem = <T extends StylingPickerItemContent>({
                 },
             )}
         >
-            <label
-                className="input-radio-label gd-styling-picker-list-item-content"
-                onClick={() => onClick(ref)}
-            >
+            <label className="input-radio-label gd-styling-picker-list-item-content">
                 <input
                     aria-label={stringUtils.simplifyText(name)}
                     type="radio"
                     className="input-radio"
                     readOnly={true}
                     checked={isSelected}
+                    onClick={() => onClick(ref)}
                 />
                 <ColorPreview className="gd-styling-picker-list-item-colors" colors={colorsPreview} />
                 <span className="input-label-text gd-styling-picker-list-item-text">

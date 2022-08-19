@@ -15,6 +15,7 @@ interface IStylingPickerListProps<T> {
     selectedItemRef?: ObjRef;
     onItemEdit?: (item: IStylingPickerItem<T>) => void;
     onItemDelete?: (ref: ObjRef) => void;
+    onItemMenuToggle?: (ref: ObjRef) => void;
 }
 
 export const StylingPickerList = <T extends StylingPickerItemContent>({
@@ -26,6 +27,7 @@ export const StylingPickerList = <T extends StylingPickerItemContent>({
     onItemDelete,
     initiallySelectedItemRef,
     selectedItemRef,
+    onItemMenuToggle,
 }: IStylingPickerListProps<T>): JSX.Element => {
     if (items.length === 0) {
         return <DialogListEmpty message={emptyMessageElement} className="gd-styling-picker-list-empty" />;
@@ -43,6 +45,7 @@ export const StylingPickerList = <T extends StylingPickerItemContent>({
                     onClick={onItemClick}
                     onDelete={onItemDelete}
                     onEdit={onItemEdit}
+                    onMenuToggle={onItemMenuToggle}
                 />
             ))}
         </div>

@@ -9,6 +9,7 @@ import { useMediaQuery } from "../responsive";
 import { StylingPickerHeader } from "./StylingPickerHeader";
 import { StylingPickerFooter } from "./StylingPickerFooter";
 import { StylingPickerBody } from "./StylingPickerBody";
+import noop from "lodash/noop";
 
 /**
  * @internal
@@ -31,6 +32,9 @@ export interface IStylingPickerProps<T> {
     onItemEdit?: (modifiedItem: IStylingPickerItem<T>) => void;
     onItemDelete?: (ref: ObjRef) => void;
     locale?: string;
+    onHelpClick?: () => void;
+    onItemMenuToggle?: (ref: ObjRef) => void;
+    onItemSelect?: (ref: ObjRef) => void;
 }
 
 const StylingPickerCore = <T extends StylingPickerItemContent>(
@@ -53,6 +57,9 @@ const StylingPickerCore = <T extends StylingPickerItemContent>(
         onItemEdit,
         onItemDelete,
         className,
+        onHelpClick,
+        onItemSelect = noop,
+        onItemMenuToggle,
     } = props;
     const isMobileDevice = useMediaQuery("mobileDevice");
 
@@ -70,9 +77,13 @@ const StylingPickerCore = <T extends StylingPickerItemContent>(
         }
     }, [currentItemRef, customItems, customItems.length, initiallySelectedItemRef]);
 
-    const onItemClick = useCallback((ref: ObjRef) => {
-        setCurrentItemRef(ref);
-    }, []);
+    const onItemClick = useCallback(
+        (ref: ObjRef) => {
+            onItemSelect(ref);
+            setCurrentItemRef(ref);
+        },
+        [onItemSelect],
+    );
 
     const showFooterButtons = useMemo(() => customItems.length > 0, [customItems]);
 
@@ -105,6 +116,7 @@ const StylingPickerCore = <T extends StylingPickerItemContent>(
                 onItemClick={onItemClick}
                 onItemEdit={onItemEdit}
                 onItemDelete={onItemDelete}
+                onItemMenuToggle={onItemMenuToggle}
             />
             <ContentDivider />
             <StylingPickerFooter
@@ -116,6 +128,7 @@ const StylingPickerCore = <T extends StylingPickerItemContent>(
                 footerMobileMessage={footerMobileMessage}
                 onApply={handleApply}
                 onCancel={handleCancel}
+                onHelpClick={onHelpClick}
             />
         </div>
     );
