@@ -1,5 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
 import React, { useCallback } from "react";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { IMeasure, IMeasureDefinition, newMeasure } from "@gooddata/sdk-model";
 
 import { PlaceholdersProvider, IPlaceholdersProviderProps } from "../context";
@@ -7,13 +9,11 @@ import { newPlaceholder } from "../factory";
 import { IPlaceholder } from "../base";
 import { usePlaceholder } from "../hooks";
 
-import { setupComponent } from "../../../tests/testHelper";
-
 const createComponent = (
     componentProps: IComponentWithUsePlaceholderHookProps,
     providerProps?: IPlaceholdersProviderProps,
 ) =>
-    setupComponent(
+    render(
         <PlaceholdersProvider {...providerProps}>
             <ComponentWithUsePlaceholderHook {...componentProps} />
         </PlaceholdersProvider>,
@@ -32,7 +32,7 @@ const ComponentWithUsePlaceholderHook = (props: IComponentWithUsePlaceholderHook
         if (onSetPlaceholder) {
             setPlaceholder(onSetPlaceholder);
         }
-    }, [onSetPlaceholder]);
+    }, [onSetPlaceholder, setPlaceholder]);
 
     return (
         <div>
@@ -65,20 +65,20 @@ describe("usePlaceholder", () => {
     it("should resolve default placeholder value", () => {
         const measure = newMeasure("test-measure");
         const singleValuePlaceholder = newPlaceholder(measure);
-        const { queryByText } = createComponent({ placeholder: singleValuePlaceholder });
+        createComponent({ placeholder: singleValuePlaceholder });
 
-        expect(queryByText(measure.measure.localIdentifier)).toBeInTheDocument();
+        expect(screen.queryByText(measure.measure.localIdentifier)).toBeInTheDocument();
     });
 
     it("should update placeholder value", async () => {
         const measure = newMeasure("updated-measure");
         const singleValuePlaceholder = newPlaceholder();
-        const { queryByText, getByText, user } = createComponent({
+        createComponent({
             placeholder: singleValuePlaceholder,
             onSetPlaceholder: () => measure,
         });
 
-        await user.click(getByText("Placeholder"));
-        expect(queryByText(measure.measure.localIdentifier)).toBeInTheDocument();
+        await userEvent.click(screen.getByText("Placeholder"));
+        expect(screen.queryByText(measure.measure.localIdentifier)).toBeInTheDocument();
     });
 });

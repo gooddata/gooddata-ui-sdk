@@ -1,6 +1,6 @@
 // (C) 2020-2022 GoodData Corporation
 import React from "react";
-import { render, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 
@@ -20,7 +20,7 @@ const messages = {
 
 describe("TranslationsCustomizationProvider", () => {
     it("should prepare the translations so there is always used `Insight` when `enableInsightToReport` feature flag is set to false as is by default", async () => {
-        const { queryByText } = render(
+        render(
             <TranslationsCustomizationProvider
                 backend={getBackend(false)}
                 workspace={workspace}
@@ -29,13 +29,13 @@ describe("TranslationsCustomizationProvider", () => {
             />,
         );
         await waitFor(() => {
-            expect(queryByText("Report")).not.toBeInTheDocument();
-            expect(queryByText("Insight")).toBeInTheDocument();
+            expect(screen.queryByText("Report")).not.toBeInTheDocument();
+            expect(screen.queryByText("Insight")).toBeInTheDocument();
         });
     });
 
     it("should prepare the translations so there is always used `Report` when `enableInsightToReport` feature flag is set to true", async () => {
-        const { queryByText } = render(
+        render(
             <TranslationsCustomizationProvider
                 backend={getBackend()}
                 workspace={workspace}
@@ -44,8 +44,8 @@ describe("TranslationsCustomizationProvider", () => {
             />,
         );
         await waitFor(() => {
-            expect(queryByText("Insight")).not.toBeInTheDocument();
-            expect(queryByText("Report")).toBeInTheDocument();
+            expect(screen.queryByText("Insight")).not.toBeInTheDocument();
+            expect(screen.queryByText("Report")).toBeInTheDocument();
         });
     });
 });
