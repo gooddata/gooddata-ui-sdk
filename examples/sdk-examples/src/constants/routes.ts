@@ -19,6 +19,7 @@ import { ChartConfiguration } from "../examples/advanced/chartConfiguration";
 import { Responsive } from "../examples/advanced/responsive";
 import { Export } from "../examples/export";
 import { AttributeFilter } from "../examples/attributeFilter";
+import { AttributeFilter as AttributeFilterNext } from "../examples/attributeFilterNext";
 import { RankingFilter } from "../examples/rankingFilter";
 
 import { MeasureValueFilter } from "../examples/measureValueFilter/measureValueFilterByValue";
@@ -253,6 +254,11 @@ export const sideNavigationRoutes: RouteDefinition[] = [
         path: "/attribute-filter-components",
         title: "Attribute Filter Components",
         Component: AttributeFilter,
+    },
+    {
+        path: "/attribute-filter-next-components",
+        title: "Attribute Filter Next Components",
+        Component: AttributeFilterNext,
     },
     {
         path: "/measure-value-filter",

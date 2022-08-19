@@ -342,7 +342,7 @@ export type IAttributeFilterButtonProps = IAttributeFilterButtonOwnProps & Wrapp
 export type IAttributeFilterButtonPropsV2 = IAttributeFilterBaseProps;
 
 // @alpha (undocumented)
-export type IAttributeFilterContext = ReturnType<typeof useAttributeFilterController>;
+export type IAttributeFilterContext = ReturnType<typeof useAttributeFilterController> & Pick<IAttributeFilterCoreProps, "fullscreenOnMobile" | "title">;
 
 // @alpha (undocumented)
 export interface IAttributeFilterCoreProps {
@@ -931,6 +931,13 @@ export interface IUiRelativeDateFilterForm extends Omit<IRelativeDateFilterForm,
 }
 
 // @alpha (undocumented)
+export type IUseAttributeFilterControllerProps = Omit<IAttributeFilterCoreProps, "fullscreenOnMobile" | "locale" | "title"> & {
+    elementsOptions?: {
+        limit: number;
+    };
+};
+
+// @alpha (undocumented)
 export interface IUseAttributeFilterHandlerProps {
     // (undocumented)
     backend: IAnalyticalBackend;
@@ -1078,14 +1085,15 @@ export type Unsubscribe = () => void;
 export const useAttributeFilterContext: () => IAttributeFilterContext;
 
 // @alpha
-export const useAttributeFilterController: (props: IAttributeFilterCoreProps) => {
+export const useAttributeFilterController: (props: IUseAttributeFilterControllerProps) => {
     onApply: () => void;
     onLoadNextElementsPage: () => void;
     onSearch: DebouncedFunc<(search: string) => void>;
     onSelect: (selectedItems: IAttributeElement[], isInverted: boolean) => void;
     onReset: () => void;
-    title: string;
-    subtitle: string;
+    attribute: IAttributeMetadataObject;
+    offset: number;
+    limit: number;
     isFiltering: boolean;
     isInitializing: boolean;
     initError: GoodDataSdkError;
@@ -1107,7 +1115,6 @@ export const useAttributeFilterController: (props: IAttributeFilterCoreProps) =>
     parentFilterAttributes: IAttributeMetadataObject[];
     displayForms: IAttributeDisplayFormMetadataObject[];
     currentDisplayFormRef: ObjRef;
-    fullscreenOnMobile: boolean;
 };
 
 // @alpha (undocumented)

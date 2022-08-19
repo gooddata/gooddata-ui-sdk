@@ -5,6 +5,7 @@ import cx from "classnames";
 
 import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext";
 import { useAttributeFilterContext } from "../../Context/AttributeFilterContext";
+import { useResolveAttributeFilterSubtitle } from "../../hooks/useResolveAttributeFilterSubtitle";
 
 const ALIGN_POINTS = [
     { align: "bl tl" },
@@ -22,7 +23,6 @@ export const AttributeFilterDropdown: React.VFC = () => {
 
     const {
         title,
-        subtitle,
         isInitializing,
         initError,
         isFiltering,
@@ -30,9 +30,15 @@ export const AttributeFilterDropdown: React.VFC = () => {
         onReset,
         onApply,
         fullscreenOnMobile,
+        isCommittedSelectionInverted,
     } = useAttributeFilterContext();
 
     const isMobile = useMediaQuery("mobileDevice");
+
+    const subtitle = useResolveAttributeFilterSubtitle(
+        isCommittedSelectionInverted,
+        committedSelectionElements,
+    );
 
     return (
         <Dropdown

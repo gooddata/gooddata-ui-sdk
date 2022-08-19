@@ -68,7 +68,10 @@ export const selectLimit = createSelector(selectState, (state) => state.elements
 /**
  * @internal
  */
-export const selectOffset = createSelector(selectState, (state) => state.elements.currentOptions.offset);
+export const selectOffset = createSelector(
+    selectState,
+    (state) => state.elements?.lastLoadedOptions?.offset ?? state.elements.currentOptions.offset,
+);
 
 /**
  * @internal

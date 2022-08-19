@@ -2,7 +2,12 @@
 import { useCallback, useEffect } from "react";
 import isEqual from "lodash/isEqual";
 import debounce from "lodash/debounce";
-import { IAttributeElement, IAttributeFilter } from "@gooddata/sdk-model";
+import {
+    filterAttributeElements,
+    IAttributeElement,
+    IAttributeFilter,
+    isAttributeElementsByRef,
+} from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict, GoodDataSdkError } from "@gooddata/sdk-ui";
 
 import { IMultiSelectAttributeFilterHandler } from "../../AttributeFilterHandler";
@@ -15,11 +20,21 @@ import { PARENT_FILTERS_CORRELATION, RESET_CORRELATION, SEARCH_CORRELATION } fro
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 
 /**
+ * @alpha
+ */
+export type IUseAttributeFilterControllerProps = Omit<
+    IAttributeFilterCoreProps,
+    "fullscreenOnMobile" | "locale" | "title"
+> & {
+    elementsOptions?: { limit: number };
+};
+
+/**
  * Use this hook if you want to implement your custom attribute filter.
  *
  * @alpha
  */
-export const useAttributeFilterController = (props: IAttributeFilterCoreProps) => {
+export const useAttributeFilterController = (props: IUseAttributeFilterControllerProps) => {
     const {
         backend: backendInput,
         workspace: workspaceInput,
@@ -35,7 +50,7 @@ export const useAttributeFilterController = (props: IAttributeFilterCoreProps) =
         hiddenElements,
         staticElements,
 
-        fullscreenOnMobile,
+        elementsOptions,
     } = props;
 
     const backend = useBackendStrict(backendInput, "AttributeFilter");
@@ -56,14 +71,13 @@ export const useAttributeFilterController = (props: IAttributeFilterCoreProps) =
         hiddenElements,
         staticElements,
     });
-    const attributeFilterControllerData = useAttributeFilterControllerData(handler, props);
+    const attributeFilterControllerData = useAttributeFilterControllerData(handler);
 
     useOnError(handler, { onError });
-    useInitOrReload(handler, { filter, limitingAttributeFilters });
+    useInitOrReload(handler, { filter, limitingAttributeFilters, limit: elementsOptions?.limit });
     const callbacks = useCallbacks(handler, { onApply, setConnectedPlaceholderValue });
 
     return {
-        fullscreenOnMobile,
         ...attributeFilterControllerData,
         ...callbacks,
     };
@@ -105,12 +119,16 @@ function useInitOrReload(
     props: {
         filter: IAttributeFilter;
         limitingAttributeFilters?: IElementsQueryAttributeFilter[];
+        limit?: number;
     },
 ) {
-    const { filter, limitingAttributeFilters } = props;
+    const { filter, limitingAttributeFilters, limit } = props;
     useEffect(() => {
         if (limitingAttributeFilters.length > 0) {
             handler.setLimitingAttributeFilters(limitingAttributeFilters);
+        }
+        if (limit) {
+            handler.setLimit(limit);
         }
         handler.init();
 
@@ -142,7 +160,10 @@ function useCallbacks(
     const { onApply: onApplyInput, setConnectedPlaceholderValue } = props;
     const onSelect = useCallback(
         (selectedItems: IAttributeElement[], isInverted: boolean) => {
-            const keys = selectedItems.map((item) => item.uri);
+            const attributeFilter = handler.getFilter();
+            const isElementsByRef = isAttributeElementsByRef(filterAttributeElements(attributeFilter));
+
+            const keys = selectedItems.map((item) => (isElementsByRef ? item.uri : item.title));
             handler.changeSelection({ keys, isInverted });
         },
         [handler],

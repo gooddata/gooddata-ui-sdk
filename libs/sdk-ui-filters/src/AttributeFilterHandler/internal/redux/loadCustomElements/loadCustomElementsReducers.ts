@@ -5,6 +5,7 @@ import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 import { Correlation, ILoadElementsOptions, ILoadElementsResult } from "../../../types";
 import { AttributeFilterReducer } from "../store/state";
+import { getElementCacheKey } from "../common/selectors";
 
 const loadCustomElementsRequest: AttributeFilterReducer<
     PayloadAction<{ options: ILoadElementsOptions; correlation: Correlation | undefined }>
@@ -20,7 +21,14 @@ const loadCustomElementsSuccess: AttributeFilterReducer<
             correlation?: Correlation;
         }
     >
-> = identity;
+> = (state, action) => {
+    action.payload.elements.forEach((el) => {
+        const cacheKey = getElementCacheKey(state, el);
+        if (!state.elements.cache[cacheKey]) {
+            state.elements.cache[cacheKey] = el;
+        }
+    });
+};
 
 const loadCustomElementsError: AttributeFilterReducer<
     PayloadAction<{ error: GoodDataSdkError; correlation: Correlation | undefined }>

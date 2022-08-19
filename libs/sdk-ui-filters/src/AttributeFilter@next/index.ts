@@ -21,7 +21,10 @@ export {
 } from "./Components/types";
 export { AttributeFilter, IAttributeFilterProps } from "./AttributeFilter";
 export { AttributeFilterButton, IAttributeFilterButtonProps } from "./AttributeFilterButton";
-export { useAttributeFilterController } from "./hooks/useAttributeFilterController";
+export {
+    useAttributeFilterController,
+    IUseAttributeFilterControllerProps,
+} from "./hooks/useAttributeFilterController";
 export {
     useAttributeFilterHandler,
     IUseAttributeFilterHandlerProps,
