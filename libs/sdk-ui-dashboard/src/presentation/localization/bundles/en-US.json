@@ -4,6 +4,11 @@
         "comment": "Use '…' as one character, not 3 dots ('...').",
         "limit": 0
     },
+    "untitled": {
+        "value": "Untitled",
+        "comment": "",
+        "limit": 0
+    },
     "apply": {
         "value": "Apply",
         "comment": "",

@@ -71,6 +71,12 @@
     vertical-align: top;
     color: $gd-dashboards-title-color;
 
+    // make sure the textarea uses the same font and color (that is not the default behavior)
+    textarea {
+        font: inherit;
+        color: inherit;
+    }
+
     &,
     textarea {
         white-space: nowrap;
