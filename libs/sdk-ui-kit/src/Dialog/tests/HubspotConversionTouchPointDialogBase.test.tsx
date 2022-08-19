@@ -1,14 +1,15 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { IntlWrapper } from "@gooddata/sdk-ui";
+
 import { useHubspotForm } from "@aaronhayes/react-use-hubspot-form";
 
 import {
     HubspotConversionTouchPointDialogBase,
     IHubspotFormField,
 } from "../HubspotConversionTouchPointDialogBase";
-import { Button } from "../../Button";
 import { IHubspotConversionTouchPointDialogBaseProps } from "../index";
 
 interface IFormReadyProps {
@@ -39,7 +40,7 @@ jest.mock("@aaronhayes/react-use-hubspot-form", () => ({
 describe("HubspotConversionTouchPointDialogBase", () => {
     function renderComponent(props: Partial<IHubspotConversionTouchPointDialogBaseProps> = {}) {
         formReadyCalled = false;
-        return mount(
+        return render(
             <IntlWrapper locale="en-US">
                 <HubspotConversionTouchPointDialogBase
                     onClose={jest.fn()}
@@ -48,6 +49,7 @@ describe("HubspotConversionTouchPointDialogBase", () => {
                     dialogTitle="How can we help!"
                     hubspotPortalId="98798"
                     hubspotFormId="09w9uewioewoproewopdsfmks"
+                    cancelButtonText="Cancel"
                     {...props}
                 />
             </IntlWrapper>,
@@ -55,42 +57,39 @@ describe("HubspotConversionTouchPointDialogBase", () => {
     }
 
     it("should render content", () => {
-        const wrapper = renderComponent();
+        renderComponent();
 
         expect(useHubspotForm).toHaveBeenCalled();
-        expect(wrapper.find("h3").first().text()).toBe("How can we help!");
-        expect(wrapper.find("#conversion-touch-point-hubspot")).toHaveLength(1);
+        expect(screen.getByText("How can we help!")).toBeInTheDocument();
+        expect(document.querySelector("#conversion-touch-point-hubspot")).toBeInTheDocument();
     });
 
     it("should have dynamic the target id", () => {
-        const wrapper = renderComponent({
+        renderComponent({
             targetId: "targetId",
         });
 
         expect(useHubspotForm).toHaveBeenCalled();
-        expect(wrapper.find("#targetId")).toHaveLength(1);
+        expect(document.querySelector("#targetId")).toBeInTheDocument();
     });
 
     it("Should not display the cancel button", () => {
-        const wrapper = renderComponent({
+        renderComponent({
             showCancelButton: false,
         });
 
-        expect(wrapper.find(Button)).toHaveLength(0);
+        expect(screen.queryByText("Cancel")).not.toBeInTheDocument();
     });
 
-    it("Should call the onClose function when clicking on the cancel button", () => {
+    it("Should call the onClose function when clicking on the cancel button", async () => {
         const spyCancel = jest.fn();
-        const wrapper = renderComponent({
+        renderComponent({
             showCancelButton: true,
-            cancelButtonText: "Cancel",
             onClose: spyCancel,
         });
 
-        const cancelButton = wrapper.find(Button);
+        await userEvent.click(screen.getByText("Cancel"));
 
-        cancelButton.simulate("click");
-
-        expect(spyCancel).toHaveBeenCalledTimes(1);
+        await waitFor(() => expect(spyCancel).toHaveBeenCalledTimes(1));
     });
 });

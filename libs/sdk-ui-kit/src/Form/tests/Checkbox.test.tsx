@@ -1,6 +1,8 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+
 import { Checkbox } from "../Checkbox";
 
 describe("ReactCheckbox", () => {
@@ -9,11 +11,11 @@ describe("ReactCheckbox", () => {
             onChange: jest.fn(),
             ...options,
         };
-        const wrapper = mount(<Checkbox {...props} />);
-        const checkbox = wrapper.find(".input-checkbox").first();
+        render(<Checkbox {...props} />);
+        const checkbox = screen.getAllByRole("checkbox")[0];
+
         return {
             checkbox,
-            wrapper,
         };
     }
 
@@ -21,8 +23,8 @@ describe("ReactCheckbox", () => {
         it("should enable and un-check the checkbox", () => {
             const { checkbox } = renderCheckbox();
 
-            expect(checkbox.prop("checked")).toBeFalsy();
-            expect(checkbox.prop("disabled")).toBeFalsy();
+            expect(checkbox).not.toBeChecked();
+            expect(checkbox).toBeEnabled();
         });
 
         it("should check the checkbox", () => {
@@ -30,7 +32,7 @@ describe("ReactCheckbox", () => {
                 value: true,
             });
 
-            expect(checkbox.prop("checked")).toBeTruthy();
+            expect(checkbox).toBeChecked();
         });
 
         it("should disable the checkbox", () => {
@@ -38,20 +40,17 @@ describe("ReactCheckbox", () => {
                 disabled: true,
             });
 
-            expect(checkbox.prop("disabled")).toBeTruthy();
+            expect(checkbox).toBeDisabled();
         });
 
-        it("should call onChange when value changed", () => {
+        it("should call onChange when value changed", async () => {
             const changedValue = true;
             const onChange = jest.fn();
             const { checkbox } = renderCheckbox({ onChange });
-            checkbox.simulate("change", {
-                target: {
-                    checked: changedValue,
-                },
-            });
 
-            expect(onChange).toHaveBeenCalledWith(changedValue);
+            await userEvent.click(checkbox);
+
+            await waitFor(() => expect(onChange).toHaveBeenCalledWith(changedValue));
         });
     });
 });

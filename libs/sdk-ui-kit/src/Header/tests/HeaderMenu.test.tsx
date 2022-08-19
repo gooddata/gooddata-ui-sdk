@@ -1,6 +1,7 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { withIntl, ITranslations } from "@gooddata/sdk-ui";
 
 import { HeaderMenu } from "../HeaderMenu";
@@ -24,17 +25,24 @@ const Wrapped = withIntl(HeaderMenu, "en-US", mockTranslation);
 
 describe("ReactHeaderMenu", () => {
     it("should render menu items", () => {
-        const headerMenu = mount(<Wrapped sections={sections} />);
+        render(<Wrapped sections={sections} />);
 
-        expect(headerMenu.find("li")).toHaveLength(3);
-        expect(headerMenu.find(".active").prop("href")).toEqual("https://example.com");
+        expect(screen.getByText(mockTranslation.account)).toBeInTheDocument();
+        expect(screen.getByText(mockTranslation.dic)).toBeInTheDocument();
+        expect(screen.getByText(mockTranslation.logout)).toBeInTheDocument();
+
+        expect(screen.getByText(mockTranslation.dic).closest("a")).toHaveAttribute(
+            "href",
+            "https://example.com",
+        );
     });
 
-    it("should call click handler on menu item", () => {
+    it("should call click handler on menu item", async () => {
         const clickSpy = jest.fn();
-        const headerMenu = mount(<Wrapped sections={sections} onMenuItemClick={clickSpy} />);
-        headerMenu.find("li a").first().simulate("click");
+        render(<Wrapped sections={sections} onMenuItemClick={clickSpy} />);
 
-        expect(clickSpy).toHaveBeenCalledTimes(1);
+        await userEvent.click(screen.getByText(mockTranslation.dic));
+
+        await waitFor(() => expect(clickSpy).toHaveBeenCalledTimes(1));
     });
 });

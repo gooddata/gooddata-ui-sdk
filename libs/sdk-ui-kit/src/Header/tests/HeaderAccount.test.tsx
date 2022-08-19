@@ -1,6 +1,7 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import noop from "lodash/noop";
 import { withIntl, ITranslations } from "@gooddata/sdk-ui";
 
@@ -23,22 +24,17 @@ const Wrapper = withIntl(HeaderAccount, "en-US", mockTranslation);
 
 describe("HeaderAccount", () => {
     it("should render username", () => {
-        const headerWrapper = mount(<Wrapper items={menuItems} onMenuItemClick={noop} userName="John Doe" />);
-
-        expect(headerWrapper.find(".gd-header-account-user").text()).toEqual("John Doe");
+        const userName = "John Doe";
+        render(<Wrapper items={menuItems} onMenuItemClick={noop} userName={userName} />);
+        expect(screen.getByText(`${userName}`)).toBeInTheDocument();
     });
 
-    it("should open menu on click", () => {
+    it("should open menu on click", async () => {
         const clickSpy = jest.fn();
-        const headerAccount = mount(<Wrapper items={menuItems} onMenuItemClick={clickSpy} />);
+        render(<Wrapper items={menuItems} onMenuItemClick={clickSpy} />);
+        await userEvent.click(document.querySelector(".gd-header-account"));
+        await userEvent.click(screen.getByText("Account"));
 
-        expect(headerAccount.find(".gd-header-account-dropdown")).toHaveLength(0);
-        headerAccount.simulate("click");
-
-        expect(headerAccount.find(".gd-header-account-dropdown")).toHaveLength(1);
-
-        headerAccount.find(".gd-header-account-dropdown a").first().simulate("click");
-
-        expect(clickSpy).toHaveBeenCalledTimes(1);
+        await waitFor(() => expect(clickSpy).toHaveBeenCalledTimes(1));
     });
 });

@@ -25,7 +25,7 @@ const WorkspacePickerHomeFooterComponent: React.FC<IWorkspacePickerHomeFooterPro
 }) => {
     const mergedClassNames = cx("gd-workspace-picker-home-footer", className);
     return (
-        <a className={mergedClassNames} href={href} onClick={onClick}>
+        <a role="icon-home" className={mergedClassNames} href={href} onClick={onClick}>
             <Icon.Home
                 className="gd-icon-home"
                 width={20}
