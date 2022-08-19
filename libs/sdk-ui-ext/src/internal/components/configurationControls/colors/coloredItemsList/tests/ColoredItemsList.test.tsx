@@ -1,11 +1,11 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import noop from "lodash/noop";
 import cloneDeep from "lodash/cloneDeep";
 import ColoredItemsList, { IColoredItemsListProps } from "../ColoredItemsList";
 import { colorPalette } from "../../../../../tests/mocks/testColorHelper";
-import { setupComponent } from "../../../../../tests/testHelper";
 import { InternalIntlWrapper, createInternalIntl } from "../../../../../utils/internalIntlProvider";
 import { inputItemsMock } from "./mock";
 
@@ -18,7 +18,7 @@ const defaultProps: IColoredItemsListProps = {
 
 function createComponent(customProps: Partial<IColoredItemsListProps> = {}) {
     const props: IColoredItemsListProps = { ...cloneDeep(defaultProps), ...customProps };
-    return setupComponent(
+    return render(
         <InternalIntlWrapper>
             <ColoredItemsList {...props} />
         </InternalIntlWrapper>,
@@ -27,42 +27,42 @@ function createComponent(customProps: Partial<IColoredItemsListProps> = {}) {
 
 describe("ColoredItemsList", () => {
     it("should render empty ColoredItemsList control", () => {
-        const { getByText } = createComponent();
-        expect(getByText("No matching data")).toBeInTheDocument();
+        createComponent();
+        expect(screen.getByText("No matching data")).toBeInTheDocument();
     });
 
     it("should hide search field for less than 7 items", () => {
-        const { queryByRole } = createComponent({
+        createComponent({
             inputItems: inputItemsMock.slice(0, 3),
         });
 
-        expect(queryByRole("textbox")).not.toBeInTheDocument();
+        expect(screen.queryByRole("textbox")).not.toBeInTheDocument();
     });
 
     it("should hide search field while loading", () => {
-        const { getByLabelText } = createComponent({
+        createComponent({
             inputItems: inputItemsMock,
             isLoading: true,
         });
 
-        expect(getByLabelText("loading")).toBeInTheDocument();
+        expect(screen.getByLabelText("loading")).toBeInTheDocument();
     });
 
     it("should show search field for more than 7 items", () => {
-        const { getByRole } = createComponent({
+        createComponent({
             inputItems: inputItemsMock,
         });
-        expect(getByRole("textbox")).toBeInTheDocument();
+        expect(screen.getByRole("textbox")).toBeInTheDocument();
     });
 
     it("should use searchString when search field is visible", async () => {
-        const { getByRole, user } = createComponent({
+        createComponent({
             inputItems: inputItemsMock,
         });
 
-        await user.type(getByRole("textbox"), "abcd");
+        await userEvent.type(screen.getByRole("textbox"), "abcd");
         await waitFor(() => {
-            expect(getByRole("textbox")).toHaveValue("abcd");
+            expect(screen.getByRole("textbox")).toHaveValue("abcd");
         });
     });
 });

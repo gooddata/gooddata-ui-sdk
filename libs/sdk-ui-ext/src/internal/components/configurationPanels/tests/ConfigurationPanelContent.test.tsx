@@ -1,6 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { DefaultLocale } from "@gooddata/sdk-ui";
 
 import ConfigurationPanelContent, {
@@ -32,7 +32,7 @@ describe("ConfigurationPanelContent", () => {
     }
 
     it("should render dummy configuration panel", () => {
-        const { getByText } = createComponent();
-        expect(getByText("Configuration Panel")).toBeInTheDocument();
+        createComponent();
+        expect(screen.getByText("Configuration Panel")).toBeInTheDocument();
     });
 });

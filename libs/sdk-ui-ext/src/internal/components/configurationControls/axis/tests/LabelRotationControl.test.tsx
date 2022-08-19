@@ -1,13 +1,13 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
+import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import noop from "lodash/noop";
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
-import { waitFor } from "@testing-library/react";
 
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider";
 import LabelRotationControl, { ILabelRotationControl } from "../LabelRotationControl";
-import { setupComponent } from "../../../../tests/testHelper";
 
 const defaultProps: ILabelRotationControl = {
     disabled: true,
@@ -19,7 +19,7 @@ const defaultProps: ILabelRotationControl = {
 
 function createComponent(customProps: Partial<ILabelRotationControl> = {}) {
     const props: ILabelRotationControl = { ...cloneDeep(defaultProps), ...customProps };
-    return setupComponent(
+    return render(
         <InternalIntlWrapper>
             <LabelRotationControl {...props} />
         </InternalIntlWrapper>,
@@ -28,30 +28,30 @@ function createComponent(customProps: Partial<ILabelRotationControl> = {}) {
 
 describe("LabelRotationControl render", () => {
     it("should render", () => {
-        const { queryByText } = createComponent();
-        expect(queryByText("Rotation")).toBeInTheDocument();
+        createComponent();
+        expect(screen.queryByText("Rotation")).toBeInTheDocument();
     });
 
     it("When LabelRotationControl disabled true" + "should be disable", () => {
         const xaxisVisible = set({}, "controls.xaxis.visible", true);
 
-        const { queryByTitle } = createComponent({
+        createComponent({
             disabled: true,
             properties: xaxisVisible,
         });
 
-        expect(queryByTitle("auto (default)")).toHaveClass("disabled");
+        expect(screen.queryByTitle("auto (default)")).toHaveClass("disabled");
     });
 
     it("When LabelRotationControl disabled false and xaxis is not visible" + "should be disable", () => {
         const xaxisVisible = set({}, "controls.xaxis.visible", false);
 
-        const { queryByTitle } = createComponent({
+        createComponent({
             disabled: false,
             properties: xaxisVisible,
         });
 
-        expect(queryByTitle("auto (default)")).toHaveClass("disabled");
+        expect(screen.queryByTitle("auto (default)")).toHaveClass("disabled");
     });
 
     it(
@@ -61,12 +61,12 @@ describe("LabelRotationControl render", () => {
             const xaxisVisible = set({}, "controls.xaxis.visible", true);
             const axisLabelsEnabled = set(xaxisVisible, "controls.xaxis.labelsEnabled", false);
 
-            const { queryByTitle } = createComponent({
+            createComponent({
                 disabled: true,
                 properties: axisLabelsEnabled,
             });
 
-            expect(queryByTitle("auto (default)")).toHaveClass("disabled");
+            expect(screen.queryByTitle("auto (default)")).toHaveClass("disabled");
         },
     );
 
@@ -77,12 +77,12 @@ describe("LabelRotationControl render", () => {
             const xaxisVisible = set({}, "controls.xaxis.visible", true);
             const properties = set(xaxisVisible, "controls.xaxis.labelsEnabled", true);
 
-            const { queryByTitle } = createComponent({
+            createComponent({
                 disabled: false,
                 properties: properties,
             });
 
-            expect(queryByTitle("auto (default)")).not.toHaveClass("disabled");
+            expect(screen.queryByTitle("auto (default)")).not.toHaveClass("disabled");
         },
     );
 
@@ -91,15 +91,15 @@ describe("LabelRotationControl render", () => {
         const xaxisVisible = set({}, "controls.xaxis.visible", true);
         const properties = set(xaxisVisible, "controls.xaxis.labelsEnabled", true);
 
-        const { getByText, user } = createComponent({
+        createComponent({
             disabled: false,
             properties,
             pushData,
         });
 
-        await user.click(getByText("auto (default)"));
+        await userEvent.click(screen.getByText("auto (default)"));
 
-        await user.click(getByText("30°"));
+        await userEvent.click(screen.getByText("30°"));
         await waitFor(() => {
             expect(pushData).toBeCalledWith(
                 expect.objectContaining({

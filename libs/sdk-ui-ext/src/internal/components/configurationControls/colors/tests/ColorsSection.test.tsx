@@ -1,11 +1,11 @@
 // (C) 2019-2022 GoodData Corporation
-import { IColor } from "@gooddata/sdk-model";
 import React from "react";
-import { waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { IColor } from "@gooddata/sdk-model";
 import { DefaultColorPalette } from "@gooddata/sdk-ui";
 import { IColorConfiguration } from "../../../../interfaces/Colors";
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider";
-import { setupComponent } from "../../../../tests/testHelper";
 
 import ColorsSection, { COLOR_MAPPING_CHANGED, IColorsSectionProps } from "../ColorsSection";
 import cloneDeep from "lodash/cloneDeep";
@@ -49,7 +49,7 @@ const defaultProps: IColorsSectionProps = {
 
 function createComponent(customProps: Partial<IColorsSectionProps> = {}) {
     const props: IColorsSectionProps = { ...cloneDeep(defaultProps), ...customProps };
-    return setupComponent(
+    return render(
         <InternalIntlWrapper>
             <ColorsSection {...props} />
         </InternalIntlWrapper>,
@@ -58,31 +58,33 @@ function createComponent(customProps: Partial<IColorsSectionProps> = {}) {
 
 describe("ColorsSection", () => {
     it("should render ColorSection control with 2 colors", () => {
-        const { getByText, getAllByRole } = createComponent();
+        createComponent();
 
-        expect(getByText("Colors")).toBeInTheDocument();
-        expect(getAllByRole("row")).toHaveLength(3); // including header row
+        expect(screen.getByText("Colors")).toBeInTheDocument();
+        expect(screen.getAllByRole("row")).toHaveLength(3); // including header row
     });
 
     it("should NOT render ColoredItemsList when no measure, unsupported color message is visible", () => {
-        const { queryByRole } = createComponent({
+        createComponent({
             hasMeasures: false,
         });
 
-        expect(queryByRole("row")).not.toBeInTheDocument();
+        expect(screen.queryByRole("row")).not.toBeInTheDocument();
     });
 
     it("should render error message when no measure", () => {
-        const { getByText } = createComponent({
+        createComponent({
             hasMeasures: false,
         });
 
-        expect(getByText(/There are no colors for this configuration of the insight/i)).toBeInTheDocument();
+        expect(
+            screen.getByText(/There are no colors for this configuration of the insight/i),
+        ).toBeInTheDocument();
     });
 
     it("should render Reset Colors button", () => {
-        const { getByText } = createComponent();
-        expect(getByText("Reset Colors")).toBeInTheDocument();
+        createComponent();
+        expect(screen.getByText("Reset Colors")).toBeInTheDocument();
     });
 
     it("should call pushData on Reset Colors button click", async () => {
@@ -103,13 +105,13 @@ describe("ColorsSection", () => {
             },
         };
         const references = { aaa: "/a1" };
-        const { getByText, user } = createComponent({
+        createComponent({
             pushData,
             properties,
             references,
         });
 
-        await user.click(getByText("Reset Colors"));
+        await userEvent.click(screen.getByText("Reset Colors"));
         await waitFor(() => {
             expect(pushData).toBeCalledWith(
                 expect.objectContaining({
@@ -127,9 +129,9 @@ describe("ColorsSection", () => {
     });
 
     it("should contain loading element when in loading state", () => {
-        const { getByLabelText } = createComponent({
+        createComponent({
             isLoading: true,
         });
-        expect(getByLabelText("loading")).toBeInTheDocument();
+        expect(screen.getByLabelText("loading")).toBeInTheDocument();
     });
 });

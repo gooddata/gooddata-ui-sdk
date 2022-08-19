@@ -191,9 +191,9 @@ describe("BaseVisualization", () => {
     }
 
     it("should render div for all visualizations", () => {
-        const { getByLabelText } = createComponent(defaultProps);
+        createComponent(defaultProps);
 
-        expect(getByLabelText("base-visualization")).toBeInTheDocument();
+        expect(screen.getByLabelText("base-visualization")).toBeInTheDocument();
     });
 
     describe("feature flags in visualization instance", () => {
@@ -274,7 +274,6 @@ describe("BaseVisualization", () => {
                 />,
             );
 
-            screen.logTestingPlaygroundURL();
             await waitFor(() => {
                 expect(tableAddBucketItemsCall).toHaveBeenCalledTimes(1);
                 expect(onNewDerivedBucketItemsPlaced).toHaveBeenCalledTimes(1);

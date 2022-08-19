@@ -1,8 +1,8 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
+import { render, screen } from "@testing-library/react";
 import LegendSection, { ILegendSection } from "../LegendSection";
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider";
-import { setupComponent } from "../../../../tests/testHelper";
 import noop from "lodash/noop";
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
@@ -16,7 +16,7 @@ const defaultProps: ILegendSection = {
 
 function createComponent(customProps: Partial<ILegendSection> = {}) {
     const props: ILegendSection = { ...cloneDeep(defaultProps), ...customProps };
-    return setupComponent(
+    return render(
         <InternalIntlWrapper>
             <LegendSection {...props} />
         </InternalIntlWrapper>,
@@ -25,23 +25,23 @@ function createComponent(customProps: Partial<ILegendSection> = {}) {
 
 describe("LegendSection render", () => {
     it("should render legend section", () => {
-        const { getByText } = createComponent();
-        expect(getByText("Legend")).toBeInTheDocument();
+        createComponent();
+        expect(screen.getByText("Legend")).toBeInTheDocument();
     });
 
     it("when controlsDisabled true than LegendPositionControl should render disabled", () => {
         const notCollapsed = set({}, "legend_section.collapsed", false);
         const legendToggledOn = set({}, "controls.legend.enabled", true);
 
-        const { getByRole, getByText } = createComponent({
+        createComponent({
             controlsDisabled: true,
             properties: legendToggledOn,
             propertiesMeta: notCollapsed,
         });
 
-        expect(getByText("Position")).toBeInTheDocument();
-        expect(getByRole("checkbox")).toBeDisabled();
-        expect(getByRole("button")).toHaveClass("disabled");
+        expect(screen.getByText("Position")).toBeInTheDocument();
+        expect(screen.getByRole("checkbox")).toBeDisabled();
+        expect(screen.getByRole("button")).toHaveClass("disabled");
     });
 
     it(
@@ -51,15 +51,15 @@ describe("LegendSection render", () => {
             const legendToggledOn = set({}, "controls.legend.enabled", false);
             const notCollapsed = set({}, "legend_section.collapsed", false);
 
-            const { getByRole, getByText } = createComponent({
+            createComponent({
                 controlsDisabled: false,
                 properties: legendToggledOn,
                 propertiesMeta: notCollapsed,
             });
 
-            expect(getByText("Position")).toBeInTheDocument();
-            expect(getByRole("checkbox")).toBeEnabled();
-            expect(getByRole("button")).toHaveClass("disabled");
+            expect(screen.getByText("Position")).toBeInTheDocument();
+            expect(screen.getByRole("checkbox")).toBeEnabled();
+            expect(screen.getByRole("button")).toHaveClass("disabled");
         },
     );
 
@@ -70,15 +70,15 @@ describe("LegendSection render", () => {
             const legendToggledOn = set({}, "controls.legend.enabled", true);
             const notCollapsed = set({}, "legend_section.collapsed", false);
 
-            const { getByRole, getByText } = createComponent({
+            createComponent({
                 controlsDisabled: false,
                 properties: legendToggledOn,
                 propertiesMeta: notCollapsed,
             });
 
-            expect(getByText("Position")).toBeInTheDocument();
-            expect(getByRole("checkbox")).toBeEnabled();
-            expect(getByRole("button")).not.toHaveClass("disabled");
+            expect(screen.getByText("Position")).toBeInTheDocument();
+            expect(screen.getByRole("checkbox")).toBeEnabled();
+            expect(screen.getByRole("button")).not.toHaveClass("disabled");
         },
     );
 
@@ -89,14 +89,14 @@ describe("LegendSection render", () => {
             legend_section: { collapsed: false },
         };
 
-        const { getByText, getByRole } = createComponent({
+        createComponent({
             controlsDisabled: false,
             properties: legendToggledOn,
             propertiesMeta,
         });
 
-        expect(getByText("Position")).toBeInTheDocument();
-        expect(getByRole("checkbox")).toBeDisabled();
-        expect(getByRole("button")).toHaveClass("disabled");
+        expect(screen.getByText("Position")).toBeInTheDocument();
+        expect(screen.getByRole("checkbox")).toBeDisabled();
+        expect(screen.getByRole("button")).toHaveClass("disabled");
     });
 });

@@ -1,6 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import set from "lodash/set";
 import noop from "lodash/noop";
 
@@ -8,7 +9,6 @@ import NamePositionControl from "../NamePositionControl";
 
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider";
 import { IConfigItemSubsection } from "../../../../interfaces/ConfigurationPanel";
-import { setupComponent } from "../../../../tests/testHelper";
 
 const defaultProps: IConfigItemSubsection = {
     disabled: true,
@@ -20,7 +20,7 @@ const defaultProps: IConfigItemSubsection = {
 
 function createComponent(customProps: Partial<IConfigItemSubsection> = {}) {
     const props: IConfigItemSubsection = { ...defaultProps, ...customProps };
-    return setupComponent(
+    return render(
         <InternalIntlWrapper>
             <NamePositionControl {...props} />
         </InternalIntlWrapper>,
@@ -29,30 +29,30 @@ function createComponent(customProps: Partial<IConfigItemSubsection> = {}) {
 
 describe("NamePositionControl render", () => {
     it("should render", () => {
-        const { getByText } = createComponent();
-        expect(getByText("Position")).toBeInTheDocument();
+        createComponent();
+        expect(screen.getByText("Position")).toBeInTheDocument();
     });
 
     it("should be disabled when xaxis is not visible", () => {
         const xaxisVisible = set({}, "controls.xaxis.visible", false);
 
-        const { getByTitle } = createComponent({
+        createComponent({
             disabled: false,
             properties: xaxisVisible,
         });
 
-        expect(getByTitle("auto (default)")).toHaveClass("disabled");
+        expect(screen.getByTitle("auto (default)")).toHaveClass("disabled");
     });
 
     it("should be disabled when xaxis is visible and axisLabelsEnabled is false", () => {
         const xaxisVisible = set({}, "controls.xaxis.visible", true);
         const axisLabelsEnabled = set(xaxisVisible, "controls.xaxis.labelsEnabled", false);
 
-        const { getByTitle } = createComponent({
+        createComponent({
             properties: axisLabelsEnabled,
         });
 
-        expect(getByTitle("auto (default)")).toHaveClass("disabled");
+        expect(screen.getByTitle("auto (default)")).toHaveClass("disabled");
     });
 
     it("should call pushData when click on list item", async () => {
@@ -60,15 +60,15 @@ describe("NamePositionControl render", () => {
         const xaxisVisible = set({}, "controls.xaxis.visible", true);
         const properties = set(xaxisVisible, "controls.xaxis.labelsEnabled", true);
 
-        const { getByText, user } = createComponent({
+        createComponent({
             disabled: false,
             properties,
             pushData,
         });
 
-        await user.click(getByText("auto (default)"));
+        await userEvent.click(screen.getByText("auto (default)"));
 
-        await user.click(getByText("left"));
+        await userEvent.click(screen.getByText("left"));
         await waitFor(() => {
             expect(pushData).toBeCalledWith(
                 expect.objectContaining({

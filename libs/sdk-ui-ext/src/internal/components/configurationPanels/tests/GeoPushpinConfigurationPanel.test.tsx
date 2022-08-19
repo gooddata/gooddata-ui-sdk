@@ -1,5 +1,7 @@
 // (C) 2020-2022 GoodData Corporation
 import React from "react";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { BucketNames, DefaultLocale, VisualizationTypes, DefaultColorPalette } from "@gooddata/sdk-ui";
 import { ExamplesMd } from "@gooddata/live-examples-workspace";
 import { IInsightDefinition, modifyMeasure, newBucket, newInsightDefinition } from "@gooddata/sdk-model";
@@ -7,7 +9,6 @@ import { IInsightDefinition, modifyMeasure, newBucket, newInsightDefinition } fr
 import { IConfigurationPanelContentProps } from "../ConfigurationPanelContent";
 import GeoPushpinConfigurationPanel from "../GeoPushpinConfigurationPanel";
 
-import { setupComponent } from "../../../tests/testHelper";
 import { IColorConfiguration } from "../../../interfaces/Colors";
 
 const Location = ExamplesMd.City.Location;
@@ -57,7 +58,7 @@ const colors: IColorConfiguration = {
 
 describe("GeoPushpinConfigurationPanel", () => {
     function createComponent(props: IConfigurationPanelContentProps) {
-        return setupComponent(<GeoPushpinConfigurationPanel {...props} />);
+        return render(<GeoPushpinConfigurationPanel {...props} />);
     }
 
     const defaultProps: IConfigurationPanelContentProps = {
@@ -84,15 +85,15 @@ describe("GeoPushpinConfigurationPanel", () => {
                 expectedStatus: boolean,
                 insight: IInsightDefinition,
             ) => {
-                const { getByLabelText } = createComponent({
+                createComponent({
                     ...defaultProps,
                     insight,
                 });
 
                 if (expectedStatus) {
-                    expect(getByLabelText("legend_section")).toBeDisabled();
+                    expect(screen.getByLabelText("legend_section")).toBeDisabled();
                 } else {
-                    expect(getByLabelText("legend_section")).toBeEnabled();
+                    expect(screen.getByLabelText("legend_section")).toBeEnabled();
                 }
             },
         );
@@ -100,60 +101,62 @@ describe("GeoPushpinConfigurationPanel", () => {
 
     describe("Map section", () => {
         it("should render config panel with Default viewport dropdown is disabled", async () => {
-            const { getByText, getByTitle, user } = createComponent({
+            createComponent({
                 ...defaultProps,
                 insight: InsightWithoutLocation,
             });
 
-            await user.click(getByText("Map"));
-            expect(getByTitle("Include all data")).toHaveClass("disabled");
+            await userEvent.click(screen.getByText("Map"));
+            expect(screen.getByTitle("Include all data")).toHaveClass("disabled");
         });
 
         it("should render config panel with Default viewport dropdown is enabled", async () => {
-            const { getByText, getByTitle, user } = createComponent(defaultProps);
+            createComponent(defaultProps);
 
-            await user.click(getByText("Map"));
-            expect(getByTitle("Include all data")).not.toHaveClass("disabled");
+            await userEvent.click(screen.getByText("Map"));
+            expect(screen.getByTitle("Include all data")).not.toHaveClass("disabled");
         });
     });
 
     describe("Points section", () => {
         it("should render config panel with groupNearbyPoints checkbox is disabled", async () => {
-            const { getByText, getByLabelText, user } = createComponent(defaultProps);
+            createComponent(defaultProps);
 
-            await user.click(getByText("Points"));
-            expect(getByLabelText("points.groupNearbyPoints")).toBeDisabled();
+            await userEvent.click(screen.getByText("Points"));
+            expect(screen.getByLabelText("points.groupNearbyPoints")).toBeDisabled();
         });
 
         it("should render config panel with groupNearbyPoints checkbox is enabled", async () => {
-            const { getByText, getByLabelText, user } = createComponent({
+            createComponent({
                 ...defaultProps,
                 insight: InsightForClustering,
             });
 
-            await user.click(getByText("Points"));
-            expect(getByLabelText("points.groupNearbyPoints")).toBeEnabled();
+            await userEvent.click(screen.getByText("Points"));
+            expect(screen.getByLabelText("points.groupNearbyPoints")).toBeEnabled();
         });
     });
 
     it("should render config panel with Color section is enabled", async () => {
-        const { queryByText, user } = createComponent({ ...defaultProps, colors });
+        createComponent({ ...defaultProps, colors });
 
-        await user.click(queryByText("Colors"));
-        expect(queryByText("Color 1")).toBeInTheDocument();
+        await userEvent.click(screen.queryByText("Colors"));
+        expect(screen.queryByText("Color 1")).toBeInTheDocument();
         expect(
-            queryByText("There are no colors for this configuration of the insight"),
+            screen.queryByText("There are no colors for this configuration of the insight"),
         ).not.toBeInTheDocument();
     });
 
     it("should render config panel with Color section is disabled", async () => {
-        const { queryByText, user } = createComponent({
+        createComponent({
             ...defaultProps,
             insight: InsightWithoutLocation,
         });
-        await user.click(queryByText("Colors"));
+        await userEvent.click(screen.queryByText("Colors"));
 
-        expect(queryByText("There are no colors for this configuration of the insight")).toBeInTheDocument();
-        expect(queryByText("Color 1")).not.toBeInTheDocument();
+        expect(
+            screen.queryByText("There are no colors for this configuration of the insight"),
+        ).toBeInTheDocument();
+        expect(screen.queryByText("Color 1")).not.toBeInTheDocument();
     });
 });
