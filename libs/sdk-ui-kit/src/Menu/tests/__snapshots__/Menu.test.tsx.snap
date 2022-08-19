@@ -1,41 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Menu snapshot should match snapshot of menu with config 1`] = `
-<div>
+<body>
   <div>
-    <div
-      class="gd-menuOpenedByClick-togglerWrapped"
-    >
-      <button>
-        toggler
-      </button>
-    </div>
-  </div>
-  <div>
-    <div
-      style="position: absolute; left: -16px; top: 8px;"
-    >
+    <div>
       <div
-        class="gd-menuOpener"
+        class="gd-menuOpenedByClick-togglerWrapped"
       >
-        <ul
-          class="content"
-        >
-          <li>
-            1
-          </li>
-          <li>
-            2
-          </li>
-        </ul>
+        <button>
+          toggler
+        </button>
       </div>
     </div>
   </div>
-</div>
-`;
-
-exports[`Menu snapshot should match snapshot of menu with config 2`] = `
-<body>
   <div>
     <div>
       <div
@@ -45,7 +22,7 @@ exports[`Menu snapshot should match snapshot of menu with config 2`] = `
           class="gd-menuOpener"
         >
           <ul
-            class="content"
+            role="content"
           >
             <li>
               1
@@ -62,150 +39,77 @@ exports[`Menu snapshot should match snapshot of menu with config 2`] = `
 `;
 
 exports[`Menu snapshot should match snapshot of menu with no config 1`] = `
-<div>
+<body>
   <div>
-    <div
-      class="gd-menuOpenedByClick-togglerWrapped"
-    >
-      <button>
-        toggler
-      </button>
+    <div>
+      <div
+        class="gd-menuOpenedByClick-togglerWrapped"
+      >
+        <button>
+          toggler
+        </button>
+      </div>
     </div>
   </div>
-</div>
-`;
-
-exports[`Menu snapshot should match snapshot of menu with no config 2`] = `
-<body>
   <div />
 </body>
 `;
 
 exports[`Menu snapshot should match snapshot of menu with portalTarget 1`] = `
-<div>
-  <div>
-    <div
-      class="gd-menuOpenedByClick-togglerWrapped"
-    >
-      <button>
-        toggler
-      </button>
-    </div>
-  </div>
-  <div>
-    <div
-      style="position: absolute; left: 0px; top: 0px;"
-    >
-      <div
-        class="gd-menuOpener"
-      >
-        <ul
-          class="content"
+<body>
+  <section
+    class="portal-target"
+  >
+    <div>
+      <div>
+        <div
+          style="position: absolute; left: 0px; top: 0px;"
         >
-          <li>
-            1
-          </li>
-          <li>
-            2
-          </li>
-        </ul>
+          <div
+            class="gd-menuOpener"
+          >
+            <ul
+              role="content"
+            >
+              <li>
+                1
+              </li>
+              <li>
+                2
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-`;
-
-exports[`Menu snapshot should match snapshot of menu with portalTarget 2`] = `
-<section
-  class="portal-target"
->
+  </section>
   <div>
     <div>
       <div
-        style="position: absolute; left: 0px; top: 0px;"
+        class="gd-menuOpenedByClick-togglerWrapped"
       >
-        <div
-          class="gd-menuOpener"
-        >
-          <ul
-            class="content"
-          >
-            <li>
-              1
-            </li>
-            <li>
-              2
-            </li>
-          </ul>
-        </div>
+        <button>
+          toggler
+        </button>
       </div>
     </div>
   </div>
-</section>
+</body>
 `;
 
 exports[`Menu snapshot should match snapshot of nested menus 1`] = `
-<div>
+<body>
   <div>
-    <div
-      class="gd-menuOpenedByClick-togglerWrapped"
-    >
-      <button>
-        toggler
-      </button>
-    </div>
-  </div>
-  <div>
-    <div
-      style="position: absolute; left: 0px; top: 0px;"
-    >
+    <div>
       <div
-        class="gd-menuOpener"
+        class="gd-menuOpenedByClick-togglerWrapped"
       >
-        <p>
-          Menu Item
-        </p>
-        <p>
-          Menu Item
-        </p>
-        <div
-          class="gd-menuPosition-wrapper"
-        >
-          <div>
-            <div>
-              <button>
-                toggler
-              </button>
-            </div>
-          </div>
-          <div
-            style="position: absolute; left: 0px; top: 0px;"
-          >
-            <div>
-              <div
-                class="gd-menuOpener"
-              >
-                <p>
-                  Menu Item
-                </p>
-                <p>
-                  Menu Item
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <p>
-          Menu Item
-        </p>
+        <button>
+          toggler
+        </button>
       </div>
     </div>
   </div>
-</div>
-`;
-
-exports[`Menu snapshot should match snapshot of nested menus 2`] = `
-<body>
   <div>
     <div>
       <div

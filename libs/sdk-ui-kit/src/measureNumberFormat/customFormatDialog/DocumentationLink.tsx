@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
 import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
 
@@ -11,6 +11,7 @@ type IDocumentationLinkProps = IDocumentationLinkOwnProps & WrappedComponentProp
 const DocumentationLink = ({ url }: IDocumentationLinkProps) => (
     <div className="gd-measure-custom-format-dialog-section gd-measure-custom-format-dialog-section-help">
         <a
+            aria-label="custom-format-documentation-link"
             className="gd-measure-format-button s-custom-format-dialog-documentation-link"
             target="_blank"
             rel="noreferrer noopener"

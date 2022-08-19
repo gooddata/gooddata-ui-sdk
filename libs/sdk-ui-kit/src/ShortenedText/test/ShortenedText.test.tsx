@@ -1,12 +1,13 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+
 import { ShortenedText, getShortenedTitle, IShortenedTextProps } from "../ShortenedText";
-import { BubbleHoverTrigger } from "../../Bubble/BubbleHoverTrigger";
 
 describe("ShortenedText", () => {
     const renderShortenedText = (props: IShortenedTextProps) => {
-        return mount(<ShortenedText {...props} />);
+        return render(<ShortenedText {...props} />);
     };
 
     function createElement(
@@ -29,128 +30,104 @@ describe("ShortenedText", () => {
         };
     }
 
-    describe("ShortenedText", () => {
-        const shortText = "t";
-        const longText = "this is a very very long text for testing purposes";
+    const shortText = "t";
+    const longText = "this is a very very long text for testing purposes";
 
-        it("should render shortened text with default tagName SPAN", () => {
-            const component = renderShortenedText({
-                children: shortText,
-                getElement: () => createElement(100, 100),
-            });
-
-            expect(component.getDOMNode().tagName).toEqual("SPAN");
+    it("should not shorten short text", () => {
+        renderShortenedText({
+            children: shortText,
+            tagName: "div",
+            getElement: () => createElement(99.4, 100),
         });
 
-        it("should render text wrapped in custom tagName", () => {
-            const component = renderShortenedText({
-                children: shortText,
-                tagName: "div",
-                getElement: () => createElement(100, 100),
-            });
+        expect(screen.getByText(shortText)).toBeInTheDocument();
+    });
 
-            expect(component.getDOMNode().tagName).toEqual("DIV");
+    it("should shorten log text", () => {
+        renderShortenedText({
+            children: longText,
+            tagName: "div",
+            getElement: () => createElement(100, 200),
+        });
+        expect(screen.getByText("…", { exact: false })).toBeInTheDocument();
+    });
+
+    it("should render shorten text first and than not render shorten text after resize", () => {
+        let elementWidth = 120;
+        let scrollWidth = 200;
+
+        // first render shorten text
+        const { rerender } = renderShortenedText({
+            children: longText,
+            tagName: "div",
+            getElement: () => {
+                return createElement(elementWidth, scrollWidth);
+            },
+        });
+        expect(screen.getByText("…", { exact: false })).toBeInTheDocument();
+
+        // change size
+        elementWidth = 100;
+        scrollWidth = 100;
+
+        rerender(
+            <ShortenedText getElement={() => createElement(elementWidth, scrollWidth)}>
+                {shortText}
+            </ShortenedText>,
+        );
+
+        expect(screen.getByText(shortText)).toBeInTheDocument();
+    });
+
+    it("should not render shorten text first and than render shorten text after resize", () => {
+        let elementWidth = 100;
+        let scrollWidth = 100;
+
+        // first render not shorten text
+        const { rerender } = renderShortenedText({
+            children: shortText,
+            tagName: "div",
+            getElement: () => {
+                return createElement(elementWidth, scrollWidth);
+            },
+        });
+        expect(screen.getByText(shortText)).toBeInTheDocument();
+
+        // change size
+        elementWidth = 120;
+        scrollWidth = 200;
+
+        rerender(
+            <ShortenedText getElement={() => createElement(elementWidth, scrollWidth)}>
+                {longText}
+            </ShortenedText>,
+        );
+
+        expect(screen.getByText("…", { exact: false })).toBeInTheDocument();
+    });
+
+    it("should render bubble if displayTooltip is true", async () => {
+        renderShortenedText({
+            children: longText,
+            tagName: "div",
+            getElement: () => createElement(100, 200),
+            displayTooltip: true,
         });
 
-        it("should not shorten short text", () => {
-            const component = renderShortenedText({
-                children: shortText,
-                tagName: "div",
-                getElement: () => createElement(99.4, 100),
-            });
+        await userEvent.hover(screen.getByText("…", { exact: false }));
+        expect(screen.getByText(longText)).toBeInTheDocument();
+    });
 
-            expect(component.find(".is-shortened")).toHaveLength(0);
-            expect(component.text()).toEqual(shortText);
+    it("should not render bubble if displayTooltip is false", async () => {
+        renderShortenedText({
+            children: longText,
+            tagName: "div",
+            getElement: () => createElement(100, 200),
+            displayTooltip: false,
         });
 
-        it("should add class for shortened text and contain ellipsis", () => {
-            const component = renderShortenedText({
-                children: longText,
-                tagName: "div",
-                getElement: () => createElement(100, 200),
-            });
-
-            expect(component.find(".is-shortened")).toHaveLength(1);
-            expect(component.text()).toContain("…");
-        });
-
-        it("should render shorten text first and than not render shorten text after resize", () => {
-            let elementWidth = 120;
-            let scrollWidth = 200;
-
-            // first render shorten text
-            let component = renderShortenedText({
-                children: longText,
-                tagName: "div",
-                getElement: () => {
-                    return createElement(elementWidth, scrollWidth);
-                },
-            });
-            expect(component.find(".is-shortened")).toHaveLength(1);
-            expect(component.text()).toContain("…");
-
-            // change size
-            elementWidth = 100;
-            scrollWidth = 100;
-
-            // update child
-            component = component.setProps({ children: shortText });
-            component.update();
-
-            // than render not shorten text
-            expect(component.find(".is-shortened")).toHaveLength(0);
-            expect(component.text()).toEqual(shortText);
-        });
-
-        it("should not render shorten text first and than render shorten text after resize", () => {
-            let elementWidth = 100;
-            let scrollWidth = 100;
-
-            // first render not shorten text
-            let component = renderShortenedText({
-                children: shortText,
-                tagName: "div",
-                getElement: () => {
-                    return createElement(elementWidth, scrollWidth);
-                },
-            });
-            expect(component.find(".is-shortened")).toHaveLength(0);
-            expect(component.text()).toEqual(shortText);
-
-            // change size
-            elementWidth = 120;
-            scrollWidth = 200;
-
-            // update child
-            component = component.setProps({ children: longText });
-            component.update();
-
-            // than render shorten text
-            expect(component.find(".is-shortened")).toHaveLength(1);
-            expect(component.text()).toContain("…");
-        });
-
-        it("should render bubble if displayTooltip is true", () => {
-            const component = renderShortenedText({
-                children: longText,
-                tagName: "div",
-                getElement: () => createElement(100, 200),
-                displayTooltip: true,
-            });
-
-            expect(component.find(BubbleHoverTrigger).exists()).toBe(true);
-        });
-
-        it("should not render bubble if displayTooltip is false", () => {
-            const component = renderShortenedText({
-                children: longText,
-                tagName: "div",
-                getElement: () => createElement(100, 200),
-                displayTooltip: false,
-            });
-
-            expect(component.find(BubbleHoverTrigger).exists()).toBe(false);
-        });
+        await userEvent.hover(screen.getByText("…", { exact: false }));
+        expect(screen.queryByText(longText)).not.toBeInTheDocument();
     });
 
     describe("getShortenedTitle", () => {
@@ -194,38 +171,6 @@ describe("ShortenedText", () => {
                     createElement(200, 10),
                 ),
             ).toEqual("abcdefghijklmnopqrstuvwxyz zyxwvutsrqponmlkjihgfedcba");
-        });
-    });
-
-    describe("renderTextWithBubble", () => {
-        const renderShortenedTextWithBubbleHoverTrigger = (props = {}) => {
-            const root = renderShortenedText({
-                children: "foo",
-                tagName: "div",
-                getElement: () => createElement(100, 200),
-                ...props,
-            });
-
-            return root.find(BubbleHoverTrigger);
-        };
-
-        it("should render BubbleHoverTrigger with eventsOnBubble set to false by default", () => {
-            const bubbleHoverTrigger = renderShortenedTextWithBubbleHoverTrigger();
-            expect(bubbleHoverTrigger.prop("eventsOnBubble")).toBe(false);
-        });
-
-        it("should render BubbleHoverTrigger with eventsOnBubble set to true", () => {
-            const bubbleHoverTrigger = renderShortenedTextWithBubbleHoverTrigger({
-                tooltipVisibleOnMouseOver: true,
-            });
-            expect(bubbleHoverTrigger.prop("eventsOnBubble")).toBe(true);
-        });
-
-        it("should render BubbleHoverTrigger with eventsOnBubble set to false", () => {
-            const bubbleHoverTrigger = renderShortenedTextWithBubbleHoverTrigger({
-                tooltipVisibleOnMouseOver: false,
-            });
-            expect(bubbleHoverTrigger.prop("eventsOnBubble")).toBe(false);
         });
     });
 });

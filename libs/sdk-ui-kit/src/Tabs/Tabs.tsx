@@ -72,6 +72,7 @@ export class Tabs extends Component<ITabsProps, ITabsState> {
 
         return (
             <div
+                aria-label={stringUtils.simplifyText(tab.id)}
                 className={tabClassName}
                 key={tab.id}
                 onClick={() => {

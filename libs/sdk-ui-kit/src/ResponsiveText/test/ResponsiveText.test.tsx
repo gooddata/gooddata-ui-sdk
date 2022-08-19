@@ -1,6 +1,7 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
+import { render, screen, waitFor } from "@testing-library/react";
+
 import { ResponsiveText, IResponsiveTextProps } from "../ResponsiveText";
 
 describe("ResponsiveText", () => {
@@ -23,30 +24,33 @@ describe("ResponsiveText", () => {
             tagClassName: "test-class",
             title: "Responsive text title",
         };
-        const component = mount(<ResponsiveText {...props} />);
+        render(<ResponsiveText {...props} />);
 
-        expect(component.children().name()).toEqual(props.tagName);
-        expect(component.find(".test-class").exists()).toEqual(true);
-        expect(component.find(".test-class").props().title).toEqual(props.title);
+        expect(screen.getByTitle(props.title)).toHaveClass("test-class");
+        expect(screen.getByTitle(props.title)).toBeInTheDocument();
     });
 
-    it("should add resize window event listener when component is mounted", () => {
+    it("should add resize window event listener when component is mounted", async () => {
         const props = {
             window: createWindowMock(),
         };
-        mount(<ResponsiveText {...props} />);
+        render(<ResponsiveText {...props} />);
 
-        expect(props.window.addEventListener).toHaveBeenCalledWith("resize", expect.any(Function));
+        await waitFor(() => {
+            expect(props.window.addEventListener).toBeCalledWith("resize", expect.any(Function));
+        });
     });
 
-    it("should remove window event listener when component is unmounted", () => {
+    it("should remove window event listener when component is unmounted", async () => {
         const props = {
             window: createWindowMock(),
         };
-        const component = mount(<ResponsiveText {...props} />);
+        const { unmount } = render(<ResponsiveText {...props} />);
 
-        component.unmount();
+        unmount();
 
-        expect(props.window.removeEventListener).toHaveBeenCalledWith("resize", expect.any(Function));
+        await waitFor(() => {
+            expect(props.window.removeEventListener).toBeCalledWith("resize", expect.any(Function));
+        });
     });
 });

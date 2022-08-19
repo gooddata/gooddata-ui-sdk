@@ -1,11 +1,13 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import includes from "lodash/includes";
-import { mount, ReactWrapper } from "enzyme";
+import { withIntl } from "@gooddata/sdk-ui";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+
+import { customMessages } from "./customDictionary";
 
 import LegacyMultiSelectList, { ILegacyMultiSelectListProps } from "../LegacyMultiSelectList";
-import { withIntl } from "@gooddata/sdk-ui";
-import { customMessages } from "./customDictionary";
 
 describe("LegacyMultiSelectList", () => {
     const firstItem: any = {
@@ -14,6 +16,7 @@ describe("LegacyMultiSelectList", () => {
     const secondItem: any = {
         title: "Second item",
     };
+
     const maskedItem: any = {
         title: null,
         available: false,
@@ -38,52 +41,53 @@ describe("LegacyMultiSelectList", () => {
             undefined,
             customMessages,
         );
-        return mount(<Wrapped {...props} />);
+        return render(<Wrapped {...props} />);
     }
 
     it("should select items based on result of isSelected", () => {
-        const wrapper = renderList({
+        renderList({
             items: [firstItem, secondItem],
             selection: [firstItem],
         });
 
-        const checkboxes = wrapper.find('input[type="checkbox"]');
-        expect(checkboxes.get(0).props.checked).toEqual(true);
-        expect(checkboxes.get(1).props.checked).toEqual(false);
+        const checkboxes = screen.getAllByRole("checkbox");
+        expect(checkboxes[0]).toBeChecked();
+        expect(checkboxes[1]).not.toBeChecked();
     });
 
-    it("List should maintain selection as items are clicked", () => {
+    it("List should maintain selection as items are clicked", async () => {
         const onSelect = jest.fn();
-        const wrapper = renderList({
+        renderList({
             items,
             onSelect,
         });
 
-        wrapper.find(".gd-list-item").first().simulate("click");
+        await userEvent.click(screen.getByText(firstItem.title));
+
         expect(onSelect).toHaveBeenCalledWith(firstItem);
     });
 
-    it("should deselect previously selected item on second click", () => {
+    it("should deselect previously selected item on second click", async () => {
         const onSelect = jest.fn();
-        const wrapper = renderList({
+        renderList({
             items,
             selection: [firstItem, secondItem],
             onSelect,
         });
 
-        wrapper.find(".gd-list-item").at(1).simulate("click");
+        await userEvent.click(screen.getByText(secondItem.title));
         expect(onSelect).toHaveBeenCalledWith(secondItem);
     });
 
-    it('should correctly handle "only" option', () => {
+    it('should correctly handle "only" option', async () => {
         const onSelectOnly = jest.fn();
-        const wrapper = renderList({
+        renderList({
             items,
             selection: [firstItem, secondItem],
             onSelectOnly,
         });
 
-        wrapper.find(".gd-list-item-only").first().simulate("click");
+        await userEvent.click(screen.getAllByText("Only")[0]);
         expect(onSelectOnly).toHaveBeenCalledWith(firstItem);
     });
 
@@ -97,7 +101,7 @@ describe("LegacyMultiSelectList", () => {
         };
 
         const mutableItems = [first, second];
-        const wrapper = renderList({
+        renderList({
             items: mutableItems,
             selection: [second],
             selectAllCheckbox: true,
@@ -105,66 +109,62 @@ describe("LegacyMultiSelectList", () => {
             isSearching: false,
             tagName: "Attribute",
         });
-        expect(wrapper.find(".s-list-status-bar")).toHaveLength(1);
-        expect(wrapper.find(".s-list-status-bar").text().replace(/\xA0/g, " ")).toBe(
-            `Attribute is ${second.title}`,
-        );
+
+        expect(screen.getByTitle("Attribute")).toBeInTheDocument();
+        expect(screen.getByTitle(`${second.title}`)).toBeInTheDocument();
     });
 
     describe("selectAllCheckbox", () => {
-        function clickCheckbox(wrapper: ReactWrapper) {
-            wrapper.find(".gd-checkbox-selection").simulate("change");
-        }
-
-        it("should trigger selectAll if none is selected", () => {
+        it("should trigger selectAll if none is selected", async () => {
             const onSelectAll = jest.fn();
-            const wrapper = renderList({
+            renderList({
                 items,
                 selectAllCheckbox: true,
                 onSelectAll,
             });
-            clickCheckbox(wrapper);
+
+            await userEvent.click(screen.getAllByRole("checkbox")[0]);
             expect(onSelectAll).toHaveBeenCalledTimes(1);
         });
 
-        it("should trigger selectNone if all are selected", () => {
+        it("should trigger selectNone if all are selected", async () => {
             const onSelectNone = jest.fn();
-            const wrapper = renderList({
+            renderList({
                 items,
                 selection: items,
                 selectAllCheckbox: true,
                 onSelectNone,
             });
-            clickCheckbox(wrapper);
+            await userEvent.click(screen.getAllByRole("checkbox")[0]);
             expect(onSelectNone).toHaveBeenCalledTimes(1);
         });
 
-        it("should trigger selectAll if some are selected", () => {
+        it("should trigger selectAll if some are selected", async () => {
             const onSelectAll = jest.fn();
-            const wrapper = renderList({
+            renderList({
                 items,
                 selection: [firstItem],
                 selectAllCheckbox: true,
                 onSelectAll,
             });
-            clickCheckbox(wrapper);
+            await userEvent.click(screen.getAllByRole("checkbox")[0]);
             expect(onSelectAll).toHaveBeenCalledTimes(1);
         });
 
         it("should have selectAll enabled if not searching", () => {
-            const wrapper = renderList({
+            renderList({
                 items,
                 selection: [firstItem],
                 selectAllCheckbox: true,
                 isSearching: false,
             });
-            expect(wrapper.find("label.s-select-all-checkbox")).toHaveLength(1);
-            expect(wrapper.find("label.s-select-all-checkbox").hasClass("disabled")).toBeFalsy();
+
+            expect(screen.getByRole("select-all-checkbox")).not.toHaveClass("disabled");
         });
 
         describe("selection footer info", () => {
             it("should show all when nothing is selected", () => {
-                const wrapper = renderList({
+                renderList({
                     items,
                     selection: [],
                     selectAllCheckbox: true,
@@ -172,42 +172,41 @@ describe("LegacyMultiSelectList", () => {
                     isSearching: false,
                     tagName: "Attribute",
                 });
-                expect(wrapper.find(".s-list-status-bar")).toHaveLength(1);
-                expect(wrapper.find(".s-list-status-bar").text().replace(/\xA0/g, " ")).toBe(
+
+                expect(screen.getByRole("list-status-bar").textContent.replace(/\xA0/g, " ")).toBe(
                     "Attribute is All",
                 );
             });
 
             it("should show none when nothing is selected", () => {
-                const wrapper = renderList({
+                renderList({
                     items,
                     selection: [],
                     selectAllCheckbox: true,
                     isSearching: false,
                     tagName: "Attribute",
                 });
-                expect(wrapper.find(".s-list-status-bar")).toHaveLength(1);
-                expect(wrapper.find(".s-list-status-bar").text().replace(/\xA0/g, " ")).toBe(
+                expect(screen.getByRole("list-status-bar").textContent.replace(/\xA0/g, " ")).toBe(
                     "Attribute is (None)",
                 );
             });
 
             it("should show selected item info", () => {
-                const wrapper = renderList({
+                renderList({
                     items,
                     selection: [items[0]],
                     selectAllCheckbox: true,
                     isSearching: false,
                     tagName: "Attribute",
                 });
-                expect(wrapper.find(".s-list-status-bar")).toHaveLength(1);
-                expect(wrapper.find(".s-list-status-bar").text().replace(/\xA0/g, " ")).toBe(
+
+                expect(screen.getByRole("list-status-bar").textContent.replace(/\xA0/g, " ")).toBe(
                     `Attribute is ${firstItem.title}`,
                 );
             });
 
             it("should show selected item info (inverted)", () => {
-                const wrapper = renderList({
+                renderList({
                     items,
                     selection: [items[0]],
                     selectAllCheckbox: true,
@@ -215,14 +214,14 @@ describe("LegacyMultiSelectList", () => {
                     isSearching: false,
                     tagName: "Attribute",
                 });
-                expect(wrapper.find(".s-list-status-bar")).toHaveLength(1);
-                expect(wrapper.find(".s-list-status-bar").text().replace(/\xA0/g, " ")).toBe(
+
+                expect(screen.getByRole("list-status-bar").textContent.replace(/\xA0/g, " ")).toBe(
                     `Attribute is All except ${firstItem.title}`,
                 );
             });
 
             it("should show selected items info with count (inverted)", () => {
-                const wrapper = renderList({
+                renderList({
                     items,
                     selection: [...items],
                     selectAllCheckbox: true,
@@ -230,14 +229,14 @@ describe("LegacyMultiSelectList", () => {
                     isSearching: false,
                     tagName: "Attribute",
                 });
-                expect(wrapper.find(".s-list-status-bar")).toHaveLength(1);
-                expect(wrapper.find(".s-list-status-bar").text().replace(/\xA0/g, " ")).toBe(
+
+                expect(screen.getByRole("list-status-bar").textContent.replace(/\xA0/g, " ")).toBe(
                     `Attribute is All except ${firstItem.title}, ${secondItem.title} (2)`,
                 );
             });
 
             it("should show selected items info with count", () => {
-                const wrapper = renderList({
+                renderList({
                     items,
                     selection: [...items],
                     selectAllCheckbox: true,
@@ -245,14 +244,14 @@ describe("LegacyMultiSelectList", () => {
                     isSearching: false,
                     tagName: "Attribute",
                 });
-                expect(wrapper.find(".s-list-status-bar")).toHaveLength(1);
-                expect(wrapper.find(".s-list-status-bar").text().replace(/\xA0/g, " ")).toBe(
+
+                expect(screen.getByRole("list-status-bar").textContent.replace(/\xA0/g, " ")).toBe(
                     `Attribute is ${firstItem.title}, ${secondItem.title} (2)`,
                 );
             });
 
             it("should show not available for masked attribute elements (MUF)", () => {
-                const wrapper = renderList({
+                renderList({
                     items: [...items, maskedItem],
                     selection: [firstItem, maskedItem],
                     selectAllCheckbox: true,
@@ -260,8 +259,7 @@ describe("LegacyMultiSelectList", () => {
                     isSearching: false,
                     tagName: "Attribute",
                 });
-                expect(wrapper.find(".s-list-status-bar")).toHaveLength(1);
-                expect(wrapper.find(".s-list-status-bar").text().replace(/\xA0/g, " ")).toBe(
+                expect(screen.getByRole("list-status-bar").textContent.replace(/\xA0/g, " ")).toBe(
                     `Attribute is ${firstItem.title}, N/A (2)`,
                 );
             });
@@ -269,7 +267,7 @@ describe("LegacyMultiSelectList", () => {
 
         describe("searching in dropdown", () => {
             it("shouldn't show searching info when not searching", () => {
-                const wrapper = renderList({
+                renderList({
                     items,
                     itemsCount: items.length,
                     selection: [],
@@ -278,11 +276,12 @@ describe("LegacyMultiSelectList", () => {
                     isSearching: false,
                     tagName: "Attribute",
                 });
-                expect(wrapper.find(".s-list-search-selection-size")).toHaveLength(0);
+
+                expect(screen.queryByText("search result", { exact: false })).not.toBeInTheDocument();
             });
 
             it("should show searching info", () => {
-                const wrapper = renderList({
+                renderList({
                     items,
                     itemsCount: 1,
                     selection: [...items],
@@ -291,8 +290,8 @@ describe("LegacyMultiSelectList", () => {
                     isSearching: true,
                     tagName: "Attribute",
                 });
-                expect(wrapper.find(".s-list-search-selection-size")).toHaveLength(1);
-                expect(wrapper.find(".s-list-search-selection-size").text()).toBe("search results (1)");
+
+                expect(screen.getByText("search results (1)")).toBeInTheDocument();
             });
         });
     });
