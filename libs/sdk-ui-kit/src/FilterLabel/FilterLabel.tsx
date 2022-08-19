@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { ReactNode, createRef, RefObject } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 
@@ -100,7 +100,10 @@ class WrappedFilterLabel extends React.PureComponent<
 
     render(): ReactNode {
         return (
-            <div className="adi-attribute-filter-label s-attribute-filter-label">
+            <div
+                role="attribute-filter-label"
+                className="adi-attribute-filter-label s-attribute-filter-label"
+            >
                 <span className="label" ref={this.labelRef}>
                     {this.renderTitle()}
                     {this.renderSelectedElements()}

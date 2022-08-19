@@ -1,7 +1,7 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import * as React from "react";
 import cx from "classnames";
-import { mount, ReactWrapper } from "enzyme";
+import { render, screen } from "@testing-library/react";
 import Kefir, { constant, merge } from "kefir";
 
 import { LegacyList, ILegacyListProps } from "../LegacyList";
@@ -150,8 +150,8 @@ interface IItemProps {
 }
 
 describe("List", () => {
-    const renderList = (options: Partial<ILegacyListProps>): ReactWrapper<LegacyList> => {
-        return mount(<LegacyList {...(options as any)} />);
+    const renderList = (options: Partial<ILegacyListProps>) => {
+        return render(<LegacyList {...(options as any)} />);
     };
 
     const dataSource = createDummyDataSource<IItemProps>([
@@ -161,34 +161,22 @@ describe("List", () => {
     ]);
 
     it("should render list with first and last items marked", () => {
-        const wrapper = renderList({
+        renderList({
             dataSource,
             rowItem: <DummyRowItem />,
         });
 
-        const firstItem = wrapper.find(".one");
-        const secondItem = wrapper.find(".two");
-        const thirdItem = wrapper.find(".three");
+        expect(screen.getByText("one")).toBeInTheDocument();
+        expect(screen.getByText("two")).toBeInTheDocument();
+        expect(screen.getByText("three")).toBeInTheDocument();
 
-        expect(firstItem.hasClass("is-first")).toEqual(true);
-        expect(firstItem.hasClass("is-last")).toEqual(false);
+        expect(screen.getByText("one").closest("div")).toHaveClass("is-first");
+        expect(screen.getByText("one").closest("div")).not.toHaveClass("is-last");
 
-        expect(secondItem.hasClass("is-first")).toEqual(false);
-        expect(secondItem.hasClass("is-last")).toEqual(false);
+        expect(screen.getByText("two").closest("div")).not.toHaveClass("is-first");
+        expect(screen.getByText("two").closest("div")).not.toHaveClass("is-last");
 
-        expect(thirdItem.hasClass("is-first")).toEqual(false);
-        expect(thirdItem.hasClass("is-last")).toEqual(true);
-    });
-
-    it("should have scrollToSelected prop", () => {
-        const wrapper = renderList({
-            dataSource,
-            rowItem: <DummyRowItem />,
-        });
-
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        const scrollToSelectedProps = wrapper.props().scrollToSelected;
-        expect(scrollToSelectedProps).toEqual(false);
+        expect(screen.getByText("three").closest("div")).not.toHaveClass("is-first");
+        expect(screen.getByText("three").closest("div")).toHaveClass("is-last");
     });
 });

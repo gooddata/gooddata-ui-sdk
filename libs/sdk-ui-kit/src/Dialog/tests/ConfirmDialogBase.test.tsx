@@ -1,48 +1,43 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
-import { shallow } from "enzyme";
+import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+
 import { ConfirmDialogBase } from "../ConfirmDialogBase";
 
 describe("ConfirmDialogBase", () => {
     it("should render content", () => {
-        const wrapper = shallow(
+        render(
             <ConfirmDialogBase>
                 <div className="test-content">ReactConfirmDialogBase content</div>
             </ConfirmDialogBase>,
         );
 
-        expect(wrapper.find(".gd-dialog-header")).toHaveLength(1);
-        expect(wrapper.find(".gd-dialog-footer")).toHaveLength(1);
-        expect(wrapper.find(".gd-dialog-content")).toHaveLength(1);
-
-        expect(wrapper.find(".test-content")).toHaveLength(1);
-
-        wrapper.unmount();
+        expect(screen.getByText("ReactConfirmDialogBase content")).toBeInTheDocument();
     });
 
-    it("should call cancel handler", () => {
+    it("should call cancel handler", async () => {
         const cancelSpy = jest.fn();
-        const wrapper = shallow(
-            <ConfirmDialogBase onCancel={cancelSpy}>ConfirmDialogBase content</ConfirmDialogBase>,
+        render(
+            <ConfirmDialogBase onCancel={cancelSpy} cancelButtonText="Cancel">
+                ConfirmDialogBase content
+            </ConfirmDialogBase>,
         );
 
-        wrapper.find(".s-dialog-cancel-button").first().simulate("click");
-        expect(cancelSpy).toHaveBeenCalledTimes(1);
-
-        wrapper.unmount();
+        await userEvent.click(screen.getByText("Cancel"));
+        await waitFor(() => expect(cancelSpy).toHaveBeenCalledTimes(1));
     });
 
-    it("should call submit handler", () => {
+    it("should call submit handler", async () => {
         const submitSpy = jest.fn();
-        const wrapper = shallow(
+        render(
             <ConfirmDialogBase onSubmit={submitSpy} submitButtonText="Submit">
                 ConfirmDialogBase content
             </ConfirmDialogBase>,
         );
 
-        wrapper.find(".s-dialog-submit-button").first().simulate("click");
-        expect(submitSpy).toHaveBeenCalledTimes(1);
+        await userEvent.click(screen.getByText("Submit"));
 
-        wrapper.unmount();
+        await waitFor(() => expect(submitSpy).toHaveBeenCalledTimes(1));
     });
 });

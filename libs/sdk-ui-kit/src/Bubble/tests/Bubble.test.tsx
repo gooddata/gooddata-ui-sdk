@@ -1,55 +1,45 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
-import { mount } from "enzyme";
-import { Bubble, X_SHIFT, Y_SHIFT, IBubbleProps } from "../Bubble";
+import { render } from "@testing-library/react";
+
+import { Bubble, IBubbleProps } from "../Bubble";
 
 function renderBubble(options: Partial<IBubbleProps>) {
-    return mount<IBubbleProps>(<Bubble {...options}>lorem ipsum</Bubble>);
+    return render(<Bubble {...options}>lorem ipsum</Bubble>);
 }
 
 describe("Bubble", () => {
     describe("render", () => {
         it("should have correct default align points", () => {
-            const wrapper = renderBubble({});
-            expect(wrapper.state().alignPoints[0].align).toEqual("bl tl");
-        });
+            renderBubble({});
 
-        it("should add offset to align points", () => {
-            const wrapper = renderBubble({});
-
-            const { offset } = wrapper.state().alignPoints[0];
-
-            // Responds to default "bl tl"
-            expect(offset.x).toBe(-Y_SHIFT);
-            expect(offset.y).toBe(X_SHIFT);
+            expect(document.querySelector(".target-bl")).toBeInTheDocument();
+            expect(document.querySelector(".self-tl")).toBeInTheDocument();
         });
     });
 
     describe("css classes", () => {
         it("should have given className", () => {
             const customClass = "bubble-primary";
-            const wrapper = renderBubble({
+            renderBubble({
                 className: customClass,
             });
 
-            const cssClasses = wrapper.props().className.split(" ");
-            expect(cssClasses).toContain(customClass);
+            expect(document.querySelector(`.${customClass}`)).toBeInTheDocument();
         });
 
-        it("should have correct arrow classes for align points", () => {
-            const wrapper = renderBubble({});
-            const instance: any = wrapper.instance();
-            const cssClassesTl = instance.getArrowsClassname("bl tl").split(" ");
-            expect(cssClassesTl).toContain("arrow-top-direction");
-            expect(cssClassesTl).toContain("arrow-tl");
+        it.each([
+            ["bl tl", ".arrow-top-direction", ".arrow-tl"],
+            ["cc cc", ".arrow-none-direction", ".arrow-cc"],
+            ["tc bc", ".arrow-bottom-direction", ".arrow-bc"],
+        ])(
+            "should have correct arrow classes for align points %s",
+            (alignPoints: string, expectedDirectionClass: string, expectAligntClass: string) => {
+                renderBubble({ alignPoints: [{ align: alignPoints }] });
 
-            const cssClassesCc = instance.getArrowsClassname("cc cc").split(" ");
-            expect(cssClassesCc).toContain("arrow-none-direction");
-            expect(cssClassesCc).toContain("arrow-cc");
-
-            const cssClassesBc = instance.getArrowsClassname("tc bc").split(" ");
-            expect(cssClassesBc).toContain("arrow-bottom-direction");
-            expect(cssClassesBc).toContain("arrow-bc");
-        });
+                expect(document.querySelector(expectedDirectionClass)).toBeInTheDocument();
+                expect(document.querySelector(expectAligntClass)).toBeInTheDocument();
+            },
+        );
     });
 });
