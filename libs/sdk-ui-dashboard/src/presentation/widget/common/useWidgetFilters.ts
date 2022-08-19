@@ -8,6 +8,7 @@ import {
     ObjRef,
     FilterContextItem,
     isDashboardAttributeFilter,
+    attributeElementsIsEmpty,
 } from "@gooddata/sdk-model";
 import stringify from "json-stable-stringify";
 import compact from "lodash/compact";
@@ -20,6 +21,7 @@ import {
     ExtendedDashboardWidget,
     QueryProcessingState,
     QueryProcessingStatus,
+    QueryWidgetFilters,
     queryWidgetFilters,
     selectFilterContextFilters,
     useDashboardQueryProcessing,
@@ -62,11 +64,11 @@ export function useWidgetFilters(
         run: runFiltersQuery,
         status,
         error,
-    } = useDashboardQueryProcessing({
+    } = useDashboardQueryProcessing<QueryWidgetFilters, IFilter[], Parameters<typeof queryWidgetFilters>>({
         queryCreator: queryWidgetFilters,
-        onSuccess: (result) => {
+        onSuccess: (filters) => {
             setEffectiveFiltersState({
-                filters: result as IFilter[],
+                filters,
                 filterQueryStatus: "success",
             });
         },
@@ -196,7 +198,8 @@ function combineQueryProcessingStatuses(...statuses: QueryProcessingStatus[]): Q
  * Gets a simplified serialized digest of the filters provided. This is useful for detecting if the set of filters has changed.
  *
  * @remarks
- * This digest is only concerned with the display forms/datasets, not the selected values of the filters.
+ * This digest is only concerned with the display forms/datasets, not the selected values of the filters
+ * (it does, however, ignore noop attribute filters).
  * Also, the order of filters is ignored as it does not matter for executions.
  *
  * @param filters - filters to get digest for
@@ -204,20 +207,29 @@ function combineQueryProcessingStatuses(...statuses: QueryProcessingStatus[]): Q
  * @returns
  */
 function filtersDigest(filters: FilterContextItem[], ignoreDateFilter: boolean): string {
-    return (
-        filters
-            // if the widget ignores date filters, remove it from the digest to avoid false positives
-            // when date filter changes to or from All time (this effectively adds/removes the date filter in the filters set,
-            // but we do not care either way, so remove it altogether)
-            .filter((filter) => !ignoreDateFilter || isDashboardAttributeFilter(filter))
-            .map((filter) => {
-                return isDashboardAttributeFilter(filter)
-                    ? `df_${safeSerializeObjRef(filter.attributeFilter.displayForm)}`
-                    : `ds_${safeSerializeObjRef(filter.dateFilter.dataSet)}`;
-            })
-            .sort()
-            .join("|")
-    );
+    return filters
+        .filter((filter) => {
+            if (isDashboardAttributeFilter(filter)) {
+                // remove noop attribute filters as they would cause a useless query when a new filter (noop by default) is added
+                const isNoop =
+                    filter.attributeFilter.negativeSelection &&
+                    attributeElementsIsEmpty(filter.attributeFilter.attributeElements);
+
+                return !isNoop;
+            } else {
+                // if the widget ignores date filters, remove it from the digest to avoid false positives
+                // when date filter changes to or from All time (this effectively adds/removes the date filter in the filters set,
+                // but we do not care either way, so remove it altogether)
+                return !ignoreDateFilter;
+            }
+        })
+        .map((filter) => {
+            return isDashboardAttributeFilter(filter)
+                ? `df_${safeSerializeObjRef(filter.attributeFilter.displayForm)}`
+                : `ds_${safeSerializeObjRef(filter.dateFilter.dataSet)}`;
+        })
+        .sort()
+        .join("|");
 }
 
 /**
