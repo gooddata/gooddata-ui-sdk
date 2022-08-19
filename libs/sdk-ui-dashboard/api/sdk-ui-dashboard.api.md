@@ -4770,6 +4770,9 @@ export interface RemoveAttributeFilters extends IDashboardCommand {
 }
 
 // @alpha
+export function removeAttributeFilters(filterLocalIds: string[], correlationId?: string): RemoveAttributeFilters;
+
+// @alpha
 export interface RemoveAttributeFiltersPayload {
     readonly filterLocalIds: string[];
 }

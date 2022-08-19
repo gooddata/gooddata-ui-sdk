@@ -110,6 +110,7 @@ export {
     RemoveAttributeFilters,
     RemoveAttributeFiltersPayload,
     removeAttributeFilter,
+    removeAttributeFilters,
     ChangeAttributeFilterSelection,
     AttributeFilterSelectionType,
     resetAttributeFilterSelection,

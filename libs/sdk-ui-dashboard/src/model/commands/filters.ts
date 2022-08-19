@@ -315,6 +315,28 @@ export function removeAttributeFilter(filterLocalId: string, correlationId?: str
     };
 }
 
+/**
+ * Creates the RemoveAttributeFilters command. Dispatching this command will result in the removal
+ * of dashboard's attribute filters with the provided local identifiers.
+ *
+ * @param filterLocalIds - an array of dashboard attribute filter's local identifiers
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ * @alpha
+ */
+export function removeAttributeFilters(
+    filterLocalIds: string[],
+    correlationId?: string,
+): RemoveAttributeFilters {
+    return {
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVE",
+        correlationId,
+        payload: {
+            filterLocalIds,
+        },
+    };
+}
+
 //
 //
 //
