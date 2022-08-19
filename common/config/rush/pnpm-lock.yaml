@@ -6312,8 +6312,8 @@ packages:
     resolution: {integrity: sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==}
     dev: false
 
-  /abab/2.0.5:
-    resolution: {integrity: sha512-9IK9EadsbHo6jLWIpxpR6pL0sazTXV6+SQv25ZB+F7Bj9mJNaOc4nCRabwd5M/JwmUa8idz6Eci6eKfJryPs6Q==}
+  /abab/2.0.6:
+    resolution: {integrity: sha512-j2afSsaIENvHZN2B8GOpF566vZ5WVk5opAiMTvWgaQT8DkbOqsTfvNAvHoRGU2zzP8cPoqys+xHTRDWW8L+/BA==}
     dev: false
 
   /abbrev/1.1.1:
@@ -8092,13 +8092,12 @@ packages:
       escape-string-regexp: 4.0.0
     dev: false
 
-  /clean-webpack-plugin/3.0.0_webpack@5.72.0:
-    resolution: {integrity: sha512-MciirUH5r+cYLGCOL5JX/ZLzOZbVr1ot3Fw+KcvbhUb6PM+yycqd9ZhIlcigQ5gl+XhppNmw3bEFuaaMNyLj3A==}
-    engines: {node: '>=8.9.0'}
+  /clean-webpack-plugin/4.0.0_webpack@5.72.0:
+    resolution: {integrity: sha512-WuWE1nyTNAyW5T7oNyys2EN0cfP2fdRxhxnIQWiAp0bMabPdHhoGxM8A6YL2GhqwgrPnnaemVE7nv5XJ2Fhh2w==}
+    engines: {node: '>=10.0.0'}
     peerDependencies:
-      webpack: '*'
+      webpack: '>=4.0.0 <6.0.0'
     dependencies:
-      '@types/webpack': 4.41.32
       del: 4.1.1
       webpack: 5.72.0
     dev: false
@@ -9073,7 +9072,7 @@ packages:
     resolution: {integrity: sha512-X5eWTSXO/BJmpdIKCRuKUgSCgAN0OwliVK3yPKbwIWU1Tdw5BRajxlzMidvh+gwko9AfQ9zIj52pzF91Q3YAvQ==}
     engines: {node: '>=10'}
     dependencies:
-      abab: 2.0.5
+      abab: 2.0.6
       whatwg-mimetype: 2.3.0
       whatwg-url: 8.7.0
     dev: false
@@ -13850,7 +13849,7 @@ packages:
       canvas:
         optional: true
     dependencies:
-      abab: 2.0.5
+      abab: 2.0.6
       acorn: 8.7.0
       acorn-globals: 6.0.0
       cssom: 0.4.4
@@ -18592,25 +18591,20 @@ packages:
     resolution: {integrity: sha512-qnQ7gVMxGNxsiL4lEuJwe/To8UnK7fAnmbGEEH8RpLouuKbeEm0lhbQVFIrNSuB+G7tVrAlVsZgETT5nljf+Iw==}
     dev: false
 
-  /source-map-js/0.6.2:
-    resolution: {integrity: sha512-/3GptzWzu0+0MBQFrDKzw/DvvMTUORvgY6k6jd/VS6iCR4RDTKWH6v6WPwQoUO8667uQEf9Oe38DxAYWY5F/Ug==}
-    engines: {node: '>=0.10.0'}
-    dev: false
-
   /source-map-js/1.0.2:
     resolution: {integrity: sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==}
     engines: {node: '>=0.10.0'}
     dev: false
 
-  /source-map-loader/2.0.2_webpack@5.72.0:
-    resolution: {integrity: sha512-yIYkFOsKn+OdOirRJUPQpnZiMkF74raDVQjj5ni3SzbOiA57SabeX80R5zyMQAKpvKySA3Z4a85vFX3bvpC6KQ==}
-    engines: {node: '>= 10.13.0'}
+  /source-map-loader/4.0.0_webpack@5.72.0:
+    resolution: {integrity: sha512-i3KVgM3+QPAHNbGavK+VBq03YoJl24m9JWNbLgsjTj8aJzXG9M61bantBTNBt7CNwY2FYf+RJRYJ3pzalKjIrw==}
+    engines: {node: '>= 14.15.0'}
     peerDependencies:
-      webpack: ^5.0.0
+      webpack: ^5.72.1
     dependencies:
-      abab: 2.0.5
+      abab: 2.0.6
       iconv-lite: 0.6.3
-      source-map-js: 0.6.2
+      source-map-js: 1.0.2
       webpack: 5.72.0_webpack-cli@4.9.2
     dev: false
 
@@ -22094,7 +22088,7 @@ packages:
     dev: false
 
   file:projects/dashboard-plugin-template.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-GTBia4/jsoOWqAnNxK8I9dbIiWMW+j3Av6MqdeleNNp+TtTXTXkqBwksrVrgkAO3Nf25Oa3hXiL0op2AJhuHrg==, tarball: file:projects/dashboard-plugin-template.tgz}
+    resolution: {integrity: sha512-ZdVNLPNjYFGOi47+WfQ5kNwwKYxs5ox3tVTKukF2oIeTQPYsz03LgBNuNw9NGDkRi1B2ReRXgOhFgynL/5Lfog==, tarball: file:projects/dashboard-plugin-template.tgz}
     id: file:projects/dashboard-plugin-template.tgz
     name: '@rush-temp/dashboard-plugin-template'
     version: 0.0.0
@@ -22144,7 +22138,7 @@ packages:
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       react-intl: 5.24.8_react@17.0.2+typescript@4.0.2
-      source-map-loader: 2.0.2_webpack@5.72.0
+      source-map-loader: 4.0.0_webpack@5.72.0
       style-loader: 3.3.1_webpack@5.72.0
       ts-jest: 27.1.4_04d0a0d69bd2aca5362e207508aff12f
       ts-loader: 8.3.0_typescript@4.0.2+webpack@5.72.0
@@ -22173,7 +22167,7 @@ packages:
     dev: false
 
   file:projects/dashboard-plugin-tests.tgz:
-    resolution: {integrity: sha512-JiKoaQvOv7rg8xPZBdCQFrlIbNKiFCL5CIK5WLCL1NgMEECZTm6pLcv7nKeJpH7mGVMw8U/sciDuKK79qXzsxA==, tarball: file:projects/dashboard-plugin-tests.tgz}
+    resolution: {integrity: sha512-TDbsWaKMSoD3vEeQfxCff1c//qzDvX62A/HIyC6SGWa/TpEDQHOvJ6qmpJwVmPuTePHVL4+w2tgaNM4DPlu+mQ==, tarball: file:projects/dashboard-plugin-tests.tgz}
     name: '@rush-temp/dashboard-plugin-tests'
     version: 0.0.0
     dependencies:
@@ -22206,7 +22200,7 @@ packages:
       axios: 0.21.4
       babel-loader: 8.2.4_acba72ea4bf9d339cdfcd8f55cdb7006
       circular-dependency-plugin: 5.2.2_webpack@5.72.0
-      clean-webpack-plugin: 3.0.0_webpack@5.72.0
+      clean-webpack-plugin: 4.0.0_webpack@5.72.0
       compression-webpack-plugin: 7.1.2_webpack@5.72.0
       concurrently: 6.5.1
       css-loader: 6.7.1_webpack@5.72.0
@@ -22236,7 +22230,7 @@ packages:
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       react-intl: 5.24.8_react@17.0.2+typescript@4.0.2
-      source-map-loader: 2.0.2_webpack@5.72.0
+      source-map-loader: 4.0.0_webpack@5.72.0
       speed-measure-webpack-plugin: 1.5.0_webpack@5.72.0
       style-loader: 3.3.1_webpack@5.72.0
       ts-jest: 27.1.4_04d0a0d69bd2aca5362e207508aff12f
@@ -22459,7 +22453,7 @@ packages:
     dev: false
 
   file:projects/playground.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-xi+r8r5Eki3dXfSJ2RiGqYHDu8lS1aY+K7QCuCi0OIcdbAwZwdUGcaE4rG9VPum19Pe165cSh8us8rEKEPMPwg==, tarball: file:projects/playground.tgz}
+    resolution: {integrity: sha512-cD/oHJ5uK7tCe6HE8Xt9TP6xhlmCpVTSazMtsNOgytpJQ8ARdMVStii/cKuq3y+aGtkyKabc22Ae077aqHQF7w==, tarball: file:projects/playground.tgz}
     id: file:projects/playground.tgz
     name: '@rush-temp/playground'
     version: 0.0.0
@@ -22487,9 +22481,7 @@ packages:
       babel-plugin-lodash: 3.3.4
       babel-polyfill: 6.26.0
       babel-runtime: 6.26.0
-      circular-dependency-plugin: 5.2.2_webpack@5.72.0
-      clean-webpack-plugin: 3.0.0_webpack@5.72.0
-      compression-webpack-plugin: 7.1.2_webpack@5.72.0
+      clean-webpack-plugin: 4.0.0_webpack@5.72.0
       css-loader: 6.7.1_webpack@5.72.0
       dotenv-webpack: 7.1.0_webpack@5.72.0
       eslint: 8.12.0
@@ -22515,7 +22507,7 @@ packages:
       react-dom: 17.0.2_react@17.0.2
       sass: 1.53.0
       sass-loader: 10.2.1_sass@1.53.0+webpack@5.72.0
-      source-map-loader: 2.0.2_webpack@5.72.0
+      source-map-loader: 4.0.0_webpack@5.72.0
       speed-measure-webpack-plugin: 1.5.0_webpack@5.72.0
       style-loader: 3.3.1_webpack@5.72.0
       ts-invariant: 0.7.5
@@ -22989,7 +22981,7 @@ packages:
     dev: false
 
   file:projects/sdk-examples.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-AfY352lpkIhLcoBznccGp66XkRDdS/o+9EUhlClyQUTmOjBWtve4KLgwV9ipuJCY3O+naZZ9D9EVq0VYXqXmfw==, tarball: file:projects/sdk-examples.tgz}
+    resolution: {integrity: sha512-IWRwZHe4/WhwodqLcB44nl+pNLdNCY7zBlnZFm6+Eo+aeY02kP/r5223F5pFIysE9V6ekpVkyDuJQ3iSsHudDQ==, tarball: file:projects/sdk-examples.tgz}
     id: file:projects/sdk-examples.tgz
     name: '@rush-temp/sdk-examples'
     version: 0.0.0
@@ -23028,7 +23020,7 @@ packages:
       babel-runtime: 6.26.0
       circular-dependency-plugin: 5.2.2_webpack@5.72.0
       classnames: 2.3.1
-      clean-webpack-plugin: 3.0.0_webpack@5.72.0
+      clean-webpack-plugin: 4.0.0_webpack@5.72.0
       commander: 8.3.0
       compression-webpack-plugin: 7.1.2_webpack@5.72.0
       css-loader: 6.7.1_webpack@5.72.0
@@ -23070,7 +23062,7 @@ packages:
       recharts: 2.1.13_react-dom@17.0.2+react@17.0.2
       sass: 1.53.0
       sass-loader: 10.2.1_sass@1.53.0+webpack@5.72.0
-      source-map-loader: 2.0.2_webpack@5.72.0
+      source-map-loader: 4.0.0_webpack@5.72.0
       speed-measure-webpack-plugin: 1.5.0_webpack@5.72.0
       style-loader: 3.3.1_webpack@5.72.0
       styled-jsx: 4.0.1_@babel+core@7.17.9+react@17.0.2
@@ -23958,7 +23950,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-tests-e2e.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-dqdwohF1YwtXyZXJ9ieBeliWkXIagR4PA1zMgnapXQ5IlgzvMJWB6omX/SH1/HQlp87j3X6XFvmvqA/uXlvXag==, tarball: file:projects/sdk-ui-tests-e2e.tgz}
+    resolution: {integrity: sha512-yBnQ3IjHXvbvcjagAmRHJqX3yH5Lfr+hApa3q4FZU/a+OGAfGH9rx7T77S4a/KfUw1sP4/ugbkJJJPLCrGEv1g==, tarball: file:projects/sdk-ui-tests-e2e.tgz}
     id: file:projects/sdk-ui-tests-e2e.tgz
     name: '@rush-temp/sdk-ui-tests-e2e'
     version: 0.0.0
@@ -23992,7 +23984,7 @@ packages:
       babel-polyfill: 6.26.0
       babel-runtime: 6.26.0
       circular-dependency-plugin: 5.2.2_webpack@5.72.0
-      clean-webpack-plugin: 3.0.0_webpack@5.72.0
+      clean-webpack-plugin: 4.0.0_webpack@5.72.0
       compression-webpack-plugin: 7.1.2_webpack@5.72.0
       css-loader: 6.7.1_webpack@5.72.0
       cypress: 7.7.0
@@ -24028,7 +24020,7 @@ packages:
       react-router-dom: 5.3.0_react@17.0.2
       sass: 1.53.0
       sass-loader: 10.2.1_sass@1.53.0+webpack@5.72.0
-      source-map-loader: 2.0.2_webpack@5.72.0
+      source-map-loader: 4.0.0_webpack@5.72.0
       speed-measure-webpack-plugin: 1.5.0_webpack@5.72.0
       style-loader: 3.3.1_webpack@5.72.0
       styled-jsx: 4.0.1_@babel+core@7.17.9+react@17.0.2
@@ -24295,7 +24287,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-web-components.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-0zjiDW7kE3D06AYhs0RtnYiOqonUEV0mxGlx0MGkp0h/agkag/D7lbprViDd3003mH6l2Kkg5iEfjjfkB6SHFg==, tarball: file:projects/sdk-ui-web-components.tgz}
+    resolution: {integrity: sha512-M6rF0vZJbGV6Az0zVFUpS+Zlnq3RlkTjBeAUowQu/tGsru9sCje2/avaLJW1yl7xVts6Of38skjIzgduHdOImw==, tarball: file:projects/sdk-ui-web-components.tgz}
     id: file:projects/sdk-ui-web-components.tgz
     name: '@rush-temp/sdk-ui-web-components'
     version: 0.0.0
@@ -24340,7 +24332,7 @@ packages:
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       react-intl: 5.24.8_react@17.0.2+typescript@4.0.2
-      source-map-loader: 2.0.2_webpack@5.72.0
+      source-map-loader: 4.0.0_webpack@5.72.0
       style-loader: 3.3.1_webpack@5.72.0
       ts-invariant: 0.7.5
       ts-jest: 27.1.4_dddc46dbe41fd8ba74d3d274e144bf21
