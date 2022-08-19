@@ -1,6 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { dummyBackend, dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
 import { createDummyPromise } from "../../base/react/tests/toolkit";
 import { DataViewFacade } from "../../base/results/facade";
@@ -11,7 +12,6 @@ import { newAttributeSort, newPositiveAttributeFilter, newTotal } from "@gooddat
 import { createExecution, CreateExecutionOptions } from "../createExecution";
 import { LoadingComponent } from "../../base/react/LoadingComponent";
 import { IExecuteErrorComponent } from "../interfaces";
-import { setupComponent } from "../../base/tests/testHelper";
 
 const DummyBackendEmptyData = dummyBackendEmptyData();
 const makeChild = () => jest.fn((_) => <div />);
@@ -20,7 +20,7 @@ const renderDummyExecutor = (
     props: Omit<IExecuteProps, "backend" | "workspace" | "children" | "seriesBy"> = {},
     backend: IAnalyticalBackend = DummyBackendEmptyData,
 ) => {
-    return setupComponent(
+    return render(
         <Execute backend={backend} workspace={"testWorkspace"} seriesBy={[ReferenceMd.Amount]} {...props}>
             {child}
         </Execute>,
@@ -80,8 +80,8 @@ describe("Execute", () => {
 
     it("should start loading after invoking injected reload function", async () => {
         const child = jest.fn(({ reload }) => <button onClick={reload}>Reload</button>);
-        const { getByText, user } = renderDummyExecutor(child, { loadOnMount: false });
-        await user.click(getByText("Reload"));
+        renderDummyExecutor(child, { loadOnMount: false });
+        await userEvent.click(screen.getByText("Reload"));
 
         expect(child).toHaveBeenCalledWith({
             isLoading: false,
@@ -170,17 +170,17 @@ describe("Execute", () => {
 
     it("should render LoadingComponent", async () => {
         const child = makeChild();
-        const { queryByText } = renderDummyExecutor(child, {
+        renderDummyExecutor(child, {
             LoadingComponent: () => <div>MOCKED LOADING</div>,
         });
 
-        expect(queryByText("MOCKED LOADING")).toBeInTheDocument();
+        expect(screen.queryByText("MOCKED LOADING")).toBeInTheDocument();
     });
 
     it("should render ErrorComponent, when execution fails", async () => {
         const ErrorComponent: IExecuteErrorComponent = () => <div>MOCKED ERROR</div>;
         const child = makeChild();
-        const { queryByText } = renderDummyExecutor(
+        renderDummyExecutor(
             child,
             {
                 ErrorComponent,
@@ -190,7 +190,7 @@ describe("Execute", () => {
 
         await createDummyPromise({ delay: 100 });
 
-        expect(queryByText("MOCKED ERROR")).toBeInTheDocument();
+        expect(screen.queryByText("MOCKED ERROR")).toBeInTheDocument();
     });
 
     it("should not call children function without result, when both Loading & ErrorComponent are provided", async () => {
@@ -217,7 +217,7 @@ describe("Execute", () => {
     });
 
     it("should throw if neither seriesBy not slicesBy have any elements", async () => {
-        const { queryByText } = render(
+        render(
             <Execute backend={DummyBackendEmptyData} workspace={"testWorkspace"}>
                 {({ error }) => {
                     if (error) {
@@ -230,7 +230,7 @@ describe("Execute", () => {
 
         await createDummyPromise({ delay: 100 });
 
-        expect(queryByText("ERROR")).toBeInTheDocument();
+        expect(screen.queryByText("ERROR")).toBeInTheDocument();
     });
 });
 

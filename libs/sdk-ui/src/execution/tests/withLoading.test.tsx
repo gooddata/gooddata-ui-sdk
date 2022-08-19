@@ -1,12 +1,13 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
+import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import { emptyDef } from "@gooddata/sdk-model";
 import { withExecutionLoading, IWithExecutionLoading, WithLoadingResult } from "../withExecutionLoading";
 
 import { IDummyPromise, createDummyPromise } from "../../base/react/tests/toolkit";
 import { DataViewFacade } from "../../base";
-import { setupComponent } from "../../base/tests/testHelper";
 
 const EmptyDataViewFacade = DataViewFacade.for(dummyDataView(emptyDef("testWorkspace")));
 
@@ -39,7 +40,7 @@ const renderEnhancedComponent = <T, E>(
         exportTitle: "TestComponent",
     })(CoreComponent as any);
 
-    return setupComponent(<Component />);
+    return render(<Component />);
 };
 
 describe("withLoading", () => {
@@ -47,38 +48,37 @@ describe("withLoading", () => {
     const ERROR = new Error("ERROR_MESSAGE");
 
     it("should start loading immediately and inject isLoading prop", () => {
-        const { getByText } = renderEnhancedComponent({ result: RESULT, delay: 100 });
-        expect(getByText("Loading")).toBeInTheDocument();
+        renderEnhancedComponent({ result: RESULT, delay: 100 });
+        expect(screen.getByText("Loading")).toBeInTheDocument();
     });
 
     it("should not start loading immediately if loadOnMount is set to false", () => {
-        const { queryByText } = renderEnhancedComponent(
-            { result: RESULT, delay: 100 },
-            { loadOnMount: false },
-        );
-        expect(queryByText("Loading")).not.toBeInTheDocument();
+        renderEnhancedComponent({ result: RESULT, delay: 100 }, { loadOnMount: false });
+        expect(screen.queryByText("Loading")).not.toBeInTheDocument();
     });
 
     it("should stop loading when promise is resolved and inject result prop", async () => {
-        const { queryByText } = renderEnhancedComponent({ result: RESULT, delay: 100 });
+        renderEnhancedComponent({ result: RESULT, delay: 100 });
         await createDummyPromise({ delay: 150 });
-        expect(queryByText("Loading")).not.toBeInTheDocument();
-        expect(queryByText("Result")).toBeInTheDocument();
+        expect(screen.queryByText("Loading")).not.toBeInTheDocument();
+        expect(screen.queryByText("Result")).toBeInTheDocument();
     });
 
     it("should stop loading when promise is rejected and inject error prop", async () => {
-        const { queryByText } = renderEnhancedComponent({ willResolve: false, error: ERROR, delay: 100 });
+        renderEnhancedComponent({ willResolve: false, error: ERROR, delay: 100 });
         await createDummyPromise({ delay: 150 });
-        expect(queryByText("Loading")).not.toBeInTheDocument();
-        expect(queryByText("ERROR_MESSAGE")).toBeInTheDocument();
-        expect(queryByText("Error")).toBeInTheDocument();
+        expect(screen.queryByText("Loading")).not.toBeInTheDocument();
+        expect(screen.queryByText("ERROR_MESSAGE")).toBeInTheDocument();
+        expect(screen.queryByText("Error")).toBeInTheDocument();
     });
 
     it("should start loading again after invoking injected fetch function", async () => {
-        const { getByText, user } = renderEnhancedComponent({ delay: 100 });
+        renderEnhancedComponent({ delay: 100 });
         await createDummyPromise({ delay: 150 });
-        await user.click(getByText("Refetch"));
-        expect(getByText("Loading")).toBeInTheDocument();
+        await userEvent.click(screen.getByText("Refetch"));
+        await waitFor(() => {
+            expect(screen.getByText("Loading")).toBeInTheDocument();
+        });
     });
 
     it("should invoke onLoadingStart, onLoadingChanged and onLoadingFinish events", async () => {

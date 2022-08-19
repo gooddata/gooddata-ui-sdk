@@ -1,5 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { dummyBackend, dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
 import { IAttribute, IFilter, IMeasure } from "@gooddata/sdk-model";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -9,7 +11,6 @@ import { DataViewWindow, WithLoadingResult } from "../withExecutionLoading";
 import { IWithExecution, withExecution } from "../withExecution";
 
 import { createDummyPromise } from "../../base/react/tests/toolkit";
-import { setupComponent } from "../../base/tests/testHelper";
 interface IDummyComponentProps {
     attributes?: IAttribute[];
     measures?: IMeasure[];
@@ -50,31 +51,32 @@ const renderEnhancedComponent = (
         exportTitle: "TestComponent",
     })(CoreComponent);
 
-    return setupComponent(<Component attributes={[]} measures={[]} filters={[]} />);
+    return render(<Component attributes={[]} measures={[]} filters={[]} />);
 };
 
 describe("withExecution", () => {
     it("should start loading immediately and inject isLoading prop", () => {
-        const { queryByText } = renderEnhancedComponent();
-        expect(queryByText("Loading")).toBeInTheDocument();
+        renderEnhancedComponent();
+        expect(screen.queryByText("Loading")).toBeInTheDocument();
     });
 
     it("should not start loading immediately if loadOnMount is set to false", () => {
-        const { queryByText } = renderEnhancedComponent({ loadOnMount: false });
-        expect(queryByText("Loading")).not.toBeInTheDocument();
+        renderEnhancedComponent({ loadOnMount: false });
+        expect(screen.queryByText("Loading")).not.toBeInTheDocument();
     });
 
     it("should stop loading when execution is resolved and inject data view facade", async () => {
-        const { queryByText } = renderEnhancedComponent();
+        renderEnhancedComponent();
         await createDummyPromise({ delay: 100 });
-        expect(queryByText("Loading")).not.toBeInTheDocument();
-        expect(queryByText("Result")).toBeInTheDocument();
+        expect(screen.queryByText("Loading")).not.toBeInTheDocument();
+        expect(screen.queryByText("Result")).toBeInTheDocument();
     });
 
     it("should start loading again after invoking injected fetch function", async () => {
-        const { getByText, queryByText, user } = renderEnhancedComponent();
-        user.click(getByText("Refetch"));
-        expect(queryByText("Loading")).toBeInTheDocument();
+        renderEnhancedComponent();
+
+        userEvent.click(screen.getByText("Refetch"));
+        expect(screen.queryByText("Loading")).toBeInTheDocument();
     });
 
     it("should invoke onLoadingStart, onLoadingChanged and onLoadingFinish events", async () => {

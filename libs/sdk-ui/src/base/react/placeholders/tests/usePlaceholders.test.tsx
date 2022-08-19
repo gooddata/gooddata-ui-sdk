@@ -1,20 +1,19 @@
 // (C) 2019-2022 GoodData Corporation
 import React, { useCallback } from "react";
+import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { IMeasure, IMeasureDefinition, newMeasure } from "@gooddata/sdk-model";
-import { waitFor } from "@testing-library/react";
 
 import { PlaceholdersProvider, IPlaceholdersProviderProps } from "../context";
 import { newPlaceholder } from "../factory";
 import { IPlaceholder } from "../base";
 import { usePlaceholders } from "../hooks";
 
-import { setupComponent } from "../../../tests/testHelper";
-
 const createComponent = (
     componentProps: IComponentWithUsePlaceholderHookProps,
     providerProps?: IPlaceholdersProviderProps,
 ) =>
-    setupComponent(
+    render(
         <PlaceholdersProvider {...providerProps}>
             <ComponentWithUsePlaceholderHook {...componentProps} />
         </PlaceholdersProvider>,
@@ -69,10 +68,10 @@ describe("usePlaceholders", () => {
         const measure = newMeasure("test-measure");
         const singleValuePlaceholder = newPlaceholder(measure);
         const multiValuePlaceholder = newPlaceholder([]);
-        const { queryByText } = createComponent({
+        createComponent({
             placeholders: [singleValuePlaceholder, multiValuePlaceholder],
         });
-        expect(queryByText(measure.measure.localIdentifier)).toBeInTheDocument();
+        expect(screen.queryByText(measure.measure.localIdentifier)).toBeInTheDocument();
     });
 
     it("should update placeholder values", async () => {
@@ -81,15 +80,15 @@ describe("usePlaceholders", () => {
         const singleValuePlaceholder = newPlaceholder();
         const multiValuePlaceholder = newPlaceholder();
 
-        const { getByText, queryByText, user } = createComponent({
+        createComponent({
             placeholders: [singleValuePlaceholder, multiValuePlaceholder],
             onSetPlaceholders: () => [measure, measure2],
         });
 
-        await user.click(getByText("Placeholder"));
+        await userEvent.click(screen.getByText("Placeholder"));
         await waitFor(() => {
-            expect(queryByText(measure.measure.localIdentifier)).toBeInTheDocument();
-            expect(queryByText(measure2.measure.localIdentifier)).toBeInTheDocument();
+            expect(screen.queryByText(measure.measure.localIdentifier)).toBeInTheDocument();
+            expect(screen.queryByText(measure2.measure.localIdentifier)).toBeInTheDocument();
         });
     });
 });

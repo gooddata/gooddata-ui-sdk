@@ -7,7 +7,7 @@ import {
     IMeasure,
     IMeasureDefinition,
 } from "@gooddata/sdk-model";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { PlaceholdersProvider, IPlaceholdersProviderProps } from "../context";
 import { newComposedPlaceholder, newPlaceholder } from "../factory";
 import { IComposedPlaceholder } from "../base";
@@ -62,8 +62,8 @@ describe("useComposedPlaceholder", () => {
         );
         const expectedMeasure = modifySimpleMeasure(testMeasure, (m) => m.filters(testFilter));
 
-        const { queryByText } = createComponent({ placeholder: composedPlaceholder });
-        expect(queryByText(expectedMeasure.measure.localIdentifier)).toBeInTheDocument();
+        createComponent({ placeholder: composedPlaceholder });
+        expect(screen.queryByText(expectedMeasure.measure.localIdentifier)).toBeInTheDocument();
     });
 
     it("should resolve composed placeholder value with custom resolution context", () => {
@@ -74,11 +74,11 @@ describe("useComposedPlaceholder", () => {
         });
         const expectedMeasure = modifySimpleMeasure(testMeasure, (m) => m.format(testFormat));
 
-        const { queryByText } = createComponent({
+        createComponent({
             placeholder: composedPlaceholder,
             resolutionContext: { customFormat: testFormat },
         });
-        expect(queryByText(expectedMeasure.measure.localIdentifier)).toBeInTheDocument();
+        expect(screen.queryByText(expectedMeasure.measure.localIdentifier)).toBeInTheDocument();
     });
 
     it("should resolve composed placeholder value with custom resolution context and multiple composed placeholders", () => {
@@ -95,12 +95,12 @@ describe("useComposedPlaceholder", () => {
 
         const expectedMeasure1 = modifySimpleMeasure(testMeasure1, (m) => m.format(testFormat));
         const expectedMeasure2 = modifySimpleMeasure(testMeasure2, (m) => m.format(testFormat));
-        const { queryByText } = createComponent({
+        createComponent({
             placeholder: composedPlaceholder3,
             resolutionContext: { customFormat: testFormat },
         });
 
-        expect(queryByText(expectedMeasure1.measure.localIdentifier)).toBeInTheDocument();
-        expect(queryByText(expectedMeasure2.measure.localIdentifier)).toBeInTheDocument();
+        expect(screen.queryByText(expectedMeasure1.measure.localIdentifier)).toBeInTheDocument();
+        expect(screen.queryByText(expectedMeasure2.measure.localIdentifier)).toBeInTheDocument();
     });
 });
