@@ -62,7 +62,10 @@
     "gs.list.only": "限定",
     "gs.list.selectAll": "すべて選択",
     "gs.list.limitExceeded": "申し訳ございません、制限({limit})を超過しました。",
+    "gs.list.limitReached": "選択した値の上限{limit}に達しました",
+    "gs.list.cannotSelectMoreValues": "{limit} より多くの値を選択できません。",
     "gs.list.noItemsFound": "アイテムが見つかりません。",
+    "gs.list.noResultsMatch": "一致する結果がありません",
     "gs.list.error": "リストの読み込みエラー",
     "gs.header.upsellButtonText": "アップグレード",
     "gs.header.countdown.numberOfDaysLeft": "残り {number} 日",
@@ -314,5 +317,15 @@
     "embedInsightDialog.complete.list.props.message": "埋め込みプロパティーの完全なリストです",
     "error.overlay.login": "ログイン",
     "error.overlay.title": "ログアウトしています",
-    "error.overlay.text": "作業を続行するには、再度ログインしてください。"
+    "error.overlay.text": "作業を続行するには、再度ログインしてください。",
+    "stylingPicker.title.basic": "基本",
+    "stylingPicker.title.custom": "カスタム",
+    "stylingPicker.title.create": "作成",
+    "stylingEditor.dialog.name": "名前",
+    "stylingEditor.dialog.definition": "定義",
+    "stylingEditor.dialog.examples": "例",
+    "stylingEditor.dialog.example.paste": "ペースト",
+    "stylingPicker.item.edit": "編集",
+    "stylingPicker.item.delete": "削除",
+    "stylingPicker.item.delete.tooltip": "デフォルトのアイテムは削除できません。"
 }

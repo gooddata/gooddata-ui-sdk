@@ -62,7 +62,10 @@
     "gs.list.only": "仅",
     "gs.list.selectAll": "全选",
     "gs.list.limitExceeded": "抱歉，您已超出限制 ({limit})。",
+    "gs.list.limitReached": "您已达到 {limit} 个选择值限制",
+    "gs.list.cannotSelectMoreValues": "您不能选择超过 {limit} 个值。",
     "gs.list.noItemsFound": "未找到任何项。",
+    "gs.list.noResultsMatch": "没有匹配结果",
     "gs.list.error": "加载列表项时出错",
     "gs.header.upsellButtonText": "升级",
     "gs.header.countdown.numberOfDaysLeft": "剩余 {number} 天",
@@ -314,5 +317,15 @@
     "embedInsightDialog.complete.list.props.message": "嵌入属性的完整列表",
     "error.overlay.login": "登录",
     "error.overlay.title": "您已经退出",
-    "error.overlay.text": "请重新登录以继续您的工作。"
+    "error.overlay.text": "请重新登录以继续您的工作。",
+    "stylingPicker.title.basic": "基本",
+    "stylingPicker.title.custom": "自定义",
+    "stylingPicker.title.create": "创建",
+    "stylingEditor.dialog.name": "名称",
+    "stylingEditor.dialog.definition": "定义",
+    "stylingEditor.dialog.examples": "示例",
+    "stylingEditor.dialog.example.paste": "粘贴",
+    "stylingPicker.item.edit": "编辑",
+    "stylingPicker.item.delete": "删除",
+    "stylingPicker.item.delete.tooltip": "无法删除默认项。"
 }
