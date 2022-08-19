@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { shallow, mount } from "enzyme";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
@@ -56,7 +56,7 @@ describe("HeaderCell renderer", () => {
             const cellLabel = component.find(".s-header-cell-label");
 
             cellLabel.simulate("click");
-            expect(onSortClick).toHaveBeenCalledWith("asc");
+            expect(onSortClick).toHaveBeenCalledWith("asc", false);
         });
 
         it("should call onSortChanged with next sort direction", () => {
@@ -73,7 +73,7 @@ describe("HeaderCell renderer", () => {
             const cellLabel = component.find(".s-header-cell-label");
 
             cellLabel.simulate("click");
-            expect(onSortClick).toHaveBeenCalledWith("desc");
+            expect(onSortClick).toHaveBeenCalledWith("desc", false);
         });
     });
 });

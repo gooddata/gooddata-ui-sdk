@@ -42,9 +42,8 @@ class ColumnHeader extends React.Component<IColumnHeaderProps, IColumnHeaderStat
         return isSliceCol(this.getColDescriptor()) ? "asc" : "desc";
     }
 
-    public onSortRequested = (sortDir: SortDirection): void => {
-        const multiSort = false; // Enable support for multisort with CMD key with 'event.shiftKey';
-        this.props.setSort(sortDir, multiSort);
+    public onSortRequested = (sortDir: SortDirection, isMulti: boolean): void => {
+        this.props.setSort(sortDir, isMulti);
     };
 
     public render() {

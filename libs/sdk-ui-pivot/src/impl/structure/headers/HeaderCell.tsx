@@ -1,5 +1,5 @@
 // (C) 2007-2022 GoodData Corporation
-import React from "react";
+import React, { MouseEvent } from "react";
 import { IntlShape } from "react-intl";
 import cx from "classnames";
 import { IExecutionDefinition, ITotal, SortDirection } from "@gooddata/sdk-model";
@@ -33,7 +33,7 @@ export interface IHeaderCellProps extends ICommonHeaderParams {
     menuPosition?: AlignPositions;
     textAlign?: AlignPositions;
     sortDirection?: SortDirection | null;
-    onSortClick?: (direction: SortDirection) => void;
+    onSortClick?: (direction: SortDirection, isMulti: boolean) => void;
     menu?: IMenu | null;
     colId?: string;
 }
@@ -213,18 +213,22 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
         this.resetSortDirection();
     };
 
-    private onTextClick = () => {
+    private onTextClick = (e: MouseEvent) => {
         const { sortDirection, onSortClick, enableSorting, defaultSortDirection } = this.props;
 
         if (!enableSorting) {
             return;
         }
+
+        // this is the default for ag-grid, but we can change it to metaKey (Ctrl on Windows, Cmd on Mac)
+        const isMulti = !!e.shiftKey;
+
         if (sortDirection === null) {
             const nextSortDirection = defaultSortDirection!;
             this.setState({
                 currentSortDirection: nextSortDirection!,
             });
-            onSortClick!(nextSortDirection);
+            onSortClick!(nextSortDirection, isMulti);
             return;
         }
 
@@ -232,7 +236,7 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
         this.setState({
             currentSortDirection: nextSort,
         });
-        onSortClick!(nextSort);
+        onSortClick!(nextSort, isMulti);
     };
 
     private showMenuButton = () => {
