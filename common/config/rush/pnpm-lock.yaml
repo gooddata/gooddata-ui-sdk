@@ -22454,7 +22454,7 @@ packages:
     dev: false
 
   file:projects/playground.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-uVe3Ez/vQAjCZe7AAHtEVT6Jx/nOAkHESEjOHN3kEJouU3vuY20A7tO9ivBEyk1eFq8A6nkSbUrmAQOXKqrHoA==, tarball: file:projects/playground.tgz}
+    resolution: {integrity: sha512-cO1FVd3+RTahL++/FnXkOHAV0PBovMyVqudDO0w1WrGRp8kuHJDSoV4MH/EFZGiCZYzz7sr0oEGVhlvfH/Y1kg==, tarball: file:projects/playground.tgz}
     id: file:projects/playground.tgz
     name: '@rush-temp/playground'
     version: 0.0.0
@@ -22482,9 +22482,7 @@ packages:
       babel-plugin-lodash: 3.3.4
       babel-polyfill: 6.26.0
       babel-runtime: 6.26.0
-      circular-dependency-plugin: 5.2.2_webpack@5.72.0
       clean-webpack-plugin: 3.0.0_webpack@5.72.0
-      compression-webpack-plugin: 7.1.2_webpack@5.72.0
       css-loader: 6.7.1_webpack@5.72.0
       dotenv-webpack: 7.1.0_webpack@5.72.0
       eslint: 8.12.0

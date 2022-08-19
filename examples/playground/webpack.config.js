@@ -3,8 +3,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const CircularDependencyPlugin = require("circular-dependency-plugin");
-const CompressionPlugin = require("compression-webpack-plugin");
 const webpack = require("webpack");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
@@ -85,10 +83,6 @@ module.exports = async (env, argv) => {
         new HtmlWebpackPlugin({
             title: "GoodData.UI Developer Playground",
         }),
-        new CircularDependencyPlugin({
-            exclude: /node_modules|dist/,
-            failOnError: true,
-        }),
         new webpack.DefinePlugin({
             BACKEND_URL: JSON.stringify(backendUrl),
             BACKEND_TYPE: JSON.stringify(backendType),
@@ -104,10 +98,6 @@ module.exports = async (env, argv) => {
             },
         }),
     ];
-
-    if (isProduction) {
-        plugins.push(new CompressionPlugin());
-    }
 
     // flip the `disable` flag to false if you want to diagnose webpack perf
     const smp = new SpeedMeasurePlugin({ disable: true });
