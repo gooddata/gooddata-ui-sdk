@@ -1,35 +1,31 @@
 // (C) 2022 GoodData Corporation
-
-import { mount } from "enzyme";
 import React from "react";
-
+import { render, screen } from "@testing-library/react";
 import { DialogList } from "../DialogList";
-import { DialogListLoading } from "../DialogListLoading";
-import { DialogListEmpty } from "../DialogListEmpty";
-import { DialogListItemBasic } from "../DialogListItemBasic";
 import { IDialogListProps } from "../typings";
 
 describe("DialogList", () => {
-    const render = (props: IDialogListProps) => {
-        return mount(<DialogList {...props} />);
+    const createComponent = (props: IDialogListProps) => {
+        return render(<DialogList {...props} />);
     };
 
-    it("should render DialogListLoading component", () => {
-        expect(render({ items: [], isLoading: true }).find(DialogListLoading)).toExist();
+    it("should createComponent DialogListLoading component", () => {
+        createComponent({ items: [], isLoading: true });
+        expect(screen.getByLabelText("loading")).toBeInTheDocument();
     });
 
-    it("should render DialogListEmpty component", () => {
-        expect(render({ items: [] }).find(DialogListEmpty)).toExist();
+    it("should createComponent DialogListEmpty component", () => {
+        createComponent({ items: [] });
+        expect(screen.getByLabelText("dialog-list-empty")).toBeInTheDocument();
     });
 
-    it("should render DialogListItemBasic components", () => {
-        expect(
-            render({
-                items: [
-                    { id: "0", title: "0" },
-                    { id: "1", title: "1" },
-                ],
-            }).find(DialogListItemBasic),
-        ).toHaveLength(2);
+    it("should createComponent DialogListItemBasic components", () => {
+        createComponent({
+            items: [
+                { id: "0", title: "0" },
+                { id: "1", title: "1" },
+            ],
+        });
+        expect(screen.getAllByRole("dialog-list-item")).toHaveLength(2);
     });
 });

@@ -7,5 +7,12 @@ export const DialogListEmpty: React.VFC<{ message: JSX.Element; className?: stri
     message,
     className,
 }) => {
-    return <div className={cx("gd-dialog-list-empty s-dialog-list-empty", className)}>{message}</div>;
+    return (
+        <div
+            aria-label="dialog-list-empty"
+            className={cx("gd-dialog-list-empty s-dialog-list-empty", className)}
+        >
+            {message}
+        </div>
+    );
 };

@@ -214,7 +214,7 @@ export class EditableLabelInner extends Component<IEditableLabelInnerProps, IEdi
         };
 
         return (
-            <div className={`${alignId} gd-editable-label-textarea-wrapper`}>
+            <div role="textarea-wrapper" className={`${alignId} gd-editable-label-textarea-wrapper`}>
                 <Overlay
                     alignTo={`.${alignId}`}
                     alignPoints={[
@@ -270,7 +270,12 @@ export class EditableLabelInner extends Component<IEditableLabelInnerProps, IEdi
         const displayValue = this.props.children || this.state.value || this.props.placeholder;
 
         return (
-            <div ref={this.props.innerRef} className={editableLabelClasses} onClick={this.edit}>
+            <div
+                role="editable-label"
+                ref={this.props.innerRef}
+                className={editableLabelClasses}
+                onClick={this.edit}
+            >
                 <div className="gd-editable-label-inner" ref={this.root}>
                     {this.state.isEditing ? this.renderEditableLabelEdit() : displayValue}
                 </div>
