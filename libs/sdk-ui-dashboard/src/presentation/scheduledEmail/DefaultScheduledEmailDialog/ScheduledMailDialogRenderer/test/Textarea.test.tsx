@@ -1,12 +1,11 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { waitFor, screen, fireEvent } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import noop from "lodash/noop";
 
 import { Textarea, ITextareaProps } from "../Textarea";
 
 import { IntlWrapper } from "../../../../localization/IntlWrapper";
-import { setupComponent } from "../../../../../tests/testHelper";
 
 describe("Textarea", () => {
     function renderComponent(customProps: Partial<ITextareaProps> = {}) {
@@ -22,7 +21,7 @@ describe("Textarea", () => {
             ...customProps,
         };
 
-        return setupComponent(
+        return render(
             <IntlWrapper>
                 <Textarea {...defaultProps} />
             </IntlWrapper>,

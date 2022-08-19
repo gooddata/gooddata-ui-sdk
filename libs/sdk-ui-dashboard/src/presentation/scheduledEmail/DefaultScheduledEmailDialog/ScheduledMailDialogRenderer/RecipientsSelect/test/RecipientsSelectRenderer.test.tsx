@@ -1,14 +1,14 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
+import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import noop from "lodash/noop";
-import { screen } from "@testing-library/react";
 import { IUser, uriRef } from "@gooddata/sdk-model";
 
 import { IRecipientsSelectRendererProps, RecipientsSelectRenderer } from "../RecipientsSelectRenderer";
 
 import { IScheduleEmailRecipient } from "../../../interfaces";
 import { IntlWrapper } from "../../../../../localization/IntlWrapper";
-import { setupComponent } from "../../../../../../tests/testHelper";
 
 const author: IScheduleEmailRecipient = {
     user: {
@@ -63,7 +63,7 @@ describe("RecipientsSelect", () => {
             ...customProps,
         };
 
-        return setupComponent(
+        return render(
             <IntlWrapper>
                 <RecipientsSelectRenderer {...defaultProps} />
             </IntlWrapper>,
@@ -89,10 +89,11 @@ describe("RecipientsSelect", () => {
     });
 
     it("should change input when adding new value", async () => {
-        const { user } = renderComponent({ isMulti: true });
-        await user.type(screen.getByRole("combobox"), "extraUser@gooddata.com");
-
-        expect(screen.getByText(`${author.user.fullName}`)).toBeInTheDocument();
-        expect(screen.getByDisplayValue(`${extraUser.user.email}`)).toBeInTheDocument();
+        renderComponent({ isMulti: true });
+        await userEvent.type(screen.getByRole("combobox"), "extraUser@gooddata.com");
+        await waitFor(() => {
+            expect(screen.getByText(`${author.user.fullName}`)).toBeInTheDocument();
+            expect(screen.getByDisplayValue(`${extraUser.user.email}`)).toBeInTheDocument();
+        });
     });
 });

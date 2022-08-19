@@ -1,12 +1,12 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
 import noop from "lodash/noop";
-import { waitFor, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
 import { RepeatPeriodSelect, IRepeatPeriodSelectProps } from "../RepeatPeriodSelect";
 
 import { IntlWrapper } from "../../../../../localization/IntlWrapper";
-import { setupComponent } from "../../../../../../tests/testHelper";
 
 describe("RepeatPeriodSelect", () => {
     function renderComponent(customProps: Partial<IRepeatPeriodSelectProps> = {}) {
@@ -16,7 +16,7 @@ describe("RepeatPeriodSelect", () => {
             ...customProps,
         };
 
-        return setupComponent(
+        return render(
             <IntlWrapper>
                 <RepeatPeriodSelect {...defaultProps} />
             </IntlWrapper>,
@@ -39,17 +39,17 @@ describe("RepeatPeriodSelect", () => {
 
     it("should change input value when valid value is provided", async () => {
         const repeatPeriod = 5;
-        const { user } = renderComponent({
+        renderComponent({
             repeatPeriod,
         });
 
-        await user.type(screen.getByDisplayValue(`${repeatPeriod}`), "test");
+        await userEvent.type(screen.getByDisplayValue(`${repeatPeriod}`), "test");
         await waitFor(() => {
             expect(screen.queryByDisplayValue("test")).not.toBeInTheDocument();
         });
 
-        await user.clear(screen.getByRole("textbox"));
-        await user.type(screen.getByRole("textbox"), "2");
+        await userEvent.clear(screen.getByRole("textbox"));
+        await userEvent.type(screen.getByRole("textbox"), "2");
         await waitFor(() => {
             expect(screen.queryByDisplayValue("2")).toBeInTheDocument();
         });

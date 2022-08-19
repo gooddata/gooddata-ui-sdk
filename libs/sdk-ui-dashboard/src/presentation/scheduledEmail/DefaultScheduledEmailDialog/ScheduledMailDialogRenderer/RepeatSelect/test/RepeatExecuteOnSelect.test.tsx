@@ -2,7 +2,8 @@
 import React from "react";
 import { IntlShape } from "react-intl";
 import noop from "lodash/noop";
-import { waitFor, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
 import { TEXT_INDEX } from "./testUtils";
 import { RepeatExecuteOnSelect, IRepeatExecuteOnSelectProps } from "../RepeatExecuteOnSelect";
@@ -12,7 +13,6 @@ import { getDate, getIntlDayName, getWeek } from "../../../utils/datetime";
 
 import { IntlWrapper } from "../../../../../localization/IntlWrapper";
 import { createInternalIntl } from "../../../../../localization/createInternalIntl";
-import { setupComponent } from "../../../../../../tests/testHelper";
 
 describe("RepeatExecuteOnSelect", () => {
     const intl: IntlShape = createInternalIntl();
@@ -28,7 +28,7 @@ describe("RepeatExecuteOnSelect", () => {
             ...customProps,
         };
 
-        return setupComponent(
+        return render(
             <IntlWrapper>
                 <RepeatExecuteOnSelect {...defaultProps} />
             </IntlWrapper>,
@@ -53,9 +53,9 @@ describe("RepeatExecuteOnSelect", () => {
 
     it("should trigger onChange", async () => {
         const onChange = jest.fn();
-        const { user } = renderComponent({ onChange });
-        await user.click(screen.getByText(titleDayOfMonth));
-        await user.click(screen.getByText(titleDayOfWeek));
+        renderComponent({ onChange });
+        await userEvent.click(screen.getByText(titleDayOfMonth));
+        await userEvent.click(screen.getByText(titleDayOfWeek));
         await waitFor(() => {
             expect(onChange).toHaveBeenCalledTimes(1);
             expect(onChange).toBeCalledWith(expect.stringContaining(REPEAT_EXECUTE_ON.DAY_OF_WEEK));
