@@ -26,9 +26,10 @@ stages:
   # package.json in every release anyway.
   # Commit message condition is needed to avoid creating a new Docker image on
   # every single merge commit to master - that would be a waste.
-  if: '$CI_COMMIT_BRANCH == "master" && $CI_COMMIT_MESSAGE =~ /^Release .+$/'
-  changes:
-    - libs/sdk-ui-components/**/*
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master" && $CI_COMMIT_MESSAGE =~ /^Release .+$/'
+      changes:
+        - libs/sdk-ui-components/**/*
 
 .with-buildx:
   before_script:
@@ -40,6 +41,8 @@ stages:
       --driver-opt="namespace=gitlab-managed-apps,nodeselector=role=ci,qemu.install=true,replicas=3"
 
 build-web-components:
+  extends:
+    - .release
   image: node:16
   stage: build
   cache:
@@ -59,11 +62,10 @@ build-web-components:
   artifacts:
     paths:
       - ${CI_PROJECT_DIR}/libs/sdk-ui-web-components/web-components.tar.gz
-  rules:
-    - <<: *.release
 
 docker-build-web-components:
   extends:
+    - .release
     - .with-buildx
   stage: artifacts
   variables:
@@ -75,15 +77,13 @@ docker-build-web-components:
       -t $IMAGE_ID -t $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG -f Dockerfile .
   dependencies:
     - build-web-components
-  rules:
-    - <<: *.release
 
 generate-update:
+  extends:
+    - .release
   stage: generate-update
   variables:
     KUBERNETES_MEMORY_REQUEST: 100Mi
   script:
     - /scripts/update-ext-image-version.rb web-components
   dependencies: []
-  rules:
-    - <<: *.release
