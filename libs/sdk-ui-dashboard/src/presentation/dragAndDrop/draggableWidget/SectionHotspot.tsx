@@ -4,7 +4,7 @@ import cx from "classnames";
 import { getDropZoneDebugStyle } from "../debug";
 import {
     eagerRemoveSectionItem,
-    selectWidgetPlaceholder,
+    selectWidgetPlaceholderCoordinates,
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../model";
@@ -30,7 +30,7 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
     const { index, targetPosition } = props;
 
     const dispatch = useDashboardDispatch();
-    const widgetPlaceholder = useDashboardSelector(selectWidgetPlaceholder);
+    const widgetPlaceholderCoords = useDashboardSelector(selectWidgetPlaceholderCoordinates);
 
     const handleInsightListItemDrop = useNewSectionInsightListItemDropHandler(index);
     const handleKpiPlaceholderDrop = useNewSectionKpiPlaceholderDropHandler(index);
@@ -51,16 +51,19 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
                 }
             },
             hover: () => {
-                if (widgetPlaceholder) {
+                if (widgetPlaceholderCoords) {
                     dispatch(
-                        eagerRemoveSectionItem(widgetPlaceholder.sectionIndex, widgetPlaceholder.itemIndex),
+                        eagerRemoveSectionItem(
+                            widgetPlaceholderCoords.sectionIndex,
+                            widgetPlaceholderCoords.itemIndex,
+                        ),
                     );
                 }
             },
         },
         [
             dispatch,
-            widgetPlaceholder,
+            widgetPlaceholderCoords,
             index,
             handleInsightListItemDrop,
             handleKpiPlaceholderDrop,

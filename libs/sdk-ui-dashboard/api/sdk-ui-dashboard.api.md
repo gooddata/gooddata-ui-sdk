@@ -3654,12 +3654,6 @@ export type InsightPlaceholderDraggableItem = {
 export interface InsightPlaceholderWidget extends ICustomWidget {
     // (undocumented)
     readonly customType: "gd-insight-placeholder";
-    // (undocumented)
-    readonly isLastInSection: boolean;
-    // (undocumented)
-    readonly itemIndex: number;
-    // (undocumented)
-    readonly sectionIndex: number;
 }
 
 // @alpha
@@ -4217,12 +4211,6 @@ export type KpiPlaceholderDraggableItem = {
 export interface KpiPlaceholderWidget extends ICustomWidget {
     // (undocumented)
     readonly customType: "gd-kpi-placeholder";
-    // (undocumented)
-    readonly isLastInSection: boolean;
-    // (undocumented)
-    readonly itemIndex: number;
-    // (undocumented)
-    readonly sectionIndex: number;
 }
 
 // @alpha (undocumented)
@@ -4389,16 +4377,16 @@ export const newDrillToSameDashboardHandler: (dashboardRef: ObjRef) => Dashboard
 export function newInitialPlaceholderWidget(): PlaceholderWidget;
 
 // @alpha (undocumented)
-export function newInsightPlaceholderWidget(sectionIndex: number, itemIndex: number, isLastInSection: boolean): InsightPlaceholderWidget;
+export function newInsightPlaceholderWidget(): InsightPlaceholderWidget;
 
 // @internal
 export function newInsightWidget(insight: IInsight, modifications?: InsightWidgetModifications): IInsightWidgetBase;
 
 // @alpha (undocumented)
-export function newKpiPlaceholderWidget(sectionIndex: number, itemIndex: number, isLastInSection: boolean): KpiPlaceholderWidget;
+export function newKpiPlaceholderWidget(): KpiPlaceholderWidget;
 
 // @alpha (undocumented)
-export function newPlaceholderWidget(sectionIndex: number, itemIndex: number, isLastInSection: boolean): PlaceholderWidget;
+export function newPlaceholderWidget(): PlaceholderWidget;
 
 // @public
 export interface ObjectAvailabilityConfig {
@@ -4531,12 +4519,6 @@ export interface PlaceholderWidget extends ICustomWidget {
     readonly customType: "gd-widget-placeholder";
     // (undocumented)
     readonly isInitial?: boolean;
-    // (undocumented)
-    readonly isLastInSection: boolean;
-    // (undocumented)
-    readonly itemIndex: number;
-    // (undocumented)
-    readonly sectionIndex: number;
 }
 
 // @internal
@@ -5469,6 +5451,15 @@ export const selectInsightsMap: OutputSelector<DashboardState, ObjRefMap<IInsigh
 // @internal (undocumented)
 export const selectInsightWidgetPlaceholder: OutputSelector<DashboardState, InsightPlaceholderWidget | undefined, (res: ICustomWidget[]) => InsightPlaceholderWidget | undefined>;
 
+// @internal (undocumented)
+export const selectInsightWidgetPlaceholderCoordinates: OutputSelector<DashboardState, {
+sectionIndex: number;
+itemIndex: number;
+} | undefined, (res1: InsightPlaceholderWidget | undefined, res2: IDashboardLayout<ExtendedDashboardWidget>) => {
+sectionIndex: number;
+itemIndex: number;
+} | undefined>;
+
 // @internal
 export const selectIsCircularDependency: (currentFilterLocalId: string, neighborFilterLocalid: string) => OutputSelector<DashboardState, boolean, (res: string[]) => boolean>;
 
@@ -5565,6 +5556,15 @@ export const selectKpiDeleteDialogWidgetCoordinates: OutputSelector<DashboardSta
 // @internal (undocumented)
 export const selectKpiWidgetPlaceholder: OutputSelector<DashboardState, KpiPlaceholderWidget | undefined, (res: ICustomWidget[]) => KpiPlaceholderWidget | undefined>;
 
+// @internal (undocumented)
+export const selectKpiWidgetPlaceholderCoordinates: OutputSelector<DashboardState, {
+sectionIndex: number;
+itemIndex: number;
+} | undefined, (res1: KpiPlaceholderWidget | undefined, res2: IDashboardLayout<ExtendedDashboardWidget>) => {
+sectionIndex: number;
+itemIndex: number;
+} | undefined>;
+
 // @alpha
 export const selectLayout: OutputSelector<DashboardState, IDashboardLayout<ExtendedDashboardWidget>, (res: LayoutState) => IDashboardLayout<ExtendedDashboardWidget>>;
 
@@ -5653,13 +5653,22 @@ export const selectValidConfiguredDrillsByWidgetRef: (ref: ObjRef) => OutputSele
 export const selectWidgetByRef: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IKpiWidget | IInsightWidget | ICustomWidget | undefined, (res: ObjRefMap<ExtendedDashboardWidget>) => IKpiWidget | IInsightWidget | ICustomWidget | undefined>;
 
 // @alpha
-export const selectWidgetCoordinatesByRef: (ref: ObjRef) => OutputSelector<DashboardState, ILayoutCoordinates, (res1: IKpiWidget | IInsightWidget | ICustomWidget | undefined, res2: IDashboardLayout<ExtendedDashboardWidget>) => ILayoutCoordinates>;
+export const selectWidgetCoordinatesByRef: (ref: ObjRef) => OutputSelector<DashboardState, ILayoutCoordinates, (res: IDashboardLayout<ExtendedDashboardWidget>) => ILayoutCoordinates>;
 
 // @alpha
 export const selectWidgetDrills: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IDrillToLegacyDashboard[] | InsightDrillDefinition[], (res: IKpiWidget | IInsightWidget | undefined) => IDrillToLegacyDashboard[] | InsightDrillDefinition[]>;
 
 // @internal (undocumented)
 export const selectWidgetPlaceholder: OutputSelector<DashboardState, PlaceholderWidget | undefined, (res: ICustomWidget[]) => PlaceholderWidget | undefined>;
+
+// @internal (undocumented)
+export const selectWidgetPlaceholderCoordinates: OutputSelector<DashboardState, {
+sectionIndex: number;
+itemIndex: number;
+} | undefined, (res1: PlaceholderWidget | undefined, res2: IDashboardLayout<ExtendedDashboardWidget>) => {
+sectionIndex: number;
+itemIndex: number;
+} | undefined>;
 
 // @internal
 export const selectWidgets: OutputSelector<DashboardState, ExtendedDashboardWidget[], (res: IDashboardLayout<ExtendedDashboardWidget>) => ExtendedDashboardWidget[]>;

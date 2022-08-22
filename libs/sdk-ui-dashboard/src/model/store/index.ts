@@ -125,8 +125,11 @@ export {
     selectWidgetDrills,
     selectWidgetCoordinatesByRef,
     selectWidgetPlaceholder,
+    selectWidgetPlaceholderCoordinates,
     selectInsightWidgetPlaceholder,
+    selectInsightWidgetPlaceholderCoordinates,
     selectKpiWidgetPlaceholder,
+    selectKpiWidgetPlaceholderCoordinates,
 } from "./layout/layoutSelectors";
 export { DateFilterConfigState } from "./dateFilterConfig/dateFilterConfigState";
 export {

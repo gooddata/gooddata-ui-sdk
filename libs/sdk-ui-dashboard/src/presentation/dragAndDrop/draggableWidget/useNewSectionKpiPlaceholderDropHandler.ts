@@ -41,7 +41,7 @@ export function useNewSectionKpiPlaceholderDropHandler(sectionIndex: number) {
                         gridWidth: sizeInfo.width.default!,
                     },
                 },
-                widget: newKpiPlaceholderWidget(sectionIndex, 0, true),
+                widget: newKpiPlaceholderWidget(),
             },
         ]);
     }, [addNewSectionWithKpiPlaceholder, sectionIndex, settings]);

@@ -8,9 +8,9 @@ import {
     selectSettings,
     useDashboardDispatch,
     useDashboardSelector,
-    selectWidgetPlaceholder,
     addSectionItem,
     removeSectionItem,
+    selectWidgetPlaceholderCoordinates,
 } from "../../../model";
 import { useDashboardDrop } from "../useDashboardDrop";
 import {
@@ -53,11 +53,11 @@ function getDraggableItemSizeInfo(
 }
 
 export const Hotspot: React.FC<IHotspotProps> = (props) => {
-    const { itemIndex, sectionIndex, isLastInSection, classNames, dropZoneType } = props;
+    const { itemIndex, sectionIndex, classNames, dropZoneType } = props;
 
     const dispatch = useDashboardDispatch();
     const settings = useDashboardSelector(selectSettings);
-    const widgetPlaceholder = useDashboardSelector(selectWidgetPlaceholder);
+    const widgetPlaceholderCoords = useDashboardSelector(selectWidgetPlaceholderCoordinates);
 
     // for "next" we need to add the item after the current index, for "prev" on the current one
     const targetItemIndex = dropZoneType === "next" ? itemIndex + 1 : itemIndex;
@@ -67,10 +67,10 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
     const handleKpiPlaceholderDrop = useKpiPlaceholderDropHandler();
 
     const needsToAddWidgetDropzone =
-        !widgetPlaceholder || // first placeholder ever
-        widgetPlaceholder.sectionIndex !== sectionIndex || // or different section
-        (dropZoneType === "prev" && widgetPlaceholder.itemIndex !== itemIndex - 1) || // or not immediately before for prev hotspot
-        (dropZoneType === "next" && widgetPlaceholder.itemIndex !== itemIndex + 1); // or not immediately after for next hotspot
+        !widgetPlaceholderCoords || // first placeholder ever
+        widgetPlaceholderCoords.sectionIndex !== sectionIndex || // or different section
+        (dropZoneType === "prev" && widgetPlaceholderCoords.itemIndex !== itemIndex - 1) || // or not immediately before for prev hotspot
+        (dropZoneType === "next" && widgetPlaceholderCoords.itemIndex !== itemIndex + 1); // or not immediately after for next hotspot
 
     const [{ canDrop, isOver }, dropRef] = useDashboardDrop(
         ["insightListItem", "kpi-placeholder", "insight-placeholder"],
@@ -80,10 +80,10 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
                     handleInsightListItemDrop(item.insight);
                 }
                 if (isKpiPlaceholderDraggableItem(item)) {
-                    handleKpiPlaceholderDrop(sectionIndex, targetItemIndex, isLastInSection);
+                    handleKpiPlaceholderDrop();
                 }
                 if (isInsightPlaceholderDraggableItem(item)) {
-                    handleInsightPlaceholderDrop(sectionIndex, targetItemIndex, isLastInSection);
+                    handleInsightPlaceholderDrop();
                 }
             },
             hover: (item) => {
@@ -92,11 +92,14 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
                 }
 
                 // we will definitely be adding a new placeholder, so remove the current one if any
-                if (widgetPlaceholder) {
-                    dispatch(removeSectionItem(widgetPlaceholder.sectionIndex, widgetPlaceholder.itemIndex));
+                if (widgetPlaceholderCoords) {
+                    dispatch(
+                        removeSectionItem(
+                            widgetPlaceholderCoords.sectionIndex,
+                            widgetPlaceholderCoords.itemIndex,
+                        ),
+                    );
                 }
-
-                const placeholderSpec = newPlaceholderWidget(sectionIndex, targetItemIndex, isLastInSection);
 
                 const sizeInfo = getDraggableItemSizeInfo(settings, item);
 
@@ -109,14 +112,14 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
                                 gridWidth: sizeInfo.width.default!,
                             },
                         },
-                        widget: placeholderSpec,
+                        widget: newPlaceholderWidget(),
                     }),
                 );
             },
         },
         [
             dispatch,
-            widgetPlaceholder,
+            widgetPlaceholderCoords,
             settings,
             targetItemIndex,
             sectionIndex,

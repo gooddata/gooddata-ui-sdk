@@ -8,9 +8,9 @@ import {
     uiActions,
     useDashboardSelector,
     selectSettings,
-    selectWidgetPlaceholder,
     replaceSectionItem,
     useDashboardCommandProcessing,
+    selectWidgetPlaceholderCoordinates,
 } from "../../../model";
 import { INSIGHT_PLACEHOLDER_WIDGET_ID, newInsightPlaceholderWidget } from "../../../widgets";
 import { getInsightPlaceholderSizeInfo } from "../../../_staging/layout/sizing";
@@ -18,7 +18,7 @@ import { getInsightPlaceholderSizeInfo } from "../../../_staging/layout/sizing";
 export function useInsightPlaceholderDropHandler() {
     const dispatch = useDashboardDispatch();
     const settings = useDashboardSelector(selectSettings);
-    const widgetPlaceholder = useDashboardSelector(selectWidgetPlaceholder);
+    const widgetPlaceholderCoords = useDashboardSelector(selectWidgetPlaceholderCoordinates);
 
     const { run: replaceInsightOntoPlaceholder } = useDashboardCommandProcessing({
         commandCreator: replaceSectionItem,
@@ -30,11 +30,13 @@ export function useInsightPlaceholderDropHandler() {
         },
     });
 
-    return useCallback(
-        (sectionIndex: number, itemIndex: number, isLastInSection: boolean) => {
-            const sizeInfo = getInsightPlaceholderSizeInfo(settings);
-            invariant(widgetPlaceholder, "cannot drop onto placeholder, there is none");
-            replaceInsightOntoPlaceholder(widgetPlaceholder.sectionIndex, widgetPlaceholder.itemIndex, {
+    return useCallback(() => {
+        const sizeInfo = getInsightPlaceholderSizeInfo(settings);
+        invariant(widgetPlaceholderCoords, "cannot drop onto placeholder, there is none");
+        replaceInsightOntoPlaceholder(
+            widgetPlaceholderCoords.sectionIndex,
+            widgetPlaceholderCoords.itemIndex,
+            {
                 type: "IDashboardLayoutItem",
                 size: {
                     xl: {
@@ -42,9 +44,8 @@ export function useInsightPlaceholderDropHandler() {
                         gridWidth: sizeInfo.width.default!,
                     },
                 },
-                widget: newInsightPlaceholderWidget(sectionIndex, itemIndex, isLastInSection),
-            });
-        },
-        [replaceInsightOntoPlaceholder, settings, widgetPlaceholder],
-    );
+                widget: newInsightPlaceholderWidget(),
+            },
+        );
+    }, [replaceInsightOntoPlaceholder, settings, widgetPlaceholderCoords]);
 }

@@ -25,7 +25,7 @@ export const TestSectionHeader: IDashboardLayoutSectionHeader = {
     description: "Section added for test purposes",
 };
 
-const TestKpiPlaceholderWidget = newKpiPlaceholderWidget(0, 0, false);
+const TestKpiPlaceholderWidget = newKpiPlaceholderWidget();
 export const TestKpiPlaceholderItem: IDashboardLayoutItem<KpiPlaceholderWidget> = {
     type: "IDashboardLayoutItem",
     widget: TestKpiPlaceholderWidget,
@@ -36,7 +36,7 @@ export const TestKpiPlaceholderItem: IDashboardLayoutItem<KpiPlaceholderWidget> 
     },
 };
 
-const TestInsightPlaceholderWidget = newInsightPlaceholderWidget(0, 0, false);
+const TestInsightPlaceholderWidget = newInsightPlaceholderWidget();
 export const TestInsightPlaceholderItem: IDashboardLayoutItem<InsightPlaceholderWidget> = {
     type: "IDashboardLayoutItem",
     widget: TestInsightPlaceholderWidget,

@@ -41,10 +41,10 @@ export const EmptyDashboardDropZone: React.FC = () => {
                     handleInsightListItemDrop(item.insight);
                 }
                 if (isKpiPlaceholderDraggableItem(item)) {
-                    handleKpiPlaceholderDrop(0, 0, true);
+                    handleKpiPlaceholderDrop();
                 }
                 if (isInsightPlaceholderDraggableItem(item)) {
-                    handleInsightPlaceholderDrop(0, 0, true);
+                    handleInsightPlaceholderDrop();
                 }
             },
         },
