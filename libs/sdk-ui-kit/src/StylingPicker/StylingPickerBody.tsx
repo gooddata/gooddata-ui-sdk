@@ -21,6 +21,7 @@ interface IStylingPickerBodyProps<T> {
     onItemClick: (ref: ObjRef) => void;
     onItemEdit?: (item: IStylingPickerItem<T>) => void;
     onItemDelete?: (ref: ObjRef) => void;
+    onItemMenuToggle?: (ref: ObjRef) => void;
 }
 
 export const StylingPickerBody = <T extends StylingPickerItemContent>({
@@ -36,6 +37,7 @@ export const StylingPickerBody = <T extends StylingPickerItemContent>({
     onItemClick,
     onItemEdit,
     onItemDelete,
+    onItemMenuToggle,
 }: IStylingPickerBodyProps<T>) => {
     const intl = useIntl();
 
@@ -74,6 +76,7 @@ export const StylingPickerBody = <T extends StylingPickerItemContent>({
                             onItemDelete={isMobile ? undefined : onItemDelete}
                             initiallySelectedItemRef={initiallySelectedItemRef}
                             selectedItemRef={selectedItemRef}
+                            onItemMenuToggle={onItemMenuToggle}
                         />
                     </div>
                 </>

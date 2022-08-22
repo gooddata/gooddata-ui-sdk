@@ -6,6 +6,7 @@ import { useIntl } from "react-intl";
 import { IDialogBaseProps } from "../typings";
 import { LoadingSpinner } from "../../LoadingSpinner";
 import { Bubble, BubbleHoverTrigger } from "../../Bubble";
+import noop from "lodash/noop";
 
 /**
  * @internal
@@ -18,6 +19,7 @@ export interface IStylingEditorDialogFooterProps extends IDialogBaseProps {
     disableSubmit?: boolean;
     showProgressIndicator?: boolean;
     errorMessage?: string;
+    onHelpClick?: () => void;
 }
 
 /**
@@ -31,6 +33,7 @@ export const StylingEditorDialogFooter = (props: IStylingEditorDialogFooterProps
         errorMessage,
         onSubmit,
         onCancel,
+        onHelpClick = noop,
     } = props;
     const intl = useIntl();
 
@@ -43,6 +46,7 @@ export const StylingEditorDialogFooter = (props: IStylingEditorDialogFooterProps
                     href={link.url}
                     target="_blank"
                     rel="noreferrer noopener"
+                    onClick={() => onHelpClick()}
                 >
                     {link.text}
                 </a>

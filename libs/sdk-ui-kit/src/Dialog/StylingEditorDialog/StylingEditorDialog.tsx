@@ -9,6 +9,7 @@ import { BubbleHeaderSeparator } from "./BubbleHeaderSeparator";
 import { StylingEditorDialogFooter, IStylingEditorDialogFooterProps } from "./StylingEditorDialogFooter";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { useIntl } from "react-intl";
+import noop from "lodash/noop";
 
 /**
  * @internal
@@ -34,6 +35,8 @@ export interface IStylingEditorDialogProps<T> extends IStylingEditorDialogFooter
     examples?: IStylingPickerItem<T>[];
     exampleToColorPreview?: (example: T) => string[];
     locale?: string;
+    onExit?: (name: string, definition: string) => void;
+    onInvalidDefinition?: (ref: ObjRef) => void;
 }
 
 /**
@@ -62,6 +65,9 @@ const StylingEditorDialogCore = <T extends StylingPickerItemContent>(props: ISty
         onCancel,
         disableSubmit,
         showProgressIndicator,
+        onHelpClick,
+        onExit = noop,
+        onInvalidDefinition = noop,
     } = props;
     const intl = useIntl();
     const providedExamples = !!examples && examples.length !== 0 && !!exampleToColorPreview;
@@ -100,18 +106,21 @@ const StylingEditorDialogCore = <T extends StylingPickerItemContent>(props: ISty
         [validFields, fieldsChanged, disableSubmit],
     );
 
+    const emptyDefinition = useMemo(() => definitionField === "", [definitionField]);
+
     const errorMessage = useMemo((): string | undefined => {
         if (!validName) {
             return intl.formatMessage({ id: "stylingEditor.dialog.name.required" });
         }
-        if (definitionField === "") {
+        if (emptyDefinition) {
             return intl.formatMessage({ id: "stylingEditor.dialog.definition.required" });
         }
         if (!validDefinition) {
+            onInvalidDefinition(stylingItem?.ref);
             return intl.formatMessage({ id: "stylingEditor.dialog.definition.invalid" });
         }
         return undefined;
-    }, [validName, validDefinition, definitionField]);
+    }, [validName, emptyDefinition, validDefinition]);
 
     const getFinalStylingItem = (
         original: IStylingPickerItem<T>,
@@ -130,7 +139,10 @@ const StylingEditorDialogCore = <T extends StylingPickerItemContent>(props: ISty
             className={cx("gd-styling-editor-dialog", {
                 "gd-styling-editor-dialog-create": providedExamples,
             })}
-            onClose={onClose}
+            onClose={() => {
+                onExit(nameField, definitionField);
+                onClose();
+            }}
             displayCloseButton={true}
             submitOnEnterKey={false}
         >
@@ -191,7 +203,11 @@ const StylingEditorDialogCore = <T extends StylingPickerItemContent>(props: ISty
                 link={link}
                 errorMessage={errorMessage}
                 onSubmit={() => onSubmit(getFinalStylingItem(stylingItem, definitionField, nameField))}
-                onCancel={onCancel}
+                onCancel={() => {
+                    onExit(nameField, definitionField);
+                    onCancel();
+                }}
+                onHelpClick={onHelpClick}
             />
         </Dialog>
     );

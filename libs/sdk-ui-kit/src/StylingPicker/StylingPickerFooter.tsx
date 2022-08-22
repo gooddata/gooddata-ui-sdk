@@ -4,6 +4,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 import { Message } from "../Messages";
 import { Button } from "../Button";
+import noop from "lodash/noop";
 
 interface IStylingPickerFooterProps {
     showButtons: boolean;
@@ -14,6 +15,7 @@ interface IStylingPickerFooterProps {
     footerMobileMessage?: string;
     onApply: () => void;
     onCancel: () => void;
+    onHelpClick?: () => void;
 }
 
 export const StylingPickerFooter: React.FC<IStylingPickerFooterProps> = ({
@@ -25,6 +27,7 @@ export const StylingPickerFooter: React.FC<IStylingPickerFooterProps> = ({
     footerMobileMessage,
     onApply,
     onCancel,
+    onHelpClick = noop,
 }) => {
     const intl = useIntl();
 
@@ -44,6 +47,7 @@ export const StylingPickerFooter: React.FC<IStylingPickerFooterProps> = ({
                             rel="noopener noreferrer"
                             target="_blank"
                             href={footerHelpLink}
+                            onClick={() => onHelpClick()}
                         >
                             {footerHelpTitle}
                         </a>
