@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 @import "./variables.scss";
 @import "./mixins.scss";
 
@@ -408,6 +408,28 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
     }
 }
 
+.gd-header-invite {
+    display: flex;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    .gd-header-invite-text {
+        margin-left: 5px;
+        font-size: 14px;
+        line-height: 44px;
+        font-family: $gd-font-primary;
+    }
+
+    .gd-header-invite-icon {
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+        margin: auto;
+        background: url("~@gooddata/sdk-ui-kit/esm/assets/invite.svg") no-repeat;
+    }
+}
+
+.gd-header-invite,
 .gd-header-account,
 .gd-header-help {
     height: 100%;

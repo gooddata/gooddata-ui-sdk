@@ -57,6 +57,9 @@ export interface IAppHeaderProps {
 
     showUpsellButton?: boolean;
     onUpsellButtonClick?: (e: React.MouseEvent) => void;
+
+    showInviteItem?: boolean;
+    onInviteItemClick?: (e: React.MouseEvent) => void;
 }
 
 /**
@@ -101,6 +104,13 @@ export interface IHeaderMenuProps {
  */
 export interface IHeaderUpsellButtonProps {
     onUpsellButtonClick?: (e: React.MouseEvent) => void;
+}
+
+/**
+ * @internal
+ */
+export interface IHeaderInviteProps {
+    onInviteItemClick?: (e: React.MouseEvent) => void;
 }
 
 /**

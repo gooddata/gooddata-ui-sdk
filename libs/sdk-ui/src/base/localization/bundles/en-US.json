@@ -386,6 +386,11 @@
         "comment": "",
         "limit": 0
     },
+    "gs.header.invite": {
+        "value": "Invite",
+        "comment": "",
+        "limit": 0
+    },
     "gs.header.countdown.numberOfDaysLeft": {
         "value": "{number} days left",
         "comment": "",

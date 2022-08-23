@@ -28,6 +28,7 @@ import { HeaderHelp } from "./HeaderHelp";
 import { HeaderAccount } from "./HeaderAccount";
 import { HeaderMenu } from "./HeaderMenu";
 import { HeaderUpsellButton } from "./HeaderUpsellButton";
+import { HeaderInvite } from "./HeaderInvite";
 
 function getOuterWidth(element: HTMLDivElement) {
     const width = element.offsetWidth;
@@ -385,6 +386,10 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
                         onHelpClicked={this.props.onHelpClick}
                         helpRedirectUrl={this.props.helpRedirectUrl}
                     />
+                )}
+
+                {this.props.showInviteItem && (
+                    <HeaderInvite onInviteItemClick={this.props.onInviteItemClick} />
                 )}
 
                 <HeaderAccount
