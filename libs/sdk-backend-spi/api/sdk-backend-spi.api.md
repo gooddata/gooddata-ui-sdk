@@ -214,7 +214,7 @@ export type ErrorConverter = (e: Error) => AnalyticalBackendError;
 
 // @internal
 export type ExplainConfig = {
-    explainType?: "LDM" | "PDM" | "MAQL";
+    explainType?: "MAQL" | "GRPC_MODEL" | "WDF" | "QT" | "QT_SVG" | "OPT_QT" | "OPT_QT_SVG" | "SQL";
 };
 
 // @alpha @deprecated

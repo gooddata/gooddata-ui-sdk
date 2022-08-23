@@ -28,6 +28,7 @@ import { LayoutApiPutWorkspaceLayoutRequest } from '@gooddata/api-client-tiger';
 import { LayoutApiSetPdmLayoutRequest } from '@gooddata/api-client-tiger';
 import { NotAuthenticated } from '@gooddata/sdk-backend-spi';
 import { NotAuthenticatedHandler } from '@gooddata/sdk-backend-spi';
+import { PlatformUsage } from '@gooddata/api-client-tiger';
 import { TestDefinitionRequestTypeEnum } from '@gooddata/api-client-tiger';
 
 export { AnonymousAuthProvider }
@@ -281,6 +282,7 @@ export type TigerSpecificFunctions = {
     getDependentEntitiesGraph?: (workspaceId: string) => Promise<DependentEntitiesGraphResponse>;
     getDependentEntitiesGraphFromEntryPoints?: (workspaceId: string, dependentEntitiesGraphRequest: DependentEntitiesGraphRequest) => Promise<DependentEntitiesGraphResponse>;
     resolveAllEntitlements?: () => Promise<ApiEntitlement[]>;
+    getAllPlatformUsage?: () => Promise<PlatformUsage[]>;
 };
 
 // @public

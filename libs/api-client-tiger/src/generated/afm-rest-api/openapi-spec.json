@@ -103,7 +103,7 @@
             "post": {
                 "tags": ["actions"],
                 "summary": "AFM explain resource.",
-                "description": "The resource provides static structures needed for investigation of a problem with given AFM. The structures are MAQL (internal form of AFM) and GRPC and WDF models.",
+                "description": "The resource provides static structures needed for investigation of a problem with given AFM.",
                 "operationId": "explainAFM",
                 "parameters": [
                     {
@@ -119,13 +119,11 @@
                     {
                         "name": "explainType",
                         "in": "query",
-                        "description": "Requested explain type (LDM, PDM, GRPC_MODEL, WDF, MAQL, QT, QT_SVG, OPT_QT, OPT_QT_SVG or SQL). If not specified all types are bundled in a ZIP archive.",
+                        "description": "Requested explain type. If not specified all types are bundled in a ZIP archive.\n\n`MAQL` - MAQL Abstract Syntax Tree, execution dimensions and related info\n\n`GRPC_MODEL` - Datasets used in execution\n\n`WDF` - Workspace data filters in execution workspace context\n\n`QT` - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL\n\n`QT_SVG` - Generated SVG image of the Query Tree\n\n`OPT_QT` - Optimized Query Tree\n\n`OPT_QT_SVG` - Generated SVG image of the Optimized Query Tree\n\n`SQL` - Final SQL to be executed",
                         "required": false,
                         "schema": {
                             "type": "string",
                             "enum": [
-                                "LDM",
-                                "PDM",
                                 "MAQL",
                                 "GRPC_MODEL",
                                 "WDF",
@@ -150,11 +148,12 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "ZIP archive with MAQL, LDM and PDM files; or with MAQL, GRPC_MODEL, WDF, QT, QT_SVG, OPT_QT, OPT_QT_SVG and SQL files",
+                        "description": "Requested resource",
                         "content": {
                             "application/zip": {
                                 "schema": {
                                     "type": "string",
+                                    "description": "ZIP with MAQL, GRPC_MODEL, WDF, QT, QT_SVG, OPT_QT, OPT_QT_SVG and SQL files",
                                     "format": "binary"
                                 }
                             },
@@ -320,16 +319,6 @@
                                 }
                             }
                         }
-                    },
-                    "404": {
-                        "description": "Execution result was not found.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Problem"
-                                }
-                            }
-                        }
                     }
                 },
                 "x-gdc-security-info": {
@@ -423,36 +412,6 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ExecutionResult"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Limit and/or offset and/or excludedTotalDimensions query parameters (paging) were invalid.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Problem"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Execution result was not found.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Problem"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "The result processing has failed unexpectedly.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Problem"
                                 }
                             }
                         }
@@ -614,6 +573,7 @@
                 "properties": {
                     "attributes": {
                         "type": "array",
+                        "description": "Attributes to be used in the computation.",
                         "items": {
                             "$ref": "#/components/schemas/AttributeItem"
                         }
@@ -1045,7 +1005,7 @@
                         "format": "float"
                     }
                 },
-                "description": "Various setting affecting the process of ADM execution or its result"
+                "description": "Various settings affecting the process of AFM execution or its result"
             },
             "FilterDefinition": {
                 "type": "object",
@@ -1154,8 +1114,7 @@
                     "definition": {
                         "$ref": "#/components/schemas/MeasureDefinition"
                     }
-                },
-                "description": "Metrics to be referenced from other AFM objects (e.g. filters) but not included in the result."
+                }
             },
             "MeasureValueFilter": {
                 "type": "object",
@@ -1478,7 +1437,6 @@
             },
             "SortKey": {
                 "type": "object",
-                "description": "List of sorting rules. From most relevant to least relevant (less relevant rule is applied, when more relevant rule compares items as equal).",
                 "oneOf": [
                     {
                         "$ref": "#/components/schemas/SortKeyAttribute"
@@ -1806,59 +1764,6 @@
                     }
                 },
                 "description": "All execution result's metadata used for calculation including ExecutionResponse"
-            },
-            "Problem": {
-                "required": ["status", "traceId", "type"],
-                "type": "object",
-                "properties": {
-                    "instance": {
-                        "type": "string",
-                        "description": "An relative URI that identifies the specific occurrence of the problem. It may yield further information if dereferenced.",
-                        "format": "uri"
-                    },
-                    "type": {
-                        "type": "string",
-                        "description": "An relative URI that identifies the problem type. When dereferenced, it should provide human-readable documentation for the problem type (e.g., using HTML).",
-                        "format": "uri"
-                    },
-                    "traceId": {
-                        "type": "string",
-                        "description": "Unique trace id used in open-tracing (semantics of transactions in distributed systems). Can be used to correlate client error with concrete request processing in the system.",
-                        "example": "5202292772879600441"
-                    },
-                    "title": {
-                        "type": "string",
-                        "description": "A short, summary of the problem type. Written in english and readable for engineers (usually not suited for non technical stakeholders and not localized).",
-                        "example": "Service Unavailable"
-                    },
-                    "status": {
-                        "$ref": "#/components/schemas/StatusType"
-                    },
-                    "detail": {
-                        "type": "string",
-                        "description": "A human readable explanation specific to this occurrence of the problem.",
-                        "example": "Connection to database timed out"
-                    }
-                },
-                "description": "Contains information about the error."
-            },
-            "StatusType": {
-                "maximum": 600,
-                "exclusiveMaximum": true,
-                "minimum": 100,
-                "type": "object",
-                "properties": {
-                    "statusCode": {
-                        "type": "integer",
-                        "format": "int32"
-                    },
-                    "reasonPhrase": {
-                        "type": "string"
-                    }
-                },
-                "description": "The HTTP status code generated by the origin server for this occurrence of the problem.",
-                "format": "int32",
-                "example": 503
             },
             "AttributeExecutionResultHeader": {
                 "required": ["attributeHeader"],

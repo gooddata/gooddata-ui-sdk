@@ -118,7 +118,9 @@ export interface IExecutionFactory {
  * Config for execution in explain mode
  * @internal
  */
-export type ExplainConfig = { explainType?: "LDM" | "PDM" | "MAQL" };
+export type ExplainConfig = {
+    explainType?: "MAQL" | "GRPC_MODEL" | "WDF" | "QT" | "QT_SVG" | "OPT_QT" | "OPT_QT_SVG" | "SQL";
+};
 
 /**
  * Prepared execution already knows what data to calculate and allows to specify how the data should be

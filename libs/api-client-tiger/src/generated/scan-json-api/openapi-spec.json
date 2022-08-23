@@ -71,24 +71,6 @@
                                 }
                             }
                         }
-                    },
-                    "404": {
-                        "description": "A data source with given id does not exists.",
-                        "content": {
-                            "application/json": {
-                                "examples": {
-                                    "An example of a non-existent data source": {
-                                        "description": "An example of a non-existent data source",
-                                        "value": {
-                                            "detail": "The requested endpoint does not exist or you do not have permission to access it.",
-                                            "status": 404,
-                                            "title": "Not Found",
-                                            "traceId": "<traceId>"
-                                        }
-                                    }
-                                }
-                            }
-                        }
                     }
                 },
                 "x-gdc-security-info": {
@@ -165,24 +147,6 @@
                                                 ]
                                             },
                                             "warnings": []
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "A data source with given id does not exists.",
-                        "content": {
-                            "application/json": {
-                                "examples": {
-                                    "An example of a non-existent data source": {
-                                        "description": "An example of a non-existent data source",
-                                        "value": {
-                                            "detail": "The requested endpoint does not exist or you do not have permission to access it.",
-                                            "status": 404,
-                                            "title": "Not Found",
-                                            "traceId": "string"
                                         }
                                     }
                                 }
@@ -277,24 +241,6 @@
                                         "description": "An example of a successful scan",
                                         "value": {
                                             "schemaNames": ["demo", "public"]
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "A data source with given id does not exists.",
-                        "content": {
-                            "application/json": {
-                                "examples": {
-                                    "An example of a non-existent data source": {
-                                        "description": "An example of a non-existent data source",
-                                        "value": {
-                                            "detail": "The requested endpoint does not exist or you do not have permission to access it.",
-                                            "status": 404,
-                                            "title": "Not Found",
-                                            "traceId": "<traceId>"
                                         }
                                     }
                                 }
