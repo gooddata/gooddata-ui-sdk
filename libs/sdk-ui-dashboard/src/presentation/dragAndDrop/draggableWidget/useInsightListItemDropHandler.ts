@@ -9,18 +9,18 @@ import {
     useDashboardSelector,
     useDashboardCommandProcessing,
     uiActions,
-    selectWidgetPlaceholder,
     replaceSectionItem,
     enableInsightWidgetDateFilter,
     DashboardCommandFailed,
     ChangeInsightWidgetFilterSettings,
+    selectWidgetPlaceholderCoordinates,
 } from "../../../model";
 import { getSizeInfo } from "../../../_staging/layout/sizing";
 
 export function useInsightListItemDropHandler() {
     const dispatch = useDashboardDispatch();
     const settings = useDashboardSelector(selectSettings);
-    const widgetPlaceholder = useDashboardSelector(selectWidgetPlaceholder);
+    const widgetPlaceholderCoords = useDashboardSelector(selectWidgetPlaceholderCoordinates);
 
     const { run: preselectDateDataset } = useDashboardCommandProcessing({
         commandCreator: enableInsightWidgetDateFilter,
@@ -49,29 +49,33 @@ export function useInsightListItemDropHandler() {
 
     return useCallback(
         (insight: IInsight) => {
-            invariant(widgetPlaceholder, "cannot drop onto placeholder, there is none");
+            invariant(widgetPlaceholderCoords, "cannot drop onto placeholder, there is none");
 
             const sizeInfo = getSizeInfo(settings, "insight", insight);
-            replaceInsightOntoPlaceholder(widgetPlaceholder.sectionIndex, widgetPlaceholder.itemIndex, {
-                type: "IDashboardLayoutItem",
-                widget: {
-                    type: "insight",
-                    insight: insightRef(insight),
-                    ignoreDashboardFilters: [],
-                    drills: [],
-                    title: insightTitle(insight),
-                    description: "",
-                    configuration: { hideTitle: false },
-                    properties: {},
-                },
-                size: {
-                    xl: {
-                        gridHeight: sizeInfo.height.default,
-                        gridWidth: sizeInfo.width.default!,
+            replaceInsightOntoPlaceholder(
+                widgetPlaceholderCoords.sectionIndex,
+                widgetPlaceholderCoords.itemIndex,
+                {
+                    type: "IDashboardLayoutItem",
+                    widget: {
+                        type: "insight",
+                        insight: insightRef(insight),
+                        ignoreDashboardFilters: [],
+                        drills: [],
+                        title: insightTitle(insight),
+                        description: "",
+                        configuration: { hideTitle: false },
+                        properties: {},
+                    },
+                    size: {
+                        xl: {
+                            gridHeight: sizeInfo.height.default,
+                            gridWidth: sizeInfo.width.default!,
+                        },
                     },
                 },
-            });
+            );
         },
-        [replaceInsightOntoPlaceholder, settings, widgetPlaceholder],
+        [replaceInsightOntoPlaceholder, settings, widgetPlaceholderCoords],
     );
 }

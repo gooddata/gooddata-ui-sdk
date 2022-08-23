@@ -238,31 +238,35 @@ export const selectAllCustomWidgets = createSelector(selectAllWidgets, (allWidge
     return allWidgets.filter(isCustomWidget);
 });
 
+function getWidgetCoordinates(layout: IDashboardLayout<ExtendedDashboardWidget>, ref: ObjRef) {
+    for (let sectionIndex = 0; sectionIndex < layout.sections.length; sectionIndex++) {
+        const section = layout.sections[sectionIndex];
+
+        for (let itemIndex = 0; itemIndex < section.items.length; itemIndex++) {
+            const item = section.items[itemIndex];
+
+            if (areObjRefsEqual(item.widget?.ref, ref)) {
+                return {
+                    sectionIndex,
+                    itemIndex,
+                };
+            }
+        }
+    }
+
+    return undefined;
+}
+
 /**
  * Selects layout coordinates for a given widget.
  *
  * @alpha
  */
 export const selectWidgetCoordinatesByRef = createMemoizedSelector((ref: ObjRef) => {
-    return createSelector(selectWidgetByRef(ref), selectLayout, (widget, layout): ILayoutCoordinates => {
-        invariant(widget, `widget with ref ${objRefToString(ref)} does not exist in the state`);
-
-        for (let sectionIndex = 0; sectionIndex < layout.sections.length; sectionIndex++) {
-            const section = layout.sections[sectionIndex];
-
-            for (let itemIndex = 0; itemIndex < section.items.length; itemIndex++) {
-                const item = section.items[itemIndex];
-
-                if (areObjRefsEqual(item.widget?.ref, ref)) {
-                    return {
-                        sectionIndex,
-                        itemIndex,
-                    };
-                }
-            }
-        }
-
-        invariant(false, `widget with ref ${objRefToString(ref)} does not exist in the state`);
+    return createSelector(selectLayout, (layout): ILayoutCoordinates => {
+        const coords = getWidgetCoordinates(layout, ref);
+        invariant(coords, `widget with ref ${objRefToString(ref)} does not exist in the state`);
+        return coords;
     });
 });
 
@@ -276,6 +280,17 @@ export const selectWidgetPlaceholder = createSelector(selectAllCustomWidgets, (c
 /**
  * @internal
  */
+export const selectWidgetPlaceholderCoordinates = createSelector(
+    selectWidgetPlaceholder,
+    selectLayout,
+    (widgetPlaceholder, layout) => {
+        return widgetPlaceholder ? getWidgetCoordinates(layout, widgetPlaceholder.ref) : undefined;
+    },
+);
+
+/**
+ * @internal
+ */
 export const selectInsightWidgetPlaceholder = createSelector(selectAllCustomWidgets, (customWidgets) => {
     return customWidgets.find(isInsightPlaceholderWidget);
 });
@@ -283,6 +298,28 @@ export const selectInsightWidgetPlaceholder = createSelector(selectAllCustomWidg
 /**
  * @internal
  */
+export const selectInsightWidgetPlaceholderCoordinates = createSelector(
+    selectInsightWidgetPlaceholder,
+    selectLayout,
+    (widgetPlaceholder, layout) => {
+        return widgetPlaceholder ? getWidgetCoordinates(layout, widgetPlaceholder.ref) : undefined;
+    },
+);
+
+/**
+ * @internal
+ */
 export const selectKpiWidgetPlaceholder = createSelector(selectAllCustomWidgets, (customWidgets) => {
     return customWidgets.find(isKpiPlaceholderWidget);
 });
+
+/**
+ * @internal
+ */
+export const selectKpiWidgetPlaceholderCoordinates = createSelector(
+    selectKpiWidgetPlaceholder,
+    selectLayout,
+    (widgetPlaceholder, layout) => {
+        return widgetPlaceholder ? getWidgetCoordinates(layout, widgetPlaceholder.ref) : undefined;
+    },
+);

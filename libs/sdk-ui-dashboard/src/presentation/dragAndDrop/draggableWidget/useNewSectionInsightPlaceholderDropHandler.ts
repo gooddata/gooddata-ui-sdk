@@ -38,7 +38,7 @@ export function useNewSectionInsightPlaceholderDropHandler(sectionIndex: number)
                         gridWidth: sizeInfo.width.default!,
                     },
                 },
-                widget: newInsightPlaceholderWidget(sectionIndex, 0, true),
+                widget: newInsightPlaceholderWidget(),
             },
         ]);
     }, [addNewSectionWithInsightPlaceholder, sectionIndex, settings]);

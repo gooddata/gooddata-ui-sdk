@@ -6,7 +6,7 @@ import {
     uiActions,
     eagerRemoveSectionItem,
     useDashboardSelector,
-    selectWidgetPlaceholder,
+    selectWidgetPlaceholderCoordinates,
 } from "../../../model";
 
 /**
@@ -14,15 +14,20 @@ import {
  */
 export function useWidgetDragEndHandler() {
     const dispatch = useDashboardDispatch();
-    const widgetPlaceholder = useDashboardSelector(selectWidgetPlaceholder);
+    const widgetPlaceholderCoords = useDashboardSelector(selectWidgetPlaceholderCoordinates);
 
     return useCallback(
         (didDrop: boolean) => {
-            if (!didDrop && widgetPlaceholder) {
-                dispatch(eagerRemoveSectionItem(widgetPlaceholder.sectionIndex, widgetPlaceholder.itemIndex));
+            if (!didDrop && widgetPlaceholderCoords) {
+                dispatch(
+                    eagerRemoveSectionItem(
+                        widgetPlaceholderCoords.sectionIndex,
+                        widgetPlaceholderCoords.itemIndex,
+                    ),
+                );
             }
             dispatch(uiActions.setIsDraggingWidget(false));
         },
-        [dispatch, widgetPlaceholder],
+        [dispatch, widgetPlaceholderCoords],
     );
 }

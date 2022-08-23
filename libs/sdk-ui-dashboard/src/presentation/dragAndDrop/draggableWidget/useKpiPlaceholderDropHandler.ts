@@ -9,8 +9,8 @@ import {
     useDashboardSelector,
     uiActions,
     replaceSectionItem,
-    selectWidgetPlaceholder,
     useDashboardCommandProcessing,
+    selectWidgetPlaceholderCoordinates,
 } from "../../../model";
 import { getSizeInfo } from "../../../_staging/layout/sizing";
 import { KPI_PLACEHOLDER_WIDGET_ID, newKpiPlaceholderWidget } from "../../../widgets";
@@ -18,7 +18,7 @@ import { KPI_PLACEHOLDER_WIDGET_ID, newKpiPlaceholderWidget } from "../../../wid
 export function useKpiPlaceholderDropHandler() {
     const dispatch = useDashboardDispatch();
     const settings = useDashboardSelector(selectSettings);
-    const widgetPlaceholder = useDashboardSelector(selectWidgetPlaceholder);
+    const widgetPlaceholderCoords = useDashboardSelector(selectWidgetPlaceholderCoordinates);
 
     const { run: replaceKpiOntoPlaceholder } = useDashboardCommandProcessing({
         commandCreator: replaceSectionItem,
@@ -33,21 +33,18 @@ export function useKpiPlaceholderDropHandler() {
         },
     });
 
-    return useCallback(
-        (sectionIndex: number, itemIndex: number, isLastInSection: boolean) => {
-            const sizeInfo = getSizeInfo(settings, "kpi");
-            invariant(widgetPlaceholder, "cannot drop onto placeholder, there is none");
-            replaceKpiOntoPlaceholder(widgetPlaceholder.sectionIndex, widgetPlaceholder.itemIndex, {
-                type: "IDashboardLayoutItem",
-                size: {
-                    xl: {
-                        gridHeight: sizeInfo.height.default!,
-                        gridWidth: sizeInfo.width.default!,
-                    },
+    return useCallback(() => {
+        const sizeInfo = getSizeInfo(settings, "kpi");
+        invariant(widgetPlaceholderCoords, "cannot drop onto placeholder, there is none");
+        replaceKpiOntoPlaceholder(widgetPlaceholderCoords.sectionIndex, widgetPlaceholderCoords.itemIndex, {
+            type: "IDashboardLayoutItem",
+            size: {
+                xl: {
+                    gridHeight: sizeInfo.height.default!,
+                    gridWidth: sizeInfo.width.default!,
                 },
-                widget: newKpiPlaceholderWidget(sectionIndex, itemIndex, isLastInSection),
-            });
-        },
-        [replaceKpiOntoPlaceholder, settings, widgetPlaceholder],
-    );
+            },
+            widget: newKpiPlaceholderWidget(),
+        });
+    }, [replaceKpiOntoPlaceholder, settings, widgetPlaceholderCoords]);
 }

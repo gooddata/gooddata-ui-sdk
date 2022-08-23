@@ -8,6 +8,7 @@ import {
     replaceSectionItem,
     selectAllCatalogMeasuresMap,
     selectSettings,
+    selectWidgetCoordinatesByRef,
     uiActions,
     useDashboardCommandProcessing,
     useDashboardDispatch,
@@ -29,6 +30,7 @@ export const KpiPlaceholderConfigurationPanel: React.FC<IKpiPlaceholderConfigura
 
     const settings = useDashboardSelector(selectSettings);
     const measuresMap = useDashboardSelector(selectAllCatalogMeasuresMap);
+    const { itemIndex, sectionIndex } = useDashboardSelector(selectWidgetCoordinatesByRef(widget.ref));
 
     const replaceKpiProcessing = useDashboardCommandProcessing({
         commandCreator: replaceSectionItem,
@@ -50,7 +52,7 @@ export const KpiPlaceholderConfigurationPanel: React.FC<IKpiPlaceholderConfigura
             const sizeInfo = getSizeInfo(settings, "kpi");
 
             // replace the placeholder that is already in place
-            replaceKpiProcessing.run(widget.sectionIndex, widget.itemIndex, {
+            replaceKpiProcessing.run(sectionIndex, itemIndex, {
                 type: "IDashboardLayoutItem",
                 size: {
                     xl: {
@@ -73,13 +75,13 @@ export const KpiPlaceholderConfigurationPanel: React.FC<IKpiPlaceholderConfigura
                 },
             });
         },
-        [measuresMap, settings, replaceKpiProcessing, widget.sectionIndex, widget.itemIndex],
+        [measuresMap, settings, replaceKpiProcessing, sectionIndex, itemIndex],
     );
 
     const handlePanelClosed = useCallback(() => {
         dispatch(uiActions.setConfigurationPanelOpened(false));
-        dispatch(eagerRemoveSectionItem(widget.sectionIndex, widget.itemIndex));
-    }, [dispatch, widget.itemIndex, widget.sectionIndex]);
+        dispatch(eagerRemoveSectionItem(sectionIndex, itemIndex));
+    }, [dispatch, itemIndex, sectionIndex]);
 
     return <KpiConfigurationPanelCore onMeasureChange={handleMeasureChanged} onClose={handlePanelClosed} />;
 };

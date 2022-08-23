@@ -3,7 +3,13 @@ import React, { useEffect, useRef } from "react";
 import invariant from "ts-invariant";
 
 import { isKpiPlaceholderWidget } from "../../../widgets";
-import { eagerRemoveSectionItem, useDashboardDispatch, useWidgetSelection } from "../../../model";
+import {
+    eagerRemoveSectionItem,
+    selectWidgetCoordinatesByRef,
+    useDashboardDispatch,
+    useDashboardSelector,
+    useWidgetSelection,
+} from "../../../model";
 import { DashboardItem, DashboardItemContent } from "../../presentationComponents";
 import { ConfigurationBubble } from "../common";
 import { CustomDashboardWidgetComponent } from "../widget/types";
@@ -17,6 +23,7 @@ export const DefaultDashboardKpiPlaceholderWidget: CustomDashboardWidgetComponen
     invariant(isKpiPlaceholderWidget(widget));
 
     const dispatch = useDashboardDispatch();
+    const { itemIndex, sectionIndex } = useDashboardSelector(selectWidgetCoordinatesByRef(widget.ref));
 
     const { isSelectable, isSelected } = useWidgetSelection(widget.ref);
 
@@ -32,9 +39,9 @@ export const DefaultDashboardKpiPlaceholderWidget: CustomDashboardWidgetComponen
         // if the widget was selected in the past and is now not selected, it has just been unselected
         // -> remove its widget placeholder
         if (wasSelected.current && !isSelected) {
-            dispatch(eagerRemoveSectionItem(widget.sectionIndex, widget.itemIndex));
+            dispatch(eagerRemoveSectionItem(sectionIndex, itemIndex));
         }
-    }, [dispatch, isSelected, widget.itemIndex, widget.sectionIndex]);
+    }, [dispatch, isSelected, itemIndex, sectionIndex]);
 
     return (
         <DashboardItem className="is-selected is-placeholder is-edit-mode" screen={screen}>

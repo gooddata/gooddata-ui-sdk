@@ -7,9 +7,6 @@ import { ICustomWidget, newCustomWidget } from "../../model/types/layoutTypes";
  */
 export interface KpiPlaceholderWidget extends ICustomWidget {
     readonly customType: "gd-kpi-placeholder";
-    readonly sectionIndex: number;
-    readonly itemIndex: number;
-    readonly isLastInSection: boolean;
 }
 
 /**
@@ -30,16 +27,8 @@ export const KPI_PLACEHOLDER_WIDGET_ID = "__kpiPlaceholder__";
 /**
  * @alpha
  */
-export function newKpiPlaceholderWidget(
-    sectionIndex: number,
-    itemIndex: number,
-    isLastInSection: boolean,
-): KpiPlaceholderWidget {
-    return newCustomWidget(KPI_PLACEHOLDER_WIDGET_ID, "gd-kpi-placeholder", {
-        sectionIndex,
-        itemIndex,
-        isLastInSection,
-    }) as KpiPlaceholderWidget;
+export function newKpiPlaceholderWidget(): KpiPlaceholderWidget {
+    return newCustomWidget(KPI_PLACEHOLDER_WIDGET_ID, "gd-kpi-placeholder");
 }
 
 /**
@@ -47,9 +36,6 @@ export function newKpiPlaceholderWidget(
  */
 export interface InsightPlaceholderWidget extends ICustomWidget {
     readonly customType: "gd-insight-placeholder";
-    readonly sectionIndex: number;
-    readonly itemIndex: number;
-    readonly isLastInSection: boolean;
 }
 
 /**
@@ -70,16 +56,8 @@ export const INSIGHT_PLACEHOLDER_WIDGET_ID = "__insightPlaceholder__";
 /**
  * @alpha
  */
-export function newInsightPlaceholderWidget(
-    sectionIndex: number,
-    itemIndex: number,
-    isLastInSection: boolean,
-): InsightPlaceholderWidget {
-    return newCustomWidget(INSIGHT_PLACEHOLDER_WIDGET_ID, "gd-insight-placeholder", {
-        sectionIndex,
-        itemIndex,
-        isLastInSection,
-    }) as InsightPlaceholderWidget;
+export function newInsightPlaceholderWidget(): InsightPlaceholderWidget {
+    return newCustomWidget(INSIGHT_PLACEHOLDER_WIDGET_ID, "gd-insight-placeholder");
 }
 
 /**
@@ -87,9 +65,6 @@ export function newInsightPlaceholderWidget(
  */
 export interface PlaceholderWidget extends ICustomWidget {
     readonly customType: "gd-widget-placeholder";
-    readonly sectionIndex: number;
-    readonly itemIndex: number;
-    readonly isLastInSection: boolean;
     readonly isInitial?: boolean;
 }
 
@@ -121,16 +96,8 @@ export const PLACEHOLDER_WIDGET_ID = "__placeholder__";
 /**
  * @alpha
  */
-export function newPlaceholderWidget(
-    sectionIndex: number,
-    itemIndex: number,
-    isLastInSection: boolean,
-): PlaceholderWidget {
-    return newCustomWidget(PLACEHOLDER_WIDGET_ID, "gd-widget-placeholder", {
-        sectionIndex,
-        itemIndex,
-        isLastInSection,
-    }) as PlaceholderWidget;
+export function newPlaceholderWidget(): PlaceholderWidget {
+    return newCustomWidget(PLACEHOLDER_WIDGET_ID, "gd-widget-placeholder");
 }
 
 /**
@@ -138,9 +105,6 @@ export function newPlaceholderWidget(
  */
 export function newInitialPlaceholderWidget(): PlaceholderWidget {
     return newCustomWidget(PLACEHOLDER_WIDGET_ID, "gd-widget-placeholder", {
-        sectionIndex: 0,
-        itemIndex: 0,
-        isLastInSection: true,
         isInitial: true,
     }) as PlaceholderWidget;
 }

@@ -3,7 +3,13 @@ import React from "react";
 import invariant from "ts-invariant";
 
 import { CustomDashboardWidgetComponent } from "../../widget/types";
-import { selectSettings, useDashboardDispatch, useDashboardSelector } from "../../../model";
+import {
+    selectLayout,
+    selectSettings,
+    selectWidgetCoordinatesByRef,
+    useDashboardDispatch,
+    useDashboardSelector,
+} from "../../../model";
 import { useDashboardDrop } from "../useDashboardDrop";
 import { WidgetDropZoneBox } from "./WidgetDropZoneBox";
 import { isPlaceholderWidget } from "../../../widgets";
@@ -20,10 +26,12 @@ export const WidgetDropZone: CustomDashboardWidgetComponent = (props) => {
     const { widget } = props;
     invariant(isPlaceholderWidget(widget));
 
-    const { sectionIndex, itemIndex, isLastInSection } = widget;
-
     const dispatch = useDashboardDispatch();
     const settings = useDashboardSelector(selectSettings);
+    const coords = useDashboardSelector(selectWidgetCoordinatesByRef(widget.ref));
+    const layout = useDashboardSelector(selectLayout);
+
+    const isLastInSection = coords.itemIndex === layout.sections[coords.sectionIndex]?.items.length - 1;
 
     const handleInsightListItemDrop = useInsightListItemDropHandler();
     const handleInsightPlaceholderDrop = useInsightPlaceholderDropHandler();
@@ -37,19 +45,16 @@ export const WidgetDropZone: CustomDashboardWidgetComponent = (props) => {
                     handleInsightListItemDrop(item.insight);
                 }
                 if (isKpiPlaceholderDraggableItem(item)) {
-                    handleKpiPlaceholderDrop(sectionIndex, itemIndex, isLastInSection);
+                    handleKpiPlaceholderDrop();
                 }
                 if (isInsightPlaceholderDraggableItem(item)) {
-                    handleInsightPlaceholderDrop(sectionIndex, itemIndex, isLastInSection);
+                    handleInsightPlaceholderDrop();
                 }
             },
         },
         [
             dispatch,
             settings,
-            sectionIndex,
-            itemIndex,
-            isLastInSection,
             handleInsightListItemDrop,
             handleInsightPlaceholderDrop,
             handleKpiPlaceholderDrop,
