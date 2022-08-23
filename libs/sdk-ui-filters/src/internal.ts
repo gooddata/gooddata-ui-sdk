@@ -63,3 +63,5 @@ export {
     AttributeDisplayFormSelect,
     IAttributeDisplayFormSelectProps,
 } from "./AttributeFilter@next/Components/Addons/AttributeDisplayFormSelect/AttributeDisplayFormSelect";
+
+export { EmptyElementsSearchBar } from "./AttributeFilter@next/Components/Addons/EmptyElementsSearchBar";

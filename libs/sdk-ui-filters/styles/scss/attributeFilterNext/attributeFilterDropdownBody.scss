@@ -4,10 +4,8 @@
 .gd-attribute-filter-dropdown-body__next {
     display: flex;
     flex-direction: column;
-    width: 245px;
 
     @media #{$xsmall-only}, #{$small-only} {
-        width: 100%;
         height: 100%;
     }
 }

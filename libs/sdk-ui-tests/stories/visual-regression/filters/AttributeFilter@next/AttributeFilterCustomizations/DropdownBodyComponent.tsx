@@ -32,16 +32,49 @@ const CustomDropdownBody = (_props: IAttributeFilterDropdownBodyProps) => {
     );
 };
 
-storiesOf(`${FilterStories}@next/Customization/DropdownBodyComponent`).add("Custom component", () => {
+const CustomDropdownBodyDefinedWidth = (_props: IAttributeFilterDropdownBodyProps) => {
     return (
-        <div style={wrapperStyle} className="screenshot-target">
-            <AttributeFilterV2
-                backend={backend}
-                workspace={ReferenceWorkspaceId}
-                filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
-                onApply={action("onApply")}
-                DropdownBodyComponent={CustomDropdownBody}
-            />
+        <div
+            style={{
+                border: "2px solid black",
+                display: "flex",
+                margin: 0,
+                justifyContent: "center",
+                background: "pink",
+                alignItems: "center",
+                padding: 10,
+                width: 400,
+            }}
+        >
+            Custom dropdown body content
         </div>
     );
-});
+};
+
+storiesOf(`${FilterStories}@next/Customization/DropdownBodyComponent`)
+    .add("Custom component", () => {
+        return (
+            <div style={wrapperStyle} className="screenshot-target">
+                <AttributeFilterV2
+                    backend={backend}
+                    workspace={ReferenceWorkspaceId}
+                    filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
+                    onApply={action("onApply")}
+                    DropdownBodyComponent={CustomDropdownBody}
+                />
+            </div>
+        );
+    })
+    .add("Custom component with defined width", () => {
+        return (
+            <div style={wrapperStyle} className="screenshot-target">
+                <AttributeFilterV2
+                    backend={backend}
+                    workspace={ReferenceWorkspaceId}
+                    filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
+                    onApply={action("onApply")}
+                    DropdownBodyComponent={CustomDropdownBodyDefinedWidth}
+                />
+            </div>
+        );
+    });
