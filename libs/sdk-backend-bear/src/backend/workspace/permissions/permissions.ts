@@ -3,6 +3,7 @@ import { IWorkspacePermissionsService } from "@gooddata/sdk-backend-spi";
 import { IWorkspacePermissions } from "@gooddata/sdk-model";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { convertPermissions } from "../../../convertors/toBackend/WorkspaceConverter";
+import { userLoginMd5FromAuthenticatedPrincipal } from "../../../utils/api";
 
 const emptyPermissions = { permissions: {} };
 
@@ -10,11 +11,10 @@ export class BearWorkspacePermissionsFactory implements IWorkspacePermissionsSer
     constructor(public readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}
 
     public async getPermissionsForCurrentUser(): Promise<IWorkspacePermissions> {
-        const bootstrapResource = await this.authCall((sdk) =>
-            sdk.user.getBootstrapResource({ projectId: this.workspace }),
-        );
-        return convertPermissions(
-            bootstrapResource.bootstrapResource.current?.projectPermissions || emptyPermissions,
-        );
+        const permissions = await this.authCall(async (sdk, { getPrincipal }) => {
+            const userLoginMd5 = await userLoginMd5FromAuthenticatedPrincipal(getPrincipal);
+            return sdk.project.getPermissions(this.workspace, userLoginMd5);
+        });
+        return convertPermissions(permissions.associatedPermissions || emptyPermissions);
     }
 }

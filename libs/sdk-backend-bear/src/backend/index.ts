@@ -74,6 +74,8 @@ const CAPABILITIES: IBackendCapabilities = {
     supportsHierarchicalWorkspaces: false,
     supportsCustomColorPalettes: true,
     supportsOrganizationSettings: false,
+    supportsInlineMeasures: false,
+    supportsBootstrapResource: true,
 };
 
 /**
@@ -104,6 +106,7 @@ type BearLegacyFunctions = {
         projectId?: string;
         productId?: string;
         clientId?: string;
+        loadAnalyticalDashboards?: boolean;
     }): Promise<GdcUser.IBootstrapResource>;
     ajaxSetup?(setup: any): void;
     log?(uri: string, logMessages: string[]): Promise<any>;

@@ -76,6 +76,7 @@ const CAPABILITIES: IBackendCapabilities = {
     supportsCustomColorPalettes: true,
     supportsOrganizationSettings: true,
     supportsInlineMeasures: true,
+    supportsBootstrapResource: false,
 };
 
 /**

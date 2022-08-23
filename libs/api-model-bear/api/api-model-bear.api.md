@@ -1818,6 +1818,18 @@ export namespace GdcMetadataObject {
     export type WrappedObject = GdcMetadata.IWrappedAttribute | GdcMetadata.IWrappedMetric | GdcMetadata.IWrappedFact | GdcMetadata.IWrappedAttributeDisplayForm | GdcMetadata.IWrappedKpiAlert | GdcMetadata.IWrappedDataSet | GdcMetadata.IWrappedPrompt | GdcMetadata.IWrappedTheme | GdcDashboard.IWrappedAnalyticalDashboard | GdcFilterContext.IWrappedFilterContext | GdcFilterContext.IWrappedTempFilterContext | GdcKpi.IWrappedKPI | GdcScheduledMail.IWrappedScheduledMail | GdcProjectDashboard.IWrappedProjectDashboard | GdcExtendedDateFilters.IWrappedDateFilterConfig | GdcVisualizationWidget.IWrappedVisualizationWidget | GdcVisualizationObject.IVisualization | GdcVisualizationClass.IVisualizationClassWrapped | GdcDataSets.IWrappedDataSet | GdcReport.IWrappedReport | GdcReport.IWrappedReportDefinition | GdcDashboardPlugin.IWrappedDashboardPlugin;
 }
 
+// @public (undocumented)
+export namespace GdcOrganization {
+    // (undocumented)
+    export interface IOrganization {
+        // (undocumented)
+        organization: {
+            id: string;
+            name: string;
+        };
+    }
+}
+
 // @public
 export namespace GdcPaging {
     // (undocumented)
@@ -1838,6 +1850,31 @@ export namespace GdcPaging {
 
 // @public (undocumented)
 export namespace GdcProject {
+    // (undocumented)
+    export interface IProjectId {
+        // (undocumented)
+        projectId: string;
+    }
+    // (undocumented)
+    export interface IProjectLcmIdentifiers {
+        // (undocumented)
+        projectLcm: {
+            projectId?: string;
+            dataProductId?: string;
+            clientId?: string;
+            segmentId?: string;
+        };
+    }
+    // (undocumented)
+    export interface ITimezone {
+        // (undocumented)
+        timezone: {
+            id: string;
+            displayName: string;
+            shortDisplayName: string;
+            currentOffsetMs: number;
+        };
+    }
     // (undocumented)
     export interface IUserProject {
         // (undocumented)
@@ -2124,6 +2161,28 @@ export namespace GdcUser {
     // (undocumented)
     export type DataUploadStatus = "PREPARED" | "RUNNING" | "OK" | "ERROR" | "WARNING";
     // (undocumented)
+    export interface IAccountInfo {
+        // (undocumented)
+        firstName: string;
+        // (undocumented)
+        lastName: string;
+        // (undocumented)
+        login: string;
+        // (undocumented)
+        loginMD5: string;
+        // (undocumented)
+        logoutUri: string;
+        // (undocumented)
+        organizationName: string;
+        // (undocumented)
+        profileUri: string;
+    }
+    // (undocumented)
+    export interface IAccountInfoResponse {
+        // (undocumented)
+        accountInfo: IAccountInfo;
+    }
+    // (undocumented)
     export interface IAccountSetting {
         // (undocumented)
         authenticationModes?: Array<"SSO" | "PASSWORD">;
@@ -2172,6 +2231,11 @@ export namespace GdcUser {
         updated?: Timestamp;
         // (undocumented)
         verifyPassword?: string;
+    }
+    // (undocumented)
+    export interface IAssociatedProjectPermissions {
+        // (undocumented)
+        associatedPermissions: IProjectPermissions;
     }
     // (undocumented)
     export interface IBootstrapResource {
@@ -2510,6 +2574,11 @@ export namespace GdcUser {
         walkMe?: string;
         // (undocumented)
         walkMeEnvironment?: string;
+    }
+    // (undocumented)
+    export interface IUserFeatureFlags {
+        // (undocumented)
+        featureFlags: IFeatureFlags;
     }
     // (undocumented)
     export interface IUserListItem {

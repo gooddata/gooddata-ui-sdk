@@ -13,6 +13,7 @@ import { sanitizeConfig, IConfigStorage, ConfigModule } from "./config";
 import { CatalogueModule } from "./catalogue";
 import { AttributesMapLoaderModule } from "./utils/attributesMapLoader";
 import { LdmModule } from "./ldm";
+import { OrganizationModule } from "./organization";
 
 /**
  * This package provides low-level functions for communication with the GoodData platform.
@@ -53,6 +54,7 @@ export class SDK {
     public catalogue: CatalogueModule;
     public ldm: LdmModule;
     public configStorage: IConfigStorage;
+    public organization: OrganizationModule;
     public utils: {
         loadAttributesMap: any;
         getAttributesDisplayForms: any;
@@ -72,6 +74,7 @@ export class SDK {
         this.dashboard = new DashboardModule(this.xhr);
         this.catalogue = new CatalogueModule(this.xhr, this.execution);
         this.ldm = new LdmModule(this.xhr);
+        this.organization = new OrganizationModule(this.xhr);
 
         const attributesMapLoaderModule = new AttributesMapLoaderModule(this.md);
         this.utils = {

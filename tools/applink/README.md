@@ -56,6 +56,8 @@ The application supports several global hotkeys:
 
 ### autoBuild
 
+Start `npm run applink autoBuild`.
+
 The autoBuild mode is a special mode of the devConsole suitable for automation of incremental SDK library builds. In
 this mode the dev console will not work towards updating some target application with latest build artifacts.
 

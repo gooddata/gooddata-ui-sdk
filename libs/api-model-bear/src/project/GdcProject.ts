@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { GdcPaging } from "../base/GdcPaging";
 import { Uri } from "../aliases";
 
@@ -34,6 +34,28 @@ export namespace GdcProject {
         userProjects: {
             items: IUserProject[];
             paging: GdcPaging.IBearPagingWithTotalCount;
+        };
+    }
+
+    export interface IProjectLcmIdentifiers {
+        projectLcm: {
+            projectId?: string;
+            dataProductId?: string;
+            clientId?: string;
+            segmentId?: string;
+        };
+    }
+
+    export interface IProjectId {
+        projectId: string;
+    }
+
+    export interface ITimezone {
+        timezone: {
+            id: string;
+            displayName: string;
+            shortDisplayName: string;
+            currentOffsetMs: number;
         };
     }
 }
