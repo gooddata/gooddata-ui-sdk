@@ -1,16 +1,20 @@
 // (C) 2022 GoodData Corporation
 import React, { useMemo } from "react";
+import { useMediaQuery } from "@gooddata/sdk-ui-kit";
 import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext";
 import { useAttributeFilterContext } from "../../Context/AttributeFilterContext";
 import { IAttributeFilterDropdownBodyProps } from "./types";
+import { DEFAULT_DROPDOWN_BODY_WIDTH } from "../../constants";
 
 /**
  * @internal
  */
 export const AttributeFilterDropdownBody: React.FC<IAttributeFilterDropdownBodyProps> = (props) => {
-    const { onApplyButtonClick, onCloseButtonClick } = props;
+    const { onApplyButtonClick, onCloseButtonClick, width = DEFAULT_DROPDOWN_BODY_WIDTH } = props;
 
     const { DropdownActionsComponent, ElementsSelectComponent } = useAttributeFilterComponentsContext();
+
+    const isMobile = useMediaQuery("mobileDevice");
 
     const {
         initialElementsPageError,
@@ -36,8 +40,11 @@ export const AttributeFilterDropdownBody: React.FC<IAttributeFilterDropdownBodyP
         return parentFilterAttributes.map((attr) => attr.title);
     }, [parentFilterAttributes]);
 
+    const usedWidth = !isMobile ? width : "100%";
+    const style = { width: usedWidth };
+
     return (
-        <div className="gd-attribute-filter-dropdown-body__next">
+        <div className="gd-attribute-filter-dropdown-body__next" style={style}>
             <ElementsSelectComponent
                 isInverted={isWorkingSelectionInverted}
                 isLoading={isLoadingInitialElementsPage}

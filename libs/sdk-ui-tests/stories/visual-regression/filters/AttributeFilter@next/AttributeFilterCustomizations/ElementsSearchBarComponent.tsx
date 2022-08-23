@@ -36,16 +36,34 @@ const CustomElementsSearchBar = (props: IAttributeFilterElementsSearchBarProps) 
     );
 };
 
-storiesOf(`${FilterStories}@next/Customization/ElementsSearchBarComponent`).add("Custom component", () => {
-    return (
-        <div style={wrapperStyle} className="screenshot-target">
-            <AttributeFilterV2
-                backend={backend}
-                workspace={ReferenceWorkspaceId}
-                filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
-                onApply={action("on-apply")}
-                ElementsSearchBarComponent={CustomElementsSearchBar}
-            />
-        </div>
-    );
-});
+export const EmptyElementsSearchBar: React.VFC<IAttributeFilterElementsSearchBarProps> = (_props) => {
+    return <div style={{ paddingBottom: 10 }} />;
+};
+
+storiesOf(`${FilterStories}@next/Customization/ElementsSearchBarComponent`)
+    .add("Custom component", () => {
+        return (
+            <div style={wrapperStyle} className="screenshot-target">
+                <AttributeFilterV2
+                    backend={backend}
+                    workspace={ReferenceWorkspaceId}
+                    filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
+                    onApply={action("on-apply")}
+                    ElementsSearchBarComponent={CustomElementsSearchBar}
+                />
+            </div>
+        );
+    })
+    .add("Empty component", () => {
+        return (
+            <div style={wrapperStyle} className="screenshot-target">
+                <AttributeFilterV2
+                    backend={backend}
+                    workspace={ReferenceWorkspaceId}
+                    filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
+                    onApply={action("on-apply")}
+                    ElementsSearchBarComponent={EmptyElementsSearchBar}
+                />
+            </div>
+        );
+    });

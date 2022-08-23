@@ -120,10 +120,9 @@ storiesOf(`${FilterStories}@next/AttributeFilter`)
                     <AttributeFilterV2
                         backend={backend}
                         workspace={ReferenceWorkspaceId}
-                        filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [
-                            ElementUris.WonderKid,
-                            ElementUris.Explorer,
-                        ])}
+                        filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, {
+                            uris: [ElementUris.WonderKid, ElementUris.Explorer],
+                        })}
                         onApply={action("on-apply")}
                     />
                 </div>
@@ -151,11 +150,9 @@ storiesOf(`${FilterStories}@next/AttributeFilter`)
                     <AttributeFilterV2
                         backend={backend}
                         workspace={ReferenceWorkspaceId}
-                        filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [
-                            ElementUris.WonderKid,
-                            ElementUris.Explorer,
-                            ElementUris.TouchAll,
-                        ])}
+                        filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, {
+                            uris: [ElementUris.WonderKid, ElementUris.Explorer, ElementUris.TouchAll],
+                        })}
                         onApply={action("on-apply")}
                         titleWithSelection={true}
                     />
@@ -188,11 +185,9 @@ storiesOf(`${FilterStories}@next/AttributeFilter`)
                     <AttributeFilterV2
                         backend={backend}
                         workspace={ReferenceWorkspaceId}
-                        filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [
-                            ElementUris.WonderKid,
-                            ElementUris.Explorer,
-                            ElementUris.TouchAll,
-                        ])}
+                        filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, {
+                            uris: [ElementUris.WonderKid, ElementUris.Explorer, ElementUris.TouchAll],
+                        })}
                         onApply={action("on-apply")}
                         titleWithSelection={true}
                     />
@@ -225,15 +220,17 @@ storiesOf(`${FilterStories}@next/AttributeFilter`)
                     <AttributeFilterV2
                         backend={backend}
                         workspace={ReferenceWorkspaceId}
-                        filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [
-                            ElementUris.CompuSci,
-                            ElementUris.Educationly,
-                            ElementUris.Explorer,
-                            ElementUris["Grammar Plus"],
-                            ElementUris.PhoenixSoft,
-                            ElementUris.TouchAll,
-                            ElementUris.WonderKid,
-                        ])}
+                        filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, {
+                            uris: [
+                                ElementUris.CompuSci,
+                                ElementUris.Educationly,
+                                ElementUris.Explorer,
+                                ElementUris["Grammar Plus"],
+                                ElementUris.PhoenixSoft,
+                                ElementUris.TouchAll,
+                                ElementUris.WonderKid,
+                            ],
+                        })}
                         onApply={action("on-apply")}
                     />
                 </div>
