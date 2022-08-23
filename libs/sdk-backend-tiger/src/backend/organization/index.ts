@@ -3,6 +3,7 @@
 import {
     IOrganization,
     IOrganizations,
+    IOrganizationSettingsService,
     IOrganizationStylingService,
     ISecuritySettingsService,
 } from "@gooddata/sdk-backend-spi";
@@ -11,6 +12,7 @@ import { IOrganizationDescriptor } from "@gooddata/sdk-model";
 import { SecuritySettingsService } from "./securitySettings";
 import { TigerAuthenticatedCallGuard } from "../../types";
 import { OrganizationStylingService } from "./styling";
+import { OrganizationSettingsService } from "./settings";
 
 export class TigerOrganization implements IOrganization {
     constructor(
@@ -43,6 +45,10 @@ export class TigerOrganization implements IOrganization {
 
     public styling(): IOrganizationStylingService {
         return new OrganizationStylingService(this.authCall);
+    }
+
+    public settings(): IOrganizationSettingsService {
+        return new OrganizationSettingsService(this.authCall);
     }
 }
 

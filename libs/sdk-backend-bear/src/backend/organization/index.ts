@@ -3,8 +3,10 @@
 import {
     IOrganization,
     IOrganizations,
+    IOrganizationSettingsService,
     IOrganizationStylingService,
     ISecuritySettingsService,
+    NotSupported,
 } from "@gooddata/sdk-backend-spi";
 import { IOrganizationDescriptor } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
@@ -43,6 +45,10 @@ export class BearOrganization implements IOrganization {
 
     public styling(): IOrganizationStylingService {
         return new OrganizationStylingService();
+    }
+
+    public settings(): IOrganizationSettingsService {
+        throw new NotSupported("Backend does not support organization settings service");
     }
 }
 

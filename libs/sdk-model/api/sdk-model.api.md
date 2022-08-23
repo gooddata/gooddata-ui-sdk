@@ -2074,6 +2074,7 @@ export interface ISettings {
     hideKpiDrillInEmbedded?: boolean;
     platformEdition?: PlatformEdition;
     responsiveUiDateFormat?: string;
+    whiteLabeling?: IWhiteLabeling;
 }
 
 // @public
@@ -2621,6 +2622,14 @@ export interface IVisualizationClassBody {
     title: string;
     uri: string;
     url: string;
+}
+
+// @public
+export interface IWhiteLabeling {
+    appleTouchIconUrl?: string;
+    enabled: boolean;
+    faviconUrl?: string;
+    logoUrl?: string;
 }
 
 // @alpha (undocumented)

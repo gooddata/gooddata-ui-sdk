@@ -82,6 +82,7 @@ import { IThemeDefinition } from '@gooddata/sdk-model';
 import { IThemeMetadataObject } from '@gooddata/sdk-model';
 import { IUser as IUser_2 } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
+import { IWhiteLabeling } from '@gooddata/sdk-model';
 import { IWidget as IWidget_2 } from '@gooddata/sdk-model';
 import { IWidgetAlert as IWidgetAlert_2 } from '@gooddata/sdk-model';
 import { IWidgetAlertDefinition as IWidgetAlertDefinition_2 } from '@gooddata/sdk-model';
@@ -371,6 +372,7 @@ export interface IBackendCapabilities {
     supportsHyperlinkAttributeLabels?: boolean;
     supportsKpiWidget?: boolean;
     supportsObjectUris?: boolean;
+    supportsOrganizationSettings?: boolean;
     supportsOwners?: boolean;
     supportsRankingFilter?: boolean;
     supportsRankingFilterWithMeasureValueFilter?: boolean;
@@ -966,6 +968,7 @@ export interface IOrganization {
     getDescriptor(): Promise<IOrganizationDescriptor_2>;
     readonly organizationId: string;
     securitySettings(): ISecuritySettingsService;
+    settings(): IOrganizationSettingsService;
     styling(): IOrganizationStylingService;
 }
 
@@ -976,6 +979,11 @@ export interface IOrganizationDescriptor extends m.IOrganizationDescriptor {
 // @public
 export interface IOrganizations {
     getCurrentOrganization(): Promise<IOrganization>;
+}
+
+// @public
+export interface IOrganizationSettingsService {
+    setWhiteLabeling(whiteLabeling: IWhiteLabeling): Promise<void>;
 }
 
 // @public
