@@ -11,6 +11,7 @@
     line-height: 16px;
     cursor: pointer;
     user-select: none;
+    border-radius: 3px;
 
     &.gd-is-draggable {
         padding-left: 23px;
@@ -48,13 +49,16 @@
 
     &:hover {
         &.gd-is-draggable {
+            &:not(.gd-is-active, .gd-is-filtering) {
+                box-shadow: 0 1px 3px 0 $button-shadow-lighter, 0 2px 9px 0 $button-shadow-darker;
+            }
             &::before {
                 opacity: 1;
             }
         }
 
         &::after {
-            border-color: $gd-border-color;
+            border-color: $button-normal-hover-border-color;
         }
     }
 
@@ -271,6 +275,7 @@
     max-width: 120px;
     text-overflow: ellipsis;
     vertical-align: bottom;
+    color: var(--gd-palette-complementary-8, $default-gd-color-text);
 
     .overlay & {
         max-width: none;
@@ -281,4 +286,5 @@
     display: inline-block;
     flex: 0 0 auto;
     vertical-align: bottom;
+    color: var(--gd-palette-complementary-8, $default-gd-color-text);
 }
