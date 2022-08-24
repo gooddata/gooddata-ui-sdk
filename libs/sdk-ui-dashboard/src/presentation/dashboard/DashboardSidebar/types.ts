@@ -10,6 +10,11 @@ export interface ISidebarProps {
      * sidebar that decorates default side bar, then use this component to render the default sidebar.
      */
     DefaultSidebar: ComponentType<ISidebarProps>;
+
+    /**
+     * Specify className for configurationPanel.
+     */
+    configurationPanelClassName?: string;
 }
 
 /**

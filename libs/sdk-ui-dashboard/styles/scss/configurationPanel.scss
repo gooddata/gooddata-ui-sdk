@@ -9,6 +9,7 @@ $dialog-background: var(--gd-palette-complementary-0, #fcfcfd);
 
 .configuration-panel {
     width: 100%;
+    height: 100%;
     padding: 10px 0;
     background-color: $dialog-background;
 
@@ -447,4 +448,10 @@ $dialog-background: var(--gd-palette-complementary-0, #fcfcfd);
     .input-checkbox-label {
         display: inline-block;
     }
+}
+
+.configuration-panel-content {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
 }
