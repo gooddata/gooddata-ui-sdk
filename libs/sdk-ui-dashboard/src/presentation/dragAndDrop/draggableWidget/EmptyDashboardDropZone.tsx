@@ -62,9 +62,10 @@ export const EmptyDashboardDropZone: React.FC = () => {
 
     return (
         <div
-            className={cx("drag-info-placeholder", "s-last-drop-position", "dash-item", {
+            className={cx("drag-info-placeholder", "dash-item", {
                 [`type-${widgetCategory}`]: !!widgetCategory,
                 "type-none": !widgetCategory,
+                "s-last-drop-position": canDrop,
             })}
             ref={dropRef}
         >
