@@ -288,3 +288,21 @@
     vertical-align: bottom;
     color: var(--gd-palette-complementary-8, $default-gd-color-text);
 }
+
+.gd-attribute-filter-dropdown-simple-button__next {
+    max-width: 240px;
+
+    .gd-attribute-filter-dropdown-simple-button-text {
+        display: flex;
+    }
+
+    .gd-attribute-filter-dropdown-simple-button-selection {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .gd-attribute-filter-dropdown-simple-button-selection-count {
+        flex: 1 0 auto;
+        padding-left: 5px;
+    }
+}
