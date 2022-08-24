@@ -1711,7 +1711,7 @@
         "limit": 0
     },
     "stylingPicker.title.basic": {
-        "value": "Basic",
+        "value": "Default",
         "comment": "",
         "limit": 0
     },
@@ -1771,7 +1771,7 @@
         "limit": 0
     },
     "stylingPicker.item.delete.tooltip": {
-        "value": "Applied default item cannot be deleted.",
+        "value": "Applied item cannot be deleted.",
         "comment": "",
         "limit": 0
     }

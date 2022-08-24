@@ -45,14 +45,14 @@ describe("StylingPicker", () => {
 
     it("should render component with basic item selected by default", () => {
         renderComponent({});
-        expect(screen.getByText("Basic")).toBeInTheDocument();
+        expect(screen.getByText("Default")).toBeInTheDocument();
 
         expect(screen.getByLabelText("default_theme")).toBeChecked();
     });
 
     it("should be loading", () => {
         renderComponent({ isLoading: true });
-        expect(screen.queryByText("Basic")).not.toBeInTheDocument();
+        expect(screen.queryByText("Default")).not.toBeInTheDocument();
         expect(screen.getByLabelText("dialog-list-loading")).toBeInTheDocument();
     });
 
