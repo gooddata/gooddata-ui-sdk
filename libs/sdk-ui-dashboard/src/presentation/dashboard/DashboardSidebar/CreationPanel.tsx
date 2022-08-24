@@ -4,17 +4,17 @@ import { Typography } from "@gooddata/sdk-ui-kit";
 import compact from "lodash/compact";
 import sortBy from "lodash/sortBy";
 import { FormattedMessage } from "react-intl";
-import cx from "classnames";
 
 import { DraggableInsightList } from "./DraggableInsightList";
 import { selectSupportsKpiWidgetCapability, useDashboardSelector } from "../../../model";
 import { useDashboardComponentsContext } from "../../dashboardContexts";
+import cx from "classnames";
 
 interface ICreationPanelProps {
-    isSticky: boolean;
+    className?: string;
 }
 
-export const CreationPanel: React.FC<ICreationPanelProps> = ({ isSticky = false }) => {
+export const CreationPanel: React.FC<ICreationPanelProps> = ({ className }) => {
     const supportsKpis = useDashboardSelector(selectSupportsKpiWidgetCapability);
 
     const { KpiWidgetComponentSet, AttributeFilterComponentSet, InsightWidgetComponentSet } =
@@ -33,12 +33,8 @@ export const CreationPanel: React.FC<ICreationPanelProps> = ({ isSticky = false 
     }, [AttributeFilterComponentSet, KpiWidgetComponentSet, InsightWidgetComponentSet, supportsKpis]);
 
     return (
-        <div className="configuration-panel creation-panel">
-            <div
-                className={cx("flex-panel-full-vh-height", {
-                    "sticky-panel": isSticky,
-                })}
-            >
+        <div className={cx("configuration-panel creation-panel", className)}>
+            <div className="configuration-panel-content">
                 <Typography tagName="h2" className="flex-panel-item-nostretch">
                     <FormattedMessage id="visualizationsList.dragToAdd" />
                 </Typography>
@@ -52,7 +48,7 @@ export const CreationPanel: React.FC<ICreationPanelProps> = ({ isSticky = false 
                     <Typography tagName="h3">
                         <FormattedMessage id="visualizationsList.savedVisualizations" />
                     </Typography>
-                    <DraggableInsightList />
+                    <DraggableInsightList recalculateSizeReference={className} />
                 </div>
             </div>
         </div>

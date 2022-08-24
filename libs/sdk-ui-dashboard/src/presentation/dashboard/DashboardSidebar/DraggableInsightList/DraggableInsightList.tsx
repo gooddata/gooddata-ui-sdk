@@ -5,18 +5,18 @@ import { FlexDimensions } from "@gooddata/sdk-ui-kit";
 import { DraggableInsightListCore } from "./DraggableInsightListCore";
 
 interface IDraggableInsightListProps {
-    isSticky?: boolean;
+    recalculateSizeReference?: string;
     searchAutofocus?: boolean;
 }
 
 export const DraggableInsightList: React.FC<IDraggableInsightListProps> = (props) => {
-    const { isSticky, searchAutofocus } = props;
+    const { recalculateSizeReference, searchAutofocus } = props;
 
     const flexRef = useRef<FlexDimensions>(null);
 
     useEffect(() => {
         flexRef.current?.updateSize();
-    }, [isSticky]);
+    }, [recalculateSizeReference]);
 
     return (
         <div className="gd-visualizations-list gd-flex-item-stretch gd-flex-row-container">

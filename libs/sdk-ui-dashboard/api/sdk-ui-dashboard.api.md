@@ -4107,6 +4107,7 @@ export interface ISharingProperties {
 
 // @alpha (undocumented)
 export interface ISidebarProps {
+    configurationPanelClassName?: string;
     DefaultSidebar: ComponentType<ISidebarProps>;
 }
 
@@ -5744,7 +5745,7 @@ export const ShareDialog: (props: IShareDialogProps) => JSX.Element;
 export const ShareStatusIndicator: (props: IShareStatusProps) => JSX.Element;
 
 // @internal (undocumented)
-export const SidebarConfigurationPanel: () => JSX.Element;
+export const SidebarConfigurationPanel: React_2.FC<Omit<ISidebarProps, "DefaultSidebar">>;
 
 // @public
 export class SingleDashboardStoreAccessor {
