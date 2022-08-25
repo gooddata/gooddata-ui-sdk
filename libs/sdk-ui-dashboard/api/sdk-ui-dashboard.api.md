@@ -327,6 +327,9 @@ export const ButtonBar: (props: IButtonBarProps) => JSX.Element;
 // @internal (undocumented)
 export const CancelButton: (props: ICancelButtonProps) => JSX.Element;
 
+// @internal (undocumented)
+export const CancelEditDialog: React_2.FC<ICancelEditDialogProps>;
+
 // @internal
 export function cancelEditRenderMode(correlationId?: string): ChangeRenderMode;
 
@@ -2152,6 +2155,9 @@ export const DefaultButtonBar: React_2.FC<PropsWithChildren<IButtonBarProps>>;
 // @internal (undocumented)
 export function DefaultCancelButton({ isVisible, onCancelClick }: ICancelButtonProps): JSX.Element | null;
 
+// @internal (undocumented)
+export const DefaultCancelEditDialog: React_2.FC<ICancelEditDialogProps>;
+
 // @alpha
 export const DefaultDashboardAttributeFilter: (props: IDashboardAttributeFilterProps) => JSX.Element;
 
@@ -2789,6 +2795,14 @@ export interface ICancelButtonProps {
     isVisible: boolean;
     // (undocumented)
     onCancelClick: () => void;
+}
+
+// @internal (undocumented)
+export interface ICancelEditDialogProps {
+    // (undocumented)
+    onCancel: () => void;
+    // (undocumented)
+    onSubmit: () => void;
 }
 
 // @internal (undocumented)
@@ -5464,6 +5478,9 @@ itemIndex: number;
 // @internal
 export const selectIsAnalyticalDesignerEnabled: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
+// @internal (undocumented)
+export const selectIsCancelEditModeDialogOpen: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
+
 // @internal
 export const selectIsCircularDependency: (currentFilterLocalId: string, neighborFilterLocalid: string) => OutputSelector<DashboardState, boolean, (res: string[]) => boolean>;
 
@@ -5885,12 +5902,18 @@ payload: number;
 type: string;
 }>;
 clearActiveSectionIndex: CaseReducer<UiState, AnyAction>;
+openCancelEditModeDialog: CaseReducer<UiState, AnyAction>;
+closeCancelEditModeDialog: CaseReducer<UiState, AnyAction>;
 }>;
 
 // @alpha (undocumented)
 export interface UiState {
     // (undocumented)
     activeSectionIndex: number | undefined;
+    // (undocumented)
+    cancelEditModeDialog: {
+        open: boolean;
+    };
     // (undocumented)
     configurationPanelOpened: boolean;
     // (undocumented)
@@ -6014,6 +6037,15 @@ export interface UpsertExecutionResult extends IDashboardCommand {
 
 // @internal (undocumented)
 export function useCancelButtonProps(): ICancelButtonProps;
+
+// @internal (undocumented)
+export const useCancelEditDialog: () => {
+    onCancel: () => {
+        payload: undefined;
+        type: string;
+    };
+    onSubmit: () => void;
+};
 
 // @public
 export function useCustomWidgetExecutionDataView({ widget, execution, onCancel, onError, onLoading, onPending, onSuccess, }: IUseCustomWidgetExecutionDataViewConfig & UseCustomWidgetExecutionDataViewCallbacks): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;

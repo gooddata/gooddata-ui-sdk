@@ -74,6 +74,14 @@ const closeKpiAlertDialog: UiReducer = (state) => {
     state.kpiAlerts.openedWidgetRef = undefined;
 };
 
+const openCancelEditModeDialog: UiReducer = (state) => {
+    state.cancelEditModeDialog.open = true;
+};
+
+const closeCancelEditModeDialog: UiReducer = (state) => {
+    state.cancelEditModeDialog.open = false;
+};
+
 const highlightKpiAlert: UiReducer<PayloadAction<ObjRef>> = (state, action) => {
     state.kpiAlerts.highlightedWidgetRef = action.payload;
 };
@@ -172,4 +180,6 @@ export const uiReducers = {
     setIsDraggingWidget,
     setActiveSectionIndex,
     clearActiveSectionIndex,
+    openCancelEditModeDialog,
+    closeCancelEditModeDialog,
 };

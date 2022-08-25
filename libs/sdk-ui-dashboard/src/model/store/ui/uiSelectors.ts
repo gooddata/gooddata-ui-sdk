@@ -61,6 +61,14 @@ export const selectIsKpiDeleteDialogOpen = createSelector(
 /**
  * @internal
  */
+export const selectIsCancelEditModeDialogOpen = createSelector(
+    selectSelf,
+    (state) => !!state.cancelEditModeDialog.open,
+);
+
+/**
+ * @internal
+ */
 export const selectKpiDeleteDialogWidgetCoordinates = createSelector(
     selectSelf,
     (state) => state.kpiDeleteDialog.widgetCoordinates,

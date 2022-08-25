@@ -5,8 +5,10 @@ import { Button } from "@gooddata/sdk-ui-kit";
 
 import {
     cancelEditRenderMode,
+    selectIsDashboardDirty,
     selectIsDashboardSaving,
     selectIsInEditMode,
+    uiActions,
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../../../model";
@@ -20,7 +22,15 @@ export function useCancelButtonProps(): ICancelButtonProps {
     const isEditing = useDashboardSelector(selectIsInEditMode);
     const isSaving = useDashboardSelector(selectIsDashboardSaving);
 
-    const onCancelClick = useCallback(() => dispatch(cancelEditRenderMode()), [dispatch]);
+    const isDirty = useDashboardSelector(selectIsDashboardDirty);
+
+    const onCancelClick = useCallback(() => {
+        if (isDirty) {
+            dispatch(uiActions.openCancelEditModeDialog());
+        } else {
+            dispatch(cancelEditRenderMode());
+        }
+    }, [dispatch, isDirty]);
 
     return {
         isVisible: isEditing && !isSaving,

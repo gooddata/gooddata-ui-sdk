@@ -165,6 +165,21 @@
         "comment": "",
         "limit": 0
     },
+    "cancelConfirmationDialog.headline": {
+        "value": "Discard changes?",
+        "comment": "",
+        "limit": 0
+    },
+    "cancelConfirmationDialog.message": {
+        "value": "All changes will be lost",
+        "comment": "",
+        "limit": 0
+    },
+    "cancelConfirmationDialog.submitButtonText": {
+        "value": "Discard changes",
+        "comment": "",
+        "limit": 0
+    },
     "deleteDashboardDialog.headline": {
         "value": "Delete dashboard?",
         "comment": "",

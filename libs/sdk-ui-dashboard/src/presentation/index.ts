@@ -20,4 +20,5 @@ export * from "./topBar";
 export * from "./widget";
 export * from "./shareDialog";
 export * from "./insightList";
+export * from "./cancelEditDialog";
 export { translations } from "./localization";
