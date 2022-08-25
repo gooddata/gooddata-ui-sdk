@@ -6,16 +6,20 @@ import sortBy from "lodash/sortBy";
 import { FormattedMessage } from "react-intl";
 
 import { DraggableInsightList } from "./DraggableInsightList";
-import { selectSupportsKpiWidgetCapability, useDashboardSelector } from "../../../model";
+import {
+    selectSupportsKpiWidgetCapability,
+    selectIsAnalyticalDesignerEnabled,
+    useDashboardSelector,
+} from "../../../model";
 import { useDashboardComponentsContext } from "../../dashboardContexts";
 import cx from "classnames";
-
 interface ICreationPanelProps {
     className?: string;
 }
 
 export const CreationPanel: React.FC<ICreationPanelProps> = ({ className }) => {
     const supportsKpis = useDashboardSelector(selectSupportsKpiWidgetCapability);
+    const isAnalyticalDesignerEnabled = useDashboardSelector(selectIsAnalyticalDesignerEnabled);
 
     const { KpiWidgetComponentSet, AttributeFilterComponentSet, InsightWidgetComponentSet } =
         useDashboardComponentsContext();
@@ -44,12 +48,14 @@ export const CreationPanel: React.FC<ICreationPanelProps> = ({ className }) => {
                     </Typography>
                     <div className="add-item-panel">{addItemPanelItems}</div>
                 </div>
-                <div className="configuration-category configuration-category-vis drag-to-add flex-panel-item-stretch">
-                    <Typography tagName="h3">
-                        <FormattedMessage id="visualizationsList.savedVisualizations" />
-                    </Typography>
-                    <DraggableInsightList recalculateSizeReference={className} />
-                </div>
+                {isAnalyticalDesignerEnabled && (
+                    <div className="configuration-category configuration-category-vis drag-to-add flex-panel-item-stretch">
+                        <Typography tagName="h3">
+                            <FormattedMessage id="visualizationsList.savedVisualizations" />
+                        </Typography>
+                        <DraggableInsightList recalculateSizeReference={className} />
+                    </div>
+                )}
             </div>
         </div>
     );

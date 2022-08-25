@@ -369,3 +369,13 @@ export const selectAllowUnfinishedFeatures = createSelector(
     selectConfig,
     (state) => state.allowUnfinishedFeatures || false,
 );
+
+/**
+ * Returns whether analytical designer is enabled.
+ *
+ * @internal
+ */
+export const selectIsAnalyticalDesignerEnabled = createSelector(
+    selectConfig,
+    (state) => !!(state.settings?.analyticalDesigner || false),
+);
