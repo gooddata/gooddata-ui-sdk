@@ -245,6 +245,11 @@ export interface ISettings {
     enableTheming?: boolean;
 
     /**
+     * Represents whiteLabeling configuration
+     */
+    whiteLabeling?: IWhiteLabeling;
+
+    /**
      * Enable custom non-production dataset in AD/Modeler
      */
     ["msf.enableTenantCustomModel"]?: boolean;
@@ -274,4 +279,31 @@ export interface ISeparators {
      * Decimal separator (e.g. "," or ".")
      */
     decimal: string;
+}
+
+/**
+ * Configuration of WhiteLabeling.
+ *
+ * @public
+ */
+export interface IWhiteLabeling {
+    /**
+     * (De)/Activate whiteLabeling
+     */
+    enabled: boolean;
+
+    /**
+     * Whitelabeling favicon url
+     */
+    faviconUrl?: string;
+
+    /**
+     * Company logo url
+     */
+    logoUrl?: string;
+
+    /**
+     * Whitelabeling of Apple touch icon url
+     */
+    appleTouchIconUrl?: string;
 }

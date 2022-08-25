@@ -34,6 +34,7 @@ import {
     IWorkspaceUserGroupsQuery,
     IWorkspaceAccessControlService,
     IOrganizationStylingService,
+    IOrganizationSettingsService,
 } from "@gooddata/sdk-backend-spi";
 import {
     IColorPalette,
@@ -317,6 +318,11 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 createColorPalette: resolveColorPalette,
                 updateColorPalette: resolveColorPalette,
                 deleteColorPalette: () => Promise.resolve(),
+            };
+        },
+        settings(): IOrganizationSettingsService {
+            return {
+                setWhiteLabeling: () => Promise.resolve(),
             };
         },
     };

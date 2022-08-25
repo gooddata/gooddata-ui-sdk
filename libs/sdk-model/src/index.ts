@@ -652,7 +652,7 @@ export {
     ShareStatus,
 } from "./dashboard/dashboard";
 
-export { ISeparators, ISettings, PlatformEdition } from "./settings";
+export { ISeparators, ISettings, PlatformEdition, IWhiteLabeling } from "./settings";
 
 export { IWorkspaceUserGroup } from "./userGroup";
 

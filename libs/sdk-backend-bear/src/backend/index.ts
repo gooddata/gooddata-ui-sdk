@@ -73,6 +73,7 @@ const CAPABILITIES: IBackendCapabilities = {
     supportsTimeGranularities: false,
     supportsHierarchicalWorkspaces: false,
     supportsCustomColorPalettes: true,
+    supportsOrganizationSettings: false,
 };
 
 /**

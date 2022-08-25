@@ -42,6 +42,7 @@ import {
     IWorkspaceUserGroupsQuery,
     IWorkspaceAccessControlService,
     IOrganizationStylingService,
+    IOrganizationSettingsService,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -502,6 +503,12 @@ class DummyOrganization implements IOrganization {
             createColorPalette: resolveColorPalette,
             updateColorPalette: resolveColorPalette,
             deleteColorPalette: () => Promise.resolve(),
+        };
+    }
+
+    settings(): IOrganizationSettingsService {
+        return {
+            setWhiteLabeling: () => Promise.resolve(),
         };
     }
 }

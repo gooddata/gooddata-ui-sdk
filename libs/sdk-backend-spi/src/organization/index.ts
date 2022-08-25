@@ -1,5 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 import { IOrganizationDescriptor } from "@gooddata/sdk-model";
+import { IOrganizationSettingsService } from "./settings";
 import { ISecuritySettingsService } from "./securitySettings";
 import { IOrganizationStylingService } from "./styling";
 
@@ -28,6 +29,11 @@ export interface IOrganization {
      * Returns service that can be used to query and update organization styling.
      */
     styling(): IOrganizationStylingService;
+
+    /**
+     * Returns current organization settings.
+     */
+    settings(): IOrganizationSettingsService;
 }
 
 /**
