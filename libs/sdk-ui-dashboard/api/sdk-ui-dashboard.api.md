@@ -5475,11 +5475,11 @@ sectionIndex: number;
 itemIndex: number;
 } | undefined>;
 
-// @internal (undocumented)
-export const selectIsCancelEditModeDialogOpen: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
-
 // @internal
 export const selectIsAnalyticalDesignerEnabled: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
+
+// @internal (undocumented)
+export const selectIsCancelEditModeDialogOpen: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
 
 // @internal
 export const selectIsCircularDependency: (currentFilterLocalId: string, neighborFilterLocalid: string) => OutputSelector<DashboardState, boolean, (res: string[]) => boolean>;
