@@ -55,7 +55,7 @@ export type Alignment = {
 };
 
 // @internal (undocumented)
-export const AppHeader: React_2.ComponentType<Pick<WithIntlProps<IAppHeaderProps & WrappedComponentProps<"intl">>, "className" | "forwardedRef" | "helpMenuDropdownAlignPoints" | "onMenuItemClick" | "helpRedirectUrl" | "userName" | "onUpsellButtonClick" | "logoHref" | "accountMenuItems" | "helpMenuItems" | "menuItemsGroups" | "onLogoClick" | "badges" | "logoUrl" | "logoTitle" | "documentationUrl" | "workspacePicker" | "headerColor" | "headerTextColor" | "activeColor" | "expiredDate" | "disableHelpDropdown" | "onHelpClick" | "showStaticHelpMenu" | "showUpsellButton">>;
+export const AppHeader: React_2.ComponentType<Pick<WithIntlProps<IAppHeaderProps & WrappedComponentProps<"intl">>, "className" | "forwardedRef" | "helpMenuDropdownAlignPoints" | "onMenuItemClick" | "helpRedirectUrl" | "userName" | "onUpsellButtonClick" | "onInviteItemClick" | "logoHref" | "accountMenuItems" | "helpMenuItems" | "menuItemsGroups" | "onLogoClick" | "badges" | "logoUrl" | "logoTitle" | "documentationUrl" | "workspacePicker" | "headerColor" | "headerTextColor" | "activeColor" | "expiredDate" | "disableHelpDropdown" | "onHelpClick" | "showStaticHelpMenu" | "showUpsellButton" | "showInviteItem">>;
 
 // @internal (undocumented)
 export type ArrowDirections = Record<string, string>;
@@ -751,11 +751,15 @@ export interface IAppHeaderProps {
     // (undocumented)
     onHelpClick?: (isOpen: boolean) => void;
     // (undocumented)
+    onInviteItemClick?: (e: React_2.MouseEvent) => void;
+    // (undocumented)
     onLogoClick?: (e: React_2.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
     // (undocumented)
     onMenuItemClick?: (menuItem: IHeaderMenuItem, e?: React_2.MouseEvent) => void;
     // (undocumented)
     onUpsellButtonClick?: (e: React_2.MouseEvent) => void;
+    // (undocumented)
+    showInviteItem?: boolean;
     // (undocumented)
     showStaticHelpMenu?: boolean;
     // (undocumented)
@@ -1767,6 +1771,12 @@ export interface IHeaderDataMenuProps {
     intl: IntlShape;
     // (undocumented)
     onMenuItemClick: (item: IHeaderDataMenuItem) => void;
+}
+
+// @internal (undocumented)
+export interface IHeaderInviteProps {
+    // (undocumented)
+    onInviteItemClick?: (e: React_2.MouseEvent) => void;
 }
 
 // @internal (undocumented)
