@@ -53,6 +53,7 @@ export {
     selectIsSaveAsNewButtonHidden,
     selectAllowUnfinishedFeatures,
     selectDashboardEditModeDevRollout,
+    selectIsAnalyticalDesignerEnabled,
 } from "./config/configSelectors";
 export { PermissionsState } from "./permissions/permissionsState";
 export {
