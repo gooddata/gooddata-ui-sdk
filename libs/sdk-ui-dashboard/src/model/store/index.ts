@@ -235,6 +235,7 @@ export {
     selectSelectedFilterIndex,
     selectIsDraggingWidget,
     selectActiveSectionIndex,
+    selectIsCancelEditModeDialogOpen,
 } from "./ui/uiSelectors";
 export { uiActions } from "./ui";
 export { RenderModeState } from "./renderMode/renderModeState";

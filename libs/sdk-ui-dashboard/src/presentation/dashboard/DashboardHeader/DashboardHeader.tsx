@@ -10,6 +10,7 @@ import { ShareDialogDashboardHeader } from "./ShareDialogDashboardHeader";
 import { ScheduledEmailDialogProvider } from "./ScheduledEmailDialogProvider";
 import { DeleteDialog, useDeleteDialogProps } from "../../deleteDialog";
 import { KpiDeleteDialog, useKpiDeleteDialogProps } from "../../kpiDeleteDialog";
+import { CancelEditDialog, useCancelEditDialog } from "../../cancelEditDialog";
 
 // these wrapper components are here to prevent the whole DashboardHeader from re-rendering whenever some
 // of the sub-components' props change. by isolating the hooks more, we make sure only the really changed component re-renders.
@@ -38,6 +39,11 @@ const FilterBarWrapper = () => {
     return <FilterBar {...filterBarProps} />;
 };
 
+const CancelEditDialogWrapper = () => {
+    const cancelEditDialogProps = useCancelEditDialog();
+    return <CancelEditDialog {...cancelEditDialogProps} />;
+};
+
 // split the header parts of the dashboard so that changes to their state
 // (e.g. opening email dialog) do not re-render the dashboard body
 export const DashboardHeader = (): JSX.Element => {
@@ -52,6 +58,7 @@ export const DashboardHeader = (): JSX.Element => {
             <SaveAsDialogWrapper />
             <TopBarWrapper />
             <FilterBarWrapper />
+            <CancelEditDialogWrapper />
         </>
     );
 };

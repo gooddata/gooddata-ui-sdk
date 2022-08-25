@@ -29,6 +29,9 @@ export interface UiState {
          */
         widgetCoordinates: ILayoutCoordinates | undefined;
     };
+    cancelEditModeDialog: {
+        open: boolean;
+    };
     filterBar: {
         expanded: boolean;
     };
@@ -69,6 +72,9 @@ export const uiInitialState: UiState = {
     },
     kpiDeleteDialog: {
         widgetCoordinates: undefined,
+    },
+    cancelEditModeDialog: {
+        open: false,
     },
     filterBar: {
         expanded: false,
