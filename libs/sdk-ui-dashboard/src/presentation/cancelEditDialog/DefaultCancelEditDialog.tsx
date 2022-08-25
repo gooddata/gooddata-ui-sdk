@@ -50,7 +50,7 @@ export const DefaultCancelEditDialog: React.FC<ICancelEditDialogProps> = (props)
             isPositive={false}
             className="s-dialog s-cancel_confirmation_dialog"
         >
-            <Typography tagName="h3">
+            <Typography tagName="p">
                 {intl.formatMessage({ id: "cancelConfirmationDialog.message" })}
             </Typography>
         </ConfirmDialog>
