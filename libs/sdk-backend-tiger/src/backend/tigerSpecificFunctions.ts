@@ -29,6 +29,7 @@ import {
     DependentEntitiesRequest,
     DependentEntitiesResponse,
     ApiEntitlement,
+    PlatformUsage,
 } from "@gooddata/api-client-tiger";
 import { convertApiError } from "../utils/errorHandling";
 import uniq from "lodash/uniq";
@@ -282,6 +283,7 @@ export type TigerSpecificFunctions = {
         dependentEntitiesGraphRequest: DependentEntitiesGraphRequest,
     ) => Promise<DependentEntitiesGraphResponse>;
     resolveAllEntitlements?: () => Promise<ApiEntitlement[]>;
+    getAllPlatformUsage?: () => Promise<PlatformUsage[]>;
 };
 
 const getDataSourceErrorMessage = (error: unknown) => {
@@ -895,5 +897,8 @@ export const buildTigerSpecificFunctions = (
     },
     resolveAllEntitlements: async () => {
         return authApiCall(async (sdk) => sdk.actions.resolveAllEntitlements().then((res) => res.data));
+    },
+    getAllPlatformUsage: async () => {
+        return authApiCall(async (sdk) => sdk.actions.allPlatformUsage().then((res) => res.data));
     },
 });
