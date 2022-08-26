@@ -102,30 +102,20 @@
     }
 }
 
-.gd-styling-editor-dialog-footer {
+.gd-flex-dialog-footer {
     display: flex;
-    border-top: 1px solid $gd-border-color;
-    background-color: $gd-color-white;
+    flex-direction: row;
     align-items: center;
+    flex-wrap: wrap;
     overflow: hidden;
+    min-height: 32px;
+    gap: 20px 10px;
     margin: 0 -20px -20px -20px;
     padding: 20px;
-    flex-direction: row;
+    border-top: 1px solid $gd-border-color;
 
-    &-link {
-        display: flex;
-        flex: 1;
-        align-items: center;
-
-        .gd-icon-circle-question {
-            color: $gd-color-state-blank;
-        }
-
-        > a {
-            // stylelint-disable-next-line declaration-no-important
-            text-decoration: underline !important;
-            line-height: 30px;
-        }
+    .gd-loading-equalizer-spinner {
+        margin-right: 10px;
     }
 }
 
@@ -147,6 +137,7 @@
     &-icon {
         color: $gd-color-state-blank;
         margin-right: 10px;
+        cursor: help;
     }
 
     &-divider {

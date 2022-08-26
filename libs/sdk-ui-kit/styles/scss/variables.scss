@@ -164,3 +164,7 @@ $xxlarge-up: "#{$screen} and (min-width:#{lower-bound($xxlarge-range)})";
 $xxlarge-only: "#{$screen} and (min-width:#{lower-bound($xxlarge-range)}) and (max-width:#{upper-bound($xxlarge-range)})";
 
 $measure_sequence_number_font: menlo, monaco, consolas, "Courier New", monospace;
+
+//This is a temporary solution to introduce new design colors
+$default-gd-medium-gray: #687581;
+$gd-medium-gray: var(--gd-palette-complementary-7, $default-gd-medium-gray);

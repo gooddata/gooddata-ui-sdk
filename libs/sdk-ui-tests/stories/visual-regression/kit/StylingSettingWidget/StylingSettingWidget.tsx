@@ -6,7 +6,7 @@ import {
     defaultThemeMetadataObject,
     getColorsPreviewFromTheme,
     IStylingPickerItem,
-    StylingPicker,
+    StylingSettingWidget,
 } from "@gooddata/sdk-ui-kit";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
 import { action } from "@storybook/addon-actions";
@@ -31,12 +31,12 @@ const defaultItem: IStylingPickerItem<ITheme> = {
     name: defaultThemeMetadataObject.title,
 };
 
-const StylingPickerTest: React.FC = () => {
+const StylingSettingWidgetTest: React.FC = () => {
     return (
         <InternalIntlWrapper>
-            <div style={{ width: "600px" }}>
+            <div style={{ maxWidth: "580px" }}>
                 <div className="library-component screenshot-target">
-                    <StylingPicker
+                    <StylingSettingWidget
                         title="Theme picker"
                         titleTooltip="Theme customize the look of Dashboards and Analytical Designer. Default theme is inherited by all workspaces within the organization. You can select non default theme for individual workspaces through API."
                         footerHelpLink={footerHelpLink}
@@ -54,7 +54,7 @@ const StylingPickerTest: React.FC = () => {
                     />
                 </div>
                 <div className="library-component screenshot-target">
-                    <StylingPicker
+                    <StylingSettingWidget
                         title="Fewer list items"
                         footerHelpLink={footerHelpLink}
                         footerHelpTitle={footerHelpTitle}
@@ -70,7 +70,7 @@ const StylingPickerTest: React.FC = () => {
                     />
                 </div>
                 <div className="library-component screenshot-target">
-                    <StylingPicker
+                    <StylingSettingWidget
                         title="No custom themes"
                         titleTooltip="Theme customize the look of Dashboards and Analytical Designer. Default theme is inherited by all workspaces within the organization. You can select non default theme for individual workspaces through API."
                         footerMobileMessage={footerMessage}
@@ -87,6 +87,6 @@ const StylingPickerTest: React.FC = () => {
     );
 };
 
-storiesOf(`${UiKit}/StylingPicker`)
-    .add("full-featured", () => <StylingPickerTest />, { screenshot: true })
-    .add("themed", () => wrapWithTheme(<StylingPickerTest />), { screenshot: true });
+storiesOf(`${UiKit}/StylingSettingWidget`)
+    .add("full-featured", () => <StylingSettingWidgetTest />, { screenshot: true })
+    .add("themed", () => wrapWithTheme(<StylingSettingWidgetTest />), { screenshot: true });

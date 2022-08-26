@@ -3,12 +3,12 @@
 import React from "react";
 import { useIntl } from "react-intl";
 import { ObjRef } from "@gooddata/sdk-model";
-import { DialogListHeader, IStylingPickerItem, StylingPickerItemContent } from "../Dialog";
-import { DialogListLoading } from "../Dialog/DialogList/DialogListLoading";
-import { StylingPickerList } from "./StylingPickerList";
-import { StylingPickerListItem } from "./StylingPickerListItem";
+import { DialogListHeader, IStylingPickerItem, StylingPickerItemContent } from "../../Dialog";
+import { DialogListLoading } from "../../Dialog/DialogList/DialogListLoading";
+import { StylingSettingList } from "./StylingSettingList";
+import { StylingSettingListItem } from "./StylingSettingListItem";
 
-interface IStylingPickerBodyProps<T> {
+interface IStylingSettingBodyProps<T> {
     isMobile: boolean;
     defaultItem: IStylingPickerItem<T>;
     customItems: IStylingPickerItem<T>[];
@@ -24,7 +24,7 @@ interface IStylingPickerBodyProps<T> {
     onItemMenuToggle?: (ref: ObjRef) => void;
 }
 
-export const StylingPickerBody = <T extends StylingPickerItemContent>({
+export const StylingSettingBody = <T extends StylingPickerItemContent>({
     isMobile,
     defaultItem,
     customItems,
@@ -38,7 +38,7 @@ export const StylingPickerBody = <T extends StylingPickerItemContent>({
     onItemEdit,
     onItemDelete,
     onItemMenuToggle,
-}: IStylingPickerBodyProps<T>) => {
+}: IStylingSettingBodyProps<T>) => {
     const intl = useIntl();
 
     return (
@@ -48,8 +48,11 @@ export const StylingPickerBody = <T extends StylingPickerItemContent>({
             ) : (
                 <>
                     <div>
-                        <DialogListHeader title={intl.formatMessage({ id: "stylingPicker.title.basic" })} />
-                        <StylingPickerListItem
+                        <DialogListHeader
+                            className="gd-styling-picker-list-header"
+                            title={intl.formatMessage({ id: "stylingPicker.title.basic" })}
+                        />
+                        <StylingSettingListItem
                             item={defaultItem}
                             itemToColorPreview={itemToColorPreview}
                             isSelected={!selectedItemRef}
@@ -65,9 +68,9 @@ export const StylingPickerBody = <T extends StylingPickerItemContent>({
                                     : intl.formatMessage({ id: "stylingPicker.title.create" })
                             }
                             onButtonClick={onListActionClick}
-                            className="s-styling-picker-list-header"
+                            className="gd-styling-picker-list-header s-styling-picker-list-header"
                         />
-                        <StylingPickerList
+                        <StylingSettingList
                             items={customItems}
                             itemToColorPreview={itemToColorPreview}
                             emptyMessageElement={emptyMessage()}

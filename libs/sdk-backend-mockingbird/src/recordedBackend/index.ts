@@ -327,6 +327,7 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
             return {
                 setWhiteLabeling: () => Promise.resolve(),
                 setLocale: () => Promise.resolve(),
+                getSettings: () => Promise.resolve({}),
             };
         },
     };

@@ -1,8 +1,9 @@
 // (C) 2022 GoodData Corporation
 import { IOrganizationSettingsService, isUnexpectedError } from "@gooddata/sdk-backend-spi";
-import { IWhiteLabeling } from "@gooddata/sdk-model";
+import { ISettings, IWhiteLabeling } from "@gooddata/sdk-model";
 import { convertApiError } from "../../utils/errorHandling";
 import { TigerAuthenticatedCallGuard } from "../../types";
+import { unwrapSettingContent } from "../../convertors/fromBackend/SettingsConverter";
 
 export class OrganizationSettingsService implements IOrganizationSettingsService {
     constructor(public readonly authCall: TigerAuthenticatedCallGuard) {}
@@ -13,6 +14,19 @@ export class OrganizationSettingsService implements IOrganizationSettingsService
 
     public async setLocale(locale: string): Promise<void> {
         return this.setSetting("locale", { value: locale });
+    }
+
+    public async getSettings(): Promise<ISettings> {
+        const { data } = await this.authCall(async (client) =>
+            client.entities.getAllEntitiesOrganizationSettings({}),
+        );
+
+        return data.data.reduce((result: ISettings, setting) => {
+            return {
+                ...result,
+                [setting.id]: unwrapSettingContent(setting.attributes?.content),
+            };
+        }, {});
     }
 
     private async setSetting(id: string, content: any): Promise<any> {

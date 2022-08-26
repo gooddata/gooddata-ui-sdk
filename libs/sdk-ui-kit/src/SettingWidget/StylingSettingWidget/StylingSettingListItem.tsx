@@ -5,15 +5,15 @@ import { useIntl } from "react-intl";
 import cx from "classnames";
 import { ObjRef } from "@gooddata/sdk-model";
 import { stringUtils } from "@gooddata/util";
-import { ShortenedText } from "../ShortenedText";
-import { ColorPreview, IStylingPickerItem, StylingPickerItemContent } from "../Dialog";
-import { IOnOpenedChangeParams, Menu } from "../Menu";
-import { Item, ItemsWrapper, Separator } from "../List";
-import { Button } from "../Button";
-import { Bubble, BubbleHoverTrigger } from "../Bubble";
+import { ShortenedText } from "../../ShortenedText";
+import { ColorPreview, IStylingPickerItem, StylingPickerItemContent } from "../../Dialog";
+import { IOnOpenedChangeParams, Menu } from "../../Menu";
+import { Item, ItemsWrapper, Separator } from "../../List";
+import { Button } from "../../Button";
+import { Bubble, BubbleHoverTrigger } from "../../Bubble";
 import noop from "lodash/noop";
 
-interface IStylingPickerListItemProps<T> {
+interface IStylingSettingListItemProps<T> {
     item: IStylingPickerItem<T>;
     itemToColorPreview: (itemContent: T) => string[];
     isSelected: boolean;
@@ -29,7 +29,7 @@ const TEXT_TOOLTIP_ALIGN_POINTS = [
     { align: "bc tc", offset: { x: 0, y: 0 } },
 ];
 
-export const StylingPickerListItem = <T extends StylingPickerItemContent>({
+export const StylingSettingListItem = <T extends StylingPickerItemContent>({
     item,
     itemToColorPreview,
     isSelected,
@@ -38,7 +38,7 @@ export const StylingPickerListItem = <T extends StylingPickerItemContent>({
     onEdit,
     onDelete,
     onMenuToggle = noop,
-}: IStylingPickerListItemProps<T>): JSX.Element => {
+}: IStylingSettingListItemProps<T>): JSX.Element => {
     const intl = useIntl();
 
     const { name, ref, content } = item;

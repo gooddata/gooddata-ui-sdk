@@ -1,12 +1,14 @@
 // (C) 2022 GoodData Corporation
-
-import { Button } from "../../Button";
 import React from "react";
+import noop from "lodash/noop";
+import { Button } from "../../Button";
 import { useIntl } from "react-intl";
 import { IDialogBaseProps } from "../typings";
 import { LoadingSpinner } from "../../LoadingSpinner";
 import { Bubble, BubbleHoverTrigger } from "../../Bubble";
-import noop from "lodash/noop";
+import { Hyperlink } from "../../Hyperlink";
+import { Footer } from "../Footer";
+import { FooterButtons } from "../FooterButtons";
 
 /**
  * @internal
@@ -38,40 +40,36 @@ export const StylingEditorDialogFooter = (props: IStylingEditorDialogFooterProps
     const intl = useIntl();
 
     return (
-        <div className="gd-styling-editor-dialog-footer">
-            <div className="gd-styling-editor-dialog-footer-link">
-                <span className="gd-icon-circle-question" />
-                <a
-                    className="gd-button-link-dimmed"
-                    href={link.url}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    onClick={() => onHelpClick()}
-                >
-                    {link.text}
-                </a>
-            </div>
-            {showProgressIndicator && (
-                <LoadingSpinner className="gd-dialog-spinner small s-gd-styling-editor-spinner" />
-            )}
-            <Button
-                className="gd-button-secondary s-dialog-cancel-button"
-                value={intl.formatMessage({ id: "cancel" })}
-                onClick={() => onCancel()}
+        <Footer>
+            <Hyperlink
+                text={link.text}
+                href={link.url}
+                onClick={() => onHelpClick()}
+                iconClass={"gd-icon-circle-question"}
             />
-            <BubbleHoverTrigger className="gd-button" showDelay={0} hideDelay={0}>
-                <Button
-                    className="gd-button-action s-dialog-submit-button"
-                    value={intl.formatMessage({ id: "save" })}
-                    onClick={() => onSubmit()}
-                    disabled={disableSubmit}
-                />
-                {errorMessage && disableSubmit && (
-                    <Bubble className="bubble-negative" alignPoints={[{ align: "tc br" }]}>
-                        {errorMessage}
-                    </Bubble>
+            <FooterButtons>
+                {showProgressIndicator && (
+                    <LoadingSpinner className="gd-loading-equalizer-spinner small s-gd-styling-editor-spinner" />
                 )}
-            </BubbleHoverTrigger>
-        </div>
+                <Button
+                    className="gd-button-secondary s-dialog-cancel-button"
+                    value={intl.formatMessage({ id: "cancel" })}
+                    onClick={() => onCancel()}
+                />
+                <BubbleHoverTrigger className="gd-button" showDelay={0} hideDelay={0}>
+                    <Button
+                        className="gd-button-action s-dialog-submit-button"
+                        value={intl.formatMessage({ id: "save" })}
+                        onClick={() => onSubmit()}
+                        disabled={disableSubmit}
+                    />
+                    {errorMessage && disableSubmit && (
+                        <Bubble className="bubble-negative" alignPoints={[{ align: "tc br" }]}>
+                            {errorMessage}
+                        </Bubble>
+                    )}
+                </BubbleHoverTrigger>
+            </FooterButtons>
+        </Footer>
     );
 };

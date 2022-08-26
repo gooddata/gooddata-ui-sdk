@@ -1,0 +1,82 @@
+@import "./variables";
+
+.gd-setting-widget {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    width: 100%;
+    background-color: $gd-color-white;
+    border: 1px solid $is-focused-background;
+    border-radius: 3px;
+}
+
+.gd-widget-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: nowrap;
+    font-family: $gd-font-primary;
+    margin: 20px;
+    color: $gd-color-text;
+    gap: 10px;
+}
+
+.gd-widget-title {
+    font-weight: 700;
+    overflow: hidden;
+    font-size: 17px;
+    line-height: 23px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.gd-tooltip-icon {
+    display: flex;
+    font-size: 14px;
+    height: auto;
+    color: $gd-color-state-blank;
+    cursor: help;
+}
+
+.gd-setting-widget-status-pill {
+    font-size: 12px;
+    background-color: $is-focused-background;
+    overflow: hidden;
+    line-height: 20px;
+    white-space: nowrap;
+    color: $gd-medium-gray;
+    border-radius: 30px;
+    padding-left: 7px;
+    padding-right: 7px;
+    text-overflow: ellipsis;
+    flex-shrink: 0;
+}
+
+.gd-widget-separator {
+    border-bottom: 1px solid $gd-border-color;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.gd-widget-footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    overflow: hidden;
+    min-height: 32px;
+    gap: 20px 10px;
+    margin: 20px;
+}
+
+.gd-widget-footer-buttons {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    align-items: center;
+
+    &-separator {
+        flex: 1;
+    }
+}

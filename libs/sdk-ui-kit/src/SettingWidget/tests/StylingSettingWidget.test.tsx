@@ -8,9 +8,8 @@ import { ITheme } from "@gooddata/sdk-model";
 
 import { defaultItemMock, customItemsMock } from "./mocks";
 
-import { IStylingPickerProps, StylingPicker } from "../StylingPicker";
-
 import * as useMediaQuery from "../../responsive/useMediaQuery";
+import { StylingSettingWidget, IStylingSettingWidgetProps } from "../StylingSettingWidget";
 
 const expectedButtonsState = (buttons: HTMLElement[], disabled = true) => {
     return buttons.forEach((item) => {
@@ -23,7 +22,7 @@ const expectedButtonsState = (buttons: HTMLElement[], disabled = true) => {
 };
 
 describe("StylingPicker", () => {
-    const renderComponent = (props: Partial<IStylingPickerProps<ITheme>>) => {
+    const renderComponent = (props: Partial<IStylingSettingWidgetProps<ITheme>>) => {
         const defaultProps = {
             title: "Styling picker",
             defaultItem: defaultItemMock,
@@ -34,7 +33,7 @@ describe("StylingPicker", () => {
 
         return render(
             <IntlWrapper locale="en-US">
-                <StylingPicker {...defaultProps} {...props} />
+                <StylingSettingWidget {...defaultProps} {...props} />
             </IntlWrapper>,
         );
     };

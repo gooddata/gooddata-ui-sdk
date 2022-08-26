@@ -10,6 +10,7 @@ import { TigerAuthenticatedCallGuard } from "../../../types";
 import { TigerFeaturesService, pickContext } from "../../features";
 import { DefaultUiSettings, DefaultUserSettings } from "../../uiSettings";
 import { convertApiError } from "../../../utils/errorHandling";
+import { unwrapSettingContent } from "../../../convertors/fromBackend/SettingsConverter";
 
 export class TigerWorkspaceSettings implements IWorkspaceSettingsService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -103,20 +104,6 @@ export class TigerWorkspaceSettings implements IWorkspaceSettingsService {
     }
 }
 
-const isValueSetting = (obj: object | undefined): obj is { value: string } => {
-    if (!obj || Object.keys(obj).length !== 1) {
-        return false;
-    }
-    return typeof (obj as { value: any }).value === "string";
-};
-
-const unwrap = (content: object | undefined) => {
-    if (isValueSetting(content)) {
-        return content.value;
-    }
-    return content;
-};
-
 /**
  * @internal
  */
@@ -130,7 +117,7 @@ async function resolveSettings(authCall: TigerAuthenticatedCallGuard, workspace:
     return data.reduce((result: ISettings, setting) => {
         return {
             ...result,
-            [setting.id]: unwrap(setting.content),
+            [setting.id]: unwrapSettingContent(setting.content),
         };
     }, {});
 }
