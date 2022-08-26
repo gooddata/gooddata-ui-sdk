@@ -15,6 +15,7 @@ import { AxiosInstance } from "axios";
 import { tigerLayoutClientFactory } from "./layout";
 import { tigerAfmExplainClientFactory } from "./explain";
 import { tigerActionsClientFactory } from "./actions";
+import { tigerAuthActionsClientFactory } from "./authActions";
 
 import {
     MetadataConfiguration,
@@ -50,6 +51,7 @@ export {
     tigerAfmExplainClientFactory,
     tigerProfileClientFactory,
     tigerActionsClientFactory,
+    tigerAuthActionsClientFactory,
     tigerScanModelClientFactory,
     MetadataConfiguration,
     MetadataConfigurationParameters,
@@ -82,6 +84,7 @@ export interface ITigerClient {
     entities: ReturnType<typeof tigerEntitiesObjectsClientFactory>;
     profile: ReturnType<typeof tigerProfileClientFactory>;
     actions: ReturnType<typeof tigerActionsClientFactory>;
+    authActions: ReturnType<typeof tigerAuthActionsClientFactory>;
     scanModel: ReturnType<typeof tigerScanModelClientFactory>;
 
     /**
@@ -108,6 +111,7 @@ export const tigerClientFactory = (axios: AxiosInstance): ITigerClient => {
     const entities = tigerEntitiesObjectsClientFactory(axios);
     const profile = tigerProfileClientFactory(axios);
     const actions = tigerActionsClientFactory(axios);
+    const authActions = tigerAuthActionsClientFactory(axios);
     const scanModel = tigerScanModelClientFactory(axios);
 
     return {
@@ -121,6 +125,7 @@ export const tigerClientFactory = (axios: AxiosInstance): ITigerClient => {
         entities,
         profile,
         actions,
+        authActions,
         scanModel,
         setApiToken: (token: string | undefined): void => {
             setAxiosAuthorizationToken(axios, token);

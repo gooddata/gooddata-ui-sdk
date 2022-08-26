@@ -29,6 +29,7 @@ import {
     DependentEntitiesRequest,
     DependentEntitiesResponse,
     ApiEntitlement,
+    ActionsApiProcessInvitationRequest,
     PlatformUsage,
 } from "@gooddata/api-client-tiger";
 import { convertApiError } from "../utils/errorHandling";
@@ -37,6 +38,7 @@ import toLower from "lodash/toLower";
 import { UnexpectedError, ErrorConverter, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import isEmpty from "lodash/isEmpty";
 import { AuthenticatedAsyncCall } from "@gooddata/sdk-backend-base";
+import { AxiosRequestConfig } from "axios";
 
 /**
  * @internal
@@ -174,6 +176,14 @@ export interface IDataSourceDeletedResponse {
 /**
  * @internal
  */
+export interface IInvitationUserResponse {
+    successful?: boolean;
+    errorMessage?: string;
+}
+
+/**
+ * @internal
+ */
 export type OrganizationPermission = JsonApiOrganizationOutMetaPermissionsEnum;
 
 /**
@@ -284,6 +294,10 @@ export type TigerSpecificFunctions = {
     ) => Promise<DependentEntitiesGraphResponse>;
     resolveAllEntitlements?: () => Promise<ApiEntitlement[]>;
     getAllPlatformUsage?: () => Promise<PlatformUsage[]>;
+    inviteUser?: (
+        requestParameters: ActionsApiProcessInvitationRequest,
+        options?: AxiosRequestConfig,
+    ) => Promise<IInvitationUserResponse>;
 };
 
 const getDataSourceErrorMessage = (error: unknown) => {
@@ -900,5 +914,24 @@ export const buildTigerSpecificFunctions = (
     },
     getAllPlatformUsage: async () => {
         return authApiCall(async (sdk) => sdk.actions.allPlatformUsage().then((res) => res.data));
+    },
+    inviteUser: async (
+        requestParameters: ActionsApiProcessInvitationRequest,
+        options?: AxiosRequestConfig,
+    ) => {
+        return authApiCall(async (sdk) => {
+            return sdk.authActions.processInvitation(requestParameters, options).then((res) => {
+                if (res.status == 204) {
+                    return {
+                        successful: true,
+                    } as IInvitationUserResponse;
+                } else {
+                    return {
+                        successful: false,
+                        errorMessage: res?.data,
+                    } as IInvitationUserResponse;
+                }
+            });
+        });
     },
 });
