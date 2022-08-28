@@ -130,6 +130,7 @@ export const AnalyticalBackendErrorTypes: {
     NOT_IMPLEMENTED: string;
     NOT_AUTHENTICATED: string;
     LIMIT_REACHED: string;
+    CONTRACT_EXPIRED: string;
 };
 
 // @public
@@ -161,6 +162,11 @@ export const catalogItemMetadataObject: (catalogItem: m.CatalogItem) => m.Metada
 
 // @public @deprecated
 export type CatalogItemType = m.CatalogItemType;
+
+// @public
+export class ContractExpired extends AnalyticalBackendError {
+    constructor(message: string, cause?: Error);
+}
 
 // @alpha @deprecated
 export type DashboardDateFilterConfigMode = m.DashboardDateFilterConfigMode;
@@ -1124,6 +1130,9 @@ export interface IScheduledMailBase extends m.IScheduledMailBase {
 // @alpha @deprecated
 export interface IScheduledMailDefinition extends m.IScheduledMailDefinition {
 }
+
+// @public
+export function isContractExpired(obj: unknown): obj is ContractExpired;
 
 // @alpha @deprecated
 export const isDashboard: typeof m.isDashboard;

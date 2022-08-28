@@ -16,6 +16,7 @@ import {
     isNotAuthenticated,
     IOrganization,
     IOrganizations,
+    isContractExpired,
 } from "@gooddata/sdk-backend-spi";
 import { newAxios, tigerClientFactory, ITigerClient } from "@gooddata/api-client-tiger";
 import isEmpty from "lodash/isEmpty";
@@ -104,6 +105,7 @@ export type TigerBackendConfig = {
  */
 type TigerSpecificFunctionsSubscription = {
     onTigerSpecificFunctionsReady?: (functions: TigerSpecificFunctions) => void;
+    onContractExpired?: (tier: string) => void;
 };
 
 /**
@@ -268,6 +270,8 @@ export class TigerBackend implements IAnalyticalBackend {
     private handleNotAuthenticated = <T>(err: T): T => {
         if (isNotAuthenticated(err)) {
             this.authProvider.onNotAuthenticated?.({ client: this.client, backend: this }, err);
+        } else if (isContractExpired(err)) {
+            this.implConfig.onContractExpired?.(err.message);
         }
 
         return err;
