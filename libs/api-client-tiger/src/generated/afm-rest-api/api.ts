@@ -2202,7 +2202,7 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
          * @summary AFM explain resource.
          * @param {string} workspaceId Workspace identifier
          * @param {AfmExecution} afmExecution
-         * @param {'MAQL' | 'GRPC_MODEL' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL'} [explainType] Requested explain type. If not specified all types are bundled in a ZIP archive. 'MAQL' - MAQL Abstract Syntax Tree, execution dimensions and related info 'GRPC_MODEL' - Datasets used in execution 'WDF' - Workspace data filters in execution workspace context 'QT' - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL 'QT_SVG' - Generated SVG image of the Query Tree 'OPT_QT' - Optimized Query Tree 'OPT_QT_SVG' - Generated SVG image of the Optimized Query Tree 'SQL' - Final SQL to be executed
+         * @param {'MAQL' | 'GRPC_MODEL' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL'} [explainType] Requested explain type. If not specified all types are bundled in a ZIP archive.  &#x60;MAQL&#x60; - MAQL Abstract Syntax Tree, execution dimensions and related info  &#x60;GRPC_MODEL&#x60; - Datasets used in execution  &#x60;WDF&#x60; - Workspace data filters in execution workspace context  &#x60;QT&#x60; - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL  &#x60;QT_SVG&#x60; - Generated SVG image of the Query Tree  &#x60;OPT_QT&#x60; - Optimized Query Tree  &#x60;OPT_QT_SVG&#x60; - Generated SVG image of the Optimized Query Tree  &#x60;SQL&#x60; - Final SQL to be executed
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2453,7 +2453,7 @@ export const ActionsApiFp = function (configuration?: Configuration) {
          * @summary AFM explain resource.
          * @param {string} workspaceId Workspace identifier
          * @param {AfmExecution} afmExecution
-         * @param {'MAQL' | 'GRPC_MODEL' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL'} [explainType] Requested explain type. If not specified all types are bundled in a ZIP archive. 'MAQL' - MAQL Abstract Syntax Tree, execution dimensions and related info 'GRPC_MODEL' - Datasets used in execution 'WDF' - Workspace data filters in execution workspace context 'QT' - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL 'QT_SVG' - Generated SVG image of the Query Tree 'OPT_QT' - Optimized Query Tree 'OPT_QT_SVG' - Generated SVG image of the Optimized Query Tree 'SQL' - Final SQL to be executed
+         * @param {'MAQL' | 'GRPC_MODEL' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL'} [explainType] Requested explain type. If not specified all types are bundled in a ZIP archive.  &#x60;MAQL&#x60; - MAQL Abstract Syntax Tree, execution dimensions and related info  &#x60;GRPC_MODEL&#x60; - Datasets used in execution  &#x60;WDF&#x60; - Workspace data filters in execution workspace context  &#x60;QT&#x60; - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL  &#x60;QT_SVG&#x60; - Generated SVG image of the Query Tree  &#x60;OPT_QT&#x60; - Optimized Query Tree  &#x60;OPT_QT_SVG&#x60; - Generated SVG image of the Optimized Query Tree  &#x60;SQL&#x60; - Final SQL to be executed
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2860,7 +2860,7 @@ export interface ActionsApiExplainAFMRequest {
     readonly afmExecution: AfmExecution;
 
     /**
-     * Requested explain type. If not specified all types are bundled in a ZIP archive. 'MAQL' - MAQL Abstract Syntax Tree, execution dimensions and related info 'GRPC_MODEL' - Datasets used in execution 'WDF' - Workspace data filters in execution workspace context 'QT' - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL 'QT_SVG' - Generated SVG image of the Query Tree 'OPT_QT' - Optimized Query Tree 'OPT_QT_SVG' - Generated SVG image of the Optimized Query Tree 'SQL' - Final SQL to be executed
+     * Requested explain type. If not specified all types are bundled in a ZIP archive.  &#x60;MAQL&#x60; - MAQL Abstract Syntax Tree, execution dimensions and related info  &#x60;GRPC_MODEL&#x60; - Datasets used in execution  &#x60;WDF&#x60; - Workspace data filters in execution workspace context  &#x60;QT&#x60; - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL  &#x60;QT_SVG&#x60; - Generated SVG image of the Query Tree  &#x60;OPT_QT&#x60; - Optimized Query Tree  &#x60;OPT_QT_SVG&#x60; - Generated SVG image of the Optimized Query Tree  &#x60;SQL&#x60; - Final SQL to be executed
      * @type {'MAQL' | 'GRPC_MODEL' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL'}
      * @memberof ActionsApiExplainAFM
      */

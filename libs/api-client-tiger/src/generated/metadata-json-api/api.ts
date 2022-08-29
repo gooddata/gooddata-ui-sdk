@@ -53,6 +53,8 @@ export interface ApiEntitlement {
 export const ApiEntitlementNameEnum = {
     CONTRACT: "Contract",
     CUSTOM_THEMING: "CustomTheming",
+    WHITE_LABELING: "WhiteLabeling",
+    UI_LOCALIZATION: "UiLocalization",
     TIER: "Tier",
     USER_COUNT: "UserCount",
     UNLIMITED_USERS: "UnlimitedUsers",
@@ -1693,6 +1695,8 @@ export interface EntitlementsRequest {
 export const EntitlementsRequestEntitlementsNameEnum = {
     CONTRACT: "Contract",
     CUSTOM_THEMING: "CustomTheming",
+    WHITE_LABELING: "WhiteLabeling",
+    UI_LOCALIZATION: "UiLocalization",
     TIER: "Tier",
     USER_COUNT: "UserCount",
     UNLIMITED_USERS: "UnlimitedUsers",
@@ -3030,10 +3034,10 @@ export interface JsonApiCookieSecurityConfigurationIn {
     id: string;
     /**
      *
-     * @type {JsonApiCookieSecurityConfigurationInAttributes}
+     * @type {JsonApiCookieSecurityConfigurationPatchAttributes}
      * @memberof JsonApiCookieSecurityConfigurationIn
      */
-    attributes?: JsonApiCookieSecurityConfigurationInAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationPatchAttributes;
 }
 
 export const JsonApiCookieSecurityConfigurationInTypeEnum = {
@@ -3043,25 +3047,6 @@ export const JsonApiCookieSecurityConfigurationInTypeEnum = {
 export type JsonApiCookieSecurityConfigurationInTypeEnum =
     typeof JsonApiCookieSecurityConfigurationInTypeEnum[keyof typeof JsonApiCookieSecurityConfigurationInTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiCookieSecurityConfigurationInAttributes
- */
-export interface JsonApiCookieSecurityConfigurationInAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiCookieSecurityConfigurationInAttributes
-     */
-    lastRotation?: string;
-    /**
-     * Length of interval between automatic rotations expressed in format of ISO 8601 duration
-     * @type {string}
-     * @memberof JsonApiCookieSecurityConfigurationInAttributes
-     */
-    rotationInterval?: string;
-}
 /**
  *
  * @export
@@ -3095,10 +3080,10 @@ export interface JsonApiCookieSecurityConfigurationOut {
     id: string;
     /**
      *
-     * @type {JsonApiCookieSecurityConfigurationInAttributes}
+     * @type {JsonApiCookieSecurityConfigurationPatchAttributes}
      * @memberof JsonApiCookieSecurityConfigurationOut
      */
-    attributes?: JsonApiCookieSecurityConfigurationInAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationPatchAttributes;
 }
 
 export const JsonApiCookieSecurityConfigurationOutTypeEnum = {
@@ -3147,10 +3132,10 @@ export interface JsonApiCookieSecurityConfigurationPatch {
     id: string;
     /**
      *
-     * @type {JsonApiCookieSecurityConfigurationInAttributes}
+     * @type {JsonApiCookieSecurityConfigurationPatchAttributes}
      * @memberof JsonApiCookieSecurityConfigurationPatch
      */
-    attributes?: JsonApiCookieSecurityConfigurationInAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationPatchAttributes;
 }
 
 export const JsonApiCookieSecurityConfigurationPatchTypeEnum = {
@@ -3160,6 +3145,25 @@ export const JsonApiCookieSecurityConfigurationPatchTypeEnum = {
 export type JsonApiCookieSecurityConfigurationPatchTypeEnum =
     typeof JsonApiCookieSecurityConfigurationPatchTypeEnum[keyof typeof JsonApiCookieSecurityConfigurationPatchTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiCookieSecurityConfigurationPatchAttributes
+ */
+export interface JsonApiCookieSecurityConfigurationPatchAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiCookieSecurityConfigurationPatchAttributes
+     */
+    lastRotation?: string;
+    /**
+     * Length of interval between automatic rotations expressed in format of ISO 8601 duration
+     * @type {string}
+     * @memberof JsonApiCookieSecurityConfigurationPatchAttributes
+     */
+    rotationInterval?: string;
+}
 /**
  *
  * @export
@@ -6125,10 +6129,10 @@ export interface JsonApiOrganizationIn {
     id: string;
     /**
      *
-     * @type {JsonApiOrganizationInAttributes}
+     * @type {JsonApiOrganizationPatchAttributes}
      * @memberof JsonApiOrganizationIn
      */
-    attributes?: JsonApiOrganizationInAttributes;
+    attributes?: JsonApiOrganizationPatchAttributes;
 }
 
 export const JsonApiOrganizationInTypeEnum = {
@@ -6138,61 +6142,6 @@ export const JsonApiOrganizationInTypeEnum = {
 export type JsonApiOrganizationInTypeEnum =
     typeof JsonApiOrganizationInTypeEnum[keyof typeof JsonApiOrganizationInTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiOrganizationInAttributes
- */
-export interface JsonApiOrganizationInAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiOrganizationInAttributes
-     */
-    name?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiOrganizationInAttributes
-     */
-    hostname?: string;
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof JsonApiOrganizationInAttributes
-     */
-    allowedOrigins?: Array<string>;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiOrganizationInAttributes
-     */
-    oauthIssuerLocation?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiOrganizationInAttributes
-     */
-    oauthClientId?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiOrganizationInAttributes
-     */
-    oauthClientSecret?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiOrganizationInAttributes
-     */
-    earlyAccess?: string;
-    /**
-     * Any string identifying the OIDC provider. This value is used as suffix for OAuth2 callback (redirect) URL. If not defined, the standard callback URL is used. This value is valid only for external OIDC providers, not for the internal DEX provider.
-     * @type {string}
-     * @memberof JsonApiOrganizationInAttributes
-     */
-    oauthIssuerId?: string;
-}
 /**
  *
  * @export
@@ -6417,10 +6366,10 @@ export interface JsonApiOrganizationPatch {
     id: string;
     /**
      *
-     * @type {JsonApiOrganizationInAttributes}
+     * @type {JsonApiOrganizationPatchAttributes}
      * @memberof JsonApiOrganizationPatch
      */
-    attributes?: JsonApiOrganizationInAttributes;
+    attributes?: JsonApiOrganizationPatchAttributes;
 }
 
 export const JsonApiOrganizationPatchTypeEnum = {
@@ -6430,6 +6379,61 @@ export const JsonApiOrganizationPatchTypeEnum = {
 export type JsonApiOrganizationPatchTypeEnum =
     typeof JsonApiOrganizationPatchTypeEnum[keyof typeof JsonApiOrganizationPatchTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiOrganizationPatchAttributes
+ */
+export interface JsonApiOrganizationPatchAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiOrganizationPatchAttributes
+     */
+    name?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiOrganizationPatchAttributes
+     */
+    hostname?: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof JsonApiOrganizationPatchAttributes
+     */
+    allowedOrigins?: Array<string>;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiOrganizationPatchAttributes
+     */
+    oauthIssuerLocation?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiOrganizationPatchAttributes
+     */
+    oauthClientId?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiOrganizationPatchAttributes
+     */
+    oauthClientSecret?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiOrganizationPatchAttributes
+     */
+    earlyAccess?: string;
+    /**
+     * Any string identifying the OIDC provider. This value is used as suffix for OAuth2 callback (redirect) URL. If not defined, the standard callback URL is used. This value is valid only for external OIDC providers, not for the internal DEX provider.
+     * @type {string}
+     * @memberof JsonApiOrganizationPatchAttributes
+     */
+    oauthIssuerId?: string;
+}
 /**
  *
  * @export
@@ -6463,10 +6467,10 @@ export interface JsonApiOrganizationSettingIn {
     id: string;
     /**
      *
-     * @type {JsonApiUserSettingInAttributes}
+     * @type {JsonApiOrganizationSettingInAttributes}
      * @memberof JsonApiOrganizationSettingIn
      */
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingInAttributes;
 }
 
 export const JsonApiOrganizationSettingInTypeEnum = {
@@ -6476,6 +6480,19 @@ export const JsonApiOrganizationSettingInTypeEnum = {
 export type JsonApiOrganizationSettingInTypeEnum =
     typeof JsonApiOrganizationSettingInTypeEnum[keyof typeof JsonApiOrganizationSettingInTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiOrganizationSettingInAttributes
+ */
+export interface JsonApiOrganizationSettingInAttributes {
+    /**
+     *
+     * @type {object}
+     * @memberof JsonApiOrganizationSettingInAttributes
+     */
+    content?: object;
+}
 /**
  *
  * @export
@@ -6509,10 +6526,10 @@ export interface JsonApiOrganizationSettingOut {
     id: string;
     /**
      *
-     * @type {JsonApiUserSettingInAttributes}
+     * @type {JsonApiOrganizationSettingInAttributes}
      * @memberof JsonApiOrganizationSettingOut
      */
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingInAttributes;
 }
 
 export const JsonApiOrganizationSettingOutTypeEnum = {
@@ -6580,10 +6597,10 @@ export interface JsonApiOrganizationSettingOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiUserSettingInAttributes}
+     * @type {JsonApiOrganizationSettingInAttributes}
      * @memberof JsonApiOrganizationSettingOutWithLinks
      */
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingInAttributes;
     /**
      *
      * @type {ObjectLinks}
@@ -6619,10 +6636,10 @@ export interface JsonApiOrganizationSettingPatch {
     id: string;
     /**
      *
-     * @type {JsonApiUserSettingInAttributes}
+     * @type {JsonApiOrganizationSettingInAttributes}
      * @memberof JsonApiOrganizationSettingPatch
      */
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingInAttributes;
 }
 
 export const JsonApiOrganizationSettingPatchTypeEnum = {
@@ -7427,10 +7444,10 @@ export interface JsonApiUserSettingIn {
     id: string;
     /**
      *
-     * @type {JsonApiUserSettingInAttributes}
+     * @type {JsonApiOrganizationSettingInAttributes}
      * @memberof JsonApiUserSettingIn
      */
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingInAttributes;
 }
 
 export const JsonApiUserSettingInTypeEnum = {
@@ -7440,19 +7457,6 @@ export const JsonApiUserSettingInTypeEnum = {
 export type JsonApiUserSettingInTypeEnum =
     typeof JsonApiUserSettingInTypeEnum[keyof typeof JsonApiUserSettingInTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiUserSettingInAttributes
- */
-export interface JsonApiUserSettingInAttributes {
-    /**
-     *
-     * @type {object}
-     * @memberof JsonApiUserSettingInAttributes
-     */
-    content?: object;
-}
 /**
  *
  * @export
@@ -7486,10 +7490,10 @@ export interface JsonApiUserSettingOut {
     id: string;
     /**
      *
-     * @type {JsonApiUserSettingInAttributes}
+     * @type {JsonApiOrganizationSettingInAttributes}
      * @memberof JsonApiUserSettingOut
      */
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingInAttributes;
 }
 
 export const JsonApiUserSettingOutTypeEnum = {
@@ -7557,10 +7561,10 @@ export interface JsonApiUserSettingOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiUserSettingInAttributes}
+     * @type {JsonApiOrganizationSettingInAttributes}
      * @memberof JsonApiUserSettingOutWithLinks
      */
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingInAttributes;
     /**
      *
      * @type {ObjectLinks}
@@ -8768,10 +8772,10 @@ export interface JsonApiWorkspaceSettingIn {
     id: string;
     /**
      *
-     * @type {JsonApiUserSettingInAttributes}
+     * @type {JsonApiOrganizationSettingInAttributes}
      * @memberof JsonApiWorkspaceSettingIn
      */
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingInAttributes;
 }
 
 export const JsonApiWorkspaceSettingInTypeEnum = {
@@ -8814,10 +8818,10 @@ export interface JsonApiWorkspaceSettingOut {
     id: string;
     /**
      *
-     * @type {JsonApiUserSettingInAttributes}
+     * @type {JsonApiOrganizationSettingInAttributes}
      * @memberof JsonApiWorkspaceSettingOut
      */
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingInAttributes;
 }
 
 export const JsonApiWorkspaceSettingOutTypeEnum = {
@@ -8885,10 +8889,10 @@ export interface JsonApiWorkspaceSettingOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiUserSettingInAttributes}
+     * @type {JsonApiOrganizationSettingInAttributes}
      * @memberof JsonApiWorkspaceSettingOutWithLinks
      */
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingInAttributes;
     /**
      *
      * @type {ObjectLinks}
@@ -8924,10 +8928,10 @@ export interface JsonApiWorkspaceSettingPatch {
     id: string;
     /**
      *
-     * @type {JsonApiUserSettingInAttributes}
+     * @type {JsonApiOrganizationSettingInAttributes}
      * @memberof JsonApiWorkspaceSettingPatch
      */
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingInAttributes;
 }
 
 export const JsonApiWorkspaceSettingPatchTypeEnum = {
