@@ -33,6 +33,8 @@ import { TestDefinitionRequestTypeEnum } from '@gooddata/api-client-tiger';
 
 export { AnonymousAuthProvider }
 
+export { ApiEntitlement }
+
 // @public
 export class ContextDeferredAuthProvider extends TigerAuthProviderBase {
     constructor(notAuthenticatedHandler?: NotAuthenticatedHandler | undefined);
