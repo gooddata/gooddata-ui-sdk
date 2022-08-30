@@ -290,7 +290,13 @@
 }
 
 .gd-attribute-filter-dropdown-simple-button__next {
-    max-width: 240px;
+    max-width: 285px;
+
+    .is-active {
+        @media only screen and (max-width: 640px) {
+            max-width: 100vw;
+        }
+    }
 
     .gd-attribute-filter-dropdown-simple-button-text {
         display: flex;
