@@ -56,6 +56,7 @@ export {
     GenerateLdmRequest,
     DeclarativePdm,
     ApiEntitlement,
+    ApiEntitlementNameEnum,
 } from "@gooddata/api-client-tiger";
 export {
     ContextDeferredAuthProvider,

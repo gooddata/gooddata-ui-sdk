@@ -6,6 +6,7 @@
 
 import { AnonymousAuthProvider } from '@gooddata/sdk-backend-base';
 import { ApiEntitlement } from '@gooddata/api-client-tiger';
+import { ApiEntitlementNameEnum } from '@gooddata/api-client-tiger';
 import { AuthenticationFlow } from '@gooddata/sdk-backend-spi';
 import { DeclarativeAnalytics } from '@gooddata/api-client-tiger';
 import { DeclarativeModel } from '@gooddata/api-client-tiger';
@@ -34,6 +35,8 @@ import { TestDefinitionRequestTypeEnum } from '@gooddata/api-client-tiger';
 export { AnonymousAuthProvider }
 
 export { ApiEntitlement }
+
+export { ApiEntitlementNameEnum }
 
 // @public
 export class ContextDeferredAuthProvider extends TigerAuthProviderBase {
