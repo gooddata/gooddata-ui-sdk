@@ -7,6 +7,7 @@ import { InsightDrillConfigList } from "./InsightDrillConfigList";
 import {
     modifyDrillsForInsightWidget,
     selectDrillTargetsByWidgetRef,
+    selectSettings,
     selectWidgetByRef,
     useDashboardDispatch,
     useDashboardSelector,
@@ -18,6 +19,7 @@ import { useDrillTargetTypeItems } from "./useDrillTargetTypeItems";
 import { IDrillConfigItem, isAvailableDrillTargetMeasure } from "../../../drill/types";
 import { IAvailableDrillTargetItem } from "../../../drill/DrillSelect/types";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
+import { ZoomInsightConfiguration } from "./ZoomInsightConfiguration";
 
 const mergeDrillConfigItems = (
     drillConfigItems: IDrillConfigItem[],
@@ -141,8 +143,12 @@ export const InsightDrillConfigPanel: React.FunctionComponent<IDrillConfigPanelP
     const dispatch = useDashboardDispatch();
     const mergedItems = mergeDrillConfigItems(drillItems, incompleteItems);
 
+    const settings = useDashboardSelector(selectSettings);
+
     return (
-        <div className="configuration-category s-drill-config-panel">
+        <>
+            {settings.enableKDZooming && <ZoomInsightConfiguration widget={widget} />}
+            <div className="configuration-category s-drill-config-panel">
             <Typography tagName="h3">
                 <span>
                     <FormattedMessage id="configurationPanel.drillConfig.interactions" />
@@ -158,12 +164,13 @@ export const InsightDrillConfigPanel: React.FunctionComponent<IDrillConfigPanelP
                 onIncompleteChange={onChangeItem}
                 enabledDrillTargetTypeItems={enabledDrillTargetTypeItems}
             />
-            {configItems?.availableDrillTargets ? (
+            {configItems?.availableDrillTargets && (
                 <DrillOriginSelector
                     items={getUnusedDrillTargets(configItems?.availableDrillTargets, mergedItems)}
                     onSelect={onOriginSelect}
                 />
-            ) : null}
+            )}
         </div>
+        </>
     );
 };
