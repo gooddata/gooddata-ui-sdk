@@ -91,6 +91,7 @@ export {
     PutWorkspaceLayoutRequest,
     DataSourceDefinition,
     IDataSourceDeletedResponse,
+    IInvitationUserResponse,
     WorkspaceDefinition,
     DependentEntitiesGraphRequest,
     DependentEntitiesGraphResponse,

@@ -4,10 +4,12 @@
 
 ```ts
 
+import { ActionsApiProcessInvitationRequest } from '@gooddata/api-client-tiger';
 import { AnonymousAuthProvider } from '@gooddata/sdk-backend-base';
 import { ApiEntitlement } from '@gooddata/api-client-tiger';
 import { ApiEntitlementNameEnum } from '@gooddata/api-client-tiger';
 import { AuthenticationFlow } from '@gooddata/sdk-backend-spi';
+import { AxiosRequestConfig } from 'axios';
 import { DeclarativeAnalytics } from '@gooddata/api-client-tiger';
 import { DeclarativeModel } from '@gooddata/api-client-tiger';
 import { DeclarativePdm } from '@gooddata/api-client-tiger';
@@ -189,6 +191,14 @@ export interface IDataSourceUpsertRequest {
 }
 
 // @internal (undocumented)
+export interface IInvitationUserResponse {
+    // (undocumented)
+    errorMessage?: string;
+    // (undocumented)
+    successful?: boolean;
+}
+
+// @internal (undocumented)
 export type OrganizationPermission = JsonApiOrganizationOutMetaPermissionsEnum;
 
 // @internal (undocumented)
@@ -288,6 +298,7 @@ export type TigerSpecificFunctions = {
     getDependentEntitiesGraphFromEntryPoints?: (workspaceId: string, dependentEntitiesGraphRequest: DependentEntitiesGraphRequest) => Promise<DependentEntitiesGraphResponse>;
     resolveAllEntitlements?: () => Promise<ApiEntitlement[]>;
     getAllPlatformUsage?: () => Promise<PlatformUsage[]>;
+    inviteUser?: (requestParameters: ActionsApiProcessInvitationRequest, options?: AxiosRequestConfig) => Promise<IInvitationUserResponse>;
 };
 
 // @public

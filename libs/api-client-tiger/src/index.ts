@@ -165,6 +165,13 @@ export {
     TotalDimension,
     TotalFunctionEnum,
 } from "./generated/afm-rest-api/api";
+export {
+    ActionsApiFactory as AuthActionsApiFactory,
+    ActionsApiInterface as AuthActionsApiInterface,
+    ActionsApiProcessInvitationRequest,
+    Invitation,
+} from "./generated/auth-json-api/api";
+export { Configuration, ConfigurationParameters } from "./generated/auth-json-api/configuration";
 export * from "./generated/metadata-json-api/api";
 export {
     ActionsApiGetDataSourceSchemataRequest,
@@ -184,6 +191,7 @@ export {
     TestResponse,
     ColumnWarning,
 } from "./generated/scan-json-api/api";
+
 export * from "./client";
 
 export { jsonApiHeaders, JSON_API_HEADER_VALUE, ValidateRelationsHeader } from "./constants";

@@ -161,6 +161,11 @@ export interface ActionsApiParticularPlatformUsageRequest {
 }
 
 // @public
+export interface ActionsApiProcessInvitationRequest {
+    readonly invitation: Invitation;
+}
+
+// @public
 export interface ActionsApiRegisterUploadNotificationRequest {
     readonly dataSourceId: string;
 }
@@ -617,6 +622,16 @@ export interface AttributeResultHeader {
 }
 
 // @public
+export const AuthActionsApiFactory: (configuration?: Configuration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    processInvitation(requestParameters: ActionsApiProcessInvitationRequest, options?: AxiosRequestConfig | undefined): AxiosPromise<void>;
+};
+
+// @public
+export interface AuthActionsApiInterface {
+    processInvitation(requestParameters: ActionsApiProcessInvitationRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+}
+
+// @public
 export interface ColumnWarning {
     message: Array<string>;
     name: Array<string>;
@@ -648,6 +663,37 @@ export const ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnu
 
 // @public (undocumented)
 export type ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum = typeof ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum[keyof typeof ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum];
+
+// @public (undocumented)
+export class Configuration {
+    constructor(param?: ConfigurationParameters);
+    accessToken?: string | Promise<string> | ((name?: string, scopes?: string[]) => string) | ((name?: string, scopes?: string[]) => Promise<string>);
+    apiKey?: string | Promise<string> | ((name: string) => string) | ((name: string) => Promise<string>);
+    baseOptions?: any;
+    basePath?: string;
+    formDataCtor?: new () => any;
+    isJsonMime(mime: string): boolean;
+    password?: string;
+    username?: string;
+}
+
+// @public
+export interface ConfigurationParameters {
+    // (undocumented)
+    accessToken?: string | Promise<string> | ((name?: string, scopes?: string[]) => string) | ((name?: string, scopes?: string[]) => Promise<string>);
+    // (undocumented)
+    apiKey?: string | Promise<string> | ((name: string) => string) | ((name: string) => Promise<string>);
+    // (undocumented)
+    baseOptions?: any;
+    // (undocumented)
+    basePath?: string;
+    // (undocumented)
+    formDataCtor?: new () => any;
+    // (undocumented)
+    password?: string;
+    // (undocumented)
+    username?: string;
+}
 
 // @public
 export interface DataColumnLocator {
@@ -3260,6 +3306,11 @@ export interface InlineMeasureDefinitionInline {
     maql: string;
 }
 
+// @public
+export interface Invitation {
+    email: string;
+}
+
 // @public (undocumented)
 export const isAfmObjectIdentifier: (value: unknown) => value is AfmObjectIdentifier;
 
@@ -3297,6 +3348,8 @@ export function isVisualizationObjectsItem(visualizationObject: unknown): visual
 export interface ITigerClient {
     // (undocumented)
     actions: ReturnType<typeof tigerActionsClientFactory>;
+    // (undocumented)
+    authActions: ReturnType<typeof tigerAuthActionsClientFactory>;
     // (undocumented)
     axios: AxiosInstance;
     // (undocumented)
@@ -7081,6 +7134,9 @@ export const tigerActionsClientFactory: (axios: AxiosInstance) => ActionsApiInte
 
 // @public (undocumented)
 export const tigerAfmExplainClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "explainAFM">;
+
+// @public (undocumented)
+export const tigerAuthActionsClientFactory: (axios: AxiosInstance) => AuthActionsApiInterface;
 
 // @public
 export const tigerClientFactory: (axios: AxiosInstance) => ITigerClient;
