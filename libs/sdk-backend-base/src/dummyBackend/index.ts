@@ -394,6 +394,7 @@ class DummyWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
             types: ["attribute", "measure", "fact", "dateDataset"],
             excludeTags: [],
             includeTags: [],
+            loadGroups: true,
         },
     ) {}
 
@@ -426,6 +427,12 @@ class DummyWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     public excludeTags(tags: ObjRef[]): IWorkspaceCatalogFactory {
         return this.withOptions({
             excludeTags: tags,
+        });
+    }
+
+    public withGroups(loadGroups: boolean): IWorkspaceCatalogFactory {
+        return this.withOptions({
+            loadGroups,
         });
     }
 

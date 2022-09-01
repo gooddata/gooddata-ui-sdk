@@ -68,6 +68,7 @@ export class BearWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCata
             types: ["attribute", "measure", "fact", "dateDataset"],
             excludeTags: [],
             includeTags: [],
+            loadGroups: true,
         },
         private readonly mappings: IUriMappings,
     ) {}
@@ -111,6 +112,10 @@ export class BearWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCata
 
     public forInsight(insight: IInsightDefinition): IWorkspaceCatalogAvailableItemsFactory {
         return this.withOptions({ insight });
+    }
+
+    public withGroups(loadGroups: boolean): IWorkspaceCatalogAvailableItemsFactory {
+        return this.withOptions({ loadGroups });
     }
 
     public async load(): Promise<BearWorkspaceCatalogWithAvailableItems> {

@@ -10,7 +10,7 @@ ServerPaging {
   "limit": 50,
   "next": [Function],
   "offset": 200,
-  "totalCount": 23,
+  "totalCount": 24,
 }
 `;
 
@@ -1856,10 +1856,96 @@ ServerPaging {
         "visualizationUrl": "local:table",
       },
     },
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271",
+                      },
+                    },
+                  },
+                  "localIdentifier": "bc609ba7d72347ffb397a76e3b642c77",
+                  "title": "Amount",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+            "totals": undefined,
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087",
+                  },
+                  "localIdentifier": "9a1ab6658822457583a4b4d64e29d045",
+                },
+              },
+            ],
+            "localIdentifier": "view",
+            "totals": undefined,
+          },
+          Object {
+            "items": Array [
+              Object {
+                "attribute": Object {
+                  "displayForm": Object {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1089",
+                  },
+                  "localIdentifier": "5c37330913aa442080d2127f46ffaa48",
+                },
+              },
+            ],
+            "localIdentifier": "stack",
+            "totals": undefined,
+          },
+        ],
+        "created": "2022-03-14 15:57:56",
+        "createdBy": undefined,
+        "filters": Array [
+          Object {
+            "measureValueFilter": Object {
+              "condition": Object {
+                "comparison": Object {
+                  "operator": "GREATER_THAN_OR_EQUAL_TO",
+                  "treatNullValuesAs": 0,
+                  "value": 42,
+                },
+              },
+              "measure": Object {
+                "localIdentifier": "bc609ba7d72347ffb397a76e3b642c77",
+              },
+            },
+          },
+        ],
+        "identifier": "abMejN0pEA3j",
+        "isLocked": undefined,
+        "properties": Object {},
+        "ref": Object {
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1510",
+        },
+        "sorts": Array [],
+        "summary": "",
+        "tags": Array [],
+        "title": "AreaChart with all buckets",
+        "updated": "2022-03-14 15:57:56",
+        "updatedBy": undefined,
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1510",
+        "visualizationUrl": "local:area",
+      },
+    },
   ],
   "limit": 50,
   "next": [Function],
   "offset": 0,
-  "totalCount": 23,
+  "totalCount": 24,
 }
 `;

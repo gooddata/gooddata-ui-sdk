@@ -1,0 +1,40 @@
+{
+    "id": "2588e2fe-1f09-433a-ab9c-e9cf8573c0c7",
+    "name": "gdc_md_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_objects_get",
+    "request": {
+        "url": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/objects/get",
+        "method": "POST",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json; charset=utf-8"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        },
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"get\":{\"items\":[\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/673\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/675\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/676\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/677\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/678\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/679\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/993\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/994\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/995\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/996\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1000\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1001\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1002\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1003\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1005\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1006\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1007\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1008\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1009\"]}}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "bodyFileName": "gdc_md_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_objects_get-2588e2fe-1f09-433a-ab9c-e9cf8573c0c7.json",
+        "headers": {
+            "date": "Wed, 07 Sep 2022 13:59:33 GMT",
+            "content-type": "application/json;charset=UTF-8",
+            "X-GDC-REQUEST-TIME": "132",
+            "X-GDC-REQUEST": "4Rji1tDvSkLqsf9n",
+            "cache-control": "no-cache, no-store, must-revalidate",
+            "vary": "origin,X-GDC-VERSION",
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload"
+        }
+    },
+    "uuid": "2588e2fe-1f09-433a-ab9c-e9cf8573c0c7",
+    "persistent": true,
+    "insertionIndex": 10
+}
