@@ -5,6 +5,7 @@ import {
     NotAuthenticated,
     UnexpectedError,
     LimitReached,
+    ContractExpired,
 } from "@gooddata/sdk-backend-spi";
 import { AxiosError } from "axios";
 
@@ -23,6 +24,12 @@ export function convertApiError(error: Error): AnalyticalBackendError {
 
     if (limitReached) {
         throw limitReached;
+    }
+
+    const contractExpired = createContractExpiredError(error);
+
+    if (contractExpired) {
+        throw contractExpired;
     }
 
     return new UnexpectedError("An unexpected error has occurred", error);
@@ -57,4 +64,18 @@ function createLimitReachedError(error: Error): LimitReached | undefined {
     }
 
     return new LimitReached("The limit reached. Upgrade your plan to create more objects.", error);
+}
+
+function createContractExpiredError(error: Error): ContractExpired | undefined {
+    const axiosErrorResponse = (error as AxiosError).response;
+
+    if (
+        !axiosErrorResponse ||
+        axiosErrorResponse.status !== 403 ||
+        !axiosErrorResponse.data?.detail?.includes("Contract expired")
+    ) {
+        return;
+    }
+
+    return new ContractExpired(axiosErrorResponse.data.tier, error);
 }

@@ -17,6 +17,7 @@ export const AnalyticalBackendErrorTypes = {
     NOT_IMPLEMENTED: "NI!",
     NOT_AUTHENTICATED: "NAuth",
     LIMIT_REACHED: "LR",
+    CONTRACT_EXPIRED: "CE",
 };
 
 /**
@@ -188,6 +189,17 @@ export class LimitReached extends AnalyticalBackendError {
 }
 
 /**
+ * This exception is thrown when a contract has expired, for example if a plan's trial period has ended
+ *
+ * @public
+ */
+export class ContractExpired extends AnalyticalBackendError {
+    constructor(message: string, cause?: Error) {
+        super(message, AnalyticalBackendErrorTypes.CONTRACT_EXPIRED, cause);
+    }
+}
+
+/**
  * Error converter
  *
  * @public
@@ -282,4 +294,13 @@ export function isNotAuthenticated(obj: unknown): obj is NotAuthenticated {
  */
 export function isLimitReached(obj: unknown): obj is LimitReached {
     return isAnalyticalBackendError(obj) && obj.abeType === AnalyticalBackendErrorTypes.LIMIT_REACHED;
+}
+
+/**
+ * Type guard checking whether input is an instance of {@link ContractExpired}
+ *
+ * @public
+ */
+export function isContractExpired(obj: unknown): obj is ContractExpired {
+    return isAnalyticalBackendError(obj) && obj.abeType === AnalyticalBackendErrorTypes.CONTRACT_EXPIRED;
 }
