@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import noop from "lodash/noop";
 import { dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
 import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
@@ -18,6 +18,7 @@ describe("UserWorkspaceSettingsDataLoader", () => {
             settings: () => ({
                 getSettingsForCurrentUser,
                 getSettings: noop as any,
+                setLocale: (_locale: string) => Promise.resolve(),
             }),
         }),
     });

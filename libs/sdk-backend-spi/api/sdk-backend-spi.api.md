@@ -989,6 +989,7 @@ export interface IOrganizations {
 
 // @public
 export interface IOrganizationSettingsService {
+    setLocale(locale: string): Promise<void>;
     setWhiteLabeling(whiteLabeling: IWhiteLabeling): Promise<void>;
 }
 
@@ -1521,6 +1522,7 @@ export interface IUserSettings extends ISettings_2 {
 // @public
 export interface IUserSettingsService {
     getSettings(): Promise<IUserSettings>;
+    setLocale(locale: string): Promise<void>;
 }
 
 // @public
@@ -1758,6 +1760,7 @@ export interface IWorkspaceSettings extends ISettings_2 {
 export interface IWorkspaceSettingsService {
     getSettings(): Promise<IWorkspaceSettings>;
     getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings>;
+    setLocale(locale: string): Promise<void>;
 }
 
 // @public

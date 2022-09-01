@@ -509,6 +509,7 @@ class DummyOrganization implements IOrganization {
     settings(): IOrganizationSettingsService {
         return {
             setWhiteLabeling: () => Promise.resolve(),
+            setLocale: () => Promise.resolve(),
         };
     }
 }
@@ -533,6 +534,10 @@ class DummyWorkspaceSettingsService implements IWorkspaceSettingsService {
                 decimal: ".",
             },
         });
+    }
+
+    setLocale(_locale: string): Promise<void> {
+        return Promise.resolve();
     }
 }
 

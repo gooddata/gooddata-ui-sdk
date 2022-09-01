@@ -8,10 +8,14 @@ export class OrganizationSettingsService implements IOrganizationSettingsService
     constructor(public readonly authCall: TigerAuthenticatedCallGuard) {}
 
     public async setWhiteLabeling(whiteLabeling: IWhiteLabeling): Promise<void> {
-        this.setSetting("whiteLabeling", whiteLabeling);
+        return this.setSetting("whiteLabeling", whiteLabeling);
     }
 
-    private async setSetting(id: string, content: any): Promise<void> {
+    public async setLocale(locale: string): Promise<void> {
+        return this.setSetting("locale", { value: locale });
+    }
+
+    private async setSetting(id: string, content: any): Promise<any> {
         // Currently it is necessary to check existence of required setting
         // since PUT does not support creation of non-existing setting.
         // It can be simplified to Update method once NAS-4291 is implemented
@@ -29,15 +33,15 @@ export class OrganizationSettingsService implements IOrganizationSettingsService
     }
 
     private async getSetting(id: string): Promise<any> {
-        await this.authCall((client) =>
+        return this.authCall((client) =>
             client.entities.getEntityOrganizationSettings({
                 id,
             }),
         );
     }
 
-    private async updateSetting(id: string, content: any): Promise<void> {
-        await this.authCall((client) =>
+    private async updateSetting(id: string, content: any): Promise<any> {
+        return this.authCall((client) =>
             client.entities.updateEntityOrganizationSettings({
                 id,
                 jsonApiOrganizationSettingInDocument: {
@@ -53,8 +57,8 @@ export class OrganizationSettingsService implements IOrganizationSettingsService
         );
     }
 
-    private async createSetting(id: string, content: any): Promise<void> {
-        await this.authCall((client) =>
+    private async createSetting(id: string, content: any): Promise<any> {
+        return this.authCall((client) =>
             client.entities.createEntityOrganizationSettings({
                 jsonApiOrganizationSettingInDocument: {
                     data: {
