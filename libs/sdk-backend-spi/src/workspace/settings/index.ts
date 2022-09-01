@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { IWorkspaceSettings, IUserWorkspaceSettings } from "../../common/settings";
 
 /**
@@ -20,4 +20,13 @@ export interface IWorkspaceSettingsService {
      * @returns promise of user/workspace settings
      */
     getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings>;
+
+    /**
+     * Sets locale for current workspace.
+     *
+     * @param locale - IETF BCP 47 Code locale ID, for example "en-US", "cs-CZ", etc.
+     *
+     * @returns promise
+     */
+    setLocale(locale: string): Promise<void>;
 }

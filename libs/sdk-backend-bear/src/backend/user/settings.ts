@@ -1,5 +1,5 @@
-// (C) 2020 GoodData Corporation
-import { IUserSettingsService, IUserSettings } from "@gooddata/sdk-backend-spi";
+// (C) 2020-2022 GoodData Corporation
+import { IUserSettingsService, IUserSettings, NotSupported } from "@gooddata/sdk-backend-spi";
 import { userLoginMd5FromAuthenticatedPrincipalWithAnonymous } from "../../utils/api";
 import { BearAuthenticatedCallGuard } from "../../types/auth";
 import { ANONYMOUS_USER_SETTINGS } from "../constants";
@@ -31,5 +31,9 @@ export class BearUserSettingsService implements IUserSettingsService {
                 ...flags,
             };
         });
+    }
+
+    public setLocale(_locale: string): Promise<void> {
+        throw new NotSupported("Backend does not support user locale setup");
     }
 }

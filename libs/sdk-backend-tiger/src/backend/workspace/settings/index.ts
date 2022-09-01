@@ -3,11 +3,13 @@ import {
     IWorkspaceSettings,
     IWorkspaceSettingsService,
     IUserWorkspaceSettings,
+    isUnexpectedError,
 } from "@gooddata/sdk-backend-spi";
 import { ISettings } from "@gooddata/sdk-model";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { TigerFeaturesService, pickContext } from "../../features";
 import { DefaultUiSettings, DefaultUserSettings } from "../../uiSettings";
+import { convertApiError } from "../../../utils/errorHandling";
 
 export class TigerWorkspaceSettings implements IWorkspaceSettingsService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -33,6 +35,71 @@ export class TigerWorkspaceSettings implements IWorkspaceSettingsService {
 
     public getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings> {
         return getSettingsForCurrentUser(this.authCall, this.workspace);
+    }
+
+    public async setLocale(locale: string): Promise<void> {
+        return this.setSetting("locale", { value: locale });
+    }
+
+    private async setSetting(id: string, content: any): Promise<void> {
+        // Currently it is necessary to check existence of required setting
+        // since PUT does not support creation of non-existing setting.
+        // It can be simplified to Update method once NAS-4291 is implemented
+        try {
+            await this.getSetting(id);
+            await this.updateSetting(id, content);
+        } catch (error: any) {
+            if (isUnexpectedError(error)) {
+                // if such settings is not defined
+                await this.createSetting(id, content);
+                return;
+            }
+            throw convertApiError(error);
+        }
+    }
+
+    private async getSetting(id: string): Promise<any> {
+        return this.authCall((client) =>
+            client.entities.getEntityWorkspaceSettings({
+                workspaceId: this.workspace,
+                objectId: id,
+            }),
+        );
+    }
+
+    private async updateSetting(id: string, content: any): Promise<any> {
+        return this.authCall(async (client) =>
+            client.entities.updateEntityWorkspaceSettings({
+                workspaceId: this.workspace,
+                objectId: id,
+                jsonApiWorkspaceSettingInDocument: {
+                    data: {
+                        type: "workspaceSetting",
+                        id,
+                        attributes: {
+                            content,
+                        },
+                    },
+                },
+            }),
+        );
+    }
+
+    private async createSetting(id: string, content: any): Promise<any> {
+        return this.authCall(async (client) =>
+            client.entities.createEntityWorkspaceSettings({
+                workspaceId: this.workspace,
+                jsonApiWorkspaceSettingInDocument: {
+                    data: {
+                        type: "workspaceSetting",
+                        id,
+                        attributes: {
+                            content,
+                        },
+                    },
+                },
+            }),
+        );
     }
 }
 

@@ -205,6 +205,9 @@ function recordedWorkspace(
                         ...(implConfig.globalSettings ?? {}),
                     };
                 },
+                async setLocale(): Promise<void> {
+                    return Promise.resolve();
+                },
             };
         },
         styling(): IWorkspaceStylingService {
@@ -323,6 +326,7 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
         settings(): IOrganizationSettingsService {
             return {
                 setWhiteLabeling: () => Promise.resolve(),
+                setLocale: () => Promise.resolve(),
             };
         },
     };
@@ -359,6 +363,7 @@ function recordedUserService(implConfig: RecordedBackendConfig): IUserService {
                     separators,
                     ...(implConfig.globalSettings ?? {}),
                 }),
+                setLocale: () => Promise.resolve(),
             };
         },
     };

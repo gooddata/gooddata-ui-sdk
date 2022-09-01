@@ -3,6 +3,7 @@ import {
     IWorkspaceSettings,
     IWorkspaceSettingsService,
     IUserWorkspaceSettings,
+    NotSupported,
 } from "@gooddata/sdk-backend-spi";
 import { ISettings } from "@gooddata/sdk-model";
 import { IFeatureFlags } from "@gooddata/api-client-bear";
@@ -82,5 +83,9 @@ export class BearWorkspaceSettings implements IWorkspaceSettingsService {
                 ...mergeWorkspaceAndUserSettings(workspaceFeatureFlags, userFeatureFlags),
             };
         });
+    }
+
+    public setLocale(_locale: string): Promise<void> {
+        throw new NotSupported("Backend does not support workspace locale setup");
     }
 }

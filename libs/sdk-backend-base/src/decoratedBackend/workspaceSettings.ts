@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import {
     IUserWorkspaceSettings,
     IWorkspaceSettings,
@@ -17,5 +17,9 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
 
     async getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings> {
         return this.decorated.getSettingsForCurrentUser();
+    }
+
+    async setLocale(locale: string): Promise<void> {
+        return this.decorated.setLocale(locale);
     }
 }
