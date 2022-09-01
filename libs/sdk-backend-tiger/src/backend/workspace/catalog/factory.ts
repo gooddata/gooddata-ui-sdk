@@ -36,6 +36,7 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
             types: ["attribute", "measure", "fact", "dateDataset"],
             excludeTags: [],
             includeTags: [],
+            loadGroups: true,
         },
     ) {}
 
@@ -70,6 +71,12 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
             excludeTags: tags,
         });
     };
+
+    public withGroups(loadGroups: boolean): IWorkspaceCatalogFactory {
+        return this.withOptions({
+            loadGroups,
+        });
+    }
 
     public load = async (): Promise<IWorkspaceCatalog> => {
         const promises: Promise<CatalogItem[]>[] = [];

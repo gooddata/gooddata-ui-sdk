@@ -55,6 +55,12 @@ export interface IWorkspaceCatalogFactoryOptions {
      * Default: undefined
      */
     includeDateGranularities?: string[];
+
+    /**
+     * Should catalog fetch groups?
+     * Default: true
+     */
+    loadGroups?: boolean;
 }
 
 /**
@@ -233,6 +239,15 @@ export interface IWorkspaceCatalogFactoryMethods<TFactory, TOptions> {
      * @returns catalog factory
      */
     excludeTags(tags: ObjRef[]): TFactory;
+
+    /**
+     * Setup whether catalog should fetch groups.
+     * Default: true
+     *
+     * @param loadGroups - should fetch groups
+     * @returns catalog factory
+     */
+    withGroups(loadGroups: boolean): TFactory;
 
     /**
      * Setup catalog to fetch only items for specific options

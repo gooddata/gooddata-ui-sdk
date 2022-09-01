@@ -110,6 +110,7 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
             types: ["attribute", "measure", "fact", "dateDataset"],
             excludeTags: [],
             includeTags: [],
+            loadGroups: true,
         },
     ) {}
 
@@ -142,6 +143,12 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     public excludeTags(tags: ObjRef[]): IWorkspaceCatalogFactory {
         return this.withOptions({
             excludeTags: tags,
+        });
+    }
+
+    public withGroups(loadGroups: boolean): IWorkspaceCatalogFactory {
+        return this.withOptions({
+            loadGroups,
         });
     }
 
@@ -286,8 +293,8 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     };
 
     private loadCatalogGroups = async (): Promise<ICatalogGroup[]> => {
-        const { types } = this.options;
-        const shouldLoadGroups = types.some(isGroupableCatalogItemType);
+        const { types, loadGroups } = this.options;
+        const shouldLoadGroups = loadGroups && types.some(isGroupableCatalogItemType);
         if (!shouldLoadGroups) {
             return [];
         }
