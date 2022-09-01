@@ -79,7 +79,7 @@
         "element-closest-polyfill": "^1.0.0",
         "fixed-data-table-2": "^1.2.0",
         "lodash": "^4.17.19",
-        "moment-timezone": "^0.5.33",
+        "moment-timezone": "^0.5.35",
         "moment": "^2.24.0",
         "react-content-loader": "^6.2.0",
         "react-day-picker": "^8.0.1",
