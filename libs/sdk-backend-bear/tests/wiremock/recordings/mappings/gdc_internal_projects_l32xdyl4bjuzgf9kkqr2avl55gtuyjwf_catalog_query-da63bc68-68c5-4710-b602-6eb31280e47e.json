@@ -1,0 +1,41 @@
+{
+    "id": "da63bc68-68c5-4710-b602-6eb31280e47e",
+    "name": "gdc_internal_projects_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_catalog_query",
+    "request": {
+        "url": "/gdc/internal/projects/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/catalog/query",
+        "method": "POST",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json; charset=utf-8"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        },
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"catalogQueryRequest\":{\"bucketItems\":[{\"expression\":\"SELECT SUM([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1102])\"},{\"expression\":\"SELECT (SELECT SUM([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1102])) FOR PREVIOUS ([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/497])\"}],\"types\":[\"attribute\",\"metric\",\"fact\"]}}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 303,
+        "body": "{\"uri\":\"/gdc/internal/projects/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/catalog/query?c=05476bf56b85c06afe43ddb1d879be3d&q=eAFNyzsOAiAMANC7MDsUWgr1NqWfxMHF4GS8u8TB%2BPb3Krr347aeO8q1MLkn9UxjI7EZQbCWtBCQ%0AhsjwRbVcyj1Os3NQB4RHJWkrnTEYk4ZKY2S1Zn8n1fYZdQD2PrNTihE4gwVZRQ%2FrE6v%2BxvsD2KAq%0AnQ%3D%3D%0A\"}",
+        "headers": {
+            "date": "Wed, 07 Sep 2022 13:59:38 GMT",
+            "location": "/gdc/internal/projects/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/catalog/query?c=05476bf56b85c06afe43ddb1d879be3d&q=eAFNyzsOAiAMANC7MDsUWgr1NqWfxMHF4GS8u8TB%2BPb3Krr347aeO8q1MLkn9UxjI7EZQbCWtBCQ%0AhsjwRbVcyj1Os3NQB4RHJWkrnTEYk4ZKY2S1Zn8n1fYZdQD2PrNTihE4gwVZRQ%2FrE6v%2BxvsD2KAq%0AnQ%3D%3D%0A",
+            "content-type": "application/json;charset=UTF-8",
+            "X-GDC-REQUEST-TIME": "120",
+            "X-GDC-REQUEST": "Cs5EXaJmUuW5cl5W",
+            "cache-control": "no-cache, no-store, must-revalidate",
+            "vary": "origin,X-GDC-VERSION",
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload"
+        }
+    },
+    "uuid": "da63bc68-68c5-4710-b602-6eb31280e47e",
+    "persistent": true,
+    "insertionIndex": 12
+}

@@ -1,4 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
+import invariant from "ts-invariant";
 import {
     IWorkspaceCatalogAvailableItemsFactory,
     IWorkspaceCatalogFactoryOptions,
@@ -31,6 +32,7 @@ export class BearWorkspaceCatalog implements IWorkspaceCatalog {
     ) {}
 
     public groups(): ICatalogGroup[] {
+        invariant(this.options.loadGroups, "Catalog groups are not loaded.");
         return this.catalogGroups;
     }
 

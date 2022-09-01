@@ -68,6 +68,7 @@ export class BearWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCata
             types: ["attribute", "measure", "fact", "dateDataset"],
             excludeTags: [],
             includeTags: [],
+            loadGroups: true,
         },
         private readonly mappings: IUriMappings,
     ) {}
@@ -113,6 +114,10 @@ export class BearWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCata
         return this.withOptions({ insight });
     }
 
+    public withGroups(loadGroups: boolean): IWorkspaceCatalogAvailableItemsFactory {
+        return this.withOptions({ loadGroups });
+    }
+
     public async load(): Promise<BearWorkspaceCatalogWithAvailableItems> {
         const tempVisualizationObj = createVisObjectForAvailability(this.options, this.mappings);
 
@@ -123,7 +128,12 @@ export class BearWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCata
 
         const allAvailableCatalogItems = [...availableCatalogItems, ...availableDateDatasets];
 
-        return new BearWorkspaceCatalogWithAvailableItems(this.groups, this.items, allAvailableCatalogItems);
+        return new BearWorkspaceCatalogWithAvailableItems(
+            this.groups,
+            this.items,
+            allAvailableCatalogItems,
+            this.options,
+        );
     }
 
     private loadAvailableCatalogItems = async (

@@ -1,0 +1,40 @@
+{
+    "id": "f28c6863-bd47-4736-bf78-128783c31303",
+    "name": "gdc_md_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_objects_get",
+    "request": {
+        "url": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/objects/get",
+        "method": "POST",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json; charset=utf-8"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        },
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"get\":{\"items\":[\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1059\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1101\"]}}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"objects\":{\"items\":[{\"attributeDisplayForm\":{\"meta\":{\"summary\":\"\",\"tags\":\"\",\"uri\":\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1059\",\"title\":\"Account\",\"author\":\"/gdc/account/profile/0a781ac660f78609f6100f0125ca5358\",\"contributor\":\"/gdc/account/profile/7788d42c5640f3f7366faad04721d494\",\"identifier\":\"label.account.id\",\"deprecated\":\"0\",\"created\":\"2019-12-10 14:25:39\",\"updated\":\"2020-01-16 10:56:11\",\"category\":\"attributeDisplayForm\",\"isProduction\":1},\"links\":{\"elements\":\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1059/elements\"},\"content\":{\"formOf\":\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057\",\"expression\":\"[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/33]\"}}},{\"attributeDisplayForm\":{\"meta\":{\"title\":\"Status\",\"tags\":\"\",\"uri\":\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1101\",\"summary\":\"\",\"category\":\"attributeDisplayForm\",\"isProduction\":1,\"identifier\":\"label.stage.status\",\"created\":\"2019-12-10 14:25:40\",\"updated\":\"2019-12-10 14:25:40\",\"deprecated\":\"0\",\"author\":\"/gdc/account/profile/0a781ac660f78609f6100f0125ca5358\",\"contributor\":\"/gdc/account/profile/0a781ac660f78609f6100f0125ca5358\"},\"links\":{\"elements\":\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1101/elements\"},\"content\":{\"expression\":\"[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/79]\",\"default\":1,\"formOf\":\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100\"}}}]}}",
+        "headers": {
+            "date": "Wed, 07 Sep 2022 13:59:46 GMT",
+            "content-type": "application/json;charset=UTF-8",
+            "X-GDC-REQUEST-TIME": "18",
+            "X-GDC-REQUEST": "HKoRpCpcGBumEIxt",
+            "cache-control": "no-cache, no-store, must-revalidate",
+            "vary": "origin,X-GDC-VERSION",
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload"
+        }
+    },
+    "uuid": "f28c6863-bd47-4736-bf78-128783c31303",
+    "persistent": true,
+    "insertionIndex": 19
+}

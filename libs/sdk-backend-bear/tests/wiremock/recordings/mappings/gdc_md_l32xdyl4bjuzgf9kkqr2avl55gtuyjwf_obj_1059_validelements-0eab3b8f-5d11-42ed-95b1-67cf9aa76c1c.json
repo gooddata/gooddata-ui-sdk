@@ -1,0 +1,33 @@
+{
+    "id": "0eab3b8f-5d11-42ed-95b1-67cf9aa76c1c",
+    "name": "gdc_md_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_obj_1059_validelements",
+    "request": {
+        "url": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1059/validElements?c=6b99a65ddeb85f88bc790ba9c2b24279&q=eAFFj0FuxCAMRe%2FCOgtwCIS5SlUhAqZFJSECR7OoeveSpKN6YdnW93%2F2N0ubz0dAS4Vcts9En%2BUg%0AG1MmrI09tiPngTmian3JradjI%2FZggg2s1ID1Jbk3%2FrvtA%2Bte0yUGZTxw5aJy2oiltyNop503cZ4g%0Aqu7ly7pnXPHU30xy7cum0FlcBpAuTOg1B5ByNvMiQWP0Ukxh1KiFkbPwGEaAYBS%2FQkK3zW7BbFup%0Ar5v32kF0%2Bd4YvKl90r99ex8YJcr4V5cYG56r%2FPRKazpr4OznF1n%2BYz0%3D%0A",
+        "method": "GET",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json; charset=utf-8"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "bodyFileName": "gdc_md_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_obj_1059_validelements-0eab3b8f-5d11-42ed-95b1-67cf9aa76c1c.json",
+        "headers": {
+            "date": "Wed, 07 Sep 2022 13:59:48 GMT",
+            "content-type": "application/json;charset=UTF-8",
+            "X-GDC-REQUEST-TIME": "46",
+            "X-GDC-REQUEST": "RZKvneqdvfq3a630",
+            "cache-control": "no-cache, no-store, must-revalidate",
+            "vary": "origin,X-GDC-VERSION",
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload"
+        }
+    },
+    "uuid": "0eab3b8f-5d11-42ed-95b1-67cf9aa76c1c",
+    "persistent": true,
+    "insertionIndex": 22
+}

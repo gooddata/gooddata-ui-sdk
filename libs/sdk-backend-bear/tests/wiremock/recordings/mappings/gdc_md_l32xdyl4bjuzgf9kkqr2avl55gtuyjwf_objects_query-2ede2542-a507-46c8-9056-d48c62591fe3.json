@@ -1,0 +1,33 @@
+{
+    "id": "2ede2542-a507-46c8-9056-d48c62591fe3",
+    "name": "gdc_md_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_objects_query",
+    "request": {
+        "url": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/objects/query?offset=40&limit=10&category=dateFilterConfig&getTotalCount=1",
+        "method": "GET",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json; charset=utf-8"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"objects\":{\"paging\":{\"count\":0,\"offset\":40,\"totalCount\":1},\"items\":[]}}",
+        "headers": {
+            "date": "Wed, 07 Sep 2022 14:00:03 GMT",
+            "content-type": "application/json;charset=UTF-8",
+            "X-GDC-REQUEST-TIME": "13",
+            "X-GDC-REQUEST": "scDbgeGVlDB57tif",
+            "cache-control": "no-cache, no-store, must-revalidate",
+            "vary": "origin,X-GDC-VERSION",
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload"
+        }
+    },
+    "uuid": "2ede2542-a507-46c8-9056-d48c62591fe3",
+    "persistent": true,
+    "insertionIndex": 35
+}

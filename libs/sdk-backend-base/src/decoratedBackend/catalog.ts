@@ -57,6 +57,10 @@ export abstract class DecoratedWorkspaceCatalogFactory implements IWorkspaceCata
         return this.createNew(this.decorated.withOptions(options));
     }
 
+    public withGroups(loadGroups: boolean): IWorkspaceCatalogFactory {
+        return this.createNew(this.decorated.withGroups(loadGroups));
+    }
+
     public async load(): Promise<IWorkspaceCatalog> {
         const catalog = await this.decorated.load();
 

@@ -5659,6 +5659,76 @@ TigerWorkspaceCatalogWithAvailableItems {
       "type": "dateDataset",
     },
   ],
+  "options": Object {
+    "excludeTags": Array [],
+    "includeTags": Array [],
+    "items": Array [
+      Object {
+        "measure": Object {
+          "alias": "PoP measure",
+          "definition": Object {
+            "popMeasureDefinition": Object {
+              "measureIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
+              "popAttribute": Object {
+                "identifier": "f_account.id",
+                "type": "attribute",
+              },
+            },
+          },
+          "localIdentifier": "m_de156d02_m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba_f_account.id",
+        },
+      },
+      Object {
+        "measure": Object {
+          "definition": Object {
+            "measureDefinition": Object {
+              "item": Object {
+                "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
+                "type": "measure",
+              },
+            },
+          },
+          "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
+        },
+      },
+      Object {
+        "measure": Object {
+          "definition": Object {
+            "arithmeticMeasure": Object {
+              "measureIdentifiers": Array [
+                "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
+                "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
+              ],
+              "operator": "sum",
+            },
+          },
+          "localIdentifier": "m_c259efe401270d1198a7d2469f58c0a5",
+        },
+      },
+      Object {
+        "measure": Object {
+          "alias": "PoP measure",
+          "definition": Object {
+            "popMeasureDefinition": Object {
+              "measureIdentifier": "m_c259efe401270d1198a7d2469f58c0a5",
+              "popAttribute": Object {
+                "identifier": "f_account.id",
+                "type": "attribute",
+              },
+            },
+          },
+          "localIdentifier": "m_de156d02_m_c259efe401270d1198a7d2469f58c0a5_f_account.id",
+        },
+      },
+    ],
+    "loadGroups": true,
+    "types": Array [
+      "attribute",
+      "measure",
+      "fact",
+      "dateDataset",
+    ],
+  },
 }
 `;
 
@@ -10763,6 +10833,7 @@ TigerWorkspaceCatalog {
   "options": Object {
     "excludeTags": Array [],
     "includeTags": Array [],
+    "loadGroups": true,
     "types": Array [
       "attribute",
       "measure",
@@ -13814,6 +13885,7 @@ TigerWorkspaceCatalog {
       "GDC.time.quarter_in_year",
     ],
     "includeTags": Array [],
+    "loadGroups": true,
     "production": true,
     "types": Array [
       "dateDataset",
