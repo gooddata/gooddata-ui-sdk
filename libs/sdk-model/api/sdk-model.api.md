@@ -1943,6 +1943,9 @@ export function isColorFromPalette(obj: unknown): obj is IColorFromPalette;
 export function isColorMappingItem(obj: unknown): obj is IColorMappingItem;
 
 // @public
+export function isColorPaletteItem(obj: unknown): obj is IColorPaletteItem;
+
+// @public
 export function isComparisonCondition(obj: unknown): obj is IComparisonCondition;
 
 // @public
