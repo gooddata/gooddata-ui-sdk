@@ -1,5 +1,6 @@
 {
     "loading": "Cargando…",
+    "untitled": "Sin título",
     "apply": "Aplicar",
     "gs.list.cancel": "Cancelar",
     "gs.list.apply": "Aplicar",
@@ -30,6 +31,9 @@
     "dialogs.save.as.new.alertsAndEmailsMessage": "La programación de los correos electrónicos y las alertas no se duplicará",
     "dialogs.save.as.new.alertsMessage": "Las alertas no se duplicarán",
     "dialogs.save.as.new.emailsMessage": "La programación de los correos no se duplicará",
+    "cancelConfirmationDialog.headline": "¿Desea descartar los cambios?",
+    "cancelConfirmationDialog.message": "Se perderán todos los cambios",
+    "cancelConfirmationDialog.submitButtonText": "Descartar cambios",
     "deleteDashboardDialog.headline": "¿Desea eliminar el panel?",
     "deleteDashboardDialog.submitButtonText": "Eliminar",
     "deleteDashboardDialog.alertsAndEmailsMessage": "Todas las alertas y los correos programados configurados para este panel también se eliminarán.",
@@ -111,9 +115,6 @@
     "dialogs.schedule.management.delete.error": "Error al eliminar la programación. Inténtelo de nuevo más tarde.",
     "dialogs.schedule.management.tab.all": "todo",
     "dialogs.schedule.management.tab.user": "creado por mí",
-    "cancelConfirmationDialog.headline": "¿Desea descartar los cambios?",
-    "cancelConfirmationDialog.message": "Se perderán todos los cambios",
-    "cancelConfirmationDialog.submitButtonText": "Descartar cambios",
     "options.menu.schedule.email.recipient.invalid": "Debe introducir una dirección de correo electrónico válida.",
     "options.menu.schedule.email.recipient.warning.existed": "Ya ha añadido a este destinatario.",
     "options.menu.schedule.email.recipient.warning.belong.workspace": "Esta dirección de correo electrónico no pertenece a este espacio de trabajo. Es posible que el destinatario reciba datos confidenciales.",
@@ -193,7 +194,7 @@
     "dashboard.shareDialog.removeAccessGranteeTooltip": "Eliminar acceso a este panel.",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "El usuario que creó este panel. Los creadores no se pueden eliminar.",
     "attributesDropdown.placeholder": "Buscar atributos…",
-    "attributesDropdown.noData": "Este atributo no tiene ningún valor.",
+    "attributesDropdown.noData": "Este atributo no tiene valores.",
     "attributesDropdown.configuration": "Configuración",
     "attributesDropdown.itemsFiltered": "Los elementos se han filtrado",
     "attributesDropdown.allItemsFiltered": "Todos los elementos están filtrados",
@@ -330,5 +331,7 @@
     "dropzone.widget.last.in.row.desc": "Suelte en la <b>sección existente</b>",
     "deleteKpiConfirmationDialog.headline": "Eliminar KPI",
     "deleteKpiConfirmationDialog.message": "Todas las alertas establecidas para este KPI se eliminarán.",
-    "deleteKpiConfirmationDialog.submitButtonText": "Eliminar"
+    "deleteKpiConfirmationDialog.submitButtonText": "Eliminar",
+    "newDashboard.title": "Arrastre aquí la perspectiva",
+    "newDashboard.dropInsight": "Soltar perspectiva"
 }

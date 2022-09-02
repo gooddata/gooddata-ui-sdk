@@ -1,5 +1,6 @@
 {
     "loading": "Загрузка…",
+    "untitled": "Без названия",
     "apply": "Применить",
     "gs.list.cancel": "Отмена",
     "gs.list.apply": "Применить",
@@ -30,6 +31,9 @@
     "dialogs.save.as.new.alertsAndEmailsMessage": "Оповещения и запланированные электронные письма не будут дублироваться",
     "dialogs.save.as.new.alertsMessage": "Оповещения не будут дублироваться",
     "dialogs.save.as.new.emailsMessage": "Запланированные электронные письма не будут дублироваться",
+    "cancelConfirmationDialog.headline": "Отменить изменения?",
+    "cancelConfirmationDialog.message": "Все изменения будут потеряны",
+    "cancelConfirmationDialog.submitButtonText": "Отменить изменения",
     "deleteDashboardDialog.headline": "Удалить дашборд?",
     "deleteDashboardDialog.submitButtonText": "Удалить",
     "deleteDashboardDialog.alertsAndEmailsMessage": "Все оповещения и запланированные электронные письма, настроенные для этого дашборда, также будут удалены.",
@@ -111,9 +115,6 @@
     "dialogs.schedule.management.delete.error": "Не удалось удалить расписание. Повторите попытку позже.",
     "dialogs.schedule.management.tab.all": "все",
     "dialogs.schedule.management.tab.user": "создано мной",
-    "cancelConfirmationDialog.headline": "Отменить изменения?",
-    "cancelConfirmationDialog.message": "Все изменения будут потеряны",
-    "cancelConfirmationDialog.submitButtonText": "Отменить изменения",
     "options.menu.schedule.email.recipient.invalid": "Это недействительный адрес электронной почты.",
     "options.menu.schedule.email.recipient.warning.existed": "Вы уже добавили этого получателя.",
     "options.menu.schedule.email.recipient.warning.belong.workspace": "Этот адрес электронной почты не принадлежит этому рабочему пространству. Получатель может получить конфиденциальные данные.",
@@ -193,7 +194,7 @@
     "dashboard.shareDialog.removeAccessGranteeTooltip": "Удалить доступ к этому дашборду.",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "Это пользователь, создавший этот дашборд. Создателя невозможно удалить.",
     "attributesDropdown.placeholder": "Поиск атрибутов…",
-    "attributesDropdown.noData": "Этот атрибут не имеет значения.",
+    "attributesDropdown.noData": "Этот атрибут не имеет значений.",
     "attributesDropdown.configuration": "Конфигурация",
     "attributesDropdown.itemsFiltered": "Элементы фильтруются",
     "attributesDropdown.allItemsFiltered": "Все элементы отфильтрованы",
@@ -330,5 +331,7 @@
     "dropzone.widget.last.in.row.desc": "Сбросьте в <b>имеющийся раздел</b>",
     "deleteKpiConfirmationDialog.headline": "Удалить КПЭ",
     "deleteKpiConfirmationDialog.message": "Все оповещения, настроенные для этого КПЭ, также будут удалены.",
-    "deleteKpiConfirmationDialog.submitButtonText": "Удалить"
+    "deleteKpiConfirmationDialog.submitButtonText": "Удалить",
+    "newDashboard.title": "Перетащите анализ сюда",
+    "newDashboard.dropInsight": "Сбросьте анализ"
 }

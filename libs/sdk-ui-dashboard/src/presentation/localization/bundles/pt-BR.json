@@ -1,5 +1,6 @@
 {
     "loading": "Carregando…",
+    "untitled": "Sem título",
     "apply": "Aplicar",
     "gs.list.cancel": "Cancelar",
     "gs.list.apply": "Aplicar",
@@ -30,6 +31,9 @@
     "dialogs.save.as.new.alertsAndEmailsMessage": "As programações de alertas e e-mails não serão duplicadas.",
     "dialogs.save.as.new.alertsMessage": "Os alertas não serão duplicados",
     "dialogs.save.as.new.emailsMessage": "Os agendamentos de e-mail não serão duplicados",
+    "cancelConfirmationDialog.headline": "Descartar alterações?",
+    "cancelConfirmationDialog.message": "Todas as alterações serão perdidas",
+    "cancelConfirmationDialog.submitButtonText": "Descartar alterações",
     "deleteDashboardDialog.headline": "Excluir painel?",
     "deleteDashboardDialog.submitButtonText": "Excluir",
     "deleteDashboardDialog.alertsAndEmailsMessage": "Todos os alertas e e-mails agendados configurados para este painel também serão excluídos.",
@@ -111,9 +115,6 @@
     "dialogs.schedule.management.delete.error": "Não foi possível excluir o agendamento. Tente novamente mais tarde.",
     "dialogs.schedule.management.tab.all": "todos",
     "dialogs.schedule.management.tab.user": "criado por mim",
-    "cancelConfirmationDialog.headline": "Descartar alterações?",
-    "cancelConfirmationDialog.message": "Todas as alterações serão perdidas",
-    "cancelConfirmationDialog.submitButtonText": "Descartar alterações",
     "options.menu.schedule.email.recipient.invalid": "Este não é um endereço de e-mail válido.",
     "options.menu.schedule.email.recipient.warning.existed": "Você já adicionou este destinatário.",
     "options.menu.schedule.email.recipient.warning.belong.workspace": "Este endereço de e-mail não pertence a este espaço de trabalho. O destinatário pode receber dados sigilosos.",
@@ -193,7 +194,7 @@
     "dashboard.shareDialog.removeAccessGranteeTooltip": "Remover acesso a este dashboard.",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "O usuário que criou o dashboard. Não é possível remover os criadores.",
     "attributesDropdown.placeholder": "Pesquisar atributos…",
-    "attributesDropdown.noData": "Este atributo não tem valor.",
+    "attributesDropdown.noData": "O atributo não tem valores.",
     "attributesDropdown.configuration": "Configuração",
     "attributesDropdown.itemsFiltered": "Os itens estão filtrados",
     "attributesDropdown.allItemsFiltered": "Todos os itens estão filtrados",
@@ -330,5 +331,7 @@
     "dropzone.widget.last.in.row.desc": "Arraste até a <b>seção existente</b>",
     "deleteKpiConfirmationDialog.headline": "Excluir KPI",
     "deleteKpiConfirmationDialog.message": "Todos os alertas configurados para este KPI também serão excluídos.",
-    "deleteKpiConfirmationDialog.submitButtonText": "Excluir"
+    "deleteKpiConfirmationDialog.submitButtonText": "Excluir",
+    "newDashboard.title": "Arraste o insight para cá",
+    "newDashboard.dropInsight": "Soltar insight"
 }

@@ -1,5 +1,6 @@
 {
     "loading": "Chargement en cours…",
+    "untitled": "Sans titre",
     "apply": "Appliquer",
     "gs.list.cancel": "Annuler",
     "gs.list.apply": "Appliquer",
@@ -30,6 +31,9 @@
     "dialogs.save.as.new.alertsAndEmailsMessage": "Les alertes et e-mails planifiés ne seront pas dupliqués.",
     "dialogs.save.as.new.alertsMessage": "Les alertes ne seront pas dupliquées.",
     "dialogs.save.as.new.emailsMessage": "Les e-mails planifiés ne seront pas dupliqués.",
+    "cancelConfirmationDialog.headline": "Ignorez les modifications?",
+    "cancelConfirmationDialog.message": "Toutes les modifications seront perdues",
+    "cancelConfirmationDialog.submitButtonText": "Ignorer les modifications",
     "deleteDashboardDialog.headline": "Supprimez le tableau de bord?",
     "deleteDashboardDialog.submitButtonText": "Supprimer",
     "deleteDashboardDialog.alertsAndEmailsMessage": "Tous les e-mails programmés et alertes configurés pour ce tableau de bord seront aussi supprimés.",
@@ -111,9 +115,6 @@
     "dialogs.schedule.management.delete.error": "La suppression de la planification a échoué. Veuillez réessayer plus tard.",
     "dialogs.schedule.management.tab.all": "tout",
     "dialogs.schedule.management.tab.user": "créées par moi",
-    "cancelConfirmationDialog.headline": "Ignorez les modifications?",
-    "cancelConfirmationDialog.message": "Toutes les modifications seront perdues",
-    "cancelConfirmationDialog.submitButtonText": "Ignorer les modifications",
     "options.menu.schedule.email.recipient.invalid": "Ceci n'est pas une adresse e-mail valide.",
     "options.menu.schedule.email.recipient.warning.existed": "Vous avez déjà ajouté ce destinataire.",
     "options.menu.schedule.email.recipient.warning.belong.workspace": "Cette adresse e-mail ne fait pas partie de cet espace de travail. Le destinataire recevra peut-être des données sensibles.",
@@ -193,7 +194,7 @@
     "dashboard.shareDialog.removeAccessGranteeTooltip": "Retirer l'accès à ce tableau de bord.",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "L'utilisateur qui a créé ce tableau de bord. Les créateurs ne peuvent pas être retirés.",
     "attributesDropdown.placeholder": "Rechercher…",
-    "attributesDropdown.noData": "Cet attribut ne possède aucune valeur.",
+    "attributesDropdown.noData": "Cet attribut n'a aucune valeur.",
     "attributesDropdown.configuration": "Configuration",
     "attributesDropdown.itemsFiltered": "Les éléments sont filtrés.",
     "attributesDropdown.allItemsFiltered": "Tous les éléments ont été filtrés.",
@@ -330,5 +331,7 @@
     "dropzone.widget.last.in.row.desc": "Déposer dans la <b>section existante</b>",
     "deleteKpiConfirmationDialog.headline": "Supprimer le KPI",
     "deleteKpiConfirmationDialog.message": "Toutes les alertes configurées pour ce KPI vont être supprimées.",
-    "deleteKpiConfirmationDialog.submitButtonText": "Supprimer"
+    "deleteKpiConfirmationDialog.submitButtonText": "Supprimer",
+    "newDashboard.title": "Faire glisser une perception ici",
+    "newDashboard.dropInsight": "Déposer une perception"
 }
