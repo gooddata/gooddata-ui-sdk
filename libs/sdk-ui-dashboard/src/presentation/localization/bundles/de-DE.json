@@ -1,5 +1,6 @@
 {
     "loading": "Lädt…",
+    "untitled": "Unbenannt",
     "apply": "Übernehmen",
     "gs.list.cancel": "Abbrechen",
     "gs.list.apply": "Übernehmen",
@@ -30,6 +31,9 @@
     "dialogs.save.as.new.alertsAndEmailsMessage": "Warnmeldungen und E-Mail-Zeitpläne werden nicht dupliziert",
     "dialogs.save.as.new.alertsMessage": "Warnmeldungen werden nicht dupliziert",
     "dialogs.save.as.new.emailsMessage": "Warnmeldungen und E-Mail-Zeitpläne werden nicht dupliziert",
+    "cancelConfirmationDialog.headline": "Änderungen verwerfen?",
+    "cancelConfirmationDialog.message": "Alle Änderungen gehen verloren",
+    "cancelConfirmationDialog.submitButtonText": "Änderungen verwerfen",
     "deleteDashboardDialog.headline": "Dashboard löschen?",
     "deleteDashboardDialog.submitButtonText": "Löschen",
     "deleteDashboardDialog.alertsAndEmailsMessage": "Alle Warnmeldungen und geplanten E-Mails für dieses Dashboard werden ebenfalls gelöscht.",
@@ -111,9 +115,6 @@
     "dialogs.schedule.management.delete.error": "Der Zeitplan konnte nicht gelöscht werden. Später erneut versuchen.",
     "dialogs.schedule.management.tab.all": "alle",
     "dialogs.schedule.management.tab.user": "von mir erstellt",
-    "cancelConfirmationDialog.headline": "Änderungen verwerfen?",
-    "cancelConfirmationDialog.message": "Alle Änderungen gehen verloren",
-    "cancelConfirmationDialog.submitButtonText": "Änderungen verwerfen",
     "options.menu.schedule.email.recipient.invalid": "Dies ist keine gültige E-Mail-Adresse.",
     "options.menu.schedule.email.recipient.warning.existed": "Sie haben diesen Empfänger bereits hinzugefügt.",
     "options.menu.schedule.email.recipient.warning.belong.workspace": "Diese E-Mail-Adresse ist nicht bei diesem Workspace registriert. Der Empfänger könnte sensible Daten erhalten.",
@@ -193,7 +194,7 @@
     "dashboard.shareDialog.removeAccessGranteeTooltip": "Entfernt den Zugriff auf dieses Dashboard.",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "Dies ist der Benutzer, der dieses Dashboard erstellt hat. Ersteller können nicht entfernt werden.",
     "attributesDropdown.placeholder": "Sucht…",
-    "attributesDropdown.noData": "Dieses Attribut hat keinen Wert.",
+    "attributesDropdown.noData": "Dieses Attribut hat keine Werte.",
     "attributesDropdown.configuration": "Konfiguration",
     "attributesDropdown.itemsFiltered": "Elemente wurden gefiltert",
     "attributesDropdown.allItemsFiltered": "Alle Elemente sind ausgefiltert.",
@@ -330,5 +331,7 @@
     "dropzone.widget.last.in.row.desc": "Im <b>vorhandenen Abschnitt</b> ablegen",
     "deleteKpiConfirmationDialog.headline": "KPI löschen",
     "deleteKpiConfirmationDialog.message": "Alle für diesen KPI eingerichteten Alarme werden ebenfalls gelöscht.",
-    "deleteKpiConfirmationDialog.submitButtonText": "Löschen"
+    "deleteKpiConfirmationDialog.submitButtonText": "Löschen",
+    "newDashboard.title": "Betrachtungen hierher ziehen",
+    "newDashboard.dropInsight": "Betrachtung ablegen"
 }

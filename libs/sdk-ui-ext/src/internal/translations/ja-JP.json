@@ -133,7 +133,7 @@
     "properties.axis.rotation": "回転",
     "properties.axis.format": "書式",
     "properties.axis.format.inherit": "継承",
-    "properties.axis.format.info.inherit._measure": "このフォーマットはインサイトの最初のメジャーから継承されます。",
+    "properties.axis.format.info.inherit._measure": "このフォーマットはインサイトの最初の測定値から継承されます。",
     "properties.axis.format.info.inherit._metric": "このフォーマットはインサイトの最初のメトリックから継承されます。",
     "properties.axis.name": "名前",
     "properties.axis.name.position": "位置",
