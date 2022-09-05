@@ -1,12 +1,12 @@
 // (C) 2022 GoodData Corporation
 
 import React from "react";
-import { StylingPickerListItem } from "./StylingPickerListItem";
+import { StylingSettingListItem } from "./StylingSettingListItem";
 import { areObjRefsEqual, ObjRef, objRefToString } from "@gooddata/sdk-model";
-import { DialogListEmpty } from "../Dialog/DialogList/DialogListEmpty";
-import { IStylingPickerItem, StylingPickerItemContent } from "../Dialog";
+import { DialogListEmpty } from "../../Dialog/DialogList/DialogListEmpty";
+import { IStylingPickerItem, StylingPickerItemContent } from "../../Dialog";
 
-interface IStylingPickerListProps<T> {
+interface IStylingSettingListProps<T> {
     items: IStylingPickerItem<T>[];
     itemToColorPreview: (itemContent: T) => string[];
     emptyMessageElement: JSX.Element;
@@ -18,7 +18,7 @@ interface IStylingPickerListProps<T> {
     onItemMenuToggle?: (ref: ObjRef) => void;
 }
 
-export const StylingPickerList = <T extends StylingPickerItemContent>({
+export const StylingSettingList = <T extends StylingPickerItemContent>({
     items,
     itemToColorPreview,
     emptyMessageElement,
@@ -28,7 +28,7 @@ export const StylingPickerList = <T extends StylingPickerItemContent>({
     initiallySelectedItemRef,
     selectedItemRef,
     onItemMenuToggle,
-}: IStylingPickerListProps<T>): JSX.Element => {
+}: IStylingSettingListProps<T>): JSX.Element => {
     if (items.length === 0) {
         return <DialogListEmpty message={emptyMessageElement} className="gd-styling-picker-list-empty" />;
     }
@@ -36,7 +36,7 @@ export const StylingPickerList = <T extends StylingPickerItemContent>({
     return (
         <div className="gd-styling-picker-list s-styling-picker-list">
             {items.map((item) => (
-                <StylingPickerListItem<T>
+                <StylingSettingListItem<T>
                     key={objRefToString(item.ref)}
                     item={item}
                     itemToColorPreview={itemToColorPreview}

@@ -1,7 +1,7 @@
 // (C) 2022 GoodData Corporation
 
 import { ITheme } from "@gooddata/sdk-model";
-import { getColorsPreviewFromTheme } from "../utils";
+import { getColorsPreviewFromTheme } from "../StylingSettingWidget";
 import { customItemsMock, fullyDefinedThemeMock } from "./mocks";
 
 describe("getColorsPreviewFromTheme", () => {

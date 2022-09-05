@@ -1,20 +1,27 @@
 // (C) 2022 GoodData Corporation
-
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import cx from "classnames";
+import noop from "lodash/noop";
+import { useIntl } from "react-intl";
 import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
-import { ContentDivider, IStylingPickerItem, StylingPickerItemContent } from "../Dialog";
-import { useMediaQuery } from "../responsive";
-import { StylingPickerHeader } from "./StylingPickerHeader";
-import { StylingPickerFooter } from "./StylingPickerFooter";
-import { StylingPickerBody } from "./StylingPickerBody";
-import noop from "lodash/noop";
+import { StylingSettingBody } from "./StylingSettingBody";
+import { Separator } from "../Separator";
+import { SettingWidget } from "../SettingWidget";
+import { Header } from "../Header";
+import { Footer } from "../Footer";
+import { Button } from "../../Button";
+import { Message } from "../../Messages";
+import { IStylingPickerItem, StylingPickerItemContent } from "../../Dialog";
+import { useMediaQuery } from "../../responsive";
+import { Title } from "../Title";
+import { FooterButtons } from "../FooterButtons";
+import { Hyperlink } from "../../Hyperlink";
 
 /**
  * @internal
  */
-export interface IStylingPickerProps<T> {
+export interface IStylingSettingWidgetProps<T> {
     title: string;
     defaultItem: IStylingPickerItem<T>;
     customItems: IStylingPickerItem<T>[];
@@ -37,8 +44,8 @@ export interface IStylingPickerProps<T> {
     onItemSelect?: (ref: ObjRef) => void;
 }
 
-const StylingPickerCore = <T extends StylingPickerItemContent>(
-    props: IStylingPickerProps<T>,
+const StylingSettingWidgetCore = <T extends StylingPickerItemContent>(
+    props: IStylingSettingWidgetProps<T>,
 ): JSX.Element => {
     const {
         title,
@@ -61,6 +68,7 @@ const StylingPickerCore = <T extends StylingPickerItemContent>(
         onItemSelect = noop,
         onItemMenuToggle,
     } = props;
+    const intl = useIntl();
     const isMobileDevice = useMediaQuery("mobileDevice");
 
     const initiallySelectedItemRef = selectedItemRef || null;
@@ -101,9 +109,11 @@ const StylingPickerCore = <T extends StylingPickerItemContent>(
     }, [onApply, currentItemRef]);
 
     return (
-        <div className={cx("gd-styling-picker s-styling-picker", className)}>
-            <StylingPickerHeader title={title} titleTooltip={titleTooltip} />
-            <StylingPickerBody
+        <SettingWidget className={cx("s-styling-picker", className)}>
+            <Header>
+                <Title title={title} tooltip={titleTooltip} />
+            </Header>
+            <StylingSettingBody
                 isMobile={isMobileDevice}
                 defaultItem={defaultItem}
                 customItems={customItems}
@@ -118,31 +128,51 @@ const StylingPickerCore = <T extends StylingPickerItemContent>(
                 onItemDelete={onItemDelete}
                 onItemMenuToggle={onItemMenuToggle}
             />
-            <ContentDivider />
-            <StylingPickerFooter
-                showButtons={showFooterButtons}
-                disableButtons={isApplyButtonDisabled}
-                isMobile={isMobileDevice}
-                footerHelpLink={footerHelpLink}
-                footerHelpTitle={footerHelpTitle}
-                footerMobileMessage={footerMobileMessage}
-                onApply={handleApply}
-                onCancel={handleCancel}
-                onHelpClick={onHelpClick}
-            />
-        </div>
+            <Separator />
+            <Footer>
+                {isMobileDevice && footerMobileMessage && (
+                    <Message className="gd-styling-picker-footer-message" type="progress">
+                        {footerMobileMessage}
+                    </Message>
+                )}
+                {footerHelpLink && footerHelpTitle && (
+                    <Hyperlink
+                        text={footerHelpTitle}
+                        href={footerHelpLink}
+                        iconClass="gd-icon-circle-question"
+                        onClick={onHelpClick}
+                    />
+                )}
+                {showFooterButtons && (
+                    <FooterButtons>
+                        <Button
+                            className="gd-button-secondary"
+                            onClick={handleCancel}
+                            disabled={isApplyButtonDisabled}
+                            value={intl.formatMessage({ id: "cancel" })}
+                        />
+                        <Button
+                            className="gd-button-action"
+                            onClick={handleApply}
+                            disabled={isApplyButtonDisabled}
+                            value={intl.formatMessage({ id: "apply" })}
+                        />
+                    </FooterButtons>
+                )}
+            </Footer>
+        </SettingWidget>
     );
 };
 
 /**
  * @internal
  */
-export const StylingPicker = <T extends StylingPickerItemContent>(
-    props: IStylingPickerProps<T>,
+export const StylingSettingWidget = <T extends StylingPickerItemContent>(
+    props: IStylingSettingWidgetProps<T>,
 ): JSX.Element => {
     return (
         <IntlWrapper locale={props.locale}>
-            <StylingPickerCore {...props} />
+            <StylingSettingWidgetCore {...props} />
         </IntlWrapper>
     );
 };

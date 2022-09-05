@@ -510,6 +510,7 @@ class DummyOrganization implements IOrganization {
         return {
             setWhiteLabeling: () => Promise.resolve(),
             setLocale: () => Promise.resolve(),
+            getSettings: () => Promise.resolve({}),
         };
     }
 }

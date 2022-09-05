@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
 
-import { IWhiteLabeling } from "@gooddata/sdk-model";
+import { ISettings, IWhiteLabeling } from "@gooddata/sdk-model";
 
 /**
  * This service provides access to organization settings
@@ -25,4 +25,14 @@ export interface IOrganizationSettingsService {
      * @returns promise
      */
     setLocale(locale: string): Promise<void>;
+
+    /**
+     * Get all current organization settings.
+     *
+     * @remarks
+     * User has to have an organization level permission to access them.
+     *
+     * @returns promise
+     */
+    getSettings(): Promise<ISettings>;
 }

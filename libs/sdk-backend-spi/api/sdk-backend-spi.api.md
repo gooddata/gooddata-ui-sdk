@@ -989,6 +989,7 @@ export interface IOrganizations {
 
 // @public
 export interface IOrganizationSettingsService {
+    getSettings(): Promise<ISettings_2>;
     setLocale(locale: string): Promise<void>;
     setWhiteLabeling(whiteLabeling: IWhiteLabeling): Promise<void>;
 }

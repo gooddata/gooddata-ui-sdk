@@ -1,75 +1,22 @@
 @import "./variables";
 
-.gd-styling-picker {
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    width: 100%;
-    padding: 20px;
-    background-color: $gd-color-white;
-    border: 1px solid $is-focused-background;
-
-    .gd-dialog-list-header {
-        padding-bottom: 0;
-    }
-
-    .gd-content-divider {
-        margin-top: 0;
-    }
-
-    @media only screen and (max-width: 640px) {
-        min-width: unset;
-
-        .gd-styling-picker-body {
-            height: inherit;
-        }
-
-        .gd-styling-picker-list {
-            height: 100%;
-        }
-
-        .gd-styling-picker-footer {
-            flex-direction: column;
-            justify-content: unset;
-            flex-wrap: unset;
-            min-height: 124px;
-            gap: unset;
-        }
-
-        .gd-styling-picker-footer-help {
-            margin: 20px auto 20px 0;
-        }
-    }
-}
-
-.gd-styling-picker-header {
-    display: flex;
-    padding-bottom: 10px;
-    line-height: 23px;
-    cursor: default;
-
-    .gd-typography {
-        color: $gd-color-text;
-        font-weight: bold;
-    }
-
-    .gd-styling-picker-header-content {
-        display: flex;
-    }
-
-    .gd-styling-picker-header-icon {
-        display: flex;
-        align-items: center;
-        margin: 1px 0 0 10px;
-        color: $gd-color-state-blank;
-    }
+.gd-styling-picker-list-header {
+    padding: 0;
 }
 
 .gd-styling-picker-body {
     display: flex;
     flex-direction: column;
-    height: 269px;
+    height: 260px;
+
+    & > * > * {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    @media only screen and (max-width: 1280px) {
+        height: fit-content;
+    }
 }
 
 .gd-styling-picker-body-loading {
@@ -80,24 +27,26 @@
     display: flex;
     flex-direction: column;
     flex: 1 auto;
-    padding-top: 10px;
+    padding-top: 20px;
+    overflow: hidden;
 }
 
 .gd-styling-picker-list {
     display: flex;
     flex-direction: column;
-    height: 163px;
-    margin-right: -20px;
-    padding-right: 20px;
     overflow-y: auto;
 
     .gd-styling-picker-list-item {
         min-height: 35px;
+
+        &:last-child {
+            margin-bottom: 10px;
+        }
     }
 }
 
 .gd-styling-picker-list-empty {
-    padding-top: inherit;
+    padding-bottom: 10px;
     min-height: 100px;
 }
 
@@ -105,7 +54,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 10px 0 0 0;
+    padding-top: 10px;
 
     &.is-selected > .gd-styling-picker-list-item-content {
         font-weight: bold;
@@ -130,10 +79,12 @@
         white-space: nowrap;
         text-overflow: ellipsis;
         flex-grow: 1;
+        cursor: pointer;
     }
 
     .gd-styling-picker-list-item-text {
-        max-width: calc(100% - 150px); // ~ whole row except radio button width + color preview
+        flex: 1;
+        overflow: hidden;
         white-space: nowrap;
     }
 
@@ -153,44 +104,8 @@
     padding-bottom: 3px;
 }
 
-.gd-styling-picker-footer {
+.gd-styling-picker-footer-message {
     display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    min-height: 32px;
-    padding-top: 20px;
-    flex-wrap: wrap;
-    white-space: nowrap;
-    gap: 10px;
-
-    .gd-styling-picker-footer-message {
-        display: flex;
-        white-space: normal;
-    }
-
-    .gd-styling-picker-footer-message > .gd-message {
-        width: 100%;
-    }
-
-    .gd-styling-picker-footer-help {
-        display: flex;
-        align-items: center;
-        margin-right: auto;
-        overflow: hidden;
-    }
-
-    .gd-styling-picker-footer-icon {
-        color: $gd-color-state-blank;
-        margin-top: 4px;
-    }
-
-    .gd-styling-picker-footer-text > a {
-        text-decoration: underline;
-    }
-
-    .gd-styling-picker-footer-buttons {
-        display: flex;
-        justify-content: flex-end;
-        padding-left: 10px;
-    }
+    align-items: center;
+    width: 100%;
 }

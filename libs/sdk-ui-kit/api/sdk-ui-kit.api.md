@@ -666,6 +666,9 @@ export type HelpMenuDropdownAlignPoints = "br tr" | "bl tl";
 // @public (undocumented)
 export const HubspotConversionTouchPointDialog: React_2.FC<IHubspotConversionTouchPointDialogBaseProps>;
 
+// @internal
+export const Hyperlink: React_2.FC<IHyperlinkProps>;
+
 // @internal (undocumented)
 export interface IAddGranteeBaseProps {
     // (undocumented)
@@ -1882,6 +1885,20 @@ export interface IHubspotConversionTouchPointDialogBaseProps {
 export interface IHubspotFormValue {
     // (undocumented)
     [key: string]: string | number | boolean;
+}
+
+// @internal (undocumented)
+export interface IHyperlinkProps {
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    href: string;
+    // (undocumented)
+    iconClass?: string;
+    // (undocumented)
+    onClick?: () => void;
+    // (undocumented)
+    text?: string;
 }
 
 // @internal (undocumented)
@@ -3276,6 +3293,28 @@ export interface IShortenedTextState {
 }
 
 // @internal (undocumented)
+export interface ISimpleSettingWidgetProps {
+    // (undocumented)
+    actionButtonText: string;
+    // (undocumented)
+    currentSettingStatus: string;
+    // (undocumented)
+    helpLinkText?: string;
+    // (undocumented)
+    helpLinkUrl?: string;
+    // (undocumented)
+    isLoading: boolean;
+    // (undocumented)
+    onHelpLinkClick?: () => void;
+    // (undocumented)
+    onSubmit: () => void;
+    // (undocumented)
+    title: string;
+    // (undocumented)
+    titleTooltip: string;
+}
+
+// @internal (undocumented)
 export interface ISingleSelectListItemProps {
     // (undocumented)
     className?: string;
@@ -3389,7 +3428,7 @@ export interface IStylingPickerItem<T extends StylingPickerItemContent> {
 }
 
 // @internal (undocumented)
-export interface IStylingPickerProps<T> {
+export interface IStylingSettingWidgetProps<T> {
     // (undocumented)
     className?: string;
     // (undocumented)
@@ -3871,6 +3910,9 @@ export function shouldEnableNewNavigation(featureFlags: ISettings): boolean;
 // @internal (undocumented)
 export function shouldHidePPExperience(featureFlags: ISettings): boolean;
 
+// @internal
+export const SimpleSettingWidget: React_2.FC<ISimpleSettingWidgetProps>;
+
 // @internal (undocumented)
 export class SingleSelectListItem extends Component<ISingleSelectListItemProps, ISingleSelectListItemState> {
     constructor(props: ISingleSelectListItemProps);
@@ -3953,10 +3995,10 @@ export const StylingEditorDialogFooter: (props: IStylingEditorDialogFooterProps)
 export const StylingExample: (props: IStylingExampleProps) => JSX.Element;
 
 // @internal (undocumented)
-export const StylingPicker: <T extends StylingPickerItemContent>(props: IStylingPickerProps<T>) => JSX.Element;
+export type StylingPickerItemContent = ITheme | IColorPalette;
 
 // @internal (undocumented)
-export type StylingPickerItemContent = ITheme | IColorPalette;
+export const StylingSettingWidget: <T extends StylingPickerItemContent>(props: IStylingSettingWidgetProps<T>) => JSX.Element;
 
 // @internal (undocumented)
 export const SubMenu: React_2.FC<ISubMenuProps>;
