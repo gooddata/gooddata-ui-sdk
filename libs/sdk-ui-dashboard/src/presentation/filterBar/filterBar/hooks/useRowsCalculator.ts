@@ -37,13 +37,18 @@ function determineRows(element: Element) {
 
     return children.reduce(
         (rows, item) => {
-            const lastRow = rows[rows.length - 1];
-            if (item.offsetLeft <= last) {
-                rows.push([item]);
-            } else {
-                lastRow.push(item);
+            const hasWidth = Boolean(item.offsetWidth);
+            //NOTE: If element has no width, it can not basically affect row break
+            // so we can skip it here
+            if (hasWidth) {
+                const lastRow = rows[rows.length - 1];
+                if (item.offsetLeft <= last) {
+                    rows.push([item]);
+                } else {
+                    lastRow.push(item);
+                }
+                last = item.offsetLeft;
             }
-            last = item.offsetLeft;
             return rows;
         },
         [[]] as HTMLElement[][],
