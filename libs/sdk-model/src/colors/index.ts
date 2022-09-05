@@ -14,6 +14,18 @@ export interface IRgbColorValue {
     b: number;
 }
 
+function isRgbChannel(c: unknown): c is number {
+    return c !== undefined && typeof c === "number" && c >= 0 && c < 256;
+}
+
+function isRgbColorValue(obj: unknown): obj is IRgbColorValue {
+    if (!isEmpty(obj)) {
+        const { r, g, b } = obj as IRgbColorValue;
+        return isRgbChannel(r) && isRgbChannel(g) && isRgbChannel(b);
+    }
+    return false;
+}
+
 /**
  * An item in user-defined color palette. Item is essentially mapping of user-assigned
  * color identifier to an RGB Color value.
@@ -23,6 +35,19 @@ export interface IRgbColorValue {
 export interface IColorPaletteItem {
     guid: string;
     fill: IRgbColorValue;
+}
+
+/**
+ * Type guard checking whether the provided object is a {@link IColorPaletteItem}
+ *
+ * @public
+ */
+export function isColorPaletteItem(obj: unknown): obj is IColorPaletteItem {
+    if (!isEmpty(obj)) {
+        const { guid, fill } = obj as IColorPaletteItem;
+        return typeof guid === "string" && guid !== undefined && isRgbColorValue(fill);
+    }
+    return false;
 }
 
 /**
