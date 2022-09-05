@@ -27,9 +27,9 @@ stages:
   # Commit message condition is needed to avoid creating a new Docker image on
   # every single merge commit to master - that would be a waste.
   rules:
-    - if: '$CI_COMMIT_BRANCH == "master" && $CI_COMMIT_MESSAGE =~ /^Release /'
+    - if: '$CI_COMMIT_BRANCH =~ /^(master|release|hotfix\/(tiger|panther))$/ && $CI_COMMIT_MESSAGE =~ /^Release /'
       changes:
-        - libs/sdk-ui-components/**/*
+        - libs/sdk-ui-web-components/**/*
 
 .with-buildx:
   before_script:
