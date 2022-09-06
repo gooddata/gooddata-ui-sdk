@@ -59,7 +59,11 @@ export function createNotAuthenticatedError(error: Error): NotAuthenticated | un
 function createLimitReachedError(error: Error): LimitReached | undefined {
     const axiosErrorResponse = (error as AxiosError).response;
 
-    if (!axiosErrorResponse || axiosErrorResponse.status !== 413) {
+    if (
+        !axiosErrorResponse ||
+        axiosErrorResponse.status !== 400 ||
+        !axiosErrorResponse.data?.detail?.includes("Reached plan limits")
+    ) {
         return;
     }
 
