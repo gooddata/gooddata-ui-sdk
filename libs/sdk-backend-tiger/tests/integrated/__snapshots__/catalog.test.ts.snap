@@ -10763,6 +10763,7 @@ TigerWorkspaceCatalog {
   "options": Object {
     "excludeTags": Array [],
     "includeTags": Array [],
+    "loadGroups": true,
     "types": Array [
       "attribute",
       "measure",
@@ -13814,6 +13815,7 @@ TigerWorkspaceCatalog {
       "GDC.time.quarter_in_year",
     ],
     "includeTags": Array [],
+    "loadGroups": true,
     "production": true,
     "types": Array [
       "dateDataset",

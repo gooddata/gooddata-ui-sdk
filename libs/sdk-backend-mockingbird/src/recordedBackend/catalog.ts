@@ -40,6 +40,7 @@ export class RecordedCatalogFactory implements IWorkspaceCatalogFactory {
             types: ["attribute", "measure", "fact", "dateDataset"],
             excludeTags: [],
             includeTags: [],
+            loadGroups: true,
         },
     ) {}
 
@@ -75,6 +76,12 @@ export class RecordedCatalogFactory implements IWorkspaceCatalogFactory {
         };
         return new RecordedCatalogFactory(this.workspace, this.recordings, this.config, newOptions);
     };
+
+    public withGroups(loadGroups: boolean): IWorkspaceCatalogFactory {
+        return this.withOptions({
+            loadGroups,
+        });
+    }
 
     public load = async (): Promise<IWorkspaceCatalog> => {
         const catalog = this.recordings.metadata?.catalog;
@@ -146,6 +153,7 @@ class RecordedAvailableCatalogFactory implements IWorkspaceCatalogAvailableItems
             types: ["attribute", "measure", "fact", "dateDataset"],
             excludeTags: [],
             includeTags: [],
+            loadGroups: true,
         },
     ) {}
 
@@ -203,6 +211,13 @@ class RecordedAvailableCatalogFactory implements IWorkspaceCatalogAvailableItems
         // availability not implemented yet
         return this;
     };
+
+    // eslint-disable-next-line sonarjs/no-identical-functions
+    public withGroups(loadGroups: boolean): IWorkspaceCatalogAvailableItemsFactory {
+        return this.withOptions({
+            loadGroups,
+        });
+    }
 
     public load = async (): Promise<IWorkspaceCatalogWithAvailableItems> => {
         return new RecordedAvailableCatalog(this.workspace, this.config, this.groups, this.items);
