@@ -26,6 +26,8 @@ import {
 import {
     convertColorPalette as convertColorPaletteFromBackend,
     convertColorPaletteWithLinks,
+    getColorPaletteFromMDObject,
+    isValidColorPalette,
 } from "../../convertors/fromBackend/ColorPaletteConverter";
 import { convertTheme as convertThemeToBackend } from "../../convertors/toBackend/ThemeConverter";
 import { convertColorPalette as convertColorPaletteToBackend } from "../../convertors/toBackend/ColorPaletteConverter";
@@ -152,7 +154,13 @@ export class OrganizationStylingService implements IOrganizationStylingService {
                 sort: ["name"],
             })
                 .then(MetadataUtilities.mergeEntitiesResults)
-                .then((colorPalettes) => colorPalettes.data.map(convertColorPaletteWithLinks)),
+                .then((colorPalettes) => {
+                    return colorPalettes.data
+                        .filter((colorPaletteData) =>
+                            isValidColorPalette(getColorPaletteFromMDObject(colorPaletteData)),
+                        )
+                        .map(convertColorPaletteWithLinks);
+                }),
         );
     }
 
@@ -190,20 +198,23 @@ export class OrganizationStylingService implements IOrganizationStylingService {
     public async createColorPalette(
         colorPalette: IColorPaletteDefinition,
     ): Promise<IColorPaletteMetadataObject> {
-        return await this.authCall((client) =>
-            client.entities
-                .createEntityColorPalettes(
-                    {
-                        jsonApiColorPaletteInDocument: {
-                            data: convertColorPaletteToBackend(uuidv4(), colorPalette),
+        if (isValidColorPalette(colorPalette.colorPalette)) {
+            return await this.authCall((client) =>
+                client.entities
+                    .createEntityColorPalettes(
+                        {
+                            jsonApiColorPaletteInDocument: {
+                                data: convertColorPaletteToBackend(uuidv4(), colorPalette),
+                            },
                         },
-                    },
-                    {
-                        headers: jsonApiHeaders,
-                    },
-                )
-                .then(this.parseColorPaletteResult),
-        );
+                        {
+                            headers: jsonApiHeaders,
+                        },
+                    )
+                    .then(this.parseColorPaletteResult),
+            );
+        }
+        throw new Error("Invalid color palette format");
     }
 
     public async updateColorPalette(
@@ -212,22 +223,25 @@ export class OrganizationStylingService implements IOrganizationStylingService {
         if (!colorPalette.ref) {
             return this.createColorPalette(colorPalette);
         }
-        const id = await objRefToIdentifier(colorPalette.ref, this.authCall);
-        return await this.authCall((client) =>
-            client.entities
-                .updateEntityColorPalettes(
-                    {
-                        id,
-                        jsonApiColorPaletteInDocument: {
-                            data: convertColorPaletteToBackend(id, colorPalette),
+        if (isValidColorPalette(colorPalette.colorPalette)) {
+            const id = await objRefToIdentifier(colorPalette.ref, this.authCall);
+            return await this.authCall((client) =>
+                client.entities
+                    .updateEntityColorPalettes(
+                        {
+                            id,
+                            jsonApiColorPaletteInDocument: {
+                                data: convertColorPaletteToBackend(id, colorPalette),
+                            },
                         },
-                    },
-                    {
-                        headers: jsonApiHeaders,
-                    },
-                )
-                .then(this.parseColorPaletteResult),
-        );
+                        {
+                            headers: jsonApiHeaders,
+                        },
+                    )
+                    .then(this.parseColorPaletteResult),
+            );
+        }
+        throw new Error("Invalid color palette format");
     }
 
     public async deleteColorPalette(colorPaletteRef: ObjRef): Promise<void> {

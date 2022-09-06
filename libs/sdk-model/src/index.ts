@@ -330,6 +330,7 @@ export {
     IRgbColor,
     isColorFromPalette,
     isRgbColor,
+    isColorPaletteItem,
     colorPaletteItemToRgb,
     colorPaletteToColors,
     IColorPaletteMetadataObject,
