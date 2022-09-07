@@ -291,8 +291,8 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     };
 
     private loadCatalogGroups = async (): Promise<ICatalogGroup[]> => {
-        const { types } = this.options;
-        const shouldLoadGroups = types.some(isGroupableCatalogItemType);
+        const { types, loadGroups } = this.options;
+        const shouldLoadGroups = loadGroups && types.some(isGroupableCatalogItemType);
         if (!shouldLoadGroups) {
             return [];
         }
