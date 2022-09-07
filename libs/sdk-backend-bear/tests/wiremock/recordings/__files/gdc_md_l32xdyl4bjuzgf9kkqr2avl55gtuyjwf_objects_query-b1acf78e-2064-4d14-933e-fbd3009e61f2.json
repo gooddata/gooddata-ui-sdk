@@ -1,0 +1,142 @@
+{
+    "objects": {
+        "items": [
+            {
+                "dateFilterConfig": {
+                    "meta": {
+                        "summary": "",
+                        "updated": "2019-12-10 14:25:33",
+                        "isProduction": 1,
+                        "title": "DateFilterConfig",
+                        "contributor": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "created": "2019-12-10 14:25:33",
+                        "deprecated": "0",
+                        "category": "dateFilterConfig",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/12",
+                        "flags": ["preloaded"],
+                        "identifier": "defaultDateFilterConfig",
+                        "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+                        "tags": ""
+                    },
+                    "content": {
+                        "selectedOption": "relative_this_month",
+                        "relativeForm": {
+                            "localIdentifier": "relativeForm",
+                            "visible": true,
+                            "granularities": [
+                                "GDC.time.week_us",
+                                "GDC.time.month",
+                                "GDC.time.year",
+                                "GDC.time.quarter",
+                                "GDC.time.date"
+                            ]
+                        },
+                        "allTime": { "localIdentifier": "allTime", "visible": true },
+                        "relativePresets": [
+                            {
+                                "to": 0,
+                                "granularity": "GDC.time.date",
+                                "visible": true,
+                                "localIdentifier": "relative_last_7_days",
+                                "from": -6
+                            },
+                            {
+                                "from": -29,
+                                "granularity": "GDC.time.date",
+                                "visible": true,
+                                "to": 0,
+                                "localIdentifier": "relative_last_30_days"
+                            },
+                            {
+                                "from": -89,
+                                "localIdentifier": "relative_last_90_days",
+                                "granularity": "GDC.time.date",
+                                "visible": true,
+                                "to": 0
+                            },
+                            {
+                                "localIdentifier": "relative_this_week",
+                                "to": 0,
+                                "visible": true,
+                                "granularity": "GDC.time.week_us",
+                                "from": 0
+                            },
+                            {
+                                "granularity": "GDC.time.week_us",
+                                "visible": true,
+                                "to": -1,
+                                "localIdentifier": "relative_last_week",
+                                "from": -1
+                            },
+                            {
+                                "from": -1,
+                                "to": 0,
+                                "visible": true,
+                                "granularity": "GDC.time.week_us",
+                                "localIdentifier": "relative_last_two_weeks"
+                            },
+                            {
+                                "from": 0,
+                                "localIdentifier": "relative_this_month",
+                                "granularity": "GDC.time.month",
+                                "visible": true,
+                                "to": 0
+                            },
+                            {
+                                "to": -1,
+                                "visible": true,
+                                "granularity": "GDC.time.month",
+                                "localIdentifier": "relative_last_month",
+                                "from": -1
+                            },
+                            {
+                                "to": 0,
+                                "visible": true,
+                                "granularity": "GDC.time.month",
+                                "localIdentifier": "relative_last_12_months",
+                                "from": -11
+                            },
+                            {
+                                "from": 0,
+                                "to": 0,
+                                "granularity": "GDC.time.quarter",
+                                "visible": true,
+                                "localIdentifier": "relative_this_quarter"
+                            },
+                            {
+                                "from": -1,
+                                "granularity": "GDC.time.quarter",
+                                "visible": true,
+                                "to": -1,
+                                "localIdentifier": "relative_last_quarter"
+                            },
+                            {
+                                "localIdentifier": "relative_last_4_quarters",
+                                "to": 0,
+                                "visible": true,
+                                "granularity": "GDC.time.quarter",
+                                "from": -3
+                            },
+                            {
+                                "localIdentifier": "relative_this_year",
+                                "granularity": "GDC.time.year",
+                                "visible": true,
+                                "to": 0,
+                                "from": 0
+                            },
+                            {
+                                "to": -1,
+                                "granularity": "GDC.time.year",
+                                "visible": true,
+                                "localIdentifier": "relative_last_year",
+                                "from": -1
+                            }
+                        ],
+                        "absoluteForm": { "localIdentifier": "absoluteForm", "visible": true }
+                    }
+                }
+            }
+        ],
+        "paging": { "totalCount": 1, "count": 1, "offset": 0 }
+    }
+}

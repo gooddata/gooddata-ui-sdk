@@ -1,0 +1,133 @@
+{
+    "validElements": {
+        "elementsMeta": {
+            "filter": "",
+            "attributeDisplayForm": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1059",
+            "order": "asc",
+            "attribute": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057"
+        },
+        "items": [
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2870",
+                    "title": ".decimal"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=6",
+                    "title": "(add)ventures"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=7",
+                    "title": "(mt) Media Temple"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=8",
+                    "title": "@properties"
+                }
+            },
+            {
+                "element": {
+                    "title": "1 Source Consulting",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2871"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1428",
+                    "title": "1-800 Postcards"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2874",
+                    "title": "1-800 We Answer"
+                }
+            },
+            {
+                "element": {
+                    "title": "1-888-OhioComp",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2875"
+                }
+            },
+            {
+                "element": {
+                    "title": "1000Bulbs.com",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1426"
+                }
+            },
+            {
+                "element": {
+                    "title": "101 Financial",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1427"
+                }
+            },
+            {
+                "element": {
+                    "title": "123 Exteriors",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2872"
+                }
+            },
+            {
+                "element": {
+                    "title": "14 West",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2873"
+                }
+            },
+            {
+                "element": {
+                    "title": "1Source International",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1429"
+                }
+            },
+            {
+                "element": {
+                    "title": "1st Choice Staffing & Consulting",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2876"
+                }
+            },
+            {
+                "element": {
+                    "title": "1st in Video - Music World",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1430"
+                }
+            },
+            {
+                "element": {
+                    "title": "2 Wheel Bikes",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1431"
+                }
+            },
+            {
+                "element": {
+                    "title": "2HB Software Designs",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1432"
+                }
+            },
+            {
+                "element": {
+                    "title": "352 Media Group",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1433"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1434",
+                    "title": "3balls.com"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1435",
+                    "title": "3dCart Shopping Cart Software"
+                }
+            }
+        ],
+        "paging": { "offset": "0", "count": 20, "total": "4844" }
+    }
+}

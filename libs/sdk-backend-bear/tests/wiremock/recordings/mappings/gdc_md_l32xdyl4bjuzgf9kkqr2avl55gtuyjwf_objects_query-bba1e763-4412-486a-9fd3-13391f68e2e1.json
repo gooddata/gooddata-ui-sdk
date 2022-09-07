@@ -1,0 +1,33 @@
+{
+    "id": "bba1e763-4412-486a-9fd3-13391f68e2e1",
+    "name": "gdc_md_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_objects_query",
+    "request": {
+        "url": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/objects/query?category=visualizationObject&getTotalCount=1&limit=50&offset=200",
+        "method": "GET",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json; charset=utf-8"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"objects\":{\"items\":[],\"paging\":{\"count\":0,\"offset\":200,\"totalCount\":24}}}",
+        "headers": {
+            "date": "Wed, 07 Sep 2022 14:00:11 GMT",
+            "content-type": "application/json;charset=UTF-8",
+            "X-GDC-REQUEST-TIME": "14",
+            "X-GDC-REQUEST": "jnXxCcPl04qdkagm",
+            "cache-control": "no-cache, no-store, must-revalidate",
+            "vary": "origin,X-GDC-VERSION",
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload"
+        }
+    },
+    "uuid": "bba1e763-4412-486a-9fd3-13391f68e2e1",
+    "persistent": true,
+    "insertionIndex": 38
+}
