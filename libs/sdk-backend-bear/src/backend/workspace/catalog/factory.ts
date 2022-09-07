@@ -174,10 +174,12 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
             this.loadDateDatasets(),
         ]);
 
-        const bearDisplayFormsAndAttributes = await this.loadBearDisplayFormsAndAttributes(
+        const bearAttributes = await this.loadBearAttributes(
             bearCatalogItems,
             flatMap(bearDateDatasets, (dd) => dd.availableDateAttributes ?? []),
         );
+
+        const bearDisplayFormsAndAttributes = extractDisplayFormsFromBearAttributes(bearAttributes);
 
         const { attributeByDisplayFormUri, displayFormById, displayFormByUri, attributeById } = createLookups(
             bearDisplayFormsAndAttributes,
@@ -265,10 +267,10 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         );
     };
 
-    private loadBearDisplayFormsAndAttributes = async (
+    private loadBearAttributes = async (
         bearCatalogItems: GdcCatalog.CatalogItem[],
         dateDatasetAttributes: IDateDataSetAttribute[],
-    ): Promise<BearDisplayFormOrAttribute[]> => {
+    ): Promise<GdcMetadata.IWrappedAttribute[]> => {
         const { types } = this.options;
         const shouldLoadAttributes = types.some((type) => type === "attribute" || type === "dateDataset");
         if (!shouldLoadAttributes) {
@@ -277,24 +279,20 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
 
         const bearCatalogAttributes = bearCatalogItems.filter(GdcCatalog.isCatalogAttribute);
         const attributeUris = bearCatalogAttributes.map((attr) => attr.links.self);
-        const displayFormUris = flatMap(bearCatalogAttributes, (attr) => {
-            const geoPins = attr.links.geoPinDisplayForms ?? [];
 
-            return [attr.links.defaultDisplayForm, ...geoPins];
-        });
         const dateAttributeUris = dateDatasetAttributes.map((attr) => attr.attributeMeta.uri!);
 
         return this.authCall((sdk) =>
-            sdk.md.getObjects<BearDisplayFormOrAttribute>(
+            sdk.md.getObjects<GdcMetadata.IWrappedAttribute>(
                 this.workspace,
-                uniq([...attributeUris, ...displayFormUris, ...dateAttributeUris]),
+                uniq([...attributeUris, ...dateAttributeUris]),
             ),
         );
     };
 
     private loadCatalogGroups = async (): Promise<ICatalogGroup[]> => {
-        const { types, loadGroups } = this.options;
-        const shouldLoadGroups = loadGroups && types.some(isGroupableCatalogItemType);
+        const { types } = this.options;
+        const shouldLoadGroups = types.some(isGroupableCatalogItemType);
         if (!shouldLoadGroups) {
             return [];
         }
@@ -332,4 +330,15 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
 
         return this.tagsAndDatasetIdsPromise;
     };
+}
+
+function extractDisplayFormsFromBearAttributes(
+    attributes: GdcMetadata.IWrappedAttribute[],
+): BearDisplayFormOrAttribute[] {
+    return flatMap(attributes, (attribute) => [
+        attribute,
+        ...attribute.attribute.content.displayForms.map(
+            (df): GdcMetadata.IWrappedAttributeDisplayForm => ({ attributeDisplayForm: df }),
+        ),
+    ]);
 }
