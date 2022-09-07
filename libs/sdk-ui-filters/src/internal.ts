@@ -65,3 +65,7 @@ export {
 } from "./AttributeFilter@next/Components/Addons/AttributeDisplayFormSelect/AttributeDisplayFormSelect";
 
 export { EmptyElementsSearchBar } from "./AttributeFilter@next/Components/Addons/EmptyElementsSearchBar";
+
+export { useAutoOpenDropdownButton } from "./AttributeFilter@next/Components/Addons/hooks/useAutoOpenDropdownButton";
+
+export { useOnCloseDropdownButton } from "./AttributeFilter@next/Components/Addons/hooks/useOnCloseDropdownButton";
