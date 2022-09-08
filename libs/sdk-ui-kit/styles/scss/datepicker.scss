@@ -90,6 +90,8 @@
         0 2px 5px 0 var(--gd-shadow-color, transparentize($gd-datepicker-shadow-color, 0.85))
     );
 
+    //CSS for new DATEPICKER
+
     .rdp-nav {
         position: absolute;
         top: 1.05em;
@@ -195,6 +197,164 @@
     }
 
     .rdp-day_selected:not(.rdp-day_disabled):not(.rdp-day_outside) {
+        color: $gd-color-text-light;
+        background: $gd-palette-primary-base;
+    }
+
+    //CSS for old DATEPICKER due to RAIL-4460
+
+    .DayPicker {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        user-select: none;
+    }
+
+    .DayPicker-Month {
+        display: table;
+        border-spacing: 0;
+        border-collapse: collapse;
+        user-select: none;
+    }
+
+    .DayPicker-NavBar {
+        position: absolute;
+        right: 0;
+        left: 0;
+        padding: 0 0.5rem;
+    }
+
+    .DayPicker-NavButton {
+        position: absolute;
+        width: 1.5rem;
+        height: 1.5rem;
+        cursor: pointer;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+    }
+
+    .DayPicker-NavButton--prev,
+    .DayPicker-NavButton--next {
+        position: absolute;
+        top: -0.25em;
+        box-sizing: content-box;
+        width: 2em;
+        height: 2em;
+        text-align: center;
+
+        &::before {
+            display: block;
+            color: $gd-palette-primary-base;
+            padding-top: 0.15em;
+            font-family: $gd-font-indigo;
+            font-size: 18px;
+        }
+
+        &:hover::before {
+            color: $gd-color-state-blank;
+        }
+    }
+
+    .DayPicker-NavButton--prev {
+        left: 0.15em;
+
+        &::before {
+            content: "\e630";
+        }
+    }
+
+    .DayPicker-NavButton--next {
+        right: 0.35em;
+
+        &::before {
+            content: "\e631";
+        }
+    }
+
+    .DayPicker-NavButton--next:hover,
+    .DayPicker-NavButton--prev:hover {
+        color: $gd-palette-primary-base;
+        cursor: pointer;
+    }
+
+    .DayPicker-Caption {
+        display: table-caption;
+        color: $gd-color-dark;
+        cursor: default;
+        margin-left: 0.25em;
+        margin-right: 0.25em;
+        margin-bottom: 1em;
+        font-family: $gd-font-primary;
+        font-size: 17px;
+        text-align: center;
+    }
+
+    .DayPicker-Weekdays {
+        display: table-header-group;
+    }
+
+    .DayPicker-WeekdaysRow {
+        display: table-row;
+    }
+
+    .DayPicker-Weekday {
+        display: table-cell;
+        color: var(--gd-palette-complementary-8, $default-gd-color-state-blank);
+        cursor: help;
+        padding-bottom: 0.5em;
+        font-family: $gd-font-primary;
+        font-weight: 400;
+        font-size: 13px;
+        text-align: center;
+
+        abbr {
+            text-decoration: none;
+            border-bottom: none;
+        }
+    }
+
+    .DayPicker-Body {
+        display: table-row-group;
+    }
+
+    .DayPicker-Week {
+        display: table-row;
+    }
+
+    .DayPicker-Day {
+        display: table-cell;
+        padding: 0.3125em 0.55em;
+        color: $gd-color-text;
+        font-family: $gd-font-primary;
+        font-size: 14px;
+        font-weight: 700;
+        text-align: center;
+
+        &:hover {
+            background: $gd-datepicker-hover-bgcolor;
+            cursor: pointer;
+        }
+    }
+
+    .DayPicker--interactionDisabled .DayPicker-Day {
+        cursor: default;
+    }
+
+    .DayPicker-Day--disabled {
+        color: $gd-color-disabled;
+        cursor: default;
+        font-weight: 400;
+    }
+
+    .DayPicker-Day--outside {
+        color: $gd-color-disabled;
+        cursor: default;
+        font-weight: 400;
+    }
+
+    .DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
         color: $gd-color-text-light;
         background: $gd-palette-primary-base;
     }
