@@ -35,7 +35,7 @@ export const useToastMessage = (): UseToastMessageType => {
     const addMessageBase =
         (type: MessageType): AddMessageType =>
         (message, options) => {
-            if (options.values) {
+            if (options?.values) {
                 return addMessage({ ...options, type, node: intl.formatMessage(message, options.values) });
             }
             return addMessage({ ...options, type, text: intl.formatMessage(message) });
