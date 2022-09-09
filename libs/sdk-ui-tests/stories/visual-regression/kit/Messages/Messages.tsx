@@ -3,7 +3,7 @@ import React from "react";
 import reject from "lodash/reject";
 import keys from "lodash/keys";
 import { v4 as uuid } from "uuid";
-import { Button, Messages, Message, IMessage, MessageType } from "@gooddata/sdk-ui-kit";
+import { Button, Messages, Message, IMessage } from "@gooddata/sdk-ui-kit";
 import { wrapWithTheme } from "../../themeWrapper";
 
 import { storiesOf } from "../../../_infra/storyRepository";
@@ -20,11 +20,42 @@ const info = {
         { name: "7-mobile.png" },
     ],
     messages: {
-        success: "Course laid in!",
-        error: "We require more Vespene gas!",
-        progress: "Slurping hagrilly up the axlegrurts...",
-        warning: "Warning...",
-        custom: "Failed to do something. <strong>Please try again later.</strong>",
+        success: {
+            type: "success",
+            text: "Course laid in!",
+        } as IMessage,
+        error: {
+            type: "error",
+            text: "We require more Vespene gas!",
+        } as IMessage,
+        progress: {
+            type: "progress",
+            text: "Slurping hagrilly up the axlegrurts...",
+        } as IMessage,
+        warning: {
+            type: "warning",
+            text: "Warning...",
+        } as IMessage,
+        custom: {
+            type: "error",
+            text: "Failed to do something. <strong>Please try again later.</strong>",
+        } as IMessage,
+        customNode: {
+            type: "error",
+            node: (
+                <span>
+                    This is error content as <b>JSX element</b>.
+                </span>
+            ),
+        } as IMessage,
+        successNode: {
+            type: "success",
+            node: (
+                <span>
+                    This is success content as <b>JSX element</b>.
+                </span>
+            ),
+        } as IMessage,
     },
 };
 
@@ -41,17 +72,15 @@ class MessagesExamples extends React.Component<unknown, IMessagesExamplesState> 
         };
     }
 
-    private addMessage(type: MessageType) {
-        const texts = info.messages;
+    private addMessage(message: IMessage) {
         let newMessages = [...this.state.messages];
 
-        if (["error", "warning"].includes(type)) {
+        if (["error", "warning"].includes(message.type)) {
             newMessages = [
                 ...newMessages,
                 {
+                    ...message,
                     id: new Date().getTime().toString(),
-                    type,
-                    text: texts[type],
                     showMore: "Show More",
                     showLess: "Show Less",
                     errorDetail:
@@ -62,9 +91,8 @@ class MessagesExamples extends React.Component<unknown, IMessagesExamplesState> 
             newMessages = [
                 ...newMessages,
                 {
+                    ...message,
                     id: new Date().getTime().toString(),
-                    type,
-                    text: texts[type],
                 },
             ];
         }
@@ -83,15 +111,14 @@ class MessagesExamples extends React.Component<unknown, IMessagesExamplesState> 
     };
 
     public render() {
-        const buttons = keys(info.messages).map((type) => {
+        const buttons = keys(info.messages).map((msgName) => {
+            const message = info.messages[msgName];
             return (
                 <Button
                     key={`msg-${uuid()}`}
                     className="gd-button-primary"
-                    value={`Add ${type}`}
-                    onClick={() => {
-                        this.addMessage(type as MessageType);
-                    }}
+                    value={`Add ${msgName}`}
+                    onClick={() => this.addMessage(message)}
                 />
             );
         });

@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { useContext } from "react";
 import { MessageDescriptor, useIntl } from "react-intl";
@@ -10,7 +10,7 @@ import { IMessageDefinition, MessageType } from "./typings";
  */
 export type AddMessageType = (
     message: MessageDescriptor,
-    options?: Pick<IMessageDefinition, "duration" | "intensive">,
+    options?: Pick<IMessageDefinition, "duration" | "intensive" | "values">,
 ) => string;
 
 /**
@@ -35,6 +35,9 @@ export const useToastMessage = (): UseToastMessageType => {
     const addMessageBase =
         (type: MessageType): AddMessageType =>
         (message, options) => {
+            if (options.values) {
+                return addMessage({ ...options, type, node: intl.formatMessage(message, options.values) });
+            }
             return addMessage({ ...options, type, text: intl.formatMessage(message) });
         };
 

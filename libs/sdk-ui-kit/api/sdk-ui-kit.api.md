@@ -44,7 +44,7 @@ export function activateHeaderMenuItems(items: IHeaderMenuItem[][], ids: Array<s
 export const AddGranteeBase: React_2.FC<IAddGranteeBaseProps>;
 
 // @internal (undocumented)
-export type AddMessageType = (message: MessageDescriptor, options?: Pick<IMessageDefinition, "duration" | "intensive">) => string;
+export type AddMessageType = (message: MessageDescriptor, options?: Pick<IMessageDefinition, "duration" | "intensive" | "values">) => string;
 
 // @internal (undocumented)
 export type Alignment = {
@@ -513,6 +513,9 @@ export class FlexDimensions extends Component<IFlexDimensionsProps, IFlexDimensi
     // (undocumented)
     updateSize: () => void;
 }
+
+// @internal (undocumented)
+export type FormatMessageParams = Parameters<IntlShape["formatMessage"]>;
 
 // @internal (undocumented)
 export function formatTime(h: number, m: number, format?: string): string;
@@ -2569,13 +2572,17 @@ export interface IMessageDefinition {
     // (undocumented)
     intensive?: boolean;
     // (undocumented)
+    node?: React.ReactNode;
+    // (undocumented)
     showLess?: string;
     // (undocumented)
     showMore?: string;
     // (undocumented)
-    text: string;
+    text?: string;
     // (undocumented)
     type: MessageType;
+    // (undocumented)
+    values?: FormatMessageParams[1];
 }
 
 // @internal (undocumented)
