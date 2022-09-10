@@ -29,7 +29,7 @@ export function convertApiError(error: Error): AnalyticalBackendError {
     const contractExpired = createContractExpiredError(error);
 
     if (contractExpired) {
-        throw contractExpired;
+        return contractExpired;
     }
 
     return new UnexpectedError("An unexpected error has occurred", error);
