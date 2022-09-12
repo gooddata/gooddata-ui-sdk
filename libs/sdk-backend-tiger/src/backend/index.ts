@@ -219,7 +219,7 @@ export class TigerBackend implements IAnalyticalBackend {
             return await this.triggerAuthentication(true);
         } catch (err) {
             invariant(isError(err)); // if this bombs, the code in the try block threw something strange
-            throw this.handleNotAuthenticated(convertApiError(err));
+            throw this.handleAnalyticalBackendError(convertApiError(err));
         }
     };
 
@@ -244,7 +244,7 @@ export class TigerBackend implements IAnalyticalBackend {
             // if we receive some other error than missing auth, we fail fast: no need to try the auth
             // one more time, since it was not the problem in the first place
             if (!isNotAuthenticatedResponse(err)) {
-                throw this.handleNotAuthenticated(errorConverter(err));
+                throw this.handleAnalyticalBackendError(errorConverter(err));
             }
 
             // else we try to trigger the authentication once more and then we repeat the original call
@@ -255,19 +255,19 @@ export class TigerBackend implements IAnalyticalBackend {
                 return await call(this.client, await this.getAsyncCallContext());
             } catch (err2) {
                 invariant(isError(err2)); // if this bombs, the code in the try block threw something strange
-                throw this.handleNotAuthenticated(errorConverter(err2));
+                throw this.handleAnalyticalBackendError(errorConverter(err2));
             }
         }
     };
 
     /**
-     * Triggers onNotAuthenticated handler of the the authProvider if the provided error is an instance
-     * of {@link @gooddata/sdk-backend-spi#NotAuthenticated}.
+     * Triggers relevant handler if the provided error is an instance of
+     * {@link @gooddata/sdk-backend-spi#NotAuthenticated} or {@link @gooddata/sdk-backend-spi#ContractExpired}.
      *
      * @param err - error to observe and trigger handler for
      * @returns the original error to facilitate re-throwing
      */
-    private handleNotAuthenticated = <T>(err: T): T => {
+    private handleAnalyticalBackendError = <T>(err: T): T => {
         if (isNotAuthenticated(err)) {
             this.authProvider.onNotAuthenticated?.({ client: this.client, backend: this }, err);
         } else if (isContractExpired(err)) {
