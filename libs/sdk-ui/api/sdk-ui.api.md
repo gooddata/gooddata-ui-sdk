@@ -1266,6 +1266,9 @@ export function isGoodDataSdkError(obj: unknown): obj is GoodDataSdkError;
 export function isHeaderPredicate(obj: unknown): obj is IHeaderPredicate;
 
 // @public
+export const isLocale: (locale: unknown) => locale is ILocale;
+
+// @public
 export function isNegativeValues(obj: unknown): obj is NegativeValuesSdkError;
 
 // @public
@@ -1452,6 +1455,9 @@ export class LoadingComponent extends React_2.Component<ILoadingProps> {
     render(): JSX.Element;
 }
 
+// @internal
+export const LOCALES: string[];
+
 // @public
 export function localIdentifierMatch(localIdOrMeasure: string | IMeasure): IHeaderPredicate;
 
@@ -1580,6 +1586,9 @@ export const ResolvedClientWorkspaceProvider: React_2.FC<IClientWorkspaceIdentif
 
 // @alpha
 export function resolveLCMWorkspaceIdentifiers(backend: any, clientWorkspace: IClientWorkspaceIdentifiers): Promise<IClientWorkspaceIdentifiers>;
+
+// @internal
+export const resolveLocale: (locale: unknown) => ILocale;
 
 // @public
 export function resolveUseCancelablePromisesError<TError>(states: UseCancelablePromiseState<unknown, TError>[]): TError | undefined;

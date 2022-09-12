@@ -2,13 +2,13 @@
 import { SagaIterator } from "redux-saga";
 import { all, call, put } from "redux-saga/effects";
 import { IDateFilterConfigsQueryResult, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { ILocale } from "@gooddata/sdk-ui";
+import { ILocale, resolveLocale } from "@gooddata/sdk-ui";
 import { IColorPalette, ISeparators, ISettings } from "@gooddata/sdk-model";
 
 import { defaultDateFilterConfig } from "../../../../_staging/dateFilterConfig/defaultConfig";
 import { getValidDateFilterConfig } from "../../../../_staging/dateFilterConfig/validation";
 import { stripUserAndWorkspaceProps } from "../../../../_staging/settings/conversion";
-import { InitializeDashboard } from "../../../commands/dashboard";
+import { InitializeDashboard } from "../../../commands";
 import { dateFilterValidationFailed } from "../../../events/dashboard";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher";
 import { dateFilterConfigActions } from "../../../store/dateFilterConfig";
@@ -98,7 +98,7 @@ function resolveUserSettings(ctx: DashboardContext, config: DashboardConfig): Pr
     }
 
     return loadSettingsForCurrentUser(ctx).then((res) => ({
-        locale: config.locale ?? (res.locale as ILocale),
+        locale: config.locale ?? resolveLocale(res.locale),
         separators: config.separators ?? res.separators,
         settings: config.settings ?? stripUserAndWorkspaceProps(res),
     }));
@@ -114,7 +114,7 @@ function resolveColorPalette(ctx: DashboardContext, config: DashboardConfig): Pr
 
 /**
  * Loads all essential dashboard configuration from the backend if needed. The load command may specify their
- * own inline config - if that is the case the config is bounced back immediately. Otherwise the necessary
+ * own inline config - if that is the case the config is bounced back immediately. Otherwise, the necessary
  * backend queries and post-processing is done.
  */
 export function* resolveDashboardConfig(
@@ -169,9 +169,9 @@ export function* resolveDashboardConfig(
 
     const configWithDefaults = applyConfigDefaults(config);
 
-    const resolvedConfig: ResolvedDashboardConfig = {
+    return {
         ...configWithDefaults,
-        locale: settings.locale as ILocale,
+        locale: settings.locale,
         separators: settings.separators,
         dateFilterConfig: validDateFilterConfig,
         settings: configWithDefaults.allowUnfinishedFeatures
@@ -180,8 +180,6 @@ export function* resolveDashboardConfig(
         colorPalette,
         mapboxToken: config.mapboxToken,
     };
-
-    return resolvedConfig;
 }
 
 function applyConfigDefaults<T extends DashboardConfig>(config: T) {

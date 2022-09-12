@@ -1,13 +1,13 @@
 // (C) 2022 GoodData Corporation
 import { IInsightDefinition } from "@gooddata/sdk-model";
-import { DefaultLocale, ILocale } from "@gooddata/sdk-ui";
+import { DefaultLocale, ILocale, resolveLocale } from "@gooddata/sdk-ui";
 import { IGeoConfig } from "@gooddata/sdk-ui-geo";
 import {
     geoConfigForInsightViewComponent,
     isGeoChart,
 } from "../../components/pluggableVisualizations/geoChart/geoConfigCodeGenerator";
 import { IEmbeddingCodeContext } from "../../interfaces/VisualizationDescriptor";
-import { PropWithMeta } from "../../utils/embeddingCodeGenerator";
+import { PropWithMeta } from "../embeddingCodeGenerator";
 
 /**
  * @internal
@@ -19,10 +19,10 @@ export function configForInsightView(insight: IInsightDefinition): PropWithMeta<
 }
 
 export function localeForInsightView(ctx: IEmbeddingCodeContext): PropWithMeta<ILocale> | undefined {
-    const val = ctx?.settings?.locale as ILocale;
+    const val = resolveLocale(ctx?.settings?.locale);
 
     return {
-        value: val && val !== DefaultLocale ? val : undefined,
+        value: val !== DefaultLocale ? val : undefined,
         meta: {
             cardinality: "scalar",
         },

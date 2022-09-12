@@ -12,9 +12,7 @@ import {
 } from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,
-    ILocale,
     withContexts,
-    DefaultLocale,
     LoadingComponent as DefaultLoading,
     ErrorComponent as DefaultError,
     IntlWrapper,
@@ -22,6 +20,7 @@ import {
     OnError,
     useCancelablePromise,
     convertError,
+    resolveLocale,
 } from "@gooddata/sdk-ui";
 
 import InsightTitle from "./InsightTitle";
@@ -143,7 +142,7 @@ const InsightViewCore: React.FC<IInsightViewProps & WrappedComponentProps> = (pr
         [backend, workspace],
     );
 
-    // extract the url outside of backendWithTelemetry and use it as a dependency instead of the whole insight
+    // extract the url outside backendWithTelemetry and use it as a dependency instead of the whole insight
     // this reduces the amount of re-renders in case just filters change for example
     const currentInsightVisualizationUrl = insightResult && insightVisualizationUrl(insightResult);
     const backendWithTelemetry = useMemo(() => {
@@ -232,7 +231,7 @@ const InsightViewCore: React.FC<IInsightViewProps & WrappedComponentProps> = (pr
                     drillableItems={drillableItems}
                     executeByReference={executeByReference}
                     filters={filters}
-                    locale={locale || (workspaceSettingsResult?.locale as ILocale) || DefaultLocale}
+                    locale={locale || resolveLocale(workspaceSettingsResult?.locale)}
                     settings={workspaceSettingsResult}
                     ErrorComponent={ErrorComponent}
                     LoadingComponent={LoadingComponent}

@@ -165,7 +165,7 @@ export { usePrevious } from "./react/usePrevious";
  * Localization exports
  */
 
-export { ILocale, DefaultLocale } from "./localization/Locale";
+export { ILocale, DefaultLocale, isLocale, LOCALES } from "./localization/Locale";
 export { getTranslation, getIntl } from "./localization/IntlStore";
 export { IntlWrapper, IIntlWrapperProps } from "./localization/IntlWrapper";
 export { messagesMap, ITranslations } from "./localization/messagesMap";
@@ -177,7 +177,7 @@ export {
     ITranslationsProviderProps,
 } from "./localization/TranslationsProvider";
 // FIXME: temp build fix
-export { createIntlMock, withIntl } from "./localization/intlUtils";
+export { createIntlMock, withIntl, resolveLocale } from "./localization/intlUtils";
 export {
     ITranslationsCustomizationContextProviderProps,
     TranslationsCustomizationContextProvider,

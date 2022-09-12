@@ -2,7 +2,13 @@
 import React from "react";
 import invariant from "ts-invariant";
 
-import { GoodDataSdkError, ILoadingState, IDrillEvent, IExportFunction, ILocale } from "@gooddata/sdk-ui";
+import {
+    GoodDataSdkError,
+    ILoadingState,
+    IDrillEvent,
+    IExportFunction,
+    resolveLocale,
+} from "@gooddata/sdk-ui";
 import { IInsight } from "@gooddata/sdk-model";
 import {
     CustomElementAdapter,
@@ -36,7 +42,7 @@ export class Insight extends CustomElementAdapter<IInsightView> {
         const extraProps: Partial<React.ComponentProps<typeof Component>> = { config: {} };
 
         if (this.hasAttribute("locale")) {
-            extraProps.locale = this.getAttribute("locale") as ILocale;
+            extraProps.locale = resolveLocale(this.getAttribute("locale"));
         }
 
         if (this.hasAttribute("title")) {
