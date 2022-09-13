@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/api-model-bear",
-    "version": "8.11.0-alpha.68",
+    "version": "8.11.0-alpha.68.fix.0",
     "description": "TypeScript definition files for GoodData platform",
     "repository": {
         "type": "git",
