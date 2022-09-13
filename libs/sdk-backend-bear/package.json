@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-backend-bear",
-    "version": "8.11.0-alpha.72",
+    "version": "8.11.0-alpha.73",
     "author": "GoodData",
     "description": "GoodData Backend SPI implementation for the GoodData platform",
     "repository": {
@@ -56,12 +56,12 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
     },
     "dependencies": {
-        "@gooddata/api-client-bear": "^8.11.0-alpha.72",
-        "@gooddata/api-model-bear": "^8.11.0-alpha.72",
-        "@gooddata/sdk-backend-base": "^8.11.0-alpha.72",
-        "@gooddata/sdk-backend-spi": "^8.11.0-alpha.72",
-        "@gooddata/sdk-embedding": "^8.11.0-alpha.72",
-        "@gooddata/sdk-model": "^8.11.0-alpha.72",
+        "@gooddata/api-client-bear": "^8.11.0-alpha.73",
+        "@gooddata/api-model-bear": "^8.11.0-alpha.73",
+        "@gooddata/sdk-backend-base": "^8.11.0-alpha.73",
+        "@gooddata/sdk-backend-spi": "^8.11.0-alpha.73",
+        "@gooddata/sdk-embedding": "^8.11.0-alpha.73",
+        "@gooddata/sdk-model": "^8.11.0-alpha.73",
         "date-fns": "^2.22.1",
         "http-status-codes": "^2.1.4",
         "json-stable-stringify": "^1.0.1",
@@ -73,8 +73,8 @@
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^2.1.0",
-        "@gooddata/reference-workspace": "^8.11.0-alpha.72",
-        "@gooddata/sdk-backend-mockingbird": "^8.11.0-alpha.72",
+        "@gooddata/reference-workspace": "^8.11.0-alpha.73",
+        "@gooddata/sdk-backend-mockingbird": "^8.11.0-alpha.73",
         "@microsoft/api-documenter": "^7.17.0",
         "@microsoft/api-extractor": "^7.20.0",
         "@types/jest": "^27.0.1",
