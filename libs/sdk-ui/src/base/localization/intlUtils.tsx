@@ -2,7 +2,7 @@
 import React from "react";
 import { IntlProvider, createIntl, IntlShape } from "react-intl";
 import { ITranslations, messagesMap } from "./messagesMap";
-import { DefaultLocale, ILocale } from "./Locale";
+import { DefaultLocale, ILocale, isLocale } from "./Locale";
 import { wrapDisplayName } from "../react/wrapDisplayName";
 
 /**
@@ -40,3 +40,14 @@ export function withIntl<P>(
 
     return wrapDisplayName("withIntl", WrappedComponent)(WithIntl);
 }
+
+/**
+ * Resolves parameter into {@link ILocale} or {@link DefaultLocale}.
+ *
+ * @param locale - value of the locale to check for support
+ *
+ * @internal
+ */
+export const resolveLocale = (locale: unknown): ILocale => {
+    return isLocale(locale) ? locale : DefaultLocale;
+};

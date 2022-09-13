@@ -2,7 +2,7 @@
 import React from "react";
 import invariant from "ts-invariant";
 
-import { ILocale } from "@gooddata/sdk-ui";
+import { resolveLocale } from "@gooddata/sdk-ui";
 import {
     CustomElementAdapter,
     EVENT_HANDLER,
@@ -33,7 +33,7 @@ export class Dashboard extends CustomElementAdapter<IDashboard> {
         const extraProps: Partial<React.ComponentProps<IDashboard>> = { config: {} };
 
         if (this.hasAttribute("locale")) {
-            extraProps.config!.locale = this.getAttribute("locale") as ILocale;
+            extraProps.config!.locale = resolveLocale(this.getAttribute("locale"));
         }
 
         if (this.hasAttribute("readonly")) {

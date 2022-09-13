@@ -1,7 +1,7 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import { ILocale } from "@gooddata/sdk-ui";
+import { resolveLocale } from "@gooddata/sdk-ui";
 import { DateFilterOption } from "../interfaces";
 import { getDateFilterTitle } from "../utils/Translations/DateFilterTitle";
 
@@ -14,6 +14,6 @@ const DateFilterTextLocalizedComponent: React.FC<IDateFilterTextLocalizedProps &
     dateFormat,
     filter,
     intl,
-}) => <>{getDateFilterTitle(filter, intl.locale as ILocale, dateFormat)}</>;
+}) => <>{getDateFilterTitle(filter, resolveLocale(intl.locale), dateFormat)}</>;
 
 export const DateFilterTextLocalized = injectIntl(DateFilterTextLocalizedComponent);
