@@ -95,4 +95,5 @@ export {
     WorkspaceDefinition,
     DependentEntitiesGraphRequest,
     DependentEntitiesGraphResponse,
+    WorkspaceDataFiltersLayout,
 } from "./backend/tigerSpecificFunctions";

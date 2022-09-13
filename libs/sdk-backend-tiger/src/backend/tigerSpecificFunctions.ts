@@ -31,6 +31,7 @@ import {
     ApiEntitlement,
     ActionsApiProcessInvitationRequest,
     PlatformUsage,
+    DeclarativeWorkspaceDataFilters,
 } from "@gooddata/api-client-tiger";
 import { convertApiError } from "../utils/errorHandling";
 import uniq from "lodash/uniq";
@@ -237,6 +238,11 @@ export type DependentEntitiesGraphRequest = DependentEntitiesRequest;
 export type DependentEntitiesGraphResponse = DependentEntitiesResponse;
 
 /**
+ * @internal
+ */
+export type WorkspaceDataFiltersLayout = DeclarativeWorkspaceDataFilters;
+
+/**
  * TigerBackend-specific functions.
  * If possible, avoid these functions, they are here for specific use cases.
  *
@@ -298,6 +304,8 @@ export type TigerSpecificFunctions = {
         requestParameters: ActionsApiProcessInvitationRequest,
         options?: AxiosRequestConfig,
     ) => Promise<IInvitationUserResponse>;
+    getWorkspaceDataFiltersLayout?: () => Promise<WorkspaceDataFiltersLayout>;
+    setWorkspaceDataFiltersLayout?: (workspaceDataFiltersLayout: WorkspaceDataFiltersLayout) => Promise<void>;
 };
 
 const getDataSourceErrorMessage = (error: unknown) => {
@@ -931,6 +939,25 @@ export const buildTigerSpecificFunctions = (
                         errorMessage: res?.data,
                     } as IInvitationUserResponse;
                 }
+            });
+        });
+    },
+
+    getWorkspaceDataFiltersLayout: async () => {
+        try {
+            return await authApiCall(async (sdk) => {
+                const result = await sdk.declarativeLayout.getWorkspaceDataFiltersLayout();
+                return result.data;
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
+    },
+
+    setWorkspaceDataFiltersLayout: async (workspaceDataFiltersLayout: WorkspaceDataFiltersLayout) => {
+        return await authApiCall(async (sdk) => {
+            await sdk.declarativeLayout.setWorkspaceDataFiltersLayout({
+                declarativeWorkspaceDataFilters: workspaceDataFiltersLayout,
             });
         });
     },

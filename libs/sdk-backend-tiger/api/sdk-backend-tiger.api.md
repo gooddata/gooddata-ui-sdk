@@ -14,6 +14,7 @@ import { DeclarativeAnalytics } from '@gooddata/api-client-tiger';
 import { DeclarativeModel } from '@gooddata/api-client-tiger';
 import { DeclarativePdm } from '@gooddata/api-client-tiger';
 import { DeclarativeTables } from '@gooddata/api-client-tiger';
+import { DeclarativeWorkspaceDataFilters } from '@gooddata/api-client-tiger';
 import { DependentEntitiesRequest } from '@gooddata/api-client-tiger';
 import { DependentEntitiesResponse } from '@gooddata/api-client-tiger';
 import { GenerateLdmRequest } from '@gooddata/api-client-tiger';
@@ -299,6 +300,8 @@ export type TigerSpecificFunctions = {
     resolveAllEntitlements?: () => Promise<ApiEntitlement[]>;
     getAllPlatformUsage?: () => Promise<PlatformUsage[]>;
     inviteUser?: (requestParameters: ActionsApiProcessInvitationRequest, options?: AxiosRequestConfig) => Promise<IInvitationUserResponse>;
+    getWorkspaceDataFiltersLayout?: () => Promise<WorkspaceDataFiltersLayout>;
+    setWorkspaceDataFiltersLayout?: (workspaceDataFiltersLayout: WorkspaceDataFiltersLayout) => Promise<void>;
 };
 
 // @public
@@ -311,6 +314,9 @@ export class TigerTokenAuthProvider extends TigerAuthProviderBase {
     // (undocumented)
     onNotAuthenticated: (context: IAuthenticationContext, error: NotAuthenticated) => void;
 }
+
+// @internal (undocumented)
+export type WorkspaceDataFiltersLayout = DeclarativeWorkspaceDataFilters;
 
 // @internal (undocumented)
 export type WorkspaceDefinition = JsonApiWorkspaceInDocument;
