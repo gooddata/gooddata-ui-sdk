@@ -149,6 +149,20 @@ export interface IDataSourceUpsertRequest {
 /**
  * @internal
  */
+export interface IDataSourcePatchRequest {
+    id: string;
+    name?: string;
+    password?: string;
+    schema?: string;
+    token?: string;
+    type?: IDataSourceType;
+    url?: string;
+    username?: string;
+}
+
+/**
+ * @internal
+ */
 export interface IDataSourceTestConnectionRequest {
     password?: string;
     schema: string;
@@ -285,6 +299,7 @@ export type TigerSpecificFunctions = {
     getDataSourceIdentifierById?: (id: string) => Promise<IDataSourceApiResult>;
     createDataSource?: (requestData: IDataSourceUpsertRequest) => Promise<IDataSourceApiResult>;
     updateDataSource?: (id: string, requestData: IDataSourceUpsertRequest) => Promise<IDataSourceApiResult>;
+    patchDataSource?: (id: string, requestData: IDataSourcePatchRequest) => Promise<IDataSourceApiResult>;
     deleteDataSource?: (id: string) => Promise<IDataSourceDeletedResponse>;
     testDataSourceConnection?: (
         connectionData: IDataSourceTestConnectionRequest,
@@ -785,6 +800,37 @@ export const buildTigerSpecificFunctions = (
                     .updateEntityDataSources({
                         id,
                         jsonApiDataSourceInDocument: {
+                            data: {
+                                attributes: {
+                                    name,
+                                    password,
+                                    schema,
+                                    token,
+                                    type,
+                                    url,
+                                    username,
+                                },
+                                id: requestDataId,
+                                type: JsonApiDataSourceInTypeEnum.DATA_SOURCE,
+                            },
+                        },
+                    })
+                    .then((axiosResponse) => ({
+                        data: dataSourceResponseAsDataSourceConnectionInfo(axiosResponse.data),
+                    }));
+            });
+        } catch (error: any) {
+            return { errorMessage: getDataSourceErrorMessage(error) };
+        }
+    },
+    patchDataSource: async (id: string, requestData: IDataSourcePatchRequest) => {
+        const { id: requestDataId, name, password, schema, token, type, url, username } = requestData;
+        try {
+            return await authApiCall(async (sdk) => {
+                return sdk.entities
+                    .patchEntityDataSources({
+                        id,
+                        jsonApiDataSourcePatchDocument: {
                             data: {
                                 attributes: {
                                     name,

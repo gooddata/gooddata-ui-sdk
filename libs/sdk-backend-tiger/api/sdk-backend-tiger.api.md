@@ -142,6 +142,26 @@ export interface IDataSourceDeletedResponse {
 }
 
 // @internal (undocumented)
+export interface IDataSourcePatchRequest {
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    name?: string;
+    // (undocumented)
+    password?: string;
+    // (undocumented)
+    schema?: string;
+    // (undocumented)
+    token?: string;
+    // (undocumented)
+    type?: IDataSourceType;
+    // (undocumented)
+    url?: string;
+    // (undocumented)
+    username?: string;
+}
+
+// @internal (undocumented)
 export type IDataSourcePermission = "MANAGE" | "USE";
 
 // @internal (undocumented)
@@ -290,6 +310,7 @@ export type TigerSpecificFunctions = {
     getDataSourceIdentifierById?: (id: string) => Promise<IDataSourceApiResult>;
     createDataSource?: (requestData: IDataSourceUpsertRequest) => Promise<IDataSourceApiResult>;
     updateDataSource?: (id: string, requestData: IDataSourceUpsertRequest) => Promise<IDataSourceApiResult>;
+    patchDataSource?: (id: string, requestData: IDataSourcePatchRequest) => Promise<IDataSourceApiResult>;
     deleteDataSource?: (id: string) => Promise<IDataSourceDeletedResponse>;
     testDataSourceConnection?: (connectionData: IDataSourceTestConnectionRequest, id?: string) => Promise<IDataSourceTestConnectionResponse>;
     publishLogicalModel?: (workspaceId: string, declarativeModel: DeclarativeLogicalModel) => Promise<void>;
