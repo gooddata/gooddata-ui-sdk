@@ -37,6 +37,7 @@ export class EditableLabelInner extends Component<IEditableLabelInnerProps, IEdi
     };
     private readonly root: RefObject<any>;
     private readonly textarea: RefObject<HTMLTextAreaElement>;
+    private focusTimeout: number = 0;
 
     constructor(props: IEditableLabelInnerProps) {
         super(props);
@@ -74,6 +75,7 @@ export class EditableLabelInner extends Component<IEditableLabelInnerProps, IEdi
         rootNode.removeEventListener("dragstart", this.onSelectStart);
         rootNode.removeEventListener("selectstart", this.onSelectStart);
         this.removeListeners();
+        clearTimeout(this.focusTimeout);
     }
 
     onDocumentClick = (e: MouseEvent): void => {
@@ -189,17 +191,21 @@ export class EditableLabelInner extends Component<IEditableLabelInnerProps, IEdi
         const { scrollToEndOnEditingStart, textareaInOverlay } = this.props;
 
         if (componentElement) {
-            componentElement.focus();
+            window.clearTimeout(this.focusTimeout);
+            // without the timeout the focus sometimes got stolen by the previously active item for some reason
+            this.focusTimeout = window.setTimeout(() => {
+                componentElement.focus();
 
-            if (scrollToEndOnEditingStart && this.isMultiLine()) {
-                componentElement.scrollTop = componentElement.scrollHeight;
-            }
+                if (scrollToEndOnEditingStart && this.isMultiLine()) {
+                    componentElement.scrollTop = componentElement.scrollHeight;
+                }
 
-            componentElement.select();
+                componentElement.select();
 
-            if (textareaInOverlay) {
-                this.measureRootDimensions();
-            }
+                if (textareaInOverlay) {
+                    this.measureRootDimensions();
+                }
+            }, 1);
         }
     };
 
