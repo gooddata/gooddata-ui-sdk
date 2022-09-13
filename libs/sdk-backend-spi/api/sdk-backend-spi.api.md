@@ -1627,6 +1627,7 @@ export interface IWorkspaceCatalogFactoryMethods<TFactory, TOptions> {
     forDataset(dataset: ObjRef): TFactory;
     forTypes(types: CatalogItemType_2[]): TFactory;
     includeTags(tags: ObjRef[]): TFactory;
+    withGroups(loadGroups: boolean): TFactory;
     withOptions(options: Partial<TOptions>): TFactory;
 }
 
@@ -1636,6 +1637,7 @@ export interface IWorkspaceCatalogFactoryOptions {
     excludeTags: ObjRef[];
     includeDateGranularities?: string[];
     includeTags: ObjRef[];
+    loadGroups?: boolean;
     production?: boolean;
     types: CatalogItemType_2[];
 }

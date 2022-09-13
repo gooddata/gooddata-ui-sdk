@@ -1,5 +1,9 @@
 // (C) 2019-2022 GoodData Corporation
-import { IWorkspaceCatalogWithAvailableItems } from "@gooddata/sdk-backend-spi";
+import invariant from "ts-invariant";
+import {
+    IWorkspaceCatalogFactoryOptions,
+    IWorkspaceCatalogWithAvailableItems,
+} from "@gooddata/sdk-backend-spi";
 import {
     CatalogItem,
     ICatalogGroup,
@@ -18,9 +22,11 @@ export class BearWorkspaceCatalogWithAvailableItems implements IWorkspaceCatalog
         private readonly catalogGroups: ICatalogGroup[],
         private readonly items: CatalogItem[],
         private readonly availableItems: CatalogItem[],
+        private readonly options: IWorkspaceCatalogFactoryOptions,
     ) {}
 
     public groups(): ICatalogGroup[] {
+        invariant(this.options.loadGroups, "Catalog groups are not loaded.");
         return this.catalogGroups;
     }
 

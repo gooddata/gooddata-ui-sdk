@@ -1,0 +1,33 @@
+{
+    "id": "81341a82-fc26-4cc5-9ee9-a155a0f277c7",
+    "name": "gdc_account_profile_889bd5b237cc5af3e6c4749bdd551a8d",
+    "request": {
+        "url": "/gdc/account/profile/889bd5b237cc5af3e6c4749bdd551a8d",
+        "method": "GET",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json; charset=utf-8"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"accountSetting\":{\"ssoProvider\":null,\"updated\":\"2022-09-07 15:20:34\",\"timezone\":null,\"position\":null,\"phoneNumber\":\"000000000\",\"login\":\"first.last@gooddata.com\",\"lastName\":\"Last\",\"firstName\":\"First\",\"created\":\"2018-02-27 14:41:22\",\"country\":null,\"companyName\":\"GoodData\",\"email\":\"first.last@gooddata.com\",\"authenticationModes\":[],\"language\":\"en-US\",\"ipWhitelist\":null,\"effectiveIpWhitelist\":null,\"links\":{\"self\":\"/gdc/account/profile/889bd5b237cc5af3e6c4749bdd551a8d\",\"projects\":\"/gdc/account/profile/889bd5b237cc5af3e6c4749bdd551a8d/projects\",\"domain\":\"/gdc/domains/mavenlink_prod\",\"auditEvents\":\"/gdc/account/profile/889bd5b237cc5af3e6c4749bdd551a8d/auditEvents\"}}}",
+        "headers": {
+            "content-type": "application/json;charset=utf-8",
+            "date": "Wed, 07 Sep 2022 13:59:29 GMT",
+            "X-GDC-REQUEST-TIME": "12",
+            "X-GDC-REQUEST": "MMagY0AowRcgnqwU",
+            "cache-control": "no-cache, no-store, must-revalidate",
+            "vary": "origin,X-GDC-VERSION",
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload"
+        }
+    },
+    "uuid": "81341a82-fc26-4cc5-9ee9-a155a0f277c7",
+    "persistent": true,
+    "insertionIndex": 4
+}

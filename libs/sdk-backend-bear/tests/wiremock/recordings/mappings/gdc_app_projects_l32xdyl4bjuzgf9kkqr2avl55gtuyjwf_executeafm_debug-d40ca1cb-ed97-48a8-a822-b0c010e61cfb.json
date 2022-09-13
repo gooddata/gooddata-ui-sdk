@@ -1,0 +1,40 @@
+{
+    "id": "d40ca1cb-ed97-48a8-a822-b0c010e61cfb",
+    "name": "gdc_app_projects_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_executeafm_debug",
+    "request": {
+        "url": "/gdc/app/projects/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/executeAfm/debug",
+        "method": "POST",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json; charset=utf-8"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        },
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"execution\":{\"afm\":{\"attributes\":[{\"localIdentifier\":\"a1\",\"displayForm\":{\"identifier\":\"label.account.id\"}}],\"filters\":[{\"expression\":{\"value\":\"(([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100] IN ([/gdc/md/referenceworkspace/obj/1100/elements?id=460495])) OVER [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1064] TO [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057])\"}}]}}}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"reportDefinitionWithInlinedMetrics\":{\"content\":{\"format\":\"grid\",\"filters\":[{\"expression\":\"(([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100] IN ([/gdc/md/referenceworkspace/obj/1100/elements?id=460495])) OVER [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1064] TO [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057])\"}],\"grid\":{\"columns\":[],\"rows\":[{\"attribute\":{\"uri\":\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1059\",\"alias\":\"\",\"totals\":[]}}],\"metrics\":[],\"sort\":{\"columns\":[],\"rows\":[]},\"columnWidths\":[]}},\"meta\":{\"category\":\"reportDefinitionWithInlinedMetrics\",\"title\":\"Untitled\"}}}",
+        "headers": {
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "Content-Type": "application/json;charset=utf-8",
+            "Date": "Wed, 07 Sep 2022 13:59:46 GMT",
+            "X-GDC-REQUEST-TIME": "77",
+            "X-GDC-REQUEST": "RPwlhTdxvQalvpNL",
+            "vary": "origin,X-GDC-VERSION",
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload"
+        }
+    },
+    "uuid": "d40ca1cb-ed97-48a8-a822-b0c010e61cfb",
+    "persistent": true,
+    "insertionIndex": 20
+}

@@ -80,6 +80,7 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
             types: ["attribute", "measure", "fact", "dateDataset"],
             excludeTags: [],
             includeTags: [],
+            loadGroups: true,
         },
     ) {}
 
@@ -123,6 +124,12 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
         return this.withOptions({ insight });
     }
 
+    public withGroups(loadGroups: boolean): IWorkspaceCatalogAvailableItemsFactory {
+        return this.withOptions({
+            loadGroups,
+        });
+    }
+
     public async load(): Promise<TigerWorkspaceCatalogWithAvailableItems> {
         const { items = [], insight, types } = this.options;
         if (items.length === 0 && !insight) {
@@ -160,7 +167,12 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
         const availableObjRefs: ObjRef[] = availableItemsResponse.data.items.map(jsonApiIdToObjRef);
         const availableItems = filterAvailableItems(availableObjRefs, this.items);
 
-        return new TigerWorkspaceCatalogWithAvailableItems(this.groups, this.items, availableItems);
+        return new TigerWorkspaceCatalogWithAvailableItems(
+            this.groups,
+            this.items,
+            availableItems,
+            this.options,
+        );
     }
 }
 

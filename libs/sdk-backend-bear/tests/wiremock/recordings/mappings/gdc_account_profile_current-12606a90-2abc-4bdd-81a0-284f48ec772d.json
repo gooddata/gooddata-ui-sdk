@@ -1,0 +1,33 @@
+{
+    "id": "12606a90-2abc-4bdd-81a0-284f48ec772d",
+    "name": "gdc_account_profile_current",
+    "request": {
+        "url": "/gdc/account/profile/current",
+        "method": "GET",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json; charset=utf-8"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        }
+    },
+    "response": {
+        "status": 307,
+        "base64Body": "",
+        "headers": {
+            "location": "/gdc/account/profile/889bd5b237cc5af3e6c4749bdd551a8d",
+            "date": "Wed, 07 Sep 2022 13:59:28 GMT",
+            "X-GDC-REQUEST-TIME": "6",
+            "X-GDC-REQUEST": "NHKzv46WBTKYVZcv",
+            "cache-control": "no-cache, no-store, must-revalidate",
+            "vary": "origin,X-GDC-VERSION",
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload"
+        }
+    },
+    "uuid": "12606a90-2abc-4bdd-81a0-284f48ec772d",
+    "persistent": true,
+    "insertionIndex": 3
+}
