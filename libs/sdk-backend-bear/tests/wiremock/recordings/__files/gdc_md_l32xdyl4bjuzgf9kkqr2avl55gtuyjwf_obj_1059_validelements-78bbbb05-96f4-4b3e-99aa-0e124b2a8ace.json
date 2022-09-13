@@ -1,0 +1,613 @@
+{
+    "validElements": {
+        "paging": { "total": "4846", "count": 100, "offset": "0" },
+        "items": [
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2870",
+                    "title": ".decimal"
+                }
+            },
+            {
+                "element": {
+                    "title": "(add)ventures",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=6"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=4846",
+                    "title": "(blank)"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=7",
+                    "title": "(mt) Media Temple"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=8",
+                    "title": "@properties"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2871",
+                    "title": "1 Source Consulting"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1428",
+                    "title": "1-800 Postcards"
+                }
+            },
+            {
+                "element": {
+                    "title": "1-800 We Answer",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2874"
+                }
+            },
+            {
+                "element": {
+                    "title": "1-888-OhioComp",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2875"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1426",
+                    "title": "1000Bulbs.com"
+                }
+            },
+            {
+                "element": {
+                    "title": "101 Financial",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1427"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2872",
+                    "title": "123 Exteriors"
+                }
+            },
+            {
+                "element": {
+                    "title": "14 West",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2873"
+                }
+            },
+            {
+                "element": {
+                    "title": "1Source International",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1429"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2876",
+                    "title": "1st Choice Staffing & Consulting"
+                }
+            },
+            {
+                "element": {
+                    "title": "1st in Video - Music World",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1430"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1431",
+                    "title": "2 Wheel Bikes"
+                }
+            },
+            {
+                "element": {
+                    "title": "2HB Software Designs",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1432"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1433",
+                    "title": "352 Media Group"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1434",
+                    "title": "3balls.com"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1435",
+                    "title": "3dCart Shopping Cart Software"
+                }
+            },
+            {
+                "element": {
+                    "title": "3Degrees",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2877"
+                }
+            },
+            {
+                "element": {
+                    "title": "3E",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2878"
+                }
+            },
+            {
+                "element": {
+                    "title": "49er Communications",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1436"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1437",
+                    "title": "4th Source"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2879",
+                    "title": "4Wall Entertainment"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2880",
+                    "title": "5LINX Enterprises"
+                }
+            },
+            {
+                "element": {
+                    "title": "614 Media Group",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1438"
+                }
+            },
+            {
+                "element": {
+                    "title": "6K Systems",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2881"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=9",
+                    "title": "7 Medical Systems"
+                }
+            },
+            {
+                "element": {
+                    "title": "7 Simple Machines",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2882"
+                }
+            },
+            {
+                "element": {
+                    "title": "7-Eleven",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1440"
+                }
+            },
+            {
+                "element": {
+                    "title": "720 Strategies",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1439"
+                }
+            },
+            {
+                "element": {
+                    "title": "90octane",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1441"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=10",
+                    "title": "919 Marketing"
+                }
+            },
+            {
+                "element": {
+                    "title": "A Main Hobbies",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2883"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1442",
+                    "title": "A Place for Mom"
+                }
+            },
+            {
+                "element": {
+                    "title": "A Squared Group",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1443"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=11",
+                    "title": "A White Orchid Wedding"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=13",
+                    "title": "A-1 Textiles"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=56",
+                    "title": "A-Life Medical"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1556",
+                    "title": "A-T Solutions"
+                }
+            },
+            {
+                "element": {
+                    "title": "A. Pomerantz & Co.",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2885"
+                }
+            },
+            {
+                "element": {
+                    "title": "A.B. Data",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2886"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=4671",
+                    "title": "A.R.M. Solutions"
+                }
+            },
+            {
+                "element": {
+                    "title": "A&C Plastics",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1444"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=12",
+                    "title": "A&P Consulting Transportation Engineers"
+                }
+            },
+            {
+                "element": {
+                    "title": "A&R Tarpaulins",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2884"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1445",
+                    "title": "A+ Mortgage Services"
+                }
+            },
+            {
+                "element": {
+                    "title": "A+ Tutor U",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2887"
+                }
+            },
+            {
+                "element": {
+                    "title": "A1 Pool Parts",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2888"
+                }
+            },
+            {
+                "element": {
+                    "title": "A10 Clinical Solutions",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=4513"
+                }
+            },
+            {
+                "element": {
+                    "title": "A10 Networks",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=4514"
+                }
+            },
+            {
+                "element": {
+                    "title": "AAC Enterprises",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=4672"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=14",
+                    "title": "Aaron Oil Company"
+                }
+            },
+            {
+                "element": {
+                    "title": "Aaron's",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2889"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=15",
+                    "title": "Aaron's Sales & Lease Ownership"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=16",
+                    "title": "Aaron's Sales and Lease"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1446",
+                    "title": "Aaron's Sales and Lease Ownership"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1447",
+                    "title": "AArrow Advertising"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=4515",
+                    "title": "Aasent Mortgage Corporation"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1448",
+                    "title": "Abacus 24-7"
+                }
+            },
+            {
+                "element": {
+                    "title": "Abacus Plumbing",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2890"
+                }
+            },
+            {
+                "element": {
+                    "title": "Abacus Solutions Group",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=4673"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1449",
+                    "title": "ABBTech Staffing Services"
+                }
+            },
+            {
+                "element": {
+                    "title": "ABC Security Service",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2891"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2892",
+                    "title": "ABCOMRents.com"
+                }
+            },
+            {
+                "element": {
+                    "title": "Able Equipment Rental",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2893"
+                }
+            },
+            {
+                "element": {
+                    "title": "Able Patrol and Guard",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1450"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1451",
+                    "title": "Abraxas"
+                }
+            },
+            {
+                "element": {
+                    "title": "Absolute Concrete Construction",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1452"
+                }
+            },
+            {
+                "element": {
+                    "title": "Abstract Displays",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=17"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2",
+                    "title": "AC Lens"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2894",
+                    "title": "AcademixDirect"
+                }
+            },
+            {
+                "element": {
+                    "title": "Acadian Ambulance Service",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1453"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2895",
+                    "title": "ACAI Associates"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1454",
+                    "title": "Accelera Solutions"
+                }
+            },
+            {
+                "element": {
+                    "title": "Accelerated Financial Solutions",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1455"
+                }
+            },
+            {
+                "element": {
+                    "title": "Accent Electronic Systems Integrators",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=4516"
+                }
+            },
+            {
+                "element": {
+                    "title": "Access America Transport",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1456"
+                }
+            },
+            {
+                "element": {
+                    "title": "Access Display Group",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1457"
+                }
+            },
+            {
+                "element": {
+                    "title": "Access Information Management",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=18"
+                }
+            },
+            {
+                "element": {
+                    "title": "Access Insurance Holdings",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2896"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2897",
+                    "title": "Access Technology Solutions"
+                }
+            },
+            {
+                "element": {
+                    "title": "Access Worldwide",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2898"
+                }
+            },
+            {
+                "element": {
+                    "title": "Acclaim Technical Services",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2899"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=19",
+                    "title": "Acclaris"
+                }
+            },
+            {
+                "element": {
+                    "title": "Accordent",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2900"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2901",
+                    "title": "Account Control Technology"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=20",
+                    "title": "Accounting Management Solutions"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2902",
+                    "title": "AccountNow"
+                }
+            },
+            {
+                "element": {
+                    "title": "Accretive Health",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2903"
+                }
+            },
+            {
+                "element": {
+                    "title": "AccuCode",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2904"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1458",
+                    "title": "Accusoft Pegasus"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=21",
+                    "title": "Accuvant"
+                }
+            },
+            {
+                "element": {
+                    "title": "Ace Underwriting Group",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1459"
+                }
+            },
+            {
+                "element": {
+                    "title": "ACFN Franchised",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=22"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=23",
+                    "title": "Achatz Handmade Pie"
+                }
+            },
+            {
+                "element": {
+                    "title": "Achieve3000",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2905"
+                }
+            },
+            {
+                "element": {
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2906",
+                    "title": "Acorn Design and Manufacturing"
+                }
+            }
+        ],
+        "elementsMeta": {
+            "filter": "",
+            "order": "asc",
+            "attributeDisplayForm": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1059",
+            "attribute": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057"
+        }
+    }
+}

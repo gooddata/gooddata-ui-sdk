@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { DashboardContext } from "../../../types/commonTypes";
 import { IWorkspaceCatalog, IWorkspaceCatalogFactoryOptions } from "@gooddata/sdk-backend-spi";
 import { DateAttributeGranularity } from "@gooddata/sdk-model";
@@ -23,6 +23,7 @@ export function loadCatalog(ctx: DashboardContext): Promise<IWorkspaceCatalog> {
         includeTags: [],
         types: ["attribute", "fact", "measure", "dateDataset"],
         includeDateGranularities: SupportedCatalogGranularity,
+        loadGroups: false,
     };
 
     return backend.workspace(workspace).catalog().withOptions(options).load();

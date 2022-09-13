@@ -97,6 +97,7 @@ async function resolveRelativeDateFilterValues(
             ?.workspace(workspace)
             .catalog()
             .forDataset(filter.relativeDateFilter.dataSet)
+            .withGroups(false)
             .load();
 
         if (dataSet.dateDatasets) {

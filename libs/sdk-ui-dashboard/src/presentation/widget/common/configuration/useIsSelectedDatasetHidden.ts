@@ -28,6 +28,7 @@ export function useIsSelectedDatasetHidden(selectedDateDatasetRef: ObjRef | unde
                       const catalog = await backend
                           .workspace(workspace)
                           .catalog()
+                          .withGroups(false)
                           .forTypes(["dateDataset"])
                           .excludeTags(
                               (objectAvailability.excludeObjectsWithTags ?? []).map((tag) => idRef(tag)),

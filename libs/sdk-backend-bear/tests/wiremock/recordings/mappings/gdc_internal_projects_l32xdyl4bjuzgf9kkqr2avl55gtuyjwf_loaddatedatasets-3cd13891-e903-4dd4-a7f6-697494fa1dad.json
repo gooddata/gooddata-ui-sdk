@@ -1,0 +1,40 @@
+{
+    "id": "3cd13891-e903-4dd4-a7f6-697494fa1dad",
+    "name": "gdc_internal_projects_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_loaddatedatasets",
+    "request": {
+        "url": "/gdc/internal/projects/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/loadDateDataSets",
+        "method": "POST",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json; charset=utf-8"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        },
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"dateDataSetsRequest\":{\"includeUnavailableDateDataSetsCount\":true,\"includeAvailableDateAttributes\":true,\"bucketItems\":[\"SELECT SUM([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1102])\",\"SELECT (SELECT SUM([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1102])) FOR PREVIOUS ([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/497])\"],\"requiredDataSets\":{\"type\":\"ALL\"}}}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "bodyFileName": "gdc_internal_projects_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_loaddatedatasets-3cd13891-e903-4dd4-a7f6-697494fa1dad.json",
+        "headers": {
+            "date": "Wed, 07 Sep 2022 13:59:38 GMT",
+            "content-type": "application/json;charset=UTF-8",
+            "X-GDC-REQUEST-TIME": "600",
+            "X-GDC-REQUEST": "gc7RxzjGXSmNi6Be",
+            "cache-control": "no-cache, no-store, must-revalidate",
+            "vary": "origin,X-GDC-VERSION",
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload"
+        }
+    },
+    "uuid": "3cd13891-e903-4dd4-a7f6-697494fa1dad",
+    "persistent": true,
+    "insertionIndex": 13
+}

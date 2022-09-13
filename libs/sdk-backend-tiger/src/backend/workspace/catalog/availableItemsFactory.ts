@@ -80,6 +80,7 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
             types: ["attribute", "measure", "fact", "dateDataset"],
             excludeTags: [],
             includeTags: [],
+            loadGroups: true,
         },
     ) {}
 
@@ -121,6 +122,12 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
 
     public forInsight(insight: IInsightDefinition): IWorkspaceCatalogAvailableItemsFactory {
         return this.withOptions({ insight });
+    }
+
+    public withGroups(loadGroups: boolean): IWorkspaceCatalogAvailableItemsFactory {
+        return this.withOptions({
+            loadGroups,
+        });
     }
 
     public async load(): Promise<TigerWorkspaceCatalogWithAvailableItems> {
