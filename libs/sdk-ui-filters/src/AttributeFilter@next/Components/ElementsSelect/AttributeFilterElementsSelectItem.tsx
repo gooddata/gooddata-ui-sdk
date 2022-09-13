@@ -43,11 +43,13 @@ export const AttributeFilterElementsSelectItem: React.VFC<IAttributeFilterElemen
         },
     );
 
+    const itemTile = getElementTitle(item, intl);
+
     return (
-        <div className={classes} onClick={onItemClick}>
+        <div className={classes} onClick={onItemClick} title={itemTile}>
             <label className="input-checkbox-label">
                 <input type="checkbox" className="input-checkbox" readOnly checked={isSelected} />
-                <span className="input-label-text">{getElementTitle(item, intl)}</span>
+                <span className="input-label-text">{itemTile}</span>
             </label>
             <span className="gd-list-item-only" onClick={onOnlyItemClick}>
                 <FormattedMessage id="gs.list.only" />
