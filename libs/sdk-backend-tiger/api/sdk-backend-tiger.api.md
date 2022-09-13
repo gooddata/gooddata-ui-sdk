@@ -14,6 +14,7 @@ import { DeclarativeAnalytics } from '@gooddata/api-client-tiger';
 import { DeclarativeModel } from '@gooddata/api-client-tiger';
 import { DeclarativePdm } from '@gooddata/api-client-tiger';
 import { DeclarativeTables } from '@gooddata/api-client-tiger';
+import { DeclarativeWorkspaceDataFilters } from '@gooddata/api-client-tiger';
 import { DependentEntitiesRequest } from '@gooddata/api-client-tiger';
 import { DependentEntitiesResponse } from '@gooddata/api-client-tiger';
 import { GenerateLdmRequest } from '@gooddata/api-client-tiger';
@@ -138,6 +139,26 @@ export interface IDataSourceDeletedResponse {
     errorMessage?: string;
     // (undocumented)
     successful?: boolean;
+}
+
+// @internal (undocumented)
+export interface IDataSourcePatchRequest {
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    name?: string;
+    // (undocumented)
+    password?: string;
+    // (undocumented)
+    schema?: string;
+    // (undocumented)
+    token?: string;
+    // (undocumented)
+    type?: IDataSourceType;
+    // (undocumented)
+    url?: string;
+    // (undocumented)
+    username?: string;
 }
 
 // @internal (undocumented)
@@ -289,6 +310,7 @@ export type TigerSpecificFunctions = {
     getDataSourceIdentifierById?: (id: string) => Promise<IDataSourceApiResult>;
     createDataSource?: (requestData: IDataSourceUpsertRequest) => Promise<IDataSourceApiResult>;
     updateDataSource?: (id: string, requestData: IDataSourceUpsertRequest) => Promise<IDataSourceApiResult>;
+    patchDataSource?: (id: string, requestData: IDataSourcePatchRequest) => Promise<IDataSourceApiResult>;
     deleteDataSource?: (id: string) => Promise<IDataSourceDeletedResponse>;
     testDataSourceConnection?: (connectionData: IDataSourceTestConnectionRequest, id?: string) => Promise<IDataSourceTestConnectionResponse>;
     publishLogicalModel?: (workspaceId: string, declarativeModel: DeclarativeLogicalModel) => Promise<void>;
@@ -299,6 +321,8 @@ export type TigerSpecificFunctions = {
     resolveAllEntitlements?: () => Promise<ApiEntitlement[]>;
     getAllPlatformUsage?: () => Promise<PlatformUsage[]>;
     inviteUser?: (requestParameters: ActionsApiProcessInvitationRequest, options?: AxiosRequestConfig) => Promise<IInvitationUserResponse>;
+    getWorkspaceDataFiltersLayout?: () => Promise<WorkspaceDataFiltersLayout>;
+    setWorkspaceDataFiltersLayout?: (workspaceDataFiltersLayout: WorkspaceDataFiltersLayout) => Promise<void>;
 };
 
 // @public
@@ -311,6 +335,9 @@ export class TigerTokenAuthProvider extends TigerAuthProviderBase {
     // (undocumented)
     onNotAuthenticated: (context: IAuthenticationContext, error: NotAuthenticated) => void;
 }
+
+// @internal (undocumented)
+export type WorkspaceDataFiltersLayout = DeclarativeWorkspaceDataFilters;
 
 // @internal (undocumented)
 export type WorkspaceDefinition = JsonApiWorkspaceInDocument;

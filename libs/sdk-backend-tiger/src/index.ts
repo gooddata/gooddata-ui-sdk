@@ -82,6 +82,7 @@ export {
     IDataSourceConnectionInfo,
     IDataSourceType,
     IDataSourcePermission,
+    IDataSourcePatchRequest,
     OrganizationPermission,
     GenerateLogicalModelRequest,
     DeclarativeLogicalModel,
@@ -95,4 +96,5 @@ export {
     WorkspaceDefinition,
     DependentEntitiesGraphRequest,
     DependentEntitiesGraphResponse,
+    WorkspaceDataFiltersLayout,
 } from "./backend/tigerSpecificFunctions";

@@ -31,6 +31,7 @@ import {
     ApiEntitlement,
     ActionsApiProcessInvitationRequest,
     PlatformUsage,
+    DeclarativeWorkspaceDataFilters,
 } from "@gooddata/api-client-tiger";
 import { convertApiError } from "../utils/errorHandling";
 import uniq from "lodash/uniq";
@@ -148,6 +149,20 @@ export interface IDataSourceUpsertRequest {
 /**
  * @internal
  */
+export interface IDataSourcePatchRequest {
+    id: string;
+    name?: string;
+    password?: string;
+    schema?: string;
+    token?: string;
+    type?: IDataSourceType;
+    url?: string;
+    username?: string;
+}
+
+/**
+ * @internal
+ */
 export interface IDataSourceTestConnectionRequest {
     password?: string;
     schema: string;
@@ -237,6 +252,11 @@ export type DependentEntitiesGraphRequest = DependentEntitiesRequest;
 export type DependentEntitiesGraphResponse = DependentEntitiesResponse;
 
 /**
+ * @internal
+ */
+export type WorkspaceDataFiltersLayout = DeclarativeWorkspaceDataFilters;
+
+/**
  * TigerBackend-specific functions.
  * If possible, avoid these functions, they are here for specific use cases.
  *
@@ -279,6 +299,7 @@ export type TigerSpecificFunctions = {
     getDataSourceIdentifierById?: (id: string) => Promise<IDataSourceApiResult>;
     createDataSource?: (requestData: IDataSourceUpsertRequest) => Promise<IDataSourceApiResult>;
     updateDataSource?: (id: string, requestData: IDataSourceUpsertRequest) => Promise<IDataSourceApiResult>;
+    patchDataSource?: (id: string, requestData: IDataSourcePatchRequest) => Promise<IDataSourceApiResult>;
     deleteDataSource?: (id: string) => Promise<IDataSourceDeletedResponse>;
     testDataSourceConnection?: (
         connectionData: IDataSourceTestConnectionRequest,
@@ -298,6 +319,8 @@ export type TigerSpecificFunctions = {
         requestParameters: ActionsApiProcessInvitationRequest,
         options?: AxiosRequestConfig,
     ) => Promise<IInvitationUserResponse>;
+    getWorkspaceDataFiltersLayout?: () => Promise<WorkspaceDataFiltersLayout>;
+    setWorkspaceDataFiltersLayout?: (workspaceDataFiltersLayout: WorkspaceDataFiltersLayout) => Promise<void>;
 };
 
 const getDataSourceErrorMessage = (error: unknown) => {
@@ -800,6 +823,37 @@ export const buildTigerSpecificFunctions = (
             return { errorMessage: getDataSourceErrorMessage(error) };
         }
     },
+    patchDataSource: async (id: string, requestData: IDataSourcePatchRequest) => {
+        const { id: requestDataId, name, password, schema, token, type, url, username } = requestData;
+        try {
+            return await authApiCall(async (sdk) => {
+                return sdk.entities
+                    .patchEntityDataSources({
+                        id,
+                        jsonApiDataSourcePatchDocument: {
+                            data: {
+                                attributes: {
+                                    name,
+                                    password,
+                                    schema,
+                                    token,
+                                    type,
+                                    url,
+                                    username,
+                                },
+                                id: requestDataId,
+                                type: JsonApiDataSourceInTypeEnum.DATA_SOURCE,
+                            },
+                        },
+                    })
+                    .then((axiosResponse) => ({
+                        data: dataSourceResponseAsDataSourceConnectionInfo(axiosResponse.data),
+                    }));
+            });
+        } catch (error: any) {
+            return { errorMessage: getDataSourceErrorMessage(error) };
+        }
+    },
     deleteDataSource: async (id: string) => {
         try {
             return await authApiCall(async (sdk) => {
@@ -931,6 +985,25 @@ export const buildTigerSpecificFunctions = (
                         errorMessage: res?.data,
                     } as IInvitationUserResponse;
                 }
+            });
+        });
+    },
+
+    getWorkspaceDataFiltersLayout: async () => {
+        try {
+            return await authApiCall(async (sdk) => {
+                const result = await sdk.declarativeLayout.getWorkspaceDataFiltersLayout();
+                return result.data;
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
+    },
+
+    setWorkspaceDataFiltersLayout: async (workspaceDataFiltersLayout: WorkspaceDataFiltersLayout) => {
+        return await authApiCall(async (sdk) => {
+            await sdk.declarativeLayout.setWorkspaceDataFiltersLayout({
+                declarativeWorkspaceDataFilters: workspaceDataFiltersLayout,
             });
         });
     },
