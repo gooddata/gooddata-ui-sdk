@@ -10,6 +10,7 @@ import {
     selectSupportsKpiWidgetCapability,
     selectIsAnalyticalDesignerEnabled,
     useDashboardSelector,
+    selectIsNewDashboard,
 } from "../../../model";
 import { useDashboardComponentsContext } from "../../dashboardContexts";
 import cx from "classnames";
@@ -20,6 +21,7 @@ interface ICreationPanelProps {
 export const CreationPanel: React.FC<ICreationPanelProps> = ({ className }) => {
     const supportsKpis = useDashboardSelector(selectSupportsKpiWidgetCapability);
     const isAnalyticalDesignerEnabled = useDashboardSelector(selectIsAnalyticalDesignerEnabled);
+    const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
 
     const { KpiWidgetComponentSet, AttributeFilterComponentSet, InsightWidgetComponentSet } =
         useDashboardComponentsContext();
@@ -53,7 +55,10 @@ export const CreationPanel: React.FC<ICreationPanelProps> = ({ className }) => {
                         <Typography tagName="h3">
                             <FormattedMessage id="visualizationsList.savedVisualizations" />
                         </Typography>
-                        <DraggableInsightList recalculateSizeReference={className} />
+                        <DraggableInsightList
+                            recalculateSizeReference={className}
+                            searchAutofocus={!isNewDashboard}
+                        />
                     </div>
                 )}
             </div>
