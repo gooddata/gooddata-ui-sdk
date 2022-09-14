@@ -23,6 +23,8 @@ import {
     IExportResult,
     IDataView,
     NotImplemented,
+    IExplainProvider,
+    ExplainType,
 } from "@gooddata/sdk-backend-spi";
 import isEqual from "lodash/isEqual";
 import {
@@ -78,10 +80,13 @@ class CustomPreparedExecution implements IPreparedExecution {
         });
     };
 
-    public explain = (): Promise<void> => {
+    public explain = <T extends ExplainType | undefined>(): IExplainProvider<T> => {
         // eslint-disable-next-line no-console
         console.warn("Backend does not support explain mode");
-        return Promise.resolve();
+        return {
+            data: () => Promise.reject(new Error(`Backend does not support explain mode data call.`)),
+            download: () => Promise.resolve(),
+        };
     };
 
     public withDimensions = (...dimsOrGen: Array<IDimension | DimensionGenerator>): IPreparedExecution => {

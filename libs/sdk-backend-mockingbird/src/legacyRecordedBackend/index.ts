@@ -32,6 +32,8 @@ import {
     IOrganizations,
     IWorkspaceUserGroupsQuery,
     IWorkspaceAccessControlService,
+    ExplainType,
+    IExplainProvider,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -378,10 +380,13 @@ function recordedPreparedExecution(
                 }
             });
         },
-        explain(): Promise<void> {
+        explain<T extends ExplainType | undefined>(): IExplainProvider<T> {
             // eslint-disable-next-line no-console
             console.warn("Backend does not support explain mode");
-            return Promise.resolve();
+            return {
+                data: () => Promise.reject(new Error(`Backend does not support explain mode data call.`)),
+                download: () => Promise.resolve(),
+            };
         },
         fingerprint(): string {
             return fp;

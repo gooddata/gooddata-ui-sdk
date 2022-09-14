@@ -115,12 +115,44 @@ export interface IExecutionFactory {
 }
 
 /**
+ * All supported explain types
+ * @internal
+ */
+export type ExplainType = "MAQL" | "GRPC_MODEL" | "WDF" | "QT" | "QT_SVG" | "OPT_QT" | "OPT_QT_SVG" | "SQL";
+
+/**
  * Config for execution in explain mode
  * @internal
  */
-export type ExplainConfig = {
-    explainType?: "MAQL" | "GRPC_MODEL" | "WDF" | "QT" | "QT_SVG" | "OPT_QT" | "OPT_QT_SVG" | "SQL";
+export type ExplainConfig<T extends ExplainType | undefined> = {
+    explainType?: T;
 };
+
+/**
+ * Represents results of explain done with particular definition for provided exaplain type.
+ * @see ExplainType
+ *
+ * @internal
+ */
+export type IExplainResult = {
+    ["MAQL"]: unknown;
+    ["GRPC_MODEL"]: unknown;
+    ["WDF"]: unknown;
+    ["QT"]: unknown;
+    ["OPT_QT"]: unknown;
+    ["QT_SVG"]: string; //SVG definition
+    ["OPT_QT_SVG"]: string; //SVG definition
+    ["SQL"]: string;
+};
+
+/**
+ * Explain provider for download or get data from explain api
+ * @internal
+ */
+export interface IExplainProvider<T extends ExplainType | undefined> {
+    download(): Promise<void>;
+    data(): Promise<T extends undefined ? void : IExplainResult[NonNullable<T>]>;
+}
 
 /**
  * Prepared execution already knows what data to calculate and allows to specify how the data should be
@@ -178,7 +210,9 @@ export interface IPreparedExecution {
      * Starts the execution in explain mode.
      * @internal
      */
-    explain(config: ExplainConfig): Promise<void>;
+    explain<T extends ExplainType | undefined>(
+        config: ExplainConfig<T>,
+    ): IExplainProvider<typeof config["explainType"]>;
 
     /**
      * Tests whether this execution and the other execution are the same.

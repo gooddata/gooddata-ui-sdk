@@ -219,9 +219,12 @@ export type ElementsQueryOptionsElementsSpecification = IElementsQueryOptionsEle
 export type ErrorConverter = (e: Error) => AnalyticalBackendError;
 
 // @internal
-export type ExplainConfig = {
-    explainType?: "MAQL" | "GRPC_MODEL" | "WDF" | "QT" | "QT_SVG" | "OPT_QT" | "OPT_QT_SVG" | "SQL";
+export type ExplainConfig<T extends ExplainType | undefined> = {
+    explainType?: T;
 };
+
+// @internal
+export type ExplainType = "MAQL" | "GRPC_MODEL" | "WDF" | "QT" | "QT_SVG" | "OPT_QT" | "OPT_QT_SVG" | "SQL";
 
 // @alpha @deprecated
 export type FilterContextItem = m.FilterContextItem;
@@ -744,6 +747,26 @@ export interface IExecutionResult {
     transform(): IPreparedExecution;
 }
 
+// @internal
+export interface IExplainProvider<T extends ExplainType | undefined> {
+    // (undocumented)
+    data(): Promise<T extends undefined ? void : IExplainResult[NonNullable<T>]>;
+    // (undocumented)
+    download(): Promise<void>;
+}
+
+// @internal
+export type IExplainResult = {
+    ["MAQL"]: unknown;
+    ["GRPC_MODEL"]: unknown;
+    ["WDF"]: unknown;
+    ["QT"]: unknown;
+    ["OPT_QT"]: unknown;
+    ["QT_SVG"]: string;
+    ["OPT_QT_SVG"]: string;
+    ["SQL"]: string;
+};
+
 // @public
 export interface IExportConfig {
     format?: "xlsx" | "csv" | "raw";
@@ -1034,7 +1057,7 @@ export interface IPreparedExecution {
     equals(other: IPreparedExecution): boolean;
     execute(): Promise<IExecutionResult>;
     // @internal
-    explain(config: ExplainConfig): Promise<void>;
+    explain<T extends ExplainType | undefined>(config: ExplainConfig<T>): IExplainProvider<typeof config["explainType"]>;
     fingerprint(): string;
     withDateFormat(dateFormat: string): IPreparedExecution;
     withDimensions(...dim: Array<IDimension | DimensionGenerator>): IPreparedExecution;

@@ -33,6 +33,9 @@ export {
     IExecutionResult,
     IDataView,
     ExplainConfig,
+    IExplainResult,
+    IExplainProvider,
+    ExplainType,
 } from "./workspace/execution";
 
 export { IWorkspaceSettingsService } from "./workspace/settings";
