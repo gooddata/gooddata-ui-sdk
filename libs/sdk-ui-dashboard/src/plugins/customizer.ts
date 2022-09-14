@@ -398,24 +398,36 @@ export interface IAttributeFiltersCustomizer {
      *
      * @example
      * ```
+     * // outside of the register function
+     * // define your decorator in form of a factory that takes the decorated component as a parameter
+     * // that way we can later memoize the resulting component and improve the UX
+     * function MyCustomAttributeFilterDecoratorFactory(
+     *     Decorated: CustomDashboardAttributeFilterComponent,
+     * ): CustomDashboardAttributeFilterComponent {
+     *     return (props) => {
+     *         return (
+     *             <div>
+     *                 <b>My Custom Decoration</b>
+     *                 <Decorated {...props} />
+     *             </div>
+     *         );
+     *     };
+     * }
+     *
+     * // in the register function
      * withCustomDecorator((next) => {
      *     return (attributeFilter) => {
+     *         const Decorated = next(attributeFilter);
+     *         // memoize the result of the factory in order to improve performance
+     *         // and prevent unnecessary reloads of the decorated component
+     *         const WithCustomDecorator = useMemo(
+     *             () => MyCustomAttributeFilterDecoratorFactory(Decorated),
+     *             [Decorated],
+     *         );
      *         if (some_condition_to_prevent_decoration) {
      *             return undefined;
      *         }
-     *
-     *         function MyCustomDecorator(props) {
-     *              const Decorated = next(attributeFilter);
-     *
-     *              return (
-     *                  <div>
-     *                      <p>My Custom Decoration</p>
-     *                      <Decorated {...props}/>
-     *                  </div>
-     *              )
-     *         }
-     *
-     *         return MyCustomDecorator;
+     *         return WithCustomDecorator;
      *     }
      * })
      * ```
