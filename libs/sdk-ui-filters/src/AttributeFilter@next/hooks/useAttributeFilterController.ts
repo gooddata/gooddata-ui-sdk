@@ -4,9 +4,12 @@ import isEqual from "lodash/isEqual";
 import debounce from "lodash/debounce";
 import {
     filterAttributeElements,
+    // filterObjRef,
     IAttributeElement,
     IAttributeFilter,
     isAttributeElementsByRef,
+    isAttributeElementsByValue,
+    isNegativeAttributeFilter,
 } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict, GoodDataSdkError } from "@gooddata/sdk-ui";
 
@@ -139,6 +142,12 @@ function useInitOrReload(
 
     useEffect(() => {
         if (!isEqual(filter, handler.getFilter())) {
+            const elements = filterAttributeElements(filter);
+            const keys = isAttributeElementsByValue(elements) ? elements.values : elements.uris;
+            const isInverted = isNegativeAttributeFilter(filter);
+
+            handler.changeSelection({ keys, isInverted });
+            handler.commitSelection();
             handler.init();
         } else if (!isEqual(limitingAttributeFilters, handler.getLimitingAttributeFilters())) {
             handler.changeSelection({ keys: [], isInverted: true });
