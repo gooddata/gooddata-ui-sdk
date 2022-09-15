@@ -2759,7 +2759,6 @@ export type IAttributeFilterDraggingComponentProps = {
 
 // @public
 export interface IAttributeFiltersCustomizer {
-    withCustomDecorator(providerFactory: (next: AttributeFilterComponentProvider) => OptionalAttributeFilterComponentProvider): IAttributeFiltersCustomizer;
     withCustomProvider(provider: OptionalAttributeFilterComponentProvider): IAttributeFiltersCustomizer;
 }
 
@@ -3277,7 +3276,6 @@ export interface IDashboardWidgetProps {
 
 // @public
 export interface IDateFiltersCustomizer {
-    withCustomDecorator(providerFactory: (next: DateFilterComponentProvider) => OptionalDateFilterComponentProvider): IDateFiltersCustomizer;
     withCustomProvider(provider: OptionalDateFilterComponentProvider): IDateFiltersCustomizer;
 }
 

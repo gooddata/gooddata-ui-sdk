@@ -142,33 +142,6 @@ export class DefaultAttributeFiltersCustomizer implements IAttributeFiltersCusto
         return this;
     };
 
-    public withCustomDecorator = (
-        providerFactory: (next: AttributeFilterComponentProvider) => OptionalAttributeFilterComponentProvider,
-    ): IAttributeFiltersCustomizer => {
-        // snapshot current root provider
-        const rootSnapshot = this.state.getRootProvider();
-        // call user's factory in order to obtain the actual provider - pass the current root so that user's
-        // code can use it to obtain component to decorate
-        const decoratorProvider = providerFactory(rootSnapshot);
-        // construct new root provider; this will be using user's provider with a fallback to root provider
-        // in case user's code does not return anything
-        const newRootProvider: AttributeFilterComponentProvider = (attributeFilter) => {
-            const Component = decoratorProvider(attributeFilter);
-
-            if (Component) {
-                return Component;
-            }
-
-            return rootSnapshot(attributeFilter);
-        };
-
-        // finally modify the root provider; next time someone registers decorator, it will be on top of
-        // this currently registered one
-        this.state.switchRootProvider(newRootProvider);
-
-        return this;
-    };
-
     public getAttributeFilterProvider = (): AttributeFilterComponentProvider => {
         return this.state.getRootProvider();
     };
