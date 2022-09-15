@@ -16,6 +16,7 @@ const loadInitialElementsPageStart: AttributeFilterReducer<PayloadAction<{ corre
     state.elements.initialPageLoad.status = "loading";
     state.elements.initialPageLoad.error = undefined;
     state.elements.currentOptions.offset = 0;
+    state.elements.lastLoadedOptions.offset = 0;
     state.elements.data = [];
 };
 
