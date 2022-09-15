@@ -109,6 +109,7 @@ export interface IBackendCapabilities {
 
     /**
      * Indicates whether backend supports downloading of files that will be used for debugging.
+     * Indicates whether backend supports retrieving of data that will be used for debugging.
      */
     supportsExplain?: boolean;
 
@@ -165,6 +166,11 @@ export interface IBackendCapabilities {
      * Indicates whether backend supports organization settings.
      */
     supportsOrganizationSettings?: boolean;
+
+    /**
+     * Indicates whether backend supports inline measures in execution.
+     */
+    supportsInlineMeasures?: boolean;
 
     /**
      * Catchall for additional capabilities

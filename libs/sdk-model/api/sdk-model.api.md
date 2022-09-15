@@ -1173,6 +1173,14 @@ export interface IGroupableCatalogItemBase extends ICatalogItemBase {
 }
 
 // @public
+export interface IInlineMeasureDefinition {
+    // (undocumented)
+    inlineDefinition: {
+        maql: string;
+    };
+}
+
+// @public
 export type IInsight = IInsightDefinition & {
     insight: IAuditable & {
         identifier: string;
@@ -1329,7 +1337,7 @@ export interface IMeasureDefinitionBody {
 }
 
 // @public
-export type IMeasureDefinitionType = IMeasureDefinition | IArithmeticMeasureDefinition | IPoPMeasureDefinition | IPreviousPeriodMeasureDefinition;
+export type IMeasureDefinitionType = IInlineMeasureDefinition | IMeasureDefinition | IArithmeticMeasureDefinition | IPoPMeasureDefinition | IPreviousPeriodMeasureDefinition;
 
 // @public
 export interface IMeasureDescriptor {
@@ -2094,6 +2102,12 @@ export function isFilterContextDefinition(obj: unknown): obj is IFilterContextDe
 
 // @public
 export function isIdentifierRef(obj: unknown): obj is IdentifierRef;
+
+// @public
+export function isInlineMeasure(obj: unknown): obj is IMeasure<IInlineMeasureDefinition>;
+
+// @public
+export function isInlineMeasureDefinition(obj: unknown): obj is IInlineMeasureDefinition;
 
 // @public
 export function isInsight(obj: unknown): obj is IInsight;

@@ -6,6 +6,7 @@ import {
     MeasureDefinition,
     MeasureItem,
     PopDatasetMeasureDefinition,
+    InlineMeasureDefinition,
     PopDateMeasureDefinition,
     SimpleMeasureDefinition,
     SimpleMeasureDefinitionMeasureAggregationEnum,
@@ -18,10 +19,12 @@ import {
     IMeasureDefinitionType,
     IPoPMeasureDefinition,
     IPreviousPeriodMeasureDefinition,
+    IInlineMeasureDefinition,
     isArithmeticMeasureDefinition,
     isMeasureDefinition,
     isPoPMeasureDefinition,
     isPreviousPeriodMeasureDefinition,
+    isInlineMeasureDefinition,
     MeasureAggregation,
 } from "@gooddata/sdk-model";
 import compact from "lodash/compact";
@@ -64,6 +67,8 @@ function convertMeasureDefinition(definition: IMeasureDefinitionType): MeasureDe
         return convertPreviousPeriodMeasureDefinition(definition);
     } else if (isArithmeticMeasureDefinition(definition)) {
         return convertArithmeticMeasureDefinition(definition);
+    } else if (isInlineMeasureDefinition(definition)) {
+        return convertInlineMeasureDefinition(definition);
     } else {
         throw Error("The measure definition is not supported: " + JSON.stringify(definition));
     }
@@ -190,6 +195,16 @@ function convertArithmeticMeasureDefinition(
         arithmeticMeasure: {
             measureIdentifiers: arithmeticMeasure.measureIdentifiers.map(toLocalIdentifier),
             operator: convertArithmeticMeasureOperator(arithmeticMeasure.operator),
+        },
+    };
+}
+
+function convertInlineMeasureDefinition(definition: IInlineMeasureDefinition): InlineMeasureDefinition {
+    const { inlineDefinition } = definition;
+
+    return {
+        inline: {
+            maql: inlineDefinition.maql,
         },
     };
 }

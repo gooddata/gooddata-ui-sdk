@@ -38,6 +38,7 @@ import {
     isMeasureDescriptor,
     isMeasureGroupDescriptor,
     isResultMeasureHeader,
+    isMeasureDefinition,
 } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import cloneDeep from "lodash/cloneDeep";
@@ -404,7 +405,7 @@ export class Normalizer {
             this.normalizePreviousPeriod(definition, path);
         } else if (isArithmeticMeasureDefinition(definition)) {
             this.normalizeArithmetic(definition, path);
-        } else {
+        } else if (isMeasureDefinition(definition)) {
             this.normalizeSimple(definition);
         }
 

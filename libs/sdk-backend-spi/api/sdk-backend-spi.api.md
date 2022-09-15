@@ -379,6 +379,7 @@ export interface IBackendCapabilities {
     supportsGenericDateAttributeElements?: boolean;
     supportsHierarchicalWorkspaces?: boolean;
     supportsHyperlinkAttributeLabels?: boolean;
+    supportsInlineMeasures?: boolean;
     supportsKpiWidget?: boolean;
     supportsObjectUris?: boolean;
     supportsOrganizationSettings?: boolean;
