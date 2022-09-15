@@ -285,6 +285,7 @@ export type TigerSpecificFunctions = {
     ) => Promise<DeclarativeLogicalModel>;
     scanDataSource?: (dataSourceId: string, scanRequest: ScanRequest) => Promise<ScanResult>;
     publishPdm?: (dataSourceId: string, declarativePdm: PhysicalDataModel) => Promise<PublishPdmResult>;
+    createDemoWorkspace?: (sampleWorkspace: WorkspaceDefinition) => Promise<string>;
     createDemoDataSource?: (sampleDataSource: DataSourceDefinition) => Promise<string>;
     setPdmLayout?: (requestParameters: SetPdmLayoutRequest) => Promise<void>;
     createWorkspace?: (id: string, name: string) => Promise<string>;
@@ -613,6 +614,18 @@ export const buildTigerSpecificFunctions = (
                     },
                 );
         });
+    },
+    createDemoWorkspace: async (sampleWorkspace: WorkspaceDefinition) => {
+        try {
+            return await authApiCall(async (sdk) => {
+                const result = await sdk.entities.createEntityWorkspaces({
+                    jsonApiWorkspaceInDocument: sampleWorkspace,
+                });
+                return result.data.data.id;
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
     },
     createDemoDataSource: async (sampleDataSource: JsonApiDataSourceInDocument) => {
         try {

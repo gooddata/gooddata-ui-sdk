@@ -296,6 +296,7 @@ export type TigerSpecificFunctions = {
     generateLogicalModel?: (dataSourceId: string, generateLogicalModelRequest: GenerateLogicalModelRequest) => Promise<DeclarativeLogicalModel>;
     scanDataSource?: (dataSourceId: string, scanRequest: ScanRequest) => Promise<ScanResult>;
     publishPdm?: (dataSourceId: string, declarativePdm: PhysicalDataModel) => Promise<PublishPdmResult>;
+    createDemoWorkspace?: (sampleWorkspace: WorkspaceDefinition) => Promise<string>;
     createDemoDataSource?: (sampleDataSource: DataSourceDefinition) => Promise<string>;
     setPdmLayout?: (requestParameters: SetPdmLayoutRequest) => Promise<void>;
     createWorkspace?: (id: string, name: string) => Promise<string>;
