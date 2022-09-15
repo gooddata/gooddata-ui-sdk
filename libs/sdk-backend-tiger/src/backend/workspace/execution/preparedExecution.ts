@@ -5,6 +5,8 @@ import {
     IExecutionResult,
     IPreparedExecution,
     ExplainConfig,
+    IExplainProvider,
+    ExplainType,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -19,6 +21,7 @@ import {
     IExecutionConfig,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual";
+import { AxiosRequestConfig } from "axios";
 import { TigerExecutionResult } from "./executionResult";
 import { toAfmExecution } from "../../../convertors/toBackend/afm/toAfmResultSpec";
 import { DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types";
@@ -56,29 +59,39 @@ export class TigerPreparedExecution implements IPreparedExecution {
         });
     }
 
-    public async explain({ explainType }: ExplainConfig): Promise<void> {
-        if (this.definition) {
-            this.authCall((client) =>
-                client.explain
-                    .explainAFM(
-                        {
-                            workspaceId: this.definition.workspace,
-                            afmExecution: toAfmExecution(this.definition),
-                            explainType,
-                        },
-                        {
-                            responseType: "blob",
-                        },
+    public explain<T extends ExplainType | undefined>({
+        explainType,
+    }: ExplainConfig<T>): IExplainProvider<T> {
+        return {
+            download: () => {
+                return explainCall<T>(this.definition, this.authCall, explainType, "blob")
+                    .then(
+                        (response) =>
+                            response && downloadFile(getExplainFileName(explainType), response.data),
                     )
-                    .then((response) => {
-                        downloadFile(explainType ? `${explainType}.json` : "explainAfm.zip", response.data);
-                    })
                     .catch((error) => {
                         // eslint-disable-next-line no-console
                         console.warn(error);
-                    }),
-            );
-        }
+                    });
+            },
+            data: () => {
+                if (!explainType) {
+                    return Promise.reject(
+                        new Error(`There must be defined "explainType" on ExplainConfig to get data.`),
+                    );
+                }
+                return explainCall<T>(this.definition, this.authCall, explainType, "text").then(
+                    (response) =>
+                        new Promise((resolve, reject) => {
+                            if (response) {
+                                resolve(response.data);
+                                return;
+                            }
+                            reject(new Error(`Definition is not set or there is no response from server.`));
+                        }),
+                );
+            },
+        };
     }
 
     public withDimensions(...dimsOrGen: Array<IDimension | DimensionGenerator>): IPreparedExecution {
@@ -112,4 +125,45 @@ export class TigerPreparedExecution implements IPreparedExecution {
 
 function checkDefIsExecutable(_def: IExecutionDefinition): void {
     return;
+}
+
+async function explainCall<T extends ExplainType | undefined>(
+    definition: IExecutionDefinition,
+    authCall: TigerPreparedExecution["authCall"],
+    explainType: ExplainConfig<T>["explainType"],
+    responseType: AxiosRequestConfig["responseType"],
+) {
+    if (definition) {
+        return authCall((client) =>
+            client.explain.explainAFM(
+                {
+                    workspaceId: definition.workspace,
+                    afmExecution: toAfmExecution(definition),
+                    explainType,
+                },
+                {
+                    responseType,
+                },
+            ),
+        );
+    }
+    return Promise.resolve();
+}
+
+function getExplainFileName(explainType: ExplainType | undefined) {
+    switch (explainType) {
+        case "SQL":
+            return `${explainType}.sql`;
+        case "QT":
+        case "MAQL":
+        case "WDF":
+        case "GRPC_MODEL":
+        case "OPT_QT":
+            return `${explainType}.json`;
+        case "OPT_QT_SVG":
+        case "QT_SVG":
+            return `${explainType}.svg`;
+        default:
+            return "explainAfm.zip";
+    }
 }

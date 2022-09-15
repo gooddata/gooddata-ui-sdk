@@ -7,6 +7,8 @@ import {
     IExportResult,
     IPreparedExecution,
     ExplainConfig,
+    IExplainProvider,
+    ExplainType,
 } from "@gooddata/sdk-backend-spi";
 import {
     IAttributeOrMeasure,
@@ -100,7 +102,9 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
         return this.decorated.execute();
     }
 
-    public explain(config: ExplainConfig): Promise<void> {
+    public explain<T extends ExplainType | undefined>(
+        config: ExplainConfig<T>,
+    ): IExplainProvider<typeof config["explainType"]> {
         return this.decorated.explain(config);
     }
 

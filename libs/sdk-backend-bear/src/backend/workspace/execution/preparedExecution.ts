@@ -1,6 +1,12 @@
 // (C) 2019-2022 GoodData Corporation
 
-import { IExecutionFactory, IExecutionResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import {
+    IExecutionFactory,
+    IExecutionResult,
+    IPreparedExecution,
+    ExplainType,
+    IExplainProvider,
+} from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
     defWithDimensions,
@@ -47,10 +53,13 @@ export class BearPreparedExecution implements IPreparedExecution {
         );
     }
 
-    public async explain(): Promise<void> {
+    public explain<T extends ExplainType | undefined>(): IExplainProvider<T> {
         // eslint-disable-next-line no-console
         console.warn("Backend does not support explain mode");
-        return Promise.resolve();
+        return {
+            data: () => Promise.reject(new Error(`Backend does not support explain mode data call.`)),
+            download: () => Promise.resolve(),
+        };
     }
 
     public withDimensions(...dimsOrGen: Array<IDimension | DimensionGenerator>): IPreparedExecution {

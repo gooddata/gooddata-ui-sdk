@@ -14,6 +14,7 @@ import { IMeasureFilter } from "../filter";
  * @public
  */
 export type IMeasureDefinitionType =
+    | IInlineMeasureDefinition
     | IMeasureDefinition
     | IArithmeticMeasureDefinition
     | IPoPMeasureDefinition
@@ -133,6 +134,20 @@ export interface IMeasureDefinitionBody {
  */
 export interface IMeasureDefinition {
     measureDefinition: IMeasureDefinitionBody;
+}
+
+/**
+ * Inline measures are defined as MAQL measures inline string.
+ *
+ * @remarks
+ * Measures created from facts MAY specify aggregation function to apply during execution.
+ *
+ * @public
+ */
+export interface IInlineMeasureDefinition {
+    inlineDefinition: {
+        maql: string;
+    };
 }
 
 /**
@@ -275,6 +290,15 @@ export function isSimpleMeasure(obj: unknown): obj is IMeasure<IMeasureDefinitio
 }
 
 /**
+ * Type guard for checking whether object is a inline measure.
+ *
+ * @public
+ */
+export function isInlineMeasure(obj: unknown): obj is IMeasure<IInlineMeasureDefinition> {
+    return isMeasure(obj) && isInlineMeasureDefinition(obj.measure.definition);
+}
+
+/**
  * Type guard for checking whether object is an adhoc measure.
  *
  * @remarks
@@ -328,6 +352,15 @@ export function isArithmeticMeasure(obj: unknown): obj is IMeasure<IArithmeticMe
  */
 export function isMeasureDefinition(obj: unknown): obj is IMeasureDefinition {
     return !isEmpty(obj) && (obj as IMeasureDefinition).measureDefinition !== undefined;
+}
+
+/**
+ * Type guard for checking whether object is a inline measure definition.
+ *
+ * @public
+ */
+export function isInlineMeasureDefinition(obj: unknown): obj is IInlineMeasureDefinition {
+    return !isEmpty(obj) && (obj as IInlineMeasureDefinition).inlineDefinition !== undefined;
 }
 
 /**

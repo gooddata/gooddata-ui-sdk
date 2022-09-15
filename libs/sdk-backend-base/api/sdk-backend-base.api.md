@@ -11,6 +11,7 @@ import { DateAttributeGranularity } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
 import { ErrorConverter } from '@gooddata/sdk-backend-spi';
 import { ExplainConfig } from '@gooddata/sdk-backend-spi';
+import { ExplainType } from '@gooddata/sdk-backend-spi';
 import { FilterContextItem } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
@@ -44,6 +45,7 @@ import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IExecutionFactory } from '@gooddata/sdk-backend-spi';
 import { IExecutionResult } from '@gooddata/sdk-backend-spi';
+import { IExplainProvider } from '@gooddata/sdk-backend-spi';
 import { IExportConfig } from '@gooddata/sdk-backend-spi';
 import { IExportResult } from '@gooddata/sdk-backend-spi';
 import { IFactMetadataObject } from '@gooddata/sdk-model';
@@ -405,7 +407,7 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
     // (undocumented)
     execute(): Promise<IExecutionResult>;
     // (undocumented)
-    explain(config: ExplainConfig): Promise<void>;
+    explain<T extends ExplainType | undefined>(config: ExplainConfig<T>): IExplainProvider<typeof config["explainType"]>;
     // (undocumented)
     fingerprint(): string;
     // (undocumented)
