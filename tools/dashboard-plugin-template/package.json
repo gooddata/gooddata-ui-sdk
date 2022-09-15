@@ -60,6 +60,7 @@
         "@gooddata/sdk-ui": "^8.11.0-alpha.77",
         "@gooddata/sdk-ui-charts": "^8.11.0-alpha.77",
         "@gooddata/sdk-ui-ext": "^8.11.0-alpha.77",
+        "@gooddata/sdk-ui-filters": "^8.11.0-alpha.77",
         "@gooddata/sdk-ui-geo": "^8.11.0-alpha.77",
         "@gooddata/sdk-ui-pivot": "^8.11.0-alpha.77",
         "react": "^16.10.0 || ^17.0.0",
