@@ -80,6 +80,7 @@ export const initialState: Omit<AttributeFilterState, "displayFormRef" | "elemen
             status: "pending",
         },
         limitingAttributeFiltersAttributes: [],
+        lastLoadedOptions: {},
     },
     config: {},
     selection: {
