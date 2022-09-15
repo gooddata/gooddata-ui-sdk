@@ -140,33 +140,6 @@ export class DefaultDateFiltersCustomizer implements IDateFiltersCustomizer {
         return this;
     };
 
-    public withCustomDecorator = (
-        providerFactory: (next: DateFilterComponentProvider) => OptionalDateFilterComponentProvider,
-    ): IDateFiltersCustomizer => {
-        // snapshot current root provider
-        const rootSnapshot = this.state.getRootProvider();
-        // call user's factory in order to obtain the actual provider - pass the current root so that user's
-        // code can use it to obtain component to decorate
-        const decoratorProvider = providerFactory(rootSnapshot);
-        // construct new root provider; this will be using user's provider with a fallback to root provider
-        // in case user's code does not return anything
-        const newRootProvider: DateFilterComponentProvider = (dateFilter) => {
-            const Component = decoratorProvider(dateFilter);
-
-            if (Component) {
-                return Component;
-            }
-
-            return rootSnapshot(dateFilter);
-        };
-
-        // finally modify the root provider; next time someone registers decorator, it will be on top of
-        // this currently registered one
-        this.state.switchRootProvider(newRootProvider);
-
-        return this;
-    };
-
     public getDateFilterProvider = (): DateFilterComponentProvider => {
         return this.state.getRootProvider();
     };
