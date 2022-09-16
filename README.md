@@ -4,7 +4,7 @@
 
 The easiest way to start developing analytical applications using GoodData.UI SDK is to use
 the [Accelerator Toolkit](https://github.com/gooddata/gooddata-create-gooddata-react-app). You will
-be up and running in minutes.
+be up and running in minutes. test
 
 For detailed description of available components and capabilities see the [official documentation](https://sdk.gooddata.com/gooddata-ui/docs/about_gooddataui.html).
 
