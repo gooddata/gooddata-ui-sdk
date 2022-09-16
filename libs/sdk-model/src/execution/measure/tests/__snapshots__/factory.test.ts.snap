@@ -1,5 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`measure factories modifyInlineMeasure should return a modified inline measure 1`] = `
+Object {
+  "measure": Object {
+    "definition": Object {
+      "inlineDefinition": Object {
+        "maql": "SELECT 2;",
+      },
+    },
+    "localIdentifier": "m_b1698e52_inline",
+  },
+}
+`;
+
 exports[`measure factories modifyMeasure should create new measure with modified local id 1`] = `
 Object {
   "measure": Object {
@@ -130,6 +143,19 @@ Object {
       },
     },
     "localIdentifier": "m_f41f9d3bb81ba6c5d004ee17cac27ecd",
+  },
+}
+`;
+
+exports[`measure factories newInlineMeasure should return a inline measure 1`] = `
+Object {
+  "measure": Object {
+    "definition": Object {
+      "inlineDefinition": Object {
+        "maql": "SELECT 1",
+      },
+    },
+    "localIdentifier": "m_b1698e52_inline",
   },
 }
 `;
