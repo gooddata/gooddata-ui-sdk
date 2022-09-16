@@ -1,6 +1,7 @@
 // (C) 2022 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import {
+    IAnalyticalBackend,
     IElementsQueryAttributeFilter,
     IElementsQueryOptions,
     IElementsQueryResult,
@@ -44,6 +45,10 @@ export function loadElementsFromBackend(
     let loader = backend.workspace(workspace).attributes().elements().forDisplayForm(displayFormRef);
     const loaderOptions: IElementsQueryOptions = {};
 
+    if (!isElementUrisSupported(backend)) {
+        loaderOptions.excludePrimaryLabel = true;
+    }
+
     if (limit) {
         loader = loader.withLimit(limit);
     }
@@ -53,12 +58,14 @@ export function loadElementsFromBackend(
     if (search) {
         loaderOptions.filter = search;
     }
+
     if (elements) {
         loaderOptions.elements =
-            !backend.capabilities.supportsElementUris && !isValueBasedElementsQueryOptionsElements(elements)
+            !isElementUrisSupported(backend) && !isValueBasedElementsQueryOptionsElements(elements)
                 ? { primaryValues: elements.uris }
                 : elements;
     }
+
     if (order) {
         loaderOptions.order = order;
     }
@@ -92,6 +99,9 @@ export function loadElementsFromBackend(
         throw convertError(error);
     });
 }
+
+export const isElementUrisSupported = (backend: IAnalyticalBackend) =>
+    !!backend.capabilities.supportsElementUris;
 
 function getLimitingAttributeFilters(
     displayFormRef: ObjRef,
