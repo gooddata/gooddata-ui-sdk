@@ -1,7 +1,7 @@
 {
     "mappings": [
         {
-            "id": "06bf4a73-df75-4c96-97ac-e0bf3b351ddf",
+            "id": "af08cee0-765c-4130-939b-cff04bf13017",
             "name": "gdc_account_login",
             "request": {
                 "url": "/gdc/account/login",
@@ -9,7 +9,7 @@
             },
             "response": {
                 "status": 200,
-                "body": "{\"userLogin\":{\"profile\":\"/gdc/account/profile/b388eefffab41947076a75fd36d0bad1\",\"state\":\"/gdc/account/login/b388eefffab41947076a75fd36d0bad1\"}}",
+                "body": "{\"userLogin\":{\"profile\":\"/gdc/account/profile/fbdf74b48900320df823e94aa1eaa7e0\",\"state\":\"/gdc/account/login/fbdf74b48900320df823e94aa1eaa7e0\"}}",
                 "headers": {
                     "expires": "Thu, 01 Jan 1970 00:00:00 GMT",
                     "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
@@ -20,10 +20,10 @@
                     "pragma": "no-cache"
                 }
             },
-            "uuid": "06bf4a73-df75-4c96-97ac-e0bf3b351ddf"
+            "uuid": "af08cee0-765c-4130-939b-cff04bf13017"
         },
         {
-            "id": "d0201ec3-b06b-43d5-b367-f5c34cc22596",
+            "id": "e2658c63-4c62-4ae6-8c8b-1ea45a667a1e",
             "name": "gdc_account_profile_current",
             "request": {
                 "url": "/gdc/account/profile/current",
@@ -35,15 +35,15 @@
                 "headers": {
                     "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
                     "vary": "origin,X-GDC-VERSION",
-                    "location": "/gdc/account/profile/b388eefffab41947076a75fd36d0bad1",
+                    "location": "/gdc/account/profile/fbdf74b48900320df823e94aa1eaa7e0",
                     "cache-control": "no-cache, no-store, must-revalidate"
                 }
             },
-            "uuid": "d0201ec3-b06b-43d5-b367-f5c34cc22596"
+            "uuid": "e2658c63-4c62-4ae6-8c8b-1ea45a667a1e"
         },
         {
-            "id": "54e73646-cc61-48c8-824c-72108a1419d6",
-            "name": "gdc_app_projects_frho3i7qc6epdek7mcgergm9vtm6o5ty_executeafm",
+            "id": "98afc747-fecf-47c2-b409-8e340357f921",
+            "name": "gdc_app_projects_itd99xqshb69o2hjv75utvc4mopo8i6c_executeafm",
             "request": {
                 "url": "/gdc/app/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty/executeAfm",
                 "method": "POST",
@@ -57,7 +57,7 @@
             },
             "response": {
                 "status": 201,
-                "body": "{\"executionResponse\":{\"dimensions\":[{\"headers\":[{\"measureGroupHeader\":{\"items\":[{\"measureHeaderItem\":{\"name\":\"Won\",\"format\":\"$#,##0.00\",\"localIdentifier\":\"m_acugFHNJgsBy\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1249\",\"identifier\":\"acugFHNJgsBy\"}}]}}]}],\"links\":{\"executionResult\":\"/gdc/app/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty/executionResults/2745563125255601664?c=6c15a7bdf1040868d69f6ed87a4a9fd9&q=eAE9jr0OgkAQhN9lsSQe%2FkHgBYyNnbEwFHh34CnL4rJoCOHdPYyxm5kvk5kR2LbEcizQQganRpzU%0A1kAIaIWd7iC7jPANPT5T8ycH4wNVGa3QqJJvtHHJU8e2NfaRoK4sV5i%2BBGPayaDoeler9Tb19a5H%0ALHjwbW9KYizE60UQBkG0jCKY8hA01T0287g3TO9Z%2FR7tmfoW8ukDrYg88g%3D%3D%0A&offset=0%2C0&limit=1000%2C1000&dimensions=1&totals=0\"}}}",
+                "body": "{\"executionResponse\":{\"dimensions\":[{\"headers\":[{\"measureGroupHeader\":{\"items\":[{\"measureHeaderItem\":{\"name\":\"Won\",\"format\":\"$#,##0.00\",\"localIdentifier\":\"m_acugFHNJgsBy\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1249\",\"identifier\":\"acugFHNJgsBy\"}}]}}]}],\"links\":{\"executionResult\":\"/gdc/app/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty/executionResults/4041806953998089728?c=b75008788f749ff29520035ff25b46c7&q=eAEljkEOgjAQRe8yuCQWCaJwAePGnXFhWEBbpYRhsLSoIdzdQZbvv7zJTGB1T9ZdStSQw7VzxrVa%0AQQiW3gPkd0DtrJEnS76HIgRJrcduMQyrW2CCwSOW9stHOF7FWTGJp5IClTBOZdnnNdRVmlFcN%2BNh%0A790oE6SejiaVgqpG7OIk4%2FxBFkvH8SYIgyDaRhGP%2F894u1EHczH%2FAAVKPHU%3D%0A&offset=0%2C0&limit=1000%2C1000&dimensions=1&totals=0\"}}}",
                 "headers": {
                     "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
                     "Cache-Control": "no-cache, no-store, must-revalidate",
@@ -65,18 +65,18 @@
                     "Content-Type": "application/json;charset=utf-8"
                 }
             },
-            "uuid": "54e73646-cc61-48c8-824c-72108a1419d6"
+            "uuid": "98afc747-fecf-47c2-b409-8e340357f921"
         },
         {
-            "id": "2c49c478-7e96-4a12-a422-f49ac5930393",
-            "name": "gdc_account_profile_b388eefffab41947076a75fd36d0bad1",
+            "id": "906c51da-cea6-4650-a4b2-24da58bdfa04",
+            "name": "gdc_account_profile_fbdf74b48900320df823e94aa1eaa7e0",
             "request": {
-                "url": "/gdc/account/profile/b388eefffab41947076a75fd36d0bad1",
+                "url": "/gdc/account/profile/fbdf74b48900320df823e94aa1eaa7e0",
                 "method": "GET"
             },
             "response": {
                 "status": 200,
-                "body": "{\"accountSetting\":{\"ssoProvider\":null,\"updated\":\"2021-07-21 14:07:27\",\"timezone\":null,\"position\":null,\"phoneNumber\":\"000000000\",\"login\":\"first.last@gooddata.com\",\"lastName\":\"Last\",\"firstName\":\"First\",\"created\":\"2021-04-07 11:36:41\",\"country\":null,\"companyName\":\"Good Data\",\"email\":\"first.last@gooddata.com\",\"authenticationModes\":[],\"language\":\"en-US\",\"ipWhitelist\":null,\"effectiveIpWhitelist\":null,\"links\":{\"self\":\"/gdc/account/profile/b388eefffab41947076a75fd36d0bad1\",\"projects\":\"/gdc/account/profile/b388eefffab41947076a75fd36d0bad1/projects\",\"domain\":\"/gdc/domains/default\",\"auditEvents\":\"/gdc/account/profile/b388eefffab41947076a75fd36d0bad1/auditEvents\"}}}",
+                "body": "{\"accountSetting\":{\"ssoProvider\":null,\"updated\":\"2019-07-25 13:27:15\",\"timezone\":null,\"position\":null,\"phoneNumber\":\"000000000\",\"login\":\"first.last@gooddata.com\",\"lastName\":\"Last\",\"firstName\":\"First\",\"created\":\"2019-07-16 17:05:30\",\"country\":null,\"companyName\":\"GoodData\",\"email\":\"first.last@gooddata.com\",\"authenticationModes\":[],\"language\":\"en-US\",\"ipWhitelist\":null,\"effectiveIpWhitelist\":null,\"links\":{\"self\":\"/gdc/account/profile/fbdf74b48900320df823e94aa1eaa7e0\",\"projects\":\"/gdc/account/profile/fbdf74b48900320df823e94aa1eaa7e0/projects\",\"domain\":\"/gdc/domains/default\",\"auditEvents\":\"/gdc/account/profile/fbdf74b48900320df823e94aa1eaa7e0/auditEvents\"}}}",
                 "headers": {
                     "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
                     "vary": "origin,X-GDC-VERSION",
@@ -84,18 +84,18 @@
                     "cache-control": "no-cache, no-store, must-revalidate"
                 }
             },
-            "uuid": "2c49c478-7e96-4a12-a422-f49ac5930393"
+            "uuid": "906c51da-cea6-4650-a4b2-24da58bdfa04"
         },
         {
-            "id": "197c4a06-0e08-40af-9471-387133670b05",
+            "id": "14a51a81-c398-435f-8e22-63d5399dbc37",
             "name": "gdc_internal_projects",
             "request": {
-                "url": "/gdc/internal/projects/?limit=100&offset=0&userId=b388eefffab41947076a75fd36d0bad1&projectStates=ENABLED&userState=ENABLED",
+                "url": "/gdc/internal/projects/?limit=100&offset=0&userId=fbdf74b48900320df823e94aa1eaa7e0&projectStates=ENABLED&userState=ENABLED",
                 "method": "GET"
             },
             "response": {
                 "status": 200,
-                "body": "{\"userProjects\":{\"paging\":{\"offset\":0,\"limit\":100,\"count\":7,\"totalCount\":7},\"items\":[{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"# My project - DO NOT DELETE\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/kzfaabpubxludopwiwy60xq7dk2v3t3t\",\"projectUser\":\"/gdc/projects/kzfaabpubxludopwiwy60xq7dk2v3t3t/users/b388eefffab41947076a75fd36d0bad1\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"1. NEW UI(stg3)_ DO NOT DELETE\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/g2zpqxe8zk32vmjrux9mb3zywxat1w70\",\"projectUser\":\"/gdc/projects/g2zpqxe8zk32vmjrux9mb3zywxat1w70/users/b388eefffab41947076a75fd36d0bad1\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"Huyen's project\",\"projectTitle\":\"GoodSaleDemo2 - DO NOT DELETE\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/ryfz7w64063fkotl5mr0yv5ikpijt8s4\",\"projectUser\":\"/gdc/projects/ryfz7w64063fkotl5mr0yv5ikpijt8s4/users/b388eefffab41947076a75fd36d0bad1\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"MAP Test project\",\"projectTitle\":\"MAP GoodSales\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/ofyndwehwd0gwipdtdlcv4cpd81qpa5x\",\"projectUser\":\"/gdc/projects/ofyndwehwd0gwipdtdlcv4cpd81qpa5x/users/b388eefffab41947076a75fd36d0bad1\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"RAIL E2E test do not delete\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty\",\"projectUser\":\"/gdc/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty/users/b388eefffab41947076a75fd36d0bad1\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"RAIL test-do not delete\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/mbuumy476p78ybcceiru61hcyr8i8lo8\",\"projectUser\":\"/gdc/projects/mbuumy476p78ybcceiru61hcyr8i8lo8/users/b388eefffab41947076a75fd36d0bad1\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"test\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/s4olt3n7v1d2e86iavfylx4s3qzwdzyz\",\"projectUser\":\"/gdc/projects/s4olt3n7v1d2e86iavfylx4s3qzwdzyz/users/b388eefffab41947076a75fd36d0bad1\"}}}]}}",
+                "body": "{\"userProjects\":{\"paging\":{\"offset\":0,\"limit\":100,\"count\":9,\"totalCount\":9},\"items\":[{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"1. NEW UI(stg)_ DO NOT DELETE\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/d8eozkh4bmuj20xnz4q5zis8j8783c54\",\"projectUser\":\"/gdc/projects/d8eozkh4bmuj20xnz4q5zis8j8783c54/users/fbdf74b48900320df823e94aa1eaa7e0\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"aaa\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/w3hub93g7fwmvx60pkt2v8cr56530t0l\",\"projectUser\":\"/gdc/projects/w3hub93g7fwmvx60pkt2v8cr56530t0l/users/fbdf74b48900320df823e94aa1eaa7e0\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"Cloned project\",\"projectTitle\":\"Matyas stg1\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/wtlhxkdivll00dlujfyue0el18sqt6t4\",\"projectUser\":\"/gdc/projects/wtlhxkdivll00dlujfyue0el18sqt6t4/users/fbdf74b48900320df823e94aa1eaa7e0\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"Cloned project\",\"projectTitle\":\"Matyas stg1\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/ky4f8yvfl62rbyvgk9b6v1xrybqf6yd3\",\"projectUser\":\"/gdc/projects/ky4f8yvfl62rbyvgk9b6v1xrybqf6yd3/users/fbdf74b48900320df823e94aa1eaa7e0\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"Matyas Test 2 DO NOT DELETE\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/bfjbr5h0frfjlqjhs6e64wegvfepxsln\",\"projectUser\":\"/gdc/projects/bfjbr5h0frfjlqjhs6e64wegvfepxsln/users/fbdf74b48900320df823e94aa1eaa7e0\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"Matyas Test DO NOT DELETE\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/v8lb4wohuaz0pcvzofo1qvndpz7x3n91\",\"projectUser\":\"/gdc/projects/v8lb4wohuaz0pcvzofo1qvndpz7x3n91/users/fbdf74b48900320df823e94aa1eaa7e0\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"QA LIVE EXAMPLE - DO NOT DELETE clone\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/hx7dn2mfwaj4agov81sioqzo8oxein0m\",\"projectUser\":\"/gdc/projects/hx7dn2mfwaj4agov81sioqzo8oxein0m/users/fbdf74b48900320df823e94aa1eaa7e0\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"RAIL E2E [DO NOT DELETE]\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty\",\"projectUser\":\"/gdc/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty/users/fbdf74b48900320df823e94aa1eaa7e0\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"Test reference workspace Sep 9, 2022, 13:23\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/b6ri7otkyhf0w904gdi12j6yj2nfbypy\",\"projectUser\":\"/gdc/projects/b6ri7otkyhf0w904gdi12j6yj2nfbypy/users/fbdf74b48900320df823e94aa1eaa7e0\"}}}]}}",
                 "headers": {
                     "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
                     "Cache-Control": "no-cache, no-store, must-revalidate",
@@ -103,13 +103,13 @@
                     "Content-Type": "application/json;charset=utf-8"
                 }
             },
-            "uuid": "197c4a06-0e08-40af-9471-387133670b05"
+            "uuid": "14a51a81-c398-435f-8e22-63d5399dbc37"
         },
         {
-            "id": "5f6d7302-cadd-4346-bc74-506e36952080",
-            "name": "gdc_app_projects_frho3i7qc6epdek7mcgergm9vtm6o5ty_executionresults_2745563125255601664",
+            "id": "98a42761-19da-4a99-b97e-c5db7a35077a",
+            "name": "gdc_app_projects_itd99xqshb69o2hjv75utvc4mopo8i6c_executionresults_4041806953998089728",
             "request": {
-                "url": "/gdc/app/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty/executionResults/2745563125255601664?c=6c15a7bdf1040868d69f6ed87a4a9fd9&q=eAE9jr0OgkAQhN9lsSQe%2FkHgBYyNnbEwFHh34CnL4rJoCOHdPYyxm5kvk5kR2LbEcizQQganRpzU%0A1kAIaIWd7iC7jPANPT5T8ycH4wNVGa3QqJJvtHHJU8e2NfaRoK4sV5i%2BBGPayaDoeler9Tb19a5H%0ALHjwbW9KYizE60UQBkG0jCKY8hA01T0287g3TO9Z%2FR7tmfoW8ukDrYg88g%3D%3D%0A&offset=0&limit=1000&dimensions=1&totals=0",
+                "url": "/gdc/app/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty/executionResults/4041806953998089728?c=b75008788f749ff29520035ff25b46c7&q=eAEljkEOgjAQRe8yuCQWCaJwAePGnXFhWEBbpYRhsLSoIdzdQZbvv7zJTGB1T9ZdStSQw7VzxrVa%0AQQiW3gPkd0DtrJEnS76HIgRJrcduMQyrW2CCwSOW9stHOF7FWTGJp5IClTBOZdnnNdRVmlFcN%2BNh%0A790oE6SejiaVgqpG7OIk4%2FxBFkvH8SYIgyDaRhGP%2F894u1EHczH%2FAAVKPHU%3D%0A&offset=0&limit=1000&dimensions=1&totals=0",
                 "method": "GET"
             },
             "response": {
@@ -122,7 +122,7 @@
                     "Content-Type": "application/json;charset=utf-8"
                 }
             },
-            "uuid": "5f6d7302-cadd-4346-bc74-506e36952080"
+            "uuid": "98a42761-19da-4a99-b97e-c5db7a35077a"
         }
     ]
 }

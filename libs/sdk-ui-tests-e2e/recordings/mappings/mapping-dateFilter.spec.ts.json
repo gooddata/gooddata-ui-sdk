@@ -1,7 +1,7 @@
 {
     "mappings": [
         {
-            "id": "c7d854a2-299d-4f5d-a7d6-4b3b2a15b05a",
+            "id": "7091cf5d-06a7-4f46-b1f0-962067105f5b",
             "name": "gdc_account_login",
             "request": {
                 "url": "/gdc/account/login",
@@ -9,7 +9,7 @@
             },
             "response": {
                 "status": 200,
-                "body": "{\"userLogin\":{\"profile\":\"/gdc/account/profile/b388eefffab41947076a75fd36d0bad1\",\"state\":\"/gdc/account/login/b388eefffab41947076a75fd36d0bad1\"}}",
+                "body": "{\"userLogin\":{\"profile\":\"/gdc/account/profile/fbdf74b48900320df823e94aa1eaa7e0\",\"state\":\"/gdc/account/login/fbdf74b48900320df823e94aa1eaa7e0\"}}",
                 "headers": {
                     "expires": "Thu, 01 Jan 1970 00:00:00 GMT",
                     "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
@@ -20,10 +20,10 @@
                     "pragma": "no-cache"
                 }
             },
-            "uuid": "c7d854a2-299d-4f5d-a7d6-4b3b2a15b05a"
+            "uuid": "7091cf5d-06a7-4f46-b1f0-962067105f5b"
         },
         {
-            "id": "baebef9f-d6ad-4bdc-b47b-eb49c3b8d5b9",
+            "id": "33674830-e2d8-4ed5-a077-1278813c06b9",
             "name": "gdc_account_profile_current",
             "request": {
                 "url": "/gdc/account/profile/current",
@@ -35,33 +35,14 @@
                 "headers": {
                     "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
                     "vary": "origin,X-GDC-VERSION",
-                    "location": "/gdc/account/profile/b388eefffab41947076a75fd36d0bad1",
+                    "location": "/gdc/account/profile/fbdf74b48900320df823e94aa1eaa7e0",
                     "cache-control": "no-cache, no-store, must-revalidate"
                 }
             },
-            "uuid": "baebef9f-d6ad-4bdc-b47b-eb49c3b8d5b9"
+            "uuid": "33674830-e2d8-4ed5-a077-1278813c06b9"
         },
         {
-            "id": "b4d1f3c8-a6be-4228-b8d7-ab0105c6d1fc",
-            "name": "gdc_account_profile_b388eefffab41947076a75fd36d0bad1",
-            "request": {
-                "url": "/gdc/account/profile/b388eefffab41947076a75fd36d0bad1",
-                "method": "GET"
-            },
-            "response": {
-                "status": 200,
-                "body": "{\"accountSetting\":{\"ssoProvider\":null,\"updated\":\"2021-07-21 14:07:27\",\"timezone\":null,\"position\":null,\"phoneNumber\":\"000000000\",\"login\":\"first.last@gooddata.com\",\"lastName\":\"Last\",\"firstName\":\"First\",\"created\":\"2021-04-07 11:36:41\",\"country\":null,\"companyName\":\"Good Data\",\"email\":\"first.last@gooddata.com\",\"authenticationModes\":[],\"language\":\"en-US\",\"ipWhitelist\":null,\"effectiveIpWhitelist\":null,\"links\":{\"self\":\"/gdc/account/profile/b388eefffab41947076a75fd36d0bad1\",\"projects\":\"/gdc/account/profile/b388eefffab41947076a75fd36d0bad1/projects\",\"domain\":\"/gdc/domains/default\",\"auditEvents\":\"/gdc/account/profile/b388eefffab41947076a75fd36d0bad1/auditEvents\"}}}",
-                "headers": {
-                    "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
-                    "vary": "origin,X-GDC-VERSION",
-                    "content-type": "application/json;charset=utf-8",
-                    "cache-control": "no-cache, no-store, must-revalidate"
-                }
-            },
-            "uuid": "b4d1f3c8-a6be-4228-b8d7-ab0105c6d1fc"
-        },
-        {
-            "id": "145fe907-357c-4768-a725-0219526dc522",
+            "id": "823dd366-e5f6-4b8d-b1cf-9d013ddf932c",
             "name": "gdc_account_token",
             "request": {
                 "url": "/gdc/account/token",
@@ -77,7 +58,7 @@
                     "WWW-Authenticate": "GoodData realm=\"GoodData API\" cookie=GDCAuthSST location=/gdc/account/login"
                 }
             },
-            "uuid": "145fe907-357c-4768-a725-0219526dc522"
+            "uuid": "823dd366-e5f6-4b8d-b1cf-9d013ddf932c"
         }
     ]
 }

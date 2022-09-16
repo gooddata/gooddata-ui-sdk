@@ -15,7 +15,8 @@ describe("AttributeFilterButton with initial selection", () => {
         attributeFilter.titleHasText("Opportunity").subtitleHasText("Zoup! Fresh Soup > CompuSci");
     });
 
-    it("attribute filter basic operations", () => {
+    // eslint-disable-next-line jest/no-disabled-tests
+    it.skip("attribute filter basic operations", () => {
         const attributeFilter = new AttributeFilterButton(".s-attribute-filter.s-opportunity");
 
         attributeFilter.open().clearSelection().subtitleHasText("None").applyDisabled();
