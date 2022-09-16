@@ -1478,6 +1478,20 @@ export interface INegativeAttributeFilterBody {
 }
 
 // @public
+export class InlineMeasureBuilder extends MeasureBuilderBase<IInlineMeasureDefinition> {
+    // @internal
+    constructor(measureInput: InlineMeasureBuilderInput);
+    // (undocumented)
+    protected buildDefinition(): IInlineMeasureDefinition;
+    // (undocumented)
+    protected generateLocalId(): string;
+    maql: (maql: string) => this;
+}
+
+// @public
+export type InlineMeasureBuilderInput = string | IMeasure<IInlineMeasureDefinition>;
+
+// @public
 export function insightAttributes(insight: IInsightDefinition, attributePredicate?: AttributePredicate): IAttribute[];
 
 // @public
@@ -2885,6 +2899,9 @@ export const metadataObjectId: (metadataObject: MetadataObject) => string;
 export function modifyAttribute(attribute: IAttribute, modifications?: AttributeModifications): IAttribute;
 
 // @public
+export function modifyInlineMeasure(measure: IMeasure<IInlineMeasureDefinition>, modifications?: MeasureModifications<InlineMeasureBuilder>): IMeasure<IInlineMeasureDefinition>;
+
+// @public
 export function modifyMeasure<T extends IMeasureDefinitionType>(measure: IMeasure<T>, modifications?: MeasureModifications<MeasureBuilderBase<IMeasureDefinitionType>>): IMeasure<T>;
 
 // @public
@@ -2937,6 +2954,9 @@ export function newDefForItems(workspace: string, items: IAttributeOrMeasure[], 
 
 // @public
 export function newDimension(items?: DimensionItem[], totals?: ITotal[]): IDimension;
+
+// @public
+export function newInlineMeasure(maql: string): IMeasure<IInlineMeasureDefinition>;
 
 // @internal
 export function newInsightDefinition(visualizationUrl: string, modifications?: InsightModifications): IInsightDefinition;

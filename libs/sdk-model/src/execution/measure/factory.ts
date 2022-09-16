@@ -19,6 +19,8 @@ import {
     MeasureAggregation,
     measureLocalId,
     MeasureOrLocalId,
+    isInlineMeasure,
+    IInlineMeasureDefinition,
 } from "./index";
 import { Identifier, isObjRef, ObjRef, objRefToString } from "../../objRef";
 import { IMeasureFilter } from "../filter";
@@ -424,6 +426,62 @@ export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
 }
 
 /**
+ * Input to the InlineMeasureBuilder.
+ * @public
+ */
+export type InlineMeasureBuilderInput = string | IMeasure<IInlineMeasureDefinition>;
+
+/**
+ * Builder for inline measures.
+ *
+ * Do not instantiate this builder directly, instead use {@link newMeasure} or {@link modifyMeasure} functions.
+ *
+ * @public
+ */
+export class InlineMeasureBuilder extends MeasureBuilderBase<IInlineMeasureDefinition> {
+    private readonly inlineMeasureDefinition: IInlineMeasureDefinition["inlineDefinition"];
+
+    /**
+     * @internal
+     */
+    constructor(measureInput: InlineMeasureBuilderInput) {
+        super();
+
+        if (isInlineMeasure(measureInput)) {
+            this.initializeFromExisting(measureInput.measure);
+            this.inlineMeasureDefinition = cloneDeep(measureInput.measure.definition.inlineDefinition);
+        } else {
+            this.inlineMeasureDefinition = {
+                maql: measureInput,
+            };
+        }
+    }
+
+    /**
+     * Sets content of inline metric as string maql
+     *
+     * @param maql - maql of metric to use
+     */
+    public maql = (maql: string): this => {
+        this.inlineMeasureDefinition.maql = maql;
+
+        return this;
+    };
+
+    protected generateLocalId(): string {
+        const hasher = new SparkMD5();
+        hasher.append(this.inlineMeasureDefinition.maql);
+        return hasher.end().substr(0, 8) + "_inline";
+    }
+
+    protected buildDefinition(): IInlineMeasureDefinition {
+        return {
+            inlineDefinition: this.inlineMeasureDefinition,
+        };
+    }
+}
+
+/**
  * Input to the ArithmeticMeasureBuilder.
  * @public
  */
@@ -719,6 +777,8 @@ function createBuilder(measure: IMeasure): MeasureBuilderBase<IMeasureDefinition
         return new PoPMeasureBuilder(measure);
     } else if (isPreviousPeriodMeasure(measure)) {
         return new PreviousPeriodMeasureBuilder(measure);
+    } else if (isInlineMeasure(measure)) {
+        return new InlineMeasureBuilder(measure);
     }
 
     throw new InvariantError("unexpected measure type");
@@ -746,6 +806,46 @@ export function modifySimpleMeasure(
     invariant(measure, "measure must be specified");
 
     const builder = new MeasureBuilder(measure);
+
+    return modifications(builder).build();
+}
+
+/**
+ * Creates a new inline measure
+ *
+ * @param maql - maql definition of measure
+ * @returns new instance
+ * @public
+ */
+export function newInlineMeasure(maql: string): IMeasure<IInlineMeasureDefinition> {
+    invariant(maql, "maql must be specified");
+
+    const builder = new InlineMeasureBuilder(maql);
+    return builder.build();
+}
+
+/**
+ * Creates a new inline measure by applying modifications on top of an existing measure.
+ *
+ * @remarks
+ * This operation is immutable and will not alter the input measure.
+ *
+ * The returned measure will have the same localIdentifier as the original measure. If you would like to assign
+ * new/different local identifier to the measure, you can do that using the modifications where you can provide
+ * either new custom localId or indicate that the measure should fall back to the auto-generated localId.
+ *
+ * @param measure - measure to use as template for the new measure
+ * @param modifications - modifications to apply
+ * @returns new instance
+ * @public
+ */
+export function modifyInlineMeasure(
+    measure: IMeasure<IInlineMeasureDefinition>,
+    modifications: MeasureModifications<InlineMeasureBuilder> = identity,
+): IMeasure<IInlineMeasureDefinition> {
+    invariant(measure, "measure must be specified");
+
+    const builder = new InlineMeasureBuilder(measure);
 
     return modifications(builder).build();
 }

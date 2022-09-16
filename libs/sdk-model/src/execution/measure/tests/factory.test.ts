@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { Velocity, Won } from "../../../../__mocks__/model";
 import { newPositiveAttributeFilter } from "../../filter/factory";
 import {
@@ -10,6 +10,8 @@ import {
     newMeasure,
     newPopMeasure,
     newPreviousPeriodMeasure,
+    newInlineMeasure,
+    modifyInlineMeasure,
 } from "../factory";
 import { measureLocalId } from "../index";
 import { idRef, uriRef } from "../../../objRef/factory";
@@ -181,6 +183,20 @@ describe("measure factories", () => {
                     m.masterMeasure("otherMaster").dateDataSets([{ dataSet: "dataset2", periodsAgo: -1 }]),
                 ),
             ).toMatchSnapshot();
+        });
+    });
+
+    describe("newInlineMeasure", () => {
+        it("should return a inline measure", () => {
+            expect(newInlineMeasure("SELECT 1")).toMatchSnapshot();
+        });
+    });
+
+    describe("modifyInlineMeasure", () => {
+        const existing = newInlineMeasure("SELECT 1");
+
+        it("should return a modified inline measure", () => {
+            expect(modifyInlineMeasure(existing, (m) => m.maql("SELECT 2;"))).toMatchSnapshot();
         });
     });
 });
