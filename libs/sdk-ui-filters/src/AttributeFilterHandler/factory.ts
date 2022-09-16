@@ -22,6 +22,22 @@ export interface IAttributeFilterHandlerOptionsBase {
      * @remarks
      * The meaning of the items is determined by the way the filter is specified: if the filter uses URIs,
      * then these are also interpreted as URIs, analogously with values.
+     *
+     * If using hiddenElements, make sure your input filter excludes the hidden elements, otherwise it could lead to
+     * non-intuitive behavior.
+     * So, for positive filters, make sure their elements do NOT contain any of the `hiddenElements`.
+     * Inversely for negative filters, make sure their elements do contain all of the `hiddenElements`.
+     *
+     * @example
+     * This is how to correctly create a filter that has some items hidden but is set to All:
+     *
+     * ```tsx
+     * const hiddenUris: ["uri1", "uri2"];
+     * // make sure to use the uris both in the filter...
+     * const filter = newNegativeAttributeFilter("displayForm", { uris: hiddenUris });
+     * // ...and also in the config
+     * const handler = newAttributeFilterHandler(backend, workspace, filter, { hiddenElements: hiddenUris });
+     * ```
      */
     hiddenElements?: string[];
 
