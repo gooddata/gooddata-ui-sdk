@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 /* eslint-disable import/no-unresolved,import/default */
 import React from "react";
 import { ExampleWithSource } from "../../../components/ExampleWithSource";
@@ -26,10 +26,10 @@ export const GlobalFilters: React.FC = () => (
                 display and GoodData.UI components.
             </p>
             <p>
-                The AttributeElements component loads values of the Employee Name attribute. When you click an
-                attribute value (employee) in the left pane, the KPIs, pie chart and bar chart are filtered by
-                the selected attribute value (employee). In addition, employee information is passed into the
-                EmployeeCard component that renders static data mixed with external data.
+                When you click an attribute value (employee) in the left pane, the KPIs, pie chart and bar
+                chart are filtered by the selected attribute value (employee). In addition, employee
+                information is passed into the EmployeeCard component that renders static data mixed with
+                external data.
             </p>
         </div>
 

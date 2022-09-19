@@ -1,11 +1,10 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 /* eslint-disable import/no-unresolved,import/default */
 import React from "react";
 
 import { ExampleWithSource } from "../../components/ExampleWithSource";
 
 import AttributeFilterComponentExample from "./AttributeFilterComponentExample";
-import AttributeElementsExample from "./AttributeElementsExample";
 import AttributeFilterExample from "./AttributeFilterExample";
 import AttributeFilterButtonExample from "./AttributeFilterButtonExample";
 import { AttributeParentChildFilterExample } from "./AttributeParentChildFilterExample";
@@ -13,7 +12,6 @@ import { AttributeParentChildFilterButtonExample } from "./AttributeParentChildF
 import { AttributeParentChildFilterButtonWithPlaceholderExample } from "./AttributeParentChildFilterButtonWithPlaceholderExample";
 
 import AttributeFilterComponentExampleSRC from "./AttributeFilterComponentExample?raw";
-import AttributeElementsExampleSRC from "./AttributeElementsExample?raw";
 import AttributeFilterExampleSRC from "./AttributeFilterExample?raw";
 import AttributeFilterButtonExampleSRC from "./AttributeFilterButtonExample?raw";
 import AttributeParentChildFilterExampleSRC from "./AttributeParentChildFilterExample?raw";
@@ -21,7 +19,6 @@ import AttributeParentChildFilterButtonExampleSRC from "./AttributeParentChildFi
 import AttributeParentChildFilterButtonWithPlaceholderExampleSRC from "./AttributeParentChildFilterButtonWithPlaceholderExample?raw";
 
 import AttributeFilterComponentExampleSRCJS from "./AttributeFilterComponentExample?rawJS";
-import AttributeElementsExampleSRCJS from "./AttributeElementsExample?rawJS";
 import AttributeFilterExampleSRCJS from "./AttributeFilterExample?rawJS";
 import AttributeFilterButtonExampleSRCJS from "./AttributeFilterButtonExample?rawJS";
 import AttributeParentChildFilterExampleSRCJS from "./AttributeParentChildFilterExample?rawJS";
@@ -65,23 +62,6 @@ export const AttributeFilter = (): JSX.Element => (
             for={AttributeFilterExample}
             source={AttributeFilterExampleSRC}
             sourceJS={AttributeFilterExampleSRCJS}
-        />
-
-        <hr className="separator" />
-
-        <h2>Custom Attribute Filter using Attribute Elements component</h2>
-        <p>
-            Pass a custom children function to this component to render the returned data using your custom
-            components.
-        </p>
-        <p>
-            The children function will receive isLoading state, possible error state, attribute metadata,
-            paging, attribute values and a loadMore function.
-        </p>
-        <ExampleWithSource
-            for={AttributeElementsExample}
-            source={AttributeElementsExampleSRC}
-            sourceJS={AttributeElementsExampleSRCJS}
         />
 
         <hr className="separator" />
