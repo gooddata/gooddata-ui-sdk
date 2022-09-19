@@ -7,6 +7,7 @@ import {
     IAttributeElementsByRef,
     modifyMeasure,
     modifyAttribute,
+    IAttributeElement,
 } from "@gooddata/sdk-model";
 import { Kpi } from "@gooddata/sdk-ui";
 import { SidebarItem } from "../../../components/SidebarItem";
@@ -16,7 +17,6 @@ import * as Md from "../../../md/full";
 import { Layout } from "../../../components/Layout";
 import { CustomLoading } from "../../../components/CustomLoading";
 import { CustomError } from "../../../components/CustomError";
-import { IItem } from "../../attributeFilter/AttributeElementsExample";
 
 const AvgDailyTotalSales = modifyMeasure(Md.$AvgDailyTotalSales, (m) =>
     m.alias("$ Avg Daily Total Sales").format("$#,##0"),
@@ -30,32 +30,21 @@ interface IEmployeeProfileProps {
     validElements: IElementsQueryResult;
 }
 
-interface IEmployeeProfileState {
-    selectedEmployeeUri: string;
-}
-
 const measures = [AvgDailyTotalSales];
 
 export const EmployeeProfile: React.FC<IEmployeeProfileProps> = ({ validElements }) => {
-    const [{ selectedEmployeeUri }, setState] = useState<IEmployeeProfileState>({
-        selectedEmployeeUri: validElements.items[0].uri,
-    });
+    const [selectedEmployeeUri, setSelectedEmployeeUri] = useState<string>(validElements.items[0].uri);
 
     useEffect(() => {
         const newDefaultEmployeeUri = validElements.items[0].uri;
         if (newDefaultEmployeeUri !== selectedEmployeeUri) {
-            setState({
-                selectedEmployeeUri: newDefaultEmployeeUri,
-            });
+            setSelectedEmployeeUri(newDefaultEmployeeUri);
         }
     }, [validElements]);
 
-    const selectEmployee = (uri: string) =>
-        setState({
-            selectedEmployeeUri: uri,
-        });
+    const selectEmployee = (uri: string) => setSelectedEmployeeUri(uri);
 
-    const buildSidebarItem = (item: IItem, selectedEmployeeUri: string) => {
+    const buildSidebarItem = (item: IAttributeElement, selectedEmployeeUri: string) => {
         const { title, uri } = item;
 
         return (
