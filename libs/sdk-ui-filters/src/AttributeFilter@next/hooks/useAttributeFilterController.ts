@@ -77,7 +77,13 @@ export const useAttributeFilterController = (props: IUseAttributeFilterControlle
     const attributeFilterControllerData = useAttributeFilterControllerData(handler);
 
     useOnError(handler, { onError });
-    useInitOrReload(handler, { filter, limitingAttributeFilters, limit: elementsOptions?.limit });
+    useInitOrReload(handler, {
+        filter,
+        limitingAttributeFilters,
+        limit: elementsOptions?.limit,
+        onApply,
+        setConnectedPlaceholderValue,
+    });
     const callbacks = useCallbacks(handler, { onApply, setConnectedPlaceholderValue });
 
     return {
@@ -123,9 +129,11 @@ function useInitOrReload(
         filter: IAttributeFilter;
         limitingAttributeFilters?: IElementsQueryAttributeFilter[];
         limit?: number;
+        setConnectedPlaceholderValue: (filter: IAttributeFilter) => void;
+        onApply: OnApplyCallbackType;
     },
 ) {
-    const { filter, limitingAttributeFilters, limit } = props;
+    const { filter, limitingAttributeFilters, limit, setConnectedPlaceholderValue, onApply } = props;
     useEffect(() => {
         if (limitingAttributeFilters.length > 0) {
             handler.setLimitingAttributeFilters(limitingAttributeFilters);
@@ -153,8 +161,17 @@ function useInitOrReload(
             handler.changeSelection({ keys: [], isInverted: true });
             handler.setLimitingAttributeFilters(limitingAttributeFilters);
             handler.loadInitialElementsPage(PARENT_FILTERS_CORRELATION);
+
+            // the next lines are to apply selection to the state of the parent component to make the
+            // new attribute filter state persistent
+            handler.commitSelection();
+            const nextFilter = handler.getFilter();
+            const isInverted = handler.getCommittedSelection()?.isInverted;
+
+            setConnectedPlaceholderValue(nextFilter);
+            onApply?.(nextFilter, isInverted);
         }
-    }, [filter, limitingAttributeFilters, handler]);
+    }, [filter, limitingAttributeFilters, handler, onApply, setConnectedPlaceholderValue]);
 }
 
 //
