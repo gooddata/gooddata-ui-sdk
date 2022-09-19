@@ -41,7 +41,6 @@ import {
 } from "../types";
 import { AttributeFilterReduxBridge } from "./bridge";
 import { AttributeFilterHandlerConfig } from "./types";
-import { sanitizeInputFilter } from "./utils/sanitizeInputFilter";
 
 /**
  * @internal
@@ -51,10 +50,8 @@ export class AttributeFilterLoader implements IAttributeFilterLoader {
     protected config: AttributeFilterHandlerConfig;
 
     protected constructor(config: AttributeFilterHandlerConfig) {
-        const { attributeFilter, hiddenElements } = config;
-        this.config = { ...config };
-        this.config.attributeFilter = sanitizeInputFilter(attributeFilter, hiddenElements);
-        this.bridge = new AttributeFilterReduxBridge(this.config);
+        this.config = config;
+        this.bridge = new AttributeFilterReduxBridge(config);
     }
 
     private validateStaticElementsLoad = () => {

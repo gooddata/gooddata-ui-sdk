@@ -1,20 +1,23 @@
 // (C) 2021-2022 GoodData Corporation
 import { IAttributeElement } from "@gooddata/sdk-model";
 import { createSelector } from "@reduxjs/toolkit";
-import invariant from "ts-invariant";
+import compact from "lodash/compact";
 
 import { ILoadElementsOptions } from "../../../types";
 import { selectState } from "../common/selectors";
 
 /**
+ * Get the elements specified by the keys.
+ *
+ * @remarks
+ * If an element is not available in elementsMap, it is skipped. This can be the case when using hiddenElements,
+ * or when a particular element is no longer accessible on the backend (either because it was removed or hidden
+ * by permissions in the current context).
+ *
  * @internal
  */
 export const getElementsByKeys = (keys: string[], elementsMap: Record<string, IAttributeElement>) => {
-    return keys.map((key) => {
-        const element = elementsMap[key];
-        invariant(element, `Unable to map selection to elements - element with key "${key}" is not loaded.`);
-        return element;
-    });
+    return compact(keys.map((key) => elementsMap[key]));
 };
 
 /**
