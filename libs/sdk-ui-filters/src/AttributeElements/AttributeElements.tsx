@@ -15,6 +15,7 @@ import { AttributeElementsDefaultChildren } from "./AttributeElementsDefaultChil
 import { IAttributeElementsChildren } from "./types";
 
 /**
+ * @deprecated use the {@link IAttributeFilterHandler} and its implementations to create custom attribute filter components
  * @public
  */
 export interface IAttributeElementsProps {
@@ -195,8 +196,9 @@ class AttributeElementsCore extends React.PureComponent<IAttributeElementsProps,
 }
 
 /**
- * AttributeElements is a component that lists attribute values using a children function
+ * AttributeElements is a component that lists attribute values using a children function.
  *
+ * @deprecated use the {@link IAttributeFilterHandler} and its implementations to create custom attribute filter components
  * @public
  */
 export const AttributeElements = withContexts(AttributeElementsCore);

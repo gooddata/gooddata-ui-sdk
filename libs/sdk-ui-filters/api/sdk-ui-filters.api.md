@@ -57,7 +57,7 @@ export type AsyncOperationStatus = "pending" | "loading" | "success" | "error" |
 // @alpha
 export type AttributeElementKey = string;
 
-// @public
+// @public @deprecated
 export const AttributeElements: React_2.ComponentType<IAttributeElementsProps>;
 
 // @public
@@ -285,7 +285,7 @@ export interface IAttributeElementLoader {
     setSearch(search: string): void;
 }
 
-// @public
+// @public @deprecated
 export interface IAttributeElementsChildren {
     error: any;
     isLoading: boolean;
@@ -293,7 +293,7 @@ export interface IAttributeElementsChildren {
     validElements: IElementsQueryResult;
 }
 
-// @public (undocumented)
+// @public @deprecated (undocumented)
 export interface IAttributeElementsProps {
     backend?: IAnalyticalBackend;
     // (undocumented)

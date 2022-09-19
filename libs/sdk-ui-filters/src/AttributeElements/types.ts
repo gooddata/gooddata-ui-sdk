@@ -1,8 +1,10 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { IElementsQueryResult } from "@gooddata/sdk-backend-spi";
 
 /**
  * An object of this type will be passed down to the children render function by AttributeElements component.
+ *
+ * @deprecated use the {@link IAttributeFilterHandler} and its implementations to create custom attribute filter components
  * @public
  */
 export interface IAttributeElementsChildren {
