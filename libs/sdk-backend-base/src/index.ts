@@ -45,7 +45,7 @@ export { withEventing, AnalyticalBackendCallbacks } from "./eventingBackend";
 export {
     withCaching,
     CachingConfiguration,
-    DefaultCachingConfiguration,
+    RecommendedCachingConfiguration,
     CacheControl,
 } from "./cachingBackend";
 export {
