@@ -215,16 +215,32 @@ class DateRangePickerComponent extends React.Component<DateRangePickerProps, IDa
 
     private handleRangeSelect: SelectRangeEventHandler = (range: DateRange | undefined) => {
         const { selectedInput } = this.state;
+        let calculatedFrom: Date;
+        let calculatedTo: Date;
 
+        // day picker provides undefined when dates are the same or when the newly picked date
+        // is the same as "from" date, therefore we set the range from props
         if (!range) {
-            this.setState({ isOpen: false });
+            calculatedFrom = this.props.range.from;
+            calculatedTo = selectedInput === "from" ? this.props.range.to : calculatedFrom;
+
+            this.setState(
+                {
+                    inputFromValue: calculatedFrom,
+                    inputToValue: calculatedTo,
+                    selectedRange: { from: calculatedFrom, to: calculatedTo },
+                    isOpen: false,
+                },
+                () => {
+                    this.updateRange(calculatedFrom, calculatedTo);
+                },
+            );
+
             return;
         }
 
         const { from, to } = range;
 
-        let calculatedFrom: Date;
-        let calculatedTo: Date;
         if (selectedInput === "from") {
             if (this.props.range.from.getTime() === from.getTime()) {
                 calculatedFrom = to;
@@ -241,7 +257,8 @@ class DateRangePickerComponent extends React.Component<DateRangePickerProps, IDa
                 },
             );
         } else {
-            if (this.props.range.to.getTime() === to.getTime()) {
+            // day picker provides undefined "to" when newly picked date and "to" are the same
+            if (!to || this.props.range.to.getTime() === to.getTime()) {
                 calculatedTo = from;
             } else {
                 calculatedTo = to;
