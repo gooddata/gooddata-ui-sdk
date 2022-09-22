@@ -817,6 +817,11 @@ function assertPositiveOrUndefined(value: number | undefined, valueName: string)
 }
 
 /**
+ * These are the recommended settings for the backend caching.
+ *
+ * @remarks
+ * For more information on what the options mean see {@link CachingConfiguration}.
+ *
  * @public
  */
 export const RecommendedCachingConfiguration: CachingConfiguration = {
@@ -843,7 +848,7 @@ export const RecommendedCachingConfiguration: CachingConfiguration = {
  */
 export function withCaching(
     realBackend: IAnalyticalBackend,
-    config?: CachingConfiguration,
+    config: CachingConfiguration,
 ): IAnalyticalBackend {
     assertPositiveOrUndefined(config?.maxCatalogOptions, "maxCatalogOptions");
     assertPositiveOrUndefined(config?.maxSecuritySettingsOrgUrls, "maxSecuritySettingsOrgUrls");
