@@ -900,7 +900,7 @@ export class Normalizer {
 // @alpha (undocumented)
 export type PreparedExecutionWrapper = (execution: IPreparedExecution) => IPreparedExecution;
 
-// @public (undocumented)
+// @public
 export const RecommendedCachingConfiguration: CachingConfiguration;
 
 // @alpha
@@ -994,7 +994,7 @@ export class WidgetBaseBuilder<T extends IWidget> extends Builder<T> implements 
 }
 
 // @public
-export function withCaching(realBackend: IAnalyticalBackend, config?: CachingConfiguration): IAnalyticalBackend;
+export function withCaching(realBackend: IAnalyticalBackend, config: CachingConfiguration): IAnalyticalBackend;
 
 // @beta
 export function withCustomWorkspaceSettings(realBackend: IAnalyticalBackend, config: WorkspaceSettingsConfiguration): IAnalyticalBackend;
