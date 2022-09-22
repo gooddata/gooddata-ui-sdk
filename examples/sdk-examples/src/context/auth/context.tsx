@@ -2,7 +2,7 @@
 import React, { createContext, useContext, useEffect } from "react";
 import bearFactory from "@gooddata/sdk-backend-bear";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { withCaching } from "@gooddata/sdk-backend-base";
+import { withCaching, RecommendedCachingConfiguration } from "@gooddata/sdk-backend-base";
 
 import { GoodDataAuthProvider } from "./GoodDataAuthProvider";
 import { AuthStatus, IAuthContext, IAuthState } from "./types";
@@ -12,7 +12,7 @@ const noop = () => undefined;
 
 const authProvider = new GoodDataAuthProvider();
 
-const backend = withCaching(bearFactory().withAuthentication(authProvider));
+const backend = withCaching(bearFactory().withAuthentication(authProvider), RecommendedCachingConfiguration);
 
 const initialState: IAuthState = {
     authStatus: AuthStatus.AUTHORIZING,
