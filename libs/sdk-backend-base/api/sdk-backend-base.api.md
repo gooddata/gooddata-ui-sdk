@@ -216,7 +216,7 @@ export function builderFactory<TItem, TBuilder extends Builder<TItem>, TBuilderC
 // @beta
 export type BuilderModifications<TBuilder extends IBuilder<TItem>, TItem = ExtractBuilderType<TBuilder>> = (builder: TBuilder) => TBuilder;
 
-// @beta
+// @public
 export type CacheControl = {
     resetExecutions: () => void;
     resetCatalogs: () => void;
@@ -226,19 +226,19 @@ export type CacheControl = {
     resetAll: () => void;
 };
 
-// @beta
+// @public
 export type CachingConfiguration = {
-    maxExecutions: number | undefined;
-    maxResultWindows: number | undefined;
-    maxCatalogs: number | undefined;
-    maxCatalogOptions: number | undefined;
+    maxExecutions?: number;
+    maxResultWindows?: number;
+    maxCatalogs?: number;
+    maxCatalogOptions?: number;
     onCacheReady?: (cacheControl: CacheControl) => void;
-    maxSecuritySettingsOrgs: number | undefined;
-    maxSecuritySettingsOrgUrls: number | undefined;
-    maxSecuritySettingsOrgUrlsAge: number | undefined;
-    maxAttributeWorkspaces: number | undefined;
-    maxAttributeDisplayFormsPerWorkspace: number | undefined;
-    maxWorkspaceSettings: number | undefined;
+    maxSecuritySettingsOrgs?: number;
+    maxSecuritySettingsOrgUrls?: number;
+    maxSecuritySettingsOrgUrlsAge?: number;
+    maxAttributeWorkspaces?: number;
+    maxAttributeDisplayFormsPerWorkspace?: number;
+    maxWorkspaceSettings?: number;
 };
 
 // @beta
@@ -559,9 +559,6 @@ export type DecoratorFactories = {
     attributes?: AttributesDecoratorFactory;
     dashboards?: DashboardsDecoratorFactory;
 };
-
-// @beta (undocumented)
-export const DefaultCachingConfiguration: CachingConfiguration;
 
 // @internal (undocumented)
 export class Denormalizer {
@@ -903,6 +900,9 @@ export class Normalizer {
 // @alpha (undocumented)
 export type PreparedExecutionWrapper = (execution: IPreparedExecution) => IPreparedExecution;
 
+// @public
+export const RecommendedCachingConfiguration: CachingConfiguration;
+
 // @alpha
 export const resolveValueOrUpdateCallback: <TValue>(valueOrUpdateCallback: ValueOrUpdateCallback<TValue>, valueToUpdate: TValue) => TValue;
 
@@ -993,8 +993,8 @@ export class WidgetBaseBuilder<T extends IWidget> extends Builder<T> implements 
     uri: (valueOrUpdateCallback: ValueOrUpdateCallback<string>) => this;
 }
 
-// @beta
-export function withCaching(realBackend: IAnalyticalBackend, config?: CachingConfiguration): IAnalyticalBackend;
+// @public
+export function withCaching(realBackend: IAnalyticalBackend, config: CachingConfiguration): IAnalyticalBackend;
 
 // @beta
 export function withCustomWorkspaceSettings(realBackend: IAnalyticalBackend, config: WorkspaceSettingsConfiguration): IAnalyticalBackend;

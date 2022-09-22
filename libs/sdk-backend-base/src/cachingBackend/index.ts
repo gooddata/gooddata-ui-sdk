@@ -615,7 +615,7 @@ function cacheControl(ctx: CachingContext): CacheControl {
  * Cache control can be used to interact with the caching layer - at the moment to reset the contents of the
  * different top-level caches.
  *
- * @beta
+ * @public
  */
 export type CacheControl = {
     /**
@@ -655,7 +655,7 @@ export type CacheControl = {
 /**
  * Specifies where should the caching decorator apply and to what size should caches grow.
  *
- * @beta
+ * @public
  */
 export type CachingConfiguration = {
     /**
@@ -671,7 +671,7 @@ export type CachingConfiguration = {
      *
      * When non-positive number is specified, then no caching will be done.
      */
-    maxExecutions: number | undefined;
+    maxExecutions?: number;
 
     /**
      * Maximum number of execution result's pages to cache PER result. The window offset and limit are used as cache key.
@@ -685,7 +685,7 @@ export type CachingConfiguration = {
      *
      * Note: this option has no effect if execution caching is disabled.
      */
-    maxResultWindows: number | undefined;
+    maxResultWindows?: number;
 
     /**
      * Maximum number of workspaces for which to cache catalogs. The workspace identifier is used as cache key. For
@@ -699,7 +699,7 @@ export type CachingConfiguration = {
      *
      * When non-positive number is specified, then no caching of result windows will be done.
      */
-    maxCatalogs: number | undefined;
+    maxCatalogs?: number;
 
     /**
      * Catalog can be viewed in many different ways - determined by the options specified during load. This option
@@ -714,7 +714,7 @@ export type CachingConfiguration = {
      *
      * Setting non-positive number here is invalid. If you want to turn off catalog caching, tweak the `maxCatalogs`.
      */
-    maxCatalogOptions: number | undefined;
+    maxCatalogOptions?: number;
 
     /**
      * Specify function to call once the caching is set up. If present, the function will be called
@@ -736,7 +736,7 @@ export type CachingConfiguration = {
      *
      * When non-positive number is specified, then no caching will be done.
      */
-    maxSecuritySettingsOrgs: number | undefined;
+    maxSecuritySettingsOrgs?: number;
 
     /**
      * Maximum number of URLs per organization that will have its validation result cached. The URL
@@ -751,7 +751,7 @@ export type CachingConfiguration = {
      * Setting non-positive number here is invalid. If you want to turn off organization security settings caching,
      * tweak the `maxSecuritySettingsOrgs`.
      */
-    maxSecuritySettingsOrgUrls: number | undefined;
+    maxSecuritySettingsOrgUrls?: number;
 
     /**
      * Maximum age of cached organization's URL validation results. The value is in milliseconds.
@@ -764,7 +764,7 @@ export type CachingConfiguration = {
      * Setting non-positive number here is invalid. If you want to turn off organization security settings
      * caching, tweak the `maxSecuritySettingsOrgs`.
      */
-    maxSecuritySettingsOrgUrlsAge: number | undefined;
+    maxSecuritySettingsOrgUrlsAge?: number;
 
     /**
      * Maximum number of workspaces for which to cache selected {@link @gooddata/sdk-backend-spi#IWorkspaceAttributesService} calls.
@@ -779,7 +779,7 @@ export type CachingConfiguration = {
      *
      * When non-positive number is specified, then no caching will be done.
      */
-    maxAttributeWorkspaces: number | undefined;
+    maxAttributeWorkspaces?: number;
 
     /**
      * Maximum number of attribute display forms to cache per workspace.
@@ -793,7 +793,7 @@ export type CachingConfiguration = {
      * Setting non-positive number here is invalid. If you want to turn off attribute display form
      * caching, tweak the `maxAttributeWorkspaces` value.
      */
-    maxAttributeDisplayFormsPerWorkspace: number | undefined;
+    maxAttributeDisplayFormsPerWorkspace?: number;
 
     /**
      * Maximum number of settings for a workspace and for a user to cache per workspace.
@@ -806,7 +806,7 @@ export type CachingConfiguration = {
      *
      * When non-positive number is specified, then no caching of result windows will be done.
      */
-    maxWorkspaceSettings: number | undefined;
+    maxWorkspaceSettings?: number;
 };
 
 function assertPositiveOrUndefined(value: number | undefined, valueName: string) {
@@ -817,9 +817,14 @@ function assertPositiveOrUndefined(value: number | undefined, valueName: string)
 }
 
 /**
- * @beta
+ * These are the recommended settings for the backend caching.
+ *
+ * @remarks
+ * For more information on what the options mean see {@link CachingConfiguration}.
+ *
+ * @public
  */
-export const DefaultCachingConfiguration: CachingConfiguration = {
+export const RecommendedCachingConfiguration: CachingConfiguration = {
     maxExecutions: 10,
     maxResultWindows: 5,
     maxCatalogs: 1,
@@ -838,12 +843,12 @@ export const DefaultCachingConfiguration: CachingConfiguration = {
  *
  * @remarks see {@link CachingConfiguration} properties for more information.
  * @param realBackend - real backend to decorate with caching
- * @param config - caching configuration
- * @beta
+ * @param config - caching configuration. {@link RecommendedCachingConfiguration} can be used
+ * @public
  */
 export function withCaching(
     realBackend: IAnalyticalBackend,
-    config: CachingConfiguration = DefaultCachingConfiguration,
+    config: CachingConfiguration,
 ): IAnalyticalBackend {
     assertPositiveOrUndefined(config.maxCatalogOptions, "maxCatalogOptions");
     assertPositiveOrUndefined(config.maxSecuritySettingsOrgUrls, "maxSecuritySettingsOrgUrls");
