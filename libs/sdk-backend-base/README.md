@@ -75,22 +75,23 @@ critical requirement, then this decorator can speed your application immensely.
 
 ```typescript
 import {IAnalyticalBackend} from "@gooddata/sdk-backend-spi";
-import {withCaching} from "@gooddata/sdk-backend-base";
+import {withCaching, RecommendedCachingConfiguration} from "@gooddata/sdk-backend-base";
 
 const realBackendImplementation = ...;
-const enhancedBackend: IAnalyticalBackend = withCaching(realBackendImplementation);
+const enhancedBackend: IAnalyticalBackend = withCaching(realBackendImplementation, RecommendedCachingConfiguration);
 ```
 
-The withCaching optionally accepts configuration which you can use to tweak the size of the different caches.
+The withCaching accepts configuration which you need to use to tweak the size of the different caches. You can use RecommendedCachingConfiguration
+available in this package.
 
 The caching plays well with normalization:
 
 ```typescript
 import {IAnalyticalBackend} from "@gooddata/sdk-backend-spi";
-import {withCaching, withNormalization} from "@gooddata/sdk-backend-base";
+import {withCaching, withNormalization, RecommendedCachingConfiguration} from "@gooddata/sdk-backend-base";
 
 const realBackendImplementation = ...;
-const enhancedBackend: IAnalyticalBackend = withNormalization(withCaching(realBackendImplementation));
+const enhancedBackend: IAnalyticalBackend = withNormalization(withCaching(realBackendImplementation, RecommendedCachingConfiguration));
 ```
 
 This way the normalization first wipes any differences that are unimportant for the backend, effectively dispatching

@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 
 import { BearExecution } from "../executionFactory";
 import { BearAuthenticatedCallGuard } from "../../../../types/auth";
@@ -6,7 +6,7 @@ import { NotSupported } from "@gooddata/sdk-backend-spi";
 import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
 import { recordedInsight } from "@gooddata/sdk-backend-mockingbird";
 import { newAttributeSort } from "@gooddata/sdk-model";
-import { withCaching } from "@gooddata/sdk-backend-base";
+import { withCaching, RecommendedCachingConfiguration } from "@gooddata/sdk-backend-base";
 import bearFactory from "../../../../index";
 
 const UnsupportedAuthCall: BearAuthenticatedCallGuard = () => {
@@ -29,7 +29,7 @@ describe("execution factory", () => {
         /*
          * This is here to confirm that the shenanigans related to execute-by-ref play well with the decorators
          */
-        const cachingBackend = withCaching(bearFactory());
+        const cachingBackend = withCaching(bearFactory(), RecommendedCachingConfiguration);
         const initialExecution = cachingBackend
             .workspace("test-workspace")
             .execution()
