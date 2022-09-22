@@ -89,7 +89,7 @@ type CachingContext = {
         workspaceAttributes?: LRUCache<AttributeCacheEntry>;
         workspaceSettings?: LRUCache<WorkspaceSettingsCacheEntry>;
     };
-    config: CachingConfiguration;
+    config: CachingConfiguration | undefined;
     capabilities: IBackendCapabilities;
 };
 
@@ -193,8 +193,8 @@ class WithExecutionResultCaching extends DecoratedExecutionResult {
     ) {
         super(decorated, wrapper);
 
-        if (cachingEnabled(this.ctx.config.maxResultWindows)) {
-            this.windows = new LRUCache({ maxSize: this.ctx.config.maxResultWindows });
+        if (cachingEnabled(this.ctx.config?.maxResultWindows)) {
+            this.windows = new LRUCache({ maxSize: this.ctx.config?.maxResultWindows });
         }
     }
 
@@ -273,7 +273,7 @@ class WithCatalogCaching extends DecoratedWorkspaceCatalogFactory {
         if (!cacheEntry) {
             cacheEntry = {
                 catalogForOptions: new LRUCache<Promise<IWorkspaceCatalog>>({
-                    maxSize: this.ctx.config.maxCatalogOptions,
+                    maxSize: this.ctx.config?.maxCatalogOptions,
                 }),
             };
             cache.set(workspace, cacheEntry);
@@ -337,8 +337,8 @@ class WithSecuritySettingsCaching extends DecoratedSecuritySettingsService {
         if (!cacheEntry) {
             cacheEntry = {
                 valid: new LRUCache<Promise<boolean>>({
-                    maxSize: this.ctx.config.maxSecuritySettingsOrgUrls,
-                    maxAge: this.ctx.config.maxSecuritySettingsOrgUrlsAge,
+                    maxSize: this.ctx.config?.maxSecuritySettingsOrgUrls,
+                    maxAge: this.ctx.config?.maxSecuritySettingsOrgUrlsAge,
                 }),
             };
             cache.set(scope, cacheEntry);
@@ -404,10 +404,10 @@ class WithWorkspaceSettingsCaching extends DecoratedWorkspaceSettingsService {
         if (!cacheEntry) {
             cacheEntry = {
                 userWorkspaceSettings: new LRUCache<Promise<IUserWorkspaceSettings>>({
-                    maxSize: this.ctx.config.maxWorkspaceSettings,
+                    maxSize: this.ctx.config?.maxWorkspaceSettings,
                 }),
                 workspaceSettings: new LRUCache<Promise<IWorkspaceSettings>>({
-                    maxSize: this.ctx.config.maxWorkspaceSettings,
+                    maxSize: this.ctx.config?.maxWorkspaceSettings,
                 }),
             };
             cache.set(workspace, cacheEntry);
@@ -534,7 +534,7 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
         if (!cacheEntry) {
             cacheEntry = {
                 displayForms: new LRUCache<Promise<IAttributeDisplayFormMetadataObject>>({
-                    maxSize: this.ctx.config.maxAttributeDisplayFormsPerWorkspace,
+                    maxSize: this.ctx.config?.maxAttributeDisplayFormsPerWorkspace,
                 }),
             };
             cache.set(workspace, cacheEntry);
@@ -843,30 +843,30 @@ export const RecommendedCachingConfiguration: CachingConfiguration = {
  */
 export function withCaching(
     realBackend: IAnalyticalBackend,
-    config: CachingConfiguration = RecommendedCachingConfiguration,
+    config?: CachingConfiguration,
 ): IAnalyticalBackend {
-    assertPositiveOrUndefined(config.maxCatalogOptions, "maxCatalogOptions");
-    assertPositiveOrUndefined(config.maxSecuritySettingsOrgUrls, "maxSecuritySettingsOrgUrls");
-    assertPositiveOrUndefined(config.maxSecuritySettingsOrgUrlsAge, "maxSecuritySettingsOrgUrlsAge");
+    assertPositiveOrUndefined(config?.maxCatalogOptions, "maxCatalogOptions");
+    assertPositiveOrUndefined(config?.maxSecuritySettingsOrgUrls, "maxSecuritySettingsOrgUrls");
+    assertPositiveOrUndefined(config?.maxSecuritySettingsOrgUrlsAge, "maxSecuritySettingsOrgUrlsAge");
 
-    const execCaching = cachingEnabled(config.maxExecutions);
-    const catalogCaching = cachingEnabled(config.maxCatalogs);
-    const securitySettingsCaching = cachingEnabled(config.maxSecuritySettingsOrgs);
-    const attributeCaching = cachingEnabled(config.maxAttributeWorkspaces);
-    const workspaceSettingsCaching = cachingEnabled(config.maxWorkspaceSettings);
+    const execCaching = cachingEnabled(config?.maxExecutions);
+    const catalogCaching = cachingEnabled(config?.maxCatalogs);
+    const securitySettingsCaching = cachingEnabled(config?.maxSecuritySettingsOrgs);
+    const attributeCaching = cachingEnabled(config?.maxAttributeWorkspaces);
+    const workspaceSettingsCaching = cachingEnabled(config?.maxWorkspaceSettings);
 
     const ctx: CachingContext = {
         caches: {
-            execution: execCaching ? new LRUCache({ maxSize: config.maxExecutions }) : undefined,
-            workspaceCatalogs: catalogCaching ? new LRUCache({ maxSize: config.maxCatalogs }) : undefined,
+            execution: execCaching ? new LRUCache({ maxSize: config?.maxExecutions }) : undefined,
+            workspaceCatalogs: catalogCaching ? new LRUCache({ maxSize: config?.maxCatalogs }) : undefined,
             securitySettings: securitySettingsCaching
-                ? new LRUCache({ maxSize: config.maxSecuritySettingsOrgs })
+                ? new LRUCache({ maxSize: config?.maxSecuritySettingsOrgs })
                 : undefined,
             workspaceAttributes: attributeCaching
-                ? new LRUCache({ maxSize: config.maxAttributeWorkspaces })
+                ? new LRUCache({ maxSize: config?.maxAttributeWorkspaces })
                 : undefined,
             workspaceSettings: workspaceSettingsCaching
-                ? new LRUCache({ maxSize: config.maxWorkspaceSettings })
+                ? new LRUCache({ maxSize: config?.maxWorkspaceSettings })
                 : undefined,
         },
         config,
@@ -879,7 +879,7 @@ export function withCaching(
     const attributes = attributeCaching ? cachedAttributes(ctx) : identity;
     const workspaceSettings = workspaceSettingsCaching ? cachedWorkspaceSettings(ctx) : identity;
 
-    if (config.onCacheReady) {
+    if (config?.onCacheReady) {
         config.onCacheReady(cacheControl(ctx));
     }
 
