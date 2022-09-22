@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "Default backend caching configuration is no longer provided automatically. The configuration must be specified while using the withCaching backend decorator. To keep caching working the same as before, use RecommendedCachingConfiguration from @gooddata/sdk-backend-base package.",
+            "comment": "The withCaching backend decorator has been made public. RecommendedCachingConfiguration from @gooddata/sdk-backend-base can be use to configure backend caching.",
             "type": "none"
         }
     ],
