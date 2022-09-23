@@ -274,8 +274,66 @@
                 },
                 "description": "Response from data source testing."
             },
+            "DataSourceParameter": {
+                "required": ["name", "value"],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Parameter name."
+                    },
+                    "value": {
+                        "type": "string",
+                        "description": "Parameter value."
+                    }
+                },
+                "description": "A parameter for testing data source connection"
+            },
             "TestRequest": {
                 "type": "object",
+                "properties": {
+                    "url": {
+                        "type": "string",
+                        "description": "URL to database in JDBC format, where test should connect to.",
+                        "example": "jdbc:postgresql://localhost:5432/db_name"
+                    },
+                    "schema": {
+                        "type": "string",
+                        "description": "Database schema.",
+                        "example": "public"
+                    },
+                    "username": {
+                        "type": "string",
+                        "description": "Database user name.",
+                        "example": "dbadmin"
+                    },
+                    "password": {
+                        "type": "string",
+                        "description": "Database user password.",
+                        "example": "admin123"
+                    },
+                    "token": {
+                        "type": "string",
+                        "description": "Secret for token based authentication for data sources which supports it."
+                    },
+                    "enableCaching": {
+                        "type": "boolean",
+                        "description": "Enable caching of intermediate results.",
+                        "example": false
+                    },
+                    "cachePath": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "parameters": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/DataSourceParameter"
+                        }
+                    }
+                },
                 "description": "A request containing all information for testing existing data source."
             },
             "ColumnWarning": {
@@ -511,6 +569,12 @@
                     "token": {
                         "type": "string",
                         "description": "Secret for token based authentication for data sources which supports it."
+                    },
+                    "parameters": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/DataSourceParameter"
+                        }
                     }
                 },
                 "description": "A request containing all information for testing data source definition."

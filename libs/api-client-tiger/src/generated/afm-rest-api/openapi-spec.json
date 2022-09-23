@@ -1750,7 +1750,7 @@
                 "description": "All objects of specified types valid with respect to given AFM."
             },
             "ResultCacheMetadata": {
-                "required": ["afm", "executionResponse", "resultSpec"],
+                "required": ["afm", "executionResponse", "resultSize", "resultSpec"],
                 "type": "object",
                 "properties": {
                     "afm": {
@@ -1761,6 +1761,10 @@
                     },
                     "resultSpec": {
                         "$ref": "#/components/schemas/ResultSpec"
+                    },
+                    "resultSize": {
+                        "type": "integer",
+                        "format": "int64"
                     }
                 },
                 "description": "All execution result's metadata used for calculation including ExecutionResponse"

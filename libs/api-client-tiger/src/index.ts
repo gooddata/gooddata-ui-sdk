@@ -190,6 +190,8 @@ export {
     TestDefinitionRequestTypeEnum,
     TestResponse,
     ColumnWarning,
+    DataSourceParameter,
+    TestRequest,
 } from "./generated/scan-json-api/api";
 
 export * from "./client";

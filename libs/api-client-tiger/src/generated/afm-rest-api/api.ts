@@ -1661,6 +1661,12 @@ export interface ResultCacheMetadata {
      * @memberof ResultCacheMetadata
      */
     resultSpec: ResultSpec;
+    /**
+     *
+     * @type {number}
+     * @memberof ResultCacheMetadata
+     */
+    resultSize: number;
 }
 /**
  *
