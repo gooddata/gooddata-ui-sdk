@@ -5,10 +5,28 @@ import { Dropdown, DropdownList, DropdownButton, SingleSelectListItem } from "@g
 import invariant from "ts-invariant";
 
 import { IDropdownItem } from "../../interfaces";
-import { DEFAULT_DROPDOWN_ALIGN_POINTS, DEFAULT_DROPDOWN_ZINDEX, FREQUENCY_TYPE } from "../../constants";
+import {
+    DEFAULT_DROPDOWN_ALIGN_POINTS,
+    DEFAULT_DROPDOWN_ZINDEX,
+    FREQUENCY_TYPE,
+    REPEAT_FREQUENCIES,
+} from "../../constants";
 import { messages } from "../../../../../locales";
 
 const DROPDOWN_WIDTH = 100;
+
+const getLocalizationKey = (id: string): { id: string } => {
+    switch (id) {
+        case REPEAT_FREQUENCIES.DAY:
+            return messages.scheduleDialogEmailRepeatsFrequencies_day;
+        case REPEAT_FREQUENCIES.MONTH:
+            return messages.scheduleDialogEmailRepeatsFrequencies_month;
+        case REPEAT_FREQUENCIES.WEEK:
+            return messages.scheduleDialogEmailRepeatsFrequencies_week;
+        default:
+            throw new Error("Invariant: Unexpected localization key.");
+    }
+};
 
 export interface IRepeatFrequencySelectProps {
     repeatFrequency: string;
@@ -22,9 +40,11 @@ export const RepeatFrequencySelect: React.FC<IRepeatFrequencySelectProps> = (pro
 
     const repeatFrequencyItems = useMemo(() => {
         return FREQUENCY_TYPE.map((id): IDropdownItem => {
+            const localizationKey = getLocalizationKey(id);
+
             return {
                 id,
-                title: intl.formatMessage(messages[`scheduleDialogEmailRepeatsFrequencies_${id}`], {
+                title: intl.formatMessage(localizationKey, {
                     n: repeatPeriod,
                 }),
             };

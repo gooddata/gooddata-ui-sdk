@@ -42,7 +42,6 @@ export const messages = defineMessages({
     controlButtonsSaveAndPublishNoChanges: { id: "controlButtons.saveAndPublish.disable.noChanges.title" },
     controlButtonsSaveAndPublishEmpty: { id: "controlButtons.saveAndPublish.disable.empty.title" },
 
-    //dynamic
     scheduleDialogEmailRepeats_custom: { id: "dialogs.schedule.email.repeats.types.custom" },
     scheduleDialogEmailRepeats_daily: { id: "dialogs.schedule.email.repeats.types.daily" },
     scheduleDialogEmailRepeats_monthly: { id: "dialogs.schedule.email.repeats.types.monthly" },

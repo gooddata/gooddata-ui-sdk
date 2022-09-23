@@ -180,8 +180,8 @@ export function parseRepeatString(repeat: string): IScheduleEmailRepeat {
     let repeatFrequency: IScheduleEmailRepeatFrequency = {};
     const customRepeatNumber = firstFragmentValue !== 1;
     if (firstFragmentIndex === MONTH_INDEX) {
-        repeatType = customRepeatNumber ? REPEAT_TYPES.CUSTOM : REPEAT_TYPES.MONTHLY;
         if (fragments[WEEK_INDEX] === 0) {
+            repeatType = REPEAT_TYPES.CUSTOM;
             repeatFrequency = {
                 month: {
                     type: REPEAT_EXECUTE_ON.DAY_OF_MONTH,
@@ -189,6 +189,7 @@ export function parseRepeatString(repeat: string): IScheduleEmailRepeat {
                 },
             };
         } else {
+            repeatType = customRepeatNumber ? REPEAT_TYPES.CUSTOM : REPEAT_TYPES.MONTHLY;
             repeatFrequency = {
                 month: {
                     type: REPEAT_EXECUTE_ON.DAY_OF_WEEK,

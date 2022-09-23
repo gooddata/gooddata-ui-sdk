@@ -11,6 +11,21 @@ import { messages } from "../../../../../locales";
 
 const DROPDOWN_WIDTH = 199;
 
+const getLocalizationKey = (id: string): { id: string } => {
+    switch (id) {
+        case REPEAT_TYPES.DAILY:
+            return messages.scheduleDialogEmailRepeats_daily;
+        case REPEAT_TYPES.WEEKLY:
+            return messages.scheduleDialogEmailRepeats_weekly;
+        case REPEAT_TYPES.MONTHLY:
+            return messages.scheduleDialogEmailRepeats_monthly;
+        case REPEAT_TYPES.CUSTOM:
+            return messages.scheduleDialogEmailRepeats_custom;
+        default:
+            throw new Error("Invariant: Unexpected localization key.");
+    }
+};
+
 export interface IRepeatTypeSelectProps {
     repeatType: string;
     startDate: Date;
@@ -24,9 +39,11 @@ export const RepeatTypeSelect: React.FC<IRepeatTypeSelectProps> = (props) => {
     const repeatItems = useMemo(() => {
         return [REPEAT_TYPES.DAILY, REPEAT_TYPES.WEEKLY, REPEAT_TYPES.MONTHLY, REPEAT_TYPES.CUSTOM].map(
             (id): IDropdownItem => {
+                const localizationKey = getLocalizationKey(id);
+
                 return {
                     id,
-                    title: intl.formatMessage(messages[`scheduleDialogEmailRepeats_${id}`], {
+                    title: intl.formatMessage(localizationKey, {
                         day: getIntlDayName(intl, startDate),
                         week: getWeek(startDate),
                     }),
