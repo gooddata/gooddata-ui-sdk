@@ -89,16 +89,10 @@ export const pickCorrectWording = (
  */
 export const removeAllInsightToReportTranslations = (
     translations: Record<string, string>,
-): Record<string, string> => {
-    Object.keys(translations).forEach((key) => {
-        if (key.includes("|report") || key.includes("|insight")) {
-            delete translations[key];
-        }
-    });
-    return {
-        ...translations,
-    };
-};
+): Record<string, string> =>
+    Object.fromEntries(
+        Object.entries(translations).filter(([key]) => !key.includes("|report") && !key.includes("|insight")),
+    );
 
 /**
  * The function to remove all translation keys that contain special suffixes "|report", "|insight", "._measure" or "._metric"
@@ -106,19 +100,13 @@ export const removeAllInsightToReportTranslations = (
  */
 export const removeAllWordingTranslationsWithSpecialSuffix = (
     translations: Record<string, string>,
-): Record<string, string> => {
-    Object.keys(translations).forEach((key) => {
-        if (
-            key.includes("|report") ||
-            key.includes("|insight") ||
-            key.includes("._measure") ||
-            key.includes("._metric")
-        ) {
-            delete translations[key];
-        }
-    });
-
-    return {
-        ...translations,
-    };
-};
+): Record<string, string> =>
+    Object.fromEntries(
+        Object.entries(translations).filter(
+            ([key]) =>
+                !key.includes("|report") &&
+                !key.includes("|insight") &&
+                !key.includes("._measure") &&
+                !key.includes("._metric"),
+        ),
+    );
