@@ -11,6 +11,17 @@ import { messages } from "../../../../../locales";
 
 const DROPDOWN_WIDTH = 154;
 
+const getLocalizationKey = (id: string): { id: string } => {
+    switch (id) {
+        case REPEAT_EXECUTE_ON.DAY_OF_MONTH:
+            return messages.scheduleDialogEmailRepeatsExecuteOn_dayOfMonth;
+        case REPEAT_EXECUTE_ON.DAY_OF_WEEK:
+            return messages.scheduleDialogEmailRepeatsExecuteOn_dayOfWeek;
+        default:
+            throw new Error("Invariant: Unexpected localization key.");
+    }
+};
+
 export interface IRepeatExecuteOnSelectProps {
     repeatExecuteOn: string;
     startDate: Date;
@@ -23,9 +34,11 @@ export const RepeatExecuteOnSelect: React.FC<IRepeatExecuteOnSelectProps> = (pro
 
     const repeatExecuteOnItems = useMemo(() => {
         return [REPEAT_EXECUTE_ON.DAY_OF_MONTH, REPEAT_EXECUTE_ON.DAY_OF_WEEK].map((id): IDropdownItem => {
+            const localizationKey = getLocalizationKey(id);
+
             return {
                 id,
-                title: intl.formatMessage(messages[`scheduleDialogEmailRepeatsExecuteOn_${id}`], {
+                title: intl.formatMessage(localizationKey, {
                     date: getDate(startDate),
                     day: getIntlDayName(intl, startDate),
                     week: getWeek(startDate),

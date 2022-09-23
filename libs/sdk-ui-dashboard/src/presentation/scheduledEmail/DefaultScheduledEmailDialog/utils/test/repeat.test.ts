@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 
 import {
@@ -189,7 +189,7 @@ describe("repeat string parser", () => {
             ["0:0:1*4:10:30:12", REPEAT_TYPES.WEEKLY, { week: { days: [4] } }, undefined],
             [
                 "0:1*0:10:10:30:12",
-                REPEAT_TYPES.MONTHLY,
+                REPEAT_TYPES.CUSTOM,
                 { month: { dayOfMonth: 10, type: REPEAT_EXECUTE_ON.DAY_OF_MONTH } },
                 undefined,
             ],
