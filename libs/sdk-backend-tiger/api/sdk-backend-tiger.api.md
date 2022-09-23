@@ -10,6 +10,7 @@ import { ApiEntitlement } from '@gooddata/api-client-tiger';
 import { ApiEntitlementNameEnum } from '@gooddata/api-client-tiger';
 import { AuthenticationFlow } from '@gooddata/sdk-backend-spi';
 import { AxiosRequestConfig } from 'axios';
+import { DataSourceParameter } from '@gooddata/api-client-tiger';
 import { DeclarativeAnalytics } from '@gooddata/api-client-tiger';
 import { DeclarativeModel } from '@gooddata/api-client-tiger';
 import { DeclarativePdm } from '@gooddata/api-client-tiger';
@@ -118,9 +119,13 @@ export interface IDataSourceApiResult {
 // @internal (undocumented)
 export interface IDataSourceConnectionInfo {
     // (undocumented)
+    decodedParameters?: Array<DataSourceParameter>;
+    // (undocumented)
     id: string;
     // (undocumented)
     name: string;
+    // (undocumented)
+    parameters?: Array<DataSourceParameter>;
     // (undocumented)
     permissions?: IDataSourcePermission[];
     // (undocumented)
@@ -148,6 +153,8 @@ export interface IDataSourcePatchRequest {
     // (undocumented)
     name?: string;
     // (undocumented)
+    parameters?: Array<DataSourceParameter>;
+    // (undocumented)
     password?: string;
     // (undocumented)
     schema?: string;
@@ -167,6 +174,8 @@ export type IDataSourcePermission = "MANAGE" | "USE";
 // @internal (undocumented)
 export interface IDataSourceTestConnectionRequest {
     // (undocumented)
+    parameters?: Array<DataSourceParameter>;
+    // (undocumented)
     password?: string;
     // (undocumented)
     schema: string;
@@ -177,7 +186,7 @@ export interface IDataSourceTestConnectionRequest {
     // (undocumented)
     url: string;
     // (undocumented)
-    username: string;
+    username?: string;
 }
 
 // @internal (undocumented)
@@ -198,6 +207,8 @@ export interface IDataSourceUpsertRequest {
     // (undocumented)
     name: string;
     // (undocumented)
+    parameters?: Array<DataSourceParameter>;
+    // (undocumented)
     password?: string;
     // (undocumented)
     schema: string;
@@ -206,7 +217,7 @@ export interface IDataSourceUpsertRequest {
     // (undocumented)
     type: IDataSourceType;
     // (undocumented)
-    url: string;
+    url?: string;
     // (undocumented)
     username?: string;
 }

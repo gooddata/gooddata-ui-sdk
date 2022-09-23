@@ -1,5 +1,3 @@
-// (C) 2022 GoodData Corporation
-
 /* eslint-disable */
 /**
  * OpenAPI definition
@@ -42,6 +40,25 @@ export interface ColumnWarning {
      * @memberof ColumnWarning
      */
     message: Array<string>;
+}
+/**
+ * A parameter for testing data source connection
+ * @export
+ * @interface DataSourceParameter
+ */
+export interface DataSourceParameter {
+    /**
+     * Parameter name.
+     * @type {string}
+     * @memberof DataSourceParameter
+     */
+    name: string;
+    /**
+     * Parameter value.
+     * @type {string}
+     * @memberof DataSourceParameter
+     */
+    value: string;
 }
 /**
  * Result of getSchemata. Contains list of available DB schema names.
@@ -286,6 +303,12 @@ export interface TestDefinitionRequest {
      * @memberof TestDefinitionRequest
      */
     token?: string;
+    /**
+     *
+     * @type {Array<DataSourceParameter>}
+     * @memberof TestDefinitionRequest
+     */
+    parameters?: Array<DataSourceParameter>;
 }
 
 export const TestDefinitionRequestTypeEnum = {
@@ -304,6 +327,61 @@ export const TestDefinitionRequestTypeEnum = {
 export type TestDefinitionRequestTypeEnum =
     typeof TestDefinitionRequestTypeEnum[keyof typeof TestDefinitionRequestTypeEnum];
 
+/**
+ * A request containing all information for testing existing data source.
+ * @export
+ * @interface TestRequest
+ */
+export interface TestRequest {
+    /**
+     * URL to database in JDBC format, where test should connect to.
+     * @type {string}
+     * @memberof TestRequest
+     */
+    url?: string;
+    /**
+     * Database schema.
+     * @type {string}
+     * @memberof TestRequest
+     */
+    schema?: string;
+    /**
+     * Database user name.
+     * @type {string}
+     * @memberof TestRequest
+     */
+    username?: string;
+    /**
+     * Database user password.
+     * @type {string}
+     * @memberof TestRequest
+     */
+    password?: string;
+    /**
+     * Secret for token based authentication for data sources which supports it.
+     * @type {string}
+     * @memberof TestRequest
+     */
+    token?: string;
+    /**
+     * Enable caching of intermediate results.
+     * @type {boolean}
+     * @memberof TestRequest
+     */
+    enableCaching?: boolean;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof TestRequest
+     */
+    cachePath?: Array<string>;
+    /**
+     *
+     * @type {Array<DataSourceParameter>}
+     * @memberof TestRequest
+     */
+    parameters?: Array<DataSourceParameter>;
+}
 /**
  * Response from data source testing.
  * @export
@@ -426,19 +504,19 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
          * Test if it is possible to connect to a database using an existing data source definition.
          * @summary Test data source connection by data source id
          * @param {string} dataSourceId Data source id
-         * @param {object} body
+         * @param {TestRequest} testRequest
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         testDataSource: async (
             dataSourceId: string,
-            body: object,
+            testRequest: TestRequest,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'dataSourceId' is not null or undefined
             assertParamExists("testDataSource", "dataSourceId", dataSourceId);
-            // verify required parameter 'body' is not null or undefined
-            assertParamExists("testDataSource", "body", body);
+            // verify required parameter 'testRequest' is not null or undefined
+            assertParamExists("testDataSource", "testRequest", testRequest);
             const localVarPath = `/api/v1/actions/dataSources/{dataSourceId}/test`.replace(
                 `{${"dataSourceId"}}`,
                 encodeURIComponent(String(dataSourceId)),
@@ -463,11 +541,11 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
                 ...options.headers,
             };
             const needsSerialization =
-                typeof body !== "string" ||
+                typeof testRequest !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
             localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(body !== undefined ? body : {})
-                : body || "";
+                ? JSON.stringify(testRequest !== undefined ? testRequest : {})
+                : testRequest || "";
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -570,18 +648,18 @@ export const ActionsApiFp = function (configuration?: Configuration) {
          * Test if it is possible to connect to a database using an existing data source definition.
          * @summary Test data source connection by data source id
          * @param {string} dataSourceId Data source id
-         * @param {object} body
+         * @param {TestRequest} testRequest
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async testDataSource(
             dataSourceId: string,
-            body: object,
+            testRequest: TestRequest,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TestResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.testDataSource(
                 dataSourceId,
-                body,
+                testRequest,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -659,7 +737,7 @@ export const ActionsApiFactory = function (
             options?: AxiosRequestConfig,
         ): AxiosPromise<TestResponse> {
             return localVarFp
-                .testDataSource(requestParameters.dataSourceId, requestParameters.body, options)
+                .testDataSource(requestParameters.dataSourceId, requestParameters.testRequest, options)
                 .then((request) => request(axios, basePath));
         },
         /**
@@ -789,10 +867,10 @@ export interface ActionsApiTestDataSourceRequest {
 
     /**
      *
-     * @type {object}
+     * @type {TestRequest}
      * @memberof ActionsApiTestDataSource
      */
-    readonly body: object;
+    readonly testRequest: TestRequest;
 }
 
 /**
@@ -857,7 +935,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      */
     public testDataSource(requestParameters: ActionsApiTestDataSourceRequest, options?: AxiosRequestConfig) {
         return ActionsApiFp(this.configuration)
-            .testDataSource(requestParameters.dataSourceId, requestParameters.body, options)
+            .testDataSource(requestParameters.dataSourceId, requestParameters.testRequest, options)
             .then((request) => request(this.axios, this.basePath));
     }
 

@@ -1,5 +1,3 @@
-// (C) 2022 GoodData Corporation
-
 /* eslint-disable */
 /**
  * OpenAPI definition
@@ -1661,6 +1659,12 @@ export interface ResultCacheMetadata {
      * @memberof ResultCacheMetadata
      */
     resultSpec: ResultSpec;
+    /**
+     *
+     * @type {number}
+     * @memberof ResultCacheMetadata
+     */
+    resultSize: number;
 }
 /**
  *
