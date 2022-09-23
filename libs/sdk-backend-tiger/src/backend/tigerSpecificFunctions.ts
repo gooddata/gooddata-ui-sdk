@@ -32,6 +32,7 @@ import {
     ActionsApiProcessInvitationRequest,
     PlatformUsage,
     DeclarativeWorkspaceDataFilters,
+    DataSourceParameter,
 } from "@gooddata/api-client-tiger";
 import { convertApiError } from "../utils/errorHandling";
 import uniq from "lodash/uniq";
@@ -122,6 +123,8 @@ export interface IDataSourceConnectionInfo {
     username?: string;
     url?: string;
     permissions?: IDataSourcePermission[];
+    parameters?: Array<DataSourceParameter>;
+    decodedParameters?: Array<DataSourceParameter>;
 }
 
 /**
@@ -142,8 +145,9 @@ export interface IDataSourceUpsertRequest {
     schema: string;
     token?: string;
     type: IDataSourceType;
-    url: string;
+    url?: string;
     username?: string;
+    parameters?: Array<DataSourceParameter>;
 }
 
 /**
@@ -158,6 +162,7 @@ export interface IDataSourcePatchRequest {
     type?: IDataSourceType;
     url?: string;
     username?: string;
+    parameters?: Array<DataSourceParameter>;
 }
 
 /**
@@ -169,7 +174,8 @@ export interface IDataSourceTestConnectionRequest {
     token?: string;
     type: TestDefinitionRequestTypeEnum;
     url: string;
-    username: string;
+    username?: string;
+    parameters?: Array<DataSourceParameter>;
 }
 
 /**
@@ -335,7 +341,7 @@ const dataSourceResponseAsDataSourceConnectionInfo = (
     response: JsonApiDataSourceOutDocument,
 ): IDataSourceConnectionInfo => {
     const { id, meta, attributes } = response.data;
-    const { name, url, type, schema, username } = attributes;
+    const { name, url, type, schema, username, parameters, decodedParameters } = attributes;
     return {
         id,
         type,
@@ -344,6 +350,8 @@ const dataSourceResponseAsDataSourceConnectionInfo = (
         username,
         url,
         permissions: meta?.permissions ?? [],
+        parameters,
+        decodedParameters,
     };
 };
 
@@ -776,7 +784,7 @@ export const buildTigerSpecificFunctions = (
         }
     },
     createDataSource: async (requestData: IDataSourceUpsertRequest) => {
-        const { id, name, password, schema, token, type, url, username } = requestData;
+        const { id, name, password, schema, token, type, url, username, parameters } = requestData;
         try {
             return await authApiCall(async (sdk) => {
                 return sdk.entities
@@ -791,6 +799,7 @@ export const buildTigerSpecificFunctions = (
                                     type,
                                     url,
                                     username,
+                                    parameters,
                                 },
                                 id,
                                 type: JsonApiDataSourceInTypeEnum.DATA_SOURCE,
@@ -806,7 +815,17 @@ export const buildTigerSpecificFunctions = (
         }
     },
     updateDataSource: async (id: string, requestData: IDataSourceUpsertRequest) => {
-        const { id: requestDataId, name, password, schema, token, type, url, username } = requestData;
+        const {
+            id: requestDataId,
+            name,
+            password,
+            schema,
+            token,
+            type,
+            url,
+            username,
+            parameters,
+        } = requestData;
         try {
             return await authApiCall(async (sdk) => {
                 return sdk.entities
@@ -822,6 +841,7 @@ export const buildTigerSpecificFunctions = (
                                     type,
                                     url,
                                     username,
+                                    parameters,
                                 },
                                 id: requestDataId,
                                 type: JsonApiDataSourceInTypeEnum.DATA_SOURCE,
@@ -837,7 +857,17 @@ export const buildTigerSpecificFunctions = (
         }
     },
     patchDataSource: async (id: string, requestData: IDataSourcePatchRequest) => {
-        const { id: requestDataId, name, password, schema, token, type, url, username } = requestData;
+        const {
+            id: requestDataId,
+            name,
+            password,
+            schema,
+            token,
+            type,
+            url,
+            username,
+            parameters,
+        } = requestData;
         try {
             return await authApiCall(async (sdk) => {
                 return sdk.entities
@@ -853,6 +883,7 @@ export const buildTigerSpecificFunctions = (
                                     type,
                                     url,
                                     username,
+                                    parameters,
                                 },
                                 id: requestDataId,
                                 type: JsonApiDataSourceInTypeEnum.DATA_SOURCE,
@@ -882,15 +913,14 @@ export const buildTigerSpecificFunctions = (
     testDataSourceConnection: async (connectionData: IDataSourceTestConnectionRequest, id?: string) => {
         try {
             return await authApiCall(async (sdk) => {
-                const promise =
-                    id && isEmpty(connectionData)
-                        ? sdk.scanModel.testDataSource({
-                              dataSourceId: id,
-                              body: connectionData,
-                          })
-                        : sdk.scanModel.testDataSourceDefinition({
-                              testDefinitionRequest: connectionData,
-                          });
+                const promise = id
+                    ? sdk.scanModel.testDataSource({
+                          dataSourceId: id,
+                          testRequest: connectionData,
+                      })
+                    : sdk.scanModel.testDataSourceDefinition({
+                          testDefinitionRequest: connectionData,
+                      });
                 return await promise.then((axiosResponse) => axiosResponse.data);
             });
         } catch (error: any) {
