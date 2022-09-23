@@ -414,7 +414,7 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
     text-overflow: ellipsis;
 
     .gd-header-invite-text {
-        margin-left: 5px;
+        margin: -1px 0 0 5px;
         font-size: 14px;
         line-height: 44px;
         font-family: $gd-font-primary;
@@ -424,7 +424,7 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
         display: inline-block;
         width: 14px;
         height: 14px;
-        margin: auto;
+        margin: 14.5px auto;
         background: url("~@gooddata/sdk-ui-kit/esm/assets/invite.svg") no-repeat;
     }
 }
@@ -452,6 +452,13 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
     &.is-open {
         background-color: rgba(255, 255, 255, 0.3);
     }
+}
+
+.gd-header-invite,
+.gd-header-invite:active,
+.gd-header-invite:focus {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
 }
 
 .anchor-tag-header-help,
