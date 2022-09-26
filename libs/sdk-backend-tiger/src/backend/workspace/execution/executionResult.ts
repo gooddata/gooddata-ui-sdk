@@ -1,6 +1,13 @@
 // (C) 2019-2022 GoodData Corporation
 
-import { AfmExecutionResponse, ExecutionResult } from "@gooddata/api-client-tiger";
+import {
+    ITigerClient,
+    AfmExecutionResponse,
+    ExecutionResult,
+    ActionsApiGetTabularExportRequest,
+    TabularExportRequest,
+    TabularExportRequestFormatEnum,
+} from "@gooddata/api-client-tiger";
 import {
     IDataView,
     IExecutionFactory,
@@ -9,7 +16,6 @@ import {
     IExportResult,
     IPreparedExecution,
     NoDataError,
-    NotSupported,
     UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
 import { IExecutionDefinition, DataValue, IDimensionDescriptor, IResultHeader } from "@gooddata/sdk-model";
@@ -20,8 +26,11 @@ import { DateFormatter } from "../../../convertors/fromBackend/dateFormatting/ty
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { transformGrandTotalData } from "../../../convertors/fromBackend/afm/GrandTotalsConverter";
 import { getTransformDimensionHeaders } from "../../../convertors/fromBackend/afm/DimensionHeaderConverter";
+import { resolveCustomOverride } from "./utils";
 
 const TIGER_PAGE_SIZE_LIMIT = 1000;
+const DEFAULT_POLL_DELAY = 5000;
+const MAX_POLL_ATTEMPTS = 50;
 
 function sanitizeOffset(offset: number[]): number[] {
     return offset.map((offsetItem = 0) => offsetItem);
@@ -96,8 +105,34 @@ export class TigerExecutionResult implements IExecutionResult {
         return this.executionFactory.forDefinition(this.definition);
     }
 
-    public async export(_options: IExportConfig): Promise<IExportResult> {
-        return Promise.reject(new NotSupported("Tiger backend does not support exports"));
+    public async export(options: IExportConfig): Promise<IExportResult> {
+        const isXlsx = options.format?.toUpperCase() === "XLSX";
+        const payload: TabularExportRequest = {
+            // once XLSX will be supported, it will appear in the enum of api client, we would then use
+            // format: isXlsx ? TabularExportRequestFormatEnum.CSV : TabularExportRequestFormatEnum.CSV,
+            format: TabularExportRequestFormatEnum.CSV,
+            executionResult: this.resultId,
+            fileName: options.title ?? "default",
+            settings: isXlsx
+                ? {
+                      mergeHeaders: Boolean(options.mergeHeaders),
+                      showFilters: Boolean(options.showFilters),
+                  }
+                : undefined,
+            customOverride: resolveCustomOverride(this.dimensions, this.definition),
+        };
+
+        return this.authCall(async (client) => {
+            const tabularExport = await client.export.createTabularExport({
+                workspaceId: this.workspace,
+                tabularExportRequest: payload,
+            });
+
+            return await this.handleExportResultPolling(client, {
+                workspaceId: this.workspace,
+                exportId: tabularExport?.data?.exportResult,
+            });
+        });
     }
 
     public equals(other: IExecutionResult): boolean {
@@ -126,6 +161,29 @@ export class TigerExecutionResult implements IExecutionResult {
             return new TigerDataView(this, result, this.dateFormatter);
         });
     };
+
+    private async handleExportResultPolling(
+        client: ITigerClient,
+        payload: ActionsApiGetTabularExportRequest,
+    ): Promise<IExportResult> {
+        for (let i = 0; i < MAX_POLL_ATTEMPTS; i++) {
+            const result = await client.export.getTabularExport(payload, {
+                transformResponse: (x) => x,
+            });
+
+            if (result?.status === 200) {
+                return {
+                    uri: result?.config?.url || "",
+                };
+            }
+
+            await new Promise((resolve) => setTimeout(resolve, DEFAULT_POLL_DELAY));
+        }
+
+        throw new Error(
+            `Export timeout for export id "${payload.exportId}" in workspace "${payload.workspaceId}"`,
+        );
+    }
 }
 
 class TigerDataView implements IDataView {

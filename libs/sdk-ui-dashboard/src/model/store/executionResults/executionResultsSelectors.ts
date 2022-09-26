@@ -10,6 +10,10 @@ import { selectAnalyticalWidgetByRef } from "../layout/layoutSelectors";
 import { isNonExportableError } from "../../../_staging/errors/errorPredicates";
 import { selectCanExportReport, selectCanExecuteRaw } from "../permissions/permissionsSelectors";
 import { selectSettings } from "../config/configSelectors";
+import {
+    selectSupportsExportToXlsx,
+    selectSupportsExportToCsv,
+} from "../backendCapabilities/backendCapabilitiesSelectors";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -61,14 +65,15 @@ export const selectIsExecutionResultReadyForExportByRef = createMemoizedSelector
  */
 export const selectIsExecutionResultExportableToCsvByRef = createMemoizedSelector((ref: ObjRef) =>
     createSelector(
+        selectSupportsExportToCsv,
         selectIsExecutionResultReadyForExportByRef(ref),
         selectCanExportReport,
         selectCanExecuteRaw,
         selectSettings,
-        (isReadyForExport, canExportReport, canExecuteRaw, settings): boolean => {
+        (supportsCapabilityCsv, isReadyForExport, canExportReport, canExecuteRaw, settings): boolean => {
             const isExportEnabled = Boolean(settings.enableKPIDashboardExport && canExportReport);
             const isRawExportEnabled = Boolean(isExportEnabled && canExecuteRaw);
-            return isReadyForExport && isRawExportEnabled;
+            return supportsCapabilityCsv && isReadyForExport && isRawExportEnabled;
         },
     ),
 );
@@ -78,12 +83,13 @@ export const selectIsExecutionResultExportableToCsvByRef = createMemoizedSelecto
  */
 export const selectIsExecutionResultExportableToXlsxByRef = createMemoizedSelector((ref: ObjRef) =>
     createSelector(
+        selectSupportsExportToXlsx,
         selectIsExecutionResultReadyForExportByRef(ref),
         selectCanExportReport,
         selectSettings,
-        (isReadyForExport, canExportReport, settings): boolean => {
+        (supportCapabilityXlsx, isReadyForExport, canExportReport, settings): boolean => {
             const isExportEnabled = Boolean(settings.enableKPIDashboardExport && canExportReport);
-            return isReadyForExport && isExportEnabled;
+            return supportCapabilityXlsx && isReadyForExport && isExportEnabled;
         },
     ),
 );

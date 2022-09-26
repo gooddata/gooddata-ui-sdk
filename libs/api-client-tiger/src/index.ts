@@ -174,6 +174,14 @@ export {
 export { Configuration, ConfigurationParameters } from "./generated/auth-json-api/configuration";
 export * from "./generated/metadata-json-api/api";
 export {
+    TabularExportRequestFormatEnum,
+    Settings,
+    CustomOverride,
+    CustomLabel,
+    CustomMetric,
+} from "./generated/export-json-api/api";
+
+export {
     ActionsApiGetDataSourceSchemataRequest,
     ActionsApiScanDataSourceRequest,
     ActionsApiTestDataSourceDefinitionRequest,

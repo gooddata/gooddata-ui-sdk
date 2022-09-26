@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 require("dotenv").config();
 const { program } = require("commander");
 const axios = require("axios").default;
@@ -25,6 +25,7 @@ const specs = [
     { path: "/api/v1/schemas/afm", name: "afm-rest-api" },
     { path: "/api/v1/schemas/scan", name: "scan-json-api" },
     { path: "/api/v1/schemas/auth", name: "auth-json-api" },
+    { path: "/api/v1/schemas/export", name: "export-json-api" },
 ];
 
 const downloadSpec = async (specMeta, outputDir, outputFile) => {

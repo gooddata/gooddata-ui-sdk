@@ -1,0 +1,119 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Export payload should resolve custom override step by step 1`] = `
+Object {
+  "20cd0468e8fe4bdd95bdd7414e996d1d": Object {
+    "format": "#,#.##",
+    "title": "20cd0468e8fe4bdd95bdd7414e996d1d",
+  },
+  "20cd0468e8fe4bdd95bdd7414e996d1d_pop": Object {
+    "format": "#,#.##",
+    "title": "20cd0468e8fe4bdd95bdd7414e996d1d_pop",
+  },
+  "d5732e827a454f5393a9dc01f16778a9": Object {
+    "format": "#,#.##",
+    "title": "d5732e827a454f5393a9dc01f16778a9",
+  },
+  "d5732e827a454f5393a9dc01f16778a9_pop": Object {
+    "format": "#,#.##",
+    "title": "d5732e827a454f5393a9dc01f16778a9_pop",
+  },
+}
+`;
+
+exports[`Export payload should resolve custom override step by step 2`] = `
+Object {
+  "228f1cbe72844a47b342cabf5580aa9a": Object {
+    "title": "Ls  id  nm name",
+  },
+  "c2f62d0e05c045bebfb0ef02c3ab557d": Object {
+    "title": "Ls  id  nm name",
+  },
+}
+`;
+
+exports[`Export payload should resolve custom override step by step 3`] = `
+Object {
+  "20cd0468e8fe4bdd95bdd7414e996d1d": Object {
+    "format": "#,##0.00%",
+    "title": "Sum of F amount",
+  },
+  "20cd0468e8fe4bdd95bdd7414e996d1d_pop": Object {
+    "format": "#,#.##",
+    "title": "Amount - previous year",
+  },
+  "d5732e827a454f5393a9dc01f16778a9": Object {
+    "format": "<#>",
+    "title": "Probability",
+  },
+  "d5732e827a454f5393a9dc01f16778a9_pop": Object {
+    "format": "#,#.##",
+    "title": "Probability - SP year ago",
+  },
+}
+`;
+
+exports[`Export payload should resolve custom override step by step 4`] = `
+Object {
+  "228f1cbe72844a47b342cabf5580aa9a": Object {
+    "title": "Custom one",
+  },
+  "c2f62d0e05c045bebfb0ef02c3ab557d": Object {
+    "title": "Attribute custom",
+  },
+}
+`;
+
+exports[`Export payload should resolve custom override step by step 5`] = `
+Object {
+  "20cd0468e8fe4bdd95bdd7414e996d1d": Object {
+    "format": "#,##0.00%",
+    "title": "Sum of F amount",
+  },
+  "20cd0468e8fe4bdd95bdd7414e996d1d_pop": Object {
+    "format": "#,##0.00%",
+    "title": "Amount - previous year",
+  },
+  "d5732e827a454f5393a9dc01f16778a9": Object {
+    "format": "<#>",
+    "title": "Probability",
+  },
+  "d5732e827a454f5393a9dc01f16778a9_pop": Object {
+    "format": "<#>",
+    "title": "Probability - SP year ago",
+  },
+}
+`;
+
+exports[`Export payload should resolve custom override step by step 6`] = `
+Object {
+  "labels": Object {
+    "228f1cbe72844a47b342cabf5580aa9a": Object {
+      "title": "Custom one",
+    },
+    "c2f62d0e05c045bebfb0ef02c3ab557d": Object {
+      "title": "Attribute custom",
+    },
+  },
+  "metrics": Object {
+    "20cd0468e8fe4bdd95bdd7414e996d1d": Object {
+      "format": "#,##0.00%",
+      "title": "Sum of F amount",
+    },
+    "20cd0468e8fe4bdd95bdd7414e996d1d_pop": Object {
+      "format": "#,##0.00%",
+      "title": "Amount - previous year",
+    },
+    "d5732e827a454f5393a9dc01f16778a9": Object {
+      "format": "<#>",
+      "title": "Probability",
+    },
+    "d5732e827a454f5393a9dc01f16778a9_pop": Object {
+      "format": "<#>",
+      "title": "Probability - SP year ago",
+    },
+  },
+}
+`;
+
+exports[`Export payload should resolve custom override with empty data 1`] = `undefined`;
