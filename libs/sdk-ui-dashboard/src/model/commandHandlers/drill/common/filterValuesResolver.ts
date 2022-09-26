@@ -34,6 +34,8 @@ const MAX_ELEMENTS_COUNT_PER_REQUEST = 500; // should cover all attribute filter
  *  = all selected elements of attribute filter
  *  + from/to limits of relative date filter
  *  + from/to limits of absolute date filter
+ *  @param backend - Analytical backend instance
+ *  @param workspace - Workspace id
  * @returns Map of resolved filter values per filter's identifier (date dimension ref or attribute DF ref)
  * @alpha
  */
@@ -94,13 +96,13 @@ async function resolveRelativeDateFilterValues(
     let foundDayDisplayForm;
     if (isObjRef(filter.relativeDateFilter.dataSet)) {
         const dataSet = await backend
-            ?.workspace(workspace)
+            .workspace(workspace)
             .catalog()
             .forDataset(filter.relativeDateFilter.dataSet)
             .withGroups(false)
             .load();
 
-        if (dataSet.dateDatasets) {
+        if (dataSet.dateDatasets()[0]) {
             const dateDataSetAttributes = dataSet.dateDatasets()[0].dateAttributes;
             const foundDayAttribute = dateDataSetAttributes.find(
                 (dateDataSetAttr) => dateDataSetAttr.granularity === "GDC.time.date",

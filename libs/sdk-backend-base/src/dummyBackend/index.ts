@@ -45,6 +45,9 @@ import {
     IOrganizationSettingsService,
     IExplainProvider,
     ExplainType,
+    IWorkspaceCatalogAvailableItemsFactory,
+    IWorkspaceCatalogWithAvailableItemsFactoryOptions,
+    IWorkspaceCatalogWithAvailableItems,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -71,6 +74,14 @@ import {
     IThemeDefinition,
     IColorPaletteDefinition,
     IColorPaletteMetadataObject,
+    CatalogItem,
+    ICatalogAttribute,
+    ICatalogDateDataset,
+    ICatalogFact,
+    ICatalogGroup,
+    ICatalogMeasure,
+    IInsightDefinition,
+    IAttributeOrMeasure,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual";
 import isEmpty from "lodash/isEmpty";
@@ -442,7 +453,163 @@ class DummyWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     }
 
     public load(): Promise<IWorkspaceCatalog> {
-        return Promise.resolve("draw the rest of the owl" as any);
+        return Promise.resolve(new DummyWorkspaceCatalog(this.workspace));
+    }
+}
+
+class DummyWorkspaceCatalog implements IWorkspaceCatalog {
+    constructor(public readonly workspace: string) {}
+
+    public allItems(): CatalogItem[] {
+        return [];
+    }
+
+    public attributes(): ICatalogAttribute[] {
+        return [];
+    }
+
+    public availableItems(): IWorkspaceCatalogAvailableItemsFactory {
+        return new DummyWorkspaceCatalogAvailableItemsFactory(this.workspace);
+    }
+
+    public dateDatasets(): ICatalogDateDataset[] {
+        return [];
+    }
+
+    public facts(): ICatalogFact[] {
+        return [];
+    }
+
+    public groups(): ICatalogGroup[] {
+        return [];
+    }
+
+    public measures(): ICatalogMeasure[] {
+        return [];
+    }
+}
+
+class DummyWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCatalogAvailableItemsFactory {
+    constructor(
+        public readonly workspace: string,
+        public readonly options: IWorkspaceCatalogWithAvailableItemsFactoryOptions = {
+            items: [],
+            excludeTags: [],
+            insight: undefined,
+            dataset: undefined,
+            production: false,
+            includeDateGranularities: [],
+            includeTags: [],
+            loadGroups: false,
+            types: [],
+        },
+    ) {}
+
+    public excludeTags(excludeTags: ObjRef[]): IWorkspaceCatalogAvailableItemsFactory {
+        return this.withOptions({
+            excludeTags,
+        });
+    }
+
+    //eslint-disable-next-line sonarjs/no-identical-functions
+    public forDataset(dataset: ObjRef): IWorkspaceCatalogAvailableItemsFactory {
+        return this.withOptions({
+            dataset,
+        });
+    }
+
+    public forInsight(insight: IInsightDefinition): IWorkspaceCatalogAvailableItemsFactory {
+        return this.withOptions({
+            insight,
+        });
+    }
+
+    public forItems(items: IAttributeOrMeasure[]): IWorkspaceCatalogAvailableItemsFactory {
+        return this.withOptions({
+            items,
+        });
+    }
+
+    //eslint-disable-next-line sonarjs/no-identical-functions
+    public forTypes(types: CatalogItemType[]): IWorkspaceCatalogAvailableItemsFactory {
+        return this.withOptions({
+            types,
+        });
+    }
+
+    public includeTags(includeTags: ObjRef[]): IWorkspaceCatalogAvailableItemsFactory {
+        return this.withOptions({
+            includeTags,
+        });
+    }
+
+    public load(): Promise<IWorkspaceCatalogWithAvailableItems> {
+        return Promise.resolve(new DummyWorkspaceCatalogWithAvailableItems(this.workspace));
+    }
+
+    //eslint-disable-next-line sonarjs/no-identical-functions
+    public withGroups(loadGroups: boolean): IWorkspaceCatalogAvailableItemsFactory {
+        return this.withOptions({
+            loadGroups,
+        });
+    }
+
+    public withOptions(
+        options: Partial<IWorkspaceCatalogWithAvailableItemsFactoryOptions>,
+    ): IWorkspaceCatalogAvailableItemsFactory {
+        const newOptions = {
+            ...this.options,
+            ...options,
+        };
+        return new DummyWorkspaceCatalogAvailableItemsFactory(this.workspace, newOptions);
+    }
+}
+
+class DummyWorkspaceCatalogWithAvailableItems implements IWorkspaceCatalogWithAvailableItems {
+    constructor(public readonly workspace: string) {}
+
+    public allAvailableItems(): CatalogItem[] {
+        return [];
+    }
+
+    public allItems(): CatalogItem[] {
+        return [];
+    }
+
+    public attributes(): ICatalogAttribute[] {
+        return [];
+    }
+
+    public availableAttributes(): ICatalogAttribute[] {
+        return [];
+    }
+
+    public availableDateDatasets(): ICatalogDateDataset[] {
+        return [];
+    }
+
+    public availableFacts(): ICatalogFact[] {
+        return [];
+    }
+
+    public availableMeasures(): ICatalogMeasure[] {
+        return [];
+    }
+
+    public dateDatasets(): ICatalogDateDataset[] {
+        return [];
+    }
+
+    public facts(): ICatalogFact[] {
+        return [];
+    }
+
+    public groups(): ICatalogGroup[] {
+        return [];
+    }
+
+    public measures(): ICatalogMeasure[] {
+        return [];
     }
 }
 
