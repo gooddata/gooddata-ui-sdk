@@ -19,6 +19,7 @@ export function* initTotalCountSaga(correlation: Correlation): SagaIterator<void
             options: {
                 limit: 1,
                 includeTotalCountWithoutFilters: true,
+                excludePrimaryLabel: true,
             },
             correlation: initTotalCountCorrelation,
         }),

@@ -45,6 +45,7 @@ export interface ILoadElementsOptions {
     limitingDateFilters?: IRelativeDateFilter[];
     elements?: ElementsQueryOptionsElementsSpecification;
     includeTotalCountWithoutFilters?: boolean;
+    excludePrimaryLabel?: boolean;
 }
 
 /**

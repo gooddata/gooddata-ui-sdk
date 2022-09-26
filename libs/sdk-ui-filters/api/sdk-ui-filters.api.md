@@ -707,6 +707,8 @@ export interface ILoadElementsOptions {
     // (undocumented)
     elements?: ElementsQueryOptionsElementsSpecification;
     // (undocumented)
+    excludePrimaryLabel?: boolean;
+    // (undocumented)
     includeTotalCountWithoutFilters?: boolean;
     // (undocumented)
     limit?: number;

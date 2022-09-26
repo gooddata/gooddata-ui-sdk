@@ -54,7 +54,12 @@ export function* loadNextElementsPageSaga(
             selectLoadNextElementsPageOptions,
         );
 
-        const result = yield call(elementsSaga, loadOptions);
+        const loadOptionsWithExcludePrimaryLabel = {
+            ...loadOptions,
+            excludePrimaryLabel: true,
+        };
+
+        const result = yield call(elementsSaga, loadOptionsWithExcludePrimaryLabel);
 
         yield put(actions.loadNextElementsPageSuccess({ ...result, correlation }));
     } catch (error) {
