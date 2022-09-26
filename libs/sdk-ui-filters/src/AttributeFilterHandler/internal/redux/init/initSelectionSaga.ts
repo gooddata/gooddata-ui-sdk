@@ -32,6 +32,7 @@ export function* initSelectionSaga(correlation: Correlation): SagaIterator<void>
                 offset: 0,
                 limit: 550,
                 search: undefined,
+                excludePrimaryLabel: false,
             },
             correlation: initSelectionCorrelation,
         }),

@@ -182,6 +182,7 @@ Array [
       },
     ],
     "options": Object {
+      "excludePrimaryLabel": true,
       "limit": 500,
       "limitingAttributeFilters": Array [],
       "limitingDateFilters": Array [],

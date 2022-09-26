@@ -40,14 +40,11 @@ export function loadElementsFromBackend(
         search,
         order,
         includeTotalCountWithoutFilters,
+        excludePrimaryLabel = true,
     } = options;
 
     let loader = backend.workspace(workspace).attributes().elements().forDisplayForm(displayFormRef);
     const loaderOptions: IElementsQueryOptions = {};
-
-    if (!isElementUrisSupported(backend)) {
-        loaderOptions.excludePrimaryLabel = true;
-    }
 
     if (limit) {
         loader = loader.withLimit(limit);
@@ -57,6 +54,10 @@ export function loadElementsFromBackend(
     }
     if (search) {
         loaderOptions.filter = search;
+    }
+
+    if (excludePrimaryLabel && !isElementUrisSupported(backend)) {
+        loaderOptions.excludePrimaryLabel = true;
     }
 
     if (elements) {

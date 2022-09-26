@@ -44,7 +44,15 @@ export function* loadInitialElementsPageSaga(
             selectLoadElementsOptions,
         );
 
-        const result: SagaReturnType<typeof elementsSaga> = yield call(elementsSaga, loadOptions);
+        const loadOptionsWithExcludePrimaryLabel = {
+            ...loadOptions,
+            excludePrimaryLabel: true,
+        };
+
+        const result: SagaReturnType<typeof elementsSaga> = yield call(
+            elementsSaga,
+            loadOptionsWithExcludePrimaryLabel,
+        );
         const limitingAttributeFiltersAttributes = yield call(
             loadLimitingAttributeFiltersAttributes,
             context,

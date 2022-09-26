@@ -58,6 +58,9 @@ export const selectIsLoadElementsOptionsChanged = createSelector(
     selectLoadElementsOptions,
     selectLastLoadedElementsOptions,
     (loadOptions, lastLoadedOptions) => {
-        return !isEqual(omit(loadOptions, "offset"), omit(lastLoadedOptions, "offset"));
+        return !isEqual(
+            omit(loadOptions, "offset", "excludePrimaryLabel"),
+            omit(lastLoadedOptions, "offset", "excludePrimaryLabel"),
+        );
     },
 );
