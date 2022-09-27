@@ -1,6 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 import { useEffect, useRef, useState } from "react";
 import { useBackendStrict, useClientWorkspaceIdentifiers, usePrevious, useWorkspace } from "@gooddata/sdk-ui";
+import { useMapboxToken, enrichMapboxToken } from "@gooddata/sdk-ui-geo";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { ObjRef, IDashboardWidget, IDashboard, isDashboard } from "@gooddata/sdk-model";
 import { objectUtils } from "@gooddata/util";
@@ -72,6 +73,7 @@ export const useInitializeDashboardStore = (
     const { dashboard } = props;
     const backend = useBackendStrict(props.backend);
     const workspace = useWorkspace(props.workspace);
+    const mapboxToken = useMapboxToken(props.config?.mapboxToken);
     const { client: clientId, dataProduct: dataProductId } = useClientWorkspaceIdentifiers() ?? {};
     const [dashboardStore, setDashboardStore] = useState<ReduxedDashboardStore | null>(null);
     const dashboardRef = isDashboard(dashboard) ? dashboard.ref : dashboard;
@@ -125,7 +127,11 @@ export const useInitializeDashboardStore = (
                 initialRenderMode: props.initialRenderMode ?? "view",
             });
             newDashboardStore.store.dispatch(
-                initializeDashboard(props.config, props.permissions, InitialLoadCorrelationId),
+                initializeDashboard(
+                    enrichMapboxToken(props.config, mapboxToken),
+                    props.permissions,
+                    InitialLoadCorrelationId,
+                ),
             );
             setDashboardStore(newDashboardStore);
         }
