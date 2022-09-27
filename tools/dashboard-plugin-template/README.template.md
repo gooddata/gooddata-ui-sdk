@@ -111,6 +111,10 @@ Building a new plugin is easy. Before you start, ensure that your `.env` and `.e
 
     _TIP_: you can use the `unlink` command to remove the link between dashboard and the plugin.
 
+7.  Update parameters on a dashboard: `{{packageManager}} run update-plugin-params -- <plugin-object-id>`
+
+    This command is useful if you want to change or add the parameters in the already linked plugin. The tool will open an editor for you to enter the new parameters.
+
 ## Authentication & secrets
 
 Your plugin does not have to concern itself with the authentication against GoodData backend. When the plugin runs
