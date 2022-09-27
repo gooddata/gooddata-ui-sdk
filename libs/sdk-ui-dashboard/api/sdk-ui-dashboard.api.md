@@ -50,6 +50,7 @@ import { IDashboardAttributeFilter } from '@gooddata/sdk-model';
 import { IDashboardAttributeFilterParent } from '@gooddata/sdk-model';
 import { IDashboardDateFilter } from '@gooddata/sdk-model';
 import { IDashboardDateFilterConfig as IDashboardDateFilterConfig_2 } from '@gooddata/sdk-model';
+import { IDashboardDefinition } from '@gooddata/sdk-model';
 import { IDashboardFilterReference } from '@gooddata/sdk-model';
 import { IDashboardLayout } from '@gooddata/sdk-model';
 import { IDashboardLayoutItem } from '@gooddata/sdk-model';
@@ -5331,6 +5332,9 @@ export const selectDashboardUri: OutputSelector<DashboardState, string | undefin
 
 // @public
 export const selectDashboardUriRef: OutputSelector<DashboardState, UriRef | undefined, (res: string | undefined) => UriRef | undefined>;
+
+// @internal (undocumented)
+export const selectDashboardWorkingDefinition: OutputSelector<DashboardState, IDashboardDefinition<IDashboardWidget>, (res1: IDashboard<IDashboardWidget> | undefined, res2: DashboardDescriptor, res3: IFilterContextDefinition, res4: IDashboardObjectIdentity | undefined, res5: IDashboardLayout<IWidget>, res6: IDashboardDateFilterConfig_2 | undefined) => IDashboardDefinition<IDashboardWidget>>;
 
 // @internal
 export const selectDateDatasetsForInsight: (query: QueryInsightDateDatasets) => Selector<DashboardState, QueryCacheEntryResult<InsightDateDatasets> | undefined>;

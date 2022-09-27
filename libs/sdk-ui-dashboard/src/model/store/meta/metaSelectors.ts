@@ -8,6 +8,8 @@ import {
     IAccessControlAware,
     isDashboardDateFilter,
     isDashboardAttributeFilter,
+    IDashboardDefinition,
+    IDashboardObjectIdentity,
 } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import { DashboardState } from "../types";
@@ -16,9 +18,12 @@ import { selectBasicLayout } from "../layout/layoutSelectors";
 import {
     selectFilterContextAttributeFilters,
     selectFilterContextDateFilter,
+    selectFilterContextDefinition,
+    selectFilterContextIdentity,
 } from "../filterContext/filterContextSelectors";
 import { isDashboardLayoutEmpty } from "@gooddata/sdk-backend-spi";
 import isEqual from "lodash/isEqual";
+import { selectDateFilterConfigOverrides } from "../dateFilterConfig/dateFilterConfigSelectors";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -384,5 +389,48 @@ export const selectIsDashboardDirty = createSelector(
         }
 
         return [isFiltersChanged, isTitleChanged, isLayoutChanged].some(Boolean);
+    },
+);
+
+/**
+ * @internal
+ */
+export const selectDashboardWorkingDefinition = createSelector(
+    selectPersistedDashboard,
+    selectDashboardDescriptor,
+    selectFilterContextDefinition,
+    selectFilterContextIdentity,
+    selectBasicLayout,
+    selectDateFilterConfigOverrides,
+    (
+        persistedDashboard,
+        dashboardDescriptor,
+        filterContextDefinition,
+        filterContextIdentity,
+        layout,
+        dateFilterConfig,
+    ) => {
+        const dashboardIdentity: Partial<IDashboardObjectIdentity> = {
+            ref: persistedDashboard?.ref,
+            uri: persistedDashboard?.uri,
+            identifier: persistedDashboard?.identifier,
+        };
+
+        const pluginsProp = persistedDashboard?.plugins ? { plugins: persistedDashboard.plugins } : {};
+
+        const dashboardFromState: IDashboardDefinition = {
+            type: "IDashboard",
+            ...dashboardDescriptor,
+            ...dashboardIdentity,
+            filterContext: {
+                ...filterContextIdentity,
+                ...filterContextDefinition,
+            },
+            layout,
+            dateFilterConfig,
+            ...pluginsProp,
+        };
+
+        return dashboardFromState;
     },
 );

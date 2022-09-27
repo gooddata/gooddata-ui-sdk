@@ -191,6 +191,7 @@ export {
     selectIsNewDashboard,
     selectIsDashboardDirty,
     selectIsDashboardPrivate,
+    selectDashboardWorkingDefinition,
 } from "./meta/metaSelectors";
 export {
     selectListedDashboards,
