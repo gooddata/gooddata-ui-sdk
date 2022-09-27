@@ -35,8 +35,8 @@
         "limit": 0
     },
     "gs.list.search.placeholder": {
-        "value": "Search...",
-        "comment": "Placeholder text in search input filed.",
+        "value": "Search…",
+        "comment": "Use '…' as one character, not 3 dots ('...').",
         "limit": 0
     },
     "gs.list.notAvailableAbbreviation": {
@@ -1399,6 +1399,11 @@
         "comment": "This message is displayed when attribute elements are being filtered out by parent filters",
         "limit": 0
     },
+    "attributeFilterDropdown.emptyValue": {
+        "value": "empty value",
+        "comment": "",
+        "limit": 0
+    },
     "attributesDropdown.noData": {
         "value": "This attribute has no values.",
         "comment": "This message is displayed when when there are no items available because the attribute has no elements.",
@@ -1578,11 +1583,6 @@
     "sorting.default.tooltip": {
         "value": "Use the order defined in the attribute.",
         "comment": "Tooltip that explains user that default sorting of the selected attribute will be applied on the insight.",
-        "limit": 0
-    },
-    "attributeFilterDropdown.emptyValue": {
-        "value": "empty value",
-        "comment": "",
         "limit": 0
     },
     "embedInsightDialog.actions.close": {
