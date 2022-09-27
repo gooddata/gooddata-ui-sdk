@@ -18,7 +18,8 @@ Cypress.Cookies.debug(true);
 const PARENT_FILTER_SELECTOR = ".s-attribute-filter.s-product";
 const CHILD_FILTER_SELECTOR = ".s-attribute-filter.s-department";
 
-describe("Dashboard Filtering", () => {
+// eslint-disable-next-line jest/no-disabled-tests
+describe.skip("Dashboard Filtering", () => {
     beforeEach(() => {
         cy.login();
 
