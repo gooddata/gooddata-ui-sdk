@@ -32,6 +32,7 @@
         "add-plugin": "gdc-plugins dashboard-plugin add",
         "link-plugin": "gdc-plugins dashboard-plugin link",
         "unlink-plugin": "gdc-plugins dashboard-plugin unlink",
+        "update-plugin-params": "gdc-plugins dashboard-plugin update-params",
         "start": "webpack-cli serve --config-name harness",
         "test": "jest --watch --passWithNoTests",
         "test-once": "jest --maxWorkers=${JEST_MAX_WORKERS:-'45%'} --passWithNoTests",
