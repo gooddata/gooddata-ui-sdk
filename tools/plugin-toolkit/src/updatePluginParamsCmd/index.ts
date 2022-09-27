@@ -98,7 +98,9 @@ export async function updatePluginParamCmdAction(identifier: string, options: Ac
         }
 
         if (success) {
-            logSuccess(`Linked dashboard ${config.dashboard} with plugin ${config.identifier}.`);
+            logSuccess(
+                `Linked plugin ${config.identifier} on dashboard ${config.dashboard} has been updated with parameters ${config.parameters}.`,
+            );
         }
     } catch (e) {
         genericErrorReporter(e);
