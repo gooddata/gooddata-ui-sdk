@@ -22,8 +22,7 @@ export const AttributeFilterDeleteButton: React.VFC<IAttributeFilterDeleteButton
         <div className="gd-attribute-filter-delete-button">
             <BubbleHoverTrigger>
                 <Button
-                    key="delete-button"
-                    className="gd-button-link gd-button-icon-only gd-icon-trash delete-button s-delete-button"
+                    className="gd-button-link gd-button-icon-only gd-button-small gd-icon-trash gd-delete-button s-delete-button"
                     disabled={false}
                     onClick={onDelete}
                 />

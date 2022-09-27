@@ -1,7 +1,5 @@
 // (C) 2022 GoodData Corporation
-import React, { useCallback } from "react";
-import { useIntl } from "react-intl";
-import { DropdownControls } from "../common/DropdownControls";
+import React from "react";
 import { ConfigurationCategory } from "./ConfigurationCategory";
 import { ConfigurationPanelHeader } from "./ConfigurationPanelHeader";
 
@@ -14,19 +12,19 @@ import { IDashboardAttributeFilter, ObjRef } from "@gooddata/sdk-model";
 import { ParentFiltersList } from "./parentFilters/ParentFiltersList";
 
 import invariant from "ts-invariant";
-import { useDisplayFormConfiguration } from "./hooks/useDisplayFormConfiguration";
-import { useParentsConfiguration } from "./hooks/useParentsConfiguration";
 import { AttributeDisplayFormsDropdown } from "./displayForms/AttributeDisplayFormsDropdown";
+import { useAttributeFilterParentFiltering } from "../../AttributeFilterParentFilteringContext";
 
 interface IAttributeFilterConfigurationProps {
     closeHandler: () => void;
     onChange: () => void;
     filterRef?: ObjRef;
+    filterByText: string;
+    displayValuesAsText: string;
 }
 
 export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfigurationProps> = (props) => {
-    const { closeHandler, filterRef } = props;
-    const intl = useIntl();
+    const { filterRef, filterByText, displayValuesAsText } = props;
 
     const neighborFilters: IDashboardAttributeFilter[] = useDashboardSelector(
         selectOtherContextAttributeFilters(filterRef),
@@ -44,21 +42,11 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
     const {
         parents,
         onParentSelect,
-        parentsConfigChanged,
         onConnectingAttributeChanged,
-        connectingAttributeChanged,
-        onParentFiltersChange,
-    } = useParentsConfiguration(neighborFilters, currentFilter);
-
-    const { onDisplayFormSelect, filterDisplayForms, displayFormChanged, onDisplayFormChange } =
-        useDisplayFormConfiguration(currentFilter);
-
-    const onConfigurationSave = useCallback(() => {
-        onParentFiltersChange();
-        onDisplayFormChange();
-    }, [onParentFiltersChange, onDisplayFormChange]);
-
-    const showDisplayFormPicker = filterDisplayForms.availableDisplayForms.length > 1;
+        showDisplayFormPicker,
+        filterDisplayForms,
+        onDisplayFormSelect,
+    } = useAttributeFilterParentFiltering();
 
     if (!filterRef) {
         return null;
@@ -67,11 +55,7 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
     return (
         <div className="s-attribute-filter-dropdown-configuration attribute-filter-dropdown-configuration">
             <ConfigurationPanelHeader />
-            {parents.length > 0 && (
-                <ConfigurationCategory
-                    categoryTitle={intl.formatMessage({ id: "attributesDropdown.filterBy" })}
-                />
-            )}
+            {parents.length > 0 && <ConfigurationCategory categoryTitle={filterByText} />}
             <ParentFiltersList
                 currentFilterLocalId={currentFilter.attributeFilter.localIdentifier!}
                 parents={parents}
@@ -80,9 +64,7 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
             />
             {showDisplayFormPicker && (
                 <div className="s-display-form-configuration">
-                    <ConfigurationCategory
-                        categoryTitle={intl.formatMessage({ id: "attributesDropdown.displayValuesAs" })}
-                    />
+                    <ConfigurationCategory categoryTitle={displayValuesAsText} />
                     <div className="configuration-panel-body">
                         <AttributeDisplayFormsDropdown
                             displayForms={filterDisplayForms.availableDisplayForms}
@@ -92,11 +74,6 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
                     </div>
                 </div>
             )}
-            <DropdownControls
-                closeHandler={closeHandler}
-                isSaveButtonEnabled={parentsConfigChanged || displayFormChanged || connectingAttributeChanged}
-                onSave={onConfigurationSave}
-            />
         </div>
     );
 };

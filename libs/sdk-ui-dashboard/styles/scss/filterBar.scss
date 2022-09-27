@@ -112,7 +112,8 @@ $attribute-filter-drag-handle-left: 10px;
     min-height: $filter-bar-height;
     margin-right: $scrollbar-width;
 
-    .dash-filters-attribute {
+    .dash-filters-attribute,
+    .dash-filters-date {
         position: relative;
     }
 }
@@ -189,6 +190,7 @@ $attribute-filter-drag-handle-left: 10px;
 .attr-filter-dropzone-box-outer {
     display: flex;
     align-items: stretch;
+    margin-left: 10px;
 }
 
 .attr-filter-dropzone-box {
@@ -245,13 +247,12 @@ $attribute-filter-drag-handle-left: 10px;
 
 .draggable-attribute-filter {
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .add-attribute-filter-dropdown {
-    > div {
-        margin-left: -$attribute-filter-drag-handle-left;
-    }
-
     .attribute-filter-button {
         margin-left: $attribute-filter-drag-handle-left;
 
@@ -270,4 +271,22 @@ $attribute-filter-drag-handle-left: 10px;
             }
         }
     }
+}
+
+.gd-button-small[class*="gd-icon-"].gd-button-icon-only {
+    &.gd-configuration-button,
+    &.gd-delete-button {
+        width: 18px;
+        height: 18px;
+        padding: 0;
+    }
+}
+
+.gd-button-separator {
+    content: "";
+    display: inline-block;
+    width: 1px;
+    height: 18px;
+    background-color: var(--gd-palette-complementary-3, #dde4eb);
+    margin: 0 5px;
 }

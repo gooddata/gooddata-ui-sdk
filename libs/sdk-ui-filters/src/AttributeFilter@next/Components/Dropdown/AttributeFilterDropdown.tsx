@@ -78,7 +78,7 @@ export const AttributeFilterDropdown: React.VFC = () => {
                             onApply();
                             closeDropdown();
                         }}
-                        onCloseButtonClick={closeDropdown}
+                        onCancelButtonClick={closeDropdown}
                     />
                 </div>
             )}

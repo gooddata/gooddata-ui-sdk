@@ -379,3 +379,13 @@ export const selectIsAnalyticalDesignerEnabled = createSelector(
     selectConfig,
     (state) => !!(state.settings?.analyticalDesigner || false),
 );
+
+/**
+ * Returns whether delete button in dashboard attribute filters is visible.
+ *
+ * @internal
+ */
+export const selectIsDeleteFilterButtonEnabled = createSelector(
+    selectConfig,
+    (state) => !!(state.settings?.enableKPIDashboardDeleteFilterButton || false),
+);

@@ -390,7 +390,7 @@ export interface IAttributeFilterDropdownActionsProps {
     // (undocumented)
     onApplyButtonClick: () => void;
     // (undocumented)
-    onCloseButtonClick: () => void;
+    onCancelButtonClick: () => void;
 }
 
 // @alpha (undocumented)
@@ -398,7 +398,7 @@ export interface IAttributeFilterDropdownBodyProps {
     // (undocumented)
     onApplyButtonClick: () => void;
     // (undocumented)
-    onCloseButtonClick: () => void;
+    onCancelButtonClick: () => void;
     // (undocumented)
     width?: number;
 }

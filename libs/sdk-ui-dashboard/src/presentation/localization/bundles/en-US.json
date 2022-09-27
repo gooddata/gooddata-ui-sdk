@@ -9,11 +9,6 @@
         "comment": "",
         "limit": 0
     },
-    "apply": {
-        "value": "Apply",
-        "comment": "",
-        "limit": 0
-    },
     "gs.list.cancel": {
         "value": "Cancel",
         "comment": "",
@@ -841,16 +836,6 @@
         "comment": "Global messages. Load of dashboard sharing dialog fails.",
         "limit": 0
     },
-    "attributeFilterDropdown.searchPlaceholder": {
-        "value": "Search…",
-        "comment": "Use '…' as one character, not 3 dots ('...').",
-        "limit": 0
-    },
-    "attributeFilterDropdown.emptyValue": {
-        "value": "empty value",
-        "comment": "",
-        "limit": 0
-    },
     "visualization.dataTooLarge.headline": {
         "value": "Too many data points to display",
         "comment": "",
@@ -1056,11 +1041,6 @@
     "attributesDropdown.placeholder": {
         "value": "Search attributes…",
         "comment": "Use '…' as one character, not 3 dots ('...').",
-        "limit": 0
-    },
-    "attributesDropdown.noData": {
-        "value": "This attribute has no values.",
-        "comment": "This message is displayed when when there are no items available because the attribute has no elements.",
         "limit": 0
     },
     "attributesDropdown.configuration": {

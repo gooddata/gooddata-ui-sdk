@@ -15,7 +15,7 @@ const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 const backend = StorybookBackend();
 
 const CustomDropdownActions = (props: IAttributeFilterDropdownActionsProps) => {
-    const { onApplyButtonClick, onCloseButtonClick } = props;
+    const { onApplyButtonClick, onCancelButtonClick } = props;
 
     return (
         <div
@@ -28,7 +28,7 @@ const CustomDropdownActions = (props: IAttributeFilterDropdownActionsProps) => {
                 background: "cyan",
             }}
         >
-            <button style={{ border: "1px solid black" }} onClick={onCloseButtonClick}>
+            <button style={{ border: "1px solid black" }} onClick={onCancelButtonClick}>
                 Close
             </button>
             <button style={{ border: "1px solid black" }} onClick={onApplyButtonClick}>

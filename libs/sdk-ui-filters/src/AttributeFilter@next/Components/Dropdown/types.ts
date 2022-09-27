@@ -5,6 +5,6 @@
  */
 export interface IAttributeFilterDropdownBodyProps {
     onApplyButtonClick: () => void;
-    onCloseButtonClick: () => void;
+    onCancelButtonClick: () => void;
     width?: number;
 }
