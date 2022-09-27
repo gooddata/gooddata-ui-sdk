@@ -22,6 +22,7 @@ import {
     convertError,
     resolveLocale,
 } from "@gooddata/sdk-ui";
+import { withMapboxToken } from "@gooddata/sdk-ui-geo";
 
 import InsightTitle from "./InsightTitle";
 import { InsightRenderer } from "./InsightRenderer";
@@ -246,7 +247,7 @@ const InsightViewCore: React.FC<IInsightViewProps & WrappedComponentProps> = (pr
     );
 };
 
-export const IntlInsightView = withContexts(injectIntl(InsightViewCore));
+export const IntlInsightView = withMapboxToken(withContexts(injectIntl(InsightViewCore)));
 
 /**
  * Renders insight which was previously created and saved in the Analytical Designer.

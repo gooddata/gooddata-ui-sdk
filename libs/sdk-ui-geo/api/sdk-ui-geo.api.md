@@ -41,6 +41,13 @@ export type CenterPositionChangedCallback = (center: IGeoLngLat) => void;
 // @internal (undocumented)
 export const CoreGeoChart: React_2.FC<ICoreGeoChartProps & WrappedComponentProps>;
 
+// @internal (undocumented)
+export function enrichMapboxToken<T>(config?: T & {
+    mapboxToken?: string;
+}, mapboxToken?: string): (T & {
+    mapboxToken?: string;
+}) | undefined;
+
 // @public (undocumented)
 export const GeoPushpinChart: (props: IGeoPushpinChartProps) => JSX.Element;
 
@@ -297,7 +304,15 @@ export const MapboxTokenProvider: React_2.FC<{
 export type PushpinSizeOption = "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
 
 // @alpha (undocumented)
-export function useMapboxToken(): string;
+export function useMapboxToken(mapboxToken?: string): string | undefined;
+
+// @alpha (undocumented)
+export function useMapboxTokenStrict(mapboxToken?: string): string;
+
+// @internal (undocumented)
+export function withMapboxToken<T extends {
+    config?: IGeoConfig;
+}>(InnerComponent: React_2.ComponentType<T>): React_2.ComponentType<T>;
 
 // @public (undocumented)
 export type ZoomChangedCallback = (zoom: number) => void;

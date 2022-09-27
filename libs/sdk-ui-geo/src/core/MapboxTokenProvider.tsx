@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 import React, { useContext } from "react";
-import { ICoreGeoChartProps } from "./geoChart/GeoChartInner";
 import invariant from "ts-invariant";
+import { IGeoConfig } from "../GeoChart";
 
 /**
  * @alpha
@@ -22,9 +22,9 @@ export const MapboxTokenProvider: React.FC<{ token: string }> = ({ token, childr
 /**
  * @internal
  */
-export function withMapboxToken<T extends ICoreGeoChartProps>(
-    InnerComponent: React.ComponentClass<T>,
-): React.ComponentClass<T> {
+export function withMapboxToken<T extends { config?: IGeoConfig }>(
+    InnerComponent: React.ComponentType<T>,
+): React.ComponentType<T> {
     return class MapboxTokenHOC extends React.Component<T> {
         static contextType = MapboxTokenContext;
         declare context: React.ContextType<typeof MapboxTokenContext>;
@@ -32,15 +32,10 @@ export function withMapboxToken<T extends ICoreGeoChartProps>(
         public render() {
             const { mapboxToken } = this.context;
             const props = this.props;
-            const config = mapboxToken
-                ? {
-                      ...(props.config || {}),
-                      mapboxToken: props.config?.mapboxToken || mapboxToken,
-                  }
-                : props.config;
+
             return (
                 <>
-                    <InnerComponent {...props} config={config} />
+                    <InnerComponent {...props} config={enrichMapboxToken(props.config, mapboxToken)} />
                 </>
             );
         }
@@ -48,14 +43,36 @@ export function withMapboxToken<T extends ICoreGeoChartProps>(
 }
 
 /**
+ * @internal
+ */
+export function enrichMapboxToken<T>(
+    config?: T & { mapboxToken?: string },
+    mapboxToken?: string,
+): (T & { mapboxToken?: string }) | undefined {
+    return mapboxToken
+        ? ({
+              ...(config || {}),
+              mapboxToken: config?.mapboxToken || mapboxToken,
+          } as T & { mapboxToken?: string })
+        : config;
+}
+
+/**
  * @alpha
  */
-export function useMapboxToken() {
+export function useMapboxTokenStrict(mapboxToken?: string) {
     const context = useContext(MapboxTokenContext);
-    invariant(
-        context.mapboxToken,
-        "Mapbox token was not provided. Use <MapboxTokenProvider /> to provide token.",
-    );
+    const token = mapboxToken ?? context.mapboxToken;
+    invariant(token, "Mapbox token was not provided. Use <MapboxTokenProvider /> to provide token.");
 
-    return context.mapboxToken;
+    return token;
+}
+
+/**
+ * @alpha
+ */
+export function useMapboxToken(mapboxToken?: string) {
+    const context = useContext(MapboxTokenContext);
+
+    return mapboxToken ?? context.mapboxToken;
 }
