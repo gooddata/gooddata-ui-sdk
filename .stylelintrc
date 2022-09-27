@@ -1,6 +1,6 @@
 {
-  "extends": [
-    "@gooddata/stylelint-config",
-    "stylelint-config-prettier"
-  ]
+    "extends": ["@gooddata/stylelint-config", "stylelint-config-prettier"],
+    "rules": {
+        "order/properties-order": null
+    }
 }
