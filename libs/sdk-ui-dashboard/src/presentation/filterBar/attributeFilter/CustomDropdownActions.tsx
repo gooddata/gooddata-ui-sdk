@@ -23,7 +23,7 @@ export interface ICustomAttributeFilterDropdownActionsProps {
 /**
  * @internal
  */
-export const CustomAttributeFilterDropdownActions: React.VFC<ICustomAttributeFilterDropdownActionsProps> = ({
+export const CustomAttributeFilterDropdownActions: React.FC<ICustomAttributeFilterDropdownActionsProps> = ({
     isApplyDisabled,
     onApplyButtonClick,
     onCancelButtonClick,
@@ -81,7 +81,7 @@ export interface ICustomConfigureAttributeFilterDropdownActionsProps {
 /**
  * @internal
  */
-export const CustomConfigureAttributeFilterDropdownActions: React.VFC<
+export const CustomConfigureAttributeFilterDropdownActions: React.FC<
     ICustomConfigureAttributeFilterDropdownActionsProps
 > = ({ isSaveDisabled, onSaveButtonClick, onCancelButtonClick, cancelText, saveText }) => {
     return (

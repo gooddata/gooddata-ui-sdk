@@ -19,15 +19,18 @@ import {
 
 import { IDashboardAttributeFilterProps } from "./types";
 import { useParentFilters } from "./useParentFilters";
-import { selectLocale, useDashboardSelector } from "../../../model";
 import { filterObjRef } from "@gooddata/sdk-model";
 import { AttributeFilterConfiguration } from "./dashboardDropdownBody/configuration/AttributeFilterConfiguration";
 import {
     CustomAttributeFilterDropdownActions,
     CustomConfigureAttributeFilterDropdownActions,
 } from "./CustomDropdownActions";
-import { useDashboardDispatch } from "../../../model/react/DashboardStoreProvider";
-import { removeAttributeFilter } from "../../../model/commands/filters";
+import {
+    removeAttributeFilter,
+    useDashboardDispatch,
+    selectLocale,
+    useDashboardSelector,
+} from "../../../model";
 import {
     AttributeFilterParentFilteringProvider,
     useAttributeFilterParentFiltering,
@@ -45,14 +48,7 @@ export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilter
     const { parentFilters, parentFilterOverAttribute } = useParentFilters(filter);
     const locale = useDashboardSelector(selectLocale);
     const attributeFilter = useMemo(() => dashboardAttributeFilterToAttributeFilter(filter), [filter]);
-    // const theme = useTheme();
     const [isConfigurationOpen, setIsConfigurationOpen] = useState(false);
-
-    const CustomDropdownButton = useMemo(() => {
-        return function DropdownButton(props: IAttributeFilterDropdownButtonProps) {
-            return <AttributeFilterDropdownButton {...props} isDraggable={isDraggable} />;
-        };
-    }, [isDraggable]);
 
     const filterRef = useMemo(() => {
         return filterObjRef(attributeFilter);
@@ -71,6 +67,12 @@ export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilter
     const applyText = intl.formatMessage({ id: "gs.list.apply" });
     const displayValuesAsText = intl.formatMessage({ id: "attributesDropdown.displayValuesAs" });
     const filterByText = intl.formatMessage({ id: "attributesDropdown.filterBy" });
+
+    const CustomDropdownButton = useMemo(() => {
+        return function DropdownButton(props: IAttributeFilterDropdownButtonProps) {
+            return <AttributeFilterDropdownButton {...props} isDraggable={isDraggable} />;
+        };
+    }, [isDraggable]);
 
     const CustomDropdownActions = useMemo(() => {
         return function DropdownActions(props: IAttributeFilterDropdownActionsProps) {
