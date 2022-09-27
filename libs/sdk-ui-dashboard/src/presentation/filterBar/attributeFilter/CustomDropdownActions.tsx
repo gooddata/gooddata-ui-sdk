@@ -4,7 +4,7 @@ import { Button } from "@gooddata/sdk-ui-kit";
 import {
     AttributeFilterConfigurationButton,
     AttributeFilterDeleteButton,
-} from "@gooddata/sdk-ui-filters/esm/internal";
+} from "@gooddata/sdk-ui-filters/dist/internal";
 import { selectIsDeleteFilterButtonEnabled, selectIsInEditMode, useDashboardSelector } from "../../../model";
 
 /**

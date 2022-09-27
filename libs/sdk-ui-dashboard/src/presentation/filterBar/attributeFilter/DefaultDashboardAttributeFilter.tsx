@@ -10,7 +10,7 @@ import {
     AttributeFilterDropdownButton,
     AttributeFilterElementsSelect,
     IAttributeFilterElementsSelectProps,
-} from "@gooddata/sdk-ui-filters/esm/internal";
+} from "@gooddata/sdk-ui-filters/dist/internal";
 
 import {
     attributeFilterToDashboardAttributeFilter,
