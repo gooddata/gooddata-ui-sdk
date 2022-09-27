@@ -6,6 +6,15 @@
     text-align: right;
     margin: 0 10px;
     padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.gd-attribute-filter-dropdown-actions-left-content__next,
+.gd-attribute-filter-dropdown-actions-right-content__next {
+    display: flex;
+    align-items: center;
 }
 
 .gd-is-mobile {

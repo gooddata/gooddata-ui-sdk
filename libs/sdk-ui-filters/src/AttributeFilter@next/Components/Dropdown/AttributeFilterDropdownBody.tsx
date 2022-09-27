@@ -10,7 +10,7 @@ import { DEFAULT_DROPDOWN_BODY_WIDTH } from "../../constants";
  * @internal
  */
 export const AttributeFilterDropdownBody: React.FC<IAttributeFilterDropdownBodyProps> = (props) => {
-    const { onApplyButtonClick, onCloseButtonClick, width = DEFAULT_DROPDOWN_BODY_WIDTH } = props;
+    const { onApplyButtonClick, onCancelButtonClick, width = DEFAULT_DROPDOWN_BODY_WIDTH } = props;
 
     const { DropdownActionsComponent, ElementsSelectComponent } = useAttributeFilterComponentsContext();
 
@@ -64,7 +64,7 @@ export const AttributeFilterDropdownBody: React.FC<IAttributeFilterDropdownBodyP
             />
             <DropdownActionsComponent
                 onApplyButtonClick={onApplyButtonClick}
-                onCloseButtonClick={onCloseButtonClick}
+                onCancelButtonClick={onCancelButtonClick}
                 isApplyDisabled={isApplyDisabled}
             />
         </div>

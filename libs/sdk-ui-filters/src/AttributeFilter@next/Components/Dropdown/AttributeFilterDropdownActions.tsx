@@ -8,7 +8,7 @@ import { Button } from "@gooddata/sdk-ui-kit";
  */
 export interface IAttributeFilterDropdownActionsProps {
     onApplyButtonClick: () => void;
-    onCloseButtonClick: () => void;
+    onCancelButtonClick: () => void;
     isApplyDisabled?: boolean;
 }
 
@@ -18,7 +18,7 @@ export interface IAttributeFilterDropdownActionsProps {
 export const AttributeFilterDropdownActions: React.VFC<IAttributeFilterDropdownActionsProps> = ({
     isApplyDisabled,
     onApplyButtonClick,
-    onCloseButtonClick,
+    onCancelButtonClick,
 }) => {
     const intl = useIntl();
 
@@ -27,19 +27,22 @@ export const AttributeFilterDropdownActions: React.VFC<IAttributeFilterDropdownA
 
     return (
         <div className="gd-attribute-filter-dropdown-actions__next">
-            <Button
-                className="gd-attribute-filter-cancel-button__next gd-button-secondary gd-button-small cancel-button s-cancel"
-                onClick={onCloseButtonClick}
-                value={cancelText}
-                title={cancelText}
-            />
-            <Button
-                disabled={isApplyDisabled}
-                className="gd-attribute-filter-apply-button__next gd-button-action gd-button-small s-apply"
-                onClick={onApplyButtonClick}
-                value={applyText}
-                title={applyText}
-            />
+            <div className="gd-attribute-filter-dropdown-actions-left-content__next" />
+            <div className="gd-attribute-filter-dropdown-actions-right-content__next">
+                <Button
+                    className="gd-attribute-filter-cancel-button__next gd-button-secondary gd-button-small cancel-button s-cancel"
+                    onClick={onCancelButtonClick}
+                    value={cancelText}
+                    title={cancelText}
+                />
+                <Button
+                    disabled={isApplyDisabled}
+                    className="gd-attribute-filter-apply-button__next gd-button-action gd-button-small s-apply"
+                    onClick={onApplyButtonClick}
+                    value={applyText}
+                    title={applyText}
+                />
+            </div>
         </div>
     );
 };

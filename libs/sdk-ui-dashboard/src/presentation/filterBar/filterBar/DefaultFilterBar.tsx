@@ -98,7 +98,7 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
 
     return (
         <DefaultFilterBarContainer>
-            <div className="dash-filters-date dash-filters-attribute">
+            <div className="dash-filters-date">
                 {dateFilterMode === "hidden" ? (
                     <HiddenDashboardDateFilter />
                 ) : (

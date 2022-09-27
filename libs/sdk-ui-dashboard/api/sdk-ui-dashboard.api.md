@@ -5497,6 +5497,9 @@ export const selectIsDashboardSaving: OutputSelector<DashboardState, boolean, (r
 // @internal (undocumented)
 export const selectIsDeleteDialogOpen: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
 
+// @internal
+export const selectIsDeleteFilterButtonEnabled: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
+
 // @internal (undocumented)
 export const selectIsDraggingWidget: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
 

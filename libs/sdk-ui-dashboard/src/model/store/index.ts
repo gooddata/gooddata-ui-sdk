@@ -54,6 +54,7 @@ export {
     selectAllowUnfinishedFeatures,
     selectDashboardEditModeDevRollout,
     selectIsAnalyticalDesignerEnabled,
+    selectIsDeleteFilterButtonEnabled,
 } from "./config/configSelectors";
 export { PermissionsState } from "./permissions/permissionsState";
 export {

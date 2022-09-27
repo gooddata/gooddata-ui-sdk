@@ -3,6 +3,7 @@
 
 .gd-attribute-filter-dropdown-button__next {
     @include gd-font-base;
+    margin: 7px 11px 7px 0;
 
     max-width: 185px;
     position: relative;
@@ -15,6 +16,7 @@
 
     &.gd-is-draggable {
         padding-left: 23px;
+        margin-left: -10px;
     }
 
     &::before,

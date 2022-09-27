@@ -40,7 +40,7 @@ export function useDisplayFormConfiguration(currentFilter: IDashboardAttributeFi
             setFilterDisplayForms(updatedDisplayForms);
             setDisplayFormChanged(!areObjRefsEqual(displayForm, originalDisplayForm));
         },
-        [filterDisplayForms],
+        [filterDisplayForms, originalDisplayForm],
     );
 
     const onDisplayFormChange = useCallback(() => {
@@ -50,7 +50,7 @@ export function useDisplayFormConfiguration(currentFilter: IDashboardAttributeFi
                 filterDisplayForms.selectedDisplayForm,
             );
         }
-    }, [filterDisplayForms]);
+    }, [filterDisplayForms, originalDisplayForm, currentFilter, changeDisplayFormCommand]);
 
     return {
         onDisplayFormSelect,

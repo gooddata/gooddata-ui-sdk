@@ -155,7 +155,7 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                         <div className="gd-extended-date-filter-actions-buttons">
                             <DateFilterBodyButton
                                 messageId="cancel"
-                                className="gd-button-secondary s-date-filter-cancel"
+                                className="gd-button-secondary gd-button-small s-date-filter-cancel"
                                 onClick={() => {
                                     onCancelClick();
                                     closeDropdown();
@@ -163,7 +163,7 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                             />
                             <DateFilterBodyButton
                                 messageId="apply"
-                                className="gd-button-action s-date-filter-apply"
+                                className="gd-button-action gd-button-small s-date-filter-apply"
                                 disabled={!isEmpty(errors)}
                                 onClick={() => {
                                     onApplyClick();
