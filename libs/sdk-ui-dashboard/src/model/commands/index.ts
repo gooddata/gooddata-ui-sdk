@@ -77,6 +77,7 @@ export {
     InitializeDashboard,
     InitializeDashboardPayload,
     initializeDashboard,
+    initializeDashboardWithPersistedDashboard,
     SaveDashboardAs,
     SaveDashboardAsPayload,
     saveDashboardAs,

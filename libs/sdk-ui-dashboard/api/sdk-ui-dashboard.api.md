@@ -3188,6 +3188,8 @@ export interface IDashboardPluginContract_V1 extends DashboardPluginDescriptor {
 export interface IDashboardProps extends IDashboardBaseProps, IDashboardExtensionProps {
     // (undocumented)
     children?: JSX.Element | ((dashboard: any) => JSX.Element);
+    // @internal
+    persistedDashboard?: IDashboard;
 }
 
 // @alpha
@@ -3230,6 +3232,8 @@ export interface IDashboardStoreProviderProps {
     onStateChange?: (state: DashboardState, dispatch: DashboardDispatch) => void;
     // (undocumented)
     permissions?: IWorkspacePermissions;
+    // (undocumented)
+    persistedDashboard?: IDashboard;
     // (undocumented)
     workspace?: string;
 }
@@ -3589,7 +3593,12 @@ export interface InitializeDashboardPayload {
     readonly config?: DashboardConfig;
     // (undocumented)
     readonly permissions?: IWorkspacePermissions;
+    // @internal (undocumented)
+    readonly persistedDashboard?: IDashboard;
 }
+
+// @internal
+export function initializeDashboardWithPersistedDashboard(config?: DashboardConfig, permissions?: IWorkspacePermissions, persistedDashboard?: IDashboard, correlationId?: string): InitializeDashboard;
 
 // @public
 export const InitialLoadCorrelationId = "initialLoad";

@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 
 import { DashboardConfig } from "../types/commonTypes";
-import { IWorkspacePermissions } from "@gooddata/sdk-model";
+import { IDashboard, IWorkspacePermissions } from "@gooddata/sdk-model";
 import { IDashboardCommand } from "./base";
 import { ISharingApplyPayload } from "@gooddata/sdk-ui-kit";
 
@@ -19,6 +19,10 @@ export const InitialLoadCorrelationId = "initialLoad";
 export interface InitializeDashboardPayload {
     readonly config?: DashboardConfig;
     readonly permissions?: IWorkspacePermissions;
+    /**
+     * @internal
+     */
+    readonly persistedDashboard?: IDashboard;
 }
 
 /**
@@ -71,6 +75,54 @@ export function initializeDashboard(
         payload: {
             config,
             permissions,
+        },
+    };
+}
+
+/**
+ * Creates the InitializeDashboard command with the persisted dashboard overridden.
+ *
+ * @remarks
+ * Dispatching this command will result in the load of all the essential data from the backend and initializing
+ * the state of Dashboard to a point where the dashboard can be rendered.
+ *
+ * Note that the command takes the dashboard to initialize from context - from the properties of the Dashboard
+ * component in which it runs:
+ *
+ * -  If Dashboard component is referencing an existing, persisted dashboard, then the dashboard will be loaded and
+ *    rendered.
+ *
+ * -  If Dashboard component does not reference any dashboard, then the component will initialize for an empty
+ *    dashboard with default filter setup.
+ *
+ * In both cases the essential configuration, permissions and additional metadata gets loaded from the backend.
+ *
+ * @param config - specify configuration to use for for the Dashboard; you MAY provide partial configuration.
+ *  During the LoadDashboard processing the Dashboard component will resolve all the missing parts by reading them
+ *  from the backend.
+ * @param permissions - specify permissions to use when determining whether the user is eligible for some
+ *  actions with the dashboard; if you do not specify permissions Dashboard component will load the permissions
+ *  from the backend.
+ * @param persistedDashboard - dashboard to use for the persisted dashboard state slice in case it needs to be
+ *  different from the dashboard param
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @internal
+ */
+export function initializeDashboardWithPersistedDashboard(
+    config?: DashboardConfig,
+    permissions?: IWorkspacePermissions,
+    persistedDashboard?: IDashboard,
+    correlationId?: string,
+): InitializeDashboard {
+    return {
+        type: "GDC.DASH/CMD.INITIALIZE",
+        correlationId,
+        payload: {
+            config,
+            permissions,
+            persistedDashboard,
         },
     };
 }

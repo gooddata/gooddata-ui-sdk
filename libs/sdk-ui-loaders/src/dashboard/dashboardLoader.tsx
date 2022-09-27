@@ -332,9 +332,8 @@ export class DashboardLoader implements IDashboardLoader {
             config: dashboardConfig,
             ...extensionProps,
             workspace,
-            // TODO we need to set persistedDashboard to the one loaded here even for IDashboard values of dashboard prop
-            // that is needed for the isDirty selector to work for example
             dashboard: isDashboard(dashboard) ? dashboard : dashboardWithPlugins?.dashboard,
+            persistedDashboard: dashboardWithPlugins?.dashboard,
         };
 
         /*

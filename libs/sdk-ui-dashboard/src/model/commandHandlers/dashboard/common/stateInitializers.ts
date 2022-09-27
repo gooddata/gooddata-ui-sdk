@@ -121,6 +121,7 @@ function* sanitizeFilterContext(
  *  which date option is selected
  * @param displayForms - specify display forms that should be used for in-memory resolution of
  *  attribute filter display forms to metadata objects
+ * @param persistedDashboard - dashboard to use for the persisted dashboard state slice in case it needs to be different from the dashboard param
  */
 export function* actionsToInitializeExistingDashboard(
     ctx: DashboardContext,
@@ -129,6 +130,7 @@ export function* actionsToInitializeExistingDashboard(
     settings: ISettings,
     dateFilterConfig: IDateFilterConfig,
     displayForms?: ObjRefMap<IAttributeDisplayFormMetadataObject>,
+    persistedDashboard?: IDashboard,
 ): SagaIterator<Array<PayloadAction<any>>> {
     const sanitizedFilterContext = yield call(sanitizeFilterContext, ctx, dashboard.filterContext);
 
@@ -173,7 +175,7 @@ export function* actionsToInitializeExistingDashboard(
         }),
         layoutActions.setLayout(dashboardLayout),
         metaActions.setMeta({
-            dashboard,
+            dashboard: persistedDashboard ?? dashboard,
         }),
         uiActions.clearWidgetSelection(),
     ];

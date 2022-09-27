@@ -551,4 +551,9 @@ export interface IDashboardExtensionProps
  */
 export interface IDashboardProps extends IDashboardBaseProps, IDashboardExtensionProps {
     children?: JSX.Element | ((dashboard: any) => JSX.Element);
+    /**
+     * Override the persisted dashboard. This is mainly useful for internal use cases.
+     * @internal
+     */
+    persistedDashboard?: IDashboard;
 }

@@ -74,6 +74,7 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
                         backend={props.backend}
                         workspace={props.workspace}
                         dashboard={dashboardOrRef}
+                        persistedDashboard={props.persistedDashboard}
                         filterContextRef={props.filterContextRef}
                         eventHandlers={props.eventHandlers}
                         config={props.config}
