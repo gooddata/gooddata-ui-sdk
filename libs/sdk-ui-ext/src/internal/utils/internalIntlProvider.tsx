@@ -1,6 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 import React, { useMemo } from "react";
-import { IntlProvider, IntlShape, createIntl } from "react-intl";
+import { IntlProvider, IntlShape, createIntl, IntlConfig } from "react-intl";
 import {
     DefaultLocale,
     ILocale,
@@ -14,7 +14,7 @@ import { LRUCache } from "@gooddata/util";
 
 const INTL_CACHE_SIZE = 20;
 const INTL_CACHE_KEY = "messages";
-const intlCache = new LRUCache<Record<string, string>>({ maxSize: INTL_CACHE_SIZE });
+const intlCache = new LRUCache<IntlConfig>({ maxSize: INTL_CACHE_SIZE });
 
 export function createInternalIntl(locale: ILocale = DefaultLocale): IntlShape {
     /**
@@ -22,11 +22,16 @@ export function createInternalIntl(locale: ILocale = DefaultLocale): IntlShape {
      * After the issues that are described in the ticket are solved or at least reduced,
      * this workaround can be removed.
      */
-    const settings = window.gdSettings as IWorkspaceSettings;
-    if (!intlCache.get(INTL_CACHE_KEY)) {
-        intlCache.set(INTL_CACHE_KEY, pickCorrectWording(translations[locale], settings));
+    const cachedIntlConfig = intlCache.get(INTL_CACHE_KEY);
+    if (cachedIntlConfig?.locale === locale) {
+        return createIntl(cachedIntlConfig);
     }
-    return createIntl({ locale, messages: intlCache.get(INTL_CACHE_KEY) });
+    const settings = window.gdSettings as IWorkspaceSettings;
+    intlCache.set(INTL_CACHE_KEY, {
+        locale,
+        messages: pickCorrectWording(translations[locale], settings),
+    });
+    return createIntl(intlCache.get(INTL_CACHE_KEY));
 }
 
 interface IInternalIntlWrapperProps {
