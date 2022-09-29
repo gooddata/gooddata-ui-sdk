@@ -1,7 +1,9 @@
 // (C) 2022 GoodData Corporation
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { IKpiWidget, IMeasureMetadataObject, ObjRef } from "@gooddata/sdk-model";
 import { useWorkspaceStrict } from "@gooddata/sdk-ui";
+
+import { safeSerializeObjRef } from "../../../../../_staging/metadata/safeSerializeObjRef";
 
 import { MetricDropdown } from "./MetricDropdown";
 
@@ -13,16 +15,23 @@ interface IKpiMetricDropdownProps {
 export const KpiMetricDropdown: React.FC<IKpiMetricDropdownProps> = (props) => {
     const { widget, onMeasureChange } = props;
     const workspace = useWorkspaceStrict();
-
     const measureRef = widget?.kpi.metric;
-    const selectedItems = useMemo(() => (measureRef ? [measureRef] : []), [measureRef]);
+
+    const [selectedMeasure, setSelectedMeasure] = useState<ObjRef | undefined>(measureRef);
+
+    const selectedItems = useMemo(() => (selectedMeasure ? [selectedMeasure] : []), [selectedMeasure]);
 
     const handleMeasureChanged = useCallback(
         (measure: IMeasureMetadataObject) => {
             onMeasureChange(measure.ref);
+            setSelectedMeasure(measure.ref);
         },
         [onMeasureChange],
     );
+
+    useEffect(() => {
+        setSelectedMeasure(measureRef);
+    }, [safeSerializeObjRef(measureRef)]);
 
     return (
         <MetricDropdown

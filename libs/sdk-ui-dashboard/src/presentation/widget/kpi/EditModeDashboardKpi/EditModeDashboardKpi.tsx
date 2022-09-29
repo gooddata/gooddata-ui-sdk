@@ -1,9 +1,9 @@
 // (C) 2022 GoodData Corporation
-import React, { useCallback, useEffect, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
 import noop from "lodash/noop";
-import { widgetRef } from "@gooddata/sdk-model";
+import { areObjRefsEqual, widgetRef } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 import {
@@ -18,6 +18,11 @@ import {
     uiActions,
     useWidgetSelection,
     selectIsDashboardSaving,
+    useDashboardEventsContext,
+    isDashboardCommandStarted,
+    isDashboardKpiWidgetMeasureChanged,
+    DashboardEventHandler,
+    isDashboardCommandFailed,
 } from "../../../../model";
 import { DashboardItemHeadline, DashboardItemKpi } from "../../../presentationComponents";
 import { useDashboardComponentsContext } from "../../../dashboardContexts";
@@ -46,6 +51,42 @@ export const EditModeDashboardKpi = (props: IDashboardKpiProps) => {
     });
 
     const KpiConfigurationComponent = KpiWidgetComponentSet.configuration.WidgetConfigPanelComponent;
+
+    // handle loading indicator when changing measure
+    const [isChangingMeasure, setIsChangingMeasure] = useState(false);
+    const { registerHandler, unregisterHandler } = useDashboardEventsContext();
+    useEffect(() => {
+        const onMeasureChangingStarted: DashboardEventHandler = {
+            eval: (evt: any) => {
+                return (
+                    isDashboardCommandStarted(evt) &&
+                    evt.payload.command.type === "GDC.DASH/CMD.KPI_WIDGET.CHANGE_MEASURE" &&
+                    areObjRefsEqual(evt.payload.command.payload.ref, kpiWidget.ref)
+                );
+            },
+            handler: () => setIsChangingMeasure(true),
+        };
+        const onMeasureChangingEnded: DashboardEventHandler = {
+            eval: (evt: any) => {
+                return (
+                    (isDashboardKpiWidgetMeasureChanged(evt) &&
+                        areObjRefsEqual(evt.payload.ref, kpiWidget.ref)) ||
+                    (isDashboardCommandFailed(evt) &&
+                        evt.payload.command.type === "GDC.DASH/CMD.KPI_WIDGET.CHANGE_MEASURE" &&
+                        areObjRefsEqual(evt.payload.command.payload.ref, kpiWidget.ref))
+                );
+            },
+            handler: () => setIsChangingMeasure(false),
+        };
+
+        registerHandler(onMeasureChangingStarted);
+        registerHandler(onMeasureChangingEnded);
+
+        return () => {
+            unregisterHandler(onMeasureChangingStarted);
+            unregisterHandler(onMeasureChangingEnded);
+        };
+    }, [kpiWidget.ref, registerHandler, unregisterHandler]);
 
     const backend = useBackendStrict(customBackend);
     const workspace = useWorkspaceStrict(customWorkspace);
@@ -83,6 +124,7 @@ export const EditModeDashboardKpi = (props: IDashboardKpiProps) => {
     });
 
     const isLoading =
+        isChangingMeasure ||
         status === "loading" ||
         status === "pending" ||
         kpiDataStatus === "loading" ||
@@ -139,7 +181,10 @@ export const EditModeDashboardKpi = (props: IDashboardKpiProps) => {
                 return null;
             }}
             renderHeadline={(clientHeight) => (
-                <DashboardItemHeadline title={kpiWidget.title} clientHeight={clientHeight} />
+                <DashboardItemHeadline
+                    title={isChangingMeasure ? "" : kpiWidget.title}
+                    clientHeight={clientHeight}
+                />
             )}
             isSelectable={isSelectable}
             isSelected={isSelected}
