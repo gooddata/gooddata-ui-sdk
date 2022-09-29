@@ -5,7 +5,7 @@ import {
     AttributeFilterButtonV2,
     IAttributeFilterDropdownButtonProps,
     IAttributeFilterDropdownActionsProps,
-} from "@gooddata/sdk-ui-filters";
+} from "@gooddata/sdk-ui-filters/dist";
 import {
     AttributeFilterDropdownButton,
     AttributeFilterElementsSelect,
