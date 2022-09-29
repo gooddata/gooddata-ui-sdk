@@ -4,26 +4,70 @@ import {
     IAnalyticalBackend,
     IElementsQueryAttributeFilter,
     IElementsQueryOptions,
+    IElementsQueryOptionsElementsByValue,
     IElementsQueryResult,
+    isElementsQueryOptionsElementsByValue,
     isValueBasedElementsQueryOptionsElements,
 } from "@gooddata/sdk-backend-spi";
 import {
     attributeElementsIsEmpty,
+    IAttributeElement,
     IAttributeElements,
     IAttributeMetadataObject,
     newNegativeAttributeFilter,
     ObjRef,
+    newAttribute,
+    newPositiveAttributeFilter,
+    IAttributeFilter,
 } from "@gooddata/sdk-model";
-import { convertError } from "@gooddata/sdk-ui";
+import { convertError, DataViewFacade } from "@gooddata/sdk-ui";
 
 import { ILoadElementsOptions } from "../../../types";
 import { AttributeFilterHandlerStoreContext } from "../store/types";
 import { IHiddenElementsInfo } from "./types";
+import { InMemoryPaging } from "./InMemoryPaging";
+
+async function loadElementsAsExecution(
+    backend: IAnalyticalBackend,
+    workspace: string,
+    displayFormRef: ObjRef,
+    elements: IElementsQueryOptionsElementsByValue,
+    hiddenElementsInfo: IHiddenElementsInfo,
+) {
+    const elementValues = elements.values;
+    const filters: IAttributeFilter[] = [newPositiveAttributeFilter(displayFormRef, elementValues)];
+    if (!attributeElementsIsEmpty(hiddenElementsInfo.hiddenElements)) {
+        filters.push(newNegativeAttributeFilter(displayFormRef, hiddenElementsInfo.hiddenElements));
+    }
+
+    const executionResult = await backend
+        .workspace(workspace)
+        .execution()
+        .forItems([newAttribute(displayFormRef)], filters)
+        .execute()
+        .catch((err) => {
+            throw convertError(err);
+        });
+
+    const executionDataView = await executionResult.readAll().catch((err) => {
+        throw convertError(err);
+    });
+
+    const dataViewFacade = DataViewFacade.for(executionDataView);
+    const [headers] = dataViewFacade.meta().attributeHeaders();
+
+    return headers.map(([header]): IAttributeElement => {
+        return {
+            title: header.attributeHeaderItem.name,
+            uri: header.attributeHeaderItem.uri,
+        };
+    });
+}
 
 /**
  * @internal
  */
-export function loadElementsFromBackend(
+export async function loadElementsFromBackend(
     context: AttributeFilterHandlerStoreContext,
     options: ILoadElementsOptions & { displayFormRef: ObjRef },
     hiddenElementsInfo: IHiddenElementsInfo,
@@ -42,6 +86,34 @@ export function loadElementsFromBackend(
         includeTotalCountWithoutFilters,
         excludePrimaryLabel = true,
     } = options;
+
+    const isInitialSelectionRequest =
+        isEmpty(limitingAttributeFilters) &&
+        isEmpty(limitingDateFilters) &&
+        isEmpty(limitingMeasures) &&
+        !search &&
+        !excludePrimaryLabel &&
+        !order &&
+        offset === 0;
+
+    // Bear validElements API does not support loading elements by values,
+    // but it's possible to load them with execution API.
+    // This is necessary to load the initial selection.
+    if (
+        isElementUrisSupported(backend) &&
+        isElementsQueryOptionsElementsByValue(elements) &&
+        isInitialSelectionRequest
+    ) {
+        const resolvedElements = await loadElementsAsExecution(
+            backend,
+            workspace,
+            displayFormRef,
+            elements,
+            hiddenElementsInfo,
+        );
+
+        return new InMemoryPaging(resolvedElements, limit, offset);
+    }
 
     let loader = backend.workspace(workspace).attributes().elements().forDisplayForm(displayFormRef);
     const loaderOptions: IElementsQueryOptions = {};
