@@ -127,7 +127,6 @@ export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoa
         backend,
         workspace,
         dashboard && stringify(dashboard),
-        // dashboardRef && serializeObjRef(dashboardRef),
         filterContextRef,
         config,
         permissions,
