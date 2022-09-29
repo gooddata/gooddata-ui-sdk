@@ -52,7 +52,7 @@ export function useParentsConfiguration(
 
             return connectingAttributes
                 ? connectingAttributes[0]
-                : connectingAttributesMatrix![currentFilterIndex][neighborFilterIndex][0]?.ref;
+                : connectingAttributesMatrix![currentFilterIndex]?.[neighborFilterIndex][0]?.ref;
         },
         [connectingAttributesMatrix, filterElementsBy, idToIndexMap],
     );
