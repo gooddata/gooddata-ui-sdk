@@ -68,7 +68,16 @@ export function getElementKey(element: IAttributeElement) {
  * @internal
  */
 export function validateAttributeFilterProps(props: IAttributeFilterBaseProps) {
-    const { connectToPlaceholder, filter, identifier, onApply } = props;
+    const {
+        connectToPlaceholder,
+        filter,
+        identifier,
+        onApply,
+        parentFilters,
+        hiddenElements,
+        staticElements,
+        backend,
+    } = props;
 
     invariant(
         !(filter && connectToPlaceholder),
@@ -100,6 +109,20 @@ export function validateAttributeFilterProps(props: IAttributeFilterBaseProps) {
     invariant(
         identifier || filter || connectToPlaceholder,
         "No identifier, filter or placeholer provided. Provide one of the properties: 'filter', 'connectToPlaceholder' or 'identifier' (note that identifier is deprecated).",
+    );
+
+    invariant(
+        !(!backend?.capabilities?.supportsElementsQueryParentFiltering && !isEmpty(parentFilters)),
+        "Parent filtering is not supported by the current backend implementation.",
+    );
+
+    invariant(
+        !(
+            !backend?.capabilities?.supportsElementsQueryParentFiltering &&
+            !isEmpty(hiddenElements) &&
+            isEmpty(staticElements)
+        ),
+        "Hidden elements are not supported by the current backend implementation.",
     );
 
     if (identifier) {

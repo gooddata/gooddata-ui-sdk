@@ -5,3 +5,4 @@ export { CreatableAttributeFilter } from "./CreatableAttributeFilter";
 export { DefaultDashboardAttributeFilterComponentSetFactory } from "./DefaultDashboardAttributeFilterComponentSetFactory";
 export * from "./addAttributeFilter";
 export * from "./types";
+export * from "./useParentFilters";
