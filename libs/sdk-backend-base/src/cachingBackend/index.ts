@@ -52,6 +52,7 @@ import {
     uriRef,
     IAttributeDisplayFormMetadataObject,
     IMetadataObject,
+    IAttributeMetadataObject,
 } from "@gooddata/sdk-model";
 import { DecoratedWorkspaceAttributesService } from "../decoratedBackend/attributes";
 import { DecoratedWorkspaceSettingsService } from "../decoratedBackend/workspaceSettings";
@@ -74,6 +75,7 @@ type SecuritySettingsCacheEntry = {
 
 type AttributeCacheEntry = {
     displayForms: LRUCache<Promise<IAttributeDisplayFormMetadataObject>>;
+    attributesByDisplayForms: LRUCache<Promise<IAttributeMetadataObject>>;
 };
 
 type WorkspaceSettingsCacheEntry = {
@@ -527,6 +529,38 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
         });
     };
 
+    public getAttributeByDisplayForm = async (ref: ObjRef): Promise<IAttributeMetadataObject> => {
+        const cache = this.getOrCreateWorkspaceEntry(this.workspace).attributesByDisplayForms;
+
+        const idCacheKey = isIdentifierRef(ref) ? ref.identifier : undefined;
+        const uriCacheKey = isUriRef(ref) ? ref.uri : undefined;
+
+        let cacheItem = firstDefined([idCacheKey, uriCacheKey].map((key) => key && cache.get(key)));
+
+        if (!cacheItem) {
+            // eslint-disable-next-line sonarjs/no-identical-functions
+            cacheItem = super.getAttributeByDisplayForm(ref).catch((e) => {
+                if (idCacheKey) {
+                    cache.delete(idCacheKey);
+                }
+                if (uriCacheKey) {
+                    cache.delete(uriCacheKey);
+                }
+                throw e;
+            });
+
+            if (idCacheKey) {
+                cache.set(idCacheKey, cacheItem);
+            }
+
+            if (uriCacheKey) {
+                cache.set(uriCacheKey, cacheItem);
+            }
+        }
+
+        return cacheItem;
+    };
+
     private getOrCreateWorkspaceEntry = (workspace: string): AttributeCacheEntry => {
         const cache = this.ctx.caches.workspaceAttributes!;
         let cacheEntry = cache.get(workspace);
@@ -535,6 +569,9 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
             cacheEntry = {
                 displayForms: new LRUCache<Promise<IAttributeDisplayFormMetadataObject>>({
                     maxSize: this.ctx.config.maxAttributeDisplayFormsPerWorkspace,
+                }),
+                attributesByDisplayForms: new LRUCache<Promise<IAttributeMetadataObject>>({
+                    maxSize: this.ctx.config.maxAttributesPerWorkspace,
                 }),
             };
             cache.set(workspace, cacheEntry);
@@ -796,6 +833,20 @@ export type CachingConfiguration = {
     maxAttributeDisplayFormsPerWorkspace?: number;
 
     /**
+     * Maximum number of attributes to cache per workspace.
+     *
+     * When limit is reached, cache entries will be evicted using LRU policy.
+     *
+     * When no maximum number is specified, the cache will be unbounded and no evictions will happen. Unbounded
+     * attribute cache may be OK in applications where number of attributes is small and/or they are requested
+     * infrequently - the cache will be limited naturally and will not grow uncontrollably.
+     *
+     * Setting non-positive number here is invalid. If you want to turn off attribute caching,
+     * tweak the `maxAttributeWorkspaces` value.
+     */
+    maxAttributesPerWorkspace?: number;
+
+    /**
      * Maximum number of settings for a workspace and for a user to cache per workspace.
      *
      * When limit is reached, cache entries will be evicted using LRU policy.
@@ -834,6 +885,7 @@ export const RecommendedCachingConfiguration: CachingConfiguration = {
     maxSecuritySettingsOrgUrlsAge: 300_000, // 5 minutes
     maxAttributeWorkspaces: 1,
     maxAttributeDisplayFormsPerWorkspace: 100,
+    maxAttributesPerWorkspace: 100,
     maxWorkspaceSettings: 1,
 };
 

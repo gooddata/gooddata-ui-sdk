@@ -746,8 +746,32 @@ class DummyWorkspaceAttributesService implements IWorkspaceAttributesService {
     getAttribute(_ref: ObjRef): Promise<IAttributeMetadataObject> {
         throw new NotSupported("not supported");
     }
-    getAttributeByDisplayForm(_ref: ObjRef): Promise<IAttributeMetadataObject> {
-        throw new NotSupported("not supported");
+    async getAttributeByDisplayForm(ref: ObjRef): Promise<IAttributeMetadataObject> {
+        return {
+            deprecated: false,
+            description: "Dummy attribute",
+            displayForms: [
+                {
+                    attribute: idRef("dummyAttribute"),
+                    deprecated: false,
+                    description: "Dummy attribute",
+                    id: isIdentifierRef(ref) ? ref.identifier : "dummyDisplayForm",
+                    production: true,
+                    ref,
+                    title: "Dummy display form",
+                    type: "displayForm",
+                    unlisted: false,
+                    uri: isUriRef(ref) ? ref.uri : `/gdc/md/${ref.identifier}`,
+                },
+            ],
+            id: "dummyAttribute",
+            production: true,
+            ref: idRef("dummyAttribute"),
+            title: "Dummy attribute",
+            type: "attribute",
+            unlisted: false,
+            uri: "/gdc/md/dummyAttribute",
+        };
     }
     getAttributes(_refs: ObjRef[]): Promise<IAttributeMetadataObject[]> {
         throw new NotSupported("not supported");

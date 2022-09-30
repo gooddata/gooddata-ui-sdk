@@ -238,6 +238,7 @@ export type CachingConfiguration = {
     maxSecuritySettingsOrgUrlsAge?: number;
     maxAttributeWorkspaces?: number;
     maxAttributeDisplayFormsPerWorkspace?: number;
+    maxAttributesPerWorkspace?: number;
     maxWorkspaceSettings?: number;
 };
 
