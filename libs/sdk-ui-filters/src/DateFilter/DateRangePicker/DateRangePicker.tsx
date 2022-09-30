@@ -213,68 +213,60 @@ class DateRangePickerComponent extends React.Component<DateRangePickerProps, IDa
         this.setState({ monthDate: month });
     }
 
+    // get new date object composed from the date of the first argument
+    // and the time of the date provided as the second argument
+    private setTimeForDate(date: Date, time: Date): Date {
+        const result = new Date(date);
+        result.setHours(time.getHours());
+        result.setMinutes(time.getMinutes());
+        return result;
+    }
+
     private handleRangeSelect: SelectRangeEventHandler = (range: DateRange | undefined) => {
-        const { selectedInput } = this.state;
         let calculatedFrom: Date;
         let calculatedTo: Date;
 
-        // day picker provides undefined when dates are the same or when the newly picked date
-        // is the same as "from" date, therefore we set the range from props
         if (!range) {
+            // range undefined: when reaching same date by "to" field
             calculatedFrom = this.props.range.from;
-            calculatedTo = selectedInput === "from" ? this.props.range.to : calculatedFrom;
-
-            this.setState(
-                {
-                    inputFromValue: calculatedFrom,
-                    inputToValue: calculatedTo,
-                    selectedRange: { from: calculatedFrom, to: calculatedTo },
-                    isOpen: false,
-                },
-                () => {
-                    this.updateRange(calculatedFrom, calculatedTo);
-                },
-            );
-
-            return;
-        }
-
-        const { from, to } = range;
-
-        if (selectedInput === "from") {
-            if (this.props.range.from.getTime() === from.getTime()) {
-                calculatedFrom = to;
-            } else {
-                calculatedFrom = from;
-            }
-            this.setState(
-                {
-                    inputFromValue: calculatedFrom,
-                    selectedRange: { from: calculatedFrom, to: this.props.range.to },
-                },
-                () => {
-                    this.updateRange(calculatedFrom, this.props.range.to);
-                },
-            );
+            calculatedTo = this.setTimeForDate(this.props.range.from, this.props.range.to);
+        } else if (!range.to) {
+            // range.to undefined: when reaching same date by "from" field
+            calculatedFrom = this.setTimeForDate(this.props.range.to, this.props.range.from);
+            calculatedTo = this.props.range.to;
         } else {
-            // day picker provides undefined "to" when newly picked date and "to" are the same
-            if (!to || this.props.range.to.getTime() === to.getTime()) {
-                calculatedTo = from;
+            // distinct from/to dates
+            const { selectedInput } = this.state;
+            if (selectedInput === "from") {
+                // result has 0:00 and can be either in from or to field of range,
+                // it's because of the mode of operation and range selects in the picker
+                // library, see https://react-day-picker.js.org/basics/selecting-days#selecting-a-range-of-days
+                const isResultInToField = this.props.range.from.getTime() === range.from.getTime();
+
+                calculatedFrom = isResultInToField
+                    ? this.setTimeForDate(range.to, this.props.range.from)
+                    : this.setTimeForDate(range.from, this.props.range.from);
+                calculatedTo = this.props.range.to;
             } else {
-                calculatedTo = to;
+                const isResultInToField = this.props.range.from.getTime() === range.from.getTime();
+                calculatedFrom = this.props.range.from;
+                calculatedTo = isResultInToField
+                    ? this.setTimeForDate(range.to, this.props.range.to)
+                    : this.setTimeForDate(range.from, this.props.range.from);
             }
-            this.setState(
-                {
-                    inputToValue: calculatedTo,
-                    selectedRange: { from: this.props.range.from, to: calculatedTo },
-                },
-                () => {
-                    this.updateRange(this.props.range.from, calculatedTo);
-                },
-            );
         }
 
-        this.setState({ isOpen: false });
+        this.setState(
+            {
+                inputFromValue: calculatedFrom,
+                inputToValue: calculatedTo,
+                selectedRange: { from: calculatedFrom, to: calculatedTo },
+                isOpen: false,
+            },
+            () => {
+                this.updateRange(calculatedFrom, calculatedTo);
+            },
+        );
     };
 
     private handleClickOutside(event: MouseEvent) {
