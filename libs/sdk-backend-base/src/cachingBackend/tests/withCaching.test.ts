@@ -11,6 +11,7 @@ import {
     newInsightDefinition,
     ObjRef,
     IAttributeDisplayFormMetadataObject,
+    IAttributeMetadataObject,
 } from "@gooddata/sdk-model";
 import { withEventing } from "../../eventingBackend";
 
@@ -30,6 +31,8 @@ function withCachingForTests(
         maxSecuritySettingsOrgUrlsAge: 300_000,
         // set to two as one attribute can take up two places (one for id, one for uri)
         maxAttributeDisplayFormsPerWorkspace: 2,
+        // set to two as one attribute can take up two places (one for id, one for uri)
+        maxAttributesPerWorkspace: 2,
         maxAttributeWorkspaces: 1,
         maxWorkspaceSettings: 1,
         onCacheReady,
@@ -57,6 +60,13 @@ function doGetAttributeDisplayForms(
     refs: ObjRef[],
 ): Promise<IAttributeDisplayFormMetadataObject[]> {
     return backend.workspace("test").attributes().getAttributeDisplayForms(refs);
+}
+
+function doGetAttributeByDisplayForm(
+    backend: IAnalyticalBackend,
+    ref: ObjRef,
+): Promise<IAttributeMetadataObject> {
+    return backend.workspace("test").attributes().getAttributeByDisplayForm(ref);
 }
 
 describe("withCaching", () => {
@@ -501,6 +511,85 @@ describe("withCaching", () => {
                 cacheControl?.resetAll();
 
                 const second = doGetAttributeDisplayForm(
+                    backend,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                );
+
+                expect(second).not.toBe(first);
+            });
+        });
+
+        describe("getAttributeByDisplayForm", () => {
+            it("should cache the calls", async () => {
+                const backend = withCachingForTests();
+
+                const first = await doGetAttributeByDisplayForm(
+                    backend,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                );
+                const second = await doGetAttributeByDisplayForm(
+                    backend,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                );
+
+                expect(second).toBe(first);
+            });
+
+            it("should evict cache items when the limit is hit", async () => {
+                const backend = withCachingForTests();
+
+                const first = doGetAttributeByDisplayForm(
+                    backend,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                );
+
+                // other 3 calls with different display form to replace the first one
+                // the LRU we use starts evicting at maxSize * 2
+                doGetAttributeByDisplayForm(backend, ReferenceMd.Activity.Default.attribute.displayForm);
+                doGetAttributeByDisplayForm(backend, ReferenceMd.Activity.Subject.attribute.displayForm);
+                doGetAttributeByDisplayForm(backend, ReferenceMd.Account.Default.attribute.displayForm);
+
+                const second = doGetAttributeByDisplayForm(
+                    backend,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                );
+
+                expect(second).not.toBe(first);
+            });
+
+            it("should reset attributes cache with resetAttributes", async () => {
+                let cacheControl: CacheControl | undefined;
+
+                const backend = withCachingForTests(defaultBackend, (cc) => (cacheControl = cc));
+
+                const first = doGetAttributeByDisplayForm(
+                    backend,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                );
+
+                cacheControl?.resetAttributes();
+
+                const second = doGetAttributeByDisplayForm(
+                    backend,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                );
+
+                expect(second).not.toBe(first);
+            });
+
+            it("should reset attributes cache with resetAll", async () => {
+                let cacheControl: CacheControl | undefined;
+
+                const backend = withCachingForTests(defaultBackend, (cc) => (cacheControl = cc));
+
+                const first = doGetAttributeByDisplayForm(
+                    backend,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                );
+
+                cacheControl?.resetAll();
+
+                const second = doGetAttributeByDisplayForm(
                     backend,
                     ReferenceMd.Account.Name.attribute.displayForm,
                 );
