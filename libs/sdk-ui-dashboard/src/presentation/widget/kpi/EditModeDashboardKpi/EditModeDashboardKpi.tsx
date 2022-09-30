@@ -18,13 +18,17 @@ import {
     uiActions,
     useWidgetSelection,
     selectIsDashboardSaving,
+    changeKpiWidgetHeader,
+    selectAllCatalogMeasuresMap,
 } from "../../../../model";
-import { DashboardItemHeadline, DashboardItemKpi } from "../../../presentationComponents";
+import { DashboardItemKpi } from "../../../presentationComponents";
 import { useDashboardComponentsContext } from "../../../dashboardContexts";
 
 import { ConfigurationBubble } from "../../common";
 import { getKpiResult, KpiRenderer, useKpiData, useKpiExecutionDataView } from "../common";
 import { IDashboardKpiProps } from "../types";
+import { useOptimisticMeasureUpdate } from "./useOptimisticMeasureUpdate";
+import { EditableKpiHeadline } from "./EditModeKpiHeadline";
 
 export const EditModeDashboardKpi = (props: IDashboardKpiProps) => {
     const {
@@ -46,6 +50,8 @@ export const EditModeDashboardKpi = (props: IDashboardKpiProps) => {
     });
 
     const KpiConfigurationComponent = KpiWidgetComponentSet.configuration.WidgetConfigPanelComponent;
+
+    const { isChangingMeasure, titleToShow } = useOptimisticMeasureUpdate(kpiWidget);
 
     const backend = useBackendStrict(customBackend);
     const workspace = useWorkspaceStrict(customWorkspace);
@@ -73,6 +79,20 @@ export const EditModeDashboardKpi = (props: IDashboardKpiProps) => {
         dispatch(uiActions.openKpiDeleteDialog(coordinates));
     }, [dispatch, coordinates]);
 
+    const measures = useDashboardSelector(selectAllCatalogMeasuresMap);
+    const currentMeasure = measures.get(kpiWidget.kpi.metric);
+
+    const onWidgetTitleChanged = useCallback(
+        (newTitle: string) => {
+            if (newTitle) {
+                dispatch(changeKpiWidgetHeader(kpiWidget.ref, { title: newTitle }));
+            } else if (currentMeasure) {
+                dispatch(changeKpiWidgetHeader(kpiWidget.ref, { title: currentMeasure.measure.title }));
+            }
+        },
+        [currentMeasure, dispatch, kpiWidget.ref],
+    );
+
     const { error, result, status } = useKpiExecutionDataView({
         backend,
         workspace,
@@ -83,6 +103,7 @@ export const EditModeDashboardKpi = (props: IDashboardKpiProps) => {
     });
 
     const isLoading =
+        isChangingMeasure ||
         status === "loading" ||
         status === "pending" ||
         kpiDataStatus === "loading" ||
@@ -139,7 +160,11 @@ export const EditModeDashboardKpi = (props: IDashboardKpiProps) => {
                 return null;
             }}
             renderHeadline={(clientHeight) => (
-                <DashboardItemHeadline title={kpiWidget.title} clientHeight={clientHeight} />
+                <EditableKpiHeadline
+                    title={titleToShow}
+                    clientHeight={clientHeight}
+                    onTitleChange={onWidgetTitleChanged}
+                />
             )}
             isSelectable={isSelectable}
             isSelected={isSelected}
