@@ -239,6 +239,7 @@ export type CachingConfiguration = {
     maxAttributeWorkspaces?: number;
     maxAttributeDisplayFormsPerWorkspace?: number;
     maxAttributesPerWorkspace?: number;
+    maxAttributeElementResultsPerWorkspace?: number;
     maxWorkspaceSettings?: number;
 };
 

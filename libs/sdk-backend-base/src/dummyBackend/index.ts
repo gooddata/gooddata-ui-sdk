@@ -48,6 +48,13 @@ import {
     IWorkspaceCatalogAvailableItemsFactory,
     IWorkspaceCatalogWithAvailableItemsFactoryOptions,
     IWorkspaceCatalogWithAvailableItems,
+    FilterWithResolvableElements,
+    IElementsQuery,
+    IFilterElementsQuery,
+    IElementsQueryAttributeFilter,
+    IElementsQueryOptions,
+    IElementsQueryResult,
+    IPagedResource,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -82,6 +89,10 @@ import {
     ICatalogMeasure,
     IInsightDefinition,
     IAttributeOrMeasure,
+    IMeasure,
+    IMeasureDefinitionType,
+    IRelativeDateFilter,
+    IAttributeElement,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual";
 import isEmpty from "lodash/isEmpty";
@@ -721,10 +732,81 @@ class DummyWorkspaceSettingsService implements IWorkspaceSettingsService {
     }
 }
 
+class DummyElementsQueryResult implements IElementsQueryResult {
+    constructor(
+        public items: IAttributeElement[],
+        public limit: number,
+        public offset: number,
+        public totalCount: number,
+    ) {}
+
+    next(): Promise<IPagedResource<IAttributeElement>> {
+        throw new NotSupported("not supported");
+    }
+    goTo(_pageIndex: number): Promise<IPagedResource<IAttributeElement>> {
+        throw new NotSupported("not supported");
+    }
+    all(): Promise<IAttributeElement[]> {
+        throw new NotSupported("not supported");
+    }
+    allSorted(
+        _compareFn: (a: IAttributeElement, b: IAttributeElement) => number,
+    ): Promise<IAttributeElement[]> {
+        throw new NotSupported("not supported");
+    }
+}
+
+class DummyElementsQuery implements IElementsQuery {
+    public offset: number = 0;
+    public limit: number = 50;
+
+    constructor(public readonly workspace: string, public readonly ref: ObjRef) {}
+
+    withLimit(limit: number): IElementsQuery {
+        this.limit = limit;
+        return this;
+    }
+
+    withOffset(offset: number): IElementsQuery {
+        this.offset = offset;
+        return this;
+    }
+    withAttributeFilters(_filters: IElementsQueryAttributeFilter[]): IElementsQuery {
+        throw new NotSupported("not supported");
+    }
+    withMeasures(_measures: IMeasure<IMeasureDefinitionType>[]): IElementsQuery {
+        throw new NotSupported("not supported");
+    }
+    withOptions(_options: IElementsQueryOptions): IElementsQuery {
+        throw new NotSupported("not supported");
+    }
+    query = async (): Promise<IElementsQueryResult> => {
+        return new DummyElementsQueryResult([], this.limit, this.offset, 0);
+    };
+    withDateFilters(_filters: IRelativeDateFilter[]): IElementsQuery {
+        throw new NotSupported("not supported");
+    }
+}
+
+class DummyElementsQueryFactory implements IElementsQueryFactory {
+    constructor(public readonly workspace: string) {}
+
+    forDisplayForm(ref: ObjRef): IElementsQuery {
+        return new DummyElementsQuery(this.workspace, ref);
+    }
+
+    forFilter(
+        _filter: FilterWithResolvableElements,
+        _dateFilterDisplayForm?: ObjRef | undefined,
+    ): IFilterElementsQuery {
+        throw new NotSupported("not supported");
+    }
+}
+
 class DummyWorkspaceAttributesService implements IWorkspaceAttributesService {
     constructor(public readonly workspace: string) {}
     elements(): IElementsQueryFactory {
-        throw new NotSupported("not supported");
+        return new DummyElementsQueryFactory(this.workspace);
     }
     async getAttributeDisplayForm(ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject> {
         return {
