@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import find from "lodash/find";
 import omit from "lodash/omit";
 import omitBy from "lodash/omitBy";
@@ -106,9 +106,9 @@ const unwrapItemDescriptionObject = (itemDescription: ItemDescription): string =
     throw new Error("Item description can only have expression or uri");
 };
 
-// When the limit is more than 500,
+// When the limit is more than 2000,
 // catalog items endpoint returns status of 500
-const CATALOG_ITEMS_LIMIT = 500;
+const CATALOG_ITEMS_LIMIT = 1000;
 
 export class CatalogueModule {
     constructor(private xhr: XhrModule, private execution: ExecutionModule) {}

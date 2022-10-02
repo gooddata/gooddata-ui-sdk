@@ -219,7 +219,7 @@
             "id": "e8da503c-4043-4d85-9662-e09345e337d7",
             "name": "gdc_internal_projects_itd99xqshb69o2hjv75utvc4mopo8i6c_catalog_items",
             "request": {
-                "url": "/gdc/internal/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty/catalog/items?offset=0&limit=500&types=attribute%2Cfact%2Cmetric",
+                "url": "/gdc/internal/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty/catalog/items?offset=0&limit=1000&types=attribute%2Cfact%2Cmetric",
                 "method": "GET"
             },
             "response": {

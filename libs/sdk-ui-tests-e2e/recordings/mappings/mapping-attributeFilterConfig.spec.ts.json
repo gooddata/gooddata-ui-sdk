@@ -235,7 +235,7 @@
             "id": "9cab3595-a7ea-4ed2-b4ff-3d593b4cc7ac",
             "name": "gdc_internal_projects_itd99xqshb69o2hjv75utvc4mopo8i6c_catalog_items",
             "request": {
-                "url": "/gdc/internal/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty/catalog/items?offset=0&limit=500&types=attribute%2Cfact%2Cmetric",
+                "url": "/gdc/internal/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty/catalog/items?offset=0&limit=1000&types=attribute%2Cfact%2Cmetric",
                 "method": "GET"
             },
             "response": {
