@@ -2,7 +2,7 @@
     "id": "5c5c1a69-2c2d-483f-aded-47bcd0e51e69",
     "name": "gdc_internal_projects_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_catalog_items",
     "request": {
-        "url": "/gdc/internal/projects/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/catalog/items?offset=0&limit=500&types=attribute%2Cmetric%2Cfact",
+        "url": "/gdc/internal/projects/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/catalog/items?offset=0&limit=1000&types=attribute%2Cmetric%2Cfact",
         "method": "GET",
         "headers": {
             "Accept": {
