@@ -5,7 +5,6 @@ import Measure from "react-measure";
 import { GoodDataSdkError, isGoodDataSdkError, ErrorCodes, ISeparators } from "@gooddata/sdk-ui";
 import {
     IFilter,
-    isAbsoluteDateFilter,
     isAllTimeDateFilter,
     isDateFilter,
     IKpiWidget,
@@ -53,13 +52,12 @@ class KpiContent extends Component<IKpiContentProps & WrappedComponentProps> {
 
         const { kpiResult, enableCompactSize } = this.props;
         const isDateFilterNotRelevant = isDateFilterIrrelevant(this.props.kpi);
-        const isDateFilterAbsolute = this.props.filters!.some(isAbsoluteDateFilter);
         const isDateFilterAllTime = this.props.filters!.every(
             (f) => !isDateFilter(f) || isAllTimeDateFilter(f),
         );
         const dateFilter = this.props.filters!.find(isDateFilter); // for now we use the first date filter available for this
         const popLabel = getKpiPopLabel(dateFilter, this.props.kpi.kpi.comparisonType, this.props.intl);
-        const popDisabled = isDateFilterAllTime || isDateFilterNotRelevant || isDateFilterAbsolute;
+        const popDisabled = isDateFilterAllTime || isDateFilterNotRelevant;
         const isSdkError = isGoodDataSdkError(this.props.error);
         const isNoData = isSdkError && this.props.error!.message === ErrorCodes.NO_DATA;
 
