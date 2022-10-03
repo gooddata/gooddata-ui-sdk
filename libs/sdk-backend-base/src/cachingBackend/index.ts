@@ -47,6 +47,7 @@ import flow from "lodash/flow";
 import identity from "lodash/identity";
 import invariant from "ts-invariant";
 import partition from "lodash/partition";
+import SparkMD5 from "spark-md5";
 import {
     areObjRefsEqual,
     idRef,
@@ -455,7 +456,7 @@ function elementsCacheKey(
         measures?: IMeasure[];
     },
 ): string {
-    return `${objRefToString(ref)}__${stringify(settings)}`;
+    return new SparkMD5().append(objRefToString(ref)).append(stringify(settings)).end();
 }
 
 function getOrCreateAttributeCache(ctx: CachingContext, workspace: string): AttributeCacheEntry {
