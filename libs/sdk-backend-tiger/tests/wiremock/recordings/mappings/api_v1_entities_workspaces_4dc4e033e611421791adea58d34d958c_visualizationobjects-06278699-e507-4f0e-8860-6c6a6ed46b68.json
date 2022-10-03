@@ -1,0 +1,39 @@
+{
+    "id": "06278699-e507-4f0e-8860-6c6a6ed46b68",
+    "name": "api_v1_entities_workspaces_4dc4e033e611421791adea58d34d958c_visualizationobjects",
+    "request": {
+        "url": "/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/visualizationObjects?size=250&page=0",
+        "method": "GET",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/vnd.gooddata.api+json"
+            },
+            "Content-Type": {
+                "equalTo": "application/vnd.gooddata.api+json",
+                "caseInsensitive": true
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"data\":[{\"id\":\"2ec4862e-4559-42d9-a628-fd4e80c16d59\",\"type\":\"visualizationObject\",\"attributes\":{\"title\":\"Insight Activities\",\"description\":\"Insight Activities\",\"areRelationsValid\":true,\"content\":{\"buckets\":[{\"items\":[{\"measure\":{\"localIdentifier\":\"e7ffd6fe32b04f2eb28eac903f3df8eb\",\"definition\":{\"measureDefinition\":{\"item\":{\"identifier\":{\"id\":\"bb512c36-4627-4dd8-8b92-3ef5d364e8f5\",\"type\":\"metric\"}},\"filters\":[]}},\"title\":\"# of Activities\"}}],\"localIdentifier\":\"measures\"}],\"filters\":[],\"sorts\":[],\"properties\":{},\"visualizationUrl\":\"local:column\",\"version\":\"2\"}},\"links\":{\"self\":\"https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/visualizationObjects/2ec4862e-4559-42d9-a628-fd4e80c16d59\"}}],\"links\":{\"self\":\"https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/visualizationObjects?page=0&size=250\",\"next\":\"https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/visualizationObjects?page=1&size=250\"}}",
+        "headers": {
+            "Date": "Mon, 03 Oct 2022 14:20:52 GMT",
+            "Content-Type": "application/vnd.gooddata.api+json",
+            "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
+            "X-GDC-TRACE-ID": "01f353efdfd55bd7",
+            "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+            "Pragma": "no-cache",
+            "Expires": "0",
+            "X-Content-Type-Options": "nosniff",
+            "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+            "X-XSS-Protection": "1 ; mode=block",
+            "Referrer-Policy": "no-referrer",
+            "Set-Cookie": "SPRING_REDIRECT_URI=; Path=/; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Secure; HttpOnly; SameSite=None",
+            "Permission-Policy": "geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'none'; payment 'none';"
+        }
+    },
+    "uuid": "06278699-e507-4f0e-8860-6c6a6ed46b68",
+    "persistent": true,
+    "insertionIndex": 15
+}

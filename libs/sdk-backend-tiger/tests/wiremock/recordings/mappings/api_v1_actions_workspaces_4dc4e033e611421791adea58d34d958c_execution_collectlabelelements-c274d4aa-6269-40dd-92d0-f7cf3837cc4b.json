@@ -1,0 +1,46 @@
+{
+    "id": "c274d4aa-6269-40dd-92d0-f7cf3837cc4b",
+    "name": "api_v1_actions_workspaces_4dc4e033e611421791adea58d34d958c_execution_collectlabelelements",
+    "request": {
+        "url": "/api/v1/actions/workspaces/4dc4e033e611421791adea58d34d958c/execution/collectLabelElements?offset=0&limit=2",
+        "method": "POST",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json, text/plain, */*"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        },
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"label\":\"label.f_account.account.accountid\"}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"primaryLabel\":{\"id\":\"label.f_account.account\",\"type\":\"label\"},\"elements\":[{\"title\":\"1000Bulbs.com\",\"primaryTitle\":\"1000Bulbs.com\"},{\"title\":\"101 Financial\",\"primaryTitle\":\"101 Financial\"}],\"paging\":{\"total\":4846,\"count\":2,\"offset\":0,\"next\":\"https://staging.anywhere.gooddata.com/api/v1/actions/workspaces/4dc4e033e611421791adea58d34d958c/execution/collectLabelElements?limit=2&offset=2\"}}",
+        "headers": {
+            "Date": "Mon, 03 Oct 2022 14:20:50 GMT",
+            "Content-Type": "application/json",
+            "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
+            "X-GDC-TRACE-ID": "b017cc848c7345e5",
+            "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+            "Pragma": "no-cache",
+            "Expires": "0",
+            "X-Content-Type-Options": "nosniff",
+            "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+            "X-XSS-Protection": "1 ; mode=block",
+            "Referrer-Policy": "no-referrer",
+            "Set-Cookie": "SPRING_REDIRECT_URI=; Path=/; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Secure; HttpOnly; SameSite=None",
+            "Permission-Policy": "geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'none'; payment 'none';"
+        }
+    },
+    "uuid": "c274d4aa-6269-40dd-92d0-f7cf3837cc4b",
+    "persistent": true,
+    "insertionIndex": 9
+}
