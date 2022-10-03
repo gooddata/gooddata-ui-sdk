@@ -36,11 +36,14 @@ export {
     IInvertableSelectRenderSearchBarProps,
     IInvertableSelectRenderStatusBarProps,
     IInvertableSelectStatusBarProps,
+    IInvertableSelectAllCheckboxProps,
+    IInvertableSelectRenderActionsProps,
     InvertableSelect,
     InvertableSelectItem,
     InvertableSelectLimitWarning,
-    InvertableSelectStatusBar,
     InvertableSelectSearchBar,
+    InvertableSelectStatusBar,
+    InvertableSelectAllCheckbox,
 } from "./InvertableSelect";
 export {
     SingleSelectListItem,

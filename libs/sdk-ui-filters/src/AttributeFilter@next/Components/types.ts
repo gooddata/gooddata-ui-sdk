@@ -12,3 +12,4 @@ export { IAttributeFilterElementsSelectErrorProps } from "./ElementsSelect/Attri
 export { IAttributeFilterElementsSelectLoadingProps } from "./ElementsSelect/AttributeFilterElementsSelectLoading";
 export { IAttributeFilterEmptyResultProps } from "./ElementsSelect/EmptyResult/AttributeFilterEmptyResult";
 export { IAttributeFilterStatusBarProps } from "./ElementsSelect/StatusBar/AttributeFilterStatusBar";
+export { IAttributeFilterElementsActionsProps } from "./ElementsSelect/AttributeFilterElementsActions";

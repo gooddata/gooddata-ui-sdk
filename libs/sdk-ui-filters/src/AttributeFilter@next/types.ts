@@ -16,6 +16,7 @@ import {
     IAttributeFilterEmptyResultProps,
     IAttributeFilterStatusBarProps,
 } from "./Components/types";
+import { IAttributeFilterElementsActionsProps } from "./Components/ElementsSelect/AttributeFilterElementsActions";
 
 /**
  * @alpha
@@ -219,6 +220,11 @@ export interface IAttributeFilterCustomComponentProps {
      * Customize attribute filter elements select item component.
      */
     ElementsSelectItemComponent?: React.ComponentType<IAttributeFilterElementsSelectItemProps>;
+
+    /**
+     * Customize attribute filter elements select action component (Select all checkbox)
+     */
+    ElementsSelectActionsComponent?: React.ComponentType<IAttributeFilterElementsActionsProps>;
 
     /**
      * Customize attribute filter elements select error component.

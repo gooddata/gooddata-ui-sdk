@@ -1969,6 +1969,24 @@ export interface IInsightListItemProps {
 }
 
 // @internal (undocumented)
+export interface IInvertableSelectAllCheckboxProps {
+    // (undocumented)
+    checked: boolean;
+    // (undocumented)
+    isFiltered: boolean;
+    // (undocumented)
+    isPartialSelection: boolean;
+    // (undocumented)
+    isVisible: boolean;
+    // (undocumented)
+    onChange: (value: boolean) => void;
+    // (undocumented)
+    onToggle: () => void;
+    // (undocumented)
+    totalItemsCount: number;
+}
+
+// @internal (undocumented)
 export interface IInvertableSelectItem {
     // (undocumented)
     isSelected?: boolean;
@@ -2027,6 +2045,8 @@ export interface IInvertableSelectProps<T> {
     // (undocumented)
     onSelect?: (items: T[], isInverted: boolean) => void;
     // (undocumented)
+    renderActions?: (props: IInvertableSelectRenderActionsProps) => JSX.Element;
+    // (undocumented)
     renderError?: (props: IInvertableSelectRenderErrorProps) => JSX.Element;
     // (undocumented)
     renderItem?: (props: IInvertableSelectRenderItemProps<T>) => JSX.Element;
@@ -2050,6 +2070,24 @@ export interface IInvertableSelectProps<T> {
     totalItemsCount?: number;
     // (undocumented)
     width?: number;
+}
+
+// @internal (undocumented)
+export interface IInvertableSelectRenderActionsProps {
+    // (undocumented)
+    checked: boolean;
+    // (undocumented)
+    isFiltered: boolean;
+    // (undocumented)
+    isPartialSelection: boolean;
+    // (undocumented)
+    isVisible: boolean;
+    // (undocumented)
+    onChange: (value: boolean) => void;
+    // (undocumented)
+    onToggle: () => void;
+    // (undocumented)
+    totalItemsCount: number;
 }
 
 // @internal (undocumented)
@@ -2933,6 +2971,9 @@ export interface INumericInputProps {
 
 // @internal (undocumented)
 export function InvertableSelect<T>(props: IInvertableSelectProps<T>): JSX.Element;
+
+// @internal (undocumented)
+export function InvertableSelectAllCheckbox(props: IInvertableSelectAllCheckboxProps): JSX.Element;
 
 // @internal (undocumented)
 export function InvertableSelectItem(props: IInvertableSelectItem): JSX.Element;

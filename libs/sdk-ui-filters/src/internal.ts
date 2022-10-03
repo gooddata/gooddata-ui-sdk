@@ -31,6 +31,10 @@ export {
     AttributeFilterElementsSelectLoading,
     IAttributeFilterElementsSelectLoadingProps,
 } from "./AttributeFilter@next/Components/ElementsSelect/AttributeFilterElementsSelectLoading";
+export {
+    AttributeFilterElementsActions,
+    IAttributeFilterElementsActionsProps,
+} from "./AttributeFilter@next/Components/ElementsSelect/AttributeFilterElementsActions";
 export { AttributeFilterEmptyAttributeResult } from "./AttributeFilter@next/Components/ElementsSelect/EmptyResult/AttributeFilterEmptyAttributeResult";
 export {
     AttributeFilterAllValuesFilteredResult,
