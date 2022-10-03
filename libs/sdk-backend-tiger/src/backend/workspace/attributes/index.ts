@@ -24,6 +24,7 @@ import {
     JsonApiDatasetOutWithLinksTypeEnum,
 } from "@gooddata/api-client-tiger";
 import flatMap from "lodash/flatMap";
+import last from "lodash/last";
 import { invariant } from "ts-invariant";
 
 import {
@@ -150,11 +151,15 @@ function loadAttributeByDisplayForm(
 ): Promise<IAttributeMetadataObject> {
     invariant(isIdentifierRef(ref), "tiger backend only supports referencing by identifier");
 
+    // tiger RSQL does not support prefixed ids, so we strip the prefix to load matches with or without prefix
+    // and then find the prefixed value in the results
+    const idWithoutPrefix = last(ref.identifier.split(":"));
+
     return client.entities
         .getAllEntitiesAttributes(
             {
                 workspaceId,
-                filter: `labels.id==${ref.identifier}`,
+                filter: `labels.id==${idWithoutPrefix}`,
                 include: ["labels"],
             },
             {
@@ -162,17 +167,20 @@ function loadAttributeByDisplayForm(
             },
         )
         .then((res) => {
-            const convertedLabel = convertAttributesWithSideloadedLabels(res.data)[0];
+            const convertedAttributes = convertAttributesWithSideloadedLabels(res.data);
+            const match = convertedAttributes.find((attr) =>
+                attr.displayForms.some((df) => df.id === ref.identifier),
+            );
 
-            if (!convertedLabel) {
+            if (!match) {
                 throw new UnexpectedResponseError(
                     `The displayForm with id ${ref.identifier} was not found`,
                     404,
-                    convertedLabel,
+                    res,
                 );
             }
 
-            return convertedLabel;
+            return match;
         });
 }
 
