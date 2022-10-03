@@ -1,134 +1,134 @@
 {
     "data": [
         {
+            "id": "fact.f_activity.activitydate",
+            "type": "fact",
             "attributes": {
                 "title": "Activity (Date)",
                 "description": "Activity (Date)",
                 "tags": ["Activity"],
                 "sourceColumn": "f__dt_activity"
             },
-            "id": "fact.f_activity.activitydate",
             "links": {
                 "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts/fact.f_activity.activitydate"
-            },
-            "type": "fact"
+            }
         },
         {
+            "id": "fact.f_opportunity.oppcreateddate",
+            "type": "fact",
             "attributes": {
                 "title": "Opp. Created (Date)",
                 "description": "Opp. Created (Date)",
                 "tags": ["Opportunity"],
                 "sourceColumn": "f__dt_oppcreated"
             },
-            "id": "fact.f_opportunity.oppcreateddate",
             "links": {
                 "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts/fact.f_opportunity.oppcreateddate"
-            },
-            "type": "fact"
+            }
         },
         {
+            "id": "f_opportunitysnapshot.f_amount",
+            "type": "fact",
             "attributes": {
                 "title": "Amount",
                 "description": "Amount",
                 "tags": ["OpportunitySnapshot"],
                 "sourceColumn": "f_amount"
             },
-            "id": "f_opportunitysnapshot.f_amount",
             "links": {
                 "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts/f_opportunitysnapshot.f_amount"
-            },
-            "type": "fact"
+            }
         },
         {
+            "id": "f_opportunitysnapshot.f_daystoclose",
+            "type": "fact",
             "attributes": {
                 "title": "Days to Close",
                 "description": "Days to Close",
                 "tags": ["OpportunitySnapshot"],
                 "sourceColumn": "f_daystoclose"
             },
-            "id": "f_opportunitysnapshot.f_daystoclose",
             "links": {
                 "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts/f_opportunitysnapshot.f_daystoclose"
-            },
-            "type": "fact"
+            }
         },
         {
+            "id": "f_opportunitysnapshot.f_probability",
+            "type": "fact",
             "attributes": {
                 "title": "Probability",
                 "description": "Probability",
                 "tags": ["OpportunitySnapshot"],
                 "sourceColumn": "f_probability"
             },
-            "id": "f_opportunitysnapshot.f_probability",
             "links": {
                 "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts/f_opportunitysnapshot.f_probability"
-            },
-            "type": "fact"
+            }
         },
         {
+            "id": "fact.f_opportunitysnapshot.oppclosedate",
+            "type": "fact",
             "attributes": {
                 "title": "Opp. Close (Date)",
                 "description": "Opp. Close (Date)",
                 "tags": ["OpportunitySnapshot"],
                 "sourceColumn": "f__dt_closedate"
             },
-            "id": "fact.f_opportunitysnapshot.oppclosedate",
             "links": {
                 "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts/fact.f_opportunitysnapshot.oppclosedate"
-            },
-            "type": "fact"
+            }
         },
         {
+            "id": "fact.f_opportunitysnapshot.oppsnapshotdate",
+            "type": "fact",
             "attributes": {
                 "title": "Opp. Snapshot (Date)",
                 "description": "Opp. Snapshot (Date)",
                 "tags": ["OpportunitySnapshot"],
                 "sourceColumn": "f__dt_snapshotdate"
             },
-            "id": "fact.f_opportunitysnapshot.oppsnapshotdate",
             "links": {
                 "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts/fact.f_opportunitysnapshot.oppsnapshotdate"
-            },
-            "type": "fact"
+            }
         },
         {
+            "id": "f_stagehistory.f_duration",
+            "type": "fact",
             "attributes": {
                 "title": "Duration",
                 "description": "Duration",
                 "tags": ["stagehistory"],
                 "sourceColumn": "f_duration"
             },
-            "id": "f_stagehistory.f_duration",
             "links": {
                 "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts/f_stagehistory.f_duration"
-            },
-            "type": "fact"
+            }
         },
         {
+            "id": "f_stagehistory.f_velocity",
+            "type": "fact",
             "attributes": {
                 "title": "Velocity",
                 "description": "Velocity",
                 "tags": ["stagehistory"],
                 "sourceColumn": "f_velocity"
             },
-            "id": "f_stagehistory.f_velocity",
             "links": {
                 "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts/f_stagehistory.f_velocity"
-            },
-            "type": "fact"
+            }
         },
         {
+            "id": "fact.f_timeline.timelinedate",
+            "type": "fact",
             "attributes": {
                 "title": "Timeline (Date)",
                 "description": "Timeline (Date)",
                 "tags": ["Timeline"],
                 "sourceColumn": "f__dt_timeline"
             },
-            "id": "fact.f_timeline.timelinedate",
             "links": {
                 "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts/fact.f_timeline.timelinedate"
-            },
-            "type": "fact"
+            }
         }
     ],
     "links": {

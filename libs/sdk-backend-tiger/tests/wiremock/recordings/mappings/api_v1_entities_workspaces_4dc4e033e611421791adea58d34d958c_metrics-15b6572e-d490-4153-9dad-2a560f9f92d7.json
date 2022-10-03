@@ -1,0 +1,39 @@
+{
+    "id": "15b6572e-d490-4153-9dad-2a560f9f92d7",
+    "name": "api_v1_entities_workspaces_4dc4e033e611421791adea58d34d958c_metrics",
+    "request": {
+        "url": "/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics?size=250&page=0",
+        "method": "GET",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/vnd.gooddata.api+json"
+            },
+            "Content-Type": {
+                "equalTo": "application/vnd.gooddata.api+json",
+                "caseInsensitive": true
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "bodyFileName": "api_v1_entities_workspaces_4dc4e033e611421791adea58d34d958c_metrics-15b6572e-d490-4153-9dad-2a560f9f92d7.json",
+        "headers": {
+            "Date": "Mon, 03 Oct 2022 14:20:47 GMT",
+            "Content-Type": "application/vnd.gooddata.api+json",
+            "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
+            "X-GDC-TRACE-ID": "95552eb1e8f76ff4",
+            "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+            "Pragma": "no-cache",
+            "Expires": "0",
+            "X-Content-Type-Options": "nosniff",
+            "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+            "X-XSS-Protection": "1 ; mode=block",
+            "Referrer-Policy": "no-referrer",
+            "Set-Cookie": "SPRING_REDIRECT_URI=; Path=/; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Secure; HttpOnly; SameSite=None",
+            "Permission-Policy": "geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'none'; payment 'none';"
+        }
+    },
+    "uuid": "15b6572e-d490-4153-9dad-2a560f9f92d7",
+    "persistent": true,
+    "insertionIndex": 6
+}

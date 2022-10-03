@@ -9,7 +9,7 @@ function mockSensitiveData(accountSetting) {
     if (modifiedAccountSetting.userId) {
         modifiedAccountSetting.userId = "first.last";
     }
-    if (modifiedAccountSetting.links && modifiedAccountSetting.links.user) {
+    if (modifiedAccountSetting.links?.user) {
         modifiedAccountSetting.links.user =
             "https://staging.anywhere.gooddata.com/api/v1/entities/users/first.last";
     }
@@ -26,7 +26,7 @@ function mockSensitiveData(accountSetting) {
     }
 
     try {
-        const stdout = execSync(`ls ${mappingsPath}/api_profile*`).toString();
+        const stdout = execSync(`ls ${mappingsPath}/api_v1_profile*`).toString();
         if (!stdout) {
             process.exit(0);
         }
@@ -37,7 +37,7 @@ function mockSensitiveData(accountSetting) {
             }
             const data = fs.readFileSync(filePath);
             const json = JSON.parse(data);
-            if (json.response && json.response.body) {
+            if (json.response?.body) {
                 const body = mockSensitiveData(JSON.parse(json.response.body));
 
                 json.response.body = JSON.stringify(body, null);

@@ -1,0 +1,27 @@
+{
+    "id": "bd179e1d-31bb-4859-9551-5e90cdb62b9d",
+    "name": "api_v1_schemas_export",
+    "request": {
+        "url": "/api/v1/schemas/export",
+        "method": "GET",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json, text/plain, */*"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "bodyFileName": "api_v1_schemas_export-bd179e1d-31bb-4859-9551-5e90cdb62b9d.json",
+        "headers": {
+            "Date": "Mon, 03 Oct 2022 14:20:47 GMT",
+            "Content-Type": "application/json;charset=UTF-8",
+            "X-GDC-TRACE-ID": "3835ad80379208db",
+            "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+            "Permission-Policy": "geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'none'; payment 'none';"
+        }
+    },
+    "uuid": "bd179e1d-31bb-4859-9551-5e90cdb62b9d",
+    "persistent": true,
+    "insertionIndex": 2
+}
