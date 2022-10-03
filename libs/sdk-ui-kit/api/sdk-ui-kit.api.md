@@ -1096,6 +1096,7 @@ export const Icon: {
     Token: FC<IIconProps>;
     Origin: FC<IIconProps>;
     Leave: FC<IIconProps>;
+    Copy: FC<IIconProps>;
 };
 
 // @internal (undocumented)

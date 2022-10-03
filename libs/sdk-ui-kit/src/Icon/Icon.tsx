@@ -60,6 +60,7 @@ import { EmbedCodeIcon } from "./icons/EmbedCodeIcon";
 import { Origin } from "./icons/Origin";
 import { Token } from "./icons/Token";
 import { Leave } from "./icons/Leave";
+import { Copy } from "./icons/Copy";
 
 /**
  * @internal
@@ -126,6 +127,7 @@ export const Icon = {
     Token,
     Origin,
     Leave,
+    Copy,
 };
 
 export { IRowsIconProps };
