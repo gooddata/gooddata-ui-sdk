@@ -369,6 +369,7 @@ export interface IAttributeFilterCustomComponentProps {
     DropdownBodyComponent?: React.ComponentType<IAttributeFilterDropdownBodyProps>;
     DropdownButtonComponent?: React.ComponentType<IAttributeFilterDropdownButtonProps>;
     ElementsSearchBarComponent?: React.ComponentType<IAttributeFilterElementsSearchBarProps>;
+    ElementsSelectActionsComponent?: React.ComponentType<IAttributeFilterElementsActionsProps>;
     ElementsSelectComponent?: React.ComponentType<IAttributeFilterElementsSelectProps>;
     ElementsSelectErrorComponent?: React.ComponentType<IAttributeFilterElementsSelectErrorProps>;
     ElementsSelectItemComponent?: React.ComponentType<IAttributeFilterElementsSelectItemProps>;
@@ -425,6 +426,24 @@ export interface IAttributeFilterDropdownButtonProps {
     subtitle?: string;
     // (undocumented)
     title?: string;
+}
+
+// @alpha (undocumented)
+export interface IAttributeFilterElementsActionsProps {
+    // (undocumented)
+    checked: boolean;
+    // (undocumented)
+    isFiltered: boolean;
+    // (undocumented)
+    isPartialSelection: boolean;
+    // (undocumented)
+    isVisible: boolean;
+    // (undocumented)
+    onChange: (value: boolean) => void;
+    // (undocumented)
+    onToggle: () => void;
+    // (undocumented)
+    totalItemsCount: number;
 }
 
 // @alpha (undocumented)

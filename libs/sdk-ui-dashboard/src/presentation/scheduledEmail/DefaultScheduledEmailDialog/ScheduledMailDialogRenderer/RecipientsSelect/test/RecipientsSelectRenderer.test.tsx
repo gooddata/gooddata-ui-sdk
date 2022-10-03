@@ -1,6 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import noop from "lodash/noop";
 import { IUser, uriRef } from "@gooddata/sdk-model";
@@ -91,9 +91,9 @@ describe("RecipientsSelect", () => {
     it("should change input when adding new value", async () => {
         renderComponent({ isMulti: true });
         await userEvent.type(screen.getByRole("combobox"), "extraUser@gooddata.com");
-        await waitFor(() => {
-            expect(screen.getByText(`${author.user.fullName}`)).toBeInTheDocument();
-            expect(screen.getByDisplayValue(`${extraUser.user.email}`)).toBeInTheDocument();
-        });
+
+        expect(screen.getByText(`${author.user.fullName}`)).toBeInTheDocument();
+
+        expect(screen.getByDisplayValue(`${extraUser.user.email}`)).toBeInTheDocument();
     });
 });

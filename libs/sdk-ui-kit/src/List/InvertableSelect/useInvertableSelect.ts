@@ -142,7 +142,7 @@ export function useInvertableSelect<T>(props: IUseInvertableSelectProps<T>) {
         [isInverted, selectedItems, onSelect, selectNone, getItemKey, totalItemsCount, isSearch],
     );
 
-    const onSelectAllCheckboxChange = useCallback(() => {
+    const onSelectAllCheckboxToggle = useCallback(() => {
         if (isSearch) {
             if (selectionState === "all" || loadedSelectedItems.length === items.length) {
                 // Reduce selection, if is all, or all loaded is selected
@@ -170,7 +170,35 @@ export function useInvertableSelect<T>(props: IUseInvertableSelectProps<T>) {
         isSearch,
     ]);
 
+    const onSelectAllCheckboxChange = useCallback(
+        (value: boolean) => {
+            if (isSearch) {
+                if (value) {
+                    selectItems(loadedUnselectedItems);
+                } else {
+                    deselectItems(loadedSelectedItems);
+                }
+            } else if (value) {
+                selectAll();
+            } else {
+                selectNone();
+            }
+        },
+        [
+            items,
+            selectionState,
+            loadedUnselectedItems,
+            loadedSelectedItems,
+            selectItems,
+            deselectItems,
+            selectAll,
+            selectNone,
+            isSearch,
+        ],
+    );
+
     return {
+        onSelectAllCheckboxToggle,
         onSelectAllCheckboxChange,
         getIsItemSelected,
         selectionState,

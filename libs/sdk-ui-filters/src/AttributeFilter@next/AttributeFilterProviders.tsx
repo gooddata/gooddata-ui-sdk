@@ -38,6 +38,7 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
         ElementsSelectItemComponent,
         ElementsSelectErrorComponent,
         ElementsSelectLoadingComponent,
+        ElementsSelectActionsComponent,
         EmptyResultComponent,
         StatusBarComponent,
     } = props;
@@ -64,6 +65,9 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
                 }
                 ElementsSelectLoadingComponent={
                     ElementsSelectLoadingComponent ?? DefaultComponents.ElementsSelectLoadingComponent
+                }
+                ElementsSelectActionsComponent={
+                    ElementsSelectActionsComponent ?? DefaultComponents.ElementsSelectActionsComponent
                 }
                 EmptyResultComponent={EmptyResultComponent ?? DefaultComponents.EmptyResultComponent}
                 StatusBarComponent={StatusBarComponent ?? DefaultComponents.StatusBarComponent}

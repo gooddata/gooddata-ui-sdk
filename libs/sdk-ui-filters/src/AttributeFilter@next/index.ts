@@ -16,6 +16,7 @@ export {
     IAttributeFilterElementsSelectItemProps,
     IAttributeFilterElementsSelectErrorProps,
     IAttributeFilterElementsSelectLoadingProps,
+    IAttributeFilterElementsActionsProps,
     IAttributeFilterEmptyResultProps,
     IAttributeFilterStatusBarProps,
 } from "./Components/types";

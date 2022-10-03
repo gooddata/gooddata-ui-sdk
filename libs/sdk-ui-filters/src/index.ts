@@ -146,6 +146,7 @@ export {
     IAttributeFilterDropdownBodyProps,
     IAttributeFilterDropdownActionsProps,
     IAttributeFilterElementsSearchBarProps,
+    IAttributeFilterElementsActionsProps,
     IAttributeFilterElementsSelectProps,
     IAttributeFilterElementsSelectItemProps,
     IAttributeFilterElementsSelectErrorProps,

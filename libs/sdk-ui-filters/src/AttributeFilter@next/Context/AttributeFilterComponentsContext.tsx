@@ -38,6 +38,10 @@ const AttributeFilterComponentsContext = createContext<IAttributeFilterCustomCom
         "ElementsSelectErrorComponent",
         "AttributeFilterComponentsContext",
     ),
+    ElementsSelectActionsComponent: ThrowMissingComponentError(
+        "ElementsSelectActionsComponent",
+        "AttributeFilterComponentsContext",
+    ),
     EmptyResultComponent: ThrowMissingComponentError(
         "EmptyResultComponent",
         "AttributeFilterComponentsContext",

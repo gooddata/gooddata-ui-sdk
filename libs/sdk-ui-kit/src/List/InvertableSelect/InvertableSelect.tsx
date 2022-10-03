@@ -70,6 +70,19 @@ export interface IInvertableSelectRenderStatusBarProps<T> {
 /**
  * @internal
  */
+export interface IInvertableSelectRenderActionsProps {
+    checked: boolean;
+    onChange: (value: boolean) => void;
+    onToggle: () => void;
+    totalItemsCount: number;
+    isFiltered: boolean;
+    isPartialSelection: boolean;
+    isVisible: boolean;
+}
+
+/**
+ * @internal
+ */
 export interface IInvertableSelectProps<T> {
     className?: string;
     width?: number;
@@ -105,6 +118,7 @@ export interface IInvertableSelectProps<T> {
     renderNoData?: (props: IInvertableSelectRenderNoDataProps) => JSX.Element;
     renderItem?: (props: IInvertableSelectRenderItemProps<T>) => JSX.Element;
     renderStatusBar?: (props: IInvertableSelectRenderStatusBarProps<T>) => JSX.Element;
+    renderActions?: (props: IInvertableSelectRenderActionsProps) => JSX.Element;
 }
 
 /**
@@ -144,10 +158,12 @@ export function InvertableSelect<T>(props: IInvertableSelectProps<T>) {
         renderNoData = defaultNoData,
         renderItem = defaultItem,
         renderStatusBar = defaultStatusBar,
+        renderActions = defaultActions,
     } = props;
 
     const {
         onSelectAllCheckboxChange,
+        onSelectAllCheckboxToggle,
         selectOnly,
         selectItems,
         deselectItems,
@@ -183,17 +199,15 @@ export function InvertableSelect<T>(props: IInvertableSelectProps<T>) {
                 <div className="gd-invertable-select-error">{renderError({ height, error })}</div>
             ) : (
                 <>
-                    {items.length > 0 && (
-                        <div className="gd-invertable-select-all-checkbox">
-                            <InvertableSelectAllCheckbox
-                                checked={selectionState !== "none"}
-                                onChange={onSelectAllCheckboxChange}
-                                isFiltered={searchString?.length > 0}
-                                totalItemsCount={totalItemsCount}
-                                isPartialSelection={selectionState === "partial"}
-                            />
-                        </div>
-                    )}
+                    {renderActions({
+                        isVisible: items.length > 0,
+                        checked: selectionState !== "none",
+                        onToggle: onSelectAllCheckboxToggle,
+                        onChange: onSelectAllCheckboxChange,
+                        isFiltered: searchString?.length > 0,
+                        totalItemsCount,
+                        isPartialSelection: selectionState === "partial",
+                    })}
                     {items.length > 0 && (
                         <Measure client>
                             {({ measureRef, contentRect }) => {
@@ -268,6 +282,21 @@ function defaultStatusBar<T>(props: IInvertableSelectRenderStatusBarProps<T>): J
             selectedItems={selectedItems}
             getItemTitle={getItemTitle}
             selectedItemsLimit={selectedItemsLimit}
+        />
+    );
+}
+
+function defaultActions(props: IInvertableSelectRenderActionsProps): JSX.Element {
+    const { checked, onToggle, onChange, isFiltered, totalItemsCount, isPartialSelection, isVisible } = props;
+    return (
+        <InvertableSelectAllCheckbox
+            isVisible={isVisible}
+            checked={checked}
+            onChange={onChange}
+            onToggle={onToggle}
+            isFiltered={isFiltered}
+            totalItemsCount={totalItemsCount}
+            isPartialSelection={isPartialSelection}
         />
     );
 }

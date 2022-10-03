@@ -51,6 +51,7 @@ export const AttributeFilterElementsSelect: React.FC<IAttributeFilterElementsSel
         ElementsSelectErrorComponent,
         EmptyResultComponent,
         ElementsSearchBarComponent,
+        ElementsSelectActionsComponent,
         StatusBarComponent,
     } = useAttributeFilterComponentsContext();
 
@@ -124,6 +125,27 @@ export const AttributeFilterElementsSelect: React.FC<IAttributeFilterElementsSel
                             selectedItems={selectedItems}
                             totalElementsCountWithCurrentSettings={totalItemsCountWithCurrentSettings}
                             selectedItemsLimit={selectedItemsLimit}
+                        />
+                    );
+                }}
+                renderActions={({
+                    checked,
+                    onChange,
+                    onToggle,
+                    isFiltered,
+                    totalItemsCount,
+                    isPartialSelection,
+                    isVisible,
+                }) => {
+                    return (
+                        <ElementsSelectActionsComponent
+                            isVisible={isVisible}
+                            checked={checked}
+                            onChange={onChange}
+                            onToggle={onToggle}
+                            isFiltered={isFiltered}
+                            totalItemsCount={totalItemsCount}
+                            isPartialSelection={isPartialSelection}
                         />
                     );
                 }}

@@ -9,26 +9,25 @@ import { useIntl } from "react-intl";
 export interface IInvertableSelectAllCheckboxProps {
     checked: boolean;
     onChange: (value: boolean) => void;
-
+    onToggle: () => void;
     isFiltered: boolean;
     totalItemsCount: number;
-
     isPartialSelection: boolean;
+    isVisible: boolean;
 }
 
 /**
  * @internal
  */
 export function InvertableSelectAllCheckbox(props: IInvertableSelectAllCheckboxProps) {
-    const { checked, onChange, isFiltered, totalItemsCount, isPartialSelection } = props;
+    const { isVisible, checked, onToggle, isFiltered, totalItemsCount, isPartialSelection } = props;
 
     const intl = useIntl();
-
-    const handleChange = useCallback(
-        (e: React.ChangeEvent<HTMLInputElement>) => {
-            onChange(e.target.checked);
+    const handleToggle = useCallback(
+        (_e: React.ChangeEvent<HTMLInputElement>) => {
+            onToggle();
         },
-        [onChange],
+        [onToggle],
     );
 
     const checkboxClasses = cx("input-checkbox", "gd-checkbox-selection", {
@@ -37,25 +36,31 @@ export function InvertableSelectAllCheckbox(props: IInvertableSelectAllCheckboxP
 
     const labelClasses = cx("input-checkbox-label", "s-select-all-checkbox");
 
+    if (!isVisible) {
+        return null;
+    }
+
     return (
-        <label className={labelClasses}>
-            <input
-                readOnly={true}
-                type="checkbox"
-                className={checkboxClasses}
-                checked={checked}
-                onChange={handleChange}
-            />
-            <span className="input-label-text">
-                <span className={cx("gd-list-all-checkbox", { "gd-list-all-checkbox-checked": checked })}>
-                    {intl.formatMessage({ id: "gs.list.all" })}
-                    {isFiltered &&
-                        ` ${intl.formatMessage({
-                            id: "gs.list.searchResults",
-                        })}`}
+        <div className="gd-invertable-select-all-checkbox">
+            <label className={labelClasses}>
+                <input
+                    readOnly={true}
+                    type="checkbox"
+                    className={checkboxClasses}
+                    checked={checked}
+                    onChange={handleToggle}
+                />
+                <span className="input-label-text">
+                    <span className={cx("gd-list-all-checkbox", { "gd-list-all-checkbox-checked": checked })}>
+                        {intl.formatMessage({ id: "gs.list.all" })}
+                        {isFiltered &&
+                            ` ${intl.formatMessage({
+                                id: "gs.list.searchResults",
+                            })}`}
+                    </span>
+                    <span className="gd-list-actions-selection-size s-list-search-selection-size">{`(${totalItemsCount})`}</span>
                 </span>
-                <span className="gd-list-actions-selection-size s-list-search-selection-size">{`(${totalItemsCount})`}</span>
-            </span>
-        </label>
+            </label>
+        </div>
     );
 }

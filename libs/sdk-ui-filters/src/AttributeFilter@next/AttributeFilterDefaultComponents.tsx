@@ -12,6 +12,7 @@ import { AttributeFilterElementsSelectError } from "./Components/ElementsSelect/
 import { AttributeFilterElementsSelectLoading } from "./Components/ElementsSelect/AttributeFilterElementsSelectLoading";
 import { AttributeFilterEmptyResult } from "./Components/ElementsSelect/EmptyResult/AttributeFilterEmptyResult";
 import { AttributeFilterStatusBar } from "./Components/ElementsSelect/StatusBar/AttributeFilterStatusBar";
+import { AttributeFilterElementsActions } from "./Components/ElementsSelect/AttributeFilterElementsActions";
 
 /**
  * @internal
@@ -27,6 +28,7 @@ export const AttributeFilterDefaultComponents: Required<IAttributeFilterCustomCo
     ElementsSelectItemComponent: AttributeFilterElementsSelectItem,
     ElementsSelectErrorComponent: AttributeFilterElementsSelectError,
     ElementsSelectLoadingComponent: AttributeFilterElementsSelectLoading,
+    ElementsSelectActionsComponent: AttributeFilterElementsActions,
     EmptyResultComponent: AttributeFilterEmptyResult,
     StatusBarComponent: AttributeFilterStatusBar,
     FilterError: AttributeFilterError,
