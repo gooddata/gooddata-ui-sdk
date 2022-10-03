@@ -1,6 +1,6 @@
 // (C) 2007-2022 GoodData Corporation
 
-import { IAnalyticalBackend, IExecutionResult } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IElementsQueryResult, IExecutionResult } from "@gooddata/sdk-backend-spi";
 import { CacheControl, withCaching } from "../index";
 import { dummyBackend, dummyBackendEmptyData } from "../../dummyBackend";
 import { ReferenceMd } from "@gooddata/reference-workspace";
@@ -33,6 +33,7 @@ function withCachingForTests(
         maxAttributeDisplayFormsPerWorkspace: 2,
         // set to two as one attribute can take up two places (one for id, one for uri)
         maxAttributesPerWorkspace: 2,
+        maxAttributeElementResultsPerWorkspace: 1,
         maxAttributeWorkspaces: 1,
         maxWorkspaceSettings: 1,
         onCacheReady,
@@ -67,6 +68,10 @@ function doGetAttributeByDisplayForm(
     ref: ObjRef,
 ): Promise<IAttributeMetadataObject> {
     return backend.workspace("test").attributes().getAttributeByDisplayForm(ref);
+}
+
+function doGetAttributeElements(backend: IAnalyticalBackend, ref: ObjRef): Promise<IElementsQueryResult> {
+    return backend.workspace("test").attributes().elements().forDisplayForm(ref).query();
 }
 
 describe("withCaching", () => {
@@ -590,6 +595,81 @@ describe("withCaching", () => {
                 cacheControl?.resetAll();
 
                 const second = doGetAttributeByDisplayForm(
+                    backend,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                );
+
+                expect(second).not.toBe(first);
+            });
+        });
+
+        describe("elements", () => {
+            it("should cache the calls", async () => {
+                const backend = withCachingForTests();
+
+                const first = await doGetAttributeElements(
+                    backend,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                );
+                const second = await doGetAttributeElements(
+                    backend,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                );
+
+                expect(second).toBe(first);
+            });
+
+            it("should evict cache items when the limit is hit", async () => {
+                const backend = withCachingForTests();
+
+                const first = await doGetAttributeElements(
+                    backend,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                );
+
+                doGetAttributeElements(backend, ReferenceMd.Activity.Default.attribute.displayForm);
+
+                const second = await doGetAttributeElements(
+                    backend,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                );
+
+                expect(second).not.toBe(first);
+            });
+
+            it("should reset attribute elements cache with resetAttributes", async () => {
+                let cacheControl: CacheControl | undefined;
+
+                const backend = withCachingForTests(defaultBackend, (cc) => (cacheControl = cc));
+
+                const first = await doGetAttributeElements(
+                    backend,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                );
+
+                cacheControl?.resetAttributes();
+
+                const second = await doGetAttributeElements(
+                    backend,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                );
+
+                expect(second).not.toBe(first);
+            });
+
+            it("should reset attribute elements cache with resetAll", async () => {
+                let cacheControl: CacheControl | undefined;
+
+                const backend = withCachingForTests(defaultBackend, (cc) => (cacheControl = cc));
+
+                const first = await doGetAttributeElements(
+                    backend,
+                    ReferenceMd.Account.Name.attribute.displayForm,
+                );
+
+                cacheControl?.resetAll();
+
+                const second = await doGetAttributeElements(
                     backend,
                     ReferenceMd.Account.Name.attribute.displayForm,
                 );

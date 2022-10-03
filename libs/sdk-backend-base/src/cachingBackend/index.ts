@@ -3,6 +3,11 @@ import {
     IAnalyticalBackend,
     IBackendCapabilities,
     IDataView,
+    IElementsQuery,
+    IElementsQueryAttributeFilter,
+    IElementsQueryFactory,
+    IElementsQueryOptions,
+    IElementsQueryResult,
     IExecutionFactory,
     IExecutionResult,
     IPreparedExecution,
@@ -34,6 +39,7 @@ import {
     PreparedExecutionWrapper,
 } from "../decoratedBackend/execution";
 import { DecoratedWorkspaceCatalogFactory } from "../decoratedBackend/catalog";
+import { DecoratedElementsQuery, DecoratedElementsQueryFactory } from "../decoratedBackend/elements";
 import stringify from "json-stable-stringify";
 import compact from "lodash/compact";
 import first from "lodash/first";
@@ -41,6 +47,7 @@ import flow from "lodash/flow";
 import identity from "lodash/identity";
 import invariant from "ts-invariant";
 import partition from "lodash/partition";
+import SparkMD5 from "spark-md5";
 import {
     areObjRefsEqual,
     idRef,
@@ -53,6 +60,10 @@ import {
     IAttributeDisplayFormMetadataObject,
     IMetadataObject,
     IAttributeMetadataObject,
+    IRelativeDateFilter,
+    IMeasure,
+    objRefToString,
+    IMeasureDefinitionType,
 } from "@gooddata/sdk-model";
 import { DecoratedWorkspaceAttributesService } from "../decoratedBackend/attributes";
 import { DecoratedWorkspaceSettingsService } from "../decoratedBackend/workspaceSettings";
@@ -76,6 +87,7 @@ type SecuritySettingsCacheEntry = {
 type AttributeCacheEntry = {
     displayForms: LRUCache<Promise<IAttributeDisplayFormMetadataObject>>;
     attributesByDisplayForms: LRUCache<Promise<IAttributeMetadataObject>>;
+    attributeElementResults: LRUCache<Promise<IElementsQueryResult>>;
 };
 
 type WorkspaceSettingsCacheEntry = {
@@ -433,6 +445,113 @@ function refMatchesMdObject(ref: ObjRef, mdObject: IMetadataObject, type?: Objec
 
 const firstDefined = flow(compact, first);
 
+function elementsCacheKey(
+    ref: ObjRef,
+    settings: {
+        limit?: number;
+        offset?: number;
+        options?: IElementsQueryOptions;
+        attributeFilters?: IElementsQueryAttributeFilter[];
+        dateFilters?: IRelativeDateFilter[];
+        measures?: IMeasure[];
+    },
+): string {
+    return new SparkMD5().append(objRefToString(ref)).append(stringify(settings)).end();
+}
+
+function getOrCreateAttributeCache(ctx: CachingContext, workspace: string): AttributeCacheEntry {
+    const cache = ctx.caches.workspaceAttributes!;
+    let cacheEntry = cache.get(workspace);
+
+    if (!cacheEntry) {
+        cacheEntry = {
+            displayForms: new LRUCache<Promise<IAttributeDisplayFormMetadataObject>>({
+                maxSize: ctx.config.maxAttributeDisplayFormsPerWorkspace,
+            }),
+            attributesByDisplayForms: new LRUCache<Promise<IAttributeMetadataObject>>({
+                maxSize: ctx.config.maxAttributesPerWorkspace,
+            }),
+            attributeElementResults: new LRUCache<Promise<IElementsQueryResult>>({
+                maxSize: ctx.config.maxAttributeElementResultsPerWorkspace,
+            }),
+        };
+        cache.set(workspace, cacheEntry);
+    }
+
+    return cacheEntry;
+}
+
+class CachedElementsQuery extends DecoratedElementsQuery {
+    constructor(
+        decorated: IElementsQuery,
+        private readonly ctx: CachingContext,
+        private readonly workspace: string,
+        private readonly ref: ObjRef,
+        settings: {
+            limit?: number;
+            offset?: number;
+            options?: IElementsQueryOptions;
+            attributeFilters?: IElementsQueryAttributeFilter[];
+            dateFilters?: IRelativeDateFilter[];
+            measures?: IMeasure[];
+        } = {},
+    ) {
+        super(decorated, settings);
+    }
+
+    public query = async (): Promise<IElementsQueryResult> => {
+        const canCache = !this.settings.options?.filter;
+        if (!canCache) {
+            return super.query();
+        }
+
+        const cache = getOrCreateAttributeCache(this.ctx, this.workspace).attributeElementResults;
+        const cacheKey = elementsCacheKey(this.ref, this.settings);
+
+        let result = cache.get(cacheKey);
+
+        if (!result) {
+            result = super.query().catch((e) => {
+                cache.delete(cacheKey);
+                throw e;
+            });
+
+            cache.set(cacheKey, result);
+        }
+
+        return result;
+    };
+
+    protected createNew(
+        decorated: IElementsQuery,
+        settings: {
+            limit?: number | undefined;
+            offset?: number | undefined;
+            options?: IElementsQueryOptions | undefined;
+            attributeFilters?: IElementsQueryAttributeFilter[] | undefined;
+            dateFilters?: IRelativeDateFilter[] | undefined;
+            measures?: IMeasure<IMeasureDefinitionType>[] | undefined;
+        },
+    ): IElementsQuery {
+        return new CachedElementsQuery(decorated, this.ctx, this.workspace, this.ref, settings);
+    }
+}
+
+class CachedElementsQueryFactory extends DecoratedElementsQueryFactory {
+    constructor(
+        decorated: IElementsQueryFactory,
+        private readonly ctx: CachingContext,
+        private readonly workspace: string,
+    ) {
+        super(decorated);
+    }
+
+    public forDisplayForm(ref: ObjRef): IElementsQuery {
+        const decorated = this.decorated.forDisplayForm(ref);
+        return new CachedElementsQuery(decorated, this.ctx, this.workspace, ref);
+    }
+}
+
 class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
     constructor(
         decorated: IWorkspaceAttributesService,
@@ -443,7 +562,7 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
     }
 
     public getAttributeDisplayForm = (ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject> => {
-        const cache = this.getOrCreateWorkspaceEntry(this.workspace).displayForms;
+        const cache = getOrCreateAttributeCache(this.ctx, this.workspace).displayForms;
 
         const idCacheKey = isIdentifierRef(ref) ? ref.identifier : undefined;
         const uriCacheKey = isUriRef(ref) ? ref.uri : undefined;
@@ -476,7 +595,7 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
     public getAttributeDisplayForms = async (
         refs: ObjRef[],
     ): Promise<IAttributeDisplayFormMetadataObject[]> => {
-        const cache = this.getOrCreateWorkspaceEntry(this.workspace).displayForms;
+        const cache = getOrCreateAttributeCache(this.ctx, this.workspace).displayForms;
 
         // grab a reference to the cache results as soon as possible in case they would get evicted while loading the ones with missing data in cache
         // then would might not be able to call cache.get again and be guaranteed to get the data
@@ -530,7 +649,7 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
     };
 
     public getAttributeByDisplayForm = async (ref: ObjRef): Promise<IAttributeMetadataObject> => {
-        const cache = this.getOrCreateWorkspaceEntry(this.workspace).attributesByDisplayForms;
+        const cache = getOrCreateAttributeCache(this.ctx, this.workspace).attributesByDisplayForms;
 
         const idCacheKey = isIdentifierRef(ref) ? ref.identifier : undefined;
         const uriCacheKey = isUriRef(ref) ? ref.uri : undefined;
@@ -561,24 +680,10 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
         return cacheItem;
     };
 
-    private getOrCreateWorkspaceEntry = (workspace: string): AttributeCacheEntry => {
-        const cache = this.ctx.caches.workspaceAttributes!;
-        let cacheEntry = cache.get(workspace);
-
-        if (!cacheEntry) {
-            cacheEntry = {
-                displayForms: new LRUCache<Promise<IAttributeDisplayFormMetadataObject>>({
-                    maxSize: this.ctx.config.maxAttributeDisplayFormsPerWorkspace,
-                }),
-                attributesByDisplayForms: new LRUCache<Promise<IAttributeMetadataObject>>({
-                    maxSize: this.ctx.config.maxAttributesPerWorkspace,
-                }),
-            };
-            cache.set(workspace, cacheEntry);
-        }
-
-        return cacheEntry;
-    };
+    public elements(): IElementsQueryFactory {
+        const decorated = this.decorated.elements();
+        return new CachedElementsQueryFactory(decorated, this.ctx, this.workspace);
+    }
 }
 
 //
@@ -847,6 +952,22 @@ export type CachingConfiguration = {
     maxAttributesPerWorkspace?: number;
 
     /**
+     * Maximum number of attributes element results to cache per workspace.
+     *
+     * Note that not all the queries are cached (e.g. queries with `filter` value).
+     *
+     * When limit is reached, cache entries will be evicted using LRU policy.
+     *
+     * When no maximum number is specified, the cache will be unbounded and no evictions will happen. Unbounded
+     * attribute elements cache may be OK in applications where number of attributes and/or their elements is small
+     * and/or they are requested infrequently - the cache will be limited naturally and will not grow uncontrollably.
+     *
+     * Setting non-positive number here is invalid. If you want to turn off attribute caching,
+     * tweak the `maxAttributeWorkspaces` value.
+     */
+    maxAttributeElementResultsPerWorkspace?: number;
+
+    /**
      * Maximum number of settings for a workspace and for a user to cache per workspace.
      *
      * When limit is reached, cache entries will be evicted using LRU policy.
@@ -886,6 +1007,7 @@ export const RecommendedCachingConfiguration: CachingConfiguration = {
     maxAttributeWorkspaces: 1,
     maxAttributeDisplayFormsPerWorkspace: 100,
     maxAttributesPerWorkspace: 100,
+    maxAttributeElementResultsPerWorkspace: 100,
     maxWorkspaceSettings: 1,
 };
 
