@@ -149,15 +149,7 @@ function useInitOrReload(
     }, [handler]);
 
     useEffect(() => {
-        if (!isEqual(filter, handler.getFilter())) {
-            const elements = filterAttributeElements(filter);
-            const keys = isAttributeElementsByValue(elements) ? elements.values : elements.uris;
-            const isInverted = isNegativeAttributeFilter(filter);
-
-            handler.changeSelection({ keys, isInverted });
-            handler.commitSelection();
-            handler.init();
-        } else if (!isEqual(limitingAttributeFilters, handler.getLimitingAttributeFilters())) {
+        if (!isEqual(limitingAttributeFilters, handler.getLimitingAttributeFilters())) {
             handler.changeSelection({ keys: [], isInverted: true });
             handler.setLimitingAttributeFilters(limitingAttributeFilters);
             handler.loadInitialElementsPage(PARENT_FILTERS_CORRELATION);
@@ -170,6 +162,14 @@ function useInitOrReload(
 
             setConnectedPlaceholderValue(nextFilter);
             onApply?.(nextFilter, isInverted);
+        } else if (!isEqual(filter, handler.getFilter())) {
+            const elements = filterAttributeElements(filter);
+            const keys = isAttributeElementsByValue(elements) ? elements.values : elements.uris;
+            const isInverted = isNegativeAttributeFilter(filter);
+
+            handler.changeSelection({ keys, isInverted });
+            handler.commitSelection();
+            handler.init();
         }
     }, [filter, limitingAttributeFilters, handler, onApply, setConnectedPlaceholderValue]);
 }
