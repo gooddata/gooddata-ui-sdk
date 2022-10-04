@@ -12,7 +12,7 @@ default:
 
 variables:
   AWS_ECR_URL: '441851189095.dkr.ecr.eu-central-1.amazonaws.com'
-  BUILD_IMAGE_VERSION: "3.0.2"
+  BUILD_IMAGE_VERSION: "3.1.0"
 
 stages:
   - build
@@ -85,5 +85,5 @@ generate-update:
   variables:
     KUBERNETES_MEMORY_REQUEST: 100Mi
   script:
-    - /scripts/update-ext-image-version.rb web-components
+    - /scripts/update_ext_image_version.py web-components
   dependencies: []
