@@ -62,7 +62,7 @@ export const ParentFiltersListItem: React.FC<IConfigurationParentItemProps> = (p
     if (isDisabled) {
         return (
             <ParentFiltersDisabledItem
-                hasConnectingAttributes={true}
+                hasConnectingAttributes={!!connectingAttributes.length}
                 itemTitle={title}
                 itemLocalId={currentFilterLocalId}
             />

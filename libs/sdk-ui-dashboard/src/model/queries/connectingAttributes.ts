@@ -9,7 +9,7 @@ import { IDashboardQuery } from "./base";
 export interface QueryConnectingAttributes extends IDashboardQuery {
     type: "GDC.DASH/QUERY.CONNECTING.ATTRIBUTES";
     payload: {
-        readonly refs: ObjRef[][];
+        readonly refs: [ObjRef, ObjRef][];
     };
 }
 
@@ -25,7 +25,7 @@ export interface QueryConnectingAttributes extends IDashboardQuery {
  * @internal
  */
 export function queryConnectingAttributes(
-    refs: ObjRef[][],
+    refs: [ObjRef, ObjRef][],
     correlationId?: string,
 ): QueryConnectingAttributes {
     return {
