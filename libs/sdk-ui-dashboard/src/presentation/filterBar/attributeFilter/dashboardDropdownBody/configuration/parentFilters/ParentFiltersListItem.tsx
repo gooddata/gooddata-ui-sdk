@@ -3,7 +3,7 @@ import React, { useCallback, useMemo } from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
-import { ObjRef, uriRef } from "@gooddata/sdk-model";
+import { ObjRef } from "@gooddata/sdk-model";
 import { ParentFiltersDisabledItem } from "./ParentFiltersDisabledItem";
 import { stringUtils } from "@gooddata/util";
 import {
@@ -55,8 +55,9 @@ export const ParentFiltersListItem: React.FC<IConfigurationParentItemProps> = (p
     }, [isSelected, title]);
 
     const onSelect = useCallback(() => {
-        onClick(localIdentifier, !isSelected, [uriRef("")]);
-    }, [isSelected, localIdentifier, onClick]);
+        const connectingAttributeRefs = connectingAttributes.map((attr) => attr.ref);
+        onClick(localIdentifier, !isSelected, connectingAttributeRefs);
+    }, [isSelected, localIdentifier, onClick, connectingAttributes]);
 
     if (isDisabled) {
         return (

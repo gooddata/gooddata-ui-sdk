@@ -74,7 +74,7 @@ export function useParentsConfiguration(
                 title: neighborFilterMetaData.attribute.title,
                 isSelected,
                 overAttributes: overAttributes,
-                selectedConnectingAttribute: undefined,
+                selectedConnectingAttribute: overAttributes?.[0],
             };
         });
     });
@@ -85,6 +85,10 @@ export function useParentsConfiguration(
 
         changedItem.isSelected = isSelected;
         changedItem.overAttributes = overAttributes;
+
+        if (isSelected) {
+            changedItem.selectedConnectingAttribute = overAttributes[0];
+        }
 
         const changedParentItems = [...parents];
         changedParentItems[changedParentIndex] = changedItem;
@@ -123,10 +127,12 @@ export function useParentsConfiguration(
             const parentFilters: IDashboardAttributeFilterParent[] = [];
             parents.forEach((parentItem) => {
                 if (parentItem.isSelected && parentItem.overAttributes?.length) {
+                    const overAttribute =
+                        parentItem.selectedConnectingAttribute || parentItem.overAttributes[0];
                     parentFilters.push({
                         filterLocalIdentifier: parentItem.localIdentifier,
                         over: {
-                            attributes: [],
+                            attributes: [overAttribute],
                         },
                     });
                 }

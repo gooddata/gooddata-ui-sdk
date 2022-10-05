@@ -15,7 +15,8 @@ import invariant from "ts-invariant";
 import { AttributeDisplayFormsDropdown } from "./displayForms/AttributeDisplayFormsDropdown";
 import { useAttributeFilterParentFiltering } from "../../AttributeFilterParentFilteringContext";
 import { useConnectingAttributes } from "./hooks/useConnectingAttributes";
-import { LoadingComponent } from "@gooddata/sdk-ui";
+import { LoadingSpinner } from "@gooddata/sdk-ui-kit";
+import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 interface IAttributeFilterConfigurationProps {
     closeHandler: () => void;
@@ -27,6 +28,7 @@ interface IAttributeFilterConfigurationProps {
 
 export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfigurationProps> = (props) => {
     const { filterRef, filterByText, displayValuesAsText, closeHandler } = props;
+    const theme = useTheme();
 
     useEffect(() => {
         return () => {
@@ -66,7 +68,14 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
     );
 
     if (connectingAttributesLoading) {
-        return <LoadingComponent />;
+        return (
+            <div className="gd-loading-equalizer-attribute-filter-config-wrap">
+                <LoadingSpinner
+                    className="large gd-loading-equalizer-spinner"
+                    color={theme?.palette?.complementary?.c9}
+                />
+            </div>
+        );
     }
 
     if (!filterRef || !connectingAttributes) {
