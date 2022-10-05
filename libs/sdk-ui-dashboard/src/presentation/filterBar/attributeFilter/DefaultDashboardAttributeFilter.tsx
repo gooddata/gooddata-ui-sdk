@@ -70,7 +70,14 @@ export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilter
 
     const CustomDropdownButton = useMemo(() => {
         return function DropdownButton(props: IAttributeFilterDropdownButtonProps) {
-            return <AttributeFilterDropdownButton {...props} isDraggable={isDraggable} />;
+            const buttonSpacing = isDraggable
+                ? { margin: "7px 11px 7px -10px" }
+                : { margin: "7px 11px 7px 0" };
+            return (
+                <div style={buttonSpacing}>
+                    <AttributeFilterDropdownButton {...props} isDraggable={isDraggable} />
+                </div>
+            );
         };
     }, [isDraggable]);
 
