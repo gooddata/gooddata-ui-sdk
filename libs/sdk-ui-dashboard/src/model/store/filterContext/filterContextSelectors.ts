@@ -281,33 +281,6 @@ export const selectOtherContextAttributeFilters = createMemoizedSelector((ref?: 
 );
 
 /**
- * Creates a selector for selecting filter identifier to index map.
- *
- * @remarks
- * The mapping's purpose is to enable efficient handling and reading from the connecting attributes
- * matrix.
- *
- * @see {@link selectConnectingAttributesMatrix} for details.
- *
- * @internal
- */
-export const selectFiltersToIndexMap = createSelector(selectSelf, (state) => state.filtersToIndexMap);
-
-/**
- * Creates a selector for selecting connecting attributes matrix.
- *
- * @remarks
- * The matrix is used to check if the pair of attribute filters are able to create parent child
- * relationship.
- *
- * @internal
- */
-export const selectConnectingAttributesMatrix = createSelector(
-    selectSelf,
-    (state) => state.connectingAttributeMatrix,
-);
-
-/**
  * Creates a selector to get a display form of the filter defined by its local identifier.
  *
  * @internal
@@ -332,30 +305,4 @@ export const selectIsCircularDependency = createMemoizedSelector(
         createSelector(selectAttributeFilterDescendants(currentFilterLocalId), (descendants) => {
             return descendants.some((descendant) => descendant === neighborFilterLocalid);
         }),
-);
-
-/**
- * Creates a selector returning connecting attributes for a two attribute filters defined by their local identifiers.
- *
- * @internal
- */
-export const selectConnectingAttributesForFilters = createMemoizedSelector(
-    (currentFilterLocalId: string, neighborFilterId) =>
-        createSelector(
-            selectFiltersToIndexMap,
-            selectConnectingAttributesMatrix,
-            (filtersToIndexMap, connectingAttributesMatrix) => {
-                const currentFilterIndex = filtersToIndexMap?.[currentFilterLocalId];
-                const neighborFilterIndex = filtersToIndexMap?.[neighborFilterId];
-
-                invariant(
-                    currentFilterIndex !== undefined &&
-                        neighborFilterIndex !== undefined &&
-                        connectingAttributesMatrix,
-                    "Could not acquire required information to configure the attribute filter.",
-                );
-
-                return connectingAttributesMatrix[currentFilterIndex][neighborFilterIndex];
-            },
-        ),
 );

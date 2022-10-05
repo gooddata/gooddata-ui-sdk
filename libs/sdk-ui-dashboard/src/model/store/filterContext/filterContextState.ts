@@ -5,7 +5,6 @@ import {
     IFilterContextDefinition,
     IAttributeDisplayFormMetadataObject,
 } from "@gooddata/sdk-model";
-import { ConnectingAttributeMatrix } from "../../types/attributeFilterTypes";
 
 /**
  * @alpha
@@ -41,25 +40,10 @@ export interface FilterContextState {
      * Display form metadata objects for all attribute filters in the `filterContextDefinition`
      */
     attributeFilterDisplayForms?: IAttributeDisplayFormMetadataObject[];
-
-    /**
-     * Map of filter local identifier to index to be used to fetch data from the {@link FilterContextState#connectingAttributeMatrix}.
-     */
-    filtersToIndexMap?: Record<string, number>;
-
-    /**
-     * Matrix to store connecting attributes for all possible attribute filter pairs.
-     *
-     * @remarks
-     * This is being used for parent child attribute filter relationship configuration.
-     */
-    connectingAttributeMatrix?: ConnectingAttributeMatrix;
 }
 
 export const filterContextInitialState: FilterContextState = {
     filterContextDefinition: undefined,
     filterContextIdentity: undefined,
     attributeFilterDisplayForms: undefined,
-    filtersToIndexMap: undefined,
-    connectingAttributeMatrix: undefined,
 };

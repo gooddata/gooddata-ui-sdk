@@ -89,12 +89,9 @@ export {
     selectFilterContextAttributeFilterByDisplayForm,
     selectOriginalFilterContextDefinition,
     selectOriginalFilterContextFilters,
-    selectFiltersToIndexMap,
-    selectConnectingAttributesMatrix,
     selectAttributeFilterDescendants,
     selectAttributeFilterDisplayFormByLocalId,
     selectIsCircularDependency,
-    selectConnectingAttributesForFilters,
 } from "./filterContext/filterContextSelectors";
 export {
     // Core drills

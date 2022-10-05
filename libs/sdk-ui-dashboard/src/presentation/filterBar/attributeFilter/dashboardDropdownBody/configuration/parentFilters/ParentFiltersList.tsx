@@ -8,6 +8,7 @@ import {
     useDashboardSelector,
     selectSupportsElementsQueryParentFiltering,
     IDashboardAttributeFilterParentItem,
+    IConnectingAttribute,
 } from "../../../../../../model";
 
 const LOADING_MASK_HEIGHT = 150;
@@ -17,10 +18,12 @@ interface IConfigurationParentItemsProps {
     parents: IDashboardAttributeFilterParentItem[];
     setParents: (localId: string, isSelected: boolean, overAttributes: ObjRef[]) => void;
     onConnectingAttributeChanged: (localId: string, selectedAttribute: ObjRef) => void;
+    connectingAttributes: IConnectingAttribute[][];
 }
 
 export const ParentFiltersList: React.FC<IConfigurationParentItemsProps> = (props) => {
-    const { parents, currentFilterLocalId, setParents, onConnectingAttributeChanged } = props;
+    const { parents, currentFilterLocalId, setParents, onConnectingAttributeChanged, connectingAttributes } =
+        props;
 
     const isDependentFiltersEnabled = useDashboardSelector(selectSupportsElementsQueryParentFiltering);
 
@@ -39,7 +42,7 @@ export const ParentFiltersList: React.FC<IConfigurationParentItemsProps> = (prop
 
     return (
         <div className="gd-infinite-list">
-            {parents.map((item) => {
+            {parents.map((item, index) => {
                 return (
                     <ParentFiltersListItem
                         key={item.localIdentifier}
@@ -47,6 +50,7 @@ export const ParentFiltersList: React.FC<IConfigurationParentItemsProps> = (prop
                         item={item}
                         onClick={setParents}
                         onConnectingAttributeSelect={onConnectingAttributeChanged}
+                        connectingAttributes={connectingAttributes[index]}
                     />
                 );
             })}

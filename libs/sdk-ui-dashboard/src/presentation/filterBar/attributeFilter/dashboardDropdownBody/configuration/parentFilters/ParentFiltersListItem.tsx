@@ -1,16 +1,16 @@
 // (C) 2022 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
 import cx from "classnames";
+import { FormattedMessage } from "react-intl";
 
-import { ObjRef } from "@gooddata/sdk-model";
+import { ObjRef, uriRef } from "@gooddata/sdk-model";
 import { ParentFiltersDisabledItem } from "./ParentFiltersDisabledItem";
 import { stringUtils } from "@gooddata/util";
-import { FormattedMessage } from "react-intl";
 import {
     useDashboardSelector,
     IDashboardAttributeFilterParentItem,
     selectIsCircularDependency,
-    selectConnectingAttributesForFilters,
+    IConnectingAttribute,
 } from "../../../../../../model";
 import { ConnectingAttributeDropdown } from "../connectingAttribute/ConnectingAttributeDropdown";
 
@@ -25,6 +25,7 @@ export interface IConfigurationParentItemProps {
     item: IDashboardAttributeFilterParentItem;
     onClick: (localId: string, isSelected: boolean, overAttributes: ObjRef[]) => void;
     onConnectingAttributeSelect: (localIdentifier: string, targetRef: ObjRef) => void;
+    connectingAttributes: IConnectingAttribute[];
 }
 
 export const ParentFiltersListItem: React.FC<IConfigurationParentItemProps> = (props) => {
@@ -32,18 +33,16 @@ export const ParentFiltersListItem: React.FC<IConfigurationParentItemProps> = (p
         item: { isSelected, localIdentifier, title, selectedConnectingAttribute },
         onClick,
         currentFilterLocalId,
+        connectingAttributes,
         onConnectingAttributeSelect,
     } = props;
 
     const isCircularDependency = useDashboardSelector(
         selectIsCircularDependency(currentFilterLocalId, localIdentifier),
     );
-    const connectingAttributes = useDashboardSelector(
-        selectConnectingAttributesForFilters(currentFilterLocalId, localIdentifier),
-    );
 
-    const showConnectingAttributeSelect = isSelected && connectingAttributes.length > 1;
     const isDisabled = isCircularDependency || !connectingAttributes.length;
+    const showConnectingAttributeSelect = isSelected && connectingAttributes.length > 1;
 
     const activeItemClasses = useMemo(() => {
         return cx(
@@ -56,17 +55,13 @@ export const ParentFiltersListItem: React.FC<IConfigurationParentItemProps> = (p
     }, [isSelected, title]);
 
     const onSelect = useCallback(() => {
-        onClick(
-            localIdentifier,
-            !isSelected,
-            connectingAttributes.map((attr) => attr.ref),
-        );
-    }, [isSelected, localIdentifier, onClick, connectingAttributes]);
+        onClick(localIdentifier, !isSelected, [uriRef("")]);
+    }, [isSelected, localIdentifier, onClick]);
 
     if (isDisabled) {
         return (
             <ParentFiltersDisabledItem
-                hasConnectingAttributes={!!connectingAttributes.length}
+                hasConnectingAttributes={true}
                 itemTitle={title}
                 itemLocalId={currentFilterLocalId}
             />
@@ -95,8 +90,10 @@ export const ParentFiltersListItem: React.FC<IConfigurationParentItemProps> = (p
             {showConnectingAttributeSelect && (
                 <ConnectingAttributeDropdown
                     itemLocalId={localIdentifier}
-                    connectingAttributes={connectingAttributes}
-                    selectedConnectingAttributeRef={selectedConnectingAttribute}
+                    connectingAttributes={connectingAttributes!}
+                    selectedConnectingAttributeRef={
+                        selectedConnectingAttribute || connectingAttributes[0].ref
+                    }
                     onSelect={onConnectingAttributeSelect}
                 />
             )}

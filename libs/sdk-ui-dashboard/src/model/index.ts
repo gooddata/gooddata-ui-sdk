@@ -71,7 +71,6 @@ export { ICsvExportConfig, IExportConfig, IXlsxExportConfig } from "./types/expo
 
 export {
     IConnectingAttribute,
-    ConnectingAttributeMatrix,
     IDashboardAttributeFilterDisplayForms,
     IDashboardAttributeFilterParentItem,
     IParentWithConnectingAttributes,

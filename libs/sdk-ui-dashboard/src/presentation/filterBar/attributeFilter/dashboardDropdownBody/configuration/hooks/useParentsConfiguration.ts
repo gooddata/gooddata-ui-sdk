@@ -13,8 +13,6 @@ import {
     useDispatchDashboardCommand,
     selectCatalogAttributes,
     IDashboardAttributeFilterParentItem,
-    selectConnectingAttributesMatrix,
-    selectFiltersToIndexMap,
 } from "../../../../../../model";
 
 export function useParentsConfiguration(
@@ -23,39 +21,8 @@ export function useParentsConfiguration(
 ) {
     const { filterElementsBy, localIdentifier: currentFilterLocalId } = currentFilter.attributeFilter;
     const catalogAttributes = useDashboardSelector(selectCatalogAttributes);
-    const connectingAttributesMatrix = useDashboardSelector(selectConnectingAttributesMatrix);
-    const idToIndexMap = useDashboardSelector(selectFiltersToIndexMap);
 
     const saveParentFilterCommand = useDispatchDashboardCommand(setAttributeFilterParents);
-
-    // helper functions
-    const getDefaultConnectingAttribute = useCallback(
-        (neighborFilterLocalId: string, currentFilterLocalId: string): ObjRef => {
-            const connectingAttributes = filterElementsBy?.find(
-                (by) => by.filterLocalIdentifier === neighborFilterLocalId,
-            )?.over.attributes;
-
-            invariant(idToIndexMap, "Cannot load 'filtersToIndexMap' property from filterContext state.");
-
-            const currentFilterIndex = idToIndexMap[currentFilterLocalId];
-            const neighborFilterIndex = idToIndexMap[neighborFilterLocalId];
-
-            invariant(
-                currentFilterIndex !== undefined,
-                "Cannot initialize the attribute filter configuration panel state for parents, current filter index not found in mapping",
-            );
-
-            invariant(
-                neighborFilterIndex !== undefined,
-                "Cannot initialize the attribute filter configuration panel state for parents, neighbor filter index not found in mapping",
-            );
-
-            return connectingAttributes
-                ? connectingAttributes[0]
-                : connectingAttributesMatrix![currentFilterIndex]?.[neighborFilterIndex][0]?.ref;
-        },
-        [connectingAttributesMatrix, filterElementsBy, idToIndexMap],
-    );
 
     const originalParentFilterSelection = useMemo<Map<string, boolean>>(() => {
         const originalSelection = new Map<string, boolean>();
@@ -75,26 +42,6 @@ export function useParentsConfiguration(
 
         return originalSelection;
     }, [filterElementsBy, neighborFilters]);
-
-    const originalSelectedConnectingAttribute = useMemo<Map<string, ObjRef>>(() => {
-        const originalConnectingAttributes = new Map<string, ObjRef>();
-
-        for (const neighborFilter of neighborFilters) {
-            invariant(
-                neighborFilter.attributeFilter.localIdentifier,
-                "Cannot initialize the attribute filter configuration panel, neighbor filter has missing 'localIdentifier' property",
-            );
-            originalConnectingAttributes.set(
-                neighborFilter.attributeFilter.localIdentifier,
-                getDefaultConnectingAttribute(
-                    neighborFilter.attributeFilter.localIdentifier,
-                    currentFilterLocalId!,
-                ),
-            );
-        }
-
-        return originalConnectingAttributes;
-    }, [currentFilterLocalId, getDefaultConnectingAttribute, neighborFilters]);
 
     const [parents, setParents] = useState<IDashboardAttributeFilterParentItem[]>(() => {
         return neighborFilters.map((neighborFilter) => {
@@ -121,22 +68,13 @@ export function useParentsConfiguration(
                 "Cannot initialize the attribute filter configuration panel, neighbor filter has missing 'localIdentifier' property.",
             );
             invariant(neighborFilterMetaData, "Cannot load metadata for the neighbor filter attribute.");
-            invariant(
-                connectingAttributesMatrix,
-                "Cannot load 'connectingAttributesMatrix' property from filterContext state.",
-            );
-
-            const selectedConnectingAttribute = getDefaultConnectingAttribute(
-                neighborFilterLocalId,
-                currentFilterLocalId,
-            );
 
             return {
                 localIdentifier: neighborFilterLocalId,
                 title: neighborFilterMetaData.attribute.title,
                 isSelected,
                 overAttributes: overAttributes,
-                selectedConnectingAttribute,
+                selectedConnectingAttribute: undefined,
             };
         });
     });
@@ -175,13 +113,9 @@ export function useParentsConfiguration(
 
     const connectingAttributeChanged = useMemo<boolean>(() => {
         return parents.some(
-            (parentItem) =>
-                !areObjRefsEqual(
-                    parentItem.selectedConnectingAttribute,
-                    originalSelectedConnectingAttribute.get(parentItem.localIdentifier),
-                ),
+            (parentItem) => !areObjRefsEqual(parentItem.selectedConnectingAttribute, undefined),
         );
-    }, [parents, originalSelectedConnectingAttribute]);
+    }, [parents]);
 
     const onParentFiltersChange = useCallback(() => {
         // dispatch the command only if the configuration changed
@@ -192,7 +126,7 @@ export function useParentsConfiguration(
                     parentFilters.push({
                         filterLocalIdentifier: parentItem.localIdentifier,
                         over: {
-                            attributes: [parentItem.selectedConnectingAttribute],
+                            attributes: [],
                         },
                     });
                 }
