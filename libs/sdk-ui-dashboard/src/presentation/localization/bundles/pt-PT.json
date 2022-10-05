@@ -160,7 +160,6 @@
     "messages.sharingChangedError.general": "Falha ao atualizar as definições de partilha. Tente mais tarde.",
     "messages.sharingDialogError.general": "Falha ao carregar as definições de partilha. Tente mais tarde.",
     "attributeFilterDropdown.searchPlaceholder": "Pesquisar…",
-    "attributeFilterDropdown.emptyValue": "valor vazio",
     "visualization.dataTooLarge.headline": "Demasiados pontos de dados para apresentar",
     "visualization.dataTooLarge.text": "Tente aplicar um ou mais filtros ao dashboard.",
     "visualization.execute_protected_report.headline": "Não tem autorização para ver este relatório",

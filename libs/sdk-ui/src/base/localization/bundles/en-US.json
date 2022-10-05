@@ -316,11 +316,6 @@
         "comment": "",
         "limit": 0
     },
-    "gs.filter.loading": {
-        "value": "Loading filter…",
-        "comment": "Use '…' as one character, not 3 dots ('...').",
-        "limit": 0
-    },
     "gs.filter.error": {
         "value": "Error loading filter",
         "comment": "",
@@ -1281,16 +1276,6 @@
         "comment": "",
         "limit": 0
     },
-    "attrf.all": {
-        "value": "All",
-        "comment": "",
-        "limit": 0
-    },
-    "attrf.all_except": {
-        "value": "All except",
-        "comment": "",
-        "limit": 0
-    },
     "rankingFilter.topBottom": {
         "value": "Top/bottom values",
         "comment": "Filter title",
@@ -1397,11 +1382,6 @@
     "attributesDropdown.itemsFiltered": {
         "value": "Items are filtered",
         "comment": "This message is displayed when attribute elements are being filtered out by parent filters",
-        "limit": 0
-    },
-    "attributeFilterDropdown.emptyValue": {
-        "value": "empty value",
-        "comment": "",
         "limit": 0
     },
     "attributesDropdown.noData": {

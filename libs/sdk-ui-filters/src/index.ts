@@ -10,23 +10,7 @@
  */
 export { AttributeElements, IAttributeElementsProps } from "./AttributeElements/AttributeElements";
 export { IAttributeElementsChildren } from "./AttributeElements/types";
-export { AttributeFilter, IAttributeFilterProps } from "./AttributeFilter/AttributeFilter";
-export {
-    AttributeFilterButton,
-    IAttributeFilterButtonProps,
-    IAttributeFilterButtonOwnProps,
-} from "./AttributeFilter/AttributeFilterButton";
-export {
-    IAttributeDropdownBodyProps,
-    IAttributeDropdownBodyExtendedProps,
-    IAttributeDropdownListItemProps,
-} from "./AttributeFilter/AttributeDropdown/AttributeDropdownBody";
-export {
-    AttributeListItem,
-    EmptyListItem,
-    isEmptyListItem,
-    isNonEmptyListItem,
-} from "./AttributeFilter/AttributeDropdown/types";
+
 export {
     DateFilter,
     IDateFilterCallbackProps,
@@ -136,10 +120,10 @@ export {
 } from "./AttributeFilterHandler";
 
 export {
-    AttributeFilter as AttributeFilterV2,
-    IAttributeFilterProps as IAttributeFilterPropsV2,
-    AttributeFilterButton as AttributeFilterButtonV2,
-    IAttributeFilterButtonProps as IAttributeFilterButtonPropsV2,
+    AttributeFilter,
+    IAttributeFilterProps,
+    AttributeFilterButton,
+    IAttributeFilterButtonProps,
     IAttributeFilterBaseProps,
     IAttributeFilterErrorProps,
     IAttributeFilterDropdownButtonProps,
@@ -163,4 +147,47 @@ export {
     IUseAttributeFilterHandlerProps,
     useAttributeFilterContext,
     IAttributeFilterContext,
-} from "./AttributeFilter@next";
+    AttributeDisplayFormSelect,
+    AttributeFilterAllValuesFilteredResult,
+    AttributeFilterConfigurationButton,
+    AttributeFilterDeleteButton,
+    AttributeFilterDropdownActions,
+    AttributeFilterDropdownBody,
+    AttributeFilterDropdownButton,
+    AttributeFilterElementsActions,
+    AttributeFilterElementsSearchBar,
+    AttributeFilterElementsSelect,
+    AttributeFilterElementsSelectError,
+    AttributeFilterElementsSelectItem,
+    AttributeFilterElementsSelectLoading,
+    AttributeFilterEmptyAttributeResult,
+    AttributeFilterEmptyResult,
+    AttributeFilterEmptySearchResult,
+    AttributeFilterError,
+    AttributeFilterFilteredStatus,
+    AttributeFilterLoading,
+    AttributeFilterSelectionStatus,
+    AttributeFilterSimpleDropdownButton,
+    AttributeFilterSimpleDropdownButtonWithSelection,
+    AttributeFilterStatusBar,
+    EmptyElementsSearchBar,
+    IAttributeDisplayFormSelectProps,
+    IAttributeFilterAllValuesFilteredResultProps,
+    IAttributeFilterConfigurationButtonProps,
+    IAttributeFilterDeleteButtonProps,
+    IAttributeFilterFilteredStatusProps,
+    IAttributeFilterSelectionStatusProps,
+    useAutoOpenAttributeFilterDropdownButton,
+    useOnCloseAttributeFilterDropdownButton,
+} from "./AttributeFilter";
+
+export {
+    AttributeListItem,
+    EmptyListItem,
+    isEmptyListItem,
+    isNonEmptyListItem,
+    IAttributeDropdownBodyProps,
+    IAttributeDropdownBodyExtendedProps,
+    IAttributeDropdownListItemProps,
+    IAttributeFilterButtonOwnProps,
+} from "./deprecated";

@@ -160,7 +160,6 @@
     "messages.sharingChangedError.general": "Не удалось обновить настройки общего доступа. Попробуйте позже.",
     "messages.sharingDialogError.general": "Не удалось загрузить настройки общего доступа. Попробуйте позже.",
     "attributeFilterDropdown.searchPlaceholder": "Поиск…",
-    "attributeFilterDropdown.emptyValue": "значение отсутствует",
     "visualization.dataTooLarge.headline": "Слишком много точек данных для отображения",
     "visualization.dataTooLarge.text": "Попробуйте применить один или несколько фильтров к своему дашборду.",
     "visualization.execute_protected_report.headline": "У вас нет прав для просмотра этого отчета",

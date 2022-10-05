@@ -1,10 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { Button } from "@gooddata/sdk-ui-kit";
-import {
-    AttributeFilterConfigurationButton,
-    AttributeFilterDeleteButton,
-} from "@gooddata/sdk-ui-filters/dist/internal";
+import { AttributeFilterConfigurationButton, AttributeFilterDeleteButton } from "@gooddata/sdk-ui-filters";
 import { selectIsDeleteFilterButtonEnabled, selectIsInEditMode, useDashboardSelector } from "../../../model";
 
 /**

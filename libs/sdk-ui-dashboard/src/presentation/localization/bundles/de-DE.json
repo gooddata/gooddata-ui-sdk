@@ -160,7 +160,6 @@
     "messages.sharingChangedError.general": "Fehler beim Aktualisieren der Freigabeeinstellungen. Bitte später erneut versuchen.",
     "messages.sharingDialogError.general": "Fehler beim Laden der Freigabeeinstellungen. Bitte später erneut versuchen.",
     "attributeFilterDropdown.searchPlaceholder": "Sucht…",
-    "attributeFilterDropdown.emptyValue": "leerer Wert",
     "visualization.dataTooLarge.headline": "Zu viele Datenpunkte zum Anzeigen",
     "visualization.dataTooLarge.text": "Versuchen Sie, einen oder mehrere Filter auf Ihr Dashboard anzuwenden.",
     "visualization.execute_protected_report.headline": "Sie sind nicht berechtigt, diesen Bericht anzuzeigen.",
