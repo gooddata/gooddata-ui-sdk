@@ -75,7 +75,7 @@
         "intersection-observer": "^0.12.2",
         "json-stable-stringify": "^1.0.1",
         "lodash": "^4.17.19",
-        "moment": "^2.24.0",
+        "moment": "^2.29.4",
         "react-day-picker": "^8.0.1",
         "react-intl": "^5.23.0",
         "react-responsive": "^8.2.0",
