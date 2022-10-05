@@ -41,6 +41,7 @@ let previousChart: any = null;
 function getThemedConfiguration(theme: ITheme): any {
     const backgroundColor =
         theme?.chart?.backgroundColor ??
+        theme?.dashboards?.content?.widget?.backgroundColor ??
         theme?.palette?.complementary?.c0 ??
         styleVariables.gdColorBackground;
     const axisLineColor =

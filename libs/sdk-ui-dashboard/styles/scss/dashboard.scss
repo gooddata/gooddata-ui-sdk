@@ -187,7 +187,7 @@
     border-color: $gd-dashboards-content-widget-borderColor;
     border-radius: $gd-dashboards-content-widget-borderRadius;
     box-shadow: $gd-dashboards-content-widget-dropShadow;
-    background-color: $gd-color-white;
+    background-color: $gd-dashboards-content-widget-backgroundColor;
     transition: $transition-length;
 
     @media #{$xsmall-only}, #{$small-only} {

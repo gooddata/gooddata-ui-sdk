@@ -14,7 +14,7 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
     @include gd-font-base;
 
     position: relative;
-    height: 41px;
+    height: 42px;
     margin: 7px 11px 7px 0;
     padding: 5px 10px;
     line-height: 16px;
@@ -64,16 +64,9 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
         border-radius: 3px;
     }
 
-    &:hover,
-    .drag-preview & {
-        &::after {
-            background: var(--gd-palette-complementary-0, transparentize($default-gd-color-white, 0.05));
-        }
-    }
-
     &:hover {
         &::after {
-            border-color: $gd-border-color;
+            border-color: $button-normal-hover-border-color;
         }
 
         .edit-mode-on & {

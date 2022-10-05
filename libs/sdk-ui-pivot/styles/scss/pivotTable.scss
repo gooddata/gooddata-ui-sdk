@@ -12,7 +12,10 @@ $custom-secondary-foreground-color: var(
 $default-background: $default-gd-color-white;
 $custom-background-color: var(
     --gd-table-backgroundColor,
-    var(--gd-palette-complementary-0, $default-background)
+    var(
+        --gd-dashboards-content-widget-backgroundColor,
+        var(--gd-palette-complementary-0, $default-background)
+    )
 );
 
 $cell-border: 1px dashed transparent;
