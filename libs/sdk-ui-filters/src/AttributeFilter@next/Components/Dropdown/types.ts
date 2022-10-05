@@ -6,5 +6,6 @@
 export interface IAttributeFilterDropdownBodyProps {
     onApplyButtonClick: () => void;
     onCancelButtonClick: () => void;
-    width?: number;
+    width?: React.CSSProperties["width"];
+    height?: React.CSSProperties["height"];
 }

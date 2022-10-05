@@ -1,19 +1,23 @@
 // (C) 2022 GoodData Corporation
-import React from "react";
-import { Dropdown, useMediaQuery } from "@gooddata/sdk-ui-kit";
+import React, { useState, useLayoutEffect } from "react";
+import { Dropdown, useMediaQuery, IAlignPoint } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
-
 import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext";
 import { useAttributeFilterContext } from "../../Context/AttributeFilterContext";
 import { useResolveAttributeFilterSubtitle } from "../../hooks/useResolveAttributeFilterSubtitle";
 
-const ALIGN_POINTS = [
+import { useElementPositionChange } from "./useElementPositionChange";
+
+const ALIGN_POINTS: IAlignPoint[] = [
+    // below
     { align: "bl tl" },
-    { align: "tr tl" },
-    { align: "br tr", offset: { x: -11 } },
-    { align: "tr tl", offset: { x: 0, y: -100 } },
-    { align: "tr tl", offset: { x: 0, y: -50 } },
+    // above
+    { align: "tl bl" },
 ];
+
+const MIN_BODY_HEIGHT = 250;
+const MAX_BODY_HEIGHT = 520;
+const OFFSET = 30;
 
 /**
  * @internal
@@ -40,6 +44,26 @@ export const AttributeFilterDropdown: React.VFC = () => {
         committedSelectionElements,
     );
 
+    const [height, setHeight] = useState<number | string>(0);
+    const { ref, rect, viewport } = useElementPositionChange();
+
+    useLayoutEffect(() => {
+        if (rect) {
+            if (viewport.vh - rect.bottom <= MIN_BODY_HEIGHT) {
+                // Cannot be rendered below - will be rendered above
+                const targetHeight = Math.min(Math.max(rect.top - OFFSET, MIN_BODY_HEIGHT), MAX_BODY_HEIGHT);
+                setHeight(targetHeight);
+            } else {
+                // Can be rendered below
+                const targetHeight = Math.min(
+                    Math.max(viewport.vh - rect.bottom - OFFSET, MIN_BODY_HEIGHT),
+                    MAX_BODY_HEIGHT,
+                );
+                setHeight(targetHeight);
+            }
+        }
+    }, [rect, viewport]);
+
     return (
         <Dropdown
             className="gd-attribute-filter__next"
@@ -50,7 +74,7 @@ export const AttributeFilterDropdown: React.VFC = () => {
             alignPoints={ALIGN_POINTS}
             fullscreenOnMobile={fullscreenOnMobile}
             renderButton={({ toggleDropdown, isOpen }) => (
-                <div className={cx({ "gd-is-mobile": fullscreenOnMobile && isMobile && isOpen })}>
+                <div className={cx({ "gd-is-mobile": fullscreenOnMobile && isMobile && isOpen })} ref={ref}>
                     <DropdownButtonComponent
                         title={title}
                         subtitle={subtitle}
@@ -79,6 +103,7 @@ export const AttributeFilterDropdown: React.VFC = () => {
                             closeDropdown();
                         }}
                         onCancelButtonClick={closeDropdown}
+                        height={height}
                     />
                 </div>
             )}
