@@ -15,7 +15,7 @@ export function useConnectingAttributes(
     currentFilterDisplayForm: ObjRef,
     neighborFiltersDisplayForms: ObjRef[],
 ) {
-    const pairs: ObjRef[][] = useMemo(
+    const pairs: [ObjRef, ObjRef][] = useMemo(
         () =>
             neighborFiltersDisplayForms.map((neighborDisplayForm) => [
                 currentFilterDisplayForm,
