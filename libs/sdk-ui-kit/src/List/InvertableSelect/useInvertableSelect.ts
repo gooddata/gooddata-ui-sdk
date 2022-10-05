@@ -3,6 +3,7 @@ import { useMemo, useCallback } from "react";
 import differenceBy from "lodash/differenceBy";
 import intersectionBy from "lodash/intersectionBy";
 import keyBy from "lodash/keyBy";
+import noop from "lodash/noop";
 
 /**
  * @internal
@@ -16,9 +17,10 @@ export interface IUseInvertableSelectProps<T> {
 
     isInverted: boolean;
     selectedItems: T[];
-
     onSelect?: (items: T[], isInverted: boolean) => void;
 }
+
+export type SelectionStatusType = "all" | "partial" | "none";
 
 /**
  * @internal
@@ -33,7 +35,7 @@ export function useInvertableSelect<T>(props: IUseInvertableSelectProps<T>) {
 
         isInverted = true,
         selectedItems,
-        onSelect,
+        onSelect = noop,
     } = props;
 
     const isSearch = searchString.length > 0;
@@ -64,14 +66,14 @@ export function useInvertableSelect<T>(props: IUseInvertableSelectProps<T>) {
         [isInverted, itemsNotInSelection, itemsInSelection],
     );
 
-    const selectionState: "all" | "partial" | "none" = useMemo(() => {
+    const selectionState: SelectionStatusType = useMemo(() => {
         // Negative filter with no selection
         if (isInverted && isSelectionEmpty) {
             return "all";
         }
 
-        // Search with all visible items selected
-        if (isSearch && loadedSelectedItems.length === totalItemsCount) {
+        // Positive filter with all items selected
+        if (!isInverted && loadedSelectedItems.length === totalItemsCount) {
             return "all";
         }
 
@@ -80,13 +82,27 @@ export function useInvertableSelect<T>(props: IUseInvertableSelectProps<T>) {
             return "none";
         }
 
-        // Search with no visible items selected
+        // Negative filter with all items selected
+        if (isInverted && loadedUnselectedItems.length === totalItemsCount) {
+            return "none";
+        }
+
+        // Search with all visible items selected
+        if (isSearch && loadedSelectedItems.length === totalItemsCount) {
+            return "all";
+        }
+
         if (isSearch && loadedSelectedItems.length === 0) {
             return "none";
         }
 
+        // Search with no visible items selected
+        if (isSearch && loadedUnselectedItems.length === totalItemsCount) {
+            return "none";
+        }
+
         return "partial";
-    }, [isInverted, isSelectionEmpty, totalItemsCount, loadedSelectedItems, isSearch]);
+    }, [isInverted, isSelectionEmpty, totalItemsCount, loadedSelectedItems, isSearch, loadedUnselectedItems]);
 
     const getIsItemSelected = useCallback(
         (item: T) => {

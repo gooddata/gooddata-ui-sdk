@@ -111,6 +111,7 @@
         "@testing-library/jest-dom": "^5.12.0",
         "@testing-library/react": "^12.1.5",
         "@testing-library/user-event": "^14.4.2",
+        "@testing-library/react-hooks": "^8.0.1",
         "@types/codemirror": "^0.0.95",
         "@types/debounce-promise": "^3.1.4",
         "@types/enzyme": "^3.10.3",
