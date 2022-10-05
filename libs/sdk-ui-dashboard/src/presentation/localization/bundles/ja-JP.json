@@ -160,7 +160,6 @@
     "messages.sharingChangedError.general": "共有設定を更新できませんでした。後で再試行してください。",
     "messages.sharingDialogError.general": "共有設定をロードできませんでした。後で再試行してください。",
     "attributeFilterDropdown.searchPlaceholder": "検索…",
-    "attributeFilterDropdown.emptyValue": "空の値",
     "visualization.dataTooLarge.headline": "表示するデータポイントが多すぎます",
     "visualization.dataTooLarge.text": "ダッシュボードに1つまたは複数のフィルターを適用してみてください。",
     "visualization.execute_protected_report.headline": "このレポートを表示する権限がありません",

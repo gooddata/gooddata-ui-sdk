@@ -2,7 +2,7 @@
 import React from "react";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newNegativeAttributeFilter } from "@gooddata/sdk-model";
-import { AttributeFilterV2, IAttributeFilterElementsActionsProps } from "@gooddata/sdk-ui-filters";
+import { AttributeFilter, IAttributeFilterElementsActionsProps } from "@gooddata/sdk-ui-filters";
 import { action } from "@storybook/addon-actions";
 
 import { storiesOf } from "../../../../_infra/storyRepository";
@@ -47,7 +47,7 @@ storiesOf(`${FilterStories}@next/Customization/ElementsSelectActionsComponent`)
     .add("Custom component", () => {
         return (
             <div style={wrapperStyle} className="screenshot-target">
-                <AttributeFilterV2
+                <AttributeFilter
                     backend={backend}
                     workspace={ReferenceWorkspaceId}
                     filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
@@ -60,7 +60,7 @@ storiesOf(`${FilterStories}@next/Customization/ElementsSelectActionsComponent`)
     .add("Empty component", () => {
         return (
             <div style={wrapperStyle} className="screenshot-target">
-                <AttributeFilterV2
+                <AttributeFilter
                     backend={backend}
                     workspace={ReferenceWorkspaceId}
                     filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}

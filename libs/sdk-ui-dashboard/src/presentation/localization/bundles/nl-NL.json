@@ -160,7 +160,6 @@
     "messages.sharingChangedError.general": "Bijwerken van instellingen voor delen konden niet worden bijgewerkt. Probeer het later opnieuw.",
     "messages.sharingDialogError.general": "Laden van instellingen voor delen mislukt. Probeer het later opnieuw.",
     "attributeFilterDropdown.searchPlaceholder": "Zoeken…",
-    "attributeFilterDropdown.emptyValue": "lege waarde",
     "visualization.dataTooLarge.headline": "Te veel datapunten om weer te geven",
     "visualization.dataTooLarge.text": "Probeer om een of meerdere filters op uw dashboard toe te passen.",
     "visualization.execute_protected_report.headline": "U bent niet gemachtigd om dit rapport te bekijken",

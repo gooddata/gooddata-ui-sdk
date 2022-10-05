@@ -5,25 +5,34 @@ import React from "react";
 import { ExampleWithSource } from "../../components/ExampleWithSource";
 
 import AttributeFilterComponentExample from "./AttributeFilterComponentExample";
+import UseAttributeFilterControllerExample from "./UseAttributeFilterControllerExample";
 import AttributeFilterExample from "./AttributeFilterExample";
 import AttributeFilterButtonExample from "./AttributeFilterButtonExample";
 import { AttributeParentChildFilterExample } from "./AttributeParentChildFilterExample";
 import { AttributeParentChildFilterButtonExample } from "./AttributeParentChildFilterButtonExample";
 import { AttributeParentChildFilterButtonWithPlaceholderExample } from "./AttributeParentChildFilterButtonWithPlaceholderExample";
+import AttributeFilterStaticElementsExample from "./AttributeFilterStaticElementsExample";
+import AttributeFilterHiddenElementsExample from "./AttributeFilterHiddenElementsExample";
 
 import AttributeFilterComponentExampleSRC from "./AttributeFilterComponentExample?raw";
+import UseAttributeFilterControllerExampleSRC from "./UseAttributeFilterControllerExample?raw";
 import AttributeFilterExampleSRC from "./AttributeFilterExample?raw";
 import AttributeFilterButtonExampleSRC from "./AttributeFilterButtonExample?raw";
 import AttributeParentChildFilterExampleSRC from "./AttributeParentChildFilterExample?raw";
 import AttributeParentChildFilterButtonExampleSRC from "./AttributeParentChildFilterButtonExample?raw";
 import AttributeParentChildFilterButtonWithPlaceholderExampleSRC from "./AttributeParentChildFilterButtonWithPlaceholderExample?raw";
+import AttributeFilterStaticElementsExampleSRC from "./AttributeFilterStaticElementsExample?raw";
+import AttributeFilterHiddenElementsExampleSRC from "./AttributeFilterHiddenElementsExample?raw";
 
 import AttributeFilterComponentExampleSRCJS from "./AttributeFilterComponentExample?rawJS";
+import UseAttributeFilterControllerExampleSRCJS from "./UseAttributeFilterControllerExample?rawJS";
 import AttributeFilterExampleSRCJS from "./AttributeFilterExample?rawJS";
 import AttributeFilterButtonExampleSRCJS from "./AttributeFilterButtonExample?rawJS";
 import AttributeParentChildFilterExampleSRCJS from "./AttributeParentChildFilterExample?rawJS";
 import AttributeParentChildFilterButtonExampleSRCJS from "./AttributeParentChildFilterButtonExample?rawJS";
 import AttributeParentChildFilterButtonWithPlaceholderExampleSRCJS from "./AttributeParentChildFilterButtonWithPlaceholderExample?rawJS";
+import AttributeFilterStaticElementsExampleSRCJS from "./AttributeFilterStaticElementsExample?rawJS";
+import AttributeFilterHiddenElementsExampleSRCJS from "./AttributeFilterHiddenElementsExample?rawJS";
 
 export const AttributeFilter = (): JSX.Element => (
     <div>
@@ -62,6 +71,16 @@ export const AttributeFilter = (): JSX.Element => (
             for={AttributeFilterExample}
             source={AttributeFilterExampleSRC}
             sourceJS={AttributeFilterExampleSRCJS}
+        />
+
+        <hr className="separator" />
+
+        <h2>useAttributeFilterController Example</h2>
+        <p>Example of the custom attribute filter implementation using useAttributeFilterController hook</p>
+        <ExampleWithSource
+            for={UseAttributeFilterControllerExample}
+            source={UseAttributeFilterControllerExampleSRC}
+            sourceJS={UseAttributeFilterControllerExampleSRCJS}
         />
 
         <hr className="separator" />
@@ -146,6 +165,20 @@ export const AttributeFilter = (): JSX.Element => (
             for={AttributeParentChildFilterButtonWithPlaceholderExample}
             source={AttributeParentChildFilterButtonWithPlaceholderExampleSRC}
             sourceJS={AttributeParentChildFilterButtonWithPlaceholderExampleSRCJS}
+        />
+
+        <h2>Attribute Filter with static elements</h2>
+        <ExampleWithSource
+            for={AttributeFilterStaticElementsExample}
+            source={AttributeFilterStaticElementsExampleSRC}
+            sourceJS={AttributeFilterStaticElementsExampleSRCJS}
+        />
+
+        <h2>Attribute Filter with hidden elements</h2>
+        <ExampleWithSource
+            for={AttributeFilterHiddenElementsExample}
+            source={AttributeFilterHiddenElementsExampleSRC}
+            sourceJS={AttributeFilterHiddenElementsExampleSRCJS}
         />
     </div>
 );

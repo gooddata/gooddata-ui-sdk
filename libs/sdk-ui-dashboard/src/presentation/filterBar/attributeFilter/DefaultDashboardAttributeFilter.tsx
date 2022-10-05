@@ -2,15 +2,13 @@
 import React, { useCallback, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import {
-    AttributeFilterButtonV2,
+    AttributeFilterButton,
     IAttributeFilterDropdownButtonProps,
     IAttributeFilterDropdownActionsProps,
-} from "@gooddata/sdk-ui-filters/dist";
-import {
     AttributeFilterDropdownButton,
     AttributeFilterElementsSelect,
     IAttributeFilterElementsSelectProps,
-} from "@gooddata/sdk-ui-filters/dist/internal";
+} from "@gooddata/sdk-ui-filters";
 
 import {
     attributeFilterToDashboardAttributeFilter,
@@ -143,7 +141,7 @@ export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilter
 
     return (
         <AttributeFilterParentFilteringProvider filter={filter}>
-            <AttributeFilterButtonV2
+            <AttributeFilterButton
                 filter={attributeFilter}
                 onApply={(newFilter) => {
                     onFilterChanged(

@@ -160,7 +160,6 @@
     "messages.sharingChangedError.general": "Error al actualizar los ajustes de uso compartido. Inténtelo de nuevo más tarde.",
     "messages.sharingDialogError.general": "Error al cargar los ajustes de uso compartido. Inténtelo de nuevo más tarde.",
     "attributeFilterDropdown.searchPlaceholder": "Buscar…",
-    "attributeFilterDropdown.emptyValue": "valor vacío",
     "visualization.dataTooLarge.headline": "Demasiados puntos de datos para ser mostrados",
     "visualization.dataTooLarge.text": "Intente aplicar uno o más filtros a su panel.",
     "visualization.execute_protected_report.headline": "No tiene permiso para ver este informe.",

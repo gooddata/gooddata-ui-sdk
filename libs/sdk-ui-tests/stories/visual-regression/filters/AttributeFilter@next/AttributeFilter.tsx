@@ -9,7 +9,7 @@ import { wrapWithTheme } from "../../themeWrapper";
 import { ElementUris } from "./fixtures";
 
 import { action } from "@storybook/addon-actions";
-import { AttributeFilterV2 } from "@gooddata/sdk-ui-filters";
+import { AttributeFilter } from "@gooddata/sdk-ui-filters";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newNegativeAttributeFilter, newPositiveAttributeFilter } from "@gooddata/sdk-model";
 
@@ -31,7 +31,7 @@ storiesOf(`${FilterStories}@next/AttributeFilter`)
         () => {
             return (
                 <div style={wrapperStyle} className="screenshot-target">
-                    <AttributeFilterV2
+                    <AttributeFilter
                         backend={backend}
                         workspace={ReferenceWorkspaceId}
                         filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [])}
@@ -64,7 +64,7 @@ storiesOf(`${FilterStories}@next/AttributeFilter`)
                             width: 160,
                         }}
                     >
-                        <AttributeFilterV2
+                        <AttributeFilter
                             backend={backend}
                             workspace={ReferenceWorkspaceId}
                             filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [])}
@@ -91,7 +91,7 @@ storiesOf(`${FilterStories}@next/AttributeFilter`)
         () => {
             return (
                 <div style={wrapperStyle} className="screenshot-target">
-                    <AttributeFilterV2
+                    <AttributeFilter
                         backend={backend}
                         workspace={ReferenceWorkspaceId}
                         locale="de-DE"
@@ -117,7 +117,7 @@ storiesOf(`${FilterStories}@next/AttributeFilter`)
         () => {
             return (
                 <div style={wrapperStyle} className="screenshot-target">
-                    <AttributeFilterV2
+                    <AttributeFilter
                         backend={backend}
                         workspace={ReferenceWorkspaceId}
                         filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, {
@@ -147,7 +147,7 @@ storiesOf(`${FilterStories}@next/AttributeFilter`)
         () => {
             return (
                 <div style={wrapperStyle} className="screenshot-target">
-                    <AttributeFilterV2
+                    <AttributeFilter
                         backend={backend}
                         workspace={ReferenceWorkspaceId}
                         filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, {
@@ -182,7 +182,7 @@ storiesOf(`${FilterStories}@next/AttributeFilter`)
         () => {
             return (
                 <div style={wrapperStyle} className="screenshot-target">
-                    <AttributeFilterV2
+                    <AttributeFilter
                         backend={backend}
                         workspace={ReferenceWorkspaceId}
                         filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, {
@@ -217,7 +217,7 @@ storiesOf(`${FilterStories}@next/AttributeFilter`)
         () => {
             return (
                 <div style={wrapperStyle} className="screenshot-target">
-                    <AttributeFilterV2
+                    <AttributeFilter
                         backend={backend}
                         workspace={ReferenceWorkspaceId}
                         filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, {
@@ -255,7 +255,7 @@ storiesOf(`${FilterStories}@next/AttributeFilter`)
         () => {
             return (
                 <div style={wrapperStyle} className="screenshot-target">
-                    <AttributeFilterV2
+                    <AttributeFilter
                         backend={backend}
                         workspace={ReferenceWorkspaceId}
                         filter={newNegativeAttributeFilter("NON_EXISTING", [])}
@@ -283,7 +283,7 @@ storiesOf(`${FilterStories}@next/AttributeFilter`)
         () => {
             return wrapWithTheme(
                 <div style={wrapperStyle} className="screenshot-target">
-                    <AttributeFilterV2
+                    <AttributeFilter
                         backend={backend}
                         workspace={ReferenceWorkspaceId}
                         filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [])}

@@ -160,7 +160,6 @@
     "messages.sharingChangedError.general": "La mise à jour des paramètres de partage a échoué. Veuillez réessayer ultérieurement.",
     "messages.sharingDialogError.general": "Le chargement des paramètres de partage a échoué. Veuillez réessayer ultérieurement.",
     "attributeFilterDropdown.searchPlaceholder": "Rechercher…",
-    "attributeFilterDropdown.emptyValue": "valeur vide",
     "visualization.dataTooLarge.headline": "Trop de points de données à afficher",
     "visualization.dataTooLarge.text": "Essayez d'appliquer un ou plusieurs filtres à votre tableau de bord.",
     "visualization.execute_protected_report.headline": "Vous n'êtes pas autorisé à consulter ce rapport",

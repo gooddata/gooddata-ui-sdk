@@ -2,7 +2,7 @@
 import React from "react";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newNegativeAttributeFilter } from "@gooddata/sdk-model";
-import { AttributeFilterV2, IAttributeFilterStatusBarProps } from "@gooddata/sdk-ui-filters";
+import { AttributeFilter, IAttributeFilterStatusBarProps } from "@gooddata/sdk-ui-filters";
 import { action } from "@storybook/addon-actions";
 
 import { storiesOf } from "../../../../_infra/storyRepository";
@@ -41,7 +41,7 @@ const CustomStatusBar = (props: IAttributeFilterStatusBarProps) => {
 storiesOf(`${FilterStories}@next/Customization/StatusBarComponent`).add("Custom component", () => {
     return (
         <div style={wrapperStyle} className="screenshot-target">
-            <AttributeFilterV2
+            <AttributeFilter
                 backend={backend}
                 workspace={ReferenceWorkspaceId}
                 filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}

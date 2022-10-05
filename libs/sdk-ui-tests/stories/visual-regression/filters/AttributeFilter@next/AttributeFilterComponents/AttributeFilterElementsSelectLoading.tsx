@@ -6,7 +6,7 @@ import { storiesOf } from "../../../../_infra/storyRepository";
 import { wrapWithTheme } from "../../../themeWrapper";
 
 import { IntlWrapper } from "@gooddata/sdk-ui";
-import { AttributeFilterElementsSelectLoading } from "@gooddata/sdk-ui-filters/dist/internal";
+import { AttributeFilterElementsSelectLoading } from "@gooddata/sdk-ui-filters";
 
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 

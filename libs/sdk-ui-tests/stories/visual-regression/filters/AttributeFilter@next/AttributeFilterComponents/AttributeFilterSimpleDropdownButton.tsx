@@ -10,7 +10,7 @@ import { IntlWrapper } from "@gooddata/sdk-ui";
 import {
     AttributeFilterSimpleDropdownButton,
     AttributeFilterSimpleDropdownButtonWithSelection,
-} from "@gooddata/sdk-ui-filters/dist/internal";
+} from "@gooddata/sdk-ui-filters";
 
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 

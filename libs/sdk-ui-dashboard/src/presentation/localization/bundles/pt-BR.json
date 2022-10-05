@@ -160,7 +160,6 @@
     "messages.sharingChangedError.general": "Não foi possível atualizar as configurações do compartilhamento. Tente novamente mais tarde.",
     "messages.sharingDialogError.general": "Não foi possível carregar as configurações do compartilhamento. Tente novamente mais tarde.",
     "attributeFilterDropdown.searchPlaceholder": "Pesquisar…",
-    "attributeFilterDropdown.emptyValue": "valor vazio",
     "visualization.dataTooLarge.headline": "Muitos pontos de dados a serem exibidos",
     "visualization.dataTooLarge.text": "Tente aplicar um ou mais filtros ao seu painel.",
     "visualization.execute_protected_report.headline": "Você não tem autorização para ver este relatório",

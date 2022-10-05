@@ -160,7 +160,6 @@
     "messages.sharingChangedError.general": "无法更新共享设置。请稍后再试。",
     "messages.sharingDialogError.general": "无法加载共享设置。请稍后再试。",
     "attributeFilterDropdown.searchPlaceholder": "搜索…",
-    "attributeFilterDropdown.emptyValue": "空值",
     "visualization.dataTooLarge.headline": "要显示的数据点太多",
     "visualization.dataTooLarge.text": "尝试将一个或多个筛选器应用于控制面板。",
     "visualization.execute_protected_report.headline": "您无权查看此报告",

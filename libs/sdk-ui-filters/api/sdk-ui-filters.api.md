@@ -16,6 +16,7 @@ import { ElementsQueryOptionsElementsSpecification } from '@gooddata/sdk-backend
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
 import { IAbsoluteDateFilterForm } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilterPreset } from '@gooddata/sdk-model';
+import { IAlignPoint } from '@gooddata/sdk-ui-kit';
 import { IAllTimeDateFilterOption } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
@@ -54,6 +55,9 @@ export type AbsoluteDateFilterOption = IUiAbsoluteDateFilterForm | IAbsoluteDate
 // @alpha
 export type AsyncOperationStatus = "pending" | "loading" | "success" | "error" | "canceled";
 
+// @internal (undocumented)
+export const AttributeDisplayFormSelect: React_2.FC<IAttributeDisplayFormSelectProps>;
+
 // @alpha
 export type AttributeElementKey = string;
 
@@ -61,18 +65,78 @@ export type AttributeElementKey = string;
 export const AttributeElements: React_2.ComponentType<IAttributeElementsProps>;
 
 // @public
-export const AttributeFilter: React_2.ComponentType<IAttributeFilterProps>;
+export const AttributeFilter: React_2.FC<IAttributeFilterProps>;
+
+// @internal (undocumented)
+export const AttributeFilterAllValuesFilteredResult: React_2.FC<IAttributeFilterAllValuesFilteredResultProps>;
 
 // @public (undocumented)
-export const AttributeFilterButton: React_2.FC<IAttributeFilterButtonOwnProps>;
+export const AttributeFilterButton: React_2.FC<IAttributeFilterButtonProps>;
+
+// @internal (undocumented)
+export const AttributeFilterConfigurationButton: React_2.VFC<IAttributeFilterConfigurationButtonProps>;
+
+// @internal (undocumented)
+export const AttributeFilterDeleteButton: React_2.VFC<IAttributeFilterDeleteButtonProps>;
 
 // @alpha (undocumented)
-export const AttributeFilterButtonV2: React_2.FC<IAttributeFilterButtonPropsV2>;
+export const AttributeFilterDropdownActions: React_2.VFC<IAttributeFilterDropdownActionsProps>;
 
-// @alpha
-export const AttributeFilterV2: React_2.FC<IAttributeFilterPropsV2>;
+// @internal (undocumented)
+export const AttributeFilterDropdownBody: React_2.FC<IAttributeFilterDropdownBodyProps>;
 
-// @public (undocumented)
+// @internal (undocumented)
+export const AttributeFilterDropdownButton: React_2.VFC<IAttributeFilterDropdownButtonProps>;
+
+// @internal (undocumented)
+export const AttributeFilterElementsActions: React_2.VFC<IAttributeFilterElementsActionsProps>;
+
+// @internal (undocumented)
+export const AttributeFilterElementsSearchBar: React_2.VFC<IAttributeFilterElementsSearchBarProps>;
+
+// @internal (undocumented)
+export const AttributeFilterElementsSelect: React_2.FC<IAttributeFilterElementsSelectProps>;
+
+// @internal (undocumented)
+export const AttributeFilterElementsSelectError: React_2.VFC;
+
+// @internal (undocumented)
+export const AttributeFilterElementsSelectItem: React_2.VFC<IAttributeFilterElementsSelectItemProps>;
+
+// @internal (undocumented)
+export const AttributeFilterElementsSelectLoading: React_2.VFC<IAttributeFilterElementsSelectLoadingProps>;
+
+// @internal (undocumented)
+export const AttributeFilterEmptyAttributeResult: React_2.VFC;
+
+// @internal (undocumented)
+export const AttributeFilterEmptyResult: React_2.VFC<IAttributeFilterEmptyResultProps>;
+
+// @internal (undocumented)
+export const AttributeFilterEmptySearchResult: React_2.VFC;
+
+// @internal (undocumented)
+export const AttributeFilterError: React_2.VFC<IAttributeFilterErrorProps>;
+
+// @internal (undocumented)
+export const AttributeFilterFilteredStatus: React_2.FC<IAttributeFilterFilteredStatusProps>;
+
+// @internal (undocumented)
+export const AttributeFilterLoading: React_2.VFC;
+
+// @internal (undocumented)
+export const AttributeFilterSelectionStatus: React_2.FC<IAttributeFilterSelectionStatusProps>;
+
+// @internal (undocumented)
+export const AttributeFilterSimpleDropdownButton: React_2.VFC<IAttributeFilterDropdownButtonProps>;
+
+// @internal (undocumented)
+export const AttributeFilterSimpleDropdownButtonWithSelection: React_2.VFC<IAttributeFilterDropdownButtonProps>;
+
+// @internal (undocumented)
+export const AttributeFilterStatusBar: React_2.FC<IAttributeFilterStatusBarProps>;
+
+// @public @deprecated (undocumented)
 export type AttributeListItem = IAttributeElement | EmptyListItem;
 
 // @alpha (undocumented)
@@ -137,7 +201,10 @@ export type DateFilterRelativeOptionGroup = {
 // @public
 export const defaultDateFilterOptions: IDateFilterOptionsByType;
 
-// @public (undocumented)
+// @internal (undocumented)
+export const EmptyElementsSearchBar: React_2.VFC<IAttributeFilterElementsSearchBarProps>;
+
+// @public @deprecated (undocumented)
 export interface EmptyListItem {
     // (undocumented)
     empty: true;
@@ -149,7 +216,15 @@ export function filterVisibleDateFilterOptions(dateFilterOptions: IDateFilterOpt
 // @beta (undocumented)
 export type GranularityIntlKey = "day" | "minute" | "hour" | "week" | "month" | "quarter" | "year";
 
-// @public (undocumented)
+// @internal (undocumented)
+export interface IAttributeDisplayFormSelectProps {
+    // (undocumented)
+    alignPoints?: IAlignPoint[];
+    // (undocumented)
+    onSelect: (displayForm: ObjRef) => void;
+}
+
+// @public @deprecated (undocumented)
 export interface IAttributeDropdownBodyExtendedProps extends IAttributeDropdownBodyProps {
     // (undocumented)
     attributeFilterRef?: ObjRef;
@@ -162,7 +237,7 @@ export interface IAttributeDropdownBodyExtendedProps extends IAttributeDropdownB
     // (undocumented)
     isMobile?: boolean;
     // (undocumented)
-    listItemClass?: React_2.ComponentType<IAttributeDropdownListItemProps>;
+    listItemClass?: React.ComponentType<IAttributeDropdownListItemProps>;
     // (undocumented)
     maxSelectionSize?: number;
     // (undocumented)
@@ -175,7 +250,7 @@ export interface IAttributeDropdownBodyExtendedProps extends IAttributeDropdownB
     width?: number;
 }
 
-// @public (undocumented)
+// @public @deprecated (undocumented)
 export interface IAttributeDropdownBodyProps {
     // (undocumented)
     applyDisabled?: boolean;
@@ -223,7 +298,7 @@ export interface IAttributeDropdownItem {
     type?: "DATE" | "ATTRIBUTE";
 }
 
-// @public (undocumented)
+// @public @deprecated (undocumented)
 export interface IAttributeDropdownListItemProps extends WrappedComponentProps {
     // (undocumented)
     isLoading?: boolean;
@@ -307,11 +382,17 @@ export interface IAttributeElementsProps {
     workspace?: string;
 }
 
-// @alpha (undocumented)
-export interface IAttributeFilterBaseProps extends IAttributeFilterCoreProps, IAttributeFilterCustomComponentProps {
+// @internal (undocumented)
+export interface IAttributeFilterAllValuesFilteredResultProps {
+    // (undocumented)
+    parentFilterTitles: string[];
 }
 
 // @public (undocumented)
+export interface IAttributeFilterBaseProps extends IAttributeFilterCoreProps, IAttributeFilterCustomComponentProps {
+}
+
+// @public @deprecated (undocumented)
 export interface IAttributeFilterButtonOwnProps {
     backend?: IAnalyticalBackend;
     buttonProps?: {
@@ -320,7 +401,7 @@ export interface IAttributeFilterButtonOwnProps {
     };
     connectToPlaceholder?: IPlaceholder<IAttributeFilter>;
     filter?: IAttributeFilter;
-    FilterError?: React_2.ComponentType<{
+    FilterError?: React.ComponentType<{
         error?: any;
     }>;
     // @deprecated
@@ -330,21 +411,24 @@ export interface IAttributeFilterButtonOwnProps {
     onError?: (error: any) => void;
     parentFilterOverAttribute?: ObjRef | ((parentFilter: IAttributeFilter, index: number) => ObjRef);
     parentFilters?: AttributeFiltersOrPlaceholders;
-    renderBody?: (props: IAttributeDropdownBodyExtendedProps) => React_2.ReactNode;
+    renderBody?: (props: IAttributeDropdownBodyExtendedProps) => React.ReactNode;
     title?: string;
     workspace?: string;
 }
 
 // @public (undocumented)
-export type IAttributeFilterButtonProps = IAttributeFilterButtonOwnProps & WrappedComponentProps;
+export type IAttributeFilterButtonProps = IAttributeFilterBaseProps;
 
-// @alpha (undocumented)
-export type IAttributeFilterButtonPropsV2 = IAttributeFilterBaseProps;
+// @internal (undocumented)
+export interface IAttributeFilterConfigurationButtonProps {
+    // (undocumented)
+    onConfiguration: () => void;
+}
 
 // @alpha (undocumented)
 export type IAttributeFilterContext = ReturnType<typeof useAttributeFilterController> & Pick<IAttributeFilterCoreProps, "fullscreenOnMobile" | "title">;
 
-// @alpha (undocumented)
+// @public (undocumented)
 export interface IAttributeFilterCoreProps {
     backend?: IAnalyticalBackend;
     connectToPlaceholder?: IPlaceholder<IAttributeFilter>;
@@ -363,25 +447,46 @@ export interface IAttributeFilterCoreProps {
     workspace?: string;
 }
 
-// @alpha (undocumented)
+// @public (undocumented)
 export interface IAttributeFilterCustomComponentProps {
+    // @alpha
     DropdownActionsComponent?: React.ComponentType<IAttributeFilterDropdownActionsProps>;
+    // @alpha
     DropdownBodyComponent?: React.ComponentType<IAttributeFilterDropdownBodyProps>;
+    // @alpha
     DropdownButtonComponent?: React.ComponentType<IAttributeFilterDropdownButtonProps>;
+    // @alpha
     ElementsSearchBarComponent?: React.ComponentType<IAttributeFilterElementsSearchBarProps>;
+    // @alpha
     ElementsSelectActionsComponent?: React.ComponentType<IAttributeFilterElementsActionsProps>;
+    // @alpha
     ElementsSelectComponent?: React.ComponentType<IAttributeFilterElementsSelectProps>;
+    // @alpha
     ElementsSelectErrorComponent?: React.ComponentType<IAttributeFilterElementsSelectErrorProps>;
+    // @alpha
     ElementsSelectItemComponent?: React.ComponentType<IAttributeFilterElementsSelectItemProps>;
+    // @alpha
     ElementsSelectLoadingComponent?: React.ComponentType<IAttributeFilterElementsSelectLoadingProps>;
+    // @alpha
     EmptyResultComponent?: React.ComponentType<IAttributeFilterEmptyResultProps>;
+    // @alpha
     ErrorComponent?: React.ComponentType<IAttributeFilterErrorProps>;
     // @deprecated
-    FilterError?: React.ComponentType<IAttributeFilterErrorProps>;
+    FilterError?: React.ComponentType<{
+        error?: any;
+    }>;
     // @deprecated
     FilterLoading?: React.ComponentType;
+    // @alpha
     LoadingComponent?: React.ComponentType;
+    // @alpha
     StatusBarComponent?: React.ComponentType<IAttributeFilterStatusBarProps>;
+}
+
+// @internal (undocumented)
+export interface IAttributeFilterDeleteButtonProps {
+    // (undocumented)
+    onDelete: () => void;
 }
 
 // @alpha (undocumented)
@@ -524,7 +629,15 @@ export interface IAttributeFilterEmptyResultProps {
 // @alpha (undocumented)
 export interface IAttributeFilterErrorProps {
     // (undocumented)
+    error?: any;
+    // (undocumented)
     message?: string;
+}
+
+// @alpha (undocumented)
+export interface IAttributeFilterFilteredStatusProps {
+    // (undocumented)
+    parentFilterTitles: string[];
 }
 
 // @alpha
@@ -553,31 +666,21 @@ export interface IAttributeFilterLoader extends IAttributeLoader, IAttributeElem
 }
 
 // @public (undocumented)
-export interface IAttributeFilterProps {
-    backend?: IAnalyticalBackend;
-    connectToPlaceholder?: IPlaceholder<IAttributeFilter>;
-    filter?: IAttributeFilter;
-    FilterError?: React_2.ComponentType<{
-        error?: any;
-    }>;
-    FilterLoading?: React_2.ComponentType;
-    fullscreenOnMobile?: boolean;
-    // @deprecated
-    identifier?: string;
-    locale?: string;
-    onApply?: (filter: IAttributeFilter) => void;
-    onError?: OnError;
-    parentFilterOverAttribute?: ObjRef | ((parentFilter: IAttributeFilter, index: number) => ObjRef);
-    parentFilters?: AttributeFiltersOrPlaceholders;
-    title?: string;
+export interface IAttributeFilterProps extends IAttributeFilterBaseProps {
+    // (undocumented)
     titleWithSelection?: boolean;
-    workspace?: string;
 }
 
 // @alpha (undocumented)
-export interface IAttributeFilterPropsV2 extends IAttributeFilterBaseProps {
+export interface IAttributeFilterSelectionStatusProps {
     // (undocumented)
-    titleWithSelection?: boolean;
+    getItemTitle: (item: IAttributeElement) => string;
+    // (undocumented)
+    isInverted: boolean;
+    // (undocumented)
+    selectedItems: IAttributeElement[];
+    // (undocumented)
+    selectedItemsLimit: number;
 }
 
 // @alpha (undocumented)
@@ -895,7 +998,7 @@ export interface IRankingFilterProps {
 // @public
 export const isAbsoluteDateFilterOption: (obj: unknown) => obj is AbsoluteDateFilterOption;
 
-// @public (undocumented)
+// @public @deprecated (undocumented)
 export const isEmptyListItem: (item: Partial<AttributeListItem>) => item is EmptyListItem;
 
 // @alpha
@@ -915,7 +1018,7 @@ export interface ISingleSelectionHandler<T> {
     onSelectionChanged: CallbackRegistration<OnSelectionChangedCallbackPayload<T>>;
 }
 
-// @public (undocumented)
+// @public @deprecated (undocumented)
 export const isNonEmptyListItem: (item: Partial<AttributeListItem>) => item is IAttributeElement;
 
 // @public
@@ -1010,7 +1113,7 @@ export function newAttributeFilterHandler(backend: IAnalyticalBackend, workspace
 // @alpha (undocumented)
 export function newAttributeFilterHandler(backend: IAnalyticalBackend, workspace: string, attributeFilter: IAttributeFilter, options: IMultiSelectAttributeFilterHandlerOptions): IMultiSelectAttributeFilterHandler;
 
-// @alpha (undocumented)
+// @public (undocumented)
 export type OnApplyCallbackType = (filter: IAttributeFilter, isInverted: boolean) => void;
 
 // @alpha
@@ -1095,7 +1198,7 @@ export type OnSelectionCommittedCallbackPayload<T> = {
     selection: T;
 };
 
-// @alpha (undocumented)
+// @public (undocumented)
 export type ParentFilterOverAttributeType = ObjRef | ((parentFilter: IAttributeFilter, index: number) => ObjRef);
 
 // @beta (undocumented)
@@ -1148,6 +1251,12 @@ export const useAttributeFilterController: (props: IUseAttributeFilterController
 
 // @alpha (undocumented)
 export const useAttributeFilterHandler: (props: IUseAttributeFilterHandlerProps) => IMultiSelectAttributeFilterHandler;
+
+// @internal
+export const useAutoOpenAttributeFilterDropdownButton: (props: IAttributeFilterDropdownButtonProps, isAutoOpen: boolean) => void;
+
+// @internal
+export const useOnCloseAttributeFilterDropdownButton: (props: IAttributeFilterDropdownButtonProps, onClose: () => void) => void;
 
 // @beta (undocumented)
 export type WarningMessage = string | IWarningMessage;

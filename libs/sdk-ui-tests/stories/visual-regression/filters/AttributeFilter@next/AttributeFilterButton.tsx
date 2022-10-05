@@ -9,7 +9,7 @@ import { wrapWithTheme } from "../../themeWrapper";
 import { ElementUris } from "./fixtures";
 
 import { action } from "@storybook/addon-actions";
-import { AttributeFilterButtonV2 } from "@gooddata/sdk-ui-filters";
+import { AttributeFilterButton } from "@gooddata/sdk-ui-filters";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newNegativeAttributeFilter, newPositiveAttributeFilter } from "@gooddata/sdk-model";
 
@@ -31,7 +31,7 @@ storiesOf(`${FilterStories}@next/AttributeFilterButton`)
         () => {
             return (
                 <div style={wrapperStyle} className="screenshot-target">
-                    <AttributeFilterButtonV2
+                    <AttributeFilterButton
                         backend={backend}
                         workspace={ReferenceWorkspaceId}
                         filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [])}
@@ -64,7 +64,7 @@ storiesOf(`${FilterStories}@next/AttributeFilterButton`)
                             width: 160,
                         }}
                     >
-                        <AttributeFilterButtonV2
+                        <AttributeFilterButton
                             backend={backend}
                             workspace={ReferenceWorkspaceId}
                             filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [])}
@@ -91,7 +91,7 @@ storiesOf(`${FilterStories}@next/AttributeFilterButton`)
         () => {
             return (
                 <div style={wrapperStyle} className="screenshot-target">
-                    <AttributeFilterButtonV2
+                    <AttributeFilterButton
                         backend={backend}
                         workspace={ReferenceWorkspaceId}
                         locale="de-DE"
@@ -117,7 +117,7 @@ storiesOf(`${FilterStories}@next/AttributeFilterButton`)
         () => {
             return (
                 <div style={wrapperStyle} className="screenshot-target">
-                    <AttributeFilterButtonV2
+                    <AttributeFilterButton
                         backend={backend}
                         workspace={ReferenceWorkspaceId}
                         filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, {
@@ -147,7 +147,7 @@ storiesOf(`${FilterStories}@next/AttributeFilterButton`)
         () => {
             return (
                 <div style={wrapperStyle} className="screenshot-target">
-                    <AttributeFilterButtonV2
+                    <AttributeFilterButton
                         backend={backend}
                         workspace={ReferenceWorkspaceId}
                         filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, {
@@ -185,7 +185,7 @@ storiesOf(`${FilterStories}@next/AttributeFilterButton`)
         () => {
             return (
                 <div style={wrapperStyle} className="screenshot-target">
-                    <AttributeFilterButtonV2
+                    <AttributeFilterButton
                         backend={backend}
                         workspace={ReferenceWorkspaceId}
                         filter={newNegativeAttributeFilter("NON_EXISTING", [])}
@@ -213,7 +213,7 @@ storiesOf(`${FilterStories}@next/AttributeFilterButton`)
         () => {
             return wrapWithTheme(
                 <div style={wrapperStyle} className="screenshot-target">
-                    <AttributeFilterButtonV2
+                    <AttributeFilterButton
                         backend={backend}
                         workspace={ReferenceWorkspaceId}
                         filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [])}
