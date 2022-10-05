@@ -1,6 +1,7 @@
 // (C) 2022 GoodData Corporation
 
 import { IAnalyticalBackend, IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
+import { areObjRefsEqual, idRef } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 import ora from "ora";
 import { createBackend } from "../_base/backend";
@@ -40,6 +41,37 @@ function createPluginExistsValidator(identifier: string): InputValidator<IDashbo
 
         return plugins.some((plugin) => plugin.identifier === identifier);
     };
+}
+
+async function getOriginalParameters(config: UpdatePluginParamsCmdConfig) {
+    const { backendInstance, workspace, dashboard, identifier } = config;
+
+    const fetchOriginalParametersProgress = ora({
+        text: "Fetching original parameters.",
+    });
+
+    try {
+        fetchOriginalParametersProgress.start();
+
+        const dashboardObject = await backendInstance
+            .workspace(workspace)
+            .dashboards()
+            .getDashboard(idRef(dashboard));
+        const referencedObjects = await backendInstance
+            .workspace(workspace)
+            .dashboards()
+            .getDashboardReferencedObjects(dashboardObject, ["dashboardPlugin"]);
+
+        const referencedPlugin = referencedObjects.plugins.find((plugin) => plugin.identifier === identifier);
+
+        const plugin = dashboardObject.plugins?.find((plugin) =>
+            areObjRefsEqual(plugin.plugin, referencedPlugin?.ref),
+        );
+
+        return plugin?.parameters;
+    } finally {
+        fetchOriginalParametersProgress.stop();
+    }
 }
 
 async function doAsyncValidations(config: UpdatePluginParamsCmdConfig) {
@@ -99,7 +131,8 @@ export async function getUpdatePluginParamsCmdConfig(
 
     await doAsyncValidations(config);
 
-    const parameters = await promptPluginParameters();
+    const originalParameters = await getOriginalParameters(config);
+    const parameters = await promptPluginParameters(originalParameters);
 
     if (isEmpty(parameters.trim())) {
         logError(
