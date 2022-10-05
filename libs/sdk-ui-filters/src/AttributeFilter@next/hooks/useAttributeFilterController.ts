@@ -152,8 +152,6 @@ function useInitOrReload(
         if (!isEqual(limitingAttributeFilters, handler.getLimitingAttributeFilters())) {
             handler.changeSelection({ keys: [], isInverted: true });
             handler.setLimitingAttributeFilters(limitingAttributeFilters);
-            handler.loadInitialElementsPage(PARENT_FILTERS_CORRELATION);
-
             // the next lines are to apply selection to the state of the parent component to make the
             // new attribute filter state persistent
             handler.commitSelection();
@@ -162,6 +160,12 @@ function useInitOrReload(
 
             setConnectedPlaceholderValue(nextFilter);
             onApply?.(nextFilter, isInverted);
+
+            if (handler.getInitStatus() !== "success") {
+                handler.init();
+            } else {
+                handler.loadInitialElementsPage(PARENT_FILTERS_CORRELATION);
+            }
         } else if (!isEqual(filter, handler.getFilter())) {
             const elements = filterAttributeElements(filter);
             const keys = isAttributeElementsByValue(elements) ? elements.values : elements.uris;
