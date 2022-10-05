@@ -80,7 +80,7 @@
         "fixed-data-table-2": "^1.2.0",
         "lodash": "^4.17.19",
         "moment-timezone": "^0.5.35",
-        "moment": "^2.24.0",
+        "moment": "^2.29.4",
         "react-content-loader": "^6.2.0",
         "react-day-picker": "^8.0.1",
         "react-helmet": "^6.1.0",
