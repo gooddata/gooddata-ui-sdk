@@ -263,6 +263,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@testing-library/react-hooks",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@testing-library/user-event",
       "allowedCategories": [ "production" ]
     },
