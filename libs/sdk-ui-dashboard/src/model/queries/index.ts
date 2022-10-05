@@ -3,6 +3,7 @@
 import { QueryInsightAttributesMeta, QueryInsightDateDatasets } from "./insights";
 import { QueryWidgetBrokenAlerts, QueryWidgetFilters, QueryWidgetAlertCount } from "./widgets";
 import { QueryMeasureDateDatasets } from "./kpis";
+import { QueryConnectingAttributes } from "./connectingAttributes";
 
 export { IDashboardQuery, DashboardQueryType } from "./base";
 export {
@@ -23,7 +24,7 @@ export {
     QueryWidgetAlertCount,
     queryWidgetAlertCount,
 } from "./widgets";
-
+export { QueryConnectingAttributes, queryConnectingAttributes } from "./connectingAttributes";
 /**
  * @alpha
  */
@@ -33,4 +34,5 @@ export type DashboardQueries =
     | QueryInsightAttributesMeta
     | QueryWidgetFilters
     | QueryWidgetBrokenAlerts
-    | QueryWidgetAlertCount;
+    | QueryWidgetAlertCount
+    | QueryConnectingAttributes;

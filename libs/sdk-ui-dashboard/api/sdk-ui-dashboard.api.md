@@ -623,9 +623,6 @@ export type ConfigurableWidget<TWidget> = {
     };
 };
 
-// @internal
-export type ConnectingAttributeMatrix = IConnectingAttribute[][][];
-
 // @internal (undocumented)
 export function CreatableAttributeFilter(): JSX.Element;
 
@@ -1820,7 +1817,7 @@ export abstract class DashboardPluginV1 implements IDashboardPluginContract_V1 {
 }
 
 // @alpha (undocumented)
-export type DashboardQueries = QueryInsightDateDatasets | QueryMeasureDateDatasets | QueryInsightAttributesMeta | QueryWidgetFilters | QueryWidgetBrokenAlerts | QueryWidgetAlertCount;
+export type DashboardQueries = QueryInsightDateDatasets | QueryMeasureDateDatasets | QueryInsightAttributesMeta | QueryWidgetFilters | QueryWidgetBrokenAlerts | QueryWidgetAlertCount | QueryConnectingAttributes;
 
 // @alpha
 export interface DashboardQueryCompleted<TQuery extends IDashboardQuery, TResult> extends IDashboardEvent {
@@ -1871,7 +1868,7 @@ export interface DashboardQueryStartedPayload {
 }
 
 // @alpha (undocumented)
-export type DashboardQueryType = "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS" | "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META" | "GDC.DASH/QUERY.MEASURE.DATE.DATASETS" | "GDC.DASH/QUERY.WIDGET.FILTERS" | "GDC.DASH/QUERY.WIDGET.BROKEN_ALERTS" | "GDC.DASH/QUERY.WIDGET.ALERT_COUNT";
+export type DashboardQueryType = "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS" | "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META" | "GDC.DASH/QUERY.MEASURE.DATE.DATASETS" | "GDC.DASH/QUERY.WIDGET.FILTERS" | "GDC.DASH/QUERY.WIDGET.BROKEN_ALERTS" | "GDC.DASH/QUERY.WIDGET.ALERT_COUNT" | "GDC.DASH/QUERY.CONNECTING.ATTRIBUTES";
 
 // @alpha
 export interface DashboardRenamed extends IDashboardEvent {
@@ -2570,10 +2567,8 @@ export function filterContextItemsToDashboardFiltersByWidget(filterContextItems:
 // @alpha (undocumented)
 export interface FilterContextState {
     attributeFilterDisplayForms?: IAttributeDisplayFormMetadataObject[];
-    connectingAttributeMatrix?: ConnectingAttributeMatrix;
     filterContextDefinition?: IFilterContextDefinition;
     filterContextIdentity?: IDashboardObjectIdentity;
-    filtersToIndexMap?: Record<string, number>;
     originalFilterContextDefinition?: IFilterContextDefinition;
 }
 
@@ -2874,7 +2869,7 @@ export interface IDashboardAttributeFilterParentItem {
     // (undocumented)
     overAttributes?: ObjRef[];
     // (undocumented)
-    selectedConnectingAttribute: ObjRef;
+    selectedConnectingAttribute: ObjRef | undefined;
     // (undocumented)
     title: string;
 }
@@ -4565,6 +4560,19 @@ export type QueryCacheEntryResult<TResult> = {
 // @internal
 export type QueryCacheReducer<TQuery extends IDashboardQuery, TResult, TPayload> = CaseReducer<EntityState<QueryCacheEntry<TQuery, TResult>>, PayloadAction<TPayload>>;
 
+// @internal (undocumented)
+export interface QueryConnectingAttributes extends IDashboardQuery {
+    // (undocumented)
+    payload: {
+        readonly refs: [ObjRef, ObjRef][];
+    };
+    // (undocumented)
+    type: "GDC.DASH/QUERY.CONNECTING.ATTRIBUTES";
+}
+
+// @internal
+export function queryConnectingAttributes(refs: [ObjRef, ObjRef][], correlationId?: string): QueryConnectingAttributes;
+
 // @alpha
 export function queryDateDatasetsForInsight(insightOrRef: ObjRef | IInsight, correlationId?: string): QueryInsightDateDatasets;
 
@@ -5234,12 +5242,6 @@ export const selectConfiguredAndImplicitDrillsByWidgetRef: (ref: ObjRef) => Outp
 // @internal (undocumented)
 export const selectConfiguredDrillsByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res1: IDrillToLegacyDashboard[] | InsightDrillDefinition[], res2: boolean, res3: boolean, res4: boolean, res5: boolean, res6: boolean, res7: boolean, res8: boolean) => IImplicitDrillWithPredicates[]>;
 
-// @internal
-export const selectConnectingAttributesForFilters: (currentFilterLocalId: string, neighborFilterId: any) => OutputSelector<DashboardState, IConnectingAttribute[], (res1: Record<string, number> | undefined, res2: ConnectingAttributeMatrix | undefined) => IConnectingAttribute[]>;
-
-// @internal
-export const selectConnectingAttributesMatrix: OutputSelector<DashboardState, ConnectingAttributeMatrix | undefined, (res: FilterContextState) => ConnectingAttributeMatrix | undefined>;
-
 // @public
 export const selectCurrentUser: OutputSelector<DashboardState, IUser, (res: UserState) => IUser>;
 
@@ -5416,9 +5418,6 @@ export const selectFilterContextFilters: OutputSelector<DashboardState, FilterCo
 
 // @internal
 export const selectFilterContextIdentity: OutputSelector<DashboardState, IDashboardObjectIdentity | undefined, (res: FilterContextState) => IDashboardObjectIdentity | undefined>;
-
-// @internal
-export const selectFiltersToIndexMap: OutputSelector<DashboardState, Record<string, number> | undefined, (res: FilterContextState) => Record<string, number> | undefined>;
 
 // @alpha (undocumented)
 export const selectHasCatalogAttributes: OutputSelector<DashboardState, boolean, (res: ICatalogAttribute[]) => boolean>;

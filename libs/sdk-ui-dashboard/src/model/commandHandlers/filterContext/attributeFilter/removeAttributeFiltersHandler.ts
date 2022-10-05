@@ -66,9 +66,6 @@ export function* removeAttributeFiltersHandler(
             }),
             // remove filter's display form metadata object
             filterContextActions.removeAttributeFilterDisplayForms(removedFilter.attributeFilter.displayForm),
-            filterContextActions.updateConnectingAttributesOnFilterDeleted(
-                removedFilter.attributeFilter.localIdentifier!,
-            ),
             // house-keeping: ensure the removed attribute filter disappears from widget ignore lists
             layoutActions.removeIgnoredAttributeFilter({
                 displayFormRefs: [removedFilter.attributeFilter.displayForm],

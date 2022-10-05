@@ -3,7 +3,7 @@ import React from "react";
 
 import { Dropdown, DropdownButton, DropdownList } from "@gooddata/sdk-ui-kit";
 import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
-import { selectCatalogAttributes, useDashboardSelector, IConnectingAttribute } from "../../../../../../model";
+import { IConnectingAttribute } from "../../../../../../model";
 import { ConnectingAttributeItem } from "./ConnectingAttributeItem";
 
 import invariant from "ts-invariant";
@@ -28,9 +28,8 @@ const ALIGN_POINTS = [
 export const ConnectingAttributeDropdown: React.FC<IConnectingAttributeDropdownProps> = (props) => {
     const { itemLocalId, selectedConnectingAttributeRef, connectingAttributes, onSelect } = props;
 
-    const catalogAttributes = useDashboardSelector(selectCatalogAttributes);
-    const selectedConnectingAttribute = catalogAttributes.find((attr) =>
-        areObjRefsEqual(attr.attribute.ref, selectedConnectingAttributeRef),
+    const selectedConnectingAttribute = connectingAttributes.find((attr) =>
+        areObjRefsEqual(attr.ref, selectedConnectingAttributeRef),
     );
 
     invariant(
@@ -47,9 +46,9 @@ export const ConnectingAttributeDropdown: React.FC<IConnectingAttributeDropdownP
             alignPoints={ALIGN_POINTS}
             renderButton={({ isOpen, toggleDropdown }) => (
                 <DropdownButton
-                    value={selectedConnectingAttribute.attribute.title}
+                    value={selectedConnectingAttribute.title}
                     iconLeft="gd-icon-attribute"
-                    title={selectedConnectingAttribute.attribute.title}
+                    title={selectedConnectingAttribute.title}
                     isOpen={isOpen}
                     onClick={toggleDropdown}
                 />

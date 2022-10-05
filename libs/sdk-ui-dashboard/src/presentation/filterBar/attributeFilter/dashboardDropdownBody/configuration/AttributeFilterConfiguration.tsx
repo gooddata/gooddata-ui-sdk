@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 import { ConfigurationCategory } from "./ConfigurationCategory";
 import { ConfigurationPanelHeader } from "./ConfigurationPanelHeader";
 
@@ -14,6 +14,9 @@ import { ParentFiltersList } from "./parentFilters/ParentFiltersList";
 import invariant from "ts-invariant";
 import { AttributeDisplayFormsDropdown } from "./displayForms/AttributeDisplayFormsDropdown";
 import { useAttributeFilterParentFiltering } from "../../AttributeFilterParentFilteringContext";
+import { useConnectingAttributes } from "./hooks/useConnectingAttributes";
+import { LoadingSpinner } from "@gooddata/sdk-ui-kit";
+import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 interface IAttributeFilterConfigurationProps {
     closeHandler: () => void;
@@ -24,11 +27,22 @@ interface IAttributeFilterConfigurationProps {
 }
 
 export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfigurationProps> = (props) => {
-    const { filterRef, filterByText, displayValuesAsText } = props;
+    const { filterRef, filterByText, displayValuesAsText, closeHandler } = props;
+    const theme = useTheme();
+
+    useEffect(() => {
+        return () => {
+            closeHandler();
+        };
+    }, [closeHandler]);
 
     const neighborFilters: IDashboardAttributeFilter[] = useDashboardSelector(
         selectOtherContextAttributeFilters(filterRef),
     );
+
+    const neighborFilterDisplayForms = useMemo(() => {
+        return neighborFilters.map((filter) => filter.attributeFilter.displayForm);
+    }, [neighborFilters]);
 
     const currentFilter = useDashboardSelector(selectFilterContextAttributeFilters).find((filter) =>
         neighborFilters.every(
@@ -48,7 +62,23 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
         onDisplayFormSelect,
     } = useAttributeFilterParentFiltering();
 
-    if (!filterRef) {
+    const { connectingAttributesLoading, connectingAttributes } = useConnectingAttributes(
+        currentFilter.attributeFilter.displayForm,
+        neighborFilterDisplayForms,
+    );
+
+    if (connectingAttributesLoading) {
+        return (
+            <div className="gd-loading-equalizer-attribute-filter-config-wrap">
+                <LoadingSpinner
+                    className="large gd-loading-equalizer-spinner"
+                    color={theme?.palette?.complementary?.c9}
+                />
+            </div>
+        );
+    }
+
+    if (!filterRef || !connectingAttributes) {
         return null;
     }
 
@@ -61,6 +91,7 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
                 parents={parents}
                 setParents={onParentSelect}
                 onConnectingAttributeChanged={onConnectingAttributeChanged}
+                connectingAttributes={connectingAttributes}
             />
             {showDisplayFormPicker && (
                 <div className="s-display-form-configuration">

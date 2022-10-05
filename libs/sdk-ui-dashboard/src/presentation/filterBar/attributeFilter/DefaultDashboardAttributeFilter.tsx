@@ -120,11 +120,14 @@ export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilter
 
     const CustomElementsSelect = useMemo(() => {
         return function ElementsSelect(props: IAttributeFilterElementsSelectProps) {
+            const closeHandler = useCallback(() => {
+                setIsConfigurationOpen(false);
+            }, []);
             return (
                 <>
                     {isConfigurationOpen ? (
                         <AttributeFilterConfiguration
-                            closeHandler={() => setIsConfigurationOpen(false)}
+                            closeHandler={closeHandler}
                             filterRef={filterRef}
                             onChange={() => {}}
                             filterByText={filterByText}

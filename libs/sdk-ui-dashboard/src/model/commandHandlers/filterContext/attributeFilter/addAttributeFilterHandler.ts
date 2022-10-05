@@ -84,17 +84,6 @@ export function* addAttributeFilterHandler(
 
     invariant(addedFilter, "Inconsistent state in attributeFilterAddCommandHandler");
 
-    const connectingAttributes: PromiseReturnType<ReturnType<typeof getConnectingAttributes>> = yield all(
-        allFilters.map((filter) => call(getConnectingAttributes, ctx, displayFormMetadata.attribute, filter)),
-    );
-
-    yield put(
-        filterContextActions.updateConnectingAttributesOnFilterAdded({
-            addedFilterLocalId: addedFilter.attributeFilter.localIdentifier!,
-            connectingAttributes,
-        }),
-    );
-
     yield dispatchDashboardEvent(
         attributeFilterAdded(ctx, addedFilter, cmd.payload.index, cmd.correlationId),
     );
