@@ -1061,6 +1061,7 @@ export const Icon: {
     Close: FC<IIconProps>;
     Dataset: FC<IIconProps>;
     Expand: FC<IIconProps>;
+    Contract: FC<IIconProps>;
     Fact: FC<IIconProps>;
     Function: FC<IIconProps>;
     Insight: FC<IIconProps>;
@@ -1097,6 +1098,7 @@ export const Icon: {
     Origin: FC<IIconProps>;
     Leave: FC<IIconProps>;
     Copy: FC<IIconProps>;
+    Run: FC<IIconProps>;
 };
 
 // @internal (undocumented)
