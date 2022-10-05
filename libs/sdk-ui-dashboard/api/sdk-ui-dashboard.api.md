@@ -4564,14 +4564,14 @@ export type QueryCacheReducer<TQuery extends IDashboardQuery, TResult, TPayload>
 export interface QueryConnectingAttributes extends IDashboardQuery {
     // (undocumented)
     payload: {
-        readonly refs: ObjRef[][];
+        readonly refs: [ObjRef, ObjRef][];
     };
     // (undocumented)
     type: "GDC.DASH/QUERY.CONNECTING.ATTRIBUTES";
 }
 
 // @internal
-export function queryConnectingAttributes(refs: ObjRef[][], correlationId?: string): QueryConnectingAttributes;
+export function queryConnectingAttributes(refs: [ObjRef, ObjRef][], correlationId?: string): QueryConnectingAttributes;
 
 // @alpha
 export function queryDateDatasetsForInsight(insightOrRef: ObjRef | IInsight, correlationId?: string): QueryInsightDateDatasets;
