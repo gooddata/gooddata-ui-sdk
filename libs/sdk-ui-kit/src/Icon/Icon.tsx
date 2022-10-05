@@ -25,6 +25,7 @@ import { Attribute } from "./icons/Attribute";
 import { Close } from "./icons/Close";
 import { Dataset } from "./icons/Dataset";
 import { Expand } from "./icons/Expand";
+import { Contract } from "./icons/Contract";
 import { Fact } from "./icons/Fact";
 import { Function } from "./icons/Function";
 import { Insight } from "./icons/Insight";
@@ -61,6 +62,7 @@ import { Origin } from "./icons/Origin";
 import { Token } from "./icons/Token";
 import { Leave } from "./icons/Leave";
 import { Copy } from "./icons/Copy";
+import { Run } from "./icons/Run";
 
 /**
  * @internal
@@ -92,6 +94,7 @@ export const Icon = {
     Close,
     Dataset,
     Expand,
+    Contract,
     Fact,
     Function,
     Insight,
@@ -128,6 +131,7 @@ export const Icon = {
     Origin,
     Leave,
     Copy,
+    Run,
 };
 
 export { IRowsIconProps };
