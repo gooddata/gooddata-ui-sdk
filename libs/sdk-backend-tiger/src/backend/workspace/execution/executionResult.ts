@@ -108,9 +108,7 @@ export class TigerExecutionResult implements IExecutionResult {
     public async export(options: IExportConfig): Promise<IExportResult> {
         const isXlsx = options.format?.toUpperCase() === "XLSX";
         const payload: TabularExportRequest = {
-            // once XLSX will be supported, it will appear in the enum of api client, we would then use
-            // format: isXlsx ? TabularExportRequestFormatEnum.CSV : TabularExportRequestFormatEnum.CSV,
-            format: TabularExportRequestFormatEnum.CSV,
+            format: isXlsx ? TabularExportRequestFormatEnum.XLSX : TabularExportRequestFormatEnum.CSV,
             executionResult: this.resultId,
             fileName: options.title ?? "default",
             settings: isXlsx
