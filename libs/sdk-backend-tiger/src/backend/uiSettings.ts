@@ -9,7 +9,7 @@ import { DefaultFeatureFlags } from "./uiFeatures";
  */
 export const DefaultUiSettings: ISettings = {
     activeFiltersByDefault: true,
-    enableActiveFilterContext: true,
+    enableActiveFilterContext: false,
     cellMergedByDefault: true,
     enableMetricDateFilter: true,
     enableAnalyticalDesignerExport: true,
