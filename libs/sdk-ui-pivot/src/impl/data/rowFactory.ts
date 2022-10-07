@@ -53,7 +53,9 @@ function getCell(
     if (isResultAttributeHeader(rowHeaderDataItem)) {
         return {
             ...cell,
-            value: rowHeaderDataItem.attributeHeaderItem.name,
+            value:
+                rowHeaderDataItem.attributeHeaderItem.name ||
+                `(${intl.formatMessage({ id: "visualization.emptyValue" })})`, // TODO RAIL-4360 distinguish between empty and null
         };
     }
 

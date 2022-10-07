@@ -152,7 +152,7 @@ describe("searchForLocatorMatch", () => {
     ];
 
     it.each(Scenarios)("%s", (_desc, locators, dv, expected) => {
-        const tableDescriptor = createHeadersAndColDefs(dv);
+        const tableDescriptor = createHeadersAndColDefs(dv, "empty value");
         const result = searchForLocatorMatch(tableDescriptor.headers.rootDataCols, locators);
 
         expect(result?.id).toEqual(expected);
