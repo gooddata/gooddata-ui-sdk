@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import { getGeoData, getLocation } from "../../geoChart/data";
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import { emptyDef } from "@gooddata/sdk-model";
@@ -24,7 +24,7 @@ describe("geoChartData", () => {
     it("should return geoData with empty bucket", () => {
         const emptyDv = DataViewFacade.for(dummyDataView(emptyDef("testWorkspace")));
 
-        const geoData = getGeoData(emptyDv);
+        const geoData = getGeoData(emptyDv, "empty value", "null value");
         expect(geoData).toEqual({});
     });
 

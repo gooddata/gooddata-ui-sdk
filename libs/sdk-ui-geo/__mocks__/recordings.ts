@@ -14,7 +14,7 @@ function createShortcut(rec: ScenarioRecording) {
 
     return {
         dv,
-        geoData: getGeoData(dv),
+        geoData: getGeoData(dv, "empty value", "null value"),
     };
 }
 
@@ -60,7 +60,7 @@ function trimmedScenario(rec: ScenarioRecording, to: number[]) {
 
     return {
         dv,
-        geoData: getGeoData(dv),
+        geoData: getGeoData(dv, "empty value", "null value"),
     };
 }
 

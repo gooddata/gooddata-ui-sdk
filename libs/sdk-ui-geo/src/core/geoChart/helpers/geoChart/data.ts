@@ -55,7 +55,11 @@ export function getLocation(latlng: string | null): IGeoLngLat | null {
     };
 }
 
-export function getGeoData(dv: DataViewFacade): IGeoData {
+export function getGeoData(
+    dv: DataViewFacade,
+    emptyHeaderString: string,
+    nullHeaderString: string,
+): IGeoData {
     const geoData: IGeoData = getBucketItemNameAndDataIndex(dv);
     const attributeHeaderItems = getGeoAttributeHeaderItems(dv, geoData);
 
@@ -66,7 +70,12 @@ export function getGeoData(dv: DataViewFacade): IGeoData {
     const colorIndex = geoData?.color?.index;
 
     if (locationIndex !== undefined) {
-        const locationData = getAttributeData(attributeHeaderItems, locationIndex);
+        const locationData = getAttributeData(
+            attributeHeaderItems,
+            locationIndex,
+            emptyHeaderString,
+            nullHeaderString,
+        );
         geoData[BucketNames.LOCATION].data = locationData.map(getLocation);
     }
 
@@ -77,7 +86,12 @@ export function getGeoData(dv: DataViewFacade): IGeoData {
     }
 
     if (tooltipTextIndex !== undefined) {
-        geoData[BucketNames.TOOLTIP_TEXT].data = getAttributeData(attributeHeaderItems, tooltipTextIndex);
+        geoData[BucketNames.TOOLTIP_TEXT].data = getAttributeData(
+            attributeHeaderItems,
+            tooltipTextIndex,
+            emptyHeaderString,
+            nullHeaderString,
+        );
     }
 
     if (sizeIndex !== undefined) {
@@ -114,9 +128,20 @@ function getMeasureData(dv: DataViewFacade, dataIndex: number): number[] {
     return measureValues.map(dataValueAsFloat);
 }
 
-function getAttributeData(attributeHeaderItems: IResultHeader[][], dataIndex: number): string[] {
+function getAttributeData(
+    attributeHeaderItems: IResultHeader[][],
+    dataIndex: number,
+    emptyHeaderString: string,
+    nullHeaderString: string,
+): string[] {
     const headerItems = attributeHeaderItems[dataIndex];
-    return headerItems.map(resultHeaderName);
+    return headerItems.map((i) => {
+        const name = resultHeaderName(i);
+        if (name) {
+            return name;
+        }
+        return name === "" ? emptyHeaderString : nullHeaderString;
+    });
 }
 
 type BucketInfos = { [localId: string]: IBucketItemInfo | null };

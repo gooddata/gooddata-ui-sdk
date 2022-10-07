@@ -19,7 +19,6 @@ import {
     getValidColorPalette,
     IColorStrategy,
     IPushpinCategoryLegendItem,
-    fixEmptyHeaderItems,
 } from "@gooddata/sdk-ui-vis-commons";
 import { getColorStrategy } from "./colorStrategy/geoChart";
 
@@ -64,13 +63,11 @@ export class GeoChartOptionsWrapper extends React.Component<IGeoChartInnerProps>
     }
 
     public renderVisualization(): React.ReactNode {
-        const sanitizedProps = this.sanitizeProperties();
-
-        const { dataView, onDataTooLarge } = sanitizedProps;
+        const { dataView, onDataTooLarge } = this.props;
 
         const dv = DataViewFacade.for(dataView!);
-        const geoData = getGeoData(dv);
-        const validationResult = this.validateData(geoData, sanitizedProps);
+        const geoData = getGeoData(dv, this.emptyHeaderString, this.nullHeaderString);
+        const validationResult = this.validateData(geoData, this.props);
 
         if (validationResult?.isDataTooLarge) {
             invariant(onDataTooLarge, "GeoChart's onDataTooLarge callback is missing.");
@@ -79,8 +76,8 @@ export class GeoChartOptionsWrapper extends React.Component<IGeoChartInnerProps>
             return null;
         }
 
-        const geoChartOptions = this.buildGeoChartOptions(geoData, sanitizedProps);
-        return <GeoChartInner {...sanitizedProps} geoChartOptions={geoChartOptions} />;
+        const geoChartOptions = this.buildGeoChartOptions(geoData, this.props);
+        return <GeoChartInner {...this.props} geoChartOptions={geoChartOptions} />;
     }
 
     private buildGeoChartOptions = (
@@ -120,17 +117,6 @@ export class GeoChartOptionsWrapper extends React.Component<IGeoChartInnerProps>
             isDataTooLarge: !isDataOfReasonableSize(dv, geoData, limit),
         };
     };
-
-    private sanitizeProperties(): IGeoChartInnerProps {
-        const { dataView } = this.props;
-
-        fixEmptyHeaderItems(dataView!, `(${this.emptyHeaderString})`);
-
-        return {
-            ...this.props,
-            dataView,
-        };
-    }
 }
 
 export function createCategoryLegendItems(
