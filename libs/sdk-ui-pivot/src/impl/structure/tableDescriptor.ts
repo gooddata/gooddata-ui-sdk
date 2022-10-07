@@ -75,9 +75,10 @@ export class TableDescriptor {
      * Creates a new table descriptor from the provided data view facade.
      *
      * @param dv - data view facade
+     * @param emptyHeaderName - what to show for empty headers
      */
-    public static for(dv: DataViewFacade): TableDescriptor {
-        const { headers, colDefs } = createHeadersAndColDefs(dv);
+    public static for(dv: DataViewFacade, emptyHeaderName: string): TableDescriptor {
+        const { headers, colDefs } = createHeadersAndColDefs(dv, emptyHeaderName);
 
         invariant(headers.leafDataCols.length === colDefs.leafDataColDefs.length);
 

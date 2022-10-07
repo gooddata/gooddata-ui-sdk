@@ -12,21 +12,27 @@ const ColumnOnlyResult = recordedDataFacade(
     DataViewFirstPage,
 );
 
-export const ColumnOnlyResultDescriptor = TableDescriptor.for(ColumnOnlyResult);
+export const ColumnOnlyResultDescriptor = TableDescriptor.for(ColumnOnlyResult, "empty value");
 
 export const TwoMeasuresWithRowAttribute = recordedDataFacade(
     ReferenceRecordings.Scenarios.PivotTable.TwoMeasuresWithRowAttribute,
     DataViewFirstPage,
 );
 
-export const TwoMeasuresWithRowAttributeDescriptor = TableDescriptor.for(TwoMeasuresWithRowAttribute);
+export const TwoMeasuresWithRowAttributeDescriptor = TableDescriptor.for(
+    TwoMeasuresWithRowAttribute,
+    "empty value",
+);
 
 const SingleMeasureWithRowAttribute = recordedDataFacade(
     ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithRowAttribute,
     DataViewFirstPage,
 );
 
-export const SingleMeasureWithRowAttributeDescriptor = TableDescriptor.for(SingleMeasureWithRowAttribute);
+export const SingleMeasureWithRowAttributeDescriptor = TableDescriptor.for(
+    SingleMeasureWithRowAttribute,
+    "empty value",
+);
 
 export const TwoMeasuresWithTwoRowAndTwoColumnAttributes = recordedDataFacade(
     ReferenceRecordings.Scenarios.PivotTable.TwoMeasuresWithTwoRowAndTwoColumnAttributes,
@@ -34,6 +40,7 @@ export const TwoMeasuresWithTwoRowAndTwoColumnAttributes = recordedDataFacade(
 );
 export const TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor = TableDescriptor.for(
     TwoMeasuresWithTwoRowAndTwoColumnAttributes,
+    "empty value",
 );
 
 export function testStore(

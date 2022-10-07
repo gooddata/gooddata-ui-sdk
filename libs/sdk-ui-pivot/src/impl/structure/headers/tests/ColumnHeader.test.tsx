@@ -14,7 +14,7 @@ const fixture = recordedDataFacade(
     ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithTwoRowAndOneColumnAttributes,
     DataViewFirstPage,
 );
-const tableDescriptor = TableDescriptor.for(fixture);
+const tableDescriptor = TableDescriptor.for(fixture, "empty value");
 
 const getColumnHeader = (
     props = {},
@@ -67,7 +67,7 @@ describe("ColumnHeader renderer", () => {
             getColumnHeader(
                 { enableSorting: true },
                 { type: "COLUMN_ATTRIBUTE_COLUMN", colGroupId: "cg_0" },
-                TableDescriptor.for(SingleColumn),
+                TableDescriptor.for(SingleColumn, "empty value"),
             ),
         );
         expect(component.find(HeaderCell).props()).toHaveProperty("enableSorting", false);

@@ -29,7 +29,7 @@ describe("AggregationsMenu", () => {
         ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithTwoRowAndOneColumnAttributes,
         DataViewFirstPage,
     );
-    const tableDescriptor = TableDescriptor.for(fixture);
+    const tableDescriptor = TableDescriptor.for(fixture, "empty value");
     const getExecutionDefinition = () => emptyDef("testWorkspace");
     const getTotals = () => [] as ITotal[];
     const getTableDescriptor = () => tableDescriptor;
@@ -140,7 +140,7 @@ describe("AggregationsMenu", () => {
             ReferenceRecordings.Scenarios.PivotTable.TwoMeasuresWithColumnAttribute,
             DataViewFirstPage,
         );
-        const tableDescriptor = TableDescriptor.for(fixture);
+        const tableDescriptor = TableDescriptor.for(fixture, "empty value");
 
         const wrapper = render({
             showSubmenu: true,
