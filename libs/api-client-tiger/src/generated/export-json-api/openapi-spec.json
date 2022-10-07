@@ -176,7 +176,7 @@
                     },
                     "showFilters": {
                         "type": "boolean",
-                        "description": "Print used filters on top o document.",
+                        "description": "Print applied filters on top of the document.",
                         "example": false
                     }
                 },
@@ -190,7 +190,7 @@
                         "type": "string",
                         "description": "Expected file format.",
                         "example": "CSV",
-                        "enum": ["CSV"]
+                        "enum": ["CSV", "XLSX"]
                     },
                     "executionResult": {
                         "type": "string",
