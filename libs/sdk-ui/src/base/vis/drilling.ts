@@ -145,7 +145,7 @@ function convertToEmpty(attributeItem: IResultAttributeHeader) {
         attributeHeaderItem: {
             ...attributeHeaderItem,
             // Send empty string for not, need to be updated for NULL in future
-            name: isEmpty ? "" : attributeHeaderItem.name,
+            name: isEmpty ? "" : attributeHeaderItem.name ?? "",
         },
     };
 }

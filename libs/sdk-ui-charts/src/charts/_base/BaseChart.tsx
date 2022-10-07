@@ -2,7 +2,6 @@
 import React from "react";
 import { ICoreChartProps, OnLegendReady } from "../../interfaces";
 import { getValidColorPalette, ChartTransformation } from "../../highcharts";
-import { fixEmptyHeaderItems } from "@gooddata/sdk-ui-vis-commons";
 import noop from "lodash/noop";
 import { defaultCoreChartProps } from "../_commons/defaultProps";
 import {
@@ -104,9 +103,6 @@ class StatelessBaseChart extends React.Component<Props> {
                 <IntlWrapper locale={locale}>
                     <IntlTranslationsProvider>
                         {(translationProps: ITranslationsComponentProps) => {
-                            // TODO: this is evil; mutating the items of readonly array; need to find a conceptual way to do this
-                            fixEmptyHeaderItems(dataView, translationProps.emptyHeaderString);
-
                             return (
                                 <ChartTransformation
                                     height={height}

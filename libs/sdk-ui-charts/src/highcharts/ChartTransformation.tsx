@@ -83,7 +83,13 @@ const ChartTransformationImpl = (props: IChartTransformationProps) => {
     } = props;
     const visType = config.type;
     const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
-    const chartOptions: IChartOptions = getChartOptions(dataView, config, drillablePredicates, theme);
+    const chartOptions: IChartOptions = getChartOptions(
+        dataView,
+        config,
+        drillablePredicates,
+        `(${intl.formatMessage({ id: "visualization.emptyValue" })})`,
+        theme,
+    );
     const legendOptions: ILegendOptions = buildLegendOptions(config.legend, chartOptions);
     const validationResult = validateData(config.limits, chartOptions);
     const drillConfig = { dataView, onDrill };

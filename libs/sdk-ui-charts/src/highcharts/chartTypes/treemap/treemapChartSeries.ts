@@ -38,9 +38,10 @@ function getLeafPoint(
     data: any,
     format: string,
     colorStrategy: IColorStrategy,
+    emptyHeaderName: string,
 ) {
     return {
-        name: stackByAttribute.items[seriesIndex].attributeHeaderItem.name,
+        name: stackByAttribute.items[seriesIndex].attributeHeaderItem.name || emptyHeaderName, // TODO RAIL-4360 distinguish between empty and null,
         parent: `${parentIndex}`,
         value: parseValue(data),
         x: seriesIndex,
@@ -61,6 +62,7 @@ export function getTreemapStackedSeriesDataWithViewBy(
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     colorStrategy: IColorStrategy,
+    emptyHeaderName: string,
 ): any[] {
     const roots: any = [];
     const leafs: any = [];
@@ -87,7 +89,15 @@ export function getTreemapStackedSeriesDataWithViewBy(
         }
         // create leafs which will be colored at the end of group
         uncoloredLeafs.push(
-            getLeafPoint(stackByAttribute, rootId, seriesIndex, seriesItems[0], format, colorStrategy),
+            getLeafPoint(
+                stackByAttribute,
+                rootId,
+                seriesIndex,
+                seriesItems[0],
+                format,
+                colorStrategy,
+                emptyHeaderName,
+            ),
         );
 
         if (isLastSerie(seriesIndex, dataLength)) {
@@ -105,6 +115,7 @@ export function getTreemapStackedSeriesDataWithMeasures(
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     stackByAttribute: any,
     colorStrategy: IColorStrategy,
+    emptyHeaderName: string,
 ): any[] {
     let data = measureGroup.items.map((measureGroupItem, index): IPointData => {
         return {
@@ -124,7 +135,7 @@ export function getTreemapStackedSeriesDataWithMeasures(
 
             const unsortedLeafs = seriesItems.map((seriesItem, seriesItemIndex): IPointData => {
                 return {
-                    name: stackByAttribute.items[seriesItemIndex].attributeHeaderItem.name,
+                    name: stackByAttribute.items[seriesItemIndex].attributeHeaderItem.name || emptyHeaderName, // TODO RAIL-4360 distinguish between empty and null,
                     parent: `${seriesIndex}`,
                     format: unwrap(measureGroup.items[seriesIndex]).format,
                     value: parseValue(seriesItem),
@@ -157,6 +168,7 @@ export function getTreemapStackedSeries(
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     colorStrategy: IColorStrategy,
+    emptyHeaderName: string,
 ) {
     let data = [];
     if (viewByAttribute) {
@@ -166,9 +178,16 @@ export function getTreemapStackedSeries(
             viewByAttribute,
             stackByAttribute,
             colorStrategy,
+            emptyHeaderName,
         );
     } else {
-        data = getTreemapStackedSeriesDataWithMeasures(dv, measureGroup, stackByAttribute, colorStrategy);
+        data = getTreemapStackedSeriesDataWithMeasures(
+            dv,
+            measureGroup,
+            stackByAttribute,
+            colorStrategy,
+            emptyHeaderName,
+        );
     }
 
     const seriesName = measureGroup.items
