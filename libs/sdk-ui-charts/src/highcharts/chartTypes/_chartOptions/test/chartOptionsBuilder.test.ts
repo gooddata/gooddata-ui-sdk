@@ -628,6 +628,7 @@ describe("chartOptionsBuilder", () => {
                 stackByAttribute,
                 type,
                 attributeColorStrategy,
+                "empty value",
             );
 
             it("should return number of series equal to the count of measures", () => {
@@ -697,6 +698,7 @@ describe("chartOptionsBuilder", () => {
                 stackByAttribute,
                 type,
                 attributeColorStrategy,
+                "empty value",
             );
 
             it("should return number of series equal to the count of stack by attribute values", () => {
@@ -767,7 +769,15 @@ describe("chartOptionsBuilder", () => {
                     dv,
                 );
 
-                const seriesData = getSeries(dv, measureGroup, null, stackByAttribute, type, colorStrategy);
+                const seriesData = getSeries(
+                    dv,
+                    measureGroup,
+                    null,
+                    stackByAttribute,
+                    type,
+                    colorStrategy,
+                    "empty value",
+                );
 
                 expect(seriesData).toMatchSnapshot();
             });
@@ -784,7 +794,15 @@ describe("chartOptionsBuilder", () => {
                     dv,
                 );
 
-                const seriesData = getSeries(dv, measureGroup, null, stackByAttribute, type, colorStrategy);
+                const seriesData = getSeries(
+                    dv,
+                    measureGroup,
+                    null,
+                    stackByAttribute,
+                    type,
+                    colorStrategy,
+                    "empty value",
+                );
 
                 expect(seriesData).toMatchSnapshot();
             });
@@ -1182,6 +1200,7 @@ describe("chartOptionsBuilder", () => {
                     stackByAttribute,
                     type,
                     treeMapColorStrategy,
+                    "empty value",
                 );
 
                 it("should return only one serie", () => {
@@ -1230,6 +1249,7 @@ describe("chartOptionsBuilder", () => {
                     stackByAttribute,
                     type,
                     treeMapColorStrategy,
+                    "empty value",
                 );
 
                 it("should return only one serie", () => {
@@ -1284,6 +1304,7 @@ describe("chartOptionsBuilder", () => {
                     stackByAttribute,
                     type,
                     treeMapColorStrategy,
+                    "empty value",
                 );
 
                 it("should return only one serie", () => {
@@ -1348,6 +1369,7 @@ describe("chartOptionsBuilder", () => {
                     stackByAttribute,
                     type,
                     treeMapColorStrategy,
+                    "empty value",
                 );
 
                 it("should return only one serie", () => {
@@ -1442,6 +1464,7 @@ describe("chartOptionsBuilder", () => {
                     stackByAttribute,
                     type,
                     treeMapColorStrategy,
+                    "empty value",
                 );
 
                 it("should return only one serie", () => {
@@ -1577,6 +1600,7 @@ describe("chartOptionsBuilder", () => {
                 stackByAttribute,
                 type,
                 metricColorStrategy,
+                "empty value",
             );
 
             const drillableMeasures = [
@@ -1619,6 +1643,7 @@ describe("chartOptionsBuilder", () => {
                     stackByAttribute,
                     type,
                     metricColorStrategy,
+                    "empty value",
                 );
 
                 const drillableMeasures = [
@@ -1657,6 +1682,7 @@ describe("chartOptionsBuilder", () => {
                 stackByAttribute,
                 type,
                 attributeColorStrategy,
+                "empty value",
             );
             const drillableMeasures = [
                 HeaderPredicates.uriMatch("/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/67097"),
@@ -1700,6 +1726,7 @@ describe("chartOptionsBuilder", () => {
                     stackByAttribute,
                     type,
                     attributeColorStrategy,
+                    "empty value",
                 );
 
                 const drillableMeasures = [
@@ -1736,6 +1763,7 @@ describe("chartOptionsBuilder", () => {
                 stackByAttribute,
                 type,
                 metricColorStrategy,
+                "empty value",
             );
 
             describe("with all drillable measures", () => {
@@ -1785,6 +1813,7 @@ describe("chartOptionsBuilder", () => {
                 stackByAttribute,
                 type,
                 metricColorStrategy,
+                "empty value",
             );
 
             describe("with all drillable measures", () => {
@@ -1835,6 +1864,7 @@ describe("chartOptionsBuilder", () => {
                 stackByAttribute,
                 type,
                 attColorStrategy,
+                "empty value",
             );
 
             describe("with no drillable items", () => {
@@ -1958,6 +1988,7 @@ describe("chartOptionsBuilder", () => {
                 stackByAttribute,
                 type,
                 attColorStrategy,
+                "empty value",
             );
 
             it("should return number of series equal to the count of stack by attribute values", () => {
@@ -2449,7 +2480,7 @@ describe("chartOptionsBuilder", () => {
             },
         };
         it("should generate valid tooltip for 1 measure", () => {
-            const tooltipFn = buildTooltipTreemapFactory(null, null);
+            const tooltipFn = buildTooltipTreemapFactory(null, null, "empty value");
             const tooltip = tooltipFn(point, DEFAULT_TOOLTIP_CONTENT_WIDTH);
             expect(getValues(tooltip)).toEqual(["category", "300"]);
         });
@@ -2458,7 +2489,7 @@ describe("chartOptionsBuilder", () => {
             const pointWithFormat = cloneDeep(point);
             pointWithFormat.format = "abcd";
 
-            const tooltipFn = buildTooltipTreemapFactory(null, null);
+            const tooltipFn = buildTooltipTreemapFactory(null, null, "empty value");
             const tooltip = tooltipFn(pointWithFormat, DEFAULT_TOOLTIP_CONTENT_WIDTH);
             expect(getValues(tooltip)).toEqual(["category", "abcd"]);
         });
@@ -2467,7 +2498,7 @@ describe("chartOptionsBuilder", () => {
             const dv = fixtures.treemapWithMetricAndViewByAttribute;
             const { viewByAttribute, stackByAttribute } = getMVSTreemap(dv);
 
-            const tooltipFn = buildTooltipTreemapFactory(viewByAttribute, stackByAttribute);
+            const tooltipFn = buildTooltipTreemapFactory(viewByAttribute, stackByAttribute, "empty value");
             const tooltip = tooltipFn(point, DEFAULT_TOOLTIP_CONTENT_WIDTH);
             expect(getValues(tooltip)).toEqual(["Department", "Direct Sales", "serie name", "300"]);
         });
@@ -2476,7 +2507,7 @@ describe("chartOptionsBuilder", () => {
             const dv = fixtures.treemapWithMetricAndStackByAttribute;
             const { viewByAttribute, stackByAttribute } = getMVSTreemap(dv);
 
-            const tooltipFn = buildTooltipTreemapFactory(viewByAttribute, stackByAttribute);
+            const tooltipFn = buildTooltipTreemapFactory(viewByAttribute, stackByAttribute, "empty value");
             const tooltip = tooltipFn(point, DEFAULT_TOOLTIP_CONTENT_WIDTH);
             expect(getValues(tooltip)).toEqual(["Department", "Direct Sales", "category", "300"]);
         });
@@ -2485,7 +2516,7 @@ describe("chartOptionsBuilder", () => {
             const dv = fixtures.treemapWithMetricViewByAndStackByAttribute;
             const { viewByAttribute, stackByAttribute } = getMVSTreemap(dv);
 
-            const tooltipFn = buildTooltipTreemapFactory(viewByAttribute, stackByAttribute);
+            const tooltipFn = buildTooltipTreemapFactory(viewByAttribute, stackByAttribute, "empty value");
             const tooltip = tooltipFn(point, DEFAULT_TOOLTIP_CONTENT_WIDTH);
             expect(getValues(tooltip)).toEqual([
                 "Department",
@@ -2504,7 +2535,12 @@ describe("chartOptionsBuilder", () => {
             const dv = fixtures.treemapWithMetricViewByAndStackByAttribute;
             const { viewByAttribute, stackByAttribute } = getMVSTreemap(dv);
 
-            const tooltipFn = buildTooltipTreemapFactory(viewByAttribute, stackByAttribute, chartConfig);
+            const tooltipFn = buildTooltipTreemapFactory(
+                viewByAttribute,
+                stackByAttribute,
+                "empty value",
+                chartConfig,
+            );
             const tooltip = tooltipFn(pointForSmallCharts, SMALL_TOOLTIP_CONTENT_WIDTH);
             expect(getStyleMaxWidth(tooltip)).toEqual([
                 "180",
@@ -2732,10 +2768,11 @@ describe("chartOptionsBuilder", () => {
                 );
                 expect(pieChartTooltip).toBe(expectedTooltip);
 
-                expectedTooltip = buildTooltipTreemapFactory(viewByAttribute, null)(
-                    pointData,
-                    DEFAULT_TOOLTIP_CONTENT_WIDTH,
-                );
+                expectedTooltip = buildTooltipTreemapFactory(
+                    viewByAttribute,
+                    null,
+                    "empty value",
+                )(pointData, DEFAULT_TOOLTIP_CONTENT_WIDTH);
 
                 const treemapTooltip = treemapOptions.actions.tooltip(
                     pointData,
@@ -2793,10 +2830,11 @@ describe("chartOptionsBuilder", () => {
                 );
                 expect(pieChartTooltip).toBe(expectedPieChartTooltip);
 
-                const expectedTreemapTooltip = buildTooltipTreemapFactory(null, null)(
-                    pointData,
-                    DEFAULT_TOOLTIP_CONTENT_WIDTH,
-                );
+                const expectedTreemapTooltip = buildTooltipTreemapFactory(
+                    null,
+                    null,
+                    "empty value",
+                )(pointData, DEFAULT_TOOLTIP_CONTENT_WIDTH);
                 const treemapTooltip = treemapOptions.actions.tooltip(
                     pointData,
                     DEFAULT_TOOLTIP_CONTENT_WIDTH,
@@ -3188,7 +3226,7 @@ describe("chartOptionsBuilder", () => {
                 };
 
                 it("should generate correct tooltip", () => {
-                    const tooltipFn = generateTooltipHeatmapFn(viewBy, stackBy);
+                    const tooltipFn = generateTooltipHeatmapFn(viewBy, stackBy, "empty value");
                     const tooltip = tooltipFn(point, DEFAULT_TOOLTIP_CONTENT_WIDTH);
 
                     expect(getValues(tooltip)).toEqual([
@@ -3205,7 +3243,7 @@ describe("chartOptionsBuilder", () => {
                     const chartConfig: IChartConfig = {
                         type: "heatmap",
                     };
-                    const tooltipFn = generateTooltipHeatmapFn(viewBy, stackBy, chartConfig);
+                    const tooltipFn = generateTooltipHeatmapFn(viewBy, stackBy, "empty value", chartConfig);
                     const tooltip = tooltipFn(pointForSmallCharts, SMALL_TOOLTIP_CONTENT_WIDTH);
 
                     expect(getStyleMaxWidth(tooltip)).toEqual([
@@ -3225,7 +3263,11 @@ describe("chartOptionsBuilder", () => {
                 });
 
                 it('should display "-" for null value', () => {
-                    const tooltipValue = generateTooltipHeatmapFn(viewBy, stackBy)(
+                    const tooltipValue = generateTooltipHeatmapFn(
+                        viewBy,
+                        stackBy,
+                        "empty value",
+                    )(
                         {
                             ...point,
                             value: null,

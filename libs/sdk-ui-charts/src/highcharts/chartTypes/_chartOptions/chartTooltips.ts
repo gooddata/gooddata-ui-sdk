@@ -204,6 +204,7 @@ export function generateTooltipXYFn(
 export function generateTooltipHeatmapFn(
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
+    emptyHeaderName: string,
     config: IChartConfig = {},
 ): ITooltipFactory {
     const { separators } = config;
@@ -222,13 +223,13 @@ export function generateTooltipHeatmapFn(
         if (viewByAttribute) {
             textData.unshift([
                 customEscape(viewByAttribute.formOf.name),
-                customEscape(viewByAttribute.items[point.x].attributeHeaderItem.name),
+                customEscape(viewByAttribute.items[point.x].attributeHeaderItem.name || emptyHeaderName), // TODO RAIL-4360 distinguish between empty and null
             ]);
         }
         if (stackByAttribute) {
             textData.unshift([
                 customEscape(stackByAttribute.formOf.name),
-                customEscape(stackByAttribute.items[point.y].attributeHeaderItem.name),
+                customEscape(stackByAttribute.items[point.y].attributeHeaderItem.name || emptyHeaderName), // TODO RAIL-4360 distinguish between empty and null
             ]);
         }
 
@@ -239,6 +240,7 @@ export function generateTooltipHeatmapFn(
 export function buildTooltipTreemapFactory(
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
+    emptyHeaderName: string,
     config: IChartConfig = {},
 ): ITooltipFactory {
     const { separators } = config;
@@ -255,14 +257,14 @@ export function buildTooltipTreemapFactory(
         if (stackByAttribute) {
             textData.push([
                 customEscape(stackByAttribute.formOf.name),
-                customEscape(stackByAttribute.items[point.y].attributeHeaderItem.name),
+                customEscape(stackByAttribute.items[point.y].attributeHeaderItem.name || emptyHeaderName), // TODO RAIL-4360 distinguish between empty and null
             ]);
         }
 
         if (viewByAttribute) {
             textData.unshift([
                 customEscape(viewByAttribute.formOf.name),
-                customEscape(viewByAttribute.items[point.x].attributeHeaderItem.name),
+                customEscape(viewByAttribute.items[point.x].attributeHeaderItem.name || emptyHeaderName), // TODO RAIL-4360 distinguish between empty and null
             ]);
             textData.push([customEscape(point.series.name), formattedValue]);
         } else {
@@ -279,12 +281,13 @@ export function getTooltipFactory(
     viewByParentAttribute: IUnwrappedAttributeHeadersWithItems,
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     measure: IMeasureDescriptor,
+    emptyHeaderName: string,
     config: IChartConfig = {},
     isDualAxis: boolean = false,
 ): ITooltipFactory {
     const { type } = config;
     if (isTreemap(type)) {
-        return buildTooltipTreemapFactory(viewByAttribute, stackByAttribute, config);
+        return buildTooltipTreemapFactory(viewByAttribute, stackByAttribute, emptyHeaderName, config);
     }
     if (isViewByTwoAttributes) {
         return buildTooltipForTwoAttributesFactory(

@@ -28,6 +28,7 @@ type NameAndCategories = {
 export function getCategoriesForTwoAttributes(
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
     viewByParentAttribute: IUnwrappedAttributeHeadersWithItems,
+    emptyHeaderName: string,
 ): NameAndCategories[] {
     const keys: string[] = [];
     const { items: children } = viewByAttribute;
@@ -36,8 +37,8 @@ export function getCategoriesForTwoAttributes(
     const combinedResult = parent.reduce(
         (result: Record<string, NameAndCategories>, parentAttr: IResultAttributeHeader, index: number) => {
             const uri = parentAttr?.attributeHeaderItem?.uri ?? "";
-            const name = parentAttr?.attributeHeaderItem?.name ?? "";
-            const value = children[index]?.attributeHeaderItem?.name ?? "";
+            const name = parentAttr?.attributeHeaderItem?.name || emptyHeaderName; // TODO RAIL-4360 distinguish between empty and null
+            const value = children[index]?.attributeHeaderItem?.name || emptyHeaderName; // TODO RAIL-4360 distinguish between empty and null
 
             const existingEntry = result[uri];
             const childCategories = existingEntry?.categories ?? [];

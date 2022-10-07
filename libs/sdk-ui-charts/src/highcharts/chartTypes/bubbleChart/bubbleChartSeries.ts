@@ -7,7 +7,7 @@ import { parseValue, unwrap } from "../_util/common";
 import last from "lodash/last";
 
 function getCountOfEmptyBuckets(bucketEmptyFlags: boolean[] = []) {
-    return bucketEmptyFlags.filter((bucketEmpyFlag) => bucketEmpyFlag).length;
+    return bucketEmptyFlags.filter((bucketEmptyFlag) => bucketEmptyFlag).length;
 }
 
 export function getBubbleChartSeries(
@@ -16,6 +16,7 @@ export function getBubbleChartSeries(
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     stackByAttribute: any,
     colorStrategy: IColorStrategy,
+    emptyHeaderName: string,
 ): ISeriesItemConfig[] {
     const primaryMeasuresBucketEmpty = dv.def().isBucketEmpty(BucketNames.MEASURES);
     const secondaryMeasuresBucketEmpty = dv.def().isBucketEmpty(BucketNames.SECONDARY_MEASURES);
@@ -44,7 +45,9 @@ export function getBubbleChartSeries(
                 },
             ];
             return {
-                name: stackByAttribute ? stackByAttribute.items[index].attributeHeaderItem.name : "",
+                name: stackByAttribute
+                    ? stackByAttribute.items[index].attributeHeaderItem.name || emptyHeaderName // TODO RAIL-4360 distinguish between empty and null
+                    : "",
                 color: colorStrategy.getColorByIndex(legendIndex),
                 legendIndex: legendIndex++,
                 data,
