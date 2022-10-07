@@ -13,7 +13,7 @@ describe("HeaderCell renderer", () => {
         ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithTwoRowAndOneColumnAttributes,
         DataViewFirstPage,
     );
-    const tableDescriptor = TableDescriptor.for(fixture);
+    const tableDescriptor = TableDescriptor.for(fixture, "empty value");
     const getTableDescriptor = () => tableDescriptor;
 
     it("should render text for the cell", () => {

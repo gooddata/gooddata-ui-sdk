@@ -21,7 +21,7 @@ import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
 //  as the ColDefs has will be updated during test runs.
 describe("updateColumnDefinitionsWithWidths", () => {
     it("should enrich colDefs based on column width items", () => {
-        const table = TableDescriptor.for(TwoMeasuresWithTwoRowAndTwoColumnAttributes);
+        const table = TableDescriptor.for(TwoMeasuresWithTwoRowAndTwoColumnAttributes, "empty value");
         const widths: ColumnWidthItem[] = [
             newWidthForSelectedColumns(
                 ReferenceMd.Amount,
@@ -47,7 +47,7 @@ describe("updateColumnDefinitionsWithWidths", () => {
     });
 
     it("should enrich colDefs when mix of manual and auto-resizing", () => {
-        const table = TableDescriptor.for(TwoMeasuresWithRowAttribute);
+        const table = TableDescriptor.for(TwoMeasuresWithRowAttribute, "empty value");
         const store = testStore(table, newWidthForAllMeasureColumns(200));
 
         // note: size of c_1 should be ignored because manual setting above (to 200) should have preference
@@ -65,7 +65,7 @@ describe("updateColumnDefinitionsWithWidths", () => {
     });
 
     it("should enrich colDefs when mix of manual and auto-resizing and grow-to-fit on", () => {
-        const table = TableDescriptor.for(TwoMeasuresWithRowAttribute);
+        const table = TableDescriptor.for(TwoMeasuresWithRowAttribute, "empty value");
         const store = testStore(table, newWidthForSelectedColumns(ReferenceMd.Won, [], 200));
 
         updateColumnDefinitionsWithWidths(table, store, { r_0: { width: 100 } }, 666, true, {
@@ -77,7 +77,7 @@ describe("updateColumnDefinitionsWithWidths", () => {
     });
 
     it("should set with to default if no other size specification provided", () => {
-        const table = TableDescriptor.for(TwoMeasuresWithRowAttribute);
+        const table = TableDescriptor.for(TwoMeasuresWithRowAttribute, "empty value");
         const store = testStore(table);
 
         updateColumnDefinitionsWithWidths(table, store, {}, 666, false, {});
@@ -87,7 +87,7 @@ describe("updateColumnDefinitionsWithWidths", () => {
     });
 
     it("should set maxWidth to undefined when growToFit width is bigger than MANUALLY_SIZED_MAX_WIDTH", () => {
-        const table = TableDescriptor.for(TwoMeasuresWithRowAttribute);
+        const table = TableDescriptor.for(TwoMeasuresWithRowAttribute, "empty value");
         const store = testStore(table);
 
         updateColumnDefinitionsWithWidths(table, store, {}, 100, true, {

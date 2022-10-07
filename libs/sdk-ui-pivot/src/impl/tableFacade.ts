@@ -27,7 +27,6 @@ import { Column, ColumnApi, GridApi } from "@ag-grid-community/all-modules";
 import { defFingerprint, ISortItem } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 import { IntlShape } from "react-intl";
-import { fixEmptyHeaderItems } from "@gooddata/sdk-ui-vis-commons";
 import { setColumnMaxWidth, setColumnMaxWidthIf } from "./base/agColumnWrapper";
 import { agColIds, isMeasureColumn } from "./base/agUtils";
 import { agColId } from "./structure/tableDescriptorTypes";
@@ -35,6 +34,7 @@ import { sleep } from "./utils";
 import { DEFAULT_AUTOSIZE_PADDING, DEFAULT_ROW_HEIGHT } from "./base/constants";
 import { getAvailableDrillTargets } from "./drilling/drillTargets";
 import { IGroupingProvider } from "./data/rowGroupingProvider";
+import identity from "lodash/identity";
 import sumBy from "lodash/sumBy";
 import ApiWrapper from "./base/agApiWrapper";
 import {
@@ -132,10 +132,12 @@ export class TableFacade {
         this.intl = props.intl;
 
         this.currentResult = result;
-        this.fixEmptyHeaders(dataView);
         this.visibleData = DataViewFacade.for(dataView);
         this.currentFingerprint = defFingerprint(this.currentResult.definition);
-        this.tableDescriptor = TableDescriptor.for(this.visibleData);
+        this.tableDescriptor = TableDescriptor.for(
+            this.visibleData,
+            `(${props.intl.formatMessage({ id: "visualization.emptyValue" })})`,
+        );
 
         this.autoResizedColumns = {};
         this.growToFittedColumns = {};
@@ -250,10 +252,7 @@ export class TableFacade {
                 onPageLoaded: this.onPageLoaded,
                 onExecutionTransformed: this.onExecutionTransformed,
                 onTransformedExecutionFailed: this.onTransformedExecutionFailed,
-                dataViewTransform: (dataView) => {
-                    this.fixEmptyHeaders(dataView);
-                    return dataView;
-                },
+                dataViewTransform: identity,
             },
             this.visibleData,
             this.gridApiGuard,
@@ -330,10 +329,6 @@ export class TableFacade {
             );
             this.setFittedColumns();
         }
-    };
-
-    private fixEmptyHeaders = (dataView: IDataView): void => {
-        fixEmptyHeaderItems(dataView, `(${this.intl.formatMessage({ id: "visualization.emptyValue" })})`);
     };
 
     private setFittedColumns = () => {

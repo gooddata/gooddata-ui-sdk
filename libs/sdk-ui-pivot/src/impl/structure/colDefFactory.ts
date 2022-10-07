@@ -26,6 +26,7 @@ type TransformState = {
     rootColDefs: Array<ColDef | ColGroupDef>;
     leafColDefs: Array<ColDef>;
     allColDefs: Array<ColDef | ColGroupDef>;
+    emptyHeaderName: string;
 };
 
 function getSortProp(
@@ -74,7 +75,7 @@ function createColumnGroupColDef(col: ScopeCol, state: TransformState): ColDef |
         const colDef: ColDef = {
             type: COLUMN_ATTRIBUTE_COLUMN,
             colId: col.id,
-            headerName: col.header.attributeHeaderItem.name ?? "NULL", // TODO RAIL-4360 localize this when the null strings are available
+            headerName: col.header.attributeHeaderItem.name || state.emptyHeaderName, // TODO RAIL-4360 distinguish between empty and null
         };
 
         state.allColDefs.push(colDef);
@@ -84,7 +85,7 @@ function createColumnGroupColDef(col: ScopeCol, state: TransformState): ColDef |
     } else {
         const colGroup: ColGroupDef = {
             groupId: col.id,
-            headerName: col.header.attributeHeaderItem.name ?? "NULL", // TODO RAIL-4360 localize this when the null strings are available
+            headerName: col.header.attributeHeaderItem.name || state.emptyHeaderName, // TODO RAIL-4360 distinguish between empty and null
             children,
         };
 
@@ -167,8 +168,13 @@ function createAndAddDataColDefs(table: TableCols, state: TransformState) {
  *
  * @param table - table col descriptors
  * @param initialSorts - initial table sorting definition
+ * @param emptyHeaderName - what to show for empty headers
  */
-export function createColDefsFromTableDescriptor(table: TableCols, initialSorts: ISortItem[]): TableColDefs {
+export function createColDefsFromTableDescriptor(
+    table: TableCols,
+    initialSorts: ISortItem[],
+    emptyHeaderName: string,
+): TableColDefs {
     const state: TransformState = {
         initialSorts,
         cellRendererPlaced: undefined,
@@ -176,6 +182,7 @@ export function createColDefsFromTableDescriptor(table: TableCols, initialSorts:
         allColDefs: [],
         leafColDefs: [],
         rowColDefs: [],
+        emptyHeaderName,
     };
 
     createAndAddSliceColDefs(table.sliceCols, state);

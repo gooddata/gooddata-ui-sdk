@@ -15,7 +15,7 @@ describe("getRowTotals", () => {
             ReferenceRecordings.Scenarios.PivotTable.SingleMeasureAndMultipleGrandTotals,
             DataViewFirstPage,
         );
-        const tableDescriptor = TableDescriptor.for(fixture);
+        const tableDescriptor = TableDescriptor.for(fixture, "empty value");
 
         expect(getRowTotals(tableDescriptor, fixture, intl)).toMatchSnapshot();
     });
@@ -24,7 +24,7 @@ describe("getRowTotals", () => {
             ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithRowAndColumnAttributes,
             DataViewFirstPage,
         );
-        const tableDescriptor = TableDescriptor.for(dv);
+        const tableDescriptor = TableDescriptor.for(dv, "empty value");
 
         expect(getRowTotals(tableDescriptor, dv, intl)).toBe(null);
     });
@@ -36,7 +36,7 @@ describe("getRow", () => {
             ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithRowAndColumnAttributes,
             DataViewFirstPage,
         );
-        const tableDescriptor = TableDescriptor.for(dv);
+        const tableDescriptor = TableDescriptor.for(dv, "empty value");
         const headerItems = dv.meta().allHeaders();
 
         expect(
@@ -48,7 +48,7 @@ describe("getRow", () => {
             ReferenceRecordings.Scenarios.PivotTable.TwoMeasuresAndMultipleSubtotals,
             DataViewFirstPage,
         );
-        const tableDescriptor = TableDescriptor.for(dv);
+        const tableDescriptor = TableDescriptor.for(dv, "empty value");
         const headerItems = dv.meta().allHeaders();
 
         expect(
