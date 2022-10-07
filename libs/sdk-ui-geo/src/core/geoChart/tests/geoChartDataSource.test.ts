@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import mapboxgl from "mapbox-gl";
 import { createPushpinDataSource, IGeoDataSourceProps } from "../geoChartDataSource";
 import { DataViewFacade, DefaultColorPalette } from "@gooddata/sdk-ui";
@@ -23,7 +23,7 @@ function createProps(complement: Partial<IGeoDataSourceProps>): IGeoDataSourcePr
 describe("createPushpinDataSource", () => {
     it("should return empty data source", () => {
         const emptyDv = DataViewFacade.for(dummyDataView(emptyDef("testWorkspace")));
-        const geoData = getGeoData(emptyDv);
+        const geoData = getGeoData(emptyDv, "empty value", "null value");
 
         const dataSourceProps = createProps({
             hasClustering: true,
