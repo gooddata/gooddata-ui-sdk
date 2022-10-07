@@ -88,7 +88,7 @@ export interface Settings {
      */
     mergeHeaders: boolean;
     /**
-     * Print used filters on top o document.
+     * Print applied filters on top of the document.
      * @type {boolean}
      * @memberof Settings
      */
@@ -134,6 +134,7 @@ export interface TabularExportRequest {
 
 export const TabularExportRequestFormatEnum = {
     CSV: "CSV",
+    XLSX: "XLSX",
 } as const;
 
 export type TabularExportRequestFormatEnum =
