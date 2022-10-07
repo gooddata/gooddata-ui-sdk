@@ -58,6 +58,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enableTheming,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableMetricSqlAndDataExplain,
+            "enableMetricSqlAndDataExplain",
+            "BOOLEAN",
+            FeatureFlagsValues.enableMetricSqlAndDataExplain,
+        ),
     };
 }
 

@@ -22,6 +22,8 @@ describe("static features", () => {
                 [TigerFeaturesNames.EnableMultipleDates]: "ENABLED",
                 [TigerFeaturesNames.EnableKPIDashboardDeleteFilterButton]: "ENABLED",
                 [TigerFeaturesNames.DashboardEditModeDevRollout]: "ENABLED",
+                [TigerFeaturesNames.EnableTheming]: "ENABLED",
+                [TigerFeaturesNames.EnableMetricSqlAndDataExplain]: "ENABLED",
             }),
         );
         expect(results).toEqual({
@@ -30,6 +32,8 @@ describe("static features", () => {
             enableKPIDashboardDeleteFilterButton: true,
             enableMultipleDates: true,
             enableSortingByTotalGroup: true,
+            enableTheming: true,
+            enableMetricSqlAndDataExplain: true,
         });
     });
 
@@ -42,6 +46,8 @@ describe("static features", () => {
                     [TigerFeaturesNames.EnableMultipleDates]: "ENABLED",
                     [TigerFeaturesNames.EnableKPIDashboardDeleteFilterButton]: "ENABLED",
                     [TigerFeaturesNames.DashboardEditModeDevRollout]: "ENABLED",
+                    [TigerFeaturesNames.EnableTheming]: "ENABLED",
+                    [TigerFeaturesNames.EnableMetricSqlAndDataExplain]: "ENABLED",
                 },
                 "beta",
             ),
@@ -52,6 +58,8 @@ describe("static features", () => {
             enableKPIDashboardDeleteFilterButton: true,
             enableMultipleDates: true,
             enableSortingByTotalGroup: true,
+            enableTheming: true,
+            enableMetricSqlAndDataExplain: true,
         });
     });
 });

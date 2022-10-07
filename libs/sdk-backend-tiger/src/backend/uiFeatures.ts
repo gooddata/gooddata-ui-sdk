@@ -18,6 +18,8 @@ export enum TigerFeaturesNames {
     DashboardEditModeDevRollout = "dashboardEditModeDevRollout",
     //boolean + possible values: enabled, disabled
     EnableTheming = "enableTheming",
+    //boolean + possible values: enabled, disabled
+    EnableMetricSqlAndDataExplain = "enableMetricSqlAndDataExplain",
 }
 
 export type ITigerFeatureFlags = {
@@ -27,6 +29,7 @@ export type ITigerFeatureFlags = {
     enableKPIDashboardDeleteFilterButton: typeof FeatureFlagsValues["enableKPIDashboardDeleteFilterButton"][number];
     dashboardEditModeDevRollout: typeof FeatureFlagsValues["dashboardEditModeDevRollout"][number];
     enableTheming: typeof FeatureFlagsValues["enableTheming"][number];
+    enableMetricSqlAndDataExplain: typeof FeatureFlagsValues["enableMetricSqlAndDataExplain"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -37,6 +40,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     // disable edit mode in gdc-dashboards during development
     dashboardEditModeDevRollout: false,
     enableTheming: true,
+    enableMetricSqlAndDataExplain: false,
 };
 
 export const FeatureFlagsValues = {
@@ -50,4 +54,5 @@ export const FeatureFlagsValues = {
     enableKPIDashboardDeleteFilterButton: [true, false] as const,
     dashboardEditModeDevRollout: [true, false] as const,
     enableTheming: [true, false] as const,
+    enableMetricSqlAndDataExplain: [true, false] as const,
 };
