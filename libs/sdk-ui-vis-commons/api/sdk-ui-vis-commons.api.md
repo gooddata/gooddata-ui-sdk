@@ -520,4 +520,7 @@ export class StaticLegend extends React_2.PureComponent<IStaticLegendProps> {
 // @internal (undocumented)
 export const SupportedLegendPositions: PositionType[];
 
+// @internal
+export function valueWithEmptyHandling(value: string | undefined | null, emptyValueText: string): string;
+
 ```

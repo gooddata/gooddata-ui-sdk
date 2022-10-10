@@ -18,6 +18,7 @@ import {
 } from "./tableDescriptorTypes";
 import { ISortItem, sortDirection } from "@gooddata/sdk-model";
 import { attributeSortMatcher, measureSortMatcher } from "./colSortItemMatching";
+import { valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 
 type TransformState = {
     initialSorts: ISortItem[];
@@ -26,7 +27,7 @@ type TransformState = {
     rootColDefs: Array<ColDef | ColGroupDef>;
     leafColDefs: Array<ColDef>;
     allColDefs: Array<ColDef | ColGroupDef>;
-    emptyHeaderName: string;
+    emptyHeaderTitle: string;
 };
 
 function getSortProp(
@@ -75,7 +76,7 @@ function createColumnGroupColDef(col: ScopeCol, state: TransformState): ColDef |
         const colDef: ColDef = {
             type: COLUMN_ATTRIBUTE_COLUMN,
             colId: col.id,
-            headerName: col.header.attributeHeaderItem.name || state.emptyHeaderName, // TODO RAIL-4360 distinguish between empty and null
+            headerName: valueWithEmptyHandling(col.header.attributeHeaderItem.name, state.emptyHeaderTitle),
         };
 
         state.allColDefs.push(colDef);
@@ -85,7 +86,7 @@ function createColumnGroupColDef(col: ScopeCol, state: TransformState): ColDef |
     } else {
         const colGroup: ColGroupDef = {
             groupId: col.id,
-            headerName: col.header.attributeHeaderItem.name || state.emptyHeaderName, // TODO RAIL-4360 distinguish between empty and null
+            headerName: valueWithEmptyHandling(col.header.attributeHeaderItem.name, state.emptyHeaderTitle),
             children,
         };
 
@@ -168,12 +169,12 @@ function createAndAddDataColDefs(table: TableCols, state: TransformState) {
  *
  * @param table - table col descriptors
  * @param initialSorts - initial table sorting definition
- * @param emptyHeaderName - what to show for empty headers
+ * @param emptyHeaderTitle - what to show for title of headers with empty title
  */
 export function createColDefsFromTableDescriptor(
     table: TableCols,
     initialSorts: ISortItem[],
-    emptyHeaderName: string,
+    emptyHeaderTitle: string,
 ): TableColDefs {
     const state: TransformState = {
         initialSorts,
@@ -182,7 +183,7 @@ export function createColDefsFromTableDescriptor(
         allColDefs: [],
         leafColDefs: [],
         rowColDefs: [],
-        emptyHeaderName,
+        emptyHeaderTitle,
     };
 
     createAndAddSliceColDefs(table.sliceCols, state);
