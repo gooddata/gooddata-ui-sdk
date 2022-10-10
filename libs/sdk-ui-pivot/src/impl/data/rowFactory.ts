@@ -2,6 +2,7 @@
 import { IntlShape } from "react-intl";
 
 import { DataViewFacade, IMappingHeader } from "@gooddata/sdk-ui";
+import { valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 import { ROW_SUBTOTAL, ROW_TOTAL } from "../base/constants";
 import { DataValue, IResultHeader, isResultAttributeHeader, isResultTotalHeader } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
@@ -53,9 +54,10 @@ function getCell(
     if (isResultAttributeHeader(rowHeaderDataItem)) {
         return {
             ...cell,
-            value:
-                rowHeaderDataItem.attributeHeaderItem.name ||
-                `(${intl.formatMessage({ id: "visualization.emptyValue" })})`, // TODO RAIL-4360 distinguish between empty and null
+            value: valueWithEmptyHandling(
+                rowHeaderDataItem.attributeHeaderItem.name,
+                `(${intl.formatMessage({ id: "visualization.emptyValue" })})`,
+            ),
         };
     }
 

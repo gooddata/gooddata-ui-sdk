@@ -2,7 +2,7 @@
 import { ISeriesItemConfig } from "../../typings/unsafe";
 import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
 import { IMeasureGroupDescriptor } from "@gooddata/sdk-model";
-import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
+import { IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 import { parseValue, unwrap } from "../_util/common";
 import last from "lodash/last";
 
@@ -16,7 +16,7 @@ export function getBubbleChartSeries(
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     stackByAttribute: any,
     colorStrategy: IColorStrategy,
-    emptyHeaderName: string,
+    emptyHeaderTitle: string,
 ): ISeriesItemConfig[] {
     const primaryMeasuresBucketEmpty = dv.def().isBucketEmpty(BucketNames.MEASURES);
     const secondaryMeasuresBucketEmpty = dv.def().isBucketEmpty(BucketNames.SECONDARY_MEASURES);
@@ -46,7 +46,10 @@ export function getBubbleChartSeries(
             ];
             return {
                 name: stackByAttribute
-                    ? stackByAttribute.items[index].attributeHeaderItem.name || emptyHeaderName // TODO RAIL-4360 distinguish between empty and null
+                    ? valueWithEmptyHandling(
+                          stackByAttribute.items[index].attributeHeaderItem.name,
+                          emptyHeaderTitle,
+                      )
                     : "",
                 color: colorStrategy.getColorByIndex(legendIndex),
                 legendIndex: legendIndex++,

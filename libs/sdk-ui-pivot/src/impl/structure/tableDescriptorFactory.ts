@@ -295,18 +295,18 @@ function createTableHeaders(dv: DataViewFacade): TableCols {
  * This function is not intended for stand-alone usage. It used during construction of TableDescriptor.
  *
  * @param dv - data view facade
- * @param emptyHeaderName - what to show for empty headers
+ * @param emptyHeaderTitle - what to show for title of headers with empty title
  * @internal
  */
 export function createHeadersAndColDefs(
     dv: DataViewFacade,
-    emptyHeaderName: string,
+    emptyHeaderTitle: string,
 ): { headers: TableCols; colDefs: TableColDefs } {
     const headers = createTableHeaders(dv);
     const colDefs = createColDefsFromTableDescriptor(
         headers,
         dv.meta().effectiveSortItems(),
-        emptyHeaderName,
+        emptyHeaderTitle,
     );
 
     return { headers, colDefs };
