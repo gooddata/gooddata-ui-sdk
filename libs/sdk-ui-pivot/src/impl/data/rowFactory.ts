@@ -1,7 +1,7 @@
 // (C) 2007-2022 GoodData Corporation
 import { IntlShape } from "react-intl";
 
-import { DataViewFacade, IMappingHeader } from "@gooddata/sdk-ui";
+import { DataViewFacade, emptyHeaderTitleFromIntl, IMappingHeader } from "@gooddata/sdk-ui";
 import { valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 import { ROW_SUBTOTAL, ROW_TOTAL } from "../base/constants";
 import { DataValue, IResultHeader, isResultAttributeHeader, isResultTotalHeader } from "@gooddata/sdk-model";
@@ -54,7 +54,7 @@ function getCell(
             ...cell,
             value: valueWithEmptyHandling(
                 rowHeaderDataItem.attributeHeaderItem.name,
-                `(${intl.formatMessage({ id: "visualization.emptyValue" })})`,
+                emptyHeaderTitleFromIntl(intl),
             ),
         };
     } else if (isResultTotalHeader(rowHeaderDataItem)) {

@@ -374,6 +374,9 @@ export class DynamicScriptLoadSdkError extends GoodDataSdkError {
     constructor(message?: string, cause?: Error);
 }
 
+// @internal
+export function emptyHeaderTitleFromIntl(intl: IntlShape): string;
+
 // @public
 export const ErrorCodes: {
     BAD_REQUEST: string;
