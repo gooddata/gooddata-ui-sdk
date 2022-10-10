@@ -36,14 +36,12 @@ function getCell(
     rowHeader: SliceCol,
     rowHeaderIndex: number,
     intl: IntlShape,
-):
-    | {
-          field: string;
-          value: string | null;
-          rowHeaderDataItem: IResultHeader;
-          isSubtotal: boolean;
-      }
-    | undefined {
+): {
+    field: string;
+    value: string | null;
+    rowHeaderDataItem: IResultHeader;
+    isSubtotal: boolean;
+} {
     const rowHeaderDataItem = rowHeaderData[rowHeaderIndex][rowIndex];
     const cell = {
         field: rowHeader.id,
@@ -59,9 +57,7 @@ function getCell(
                 `(${intl.formatMessage({ id: "visualization.emptyValue" })})`,
             ),
         };
-    }
-
-    if (isResultTotalHeader(rowHeaderDataItem)) {
+    } else if (isResultTotalHeader(rowHeaderDataItem)) {
         const totalName = rowHeaderDataItem.totalHeaderItem.name;
         return {
             ...cell,
@@ -71,12 +67,9 @@ function getCell(
                     ? intl.formatMessage(messages[totalName])
                     : null,
         };
+    } else {
+        invariant(false, "row header is not of type IResultAttributeHeaderItem or IResultTotalHeaderItem");
     }
-
-    invariant(
-        rowHeaderDataItem,
-        "row header is not of type IResultAttributeHeaderItem or IResultTotalHeaderItem",
-    );
 }
 
 export function getRow(
@@ -98,7 +91,7 @@ export function getRow(
             rowHeader,
             rowHeaderIndex,
             intl,
-        )!;
+        );
         if (isSubtotal) {
             row.type = ROW_SUBTOTAL;
 
