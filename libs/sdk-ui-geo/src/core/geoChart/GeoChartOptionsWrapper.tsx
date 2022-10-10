@@ -30,7 +30,7 @@ export class GeoChartOptionsWrapper extends React.Component<IGeoChartInnerProps>
     constructor(props: IGeoChartInnerProps) {
         super(props);
         this.emptyHeaderString = props.intl.formatMessage({ id: "visualization.emptyValue" });
-        this.nullHeaderString = props.intl.formatMessage({ id: "visualization.emptyValue" }); // TODO RAIL-4360 replace by proper null header string id when available
+        this.nullHeaderString = props.intl.formatMessage({ id: "visualization.emptyValue" }); // TODO: RAIL-4360 replace by proper null header string id when available
         this.errorMap = newErrorMapping(props.intl);
     }
 
