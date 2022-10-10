@@ -71,7 +71,7 @@ export const DEFAULT_LEGEND_CONFIG: {
     position: PositionType;
 };
 
-// @public
+// @public @deprecated
 export function fixEmptyHeaderItems(dataView: IDataView, emptyHeaderString: string): void;
 
 // @internal (undocumented)
