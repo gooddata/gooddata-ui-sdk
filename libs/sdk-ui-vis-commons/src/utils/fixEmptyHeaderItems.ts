@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { IDataView } from "@gooddata/sdk-backend-spi";
 
 /**
@@ -7,6 +7,7 @@ import { IDataView } from "@gooddata/sdk-backend-spi";
  *
  * @param dataView - view to mutate
  * @param emptyHeaderString - value to use for empty strings
+ * @deprecated try to avoid using this function and handle empty headers when displaying them
  * @public
  */
 export function fixEmptyHeaderItems(dataView: IDataView, emptyHeaderString: string): void {
