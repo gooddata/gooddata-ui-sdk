@@ -173,6 +173,11 @@ export interface IBackendCapabilities {
     supportsInlineMeasures?: boolean;
 
     /**
+     * Indicates whether backend supports bootstrap resource that returns initial app data.
+     */
+    supportsBootstrapResource?: boolean;
+
+    /**
      * Catchall for additional capabilities
      */
     [key: string]: undefined | boolean | number | string;

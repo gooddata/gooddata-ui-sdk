@@ -1,4 +1,8 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
+
+import partial from "lodash/partial";
+import last from "lodash/last";
+
 import { IClientWorkspaceIdentifiers } from "./interfaces";
 
 /**
@@ -18,19 +22,15 @@ import { IClientWorkspaceIdentifiers } from "./interfaces";
 export async function resolveLCMWorkspaceIdentifiers(
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     backend: any,
-    clientWorkspace: IClientWorkspaceIdentifiers,
+    { client, dataProduct, workspace }: IClientWorkspaceIdentifiers,
 ): Promise<IClientWorkspaceIdentifiers> {
-    const bootstrapResource = await getBootstrapResource(backend, {
-        clientId: clientWorkspace.client,
-        productId: clientWorkspace.dataProduct,
-        projectId: clientWorkspace.workspace,
-    });
+    const projectLcmIdentifiers = await getProjectLcmIdentifiers(backend, workspace, dataProduct, client);
 
-    if (!bootstrapResource) {
+    if (!projectLcmIdentifiers) {
         return {};
     }
 
-    return getLCMWorkspaceIdentifiersFromBootstrapResource(bootstrapResource);
+    return getLCMWorkspaceIdentifiersFromProjectLcmIdentifiers(projectLcmIdentifiers);
 }
 
 function emptyPromise() {
@@ -45,46 +45,58 @@ function unwrapDecoratedBackend(backend: any): any {
     return backend;
 }
 
-type AuthApiCall = (call: (client: any) => Promise<any>) => any;
+type AuthApiCall = (
+    call: (client: any, principal: { getPrincipal: () => Promise<any> }) => Promise<any>,
+) => any;
 
 function getBackendAuthApiCallPrivateMethod(backend: any): AuthApiCall {
     return backend.authApiCall ?? emptyPromise;
 }
 
-function getBearClientBootstrapResourceMethod(client: any): GetBootstrapResource {
-    const method = client?.user?.getBootstrapResource.bind(client?.user);
-
-    return method ?? emptyPromise;
+async function extractDomainIdFromPrincipal(getPrincipal: () => Promise<any>) {
+    const principal = await getPrincipal();
+    const domainLink: string = principal.userMeta?.links?.domain ?? "";
+    return last(domainLink.split("/")) ?? null;
 }
 
-type BootstrapResourceOptions = {
-    projectId?: string;
-    productId?: string;
-    clientId?: string;
-};
-type GetBootstrapResource = (options: BootstrapResourceOptions) => Promise<any>;
+async function getBearClientProjectLcmIdentifiersMethod(
+    client: any,
+    getPrincipal: () => Promise<any>,
+): Promise<GetProjectLcmIdentifiers> {
+    const method = client?.project?.getProjectLcmIdentifiers.bind(client?.project);
+    const domainId = getPrincipal ? await extractDomainIdFromPrincipal(getPrincipal) : null;
+    const methodWithSetDomain: GetProjectLcmIdentifiers = partial(method, domainId);
 
-async function getBootstrapResource(backend: any, options: BootstrapResourceOptions): Promise<any> {
+    return methodWithSetDomain ?? emptyPromise;
+}
+
+type GetProjectLcmIdentifiers = (projectId?: string, productId?: string, clientId?: string) => Promise<any>;
+
+async function getProjectLcmIdentifiers(
+    backend: any,
+    projectId?: string,
+    productId?: string,
+    clientId?: string,
+): Promise<any> {
     const unwrappedBackend = unwrapDecoratedBackend(backend);
     const authApiCall = getBackendAuthApiCallPrivateMethod(unwrappedBackend);
 
-    return authApiCall(async (client) => {
-        const getBootstrapResource = getBearClientBootstrapResourceMethod(client);
+    return authApiCall(async (client, { getPrincipal }) => {
+        const getProjectLcmIdentifiers = await getBearClientProjectLcmIdentifiersMethod(client, getPrincipal);
 
-        return getBootstrapResource(options);
+        return getProjectLcmIdentifiers(projectId, productId, clientId);
     });
 }
 
-function getLCMWorkspaceIdentifiersFromBootstrapResource(
-    bootstrapResource: any,
+function getLCMWorkspaceIdentifiersFromProjectLcmIdentifiers(
+    projectLcmResponse: any,
 ): IClientWorkspaceIdentifiers {
     const {
         clientId: client,
         dataProductId: dataProduct,
         segmentId: segment,
-    } = bootstrapResource?.bootstrapResource.current.projectLcm ?? {};
-
-    const workspace = bootstrapResource?.bootstrapResource?.current?.project?.links?.self?.split?.("/").pop();
+        projectId: workspace,
+    } = projectLcmResponse?.projectLcm ?? {};
 
     return {
         dataProduct,

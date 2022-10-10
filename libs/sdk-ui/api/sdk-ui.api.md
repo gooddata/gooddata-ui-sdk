@@ -1585,7 +1585,7 @@ export const removeAllWordingTranslationsWithSpecialSuffix: (translations: Recor
 export const ResolvedClientWorkspaceProvider: React_2.FC<IClientWorkspaceIdentifiers>;
 
 // @alpha
-export function resolveLCMWorkspaceIdentifiers(backend: any, clientWorkspace: IClientWorkspaceIdentifiers): Promise<IClientWorkspaceIdentifiers>;
+export function resolveLCMWorkspaceIdentifiers(backend: any, { client, dataProduct, workspace }: IClientWorkspaceIdentifiers): Promise<IClientWorkspaceIdentifiers>;
 
 // @internal
 export const resolveLocale: (locale: unknown) => ILocale;

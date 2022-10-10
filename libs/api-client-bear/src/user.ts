@@ -2,7 +2,7 @@
 import qs from "qs";
 import { XhrModule, ApiResponse } from "./xhr";
 import { ProjectModule } from "./project";
-import { GdcUser } from "@gooddata/api-model-bear";
+import { GdcUser, GdcOrganization } from "@gooddata/api-model-bear";
 import { parseSettingItemValue } from "./util";
 import { IFeatureFlags } from "./interfaces";
 
@@ -107,12 +107,8 @@ export class UserModule {
     public async logout(): Promise<ApiResponse | void> {
         const isLoggedIn = await this.isLoggedIn();
         if (isLoggedIn) {
-            const { bootstrapResource } = await this.xhr.getParsed<GdcUser.IBootstrapResource>(
-                "/gdc/app/account/bootstrap",
-            );
-            const userUri = bootstrapResource.accountSetting.links!.self!;
-            const userId = userUri.match(/([^/]+)\/?$/)![1];
-            return this.xhr.del(`/gdc/account/login/${userId}`);
+            const { logoutUri } = await this.getAccountInfo();
+            return this.xhr.del(logoutUri);
         }
     }
 
@@ -149,7 +145,6 @@ export class UserModule {
      */
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     public updateProfileSettings(profileId: string, profileSetting: any): Promise<ApiResponse> {
-        // TODO
         return this.xhr.put(`/gdc/account/profile/${profileId}/settings`, {
             body: profileSetting,
         });
@@ -158,26 +153,11 @@ export class UserModule {
     /**
      * Returns info about currently logged in user from bootstrap resource
      */
-    public async getAccountInfo(): Promise<{
-        login: string;
-        loginMD5: string;
-        firstName: string;
-        lastName: string;
-        organizationName: string;
-        profileUri: string;
-    }> {
-        const { bootstrapResource } = await this.xhr.getParsed<GdcUser.IBootstrapResource>(
-            "/gdc/app/account/bootstrap",
+    public async getAccountInfo(): Promise<GdcUser.IAccountInfo> {
+        const { accountInfo } = await this.xhr.getParsed<GdcUser.IAccountInfoResponse>(
+            "/gdc/app/account/bootstrap/account",
         );
-
-        return {
-            login: bootstrapResource.accountSetting.login!,
-            loginMD5: bootstrapResource.current!.loginMD5!,
-            firstName: bootstrapResource.accountSetting.firstName,
-            lastName: bootstrapResource.accountSetting.lastName,
-            organizationName: bootstrapResource.settings!.organizationName,
-            profileUri: bootstrapResource.accountSetting.links!.self!,
-        };
+        return accountInfo;
     }
 
     /**
@@ -221,27 +201,35 @@ export class UserModule {
      * Returns the feature flags valid for the currently logged in user.
      */
     public async getFeatureFlags(): Promise<GdcUser.IFeatureFlags> {
-        const { bootstrapResource } = await this.xhr.getParsed<GdcUser.IBootstrapResource>(
-            "/gdc/app/account/bootstrap",
+        const { featureFlags } = await this.xhr.getParsed<GdcUser.IUserFeatureFlags>(
+            "/gdc/app/account/bootstrap/featureFlags",
         );
+        return featureFlags;
+    }
 
-        return bootstrapResource.current!.featureFlags!;
+    public async getCurrentOrganization(): Promise<GdcOrganization.IOrganization> {
+        return this.xhr.getParsed<GdcOrganization.IOrganization>("/gdc/app/organization/current");
     }
 
     /**
      * Returns bootstrap resource for the currently logged in user.
      */
     public getBootstrapResource(
-        options: { projectId?: string; productId?: string; clientId?: string } = {},
+        options: {
+            projectId?: string;
+            productId?: string;
+            clientId?: string;
+            loadAnalyticalDashboards?: boolean;
+        } = {},
     ): Promise<GdcUser.IBootstrapResource> {
-        const { projectId, productId, clientId } = options;
-        let uri = "/gdc/app/account/bootstrap";
+        const { projectId, productId, clientId, loadAnalyticalDashboards = true } = options;
+        let uri = `/gdc/app/account/bootstrap?loadAnalyticalDashboards=${loadAnalyticalDashboards}`;
 
         if (projectId) {
-            uri = `${uri}?projectUri=/gdc/projects/${projectId}`;
+            uri = `${uri}&projectUri=/gdc/projects/${projectId}`;
         } else if (productId && clientId) {
             // projectId can be replaced by combination of productId + clientId
-            uri = `${uri}?projectUri=/gdc/projects/client:${productId}:${clientId}`;
+            uri = `${uri}&projectUri=/gdc/projects/client:${productId}:${clientId}`;
         }
 
         return this.xhr.getParsed<GdcUser.IBootstrapResource>(uri);

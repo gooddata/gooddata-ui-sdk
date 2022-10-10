@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
 import noop from "lodash/noop";
@@ -210,16 +210,10 @@ describe("project", () => {
 
         describe("getCurrentProjectId", () => {
             it("should resolve with project id", () => {
-                fetchMock.mock("/gdc/app/account/bootstrap", {
+                fetchMock.mock("/gdc/app/account/bootstrap/projectId", {
                     status: 200,
                     body: JSON.stringify({
-                        bootstrapResource: {
-                            current: {
-                                project: {
-                                    links: { self: "/gdc/project/project_hash" },
-                                },
-                            },
-                        },
+                        projectId: "project_hash",
                     }),
                 });
 
@@ -231,9 +225,11 @@ describe("project", () => {
             });
 
             it("should resolve with null if current project not set", () => {
-                fetchMock.mock("/gdc/app/account/bootstrap", {
+                fetchMock.mock("/gdc/app/account/bootstrap/projectId", {
                     status: 200,
-                    body: JSON.stringify({ bootstrapResource: { current: { project: null } } }),
+                    body: JSON.stringify({
+                        projectId: null,
+                    }),
                 });
 
                 return createProject()
@@ -245,24 +241,17 @@ describe("project", () => {
         });
 
         describe("getTimezone", () => {
-            it("should return timezone using bootstrap", () => {
-                const bootstrapUrl = "/gdc/app/account/bootstrap?projectId=prjId";
+            it("should return timezone using its own api", () => {
+                const timezoneApiUrl = "/gdc/app/projects/prjId/timezone";
                 const timezoneMock = {
                     id: "Europe/Prague",
                     displayName: "Central European Time",
                     currentOffsetMs: 3600000,
                 };
-                const bootstrap = {
-                    bootstrapResource: {
-                        current: {
-                            timezone: timezoneMock,
-                        },
-                    },
-                };
 
-                fetchMock.mock(bootstrapUrl, {
+                fetchMock.mock(timezoneApiUrl, {
                     status: 200,
-                    body: JSON.stringify(bootstrap),
+                    body: JSON.stringify({ timezone: timezoneMock }),
                 });
 
                 return createProject()

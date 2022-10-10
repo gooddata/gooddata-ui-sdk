@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { BooleanAsString, Timestamp, Email, Uri, TimeIso8601, DateString } from "../aliases";
 import { GdcMetadata } from "../meta/GdcMetadata";
 
@@ -205,6 +205,10 @@ export namespace GdcUser {
         [key: string]: number | boolean | string;
     }
 
+    export interface IUserFeatureFlags {
+        featureFlags: IFeatureFlags;
+    }
+
     export interface IProjectPermissions {
         permissions: {
             [permission in ProjectPermission]?: BooleanAsString;
@@ -213,6 +217,10 @@ export namespace GdcUser {
             project: Uri;
             user: Uri;
         };
+    }
+
+    export interface IAssociatedProjectPermissions {
+        associatedPermissions: IProjectPermissions;
     }
 
     export interface IProject {
@@ -479,5 +487,19 @@ export namespace GdcUser {
             permissions?: Uri;
             projectRelUri?: Uri;
         };
+    }
+
+    export interface IAccountInfoResponse {
+        accountInfo: IAccountInfo;
+    }
+
+    export interface IAccountInfo {
+        login: string;
+        loginMD5: string;
+        firstName: string;
+        lastName: string;
+        organizationName: string;
+        profileUri: string;
+        logoutUri: string;
     }
 }

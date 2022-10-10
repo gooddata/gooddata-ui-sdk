@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 /**
  * This package provides TypeScript definitions for the types of the REST API requests and responses on the GoodData platform.
  * It also provides functions that operate on those objects directly.
@@ -35,6 +35,7 @@ export { GdcPaging } from "./base/GdcPaging";
 export { GdcReport } from "./report/GdcReport";
 export { GdcUserGroup } from "./userGroup/GdcUserGroup";
 export { GdcAccessControl } from "./accessControl/GdcAccessControl";
+export { GdcOrganization } from "./organization/GdcOrganization";
 export {
     BooleanAsString,
     DateString,

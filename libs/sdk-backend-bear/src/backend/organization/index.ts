@@ -9,7 +9,6 @@ import {
     NotSupported,
 } from "@gooddata/sdk-backend-spi";
 import { IOrganizationDescriptor } from "@gooddata/sdk-model";
-import invariant from "ts-invariant";
 
 import { SecuritySettingsService } from "./securitySettings";
 import { BearAuthenticatedCallGuard } from "../../types/auth";
@@ -56,21 +55,9 @@ export class BearOrganizations implements IOrganizations {
     constructor(private readonly authCall: BearAuthenticatedCallGuard) {}
 
     public async getCurrentOrganization(): Promise<IOrganization> {
-        const bootstrap = await this.authCall((sdk) => sdk.user.getBootstrapResource());
-        const organizationId = this.getDomainIdFromDomainUri(
-            bootstrap.bootstrapResource.accountSetting.links?.domain,
-        );
-        return new BearOrganization(
-            this.authCall,
-            organizationId,
-            bootstrap.bootstrapResource.settings?.organizationName,
-        );
-    }
-
-    private getDomainIdFromDomainUri(domainUri: string | undefined): string {
-        invariant(domainUri, "Current user has no domain uri");
-
-        const lastIndexOfSlash = domainUri.lastIndexOf("/");
-        return domainUri.substr(lastIndexOfSlash + 1);
+        const {
+            organization: { id, name },
+        } = await this.authCall((sdk) => sdk.organization.getCurrentOrganization());
+        return new BearOrganization(this.authCall, id, name);
     }
 }

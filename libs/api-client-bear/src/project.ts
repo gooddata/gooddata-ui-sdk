@@ -1,9 +1,11 @@
 // (C) 2007-2022 GoodData Corporation
+import invariant from "ts-invariant";
+import { GdcProject, GdcUser, GdcUserGroup, GdcAccessControl } from "@gooddata/api-model-bear";
+
 import { getAllPagesByOffsetLimit, getQueryEntries, handlePolling, parseSettingItemValue } from "./util";
 import { IColor, IColorPalette, IFeatureFlags, ITimezone } from "./interfaces";
 import { IFeatureFlagsResponse, IStyleSettingsResponse } from "./apiResponsesInterfaces";
 import { ApiError, ApiResponse, XhrModule } from "./xhr";
-import { GdcProject, GdcUser, GdcUserGroup, GdcAccessControl } from "@gooddata/api-model-bear";
 import { stringify } from "./utils/queryString";
 
 export const DEFAULT_PALETTE = [
@@ -50,6 +52,29 @@ export interface IProjectConfigResponse {
     };
 }
 
+interface IProjectLcmEntityResponse {
+    projectUri: string;
+    projectId: string;
+    projectTitle: string;
+    clientId: string;
+    segmentId: string;
+    dataProductId: string;
+    domainId: string;
+}
+
+interface IClientResponse {
+    client: {
+        id: string;
+        segment: string;
+        project: string;
+        links: {
+            self: string;
+            domain: string;
+            dataProduct: string;
+        };
+    };
+}
+
 /**
  * Functions for working with projects
  *
@@ -64,17 +89,8 @@ export class ProjectModule {
      */
     public getCurrentProjectId(): Promise<string> {
         return this.xhr
-            .get("/gdc/app/account/bootstrap")
-            .then((r) => r.getData())
-            .then((result: any) => {
-                const currentProject = result.bootstrapResource.current.project;
-                // handle situation in which current project is missing (e.g. new user)
-                if (!currentProject) {
-                    return null;
-                }
-
-                return result.bootstrapResource.current.project.links.self.split("/").pop();
-            });
+            .getParsed<GdcProject.IProjectId>("/gdc/app/account/bootstrap/projectId")
+            .then((response) => response.projectId);
     }
 
     /**
@@ -106,6 +122,7 @@ export class ProjectModule {
      * @param userId - id of the user to get the projects for
      * @param offset - number of items to skip
      * @param limit - maximum items on page
+     * @param search - search string that is matched to project title as a substring
      */
     public getProjectsWithPaging(
         userId: string,
@@ -246,14 +263,8 @@ export class ProjectModule {
      * @param projectId - GD project identifier
      */
     public getTimezone(projectId: string): Promise<ITimezone> {
-        const bootstrapUrl = `/gdc/app/account/bootstrap?projectId=${projectId}`;
-
-        return this.xhr
-            .get(bootstrapUrl)
-            .then((r) => r.getData())
-            .then((result: any) => {
-                return result.bootstrapResource.current.timezone;
-            });
+        const uri = `/gdc/app/projects/${projectId}/timezone`;
+        return this.xhr.getParsed<GdcProject.ITimezone>(uri).then((result) => result.timezone);
     }
 
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -546,5 +557,78 @@ export class ProjectModule {
         return this.xhr
             .post(`${objectUri}/grantees/remove`, { body: { ...removeGranteesRequest } })
             .catch(this.handleGranteesChangeError);
+    }
+
+    /**
+     * Get permissions for the workspace and user
+     * @param workspaceId - ID of the workspace
+     * @param userId - ID of the user
+     */
+    public getPermissions(
+        workspaceId: string,
+        userId: string,
+    ): Promise<GdcUser.IAssociatedProjectPermissions> {
+        return this.xhr.getParsed<GdcUser.IAssociatedProjectPermissions>(
+            `/gdc/projects/${workspaceId}/users/${userId}/permissions`,
+        );
+    }
+
+    /**
+     * Resolves LCM workspace identifiers. This function will use the data product and client information
+     * and consult the backend in order to obtain identifier of workspace contains analytics for that
+     * data product & client combination.
+     *
+     * Domain parameter is required. Then either project ID or product ID and client ID pair must be provided.
+     *
+     * @param domainId - ID of the domain, must be provided
+     * @param projectId - ID of the project. LCM identifiers will be fetched via project ID if the
+     *  ID is provided.
+     * @param productId - ID of the product. LCM identifiers will be provided by product ID and client ID
+     *  pair, if project ID is not provided.
+     * @param clientId - ID of the client. LCM identifiers will be provided by product ID and client ID pair,
+     *  if project ID is not provided.
+     *
+     * @returns Resolves with project LCM identifiers.
+     */
+    public getProjectLcmIdentifiers(
+        domainId: string,
+        projectId?: string,
+        productId?: string,
+        clientId?: string,
+    ): Promise<GdcProject.IProjectLcmIdentifiers> {
+        invariant(domainId, "domain ID must be specified");
+
+        if (projectId) {
+            return this.xhr
+                .getParsed<IProjectLcmEntityResponse>(`/gdc/projects/${projectId}/lcmEntity`)
+                .then(({ projectUri, clientId, dataProductId, segmentId }) => ({
+                    projectLcm: {
+                        projectId: this.extractIdFromUri(projectUri),
+                        clientId,
+                        dataProductId,
+                        segmentId,
+                    },
+                }));
+        }
+
+        invariant(productId, "product ID must be specified when project ID is not provided");
+        invariant(clientId, "client ID must be specified when project ID is not provided");
+
+        return this.xhr
+            .getParsed<IClientResponse>(
+                `/gdc/domains/${domainId}/dataproducts/${productId}/clients/${clientId}`,
+            )
+            .then(({ client: { id, project, segment, links } }) => ({
+                projectLcm: {
+                    projectId: this.extractIdFromUri(project),
+                    clientId: id,
+                    dataProductId: this.extractIdFromUri(links?.dataProduct),
+                    segmentId: this.extractIdFromUri(segment),
+                },
+            }));
+    }
+
+    private extractIdFromUri(uri?: string) {
+        return uri?.split("/").pop();
     }
 }

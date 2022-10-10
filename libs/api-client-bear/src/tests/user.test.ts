@@ -185,15 +185,11 @@ describe("user", () => {
 
                 fetchMock.mock("/gdc/account/token", 200);
 
-                fetchMock.mock("/gdc/app/account/bootstrap", {
+                fetchMock.mock("/gdc/app/account/bootstrap/account", {
                     status: 200,
                     body: JSON.stringify({
-                        bootstrapResource: {
-                            accountSetting: {
-                                links: {
-                                    self: `/gdc/account/profile/${userId}`,
-                                },
-                            },
+                        accountInfo: {
+                            logoutUri: `/gdc/account/login/${userId}`,
                         },
                     }),
                 });
@@ -258,24 +254,16 @@ describe("user", () => {
                 const organizationName = "ORG_NAME";
                 const profileUri = "PROFILE_URI";
 
-                fetchMock.mock("/gdc/app/account/bootstrap", {
+                fetchMock.mock("/gdc/app/account/bootstrap/account", {
                     status: 200,
                     body: JSON.stringify({
-                        bootstrapResource: {
-                            accountSetting: {
-                                login,
-                                firstName,
-                                lastName,
-                                links: {
-                                    self: profileUri,
-                                },
-                            },
-                            current: {
-                                loginMD5,
-                            },
-                            settings: {
-                                organizationName,
-                            },
+                        accountInfo: {
+                            login,
+                            firstName,
+                            lastName,
+                            profileUri,
+                            loginMD5,
+                            organizationName,
                         },
                     }),
                 });
