@@ -5,7 +5,12 @@ import invariant from "ts-invariant";
 import React from "react";
 import { ContentRect } from "react-measure";
 
-import { convertDrillableItemsToPredicates, OnFiredDrillEvent, ExplicitDrill } from "@gooddata/sdk-ui";
+import {
+    convertDrillableItemsToPredicates,
+    OnFiredDrillEvent,
+    ExplicitDrill,
+    emptyHeaderTitleFromIntl,
+} from "@gooddata/sdk-ui";
 import { IChartConfig, OnLegendReady } from "../interfaces";
 import { getChartOptions } from "./chartTypes/_chartOptions/chartOptionsBuilder";
 import { getHighchartsOptions } from "./chartTypes/_chartCreators/highChartsCreators";
@@ -87,7 +92,7 @@ const ChartTransformationImpl = (props: IChartTransformationProps) => {
         dataView,
         config,
         drillablePredicates,
-        `(${intl.formatMessage({ id: "visualization.emptyValue" })})`,
+        emptyHeaderTitleFromIntl(intl),
         theme,
     );
     const legendOptions: ILegendOptions = buildLegendOptions(config.legend, chartOptions);

@@ -4,6 +4,7 @@ import { IDataView, IExecutionResult, IPreparedExecution } from "@gooddata/sdk-b
 import {
     createExportFunction,
     DataViewFacade,
+    emptyHeaderTitleFromIntl,
     IAvailableDrillTargets,
     IExportFunction,
 } from "@gooddata/sdk-ui";
@@ -134,10 +135,7 @@ export class TableFacade {
         this.currentResult = result;
         this.visibleData = DataViewFacade.for(dataView);
         this.currentFingerprint = defFingerprint(this.currentResult.definition);
-        this.tableDescriptor = TableDescriptor.for(
-            this.visibleData,
-            `(${props.intl.formatMessage({ id: "visualization.emptyValue" })})`,
-        );
+        this.tableDescriptor = TableDescriptor.for(this.visibleData, emptyHeaderTitleFromIntl(props.intl));
 
         this.autoResizedColumns = {};
         this.growToFittedColumns = {};

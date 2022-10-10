@@ -2,6 +2,7 @@
 import React from "react";
 import { injectIntl, WrappedComponentProps, IntlShape } from "react-intl";
 import { messages } from "../../locales";
+import { emptyHeaderTitleFromIntl } from "./intlUtils";
 
 /**
  * @internal
@@ -37,15 +38,10 @@ export class TranslationsProvider extends React.PureComponent<ITranslationsProvi
     public render() {
         const props: ITranslationsComponentProps = {
             numericSymbols: getNumericSymbols(this.props.intl),
-            emptyHeaderString: this.getEmptyHeaderString(),
+            emptyHeaderString: emptyHeaderTitleFromIntl(this.props.intl),
             intl: this.props.intl,
         };
         return this.props.children(props);
-    }
-
-    private getEmptyHeaderString() {
-        const emptyValueTranslation = this.props.intl.formatMessage({ id: "visualization.emptyValue" });
-        return `(${emptyValueTranslation})`;
     }
 }
 

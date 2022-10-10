@@ -176,8 +176,7 @@ export {
     ITranslationsProviderOwnProps,
     ITranslationsProviderProps,
 } from "./localization/TranslationsProvider";
-// FIXME: temp build fix
-export { createIntlMock, withIntl, resolveLocale } from "./localization/intlUtils";
+export { createIntlMock, withIntl, resolveLocale, emptyHeaderTitleFromIntl } from "./localization/intlUtils";
 export {
     ITranslationsCustomizationContextProviderProps,
     TranslationsCustomizationContextProvider,
