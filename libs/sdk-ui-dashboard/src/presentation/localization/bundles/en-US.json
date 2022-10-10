@@ -1719,11 +1719,6 @@
         "comment": "Use '…' as one character, not 3 dots ('...').",
         "limit": 0
     },
-    "visualization.emptyValue": {
-        "value": "empty value",
-        "comment": "",
-        "limit": 0
-    },
     "gs.date.date-dataset.recommended": {
         "value": "Recommended",
         "comment": "",
