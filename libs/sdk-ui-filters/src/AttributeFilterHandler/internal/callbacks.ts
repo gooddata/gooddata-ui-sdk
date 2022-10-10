@@ -3,7 +3,7 @@ import {
     actions,
     selectInvertableCommittedSelection,
     selectInvertableWorkingSelection,
-    AttributeFilterHanderEventListener,
+    AttributeFilterHandlerEventListener,
 } from "./redux";
 import {
     Callback,
@@ -112,7 +112,7 @@ export const newAttributeFilterCallbacks = () => {
     const { registerCallback, registrations, unsubscribeAll } =
         newCallbackRegistrationsWithGlobalUnsubscribe();
 
-    const eventListener: AttributeFilterHanderEventListener = (action, select) => {
+    const eventListener: AttributeFilterHandlerEventListener = (action, select) => {
         // Init
         if (actions.initStart.match(action)) {
             registrations.initStart.invoke(action.payload);
