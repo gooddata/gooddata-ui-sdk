@@ -9,7 +9,7 @@ import { AttributeFilterState } from "./state";
  *
  * @internal
  */
-export type AttributeFilterHanderEventListener = (
+export type AttributeFilterHandlerEventListener = (
     action: Action,
     selectFromNextState: <T>(selector: (state: AttributeFilterState) => T) => T,
 ) => void;
@@ -38,5 +38,5 @@ export interface AttributeFilterHandlerStoreContext {
     attributeFilter: IAttributeFilter;
     hiddenElements?: string[];
     staticElements?: IAttributeElement[];
-    eventListener: AttributeFilterHanderEventListener;
+    eventListener: AttributeFilterHandlerEventListener;
 }

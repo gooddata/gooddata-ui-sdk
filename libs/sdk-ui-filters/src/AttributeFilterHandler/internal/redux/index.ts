@@ -1,7 +1,7 @@
 // (C) 2022 GoodData Corporation
 export {
     AttributeFilterHandlerStore,
-    AttributeFilterHanderEventListener,
+    AttributeFilterHandlerEventListener,
     AttributeFilterHandlerStoreContext,
 } from "./store/types";
 export { createAttributeFilterHandlerStore } from "./store/createStore";
