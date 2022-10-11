@@ -13,7 +13,6 @@ export const AttributeFilterDropdownBody: React.FC<IAttributeFilterDropdownBodyP
     const { onApplyButtonClick, onCancelButtonClick, width = DEFAULT_DROPDOWN_BODY_WIDTH } = props;
 
     const { DropdownActionsComponent, ElementsSelectComponent } = useAttributeFilterComponentsContext();
-
     const isMobile = useMediaQuery("mobileDevice");
 
     const {
@@ -34,13 +33,14 @@ export const AttributeFilterDropdownBody: React.FC<IAttributeFilterDropdownBodyP
         workingSelectionElements,
         parentFilterAttributes,
         isFilteredByParentFilters,
+        fullscreenOnMobile,
     } = useAttributeFilterContext();
 
     const parentFilterTitles = useMemo(() => {
         return parentFilterAttributes.map((attr) => attr.title);
     }, [parentFilterAttributes]);
 
-    const usedWidth = !isMobile ? width : "100%";
+    const usedWidth = !(isMobile && fullscreenOnMobile) ? width : "100%";
     const style = { width: usedWidth };
 
     return (
