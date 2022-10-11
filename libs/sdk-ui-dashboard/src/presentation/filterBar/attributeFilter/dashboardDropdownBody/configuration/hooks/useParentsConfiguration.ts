@@ -1,83 +1,31 @@
 // (C) 2022 GoodData Corporation
-import {
-    areObjRefsEqual,
-    IDashboardAttributeFilter,
-    IDashboardAttributeFilterParent,
-    ObjRef,
-} from "@gooddata/sdk-model";
+import { IDashboardAttributeFilter, IDashboardAttributeFilterParent, ObjRef } from "@gooddata/sdk-model";
 import { useState, useMemo, useCallback } from "react";
 import invariant from "ts-invariant";
+import isEqual from "lodash/isEqual";
 import {
     setAttributeFilterParents,
-    useDashboardSelector,
     useDispatchDashboardCommand,
-    selectCatalogAttributes,
     IDashboardAttributeFilterParentItem,
 } from "../../../../../../model";
+import { useOriginalConfigurationState } from "./useOriginalConfigurationState";
 
 export function useParentsConfiguration(
     neighborFilters: IDashboardAttributeFilter[],
     currentFilter: IDashboardAttributeFilter,
 ) {
     const { filterElementsBy, localIdentifier: currentFilterLocalId } = currentFilter.attributeFilter;
-    const catalogAttributes = useDashboardSelector(selectCatalogAttributes);
+
+    invariant(
+        currentFilterLocalId,
+        "Cannot initialize the attribute filter configuration panel, filter has missing 'localIdentifier' property",
+    );
 
     const saveParentFilterCommand = useDispatchDashboardCommand(setAttributeFilterParents);
 
-    const originalParentFilterSelection = useMemo<Map<string, boolean>>(() => {
-        const originalSelection = new Map<string, boolean>();
+    const originalState = useOriginalConfigurationState(neighborFilters, filterElementsBy);
 
-        neighborFilters.forEach((neighborFilter) => {
-            const neighborFilterLocalId = neighborFilter.attributeFilter.localIdentifier;
-            invariant(
-                neighborFilterLocalId,
-                "Cannot initialize the attribute filter configuration panel, neighbor filter has missing 'localIdentifier' property",
-            );
-
-            const isSelected =
-                filterElementsBy?.some((by) => by.filterLocalIdentifier === neighborFilterLocalId) || false;
-
-            originalSelection.set(neighborFilterLocalId, isSelected);
-        });
-
-        return originalSelection;
-    }, [filterElementsBy, neighborFilters]);
-
-    const [parents, setParents] = useState<IDashboardAttributeFilterParentItem[]>(() => {
-        return neighborFilters.map((neighborFilter) => {
-            const neighborFilterLocalId = neighborFilter.attributeFilter.localIdentifier;
-            const neighborFilterDisplayForm = neighborFilter.attributeFilter.displayForm;
-
-            const isSelected =
-                filterElementsBy?.some((by) => by.filterLocalIdentifier === neighborFilterLocalId) || false;
-
-            const overAttributes = filterElementsBy?.find(
-                (by) => by.filterLocalIdentifier === neighborFilterLocalId,
-            )?.over.attributes;
-
-            const neighborFilterMetaData = catalogAttributes.find((md) =>
-                md.displayForms.some((df) => areObjRefsEqual(df.ref, neighborFilterDisplayForm)),
-            );
-
-            invariant(
-                currentFilterLocalId,
-                "Cannot initialize the attribute filter configuration panel, current filter has missing 'localIdentifier' property.",
-            );
-            invariant(
-                neighborFilterLocalId,
-                "Cannot initialize the attribute filter configuration panel, neighbor filter has missing 'localIdentifier' property.",
-            );
-            invariant(neighborFilterMetaData, "Cannot load metadata for the neighbor filter attribute.");
-
-            return {
-                localIdentifier: neighborFilterLocalId,
-                title: neighborFilterMetaData.attribute.title,
-                isSelected,
-                overAttributes: overAttributes,
-                selectedConnectingAttribute: overAttributes?.[0],
-            };
-        });
-    });
+    const [parents, setParents] = useState<IDashboardAttributeFilterParentItem[]>(originalState);
 
     function onParentSelect(localIdentifier: string, isSelected: boolean, overAttributes: ObjRef[]) {
         const changedParentIndex = parents.findIndex((parent) => parent.localIdentifier === localIdentifier);
@@ -88,6 +36,11 @@ export function useParentsConfiguration(
 
         if (isSelected) {
             changedItem.selectedConnectingAttribute = overAttributes[0];
+        } else {
+            // set connecting attributes to undefined to properly check for
+            // state updates
+            changedItem.selectedConnectingAttribute = undefined;
+            changedItem.overAttributes = undefined;
         }
 
         const changedParentItems = [...parents];
@@ -108,22 +61,13 @@ export function useParentsConfiguration(
         setParents(changedParentItems);
     }
 
-    const parentsConfigChanged = useMemo<boolean>(() => {
-        return parents.some(
-            (parentItem) =>
-                parentItem.isSelected !== originalParentFilterSelection.get(parentItem.localIdentifier),
-        );
-    }, [parents, originalParentFilterSelection]);
-
-    const connectingAttributeChanged = useMemo<boolean>(() => {
-        return parents.some(
-            (parentItem) => !areObjRefsEqual(parentItem.selectedConnectingAttribute, undefined),
-        );
-    }, [parents]);
+    const configurationChanged = useMemo<boolean>(() => {
+        return !isEqual(parents, originalState);
+    }, [parents, originalState]);
 
     const onParentFiltersChange = useCallback(() => {
         // dispatch the command only if the configuration changed
-        if (parentsConfigChanged || connectingAttributeChanged) {
+        if (configurationChanged) {
             const parentFilters: IDashboardAttributeFilterParent[] = [];
             parents.forEach((parentItem) => {
                 if (parentItem.isSelected && parentItem.overAttributes?.length) {
@@ -139,14 +83,18 @@ export function useParentsConfiguration(
             });
             saveParentFilterCommand(currentFilter.attributeFilter.localIdentifier!, parentFilters);
         }
-    }, [parents, connectingAttributeChanged, currentFilter, parentsConfigChanged, saveParentFilterCommand]);
+    }, [parents, configurationChanged, currentFilter, saveParentFilterCommand]);
+
+    const onConfigurationClose = useCallback(() => {
+        setParents(originalState);
+    }, [originalState]);
 
     return {
         parents,
-        parentsConfigChanged,
-        connectingAttributeChanged,
+        configurationChanged,
         onParentSelect,
         onConnectingAttributeChanged,
         onParentFiltersChange,
+        onConfigurationClose,
     };
 }
