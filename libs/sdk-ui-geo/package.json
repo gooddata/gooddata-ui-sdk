@@ -113,7 +113,7 @@
         "eslint-plugin-react-hooks": "^4.5.0",
         "eslint-plugin-react": "^7.31.10",
         "eslint-plugin-regexp": "^1.7.0",
-        "eslint-plugin-sonarjs": "^0.14.0",
+        "eslint-plugin-sonarjs": "^0.16.0",
         "eslint-plugin-tsdoc": "^0.2.14",
         "jest": "^27.5.1",
         "jest-enzyme": "^7.1.2",
