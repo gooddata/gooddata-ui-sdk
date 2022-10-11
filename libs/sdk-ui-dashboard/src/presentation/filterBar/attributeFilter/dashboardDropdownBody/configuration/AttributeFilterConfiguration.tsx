@@ -17,6 +17,7 @@ import { useAttributeFilterParentFiltering } from "../../AttributeFilterParentFi
 import { useConnectingAttributes } from "./hooks/useConnectingAttributes";
 import { LoadingSpinner } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
+import { useAttributes } from "./hooks/useAttributes";
 
 interface IAttributeFilterConfigurationProps {
     closeHandler: () => void;
@@ -67,7 +68,9 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
         neighborFilterDisplayForms,
     );
 
-    if (connectingAttributesLoading) {
+    const { attributes, attributesLoading } = useAttributes(neighborFilterDisplayForms);
+
+    if (connectingAttributesLoading || attributesLoading) {
         return (
             <div className="gd-loading-equalizer-attribute-filter-config-wrap">
                 <LoadingSpinner
@@ -78,7 +81,7 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
         );
     }
 
-    if (!filterRef || !connectingAttributes) {
+    if (!filterRef || !connectingAttributes || !attributes) {
         return null;
     }
 
@@ -92,6 +95,7 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
                 setParents={onParentSelect}
                 onConnectingAttributeChanged={onConnectingAttributeChanged}
                 connectingAttributes={connectingAttributes}
+                attributes={attributes}
             />
             {showDisplayFormPicker && (
                 <div className="s-display-form-configuration">
