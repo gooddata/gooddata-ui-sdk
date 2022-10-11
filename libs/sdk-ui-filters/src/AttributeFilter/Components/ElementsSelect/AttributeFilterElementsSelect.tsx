@@ -63,6 +63,11 @@ export const AttributeFilterElementsSelect: React.FC<IAttributeFilterElementsSel
         return Math.max((Math.min(previousItemsCount, VISIBLE_ITEMS_COUNT) || 1) * itemHeight, 20) + 32;
     }, [previousItemsCount, itemHeight]);
 
+    const previousItemsCount = usePrevious(totalItemsCountWithCurrentSettings);
+    const loadingHeight = useMemo(() => {
+        return Math.max((Math.min(previousItemsCount, VISIBLE_ITEMS_COUNT) || 1) * itemHeight, 20) + 32;
+    }, [previousItemsCount, itemHeight]);
+
     return (
         <>
             <InvertableSelect<IAttributeElement>
