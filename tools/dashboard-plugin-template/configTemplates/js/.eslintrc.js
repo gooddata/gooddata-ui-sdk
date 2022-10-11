@@ -4,4 +4,5 @@ module.exports = {
     plugins: ["react-hooks", "prettier"],
     extends: ["plugin:react/recommended", "plugin:import/errors"],
     parserOptions: { tsconfigRootDir: __dirname },
+    ignorePatterns: ["webpack.config.js", "jest.setup.js", "scripts/refresh-md.js"],
 };

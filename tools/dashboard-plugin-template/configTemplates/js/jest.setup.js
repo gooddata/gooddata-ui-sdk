@@ -1,5 +1,4 @@
 // (C) 2019 GoodData Corporation
-/* eslint-disable @typescript-eslint/no-var-requires */
 import "jest-enzyme";
 import * as raf from "raf";
 
