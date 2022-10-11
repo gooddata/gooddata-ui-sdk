@@ -32,14 +32,14 @@ describe("createTableDescriptor", () => {
     ];
 
     it.each(Scenarios)("correctly populates fullIndexPaths for %s", (_desc, dv) => {
-        const descriptor = createHeadersAndColDefs(dv);
+        const descriptor = createHeadersAndColDefs(dv, "empty value");
         const fullIndexPaths = descriptor.headers.leafDataCols.map((col) => col.fullIndexPathToHere);
 
         expect(fullIndexPaths).toMatchSnapshot();
     });
 
     it.each(Scenarios)("correctly creates colDefs for %s", (_desc, dv) => {
-        const descriptor = createHeadersAndColDefs(dv);
+        const descriptor = createHeadersAndColDefs(dv, "empty value");
         const allCols: Array<ColDef | ColGroupDef> = [];
 
         allCols.push(...descriptor.colDefs.sliceColDefs);

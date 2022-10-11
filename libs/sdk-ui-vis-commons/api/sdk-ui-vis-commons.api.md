@@ -71,7 +71,7 @@ export const DEFAULT_LEGEND_CONFIG: {
     position: PositionType;
 };
 
-// @public
+// @public @deprecated
 export function fixEmptyHeaderItems(dataView: IDataView, emptyHeaderString: string): void;
 
 // @internal (undocumented)
@@ -519,5 +519,8 @@ export class StaticLegend extends React_2.PureComponent<IStaticLegendProps> {
 
 // @internal (undocumented)
 export const SupportedLegendPositions: PositionType[];
+
+// @internal
+export function valueWithEmptyHandling(value: string | undefined | null, emptyValueText: string): string;
 
 ```

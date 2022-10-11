@@ -15,7 +15,7 @@ import {
 import { findAttributeInDimension, findMeasureGroupInDimensions } from "../_util/executionResultHelper";
 import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess";
 
-import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
+import { IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 
 import {
     isAreaChart,
@@ -80,30 +80,44 @@ function getCategories(
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
-) {
+    emptyHeaderTitle: string,
+): any[] {
+    // We need an explicit any[] return type otherwise the code down the line no longer type checks, no time to fix all of it now
     if (isHeatmap(type)) {
         return [
-            viewByAttribute ? viewByAttribute.items.map((item: any) => item.attributeHeaderItem.name) : [""],
+            viewByAttribute
+                ? viewByAttribute.items.map((item) =>
+                      valueWithEmptyHandling(item.attributeHeaderItem.name, emptyHeaderTitle),
+                  )
+                : [""],
             stackByAttribute
-                ? stackByAttribute.items.map((item: any) => item.attributeHeaderItem.name)
+                ? stackByAttribute.items.map((item) =>
+                      valueWithEmptyHandling(item.attributeHeaderItem.name, emptyHeaderTitle),
+                  )
                 : [""],
         ];
     }
     if (isScatterPlot(type)) {
         return stackByAttribute
-            ? stackByAttribute.items.map((item: any) => item.attributeHeaderItem.name)
+            ? stackByAttribute.items.map((item) =>
+                  valueWithEmptyHandling(item.attributeHeaderItem.name, emptyHeaderTitle),
+              )
             : [""];
     }
 
     // Categories make up bar/slice labels in charts. These usually match view by attribute values.
     // Measure only pie or treemap charts get categories from measure names
     if (viewByAttribute) {
-        return viewByAttribute.items.map(({ attributeHeaderItem }: any) => attributeHeaderItem.name);
+        return viewByAttribute.items.map((item) =>
+            valueWithEmptyHandling(item.attributeHeaderItem.name, emptyHeaderTitle),
+        );
     }
 
     if (isOneOfTypes(type, multiMeasuresAlternatingTypes)) {
         // Pie or Treemap chart with measures only (no viewByAttribute) needs to list
-        return measureGroup.items.map((wrappedMeasure: IMeasureDescriptor) => unwrap(wrappedMeasure).name);
+        return measureGroup.items.map((wrappedMeasure) =>
+            valueWithEmptyHandling(unwrap(wrappedMeasure).name, emptyHeaderTitle),
+        );
         // Pie chart categories are later sorted by seriesItem pointValue
     }
     return [];
@@ -324,6 +338,7 @@ export function getChartOptions(
     dataView: IDataView,
     chartConfig: IChartConfig,
     drillableItems: IHeaderPredicate[],
+    emptyHeaderTitle: string,
     theme?: ITheme,
 ): IChartOptions {
     const dv = DataViewFacade.for(dataView);
@@ -368,6 +383,7 @@ export function getChartOptions(
         stackByAttribute,
         type,
         colorStrategy,
+        emptyHeaderTitle,
         theme,
     );
 
@@ -383,8 +399,8 @@ export function getChartOptions(
     const series = assignYAxes(drillableSeries, yAxes);
 
     let categories = viewByParentAttribute
-        ? getCategoriesForTwoAttributes(viewByAttribute, viewByParentAttribute)
-        : getCategories(type, measureGroup, viewByAttribute, stackByAttribute);
+        ? getCategoriesForTwoAttributes(viewByAttribute, viewByParentAttribute, emptyHeaderTitle)
+        : getCategories(type, measureGroup, viewByAttribute, stackByAttribute, emptyHeaderTitle);
 
     // When custom sorting is enabled and is Pie|Donut chart, need to skip this, so the sort specified by the user does not get override.
     if ((isPieOrDonutChart(type) && !config.enableChartSorting) || isFunnel(type)) {
@@ -507,7 +523,12 @@ export function getChartOptions(
                 categories,
             },
             actions: {
-                tooltip: generateTooltipHeatmapFn(viewByAttribute, stackByAttribute, config),
+                tooltip: generateTooltipHeatmapFn(
+                    viewByAttribute,
+                    stackByAttribute,
+                    emptyHeaderTitle,
+                    config,
+                ),
             },
             grid: {
                 enabled: false,
@@ -592,6 +613,7 @@ export function getChartOptions(
         viewByParentAttribute,
         stackByAttribute,
         measure,
+        emptyHeaderTitle,
         config,
         isDualAxis,
     );

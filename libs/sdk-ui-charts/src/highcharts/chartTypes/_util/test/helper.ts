@@ -28,7 +28,7 @@ export function generateChartOptions(
     },
     drillableItems: IHeaderPredicate[] = [],
 ): IChartOptions {
-    return getChartOptions(dv.dataView, config, drillableItems);
+    return getChartOptions(dv.dataView, config, drillableItems, "empty value");
 }
 
 export interface IMVS {

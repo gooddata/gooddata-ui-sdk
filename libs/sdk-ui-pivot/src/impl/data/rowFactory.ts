@@ -1,7 +1,8 @@
 // (C) 2007-2022 GoodData Corporation
 import { IntlShape } from "react-intl";
 
-import { DataViewFacade, IMappingHeader } from "@gooddata/sdk-ui";
+import { DataViewFacade, emptyHeaderTitleFromIntl, IMappingHeader } from "@gooddata/sdk-ui";
+import { valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 import { ROW_SUBTOTAL, ROW_TOTAL } from "../base/constants";
 import { DataValue, IResultHeader, isResultAttributeHeader, isResultTotalHeader } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
@@ -35,14 +36,12 @@ function getCell(
     rowHeader: SliceCol,
     rowHeaderIndex: number,
     intl: IntlShape,
-):
-    | {
-          field: string;
-          value: string | null;
-          rowHeaderDataItem: IResultHeader;
-          isSubtotal: boolean;
-      }
-    | undefined {
+): {
+    field: string;
+    value: string | null;
+    rowHeaderDataItem: IResultHeader;
+    isSubtotal: boolean;
+} {
     const rowHeaderDataItem = rowHeaderData[rowHeaderIndex][rowIndex];
     const cell = {
         field: rowHeader.id,
@@ -53,11 +52,12 @@ function getCell(
     if (isResultAttributeHeader(rowHeaderDataItem)) {
         return {
             ...cell,
-            value: rowHeaderDataItem.attributeHeaderItem.name,
+            value: valueWithEmptyHandling(
+                rowHeaderDataItem.attributeHeaderItem.name,
+                emptyHeaderTitleFromIntl(intl),
+            ),
         };
-    }
-
-    if (isResultTotalHeader(rowHeaderDataItem)) {
+    } else if (isResultTotalHeader(rowHeaderDataItem)) {
         const totalName = rowHeaderDataItem.totalHeaderItem.name;
         return {
             ...cell,
@@ -67,12 +67,9 @@ function getCell(
                     ? intl.formatMessage(messages[totalName])
                     : null,
         };
+    } else {
+        invariant(false, "row header is not of type IResultAttributeHeaderItem or IResultTotalHeaderItem");
     }
-
-    invariant(
-        rowHeaderDataItem,
-        "row header is not of type IResultAttributeHeaderItem or IResultTotalHeaderItem",
-    );
 }
 
 export function getRow(
@@ -94,7 +91,7 @@ export function getRow(
             rowHeader,
             rowHeaderIndex,
             intl,
-        )!;
+        );
         if (isSubtotal) {
             row.type = ROW_SUBTOTAL;
 
