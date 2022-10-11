@@ -156,6 +156,7 @@ export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilter
                 parentFilters={parentFilters}
                 parentFilterOverAttribute={parentFilterOverAttribute}
                 locale={locale}
+                fullscreenOnMobile={true}
                 DropdownButtonComponent={CustomDropdownButton}
                 DropdownActionsComponent={CustomDropdownActions}
                 ElementsSelectComponent={CustomElementsSelect}
