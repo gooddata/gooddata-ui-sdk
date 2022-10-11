@@ -67,7 +67,7 @@ export const AttributeFilterElementsSelect: React.FC<IAttributeFilterElementsSel
             <InvertableSelect<IAttributeElement>
                 className="gd-attribute-filter-elements-select__next"
                 adaptiveWidth
-                adaptiveHeight={isMobile}
+                adaptiveHeight={isMobile && fullscreenOnMobile}
                 items={items}
                 totalItemsCount={totalItemsCountWithCurrentSettings}
                 itemHeight={itemHeight}
