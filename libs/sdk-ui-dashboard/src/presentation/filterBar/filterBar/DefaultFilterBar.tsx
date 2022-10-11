@@ -11,6 +11,7 @@ import {
     selectEffectiveDateFilterTitle,
     selectFilterContextFilters,
     selectIsExport,
+    selectSupportsElementUris,
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../model";
@@ -28,16 +29,26 @@ import {
     useFiltersWithAddedPlaceholder,
 } from "./useFiltersWithAddedPlaceholder";
 import { HiddenFilterBar } from "./HiddenFilterBar";
+import {
+    convertDashboardAttributeFilterElementsUrisToValues,
+    convertDashboardAttributeFilterElementsValuesToUris,
+} from "../../../_staging/dashboard/legacyFilterConvertors";
 
 /**
  * @alpha
  */
 export const useFilterBarProps = (): IFilterBarProps => {
     const filters = useDashboardSelector(selectFilterContextFilters);
+    const supportElementUris = useDashboardSelector(selectSupportsElementUris);
+
     const dispatch = useDashboardDispatch();
     const onAttributeFilterChanged = useCallback(
         (filter: IDashboardAttributeFilter) => {
-            const { attributeElements, negativeSelection, localIdentifier } = filter.attributeFilter;
+            const convertedFilter = supportElementUris
+                ? filter
+                : convertDashboardAttributeFilterElementsValuesToUris(filter);
+            const { attributeElements, negativeSelection, localIdentifier } = convertedFilter.attributeFilter;
+
             dispatch(
                 changeAttributeFilterSelection(
                     localIdentifier!,
@@ -46,7 +57,7 @@ export const useFilterBarProps = (): IFilterBarProps => {
                 ),
             );
         },
-        [dispatch],
+        [dispatch, supportElementUris],
     );
 
     const onDateFilterChanged = useCallback(
@@ -83,6 +94,7 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
     const isExport = useDashboardSelector(selectIsExport);
     const { AttributeFilterComponentSet, DashboardDateFilterComponentProvider } =
         useDashboardComponentsContext();
+    const supportElementUris = useDashboardSelector(selectSupportsElementUris);
 
     if (isExport) {
         return <HiddenFilterBar {...props} />;
@@ -131,8 +143,11 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                     );
                 } else {
                     const { filter, filterIndex } = filterOrPlaceholder;
+                    const convertedFilter = supportElementUris
+                        ? filter
+                        : convertDashboardAttributeFilterElementsUrisToValues(filter);
                     const CustomAttributeFilterComponent =
-                        AttributeFilterComponentSet.MainComponentProvider(filter);
+                        AttributeFilterComponentSet.MainComponentProvider(convertedFilter);
 
                     return (
                         <DraggableAttributeFilter
