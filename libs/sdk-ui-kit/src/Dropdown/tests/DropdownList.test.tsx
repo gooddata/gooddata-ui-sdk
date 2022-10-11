@@ -16,7 +16,7 @@ const mockItems = Array.from(Array(10)).map((_, i): string => `${i}`);
 
 const testIfItemListIsRendered = (mockItems: string[]) => {
     expect(screen.getByRole("list")).toBeInTheDocument();
-    mockItems.every((item) => expect(screen.getByText(item)));
+    mockItems.every((item) => expect(screen.getByText(item)).toBeInTheDocument());
 };
 
 const renderDropdownList = (props: Partial<IDropdownListMockProps> = {}) => {
