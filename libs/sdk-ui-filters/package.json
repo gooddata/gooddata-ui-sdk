@@ -72,7 +72,6 @@
         "date-fns": "^2.22.1",
         "downshift": "^3.4.7",
         "fixed-data-table-2": "^1.2.0",
-        "intersection-observer": "^0.12.2",
         "json-stable-stringify": "^1.0.1",
         "lodash": "^4.17.19",
         "moment": "^2.29.4",
