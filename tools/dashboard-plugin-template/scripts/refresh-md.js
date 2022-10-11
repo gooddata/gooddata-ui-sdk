@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 // (C) 2022 GoodData Corporation
-/* eslint-disable @typescript-eslint/no-var-requires */
 
 const dotenv = require("dotenv");
 const path = require("path");
