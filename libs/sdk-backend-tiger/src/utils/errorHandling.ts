@@ -76,10 +76,11 @@ function createContractExpiredError(error: Error): ContractExpired | undefined {
     if (
         !axiosErrorResponse ||
         axiosErrorResponse.status !== 403 ||
-        !axiosErrorResponse.data?.detail?.includes("Contract expired")
+        (!axiosErrorResponse.data?.detail?.includes("Contract expired") &&
+            !axiosErrorResponse.data?.detail?.includes("Reason: EXPIRED"))
     ) {
         return;
     }
 
-    return new ContractExpired(axiosErrorResponse.data.tier, error);
+    return new ContractExpired(axiosErrorResponse.data.tier || "unspecified", error);
 }
