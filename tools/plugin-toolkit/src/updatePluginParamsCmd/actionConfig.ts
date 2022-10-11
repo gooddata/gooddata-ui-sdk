@@ -135,9 +135,7 @@ export async function getUpdatePluginParamsCmdConfig(
     const parameters = await promptPluginParameters(originalParameters);
 
     if (isEmpty(parameters.trim())) {
-        logError(
-            "You did not specify any parameters. If you do not want to use plugin parameterization, remove the --with-parameters option.",
-        );
+        logError("You did not specify any parameters to be updated on the plugin.");
 
         process.exit(1);
     } else {
