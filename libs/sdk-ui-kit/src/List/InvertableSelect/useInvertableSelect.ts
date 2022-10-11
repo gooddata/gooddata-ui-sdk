@@ -67,38 +67,42 @@ export function useInvertableSelect<T>(props: IUseInvertableSelectProps<T>) {
     );
 
     const selectionState: SelectionStatusType = useMemo(() => {
-        // Negative filter with no selection
-        if (isInverted && isSelectionEmpty) {
-            return "all";
-        }
+        if (!isSearch) {
+            // Negative filter with no selection
+            if (isInverted && isSelectionEmpty) {
+                return "all";
+            }
 
-        // Positive filter with all items selected
-        if (!isInverted && loadedSelectedItems.length === totalItemsCount) {
-            return "all";
-        }
+            // Positive filter with all items selected
+            if (!isInverted && loadedSelectedItems.length === totalItemsCount) {
+                return "all";
+            }
 
-        // Positive filter with no selection
-        if (!isInverted && isSelectionEmpty) {
-            return "none";
-        }
+            // Positive filter with no selection
+            if (!isInverted && isSelectionEmpty) {
+                return "none";
+            }
 
-        // Negative filter with all items selected
-        if (isInverted && loadedUnselectedItems.length === totalItemsCount) {
-            return "none";
-        }
+            // Negative filter with all items selected
+            if (isInverted && loadedUnselectedItems.length === totalItemsCount) {
+                return "none";
+            }
+        } else {
+            if (isInverted && itemsInSelection.length === 0) {
+                return "all";
+            }
 
-        // Search with all visible items selected
-        if (isSearch && loadedSelectedItems.length === totalItemsCount) {
-            return "all";
-        }
+            if (!isInverted && itemsInSelection.length === totalItemsCount) {
+                return "all";
+            }
 
-        if (isSearch && loadedSelectedItems.length === 0) {
-            return "none";
-        }
+            if (isInverted && itemsInSelection.length === totalItemsCount) {
+                return "none";
+            }
 
-        // Search with no visible items selected
-        if (isSearch && loadedUnselectedItems.length === totalItemsCount) {
-            return "none";
+            if (!isInverted && itemsInSelection.length === 0) {
+                return "none";
+            }
         }
 
         return "partial";
