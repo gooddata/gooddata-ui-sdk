@@ -15,6 +15,14 @@ module.exports = {
     rules: {
         "no-warning-comments": "error",
         "import/no-unassigned-import": "off",
+        "react/no-unknown-property": [
+            "error",
+            {
+                ignore: [
+                    "jsx", // this is for styled-jsx
+                ],
+            },
+        ],
     },
     parserOptions: { tsconfigRootDir: __dirname },
 };

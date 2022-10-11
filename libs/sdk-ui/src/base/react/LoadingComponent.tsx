@@ -83,7 +83,7 @@ export class LoadingComponent extends React.Component<ILoadingProps> {
         return (
             <div className={className} style={wrapperStyles}>
                 <svg style={svgStyles} version="1.1" x="0px" y="0px" viewBox="0 0 36 8">
-                    <style scoped={true}>{`
+                    <style>{`
                         @keyframes GDC-pop {
                             0%,
                             80%,
