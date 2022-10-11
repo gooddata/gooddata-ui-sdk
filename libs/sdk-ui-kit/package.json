@@ -146,7 +146,7 @@
         "eslint-plugin-regexp": "^1.9.0",
         "eslint-plugin-sonarjs": "^0.16.0",
         "eslint-plugin-tsdoc": "^0.2.14",
-        "eslint": "^8.3.0",
+        "eslint": "^8.25.0",
         "jest": "^27.5.1",
         "jest-enzyme": "^7.1.2",
         "jest-junit": "^3.0.0",

@@ -69,7 +69,7 @@
         "@typescript-eslint/eslint-plugin": "^5.5.0",
         "@typescript-eslint/parser": "^5.5.0",
         "dependency-cruiser": "^10.1.1",
-        "eslint": "^8.3.0",
+        "eslint": "^8.25.0",
         "eslint-plugin-header": "^3.0.0",
         "eslint-plugin-import": "^2.22.0",
         "eslint-plugin-jest": "^27.1.1",

@@ -100,7 +100,7 @@
         "dotenv-webpack": "^7.0.2",
         "dotenv": "^10.0.0",
         "enzyme": "^3.10.0",
-        "eslint": "^8.3.0",
+        "eslint": "^8.25.0",
         "eslint-plugin-header": "^3.0.0",
         "eslint-plugin-import": "^2.22.0",
         "eslint-plugin-jest": "^27.1.1",
