@@ -1,11 +1,12 @@
 // (C) 2022 GoodData Corporation
-import React from "react";
+import React, { useMemo } from "react";
 import { IDashboardAttributeFilter } from "@gooddata/sdk-model";
 import classNames from "classnames";
-import { useDashboardSelector, selectIsInEditMode } from "../../../model";
+import { useDashboardSelector, selectIsInEditMode, selectSupportsElementUris } from "../../../model";
 import { AttributeFilterDropZoneHint } from "./AttributeFilterDropZoneHint";
 import { CustomDashboardAttributeFilterComponent } from "../../filterBar/types";
 import { useDashboardDrag } from "../useDashboardDrag";
+import { convertDashboardAttributeFilterElementsUrisToValues } from "../../../_staging/dashboard/legacyFilterConvertors";
 
 type DraggableAttributeFilterProps = {
     filter: IDashboardAttributeFilter;
@@ -35,6 +36,13 @@ export function DraggableAttributeFilter({
         [filter, filterIndex, isInEditMode],
     );
     const showDropZones = isInEditMode && !isDragging;
+    const supportElementUris = useDashboardSelector(selectSupportsElementUris);
+    const filterToUse = useMemo(() => {
+        if (supportElementUris) {
+            return filter;
+        }
+        return convertDashboardAttributeFilterElementsUrisToValues(filter);
+    }, [filter, supportElementUris]);
 
     return (
         <div className="draggable-attribute-filter">
@@ -53,7 +61,7 @@ export function DraggableAttributeFilter({
                 ref={dragRef}
             >
                 <FilterComponent
-                    filter={filter}
+                    filter={filterToUse}
                     onFilterChanged={onAttributeFilterChanged}
                     isDraggable={isInEditMode}
                 />
