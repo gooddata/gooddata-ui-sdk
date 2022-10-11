@@ -502,13 +502,11 @@ export interface IAttributeFilterDropdownActionsProps {
 // @alpha (undocumented)
 export interface IAttributeFilterDropdownBodyProps {
     // (undocumented)
-    height?: React.CSSProperties["height"];
-    // (undocumented)
     onApplyButtonClick: () => void;
     // (undocumented)
     onCancelButtonClick: () => void;
     // (undocumented)
-    width?: React.CSSProperties["width"];
+    width?: number;
 }
 
 // @alpha (undocumented)
