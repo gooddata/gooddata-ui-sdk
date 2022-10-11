@@ -14,13 +14,12 @@ export interface QueryAttributeByDisplayForm extends IDashboardQuery {
 }
 
 /**
- * Creates action through which you can query connecting attributes for the information about
- * possibility of parent-child attribute filter relationship.
+ * Creates action through which you can query attributes for given display forms
  *
- * @param refs - references of the attributes
+ * @param displayForms - attribute display forms
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
- * @returns connecting attributes for given array of references
+ * @returns attribute metadata for given display forms
  *
  * @internal
  */
