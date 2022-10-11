@@ -759,10 +759,6 @@
       "allowedCategories": [ "tools" ]
     },
     {
-      "name": "intersection-observer",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "intl-messageformat-parser",
       "allowedCategories": [ "tools" ]
     },
