@@ -46,7 +46,7 @@ async function loadAttributeByDisplayForm(
         return attribute.attribute;
     }
 
-    return await backend.workspace(workspace).attributes().getAttributeByDisplayForm(displayForm);
+    return backend.workspace(workspace).attributes().getAttributeByDisplayForm(displayForm);
 }
 
 async function loadAttributes(
@@ -54,9 +54,7 @@ async function loadAttributes(
     catalogAttributes: ICatalogAttribute[],
     displayForms: ObjRef[],
 ) {
-    return await Promise.all(
-        displayForms.map((df) => loadAttributeByDisplayForm(ctx, catalogAttributes, df)),
-    );
+    return Promise.all(displayForms.map((df) => loadAttributeByDisplayForm(ctx, catalogAttributes, df)));
 }
 
 function* queryService(
