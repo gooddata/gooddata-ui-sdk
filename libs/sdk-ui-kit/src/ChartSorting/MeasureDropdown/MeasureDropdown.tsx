@@ -60,13 +60,15 @@ const getItems = (
     if (measures) {
         measures.forEach((measure) => {
             const measureLocator = measure.locators.find(isMeasureLocator);
-            const bucket = measureNames[measureLocator.measureLocatorItem.measureIdentifier];
-            measureValues.push({
-                id: measureLocator.measureLocatorItem.measureIdentifier,
-                title: bucket?.name,
-                sequenceNumber: bucket?.sequenceNumber,
-                localIdentifier: measureLocator.measureLocatorItem.measureIdentifier,
-            });
+            const bucketItem = measureNames[measureLocator.measureLocatorItem.measureIdentifier];
+            if (bucketItem) {
+                measureValues.push({
+                    id: measureLocator.measureLocatorItem.measureIdentifier,
+                    title: bucketItem?.name,
+                    sequenceNumber: bucketItem?.sequenceNumber,
+                    localIdentifier: measureLocator.measureLocatorItem.measureIdentifier,
+                });
+            }
         });
     }
 
