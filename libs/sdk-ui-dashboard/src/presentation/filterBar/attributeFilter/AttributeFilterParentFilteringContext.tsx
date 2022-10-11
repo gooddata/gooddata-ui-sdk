@@ -57,11 +57,11 @@ export const AttributeFilterParentFilteringProvider: React.FC<
 
     const {
         parents,
+        configurationChanged,
         onParentSelect,
-        parentsConfigChanged,
         onConnectingAttributeChanged,
-        connectingAttributeChanged,
         onParentFiltersChange,
+        onConfigurationClose,
     } = useParentsConfiguration(neighborFilters, currentFilter);
 
     const { onDisplayFormSelect, filterDisplayForms, displayFormChanged, onDisplayFormChange } =
@@ -79,16 +79,16 @@ export const AttributeFilterParentFilteringProvider: React.FC<
             value={{
                 parents,
                 onParentSelect,
-                parentsConfigChanged,
                 onConnectingAttributeChanged,
-                connectingAttributeChanged,
                 onParentFiltersChange,
                 onDisplayFormSelect,
                 filterDisplayForms,
                 displayFormChanged,
                 onDisplayFormChange,
                 onConfigurationSave,
+                onConfigurationClose,
                 showDisplayFormPicker,
+                configurationChanged,
             }}
         >
             {children}

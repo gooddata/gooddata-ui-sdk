@@ -7,7 +7,8 @@ import { IAttributeDisplayFormMetadataObject, ObjRef } from "@gooddata/sdk-model
  */
 export interface IDashboardAttributeFilterParentItem {
     localIdentifier: string;
-    title: string;
+    title?: string;
+    displayForm: ObjRef;
     isSelected: boolean;
     overAttributes?: ObjRef[];
     selectedConnectingAttribute: ObjRef | undefined;
