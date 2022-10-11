@@ -16,4 +16,5 @@ module.exports = {
         "import/no-unassigned-import": "off",
     },
     parserOptions: { tsconfigRootDir: __dirname },
+    ignorePatterns: ["webpack.config.js", "jest.setup.ts", "scripts/refresh-md.js"],
 };
