@@ -1,5 +1,4 @@
 // (C) 2007-2021 GoodData Corporation
-/* eslint-disable @typescript-eslint/no-var-requires */
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
 const { ModuleFederationPlugin } = require("webpack").container;
