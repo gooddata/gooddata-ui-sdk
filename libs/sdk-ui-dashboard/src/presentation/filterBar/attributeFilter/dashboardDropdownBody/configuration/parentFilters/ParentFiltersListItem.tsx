@@ -26,15 +26,17 @@ export interface IConfigurationParentItemProps {
     onClick: (localId: string, isSelected: boolean, overAttributes: ObjRef[]) => void;
     onConnectingAttributeSelect: (localIdentifier: string, targetRef: ObjRef) => void;
     connectingAttributes: IConnectingAttribute[];
+    title: string;
 }
 
 export const ParentFiltersListItem: React.FC<IConfigurationParentItemProps> = (props) => {
     const {
-        item: { isSelected, localIdentifier, title, selectedConnectingAttribute },
+        item: { isSelected, localIdentifier, selectedConnectingAttribute },
         onClick,
         currentFilterLocalId,
         connectingAttributes,
         onConnectingAttributeSelect,
+        title,
     } = props;
 
     const isCircularDependency = useDashboardSelector(
