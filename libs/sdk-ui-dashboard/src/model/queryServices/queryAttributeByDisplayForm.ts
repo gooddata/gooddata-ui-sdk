@@ -27,6 +27,11 @@ export const QueryAttributeByDisplayFormService = createCachedQueryService(
     },
 );
 
+/**
+ * Loads the attribute metadata for given display form. Primarily the metadata are loaded
+ * from the catalog attributes. If the required attribute is not listed in the catalog
+ * (e.g. deprecated attributes), the attribute metadata are fetched from the backend.
+ */
 async function loadAttributeByDisplayForm(
     ctx: DashboardContext,
     catalogAttributes: ICatalogAttribute[],
