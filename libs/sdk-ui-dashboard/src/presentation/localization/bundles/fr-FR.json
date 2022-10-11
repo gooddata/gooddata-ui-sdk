@@ -316,7 +316,6 @@
     "configurationPanel.drillIntoUrl.editor.urlDisplayFormTypeLabel": "Valeur de l'URL de l'attribut",
     "configurationPanel.drillConfig.selectInsight": "Choisir une perception…",
     "dropdown.loading": "Chargement en cours…",
-    "visualization.emptyValue": "valeur vide",
     "gs.date.date-dataset.recommended": "Recommandé",
     "gs.date.date-dataset.other": "Autre",
     "gs.date.date-dataset.related": "Associé",

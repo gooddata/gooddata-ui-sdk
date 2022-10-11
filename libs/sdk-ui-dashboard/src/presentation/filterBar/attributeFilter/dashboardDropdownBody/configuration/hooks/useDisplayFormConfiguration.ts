@@ -22,9 +22,10 @@ export function useDisplayFormConfiguration(currentFilter: IDashboardAttributeFi
         () => {
             const currentDisplayForm = currentFilter.attributeFilter.displayForm;
 
-            const availableDisplayForms = catalogAttributes.find((attribute) =>
-                attribute.displayForms.some((df) => areObjRefsEqual(df.ref, currentDisplayForm)),
-            )!.displayForms;
+            const availableDisplayForms =
+                catalogAttributes.find((attribute) =>
+                    attribute.displayForms.some((df) => areObjRefsEqual(df.ref, currentDisplayForm)),
+                )?.displayForms || [];
 
             return {
                 selectedDisplayForm: currentDisplayForm,

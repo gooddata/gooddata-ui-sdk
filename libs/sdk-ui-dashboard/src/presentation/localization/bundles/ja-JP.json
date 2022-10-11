@@ -316,7 +316,6 @@
     "configurationPanel.drillIntoUrl.editor.urlDisplayFormTypeLabel": "アトリビュート URL 値",
     "configurationPanel.drillConfig.selectInsight": "インサイトを選択…",
     "dropdown.loading": "読み込んでいます…",
-    "visualization.emptyValue": "空の値",
     "gs.date.date-dataset.recommended": "お勧め",
     "gs.date.date-dataset.other": "その他",
     "gs.date.date-dataset.related": "関係する",

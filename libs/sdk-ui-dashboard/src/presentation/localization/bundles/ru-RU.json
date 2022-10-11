@@ -316,7 +316,6 @@
     "configurationPanel.drillIntoUrl.editor.urlDisplayFormTypeLabel": "Значение URL атрибута",
     "configurationPanel.drillConfig.selectInsight": "Выбрать анализ…",
     "dropdown.loading": "Загрузка…",
-    "visualization.emptyValue": "значение отсутствует",
     "gs.date.date-dataset.recommended": "Рекомендуемые",
     "gs.date.date-dataset.other": "Прочие",
     "gs.date.date-dataset.related": "Связанные",

@@ -1,7 +1,7 @@
 // (C) 2007-2022 GoodData Corporation
 import { ITheme, IMeasureDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-model";
 import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess";
-import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
+import { IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 import { IPointData, ISeriesItemConfig } from "../../typings/unsafe";
 import {
     isBubbleChart,
@@ -97,6 +97,7 @@ function getDefaultSeries(
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     type: string,
     colorStrategy: IColorStrategy,
+    emptyHeaderTitle: string,
 ): ISeriesItemConfig[] {
     return dv
         .rawData()
@@ -122,7 +123,10 @@ function getDefaultSeries(
             if (stackByAttribute) {
                 // if stackBy attribute is available, seriesName is a stackBy attribute value of index seriesIndex
                 // this is a limitiation of highcharts and a reason why you can not have multi-measure stacked charts
-                seriesItemConfig.name = stackByAttribute.items[seriesIndex].attributeHeaderItem.name;
+                seriesItemConfig.name = valueWithEmptyHandling(
+                    stackByAttribute.items[seriesIndex].attributeHeaderItem.name,
+                    emptyHeaderTitle,
+                );
             } else if (isOneOfTypes(type, multiMeasuresAlternatingTypes) && !viewByAttribute) {
                 // Pie charts with measures only have a single series which name would is ambiguous
                 seriesItemConfig.name = measureGroup.items
@@ -151,19 +155,35 @@ export function getSeries(
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     type: string,
     colorStrategy: IColorStrategy,
+    emptyHeaderTitle: string,
     theme?: ITheme,
 ): any {
     if (isHeatmap(type)) {
         return getHeatmapSeries(dv, measureGroup, theme);
     } else if (isScatterPlot(type)) {
-        return getScatterPlotSeries(dv, stackByAttribute, colorStrategy);
+        return getScatterPlotSeries(dv, stackByAttribute, colorStrategy, emptyHeaderTitle);
     } else if (isBubbleChart(type)) {
-        return getBubbleChartSeries(dv, measureGroup, stackByAttribute, colorStrategy);
+        return getBubbleChartSeries(dv, measureGroup, stackByAttribute, colorStrategy, emptyHeaderTitle);
     } else if (isTreemap(type) && stackByAttribute) {
-        return getTreemapStackedSeries(dv, measureGroup, viewByAttribute, stackByAttribute, colorStrategy);
+        return getTreemapStackedSeries(
+            dv,
+            measureGroup,
+            viewByAttribute,
+            stackByAttribute,
+            colorStrategy,
+            emptyHeaderTitle,
+        );
     } else if (isBulletChart(type)) {
         return getBulletChartSeries(dv, measureGroup, colorStrategy);
     }
 
-    return getDefaultSeries(dv, measureGroup, viewByAttribute, stackByAttribute, type, colorStrategy);
+    return getDefaultSeries(
+        dv,
+        measureGroup,
+        viewByAttribute,
+        stackByAttribute,
+        type,
+        colorStrategy,
+        emptyHeaderTitle,
+    );
 }

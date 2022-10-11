@@ -73,6 +73,7 @@ export {
 } from "./legend/types";
 
 export { fixEmptyHeaderItems } from "./utils/fixEmptyHeaderItems";
+export { valueWithEmptyHandling } from "./utils/valueWithEmptyHandling";
 
 export { shouldRenderPagination, calculateHeadlineHeightFontSize } from "./utils/calculateCustomHeight";
 export { getHeadlineResponsiveClassName } from "./utils/headlineResponsiveClassName";

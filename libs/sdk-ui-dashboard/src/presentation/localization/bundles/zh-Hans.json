@@ -316,7 +316,6 @@
     "configurationPanel.drillIntoUrl.editor.urlDisplayFormTypeLabel": "属性 URL 值",
     "configurationPanel.drillConfig.selectInsight": "选择洞察…",
     "dropdown.loading": "正在加载…",
-    "visualization.emptyValue": "空值",
     "gs.date.date-dataset.recommended": "已推荐",
     "gs.date.date-dataset.other": "其他",
     "gs.date.date-dataset.related": "相关",

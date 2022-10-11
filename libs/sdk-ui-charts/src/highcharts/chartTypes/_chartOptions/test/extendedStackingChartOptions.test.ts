@@ -97,7 +97,11 @@ describe("getCategoriesForTwoAttributes", () => {
             ],
         };
 
-        const categories = getCategoriesForTwoAttributes(viewByAttribute, viewByParentAttribute);
+        const categories = getCategoriesForTwoAttributes(
+            viewByAttribute,
+            viewByParentAttribute,
+            "empty value",
+        );
         expect(categories).toEqual([
             {
                 name: "Direct Sales",
@@ -162,7 +166,11 @@ describe("getCategoriesForTwoAttributes", () => {
             ],
         };
 
-        const categories = getCategoriesForTwoAttributes(viewByAttribute, viewByParentAttribute);
+        const categories = getCategoriesForTwoAttributes(
+            viewByAttribute,
+            viewByParentAttribute,
+            "empty value",
+        );
         expect(categories).toEqual([
             {
                 name: "3",
@@ -188,7 +196,11 @@ describe("getCategoriesForTwoAttributes", () => {
             ...attributeDescriptor,
             items: [],
         };
-        const categories = getCategoriesForTwoAttributes(viewByAttribute, viewByParentAttribute);
+        const categories = getCategoriesForTwoAttributes(
+            viewByAttribute,
+            viewByParentAttribute,
+            "empty value",
+        );
         expect(categories).toHaveLength(0);
     });
 });
@@ -212,6 +224,7 @@ describe("getDrillableSeriesWithParentAttribute", () => {
         stackByAttribute,
         type,
         metricColorStrategy,
+        "empty value",
     );
 
     const attributes = dv.def().attributes();

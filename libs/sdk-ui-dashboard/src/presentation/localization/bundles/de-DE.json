@@ -316,7 +316,6 @@
     "configurationPanel.drillIntoUrl.editor.urlDisplayFormTypeLabel": "URL-Attributswert",
     "configurationPanel.drillConfig.selectInsight": "Betrachtung auswählen…",
     "dropdown.loading": "Lädt…",
-    "visualization.emptyValue": "leerer Wert",
     "gs.date.date-dataset.recommended": "Empfohlen",
     "gs.date.date-dataset.other": "Andere",
     "gs.date.date-dataset.related": "Zugehörig",

@@ -14,6 +14,7 @@ export const TwoMeasuresWithTwoRowAndTwoColumnAttributes = recordedDataFacade(
 );
 export const TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor = TableDescriptor.for(
     TwoMeasuresWithTwoRowAndTwoColumnAttributes,
+    "empty value",
 );
 export const OneMeasureAndRepeatingRowAttributesOnDifferentPositions = recordedDataFacade(
     ReferenceRecordings.Scenarios.PivotTable.OneMeasureAndRepeatingRowAttributesOnDifferentPositions,

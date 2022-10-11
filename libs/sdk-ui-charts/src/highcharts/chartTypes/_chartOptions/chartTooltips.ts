@@ -8,6 +8,7 @@ import { formatValueForTooltip, getFormattedValueForTooltip } from "./tooltip";
 import { multiMeasuresAlternatingTypes } from "./chartCapabilities";
 import cx from "classnames";
 import { IMeasureDescriptor } from "@gooddata/sdk-model";
+import { valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 
 const TOOLTIP_PADDING = 10;
 
@@ -204,6 +205,7 @@ export function generateTooltipXYFn(
 export function generateTooltipHeatmapFn(
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
+    emptyHeaderTitle: string,
     config: IChartConfig = {},
 ): ITooltipFactory {
     const { separators } = config;
@@ -222,13 +224,23 @@ export function generateTooltipHeatmapFn(
         if (viewByAttribute) {
             textData.unshift([
                 customEscape(viewByAttribute.formOf.name),
-                customEscape(viewByAttribute.items[point.x].attributeHeaderItem.name),
+                customEscape(
+                    valueWithEmptyHandling(
+                        viewByAttribute.items[point.x].attributeHeaderItem.name,
+                        emptyHeaderTitle,
+                    ),
+                ),
             ]);
         }
         if (stackByAttribute) {
             textData.unshift([
                 customEscape(stackByAttribute.formOf.name),
-                customEscape(stackByAttribute.items[point.y].attributeHeaderItem.name),
+                customEscape(
+                    valueWithEmptyHandling(
+                        stackByAttribute.items[point.y].attributeHeaderItem.name,
+                        emptyHeaderTitle,
+                    ),
+                ),
             ]);
         }
 
@@ -239,6 +251,7 @@ export function generateTooltipHeatmapFn(
 export function buildTooltipTreemapFactory(
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
+    emptyHeaderTitle: string,
     config: IChartConfig = {},
 ): ITooltipFactory {
     const { separators } = config;
@@ -255,14 +268,24 @@ export function buildTooltipTreemapFactory(
         if (stackByAttribute) {
             textData.push([
                 customEscape(stackByAttribute.formOf.name),
-                customEscape(stackByAttribute.items[point.y].attributeHeaderItem.name),
+                customEscape(
+                    valueWithEmptyHandling(
+                        stackByAttribute.items[point.y].attributeHeaderItem.name,
+                        emptyHeaderTitle,
+                    ),
+                ),
             ]);
         }
 
         if (viewByAttribute) {
             textData.unshift([
                 customEscape(viewByAttribute.formOf.name),
-                customEscape(viewByAttribute.items[point.x].attributeHeaderItem.name),
+                customEscape(
+                    valueWithEmptyHandling(
+                        viewByAttribute.items[point.x].attributeHeaderItem.name,
+                        emptyHeaderTitle,
+                    ),
+                ),
             ]);
             textData.push([customEscape(point.series.name), formattedValue]);
         } else {
@@ -279,12 +302,13 @@ export function getTooltipFactory(
     viewByParentAttribute: IUnwrappedAttributeHeadersWithItems,
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     measure: IMeasureDescriptor,
+    emptyHeaderTitle: string,
     config: IChartConfig = {},
     isDualAxis: boolean = false,
 ): ITooltipFactory {
     const { type } = config;
     if (isTreemap(type)) {
-        return buildTooltipTreemapFactory(viewByAttribute, stackByAttribute, config);
+        return buildTooltipTreemapFactory(viewByAttribute, stackByAttribute, emptyHeaderTitle, config);
     }
     if (isViewByTwoAttributes) {
         return buildTooltipForTwoAttributesFactory(

@@ -51,3 +51,12 @@ export function withIntl<P>(
 export const resolveLocale = (locale: unknown): ILocale => {
     return isLocale(locale) ? locale : DefaultLocale;
 };
+
+/**
+ * Returns a string meant to represent a header with an empty value.
+ * @param intl - the source of i18n strings
+ * @internal
+ */
+export function emptyHeaderTitleFromIntl(intl: IntlShape): string {
+    return `(${intl.formatMessage({ id: "visualization.emptyValue" })})`;
+}

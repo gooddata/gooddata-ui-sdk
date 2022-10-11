@@ -5,7 +5,7 @@ import { LRUCache } from "@gooddata/util";
 import { IAttributeElement, ObjRef, objRefToString } from "@gooddata/sdk-model";
 import { ParameterDetail } from "./ParameterDetail";
 import { AttributeDisplayFormType } from "../../../types";
-import { useBackendStrict } from "@gooddata/sdk-ui";
+import { emptyHeaderTitleFromIntl, useBackendStrict } from "@gooddata/sdk-ui";
 import { IAnalyticalBackend, IElementsQueryResult } from "@gooddata/sdk-backend-spi";
 
 const MAX_CACHED_REQUESTS = 50;
@@ -41,9 +41,7 @@ interface IAttributeDisplayFormParameterDetailProps {
 }
 
 const handleEmptyValues = (values: string[], intl: IntlShape) =>
-    values.map((value: string) =>
-        value.length === 0 ? `(${intl.formatMessage({ id: "visualization.emptyValue" })})` : value,
-    );
+    values.map((value: string) => (value.length === 0 ? emptyHeaderTitleFromIntl(intl) : value));
 
 const prepareValues = (elements: IAttributeElement[], type?: string) => {
     if (type !== AttributeDisplayFormType.HYPERLINK) {
