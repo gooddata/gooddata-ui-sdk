@@ -127,7 +127,7 @@ class LocalPlugin extends DashboardPluginV1 {
                     "Buttons to dispatch filter commands",
                     newDashboardItem(newCustomWidget("myWidget1", "myCustomWidget"), {
                         xl: {
-                            // all 12 columns of the grid will be 'allocated' for this this new item
+                            // all 12 columns of the grid will be 'allocated' for this new item
                             gridWidth: 12,
                             // medium height to fit the chart
                             gridHeight: 3,

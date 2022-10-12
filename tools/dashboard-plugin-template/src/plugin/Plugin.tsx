@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import {
     DashboardContext,
     DashboardPluginV1,
@@ -56,7 +56,7 @@ export class Plugin extends DashboardPluginV1 {
                     "Section Added By Plugin",
                     newDashboardItem(newCustomWidget("myWidget1", "myCustomWidget"), {
                         xl: {
-                            // all 12 columns of the grid will be 'allocated' for this this new item
+                            // all 12 columns of the grid will be 'allocated' for this new item
                             gridWidth: 12,
                             // minimum height since the custom widget now has just some one-liner text
                             gridHeight: 1,
