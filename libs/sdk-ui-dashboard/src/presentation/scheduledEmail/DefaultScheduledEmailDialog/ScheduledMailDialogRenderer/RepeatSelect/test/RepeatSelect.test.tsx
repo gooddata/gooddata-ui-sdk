@@ -17,7 +17,6 @@ describe("RepeatSelect", () => {
     const now = new Date();
     const intl: IntlShape = createInternalIntl();
     const titleDayOfMonth = `on day ${getDate(now)}`;
-    const titleDayOfMonthString = `on the ${TEXT_INDEX[getWeek(now)]} ${getIntlDayName(intl, now)}`;
     const DEFAULT_REPEAT_DATA: IRepeatSelectData = {
         repeatExecuteOn: REPEAT_EXECUTE_ON.DAY_OF_MONTH,
         repeatFrequency: REPEAT_FREQUENCIES.DAY,
@@ -164,45 +163,6 @@ describe("RepeatSelect", () => {
                         expect.objectContaining({
                             ...DEFAULT_REPEAT_DATA,
                             repeatFrequency: selected,
-                            repeatType: REPEAT_TYPES.CUSTOM,
-                        }),
-                    );
-                });
-            },
-        );
-
-        it.each([
-            [
-                REPEAT_EXECUTE_ON.DAY_OF_WEEK,
-                REPEAT_EXECUTE_ON.DAY_OF_MONTH,
-                titleDayOfMonth,
-                titleDayOfMonthString,
-            ],
-            [
-                REPEAT_EXECUTE_ON.DAY_OF_MONTH,
-                REPEAT_EXECUTE_ON.DAY_OF_WEEK,
-                titleDayOfMonthString,
-                titleDayOfMonth,
-            ],
-        ])(
-            "should trigger onChange with repeat execute on %s",
-            async (selected: string, current: string, selectedDropdown: string, currentDropdown: string) => {
-                const onChange = jest.fn();
-                renderComponent({
-                    repeatExecuteOn: current,
-                    repeatFrequency: REPEAT_FREQUENCIES.MONTH,
-                    repeatType: REPEAT_TYPES.CUSTOM,
-                    onChange,
-                });
-                await userEvent.click(screen.getByText(selectedDropdown));
-                await userEvent.click(screen.getByText(currentDropdown));
-
-                await waitFor(() => {
-                    expect(onChange).toBeCalledWith(
-                        expect.objectContaining({
-                            ...DEFAULT_REPEAT_DATA,
-                            repeatExecuteOn: selected,
-                            repeatFrequency: REPEAT_FREQUENCIES.MONTH,
                             repeatType: REPEAT_TYPES.CUSTOM,
                         }),
                     );
