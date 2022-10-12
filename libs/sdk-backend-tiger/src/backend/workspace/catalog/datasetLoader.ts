@@ -110,16 +110,18 @@ function createDateDatasets(attributes: JsonApiAttributeOutList): ICatalogDateDa
     const dateAttributes = attributes.data.filter((attr) => attr.attributes?.granularity !== undefined);
     const dateDatasets = identifyDateDatasets(dateAttributes, attributes.included);
 
-    return dateDatasets.map((dd) => {
-        const catalogDateAttributes = dd.attributes.map((attribute) => {
-            const labels = getAttributeLabels(attribute, attributes.included);
-            const defaultLabel = labels[0];
+    return dateDatasets
+        .map((dd) => {
+            const catalogDateAttributes = dd.attributes.map((attribute) => {
+                const labels = getAttributeLabels(attribute, attributes.included);
+                const defaultLabel = labels[0];
 
-            return convertDateAttribute(attribute, defaultLabel, labels);
-        });
+                return convertDateAttribute(attribute, defaultLabel, labels);
+            });
 
-        return convertDateDataset(dd.dataset, catalogDateAttributes);
-    });
+            return convertDateDataset(dd.dataset, catalogDateAttributes);
+        })
+        .sort((a, b) => a.dataSet.title.localeCompare(b.dataSet.title));
 }
 
 export async function loadAttributesAndDateDatasets(
