@@ -34,6 +34,10 @@ import AttributeParentChildFilterButtonWithPlaceholderExampleSRCJS from "./Attri
 import AttributeFilterStaticElementsExampleSRCJS from "./AttributeFilterStaticElementsExample?rawJS";
 import AttributeFilterHiddenElementsExampleSRCJS from "./AttributeFilterHiddenElementsExample?rawJS";
 
+import AttributeFilterCustomizationExample from "./AttributeFilterCustomizationExample";
+import AttributeFilterCustomizationExampleSRC from "./AttributeFilterCustomizationExample?raw";
+import AttributeFilterCustomizationExampleSRCJS from "./AttributeFilterCustomizationExample?rawJS";
+
 export const AttributeFilter = (): JSX.Element => (
     <div>
         <h1>Attribute Filter Component</h1>
@@ -179,6 +183,12 @@ export const AttributeFilter = (): JSX.Element => (
             for={AttributeFilterHiddenElementsExample}
             source={AttributeFilterHiddenElementsExampleSRC}
             sourceJS={AttributeFilterHiddenElementsExampleSRCJS}
+        />
+        <h2>Attribute Filter customization</h2>
+        <ExampleWithSource
+            for={AttributeFilterCustomizationExample}
+            source={AttributeFilterCustomizationExampleSRC}
+            sourceJS={AttributeFilterCustomizationExampleSRCJS}
         />
     </div>
 );

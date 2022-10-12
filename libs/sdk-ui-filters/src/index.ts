@@ -177,8 +177,10 @@ export {
     IAttributeFilterDeleteButtonProps,
     IAttributeFilterFilteredStatusProps,
     IAttributeFilterSelectionStatusProps,
+    IUseAttributeFilterSearchProps,
     useAutoOpenAttributeFilterDropdownButton,
     useOnCloseAttributeFilterDropdownButton,
+    useAttributeFilterSearch,
 } from "./AttributeFilter";
 
 export {
