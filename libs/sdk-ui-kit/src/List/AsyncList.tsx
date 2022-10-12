@@ -3,7 +3,6 @@ import React, { useCallback } from "react";
 import cx from "classnames";
 import ContentLoader from "react-content-loader";
 
-import { useMediaQuery } from "../responsive/useMediaQuery";
 import { LoadingMask } from "../LoadingMask";
 import { IRenderListItemProps, List } from "./List";
 
@@ -66,8 +65,6 @@ export function AsyncList<T>(props: IAsyncListProps<T>) {
         onLoadNextPage,
     } = props;
 
-    const isMobile = useMediaQuery("mobileDevice");
-
     const itemRenderer = useCallback(
         (renderItemProps: IRenderListItemProps<T>): JSX.Element => {
             if (renderItemProps.rowIndex + 1 > items.length) {
@@ -100,7 +97,6 @@ export function AsyncList<T>(props: IAsyncListProps<T>) {
             itemsCount={items.length + nextPageItemPlaceholdersCount}
             renderItem={itemRenderer}
             onScrollEnd={handleScrollEnd}
-            compensateBorder={!isMobile}
         />
     );
 }
