@@ -211,7 +211,6 @@ export function InvertableSelect<T>(props: IInvertableSelectProps<T>) {
                     {items.length > 0 && (
                         <Measure client>
                             {({ measureRef, contentRect }) => {
-                                const heightWithRespectToItemsCount = Math.min(items.length, 10) * itemHeight;
                                 return (
                                     <div className="gd-invertable-select-list" ref={measureRef}>
                                         <AsyncList
@@ -219,10 +218,7 @@ export function InvertableSelect<T>(props: IInvertableSelectProps<T>) {
                                             width={adaptiveWidth ? contentRect?.client.width : width}
                                             height={
                                                 adaptiveHeight
-                                                    ? Math.min(
-                                                          contentRect?.client.height,
-                                                          heightWithRespectToItemsCount,
-                                                      ) ?? 0
+                                                    ? contentRect?.client.height
                                                     : Math.min(items.length, 10) * itemHeight
                                             }
                                             items={items}
