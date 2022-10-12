@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { select, fork, take, race } from "redux-saga/effects";
+import { select, fork, take, race, SagaReturnType, call } from "redux-saga/effects";
 import { isAttributeElementsByRef } from "@gooddata/sdk-model";
 import { AnyAction } from "@reduxjs/toolkit";
 
@@ -8,6 +8,8 @@ import { Correlation } from "../../../types";
 import { loadCustomElementsSaga } from "../loadCustomElements/loadCustomElementsSaga";
 import { selectAttributeFilterElements } from "../filter/filterSelectors";
 import { actions } from "../store/slice";
+import { getAttributeFilterContext } from "../common/sagas";
+import { selectElementsForm } from "../common/selectors";
 
 /**
  * @internal
@@ -16,6 +18,9 @@ export function* initSelectionSaga(correlation: Correlation): SagaIterator<void>
     const elements: ReturnType<typeof selectAttributeFilterElements> = yield select(
         selectAttributeFilterElements,
     );
+    const context: SagaReturnType<typeof getAttributeFilterContext> = yield call(getAttributeFilterContext);
+    const elementsForm: ReturnType<typeof selectElementsForm> = yield select(selectElementsForm);
+
     const elementKeys = isAttributeElementsByRef(elements) ? elements.uris : elements.values;
 
     if (elementKeys.length === 0) {
@@ -32,7 +37,8 @@ export function* initSelectionSaga(correlation: Correlation): SagaIterator<void>
                 offset: 0,
                 limit: 550,
                 search: undefined,
-                excludePrimaryLabel: false,
+                excludePrimaryLabel:
+                    !context.backend.capabilities.supportsElementUris && elementsForm === "values",
             },
             correlation: initSelectionCorrelation,
         }),

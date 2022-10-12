@@ -12,3 +12,8 @@ export const selectState = (state: AttributeFilterState) => state;
  */
 export const getElementCacheKey = (state: AttributeFilterState, element: IAttributeElement) =>
     state.elementsForm === "uris" ? element.uri : element.title;
+
+/**
+ * @internal
+ */
+export const selectElementsForm = (state: AttributeFilterState) => state.elementsForm;
