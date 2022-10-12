@@ -2,6 +2,7 @@
 import { SagaIterator } from "redux-saga";
 import { put, call, takeLatest, select, cancelled, SagaReturnType } from "redux-saga/effects";
 import { getAttributeFilterContext } from "../common/sagas";
+import { selectElementsForm } from "../common/selectors";
 
 import { elementsSaga } from "../elements/elementsSaga";
 import { selectLoadElementsOptions } from "../elements/elementsSelectors";
@@ -44,9 +45,12 @@ export function* loadInitialElementsPageSaga(
             selectLoadElementsOptions,
         );
 
+        const elementsForm: ReturnType<typeof selectElementsForm> = yield select(selectElementsForm);
+
         const loadOptionsWithExcludePrimaryLabel = {
             ...loadOptions,
-            excludePrimaryLabel: true,
+            excludePrimaryLabel:
+                !context.backend.capabilities.supportsElementUris && elementsForm === "values",
         };
 
         const result: SagaReturnType<typeof elementsSaga> = yield call(
