@@ -40,7 +40,7 @@ export const AttributeFilterDropdownBody: React.FC<IAttributeFilterDropdownBodyP
         return parentFilterAttributes.map((attr) => attr.title);
     }, [parentFilterAttributes]);
 
-    const usedWidth = !(isMobile && fullscreenOnMobile) ? width : "100%";
+    const usedWidth = isMobile && fullscreenOnMobile ? "100%" : width;
     const style = { width: usedWidth };
 
     return (
