@@ -144,7 +144,7 @@ class LocalPlugin extends DashboardPluginV1 {
                         }),
                         {
                             xl: {
-                                // all 12 columns of the grid will be 'allocated' for this this new item
+                                // all 12 columns of the grid will be 'allocated' for this new item
                                 gridWidth: 12,
                                 // medium height to fit the chart
                                 gridHeight: 12,
