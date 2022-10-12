@@ -37,6 +37,14 @@
             margin: 0;
         }
     }
+
+    .gd-async-list {
+        margin: 6px 0;
+
+        @media #{$small-only} {
+            margin: 6px 0;
+        }
+    }
 }
 
 .gd-dropdown,
