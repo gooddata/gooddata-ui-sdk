@@ -3,7 +3,7 @@ import React from "react";
 import { render, screen, within, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import noop from "lodash/noop";
-import { uriRef } from "@gooddata/sdk-model";
+import { IUser, uriRef } from "@gooddata/sdk-model";
 import { newInsightWidget } from "@gooddata/sdk-backend-base";
 
 import {
@@ -114,7 +114,14 @@ describe("ScheduledMailDialogRenderer", () => {
         });
         jest.useFakeTimers().setSystemTime(new Date("2022-01-02 12:13").getTime());
         const onSubmit = jest.fn();
-        renderComponent({ onSubmit });
+        const currentUser: IUser = {
+            login: "login.email@gooddata.com",
+            ref: uriRef("/gdc/user"),
+            email: "user@gooddata.com",
+            firstName: "John",
+            lastName: "Doe",
+        };
+        renderComponent({ onSubmit, currentUser });
 
         await user.click(screen.getByText("12:30 PM"));
         await user.click(screen.getByText("02:00 AM"));
