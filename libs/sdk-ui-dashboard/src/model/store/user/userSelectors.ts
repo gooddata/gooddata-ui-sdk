@@ -35,7 +35,7 @@ const selectSelf = createSelector(
  *                  "Greetings by Plugin",
  *                  newDashboardItem(newCustomWidget("greetings", "greetingsWidget"), {
  *                      xl: {
- *                          // all 12 columns of the grid will be 'allocated' for this this new item
+ *                          // all 12 columns of the grid will be 'allocated' for this new item
  *                          gridWidth: 12,
  *                          // minimum height since the custom widget now has just some one-liner text
  *                          gridHeight: 1,

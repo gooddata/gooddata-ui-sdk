@@ -10,10 +10,9 @@ import { DEFAULT_DROPDOWN_BODY_WIDTH } from "../../constants";
  * @internal
  */
 export const AttributeFilterDropdownBody: React.FC<IAttributeFilterDropdownBodyProps> = (props) => {
-    const { onApplyButtonClick, onCancelButtonClick, width = DEFAULT_DROPDOWN_BODY_WIDTH, height } = props;
+    const { onApplyButtonClick, onCancelButtonClick, width = DEFAULT_DROPDOWN_BODY_WIDTH } = props;
 
     const { DropdownActionsComponent, ElementsSelectComponent } = useAttributeFilterComponentsContext();
-
     const isMobile = useMediaQuery("mobileDevice");
 
     const {
@@ -34,18 +33,15 @@ export const AttributeFilterDropdownBody: React.FC<IAttributeFilterDropdownBodyP
         workingSelectionElements,
         parentFilterAttributes,
         isFilteredByParentFilters,
+        fullscreenOnMobile,
     } = useAttributeFilterContext();
 
     const parentFilterTitles = useMemo(() => {
         return parentFilterAttributes.map((attr) => attr.title);
     }, [parentFilterAttributes]);
 
-    const usedWidth = !isMobile ? width : "100%";
-    const style = {
-        width: usedWidth,
-        height: isMobile ? "100%" : elements.length >= 3 ? height : "auto",
-        overflow: "hidden",
-    };
+    const usedWidth = isMobile && fullscreenOnMobile ? "100%" : width;
+    const style = { width: usedWidth };
 
     return (
         <div className="gd-attribute-filter-dropdown-body__next" style={style}>

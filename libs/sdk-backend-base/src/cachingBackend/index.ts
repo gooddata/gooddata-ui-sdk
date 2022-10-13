@@ -87,7 +87,7 @@ type SecuritySettingsCacheEntry = {
 type AttributeCacheEntry = {
     displayForms: LRUCache<Promise<IAttributeDisplayFormMetadataObject>>;
     attributesByDisplayForms: LRUCache<Promise<IAttributeMetadataObject>>;
-    attributeElementResults: LRUCache<Promise<IElementsQueryResult>>;
+    attributeElementResults?: LRUCache<Promise<IElementsQueryResult>>;
 };
 
 type WorkspaceSettingsCacheEntry = {
@@ -471,9 +471,11 @@ function getOrCreateAttributeCache(ctx: CachingContext, workspace: string): Attr
             attributesByDisplayForms: new LRUCache<Promise<IAttributeMetadataObject>>({
                 maxSize: ctx.config.maxAttributesPerWorkspace,
             }),
-            attributeElementResults: new LRUCache<Promise<IElementsQueryResult>>({
-                maxSize: ctx.config.maxAttributeElementResultsPerWorkspace,
-            }),
+            attributeElementResults: cachingEnabled(ctx.config.maxAttributeElementResultsPerWorkspace)
+                ? new LRUCache<Promise<IElementsQueryResult>>({
+                      maxSize: ctx.config.maxAttributeElementResultsPerWorkspace,
+                  })
+                : undefined,
         };
         cache.set(workspace, cacheEntry);
     }
@@ -506,6 +508,7 @@ class CachedElementsQuery extends DecoratedElementsQuery {
         }
 
         const cache = getOrCreateAttributeCache(this.ctx, this.workspace).attributeElementResults;
+        invariant(cache, "inconsistent attribute element cache config");
         const cacheKey = elementsCacheKey(this.ref, this.settings);
 
         let result = cache.get(cacheKey);
@@ -682,7 +685,9 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
 
     public elements(): IElementsQueryFactory {
         const decorated = this.decorated.elements();
-        return new CachedElementsQueryFactory(decorated, this.ctx, this.workspace);
+        return cachingEnabled(this.ctx.config.maxAttributeElementResultsPerWorkspace)
+            ? new CachedElementsQueryFactory(decorated, this.ctx, this.workspace)
+            : decorated;
     }
 }
 
@@ -952,7 +957,7 @@ export type CachingConfiguration = {
     maxAttributesPerWorkspace?: number;
 
     /**
-     * Maximum number of attributes element results to cache per workspace.
+     * Maximum number of attribute element results to cache per workspace.
      *
      * Note that not all the queries are cached (e.g. queries with `filter` value).
      *
@@ -962,8 +967,8 @@ export type CachingConfiguration = {
      * attribute elements cache may be OK in applications where number of attributes and/or their elements is small
      * and/or they are requested infrequently - the cache will be limited naturally and will not grow uncontrollably.
      *
-     * Setting non-positive number here is invalid. If you want to turn off attribute caching,
-     * tweak the `maxAttributeWorkspaces` value.
+     * The `maxAttributeWorkspaces` value must be positive, otherwise this setting is ignored.
+     * When non-positive number is specified, then no caching of attribute element results will be done.
      */
     maxAttributeElementResultsPerWorkspace?: number;
 

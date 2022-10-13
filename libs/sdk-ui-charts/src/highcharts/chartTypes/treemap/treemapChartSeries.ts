@@ -1,6 +1,6 @@
 // (C) 2020-2022 GoodData Corporation
 import { DataViewFacade } from "@gooddata/sdk-ui";
-import { IMeasureDescriptor, IMeasureGroupDescriptor, IResultAttributeHeader } from "@gooddata/sdk-model";
+import { IMeasureGroupDescriptor, IResultAttributeHeader } from "@gooddata/sdk-model";
 import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess";
 import { getLighterColor, IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 import { parseValue, unwrap } from "../_util/common";
@@ -20,10 +20,16 @@ function gradientPreviousGroup(solidColorLeafs: any[]): any[] {
     }));
 }
 
-function getRootPoint(rootName: string, index: number, format: string, colorStrategy: IColorStrategy) {
+function getRootPoint(
+    rootName: string,
+    index: number,
+    format: string,
+    colorStrategy: IColorStrategy,
+    emptyHeaderTitle: string,
+) {
     return {
         id: `${index}`,
-        name: rootName,
+        name: valueWithEmptyHandling(rootName, emptyHeaderTitle),
         color: colorStrategy.getColorByIndex(index),
         showInLegend: true,
         legendIndex: index,
@@ -88,7 +94,7 @@ export function getTreemapStackedSeriesDataWithViewBy(
             uncoloredLeafs = [];
             // create parent for pasted leafs
             const lastRootName = lastRoot?.name;
-            roots.push(getRootPoint(lastRootName, rootId, format, colorStrategy));
+            roots.push(getRootPoint(lastRootName, rootId, format, colorStrategy, emptyHeaderTitle));
         }
         // create leafs which will be colored at the end of group
         uncoloredLeafs.push(
@@ -123,7 +129,7 @@ export function getTreemapStackedSeriesDataWithMeasures(
     let data = measureGroup.items.map((measureGroupItem, index): IPointData => {
         return {
             id: `${index}`,
-            name: measureGroupItem.measureHeaderItem.name,
+            name: valueWithEmptyHandling(measureGroupItem.measureHeaderItem.name, emptyHeaderTitle),
             format: measureGroupItem.measureHeaderItem.format,
             color: colorStrategy.getColorByIndex(index),
             showInLegend: true,
@@ -196,15 +202,11 @@ export function getTreemapStackedSeries(
         );
     }
 
-    const seriesName = measureGroup.items
-        .map((wrappedMeasure: IMeasureDescriptor) => {
-            return unwrap(wrappedMeasure).name;
-        })
-        .join(", ");
+    const seriesName = measureGroup.items.map((wrappedMeasure) => unwrap(wrappedMeasure).name).join(", ");
 
     return [
         {
-            name: seriesName,
+            name: valueWithEmptyHandling(seriesName, emptyHeaderTitle),
             legendType: "point",
             showInLegend: true,
             data,

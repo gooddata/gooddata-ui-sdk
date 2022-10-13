@@ -78,7 +78,7 @@ Array [
       },
     ],
     "options": Object {
-      "excludePrimaryLabel": true,
+      "excludePrimaryLabel": false,
       "limit": 2,
       "limitingAttributeFilters": Array [],
       "limitingDateFilters": Array [],

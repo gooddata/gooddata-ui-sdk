@@ -1,6 +1,8 @@
 // (C) 2022 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { put, call, takeLatest, select, cancelled } from "redux-saga/effects";
+import { put, call, takeLatest, select, cancelled, SagaReturnType } from "redux-saga/effects";
+import { getAttributeFilterContext } from "../common/sagas";
+import { selectElementsForm } from "../common/selectors";
 
 import { elementsSaga } from "../elements/elementsSaga";
 import { actions } from "../store/slice";
@@ -29,6 +31,8 @@ export function* loadNextElementsPageSaga(
         | ReturnType<typeof actions.loadNextElementsPageCancelRequest>
         | ReturnType<typeof actions.loadInitialElementsPageRequest>,
 ): SagaIterator<void> {
+    const context: SagaReturnType<typeof getAttributeFilterContext> = yield call(getAttributeFilterContext);
+
     if (
         actions.loadNextElementsPageCancelRequest.match(action) ||
         actions.loadInitialElementsPageRequest.match(action)
@@ -54,9 +58,12 @@ export function* loadNextElementsPageSaga(
             selectLoadNextElementsPageOptions,
         );
 
+        const elementsForm: ReturnType<typeof selectElementsForm> = yield select(selectElementsForm);
+
         const loadOptionsWithExcludePrimaryLabel = {
             ...loadOptions,
-            excludePrimaryLabel: true,
+            excludePrimaryLabel:
+                !context.backend.capabilities.supportsElementUris && elementsForm === "values",
         };
 
         const result = yield call(elementsSaga, loadOptionsWithExcludePrimaryLabel);
