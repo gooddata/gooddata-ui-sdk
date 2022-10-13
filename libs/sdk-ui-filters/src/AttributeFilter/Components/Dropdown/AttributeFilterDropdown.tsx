@@ -11,8 +11,14 @@ const ALIGN_POINTS = [
     { align: "bl tl" },
     { align: "tr tl" },
     { align: "br tr", offset: { x: -11 } },
-    { align: "tr tl", offset: { x: 0, y: -100 } },
+
+    { align: "tl bl", offset: { x: 0, y: 0 } },
+
     { align: "tr tl", offset: { x: 0, y: -50 } },
+    { align: "tr tl", offset: { x: 0, y: -100 } },
+    { align: "tr tl", offset: { x: 0, y: -200 } },
+    { align: "tr tl", offset: { x: 0, y: -300 } },
+    { align: "tr tl", offset: { x: 0, y: -400 } },
 ];
 
 /**
