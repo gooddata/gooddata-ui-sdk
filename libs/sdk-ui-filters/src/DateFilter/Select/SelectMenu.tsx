@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import { ControllerStateAndHelpers } from "downshift";
@@ -41,6 +41,8 @@ export const SelectMenu = <V extends {}>({
                                 ? selectableOptions[highlightedIndex].value === item.value
                                 : false;
                         return (
+                            // The key is handled by the getItemProps from downshift
+                            // eslint-disable-next-line react/jsx-key
                             <SelectOption
                                 {...getItemProps({
                                     key: `${item.type}-${item.value}`,
