@@ -1,5 +1,5 @@
 // (C) 2007-2022 GoodData Corporation
-import { ITheme, IMeasureDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-model";
+import { ITheme, IMeasureGroupDescriptor } from "@gooddata/sdk-model";
 import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess";
 import { IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 import { IPointData, ISeriesItemConfig } from "../../typings/unsafe";
@@ -29,6 +29,7 @@ export function getSeriesItemData(
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     type: string,
     colorStrategy: IColorStrategy,
+    emptyHeaderTitle: string,
 ): IPointData[] {
     return seriesItem.map((pointValue: string, pointIndex: number) => {
         // by default seriesIndex corresponds to measureGroup label index
@@ -72,11 +73,20 @@ export function getSeriesItemData(
 
         if (stackByAttribute) {
             // if there is a stackBy attribute, then seriesIndex corresponds to stackBy label index
-            pointData.name = unwrap(stackByAttribute.items[seriesIndex]).name;
+            pointData.name = valueWithEmptyHandling(
+                unwrap(stackByAttribute.items[seriesIndex]).name,
+                emptyHeaderTitle,
+            );
         } else if (isOneOfTypes(type, multiMeasuresAlternatingTypes) && viewByAttribute) {
-            pointData.name = unwrap(viewByAttribute.items[viewByIndex]).name;
+            pointData.name = valueWithEmptyHandling(
+                unwrap(viewByAttribute.items[viewByIndex]).name,
+                emptyHeaderTitle,
+            );
         } else {
-            pointData.name = unwrap(measureGroup.items[measureIndex]).name;
+            pointData.name = valueWithEmptyHandling(
+                unwrap(measureGroup.items[measureIndex]).name,
+                emptyHeaderTitle,
+            );
         }
 
         if (isOneOfTypes(type, multiMeasuresAlternatingTypes)) {
@@ -111,6 +121,7 @@ function getDefaultSeries(
                 stackByAttribute,
                 type,
                 colorStrategy,
+                emptyHeaderTitle,
             );
 
             const seriesItemConfig: ISeriesItemConfig = {
@@ -122,7 +133,7 @@ function getDefaultSeries(
 
             if (stackByAttribute) {
                 // if stackBy attribute is available, seriesName is a stackBy attribute value of index seriesIndex
-                // this is a limitiation of highcharts and a reason why you can not have multi-measure stacked charts
+                // this is a limitation of highcharts and a reason why you can not have multi-measure stacked charts
                 seriesItemConfig.name = valueWithEmptyHandling(
                     stackByAttribute.items[seriesIndex].attributeHeaderItem.name,
                     emptyHeaderTitle,
@@ -130,13 +141,16 @@ function getDefaultSeries(
             } else if (isOneOfTypes(type, multiMeasuresAlternatingTypes) && !viewByAttribute) {
                 // Pie charts with measures only have a single series which name would is ambiguous
                 seriesItemConfig.name = measureGroup.items
-                    .map((wrappedMeasure: IMeasureDescriptor) => {
-                        return unwrap(wrappedMeasure).name;
-                    })
+                    .map((wrappedMeasure) =>
+                        valueWithEmptyHandling(unwrap(wrappedMeasure).name, emptyHeaderTitle),
+                    )
                     .join(", ");
             } else {
                 // otherwise seriesName is a measure name of index seriesIndex
-                seriesItemConfig.name = measureGroup.items[seriesIndex].measureHeaderItem.name;
+                seriesItemConfig.name = valueWithEmptyHandling(
+                    measureGroup.items[seriesIndex].measureHeaderItem.name,
+                    emptyHeaderTitle,
+                );
             }
 
             const turboThresholdProp = isTreemap(type) ? { turboThreshold: 0 } : {};
