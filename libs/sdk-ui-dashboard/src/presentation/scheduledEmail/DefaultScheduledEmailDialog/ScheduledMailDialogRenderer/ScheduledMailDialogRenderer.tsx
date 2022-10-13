@@ -818,7 +818,7 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
         /// To: is currently only owner
         const toEmails = recipients
             .filter(isScheduleEmailExistingRecipient)
-            .map((recipient) => recipient.user.login);
+            .map((recipient) => recipient.user.email!);
 
         /// All other emails (without owner)
         const bccEmails = recipients
