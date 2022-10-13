@@ -342,6 +342,7 @@ describe("chartOptionsBuilder", () => {
                 stackByAttribute,
                 "column",
                 attributeColorStrategy,
+                "empty value",
             );
 
             it("should fill correct pointData name", () => {
@@ -403,6 +404,7 @@ describe("chartOptionsBuilder", () => {
                 stackByAttribute,
                 "column",
                 attributeColorStrategy,
+                "empty value",
             );
 
             it("should fill correct pointData name", () => {
@@ -449,6 +451,7 @@ describe("chartOptionsBuilder", () => {
                 stackByAttribute,
                 "pie",
                 metricColorStrategy,
+                "empty value",
             );
 
             const treeMapColorStrategy = new TreemapColorStrategy(
@@ -467,6 +470,7 @@ describe("chartOptionsBuilder", () => {
                 stackByAttribute,
                 "treemap",
                 treeMapColorStrategy,
+                "empty value",
             );
 
             it("should fill correct pointData name", () => {
@@ -543,6 +547,7 @@ describe("chartOptionsBuilder", () => {
                 stackByAttribute,
                 "pie",
                 attributeColorStrategy,
+                "empty value",
             );
 
             const treeMapColorStrategy = new TreemapColorStrategy(
@@ -561,6 +566,7 @@ describe("chartOptionsBuilder", () => {
                 stackByAttribute,
                 "treemap",
                 treeMapColorStrategy,
+                "empty value",
             );
 
             it("should fill correct pointData name", () => {
@@ -672,6 +678,7 @@ describe("chartOptionsBuilder", () => {
                         stackByAttribute,
                         type,
                         attributeColorStrategy,
+                        "empty value",
                     );
                 });
                 expect(seriesData.map((seriesItem: any) => seriesItem.data)).toEqual(expectedData);
@@ -748,6 +755,7 @@ describe("chartOptionsBuilder", () => {
                         stackByAttribute,
                         type,
                         attributeColorStrategy,
+                        "empty value",
                     );
                 });
                 expect(seriesData.map((seriesItem: any) => seriesItem.data)).toEqual(expectedData);
@@ -2030,6 +2038,7 @@ describe("chartOptionsBuilder", () => {
                         stackByAttribute,
                         type,
                         attColorStrategy,
+                        "empty value",
                     );
                 });
                 expect(seriesData.map((seriesItem: any) => seriesItem.data)).toEqual(expectedData);
