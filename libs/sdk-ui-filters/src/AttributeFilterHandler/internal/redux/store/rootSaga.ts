@@ -11,9 +11,6 @@ import {
 } from "./sagas";
 
 export function* rootSaga(): SagaIterator<void> {
-    // eslint-disable-next-line no-console
-    console.log("Root saga started...");
-
     try {
         yield all(
             [
