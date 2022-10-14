@@ -9,10 +9,13 @@ module.exports = {
     source: "../{sdk-ui,sdk-ui-charts,sdk-ui-pivot,sdk-ui-kit,sdk-ui-filters,sdk-ui-vis-commons,sdk-ui-geo}/src/**/*.{ts,js,tsx,jsx}",
     rules: [
         {
-            // some messages need to be included for the sake of older dashboard plugins
-            pattern:
-                /^(?!gs.filter.loading|attrf.all|attrf.all_except|attributeFilterDropdown.emptyValue).*$/,
-            filterTranslationFile: true,
+            pattern: [/.+/],
+        },
+        // some messages need to be included for the sake of older dashboard plugins
+        {
+            dir: /src\/base\/localization\/bundles/,
+            pattern: /^(gs.filter.loading|attrf.all|attrf.all_except|attributeFilterDropdown.emptyValue)$/,
+            ignore: true,
         },
     ],
 };
