@@ -1,2 +1,6 @@
 ---
 scan_image: "harbor.intgdc.com/tools/gdc-fossa-cli-frontend-node:latest"
+pre_scan_script: common/scripts/ci/fossa_prescan.sh
+skip_install_deps: true # skip run cmd install deps defined package_installer_mapping.yaml
+ignored_paths:
+  - tools/dashboard-plugin-tests/plugins # skip plugin tests folder
