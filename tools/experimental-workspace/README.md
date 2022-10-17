@@ -1,5 +1,9 @@
 # LDM and recordings from workspace used to test new backend features
 
+[![npm version](https://img.shields.io/npm/v/@gooddata/experimental-workspace)](https://www.npmjs.com/@gooddata/experimental-workspace)&nbsp;
+[![npm monthly downloads](https://img.shields.io/npm/dm/@gooddata/experimental-workspace)](https://npmcharts.com/compare/@gooddata/experimental-workspace?minimal=true)&nbsp;
+![typescript](https://img.shields.io/badge/typescript-first-blue?logo=typescript)
+
 This project contains LDM and recordings captured from the GoodData workspace on staging where we deploy new
 backend functionality. The experimental workspace is useful during development and testing of integration with
 the new backend functionality before it lands on the production and can be tested on top of the reference

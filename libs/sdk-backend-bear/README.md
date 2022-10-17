@@ -1,5 +1,9 @@
 # Analytical Backend SPI implementation for the GoodData Platform
 
+[![npm version](https://img.shields.io/npm/v/@gooddata/sdk-backend-bear)](https://www.npmjs.com/@gooddata/sdk-backend-bear)&nbsp;
+[![npm monthly downloads](https://img.shields.io/npm/dm/@gooddata/sdk-backend-bear)](https://npmcharts.com/compare/@gooddata/sdk-backend-bear?minimal=true)&nbsp;
+![typescript](https://img.shields.io/badge/typescript-first-blue?logo=typescript)
+
 This package provides the [Analytical Backend](https://www.npmjs.com/package/@gooddata/sdk-backend-bear) implementation for the [GoodData Platform](https://sdk.gooddata.com/gooddata-ui/docs/platform_intro.html) (codename `bear`).
 
 You can use this package to communicate with the GoodData platform in a convenient way without concerning yourself with low-level details. The functionality includes but is not limited to: setting and creating metadata objects, running executions, getting settings, getting available workspaces, and more.

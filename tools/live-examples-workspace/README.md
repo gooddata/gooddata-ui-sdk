@@ -1,5 +1,9 @@
 # LDM and recordings from workspace backing the Examples application
 
+[![npm version](https://img.shields.io/npm/v/@gooddata/live-examples-workspace)](https://www.npmjs.com/@gooddata/live-examples-workspace)&nbsp;
+[![npm monthly downloads](https://img.shields.io/npm/dm/@gooddata/live-examples-workspace)](https://npmcharts.com/compare/@gooddata/live-examples-workspace?minimal=true)&nbsp;
+![typescript](https://img.shields.io/badge/typescript-first-blue?logo=typescript)
+
 This project contains LDM and recordings captured from the GoodData workspace which is backing the `sdk-examples`. It
 is a complement to the reference workspace; it contains additional types of objects and data and can be used for
 testing the Geo Pushpin chart.

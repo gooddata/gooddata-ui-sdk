@@ -1,5 +1,9 @@
 # Validation script for translations
 
+[![npm version](https://img.shields.io/npm/v/@gooddata/i18n-toolkit)](https://www.npmjs.com/@gooddata/i18n-toolkit)&nbsp;
+[![npm monthly downloads](https://img.shields.io/npm/dm/@gooddata/i18n-toolkit)](https://npmcharts.com/compare/@gooddata/i18n-toolkit?minimal=true)&nbsp;
+![typescript](https://img.shields.io/badge/typescript-first-blue?logo=typescript)
+
 This is a translations validator script that is able to validate rules for valid translations files.
 
 ### What this toolkit validates?
