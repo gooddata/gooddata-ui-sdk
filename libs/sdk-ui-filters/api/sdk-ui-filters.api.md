@@ -1081,6 +1081,14 @@ export interface IUseAttributeFilterHandlerProps {
     workspace: string;
 }
 
+// @alpha (undocumented)
+export interface IUseAttributeFilterSearchProps {
+    // (undocumented)
+    onSearch: (search: string) => void;
+    // (undocumented)
+    searchString: string;
+}
+
 // @beta (undocumented)
 export type IWarningMessage = {
     text: string;
@@ -1249,6 +1257,12 @@ export const useAttributeFilterController: (props: IUseAttributeFilterController
 
 // @alpha (undocumented)
 export const useAttributeFilterHandler: (props: IUseAttributeFilterHandlerProps) => IMultiSelectAttributeFilterHandler;
+
+// @alpha
+export const useAttributeFilterSearch: (props: IUseAttributeFilterSearchProps) => {
+    onSearch: (search: string) => void;
+    search: string;
+};
 
 // @internal
 export const useAutoOpenAttributeFilterDropdownButton: (props: IAttributeFilterDropdownButtonProps, isAutoOpen: boolean) => void;
