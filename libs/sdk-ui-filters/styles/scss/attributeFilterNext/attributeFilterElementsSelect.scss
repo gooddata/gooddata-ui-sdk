@@ -3,6 +3,36 @@
 
 .gd-attribute-filter-elements-select-item__next {
     min-height: 28px;
+
+    .gd-empty-list-item-tooltip-wrapper {
+        margin-left: 5px;
+        flex-grow: 1;
+
+        .gd-empty-list-item-tooltip {
+            color: var(--gd-palette-complementary-6, #94a1ad);
+        }
+    }
+}
+
+.gd-attribute-filter-list-empty-item .input-checkbox-label {
+    &.gd-empty-value-label {
+        flex-grow: 0;
+    }
+
+    .input-label-text {
+        justify-content: flex-start;
+        font-style: italic;
+        color: var(--gd-palette-complementary-6, #94a1ad);
+
+        .gd-empty-value-tooltip-icon {
+            vertical-align: middle;
+            color: var(--gd-palette-complementary-6, #94a1ad);
+        }
+    }
+}
+
+div.gd-empty-item-bubble {
+    max-width: 235px;
 }
 
 .gd-attribute-filter-elements-select__next.gd-list {
@@ -19,6 +49,14 @@
 
             .input-label-text {
                 color: var(--gd-palette-complementary-9, inherit);
+            }
+        }
+
+        &.gd-attribute-filter-list-empty-item {
+            &:hover {
+                .input-label-text {
+                    color: var(--gd-palette-complementary-6, #94a1ad);
+                }
             }
         }
 
