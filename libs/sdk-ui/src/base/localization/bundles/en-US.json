@@ -1435,7 +1435,7 @@
         "limit": 0
     },
     "attributesDropdown.empty.item.tooltip": {
-        "value": "By selecting this item, missing (null) and empty values will be included.",
+        "value": "Include missing (null) and empty (\"\") values.",
         "comment": "Tooltip text of how selecting an (empty value) item affects the values shown.",
         "limit": 0
     },
