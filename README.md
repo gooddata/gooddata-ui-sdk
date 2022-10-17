@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/GoodData_logo symbol_pink circle.svg" alt="GoodData Logo" width="120px" height="120px"/>
+  <img src="assets/gooddata-logo.svg" alt="GoodData Logo" width="120px" height="120px"/>
 </p>
 <h1 align="center">GoodData.UI</h1>
 
