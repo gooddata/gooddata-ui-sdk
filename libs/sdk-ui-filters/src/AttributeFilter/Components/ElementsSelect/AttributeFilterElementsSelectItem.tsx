@@ -5,7 +5,9 @@ import camelCase from "lodash/camelCase";
 import { FormattedMessage, useIntl } from "react-intl";
 import { getElementTitle } from "../../utils";
 import { IAttributeFilterElementsSelectItemProps } from "./types";
-import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";
+
+const ALIGN_POINTS: IAlignPoint[] = [{ align: "bl tc", offset: { x: 7, y: 0 } }];
 
 /**
  * @internal
@@ -66,7 +68,7 @@ export const AttributeFilterElementsSelectItem: React.VFC<IAttributeFilterElemen
                         <Bubble
                             className="bubble-primary gd-empty-item-bubble"
                             alignTo=".gd-empty-value-tooltip-icon"
-                            alignPoints={[{ align: "bl tc", offset: { x: 7, y: 0 } }]}
+                            alignPoints={ALIGN_POINTS}
                         >
                             <FormattedMessage id="attributesDropdown.empty.item.tooltip" />
                         </Bubble>
