@@ -13,6 +13,7 @@ import { listDashboardPlugins } from "./listCmds/listDashboardPlugins";
 import { inspectCmdAction } from "./inspectCmds/inspectCmdAction";
 import { inspectDashboard } from "./inspectCmds/inspectDashboard";
 import { updatePluginParamCmdAction } from "./updatePluginParamsCmd";
+import { removePluginParamCmdAction } from "./removeParamsCmd";
 
 program
     .version(pkg.version)
@@ -225,6 +226,30 @@ const updatePluginParamsCmd: Command = dashboardCmd
         await updatePluginParamCmdAction(identifier, {
             programOpts: program.opts(),
             commandOpts: updatePluginParamsCmd.opts(),
+        });
+    });
+
+const removePluginParamsCmd: Command = dashboardCmd
+    .command("remove-params")
+    .description("Removes the parameter for the already linked plugin.")
+    .argument("<plugin-id>", "Identifier of the plugin object which you want to modify parameters for.")
+    .option(
+        "--workspace-id <id>",
+        "Identifier of the workspace that contains dashboard that should use the plugin.",
+    )
+    .option("--dashboard-id <id>", "Identifier of the dashboard on which you want to update the plugin.")
+    .option(
+        "--dry-run",
+        "In dry run mode, the tool will proceed up to the point when first update operation has to " +
+            "be done and then will stop. This is ideal to verify configuration. Dry run is disabled by default",
+        false,
+    )
+    .action(async (identifier) => {
+        acceptUntrustedSsl(program.opts());
+
+        await removePluginParamCmdAction(identifier, {
+            programOpts: program.opts(),
+            commandOpts: removePluginParamsCmd.opts(),
         });
     });
 

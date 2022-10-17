@@ -115,6 +115,10 @@ Building a new plugin is easy. Before you start, ensure that your `.env` and `.e
 
     This command is useful if you want to change or add the parameters in the already linked plugin. The tool will open an editor for you to enter the new parameters.
 
+8.  Remove plugin parameters on a dashboard: `{{packageManager}} run remove-plugin-params -- <plugin-object-id>`
+
+    This command is useful if you want to remove the parameters in the already linked plugin.
+
 ## Authentication & secrets
 
 Your plugin does not have to concern itself with the authentication against GoodData backend. When the plugin runs
