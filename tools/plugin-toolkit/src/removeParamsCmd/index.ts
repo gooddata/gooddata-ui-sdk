@@ -6,16 +6,15 @@ import ora from "ora";
 import { logInfo, logSuccess, logWarn } from "../_base/terminal/loggers";
 import { ActionOptions } from "../_base/types";
 import { genericErrorReporter } from "../_base/utils";
-import { getUpdatePluginParamsCmdConfig, UpdatePluginParamsCmdConfig } from "./actionConfig";
+import { getRemovePluginParamsCmdConfig, RemovePluginParamsCmdConfig } from "./actionConfig";
 
-function printUsedUpdatePluginParamsSummary(config: UpdatePluginParamsCmdConfig) {
+function printUsedUpdatePluginParamsSummary(config: RemovePluginParamsCmdConfig) {
     const {
         backend,
         hostname,
         workspace,
         dashboard,
         identifier,
-        parameters,
         credentials: { username },
     } = config;
 
@@ -29,11 +28,10 @@ function printUsedUpdatePluginParamsSummary(config: UpdatePluginParamsCmdConfig)
     logInfo(`  Workspace   : ${workspace}`);
     logInfo(`  Dashboard   : ${dashboard}`);
     logInfo(`  Plugin obj  : ${identifier}`);
-    logInfo(`  Parameters  : ${parameters}`);
 }
 
-async function updateDashboardWithNewParams(config: UpdatePluginParamsCmdConfig) {
-    const { backendInstance, workspace, dashboard, identifier: validIdentifier, parameters } = config;
+async function updateDashboardWithRemovedParams(config: RemovePluginParamsCmdConfig) {
+    const { backendInstance, workspace, dashboard, identifier: validIdentifier } = config;
     const dashboardRef = idRef(dashboard);
 
     const dashboardObj: IDashboard = await backendInstance
@@ -54,7 +52,7 @@ async function updateDashboardWithNewParams(config: UpdatePluginParamsCmdConfig)
         if (areObjRefsEqual(plugin.plugin, touchedPlugin?.ref)) {
             return {
                 ...plugin,
-                parameters,
+                parameters: undefined,
             };
         }
         return plugin;
@@ -70,9 +68,9 @@ async function updateDashboardWithNewParams(config: UpdatePluginParamsCmdConfig)
     await backendInstance.workspace(workspace).dashboards().updateDashboard(dashboardObj, updatedDashboard);
 }
 
-export async function updatePluginParamCmdAction(identifier: string, options: ActionOptions): Promise<void> {
+export async function removePluginParamCmdAction(identifier: string, options: ActionOptions): Promise<void> {
     try {
-        const config: UpdatePluginParamsCmdConfig = await getUpdatePluginParamsCmdConfig(identifier, options);
+        const config: RemovePluginParamsCmdConfig = await getRemovePluginParamsCmdConfig(identifier, options);
 
         printUsedUpdatePluginParamsSummary(config);
 
@@ -85,13 +83,13 @@ export async function updatePluginParamCmdAction(identifier: string, options: Ac
         }
 
         const updateProgress = ora({
-            text: "Updating parameters on the linked plugin.",
+            text: "Removing the parameters from the linked plugin.",
         });
 
         let success = false;
         try {
             updateProgress.start();
-            await updateDashboardWithNewParams(config);
+            await updateDashboardWithRemovedParams(config);
             success = true;
         } finally {
             updateProgress.stop();
@@ -99,7 +97,7 @@ export async function updatePluginParamCmdAction(identifier: string, options: Ac
 
         if (success) {
             logSuccess(
-                `Parameters on linked plugin ${config.identifier} on dashboard ${config.dashboard} has been updated with ${config.parameters}.`,
+                `Parameters on linked plugin ${config.identifier} on dashboard ${config.dashboard} has been removed.`,
             );
         }
     } catch (e) {
