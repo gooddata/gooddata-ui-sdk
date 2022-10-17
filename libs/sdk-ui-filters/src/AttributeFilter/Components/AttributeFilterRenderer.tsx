@@ -4,6 +4,10 @@ import { AttributeFilterDropdown } from "./Dropdown/AttributeFilterDropdown";
 import { useAttributeFilterComponentsContext } from "../Context/AttributeFilterComponentsContext";
 import { useAttributeFilterContext } from "../Context/AttributeFilterContext";
 
+/**
+ * This is internal Attribute filer render
+ * @internal
+ */
 export const AttributeFilterRenderer: React.VFC = () => {
     const { LoadingComponent, ErrorComponent } = useAttributeFilterComponentsContext();
     const { isInitializing, initError } = useAttributeFilterContext();

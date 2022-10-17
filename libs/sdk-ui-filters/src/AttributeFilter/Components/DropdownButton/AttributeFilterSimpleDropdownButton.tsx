@@ -6,7 +6,12 @@ import { DropdownButton } from "@gooddata/sdk-ui-kit";
 import { IAttributeFilterDropdownButtonProps } from "./AttributeFilterDropdownButton";
 
 /**
- * @internal
+ * This component implement {@link IAttributeFilterDropdownButtonProps}
+ * It displays AttributeFilterDropdownButton as a simple button.
+ * It displays the name of related attribute filter.
+ * It displays loading and filtering statuses.
+ *
+ * @beta
  */
 export const AttributeFilterSimpleDropdownButton: React.VFC<IAttributeFilterDropdownButtonProps> = (
     props,
@@ -33,7 +38,12 @@ export const AttributeFilterSimpleDropdownButton: React.VFC<IAttributeFilterDrop
 };
 
 /**
- * @internal
+ * This component implement {@link IAttributeFilterDropdownButtonProps}
+ * It displays AttributeFilterDropdownButton as a simple button.
+ * It displays the name of related attribute filter.
+ * It displays state of selection and selection count.
+ * It displays loading and filtering statuses.
+ * @beta
  */
 export const AttributeFilterSimpleDropdownButtonWithSelection: React.VFC<
     IAttributeFilterDropdownButtonProps

@@ -7,14 +7,16 @@ const ALIGN_POINTS = [{ align: "cr cl" }];
 const ARROW_OFFSETS = { "cr cl": [10, 0] };
 
 /**
- * @alpha
+ * It represent status message for parent elements titles that are used for filtering elements.
+ * @beta
  */
 export interface IAttributeFilterFilteredStatusProps {
     parentFilterTitles: string[];
 }
 
 /**
- * @internal
+ * It displays list of parent filters
+ * @beta
  */
 export const AttributeFilterFilteredStatus: React.FC<IAttributeFilterFilteredStatusProps> = (props) => {
     const { parentFilterTitles } = props;
