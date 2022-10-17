@@ -4,7 +4,6 @@ import isEqual from "lodash/isEqual";
 import debounce from "lodash/debounce";
 import {
     filterAttributeElements,
-    // filterObjRef,
     IAttributeElement,
     IAttributeFilter,
     isAttributeElementsByRef,
@@ -141,6 +140,7 @@ function useInitOrReload(
         if (limit) {
             handler.setLimit(limit);
         }
+
         handler.init();
 
         // Change of the parent filters is resolved in the useEffect bellow,
@@ -162,7 +162,7 @@ function useInitOrReload(
             onApply?.(nextFilter, isInverted);
 
             if (handler.getInitStatus() !== "success") {
-                handler.init();
+                handler.init(PARENT_FILTERS_CORRELATION);
             } else {
                 handler.loadInitialElementsPage(PARENT_FILTERS_CORRELATION);
             }

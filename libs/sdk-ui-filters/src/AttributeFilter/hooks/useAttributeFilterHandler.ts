@@ -43,11 +43,17 @@ export const useAttributeFilterHandler = (props: IUseAttributeFilterHandlerProps
     const handlerRef = useRef<IMultiSelectAttributeFilterHandler>();
 
     const createNewHandler = useCallback(() => {
-        handlerRef.current = newAttributeFilterHandler(backend, workspace, filter, {
-            selectionMode: "multi",
-            hiddenElements,
-            staticElements,
-        });
+        const newHandler = newAttributeFilterHandler(
+            backend.withTelemetry("AttributeFilter", { workspace, filter, hiddenElements, staticElements }),
+            workspace,
+            filter,
+            {
+                selectionMode: "multi",
+                hiddenElements,
+                staticElements,
+            },
+        );
+        handlerRef.current = newHandler;
     }, [backend, workspace, filter, hiddenElements, staticElements]);
 
     if (!handlerRef.current) {

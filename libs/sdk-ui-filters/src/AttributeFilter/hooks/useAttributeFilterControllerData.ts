@@ -115,6 +115,10 @@ function useIsFiltering(handler: IMultiSelectAttributeFilterHandler) {
             handler.onLoadInitialElementsPageSuccess(handleFilteringEnd),
             handler.onLoadInitialElementsPageError(handleFilteringEnd),
             handler.onLoadInitialElementsPageCancel(handleFilteringEnd),
+            handler.onInitStart(handleFilteringStart),
+            handler.onInitSuccess(handleFilteringEnd),
+            handler.onInitError(handleFilteringEnd),
+            handler.onInitCancel(handleFilteringEnd),
         ];
 
         function handleFilteringStart(payload: { correlation: string }) {
