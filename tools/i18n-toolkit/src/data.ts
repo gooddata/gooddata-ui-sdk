@@ -43,11 +43,13 @@ export type UsageResult = {
     stats: {
         extracted: number;
         loaded: number;
+        ignored: number;
         missing: number;
         unused: number;
     };
     data: {
         missingMessages: string[];
         unusedMessages: string[];
+        ignoredMessages: string[];
     };
 };

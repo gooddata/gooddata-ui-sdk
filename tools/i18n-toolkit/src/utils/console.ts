@@ -56,8 +56,8 @@ export function resultsInfo(cwd: string, results: UsageResult[], uncontrolled: A
 
 export function resultsToRows(cwd: string, results: UsageResult[], uncontrolled: Array<string>): string[][] {
     return [
-        [" ┣ ", "Identifier", "Extracted", "Loaded", "Missing", "Unused", "Translation files"].map((s) =>
-            chalk.bold(s),
+        [" ┣ ", "Identifier", "Extracted", "Loaded", "Missing", "Unused", "Ignored", "Translation files"].map(
+            (s) => chalk.bold(s),
         ),
         ...results.map<string[]>(resultToRow.bind(null, cwd)),
         [
@@ -75,22 +75,24 @@ function resultToRow(cwd: string, { identifier, ignore, stats, files }: UsageRes
     if (ignore) {
         return [
             " ┣ ",
-            ignore ? chalk.white(`IGNORED: ${identifier}`) : chalk.blueBright(identifier),
+            chalk.white(`IGNORED: ${crop(identifier)}`),
             chalk.white(stats.extracted),
-            chalk.white(stats.loaded),
             "-",
             "-",
+            "-",
+            chalk.white(stats.ignored),
             filesText,
         ];
     }
 
     return [
         " ┣ ",
-        ignore ? chalk.white(`IGNORED: ${identifier}`) : chalk.blueBright(identifier),
+        chalk.blueBright(crop(identifier)),
         chalk.white(stats.extracted),
         chalk.white(stats.loaded),
         stats.missing > 0 ? chalk.redBright(stats.missing) : chalk.white(stats.missing),
         stats.unused > 0 ? chalk.redBright(stats.unused) : chalk.white(stats.unused),
+        stats.ignored > 0 ? chalk.gray(stats.ignored) : "-",
         filesText,
     ];
 }
@@ -157,4 +159,12 @@ function table(data: string[][]) {
 function realLength(str: string) {
     // eslint-disable-next-line no-control-regex
     return ("" + str).replace(/\u001b\[\d+m/g, "").length;
+}
+
+function crop(text: string) {
+    const max = 70;
+    if (text.length > max) {
+        return text.slice(0, max - 3) + "...";
+    }
+    return text;
 }

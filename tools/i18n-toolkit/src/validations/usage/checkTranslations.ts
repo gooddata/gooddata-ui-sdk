@@ -1,7 +1,9 @@
 // (C) 2021-2022 GoodData Corporation
 import groupBy from "lodash/groupBy";
 import difference from "lodash/difference";
+import intersection from "lodash/intersection";
 import flatten from "lodash/flatten";
+import uniq from "lodash/uniq";
 
 import {
     ToolkitConfigFile,
@@ -26,18 +28,35 @@ export function checkTranslations(
     rules: ToolkitConfigFile["rules"],
     extracted: Record<string, any>,
     { insightToReport }: { insightToReport?: boolean },
-) {
-    const { groups, translationDefinition } = getGroupedRules(rules, extracted);
+): { results: UsageResult[]; groups: Record<string, string[]>; uncontrolled: Array<string> } {
+    const { groups, ignoredRules, validateRules } = getGroupedRules(rules, extracted);
     const keysInFiles = getTranslationKeysFromFiles(localizations, insightToReport);
 
-    const results = translationDefinition.map((translation): UsageResult => {
+    const ignoredResults = getIgnoresResults(keysInFiles, ignoredRules, groups);
+    const validResults = getValidResults(keysInFiles, validateRules, groups, ignoredResults);
+
+    return {
+        results: [...validResults, ...ignoredResults],
+        groups,
+        uncontrolled: groups[Uncontrolled] || [],
+    };
+}
+
+function getValidResults(
+    keysInFiles: Array<[string, string[]]>,
+    validateRules: ToolkitTranslationRuleData[],
+    groups: Record<string, string[]>,
+    ignoredResults: UsageResult[],
+): UsageResult[] {
+    return validateRules.map((translation): UsageResult => {
         const extractedMessages = groups[translation.identifier] || [];
 
         const translationsFromFiles = getTranslationKeysForDir(keysInFiles, translation);
-        const translationKeys = getFilteredKeys(translationsFromFiles, translation);
+        const { usedKeys, ignoredKeys } = getFilteredKeys(translationsFromFiles, ignoredResults, translation);
 
-        const missingMessages = translation.ignore ? [] : difference(extractedMessages, translationKeys);
-        const unusedMessages = translation.ignore ? [] : difference(translationKeys, extractedMessages);
+        const ignoredMessages = intersection(ignoredKeys, extractedMessages);
+        const missingMessages = difference(extractedMessages, usedKeys);
+        const unusedMessages = difference(usedKeys, extractedMessages);
 
         const files = translationsFromFiles.map(([file]) => file);
 
@@ -46,19 +65,19 @@ export function checkTranslations(
             identifier: translation.identifier,
             ignore: translation.ignore,
             stats: {
+                ignored: ignoredMessages.length,
                 extracted: extractedMessages.length,
-                loaded: translationKeys.length,
+                loaded: usedKeys.length,
                 missing: missingMessages.length,
                 unused: unusedMessages.length,
             },
             data: {
                 missingMessages,
                 unusedMessages,
+                ignoredMessages,
             },
         };
     });
-
-    return { results, groups, uncontrolled: groups[Uncontrolled] || [] };
 }
 
 function getGroupedRules(rules: ToolkitConfigFile["rules"], extracted: Record<string, any>) {
@@ -73,10 +92,13 @@ function getGroupedRules(rules: ToolkitConfigFile["rules"], extracted: Record<st
     );
 
     const groups = groupBy(allExtractedMessages, getIdentifierByPatternFilter(translationDefinition));
+    const ignoredRules = translationDefinition.filter((def) => def.ignore);
+    const validateRules = translationDefinition.filter((def) => !def.ignore);
 
     return {
         groups,
-        translationDefinition,
+        ignoredRules,
+        validateRules,
     };
 }
 
@@ -127,8 +149,58 @@ function getTranslationKeysForDir(
 
 function getFilteredKeys(
     keysInFiles: Array<[string, string[]]>,
-    { filterTranslationFile, messageFilter }: ToolkitTranslationRuleData,
+    ignoredRules: UsageResult[],
+    { filterTranslationFile, messageFilter, ignore }: ToolkitTranslationRuleData,
 ) {
-    const keys = flatten(keysInFiles.map(([, values]) => values));
-    return filterTranslationFile ? keys.filter(messageFilter) : keys;
+    const keys = keysInFiles.map(([file, values]) => {
+        const ignoredValues = ignoredRules
+            .filter(({ files }) => files.includes(file))
+            .map(({ data }) => data.ignoredMessages);
+        const ignored = flatten(ignoredValues);
+        return {
+            ignored: intersection(ignored, values),
+            used: difference(values, ignored),
+        };
+    });
+
+    const ignoredKeys = uniq(flatten(keys.map(({ ignored }) => ignored)));
+    const usedKeys = uniq(flatten(keys.map(({ used }) => used)));
+
+    return {
+        usedKeys: filterTranslationFile || ignore ? usedKeys.filter(messageFilter) : usedKeys,
+        ignoredKeys,
+    };
+}
+
+function getIgnoresResults(
+    keysInFiles: Array<[string, string[]]>,
+    ignoredRules: ToolkitTranslationRuleData[],
+    groups: Record<string, string[]>,
+): UsageResult[] {
+    return ignoredRules.map((translation) => {
+        const extractedMessages = groups[translation.identifier] || [];
+
+        const translationsFromFiles = getTranslationKeysForDir(keysInFiles, translation);
+        const { usedKeys } = getFilteredKeys(translationsFromFiles, [], translation);
+
+        const files = translationsFromFiles.map(([file]) => file);
+
+        return {
+            files,
+            identifier: translation.identifier,
+            ignore: true,
+            stats: {
+                extracted: extractedMessages.length,
+                loaded: usedKeys.length,
+                ignored: usedKeys.length,
+                missing: 0,
+                unused: 0,
+            },
+            data: {
+                missingMessages: [],
+                unusedMessages: [],
+                ignoredMessages: usedKeys,
+            },
+        };
+    });
 }
