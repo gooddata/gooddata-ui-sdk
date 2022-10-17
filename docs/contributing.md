@@ -11,6 +11,42 @@ This means that some parts of the development process will not work on Windows.
 You can use [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
 but note that this mode of development is not tested and not supported by our teams.
 
+## Getting started
+
+1.  Install [nvm](https://github.com/nvm-sh/nvm)
+    ```bash
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
+    ```
+2.  Clone and bootstrap
+
+    ```bash
+    git clone git@github.com:gooddata/gooddata-ui-sdk.git
+    cd gooddata-ui-sdk
+    nvm install
+    nvm use
+    npm i -g @microsoft/rush
+    rush install
+    ```
+
+3.  Build
+
+    ```bash
+    rush build
+    ```
+
+4.  Read the rest of this guide and also the [developer guide](./sdk-dev.md).
+
+**HINT**: The repository includes the `.envrc` configuration file for [direnv](https://direnv.net/); you can use this
+to auto-nvm-use the correct node.js installation every time you enter the `gooddata-ui-sdk` directory.
+
+## After you pull latest changes
+
+Always run `rush install`; this will make sure all the dependencies from the lock file will be installed in all
+the projects managed in the repository. After that run `rush build`.
+
+In case the pull brings in new projects or large bulk of changes, it is safer (albeit more time-consuming) to run
+`rush install && rush link --force && rush clean && rush rebuild`.
+
 ## IDE Settings
 
 Please check out [How to setup IntelliJ](setupIntellij.md) guide to find out about recommended settings for IntelliJ IDEA or [How to setup VS Code](setupVsCode.md) guide to find out about recommended settings for VS Code.

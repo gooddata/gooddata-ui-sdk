@@ -1,5 +1,9 @@
 # Analytical Backend SPI - infrastructure and foundations
 
+[![npm version](https://img.shields.io/npm/v/@gooddata/sdk-backend-base)](https://www.npmjs.com/@gooddata/sdk-backend-base)&nbsp;
+[![npm monthly downloads](https://img.shields.io/npm/dm/@gooddata/sdk-backend-base)](https://npmcharts.com/compare/@gooddata/sdk-backend-base?minimal=true)&nbsp;
+![typescript](https://img.shields.io/badge/typescript-first-blue?logo=typescript)
+
 This package contains foundational, reusable code useful for building new or decorating existing
 [Analytical Backend](https://www.npmjs.com/package/@gooddata/sdk-backend-spi) implementations. This is lower-level, infrastructural code which may be useful
 when building larger, more complex applications.

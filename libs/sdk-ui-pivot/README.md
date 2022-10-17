@@ -1,5 +1,9 @@
 # GoodData.UI SDK - Pivot Table component
 
+[![npm version](https://img.shields.io/npm/v/@gooddata/sdk-ui-pivot)](https://www.npmjs.com/@gooddata/sdk-ui-pivot)&nbsp;
+[![npm monthly downloads](https://img.shields.io/npm/dm/@gooddata/sdk-ui-pivot)](https://npmcharts.com/compare/@gooddata/sdk-ui-pivot?minimal=true)&nbsp;
+![typescript](https://img.shields.io/badge/typescript-first-blue?logo=typescript)
+
 This project implements `PivotTable` React component which you can use in our React applications.
 
 See the official SDK documentation for more information about the [PivotTable](https://sdk.gooddata.com/gooddata-ui/docs/next/pivot_table_component.html) component.

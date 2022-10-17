@@ -1,5 +1,9 @@
 # GoodData Platform REST API request and response models
 
+[![npm version](https://img.shields.io/npm/v/@gooddata/api-model-bear)](https://www.npmjs.com/@gooddata/api-model-bear)&nbsp;
+[![npm monthly downloads](https://img.shields.io/npm/dm/@gooddata/api-model-bear)](https://npmcharts.com/compare/@gooddata/api-model-bear?minimal=true)&nbsp;
+![typescript](https://img.shields.io/badge/typescript-first-blue?logo=typescript)
+
 This package contains TypeScript definitions for [GoodData Platform](https://sdk.gooddata.com/gooddata-ui/docs/platform_intro.html) (codename `bear`) REST API request and response types and functions
 which operate directly on top of the different request and response objects.
 

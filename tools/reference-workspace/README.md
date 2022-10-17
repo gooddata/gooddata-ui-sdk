@@ -1,5 +1,9 @@
 # Reference Workspace for tests
 
+[![npm version](https://img.shields.io/npm/v/@gooddata/reference-workspace)](https://www.npmjs.com/@gooddata/reference-workspace)&nbsp;
+[![npm monthly downloads](https://img.shields.io/npm/dm/@gooddata/reference-workspace)](https://npmcharts.com/compare/@gooddata/reference-workspace?minimal=true)&nbsp;
+![typescript](https://img.shields.io/badge/typescript-first-blue?logo=typescript)
+
 This project defines LDM and test data recordings to use for all types of tests in GoodData.UI SDK. The
 LDM and recordings are obtained from a live workspace in a GoodData Platform.
 

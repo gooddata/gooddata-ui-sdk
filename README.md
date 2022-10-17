@@ -1,47 +1,61 @@
-# GoodData.UI SDK
+<p align="center">
+  <img src="assets/gooddata-logo.svg" alt="GoodData Logo" width="120px" height="120px"/>
+</p>
+<h1 align="center">GoodData.UI</h1>
 
-## Getting Started
+<p align="center">
+  <a href="https://sdk.gooddata.com/gooddata-ui"><strong>sdk.gooddata.com/gooddata-ui</strong></a>
+  <br>
+</p>
 
-The easiest way to start developing analytical applications using GoodData.UI SDK is to use
-the [Accelerator Toolkit](https://github.com/gooddata/gooddata-create-gooddata-react-app). You will
-be up and running in minutes.
+<p align="center">
+    <a href="https://www.npmjs.com/@gooddata/sdk-model">
+        <img src="https://img.shields.io/npm/v/@gooddata/sdk-model.svg?logo=npm" alt="GoodData.UI on npm">
+    </a>&nbsp;
+    <a href="https://npmcharts.com/compare/@gooddata/sdk-model?minimal=true">
+        <img src="https://img.shields.io/npm/dm/@gooddata/sdk-model.svg" alt="GoodData.UI on npmcharts">
+    </a>&nbsp;
+    <img src="https://img.shields.io/badge/typescript-first-blue?logo=typescript" alt="GoodData TypeScript support badge">
+    &nbsp;
+    <a href="https://www.gooddata.com/slack">
+        <img src="https://img.shields.io/badge/slack-community-green?logo=slack" alt="GoodData Community Slack">
+    </a>&nbsp;
+</p>
 
-For detailed description of available components and capabilities see the [official documentation](https://sdk.gooddata.com/gooddata-ui/docs/about_gooddataui.html).
+[GoodData.UI](https://sdk.gooddata.com/gooddata-ui) is a TypeScript framework for building analytical applications on top of the [GoodData platform](https://help.gooddata.com/doc/enterprise/en), [GoodData Cloud](https://www.gooddata.com/developers/cloud-native/doc/cloud/) or [GoodData.CN](https://www.gooddata.com/developers/cloud-native/doc/cloud/).
 
-You can also view our [live examples](https://gdui-examples.herokuapp.com/login) or start the live examples
-[application locally](examples/sdk-examples).
+GoodData.UI consists of multiple libraries with clear-cut responsibilities ranging from low-level REST API clients up to visualization libraries that deliver React-based components to render different types of charts and tables.
+
+## Documentation and examples
+
+Learn about GoodData.UI:
+
+-   [📚 Official documentation](https://sdk.gooddata.com/gooddata-ui)
+-   [🚀 Getting started](https://sdk.gooddata.com/gooddata-ui/docs/quickstart.html)
+-   [📊 Examples Gallery](https://gdui-examples.herokuapp.com)
+-   [⚙️ API reference](https://sdk.gooddata.com/gooddata-ui-apidocs/docs/index.html)
+
+## Package overview
+
+The most notable packages in this monorepo
+
+| package                                                           | description                                                                                        |
+| ----------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| [`@gooddata/sdk-model`](./libs/sdk-model)                         | Domain models for GoodData.UI                                                                      |
+| [`@gooddata/sdk-backend-spi`](./libs/sdk-backend-spi)             | Definitions of the Service Provider Interface (SPI) for the Analytical Backend                     |
+| [`@gooddata/sdk-backend-tiger`](./libs/sdk-backend-tiger)         | Analytical Backend implementation for GoodData Cloud and GoodData.CN                               |
+| [`@gooddata/sdk-backend-bear`](./libs/sdk-backend-bear)           | Analytical Backend implementation for the GoodData platform                                        |
+| [`@gooddata/sdk-ui-charts`](./libs/sdk-ui-charts)                 | React-based chart visualizations that you can use to visualize your data                           |
+| [`@gooddata/sdk-ui-pivot`](./libs/sdk-ui-pivot)                   | React-based PivotTable component that you can use to visualize your data in a table-based manner   |
+| [`@gooddata/sdk-ui-geo`](./libs/sdk-ui-geo)                       | React components that you can use to visualize your location-based data                            |
+| [`@gooddata/sdk-ui-dashboard`](./libs/sdk-ui-dashboard)           | Dashboard component that can be used to embed dashboards into your application as React components |
+| [`@gooddata/sdk-ui-ext`](./libs/sdk-ui-ext)                       | Various extensions to the base React-based components, see the package README for more             |
+| [`@gooddata/sdk-ui-filters`](./libs/sdk-ui-filters)               | Set of classes and React components for creating filter-related UI                                 |
+| [`@gooddata/sdk-ui-theme-provider`](./libs/sdk-ui-theme-provider) | Tools to make your application support themes                                                      |
 
 ## Contributing
 
-### Getting started
-
-1.  Install nvm; for instance: `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash`
-2.  Clone and bootstrap
-
-    ```bash
-    git clone git@github.com:gooddata/gooddata-ui-sdk.git
-    cd gooddata-ui-sdk
-    nvm install
-    nvm use
-    npm i -g @microsoft/rush
-    rush install
-    ```
-
-3.  Build: `rush build`
-4.  Read the [contribution guide](./docs/contributing.md)
-
-**HINT**: The repository includes the `.envrc` configuration file for [direnv](https://direnv.net/); you can use this
-to auto-nvm-use the correct node.js installation every time you enter the `gooddata-ui-sdk` directory.
-
-### After you pull latest changes
-
-Always run `rush install`; this will make sure all the dependencies from the lock file will be installed in all
-the projects managed in the repository. After that run `rush build`.
-
-In case the pull brings in new projects or large bulk of changes, it is safer (albeit more time-consuming) to run
-`rush install && rush link --force && rush clean && rush rebuild`.
-
-> You can find more technical information in [contributor manual](./docs/contributing.md) and in [developer guide](./docs/sdk-dev.md).
+To learn how to contribute, check out the [Contribution Guide](./docs/contributing.md).
 
 ## License
 
