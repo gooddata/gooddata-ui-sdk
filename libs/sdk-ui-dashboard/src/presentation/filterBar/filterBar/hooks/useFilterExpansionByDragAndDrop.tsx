@@ -25,10 +25,10 @@ export function useFilterExpansionByDragAndDrop(
     );
 
     useEffect(() => {
-        const dragStateChanged = canDrop === lastCanDrop.current;
-        const multiRowsChanged = containsMultipleRows === lastMultiRows.current;
+        const dragStateUnchanged = canDrop === lastCanDrop.current;
+        const multiRowsUnchanged = containsMultipleRows === lastMultiRows.current;
 
-        if (dragStateChanged || multiRowsChanged) {
+        if (dragStateUnchanged && multiRowsUnchanged) {
             return;
         }
 
