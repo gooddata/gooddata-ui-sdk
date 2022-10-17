@@ -7,14 +7,16 @@ const ALIGN_POINTS = [{ align: "cr cl" }];
 const ARROW_OFFSETS = { "cr cl": [10, 0] };
 
 /**
- * @internal
+ * It represent message when all elements are filtered out by parent filers.
+ * @beta
  */
 export interface IAttributeFilterAllValuesFilteredResultProps {
     parentFilterTitles: string[];
 }
 
 /**
- * @internal
+ * Component that display message that all elements are filtered out by parent filers.
+ * @beta
  */
 export const AttributeFilterAllValuesFilteredResult: React.FC<
     IAttributeFilterAllValuesFilteredResultProps

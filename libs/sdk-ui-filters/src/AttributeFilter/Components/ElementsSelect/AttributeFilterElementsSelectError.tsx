@@ -5,14 +5,16 @@ import { Message } from "@gooddata/sdk-ui-kit";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 /**
- * @alpha
+ * It represents error message component.
+ * @beta
  */
 export interface IAttributeFilterElementsSelectErrorProps {
     error: GoodDataSdkError;
 }
 
 /**
- * @internal
+ * Component that displays a generic error message.
+ * @beta
  */
 export const AttributeFilterElementsSelectError: React.VFC = () => (
     <Message type="error">

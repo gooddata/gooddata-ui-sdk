@@ -12,28 +12,98 @@ export const ALIGN_POINT = [
 ];
 
 /**
- * @alpha
+ * This is the interface of AttributeFilter dropdown button.
+ * It opens Attribute filter dropdown and displaying title or subtitle, selection details and attribute filter statuses like loading or filtering.
+ *
+ * @remarks
+ * Note for rendering error status see {@link IAttributeFilterErrorProps}
+ * @beta
  */
 export interface IAttributeFilterDropdownButtonProps {
+    /**
+     * Title of attribute {@link  @gooddata/sdk-model#IAttributeFilter} and its related display form {@link  @gooddata/sdk-model#IAttributeDisplayFormMetadataObject}
+     *
+     * @beta
+     */
     title?: string;
+
+    /**
+     * List of selected elements titles separated by comma.
+     *
+     * @beta
+     */
     subtitle?: string;
+
+    /**
+     * Selected items count
+     *
+     * @remarks
+     * -  If value is 0 for {@link @gooddata/sdk-model#IPositiveAttributeFilter} means NONE items are selected
+     *
+     * -  If value is 0 for {@link @gooddata/sdk-model#INegativeAttributeFilter} means ALL items are selected
+     *
+     * @beta
+     */
     selectedItemsCount?: number;
 
+    /**
+     * This prop defines the open or close state of AttributeFilter dropdown.
+     *
+     * @beta
+     */
     isOpen?: boolean;
 
+    /**
+     * This prop means that AttributeFilter is initializing Attribute elements and its internal data.
+     *
+     * @beta
+     */
     isLoading?: boolean;
+
+    /**
+     * This prop means that AttributeFilter is filtering elements by parent filters.
+     *
+     * @beta
+     */
     isFiltering?: boolean;
+
+    /**
+     * This prop means that all initialization finished
+     *
+     * @beta
+     */
     isLoaded?: boolean;
 
+    /**
+     * This prop means that button support drag and drop operation
+     *
+     * @beta
+     */
     isDraggable?: boolean;
 
+    /**
+     * Icon of AttributeFilterDropdownButton
+     *
+     * @beta
+     */
     icon?: ReactNode;
 
+    /**
+     * Callback to open or close AttributeFilter dropdown.
+     *
+     * @beta
+     */
     onClick?: () => void;
 }
 
 /**
- * @internal
+ * This component implement {@link IAttributeFilterDropdownButtonProps}
+ * It displays AttributeFilterDropdownButton in GD look and feel.
+ * It displays the name of related attribute filter and as subtitle state of selection and selection count.
+ * It displays loading and filtering statuses.
+ * It supports the left icon and dragging icons.
+ *
+ * @beta
  */
 export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownButtonProps> = (props) => {
     const {
