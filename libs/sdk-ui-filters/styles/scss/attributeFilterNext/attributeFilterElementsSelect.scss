@@ -52,17 +52,17 @@ div.gd-empty-item-bubble {
             }
         }
 
-        &.gd-attribute-filter-list-empty-item {
-            &:hover {
-                .input-label-text {
-                    color: var(--gd-palette-complementary-6, #94a1ad);
-                }
-            }
-        }
-
         &.is-selected {
             font-weight: bold;
             color: $gd-color-text;
+        }
+    }
+
+    .gd-list-item.gd-attribute-filter-list-empty-item {
+        &:hover {
+            .input-label-text {
+                color: var(--gd-palette-complementary-6, #94a1ad);
+            }
         }
     }
 }
