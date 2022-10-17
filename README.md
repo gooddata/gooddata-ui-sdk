@@ -32,10 +32,10 @@ Learn about GoodData.UI:
 
 -   [📚 Official documentation](https://sdk.gooddata.com/gooddata-ui)
 -   [🚀 Getting started](https://sdk.gooddata.com/gooddata-ui/docs/quickstart.html)
--   [⚙️ API reference](https://sdk.gooddata.com/gooddata-ui-apidocs/docs/index.html)
 -   [📊 Examples Gallery](https://gdui-examples.herokuapp.com)
+-   [⚙️ API reference](https://sdk.gooddata.com/gooddata-ui-apidocs/docs/index.html)
 
-## Packages overview
+## Package overview
 
 The most notable packages in this monorepo
 
