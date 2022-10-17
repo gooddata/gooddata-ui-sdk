@@ -5,6 +5,9 @@ import camelCase from "lodash/camelCase";
 import { FormattedMessage, useIntl } from "react-intl";
 import { getElementTitle } from "../../utils";
 import { IAttributeFilterElementsSelectItemProps } from "./types";
+import { Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";
+
+const ALIGN_POINTS: IAlignPoint[] = [{ align: "bl tc", offset: { x: 7, y: 0 } }];
 
 /**
  * @internal
@@ -41,16 +44,37 @@ export const AttributeFilterElementsSelectItem: React.VFC<IAttributeFilterElemen
         {
             "s-attribute-filter-list-item-selected": isSelected,
         },
+        {
+            "gd-attribute-filter-list-empty-item": !item.title,
+        },
     );
 
-    const itemTile = getElementTitle(item, intl);
+    const labelClasses = cx("input-checkbox-label", {
+        "gd-empty-value-label": !item.title,
+    });
+
+    const itemTitle = getElementTitle(item, intl);
 
     return (
-        <div className={classes} onClick={onItemClick} title={itemTile}>
-            <label className="input-checkbox-label">
+        <div className={classes} onClick={onItemClick} title={itemTitle}>
+            <label className={labelClasses}>
                 <input type="checkbox" className="input-checkbox" readOnly checked={isSelected} />
-                <span className="input-label-text">{itemTile}</span>
+                <span className="input-label-text">{itemTitle}</span>
             </label>
+            {!item.title && (
+                <div className="gd-empty-list-item-tooltip-wrapper">
+                    <BubbleHoverTrigger className="gd-empty-list-item-tooltip" showDelay={0} hideDelay={0}>
+                        <span className="gd-icon-circle-question gd-empty-value-tooltip-icon" />
+                        <Bubble
+                            className="bubble-primary gd-empty-item-bubble"
+                            alignTo=".gd-empty-value-tooltip-icon"
+                            alignPoints={ALIGN_POINTS}
+                        >
+                            <FormattedMessage id="attributesDropdown.empty.item.tooltip" />
+                        </Bubble>
+                    </BubbleHoverTrigger>
+                </div>
+            )}
             <span className="gd-list-item-only" onClick={onOnlyItemClick}>
                 <FormattedMessage id="gs.list.only" />
             </span>

@@ -1434,6 +1434,11 @@
         "comment": "Label shown on dropdown button that changes form of the attribute used in insight. For example 'Display as: Shortened name'",
         "limit": 0
     },
+    "attributesDropdown.empty.item.tooltip": {
+        "value": "Include missing (null) and empty (\"\") values.",
+        "comment": "Tooltip text of how selecting an (empty value) item affects the values shown.",
+        "limit": 0
+    },
     "shareDialog.share.grantee.title": {
         "value": "Share with users and groups",
         "comment": "Title of dialog used for sharing of private dashboard with other users or user groups.",
