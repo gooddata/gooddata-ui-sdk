@@ -896,7 +896,7 @@ button.gd-button-primary {
 }
 
 button.gd-button-primary.gd-upsell-button {
-    width: 93px;
+    min-width: 93px;
     height: 27px;
     font-style: normal;
     font-weight: normal;
@@ -920,7 +920,7 @@ button.gd-button-primary.gd-upsell-button {
     .gd-icon-star {
         width: 14px;
         height: 13px;
-        margin: auto auto 6.5px 11px;
+        margin: auto 7px 6.5px 11px;
         background: url("~@gooddata/sdk-ui-kit/esm/assets/star.svg") no-repeat;
     }
 
