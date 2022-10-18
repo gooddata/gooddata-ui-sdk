@@ -22,7 +22,7 @@ import {
 /**
  * Result of the attribute elements load along with the options that were applied for it.
  *
- * @alpha
+ * @public
  */
 export interface ILoadElementsResult {
     elements: IAttributeElement[];
@@ -33,7 +33,7 @@ export interface ILoadElementsResult {
 /**
  * Options that can be applied for the particular load of the attribute elements.
  *
- * @alpha
+ * @public
  */
 export interface ILoadElementsOptions {
     offset?: number;
@@ -51,7 +51,7 @@ export interface ILoadElementsOptions {
 /**
  * Handles the loading of the attribute elements.
  *
- * @alpha
+ * @public
  */
 export interface IAttributeElementLoader {
     /**
@@ -408,14 +408,14 @@ export interface IAttributeElementLoader {
 /**
  * Payload of the onLoadInitialElementsPageStart callback.
  *
- * @alpha
+ * @public
  */
 export type OnLoadInitialElementsPageStartCallbackPayload = CallbackPayloadWithCorrelation;
 
 /**
  * Payload of the onLoadInitialElementsPageSuccess callback.
  *
- * @alpha
+ * @public
  */
 export type OnLoadInitialElementsPageSuccessCallbackPayload =
     CallbackPayloadWithCorrelation<ILoadElementsResult>;
@@ -423,7 +423,7 @@ export type OnLoadInitialElementsPageSuccessCallbackPayload =
 /**
  * Payload of the onLoadInitialElementsPageError callback.
  *
- * @alpha
+ * @public
  */
 export type OnLoadInitialElementsPageErrorCallbackPayload = CallbackPayloadWithCorrelation<{
     error: GoodDataSdkError;
@@ -432,21 +432,21 @@ export type OnLoadInitialElementsPageErrorCallbackPayload = CallbackPayloadWithC
 /**
  * Payload of the onLoadInitialElementsPageCancel callback.
  *
- * @alpha
+ * @public
  */
 export type OnLoadInitialElementsPageCancelCallbackPayload = CallbackPayloadWithCorrelation;
 
 /**
  * Payload of the onLoadNextElementsPageStart callback.
  *
- * @alpha
+ * @public
  */
 export type OnLoadNextElementsPageStartCallbackPayload = CallbackPayloadWithCorrelation;
 
 /**
  * Payload of the onLoadNextElementsPageSuccess callback.
  *
- * @alpha
+ * @public
  */
 export type OnLoadNextElementsPageSuccessCallbackPayload =
     CallbackPayloadWithCorrelation<ILoadElementsResult>;
@@ -454,7 +454,7 @@ export type OnLoadNextElementsPageSuccessCallbackPayload =
 /**
  * Payload of the onLoadNextElementsPageError callback.
  *
- * @alpha
+ * @public
  */
 export type OnLoadNextElementsPageErrorCallbackPayload = CallbackPayloadWithCorrelation<{
     error: GoodDataSdkError;
@@ -463,21 +463,21 @@ export type OnLoadNextElementsPageErrorCallbackPayload = CallbackPayloadWithCorr
 /**
  * Payload of the onLoadNextElementsPageCancel callback.
  *
- * @alpha
+ * @public
  */
 export type OnLoadNextElementsPageCancelCallbackPayload = CallbackPayloadWithCorrelation;
 
 /**
  * Payload of the onLoadCustomElementsStart callback.
  *
- * @alpha
+ * @public
  */
 export type OnLoadCustomElementsStartCallbackPayload = Partial<CallbackPayloadWithCorrelation>;
 
 /**
  * Payload of the onLoadCustomElementsSuccess callback.
  *
- * @alpha
+ * @public
  */
 export type OnLoadCustomElementsSuccessCallbackPayload = Partial<CallbackPayloadWithCorrelation> &
     ILoadElementsResult;
@@ -485,7 +485,7 @@ export type OnLoadCustomElementsSuccessCallbackPayload = Partial<CallbackPayload
 /**
  * Payload of the onLoadCustomElementsError callback.
  *
- * @alpha
+ * @public
  */
 export type OnLoadCustomElementsErrorCallbackPayload = Partial<CallbackPayloadWithCorrelation> & {
     error: GoodDataSdkError;
@@ -494,6 +494,6 @@ export type OnLoadCustomElementsErrorCallbackPayload = Partial<CallbackPayloadWi
 /**
  * Payload of the onLoadCustomElementsCancel callback.
  *
- * @alpha
+ * @public
  */
 export type OnLoadCustomElementsCancelCallbackPayload = Partial<CallbackPayloadWithCorrelation>;
