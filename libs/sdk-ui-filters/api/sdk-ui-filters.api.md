@@ -4,14 +4,12 @@
 
 ```ts
 
-/// <reference types="lodash" />
 /// <reference types="react" />
 
 import { AttributeFiltersOrPlaceholders } from '@gooddata/sdk-ui';
 import { DashboardDateFilterConfigMode } from '@gooddata/sdk-model';
 import { DateFilterGranularity } from '@gooddata/sdk-model';
 import { DateString } from '@gooddata/sdk-model';
-import { DebouncedFunc } from 'lodash';
 import { ElementsQueryOptionsElementsSpecification } from '@gooddata/sdk-backend-spi';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
 import { IAbsoluteDateFilterForm } from '@gooddata/sdk-model';
@@ -75,6 +73,46 @@ export const AttributeFilterButton: React_2.FC<IAttributeFilterButtonProps>;
 
 // @internal (undocumented)
 export const AttributeFilterConfigurationButton: React_2.VFC<IAttributeFilterConfigurationButtonProps>;
+
+// @public
+export type AttributeFilterController = AttributeFilterControllerData & AttributeFilterControllerCallbacks;
+
+// @public
+export type AttributeFilterControllerCallbacks = {
+    onApply: () => void;
+    onLoadNextElementsPage: () => void;
+    onSearch: (search: string) => void;
+    onSelect: (selectedItems: IAttributeElement[], isInverted: boolean) => void;
+    onReset: () => void;
+};
+
+// @public
+export type AttributeFilterControllerData = {
+    attribute: IAttributeMetadataObject;
+    offset: number;
+    limit: number;
+    isFiltering: boolean;
+    isInitializing: boolean;
+    initError: GoodDataSdkError;
+    isLoadingInitialElementsPage: boolean;
+    initialElementsPageError: GoodDataSdkError;
+    isLoadingNextElementsPage: boolean;
+    nextElementsPageError: GoodDataSdkError;
+    nextElementsPageSize: number;
+    elements: IAttributeElement[];
+    totalElementsCount: number;
+    totalElementsCountWithCurrentSettings: number;
+    isApplyDisabled: boolean;
+    isWorkingSelectionInverted: boolean;
+    workingSelectionElements: IAttributeElement[];
+    isCommittedSelectionInverted: boolean;
+    committedSelectionElements: IAttributeElement[];
+    searchString: string;
+    isFilteredByParentFilters: boolean;
+    parentFilterAttributes: IAttributeMetadataObject[];
+    displayForms: IAttributeDisplayFormMetadataObject[];
+    currentDisplayFormRef: ObjRef;
+};
 
 // @internal (undocumented)
 export const AttributeFilterDeleteButton: React_2.VFC<IAttributeFilterDeleteButtonProps>;
@@ -1000,7 +1038,7 @@ export interface IUiRelativeDateFilterForm extends Omit<IRelativeDateFilterForm,
     to?: RelativeDateFilterGranularityOffset;
 }
 
-// @alpha (undocumented)
+// @public (undocumented)
 export type IUseAttributeFilterControllerProps = Omit<IAttributeFilterCoreProps, "fullscreenOnMobile" | "locale" | "title"> & {
     elementsOptions?: {
         limit: number;
@@ -1162,38 +1200,8 @@ export type Unsubscribe = () => void;
 // @alpha (undocumented)
 export const useAttributeFilterContext: () => IAttributeFilterContext;
 
-// @alpha
-export const useAttributeFilterController: (props: IUseAttributeFilterControllerProps) => {
-    onApply: () => void;
-    onLoadNextElementsPage: () => void;
-    onSearch: DebouncedFunc<(search: string) => void>;
-    onSelect: (selectedItems: IAttributeElement[], isInverted: boolean) => void;
-    onReset: () => void;
-    attribute: IAttributeMetadataObject;
-    offset: number;
-    limit: number;
-    isFiltering: boolean;
-    isInitializing: boolean;
-    initError: GoodDataSdkError;
-    isLoadingInitialElementsPage: boolean;
-    initialElementsPageError: GoodDataSdkError;
-    isLoadingNextElementsPage: boolean;
-    nextElementsPageError: GoodDataSdkError;
-    nextElementsPageSize: number;
-    elements: IAttributeElement[];
-    totalElementsCount: number;
-    totalElementsCountWithCurrentSettings: number;
-    isApplyDisabled: boolean;
-    isWorkingSelectionInverted: boolean;
-    workingSelectionElements: IAttributeElement[];
-    isCommittedSelectionInverted: boolean;
-    committedSelectionElements: IAttributeElement[];
-    searchString: string;
-    isFilteredByParentFilters: boolean;
-    parentFilterAttributes: IAttributeMetadataObject[];
-    displayForms: IAttributeDisplayFormMetadataObject[];
-    currentDisplayFormRef: ObjRef;
-};
+// @public
+export const useAttributeFilterController: (props: IUseAttributeFilterControllerProps) => AttributeFilterController;
 
 // @alpha (undocumented)
 export const useAttributeFilterHandler: (props: IUseAttributeFilterHandlerProps) => IMultiSelectAttributeFilterHandler;

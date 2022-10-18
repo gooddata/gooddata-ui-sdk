@@ -5,11 +5,14 @@ import { isLimitingAttributeFiltersEmpty } from "../utils";
 import { useAttributeFilterHandlerState } from "./useAttributeFilterHandlerState";
 import { MAX_SELECTION_SIZE, PARENT_FILTERS_CORRELATION } from "./constants";
 import { filterObjRef } from "@gooddata/sdk-model";
+import { AttributeFilterControllerData } from "./types";
 
 /**
  * @internal
  */
-export function useAttributeFilterControllerData(handler: IMultiSelectAttributeFilterHandler) {
+export function useAttributeFilterControllerData(
+    handler: IMultiSelectAttributeFilterHandler,
+): AttributeFilterControllerData {
     const handlerState = useAttributeFilterHandlerState(handler);
 
     const initStatus = handlerState.initialization.status;

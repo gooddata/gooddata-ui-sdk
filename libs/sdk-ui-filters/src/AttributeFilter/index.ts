@@ -58,6 +58,13 @@ export {
     useAttributeFilterController,
     IUseAttributeFilterControllerProps,
 } from "./hooks/useAttributeFilterController";
+
+export {
+    AttributeFilterController,
+    AttributeFilterControllerData,
+    AttributeFilterControllerCallbacks,
+} from "./hooks/types";
+
 export {
     useAttributeFilterHandler,
     IUseAttributeFilterHandlerProps,

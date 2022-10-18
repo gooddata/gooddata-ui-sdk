@@ -20,9 +20,10 @@ import { useAttributeFilterHandler } from "./useAttributeFilterHandler";
 import { useAttributeFilterControllerData } from "./useAttributeFilterControllerData";
 import { PARENT_FILTERS_CORRELATION, RESET_CORRELATION, SEARCH_CORRELATION } from "./constants";
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
+import { AttributeFilterController } from "./types";
 
 /**
- * @alpha
+ * @public
  */
 export type IUseAttributeFilterControllerProps = Omit<
     IAttributeFilterCoreProps,
@@ -32,11 +33,16 @@ export type IUseAttributeFilterControllerProps = Omit<
 };
 
 /**
- * Use this hook if you want to implement your custom attribute filter.
+ * This is the best option if you need to implement fully custom UI for the attribute filter. This option requires a bit more coding, but you have a full control over the UI.
+ * It has identical convenient API as AttributeFilter component - same input props and same output props that are available in the internal context of the AttributeFilter component.
+ * It works out of the box with other UI.SDK things - BackendProvider, WorkspaceProvider and visualization definition placeholders.
+ * See the live code example.
  *
- * @alpha
+ * @public
  */
-export const useAttributeFilterController = (props: IUseAttributeFilterControllerProps) => {
+export const useAttributeFilterController = (
+    props: IUseAttributeFilterControllerProps,
+): AttributeFilterController => {
     const {
         backend: backendInput,
         workspace: workspaceInput,
