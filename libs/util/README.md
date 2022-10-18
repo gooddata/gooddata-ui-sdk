@@ -4,6 +4,9 @@
 [![npm monthly downloads](https://img.shields.io/npm/dm/@gooddata/util)](https://npmcharts.com/compare/@gooddata/util?minimal=true)&nbsp;
 ![typescript](https://img.shields.io/badge/typescript-first-blue?logo=typescript)
 
+This package is a part of the [GoodData.UI SDK](https://sdk.gooddata.com/gooddata-ui/docs/about_gooddataui.html).
+To learn more, check [the source monorepo](https://github.com/gooddata/gooddata-ui-sdk).
+
 This package contains utility functions used in production or test code of multiple different GoodData.UI SDK packages.
 
 The functions exported from here are not part of the GoodData.UI public API.

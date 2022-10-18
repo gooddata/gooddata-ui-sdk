@@ -4,6 +4,9 @@
 [![npm monthly downloads](https://img.shields.io/npm/dm/@gooddata/sdk-backend-base)](https://npmcharts.com/compare/@gooddata/sdk-backend-base?minimal=true)&nbsp;
 ![typescript](https://img.shields.io/badge/typescript-first-blue?logo=typescript)
 
+This package is a part of the [GoodData.UI SDK](https://sdk.gooddata.com/gooddata-ui/docs/about_gooddataui.html).
+To learn more, check [the source monorepo](https://github.com/gooddata/gooddata-ui-sdk).
+
 This package contains foundational, reusable code useful for building new or decorating existing
 [Analytical Backend](https://www.npmjs.com/package/@gooddata/sdk-backend-spi) implementations. This is lower-level, infrastructural code which may be useful
 when building larger, more complex applications.
@@ -28,9 +31,9 @@ is at the moment limited to the execution part of the Analytical Backend SPI.
 Backend decorated with eventing can be created as follows:
 
 ```typescript
-import {IAnalyticalBackend} from "@gooddata/sdk-backend-spi";
-import {IExecutionDefinition, IDataView} from "@gooddata/sdk-model";
-import {withEventing} from "@gooddata/sdk-backend-base";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { IExecutionDefinition, IDataView } from "@gooddata/sdk-model";
+import { withEventing } from "@gooddata/sdk-backend-base";
 
 const realBackendImplementation = ...;
 const enhancedBackend: IAnalyticalBackend = withEventing(realBackendImplementation, {
@@ -62,8 +65,8 @@ data structures. To the caller, all of this optimization remains transparent and
 execution actually executed.
 
 ```typescript
-import {IAnalyticalBackend} from "@gooddata/sdk-backend-spi";
-import {withNormalization} from "@gooddata/sdk-backend-base";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { withNormalization } from "@gooddata/sdk-backend-base";
 
 const realBackendImplementation = ...;
 const enhancedBackend: IAnalyticalBackend = withNormalization(realBackendImplementation);
@@ -78,8 +81,8 @@ If your app must deliver a snappy experience without too many loading indicators
 critical requirement, then this decorator can speed your application immensely.
 
 ```typescript
-import {IAnalyticalBackend} from "@gooddata/sdk-backend-spi";
-import {withCaching, RecommendedCachingConfiguration} from "@gooddata/sdk-backend-base";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { withCaching, RecommendedCachingConfiguration } from "@gooddata/sdk-backend-base";
 
 const realBackendImplementation = ...;
 const enhancedBackend: IAnalyticalBackend = withCaching(realBackendImplementation, RecommendedCachingConfiguration);
@@ -91,8 +94,8 @@ available in this package.
 The caching plays well with normalization:
 
 ```typescript
-import {IAnalyticalBackend} from "@gooddata/sdk-backend-spi";
-import {withCaching, withNormalization, RecommendedCachingConfiguration} from "@gooddata/sdk-backend-base";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { withCaching, withNormalization, RecommendedCachingConfiguration } from "@gooddata/sdk-backend-base";
 
 const realBackendImplementation = ...;
 const enhancedBackend: IAnalyticalBackend = withNormalization(withCaching(realBackendImplementation, RecommendedCachingConfiguration));

@@ -4,6 +4,9 @@
 [![npm monthly downloads](https://img.shields.io/npm/dm/@gooddata/live-examples-workspace)](https://npmcharts.com/compare/@gooddata/live-examples-workspace?minimal=true)&nbsp;
 ![typescript](https://img.shields.io/badge/typescript-first-blue?logo=typescript)
 
+This package is a part of the [GoodData.UI SDK](https://sdk.gooddata.com/gooddata-ui/docs/about_gooddataui.html).
+To learn more, check [the source monorepo](https://github.com/gooddata/gooddata-ui-sdk).
+
 This project contains LDM and recordings captured from the GoodData workspace which is backing the `sdk-examples`. It
 is a complement to the reference workspace; it contains additional types of objects and data and can be used for
 testing the Geo Pushpin chart.

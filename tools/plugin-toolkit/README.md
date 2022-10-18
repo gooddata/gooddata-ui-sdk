@@ -4,6 +4,9 @@
 [![npm monthly downloads](https://img.shields.io/npm/dm/@gooddata/plugin-toolkit)](https://npmcharts.com/compare/@gooddata/plugin-toolkit?minimal=true)&nbsp;
 ![typescript](https://img.shields.io/badge/typescript-first-blue?logo=typescript)
 
+This package is a part of the [GoodData.UI SDK](https://sdk.gooddata.com/gooddata-ui/docs/about_gooddataui.html).
+To learn more, check [the source monorepo](https://github.com/gooddata/gooddata-ui-sdk).
+
 This package implements GoodData Plugin Development Toolkit (PDT). The primary entry point to the toolkit is its
 CLI tool called `gdc-plugins`. Through this CLI tool you can currently:
 

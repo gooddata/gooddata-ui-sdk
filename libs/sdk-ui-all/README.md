@@ -4,6 +4,9 @@
 [![npm monthly downloads](https://img.shields.io/npm/dm/@gooddata/sdk-ui-all)](https://npmcharts.com/compare/@gooddata/sdk-ui-all?minimal=true)&nbsp;
 ![typescript](https://img.shields.io/badge/typescript-first-blue?logo=typescript)
 
+This package is a part of the [GoodData.UI SDK](https://sdk.gooddata.com/gooddata-ui/docs/about_gooddataui.html).
+To learn more, check [the source monorepo](https://github.com/gooddata/gooddata-ui-sdk).
+
 This is all-in-one package which has all SDK packages as dependencies and re-exports their public API.
 
 The primary purpose of this package is to simplify [migration](https://sdk.gooddata.com/gooddata-ui/docs/migration_guide_8.html) from previous versions of the GoodData.UI SDK - which were
