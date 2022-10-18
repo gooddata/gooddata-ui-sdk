@@ -55,8 +55,8 @@
         "run-isolated-local": "npm run docker-build-local && IMAGE_ID=gooddata-ui-sdk npm run run-isolated",
         "run-isolated-ci": "npm run docker-build && IMAGE_ID=gooddata-ui-sdk npm run run-isolated",
         "run-scenarios-local": "node ./scripts/run-scenarios-local.js",
-        "build-scenarios": "webpack --config scenarios/webpack.config.js",
-        "start-scenarios": "webpack serve --mode development --config scenarios/webpack.config.js",
+        "build-scenarios": "webpack --config scenarios/webpack.config.js --config-name default",
+        "start-scenarios": "webpack serve --mode development --config scenarios/webpack.config.js --config-name local-run",
         "refresh-md": "./scripts/refresh-md.sh"
     },
     "dependencies": {
@@ -145,7 +145,6 @@
         "sass": "^1.52.3",
         "sass-loader": "^10.1.1",
         "source-map-loader": "^4.0.0",
-        "speed-measure-webpack-plugin": "^1.5.0",
         "style-loader": "^3.3.1",
         "styled-jsx": "^4.0.1",
         "typescript": "4.0.2",
