@@ -273,6 +273,8 @@
     "attributesDropdown.configuration": "Конфигурация",
     "attributesDropdown.removeTooltip": "Удалить с дашборда",
     "attributesDropdown.display_as": "Отобразить как: {title}",
+    "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> уже отфильтрован фильтром <strong>{childTitle}</strong> напрямую или через другие фильтры.",
+    "attributesDropdown.attributeNameWithData": "с данными",
     "shareDialog.share.grantee.title": "Поделиться с пользователями и группами",
     "shareDialog.share.grantee.share": "Поделиться",
     "shareDialog.share.grantee.list.title": "Поделиться с",

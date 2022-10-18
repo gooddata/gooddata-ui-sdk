@@ -82,15 +82,15 @@ export const ParentFiltersListItem: React.FC<IConfigurationParentItemProps> = (p
                         readOnly
                     />
                     <span className="input-label-text">{title}</span>
-                    {showConnectingAttributeSelect && (
+                    {showConnectingAttributeSelect ? (
                         <span className="addon">
                             &nbsp;
                             <FormattedMessage id="attributesDropdown.attributeNameWithData" />
                         </span>
-                    )}
+                    ) : null}
                 </label>
             </div>
-            {showConnectingAttributeSelect && (
+            {showConnectingAttributeSelect ? (
                 <ConnectingAttributeDropdown
                     itemLocalId={localIdentifier}
                     connectingAttributes={connectingAttributes!}
@@ -99,7 +99,7 @@ export const ParentFiltersListItem: React.FC<IConfigurationParentItemProps> = (p
                     }
                     onSelect={onConnectingAttributeSelect}
                 />
-            )}
+            ) : null}
         </React.Fragment>
     );
 };

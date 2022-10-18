@@ -198,9 +198,7 @@
     "attributesDropdown.save": "Enregistrer",
     "attributesDropdown.filterBy": "Filtrer par",
     "attributesDropdown.displayValuesAs": "Affichage des valeurs",
-    "attributesDropdown.attributeNameWithData": "avec les données de",
     "attributesDropdown.noConnectionMessage": "<strong>{childTitle}</strong> ne peut pas être filtré par <strong>{parentTitle}</strong>. Il n'existe aucune connexion entre les attributs du filtre dans le modèle de données.",
-    "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> est déjà filtré par le filtre <strong>{childTitle}</strong>, directement ou via d'autres filtres.",
     "attributesDropdown.removeTooltip": "Retirer du tableau de bord",
     "layout.header.characters.left": "{currentCharactersCount}/{maximumCharactersCount} caractères restant",
     "layout.header.add.title.placeholder": "Ajouter un titre ici...",
@@ -328,5 +326,7 @@
     "deleteKpiConfirmationDialog.message": "Toutes les alertes configurées pour ce KPI vont être supprimées.",
     "deleteKpiConfirmationDialog.submitButtonText": "Supprimer",
     "newDashboard.title": "Faire glisser une perception ici",
-    "newDashboard.dropInsight": "Déposer une perception"
+    "newDashboard.dropInsight": "Déposer une perception",
+    "attributesDropdown.attributeNameWithData": "avec les données de",
+    "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> est déjà filtré par le filtre <strong>{childTitle}</strong>, directement ou via d'autres filtres."
 }

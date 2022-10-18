@@ -17,5 +17,15 @@ module.exports = {
             pattern: /^(gs.filter.loading|attrf.all|attrf.all_except|attributeFilterDropdown.emptyValue)$/,
             ignore: true,
         },
+        /**
+         * These ignored messages are used in the attribute filter implementation for dashboard component, so we need to have these messages
+         * here even though they are used within the sdk-ui-dashboard code.
+         */
+        {
+            dir: /src\/base\/localization\/bundles/,
+            pattern:
+                /^(attributesDropdown.filterConfiguredMessage|attributesDropdown.noConnectionMessage|attributesDropdown.attributeNameWithData)$/,
+            ignore: true,
+        },
     ],
 };

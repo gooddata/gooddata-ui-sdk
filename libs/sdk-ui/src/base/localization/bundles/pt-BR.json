@@ -273,6 +273,8 @@
     "attributesDropdown.configuration": "Configuração",
     "attributesDropdown.removeTooltip": "Remover do dashboard",
     "attributesDropdown.display_as": "Exibir como: {title}",
+    "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> já foi filtrado por <strong>{childTitle}</strong> diretamente ou por meio de outros filtros.",
+    "attributesDropdown.attributeNameWithData": "com dados de",
     "shareDialog.share.grantee.title": "Compartilhar com usuários e grupos",
     "shareDialog.share.grantee.share": "Compartilhar",
     "shareDialog.share.grantee.list.title": "Compartilhado com",

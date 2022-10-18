@@ -198,9 +198,7 @@
     "attributesDropdown.save": "保存",
     "attributesDropdown.filterBy": "筛选条件",
     "attributesDropdown.displayValuesAs": "将数值显示为",
-    "attributesDropdown.attributeNameWithData": "带下列数据",
     "attributesDropdown.noConnectionMessage": "<strong>{childTitle}</strong> 无法被 <strong>{parentTitle}</strong> 筛选。数据模型中的筛选器属性之间没有关联。",
-    "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> 已被 <strong>{childTitle}</strong> 筛选器直接筛选或已通过其他筛选器筛选。",
     "attributesDropdown.removeTooltip": "从控制面板中移除",
     "layout.header.characters.left": "还剩 {currentCharactersCount} / {maximumCharactersCount} 个字符",
     "layout.header.add.title.placeholder": "在此处添加标题...",
@@ -328,5 +326,7 @@
     "deleteKpiConfirmationDialog.message": "为此 KPI 设置的所有警报也将被删除。",
     "deleteKpiConfirmationDialog.submitButtonText": "删除",
     "newDashboard.title": "将洞察拖至此处",
-    "newDashboard.dropInsight": "放置洞察"
+    "newDashboard.dropInsight": "放置洞察",
+    "attributesDropdown.attributeNameWithData": "带下列数据",
+    "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> 已被 <strong>{childTitle}</strong> 筛选器直接筛选或已通过其他筛选器筛选。"
 }
