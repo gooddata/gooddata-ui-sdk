@@ -146,7 +146,8 @@ export class TigerBackend implements IAnalyticalBackend {
             this.implConfig.onTigerSpecificFunctionsReady(specificFunctions);
         }
 
-        this.updateCapabilities();
+        // TNT-1096 Temporary hide export feature for P8.
+        // this.updateCapabilities();
     }
 
     public onHostname(hostname: string): IAnalyticalBackend {
@@ -317,21 +318,22 @@ export class TigerBackend implements IAnalyticalBackend {
         return this.authProvider.authenticate({ client: this.client, backend: this });
     };
 
-    private updateCapabilities() {
-        // This is just for rollout of export csv/xls and can be removed after XSH-828 is fixed.
-        const EXPORT_API_URI = "/api/v1/schemas/export";
-        this.client.axios
-            .get(EXPORT_API_URI)
-            .then((data: any) => {
-                const exportFormats: string[] =
-                    data?.data?.components?.schemas?.TabularExportRequest?.properties?.format?.enum || [];
-                this.capabilities.canExportCsv = exportFormats.includes("CSV");
-                this.capabilities.canExportXlsx = exportFormats.includes("XLSX");
-            })
-            .catch(() => {
-                // silence the error, keep default capabilities
-            });
-    }
+    // TNT-1096 Temporary hide export feature for P8.
+    // private updateCapabilities() {
+    //     // This is just for rollout of export csv/xls and can be removed after XSH-828 is fixed.
+    //     const EXPORT_API_URI = "/api/v1/schemas/export";
+    //     this.client.axios
+    //         .get(EXPORT_API_URI)
+    //         .then((data: any) => {
+    //             const exportFormats: string[] =
+    //                 data?.data?.components?.schemas?.TabularExportRequest?.properties?.format?.enum || [];
+    //             this.capabilities.canExportCsv = exportFormats.includes("CSV");
+    //             this.capabilities.canExportXlsx = exportFormats.includes("XLSX");
+    //         })
+    //         .catch(() => {
+    //             // silence the error, keep default capabilities
+    //         });
+    // }
 }
 
 function createAxios(
