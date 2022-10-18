@@ -20,17 +20,16 @@ describe("AttributeFilterButton", () => {
         attributeFilter.titleHasText("Opportunity:").subtitleHasText("All");
     });
 
-    // eslint-disable-next-line jest/no-disabled-tests
-    it.skip("attribute filter basic operations", () => {
+    it("attribute filter basic operations", () => {
         const attributeFilter = new AttributeFilterButton(ATTRIBUTE_FILTER_BUTTON_SELECTOR);
 
-        attributeFilter.open().clearSelection().subtitleHasText("None").applyDisabled();
+        attributeFilter.open().clearSelection().statusHasNone().applyDisabled();
 
         attributeFilter
             .selectElement(`.s-attribute-filter-list-item-${camelCase(".decimal > Explorer")}`)
             .selectElement(`.s-attribute-filter-list-item-${camelCase("(add)ventures > CompuSci")}`)
             .selectElement(`.s-attribute-filter-list-item-${camelCase("(mt) Media Temple > CompuSci")}`)
-            .subtitleHasText(".decimal > Explorer, (add)ventures > CompuSci, (mt) Media Temple > CompuSci");
+            .statusHasText(".decimal > Explorer, (add)ventures > CompuSci, (mt) Media Temple > CompuSci");
 
         attributeFilter.clickCancel().subtitleHasText("All");
     });
@@ -73,8 +72,7 @@ describe("AttributeFilterButton", () => {
             .subtitleHasText("All except 101 Financial > Educationly, 101 Financial > WonderKid");
     });
 
-    // eslint-disable-next-line jest/no-disabled-tests
-    it.skip("search does not modify selection", () => {
+    it("search does not modify selection", () => {
         const attributeFilter = new AttributeFilterButton(ATTRIBUTE_FILTER_BUTTON_SELECTOR);
 
         attributeFilter
@@ -86,7 +84,7 @@ describe("AttributeFilterButton", () => {
             .selectElement(`.s-attribute-filter-list-item-${camelCase("(mt) Media Temple > CompuSci")}`)
             .searchElements(SEARCH_QUERY)
             .waitElementsLoaded()
-            .subtitleHasText(".decimal > Explorer, (add)ventures > CompuSci, (mt) Media Temple > CompuSci");
+            .statusHasText(".decimal > Explorer, (add)ventures > CompuSci, (mt) Media Temple > CompuSci");
     });
 
     it("search elements corresponding with the query", () => {
