@@ -1078,18 +1078,8 @@
         "comment": "Filter section label in attribute filter dropdown configuration. Displayed before dropdown button that changes form of the attribute used in insight. For example 'Display as: Shortened name'.",
         "limit": 0
     },
-    "attributesDropdown.attributeNameWithData": {
-        "value": "with data of",
-        "comment": "Will be used in sentence between two nouns. For instance 'Filter by AttributeX with data of MetricY'",
-        "limit": 0
-    },
     "attributesDropdown.noConnectionMessage": {
         "value": "<strong>{childTitle}</strong> cannot be filtered by <strong>{parentTitle}</strong>. There is no connection between the filter attributes in the data model.",
-        "comment": "Do not translate HTML markup enclosed in <> and placeholders enclosed in {}.",
-        "limit": 0
-    },
-    "attributesDropdown.filterConfiguredMessage": {
-        "value": "<strong>{parentTitle}</strong> is already filtered by <strong>{childTitle}</strong> filter directly or through other filters.",
         "comment": "Do not translate HTML markup enclosed in <> and placeholders enclosed in {}.",
         "limit": 0
     },
