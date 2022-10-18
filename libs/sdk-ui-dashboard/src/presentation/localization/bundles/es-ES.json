@@ -326,5 +326,7 @@
     "deleteKpiConfirmationDialog.message": "Todas las alertas establecidas para este KPI se eliminarán.",
     "deleteKpiConfirmationDialog.submitButtonText": "Eliminar",
     "newDashboard.title": "Arrastre aquí la perspectiva",
-    "newDashboard.dropInsight": "Soltar perspectiva"
+    "newDashboard.dropInsight": "Soltar perspectiva",
+    "attributesDropdown.attributeNameWithData": "con datos de",
+    "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> ya se ha filtrado por el filtro <strong>{childTitle}</strong> directamente o mediante otros filtros."
 }

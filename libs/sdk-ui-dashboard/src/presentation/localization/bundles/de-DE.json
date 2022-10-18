@@ -326,5 +326,7 @@
     "deleteKpiConfirmationDialog.message": "Alle für diesen KPI eingerichteten Alarme werden ebenfalls gelöscht.",
     "deleteKpiConfirmationDialog.submitButtonText": "Löschen",
     "newDashboard.title": "Betrachtungen hierher ziehen",
-    "newDashboard.dropInsight": "Betrachtung ablegen"
+    "newDashboard.dropInsight": "Betrachtung ablegen",
+    "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> ist bereits durch <strong>{childTitle}</strong> gefiltert, filtern Sie direkt oder durch andere Filter.",
+    "attributesDropdown.attributeNameWithData": "mit Daten von"
 }

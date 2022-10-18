@@ -326,5 +326,7 @@
     "deleteKpiConfirmationDialog.message": "Alle ingestelde alarmen voor deze KPI zullen ook worden verwijderd.",
     "deleteKpiConfirmationDialog.submitButtonText": "Verwijderen",
     "newDashboard.title": "Inzicht hierheen slepen",
-    "newDashboard.dropInsight": "Inzicht laten vallen"
+    "newDashboard.dropInsight": "Inzicht laten vallen",
+    "attributesDropdown.attributeNameWithData": "met gegevens van",
+    "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> is al gefilterd op <strong>{childTitle}</strong>, rechtstreeks of via andere filters."
 }

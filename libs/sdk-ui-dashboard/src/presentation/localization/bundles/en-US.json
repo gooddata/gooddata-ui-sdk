@@ -1800,5 +1800,15 @@
         "comment": "A placeholder showed when user drags new report into a dashboard canvas by cursor (drag and drop).",
         "translate": false,
         "limit": 0
+    },
+    "attributesDropdown.filterConfiguredMessage": {
+        "value": "<strong>{parentTitle}</strong> is already filtered by <strong>{childTitle}</strong> filter directly or through other filters.",
+        "comment": "Do not translate HTML markup enclosed in <> and placeholders enclosed in {}.",
+        "limit": 0
+    },
+    "attributesDropdown.attributeNameWithData": {
+        "value": "with data of",
+        "comment": "Will be used in sentence between two nouns. For instance 'Filter by AttributeX with data of MetricY'",
+        "limit": 0
     }
 }

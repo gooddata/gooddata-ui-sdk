@@ -326,5 +326,7 @@
     "deleteKpiConfirmationDialog.message": "Все оповещения, настроенные для этого КПЭ, также будут удалены.",
     "deleteKpiConfirmationDialog.submitButtonText": "Удалить",
     "newDashboard.title": "Перетащите анализ сюда",
-    "newDashboard.dropInsight": "Сбросьте анализ"
+    "newDashboard.dropInsight": "Сбросьте анализ",
+    "attributesDropdown.attributeNameWithData": "с данными",
+    "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> уже отфильтрован фильтром <strong>{childTitle}</strong> напрямую или через другие фильтры."
 }

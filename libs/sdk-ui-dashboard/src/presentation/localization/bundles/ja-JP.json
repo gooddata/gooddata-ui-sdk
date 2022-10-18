@@ -326,5 +326,7 @@
     "deleteKpiConfirmationDialog.message": "このKPIに対して設定されたすべての通知も消去されます。",
     "deleteKpiConfirmationDialog.submitButtonText": "削除",
     "newDashboard.title": "インサイトをここにドラッグ",
-    "newDashboard.dropInsight": "インサイトをドラッグ&ドロップ"
+    "newDashboard.dropInsight": "インサイトをドラッグ&ドロップ",
+    "attributesDropdown.attributeNameWithData": "データの",
+    "attributesDropdown.filterConfiguredMessage": "直接フィルターか、他のフィルターで<strong>{parentTitle}</strong> すでにフィルター済み <strong>{childTitle}</strong>。"
 }

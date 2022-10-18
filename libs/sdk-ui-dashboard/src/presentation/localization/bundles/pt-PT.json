@@ -326,5 +326,7 @@
     "deleteKpiConfirmationDialog.message": "Todos os alertas configurados para este KPI serão também eliminados.",
     "deleteKpiConfirmationDialog.submitButtonText": "Eliminar",
     "newDashboard.title": "Arraste o insight para aqui",
-    "newDashboard.dropInsight": "Largar insight"
+    "newDashboard.dropInsight": "Largar insight",
+    "attributesDropdown.attributeNameWithData": "com dados de",
+    "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> já se encontra filtrado pelo filtro <strong>{childTitle}</strong>, de forma direta ou através de outros filtros."
 }

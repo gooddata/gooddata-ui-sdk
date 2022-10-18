@@ -326,5 +326,7 @@
     "deleteKpiConfirmationDialog.message": "Toutes les alertes configurées pour ce KPI vont être supprimées.",
     "deleteKpiConfirmationDialog.submitButtonText": "Supprimer",
     "newDashboard.title": "Faire glisser une perception ici",
-    "newDashboard.dropInsight": "Déposer une perception"
+    "newDashboard.dropInsight": "Déposer une perception",
+    "attributesDropdown.attributeNameWithData": "avec les données de",
+    "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> est déjà filtré par le filtre <strong>{childTitle}</strong>, directement ou via d'autres filtres."
 }
