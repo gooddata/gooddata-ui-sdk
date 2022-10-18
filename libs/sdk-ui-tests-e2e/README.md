@@ -10,16 +10,13 @@ Tests in this library verify various go-through scenarios for GoodData.UI compon
 
 ### Running tests locally
 
--   Make sure, that application in scenarios folder is built.
--   Run script `run-isolated-local`. The script prepares docker instances with needed volumes and runs the tests on the scenarios application.
+To run the tests against a live backend follow these steps:
 
 -   run `rush build -t sdk-ui-tests-e2e` to have the latest changes applied to the E2E tests package
--   navigate to `libs/sdk-ui-tests-e2e` package
--   run `npm run build-scenarios` to prepare the testing application
--   run `npm run run-scenarios-local` to run the testing application. The application will run on port 9500
+-   run `npm run start-scenarios` to run the testing application. The application will run on port 9500
 -   run `npm run cypress` to start cypress local instance
 
-The test application runs on `http://localhost:9500/gooddata-ui-sdk/?scenario=<scenario-key>`, to show the Scenario you want to test, replace the `<scenario-key>` variable
+The test application runs on `http://localhost:9500/gooddata-ui-sdk?scenario=<scenario-key>`, to show the Scenario you want to test, replace the `<scenario-key>` variable
 with the value of respective Scenario key. You can find all available keys in the `ComponentResolver.tsx`.
 
 To log in to the scenario app, visit `http://localhost:9500/gdc/account/login`
