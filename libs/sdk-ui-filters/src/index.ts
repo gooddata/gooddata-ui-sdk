@@ -181,6 +181,9 @@ export {
     useAutoOpenAttributeFilterDropdownButton,
     useOnCloseAttributeFilterDropdownButton,
     useAttributeFilterSearch,
+    AttributeFilterController,
+    AttributeFilterControllerData,
+    AttributeFilterControllerCallbacks,
 } from "./AttributeFilter";
 
 export {
