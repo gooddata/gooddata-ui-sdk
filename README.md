@@ -22,7 +22,7 @@
     </a>&nbsp;
 </p>
 
-[GoodData.UI](https://sdk.gooddata.com/gooddata-ui) is a TypeScript framework for building analytical applications on top of the [GoodData platform](https://help.gooddata.com/doc/enterprise/en), [GoodData Cloud](https://www.gooddata.com/developers/cloud-native/doc/cloud/) or [GoodData.CN](https://www.gooddata.com/developers/cloud-native/doc/cloud/).
+[GoodData.UI](https://sdk.gooddata.com/gooddata-ui) is a TypeScript framework for building analytical applications on top of the [GoodData platform](https://help.gooddata.com/doc/enterprise/en), [GoodData Cloud or GoodData.CN](https://www.gooddata.com/developers/cloud-native/doc/cloud/).
 
 GoodData.UI consists of multiple libraries with clear-cut responsibilities ranging from low-level REST API clients up to visualization libraries that deliver React-based components to render different types of charts and tables.
 
@@ -30,7 +30,7 @@ GoodData.UI consists of multiple libraries with clear-cut responsibilities rangi
 
 Learn about GoodData.UI:
 
--   [📚 Official documentation](https://sdk.gooddata.com/gooddata-ui)
+-   [📚 Official documentation](https://sdk.gooddata.com/gooddata-ui/docs/about_gooddataui.html)
 -   [🚀 Getting started](https://sdk.gooddata.com/gooddata-ui/docs/quickstart.html)
 -   [📊 Examples Gallery](https://gdui-examples.herokuapp.com)
 -   [⚙️ API reference](https://sdk.gooddata.com/gooddata-ui-apidocs/docs/index.html)
