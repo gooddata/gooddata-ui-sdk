@@ -24022,7 +24022,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-tests-e2e.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-EI54c9XK6eavxKNrbvHFr5cT3vGy9gCyngRgHrujrruo8D2OHn7DLBg1pRWpGQkZeViSPt+kDH7mtNUBxj4Baw==, tarball: file:projects/sdk-ui-tests-e2e.tgz}
+    resolution: {integrity: sha512-+TsPVpQ9gEdvGFpt6CfC/FW2MZWKt2RVxQYB0fY5uhxs+W6+i5CowXBgt33ZMafCqpJ5M+JB4oOjpubQ3ALZ6g==, tarball: file:projects/sdk-ui-tests-e2e.tgz}
     id: file:projects/sdk-ui-tests-e2e.tgz
     name: '@rush-temp/sdk-ui-tests-e2e'
     version: 0.0.0
