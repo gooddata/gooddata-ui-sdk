@@ -180,6 +180,21 @@
 }
 
 .dash-item-content {
+    /**
+    It does not work in IE.
+    It is necessary for the widget background to be used inside charts and tables only in the
+    limited scope of dashboard's widgets. It works in pair with 'defaultDashboardThemeModifier',
+    which provides --gd-dashboards-content-widget-chart/table-backgroundColor variables.
+     */
+    --gd-chart-backgroundColor: var(
+        --gd-dashboards-content-widget-chart-backgroundColor,
+        var(--gd-dashboards-content-widget-backgroundColor, var(--gd-palette-complementary-0, #fff))
+    );
+    --gd-table-backgroundColor: var(
+        --gd-dashboards-content-widget-table-backgroundColor,
+        var(--gd-dashboards-content-widget-backgroundColor, var(--gd-palette-complementary-0, #fff))
+    );
+
     position: relative;
     padding: $item-inner-padding;
     border-width: $gd-dashboards-content-widget-borderWidth;
@@ -187,7 +202,7 @@
     border-color: $gd-dashboards-content-widget-borderColor;
     border-radius: $gd-dashboards-content-widget-borderRadius;
     box-shadow: $gd-dashboards-content-widget-dropShadow;
-    background-color: $gd-dashboards-content-widget-backgroundColor;
+    background-color: $gd-widget-background;
     transition: $transition-length;
 
     @media #{$xsmall-only}, #{$small-only} {

@@ -115,6 +115,10 @@ $is-negative-focused-background: var(
 $navigation-bg: var(--gd-palette-complementary-1, #303442);
 $navigation-active-item-bg: var(--gd-palette-complementary-0, #131c28);
 
+$gd-widget-background: var(--gd-dashboards-content-widget-backgroundColor, $gd-color-white);
+$gd-chart-background: var(--gd-chart-backgroundColor, $gd-color-white);
+$gd-table-background: var(--gd-table-backgroundColor, $gd-color-white);
+
 // other
 $gd-rounded-small: 4px;
 

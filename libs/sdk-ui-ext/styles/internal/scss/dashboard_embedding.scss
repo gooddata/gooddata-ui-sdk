@@ -360,13 +360,15 @@
     flex-direction: column;
     overflow: hidden;
     height: 100%;
+    font-family: $gd-font-primary;
+    background-color: $gd-color-white;
 }
 
 .insight-title-outer {
     position: relative;
     z-index: 1;
     height: ($insight-title-lineHeight + $insight-title-padding-vertical) * 2 + 2; // relate SD-956: please update HEADLINE_OUTER_HEIGHT in widgetHeightUtil.ts when height is changed
-    margin-top: 10px;
+    margin: 10px 0;
     line-height: ($insight-title-lineHeight + $insight-title-padding-vertical) * 2;
 
     @media #{$xsmall-only}, #{$small-only} {

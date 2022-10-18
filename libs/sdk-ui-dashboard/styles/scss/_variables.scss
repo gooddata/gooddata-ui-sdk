@@ -96,10 +96,6 @@ $gd-dashboards-content-widget-borderRadius: var(--gd-dashboards-content-widget-b
 $gd-dashboards-content-widget-borderColor: var(--gd-dashboards-content-widget-borderColor, transparent);
 $gd-dashboards-content-widget-borderWidth: var(--gd-dashboards-content-widget-borderWidth, $item-border);
 $gd-dashboards-content-widget-dropShadow: var(--gd-dashboards-content-widget-dropShadow, $widget-drop-shadow);
-$gd-dashboards-content-widget-backgroundColor: var(
-    --gd-dashboards-content-widget-backgroundColor,
-    $gd-color-white
-);
 
 $gd-dashboards-content-kpiWidget-title-color: var(
     --gd-dashboards-content-kpiWidget-title-color,
@@ -111,7 +107,7 @@ $gd-dashboards-content-kpiWidget-title-textAlign: var(
 );
 $gd-dashboards-content-kpiWidget-backgroundColor: var(
     --gd-dashboards-content-kpiWidget-backgroundColor,
-    $gd-dashboards-content-widget-backgroundColor
+    $gd-widget-background
 );
 $gd-dashboards-content-kpiWidget-borderRadius: var(
     --gd-dashboards-content-kpiWidget-borderRadius,
