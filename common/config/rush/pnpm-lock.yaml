@@ -24022,7 +24022,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-tests-e2e.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-UqfsBRLB7XotXRrs9jXy/P7z9lem2F/Yacx3IpWpOQqboHiW0sieVlJcwk2+YyMuOTVXqPHcTTd+DAdpuxK/7A==, tarball: file:projects/sdk-ui-tests-e2e.tgz}
+    resolution: {integrity: sha512-EI54c9XK6eavxKNrbvHFr5cT3vGy9gCyngRgHrujrruo8D2OHn7DLBg1pRWpGQkZeViSPt+kDH7mtNUBxj4Baw==, tarball: file:projects/sdk-ui-tests-e2e.tgz}
     id: file:projects/sdk-ui-tests-e2e.tgz
     name: '@rush-temp/sdk-ui-tests-e2e'
     version: 0.0.0
@@ -24047,6 +24047,7 @@ packages:
       '@types/raf': 3.4.0
       '@types/react': 17.0.44
       '@types/react-dom': 17.0.15
+      '@types/react-router-dom': 5.3.3
       '@typescript-eslint/eslint-plugin': 5.18.0_99323e11f95188b2bd36c66beda2638d
       '@typescript-eslint/parser': 5.18.0_eslint@8.25.0+typescript@4.0.2
       '@wojtekmaj/enzyme-adapter-react-17': 0.6.7_fae758709a8810ba97b4c03852dde4d0

@@ -408,7 +408,7 @@
     },
     {
       "name": "@types/react-router-dom",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "@types/react-select",
