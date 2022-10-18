@@ -4,38 +4,38 @@
 /**
  * Unique key to identify the attribute element - its uri, value or primaryKey.
  *
- * @alpha
+ * @public
  */
 export type AttributeElementKey = string;
 
 /**
- * @alpha
+ * @public
  */
 export type Correlation = string;
 
 /**
- * @alpha
+ * @public
  */
 export type Unsubscribe = () => void;
 
 /**
- * @alpha
+ * @public
  */
 export type CallbackPayloadWithCorrelation<T = {}> = T & { correlation: Correlation };
 
 /**
- * @alpha
+ * @public
  */
 export type Callback<T> = (payload: T) => void;
 
 /**
- * @alpha
+ * @public
  */
 export type CallbackRegistration<T> = (cb: Callback<T>) => Unsubscribe;
 
 /**
  * Represents the current status of the asynchronous operation.
  *
- * @alpha
+ * @public
  */
 export type AsyncOperationStatus = "pending" | "loading" | "success" | "error" | "canceled";

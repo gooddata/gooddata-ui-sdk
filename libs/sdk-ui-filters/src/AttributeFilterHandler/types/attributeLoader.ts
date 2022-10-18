@@ -11,7 +11,7 @@ import {
 /**
  * Handles the loading of the attribute metadata.
  *
- * @alpha
+ * @public
  */
 export interface IAttributeLoader {
     /**
@@ -96,14 +96,14 @@ export interface IAttributeLoader {
 /**
  * Payload of the onLoadAttributeStart callback.
  *
- * @alpha
+ * @public
  */
 export type OnLoadAttributeStartCallbackPayload = CallbackPayloadWithCorrelation;
 
 /**
  * Payload of the onLoadAttributeSuccess callback.
  *
- * @alpha
+ * @public
  */
 export type OnLoadAttributeSuccessCallbackPayload = CallbackPayloadWithCorrelation<{
     attribute: IAttributeMetadataObject;
@@ -112,13 +112,13 @@ export type OnLoadAttributeSuccessCallbackPayload = CallbackPayloadWithCorrelati
 /**
  * Payload of the onLoadAttributeError callback.
  *
- * @alpha
+ * @public
  */
 export type OnLoadAttributeErrorCallbackPayload = CallbackPayloadWithCorrelation<{ error: GoodDataSdkError }>;
 
 /**
  * Payload of the onLoadAttributeCancel callback.
  *
- * @alpha
+ * @public
  */
 export type OnLoadAttributeCancelCallbackPayload = CallbackPayloadWithCorrelation;

@@ -4,7 +4,7 @@ import { CallbackRegistration } from "./common";
 /**
  * Handles simple selection of at most one item.
  *
- * @alpha
+ * @public
  */
 export interface ISingleSelectionHandler<T> {
     /**
@@ -32,7 +32,7 @@ export interface ISingleSelectionHandler<T> {
 
 /**
  * Handles selection of keys with stages: working and committed.
- * @alpha
+ * @public
  */
 export interface IStagedSingleSelectionHandler<T> extends Omit<ISingleSelectionHandler<T>, "getSelection"> {
     /**
@@ -81,7 +81,7 @@ export interface IStagedSingleSelectionHandler<T> extends Omit<ISingleSelectionH
 //
 
 /**
- * @alpha
+ * @public
  */
 export interface InvertableSelection<T> {
     keys: T[];
@@ -91,7 +91,7 @@ export interface InvertableSelection<T> {
 /**
  * Handles the selection that can be inverted.
  *
- * @alpha
+ * @public
  */
 export interface IInvertableSelectionHandler<T extends InvertableSelection<any>> {
     /**
@@ -129,7 +129,7 @@ export interface IInvertableSelectionHandler<T extends InvertableSelection<any>>
 
 /**
  * Handles selection of keys with stages: working and committed.
- * @alpha
+ * @public
  */
 export interface IStagedInvertableSelectionHandler<T extends InvertableSelection<any>>
     extends Omit<IInvertableSelectionHandler<T>, "getSelection"> {
@@ -177,13 +177,13 @@ export interface IStagedInvertableSelectionHandler<T extends InvertableSelection
 /**
  * Payload of the onSelectionChanged callback.
  *
- * @alpha
+ * @public
  */
 export type OnSelectionChangedCallbackPayload<T> = { selection: T };
 
 /**
  * Payload of the onSelectionCommitted callback.
  *
- * @alpha
+ * @public
  */
 export type OnSelectionCommittedCallbackPayload<T> = { selection: T };

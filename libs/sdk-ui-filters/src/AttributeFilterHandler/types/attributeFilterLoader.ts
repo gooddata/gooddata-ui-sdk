@@ -13,7 +13,7 @@ import { IAttributeElementLoader } from "./elementsLoader";
 /**
  * Handles the loading of the all required metadata for the attribute filter handler.
  *
- * @alpha
+ * @public
  */
 export interface IAttributeFilterLoader extends IAttributeLoader, IAttributeElementLoader {
     /**
@@ -105,27 +105,27 @@ export interface IAttributeFilterLoader extends IAttributeLoader, IAttributeElem
 /**
  * Payload of the onInitStart callback.
  *
- * @alpha
+ * @public
  */
 export type OnInitStartCallbackPayload = CallbackPayloadWithCorrelation;
 
 /**
  * Payload of the onInitSuccess callback.
  *
- * @alpha
+ * @public
  */
 export type OnInitSuccessCallbackPayload = CallbackPayloadWithCorrelation;
 
 /**
  * Payload of the onInitError callback.
  *
- * @alpha
+ * @public
  */
 export type OnInitErrorCallbackPayload = CallbackPayloadWithCorrelation<{ error: GoodDataSdkError }>;
 
 /**
  * Payload of the onInitCancel callback.
  *
- * @alpha
+ * @public
  */
 export type OnInitCancelCallbackPayload = CallbackPayloadWithCorrelation;
