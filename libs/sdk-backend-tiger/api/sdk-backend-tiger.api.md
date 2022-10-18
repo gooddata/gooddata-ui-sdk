@@ -100,6 +100,16 @@ export interface IApiTokenExtended extends IApiToken {
     bearerToken: string | undefined;
 }
 
+// @internal (undocumented)
+export interface ICSPDirective {
+    // (undocumented)
+    attributes: {
+        sources: Array<string>;
+    };
+    // (undocumented)
+    id: string;
+}
+
 // @internal
 export interface IDataSource {
     // (undocumented)
@@ -335,6 +345,11 @@ export type TigerSpecificFunctions = {
     inviteUser?: (requestParameters: ActionsApiProcessInvitationRequest, options?: AxiosRequestConfig) => Promise<IInvitationUserResponse>;
     getWorkspaceDataFiltersLayout?: () => Promise<WorkspaceDataFiltersLayout>;
     setWorkspaceDataFiltersLayout?: (workspaceDataFiltersLayout: WorkspaceDataFiltersLayout) => Promise<void>;
+    getAllCSPDirectives?: () => Promise<Array<ICSPDirective>>;
+    getCSPDirective?: (directiveId: string) => Promise<ICSPDirective>;
+    createCSPDirective?: (requestData: ICSPDirective) => Promise<ICSPDirective>;
+    updateCSPDirective?: (directiveId: string, requestData: ICSPDirective) => Promise<ICSPDirective>;
+    deleteCSPDirective?: (directiveId: string) => Promise<void>;
 };
 
 // @public
