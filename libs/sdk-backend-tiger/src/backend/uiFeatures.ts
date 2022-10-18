@@ -20,6 +20,8 @@ export enum TigerFeaturesNames {
     EnableTheming = "enableTheming",
     //boolean + possible values: enabled, disabled
     EnableMetricSqlAndDataExplain = "enableMetricSqlAndDataExplain",
+    //boolean + possible values: enabled, disabled
+    EnableDateFormats = "enableDateFormats",
 }
 
 export type ITigerFeatureFlags = {
@@ -30,6 +32,7 @@ export type ITigerFeatureFlags = {
     dashboardEditModeDevRollout: typeof FeatureFlagsValues["dashboardEditModeDevRollout"][number];
     enableTheming: typeof FeatureFlagsValues["enableTheming"][number];
     enableMetricSqlAndDataExplain: typeof FeatureFlagsValues["enableMetricSqlAndDataExplain"][number];
+    enableDateFormats: typeof FeatureFlagsValues["enableDateFormats"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -41,6 +44,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     dashboardEditModeDevRollout: false,
     enableTheming: true,
     enableMetricSqlAndDataExplain: false,
+    enableDateFormats: false,
 };
 
 export const FeatureFlagsValues = {
@@ -55,4 +59,5 @@ export const FeatureFlagsValues = {
     dashboardEditModeDevRollout: [true, false] as const,
     enableTheming: [true, false] as const,
     enableMetricSqlAndDataExplain: [true, false] as const,
+    enableDateFormats: [true, false] as const,
 };
