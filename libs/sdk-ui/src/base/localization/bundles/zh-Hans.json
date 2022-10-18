@@ -273,6 +273,8 @@
     "attributesDropdown.configuration": "配置",
     "attributesDropdown.removeTooltip": "从控制面板中移除",
     "attributesDropdown.display_as": "显示为：{title}",
+    "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> 已被 <strong>{childTitle}</strong> 筛选器直接筛选或已通过其他筛选器筛选。",
+    "attributesDropdown.attributeNameWithData": "带下列数据",
     "shareDialog.share.grantee.title": "与用户和组共享",
     "shareDialog.share.grantee.share": "共享",
     "shareDialog.share.grantee.list.title": "共享给",

@@ -70,7 +70,7 @@
         height: 28px;
     }
 
-    .configuration-item-title {
+    .input-checkbox-label.configuration-item-title {
         display: flex;
         flex-grow: 0;
 
@@ -78,7 +78,6 @@
             flex-shrink: 0;
             color: $gd-color-state-blank;
             margin-right: 3px;
-            text-overflow: initial;
         }
     }
 
