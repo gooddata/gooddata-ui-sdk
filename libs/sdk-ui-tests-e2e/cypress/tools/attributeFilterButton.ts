@@ -33,6 +33,21 @@ export class AttributeFilterButton {
         return this;
     }
 
+    statusHasText(expectedSubtitle: string): this {
+        cy.get(".s-dropdown-attribute-selection-list").should("have.text", expectedSubtitle);
+        return this;
+    }
+
+    statusHasAll(): this {
+        cy.get(".s-list-status-bar b").should("have.text", "All");
+        return this;
+    }
+
+    statusHasNone(): this {
+        cy.get(".s-list-status-bar b").should("have.text", "None");
+        return this;
+    }
+
     clearSelection(): this {
         cy.get(".s-select-all-checkbox").click();
         return this;
