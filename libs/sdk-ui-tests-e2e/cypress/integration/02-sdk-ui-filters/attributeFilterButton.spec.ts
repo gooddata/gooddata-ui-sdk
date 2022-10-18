@@ -17,7 +17,7 @@ describe("AttributeFilterButton", () => {
 
     it("attribute filter loaded", () => {
         const attributeFilter = new AttributeFilterButton(ATTRIBUTE_FILTER_BUTTON_SELECTOR);
-        attributeFilter.titleHasText("Opportunity").subtitleHasText("All");
+        attributeFilter.titleHasText("Opportunity:").subtitleHasText("All");
     });
 
     // eslint-disable-next-line jest/no-disabled-tests
@@ -69,6 +69,7 @@ describe("AttributeFilterButton", () => {
             .searchElements(SEARCH_QUERY)
             .waitElementsLoaded()
             .clearSelection()
+            .clickApply()
             .subtitleHasText("All except 101 Financial > Educationly, 101 Financial > WonderKid");
     });
 
