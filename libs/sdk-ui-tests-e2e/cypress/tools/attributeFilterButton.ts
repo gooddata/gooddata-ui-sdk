@@ -117,12 +117,8 @@ export class AttributeFilterButton {
     }
 
     waitFilteringFinished(): this {
-        cy.get(`${this.attributeFilterUniqueSelector}.gd-attribute-filter-button-is-filtering`).should(
-            "exist",
-        );
-        cy.get(`${this.attributeFilterUniqueSelector}.gd-attribute-filter-button-is-filtering`).should(
-            "not.exist",
-        );
+        cy.get(`${this.attributeFilterUniqueSelector}.gd-is-filtering`).should("exist");
+        cy.get(`${this.attributeFilterUniqueSelector}.gd-is-filtering`).should("not.exist");
         return this;
     }
 

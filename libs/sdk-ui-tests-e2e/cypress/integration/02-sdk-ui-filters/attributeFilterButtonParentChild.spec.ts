@@ -18,8 +18,8 @@ describe("Parent-child filtering on AttributeFilterButton", () => {
             CHILD_FILTER_SELECTOR,
         );
 
-        parentChildFilters.getParentFilter().titleHasText("Product");
-        parentChildFilters.getChildFilter().titleHasText("Department");
+        parentChildFilters.getParentFilter().titleHasText("Product:");
+        parentChildFilters.getChildFilter().titleHasText("Department:");
     });
 
     it("Child elements are all filtered out", () => {
