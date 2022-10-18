@@ -27,10 +27,13 @@ module.exports = async (env, argv) => {
             secure: false,
             target: backendUrl,
             headers: {
-                host: backendUrl,
-                origin: null,
+                host: backendUrl.replace(/^https:\/\//, ""),
+                // This is essential for Tiger backends. To ensure 401 flies when not authenticated and using proxy
+                "X-Requested-With": "XMLHttpRequest",
             },
-            onProxyReq(proxyReq) {
+            onProxyReq: function (proxyReq, _req, _res) {
+                // changeOrigin: true does not work well for POST requests, so remove origin like this to be safe
+                proxyReq.removeHeader("origin");
                 proxyReq.setHeader("accept-encoding", "identity");
             },
         },
@@ -76,11 +79,17 @@ module.exports = async (env, argv) => {
         target: "web",
         mode: isProduction ? "production" : "development",
         plugins,
-        output: {
-            filename: "[name].[contenthash].js",
-            path: path.join(__dirname, "build"),
-            publicPath: `./`,
-        },
+        output: isProduction
+            ? {
+                  filename: "[name].[contenthash].js",
+                  path: path.join(__dirname, "build"),
+                  publicPath: `./`,
+              }
+            : {
+                  path: path.join(__dirname, "gooddata-ui-sdk"),
+                  publicPath: "/gooddata-ui-sdk",
+                  filename: "[name].js",
+              },
         devtool: isProduction ? false : "cheap-module-source-map",
         node: {
             __filename: true,
@@ -141,7 +150,7 @@ module.exports = async (env, argv) => {
                 stats: "errors-only",
             },
             historyApiFallback: true,
-            port: 8999,
+            port: 9500,
             liveReload: true,
             proxy,
         },
