@@ -147,7 +147,7 @@ export function AttributesDropdown({
                 />
             )}
             renderBody={({ closeDropdown }) => (
-                <div className={cx(bodyClassName, "metrics-dropdown")}>
+                <div className={cx(bodyClassName, "attributes-list")}>
                     <DropdownList
                         items={filteredMeasures}
                         searchFieldSize="small"

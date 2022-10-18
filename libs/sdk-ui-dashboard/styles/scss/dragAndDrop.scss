@@ -519,3 +519,11 @@
         background-size: 130px;
     }
 }
+
+.attributes-list {
+    width: $gd-configuration-panel-inner-width;
+
+    .dropdown-body {
+        flex-direction: column;
+    }
+}
