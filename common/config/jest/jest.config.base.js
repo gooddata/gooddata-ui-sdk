@@ -10,4 +10,5 @@ module.exports = {
         "\\.(css|less|sass|scss)$": "<rootDir>/__mocks__/styleMock.ts",
     },
     testPathIgnorePatterns: ["/node_modules/", "/dist/"],
+    testTimeout: 20000, // This timeout was added because we have flaky tests that ended up with timeouts. more info: https://github.com/facebook/jest/issues/11607
 };
