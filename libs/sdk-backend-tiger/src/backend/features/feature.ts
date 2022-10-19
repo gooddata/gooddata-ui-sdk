@@ -65,6 +65,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enableMetricSqlAndDataExplain,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableDateFormats,
+            "enableDateFormats",
+            "BOOLEAN",
+            FeatureFlagsValues.enableDateFormats,
+        ),
     };
 }
 

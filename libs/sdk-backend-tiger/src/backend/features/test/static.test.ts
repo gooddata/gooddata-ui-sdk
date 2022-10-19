@@ -24,6 +24,7 @@ describe("static features", () => {
                 [TigerFeaturesNames.DashboardEditModeDevRollout]: "ENABLED",
                 [TigerFeaturesNames.EnableTheming]: "ENABLED",
                 [TigerFeaturesNames.EnableMetricSqlAndDataExplain]: "ENABLED",
+                [TigerFeaturesNames.EnableDateFormats]: "ENABLED",
             }),
         );
         expect(results).toEqual({
@@ -34,6 +35,7 @@ describe("static features", () => {
             enableSortingByTotalGroup: true,
             enableTheming: true,
             enableMetricSqlAndDataExplain: true,
+            enableDateFormats: true,
         });
     });
 
@@ -48,6 +50,7 @@ describe("static features", () => {
                     [TigerFeaturesNames.DashboardEditModeDevRollout]: "ENABLED",
                     [TigerFeaturesNames.EnableTheming]: "ENABLED",
                     [TigerFeaturesNames.EnableMetricSqlAndDataExplain]: "ENABLED",
+                    [TigerFeaturesNames.EnableDateFormats]: "ENABLED",
                 },
                 "beta",
             ),
@@ -60,6 +63,7 @@ describe("static features", () => {
             enableSortingByTotalGroup: true,
             enableTheming: true,
             enableMetricSqlAndDataExplain: true,
+            enableDateFormats: true,
         });
     });
 });
