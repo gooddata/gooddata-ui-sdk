@@ -9,17 +9,10 @@
 </p>
 
 <p align="center">
-    <a href="https://www.npmjs.com/@gooddata/sdk-model">
-        <img src="https://img.shields.io/npm/v/@gooddata/sdk-model.svg?logo=npm" alt="GoodData.UI on npm">
-    </a>&nbsp;
-    <a href="https://npmcharts.com/compare/@gooddata/sdk-model?minimal=true">
-        <img src="https://img.shields.io/npm/dm/@gooddata/sdk-model.svg" alt="GoodData.UI on npmcharts">
-    </a>&nbsp;
-    <img src="https://img.shields.io/badge/typescript-first-blue?logo=typescript" alt="GoodData TypeScript support badge">
-    &nbsp;
-    <a href="https://www.gooddata.com/slack">
-        <img src="https://img.shields.io/badge/slack-community-green?logo=slack" alt="GoodData Community Slack">
-    </a>&nbsp;
+    <a href="https://www.npmjs.com/@gooddata/sdk-model"><img src="https://img.shields.io/npm/v/@gooddata/sdk-model.svg?logo=npm" alt="GoodData.UI on npm"></a>&nbsp;
+    <a href="https://npmcharts.com/compare/@gooddata/sdk-model?minimal=true"><img src="https://img.shields.io/npm/dm/@gooddata/sdk-model.svg" alt="GoodData.UI on npmcharts"></a>&nbsp;
+    <img src="https://img.shields.io/badge/typescript-first-blue?logo=typescript" alt="GoodData TypeScript support badge">&nbsp;
+    <a href="https://www.gooddata.com/slack"><img src="https://img.shields.io/badge/slack-community-green?logo=slack" alt="GoodData Community Slack"></a>&nbsp;
 </p>
 
 [GoodData.UI](https://sdk.gooddata.com/gooddata-ui) is a TypeScript framework for building analytical applications on top of the [GoodData platform](https://help.gooddata.com/doc/enterprise/en), [GoodData Cloud or GoodData.CN](https://www.gooddata.com/developers/cloud-native/doc/cloud/).
