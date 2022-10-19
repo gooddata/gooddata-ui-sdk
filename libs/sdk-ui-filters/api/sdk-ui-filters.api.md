@@ -93,11 +93,11 @@ export type AttributeFilterControllerData = {
     limit: number;
     isFiltering: boolean;
     isInitializing: boolean;
-    initError: GoodDataSdkError;
+    initError?: GoodDataSdkError;
     isLoadingInitialElementsPage: boolean;
-    initialElementsPageError: GoodDataSdkError;
+    initialElementsPageError?: GoodDataSdkError;
     isLoadingNextElementsPage: boolean;
-    nextElementsPageError: GoodDataSdkError;
+    nextElementsPageError?: GoodDataSdkError;
     nextElementsPageSize: number;
     elements: IAttributeElement[];
     totalElementsCount: number;
