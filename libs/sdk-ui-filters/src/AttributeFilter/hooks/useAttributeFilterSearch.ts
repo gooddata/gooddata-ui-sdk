@@ -2,7 +2,8 @@
 import { useEffect, useState, useCallback } from "react";
 
 /**
- * @alpha
+ * UseAttributeFilterSearch hook properties
+ * @beta
  */
 export interface IUseAttributeFilterSearchProps {
     searchString: string;
@@ -12,7 +13,7 @@ export interface IUseAttributeFilterSearchProps {
 /**
  * Use this hook if you want to implement your custom attribute filter search bar component
  *
- * @alpha
+ * @beta
  */
 export const useAttributeFilterSearch = (props: IUseAttributeFilterSearchProps) => {
     const { onSearch, searchString } = props;

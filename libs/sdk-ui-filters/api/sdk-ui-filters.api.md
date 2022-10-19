@@ -463,8 +463,8 @@ export interface IAttributeFilterConfigurationButtonProps {
     onConfiguration: () => void;
 }
 
-// @alpha (undocumented)
-export type IAttributeFilterContext = ReturnType<typeof useAttributeFilterController> & Pick<IAttributeFilterCoreProps, "fullscreenOnMobile" | "title">;
+// @beta
+export type IAttributeFilterContext = AttributeFilterController & Pick<IAttributeFilterCoreProps, "fullscreenOnMobile" | "title">;
 
 // @public (undocumented)
 export interface IAttributeFilterCoreProps {
@@ -1038,14 +1038,14 @@ export interface IUiRelativeDateFilterForm extends Omit<IRelativeDateFilterForm,
     to?: RelativeDateFilterGranularityOffset;
 }
 
-// @public (undocumented)
+// @public
 export type IUseAttributeFilterControllerProps = Omit<IAttributeFilterCoreProps, "fullscreenOnMobile" | "locale" | "title"> & {
     elementsOptions?: {
         limit: number;
     };
 };
 
-// @alpha (undocumented)
+// @beta
 export interface IUseAttributeFilterHandlerProps {
     // (undocumented)
     backend: IAnalyticalBackend;
@@ -1059,7 +1059,7 @@ export interface IUseAttributeFilterHandlerProps {
     workspace: string;
 }
 
-// @alpha (undocumented)
+// @beta
 export interface IUseAttributeFilterSearchProps {
     // (undocumented)
     onSearch: (search: string) => void;
@@ -1197,16 +1197,16 @@ export type RelativeDateFilterOption = IUiRelativeDateFilterForm | IRelativeDate
 // @public (undocumented)
 export type Unsubscribe = () => void;
 
-// @alpha (undocumented)
+// @beta
 export const useAttributeFilterContext: () => IAttributeFilterContext;
 
 // @public
 export const useAttributeFilterController: (props: IUseAttributeFilterControllerProps) => AttributeFilterController;
 
-// @alpha (undocumented)
+// @beta
 export const useAttributeFilterHandler: (props: IUseAttributeFilterHandlerProps) => IMultiSelectAttributeFilterHandler;
 
-// @alpha
+// @beta
 export const useAttributeFilterSearch: (props: IUseAttributeFilterSearchProps) => {
     onSearch: (search: string) => void;
     search: string;
