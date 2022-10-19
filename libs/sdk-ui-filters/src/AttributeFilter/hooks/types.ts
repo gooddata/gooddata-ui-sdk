@@ -42,7 +42,7 @@ export type AttributeFilterControllerData = {
     /**
      * Error that occurred during the initialization, if any.
      */
-    initError: GoodDataSdkError;
+    initError?: GoodDataSdkError;
 
     /**
      * If true, the first elements page is loading.
@@ -52,7 +52,7 @@ export type AttributeFilterControllerData = {
     /**
      * Error that occurred during the initial elements page load, if any.
      */
-    initialElementsPageError: GoodDataSdkError;
+    initialElementsPageError?: GoodDataSdkError;
 
     /**
      * If true, the next elements page is loading.
@@ -62,7 +62,7 @@ export type AttributeFilterControllerData = {
     /**
      * Error that occurred during the next elements page load, if any.
      */
-    nextElementsPageError: GoodDataSdkError;
+    nextElementsPageError?: GoodDataSdkError;
 
     /**
      * Next element page size
