@@ -25,12 +25,13 @@ export const DraggableAttributeFilterCreatePanelItem: React.FC<
     IDraggableAttributeFilterCreatePanelItemProps
 > = ({ CreatePanelItemComponent, disabled }) => {
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
+    const dragEnabled = isInEditMode && !disabled;
 
     return (
         <DraggableCreatePanelItem
             Component={CreatePanelItemComponent}
             disabled={disabled}
-            canDrag={isInEditMode && !disabled}
+            canDrag={dragEnabled}
             dragItem={dragItem}
             hideDefaultPreview={false}
         />

@@ -35,7 +35,7 @@ export const CreatableKpi: React.FC = () => {
     return (
         <BubbleHoverTrigger eventsOnBubble={true} className="s-add-kpi-bubble-trigger">
             <DraggableKpiCreatePanelItem CreatePanelItemComponent={AddKpiWidgetButton} disabled={disabled} />
-            {tooltip && <Bubble alignPoints={bubbleAlignPoints}>{tooltip}</Bubble>}
+            {tooltip ? <Bubble alignPoints={bubbleAlignPoints}>{tooltip}</Bubble> : null}
         </BubbleHoverTrigger>
     );
 };

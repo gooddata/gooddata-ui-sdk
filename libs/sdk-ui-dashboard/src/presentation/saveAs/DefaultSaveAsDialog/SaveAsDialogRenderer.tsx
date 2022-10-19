@@ -128,7 +128,7 @@ export class SaveAsNewDashboardDialog extends React.PureComponent<
                         onChange={this.handleTitleChange as any}
                     />
                 </div>
-                {noteText && <Message type="progress">{noteText}</Message>}
+                {noteText ? <Message type="progress">{noteText}</Message> : null}
             </ConfirmDialog>
         );
     }

@@ -106,7 +106,7 @@ export function HeightResizerHotspot({
                 onMouseEnter={onMouseEnter}
                 onMouseLeave={onMouseLeave}
             >
-                {shouldRenderResizer && <HeightResizer status={status} />}
+                {shouldRenderResizer ? <HeightResizer status={status} /> : null}
             </div>
         </div>
     );

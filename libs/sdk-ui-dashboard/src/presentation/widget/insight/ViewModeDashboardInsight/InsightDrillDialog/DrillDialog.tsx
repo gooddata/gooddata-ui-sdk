@@ -50,7 +50,7 @@ export const DrillDialog: React.FC<DrillDialogProps> = ({
     return (
         <div className="gd-dialog gd-drill-modal-dialog s-drill-modal-dialog">
             <div className="gd-dialog-header gd-dialog-header-with-border gd-drill-modal-dialog-header">
-                {isBackButtonVisible && (
+                {isBackButtonVisible ? (
                     <BubbleHoverTrigger>
                         <Button
                             className="gd-button-primary gd-button-icon-only gd-icon-navigateleft s-drill-reset-button gd-drill-reset-button"
@@ -60,7 +60,7 @@ export const DrillDialog: React.FC<DrillDialogProps> = ({
                             <FormattedMessage id="drillModal.backToTop" tagName="span" />
                         </Bubble>
                     </BubbleHoverTrigger>
-                )}
+                ) : null}
                 <div className="gd-drill-title s-drill-title">
                     <ShortenedText
                         tagName="div"
@@ -78,7 +78,7 @@ export const DrillDialog: React.FC<DrillDialogProps> = ({
             <div className="gd-drill-modal-dialog-content visualization">
                 <div className="gd-drill-modal-dialog-content-base">{children}</div>
             </div>
-            {shouldShowDrilledInsightExport && (
+            {shouldShowDrilledInsightExport ? (
                 <div className="gd-drill-modal-dialog-footer gd-drill-modal-dialog-footer-with-border s-drill-modal-dialog-footer">
                     <DrillModalFooter
                         exportAvailable={exportAvailable}
@@ -89,7 +89,7 @@ export const DrillDialog: React.FC<DrillDialogProps> = ({
                         isLoading={isLoading}
                     />
                 </div>
-            )}
+            ) : null}
             <PoweredByGDLogo isSmall />
         </div>
     );

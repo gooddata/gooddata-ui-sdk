@@ -79,9 +79,9 @@ export const DateFilterCheckbox: React.FC<IDateFilterCheckboxProps> = (props) =>
                 <span className="input-label-text title">
                     <FormattedMessage id="configurationPanel.date" />
                 </span>
-                {isFilterLoading && <div className="gd-spinner small" />}
+                {isFilterLoading ? <div className="gd-spinner small" /> : null}
             </label>
-            {!isFilterLoading && showNoRelatedDate && (
+            {!isFilterLoading && showNoRelatedDate ? (
                 <div className="gd-message error s-no-related-date">
                     {isInsightWidget(widget) ? (
                         <FormattedMessage id="configurationPanel.vizCantBeFilteredByDate" />
@@ -89,7 +89,7 @@ export const DateFilterCheckbox: React.FC<IDateFilterCheckboxProps> = (props) =>
                         <FormattedMessage id="configurationPanel.kpiCantBeFilteredByDate" />
                     )}
                 </div>
-            )}
+            ) : null}
         </div>
     );
 };

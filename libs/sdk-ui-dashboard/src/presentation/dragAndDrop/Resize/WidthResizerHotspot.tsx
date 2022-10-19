@@ -105,7 +105,7 @@ export function WidthResizerHotspot({
                 onMouseLeave={onMouseLeave}
                 ref={dragRef}
             >
-                {showResizer && <WidthResizer status={status} />}
+                {showResizer ? <WidthResizer status={status} /> : null}
             </div>
         </div>
     );

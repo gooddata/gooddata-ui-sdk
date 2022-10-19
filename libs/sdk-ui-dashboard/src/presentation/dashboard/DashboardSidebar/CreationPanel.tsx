@@ -50,7 +50,7 @@ export const CreationPanel: React.FC<ICreationPanelProps> = ({ className }) => {
                     </Typography>
                     <div className="add-item-panel">{addItemPanelItems}</div>
                 </div>
-                {isAnalyticalDesignerEnabled && (
+                {isAnalyticalDesignerEnabled ? (
                     <div className="configuration-category configuration-category-vis drag-to-add flex-panel-item-stretch">
                         <Typography tagName="h3">
                             <FormattedMessage id="visualizationsList.savedVisualizations" />
@@ -60,7 +60,7 @@ export const CreationPanel: React.FC<ICreationPanelProps> = ({ className }) => {
                             searchAutofocus={!isNewDashboard}
                         />
                     </div>
-                )}
+                ) : null}
             </div>
         </div>
     );

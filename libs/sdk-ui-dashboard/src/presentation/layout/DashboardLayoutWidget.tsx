@@ -167,7 +167,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                 LoadingComponent={LoadingComponent}
             />
 
-            {isInEditMode && !isAnyPlaceholderWidget(widget) && (
+            {isInEditMode && !isAnyPlaceholderWidget(widget) ? (
                 <>
                     <ResizeOverlay
                         isActive={isActive}
@@ -195,7 +195,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                         getLayoutDimensions={getLayoutDimensions}
                     />
                 </>
-            )}
+            ) : null}
         </DefaultWidgetRenderer>
     );
 };

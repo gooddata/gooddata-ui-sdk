@@ -46,13 +46,13 @@ export function DraggableAttributeFilter({
 
     return (
         <div className="draggable-attribute-filter">
-            {showDropZones && (
+            {showDropZones ? (
                 <AttributeFilterDropZoneHint
                     hintPosition="prev"
                     targetIndex={filterIndex}
                     onAddAttributePlaceholder={onAttributeFilterAdded}
                 />
-            )}
+            ) : null}
 
             <div
                 className={classNames("dash-filters-notdate", "dash-filters-attribute", {
@@ -67,13 +67,13 @@ export function DraggableAttributeFilter({
                 />
             </div>
 
-            {showDropZones && (
+            {showDropZones ? (
                 <AttributeFilterDropZoneHint
                     hintPosition="next"
                     targetIndex={filterIndex}
                     onAddAttributePlaceholder={onAttributeFilterAdded}
                 />
-            )}
+            ) : null}
         </div>
     );
 }

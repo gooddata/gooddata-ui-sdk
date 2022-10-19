@@ -66,8 +66,7 @@ export const InsightParametersSection: React.FC<IInsightParametersSectionProps> 
 }) => {
     return (
         <>
-            {((attributeDisplayForms && attributeDisplayForms.length > 0) ||
-                loadingAttributeDisplayForms) && (
+            {(attributeDisplayForms && attributeDisplayForms.length > 0) || loadingAttributeDisplayForms ? (
                 <>
                     <DropdownSectionHeader>
                         <FormattedMessage id="configurationPanel.drillIntoUrl.editor.insightParametersSectionLabel" />
@@ -82,7 +81,7 @@ export const InsightParametersSection: React.FC<IInsightParametersSectionProps> 
                         ))
                     )}
                 </>
-            )}
+            ) : null}
         </>
     );
 };

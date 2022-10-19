@@ -240,6 +240,7 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps> = (props) => {
             : "idle";
 
     const { isSelectable, isSelected, onSelected } = useWidgetSelection(kpiWidgetRef);
+    const onDrillHandler = onDrill && handleOnDrill;
 
     return (
         <DashboardItemWithKpiAlert
@@ -385,7 +386,7 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps> = (props) => {
                         filters={effectiveFilters ?? []}
                         disableDrillUnderline={disableDrillUnderline}
                         isDrillable={isDrillable}
-                        onDrill={onDrill && handleOnDrill}
+                        onDrill={onDrillHandler}
                         separators={separators}
                         enableCompactSize={enableCompactSize}
                         error={error}

@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { Overlay, ItemsWrapper, Item, IAlignPoint } from "@gooddata/sdk-ui-kit";
@@ -40,22 +40,22 @@ const DrillModalExportOptions: React.FC<IDrillModalExportOptionsProps> = ({
             onClose={toggleShowDropdown}
         >
             <ItemsWrapper smallItemsSpacing={true}>
-                {exportXLSXEnabled && (
+                {exportXLSXEnabled ? (
                     <Item
                         onClick={onExportXLSX}
                         className="options-menu-export-xlsx s-export-drilled-insight-xlsx"
                     >
                         <FormattedMessage id="widget.options.menu.exportToXLSX" />
                     </Item>
-                )}
-                {exportCSVEnabled && (
+                ) : null}
+                {exportCSVEnabled ? (
                     <Item
                         onClick={onExportCSV}
                         className="options-menu-export-csv s-export-drilled-insight-csv"
                     >
                         <FormattedMessage id="widget.options.menu.exportToCSV" />
                     </Item>
-                )}
+                ) : null}
             </ItemsWrapper>
         </Overlay>
     ) : null;

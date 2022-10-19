@@ -142,20 +142,23 @@ export const InsightList: React.FC<IInsightListProps> = ({
 
     // need to subtract height of controls from the overall size which was measured
     const controlsHeight = search ? SEARCHFIELD_HEIGHT : TABS_AND_SEARCHFIELD_HEIGHT;
+    const dropdownListHeight = height && height - controlsHeight;
+    const dropdownListLoading = isLoading && insights.length === 0;
+    const showDropdownListTabs = initialLoadCompleted && !search;
 
     return (
         <DropdownList
             width={LIST_WIDTH}
-            height={height && height - controlsHeight}
+            height={dropdownListHeight}
             isMobile={false}
-            isLoading={isLoading && insights.length === 0}
+            isLoading={dropdownListLoading}
             showSearch={initialLoadCompleted}
             searchString={search}
             searchFieldSize="small"
             searchPlaceholder={intl.formatMessage({ id: "search_insights" })}
             onSearch={onSearch}
             disableAutofocus={!searchAutofocus}
-            showTabs={initialLoadCompleted && !search}
+            showTabs={showDropdownListTabs}
             tabs={backend.capabilities.supportsOwners && userUri ? dropdownTabsTranslationIds : undefined}
             selectedTabId={selectedTabId}
             onTabSelect={({ id }) => {

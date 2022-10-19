@@ -158,12 +158,12 @@ export const InsightDrillConfigPanel: React.FunctionComponent<IDrillConfigPanelP
                 onIncompleteChange={onChangeItem}
                 enabledDrillTargetTypeItems={enabledDrillTargetTypeItems}
             />
-            {configItems?.availableDrillTargets && (
+            {configItems?.availableDrillTargets ? (
                 <DrillOriginSelector
                     items={getUnusedDrillTargets(configItems?.availableDrillTargets, mergedItems)}
                     onSelect={onOriginSelect}
                 />
-            )}
+            ) : null}
         </div>
     );
 };

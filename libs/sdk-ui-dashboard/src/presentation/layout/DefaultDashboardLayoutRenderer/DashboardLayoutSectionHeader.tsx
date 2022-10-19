@@ -36,7 +36,7 @@ export const DashboardLayoutSectionHeader: React.FC<IDashboardLayoutSectionHeade
             <div className="gd-fluid-layout-row-header-container">
                 {renderHeader ?? (
                     <div className="gd-row-header-view">
-                        {title && (
+                        {title ? (
                             <div className="gd-row-header-title-wrapper">
                                 <span className="title">
                                     <Typography tagName="h2" className="s-fluid-layout-row-title">
@@ -44,8 +44,10 @@ export const DashboardLayoutSectionHeader: React.FC<IDashboardLayoutSectionHeade
                                     </Typography>
                                 </span>
                             </div>
-                        )}
-                        {description && <DashboardLayoutSectionHeaderDescription description={description} />}
+                        ) : null}
+                        {description ? (
+                            <DashboardLayoutSectionHeaderDescription description={description} />
+                        ) : null}
                     </div>
                 )}
             </div>

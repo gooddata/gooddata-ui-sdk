@@ -206,16 +206,16 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
                 style={insightPositionStyle}
             >
                 <IntlWrapper locale={locale}>
-                    {(filtersStatus === "running" || isVisualizationLoading) && <LoadingComponent />}
-                    {effectiveError && (
+                    {filtersStatus === "running" || isVisualizationLoading ? <LoadingComponent /> : null}
+                    {effectiveError ? (
                         <CustomError
                             error={effectiveError}
                             isCustomWidgetHeightEnabled={!!settings?.enableKDWidgetCustomHeight}
                             height={clientHeight}
                             width={clientWidth}
                         />
-                    )}
-                    {filtersStatus === "success" && (
+                    ) : null}
+                    {filtersStatus === "success" ? (
                         <div className="insight-view-visualization" style={insightWrapperStyle}>
                             <InsightBody
                                 widget={widget}
@@ -236,7 +236,7 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
                                 onExportReady={onExportReady}
                             />
                         </div>
-                    )}
+                    ) : null}
                 </IntlWrapper>
             </div>
         </div>

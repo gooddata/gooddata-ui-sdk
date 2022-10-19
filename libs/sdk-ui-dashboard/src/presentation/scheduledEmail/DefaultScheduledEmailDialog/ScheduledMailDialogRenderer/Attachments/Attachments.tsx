@@ -50,23 +50,23 @@ export const Attachments = (props: IAttachmentsProps) => {
             </label>
             <div className="gd-dashboard-attachment-list">
                 <div className="gd-dashboard-attachment-list-content">
-                    {dashboardSelected && (
+                    {dashboardSelected ? (
                         <AttachmentItem format="pdf">
                             <span className="shortened-name">{dashboardTitle}</span>
                         </AttachmentItem>
-                    )}
-                    {selectedWidgetsTitles.length !== 0 && (
+                    ) : null}
+                    {selectedWidgetsTitles.length !== 0 ? (
                         <AttachmentItem format={configuration.format}>
                             <span className="shortened-name" title={selectedWidgetsTitles.join(",\n")}>
                                 {selectedWidgetsTitles.join(", ")}
                             </span>
-                            {selectedWidgetsTitles.length > 1 && (
+                            {selectedWidgetsTitles.length > 1 ? (
                                 <span>{`(${selectedWidgetsTitles.length})`}</span>
-                            )}
+                            ) : null}
                         </AttachmentItem>
-                    )}
+                    ) : null}
                 </div>
-                {canExportReport && (
+                {canExportReport ? (
                     <div className="gd-schedule-email-dialog-attachments">
                         <AttachmentsSelectionDropdown
                             dashboardTitle={dashboardTitle}
@@ -75,16 +75,16 @@ export const Attachments = (props: IAttachmentsProps) => {
                             widgetsSelected={widgetsSelected}
                             onApply={onAttachmentsSelectionChanged}
                         />
-                        {isSomeWidgetSelected && (
+                        {isSomeWidgetSelected ? (
                             <FormatOptionsDropdown
                                 format={configuration.format}
                                 mergeHeaders={configuration.mergeHeaders}
                                 includeFilters={configuration.includeFilters}
                                 onApply={onAttachmentsConfigurationChanged}
                             />
-                        )}
+                        ) : null}
                     </div>
-                )}
+                ) : null}
             </div>
         </div>
     );
