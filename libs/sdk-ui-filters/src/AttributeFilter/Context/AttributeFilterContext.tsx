@@ -5,7 +5,7 @@ import { useAttributeFilterController } from "../hooks/useAttributeFilterControl
 import { AttributeFilterController } from "../hooks/types";
 
 /**
- * UseAttributeFilterContext return type
+ * The return type of {@link useAttributeFilterContext}.
  * @beta
  */
 export type IAttributeFilterContext = AttributeFilterController &
@@ -16,7 +16,7 @@ export const AttributeFilterContext = React.createContext<IAttributeFilterContex
 AttributeFilterContext.displayName = "AttributeFilterContext";
 
 /**
- * This context provide AttributeFilter state and callbacks. {@link AttributeFilterController}
+ * Context providing AttributeFilter state and callbacks wrapped as {@link AttributeFilterController}.
  * @beta
  */
 export const useAttributeFilterContext = (): IAttributeFilterContext => useContext(AttributeFilterContext);

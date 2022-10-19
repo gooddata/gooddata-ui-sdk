@@ -5,7 +5,6 @@ import { useAttributeFilterComponentsContext } from "../Context/AttributeFilterC
 import { useAttributeFilterContext } from "../Context/AttributeFilterContext";
 
 /**
- * This is internal Attribute filer render
  * @internal
  */
 export const AttributeFilterRenderer: React.VFC = () => {

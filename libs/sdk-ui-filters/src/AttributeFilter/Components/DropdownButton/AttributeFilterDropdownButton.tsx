@@ -12,23 +12,23 @@ export const ALIGN_POINT = [
 ];
 
 /**
- * This is the interface of AttributeFilter dropdown button.
- * It opens Attribute filter dropdown and displaying title or subtitle, selection details and attribute filter statuses like loading or filtering.
+ * The interface of the AttributeFilter dropdown button.
  *
  * @remarks
- * Note for rendering error status see {@link IAttributeFilterErrorProps}
+ * It opens Attribute filter dropdown and displaying title or subtitle, selection details and attribute filter statuses like loading or filtering.
+ * Note: for rendering error status see {@link IAttributeFilterErrorProps}.
  * @beta
  */
 export interface IAttributeFilterDropdownButtonProps {
     /**
-     * Title of attribute {@link  @gooddata/sdk-model#IAttributeFilter} and its related display form {@link  @gooddata/sdk-model#IAttributeDisplayFormMetadataObject}
+     * Title of the attribute {@link @gooddata/sdk-model#IAttributeFilter} and its related display form {@link @gooddata/sdk-model#IAttributeDisplayFormMetadataObject}.
      *
      * @beta
      */
     title?: string;
 
     /**
-     * List of selected elements titles separated by comma.
+     * Comma-separated list of selected element titles.
      *
      * @beta
      */
@@ -47,42 +47,42 @@ export interface IAttributeFilterDropdownButtonProps {
     selectedItemsCount?: number;
 
     /**
-     * This prop defines the open or close state of AttributeFilter dropdown.
+     * If true, the AttributeFilter dropdown is open.
      *
      * @beta
      */
     isOpen?: boolean;
 
     /**
-     * This prop means that AttributeFilter is initializing Attribute elements and its internal data.
+     * If true, the AttributeFilter is initializing Attribute elements and its internal data.
      *
      * @beta
      */
     isLoading?: boolean;
 
     /**
-     * This prop means that AttributeFilter is filtering elements by parent filters.
+     * If true, the AttributeFilter is filtering its elements by parent filters.
      *
      * @beta
      */
     isFiltering?: boolean;
 
     /**
-     * This prop means that all initialization finished
+     * If true, all the initialization has finished.
      *
      * @beta
      */
     isLoaded?: boolean;
 
     /**
-     * This prop means that button support drag and drop operation
+     * If true, the button supports drag and drop operations.
      *
      * @beta
      */
     isDraggable?: boolean;
 
     /**
-     * Icon of AttributeFilterDropdownButton
+     * Icon of the AttributeFilterDropdownButton.
      *
      * @beta
      */
@@ -97,11 +97,14 @@ export interface IAttributeFilterDropdownButtonProps {
 }
 
 /**
- * This component implement {@link IAttributeFilterDropdownButtonProps}
- * It displays AttributeFilterDropdownButton in GD look and feel.
- * It displays the name of related attribute filter and as subtitle state of selection and selection count.
+ * Dropdown button for the AttributeFilter.
+ *
+ * @remarks
+ * This component implements the {@link IAttributeFilterDropdownButtonProps} interface.
+ * It displays AttributeFilterDropdownButton in the GoodData look and feel.
+ * It displays the name of the related attribute filter as a title and the state of the selection as a subtitle.
  * It displays loading and filtering statuses.
- * It supports the left icon and dragging icons.
+ * It supports setting a left icon and dragging icons.
  *
  * @beta
  */

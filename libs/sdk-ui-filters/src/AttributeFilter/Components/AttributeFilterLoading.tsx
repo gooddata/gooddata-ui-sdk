@@ -3,7 +3,7 @@ import React from "react";
 import { AttributeFilterDropdownButton } from "./DropdownButton/AttributeFilterDropdownButton";
 
 /**
- * Component that display loading indicator
+ * Component that displays a loading indicator.
  *
  * @beta
  */

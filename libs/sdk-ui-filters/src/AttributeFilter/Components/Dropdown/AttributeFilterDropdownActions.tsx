@@ -4,26 +4,26 @@ import { useIntl } from "react-intl";
 import { Button } from "@gooddata/sdk-ui-kit";
 
 /**
- * It represent AttributeFilter dropdown actions like confirm and cancel button
+ * AttributeFilter dropdown actions like confirm and cancel button.
  * @beta
  */
 export interface IAttributeFilterDropdownActionsProps {
     /**
-     * Apply changes of current selection callback
+     * Callback to apply changes of current selection.
      *
      * @beta
      */
     onApplyButtonClick: () => void;
 
     /**
-     * Discard changes and close AttributeFilter dropdown callback
+     * Callback to discard changes and close AttributeFilter.
      *
      * @beta
      */
     onCancelButtonClick: () => void;
 
     /**
-     * Indicate selection is dirty and Apply action should be disabled
+     * If true, the Apply action should be disabled.
      *
      * @beta
      */
