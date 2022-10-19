@@ -219,7 +219,7 @@ export const DrillWithExternalDataExample: React.FC = () => {
                 </div>
                 <h3>
                     {!state && !location ? "All Employees" : "Employees from "}
-                    {state && (
+                    {state ? (
                         <span>
                             {state.name}&nbsp;
                             <button
@@ -227,8 +227,8 @@ export const DrillWithExternalDataExample: React.FC = () => {
                                 className="gd-button gd-button-primary gd-button-small gd-button-icon-only gd-icon-cross s-employee-heading-clear-state"
                             />
                         </span>
-                    )}
-                    {location && (
+                    ) : null}
+                    {location ? (
                         <span>
                             {location.name}&nbsp;
                             <button
@@ -236,7 +236,7 @@ export const DrillWithExternalDataExample: React.FC = () => {
                                 className="gd-button gd-button-primary gd-button-small gd-button-icon-only gd-icon-cross s-employee-heading-clear-location"
                             />
                         </span>
-                    )}
+                    ) : null}
                 </h3>
                 <div style={employeeTableStyle} className="s-employee-table">
                     <PivotTable
@@ -251,7 +251,7 @@ export const DrillWithExternalDataExample: React.FC = () => {
             <div className="details">
                 <h3>
                     Sales from {!state && !location && "All Locations"}
-                    {state && (
+                    {state ? (
                         <span>
                             {state.name}&nbsp;
                             <button
@@ -259,8 +259,8 @@ export const DrillWithExternalDataExample: React.FC = () => {
                                 className="gd-button gd-button-primary gd-button-small gd-button-icon-only gd-icon-cross s-sales-heading-clear-state"
                             />
                         </span>
-                    )}
-                    {location && (
+                    ) : null}
+                    {location ? (
                         <span>
                             {location.name}&nbsp;
                             <button
@@ -268,7 +268,7 @@ export const DrillWithExternalDataExample: React.FC = () => {
                                 className="gd-button gd-button-primary gd-button-small gd-button-icon-only gd-icon-cross s-sales-heading-clear-location"
                             />
                         </span>
-                    )}
+                    ) : null}
                 </h3>
                 <div style={salesChartStyle} className="s-sales-chart">
                     <ColumnChart
@@ -279,12 +279,12 @@ export const DrillWithExternalDataExample: React.FC = () => {
                         onDrill={onLocationDrill}
                     />
                 </div>
-                {employee && (
+                {employee ? (
                     <div>
                         <h3 className="s-employee-name">{employee.name}</h3>
                         <EmployeeDetails employeeData={employee3rdPartyData} />
                     </div>
-                )}
+                ) : null}
             </div>
         </div>
     );

@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { withFormik, FormikProps } from "formik";
 import * as Yup from "yup";
@@ -125,7 +125,9 @@ const CoreLoginForm: React.FC<ILoginProps & FormikProps<IFormValues>> = (props) 
                         onBlur={handleBlur}
                         autoComplete="e-mail"
                     />
-                    {errors.email && touched.email && <div className="gd-message error">{errors.email}</div>}
+                    {errors.email && touched.email ? (
+                        <div className="gd-message error">{errors.email}</div>
+                    ) : null}
                 </div>
                 <div className="gd-input">
                     <label htmlFor="password">Password</label>
@@ -141,12 +143,12 @@ const CoreLoginForm: React.FC<ILoginProps & FormikProps<IFormValues>> = (props) 
                         onBlur={handleBlur}
                         autoComplete="password"
                     />
-                    {errors.password && touched.password && (
+                    {errors.password && touched.password ? (
                         <div className="gd-message error">{errors.password}</div>
-                    )}
+                    ) : null}
                 </div>
-                {apiError && !isLoading && <CustomError height={undefined} message={errorMessage} />}
-                {isLoading && <CustomLoading height={100} label="Logging in&hellip;" />}
+                {apiError && !isLoading ? <CustomError height={undefined} message={errorMessage} /> : null}
+                {isLoading ? <CustomLoading height={100} label="Logging in&hellip;" /> : null}
                 <div className="gd-input buttons">
                     <button
                         type="submit"

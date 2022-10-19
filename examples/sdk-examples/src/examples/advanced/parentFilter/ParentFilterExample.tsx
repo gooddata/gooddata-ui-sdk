@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { useState, useMemo } from "react";
 import { AttributeElements } from "@gooddata/sdk-ui-filters";
 import { BarChart } from "@gooddata/sdk-ui-charts";
@@ -69,7 +69,7 @@ const CustomFilter: React.FC<ICustomFilterProps> = ({
                             placeholder={placeholder}
                             value={filterValues}
                         />
-                        {error && <span style={{ color: "#e54d42" }}>Loading failed!</span>}
+                        {error ? <span style={{ color: "#e54d42" }}>Loading failed!</span> : null}
                     </span>
                 );
             }}
