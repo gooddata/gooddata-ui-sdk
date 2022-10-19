@@ -26,7 +26,6 @@ import { Identifier } from '@gooddata/sdk-model';
 import { IElementsQueryAttributeFilter } from '@gooddata/sdk-backend-spi';
 import { IElementsQueryOptions } from '@gooddata/sdk-backend-spi';
 import { IElementsQueryResult } from '@gooddata/sdk-backend-spi';
-import { IInvertableSelectRenderItemProps } from '@gooddata/sdk-ui-kit';
 import { ILocale } from '@gooddata/sdk-ui';
 import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureValueFilter } from '@gooddata/sdk-model';
@@ -580,7 +579,13 @@ export interface IAttributeFilterElementsSelectErrorProps {
 }
 
 // @beta
-export type IAttributeFilterElementsSelectItemProps = IInvertableSelectRenderItemProps<IAttributeElement>;
+export interface IAttributeFilterElementsSelectItemProps {
+    isSelected: boolean;
+    item: IAttributeElement;
+    onDeselect: () => void;
+    onSelect: () => void;
+    onSelectOnly: () => void;
+}
 
 // @beta
 export interface IAttributeFilterElementsSelectLoadingProps {
