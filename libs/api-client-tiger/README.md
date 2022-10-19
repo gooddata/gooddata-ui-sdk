@@ -4,6 +4,9 @@
 [![npm monthly downloads](https://img.shields.io/npm/dm/@gooddata/api-client-tiger)](https://npmcharts.com/compare/@gooddata/api-client-tiger?minimal=true)&nbsp;
 ![typescript](https://img.shields.io/badge/typescript-first-blue?logo=typescript)
 
+This package is a part of the [GoodData.UI SDK](https://sdk.gooddata.com/gooddata-ui/docs/about_gooddataui.html).
+To learn more, check [the source monorepo](https://github.com/gooddata/gooddata-ui-sdk).
+
 ## Introduction
 
 This package provides a thin REST API Client for [GoodData Cloud](https://sdk.gooddata.com/gooddata-ui/docs/cloud_introduction.html) and [GoodData.CN](https://sdk.gooddata.com/gooddata-ui/docs/cloudnative_introduction.html) (joint codename `tiger`). The API client is useful for specific,

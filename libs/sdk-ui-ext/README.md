@@ -4,6 +4,9 @@
 [![npm monthly downloads](https://img.shields.io/npm/dm/@gooddata/sdk-ui-ext)](https://npmcharts.com/compare/@gooddata/sdk-ui-ext?minimal=true)&nbsp;
 ![typescript](https://img.shields.io/badge/typescript-first-blue?logo=typescript)
 
+This package is a part of the [GoodData.UI SDK](https://sdk.gooddata.com/gooddata-ui/docs/about_gooddataui.html).
+To learn more, check [the source monorepo](https://github.com/gooddata/gooddata-ui-sdk).
+
 This project implements extensions on top of stable components included in the SDK. The extensions land here
 instead of their own project as part of their staged development. They typically meet one or more of
 the following criteria:

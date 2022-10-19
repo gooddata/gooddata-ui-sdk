@@ -4,6 +4,9 @@
 [![npm monthly downloads](https://img.shields.io/npm/dm/@gooddata/api-client-bear)](https://npmcharts.com/compare/@gooddata/api-client-bear?minimal=true)&nbsp;
 ![typescript](https://img.shields.io/badge/typescript-first-blue?logo=typescript)
 
+This package is a part of the [GoodData.UI SDK](https://sdk.gooddata.com/gooddata-ui/docs/about_gooddataui.html).
+To learn more, check [the source monorepo](https://github.com/gooddata/gooddata-ui-sdk).
+
 ## Important
 
 The contents of this package were previously available under `@gooddata/gooddata-js`. We have consolidated, renamed

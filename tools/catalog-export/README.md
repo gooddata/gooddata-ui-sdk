@@ -4,6 +4,9 @@
 [![npm monthly downloads](https://img.shields.io/npm/dm/@gooddata/catalog-export)](https://npmcharts.com/compare/@gooddata/catalog-export?minimal=true)&nbsp;
 ![typescript](https://img.shields.io/badge/typescript-first-blue?logo=typescript)
 
+This package is a part of the [GoodData.UI SDK](https://sdk.gooddata.com/gooddata-ui/docs/about_gooddataui.html).
+To learn more, check [the source monorepo](https://github.com/gooddata/gooddata-ui-sdk).
+
 Catalog export is a command line program which loads metadata - Logical Data Model (LDM) and User Data Model (UDM)
 from the workspace of your choice and transforms it into TypeScript, JavaScript or JSON representation.
 
