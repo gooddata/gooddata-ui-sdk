@@ -34,7 +34,7 @@ class LabelSubsection extends React.PureComponent<ILabelSubsection & WrappedComp
                 toggleDisabled={this.props.disabled || !axisVisible}
                 showDisabledMessage={!this.props.configPanelDisabled && this.props.disabled}
             >
-                {this.props.showFormat && (
+                {this.props.showFormat ? (
                     <LabelFormatControl
                         disabled={this.props.disabled}
                         configPanelDisabled={this.props.configPanelDisabled}
@@ -42,7 +42,7 @@ class LabelSubsection extends React.PureComponent<ILabelSubsection & WrappedComp
                         properties={this.props.properties}
                         pushData={this.props.pushData}
                     />
-                )}
+                ) : null}
                 <LabelRotationControl
                     disabled={this.props.disabled}
                     configPanelDisabled={this.props.configPanelDisabled}

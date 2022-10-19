@@ -56,13 +56,13 @@ export const CoreHeaderDataMenu: React.FC<IHeaderDataMenuProps> = ({
                             value={intl.formatMessage({ id: `${key}` })}
                             disabled={isDisable}
                         />
-                        {tooltipText && isDisable && (
+                        {tooltipText && isDisable ? (
                             <Bubble
                                 alignPoints={[{ align: "bc tc" }, { align: "bc tl" }, { align: "bc tr" }]}
                             >
                                 {tooltipText}
                             </Bubble>
-                        )}
+                        ) : null}
                     </BubbleHoverTrigger>
                 </li>
             );

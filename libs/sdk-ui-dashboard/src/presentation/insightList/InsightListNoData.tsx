@@ -36,14 +36,14 @@ export const InsightListNoData: React.FC<IVisualizationListNoDataProps> = ({
                             <FormattedMessage id="visualizationsList.noInsights" />
                         )}
                     </span>{" "}
-                    {button && (
+                    {button ? (
                         <Button
                             className={`gd-button-link ${button.className}`}
                             tagName="a"
                             onClick={button.onClick}
                             value={button.value}
                         />
-                    )}
+                    ) : null}
                 </>
             )}
         </div>

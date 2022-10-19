@@ -270,7 +270,7 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
                         <i />
                     </div>
                 </div>
-                {this.state.isOverlayMenuOpen && this.renderOverlayMenu()}
+                {this.state.isOverlayMenuOpen ? this.renderOverlayMenu() : null}
             </>
         );
     };
@@ -366,17 +366,17 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
                     className="gd-header-menu-horizontal"
                 />
 
-                {this.props.expiredDate && (
+                {this.props.expiredDate ? (
                     <div className="gd-header-expiration-date">
                         {this.getTrialCountdown(this.props.expiredDate)}
                     </div>
-                )}
+                ) : null}
 
-                {this.props.showUpsellButton && (
+                {this.props.showUpsellButton ? (
                     <HeaderUpsellButton onUpsellButtonClick={this.props.onUpsellButtonClick} />
-                )}
+                ) : null}
 
-                {!!this.props.helpMenuItems.length && (
+                {this.props.helpMenuItems.length ? (
                     <HeaderHelp
                         onMenuItemClick={this.props.onMenuItemClick}
                         className="gd-header-measure"
@@ -386,11 +386,11 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
                         onHelpClicked={this.props.onHelpClick}
                         helpRedirectUrl={this.props.helpRedirectUrl}
                     />
-                )}
+                ) : null}
 
-                {this.props.showInviteItem && (
+                {this.props.showInviteItem ? (
                     <HeaderInvite onInviteItemClick={this.props.onInviteItemClick} />
-                )}
+                ) : null}
 
                 <HeaderAccount
                     userName={this.props.userName}
@@ -398,7 +398,7 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
                     className="gd-header-measure"
                     items={this.props.accountMenuItems}
                 />
-                {!!badges && <div className="gd-header-badges gd-header-measure">{badges}</div>}
+                {badges ? <div className="gd-header-badges gd-header-measure">{badges}</div> : null}
             </div>
         );
     };

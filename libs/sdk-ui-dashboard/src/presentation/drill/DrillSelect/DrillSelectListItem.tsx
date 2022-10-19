@@ -58,7 +58,7 @@ export const DrillSelectListItem = (props: DrillSelectListItemProps): JSX.Elemen
             ) : (
                 <p>
                     {name}
-                    {attributeValue && <span>&nbsp;({attributeValue})</span>}
+                    {attributeValue ? <span>&nbsp;({attributeValue})</span> : null}
                 </p>
             )}
         </a>

@@ -148,15 +148,15 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
         <div style={insightStyle}>
             <div style={insightPositionStyle}>
                 <IntlWrapper locale={locale}>
-                    {(filtersStatus === "running" || isVisualizationLoading) && <LoadingComponent />}
-                    {effectiveError && (
+                    {filtersStatus === "running" || isVisualizationLoading ? <LoadingComponent /> : null}
+                    {effectiveError ? (
                         <CustomError
                             error={effectiveError}
                             // drill dialog does not measure its size but is always large enough to fit the full content
                             forceFullContent
                         />
-                    )}
-                    {filtersStatus === "success" && (
+                    ) : null}
+                    {filtersStatus === "success" ? (
                         <div className="insight-view-visualization" style={insightWrapperStyle}>
                             <InsightBody
                                 widget={widget}
@@ -177,7 +177,7 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
                                 LoadingComponent={LoadingComponent}
                             />
                         </div>
-                    )}
+                    ) : null}
                 </IntlWrapper>
             </div>
         </div>

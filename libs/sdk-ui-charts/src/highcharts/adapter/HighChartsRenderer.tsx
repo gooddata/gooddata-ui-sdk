@@ -411,9 +411,13 @@ export class HighChartsRenderer extends React.PureComponent<
         return (
             <div className={classes} ref={this.highchartsRendererRef}>
                 {this.renderZoomOutButton()}
-                {isLegendRenderedFirst && this.renderLegend(legendDetails, contentRect, this.containerId)}
+                {isLegendRenderedFirst
+                    ? this.renderLegend(legendDetails, contentRect, this.containerId)
+                    : null}
                 {this.renderHighcharts()}
-                {!isLegendRenderedFirst && this.renderLegend(legendDetails, contentRect, this.containerId)}
+                {!isLegendRenderedFirst
+                    ? this.renderLegend(legendDetails, contentRect, this.containerId)
+                    : null}
             </div>
         );
     }

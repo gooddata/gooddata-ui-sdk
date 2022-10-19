@@ -60,7 +60,7 @@ export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
                 }}
                 className={cx("gd-list-item gd-list-help-menu-item", { [item.className]: !!item.className })}
             >
-                {item.iconName && <i className={cx(item.iconName, "gd-icon")} />}
+                {item.iconName ? <i className={cx(item.iconName, "gd-icon")} /> : null}
                 <span>
                     <FormattedMessage id={item.key} />
                 </span>

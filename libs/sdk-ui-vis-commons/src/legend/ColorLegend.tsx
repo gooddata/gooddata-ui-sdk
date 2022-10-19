@@ -71,7 +71,7 @@ export function ColorBoxes(colorBoxProps: IColorBoxesProps): JSX.Element {
 function LegendBoxes({ renderLabelsFirst, boxes, labels }: ILegendBoxesProps): JSX.Element {
     return (
         <>
-            {renderLabelsFirst && <ColorLabels labels={labels} />}
+            {renderLabelsFirst ? <ColorLabels labels={labels} /> : null}
             <ColorBoxes boxes={boxes} />
             {!renderLabelsFirst && <ColorLabels labels={labels} />}
         </>

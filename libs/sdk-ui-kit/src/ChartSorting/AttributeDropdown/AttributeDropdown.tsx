@@ -248,7 +248,7 @@ export const AttributeDropdown: React.FC<AttributeDropdownProps> = ({
 
             {/* Inner dropdown with measures/aggregation per currentItem -
                 only shown when top attribute is filter by "Largest to smallest" */}
-            {renderMeasureDropdown && (
+            {renderMeasureDropdown ? (
                 <MeasureDropdown
                     currentItem={currentSortItem}
                     intl={intl}
@@ -259,7 +259,7 @@ export const AttributeDropdown: React.FC<AttributeDropdownProps> = ({
                     enableRenamingMeasureToMetric={enableRenamingMeasureToMetric}
                     index={index}
                 />
-            )}
+            ) : null}
         </>
     );
 };

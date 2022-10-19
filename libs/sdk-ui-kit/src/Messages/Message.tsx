@@ -28,7 +28,7 @@ export const Message: React.FC<IMessageProps> = ({
         <div className={classes}>
             <div className="gd-message-text">
                 {children}
-                {onClose && (
+                {onClose ? (
                     <div className="gd-message-dismiss-container">
                         <a
                             aria-label="dismiss"
@@ -36,7 +36,7 @@ export const Message: React.FC<IMessageProps> = ({
                             onClick={onClose}
                         />
                     </div>
-                )}
+                ) : null}
             </div>
         </div>
     );

@@ -82,7 +82,7 @@ export class MenuPosition extends React.Component<IMenuPositionProps, IMenuPosit
                 </div>
 
                 <PortalIfTopLevelMenu portalTarget={portalTarget} topLevelMenu={topLevelMenu}>
-                    {opened && this.state.togglerElInitialized && (
+                    {opened && this.state.togglerElInitialized ? (
                         <ContentWrapper>
                             <PositionedMenuContent
                                 alignment={alignment}
@@ -94,7 +94,7 @@ export class MenuPosition extends React.Component<IMenuPositionProps, IMenuPosit
                                 {children}
                             </PositionedMenuContent>
                         </ContentWrapper>
-                    )}
+                    ) : null}
                 </PortalIfTopLevelMenu>
             </MaybeWrapper>
         );

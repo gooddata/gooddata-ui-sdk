@@ -51,7 +51,7 @@ export default class DropdownItem extends React.Component<
                         onMouseLeave={this.toggleHelp}
                     />
                 </div>
-                {displayHelp && (
+                {displayHelp ? (
                     <Bubble
                         alignTo={`#${templateDropdownItemId(template)}`}
                         className={`gd-measure-format-template-preview-bubble bubble-light s-measure-format-template-help-bubble-${stringUtils.simplifyText(
@@ -75,7 +75,7 @@ export default class DropdownItem extends React.Component<
                             separators={separators}
                         />
                     </Bubble>
-                )}
+                ) : null}
             </>
         );
     }

@@ -77,7 +77,7 @@ export const AttributeFilterConfigurationItem: React.FC<IAttributeFilterConfigur
                         {title}
                     </ShortenedText>
                 </span>
-                {isLoading && <div className="gd-spinner small" />}
+                {isLoading ? <div className="gd-spinner small" /> : null}
             </label>
             {!!isError && (
                 <div className="gd-message error s-not-applied-attribute-filter">

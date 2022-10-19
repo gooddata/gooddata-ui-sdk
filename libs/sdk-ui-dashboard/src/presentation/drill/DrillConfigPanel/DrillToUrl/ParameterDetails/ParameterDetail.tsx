@@ -23,7 +23,7 @@ export const ParameterDetail: React.FC<IParameterDetailProps> = (props) => {
         <div className="gd-drill-to-url-editor-parameter-detail s-parameter-detail">
             <div className="gd-parameter-detail-title">{title}</div>
             <ParameterTypeSection typeName={typeName} />
-            {label && <ParameterLabelSection label={label} />}
+            {label ? <ParameterLabelSection label={label} /> : null}
             <ParameterValuesSection
                 isLoading={isLoading}
                 useEllipsis={useEllipsis}
@@ -96,14 +96,14 @@ const Values: React.FC<IParameterValues> = ({ useEllipsis, values, additionalVal
                             {item}
                         </div>
                     ))}
-                    {additionalValues && (
+                    {additionalValues ? (
                         <div className="gd-parameter-detail-info">
                             <FormattedMessage
                                 id="configurationPanel.drillIntoUrl.editor.parameterDetailMoreValues"
                                 values={{ count: additionalValues }}
                             />
                         </div>
-                    )}
+                    ) : null}
                 </div>
             </div>
         )

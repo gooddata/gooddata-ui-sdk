@@ -38,7 +38,7 @@ class WrappedHeaderMenu extends PureComponent<IHeaderMenuProps & WrappedComponen
                         target={item.target}
                         rel={item.target === "_blank" ? "noreferrer noopener" : undefined}
                     >
-                        {item.iconName && <i className={cx(item.iconName, "gd-icon")} />}
+                        {item.iconName ? <i className={cx(item.iconName, "gd-icon")} /> : null}
                         <span className={item.className}>
                             <FormattedMessage id={item.key} />
                         </span>

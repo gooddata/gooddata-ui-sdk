@@ -37,7 +37,7 @@ export class ExtendedPreview extends React.Component<IExtendedPreviewProps, IExt
                         <FormattedMessage id="measureNumberCustomFormatDialog.extendedPreview.button" />
                     </span>
                 </div>
-                {expanded && <PreviewRows format={format} separators={separators} />}
+                {expanded ? <PreviewRows format={format} separators={separators} /> : null}
             </div>
         );
     }

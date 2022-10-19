@@ -254,16 +254,16 @@ const getButtons = () => {
                 </td>
                 <td className="example-buttons-button-class">
                     <code>{item.className}</code>
-                    {item.iconLeft && (
+                    {item.iconLeft ? (
                         <div>
                             <code>{item.iconLeft}</code>
                         </div>
-                    )}
-                    {item.iconRight && (
+                    ) : null}
+                    {item.iconRight ? (
                         <div>
                             <code>{item.iconRight}</code>
                         </div>
-                    )}
+                    ) : null}
                 </td>
             </tr>
         );

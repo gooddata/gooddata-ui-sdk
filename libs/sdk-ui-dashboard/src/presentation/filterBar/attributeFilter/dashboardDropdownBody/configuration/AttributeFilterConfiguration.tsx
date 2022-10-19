@@ -88,7 +88,7 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
     return (
         <div className="s-attribute-filter-dropdown-configuration attribute-filter-dropdown-configuration">
             <ConfigurationPanelHeader />
-            {parents.length > 0 && <ConfigurationCategory categoryTitle={filterByText} />}
+            {parents.length > 0 ? <ConfigurationCategory categoryTitle={filterByText} /> : null}
             <ParentFiltersList
                 currentFilterLocalId={currentFilter.attributeFilter.localIdentifier!}
                 parents={parents}
@@ -97,7 +97,7 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
                 connectingAttributes={connectingAttributes}
                 attributes={attributes}
             />
-            {showDisplayFormPicker && (
+            {showDisplayFormPicker ? (
                 <div className="s-display-form-configuration">
                     <ConfigurationCategory categoryTitle={displayValuesAsText} />
                     <div className="configuration-panel-body">
@@ -108,7 +108,7 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
                         />
                     </div>
                 </div>
-            )}
+            ) : null}
         </div>
     );
 };

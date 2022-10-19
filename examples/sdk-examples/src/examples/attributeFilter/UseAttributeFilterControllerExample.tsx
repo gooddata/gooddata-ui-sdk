@@ -89,12 +89,12 @@ export function UseAttributeFilterControllerExample() {
                         <input onChange={(e) => onSearch(e.target.value)} placeholder="Search elements..." />
                     </div>
                     <div>
-                        {isLoadingInitialElementsPage && (
+                        {isLoadingInitialElementsPage ? (
                             <div style={{ margin: 10 }}>Searching elements...</div>
-                        )}
-                        {searchString && !isLoadingInitialElementsPage && !elements.length && (
+                        ) : null}
+                        {searchString && !isLoadingInitialElementsPage && !elements.length ? (
                             <div style={{ margin: 10 }}>No search results.</div>
-                        )}
+                        ) : null}
                         {elements.map((element) => (
                             <AttributeFilterItem
                                 key={element.uri}

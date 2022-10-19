@@ -35,15 +35,15 @@ export const CustomAttributeFilterDropdownActions: React.FC<ICustomAttributeFilt
     return (
         <div className="gd-attribute-filter-dropdown-actions__next">
             <div className="gd-attribute-filter-dropdown-actions-left-content__next">
-                {isEditMode && isDeleteButtonEnabled && (
+                {isEditMode && isDeleteButtonEnabled ? (
                     <>
                         <AttributeFilterDeleteButton onDelete={onDeleteButtonClick} />
                         <div className="gd-button-separator" />
                     </>
-                )}
-                {isEditMode && (
+                ) : null}
+                {isEditMode ? (
                     <AttributeFilterConfigurationButton onConfiguration={onConfigurationButtonClick} />
-                )}
+                ) : null}
             </div>
             <div className="gd-attribute-filter-dropdown-actions-right-content__next">
                 <Button

@@ -54,7 +54,7 @@ export default class BubbleChartConfigurationPanel extends ConfigurationPanelCon
                         properties={properties}
                         pushData={pushData}
                     >
-                        {isNameSubsectionVisible && (
+                        {isNameSubsectionVisible ? (
                             <NameSubsection
                                 disabled={xAxisNameSectionDisabled}
                                 configPanelDisabled={controlsDisabled}
@@ -62,7 +62,7 @@ export default class BubbleChartConfigurationPanel extends ConfigurationPanelCon
                                 properties={properties}
                                 pushData={pushData}
                             />
-                        )}
+                        ) : null}
 
                         <LabelSubsection
                             disabled={controlsDisabled}
@@ -85,7 +85,7 @@ export default class BubbleChartConfigurationPanel extends ConfigurationPanelCon
                         properties={properties}
                         pushData={pushData}
                     >
-                        {isNameSubsectionVisible && (
+                        {isNameSubsectionVisible ? (
                             <NameSubsection
                                 disabled={yAxisNameSectionDisabled}
                                 configPanelDisabled={controlsDisabled}
@@ -93,7 +93,7 @@ export default class BubbleChartConfigurationPanel extends ConfigurationPanelCon
                                 properties={properties}
                                 pushData={pushData}
                             />
-                        )}
+                        ) : null}
 
                         <LabelSubsection
                             disabled={controlsDisabled}

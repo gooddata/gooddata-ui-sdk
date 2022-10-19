@@ -63,7 +63,7 @@ export const RankingFilter: React.FC<IRankingFilterProps> = ({
                 title={buttonTitle}
                 className="gd-rf-dropdown-button"
             />
-            {isOpen && (
+            {isOpen ? (
                 <RankingFilterDropdown
                     measureItems={measureItems}
                     attributeItems={attributeItems}
@@ -77,7 +77,7 @@ export const RankingFilter: React.FC<IRankingFilterProps> = ({
                     locale={locale}
                     enableRenamingMeasureToMetric={enableRenamingMeasureToMetric}
                 />
-            )}
+            ) : null}
         </>
     );
 };

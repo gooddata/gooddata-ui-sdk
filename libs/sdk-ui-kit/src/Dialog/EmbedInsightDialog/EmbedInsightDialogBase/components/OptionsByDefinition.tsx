@@ -54,7 +54,7 @@ export const OptionsByDefinition: React.VFC<IOptionsByDefinitionProps> = (props)
                 }}
             />
 
-            {option.customHeight && (
+            {option.customHeight ? (
                 <HeightSetting
                     value={option.height}
                     unit={option.unit}
@@ -63,7 +63,7 @@ export const OptionsByDefinition: React.VFC<IOptionsByDefinitionProps> = (props)
                         onChange(opt);
                     }}
                 />
-            )}
+            ) : null}
         </div>
     );
 };

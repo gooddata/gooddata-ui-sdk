@@ -145,6 +145,8 @@ export default class BaseChartConfigurationPanel<
                 (axis.primary || !isAxisNameViewByTwoAttributesEnabled) && itemsOnAxes[axis.name] > 1;
             const { name, title, subtitle, visible } = axis;
 
+            const showFormat = axis.primary && isAxisLabelsFormatEnabled;
+
             return (
                 <ConfigSection
                     key={name}
@@ -159,7 +161,7 @@ export default class BaseChartConfigurationPanel<
                     properties={properties}
                     pushData={pushData}
                 >
-                    {isNameSubsectionVisible && (
+                    {isNameSubsectionVisible ? (
                         <NameSubsection
                             disabled={disabled || nameSubsectionDisabled}
                             configPanelDisabled={controlsDisabled}
@@ -167,16 +169,16 @@ export default class BaseChartConfigurationPanel<
                             properties={properties}
                             pushData={pushData}
                         />
-                    )}
+                    ) : null}
                     <LabelSubsection
                         disabled={disabled}
                         configPanelDisabled={controlsDisabled}
                         axis={axis.name}
                         properties={properties}
                         pushData={pushData}
-                        showFormat={axis.primary && isAxisLabelsFormatEnabled}
+                        showFormat={showFormat}
                     />
-                    {axis.primary && this.renderMinMax(axis.name)}
+                    {axis.primary ? this.renderMinMax(axis.name) : null}
                 </ConfigSection>
             );
         });

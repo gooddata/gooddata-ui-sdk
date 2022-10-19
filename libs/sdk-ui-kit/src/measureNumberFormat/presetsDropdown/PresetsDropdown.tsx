@@ -54,13 +54,16 @@ export class PresetsDropdown extends React.PureComponent<IMeasureNumberFormatDro
 
     private renderPresetOption(preset: IFormatPreset, index?: number) {
         const { selectedPreset, separators, onSelect } = this.props;
+        const isPresetItemSelected =
+            selectedPreset && preset.localIdentifier === selectedPreset.localIdentifier;
+
         return (
             <PresetsDropdownItem
                 key={`${preset.localIdentifier}_${index}`} // eliminate possible collision with hardcoded options
                 preset={preset}
                 separators={separators}
                 onClick={onSelect}
-                isSelected={selectedPreset && preset.localIdentifier === selectedPreset.localIdentifier}
+                isSelected={isPresetItemSelected}
             />
         );
     }

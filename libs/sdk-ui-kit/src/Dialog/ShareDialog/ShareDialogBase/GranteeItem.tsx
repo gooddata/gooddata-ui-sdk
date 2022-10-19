@@ -144,14 +144,14 @@ const GranteeGroupItem: React.FC<IGranteeGroupItemProps> = (props) => {
             <GranteeRemoveIcon mode={mode} onClick={onClick} />
             <div className="gd-grantee-content">
                 <div className="gd-grantee-content-label">{groupName}</div>
-                {numOfUsers && (
+                {numOfUsers ? (
                     <div className="gd-grantee-count-button">
                         <Button
                             className="gd-button-link-dimmed gd-button gd-grantee-content-user-count s-grantee-content-user-count"
                             value={numOfUsers}
                         />
                     </div>
-                )}
+                ) : null}
             </div>
             <GranteeGroupIcon />
         </div>

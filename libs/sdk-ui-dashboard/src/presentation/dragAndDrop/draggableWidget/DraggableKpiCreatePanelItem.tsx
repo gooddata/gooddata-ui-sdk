@@ -26,11 +26,13 @@ export const DraggableKpiCreatePanelItem: React.FC<IDraggableKpiCreatePanelItemP
     const handleDragStart = useWidgetDragStartHandler();
     const handleDragEnd = useWidgetDragEndHandler();
 
+    const dragEnabled = isInEditMode && !disabled;
+
     return (
         <DraggableCreatePanelItem
             Component={CreatePanelItemComponent}
             disabled={disabled}
-            canDrag={isInEditMode && !disabled}
+            canDrag={dragEnabled}
             dragItem={dragItem}
             hideDefaultPreview={false}
             onDragEnd={handleDragEnd}

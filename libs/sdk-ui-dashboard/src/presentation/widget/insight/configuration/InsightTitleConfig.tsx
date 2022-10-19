@@ -32,7 +32,7 @@ export function InsightTitleConfig(props: IVisualizationTitleConfigProps) {
 
     return (
         <>
-            {isHidingOfWidgetTitleEnabled && (
+            {isHidingOfWidgetTitleEnabled ? (
                 <div className="configuration-category s-hide-title-configuration">
                     <Typography tagName="h3" className="s-viz-title-headline">
                         <FormattedMessage id="configurationPanel.visualprops.sectionTitle" />
@@ -44,7 +44,7 @@ export function InsightTitleConfig(props: IVisualizationTitleConfigProps) {
                         labelSize="small"
                     />
                 </div>
-            )}
+            ) : null}
         </>
     );
 }

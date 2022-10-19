@@ -135,7 +135,7 @@ export const ExampleWithExport: React.FC<IExampleWithExportProps> = ({ children,
         <div style={style}>
             {children(onExportReady)}
             <div style={buttonsContainerStyle}>
-                <div style={loadingStyle}>{exporting && <span>Exporting...</span>}</div>
+                <div style={loadingStyle}>{exporting ? <span>Exporting...</span> : null}</div>
                 <Button onClick={exportToCSV} disabled={exporting}>
                     Export CSV
                 </Button>
@@ -149,8 +149,8 @@ export const ExampleWithExport: React.FC<IExampleWithExportProps> = ({ children,
                     Export using Export Dialog
                 </Button>
             </div>
-            {errorMessage && <div style={errorStyle}>{errorMessage}</div>}
-            {showExportDialog && (
+            {errorMessage ? <div style={errorStyle}>{errorMessage}</div> : null}
+            {showExportDialog ? (
                 <ExportDialog
                     headline="Export to XLSX"
                     cancelButtonText="Cancel"
@@ -164,7 +164,7 @@ export const ExampleWithExport: React.FC<IExampleWithExportProps> = ({ children,
                     onCancel={cancelExportDialog}
                     onSubmit={submitExportDialog}
                 />
-            )}
+            ) : null}
         </div>
     );
 };

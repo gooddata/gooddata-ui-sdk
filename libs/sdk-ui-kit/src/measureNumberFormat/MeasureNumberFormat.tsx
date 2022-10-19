@@ -83,7 +83,7 @@ class WrappedMeasureNumberFormat extends React.PureComponent<
                     toggleDropdown={this.toggleDropdownOpened}
                     selectedPreset={selectedPreset}
                 />
-                {showDropdown && (
+                {showDropdown ? (
                     <PresetsDropdown
                         presets={presets}
                         customPreset={customPreset}
@@ -95,8 +95,8 @@ class WrappedMeasureNumberFormat extends React.PureComponent<
                         positioning={presetsDropdownPositioning}
                         intl={intl}
                     />
-                )}
-                {showCustomFormatDialog && (
+                ) : null}
+                {showCustomFormatDialog ? (
                     <CustomFormatDialog
                         onApply={this.onCustomFormatDialogApply}
                         onCancel={this.onCustomFormatDialogCancel}
@@ -108,7 +108,7 @@ class WrappedMeasureNumberFormat extends React.PureComponent<
                         templates={templates}
                         intl={intl}
                     />
-                )}
+                ) : null}
             </>
         );
     }

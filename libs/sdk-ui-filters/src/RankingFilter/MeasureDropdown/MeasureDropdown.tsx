@@ -59,7 +59,7 @@ export const MeasureDropdown: React.FC<IMeasureDropdownProps> = ({
                 onClick={onButtonClick}
                 iconLeft={enableRenamingMeasureToMetric ? "gd-icon-metric" : "gd-icon-measure"}
             />
-            {isOpen && (
+            {isOpen ? (
                 <MeasureDropdownBody
                     items={items}
                     selectedItemRef={selectedItemRef}
@@ -69,7 +69,7 @@ export const MeasureDropdown: React.FC<IMeasureDropdownProps> = ({
                     onDropDownItemMouseOut={onDropDownItemMouseOut}
                     enableRenamingMeasureToMetric={enableRenamingMeasureToMetric}
                 />
-            )}
+            ) : null}
         </>
     );
 };

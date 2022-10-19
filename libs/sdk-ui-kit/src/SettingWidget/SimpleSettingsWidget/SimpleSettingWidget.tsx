@@ -55,15 +55,15 @@ export const SimpleSettingWidget: React.FC<ISimpleSettingWidgetProps> = (props) 
             </Header>
             <Separator />
             <Footer>
-                {helpLinkText && helpLinkUrl && (
+                {helpLinkText && helpLinkUrl ? (
                     <Hyperlink
                         text={helpLinkText}
                         href={helpLinkUrl}
                         iconClass="gd-icon-circle-question"
                         onClick={onHelpLinkClick}
                     />
-                )}
-                {!isLoading && (
+                ) : null}
+                {!isLoading ? (
                     <FooterButtons>
                         <Button
                             className="gd-button-action"
@@ -72,7 +72,7 @@ export const SimpleSettingWidget: React.FC<ISimpleSettingWidgetProps> = (props) 
                             value={actionButtonText}
                         />
                     </FooterButtons>
-                )}
+                ) : null}
             </Footer>
         </SettingWidget>
     );

@@ -170,7 +170,7 @@ const StylingEditorDialogCore = <T extends StylingPickerItemContent>(props: ISty
                         />
                     </label>
                 </form>
-                {providedExamples && (
+                {providedExamples ? (
                     <div
                         className={cx(
                             "gd-styling-editor-dialog-content-examples",
@@ -195,7 +195,7 @@ const StylingEditorDialogCore = <T extends StylingPickerItemContent>(props: ISty
                             ))}
                         </div>
                     </div>
-                )}
+                ) : null}
             </div>
             <StylingEditorDialogFooter
                 disableSubmit={isSubmitDisabled}

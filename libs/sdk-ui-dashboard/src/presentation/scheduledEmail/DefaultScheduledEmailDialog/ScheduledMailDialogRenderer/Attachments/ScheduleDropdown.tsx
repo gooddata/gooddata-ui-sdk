@@ -105,18 +105,18 @@ export const ScheduleDropdown: React.FC<IScheduleDropdownProps> = (props) => {
                             !buttonDisabled && toggleDropdown();
                         }}
                     >
-                        {iconComponent && (
+                        {iconComponent ? (
                             <div className="gd-schedule-dropdown-button-icon">{iconComponent}</div>
-                        )}
+                        ) : null}
                         {title}
                     </a>
-                    {buttonDisabled && (
+                    {buttonDisabled ? (
                         <Bubble className="bubble-primary" alignPoints={ALIGN_POINTS}>
                             <FormattedMessage
                                 id={"dialogs.schedule.email.attachment.select.disabled.message"}
                             />
                         </Bubble>
-                    )}
+                    ) : null}
                 </BubbleHoverTrigger>
             )}
             renderBody={({ closeDropdown }) => renderBody(closeDropdown)}

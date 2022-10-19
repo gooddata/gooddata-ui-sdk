@@ -60,16 +60,16 @@ const ErrorOverlayCore: React.VFC<IErrorOverlayProps & WrappedComponentProps> = 
             className={className}
         >
             <div className="gd-error-overlay s-error-overlay">
-                {showIcon && IconComponent}
+                {showIcon ? IconComponent : null}
                 <Typography tagName="h2">{titleContent}</Typography>
                 <div className="gd-error-overlay-text">{textContent}</div>
-                {showButton && (
+                {showButton ? (
                     <Button
                         className="gd-button gd-button-action gd-error-overlay-button"
                         value={buttonValue}
                         onClick={onButtonClick}
                     />
-                )}
+                ) : null}
             </div>
         </Overlay>
     );

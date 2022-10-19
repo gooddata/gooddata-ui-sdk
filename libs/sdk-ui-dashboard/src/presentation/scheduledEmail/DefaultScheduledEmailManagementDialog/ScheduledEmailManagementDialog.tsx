@@ -82,14 +82,14 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
                         <FormattedMessage id="dialogs.schedule.management.title" />
                     </Typography>
                 </div>
-                {!isFirstLoaded && canManageScheduledMail && (
+                {!isFirstLoaded && canManageScheduledMail ? (
                     <Tabs
                         className="gd-scheduled-email-management-dialog-tabs"
                         tabs={[messages.scheduleManagementTabUser, messages.scheduleManagementTabAll]}
                         selectedTabId={selectedTabId}
                         onTabSelect={handleTabChange}
                     />
-                )}
+                ) : null}
                 <div className="gd-scheduled-emails-content">
                     <ScheduledEmails
                         onDelete={handleScheduleDelete}
@@ -120,14 +120,14 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
                     />
                 </div>
             </Dialog>
-            {scheduledEmailToDelete && (
+            {scheduledEmailToDelete ? (
                 <DeleteScheduleConfirmDialog
                     scheduledEmail={scheduledEmailToDelete}
                     onCancel={() => setScheduledEmailToDelete(null)}
                     onSuccess={handleScheduleDeleteSuccess}
                     onError={onDeleteError}
                 />
-            )}
+            ) : null}
         </>
     );
 };

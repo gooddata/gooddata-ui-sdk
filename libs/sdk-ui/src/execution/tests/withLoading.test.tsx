@@ -22,14 +22,14 @@ const renderEnhancedComponent = <T, E>(
         return (
             <div>
                 <button onClick={reload}>Refetch</button>
-                {isLoading && <div>Loading</div>}
-                {result && <div>Result</div>}
-                {error && (
+                {isLoading ? <div>Loading</div> : null}
+                {result ? <div>Result</div> : null}
+                {error ? (
                     <div>
                         <span>Error</span>
                         {error?.cause?.message}
                     </div>
-                )}
+                ) : null}
             </div>
         );
     };

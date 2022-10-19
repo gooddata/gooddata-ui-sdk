@@ -179,7 +179,7 @@ export class DynamicSelect extends React.Component<IDynamicSelectProps, IDynamic
                                     })}
                                 />
                             </div>
-                            {isOpen && items.length > 0 && <VirtualizedSelectMenu {...menuProps} />}
+                            {isOpen && items.length > 0 ? <VirtualizedSelectMenu {...menuProps} /> : null}
                         </div>
                     );
                 }}

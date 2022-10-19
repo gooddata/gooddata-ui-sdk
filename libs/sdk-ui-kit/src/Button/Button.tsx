@@ -41,7 +41,7 @@ export class Button extends React.Component<IButtonProps> {
                 tabIndex={tabIndex}
             >
                 {this.renderIcon(iconLeft)}
-                {value && <span className="gd-button-text">{value}</span>}
+                {value ? <span className="gd-button-text">{value}</span> : null}
                 {this.renderIcon(iconRight)}
             </TagName>
         );

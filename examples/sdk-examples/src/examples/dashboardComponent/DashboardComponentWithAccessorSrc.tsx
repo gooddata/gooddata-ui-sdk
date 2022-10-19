@@ -61,12 +61,12 @@ const DashboardComponentWithAccessorSrc: React.FC = () => {
                 <button onClick={onDispatchClick}>Dispatch changeDateFilterSelection command</button>
                 <button onClick={onSelectClick}>Select selectEffectiveDateFilterOptions</button>
             </div>
-            {selectResult && (
+            {selectResult ? (
                 <React.Fragment>
                     <h3>Select result</h3>
                     <pre>{JSON.stringify(selectResult, null, 2)}</pre>
                 </React.Fragment>
-            )}
+            ) : null}
             <Dashboard
                 dashboard={dashboardRef}
                 config={config}

@@ -17,8 +17,8 @@ export interface IBubbleHeaderSeparatorProps {
  */
 export const BubbleHeaderSeparator = ({ title, message }: IBubbleHeaderSeparatorProps) => (
     <div className="gd-bubble-header-separator">
-        {title && <Typography tagName="h3">{title}</Typography>}
-        {message && (
+        {title ? <Typography tagName="h3">{title}</Typography> : null}
+        {message ? (
             <BubbleHoverTrigger className="gd-bubble-header-separator-icon" showDelay={0} hideDelay={0}>
                 <div className="gd-icon-circle-question" />
                 <Bubble
@@ -29,7 +29,7 @@ export const BubbleHeaderSeparator = ({ title, message }: IBubbleHeaderSeparator
                     {message}
                 </Bubble>
             </BubbleHoverTrigger>
-        )}
+        ) : null}
         <div className="gd-bubble-header-separator-divider" />
     </div>
 );

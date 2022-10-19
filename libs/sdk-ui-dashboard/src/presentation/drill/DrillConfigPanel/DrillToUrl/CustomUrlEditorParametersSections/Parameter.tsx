@@ -31,7 +31,7 @@ export const Parameter: React.FC<IParameterProps> = (props) => {
     return (
         <div id={id} className={itemClassNames} onClick={() => onAdd()}>
             <span className="gd-parameter-title">{name}</span>
-            {description && <span className="addon s-parameter-description">({description})</span>}
+            {description ? <span className="addon s-parameter-description">({description})</span> : null}
             <Button className="gd-button gd-button-link s-parameter-add-button" value={addButtonLabel} />
             <div className="gd-list-item-tooltip">
                 <span
@@ -39,7 +39,7 @@ export const Parameter: React.FC<IParameterProps> = (props) => {
                     onMouseEnter={() => setDisplayHelp(true)}
                     onMouseLeave={() => setDisplayHelp(false)}
                 />
-                {displayHelp && (
+                {displayHelp ? (
                     <Bubble
                         className={`themed-bubble ${isDark ? "bubble-primary" : "bubble-light"}`}
                         alignTo={`#${id}`}
@@ -47,7 +47,7 @@ export const Parameter: React.FC<IParameterProps> = (props) => {
                     >
                         {detailContent}
                     </Bubble>
-                )}
+                ) : null}
             </div>
         </div>
     );

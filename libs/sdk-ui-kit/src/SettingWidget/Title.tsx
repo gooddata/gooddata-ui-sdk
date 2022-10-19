@@ -17,8 +17,8 @@ export interface ITitleProps {
 export const Title: React.FC<ITitleProps> = ({ title, tooltip }) => {
     return (
         <>
-            {title && <span className="gd-widget-title">{title}</span>}
-            {tooltip && <TooltipIcon text={tooltip} iconClass="gd-icon-circle-question" />}
+            {title ? <span className="gd-widget-title">{title}</span> : null}
+            {tooltip ? <TooltipIcon text={tooltip} iconClass="gd-icon-circle-question" /> : null}
         </>
     );
 };

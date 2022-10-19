@@ -69,7 +69,7 @@ export class FluidLegend extends React.PureComponent<IFluidLegendProps> {
         return (
             <div className="viz-legend fluid">
                 {this.renderSeries(itemWidth, visibleItemsCount)}
-                {hasPaging && this.renderPaging()}
+                {hasPaging ? this.renderPaging() : null}
             </div>
         );
     }

@@ -48,9 +48,9 @@ export const StylingEditorDialogFooter = (props: IStylingEditorDialogFooterProps
                 iconClass={"gd-icon-circle-question"}
             />
             <FooterButtons>
-                {showProgressIndicator && (
+                {showProgressIndicator ? (
                     <LoadingSpinner className="gd-loading-equalizer-spinner small s-gd-styling-editor-spinner" />
-                )}
+                ) : null}
                 <Button
                     className="gd-button-secondary s-dialog-cancel-button"
                     value={intl.formatMessage({ id: "cancel" })}
@@ -63,11 +63,11 @@ export const StylingEditorDialogFooter = (props: IStylingEditorDialogFooterProps
                         onClick={() => onSubmit()}
                         disabled={disableSubmit}
                     />
-                    {errorMessage && disableSubmit && (
+                    {errorMessage && disableSubmit ? (
                         <Bubble className="bubble-negative" alignPoints={[{ align: "tc br" }]}>
                             {errorMessage}
                         </Bubble>
-                    )}
+                    ) : null}
                 </BubbleHoverTrigger>
             </FooterButtons>
         </Footer>

@@ -133,7 +133,7 @@ export const DrillTargetUrlItem: React.FunctionComponent<DrillUrlItemProps> = (p
                 )}
                 renderBody={({ closeDropdown }) => (
                     <div className="gd-menu-wrapper gd-drill-to-url-body gd-drill-to-url-list s-gd-drill-to-url-body">
-                        {supportsAttributeHyperlinks && (
+                        {supportsAttributeHyperlinks ? (
                             <AttributeUrlSection
                                 attributeDisplayForms={attributeUrlDisplayForms}
                                 onSelect={(insightAttributeDisplayForm, drillToAttributeDisplayForm) => {
@@ -150,7 +150,7 @@ export const DrillTargetUrlItem: React.FunctionComponent<DrillUrlItemProps> = (p
                                 }
                                 closeDropdown={closeDropdown}
                             />
-                        )}
+                        ) : null}
                         <CustomUrlSection
                             {...props}
                             urlDrillTarget={urlDrillTarget}
@@ -161,7 +161,7 @@ export const DrillTargetUrlItem: React.FunctionComponent<DrillUrlItemProps> = (p
                 )}
             />
 
-            {showModal && (
+            {showModal ? (
                 <CustomUrlEditor
                     urlDrillTarget={urlDrillTarget}
                     attributeDisplayForms={targetAttributesForms}
@@ -174,7 +174,7 @@ export const DrillTargetUrlItem: React.FunctionComponent<DrillUrlItemProps> = (p
                     onSelect={onCustomUrlHandler}
                     onClose={toggleModal}
                 />
-            )}
+            ) : null}
         </>
     );
 };

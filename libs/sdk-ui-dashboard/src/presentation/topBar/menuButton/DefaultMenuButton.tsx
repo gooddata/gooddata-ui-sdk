@@ -120,7 +120,7 @@ export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element | null =
                 value="&#8943;"
                 className={"gd-button-primary dash-header-options-button s-header-options-button gd-button"}
             />
-            {isOpen && renderMenuItems()}
+            {isOpen ? renderMenuItems() : null}
         </>
     );
 };

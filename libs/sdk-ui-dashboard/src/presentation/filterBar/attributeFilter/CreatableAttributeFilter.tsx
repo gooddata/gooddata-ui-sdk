@@ -15,22 +15,23 @@ export function CreatableAttributeFilter() {
 
     const disabled = !hasAttributes;
 
-    const tooltip = disabled && !hasAttributes && (
-        <div>
-            <FormattedMessage id="addPanel.attributeFilter.tooltip.no_attributes" />
-            &nbsp;
-            {!isWhiteLabeled && (
-                <a
-                    href="https://help.gooddata.com/display/doc/Attributes+in+Logical+Data+Models"
-                    rel="noopener noreferrer"
-                    target="_blank"
-                    className="s-add-attribute-filter-tooltip-link"
-                >
-                    <FormattedMessage id="addPanel.attributeFilter.tooltip.no_attributes.link" />
-                </a>
-            )}
-        </div>
-    );
+    const tooltip =
+        disabled && !hasAttributes ? (
+            <div>
+                <FormattedMessage id="addPanel.attributeFilter.tooltip.no_attributes" />
+                &nbsp;
+                {!isWhiteLabeled ? (
+                    <a
+                        href="https://help.gooddata.com/display/doc/Attributes+in+Logical+Data+Models"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                        className="s-add-attribute-filter-tooltip-link"
+                    >
+                        <FormattedMessage id="addPanel.attributeFilter.tooltip.no_attributes.link" />
+                    </a>
+                ) : null}
+            </div>
+        ) : undefined;
 
     return (
         <BubbleHoverTrigger eventsOnBubble={true} className="s-add-attribute-filter-bubble-trigger">
@@ -39,9 +40,9 @@ export function CreatableAttributeFilter() {
                 disabled={disabled}
             />
 
-            {tooltip && (
+            {tooltip ? (
                 <Bubble alignPoints={[{ align: "cr cl", offset: { x: -20, y: 0 } }]}>{tooltip}</Bubble>
-            )}
+            ) : null}
         </BubbleHoverTrigger>
     );
 }

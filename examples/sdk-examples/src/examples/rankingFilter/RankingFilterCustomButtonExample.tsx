@@ -111,10 +111,10 @@ export const RankingFilterCustomButtonExample: React.FC = () => {
                 isActive={filters.length > 0}
                 onClick={() => setFilters([newRankingFilter(measureLocalId(FranchisedSales), "TOP", 3)])}
             />
-            {filters.length > 0 && (
+            {filters.length > 0 ? (
                 <React.Fragment>
                     <DropdownButton onClick={() => toggleDropdown(!isOpen)} isActive={isOpen} />
-                    {isOpen && (
+                    {isOpen ? (
                         <RankingFilterDropdown
                             measureItems={measureDropdownItems}
                             attributeItems={attributeDropdownItems}
@@ -123,9 +123,9 @@ export const RankingFilterCustomButtonExample: React.FC = () => {
                             onCancel={() => toggleDropdown(false)}
                             anchorEl=".custom-button"
                         />
-                    )}
+                    ) : null}
                 </React.Fragment>
-            )}
+            ) : null}
             <hr className="separator" />
             <div style={{ height: 300 }} className="s-pivot-table">
                 <PivotTable measures={measures} rows={attributes} filters={filters} />

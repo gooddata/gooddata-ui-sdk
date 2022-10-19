@@ -86,7 +86,7 @@ export function AttributeFilterDropZoneHint({
 
     return (
         <div className={className} style={debugStyle} ref={dropRef}>
-            {isActive && <div className="drop-hint" />}
+            {isActive ? <div className="drop-hint" /> : null}
         </div>
     );
 }

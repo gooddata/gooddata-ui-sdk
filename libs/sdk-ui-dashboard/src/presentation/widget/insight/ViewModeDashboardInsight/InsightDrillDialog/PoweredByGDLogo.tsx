@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import { createSelector } from "@reduxjs/toolkit";
@@ -39,7 +39,7 @@ export const PoweredByGDLogo: React.FC<PoweredByGDLogoProps> = ({ isSmall }: Pow
     const userInteraction = useDashboardUserInteraction();
     return (
         <>
-            {isPresent && (
+            {isPresent ? (
                 <div
                     className={cx("gd-powered-by-logo-wrapper", {
                         "gd-powered-by-logo-wrapper-small": isSmall,
@@ -58,7 +58,7 @@ export const PoweredByGDLogo: React.FC<PoweredByGDLogoProps> = ({ isSmall }: Pow
                         aria-label="Powered by GoodData"
                     />
                 </div>
-            )}
+            ) : null}
         </>
     );
 };

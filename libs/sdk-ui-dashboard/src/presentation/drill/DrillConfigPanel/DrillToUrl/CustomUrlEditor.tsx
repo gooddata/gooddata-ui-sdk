@@ -124,7 +124,7 @@ const UrlInputPanel: React.FC<IUrlInputPanelProps> = (props) => {
                 syntaxHighlightingRules={syntaxHighlightingRules}
                 intl={intl}
             />
-            {documentationLink && <HelpLink link={documentationLink} />}
+            {documentationLink ? <HelpLink link={documentationLink} /> : null}
         </div>
     );
 };

@@ -61,7 +61,7 @@ export const DashboardInsightWithDrillDialog = (props: IDashboardInsightProps): 
                 onDrillDown={onDrillDown}
                 onDrillToInsight={onDrillToInsight}
             />
-            {activeDrillStep && (
+            {activeDrillStep ? (
                 <InsightDrillDialog
                     locale={locale}
                     breadcrumbs={breadcrumbs}
@@ -71,7 +71,7 @@ export const DashboardInsightWithDrillDialog = (props: IDashboardInsightProps): 
                     onBackButtonClick={goBack}
                     onClose={onClose}
                 />
-            )}
+            ) : null}
         </>
     );
 };

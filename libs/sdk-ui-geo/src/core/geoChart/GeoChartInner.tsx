@@ -190,9 +190,9 @@ export class GeoChartInner extends React.PureComponent<IGeoChartInnerProps, IGeo
 
         return (
             <div className={classes} ref={measureRef}>
-                {isLegendRenderedFirst && legendComponent}
+                {isLegendRenderedFirst ? legendComponent : null}
                 {this.renderChart(geoChartOptions)}
-                {!isLegendRenderedFirst && legendComponent}
+                {!isLegendRenderedFirst ? legendComponent : null}
             </div>
         );
     }

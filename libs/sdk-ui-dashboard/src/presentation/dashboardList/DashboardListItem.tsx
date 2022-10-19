@@ -41,7 +41,7 @@ const DropdownItem: React.FC<DashboardsListItemProps> = (props) => {
 
     return (
         <div className={classNames} onClick={onClick} title={title}>
-            {icon && <span className={cx("gd-list-icon", icon)} />}
+            {icon ? <span className={cx("gd-list-icon", icon)} /> : null}
             <span>{title}</span>
         </div>
     );

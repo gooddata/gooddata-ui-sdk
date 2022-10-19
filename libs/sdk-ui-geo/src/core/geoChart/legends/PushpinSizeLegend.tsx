@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import { calculateAverage } from "../helpers/geoChart/common";
@@ -36,11 +36,11 @@ export default function PushpinSizeLegend(props: IPushpinSizeLegendProps): JSX.E
 
     return (
         <div className={classNamesContainer}>
-            {measureName && (
+            {measureName ? (
                 <div className="metric-name" title={measureName}>
                     {measureName}:
                 </div>
-            )}
+            ) : null}
             <div className={classNamesCircles}>
                 <div className="pushpin-size-legend-circle circle-min-value">
                     <span className="circle-min-icon" />
@@ -48,8 +48,8 @@ export default function PushpinSizeLegend(props: IPushpinSizeLegendProps): JSX.E
                         {formatLegendLabel(min, format, diff, numericSymbols)}
                     </span>
                 </div>
-                {showMiddleCircle && renderMiddleCircle(props)}
-                {!measureName && <div className="circle-separator" />}
+                {showMiddleCircle ? renderMiddleCircle(props) : null}
+                {!measureName ? <div className="circle-separator" /> : null}
                 <div className="pushpin-size-legend-circle circle-max-value">
                     <span className="circle-max-icon" />
                     <span className="circle-value">

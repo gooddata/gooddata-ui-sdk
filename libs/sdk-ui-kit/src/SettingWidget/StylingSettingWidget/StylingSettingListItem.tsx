@@ -84,7 +84,7 @@ export const StylingSettingListItem = <T extends StylingPickerItemContent>({
                     </ShortenedText>
                 </span>
             </label>
-            {isMenuVisible && (
+            {isMenuVisible ? (
                 <Menu
                     toggler={
                         <Button
@@ -110,16 +110,16 @@ export const StylingSettingListItem = <T extends StylingPickerItemContent>({
                         >
                             <BubbleHoverTrigger showDelay={0} hideDelay={0}>
                                 {intl.formatMessage({ id: "stylingPicker.item.delete" })}
-                                {!isDeletable && (
+                                {!isDeletable ? (
                                     <Bubble className="bubble-primary">
                                         {intl.formatMessage({ id: "stylingPicker.item.delete.tooltip" })}
                                     </Bubble>
-                                )}
+                                ) : null}
                             </BubbleHoverTrigger>
                         </Item>
                     </ItemsWrapper>
                 </Menu>
-            )}
+            ) : null}
         </div>
     );
 };

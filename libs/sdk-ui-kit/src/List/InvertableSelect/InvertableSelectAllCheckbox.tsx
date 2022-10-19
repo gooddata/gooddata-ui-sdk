@@ -53,10 +53,11 @@ export function InvertableSelectAllCheckbox(props: IInvertableSelectAllCheckboxP
                 <span className="input-label-text">
                     <span className={cx("gd-list-all-checkbox", { "gd-list-all-checkbox-checked": checked })}>
                         {intl.formatMessage({ id: "gs.list.all" })}
-                        {isFiltered &&
-                            ` ${intl.formatMessage({
-                                id: "gs.list.searchResults",
-                            })}`}
+                        {isFiltered
+                            ? ` ${intl.formatMessage({
+                                  id: "gs.list.searchResults",
+                              })}`
+                            : null}
                     </span>
                     <span className="gd-list-actions-selection-size s-list-search-selection-size">{`(${totalItemsCount})`}</span>
                 </span>

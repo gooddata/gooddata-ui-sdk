@@ -57,14 +57,14 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
                             defaultValue={dataLabelDefaultValue}
                         />
 
-                        {featureFlags["enableHidingOfDataPoints"] && (
+                        {featureFlags["enableHidingOfDataPoints"] ? (
                             <DataPointsControl
                                 pushData={pushData}
                                 properties={properties}
                                 isDisabled={controlsDisabled || isDataPointsControlDisabled}
                                 showDisabledMessage={isDataPointsControlDisabled}
                             />
-                        )}
+                        ) : null}
 
                         <CheckboxControl
                             valuePath="grid.enabled"
