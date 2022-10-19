@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import { IRgbColorValue, IColor, isColorFromPalette, isRgbColor, IColorPalette } from "@gooddata/sdk-model";
@@ -57,7 +57,7 @@ class ColorDropdown extends React.PureComponent<IColorDropdownProps, IColorDropd
                 <div className={this.getClassName()} onClick={this.onDropdownButtonClick}>
                     {this.setupDropdownChild()}
                 </div>
-                {this.state.isDropdownOpen && (
+                {this.state.isDropdownOpen ? (
                     <ColorOverlay
                         alignTo={`.${this.getClassName()}`}
                         onClose={this.onClose}
@@ -70,7 +70,7 @@ class ColorDropdown extends React.PureComponent<IColorDropdownProps, IColorDropd
                                 : this.renderColorPickerContent()}
                         </div>
                     </ColorOverlay>
-                )}
+                ) : null}
             </React.Fragment>
         );
     }
@@ -101,7 +101,9 @@ class ColorDropdown extends React.PureComponent<IColorDropdownProps, IColorDropd
                     colorPalette={this.props.colorPalette}
                     onColorSelected={this.onColorSelected}
                 />
-                {this.props.showCustomPicker && <CustomColorButton onClick={this.onCustomColorButtonClick} />}
+                {this.props.showCustomPicker ? (
+                    <CustomColorButton onClick={this.onCustomColorButtonClick} />
+                ) : null}
             </div>
         );
     }

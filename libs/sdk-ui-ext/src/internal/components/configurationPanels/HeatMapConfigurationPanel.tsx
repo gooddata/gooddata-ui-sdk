@@ -46,7 +46,7 @@ export default class HeatMapConfigurationPanel extends ConfigurationPanelContent
                         properties={properties}
                         pushData={pushData}
                     >
-                        {isNameSubsectionVisible && (
+                        {isNameSubsectionVisible ? (
                             <NameSubsection
                                 disabled={xAxisDisabled}
                                 configPanelDisabled={controlsDisabled}
@@ -54,7 +54,7 @@ export default class HeatMapConfigurationPanel extends ConfigurationPanelContent
                                 properties={properties}
                                 pushData={pushData}
                             />
-                        )}
+                        ) : null}
 
                         <LabelSubsection
                             disabled={xAxisDisabled}
@@ -76,7 +76,7 @@ export default class HeatMapConfigurationPanel extends ConfigurationPanelContent
                         properties={properties}
                         pushData={pushData}
                     >
-                        {isNameSubsectionVisible && (
+                        {isNameSubsectionVisible ? (
                             <NameSubsection
                                 disabled={yAxisDisabled}
                                 configPanelDisabled={controlsDisabled}
@@ -84,7 +84,7 @@ export default class HeatMapConfigurationPanel extends ConfigurationPanelContent
                                 properties={properties}
                                 pushData={pushData}
                             />
-                        )}
+                        ) : null}
 
                         <LabelSubsection
                             disabled={yAxisDisabled}

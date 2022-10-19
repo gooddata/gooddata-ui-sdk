@@ -212,11 +212,11 @@ const InsightViewCore: React.FC<IInsightViewProps & WrappedComponentProps> = (pr
 
     return (
         <div className="insight-view-container">
-            {resolvedTitle && <TitleComponent title={resolvedTitle} />}
-            {isLoadingShown && <LoadingComponent className="insight-view-loader" />}
-            {error && !isDataLoading && (
+            {resolvedTitle ? <TitleComponent title={resolvedTitle} /> : null}
+            {isLoadingShown ? <LoadingComponent className="insight-view-loader" /> : null}
+            {error && !isDataLoading ? (
                 <InsightError error={convertError(error)} ErrorComponent={ErrorComponent} />
-            )}
+            ) : null}
             <div
                 className="insight-view-visualization"
                 // make the visualization div 0 height so that the loading component can take up the whole area

@@ -56,7 +56,7 @@ export default class BulletChartConfigurationPanel extends ConfigurationPanelCon
                         properties={properties}
                         pushData={pushData}
                     >
-                        {isNameSubsectionVisible && (
+                        {isNameSubsectionVisible ? (
                             <NameSubsection
                                 disabled={xAxisNameSectionDisabled}
                                 configPanelDisabled={controlsDisabled}
@@ -64,7 +64,7 @@ export default class BulletChartConfigurationPanel extends ConfigurationPanelCon
                                 properties={properties}
                                 pushData={pushData}
                             />
-                        )}
+                        ) : null}
                         <LabelSubsection
                             disabled={controlsDisabled}
                             configPanelDisabled={controlsDisabled}
@@ -86,7 +86,7 @@ export default class BulletChartConfigurationPanel extends ConfigurationPanelCon
                         properties={properties}
                         pushData={pushData}
                     >
-                        {isNameSubsectionVisible && (
+                        {isNameSubsectionVisible ? (
                             <NameSubsection
                                 disabled={yAxisNameSubsectionDisabled}
                                 configPanelDisabled={controlsDisabled}
@@ -94,7 +94,7 @@ export default class BulletChartConfigurationPanel extends ConfigurationPanelCon
                                 properties={properties}
                                 pushData={pushData}
                             />
-                        )}
+                        ) : null}
                         <LabelSubsection
                             disabled={controlsDisabled || itemsOnYAxis === 0}
                             configPanelDisabled={controlsDisabled}

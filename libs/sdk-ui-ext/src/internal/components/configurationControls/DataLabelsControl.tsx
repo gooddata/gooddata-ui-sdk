@@ -51,7 +51,7 @@ class DataLabelsControl extends React.Component<IDataLabelsControlProps & Wrappe
                     items={getTranslatedDropdownItems(dataLabelsDropdownItems, intl)}
                     showDisabledMessage={showDisabledMessage}
                 />
-                {enableSeparateTotalLabels && (
+                {enableSeparateTotalLabels ? (
                     <DropdownControl
                         value={totalLabels}
                         valuePath="dataLabels.totalsVisible"
@@ -62,7 +62,7 @@ class DataLabelsControl extends React.Component<IDataLabelsControlProps & Wrappe
                         items={getTranslatedDropdownItems(dataLabelsDropdownItems, intl)}
                         showDisabledMessage={showDisabledMessage}
                     />
-                )}
+                ) : null}
             </div>
         );
     }
