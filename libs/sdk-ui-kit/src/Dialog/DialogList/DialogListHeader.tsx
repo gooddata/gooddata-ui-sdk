@@ -46,13 +46,13 @@ export const DialogListHeader: React.VFC<IDialogListHeaderProps> = (props) => {
 
     return (
         <div role="dialog-list-header" className={headerClassNames}>
-            {title && (
+            {title ? (
                 <div>
                     <Typography tagName="h3">{title}</Typography>
                 </div>
-            )}
+            ) : null}
             <div className="gd-dialog-list-header-divider" />
-            {buttonTitle && (
+            {buttonTitle ? (
                 <div className="gd-dialog-list-header-button">
                     <BubbleHoverTrigger showDelay={0} hideDelay={0}>
                         <a
@@ -63,14 +63,14 @@ export const DialogListHeader: React.VFC<IDialogListHeaderProps> = (props) => {
                         >
                             {buttonTitle}
                         </a>
-                        {buttonTooltipText && (
+                        {buttonTooltipText ? (
                             <Bubble className="bubble-primary" alignPoints={BUTTON_TOOLTIP_ALIGN_POINTS}>
                                 {buttonTooltipText}
                             </Bubble>
-                        )}
+                        ) : null}
                     </BubbleHoverTrigger>
                 </div>
-            )}
+            ) : null}
         </div>
     );
 };

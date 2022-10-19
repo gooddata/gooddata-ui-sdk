@@ -165,11 +165,11 @@ export const MeasureDropdown: React.FC<MeasureDropdownProps> = ({
                                 enableRenamingMeasureToMetric,
                             )}
                         />
-                        {disabledExplanationTooltip && (
+                        {disabledExplanationTooltip ? (
                             <Bubble alignPoints={[{ align: "cr cl" }, { align: "cl cr" }]}>
                                 {/* TODO: TNT-466 - Tooltip explanation message provided by PV  */}
                             </Bubble>
-                        )}
+                        ) : null}
                     </BubbleHoverTrigger>
                 ) : (
                     <Dropdown

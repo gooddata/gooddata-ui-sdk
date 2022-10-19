@@ -130,20 +130,20 @@ const StylingSettingWidgetCore = <T extends StylingPickerItemContent>(
             />
             <Separator />
             <Footer>
-                {isMobileDevice && footerMobileMessage && (
+                {isMobileDevice && footerMobileMessage ? (
                     <Message className="gd-styling-picker-footer-message" type="progress">
                         {footerMobileMessage}
                     </Message>
-                )}
-                {footerHelpLink && footerHelpTitle && (
+                ) : null}
+                {footerHelpLink && footerHelpTitle ? (
                     <Hyperlink
                         text={footerHelpTitle}
                         href={footerHelpLink}
                         iconClass="gd-icon-circle-question"
                         onClick={onHelpClick}
                     />
-                )}
-                {showFooterButtons && (
+                ) : null}
+                {showFooterButtons ? (
                     <FooterButtons>
                         <Button
                             className="gd-button-secondary"
@@ -158,7 +158,7 @@ const StylingSettingWidgetCore = <T extends StylingPickerItemContent>(
                             value={intl.formatMessage({ id: "apply" })}
                         />
                     </FooterButtons>
-                )}
+                ) : null}
             </Footer>
         </SettingWidget>
     );

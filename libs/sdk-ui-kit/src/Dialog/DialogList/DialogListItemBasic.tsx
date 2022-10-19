@@ -61,7 +61,7 @@ export const DialogListItemBasic: React.VFC<IDialogListItemComponentProps> = (pr
 
     return (
         <div role="dialog-list-item" className={rootClassNames}>
-            {showDeleteButton && (
+            {showDeleteButton ? (
                 <div className="gd-dialog-list-item-delete">
                     <BubbleHoverTrigger showDelay={0} hideDelay={0}>
                         <span
@@ -69,20 +69,20 @@ export const DialogListItemBasic: React.VFC<IDialogListItemComponentProps> = (pr
                             className="gd-dialog-list-item-delete-icon s-dialog-list-item-delete-icon"
                             onClick={handleItemDelete}
                         />
-                        {deleteTooltipText && (
+                        {deleteTooltipText ? (
                             <Bubble className="bubble-primary" alignPoints={ICON_TOOLTIP_ALIGN_POINTS}>
                                 {deleteTooltipText}
                             </Bubble>
-                        )}
+                        ) : null}
                     </BubbleHoverTrigger>
                 </div>
-            )}
+            ) : null}
             <div
                 role="dialog-list-item-content"
                 className="gd-dialog-list-item-content s-dialog-list-item-content"
                 onClick={handleItemClick}
             >
-                {icon && <div className="gd-dialog-list-item-icon">{icon}</div>}
+                {icon ? <div className="gd-dialog-list-item-icon">{icon}</div> : null}
                 <div className="gd-dialog-list-item-text s-dialog-list-item-text">
                     <div className="gd-dialog-list-item-title s-dialog-list-item-title">
                         <ShortenedText
@@ -92,7 +92,7 @@ export const DialogListItemBasic: React.VFC<IDialogListItemComponentProps> = (pr
                             {title}
                         </ShortenedText>
                     </div>
-                    {subtitle && (
+                    {subtitle ? (
                         <div className="gd-dialog-list-item-subtitle s-dialog-list-item-subtitle">
                             <ShortenedText
                                 className="gd-dialog-list-item-shortened-text"
@@ -101,7 +101,7 @@ export const DialogListItemBasic: React.VFC<IDialogListItemComponentProps> = (pr
                                 {subtitle}
                             </ShortenedText>
                         </div>
-                    )}
+                    ) : null}
                 </div>
             </div>
         </div>

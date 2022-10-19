@@ -351,7 +351,7 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
                     onChange={this.handleInputChanged}
                 />
 
-                {isOpen && (
+                {isOpen ? (
                     <div role="datepicker-picker" ref={this.datePickerContainerRef}>
                         <DayPicker
                             classNames={classNamesProps}
@@ -364,7 +364,7 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
                             onMonthChange={this.handleMonthChanged}
                         />
                     </div>
-                )}
+                ) : null}
                 <span className="gd-datepicker-icon gd-icon-calendar" />
             </div>
         );

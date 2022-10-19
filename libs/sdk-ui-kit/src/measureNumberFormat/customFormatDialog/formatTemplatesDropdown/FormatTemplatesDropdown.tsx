@@ -32,7 +32,7 @@ export class FormatTemplatesDropdown extends React.Component<
         return (
             <div className="gd-measure-format-templates">
                 <DropdownToggleButton toggleDropdown={this.toggleDropdown} isOpened={isOpened} />
-                {isOpened && (
+                {isOpened ? (
                     <Overlay
                         closeOnOutsideClick={true}
                         closeOnParentScroll={true}
@@ -53,7 +53,7 @@ export class FormatTemplatesDropdown extends React.Component<
                             </div>
                         </div>
                     </Overlay>
-                )}
+                ) : null}
             </div>
         );
     }

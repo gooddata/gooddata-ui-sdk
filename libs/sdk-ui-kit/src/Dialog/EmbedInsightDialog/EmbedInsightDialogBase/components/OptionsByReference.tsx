@@ -52,7 +52,7 @@ export const OptionsByReference: React.VFC<IOptionsByReferenceProps> = (props) =
                 }}
             />
 
-            {option.customHeight && (
+            {option.customHeight ? (
                 <HeightSetting
                     value={option.height}
                     unit={option.unit}
@@ -61,7 +61,7 @@ export const OptionsByReference: React.VFC<IOptionsByReferenceProps> = (props) =
                         onChange(opt);
                     }}
                 />
-            )}
+            ) : null}
         </div>
     );
 };

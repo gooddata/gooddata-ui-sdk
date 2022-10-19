@@ -35,15 +35,15 @@ export function InvertableSelectStatusBar<T>(props: IInvertableSelectStatusBarPr
         <>
             <div className={cx([className, "gd-invertable-select-selection-status", "s-list-status-bar"])}>
                 <span>&nbsp;{intl.formatMessage({ id: "gs.list.is" })}&nbsp;</span>
-                {isAll && <b>{intl.formatMessage({ id: "gs.list.all" })}</b>}
-                {isNone && <b>{intl.formatMessage({ id: "gs.filterLabel.none" })}</b>}
-                {isAllExcept && (
+                {isAll ? <b>{intl.formatMessage({ id: "gs.list.all" })}</b> : null}
+                {isNone ? <b>{intl.formatMessage({ id: "gs.filterLabel.none" })}</b> : null}
+                {isAllExcept ? (
                     <span>
                         <b>{intl.formatMessage({ id: "gs.list.all" })}</b>&nbsp;
                         {intl.formatMessage({ id: "gs.list.except" })}&nbsp;
                     </span>
-                )}
-                {!isAll && !isSelectionEmpty && (
+                ) : null}
+                {!isAll && !isSelectionEmpty ? (
                     <>
                         <span
                             className="gd-shortened-text gd-selection-list s-dropdown-attribute-selection-list"
@@ -53,14 +53,14 @@ export function InvertableSelectStatusBar<T>(props: IInvertableSelectStatusBarPr
                         </span>
                         {`\xa0(${selectedItems.length})`}
                     </>
-                )}
+                ) : null}
             </div>
-            {selectedItems.length >= selectedItemsLimit && (
+            {selectedItems.length >= selectedItemsLimit ? (
                 <InvertableSelectLimitWarning
                     limit={selectedItemsLimit}
                     selectedItemsCount={selectedItems.length}
                 />
-            )}
+            ) : null}
         </>
     );
 }

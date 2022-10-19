@@ -48,7 +48,7 @@ export class Checkbox extends React.PureComponent<CheckboxProps> {
 
         return (
             <React.Fragment>
-                {title && <h6>{title}</h6>}
+                {title ? <h6>{title}</h6> : null}
                 <label className="input-checkbox-label">
                     <input
                         type="checkbox"

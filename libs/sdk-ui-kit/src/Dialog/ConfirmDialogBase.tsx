@@ -59,7 +59,7 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
         return (
             <div tabIndex={0} onKeyDown={this.onKeyDown}>
                 <div className={dialogClasses}>
-                    {displayCloseButton && this.renderCloseButton()}
+                    {displayCloseButton ? this.renderCloseButton() : null}
 
                     <div className="gd-dialog-header-wrapper">
                         {headerLeftButtonRenderer?.()}
@@ -74,7 +74,9 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
 
                     <div className="gd-dialog-footer">
                         {footerLeftRenderer?.()}
-                        {showProgressIndicator && <LoadingSpinner className="gd-dialog-spinner small" />}
+                        {showProgressIndicator ? (
+                            <LoadingSpinner className="gd-dialog-spinner small" />
+                        ) : null}
 
                         <Button
                             onClick={onCancel}
@@ -82,7 +84,7 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
                             value={cancelButtonText}
                         />
 
-                        {submitButtonText && (
+                        {submitButtonText ? (
                             <BubbleHoverTrigger className="gd-button" showDelay={0} hideDelay={0}>
                                 <Button
                                     onClick={onSubmit}
@@ -90,7 +92,7 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
                                     value={submitButtonText}
                                     disabled={isSubmitDisabled}
                                 />
-                                {submitButtonTooltipText && (
+                                {submitButtonTooltipText ? (
                                     <Bubble
                                         className="bubble-primary"
                                         alignPoints={submitButtonTooltipAlignPoints || [{ align: "bc tc" }]}
@@ -98,9 +100,9 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
                                     >
                                         {submitButtonTooltipText}
                                     </Bubble>
-                                )}
+                                ) : null}
                             </BubbleHoverTrigger>
-                        )}
+                        ) : null}
                     </div>
                 </div>
             </div>

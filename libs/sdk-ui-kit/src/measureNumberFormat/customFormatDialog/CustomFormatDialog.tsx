@@ -72,7 +72,7 @@ export class CustomFormatDialog extends React.PureComponent<
                                 separators={separators}
                                 onFormatChange={this.onFormatChange}
                             />
-                            {documentationLink && <DocumentationLink url={documentationLink} />}
+                            {documentationLink ? <DocumentationLink url={documentationLink} /> : null}
                             <Preview format={format} separators={separators} />
                         </div>
                         <div className="gd-measure-custom-format-dialog-footer">

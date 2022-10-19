@@ -130,7 +130,7 @@ export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element {
 
     return (
         <React.Fragment>
-            {showSearch && (
+            {showSearch ? (
                 <Input
                     className={searchFieldClassNames}
                     value={searchString}
@@ -141,13 +141,15 @@ export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element {
                     isSearch={true}
                     autofocus={!disableAutofocus}
                 />
-            )}
-            {showTabs && <DropdownTabs tabs={tabs} selectedTabId={selectedTabId} onTabSelect={onTabSelect} />}
-            {hasNoData && (
+            ) : null}
+            {showTabs ? (
+                <DropdownTabs tabs={tabs} selectedTabId={selectedTabId} onTabSelect={onTabSelect} />
+            ) : null}
+            {hasNoData ? (
                 <div style={{ width: isMobile ? "auto" : width }}>{renderNoData({ hasNoMatchingData })}</div>
-            )}
-            {isLoading && <LoadingMask width={isMobile ? "100%" : width} height={LOADING_HEIGHT} />}
-            {!isLoading && itemsCount > 0 && (
+            ) : null}
+            {isLoading ? <LoadingMask width={isMobile ? "100%" : width} height={LOADING_HEIGHT} /> : null}
+            {!isLoading && itemsCount > 0 ? (
                 <AutoSize>
                     {(autoSize) => {
                         const listWidth = isMobile ? autoSize.width : width;
@@ -167,7 +169,7 @@ export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element {
                         );
                     }}
                 </AutoSize>
-            )}
+            ) : null}
             {renderFooter()}
         </React.Fragment>
     );
