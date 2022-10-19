@@ -73,11 +73,11 @@ export const AttributeFilterSimpleDropdownButtonWithSelection: React.VFC<
                         <div className="gd-attribute-filter-dropdown-simple-button-selection">
                             {buttonTitle}
                         </div>
-                        {selectionSize && (
+                        {selectionSize ? (
                             <div className="gd-attribute-filter-dropdown-simple-button-selection-count">
                                 {selectionSize}
                             </div>
-                        )}
+                        ) : null}
                     </div>
                 </span>
                 <span className={icoClassNames} role="button-icon"></span>

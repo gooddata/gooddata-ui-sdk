@@ -40,11 +40,11 @@ export const ExcludeCurrentPeriodToggle: React.FC<IExcludeCurrentPeriodTogglePro
                 &ensp;
                 <ExcludeCurrentPeriodToggleLabel granularity={granularity} disabled={disabled} />
             </label>
-            {disabled && (
+            {disabled ? (
                 <Bubble alignPoints={alignPoints}>
                     <FormattedMessage id="filters.excludeCurrentPeriod.unavailable" />
                 </Bubble>
-            )}
+            ) : null}
         </BubbleHoverTrigger>
     </div>
 );

@@ -175,10 +175,10 @@ class DateRangePickerComponent extends React.Component<DateRangePickerProps, IDa
                     <div className="gd-date-range-picker datetime s-date-range-picker">
                         <label>{intl.formatMessage({ id: "filters.from" })}</label>
                         {FromField}
-                        {isFromInputDatePickerOpen && DatePicker}
+                        {isFromInputDatePickerOpen ? DatePicker : null}
                         <label>{intl.formatMessage({ id: "filters.to" })}</label>
                         {ToField}
-                        {isToInputDatePickerOpen && DatePicker}
+                        {isToInputDatePickerOpen ? DatePicker : null}
                     </div>
                 ) : (
                     <>
@@ -187,10 +187,10 @@ class DateRangePickerComponent extends React.Component<DateRangePickerProps, IDa
                             <span className="gd-date-range-picker-dash">&ndash;</span>
                             {ToField}
                         </div>
-                        {this.state.isOpen && DatePicker}
+                        {this.state.isOpen ? DatePicker : null}
                     </>
                 )}
-                {(errorFrom || errorTo) && (
+                {errorFrom || errorTo ? (
                     <DateRangePickerError
                         dateFormat={dateFormat}
                         errorId={
@@ -198,7 +198,7 @@ class DateRangePickerComponent extends React.Component<DateRangePickerProps, IDa
                             errorFrom || errorTo
                         }
                     />
-                )}
+                ) : null}
             </>
         );
     }

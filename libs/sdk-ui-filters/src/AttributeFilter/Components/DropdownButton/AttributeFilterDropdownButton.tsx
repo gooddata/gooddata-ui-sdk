@@ -90,7 +90,7 @@ export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownBu
             )}
             onClick={onClick}
         >
-            {icon && <div className="gd-attribute-filter-dropdown-button-icon__next">{icon}</div>}
+            {icon ? <div className="gd-attribute-filter-dropdown-button-icon__next">{icon}</div> : null}
             <div className="gd-attribute-filter-dropdown-button-content__next">
                 <div className="gd-attribute-filter-dropdown-button-title__next">
                     <ShortenedText
@@ -107,9 +107,9 @@ export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownBu
                     >
                         {buttonSubtitle}
                     </span>
-                    {displayItemCount && (
+                    {displayItemCount ? (
                         <span className="gd-attribute-filter-dropdown-button-selected-items-count__next">{`(${selectedItemsCount})`}</span>
-                    )}
+                    ) : null}
                 </div>
             </div>
         </div>

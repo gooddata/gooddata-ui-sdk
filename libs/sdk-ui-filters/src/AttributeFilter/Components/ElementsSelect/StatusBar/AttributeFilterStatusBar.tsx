@@ -39,9 +39,9 @@ export const AttributeFilterStatusBar: React.FC<IAttributeFilterStatusBarProps> 
                 selectedItems={selectedItems}
                 selectedItemsLimit={selectedItemsLimit}
             />
-            {isFilteredByParentFilters && totalElementsCountWithCurrentSettings > 0 && (
+            {isFilteredByParentFilters && totalElementsCountWithCurrentSettings > 0 ? (
                 <AttributeFilterFilteredStatus parentFilterTitles={parentFilterTitles} />
-            )}
+            ) : null}
         </div>
     );
 };

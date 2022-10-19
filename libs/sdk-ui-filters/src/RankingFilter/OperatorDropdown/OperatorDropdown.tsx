@@ -58,14 +58,14 @@ const OperatorDropdownComponent: React.FC<OperatorDropdownComponentProps> = ({
     return (
         <>
             <Button className={buttonClassNames} value={title} onClick={onButtonClick} />
-            {isOpen && (
+            {isOpen ? (
                 <OperatorDropdownBody
                     items={operatorItems}
                     selectedValue={selectedValue}
                     onSelect={onItemSelect}
                     onClose={() => setIsOpen(false)}
                 />
-            )}
+            ) : null}
         </>
     );
 };

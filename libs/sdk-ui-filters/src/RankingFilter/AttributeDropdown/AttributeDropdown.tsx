@@ -85,7 +85,7 @@ const AttributeDropdownComponent: React.FC<AttributeDropdownProps> = ({
                 onClick={onButtonClick}
                 iconLeft={getItemIcon(selectedAttributeItem)}
             />
-            {isOpen && (
+            {isOpen ? (
                 <AttributeDropdownBody
                     items={items}
                     selectedItemRef={selectedItemRef}
@@ -95,7 +95,7 @@ const AttributeDropdownComponent: React.FC<AttributeDropdownProps> = ({
                     onDropDownItemMouseOut={onDropDownItemMouseOut}
                     customGranularitySelection={customGranularitySelection}
                 />
-            )}
+            ) : null}
         </>
     );
 };

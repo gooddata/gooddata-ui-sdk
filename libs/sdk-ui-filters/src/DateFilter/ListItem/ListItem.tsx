@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import MediaQuery from "react-responsive";
@@ -27,11 +27,11 @@ export const ListItem: React.FC<{ isSelected?: boolean } & React.HTMLProps<HTMLB
             {...(restProps as any)}
         >
             {children}
-            {isActive && (
+            {isActive ? (
                 <MediaQuery query={MediaQueries.IS_MOBILE_DEVICE}>
                     <CustomizableCheckmark className="gd-customizable-checkmark-mobile-date-filter" />
                 </MediaQuery>
-            )}
+            ) : null}
         </button>
     </>
 );

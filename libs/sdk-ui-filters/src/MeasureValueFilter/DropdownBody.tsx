@@ -64,11 +64,11 @@ class DropdownBodyWrapped extends React.PureComponent<IDropdownBodyProps, IDropd
         return (
             <div className="gd-mvf-dropdown-body gd-dialog gd-dropdown overlay s-mvf-dropdown-body">
                 <div className="gd-mvf-dropdown-content">
-                    {warningMessage && (
+                    {warningMessage ? (
                         <div className="gd-mvf-dropdown-section">
                             <WarningMessageComponent warningMessage={warningMessage} />
                         </div>
-                    )}
+                    ) : null}
 
                     <div className="gd-mvf-dropdown-section">
                         <OperatorDropdown
@@ -78,18 +78,18 @@ class DropdownBodyWrapped extends React.PureComponent<IDropdownBodyProps, IDropd
                         />
                     </div>
 
-                    {operator !== "ALL" && (
+                    {operator !== "ALL" ? (
                         <div className="gd-mvf-dropdown-section">
                             {this.renderInputSection()}{" "}
-                            {displayTreatNullAsZeroOption && (
+                            {displayTreatNullAsZeroOption ? (
                                 <TreatNullValuesAsZeroCheckbox
                                     onChange={this.handleTreatNullAsZeroClicked}
                                     checked={enabledTreatNullValuesAsZero}
                                     intl={intl}
                                 />
-                            )}
+                            ) : null}
                         </div>
-                    )}
+                    ) : null}
                 </div>
                 <div className="gd-mvf-dropdown-footer">
                     <Button

@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 
 import React from "react";
 import Downshift, { ControllerStateAndHelpers } from "downshift";
@@ -50,7 +50,7 @@ export const Select = <V extends {}>({
                         selectedItem={selectedItem}
                         getToggleButtonProps={getToggleButtonProps}
                     />
-                    {isOpen && (
+                    {isOpen ? (
                         <SelectMenu
                             items={items}
                             selectedItem={selectedItem}
@@ -58,7 +58,7 @@ export const Select = <V extends {}>({
                             getItemProps={getItemProps}
                             getMenuProps={getMenuProps}
                         />
-                    )}
+                    ) : null}
                 </div>
             )}
         </Downshift>

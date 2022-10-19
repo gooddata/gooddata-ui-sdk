@@ -157,7 +157,7 @@ const DateTimePickerComponent = React.forwardRef<HTMLInputElement, DateTimePicke
                         </span>
                     </div>
                 )}
-                {isTimeEnabled && (
+                {isTimeEnabled ? (
                     <span
                         className={cx(
                             "gd-date-range-picker-input",
@@ -174,7 +174,7 @@ const DateTimePickerComponent = React.forwardRef<HTMLInputElement, DateTimePicke
                             value={pickerTime}
                         />
                     </span>
-                )}
+                ) : null}
             </div>
         );
     },

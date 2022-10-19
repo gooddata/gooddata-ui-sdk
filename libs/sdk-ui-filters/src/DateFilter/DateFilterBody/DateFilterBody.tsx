@@ -121,7 +121,7 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                         isMobile && "gd-extended-date-filter-body-mobile",
                     )}
                 >
-                    {route === null && isMobile && (
+                    {route === null && isMobile ? (
                         <div
                             onClick={() => {
                                 onCancelClick();
@@ -130,7 +130,7 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                         >
                             {dateFilterButton}
                         </div>
-                    )}
+                    ) : null}
                     <div
                         className={cx("gd-extended-date-filter-body-wrapper", {
                             "gd-extended-date-filter-body-wrapper-wide":
@@ -138,7 +138,7 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                         })}
                         style={wrapperStyle}
                     >
-                        {isEditMode && !isMobile && <EditModeMessage />}
+                        {isEditMode && !isMobile ? <EditModeMessage /> : null}
                         {isMobile ? (
                             this.renderMobileContent()
                         ) : (
@@ -184,7 +184,7 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                 filterOption={filterOptions.allTime}
                 selectedFilterOption={selectedFilterOption}
                 onSelectedFilterOptionChange={onSelectedFilterOptionChange}
-                className={isMobile && ITEM_CLASS_MOBILE}
+                className={isMobile ? ITEM_CLASS_MOBILE : undefined}
             />
         ) : null;
     };
@@ -210,7 +210,7 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
         const isOnRoute = route === "absoluteForm";
         return (
             <>
-                {(!isMobile || !isOnRoute) && (
+                {!isMobile || !isOnRoute ? (
                     <ListItem
                         isSelected={isSelected}
                         onClick={() => {
@@ -231,8 +231,8 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                             <FormattedMessage id="filters.staticPeriod" />
                         )}
                     </ListItem>
-                )}
-                {isSelected && (!isMobile || isOnRoute) && (
+                ) : null}
+                {isSelected && (!isMobile || isOnRoute) ? (
                     <DateFilterFormWrapper isMobile={isMobile}>
                         <AbsoluteDateFilterForm
                             dateFormat={dateFormat}
@@ -243,7 +243,7 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                             isTimeEnabled={isTimeForAbsoluteRangeEnabled}
                         />
                     </DateFilterFormWrapper>
-                )}
+                ) : null}
             </>
         );
     };
@@ -267,7 +267,7 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
 
         return (
             <>
-                {(!isMobile || !isOnRoute) && (
+                {!isMobile || !isOnRoute ? (
                     <ListItem
                         isSelected={isSelected}
                         onClick={() => {
@@ -287,15 +287,15 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                         ) : (
                             <FormattedMessage id="filters.floatingRange" />
                         )}
-                        {!isMobile && (
+                        {!isMobile ? (
                             <ListItemTooltip bubbleAlignPoints={[{ align: "cr cl" }]}>
                                 <FormattedMessage id="filters.floatingRange.tooltip" />
                             </ListItemTooltip>
-                        )}
+                        ) : null}
                     </ListItem>
-                )}
+                ) : null}
 
-                {isSelected && (!isMobile || isOnRoute) && (
+                {isSelected && (!isMobile || isOnRoute) ? (
                     <DateFilterFormWrapper isMobile={isMobile}>
                         <RelativeDateFilterForm
                             onSelectedFilterOptionChange={(option) => {
@@ -306,7 +306,7 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                             isMobile={isMobile}
                         />
                     </DateFilterFormWrapper>
-                )}
+                ) : null}
             </>
         );
     };
@@ -320,7 +320,7 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                 filterOptions={filterOptions.absolutePreset}
                 selectedFilterOption={selectedFilterOption}
                 onSelectedFilterOptionChange={onSelectedFilterOptionChange}
-                className={isMobile && ITEM_CLASS_MOBILE}
+                className={isMobile ? ITEM_CLASS_MOBILE : undefined}
             />
         ) : null;
     };
@@ -334,7 +334,7 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                 filterOption={filterOptions.relativePreset}
                 selectedFilterOption={selectedFilterOption}
                 onSelectedFilterOptionChange={onSelectedFilterOptionChange}
-                className={isMobile && ITEM_CLASS_MOBILE}
+                className={isMobile ? ITEM_CLASS_MOBILE : undefined}
             />
         ) : null;
     };
@@ -386,7 +386,7 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
             <>
                 {this.renderAllTime()}
                 {this.renderAbsoluteForm()}
-                {!isEmpty(this.props.availableGranularities) && this.renderRelativeForm()}
+                {!isEmpty(this.props.availableGranularities) ? this.renderRelativeForm() : null}
                 {this.renderAbsolutePreset()}
                 {this.renderRelativePreset()}
             </>
