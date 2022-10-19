@@ -1,16 +1,17 @@
 // (C) 2007-2022 GoodData Corporation
 import React, { useState } from "react";
-import { useAttributeFilterController } from "@gooddata/sdk-ui-filters";
-import { IAttributeFilter, newNegativeAttributeFilter } from "@gooddata/sdk-model";
-import * as Md from "../../md/full";
+import { IUseAttributeFilterControllerProps, useAttributeFilterController } from "@gooddata/sdk-ui-filters";
+import { IAttributeElement, IAttributeFilter, newNegativeAttributeFilter } from "@gooddata/sdk-model";
+import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import * as Md from "../../../md/full";
 
-export interface IAttributeFilterItemProps {
+interface IAttributeFilterItemProps {
     title: string;
     isSelected: boolean;
     onChange: (checked: boolean) => void;
 }
 
-export function AttributeFilterItem(props: IAttributeFilterItemProps) {
+function AttributeFilterItem(props: IAttributeFilterItemProps) {
     const { title, isSelected, onChange } = props;
     return (
         <label className="gd-list-item s-attribute-filter-list-item" style={{ display: "inline-flex" }}>
@@ -25,11 +26,38 @@ export function AttributeFilterItem(props: IAttributeFilterItemProps) {
     );
 }
 
-export function UseAttributeFilterControllerExample() {
-    const [filter, setFilter] = useState<IAttributeFilter>(
-        newNegativeAttributeFilter(Md.EmployeeName.Default, []),
-    );
+interface IErrorComponentProps {
+    error: GoodDataSdkError;
+}
 
+function ErrorComponent(props: IErrorComponentProps) {
+    const { error } = props;
+    return <div>{error.message}</div>;
+}
+
+function LoadingComponent() {
+    return <div>Initializing...</div>;
+}
+
+interface ISelectionOverviewProps {
+    elements: IAttributeElement[];
+}
+
+function SelectionOverview(props: ISelectionOverviewProps) {
+    const { elements } = props;
+    return <>{elements.length ? elements.map((e) => e.title).join(",") : "No selection"}</>;
+}
+
+interface ISearchFieldProps {
+    onSearch: (search: string) => void;
+}
+
+function SearchField(props: ISearchFieldProps) {
+    const { onSearch } = props;
+    return <input onChange={(e) => onSearch(e.target.value)} placeholder="Search elements..." />;
+}
+
+export function CustomAttributeFilter(props: IUseAttributeFilterControllerProps) {
     const {
         attribute,
         elements,
@@ -50,8 +78,7 @@ export function UseAttributeFilterControllerExample() {
         searchString,
         onReset,
     } = useAttributeFilterController({
-        filter,
-        onApply: (newFilter) => setFilter(newFilter),
+        ...props,
         elementsOptions: {
             limit: 20,
         },
@@ -67,26 +94,20 @@ export function UseAttributeFilterControllerExample() {
     return (
         <div style={{ minHeight: 500 }}>
             {isInitializing ? (
-                <div>Initializing...</div>
+                <LoadingComponent />
             ) : error ? (
-                <div>{error}</div>
+                <ErrorComponent error={error} />
             ) : (
                 <div>
                     <h4>{attribute?.title}</h4>
                     <h5>
-                        Commited Selection:{" "}
-                        {committedSelectionElements.length
-                            ? committedSelectionElements.map((e) => e.title).join(",")
-                            : "No selection"}
+                        Committed Selection: <SelectionOverview elements={committedSelectionElements} />
                     </h5>
                     <h5>
-                        Working Selection:{" "}
-                        {workingSelectionElements.length
-                            ? workingSelectionElements.map((e) => e.title).join(",")
-                            : "No selection"}
+                        Working Selection: <SelectionOverview elements={workingSelectionElements} />
                     </h5>
                     <div style={{ margin: 10 }}>
-                        <input onChange={(e) => onSearch(e.target.value)} placeholder="Search elements..." />
+                        <SearchField onSearch={onSearch} />
                     </div>
                     <div>
                         {isLoadingInitialElementsPage ? (
@@ -110,27 +131,21 @@ export function UseAttributeFilterControllerExample() {
                         ))}
                     </div>
                     <button
-                        className="gd-button gd-button-small gd-button-action s-show-more-filters-button"
+                        className={`gd-button gd-button-small gd-button-action`}
                         onClick={onLoadNextElementsPage}
                         disabled={isLoading || elements.length === totalElementsCount}
                         style={{ margin: 10 }}
                     >
-                        {isLoading ? "Loading Elements..." : "Load More Elements..."}
+                        {isLoading ? "Loading..." : "Load More..."}
+                    </button>
+                    <button className="gd-button gd-button-small gd-button-secondary" onClick={onApply}>
+                        Apply
+                    </button>
+                    <button className="gd-button gd-button-small gd-button-secondary" onClick={onReset}>
+                        Reset
                     </button>
                     <button
-                        className="gd-button gd-button-small gd-button-secondary s-show-more-filters-button"
-                        onClick={onApply}
-                    >
-                        Apply selected elements
-                    </button>
-                    <button
-                        className="gd-button gd-button-small gd-button-secondary s-show-more-filters-button"
-                        onClick={onReset}
-                    >
-                        Reset working selection
-                    </button>
-                    <button
-                        className="gd-button gd-button-small gd-button-secondary s-show-more-filters-button"
+                        className="gd-button gd-button-small gd-button-secondary"
                         onClick={() => onSelect([], isWorkingSelectionInverted)}
                     >
                         Clear
@@ -141,4 +156,12 @@ export function UseAttributeFilterControllerExample() {
     );
 }
 
-export default UseAttributeFilterControllerExample;
+const UseAttributeFilterController = () => {
+    const [filter, setFilter] = useState<IAttributeFilter>(
+        newNegativeAttributeFilter(Md.EmployeeName.Default, []),
+    );
+
+    return <CustomAttributeFilter filter={filter} onApply={setFilter} />;
+};
+
+export default UseAttributeFilterController;

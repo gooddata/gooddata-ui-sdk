@@ -12,7 +12,7 @@ import {
     useAttributeFilterSearch,
 } from "@gooddata/sdk-ui-filters";
 import { IAttributeFilter, newNegativeAttributeFilter } from "@gooddata/sdk-model";
-import * as Md from "../../md/full";
+import * as Md from "../../../md/full";
 
 interface ICustomProps {
     onMyCallback: () => void;
@@ -210,7 +210,7 @@ const CustomElementsSearchBar = (props: IAttributeFilterElementsSearchBarProps) 
     );
 };
 
-export const AttributeFilterCustomizationExample: React.FC = () => {
+export const AttributeFilterWithCustomizations: React.FC = () => {
     const [filter, setFilter] = useState<IAttributeFilter>(
         newNegativeAttributeFilter(Md.EmployeeName.Default, { values: ["Abbie Adams"] }),
     );
@@ -226,7 +226,6 @@ export const AttributeFilterCustomizationExample: React.FC = () => {
 
     return (
         <div>
-            <div>AttributeFilterButton with custom components</div>
             <CustomPropsProvider onMyCallback={myCustomCallback}>
                 <AttributeFilter
                     filter={filter}
@@ -243,4 +242,4 @@ export const AttributeFilterCustomizationExample: React.FC = () => {
     );
 };
 
-export default AttributeFilterCustomizationExample;
+export default AttributeFilterWithCustomizations;
