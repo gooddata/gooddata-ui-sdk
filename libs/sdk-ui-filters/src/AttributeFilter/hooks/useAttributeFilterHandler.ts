@@ -8,7 +8,7 @@ import { IMultiSelectAttributeFilterHandler, newAttributeFilterHandler } from ".
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 /**
- * Properties of {@link useAttributeFilterHandler}  hook
+ * Properties of the {@link useAttributeFilterHandler} hook.
  * @beta
  */
 export interface IUseAttributeFilterHandlerProps {
@@ -23,7 +23,7 @@ export interface IUseAttributeFilterHandlerProps {
 
 /**
  * Hook for retrieving AttributeFilterHandler {@link IMultiSelectAttributeFilterHandler} Core API for Attribute Filter components.
- * This hook is responsible for initialization AttributeFilterHandler
+ * This hook is responsible for initialization of the AttributeFilterHandler.
  * @beta
  */
 export const useAttributeFilterHandler = (props: IUseAttributeFilterHandlerProps) => {

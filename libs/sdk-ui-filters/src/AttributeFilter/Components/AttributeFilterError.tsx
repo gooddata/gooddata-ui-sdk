@@ -3,9 +3,9 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 
 /**
- * It represents component that is rendered rendered when initializations of the attribute filter end up in error state.
+ * Component that is rendered when the initialization of the attribute filter ends up in an error state.
  * @remarks
- * It will be rendered instead of the component that implement {@link IAttributeFilterDropdownButtonProps}
+ * It will be rendered instead of the component that implements {@link IAttributeFilterDropdownButtonProps}.
  * @beta
  */
 export interface IAttributeFilterErrorProps {

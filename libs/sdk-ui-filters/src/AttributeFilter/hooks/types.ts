@@ -9,58 +9,58 @@ import {
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 /**
- * This type represent AttributeFilter controller state
+ * AttributeFilter controller state.
  *
  * @public
  */
 export type AttributeFilterControllerData = {
     /**
-     * Loaded attribute
+     * Loaded attribute.
      */
     attribute: IAttributeMetadataObject;
 
     /**
-     * Current offset used for the attribute element loads.
+     * Current offset used for the attribute element loading.
      */
     offset: number;
 
     /**
-     * Current limit used for the attribute element loads.
+     * Current limit used for the attribute element loading.
      */
     limit: number;
 
     /**
-     * AttributeFilter is filtering elements
+     * If true, AttributeFilter is filtering elements.
      */
     isFiltering: boolean;
 
     /**
-     * AttributeFilter is initializing internal data and elements
+     * If true, AttributeFilter is initializing internal data and elements
      */
     isInitializing: boolean;
 
     /**
-     * Error occurred during the initialization, undefined otherwise.
+     * Error that occurred during the initialization, if any.
      */
     initError: GoodDataSdkError;
 
     /**
-     * First elements page is loading
+     * If true, the first elements page is loading.
      */
     isLoadingInitialElementsPage: boolean;
 
     /**
-     * Error occurred during the initial elements page load, undefined otherwise.
+     * Error that occurred during the initial elements page load, if any.
      */
     initialElementsPageError: GoodDataSdkError;
 
     /**
-     * Next elements page is loading
+     * If true, the next elements page is loading.
      */
     isLoadingNextElementsPage: boolean;
 
     /**
-     *  Error occurred during the next elements page load, undefined otherwise.
+     * Error that occurred during the next elements page load, if any.
      */
     nextElementsPageError: GoodDataSdkError;
 
@@ -70,7 +70,7 @@ export type AttributeFilterControllerData = {
     nextElementsPageSize: number;
 
     /**
-     * All attribute elements loaded by initialElementsPageLoad and all nextElementsPageLoad
+     * All attribute elements loaded by initialElementsPageLoad and all nextElementsPageLoad.
      */
     elements: IAttributeElement[];
 
@@ -85,90 +85,90 @@ export type AttributeFilterControllerData = {
     totalElementsCountWithCurrentSettings: number;
 
     /**
-     * if true then selection has any changes or number of selected elements reach the limit of maximum selection size.
+     * If true, selection has changes or the number of selected elements reached the limit of maximum selection size.
      */
     isApplyDisabled: boolean;
 
     /**
-     * Current working selection is inverted
+     * If true, the current working selection is inverted.
      */
     isWorkingSelectionInverted: boolean;
 
     /**
-     * List of all elements in current working selection
+     * List of all elements in current working selection.
      */
     workingSelectionElements: IAttributeElement[];
 
     /**
-     * Committed selection is inverted
+     * If true, the committed selection is inverted.
      */
     isCommittedSelectionInverted: boolean;
 
     /**
-     * List of all elements in committed selection
+     * List of all elements in committed selection.
      */
     committedSelectionElements: IAttributeElement[];
 
     /**
-     * Current search string
+     * Current search string.
      */
     searchString: string;
 
     /**
-     * AttributeFilter is filtering elements by parent filters
+     * If true, AttributeFilter is filtering elements by parent filters.
      */
     isFilteredByParentFilters: boolean;
 
     /**
-     * List of parent filters Attributes
+     * List of parent filters Attributes.
      */
     parentFilterAttributes: IAttributeMetadataObject[];
 
     /**
-     * Display forms of the attribute
+     * Display forms of the attribute.
      */
     displayForms: IAttributeDisplayFormMetadataObject[];
 
     /**
-     * Current attribute filter display form ObjRef
+     * Current attribute filter display form {@link @gooddata/sdk-model#ObjRef}.
      */
     currentDisplayFormRef: ObjRef;
 };
 
 /**
- * This type represent AttributeFilter controller callbacks
+ * AttributeFilter controller callbacks.
  *
  * @public
  */
 export type AttributeFilterControllerCallbacks = {
     /**
-     * Apply changes from working selection to committed selection
+     * Apply changes from working selection to committed selection.
      */
     onApply: () => void;
 
     /**
-     * Request next page of elements that respect current search criteria
+     * Request next page of elements that respect current search criteria.
      */
     onLoadNextElementsPage: () => void;
 
     /**
-     * Search elements
+     * Search elements.
      */
     onSearch: (search: string) => void;
 
     /**
-     * Change working selection
+     * Change working selection.
      */
     onSelect: (selectedItems: IAttributeElement[], isInverted: boolean) => void;
 
     /**
-     * Reset working selection
+     * Reset working selection.
      */
     onReset: () => void;
 };
 
 /**
- * This type represent AttributeFilter controller return type
+ * AttributeFilter controller return type.
  *
  * @public
  */

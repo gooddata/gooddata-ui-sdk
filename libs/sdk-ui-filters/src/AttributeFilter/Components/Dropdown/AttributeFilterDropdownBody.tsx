@@ -7,7 +7,11 @@ import { IAttributeFilterDropdownBodyProps } from "./types";
 import { DEFAULT_DROPDOWN_BODY_WIDTH } from "../../constants";
 
 /**
- * This component displays a component that implements {@link IAttributeFilterElementsSelectProps} for search and manipulation of filter selection. And a component that implements {@link IAttributeFilterDropdownActionsProps} to confirm or cancel changes.
+ * Component showing a list of elements and controls for manipulating the selection.
+ *
+ * @remarks
+ * It uses a component using the {@link IAttributeFilterElementsSelectProps} props for search and manipulation of filter selection
+ * and a component using the {@link IAttributeFilterDropdownActionsProps} props to confirm or cancel changes.
  *
  * @beta
  */

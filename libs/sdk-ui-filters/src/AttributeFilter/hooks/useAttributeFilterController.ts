@@ -35,12 +35,13 @@ export type IUseAttributeFilterControllerProps = Omit<
 
 /**
  * UseAttributeFilterController hook is responsible for initialization of AttributeFilterHandler {@link IMultiSelectAttributeFilterHandler} Core API for Attribute Filter components
- * You can access AttributeFilter state and callbacks. {@link AttributeFilterController}
+ *
+ * @remarks
+ * You can access AttributeFilter state and callbacks ({@link AttributeFilterController})
  *
  * This is the best option if you need to implement fully custom UI for the attribute filter. This option requires a bit more coding, but you have a full control over the UI.
  * It has identical convenient API as AttributeFilter component - same input props and same output props that are available in the internal context of the AttributeFilter component.
- * It works out of the box with other UI.SDK things - BackendProvider, WorkspaceProvider and visualization definition placeholders.
- * See the live code example.
+ * It works out of the box with other UI.SDK things - {@link @gooddata/sdk-ui#BackendProvider}, {@link @gooddata/sdk-ui#WorkspaceProvider} and visualization definition placeholders.
  *
  * @public
  */

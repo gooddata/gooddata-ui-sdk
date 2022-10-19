@@ -222,10 +222,10 @@ export interface IAttributeFilterCustomComponentProps {
 
     /**
      * Customize attribute filter dropdown actions component.
-     * 
+     *
      * @remarks
      * -  If not provided, the default implementation {@link AttributeFilterDropdownActions} will be used.
-     
+
      * @beta
      */
     DropdownActionsComponent?: React.ComponentType<IAttributeFilterDropdownActionsProps>;
@@ -304,7 +304,6 @@ export interface IAttributeFilterCustomComponentProps {
      */
     StatusBarComponent?: React.ComponentType<IAttributeFilterStatusBarProps>;
 
-    // Deprecated
     /**
      * Customize attribute filter with a component to be rendered if initialization fails.
      *

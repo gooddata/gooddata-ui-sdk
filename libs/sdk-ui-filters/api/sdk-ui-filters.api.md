@@ -53,7 +53,7 @@ export type AbsoluteDateFilterOption = IUiAbsoluteDateFilterForm | IAbsoluteDate
 // @public
 export type AsyncOperationStatus = "pending" | "loading" | "success" | "error" | "canceled";
 
-// @internal (undocumented)
+// @internal
 export const AttributeDisplayFormSelect: React_2.FC<IAttributeDisplayFormSelectProps>;
 
 // @public
@@ -68,7 +68,7 @@ export const AttributeFilter: React_2.FC<IAttributeFilterProps>;
 // @beta
 export const AttributeFilterAllValuesFilteredResult: React_2.FC<IAttributeFilterAllValuesFilteredResultProps>;
 
-// @public (undocumented)
+// @public
 export const AttributeFilterButton: React_2.FC<IAttributeFilterButtonProps>;
 
 // @internal (undocumented)
@@ -239,7 +239,7 @@ export type DateFilterRelativeOptionGroup = {
 // @public
 export const defaultDateFilterOptions: IDateFilterOptionsByType;
 
-// @internal (undocumented)
+// @internal
 export const EmptyElementsSearchBar: React_2.VFC<IAttributeFilterElementsSearchBarProps>;
 
 // @public @deprecated (undocumented)
@@ -254,7 +254,7 @@ export function filterVisibleDateFilterOptions(dateFilterOptions: IDateFilterOpt
 // @beta (undocumented)
 export type GranularityIntlKey = "day" | "minute" | "hour" | "week" | "month" | "quarter" | "year";
 
-// @internal (undocumented)
+// @internal
 export interface IAttributeDisplayFormSelectProps {
     // (undocumented)
     alignPoints?: IAlignPoint[];
@@ -1061,9 +1061,7 @@ export interface IUseAttributeFilterHandlerProps {
 
 // @beta
 export interface IUseAttributeFilterSearchProps {
-    // (undocumented)
     onSearch: (search: string) => void;
-    // (undocumented)
     searchString: string;
 }
 
