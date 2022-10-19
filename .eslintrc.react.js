@@ -12,6 +12,6 @@ module.exports = {
          * jsx-no-leaked-render is set to warning only because it's not working properly for the AND operator
          * within component's properties.
          */
-        "react/jsx-no-leaked-render": ["error", { validStrategies: ["ternary", "coerce"] }],
+        "react/jsx-no-leaked-render": ["warn", { validStrategies: ["ternary", "coerce"] }],
     },
 };
