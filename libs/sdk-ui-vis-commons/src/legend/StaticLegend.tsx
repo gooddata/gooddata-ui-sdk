@@ -131,7 +131,7 @@ export class StaticLegend extends React.PureComponent<IStaticLegendProps> {
                         {labelComponent}
                         {customComponent}
                     </div>
-                    {usePaging && this.renderPaging(pagesCount)}
+                    {usePaging ? this.renderPaging(pagesCount) : null}
                 </div>
             );
         }
@@ -163,7 +163,7 @@ export class StaticLegend extends React.PureComponent<IStaticLegendProps> {
                         onItemClick={onItemClick}
                     />
                 </div>
-                {usePaging && this.renderPaging(pagesCount)}
+                {usePaging ? this.renderPaging(pagesCount) : null}
             </div>
         );
     }
