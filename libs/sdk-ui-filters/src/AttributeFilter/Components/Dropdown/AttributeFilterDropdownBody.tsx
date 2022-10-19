@@ -7,7 +7,13 @@ import { IAttributeFilterDropdownBodyProps } from "./types";
 import { DEFAULT_DROPDOWN_BODY_WIDTH } from "../../constants";
 
 /**
- * @internal
+ * Component showing a list of elements and controls for manipulating the selection.
+ *
+ * @remarks
+ * It uses a component using the {@link IAttributeFilterElementsSelectProps} props for search and manipulation of filter selection
+ * and a component using the {@link IAttributeFilterDropdownActionsProps} props to confirm or cancel changes.
+ *
+ * @beta
  */
 export const AttributeFilterDropdownBody: React.FC<IAttributeFilterDropdownBodyProps> = (props) => {
     const { onApplyButtonClick, onCancelButtonClick, width = DEFAULT_DROPDOWN_BODY_WIDTH } = props;

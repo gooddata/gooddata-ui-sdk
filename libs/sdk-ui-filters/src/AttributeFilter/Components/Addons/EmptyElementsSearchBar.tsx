@@ -3,6 +3,7 @@ import React from "react";
 import { IAttributeFilterElementsSearchBarProps } from "../ElementsSelect/AttributeFilterElementsSearchBar";
 
 /**
+ * This component render empty ElementsSearchBar
  * @internal
  */
 export const EmptyElementsSearchBar: React.VFC<IAttributeFilterElementsSearchBarProps> = (_props) => {

@@ -7,7 +7,12 @@ import { getElementTitle } from "../../utils";
 import { IAttributeFilterElementsSelectItemProps } from "./types";
 
 /**
- * @internal
+ * This component represents the Attribute Filter element.
+ * It displays a checkbox to add/remove to/from selection.
+ * It allows users to add only this item to selection.
+ * It also displays a localized empty element label in case element value is empty.
+ *
+ * @beta
  */
 export const AttributeFilterElementsSelectItem: React.VFC<IAttributeFilterElementsSelectItemProps> = (
     props,
