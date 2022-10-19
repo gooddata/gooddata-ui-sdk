@@ -2101,7 +2101,7 @@ export interface IInvertableSelectRenderErrorProps {
     height?: number;
 }
 
-// @beta
+// @internal
 export interface IInvertableSelectRenderItemProps<T> {
     isSelected: boolean;
     item: T;

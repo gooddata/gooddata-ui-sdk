@@ -1,7 +1,6 @@
 // (C) 2022 GoodData Corporation
 import { IAttributeElement } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
-import { IInvertableSelectRenderItemProps } from "@gooddata/sdk-ui-kit";
 
 /**
  * It represents a list of Attribute filter elements.
@@ -124,4 +123,39 @@ export interface IAttributeFilterElementsSelectProps {
  *
  * @beta
  */
-export type IAttributeFilterElementsSelectItemProps = IInvertableSelectRenderItemProps<IAttributeElement>;
+export interface IAttributeFilterElementsSelectItemProps {
+    /**
+     * Item of list
+     *
+     * @beta
+     */
+    item: IAttributeElement;
+
+    /**
+     * Indicate that item is selected
+     *
+     * @beta
+     */
+    isSelected: boolean;
+
+    /**
+     * Add item to selection callback
+     *
+     * @beta
+     */
+    onSelect: () => void;
+
+    /**
+     * Remove item from selection
+     *
+     * @beta
+     */
+    onDeselect: () => void;
+
+    /**
+     * Select item only
+     *
+     * @beta
+     */
+    onSelectOnly: () => void;
+}
