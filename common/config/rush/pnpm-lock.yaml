@@ -8971,12 +8971,62 @@ packages:
     resolution: {integrity: sha512-NJGVKPS81XejHcLhaLJS7plab0fK3slPh11mESeeDq2W4ZI5kUKK/LRRdVDvjJseojbPB7ZwjnyOybg3Igea/A==}
     dev: false
 
-  /cypress-real-events/1.7.0_cypress@9.7.0:
+  /cypress-real-events/1.7.0_cypress@10.10.0:
     resolution: {integrity: sha512-iyXp07j0V9sG3YClVDcvHN2DAQDgr+EjTID82uWDw6OZBlU3pXEBqTMNYqroz3bxlb0k+F74U81aZwzMNaKyew==}
     peerDependencies:
       cypress: ^4.x || ^5.x || ^6.x || ^7.x || ^8.x || ^9.x
     dependencies:
-      cypress: 9.7.0
+      cypress: 10.10.0
+    dev: false
+
+  /cypress/10.10.0:
+    resolution: {integrity: sha512-bU8r44x1NIYAUNNXt3CwJpLOVth7HUv2hUhYCxZmgZ1IugowDvuHNpevnoZRQx1KKOEisLvIJW+Xen5Pjn41pg==}
+    engines: {node: '>=12.0.0'}
+    hasBin: true
+    requiresBuild: true
+    dependencies:
+      '@cypress/request': 2.88.10
+      '@cypress/xvfb': 1.2.4
+      '@types/node': 14.18.12
+      '@types/sinonjs__fake-timers': 8.1.1
+      '@types/sizzle': 2.3.3
+      arch: 2.2.0
+      blob-util: 2.0.2
+      bluebird: 3.7.2
+      buffer: 5.7.1
+      cachedir: 2.3.0
+      chalk: 4.1.2
+      check-more-types: 2.24.0
+      cli-cursor: 3.1.0
+      cli-table3: 0.6.1
+      commander: 5.1.0
+      common-tags: 1.8.2
+      dayjs: 1.11.0
+      debug: 4.3.4_supports-color@8.1.1
+      enquirer: 2.3.6
+      eventemitter2: 6.4.7
+      execa: 4.1.0
+      executable: 4.1.1
+      extract-zip: 2.0.1_supports-color@8.1.1
+      figures: 3.2.0
+      fs-extra: 9.1.0
+      getos: 3.2.1
+      is-ci: 3.0.1
+      is-installed-globally: 0.4.0
+      lazy-ass: 1.6.0
+      listr2: 3.14.0_enquirer@2.3.6
+      lodash: 4.17.21
+      log-symbols: 4.1.0
+      minimist: 1.2.6
+      ospath: 1.2.2
+      pretty-bytes: 5.6.0
+      proxy-from-env: 1.0.0
+      request-progress: 3.0.0
+      semver: 7.3.6
+      supports-color: 8.1.1
+      tmp: 0.2.1
+      untildify: 4.0.0
+      yauzl: 2.10.0
     dev: false
 
   /cypress/9.7.0:
@@ -9004,7 +9054,7 @@ packages:
       dayjs: 1.11.0
       debug: 4.3.4_supports-color@8.1.1
       enquirer: 2.3.6
-      eventemitter2: 6.4.5
+      eventemitter2: 6.4.7
       execa: 4.1.0
       executable: 4.1.1
       extract-zip: 2.0.1_supports-color@8.1.1
@@ -10378,8 +10428,8 @@ packages:
     engines: {node: '>= 0.6'}
     dev: false
 
-  /eventemitter2/6.4.5:
-    resolution: {integrity: sha512-bXE7Dyc1i6oQElDG0jMRZJrRAn9QR2xyyFGmBdZleNmyQX0FqGYmhZIrIrpPfm/w//LTo4tVQGOGQcGCb5q9uw==}
+  /eventemitter2/6.4.7:
+    resolution: {integrity: sha512-tYUSVOGeQPKt/eC1ABfhHy5Xd96N3oIijJvN3O9+TsC28T5V9yX9oEfEK5faP0EFSNVOG97qtAS68GBrQB2hDg==}
     dev: false
 
   /eventemitter3/4.0.7:
@@ -24023,7 +24073,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-tests-e2e.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-Lc+jAnKFEjM5dnagtPt5pI9nv1AKvktXsGdOKWnjrrY/AZUr/5crtetrnGpeFWssvoFOHk9oN36+ZCArx2lO+g==, tarball: file:projects/sdk-ui-tests-e2e.tgz}
+    resolution: {integrity: sha512-jVwkfwKTqcp9jsU7tJ0RChljcrhbQb2pst+ykgKSGnno88agyWbdkTbb+cy6g/QivXeYGU0GvyTSOP087erNwg==, tarball: file:projects/sdk-ui-tests-e2e.tgz}
     id: file:projects/sdk-ui-tests-e2e.tgz
     name: '@rush-temp/sdk-ui-tests-e2e'
     version: 0.0.0
@@ -24061,8 +24111,8 @@ packages:
       clean-webpack-plugin: 4.0.0_webpack@5.72.0
       compression-webpack-plugin: 7.1.2_webpack@5.72.0
       css-loader: 6.7.1_webpack@5.72.0
-      cypress: 9.7.0
-      cypress-real-events: 1.7.0_cypress@9.7.0
+      cypress: 10.10.0
+      cypress-real-events: 1.7.0_cypress@10.10.0
       dependency-cruiser: 10.9.0
       dotenv: 10.0.0
       dotenv-webpack: 7.1.0_webpack@5.72.0
