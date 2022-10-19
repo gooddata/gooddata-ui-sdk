@@ -240,7 +240,7 @@ class DialogExamples extends PureComponent {
                         this.setState({ dialogOpen: !this.state.dialogOpen });
                     }}
                 />
-                {this.state.dialogOpen && this.renderDialogContent()}
+                {this.state.dialogOpen ? this.renderDialogContent() : null}
             </div>
         );
     }
@@ -255,7 +255,7 @@ class DialogExamples extends PureComponent {
                         this.setState({ confirmDialogOpen: !this.state.confirmDialogOpen });
                     }}
                 />
-                {this.state.confirmDialogOpen && this.renderConfirmDialogContent()}
+                {this.state.confirmDialogOpen ? this.renderConfirmDialogContent() : null}
             </div>
         );
     }
@@ -273,8 +273,9 @@ class DialogExamples extends PureComponent {
                         });
                     }}
                 />
-                {this.state.confirmDialogWithNoSubmitButtonOpen &&
-                    this.renderConfirmDialogWithNoSubmitButtonContent()}
+                {this.state.confirmDialogWithNoSubmitButtonOpen
+                    ? this.renderConfirmDialogWithNoSubmitButtonContent()
+                    : null}
             </div>
         );
     }
@@ -291,7 +292,9 @@ class DialogExamples extends PureComponent {
                         });
                     }}
                 />
-                {this.state.confirmDialogWithProgress && this.renderConfirmDialogWithProgressIndicator()}
+                {this.state.confirmDialogWithProgress
+                    ? this.renderConfirmDialogWithProgressIndicator()
+                    : null}
             </div>
         );
     }
@@ -308,7 +311,9 @@ class DialogExamples extends PureComponent {
                         });
                     }}
                 />
-                {this.state.confirmDialogWithWarningOpen && this.renderConfirmDialogWithWarningContent()}
+                {this.state.confirmDialogWithWarningOpen
+                    ? this.renderConfirmDialogWithWarningContent()
+                    : null}
             </div>
         );
     }
@@ -323,7 +328,7 @@ class DialogExamples extends PureComponent {
                         this.setState({ exportDialogOpen: !this.state.exportDialogOpen });
                     }}
                 />
-                {this.state.exportDialogOpen && this.renderExportDialogContent()}
+                {this.state.exportDialogOpen ? this.renderExportDialogContent() : null}
             </div>
         );
     }
@@ -338,7 +343,7 @@ class DialogExamples extends PureComponent {
                         this.setState({ communityDialogOpen: !this.state.communityDialogOpen });
                     }}
                 />
-                {this.state.communityDialogOpen && this.renderCommunityEditionDialogContent()}
+                {this.state.communityDialogOpen ? this.renderCommunityEditionDialogContent() : null}
             </div>
         );
     }
@@ -353,7 +358,7 @@ class DialogExamples extends PureComponent {
                         this.setState({ stylingEditorOpen: !this.state.stylingEditorOpen });
                     }}
                 />
-                {this.state.stylingEditorOpen && this.renderStylingEditorDialogContent()}
+                {this.state.stylingEditorOpen ? this.renderStylingEditorDialogContent() : null}
             </div>
         );
     }

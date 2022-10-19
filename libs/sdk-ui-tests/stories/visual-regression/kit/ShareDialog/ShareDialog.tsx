@@ -51,7 +51,7 @@ const BasicExample: React.FC = () => {
                             className="gd-button-positive s-share-dialog-button"
                             onClick={onOpen}
                         />
-                        {open && (
+                        {open ? (
                             <ShareDialogBase
                                 currentUserRef={uriRef("ref")}
                                 sharedObject={{
@@ -67,7 +67,7 @@ const BasicExample: React.FC = () => {
                                 onSubmit={onSubmit}
                                 onError={onCancel}
                             />
-                        )}
+                        ) : null}
                     </div>
                 </ComponentLabelsProvider>
             </WorkspaceProvider>
