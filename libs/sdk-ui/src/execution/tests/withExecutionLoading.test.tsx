@@ -31,9 +31,9 @@ const renderEnhancedComponent = (
                 <button className="Refetch" onClick={reload}>
                     Refetch
                 </button>
-                {isLoading && <div className="Loading"> Loading </div>}
-                {result && <div className="Result"> Result </div>}
-                {error && <div className="Error"> {error.message} </div>}
+                {isLoading ? <div className="Loading"> Loading </div> : null}
+                {result ? <div className="Result"> Result </div> : null}
+                {error ? <div className="Error"> {error.message} </div> : null}
             </div>
         );
     };
