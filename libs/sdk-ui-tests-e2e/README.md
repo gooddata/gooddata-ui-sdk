@@ -35,3 +35,10 @@ To log in to the scenario app, visit `http://localhost:9500/gdc/account/login`
     -   screenshots in `cypress/screenshots`
     -   videos in `cypress/videos`
     -   if you are running tests in record mode, then you can see all calls logged in `recording/mappings`
+
+### Running things on Apple Silicon
+
+Currently, our ECR images do not support ARM64 tags, so to run Docker things in this repo locally, search for
+`020413372491.dkr.ecr.us-east-1.amazonaws.com/3rdparty/` in this folder and remove it.
+This will make your docker use upstream images that do support ARM64 and thus your Mac will run them natively.
+Do not commit this change!
