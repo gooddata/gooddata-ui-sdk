@@ -33,6 +33,9 @@ import {
     PlatformUsage,
     DeclarativeWorkspaceDataFilters,
     DataSourceParameter,
+    JsonApiCustomApplicationSettingOutWithLinks,
+    JsonApiCustomApplicationSettingOutWithLinksTypeEnum,
+    JsonApiCustomApplicationSettingInDocument,
 } from "@gooddata/api-client-tiger";
 import { convertApiError } from "../utils/errorHandling";
 import uniq from "lodash/uniq";
@@ -205,6 +208,16 @@ export interface IInvitationUserResponse {
 /**
  * @internal
  */
+export interface WorkspaceCustomApplicationSettingInfo {
+    id: string;
+    type: JsonApiCustomApplicationSettingOutWithLinksTypeEnum;
+    applicationName: string;
+    content: object;
+}
+
+/**
+ * @internal
+ */
 export type OrganizationPermission = JsonApiOrganizationOutMetaPermissionsEnum;
 
 /**
@@ -328,6 +341,13 @@ export type TigerSpecificFunctions = {
     ) => Promise<IInvitationUserResponse>;
     getWorkspaceDataFiltersLayout?: () => Promise<WorkspaceDataFiltersLayout>;
     setWorkspaceDataFiltersLayout?: (workspaceDataFiltersLayout: WorkspaceDataFiltersLayout) => Promise<void>;
+    getAllWorkspaceCustomApplicationSettings?: (
+        workspaceId: string,
+    ) => Promise<WorkspaceCustomApplicationSettingInfo[]>;
+    setWorkspaceCustomApplicationSetting?: (
+        workspaceId: string,
+        data: JsonApiCustomApplicationSettingInDocument,
+    ) => Promise<WorkspaceCustomApplicationSettingInfo>;
 };
 
 const getDataSourceErrorMessage = (error: unknown) => {
@@ -386,6 +406,18 @@ const dataSourceIdentifierOutDocumentAsDataSourceConnectionInfo = (
         username: undefined,
         url: undefined,
         permissions: meta?.permissions ?? [],
+    };
+};
+
+const customApplicationSettingOutWithLinksAsWorkspaceCustomApplicationSettingInfo = (
+    response: JsonApiCustomApplicationSettingOutWithLinks,
+): WorkspaceCustomApplicationSettingInfo => {
+    const { id, type, attributes } = response;
+    return {
+        id,
+        type,
+        applicationName: attributes.applicationName,
+        content: attributes.content,
     };
 };
 
@@ -1048,6 +1080,32 @@ export const buildTigerSpecificFunctions = (
             await sdk.declarativeLayout.setWorkspaceDataFiltersLayout({
                 declarativeWorkspaceDataFilters: workspaceDataFiltersLayout,
             });
+        });
+    },
+
+    getAllWorkspaceCustomApplicationSettings: async (workspaceId: string) => {
+        return await authApiCall(async (sdk) => {
+            const result = await sdk.entities.getAllEntitiesCustomApplicationSettings({
+                workspaceId,
+            });
+            return result.data.data.map((setting) =>
+                customApplicationSettingOutWithLinksAsWorkspaceCustomApplicationSettingInfo(setting),
+            );
+        });
+    },
+
+    setWorkspaceCustomApplicationSetting: async (
+        workspaceId: string,
+        data: JsonApiCustomApplicationSettingInDocument,
+    ) => {
+        return await authApiCall(async (sdk) => {
+            const result = await sdk.entities.createEntityCustomApplicationSettings({
+                workspaceId,
+                jsonApiCustomApplicationSettingInDocument: data,
+            });
+            return customApplicationSettingOutWithLinksAsWorkspaceCustomApplicationSettingInfo(
+                result.data.data,
+            );
         });
     },
 });

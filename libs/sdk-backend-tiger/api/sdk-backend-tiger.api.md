@@ -25,6 +25,8 @@ import { IAuthenticatedPrincipal } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationContext } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationProvider } from '@gooddata/sdk-backend-spi';
 import { ITigerClient } from '@gooddata/api-client-tiger';
+import { JsonApiCustomApplicationSettingInDocument } from '@gooddata/api-client-tiger';
+import { JsonApiCustomApplicationSettingOutWithLinksTypeEnum } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInAttributesTypeEnum } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInDocument } from '@gooddata/api-client-tiger';
 import { JsonApiOrganizationOutMetaPermissionsEnum } from '@gooddata/api-client-tiger';
@@ -335,6 +337,8 @@ export type TigerSpecificFunctions = {
     inviteUser?: (requestParameters: ActionsApiProcessInvitationRequest, options?: AxiosRequestConfig) => Promise<IInvitationUserResponse>;
     getWorkspaceDataFiltersLayout?: () => Promise<WorkspaceDataFiltersLayout>;
     setWorkspaceDataFiltersLayout?: (workspaceDataFiltersLayout: WorkspaceDataFiltersLayout) => Promise<void>;
+    getAllWorkspaceCustomApplicationSettings?: (workspaceId: string) => Promise<WorkspaceCustomApplicationSettingInfo[]>;
+    setWorkspaceCustomApplicationSetting?: (workspaceId: string, data: JsonApiCustomApplicationSettingInDocument) => Promise<WorkspaceCustomApplicationSettingInfo>;
 };
 
 // @public
@@ -346,6 +350,18 @@ export class TigerTokenAuthProvider extends TigerAuthProviderBase {
     initializeClient(client: ITigerClient): void;
     // (undocumented)
     onNotAuthenticated: (context: IAuthenticationContext, error: NotAuthenticated) => void;
+}
+
+// @internal (undocumented)
+export interface WorkspaceCustomApplicationSettingInfo {
+    // (undocumented)
+    applicationName: string;
+    // (undocumented)
+    content: object;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    type: JsonApiCustomApplicationSettingOutWithLinksTypeEnum;
 }
 
 // @internal (undocumented)
