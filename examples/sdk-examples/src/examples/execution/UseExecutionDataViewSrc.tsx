@@ -42,7 +42,7 @@ const UseExecutionDataViewExample: React.FC = () => {
 
     return (
         <div>
-            {status === "error" && (
+            {status === "error" ? (
                 <div>
                     {retryButton}
                     <div className="gd-message error">
@@ -53,16 +53,16 @@ const UseExecutionDataViewExample: React.FC = () => {
                         description={JSON.stringify(error, null, 2)}
                     />
                 </div>
-            )}
-            {status === "loading" && (
+            ) : null}
+            {status === "loading" ? (
                 <div>
                     <div className="gd-message progress">
                         <div className="gd-message-text">Loading…</div>
                     </div>
                     <LoadingComponent />
                 </div>
-            )}
-            {status === "success" && (
+            ) : null}
+            {status === "success" ? (
                 <div>
                     <style jsx>
                         {`
@@ -80,7 +80,7 @@ const UseExecutionDataViewExample: React.FC = () => {
                     {retryButton}
                     <p className="kpi s-execute-kpi">{measureSeries?.dataPoints()[0].formattedValue()}</p>
                 </div>
-            )}
+            ) : null}
         </div>
     );
 };

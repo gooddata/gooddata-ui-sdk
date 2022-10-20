@@ -1,5 +1,5 @@
 // (C) 2007-2022 GoodData Corporation
-import React, { Component } from "react";
+import React from "react";
 import { GeoPushpinChart } from "@gooddata/sdk-ui-geo";
 
 import "@gooddata/sdk-ui-geo/styles/css/main.css";
@@ -7,45 +7,43 @@ import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import { MAPBOX_TOKEN } from "../../constants/fixtures";
 import { locationAttribute, sizeMeasure, colorMeasure } from "../../md/geoModel";
 
-export class GeoPushpinChartWithColorLegendExample extends Component {
-    public render() {
-        return (
-            <div style={{ height: "500px", position: "relative" }} className="s-geo-pushpin-chart-color">
-                <GeoPushpinChart
-                    location={locationAttribute}
-                    size={sizeMeasure}
-                    color={colorMeasure}
-                    config={{
-                        mapboxToken: MAPBOX_TOKEN,
-                    }}
-                    onZoomChanged={this.onZoomChanged}
-                    onCenterPositionChanged={this.onCenterPositionChanged}
-                    onLoadingChanged={this.onLoadingChanged}
-                    onError={this.onError}
-                />
-            </div>
-        );
-    }
-
-    private onLoadingChanged(...params: any[]) {
+export const GeoPushpinChartWithColorLegendExample: React.FC = () => {
+    const onLoadingChanged = (...params: any[]) => {
         // eslint-disable-next-line no-console
         return console.log("GeoPushpinChartWithColorLegendExample onLoadingChanged", ...params);
-    }
+    };
 
-    private onError(...params: any[]) {
+    const onError = (...params: any[]) => {
         // eslint-disable-next-line no-console
         return console.log("GeoPushpinChartWithColorLegendExample onError", ...params);
-    }
+    };
 
-    private onZoomChanged(...params: any[]) {
+    const onZoomChanged = (...params: any[]) => {
         // eslint-disable-next-line no-console
         return console.log("GeoPushpinChartWithColorLegendExample onZoomChanged", ...params);
-    }
+    };
 
-    private onCenterPositionChanged(...params: any[]) {
+    const onCenterPositionChanged = (...params: any[]) => {
         // eslint-disable-next-line no-console
         return console.log("GeoPushpinChartWithColorLegendExample onCenterPositionChanged", ...params);
-    }
-}
+    };
+
+    return (
+        <div style={{ height: "500px", position: "relative" }} className="s-geo-pushpin-chart-color">
+            <GeoPushpinChart
+                location={locationAttribute}
+                size={sizeMeasure}
+                color={colorMeasure}
+                config={{
+                    mapboxToken: MAPBOX_TOKEN,
+                }}
+                onZoomChanged={onZoomChanged}
+                onCenterPositionChanged={onCenterPositionChanged}
+                onLoadingChanged={onLoadingChanged}
+                onError={onError}
+            />
+        </div>
+    );
+};
 
 export default GeoPushpinChartWithColorLegendExample;

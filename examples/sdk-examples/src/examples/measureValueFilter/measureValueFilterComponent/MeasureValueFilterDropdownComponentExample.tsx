@@ -1,5 +1,5 @@
 // (C) 2007-2022 GoodData Corporation
-import React from "react";
+import React, { useState } from "react";
 import classNames from "classnames";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { MeasureValueFilterDropdown } from "@gooddata/sdk-ui-filters";
@@ -42,61 +42,49 @@ const DropdownButton = ({ isActive, measureTitle, onClick }: IMeasureValueFilter
     );
 };
 
-interface IMeasureValueFilterComponentExampleState {
-    displayDropdown: any;
-    filters: IMeasureValueFilter[];
-}
+export const MeasureValueFilterComponentExample: React.FC = () => {
+    const [displayDropdown, setDisplayDropdown] = useState<boolean>(false);
+    const [filters, setFilters] = useState<IMeasureValueFilter[]>([]);
 
-export class MeasureValueFilterComponentExample extends React.PureComponent<
-    unknown,
-    IMeasureValueFilterComponentExampleState
-> {
-    public state = {
-        displayDropdown: false,
-        filters: [],
-    };
-    public ref = React.createRef<HTMLDivElement>();
+    const ref = React.createRef<HTMLDivElement>();
 
-    public onApply = (filter: IMeasureValueFilter): void => {
-        this.setState({ filters: [filter ?? defaultFilter], displayDropdown: false });
+    const onApply = (filter: IMeasureValueFilter): void => {
+        setFilters([filter ?? defaultFilter]);
+        setDisplayDropdown(false);
     };
 
-    public onCancel = (): void => {
-        this.setState({ displayDropdown: false });
+    const onCancel = (): void => {
+        setDisplayDropdown(false);
     };
 
-    public toggleDropdown = (): void => {
-        this.setState((state) => ({ ...state, displayDropdown: !state.displayDropdown }));
+    const toggleDropdown = (): void => {
+        setDisplayDropdown((current) => !current);
     };
 
-    public render() {
-        const { filters, displayDropdown } = this.state;
-
-        return (
-            <React.Fragment>
-                <div ref={this.ref}>
-                    <DropdownButton
-                        onClick={this.toggleDropdown}
-                        isActive={displayDropdown}
-                        measureTitle="Custom button"
-                    />
-                </div>
-                {displayDropdown ? (
-                    <MeasureValueFilterDropdown
-                        onApply={this.onApply}
-                        onCancel={this.onCancel}
-                        filter={filters[0]}
-                        anchorEl={this.ref.current!}
-                        measureIdentifier={measureLocalId(FranchisedSales)}
-                    />
-                ) : null}
-                <hr className="separator" />
-                <div style={{ height: 300 }} className="s-pivot-table">
-                    <PivotTable measures={measures} rows={attributes} filters={filters} />
-                </div>
-            </React.Fragment>
-        );
-    }
-}
+    return (
+        <React.Fragment>
+            <div ref={ref}>
+                <DropdownButton
+                    onClick={toggleDropdown}
+                    isActive={displayDropdown}
+                    measureTitle="Custom button"
+                />
+            </div>
+            {displayDropdown ? (
+                <MeasureValueFilterDropdown
+                    onApply={onApply}
+                    onCancel={onCancel}
+                    filter={filters[0]}
+                    anchorEl={ref.current!}
+                    measureIdentifier={measureLocalId(FranchisedSales)}
+                />
+            ) : null}
+            <hr className="separator" />
+            <div style={{ height: 300 }} className="s-pivot-table">
+                <PivotTable measures={measures} rows={attributes} filters={filters} />
+            </div>
+        </React.Fragment>
+    );
+};
 
 export default MeasureValueFilterComponentExample;

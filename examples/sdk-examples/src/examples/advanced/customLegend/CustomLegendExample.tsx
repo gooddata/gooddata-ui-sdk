@@ -42,7 +42,7 @@ export const CustomLegendExample: React.FC = () => {
 
     return (
         <div>
-            {legendItems.length > 0 && (
+            {legendItems.length > 0 ? (
                 <div className="s-custom-legend">
                     {legendItems.map(({ color, name, onClick }, idx) => {
                         return (
@@ -62,7 +62,7 @@ export const CustomLegendExample: React.FC = () => {
                         );
                     })}
                 </div>
-            )}
+            ) : null}
             <div style={style} className="s-pie-chart">
                 <PieChart measures={measures} config={chartConfig} onLegendReady={onLegendReady} />
             </div>

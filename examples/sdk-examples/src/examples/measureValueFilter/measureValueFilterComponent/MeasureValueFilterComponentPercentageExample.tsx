@@ -1,5 +1,5 @@
 // (C) 2007-2022 GoodData Corporation
-import React from "react";
+import React, { useState } from "react";
 
 import { MeasureValueFilter } from "@gooddata/sdk-ui-filters";
 import { IMeasureValueFilter, measureLocalId, modifyMeasure } from "@gooddata/sdk-model";
@@ -22,34 +22,28 @@ const defaultFilter = {
     },
 };
 
-export class MeasureValueFilterComponentPercentageExample extends React.PureComponent {
-    public state = {
-        filters: [],
+export const MeasureValueFilterComponentPercentageExample: React.FC = () => {
+    const [filters, setFilters] = useState<IMeasureValueFilter[]>([]);
+
+    const onApply = (filter: IMeasureValueFilter): void => {
+        setFilters([filter ?? defaultFilter]);
     };
 
-    public onApply = (filter: IMeasureValueFilter): void => {
-        this.setState({ filters: [filter ?? defaultFilter] });
-    };
-
-    public render() {
-        const { filters } = this.state;
-
-        return (
-            <React.Fragment>
-                <MeasureValueFilter
-                    onApply={this.onApply}
-                    filter={filters[0]}
-                    buttonTitle={measureTitle}
-                    usePercentage
-                    measureIdentifier={measureLocalId(FranchisedSalesAsPercent)}
-                />
-                <hr className="separator" />
-                <div style={{ height: 300 }} className="s-pivot-table">
-                    <PivotTable measures={measures} rows={attributes} filters={filters} />
-                </div>
-            </React.Fragment>
-        );
-    }
-}
+    return (
+        <React.Fragment>
+            <MeasureValueFilter
+                onApply={onApply}
+                filter={filters[0]}
+                buttonTitle={measureTitle}
+                usePercentage
+                measureIdentifier={measureLocalId(FranchisedSalesAsPercent)}
+            />
+            <hr className="separator" />
+            <div style={{ height: 300 }} className="s-pivot-table">
+                <PivotTable measures={measures} rows={attributes} filters={filters} />
+            </div>
+        </React.Fragment>
+    );
+};
 
 export default MeasureValueFilterComponentPercentageExample;

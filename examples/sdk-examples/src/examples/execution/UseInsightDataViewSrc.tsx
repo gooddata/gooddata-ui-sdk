@@ -22,21 +22,21 @@ const UseInsightDataViewExample: React.FC = () => {
             </div>
             <div>
                 <h3>The same insight, rendered with custom table:</h3>
-                {status === "error" && (
+                {status === "error" ? (
                     <ErrorComponent
                         message="There was an error getting your execution"
                         description={JSON.stringify(error, null, 2)}
                     />
-                )}
-                {status === "loading" && (
+                ) : null}
+                {status === "loading" ? (
                     <div>
                         <div className="gd-message progress">
                             <div className="gd-message-text">Loading…</div>
                         </div>
                         <LoadingComponent />
                     </div>
-                )}
-                {status === "success" && (
+                ) : null}
+                {status === "success" ? (
                     <table style={style}>
                         <tbody>
                             <tr>
@@ -76,7 +76,7 @@ const UseInsightDataViewExample: React.FC = () => {
                             })}
                         </tbody>
                     </table>
-                )}
+                ) : null}
             </div>
         </div>
     );

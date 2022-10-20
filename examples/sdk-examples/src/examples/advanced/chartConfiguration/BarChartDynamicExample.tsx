@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { useState } from "react";
 import { BarChart, IChartConfig } from "@gooddata/sdk-ui-charts";
 import { modifyMeasure } from "@gooddata/sdk-model";
@@ -69,28 +69,26 @@ export const BarChartDynamicExample: React.FC = () => {
         });
 
     return (
-        <div>
-            <div className="s-bar-chart">
-                <button className="s-change-palette" onClick={onPaletteChange}>
-                    Change palette
-                </button>
+        <div className="s-bar-chart">
+            <button className="s-change-palette" onClick={onPaletteChange}>
+                Change palette
+            </button>
 
-                <button className="s-change-legend" onClick={onLegendChange}>
-                    Change legend
-                </button>
+            <button className="s-change-legend" onClick={onLegendChange}>
+                Change legend
+            </button>
 
-                <button className="s-change-separator" onClick={onSeparatorChange}>
-                    Change separator
-                </button>
+            <button className="s-change-separator" onClick={onSeparatorChange}>
+                Change separator
+            </button>
 
-                <div style={style}>
-                    <BarChart
-                        measures={[TotalSales]}
-                        viewBy={Md.LocationResort}
-                        stackBy={Md.MenuCategory}
-                        config={config}
-                    />
-                </div>
+            <div style={style}>
+                <BarChart
+                    measures={[TotalSales]}
+                    viewBy={Md.LocationResort}
+                    stackBy={Md.MenuCategory}
+                    config={config}
+                />
             </div>
         </div>
     );
