@@ -2101,17 +2101,12 @@ export interface IInvertableSelectRenderErrorProps {
     height?: number;
 }
 
-// @internal (undocumented)
+// @internal
 export interface IInvertableSelectRenderItemProps<T> {
-    // (undocumented)
     isSelected: boolean;
-    // (undocumented)
     item: T;
-    // (undocumented)
     onDeselect: () => void;
-    // (undocumented)
     onSelect: () => void;
-    // (undocumented)
     onSelectOnly: () => void;
 }
 

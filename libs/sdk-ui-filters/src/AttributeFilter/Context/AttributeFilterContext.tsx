@@ -2,11 +2,13 @@
 import React, { useContext } from "react";
 import { IAttributeFilterCoreProps } from "../types";
 import { useAttributeFilterController } from "../hooks/useAttributeFilterController";
+import { AttributeFilterController } from "../hooks/types";
 
 /**
- * @alpha
+ * The return type of {@link useAttributeFilterContext}.
+ * @beta
  */
-export type IAttributeFilterContext = ReturnType<typeof useAttributeFilterController> &
+export type IAttributeFilterContext = AttributeFilterController &
     Pick<IAttributeFilterCoreProps, "fullscreenOnMobile" | "title">;
 
 export const AttributeFilterContext = React.createContext<IAttributeFilterContext>(null);
@@ -14,7 +16,8 @@ export const AttributeFilterContext = React.createContext<IAttributeFilterContex
 AttributeFilterContext.displayName = "AttributeFilterContext";
 
 /**
- * @alpha
+ * Context providing AttributeFilter state and callbacks wrapped as {@link AttributeFilterController}.
+ * @beta
  */
 export const useAttributeFilterContext = (): IAttributeFilterContext => useContext(AttributeFilterContext);
 

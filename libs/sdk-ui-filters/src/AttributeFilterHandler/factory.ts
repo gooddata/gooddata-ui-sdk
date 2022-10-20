@@ -12,7 +12,7 @@ import {
 /**
  * Common options for initialization of the {@link IAttributeFilterHandler}.
  *
- * @alpha
+ * @public
  */
 export interface IAttributeFilterHandlerOptionsBase {
     /**
@@ -52,7 +52,7 @@ export interface IAttributeFilterHandlerOptionsBase {
 /**
  * Options for initialization of the {@link IAttributeFilterHandler} with single selection.
  *
- * @alpha
+ * @public
  */
 export interface ISingleSelectAttributeFilterHandlerOptions extends IAttributeFilterHandlerOptionsBase {
     selectionMode: "single";
@@ -61,7 +61,7 @@ export interface ISingleSelectAttributeFilterHandlerOptions extends IAttributeFi
 /**
  * Options for initialization of the {@link IAttributeFilterHandler} with multi selection.
  *
- * @alpha
+ * @public
  */
 export interface IMultiSelectAttributeFilterHandlerOptions extends IAttributeFilterHandlerOptionsBase {
     selectionMode: "multi";
@@ -70,14 +70,14 @@ export interface IMultiSelectAttributeFilterHandlerOptions extends IAttributeFil
 /**
  * Options for initialization of the {@link IAttributeFilterHandler}.
  *
- * @alpha
+ * @public
  */
 export type IAttributeFilterHandlerOptions =
     | ISingleSelectAttributeFilterHandlerOptions
     | IMultiSelectAttributeFilterHandlerOptions;
 
 /**
- * @alpha
+ * @public
  */
 export function newAttributeFilterHandler(
     backend: IAnalyticalBackend,
@@ -86,7 +86,7 @@ export function newAttributeFilterHandler(
     options: ISingleSelectAttributeFilterHandlerOptions,
 ): ISingleSelectAttributeFilterHandler;
 /**
- * @alpha
+ * @public
  */
 export function newAttributeFilterHandler(
     backend: IAnalyticalBackend,
@@ -95,7 +95,7 @@ export function newAttributeFilterHandler(
     options: IMultiSelectAttributeFilterHandlerOptions,
 ): IMultiSelectAttributeFilterHandler;
 /**
- * @alpha
+ * @public
  */
 export function newAttributeFilterHandler(
     backend: IAnalyticalBackend,

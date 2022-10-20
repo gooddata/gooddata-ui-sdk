@@ -18,7 +18,6 @@ import { ParentFilter } from "../examples/advanced/parentFilter";
 import { ChartConfiguration } from "../examples/advanced/chartConfiguration";
 import { Responsive } from "../examples/advanced/responsive";
 import { Export } from "../examples/export";
-import { AttributeFilter } from "../examples/attributeFilter";
 import { RankingFilter } from "../examples/rankingFilter";
 
 import { MeasureValueFilter } from "../examples/measureValueFilter/measureValueFilterByValue";
@@ -42,6 +41,10 @@ import RawExecuteComponent from "../examples/execution/RawExecute";
 import ExecuteInsightComponent from "../examples/execution/ExecuteInsight";
 import UseExecutionDataView from "../examples/execution/UseExecutionDataView";
 import UseInsightDataView from "../examples/execution/UseInsightDataView";
+
+import AttributeFilter from "../examples/attributeFilter/attributeFilter";
+import AttributeFilterButton from "../examples/attributeFilter/attributeFilterButton";
+import CustomAttributeFilter from "../examples/attributeFilter/customAttributeFilter";
 
 import SingleValuePlaceholders from "../examples/placeholders/SingleValuePlaceholder";
 import MultiValuePlaceholders from "../examples/placeholders/MultiValuePlaceholder";
@@ -138,6 +141,25 @@ export const executeUseCasesRoutes = [
     },
 ];
 
+export const attributeFilterUseCasesRoutes = [
+    {
+        path: "/attribute-filter-components/attribute-filter",
+        title: "AttributeFilter",
+        Component: AttributeFilter,
+    },
+    {
+        path: "/attribute-filter-components/attribute-filter-button",
+        title: "AttributeFilterButton",
+        Component: AttributeFilterButton,
+    },
+
+    {
+        path: "/attribute-filter-components/customizations",
+        title: "Custom Attribute Filters",
+        Component: CustomAttributeFilter,
+    },
+];
+
 export const drillingUseCasesRoutes = [
     {
         path: "/drilling/drill-with-external-data",
@@ -196,6 +218,10 @@ const ExecuteUseCasesRoutes = (props: any): JSX.Element =>
     WithSubRoutes({ ...props, subRoutes: executeUseCasesRoutes });
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const AttributeFilterUseCasesRoutes = (props: any): JSX.Element =>
+    WithSubRoutes({ ...props, subRoutes: attributeFilterUseCasesRoutes });
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const AdvancedUseCasesRoutes = (props: any): JSX.Element =>
     WithSubRoutes({ ...props, subRoutes: advancedUseCasesRoutes });
 
@@ -251,8 +277,10 @@ export const sideNavigationRoutes: RouteDefinition[] = [
     },
     {
         path: "/attribute-filter-components",
+        pathMatch: "full",
+        redirectTo: executeUseCasesRoutes[0].path,
         title: "Attribute Filter Components",
-        Component: AttributeFilter,
+        Component: AttributeFilterUseCasesRoutes,
     },
     {
         path: "/measure-value-filter",
@@ -325,6 +353,7 @@ export const routes = [
     ...sideNavigationRoutes,
     ...insightViewUseCasesRoutes,
     ...dashboardComponentUseCasesRoutes,
+    ...attributeFilterUseCasesRoutes,
     ...executeUseCasesRoutes,
     ...advancedUseCasesRoutes,
     ...drillingUseCasesRoutes,

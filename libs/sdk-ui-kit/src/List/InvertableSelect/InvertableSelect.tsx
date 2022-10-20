@@ -15,13 +15,34 @@ import { ErrorComponent } from "@gooddata/sdk-ui";
 import { InvertableSelectItem } from "./InvertableSelectItem";
 
 /**
+ * Properties of List item component implementation
+ *
  * @internal
  */
 export interface IInvertableSelectRenderItemProps<T> {
+    /**
+     * Item of list
+     */
     item: T;
+
+    /**
+     * Indicate that item is selected
+     */
     isSelected: boolean;
+
+    /**
+     * Add item to selection callback
+     */
     onSelect: () => void;
+
+    /**
+     * Remove item from selection
+     */
     onDeselect: () => void;
+
+    /**
+     * Select item only
+     */
     onSelectOnly: () => void;
 }
 

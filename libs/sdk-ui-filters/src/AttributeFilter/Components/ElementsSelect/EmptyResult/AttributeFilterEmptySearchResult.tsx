@@ -4,7 +4,8 @@ import { useIntl } from "react-intl";
 import { NoData } from "@gooddata/sdk-ui-kit";
 
 /**
- * @internal
+ * Component that displays empty result message
+ * @beta
  */
 export const AttributeFilterEmptySearchResult: React.VFC = () => {
     const intl = useIntl();

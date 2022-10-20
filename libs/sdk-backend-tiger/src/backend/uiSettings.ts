@@ -53,7 +53,8 @@ export const DefaultUiSettings: ISettings = {
     enableKPIDashboardDrillToURL: true,
     enableKPIDashboardImplicitDrillDown: false,
     enableKPIDashboardDrillFromAttribute: false,
-    enableDrilledInsightExport: true,
+    // TNT-1096 Temporary disable for P8.
+    enableDrilledInsightExport: false,
     enableFilterValuesResolution: false,
     enableClickableAttributeURL: true,
 
@@ -81,7 +82,8 @@ export const DefaultUiSettings: ISettings = {
     enableAdFloatingDateRangeFilter: true,
     enableReversedStacking: true,
     enableSeparateTotalLabels: true,
-    enableKPIDashboardExport: true,
+    // TNT-1096 Temporary disable for P8.
+    enableKPIDashboardExport: false,
     ["msf.enableTenantCustomModel"]: false,
     drillIntoUrlDocumentationLink:
         "https://www.gooddata.com/developers/cloud-native/doc/cloud/create-dashboards/drilling-in-dashboards/set-drill-into-hyperlink/",

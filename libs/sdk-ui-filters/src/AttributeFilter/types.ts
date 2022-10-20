@@ -174,88 +174,136 @@ export interface IAttributeFilterCoreProps {
 }
 
 /**
+ * These customization properties allow you to specify custom components that the AttributeFilter
+ * component will use for rendering different parts.
+ *
+ * @remarks
+ * IMPORTANT: while this interface is marked as public, you also need to heed the maturity annotations
+ * on each Customization properties,that are at this moment beta level.
+ *
  * @public
  */
 export interface IAttributeFilterCustomComponentProps {
     /**
      * Customize attribute filter with a component to be rendered if initialization fails.
-     * @alpha
+     *
+     * @remarks
+     * -  If not provided, the default implementation {@link AttributeFilterError} will be used.
+     * @beta
      */
     ErrorComponent?: React.ComponentType<IAttributeFilterErrorProps>;
 
     /**
      * Customize attribute filter with a component to be rendered if attribute filter is loading.
-     * @alpha
+     *
+     * @beta
      */
     LoadingComponent?: React.ComponentType;
 
     /**
      * Customize attribute filter dropdown button component.
-     * @alpha
+     *
+     * @remarks
+     * -  If not provided, the default implementation {@link AttributeFilterDropdownButton} or {@link AttributeFilterSimpleDropdownButton} will be used.
+     *
+     * @beta
      */
     DropdownButtonComponent?: React.ComponentType<IAttributeFilterDropdownButtonProps>;
 
     /**
      * Customize attribute filter dropdown body component.
-     * @alpha
+     *
+     * @remarks
+     * -  If not provided, the default implementation {@link AttributeFilterDropdownBody} will be used.
+     *
+     * @beta
      */
     DropdownBodyComponent?: React.ComponentType<IAttributeFilterDropdownBodyProps>;
 
     /**
      * Customize attribute filter dropdown actions component.
-     * @alpha
+     *
+     * @remarks
+     * -  If not provided, the default implementation {@link AttributeFilterDropdownActions} will be used.
+
+     * @beta
      */
     DropdownActionsComponent?: React.ComponentType<IAttributeFilterDropdownActionsProps>;
 
     /**
      * Customize attribute filter search bar component.
-     * @alpha
+     *
+     * @remarks
+     * -  If not provided, the default implementation {@link AttributeFilterElementsSearchBar} will be used.
+     *
+     * @beta
      */
     ElementsSearchBarComponent?: React.ComponentType<IAttributeFilterElementsSearchBarProps>;
 
     /**
      * Customize attribute filter elements select component.
-     * @alpha
+     *
+     * @remarks
+     * -  If not provided, the default implementation {@link AttributeFilterElementsSelect} will be used.
+     *
+     * @beta
      */
     ElementsSelectComponent?: React.ComponentType<IAttributeFilterElementsSelectProps>;
 
     /**
      * Customize attribute filter elements select loading component.
-     * @alpha
+     *
+     * @remarks
+     * -  If not provided, the default implementation {@link AttributeFilterElementsSelectLoading} will be used.
+     *
+     * @beta
      */
     ElementsSelectLoadingComponent?: React.ComponentType<IAttributeFilterElementsSelectLoadingProps>;
 
     /**
      * Customize attribute filter elements select item component.
-     * @alpha
+     *
+     * @remarks
+     * -  If not provided, the default implementation {@link AttributeFilterElementsSelectItem} will be used.
+     *
+     * @beta
      */
     ElementsSelectItemComponent?: React.ComponentType<IAttributeFilterElementsSelectItemProps>;
 
     /**
      * Customize attribute filter elements select action component (Select all checkbox)
-     * @alpha
+     * @remarks
+     * -  If not provided, the default implementation {@link AttributeFilterElementsActions} will be used.
+     *
+     * @beta
      */
     ElementsSelectActionsComponent?: React.ComponentType<IAttributeFilterElementsActionsProps>;
 
     /**
      * Customize attribute filter elements select error component.
-     * @alpha
+     * @remarks
+     * -  If not provided, the default implementation {@link AttributeFilterElementsSelectError} will be used.
+     * @beta
      */
     ElementsSelectErrorComponent?: React.ComponentType<IAttributeFilterElementsSelectErrorProps>;
 
     /**
      * Customize attribute filter empty result component.
-     * @alpha
+     * @remarks
+     * -  If not provided, the default implementation {@link AttributeFilterEmptyResult} will be used.
+     *
+     * @beta
      */
     EmptyResultComponent?: React.ComponentType<IAttributeFilterEmptyResultProps>;
 
     /**
      * Customize attribute filter status bar component.
-     * @alpha
+     * @remarks
+     * -  If not provided, the default implementation {@link AttributeFilterStatusBar} will be used.
+     * @beta
      */
     StatusBarComponent?: React.ComponentType<IAttributeFilterStatusBarProps>;
 
-    // Deprecated
     /**
      * Customize attribute filter with a component to be rendered if initialization fails.
      *

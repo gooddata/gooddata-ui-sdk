@@ -6,6 +6,8 @@ import { AttributeDisplayFormDropdown } from "./AttributeDisplayFormDropdown";
 import { useAttributeFilterContext } from "../../../Context/AttributeFilterContext";
 
 /**
+ * It is AttributeDisplayFormSelect
+ * It represents selector for related Attribute display forms
  * @internal
  */
 export interface IAttributeDisplayFormSelectProps {
@@ -14,6 +16,7 @@ export interface IAttributeDisplayFormSelectProps {
 }
 
 /**
+ * Component that render Attribute display forms selector as dropdown.
  * @internal
  */
 export const AttributeDisplayFormSelect: React.FC<IAttributeDisplayFormSelectProps> = (props) => {

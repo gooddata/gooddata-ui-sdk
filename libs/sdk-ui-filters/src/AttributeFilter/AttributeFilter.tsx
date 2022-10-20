@@ -15,7 +15,7 @@ export interface IAttributeFilterProps extends IAttributeFilterBaseProps {
 }
 
 /**
- * AttributeFilter is a component that renders a dropdown populated with attribute values
+ * AttributeFilter is a component that renders a simple button and a dropdown populated with attribute values
  * for specified attribute display form.
  *
  * @public

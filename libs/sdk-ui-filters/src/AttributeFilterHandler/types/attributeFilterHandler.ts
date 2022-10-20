@@ -10,7 +10,7 @@ import {
 /**
  * Invertable selection with list of the unique attribute elements keys.
  *
- * @alpha
+ * @public
  */
 export type InvertableAttributeElementSelection = InvertableSelection<AttributeElementKey>;
 
@@ -32,7 +32,7 @@ export type InvertableAttributeElementSelection = InvertableSelection<AttributeE
  *
  * - Support for hiding particular attribute elements
  *
- * @alpha
+ * @public
  */
 export interface IMultiSelectAttributeFilterHandler
     extends IAttributeFilterLoader,
@@ -56,7 +56,7 @@ export interface IMultiSelectAttributeFilterHandler
  *
  * - Support for hiding particular attribute elements
  *
- * @alpha
+ * @public
  */
 export interface ISingleSelectAttributeFilterHandler
     extends IAttributeFilterLoader,
@@ -80,7 +80,7 @@ export interface ISingleSelectAttributeFilterHandler
  *
  * - Support for hiding particular attribute elements
  *
- * @alpha
+ * @public
  */
 export type IAttributeFilterHandler =
     | IMultiSelectAttributeFilterHandler
