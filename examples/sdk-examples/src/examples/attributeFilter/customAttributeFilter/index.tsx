@@ -45,7 +45,9 @@ const CustomAttributeFilterComponents = (): JSX.Element => (
         <hr className="separator" />
 
         <h2 id="use-attribute-filter-controller">useAttributeFilterController</h2>
-        <p>The easiest way to implement your own attribute filter is a useAttributeFilterController hook.</p>
+        <p>
+            The easiest way to implement your own attribute filter is the useAttributeFilterController hook.
+        </p>
         <p>
             Advantage of this hook is that it has the same input props as the original attribute filter
             components, and it works with all the GoodData things out of the box - e.g. BackendProvider,
@@ -62,7 +64,7 @@ const CustomAttributeFilterComponents = (): JSX.Element => (
         <h2 id="use-attribute-filter-handler">useAttributeFilterHandler</h2>
         <p>
             If the useAttributeFilterController hook API is not sufficient for you, and you are looking for
-            more control and access to lower level APIs, then you can built on top of it. It gives you full
+            more control and access to lower level APIs, then you can build on top of it. It gives you full
             access to the AttributeFilterHandler API.
         </p>
         <ExampleWithSource
@@ -75,7 +77,7 @@ const CustomAttributeFilterComponents = (): JSX.Element => (
 
         <h2 id="attribute-filter-handler">AttributeFilterHandler</h2>
         <p>
-            AttributeFilterHandler comes up with a framework agnostic API, so you can integrate it with any
+            AttributeFilterHandler comes with a framework agnostic API, so you can integrate it with any
             framework, JavaScript application, or even use it in a headless environment.
         </p>
         <p>It has fully documented interfaces, so feel free to explore it and use it.</p>
