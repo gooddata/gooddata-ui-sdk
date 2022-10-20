@@ -45,10 +45,6 @@ export class Table {
     hasCellWidth(rowIndex: number, columnIndex: number, expectedWidth: number, withTolerance = false) {
         const columnWidth = this.getCell(rowIndex, columnIndex).invoke("outerWidth");
 
-        columnWidth.then((v) => {
-            cy.log(String(v));
-        });
-
         if (withTolerance) {
             columnWidth
                 .should("be.greaterThan", expectedWidth - AUTO_SIZE_TOLERANCE)
