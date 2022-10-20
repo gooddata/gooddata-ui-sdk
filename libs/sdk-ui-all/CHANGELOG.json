@@ -2,6 +2,33 @@
   "name": "@gooddata/sdk-ui-all",
   "entries": [
     {
+      "version": "8.11.0",
+      "tag": "@gooddata/sdk-ui-all_v8.11.0",
+      "date": "Thu, 20 Oct 2022 09:18:18 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Improved custom attribute filters were added. We added support for customization of the AttributeFilter and AttributeFilterButton components and new features, such as static and hidden elements."
+          },
+          {
+            "comment": "Dashboard plugins APIs to customize attribute filters were added. You can now customize the attribute filters with dashboard plugins."
+          },
+          {
+            "comment": "Core API for attribute filter components was added. These components now allow implementation of custom attribute filters."
+          },
+          {
+            "comment": "SDK SPI ability for white-labeling was added. You can enable white-labeling for your organization."
+          },
+          {
+            "comment": "Mapbox token React provider was added."
+          },
+          {
+            "comment": "The withCaching backend decorator has been made public. RecommendedCachingConfiguration from @gooddata/sdk-backend-base can be used to configure backend caching."
+          }
+        ]
+      }
+    },
+    {
       "version": "8.10.0",
       "tag": "@gooddata/sdk-ui-all_v8.10.0",
       "date": "Thu, 14 Jul 2022 08:56:22 GMT",

@@ -1,6 +1,18 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 14 Jul 2022 08:56:22 GMT and should not be manually modified.
+This log was last generated on Thu, 20 Oct 2022 09:18:18 GMT and should not be manually modified.
+
+## 8.11.0
+Thu, 20 Oct 2022 09:18:18 GMT
+
+### Updates
+
+- Improved custom attribute filters were added. We added support for customization of the AttributeFilter and AttributeFilterButton components and new features, such as static and hidden elements.
+- Dashboard plugins APIs to customize attribute filters were added. You can now customize the attribute filters with dashboard plugins.
+- Core API for attribute filter components was added. These components now allow implementation of custom attribute filters.
+- SDK SPI ability for white-labeling was added. You can enable white-labeling for your organization.
+- Mapbox token React provider was added.
+- The withCaching backend decorator has been made public. RecommendedCachingConfiguration from @gooddata/sdk-backend-base can be used to configure backend caching.
 
 ## 8.10.0
 Thu, 14 Jul 2022 08:56:22 GMT
