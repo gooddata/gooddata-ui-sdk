@@ -55,17 +55,23 @@ export abstract class CustomElementAdapter<C> extends HTMLElement {
         const link = document.createElement("link");
         link.type = "text/css";
         link.rel = "stylesheet";
+        const stylesLoadPromise = new Promise((res, rej) => {
+            link.addEventListener("load", () => res());
+            link.addEventListener("error", rej);
+        });
         const webpackWorkaround = SHADOW_STYLES;
         link.href = new URL(webpackWorkaround, import.meta.url).href;
         shadowRoot.appendChild(link);
 
         // Attach a mounting point for React
         this[MOUNT_POINT] = document.createElement("div");
-        this[MOUNT_POINT].classList.add("mount-point");
+        this[MOUNT_POINT].style.display = "flex";
+        this[MOUNT_POINT].style.flex = "1";
+        this[MOUNT_POINT].style.flexDirection = "column";
         shadowRoot.appendChild(this[MOUNT_POINT]);
 
         // Load the rest of the dependencies needed for React element rendering
-        Promise.all([this[LOAD_COMPONENT](), getContext()])
+        Promise.all([this[LOAD_COMPONENT](), getContext(), stylesLoadPromise])
             .then(([Component, context]) => {
                 this[COMPONENT] = Component;
                 this[CONTEXT] = context;
