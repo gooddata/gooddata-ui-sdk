@@ -4,16 +4,6 @@ const AUTO_SIZE_TOLERANCE = 10;
 
 export const nonEmptyValue = /\$?[0-9,.]+/;
 
-export type positionType =
-    | "topLeft"
-    | "top"
-    | "topRight"
-    | "left"
-    | "center"
-    | "right"
-    | "bottomLeft"
-    | "bottom"
-    | "bottomRight";
 export class Table {
     constructor(private parentSelector: string) {}
 
@@ -67,7 +57,8 @@ export class Table {
             columnWidth.should("equal", expectedWidth);
         }
     }
-    scrollTo(position: positionType) {
+
+    scrollTo(position: Cypress.PositionType) {
         this.getElement().find(".ag-center-cols-viewport").scrollTo(position);
     }
 
