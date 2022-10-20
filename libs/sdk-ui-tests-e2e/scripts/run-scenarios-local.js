@@ -19,7 +19,7 @@ async function main() {
         `${process.env.PWD}/nginx/nginx.conf:/etc/nginx/nginx.conf:ro`,
         "-v",
         `${process.env.PWD}/nginx/proxy-isolated-tests-local.conf:/etc/nginx/extra-conf.d/proxy-isolated-tests-local.conf:ro`,
-        "nginxinc/nginx-unprivileged:1.21.6-alpine",
+        "020413372491.dkr.ecr.us-east-1.amazonaws.com/3rdparty/nginxinc/nginx-unprivileged:1.23.1-alpine",
     ]);
 
     editorNginxProcess.stdout.on("data", (data) => {

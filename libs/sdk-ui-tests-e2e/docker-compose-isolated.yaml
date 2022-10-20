@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   isolated-tests:
-    image: cypress/included:10.10.0 # TODO RAIL-4538: use the ECR image
+    image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/3rdparty/cypress/included:10.10.0
     entrypoint: node ./scripts/run_isolated_compose.js --$MODE --filter=$FILTER
     volumes:
       - ../../:/gooddata-ui-sdk-e2e:rw
@@ -26,7 +26,7 @@ services:
       - backend-mock
 
   backend-mock:
-    image: wiremock/wiremock:2.34.0 # TODO RAIL-4538: use the ECR image
+    image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/3rdparty/wiremock/wiremock:2.34.0
     command: "--preserve-host-header --proxy-all=https://${HOST:-staging3.intgdc.com} --extensions org.gooddata.extensions.ResponseHeadersTransformer,org.gooddata.extensions.RequestHeadersTransformer"
 #    --extensions org.gooddata.extensions.ResponseHeadersTransformer,org.gooddata.extensions.RequestHeadersTransformer --verbose"
     volumes:
