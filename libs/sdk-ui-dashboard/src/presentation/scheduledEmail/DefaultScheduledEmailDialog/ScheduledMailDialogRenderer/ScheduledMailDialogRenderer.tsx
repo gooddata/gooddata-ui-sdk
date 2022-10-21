@@ -262,7 +262,8 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
          *  silently by the method identifyWorkspaceRecipients.
          */
         const selectedRecipients = schedule.to.concat(schedule.bcc || []).map((email) => {
-            if (email === schedule.createdBy?.email) {
+            // user that created the schedule can have different login and email address
+            if (email === schedule.createdBy?.email || email === schedule.createdBy?.login) {
                 return userToRecipient(schedule.createdBy);
             }
             return {
@@ -818,7 +819,7 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
         /// To: is currently only owner
         const toEmails = recipients
             .filter(isScheduleEmailExistingRecipient)
-            .map((recipient) => recipient.user.email!);
+            .map((recipient) => recipient.user.login);
 
         /// All other emails (without owner)
         const bccEmails = recipients
