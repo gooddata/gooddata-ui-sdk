@@ -12,20 +12,19 @@ describe("AttributeFilterButton with initial selection", () => {
 
     it("attribute filter loaded", () => {
         const attributeFilter = new AttributeFilterButton(".s-attribute-filter.s-opportunity");
-        attributeFilter.titleHasText("Opportunity").subtitleHasText("Zoup! Fresh Soup > CompuSci");
+        attributeFilter.titleHasText("Opportunity:").subtitleHasText("Zoup! Fresh Soup > CompuSci");
     });
 
-    // eslint-disable-next-line jest/no-disabled-tests
-    it.skip("attribute filter basic operations", () => {
+    it("attribute filter basic operations", () => {
         const attributeFilter = new AttributeFilterButton(".s-attribute-filter.s-opportunity");
 
-        attributeFilter.open().clearSelection().subtitleHasText("None").applyDisabled();
+        attributeFilter.open().selectAll().clearSelection().statusHasNone().applyDisabled();
 
         attributeFilter
             .selectElement(`.s-attribute-filter-list-item-${camelCase(".decimal > Explorer")}`)
             .selectElement(`.s-attribute-filter-list-item-${camelCase("(add)ventures > CompuSci")}`)
             .selectElement(`.s-attribute-filter-list-item-${camelCase("(mt) Media Temple > CompuSci")}`)
-            .subtitleHasText(".decimal > Explorer, (add)ventures > CompuSci, (mt) Media Temple > CompuSci");
+            .statusHasText(".decimal > Explorer, (add)ventures > CompuSci, (mt) Media Temple > CompuSci");
 
         attributeFilter.clickCancel().subtitleHasText("Zoup! Fresh Soup > CompuSci");
     });

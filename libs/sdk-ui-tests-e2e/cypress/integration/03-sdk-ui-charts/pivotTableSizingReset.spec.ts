@@ -292,8 +292,7 @@ describe("Pivot Table Sizing and Reset by double click", () => {
         });
     });
 
-    // eslint-disable-next-line jest/no-disabled-tests
-    it.skip("should reset second column with manual width by double click to auto size and notify column as manually resized via props", () => {
+    it("should reset second column with manual width by double click to auto size and notify column as manually resized via props", () => {
         const expectedCallBackArrayItemsCount = 1;
 
         const table = new Table(TABLE_SELECTOR_STR_COMPLEX);
@@ -338,8 +337,7 @@ describe("Pivot Table Sizing and Reset by double click", () => {
         });
     });
 
-    // eslint-disable-next-line jest/no-disabled-tests
-    it.skip("when auto resize is on should reset second column with manual width by double click to auto size and remove this column from manually resized via props", () => {
+    it("when auto resize is on should reset second column with manual width by double click to auto size and remove this column from manually resized via props", () => {
         const expectedCallBackArrayItemsCount = 0;
 
         const table = new Table(TABLE_SELECTOR_STR_COMPLEX);
@@ -567,7 +565,7 @@ describe("Pivot Table Sizing and Reset by double click", () => {
         });
     });
 
-    it("should reset all measaure columns and apply correctly grow to fit on them", () => {
+    it("should reset all measure columns and apply correctly grow to fit on them", () => {
         const expectedCallBackArrayItemsCount = 3;
 
         const table = new Table(TABLE_SELECTOR_STR_COMPLEX);
@@ -601,7 +599,7 @@ describe("Pivot Table Sizing and Reset by double click", () => {
         });
     });
 
-    it("should not reset all measaure columns when doubleclicked with meta key on attribute resizer", () => {
+    it("should not reset all measure columns when double clicked with meta key on attribute resizer", () => {
         const expectedCallBackArrayItemsCount = 2;
 
         const table = new Table(TABLE_SELECTOR_STR_COMPLEX);
@@ -640,7 +638,7 @@ describe("Pivot Table Sizing and Reset by double click", () => {
         });
     });
 
-    it("should not reset all measaure columns when doubleclicked with alt key on attribute resizer", () => {
+    it("should not reset all measure columns when double clicked with alt key on attribute resizer", () => {
         const expectedCallBackArrayItemsCount = 2;
 
         const table = new Table(TABLE_SELECTOR_STR_COMPLEX);

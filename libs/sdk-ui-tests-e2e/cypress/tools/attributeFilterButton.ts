@@ -33,13 +33,28 @@ export class AttributeFilterButton {
         return this;
     }
 
+    statusHasText(expectedSubtitle: string): this {
+        cy.get(".s-dropdown-attribute-selection-list").should("have.text", expectedSubtitle);
+        return this;
+    }
+
+    statusHasAll(): this {
+        cy.get(".s-list-status-bar b").should("have.text", "All");
+        return this;
+    }
+
+    statusHasNone(): this {
+        cy.get(".s-list-status-bar b").should("have.text", "None");
+        return this;
+    }
+
     clearSelection(): this {
-        cy.get(".s-clear").click();
+        cy.get(".s-select-all-checkbox").click();
         return this;
     }
 
     selectAll(): this {
-        cy.get(".s-select_all").click();
+        cy.get(".s-select-all-checkbox").click();
         return this;
     }
 
@@ -75,7 +90,7 @@ export class AttributeFilterButton {
     }
 
     searchElements(query: string): this {
-        cy.get(".s-attribute-filter-button-search-field .gd-input-field").focus().type(query);
+        cy.get(".gd-input-search .gd-input-field").focus().type(query);
         return this;
     }
 
@@ -85,14 +100,14 @@ export class AttributeFilterButton {
     }
 
     elementsCorrespondToQuery(query: string): this {
-        cy.get(".s-attribute-filter-list-item span").each((item) => {
+        cy.get(".s-attribute-filter-list-item").each((item) => {
             cy.wrap(item).should("include.text", query);
         });
         return this;
     }
 
     isAllElementsFiltered(): this {
-        cy.get(".s-list-no-results").should("exist");
+        cy.get(".gd-no-data").should("exist");
         return this;
     }
 
@@ -102,12 +117,8 @@ export class AttributeFilterButton {
     }
 
     waitFilteringFinished(): this {
-        cy.get(`${this.attributeFilterUniqueSelector}.gd-attribute-filter-button-is-filtering`).should(
-            "exist",
-        );
-        cy.get(`${this.attributeFilterUniqueSelector}.gd-attribute-filter-button-is-filtering`).should(
-            "not.exist",
-        );
+        cy.get(`${this.attributeFilterUniqueSelector}.gd-is-filtering`).should("exist");
+        cy.get(`${this.attributeFilterUniqueSelector}.gd-is-filtering`).should("not.exist");
         return this;
     }
 

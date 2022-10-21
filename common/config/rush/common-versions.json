@@ -59,6 +59,7 @@
      * This design avoids unnecessary churn in this file.
      */
     "allowedAlternativeVersions": {
+        "cypress": ["^9.7.0"] // TODO migrate plugin tests to Cypress 10 as well
         /**
          * For example, allow some projects to use an older TypeScript compiler
          * (in addition to whatever "usual" version is being used by other projects in the repo):

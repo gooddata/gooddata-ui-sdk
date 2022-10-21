@@ -8,7 +8,6 @@ const CompressionPlugin = require("compression-webpack-plugin");
 const webpack = require("webpack");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
-const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
@@ -27,10 +26,13 @@ module.exports = async (env, argv) => {
             secure: false,
             target: backendUrl,
             headers: {
-                host: backendUrl,
-                origin: null,
+                host: backendUrl.replace(/^https:\/\//, ""),
+                // This is essential for Tiger backends. To ensure 401 flies when not authenticated and using proxy
+                "X-Requested-With": "XMLHttpRequest",
             },
-            onProxyReq(proxyReq) {
+            onProxyReq: function (proxyReq, _req, _res) {
+                // changeOrigin: true does not work well for POST requests, so remove origin like this to be safe
+                proxyReq.removeHeader("origin");
                 proxyReq.setHeader("accept-encoding", "identity");
             },
         },
@@ -68,10 +70,7 @@ module.exports = async (env, argv) => {
         plugins.push(new CompressionPlugin());
     }
 
-    // flip the `disable` flag to false if you want to diagnose webpack perf
-    const smp = new SpeedMeasurePlugin({ disable: true });
-
-    return smp.wrap({
+    const commonConfig = {
         entry: ["./scenarios/src/index.tsx"],
         target: "web",
         mode: isProduction ? "production" : "development",
@@ -133,18 +132,34 @@ module.exports = async (env, argv) => {
             ],
         },
         ignoreWarnings: [/Failed to parse source map/], // some of the dependencies have invalid source maps, we do not care that much
-        devServer: {
-            static: {
-                directory: path.join(__dirname, "scenarios/build"),
-            },
-            devMiddleware: {
-                stats: "errors-only",
-            },
-            historyApiFallback: true,
-            port: 8999,
-            liveReload: true,
-            proxy,
-        },
         stats: "errors-only",
-    });
+    };
+
+    return [
+        {
+            ...commonConfig,
+            name: "default",
+        },
+        {
+            ...commonConfig,
+            name: "local-run",
+            devServer: {
+                static: {
+                    directory: path.join(__dirname, "scenarios/build"),
+                },
+                devMiddleware: {
+                    stats: "errors-only",
+                },
+                historyApiFallback: true,
+                port: 9500,
+                liveReload: true,
+                proxy,
+            },
+            output: {
+                path: path.join(__dirname, "gooddata-ui-sdk"),
+                publicPath: "/gooddata-ui-sdk",
+                filename: "[name].js",
+            },
+        },
+    ];
 };

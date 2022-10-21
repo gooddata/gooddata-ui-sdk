@@ -1,7 +1,7 @@
 {
     "mappings": [
         {
-            "id": "79e327bf-c0c6-4bff-9369-875d5064684a",
+            "id": "83261e5e-e08f-4a9e-bdb9-670c96265f3e",
             "name": "gdc_account_login",
             "request": {
                 "url": "/gdc/account/login",
@@ -9,7 +9,7 @@
             },
             "response": {
                 "status": 200,
-                "body": "{\"userLogin\":{\"profile\":\"/gdc/account/profile/fbdf74b48900320df823e94aa1eaa7e0\",\"state\":\"/gdc/account/login/fbdf74b48900320df823e94aa1eaa7e0\"}}",
+                "body": "{\"userLogin\":{\"profile\":\"/gdc/account/profile/4d3da5c4452c6948e790c2a1e3772dc3\",\"state\":\"/gdc/account/login/4d3da5c4452c6948e790c2a1e3772dc3\"}}",
                 "headers": {
                     "expires": "Thu, 01 Jan 1970 00:00:00 GMT",
                     "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
@@ -20,10 +20,10 @@
                     "pragma": "no-cache"
                 }
             },
-            "uuid": "79e327bf-c0c6-4bff-9369-875d5064684a"
+            "uuid": "83261e5e-e08f-4a9e-bdb9-670c96265f3e"
         },
         {
-            "id": "ba35c596-7525-4bae-9c9c-484b01292604",
+            "id": "767ecc8f-aed1-49ba-8d75-b1a7e88c3430",
             "name": "gdc_account_profile_current",
             "request": {
                 "url": "/gdc/account/profile/current",
@@ -35,15 +35,15 @@
                 "headers": {
                     "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
                     "vary": "origin,X-GDC-VERSION",
-                    "location": "/gdc/account/profile/fbdf74b48900320df823e94aa1eaa7e0",
+                    "location": "/gdc/account/profile/4d3da5c4452c6948e790c2a1e3772dc3",
                     "cache-control": "no-cache, no-store, must-revalidate"
                 }
             },
-            "uuid": "ba35c596-7525-4bae-9c9c-484b01292604"
+            "uuid": "767ecc8f-aed1-49ba-8d75-b1a7e88c3430"
         },
         {
-            "id": "7ad240b8-752d-4a33-b6a5-5402ca21c94a",
-            "name": "gdc_app_projects_itd99xqshb69o2hjv75utvc4mopo8i6c_executeafm",
+            "id": "f8125d9a-3933-4c3a-952d-2bfaf44afd7f",
+            "name": "gdc_app_projects_frho3i7qc6epdek7mcgergm9vtm6o5ty_executeafm",
             "request": {
                 "url": "/gdc/app/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty/executeAfm",
                 "method": "POST",
@@ -57,7 +57,7 @@
             },
             "response": {
                 "status": 201,
-                "body": "{\"executionResponse\":{\"dimensions\":[{\"headers\":[{\"attributeHeader\":{\"name\":\"Product Name\",\"localIdentifier\":\"a_label.product.id.name\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1052\",\"identifier\":\"label.product.id.name\",\"formOf\":{\"name\":\"Product\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1051\",\"identifier\":\"attr.product.id\"},\"totalItems\":[{\"totalHeaderItem\":{\"name\":\"sum\"}}]}},{\"attributeHeader\":{\"name\":\"Department\",\"localIdentifier\":\"a_label.owner.department\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1086\",\"identifier\":\"label.owner.department\",\"formOf\":{\"name\":\"Department\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1085\",\"identifier\":\"attr.owner.department\"}}}]},{\"headers\":[{\"attributeHeader\":{\"name\":\"Forecast Category\",\"localIdentifier\":\"a_label.opportunitysnapshot.forecastcategory\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1060\",\"identifier\":\"label.opportunitysnapshot.forecastcategory\",\"formOf\":{\"name\":\"Forecast Category\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1059\",\"identifier\":\"attr.opportunitysnapshot.forecastcategory\"}}},{\"attributeHeader\":{\"name\":\"Region\",\"localIdentifier\":\"a_label.owner.region\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1084\",\"identifier\":\"label.owner.region\",\"formOf\":{\"name\":\"Region\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1083\",\"identifier\":\"attr.owner.region\"}}},{\"measureGroupHeader\":{\"items\":[{\"measureHeaderItem\":{\"name\":\"Amount\",\"format\":\"$#,##0.00\",\"localIdentifier\":\"m_aangOxLSeztu\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1248\",\"identifier\":\"aangOxLSeztu\"}},{\"measureHeaderItem\":{\"name\":\"Won\",\"format\":\"$#,##0.00\",\"localIdentifier\":\"m_acugFHNJgsBy\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1249\",\"identifier\":\"acugFHNJgsBy\"}}]}}]}],\"links\":{\"executionResult\":\"/gdc/app/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty/executionResults/7490929123246210048?c=89244a3ec802b8102d40449f00dff68e&q=eAGtlE1vgkAQhv9Ks%2FZICn5AF5OmafoVL01janowHBbYKoZl6TLYGuN%2F76wigrWHgjcyMDPvPO8M%0AayI4qCjIyHC6Lp5HIRkScxYGpgjNCELX%2Ff7M5r7jyt58sby2c1gGAyFTSSMnMKW%2FMLu9ASUG%2BZBK%0AMMDky47R6VhXloVBiCDmGLsTMk8AA1kuBFMrDJGNsS7fv8vkrxI7iY1kuUcNPYMonkoFL0xoVZNk%0Aqy%2FEzwIZ5yLZgQAJLNaPU8%2BYepjks4w%2FxlzwBCbjESb%2Bj49luybfpWe3UXiD7cIoS2O2ekJmDSaz%0AHM2WAXrn58DfCshYjQcsg4t7BnwmkXKNdyWjSU9b09z7%2BbtV1c0xn0VbQ1uOSQenxiyrV3ap5Wy0%0Ar2c7t%2B20X7d9YxQ39qxknhK9jfKrWLnCwlclwzzQh1K628irLlZoCd%2FuVVXsd%2BwgsEb%2FwE5fOI52%0AnrvpHgM8%2FDEeeMoU6JNEmW0PlNr1RieWoZUf1EaRNWBluT3Y2jwtraMO2XibH%2B0C85k%3D%0A&offset=0%2C0&limit=1000%2C1000&dimensions=2&totals=1%2C0\"}}}",
+                "body": "{\"executionResponse\":{\"dimensions\":[{\"headers\":[{\"attributeHeader\":{\"name\":\"Product Name\",\"localIdentifier\":\"a_label.product.id.name\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1052\",\"identifier\":\"label.product.id.name\",\"formOf\":{\"name\":\"Product\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1051\",\"identifier\":\"attr.product.id\"},\"totalItems\":[{\"totalHeaderItem\":{\"name\":\"sum\"}}]}},{\"attributeHeader\":{\"name\":\"Department\",\"localIdentifier\":\"a_label.owner.department\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1086\",\"identifier\":\"label.owner.department\",\"formOf\":{\"name\":\"Department\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1085\",\"identifier\":\"attr.owner.department\"}}}]},{\"headers\":[{\"attributeHeader\":{\"name\":\"Forecast Category\",\"localIdentifier\":\"a_label.opportunitysnapshot.forecastcategory\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1060\",\"identifier\":\"label.opportunitysnapshot.forecastcategory\",\"formOf\":{\"name\":\"Forecast Category\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1059\",\"identifier\":\"attr.opportunitysnapshot.forecastcategory\"}}},{\"attributeHeader\":{\"name\":\"Region\",\"localIdentifier\":\"a_label.owner.region\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1084\",\"identifier\":\"label.owner.region\",\"formOf\":{\"name\":\"Region\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1083\",\"identifier\":\"attr.owner.region\"}}},{\"measureGroupHeader\":{\"items\":[{\"measureHeaderItem\":{\"name\":\"Amount\",\"format\":\"$#,##0.00\",\"localIdentifier\":\"m_aangOxLSeztu\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1248\",\"identifier\":\"aangOxLSeztu\"}},{\"measureHeaderItem\":{\"name\":\"Won\",\"format\":\"$#,##0.00\",\"localIdentifier\":\"m_acugFHNJgsBy\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1249\",\"identifier\":\"acugFHNJgsBy\"}}]}}]}],\"links\":{\"executionResult\":\"/gdc/app/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty/executionResults/6354489527811734528?c=4fe3a959ed8bf7b65af8c57b06b06026&q=eAGtVMtOwzAQ%2FBXkcoxI%2BkiaVkII8VIvCFVUHKoc3HgbAnEcnA2oqvLvbPogbikHmt6ssb27Mzu7%0ASyYBdRzmbDhdbs4jwYbMjkRoS2HP9avqxv2P0INMwHtfhhHoSA4%2BUXrKxYWtZm92u9PzmcXmSkuO%0A9Pm8ZbVazoXjEIgxJkDYtVRFigTkhZRcLwhipdUo5%2BCvnEaKuoAXlbIysFiokkKma8I7D2c8h7sE%0AJKQ4GY%2F%2BrYHjDmxYf8%2BvYnFJxXEkbWcFwhGSUjhDvXulIeQ5nt1whEiRfEb0543Ehx6JOM8SvqAr%0AeUwR3qqFCnlSCTYNrGkQVF3DXchiDfP4PYPsGKKYmnWA4e%2BbY0j5XYrdtNt%2Bd7%2FbhplKazNLD1oV%0AGSPXafW1tlytXDUJdEWKHmD6pJUowmpetgNUI0ai5jzc9j6PZq5tU8kNzeB2VpuhVmojUsOwvneK%0Atrsnlct3qaadfv6ov53qW8i4xmorGWYwwGqnaciUxkcuq007SVeWEaz8BqBK%2Bm8%3D%0A&offset=0%2C0&limit=1000%2C1000&dimensions=2&totals=1%2C0\"}}}",
                 "headers": {
                     "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
                     "Cache-Control": "no-cache, no-store, must-revalidate",
@@ -65,18 +65,18 @@
                     "Content-Type": "application/json;charset=utf-8"
                 }
             },
-            "uuid": "7ad240b8-752d-4a33-b6a5-5402ca21c94a"
+            "uuid": "f8125d9a-3933-4c3a-952d-2bfaf44afd7f"
         },
         {
-            "id": "836069ee-3435-45a5-8851-b63fd993781a",
-            "name": "gdc_account_profile_fbdf74b48900320df823e94aa1eaa7e0",
+            "id": "657b5a82-1636-4d44-906d-b1c8c6e9671c",
+            "name": "gdc_account_profile_4d3da5c4452c6948e790c2a1e3772dc3",
             "request": {
-                "url": "/gdc/account/profile/fbdf74b48900320df823e94aa1eaa7e0",
+                "url": "/gdc/account/profile/4d3da5c4452c6948e790c2a1e3772dc3",
                 "method": "GET"
             },
             "response": {
                 "status": 200,
-                "body": "{\"accountSetting\":{\"ssoProvider\":null,\"updated\":\"2019-07-25 13:27:15\",\"timezone\":null,\"position\":null,\"phoneNumber\":\"000000000\",\"login\":\"first.last@gooddata.com\",\"lastName\":\"Last\",\"firstName\":\"First\",\"created\":\"2019-07-16 17:05:30\",\"country\":null,\"companyName\":\"GoodData\",\"email\":\"first.last@gooddata.com\",\"authenticationModes\":[],\"language\":\"en-US\",\"ipWhitelist\":null,\"effectiveIpWhitelist\":null,\"links\":{\"self\":\"/gdc/account/profile/fbdf74b48900320df823e94aa1eaa7e0\",\"projects\":\"/gdc/account/profile/fbdf74b48900320df823e94aa1eaa7e0/projects\",\"domain\":\"/gdc/domains/default\",\"auditEvents\":\"/gdc/account/profile/fbdf74b48900320df823e94aa1eaa7e0/auditEvents\"}}}",
+                "body": "{\"accountSetting\":{\"ssoProvider\":null,\"updated\":\"2022-04-07 12:23:51\",\"timezone\":null,\"position\":null,\"phoneNumber\":\"000000000\",\"login\":\"first.last@gooddata.com\",\"lastName\":\"Last\",\"firstName\":\"First\",\"created\":\"2018-12-07 13:29:48\",\"country\":null,\"companyName\":\"GoodData\",\"email\":\"first.last@gooddata.com\",\"authenticationModes\":[],\"language\":\"en-US\",\"ipWhitelist\":null,\"effectiveIpWhitelist\":null,\"links\":{\"self\":\"/gdc/account/profile/4d3da5c4452c6948e790c2a1e3772dc3\",\"projects\":\"/gdc/account/profile/4d3da5c4452c6948e790c2a1e3772dc3/projects\",\"domain\":\"/gdc/domains/default\",\"auditEvents\":\"/gdc/account/profile/4d3da5c4452c6948e790c2a1e3772dc3/auditEvents\"}}}",
                 "headers": {
                     "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
                     "vary": "origin,X-GDC-VERSION",
@@ -84,18 +84,18 @@
                     "cache-control": "no-cache, no-store, must-revalidate"
                 }
             },
-            "uuid": "836069ee-3435-45a5-8851-b63fd993781a"
+            "uuid": "657b5a82-1636-4d44-906d-b1c8c6e9671c"
         },
         {
-            "id": "99084b67-8f1c-4980-9182-1415a639b97b",
+            "id": "360e740a-58c9-485c-8ff7-b20c07b882d4",
             "name": "gdc_internal_projects",
             "request": {
-                "url": "/gdc/internal/projects/?limit=100&offset=0&userId=fbdf74b48900320df823e94aa1eaa7e0&projectStates=ENABLED&userState=ENABLED",
+                "url": "/gdc/internal/projects/?limit=100&offset=0&userId=4d3da5c4452c6948e790c2a1e3772dc3&projectStates=ENABLED&userState=ENABLED",
                 "method": "GET"
             },
             "response": {
                 "status": 200,
-                "body": "{\"userProjects\":{\"paging\":{\"offset\":0,\"limit\":100,\"count\":9,\"totalCount\":9},\"items\":[{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"1. NEW UI(stg)_ DO NOT DELETE\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/d8eozkh4bmuj20xnz4q5zis8j8783c54\",\"projectUser\":\"/gdc/projects/d8eozkh4bmuj20xnz4q5zis8j8783c54/users/fbdf74b48900320df823e94aa1eaa7e0\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"aaa\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/w3hub93g7fwmvx60pkt2v8cr56530t0l\",\"projectUser\":\"/gdc/projects/w3hub93g7fwmvx60pkt2v8cr56530t0l/users/fbdf74b48900320df823e94aa1eaa7e0\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"Cloned project\",\"projectTitle\":\"Matyas stg1\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/wtlhxkdivll00dlujfyue0el18sqt6t4\",\"projectUser\":\"/gdc/projects/wtlhxkdivll00dlujfyue0el18sqt6t4/users/fbdf74b48900320df823e94aa1eaa7e0\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"Cloned project\",\"projectTitle\":\"Matyas stg1\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/ky4f8yvfl62rbyvgk9b6v1xrybqf6yd3\",\"projectUser\":\"/gdc/projects/ky4f8yvfl62rbyvgk9b6v1xrybqf6yd3/users/fbdf74b48900320df823e94aa1eaa7e0\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"Matyas Test 2 DO NOT DELETE\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/bfjbr5h0frfjlqjhs6e64wegvfepxsln\",\"projectUser\":\"/gdc/projects/bfjbr5h0frfjlqjhs6e64wegvfepxsln/users/fbdf74b48900320df823e94aa1eaa7e0\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"Matyas Test DO NOT DELETE\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/v8lb4wohuaz0pcvzofo1qvndpz7x3n91\",\"projectUser\":\"/gdc/projects/v8lb4wohuaz0pcvzofo1qvndpz7x3n91/users/fbdf74b48900320df823e94aa1eaa7e0\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"QA LIVE EXAMPLE - DO NOT DELETE clone\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/hx7dn2mfwaj4agov81sioqzo8oxein0m\",\"projectUser\":\"/gdc/projects/hx7dn2mfwaj4agov81sioqzo8oxein0m/users/fbdf74b48900320df823e94aa1eaa7e0\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"RAIL E2E [DO NOT DELETE]\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty\",\"projectUser\":\"/gdc/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty/users/fbdf74b48900320df823e94aa1eaa7e0\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"Test reference workspace Sep 9, 2022, 13:23\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/b6ri7otkyhf0w904gdi12j6yj2nfbypy\",\"projectUser\":\"/gdc/projects/b6ri7otkyhf0w904gdi12j6yj2nfbypy/users/fbdf74b48900320df823e94aa1eaa7e0\"}}}]}}",
+                "body": "{\"userProjects\":{\"paging\":{\"offset\":0,\"limit\":100,\"count\":19,\"totalCount\":19},\"items\":[{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"_Thao project\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/sc548ag7m31wfot3nn9a0o8dwzfddluo\",\"projectUser\":\"/gdc/projects/sc548ag7m31wfot3nn9a0o8dwzfddluo/users/4d3da5c4452c6948e790c2a1e3772dc3\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"Cloned project\",\"projectTitle\":\"# Theme M2\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/va3dmcilkb28iatz907z8m93ia2u1elq\",\"projectUser\":\"/gdc/projects/va3dmcilkb28iatz907z8m93ia2u1elq/users/4d3da5c4452c6948e790c2a1e3772dc3\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"1. NEW UI(stg3)_ DO NOT DELETE\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/g2zpqxe8zk32vmjrux9mb3zywxat1w70\",\"projectUser\":\"/gdc/projects/g2zpqxe8zk32vmjrux9mb3zywxat1w70/users/4d3da5c4452c6948e790c2a1e3772dc3\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"corona virus\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/wnn4h8tawjp0op597eyzxcun66fagh3d\",\"projectUser\":\"/gdc/projects/wnn4h8tawjp0op597eyzxcun66fagh3d/users/4d3da5c4452c6948e790c2a1e3772dc3\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"demo1 <b>a</b>\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8\",\"projectUser\":\"/gdc/projects/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/users/4d3da5c4452c6948e790c2a1e3772dc3\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"Extended date KD (Don't delete)\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/atwx5j4ya3bhswkerz66ipof4jun01ev\",\"projectUser\":\"/gdc/projects/atwx5j4ya3bhswkerz66ipof4jun01ev/users/4d3da5c4452c6948e790c2a1e3772dc3\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"Good Sales test project\",\"projectTitle\":\"Good Sales\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/s9bap4zkhpn1cmuoopgwurnolvj9hto8\",\"projectUser\":\"/gdc/projects/s9bap4zkhpn1cmuoopgwurnolvj9hto8/users/4d3da5c4452c6948e790c2a1e3772dc3\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"Huyen's project\",\"projectTitle\":\"GoodSaleDemo2 - DO NOT DELETE\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/ryfz7w64063fkotl5mr0yv5ikpijt8s4\",\"projectUser\":\"/gdc/projects/ryfz7w64063fkotl5mr0yv5ikpijt8s4/users/4d3da5c4452c6948e790c2a1e3772dc3\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"GS many reports + element masking - do not delete\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/w7b2nrw3om5q6w3ne2qrw5jwv51r97hx\",\"projectUser\":\"/gdc/projects/w7b2nrw3om5q6w3ne2qrw5jwv51r97hx/users/4d3da5c4452c6948e790c2a1e3772dc3\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"has preset\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/k1cnlpyqevyeegcubva5yjtqffg3lyyf\",\"projectUser\":\"/gdc/projects/k1cnlpyqevyeegcubva5yjtqffg3lyyf/users/4d3da5c4452c6948e790c2a1e3772dc3\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"MAP Test project\",\"projectTitle\":\"MAP GoodSales\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/ofyndwehwd0gwipdtdlcv4cpd81qpa5x\",\"projectUser\":\"/gdc/projects/ofyndwehwd0gwipdtdlcv4cpd81qpa5x/users/4d3da5c4452c6948e790c2a1e3772dc3\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"QA LIVE EXAMPLE - DO NOT DELETE\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/y2lwt04m1kb3r4mlclsu39tmvf935vy9\",\"projectUser\":\"/gdc/projects/y2lwt04m1kb3r4mlclsu39tmvf935vy9/users/4d3da5c4452c6948e790c2a1e3772dc3\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"RAIL E2E test do not delete\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty\",\"projectUser\":\"/gdc/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty/users/4d3da5c4452c6948e790c2a1e3772dc3\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"Cloned project\",\"projectTitle\":\"RAIL HACKATHON\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/dgikb1s6a7fureddo2qvdn55adx9py1h\",\"projectUser\":\"/gdc/projects/dgikb1s6a7fureddo2qvdn55adx9py1h/users/4d3da5c4452c6948e790c2a1e3772dc3\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"RAIL test-do not delete\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/mbuumy476p78ybcceiru61hcyr8i8lo8\",\"projectUser\":\"/gdc/projects/mbuumy476p78ybcceiru61hcyr8i8lo8/users/4d3da5c4452c6948e790c2a1e3772dc3\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"Cloned project\",\"projectTitle\":\"RAIL test-do not delete JLI CLONE\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/y6bk8h3oxc4b1cs14dn2hacun7s6iykd\",\"projectUser\":\"/gdc/projects/y6bk8h3oxc4b1cs14dn2hacun7s6iykd/users/4d3da5c4452c6948e790c2a1e3772dc3\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"SDK8 Experimental Workspace (used for test mocks recording)\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/d79dpgty2b4ydewi6kbzqm4fq1be2ltm\",\"projectUser\":\"/gdc/projects/d79dpgty2b4ydewi6kbzqm4fq1be2ltm/users/4d3da5c4452c6948e790c2a1e3772dc3\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"test\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/s4olt3n7v1d2e86iavfylx4s3qzwdzyz\",\"projectUser\":\"/gdc/projects/s4olt3n7v1d2e86iavfylx4s3qzwdzyz/users/4d3da5c4452c6948e790c2a1e3772dc3\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"Test  CloudConnection\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/guz9gskz26amk6vdzg9m70sacwd0bawh\",\"projectUser\":\"/gdc/projects/guz9gskz26amk6vdzg9m70sacwd0bawh/users/4d3da5c4452c6948e790c2a1e3772dc3\"}}}]}}",
                 "headers": {
                     "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
                     "Cache-Control": "no-cache, no-store, must-revalidate",
@@ -103,11 +103,11 @@
                     "Content-Type": "application/json;charset=utf-8"
                 }
             },
-            "uuid": "99084b67-8f1c-4980-9182-1415a639b97b"
+            "uuid": "360e740a-58c9-485c-8ff7-b20c07b882d4"
         },
         {
-            "id": "2695dcf7-8913-4150-bc76-0128b0c5425e",
-            "name": "gdc_app_projects_itd99xqshb69o2hjv75utvc4mopo8i6c_executeafm",
+            "id": "4b67ae80-fb80-4120-a1fb-8681d4ccd68d",
+            "name": "gdc_app_projects_frho3i7qc6epdek7mcgergm9vtm6o5ty_executeafm",
             "request": {
                 "url": "/gdc/app/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty/executeAfm",
                 "method": "POST",
@@ -121,7 +121,7 @@
             },
             "response": {
                 "status": 201,
-                "body": "{\"executionResponse\":{\"dimensions\":[{\"headers\":[{\"attributeHeader\":{\"name\":\"Product Name\",\"localIdentifier\":\"a_label.product.id.name\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1052\",\"identifier\":\"label.product.id.name\",\"formOf\":{\"name\":\"Product\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1051\",\"identifier\":\"attr.product.id\"}}},{\"attributeHeader\":{\"name\":\"Department\",\"localIdentifier\":\"a_label.owner.department\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1086\",\"identifier\":\"label.owner.department\",\"formOf\":{\"name\":\"Department\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1085\",\"identifier\":\"attr.owner.department\"}}}]},{\"headers\":[{\"attributeHeader\":{\"name\":\"Forecast Category\",\"localIdentifier\":\"a_label.opportunitysnapshot.forecastcategory\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1060\",\"identifier\":\"label.opportunitysnapshot.forecastcategory\",\"formOf\":{\"name\":\"Forecast Category\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1059\",\"identifier\":\"attr.opportunitysnapshot.forecastcategory\"}}},{\"attributeHeader\":{\"name\":\"Region\",\"localIdentifier\":\"a_label.owner.region\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1084\",\"identifier\":\"label.owner.region\",\"formOf\":{\"name\":\"Region\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1083\",\"identifier\":\"attr.owner.region\"}}},{\"measureGroupHeader\":{\"items\":[{\"measureHeaderItem\":{\"name\":\"Amount\",\"format\":\"$#,##0.00\",\"localIdentifier\":\"m_aangOxLSeztu\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1248\",\"identifier\":\"aangOxLSeztu\"}},{\"measureHeaderItem\":{\"name\":\"Won\",\"format\":\"$#,##0.00\",\"localIdentifier\":\"m_acugFHNJgsBy\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1249\",\"identifier\":\"acugFHNJgsBy\"}}]}}]}],\"links\":{\"executionResult\":\"/gdc/app/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty/executionResults/7493345709909048320?c=dd2e2707ee32eb861a19e441d2b6dd13&q=eAGlVEtvgzAM%2FitTuiMa9AELlaZp2ku9TFO1aoeKQyBZS0UIC6ZbVfHfZ8roiop2IMc4ju3v4eyJ%0AFpnS8MKkIFOySCGGRHBiEa2%2BcjJd7gkD0HFYgHirrjDpVSteRIA5eSEl0zuM4eGYN%2BMYsFc8siW3%0AY%2BC%2B%2F%2F2Zr0PPV6P1ZnvtFrCNJlJlisZeZKtwYw8dd4gVQAFLqqbLwFoGgUVClovHREiRwmI%2B61PV%0AFvXz%2FDbmN1WLMww8zrOE7Z6Ulr0GH5HSOiGpTw3qdoHvJrcR4UFkTEPFzAmqVtAQGPWwsKkA1G0L%0AUKKokUoKmdbe%2Bh8jaiIilsPFPQOxUmg0U5f5XUSbgnT9Nsg%2Fl3UBMJTFcw5%2BO1sVo%2B2j41NmG4vN%0AxSpWKd60VDKcn04qCX638NjBVAI6bktQWkQK%2FLaiZ62KjKDr6mPtuqb9nVTFYX8%2BcPkZ4P9yObAG%0AA%2BfKcXDI%2BkWPfR5NaJu06oNocdjZr5nq%2FcC5QXeflEH5A03D8gA%3D%0A&offset=0%2C0&limit=1000%2C1000&dimensions=2&totals=0%2C0\"}}}",
+                "body": "{\"executionResponse\":{\"dimensions\":[{\"headers\":[{\"attributeHeader\":{\"name\":\"Product Name\",\"localIdentifier\":\"a_label.product.id.name\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1052\",\"identifier\":\"label.product.id.name\",\"formOf\":{\"name\":\"Product\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1051\",\"identifier\":\"attr.product.id\"}}},{\"attributeHeader\":{\"name\":\"Department\",\"localIdentifier\":\"a_label.owner.department\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1086\",\"identifier\":\"label.owner.department\",\"formOf\":{\"name\":\"Department\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1085\",\"identifier\":\"attr.owner.department\"}}}]},{\"headers\":[{\"attributeHeader\":{\"name\":\"Forecast Category\",\"localIdentifier\":\"a_label.opportunitysnapshot.forecastcategory\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1060\",\"identifier\":\"label.opportunitysnapshot.forecastcategory\",\"formOf\":{\"name\":\"Forecast Category\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1059\",\"identifier\":\"attr.opportunitysnapshot.forecastcategory\"}}},{\"attributeHeader\":{\"name\":\"Region\",\"localIdentifier\":\"a_label.owner.region\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1084\",\"identifier\":\"label.owner.region\",\"formOf\":{\"name\":\"Region\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1083\",\"identifier\":\"attr.owner.region\"}}},{\"measureGroupHeader\":{\"items\":[{\"measureHeaderItem\":{\"name\":\"Amount\",\"format\":\"$#,##0.00\",\"localIdentifier\":\"m_aangOxLSeztu\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1248\",\"identifier\":\"aangOxLSeztu\"}},{\"measureHeaderItem\":{\"name\":\"Won\",\"format\":\"$#,##0.00\",\"localIdentifier\":\"m_acugFHNJgsBy\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1249\",\"identifier\":\"acugFHNJgsBy\"}}]}}]}],\"links\":{\"executionResult\":\"/gdc/app/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty/executionResults/7553747670206053376?c=fa0437d47935a9a7affa58beb1188f2a&q=eAG1lFtPwkAQhf%2BKWXxsbLm0LiTGGG%2FhxRgi8YHwsOwOtdrt1u1UQwj%2F3SmIFAKJYfWt7aQzs985%0AZ%2BfMms%2BC9UZzhgZFWj2Oxt5oPPaYSoo8FbM7Y3VfsR7zYyV9rfypfTHt5PxdRpAreDvXMgYb6%2B4H%0A6siEOPPN5NVvBmGLeWwiCrhNQUOGw0H%2FiCZNH1a%2FF5eJuqCORam1sDNqRS8C0SaTEuGoBZv1Dk8J%0ApkBdH61RpUQq4c6Xhff3kHhUG3QDubBYsdq32FbVlSsP%2F48rD9mC7KOBtJErb62ejxCp1eHEYkoW%0AFEjinDa8RiM4C4IatSttyiWxmjMqqRxmdg%2FNrI3Y%2BOPZZMsDS5OWOjsQJjenVgu5Sh52fyf5OgiU%0Ae5CiwJNrgRAbitzmyPtqjtdFFLC9AVuncABxQqBrmV8v%2BlPZUscVF2%2Fv4nKSkLdpdUdEvEOIvn19%0Ab02ZM4qZhdxYfBC6uryG2RKXYosvfyD41g%3D%3D%0A&offset=0%2C0&limit=1000%2C1000&dimensions=2&totals=0%2C0\"}}}",
                 "headers": {
                     "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
                     "Cache-Control": "no-cache, no-store, must-revalidate",
@@ -129,13 +129,13 @@
                     "Content-Type": "application/json;charset=utf-8"
                 }
             },
-            "uuid": "2695dcf7-8913-4150-bc76-0128b0c5425e"
+            "uuid": "4b67ae80-fb80-4120-a1fb-8681d4ccd68d"
         },
         {
-            "id": "87ed1f53-13f0-4754-a800-c24eac01b228",
-            "name": "gdc_app_projects_itd99xqshb69o2hjv75utvc4mopo8i6c_executionresults_7490929123246210048",
+            "id": "5a6d9688-d34f-459f-ae44-1e53931bd3f2",
+            "name": "gdc_app_projects_frho3i7qc6epdek7mcgergm9vtm6o5ty_executionresults_6354489527811734528",
             "request": {
-                "url": "/gdc/app/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty/executionResults/7490929123246210048?c=89244a3ec802b8102d40449f00dff68e&q=eAGtlE1vgkAQhv9Ks%2FZICn5AF5OmafoVL01janowHBbYKoZl6TLYGuN%2F76wigrWHgjcyMDPvPO8M%0AayI4qCjIyHC6Lp5HIRkScxYGpgjNCELX%2Ff7M5r7jyt58sby2c1gGAyFTSSMnMKW%2FMLu9ASUG%2BZBK%0AMMDky47R6VhXloVBiCDmGLsTMk8AA1kuBFMrDJGNsS7fv8vkrxI7iY1kuUcNPYMonkoFL0xoVZNk%0Aqy%2FEzwIZ5yLZgQAJLNaPU8%2BYepjks4w%2FxlzwBCbjESb%2Bj49luybfpWe3UXiD7cIoS2O2ekJmDSaz%0AHM2WAXrn58DfCshYjQcsg4t7BnwmkXKNdyWjSU9b09z7%2BbtV1c0xn0VbQ1uOSQenxiyrV3ap5Wy0%0Ar2c7t%2B20X7d9YxQ39qxknhK9jfKrWLnCwlclwzzQh1K628irLlZoCd%2FuVVXsd%2BwgsEb%2FwE5fOI52%0AnrvpHgM8%2FDEeeMoU6JNEmW0PlNr1RieWoZUf1EaRNWBluT3Y2jwtraMO2XibH%2B0C85k%3D%0A&offset=0%2C0&limit=100%2C1000&dimensions=2&totals=1%2C0",
+                "url": "/gdc/app/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty/executionResults/6354489527811734528?c=4fe3a959ed8bf7b65af8c57b06b06026&q=eAGtVMtOwzAQ%2FBXkcoxI%2BkiaVkII8VIvCFVUHKoc3HgbAnEcnA2oqvLvbPogbikHmt6ssb27Mzu7%0ASyYBdRzmbDhdbs4jwYbMjkRoS2HP9avqxv2P0INMwHtfhhHoSA4%2BUXrKxYWtZm92u9PzmcXmSkuO%0A9Pm8ZbVazoXjEIgxJkDYtVRFigTkhZRcLwhipdUo5%2BCvnEaKuoAXlbIysFiokkKma8I7D2c8h7sE%0AJKQ4GY%2F%2BrYHjDmxYf8%2BvYnFJxXEkbWcFwhGSUjhDvXulIeQ5nt1whEiRfEb0543Ehx6JOM8SvqAr%0AeUwR3qqFCnlSCTYNrGkQVF3DXchiDfP4PYPsGKKYmnWA4e%2BbY0j5XYrdtNt%2Bd7%2FbhplKazNLD1oV%0AGSPXafW1tlytXDUJdEWKHmD6pJUowmpetgNUI0ai5jzc9j6PZq5tU8kNzeB2VpuhVmojUsOwvneK%0Atrsnlct3qaadfv6ov53qW8i4xmorGWYwwGqnaciUxkcuq007SVeWEaz8BqBK%2Bm8%3D%0A&offset=0%2C0&limit=100%2C1000&dimensions=2&totals=1%2C0",
                 "method": "GET"
             },
             "response": {
@@ -148,13 +148,13 @@
                     "Content-Type": "application/json;charset=utf-8"
                 }
             },
-            "uuid": "87ed1f53-13f0-4754-a800-c24eac01b228"
+            "uuid": "5a6d9688-d34f-459f-ae44-1e53931bd3f2"
         },
         {
-            "id": "af2a0c6f-ea73-495a-9511-54d0c8362d79",
-            "name": "gdc_app_projects_itd99xqshb69o2hjv75utvc4mopo8i6c_executionresults_7493345709909048320",
+            "id": "eeb9ef12-fc3d-4a80-acf5-2681904b014c",
+            "name": "gdc_app_projects_frho3i7qc6epdek7mcgergm9vtm6o5ty_executionresults_7553747670206053376",
             "request": {
-                "url": "/gdc/app/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty/executionResults/7493345709909048320?c=dd2e2707ee32eb861a19e441d2b6dd13&q=eAGlVEtvgzAM%2FitTuiMa9AELlaZp2ku9TFO1aoeKQyBZS0UIC6ZbVfHfZ8roiop2IMc4ju3v4eyJ%0AFpnS8MKkIFOySCGGRHBiEa2%2BcjJd7gkD0HFYgHirrjDpVSteRIA5eSEl0zuM4eGYN%2BMYsFc8siW3%0AY%2BC%2B%2F%2F2Zr0PPV6P1ZnvtFrCNJlJlisZeZKtwYw8dd4gVQAFLqqbLwFoGgUVClovHREiRwmI%2B61PV%0AFvXz%2FDbmN1WLMww8zrOE7Z6Ulr0GH5HSOiGpTw3qdoHvJrcR4UFkTEPFzAmqVtAQGPWwsKkA1G0L%0AUKKokUoKmdbe%2Bh8jaiIilsPFPQOxUmg0U5f5XUSbgnT9Nsg%2Fl3UBMJTFcw5%2BO1sVo%2B2j41NmG4vN%0AxSpWKd60VDKcn04qCX638NjBVAI6bktQWkQK%2FLaiZ62KjKDr6mPtuqb9nVTFYX8%2BcPkZ4P9yObAG%0AA%2BfKcXDI%2BkWPfR5NaJu06oNocdjZr5nq%2FcC5QXeflEH5A03D8gA%3D%0A&offset=0%2C0&limit=22%2C1000&dimensions=2&totals=0%2C0",
+                "url": "/gdc/app/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty/executionResults/7553747670206053376?c=fa0437d47935a9a7affa58beb1188f2a&q=eAG1lFtPwkAQhf%2BKWXxsbLm0LiTGGG%2FhxRgi8YHwsOwOtdrt1u1UQwj%2F3SmIFAKJYfWt7aQzs985%0AZ%2BfMms%2BC9UZzhgZFWj2Oxt5oPPaYSoo8FbM7Y3VfsR7zYyV9rfypfTHt5PxdRpAreDvXMgYb6%2B4H%0A6siEOPPN5NVvBmGLeWwiCrhNQUOGw0H%2FiCZNH1a%2FF5eJuqCORam1sDNqRS8C0SaTEuGoBZv1Dk8J%0ApkBdH61RpUQq4c6Xhff3kHhUG3QDubBYsdq32FbVlSsP%2F48rD9mC7KOBtJErb62ejxCp1eHEYkoW%0AFEjinDa8RiM4C4IatSttyiWxmjMqqRxmdg%2FNrI3Y%2BOPZZMsDS5OWOjsQJjenVgu5Sh52fyf5OgiU%0Ae5CiwJNrgRAbitzmyPtqjtdFFLC9AVuncABxQqBrmV8v%2BlPZUscVF2%2Fv4nKSkLdpdUdEvEOIvn19%0Ab02ZM4qZhdxYfBC6uryG2RKXYosvfyD41g%3D%3D%0A&offset=0%2C0&limit=22%2C1000&dimensions=2&totals=0%2C0",
                 "method": "GET"
             },
             "response": {
@@ -167,7 +167,7 @@
                     "Content-Type": "application/json;charset=utf-8"
                 }
             },
-            "uuid": "af2a0c6f-ea73-495a-9511-54d0c8362d79"
+            "uuid": "eeb9ef12-fc3d-4a80-acf5-2681904b014c"
         }
     ]
 }

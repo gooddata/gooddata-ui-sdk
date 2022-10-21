@@ -55,7 +55,7 @@ function runCypress(configParam = {}) {
         cypressProps["CYPRESS_COMMAND_DELAY"] = 0;
     }
 
-    const args = [visual ? "open" : "run"];
+    const args = [visual ? "open" : "run", "--e2e"];
     if (specFilesFilter) {
         args.push("--spec", `./**/${specFilesFilter}*`);
     }
