@@ -115,6 +115,10 @@ export interface IVisualizationMeta {
      * If true, the visualization supports being exported (if the currently used backend supports exports as well).
      */
     supportsExport: boolean;
+    /**
+     * If true, the visualization supports zoom to detailed view.
+     */
+    supportsZooming: boolean;
 }
 
 /**

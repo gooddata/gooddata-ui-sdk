@@ -48,6 +48,7 @@ export class ScatterPlotDescriptor extends BigChartDescriptor {
         return {
             documentationUrl: "https://sdk.gooddata.com/gooddata-ui/docs/scatter_plot_component.html",
             supportsExport: true,
+            supportsZooming: true,
         };
     }
 }

@@ -67,6 +67,7 @@ export class TreemapDescriptor extends BigChartDescriptor {
         return {
             documentationUrl: "https://sdk.gooddata.com/gooddata-ui/docs/treemap_component.html",
             supportsExport: true,
+            supportsZooming: true,
         };
     }
 

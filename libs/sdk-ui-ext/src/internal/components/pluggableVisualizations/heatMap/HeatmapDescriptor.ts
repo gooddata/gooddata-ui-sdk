@@ -67,6 +67,7 @@ export class HeatmapDescriptor extends BigChartDescriptor implements IVisualizat
         return {
             documentationUrl: "https://sdk.gooddata.com/gooddata-ui/docs/heatmap_component.html",
             supportsExport: true,
+            supportsZooming: true,
         };
     }
 

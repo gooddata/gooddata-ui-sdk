@@ -1,7 +1,6 @@
 // (C) 2020-2022 GoodData Corporation
-import { IInsightWidget, insightVisualizationUrl } from "@gooddata/sdk-model";
+import { IInsightWidget } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, Checkbox, Message } from "@gooddata/sdk-ui-kit";
-import includes from "lodash/includes";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 import {
@@ -10,21 +9,7 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../../model";
-import { VisType, VisualizationTypes } from "@gooddata/sdk-ui";
-
-const supportedVisualizationTypes = [
-    VisualizationTypes.COLUMN,
-    VisualizationTypes.BAR,
-    VisualizationTypes.LINE,
-    VisualizationTypes.AREA,
-    VisualizationTypes.SCATTER,
-    VisualizationTypes.COMBO,
-    VisualizationTypes.COMBO2,
-    VisualizationTypes.BUBBLE,
-    VisualizationTypes.TREEMAP,
-    VisualizationTypes.HEATMAP,
-    VisualizationTypes.BULLET,
-];
+import { getInsightVisualizationMeta } from "@gooddata/sdk-ui-ext";
 
 interface ZoomInsightConfigurationProps {
     widget: IInsightWidget;
@@ -39,9 +24,12 @@ export function ZoomInsightConfiguration(props: ZoomInsightConfigurationProps) {
     const dispatch = useDashboardDispatch();
 
     const insight = useDashboardSelector(selectInsightByRef(widget.insight));
-    const insightUrl = insight ? insightVisualizationUrl(insight) : "";
-    const visualizationType = insightUrl.replace("local:", "") as VisType;
-    if (!includes(supportedVisualizationTypes, visualizationType)) {
+    if (!insight) {
+        return null;
+    }
+
+    const visualizationMeta = getInsightVisualizationMeta(insight);
+    if (!visualizationMeta.supportsZooming) {
         return null;
     }
 

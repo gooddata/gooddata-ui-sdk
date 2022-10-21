@@ -149,28 +149,28 @@ export const InsightDrillConfigPanel: React.FunctionComponent<IDrillConfigPanelP
         <>
             {settings.enableKDZooming && <ZoomInsightConfiguration widget={widget} />}
             <div className="configuration-category s-drill-config-panel">
-            <Typography tagName="h3">
-                <span>
-                    <FormattedMessage id="configurationPanel.drillConfig.interactions" />
-                </span>
-            </Typography>
-            <InsightDrillConfigList
-                drillConfigItems={mergedItems}
-                // onDelete={onDeleteItem}
-                onSetup={(drill: InsightDrillDefinition, changedItem: IDrillConfigItem) => {
-                    dispatch(modifyDrillsForInsightWidget(widgetRef, [drill]));
-                    deleteIncompleteItem(changedItem);
-                }}
-                onIncompleteChange={onChangeItem}
-                enabledDrillTargetTypeItems={enabledDrillTargetTypeItems}
-            />
-            {configItems?.availableDrillTargets && (
-                <DrillOriginSelector
-                    items={getUnusedDrillTargets(configItems?.availableDrillTargets, mergedItems)}
-                    onSelect={onOriginSelect}
+                <Typography tagName="h3">
+                    <span>
+                        <FormattedMessage id="configurationPanel.drillConfig.interactions" />
+                    </span>
+                </Typography>
+                <InsightDrillConfigList
+                    drillConfigItems={mergedItems}
+                    // onDelete={onDeleteItem}
+                    onSetup={(drill: InsightDrillDefinition, changedItem: IDrillConfigItem) => {
+                        dispatch(modifyDrillsForInsightWidget(widgetRef, [drill]));
+                        deleteIncompleteItem(changedItem);
+                    }}
+                    onIncompleteChange={onChangeItem}
+                    enabledDrillTargetTypeItems={enabledDrillTargetTypeItems}
                 />
-            )}
-        </div>
+                {configItems?.availableDrillTargets && (
+                    <DrillOriginSelector
+                        items={getUnusedDrillTargets(configItems?.availableDrillTargets, mergedItems)}
+                        onSelect={onOriginSelect}
+                    />
+                )}
+            </div>
         </>
     );
 };

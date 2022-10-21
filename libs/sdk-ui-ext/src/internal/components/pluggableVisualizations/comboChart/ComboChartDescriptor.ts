@@ -52,6 +52,7 @@ export class ComboChartDescriptor extends BigChartDescriptor implements IVisuali
         return {
             documentationUrl: "https://sdk.gooddata.com/gooddata-ui/docs/combo_chart_component.html",
             supportsExport: true,
+            supportsZooming: true,
         };
     }
 }

@@ -74,6 +74,7 @@ export class BulletChartDescriptor extends BaseChartDescriptor implements IVisua
         return {
             documentationUrl: "https://sdk.gooddata.com/gooddata-ui/docs/bullet_chart_component.html",
             supportsExport: true,
+            supportsZooming: true,
         };
     }
 

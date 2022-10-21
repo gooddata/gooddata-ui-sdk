@@ -47,6 +47,7 @@ export class FunnelChartDescriptor extends BaseChartDescriptor implements IVisua
     public getMeta(): IVisualizationMeta {
         return {
             supportsExport: true,
+            supportsZooming: false,
         };
     }
 }

@@ -50,6 +50,7 @@ export class BubbleChartDescriptor extends BigChartDescriptor implements IVisual
         return {
             documentationUrl: "https://sdk.gooddata.com/gooddata-ui/docs/bubble_chart_component.html",
             supportsExport: true,
+            supportsZooming: true,
         };
     }
 }

@@ -76,7 +76,7 @@ class DummyClassDescriptor extends BaseChartDescriptor {
         return (params) => new DummyClass(params);
     }
     public getMeta(): IVisualizationMeta {
-        return { supportsExport: true };
+        return { supportsExport: true, supportsZooming: true };
     }
 }
 
@@ -137,7 +137,7 @@ describe("BaseVisualization", () => {
                 return (params) => new DummyTable(params);
             }
             public getMeta(): IVisualizationMeta {
-                return { supportsExport: true };
+                return { supportsExport: true, supportsZooming: true };
             }
         }
 
@@ -163,7 +163,7 @@ describe("BaseVisualization", () => {
                 return () => new DummyColumn();
             }
             public getMeta(): IVisualizationMeta {
-                return { supportsExport: true };
+                return { supportsExport: true, supportsZooming: true };
             }
         }
 

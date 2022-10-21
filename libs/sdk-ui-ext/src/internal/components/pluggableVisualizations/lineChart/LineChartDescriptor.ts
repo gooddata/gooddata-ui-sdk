@@ -70,6 +70,7 @@ export class LineChartDescriptor extends BaseChartDescriptor implements IVisuali
         return {
             documentationUrl: "https://sdk.gooddata.com/gooddata-ui/docs/line_chart_component.html",
             supportsExport: true,
+            supportsZooming: true,
         };
     }
 
