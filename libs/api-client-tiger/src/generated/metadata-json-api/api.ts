@@ -178,7 +178,7 @@ export interface DeclarativeAnalyticalDashboard {
      */
     description?: string;
     /**
-     * A server agnostic definition of the dashboard plugin in JSON format.
+     * Custom setting content in JSON format.
      * @type {object}
      * @memberof DeclarativeAnalyticalDashboard
      */
@@ -329,7 +329,7 @@ export interface DeclarativeColorPalette {
      */
     name: string;
     /**
-     * A server agnostic definition of the dashboard plugin in JSON format.
+     * Custom setting content in JSON format.
      * @type {object}
      * @memberof DeclarativeColorPalette
      */
@@ -406,6 +406,31 @@ export interface DeclarativeCspDirective {
     sources: Array<string>;
 }
 /**
+ * Custom application setting and its value.
+ * @export
+ * @interface DeclarativeCustomApplicationSetting
+ */
+export interface DeclarativeCustomApplicationSetting {
+    /**
+     * Custom Application Setting ID.
+     * @type {string}
+     * @memberof DeclarativeCustomApplicationSetting
+     */
+    id: string;
+    /**
+     * Custom setting content in JSON format.
+     * @type {object}
+     * @memberof DeclarativeCustomApplicationSetting
+     */
+    content: object;
+    /**
+     * The application id
+     * @type {string}
+     * @memberof DeclarativeCustomApplicationSetting
+     */
+    applicationName: string;
+}
+/**
  *
  * @export
  * @interface DeclarativeDashboardPlugin
@@ -430,7 +455,7 @@ export interface DeclarativeDashboardPlugin {
      */
     description?: string;
     /**
-     * A server agnostic definition of the dashboard plugin in JSON format.
+     * Custom setting content in JSON format.
      * @type {object}
      * @memberof DeclarativeDashboardPlugin
      */
@@ -779,7 +804,7 @@ export interface DeclarativeFilterContext {
      */
     description?: string;
     /**
-     * A server agnostic definition of the dashboard plugin in JSON format.
+     * Custom setting content in JSON format.
      * @type {object}
      * @memberof DeclarativeFilterContext
      */
@@ -888,7 +913,7 @@ export interface DeclarativeMetric {
      */
     description?: string;
     /**
-     * A server agnostic definition of the dashboard plugin in JSON format.
+     * Custom setting content in JSON format.
      * @type {object}
      * @memberof DeclarativeMetric
      */
@@ -1119,7 +1144,7 @@ export interface DeclarativeSetting {
      */
     id: string;
     /**
-     * A server agnostic definition of the dashboard plugin in JSON format.
+     * Custom setting content in JSON format.
      * @type {object}
      * @memberof DeclarativeSetting
      */
@@ -1224,7 +1249,7 @@ export interface DeclarativeTheme {
      */
     name: string;
     /**
-     * A server agnostic definition of the dashboard plugin in JSON format.
+     * Custom setting content in JSON format.
      * @type {object}
      * @memberof DeclarativeTheme
      */
@@ -1350,7 +1375,7 @@ export interface DeclarativeVisualizationObject {
      */
     description?: string;
     /**
-     * A server agnostic definition of the dashboard plugin in JSON format.
+     * Custom setting content in JSON format.
      * @type {object}
      * @memberof DeclarativeVisualizationObject
      */
@@ -1422,6 +1447,12 @@ export interface DeclarativeWorkspace {
      * @memberof DeclarativeWorkspace
      */
     settings?: Array<DeclarativeSetting>;
+    /**
+     * A list of workspace custom settings.
+     * @type {Array<DeclarativeCustomApplicationSetting>}
+     * @memberof DeclarativeWorkspace
+     */
+    customApplicationSettings?: Array<DeclarativeCustomApplicationSetting>;
 }
 /**
  * Workspace Data Filters serving the filtering of what data users can see in workspaces.
@@ -3029,10 +3060,10 @@ export interface JsonApiCookieSecurityConfigurationIn {
     id: string;
     /**
      *
-     * @type {JsonApiCookieSecurityConfigurationInAttributes}
+     * @type {JsonApiCookieSecurityConfigurationOutAttributes}
      * @memberof JsonApiCookieSecurityConfigurationIn
      */
-    attributes?: JsonApiCookieSecurityConfigurationInAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationOutAttributes;
 }
 
 export const JsonApiCookieSecurityConfigurationInTypeEnum = {
@@ -3042,25 +3073,6 @@ export const JsonApiCookieSecurityConfigurationInTypeEnum = {
 export type JsonApiCookieSecurityConfigurationInTypeEnum =
     typeof JsonApiCookieSecurityConfigurationInTypeEnum[keyof typeof JsonApiCookieSecurityConfigurationInTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiCookieSecurityConfigurationInAttributes
- */
-export interface JsonApiCookieSecurityConfigurationInAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiCookieSecurityConfigurationInAttributes
-     */
-    lastRotation?: string;
-    /**
-     * Length of interval between automatic rotations expressed in format of ISO 8601 duration
-     * @type {string}
-     * @memberof JsonApiCookieSecurityConfigurationInAttributes
-     */
-    rotationInterval?: string;
-}
 /**
  *
  * @export
@@ -3094,10 +3106,10 @@ export interface JsonApiCookieSecurityConfigurationOut {
     id: string;
     /**
      *
-     * @type {JsonApiCookieSecurityConfigurationInAttributes}
+     * @type {JsonApiCookieSecurityConfigurationOutAttributes}
      * @memberof JsonApiCookieSecurityConfigurationOut
      */
-    attributes?: JsonApiCookieSecurityConfigurationInAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationOutAttributes;
 }
 
 export const JsonApiCookieSecurityConfigurationOutTypeEnum = {
@@ -3107,6 +3119,25 @@ export const JsonApiCookieSecurityConfigurationOutTypeEnum = {
 export type JsonApiCookieSecurityConfigurationOutTypeEnum =
     typeof JsonApiCookieSecurityConfigurationOutTypeEnum[keyof typeof JsonApiCookieSecurityConfigurationOutTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiCookieSecurityConfigurationOutAttributes
+ */
+export interface JsonApiCookieSecurityConfigurationOutAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiCookieSecurityConfigurationOutAttributes
+     */
+    lastRotation?: string;
+    /**
+     * Length of interval between automatic rotations expressed in format of ISO 8601 duration
+     * @type {string}
+     * @memberof JsonApiCookieSecurityConfigurationOutAttributes
+     */
+    rotationInterval?: string;
+}
 /**
  *
  * @export
@@ -3146,10 +3177,10 @@ export interface JsonApiCookieSecurityConfigurationPatch {
     id: string;
     /**
      *
-     * @type {JsonApiCookieSecurityConfigurationInAttributes}
+     * @type {JsonApiCookieSecurityConfigurationOutAttributes}
      * @memberof JsonApiCookieSecurityConfigurationPatch
      */
-    attributes?: JsonApiCookieSecurityConfigurationInAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationOutAttributes;
 }
 
 export const JsonApiCookieSecurityConfigurationPatchTypeEnum = {
@@ -3399,6 +3430,246 @@ export interface JsonApiCspDirectivePatchDocument {
      * @memberof JsonApiCspDirectivePatchDocument
      */
     data: JsonApiCspDirectivePatch;
+}
+/**
+ * JSON:API representation of customApplicationSetting entity.
+ * @export
+ * @interface JsonApiCustomApplicationSettingIn
+ */
+export interface JsonApiCustomApplicationSettingIn {
+    /**
+     * Object type
+     * @type {string}
+     * @memberof JsonApiCustomApplicationSettingIn
+     */
+    type: JsonApiCustomApplicationSettingInTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiCustomApplicationSettingIn
+     */
+    id: string;
+    /**
+     *
+     * @type {JsonApiCustomApplicationSettingInAttributes}
+     * @memberof JsonApiCustomApplicationSettingIn
+     */
+    attributes: JsonApiCustomApplicationSettingInAttributes;
+}
+
+export const JsonApiCustomApplicationSettingInTypeEnum = {
+    CUSTOM_APPLICATION_SETTING: "customApplicationSetting",
+} as const;
+
+export type JsonApiCustomApplicationSettingInTypeEnum =
+    typeof JsonApiCustomApplicationSettingInTypeEnum[keyof typeof JsonApiCustomApplicationSettingInTypeEnum];
+
+/**
+ *
+ * @export
+ * @interface JsonApiCustomApplicationSettingInAttributes
+ */
+export interface JsonApiCustomApplicationSettingInAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiCustomApplicationSettingInAttributes
+     */
+    applicationName: string;
+    /**
+     *
+     * @type {object}
+     * @memberof JsonApiCustomApplicationSettingInAttributes
+     */
+    content: object;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiCustomApplicationSettingInDocument
+ */
+export interface JsonApiCustomApplicationSettingInDocument {
+    /**
+     *
+     * @type {JsonApiCustomApplicationSettingIn}
+     * @memberof JsonApiCustomApplicationSettingInDocument
+     */
+    data: JsonApiCustomApplicationSettingIn;
+}
+/**
+ * JSON:API representation of customApplicationSetting entity.
+ * @export
+ * @interface JsonApiCustomApplicationSettingOut
+ */
+export interface JsonApiCustomApplicationSettingOut {
+    /**
+     * Object type
+     * @type {string}
+     * @memberof JsonApiCustomApplicationSettingOut
+     */
+    type: JsonApiCustomApplicationSettingOutTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiCustomApplicationSettingOut
+     */
+    id: string;
+    /**
+     *
+     * @type {JsonApiCustomApplicationSettingInAttributes}
+     * @memberof JsonApiCustomApplicationSettingOut
+     */
+    attributes: JsonApiCustomApplicationSettingInAttributes;
+}
+
+export const JsonApiCustomApplicationSettingOutTypeEnum = {
+    CUSTOM_APPLICATION_SETTING: "customApplicationSetting",
+} as const;
+
+export type JsonApiCustomApplicationSettingOutTypeEnum =
+    typeof JsonApiCustomApplicationSettingOutTypeEnum[keyof typeof JsonApiCustomApplicationSettingOutTypeEnum];
+
+/**
+ *
+ * @export
+ * @interface JsonApiCustomApplicationSettingOutDocument
+ */
+export interface JsonApiCustomApplicationSettingOutDocument {
+    /**
+     *
+     * @type {JsonApiCustomApplicationSettingOut}
+     * @memberof JsonApiCustomApplicationSettingOutDocument
+     */
+    data: JsonApiCustomApplicationSettingOut;
+    /**
+     *
+     * @type {ObjectLinks}
+     * @memberof JsonApiCustomApplicationSettingOutDocument
+     */
+    links?: ObjectLinks;
+}
+/**
+ * A JSON:API document with a list of resources
+ * @export
+ * @interface JsonApiCustomApplicationSettingOutList
+ */
+export interface JsonApiCustomApplicationSettingOutList {
+    /**
+     *
+     * @type {Array<JsonApiCustomApplicationSettingOutWithLinks>}
+     * @memberof JsonApiCustomApplicationSettingOutList
+     */
+    data: Array<JsonApiCustomApplicationSettingOutWithLinks>;
+    /**
+     *
+     * @type {ListLinks}
+     * @memberof JsonApiCustomApplicationSettingOutList
+     */
+    links?: ListLinks;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiCustomApplicationSettingOutWithLinks
+ */
+export interface JsonApiCustomApplicationSettingOutWithLinks {
+    /**
+     * Object type
+     * @type {string}
+     * @memberof JsonApiCustomApplicationSettingOutWithLinks
+     */
+    type: JsonApiCustomApplicationSettingOutWithLinksTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiCustomApplicationSettingOutWithLinks
+     */
+    id: string;
+    /**
+     *
+     * @type {JsonApiCustomApplicationSettingInAttributes}
+     * @memberof JsonApiCustomApplicationSettingOutWithLinks
+     */
+    attributes: JsonApiCustomApplicationSettingInAttributes;
+    /**
+     *
+     * @type {ObjectLinks}
+     * @memberof JsonApiCustomApplicationSettingOutWithLinks
+     */
+    links?: ObjectLinks;
+}
+
+export const JsonApiCustomApplicationSettingOutWithLinksTypeEnum = {
+    CUSTOM_APPLICATION_SETTING: "customApplicationSetting",
+} as const;
+
+export type JsonApiCustomApplicationSettingOutWithLinksTypeEnum =
+    typeof JsonApiCustomApplicationSettingOutWithLinksTypeEnum[keyof typeof JsonApiCustomApplicationSettingOutWithLinksTypeEnum];
+
+/**
+ * JSON:API representation of patching customApplicationSetting entity.
+ * @export
+ * @interface JsonApiCustomApplicationSettingPatch
+ */
+export interface JsonApiCustomApplicationSettingPatch {
+    /**
+     * Object type
+     * @type {string}
+     * @memberof JsonApiCustomApplicationSettingPatch
+     */
+    type: JsonApiCustomApplicationSettingPatchTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiCustomApplicationSettingPatch
+     */
+    id: string;
+    /**
+     *
+     * @type {JsonApiCustomApplicationSettingPatchAttributes}
+     * @memberof JsonApiCustomApplicationSettingPatch
+     */
+    attributes: JsonApiCustomApplicationSettingPatchAttributes;
+}
+
+export const JsonApiCustomApplicationSettingPatchTypeEnum = {
+    CUSTOM_APPLICATION_SETTING: "customApplicationSetting",
+} as const;
+
+export type JsonApiCustomApplicationSettingPatchTypeEnum =
+    typeof JsonApiCustomApplicationSettingPatchTypeEnum[keyof typeof JsonApiCustomApplicationSettingPatchTypeEnum];
+
+/**
+ *
+ * @export
+ * @interface JsonApiCustomApplicationSettingPatchAttributes
+ */
+export interface JsonApiCustomApplicationSettingPatchAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiCustomApplicationSettingPatchAttributes
+     */
+    applicationName?: string;
+    /**
+     *
+     * @type {object}
+     * @memberof JsonApiCustomApplicationSettingPatchAttributes
+     */
+    content?: object;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiCustomApplicationSettingPatchDocument
+ */
+export interface JsonApiCustomApplicationSettingPatchDocument {
+    /**
+     *
+     * @type {JsonApiCustomApplicationSettingPatch}
+     * @memberof JsonApiCustomApplicationSettingPatchDocument
+     */
+    data: JsonApiCustomApplicationSettingPatch;
 }
 /**
  * JSON:API representation of dashboardPlugin entity.
@@ -3686,10 +3957,10 @@ export interface JsonApiDataSourceIdentifierOut {
     id: string;
     /**
      *
-     * @type {JsonApiDataSourceOutMeta}
+     * @type {JsonApiDataSourceIdentifierOutMeta}
      * @memberof JsonApiDataSourceIdentifierOut
      */
-    meta?: JsonApiDataSourceOutMeta;
+    meta?: JsonApiDataSourceIdentifierOutMeta;
     /**
      *
      * @type {JsonApiDataSourceIdentifierOutAttributes}
@@ -3788,6 +4059,28 @@ export interface JsonApiDataSourceIdentifierOutList {
 /**
  *
  * @export
+ * @interface JsonApiDataSourceIdentifierOutMeta
+ */
+export interface JsonApiDataSourceIdentifierOutMeta {
+    /**
+     * List of valid permissions for a logged user.
+     * @type {Array<string>}
+     * @memberof JsonApiDataSourceIdentifierOutMeta
+     */
+    permissions?: Array<JsonApiDataSourceIdentifierOutMetaPermissionsEnum>;
+}
+
+export const JsonApiDataSourceIdentifierOutMetaPermissionsEnum = {
+    MANAGE: "MANAGE",
+    USE: "USE",
+} as const;
+
+export type JsonApiDataSourceIdentifierOutMetaPermissionsEnum =
+    typeof JsonApiDataSourceIdentifierOutMetaPermissionsEnum[keyof typeof JsonApiDataSourceIdentifierOutMetaPermissionsEnum];
+
+/**
+ *
+ * @export
  * @interface JsonApiDataSourceIdentifierOutWithLinks
  */
 export interface JsonApiDataSourceIdentifierOutWithLinks {
@@ -3805,10 +4098,10 @@ export interface JsonApiDataSourceIdentifierOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiDataSourceOutMeta}
+     * @type {JsonApiDataSourceIdentifierOutMeta}
      * @memberof JsonApiDataSourceIdentifierOutWithLinks
      */
-    meta?: JsonApiDataSourceOutMeta;
+    meta?: JsonApiDataSourceIdentifierOutMeta;
     /**
      *
      * @type {JsonApiDataSourceIdentifierOutAttributes}
@@ -3925,10 +4218,10 @@ export interface JsonApiDataSourceInAttributes {
     cachePath?: Array<string>;
     /**
      *
-     * @type {Array<JsonApiDataSourcePatchAttributesParameters>}
+     * @type {Array<JsonApiDataSourceOutAttributesParameters>}
      * @memberof JsonApiDataSourceInAttributes
      */
-    parameters?: Array<JsonApiDataSourcePatchAttributesParameters>;
+    parameters?: Array<JsonApiDataSourceOutAttributesParameters>;
 }
 
 export const JsonApiDataSourceInAttributesTypeEnum = {
@@ -3980,10 +4273,10 @@ export interface JsonApiDataSourceOut {
     id: string;
     /**
      *
-     * @type {JsonApiDataSourceOutMeta}
+     * @type {JsonApiDataSourceIdentifierOutMeta}
      * @memberof JsonApiDataSourceOut
      */
-    meta?: JsonApiDataSourceOutMeta;
+    meta?: JsonApiDataSourceIdentifierOutMeta;
     /**
      *
      * @type {JsonApiDataSourceOutAttributes}
@@ -4049,16 +4342,16 @@ export interface JsonApiDataSourceOutAttributes {
     cachePath?: Array<string>;
     /**
      *
-     * @type {Array<JsonApiDataSourcePatchAttributesParameters>}
+     * @type {Array<JsonApiDataSourceOutAttributesParameters>}
      * @memberof JsonApiDataSourceOutAttributes
      */
-    parameters?: Array<JsonApiDataSourcePatchAttributesParameters>;
+    parameters?: Array<JsonApiDataSourceOutAttributesParameters>;
     /**
      *
-     * @type {Array<JsonApiDataSourcePatchAttributesParameters>}
+     * @type {Array<JsonApiDataSourceOutAttributesParameters>}
      * @memberof JsonApiDataSourceOutAttributes
      */
-    decodedParameters?: Array<JsonApiDataSourcePatchAttributesParameters>;
+    decodedParameters?: Array<JsonApiDataSourceOutAttributesParameters>;
 }
 
 export const JsonApiDataSourceOutAttributesTypeEnum = {
@@ -4077,6 +4370,25 @@ export const JsonApiDataSourceOutAttributesTypeEnum = {
 export type JsonApiDataSourceOutAttributesTypeEnum =
     typeof JsonApiDataSourceOutAttributesTypeEnum[keyof typeof JsonApiDataSourceOutAttributesTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiDataSourceOutAttributesParameters
+ */
+export interface JsonApiDataSourceOutAttributesParameters {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiDataSourceOutAttributesParameters
+     */
+    name: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiDataSourceOutAttributesParameters
+     */
+    value: string;
+}
 /**
  *
  * @export
@@ -4118,28 +4430,6 @@ export interface JsonApiDataSourceOutList {
 /**
  *
  * @export
- * @interface JsonApiDataSourceOutMeta
- */
-export interface JsonApiDataSourceOutMeta {
-    /**
-     * List of valid permissions for a logged user.
-     * @type {Array<string>}
-     * @memberof JsonApiDataSourceOutMeta
-     */
-    permissions?: Array<JsonApiDataSourceOutMetaPermissionsEnum>;
-}
-
-export const JsonApiDataSourceOutMetaPermissionsEnum = {
-    MANAGE: "MANAGE",
-    USE: "USE",
-} as const;
-
-export type JsonApiDataSourceOutMetaPermissionsEnum =
-    typeof JsonApiDataSourceOutMetaPermissionsEnum[keyof typeof JsonApiDataSourceOutMetaPermissionsEnum];
-
-/**
- *
- * @export
  * @interface JsonApiDataSourceOutWithLinks
  */
 export interface JsonApiDataSourceOutWithLinks {
@@ -4157,10 +4447,10 @@ export interface JsonApiDataSourceOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiDataSourceOutMeta}
+     * @type {JsonApiDataSourceIdentifierOutMeta}
      * @memberof JsonApiDataSourceOutWithLinks
      */
-    meta?: JsonApiDataSourceOutMeta;
+    meta?: JsonApiDataSourceIdentifierOutMeta;
     /**
      *
      * @type {JsonApiDataSourceOutAttributes}
@@ -4277,10 +4567,10 @@ export interface JsonApiDataSourcePatchAttributes {
     cachePath?: Array<string>;
     /**
      *
-     * @type {Array<JsonApiDataSourcePatchAttributesParameters>}
+     * @type {Array<JsonApiDataSourceOutAttributesParameters>}
      * @memberof JsonApiDataSourcePatchAttributes
      */
-    parameters?: Array<JsonApiDataSourcePatchAttributesParameters>;
+    parameters?: Array<JsonApiDataSourceOutAttributesParameters>;
 }
 
 export const JsonApiDataSourcePatchAttributesTypeEnum = {
@@ -4299,25 +4589,6 @@ export const JsonApiDataSourcePatchAttributesTypeEnum = {
 export type JsonApiDataSourcePatchAttributesTypeEnum =
     typeof JsonApiDataSourcePatchAttributesTypeEnum[keyof typeof JsonApiDataSourcePatchAttributesTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiDataSourcePatchAttributesParameters
- */
-export interface JsonApiDataSourcePatchAttributesParameters {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiDataSourcePatchAttributesParameters
-     */
-    name: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiDataSourcePatchAttributesParameters
-     */
-    value: string;
-}
 /**
  *
  * @export
@@ -6907,10 +7178,10 @@ export interface JsonApiUserGroupIn {
     id: string;
     /**
      *
-     * @type {JsonApiUserGroupPatchRelationships}
+     * @type {JsonApiUserGroupOutRelationships}
      * @memberof JsonApiUserGroupIn
      */
-    relationships?: JsonApiUserGroupPatchRelationships;
+    relationships?: JsonApiUserGroupOutRelationships;
 }
 
 export const JsonApiUserGroupInTypeEnum = {
@@ -6980,10 +7251,10 @@ export interface JsonApiUserGroupOut {
     id: string;
     /**
      *
-     * @type {JsonApiUserGroupPatchRelationships}
+     * @type {JsonApiUserGroupOutRelationships}
      * @memberof JsonApiUserGroupOut
      */
-    relationships?: JsonApiUserGroupPatchRelationships;
+    relationships?: JsonApiUserGroupOutRelationships;
 }
 
 export const JsonApiUserGroupOutTypeEnum = {
@@ -7046,6 +7317,32 @@ export interface JsonApiUserGroupOutList {
 /**
  *
  * @export
+ * @interface JsonApiUserGroupOutRelationships
+ */
+export interface JsonApiUserGroupOutRelationships {
+    /**
+     *
+     * @type {JsonApiUserGroupOutRelationshipsParents}
+     * @memberof JsonApiUserGroupOutRelationships
+     */
+    parents?: JsonApiUserGroupOutRelationshipsParents;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiUserGroupOutRelationshipsParents
+ */
+export interface JsonApiUserGroupOutRelationshipsParents {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     * @type {Array<JsonApiUserGroupLinkage>}
+     * @memberof JsonApiUserGroupOutRelationshipsParents
+     */
+    data: Array<JsonApiUserGroupLinkage>;
+}
+/**
+ *
+ * @export
  * @interface JsonApiUserGroupOutWithLinks
  */
 export interface JsonApiUserGroupOutWithLinks {
@@ -7063,10 +7360,10 @@ export interface JsonApiUserGroupOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiUserGroupPatchRelationships}
+     * @type {JsonApiUserGroupOutRelationships}
      * @memberof JsonApiUserGroupOutWithLinks
      */
-    relationships?: JsonApiUserGroupPatchRelationships;
+    relationships?: JsonApiUserGroupOutRelationships;
     /**
      *
      * @type {ObjectLinks}
@@ -7102,10 +7399,10 @@ export interface JsonApiUserGroupPatch {
     id: string;
     /**
      *
-     * @type {JsonApiUserGroupPatchRelationships}
+     * @type {JsonApiUserGroupOutRelationships}
      * @memberof JsonApiUserGroupPatch
      */
-    relationships?: JsonApiUserGroupPatchRelationships;
+    relationships?: JsonApiUserGroupOutRelationships;
 }
 
 export const JsonApiUserGroupPatchTypeEnum = {
@@ -7127,32 +7424,6 @@ export interface JsonApiUserGroupPatchDocument {
      * @memberof JsonApiUserGroupPatchDocument
      */
     data: JsonApiUserGroupPatch;
-}
-/**
- *
- * @export
- * @interface JsonApiUserGroupPatchRelationships
- */
-export interface JsonApiUserGroupPatchRelationships {
-    /**
-     *
-     * @type {JsonApiUserGroupPatchRelationshipsParents}
-     * @memberof JsonApiUserGroupPatchRelationships
-     */
-    parents?: JsonApiUserGroupPatchRelationshipsParents;
-}
-/**
- *
- * @export
- * @interface JsonApiUserGroupPatchRelationshipsParents
- */
-export interface JsonApiUserGroupPatchRelationshipsParents {
-    /**
-     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
-     * @type {Array<JsonApiUserGroupLinkage>}
-     * @memberof JsonApiUserGroupPatchRelationshipsParents
-     */
-    data: Array<JsonApiUserGroupLinkage>;
 }
 /**
  * @type JsonApiUserGroupToOneLinkage
@@ -7181,16 +7452,16 @@ export interface JsonApiUserIn {
     id: string;
     /**
      *
-     * @type {JsonApiUserPatchAttributes}
+     * @type {JsonApiUserOutAttributes}
      * @memberof JsonApiUserIn
      */
-    attributes?: JsonApiUserPatchAttributes;
+    attributes?: JsonApiUserOutAttributes;
     /**
      *
-     * @type {JsonApiUserPatchRelationships}
+     * @type {JsonApiUserOutRelationships}
      * @memberof JsonApiUserIn
      */
-    relationships?: JsonApiUserPatchRelationships;
+    relationships?: JsonApiUserOutRelationships;
 }
 
 export const JsonApiUserInTypeEnum = {
@@ -7259,16 +7530,16 @@ export interface JsonApiUserOut {
     id: string;
     /**
      *
-     * @type {JsonApiUserPatchAttributes}
+     * @type {JsonApiUserOutAttributes}
      * @memberof JsonApiUserOut
      */
-    attributes?: JsonApiUserPatchAttributes;
+    attributes?: JsonApiUserOutAttributes;
     /**
      *
-     * @type {JsonApiUserPatchRelationships}
+     * @type {JsonApiUserOutRelationships}
      * @memberof JsonApiUserOut
      */
-    relationships?: JsonApiUserPatchRelationships;
+    relationships?: JsonApiUserOutRelationships;
 }
 
 export const JsonApiUserOutTypeEnum = {
@@ -7277,6 +7548,19 @@ export const JsonApiUserOutTypeEnum = {
 
 export type JsonApiUserOutTypeEnum = typeof JsonApiUserOutTypeEnum[keyof typeof JsonApiUserOutTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiUserOutAttributes
+ */
+export interface JsonApiUserOutAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiUserOutAttributes
+     */
+    authenticationId?: string;
+}
 /**
  *
  * @export
@@ -7330,6 +7614,19 @@ export interface JsonApiUserOutList {
 /**
  *
  * @export
+ * @interface JsonApiUserOutRelationships
+ */
+export interface JsonApiUserOutRelationships {
+    /**
+     *
+     * @type {JsonApiUserGroupOutRelationshipsParents}
+     * @memberof JsonApiUserOutRelationships
+     */
+    userGroups?: JsonApiUserGroupOutRelationshipsParents;
+}
+/**
+ *
+ * @export
  * @interface JsonApiUserOutWithLinks
  */
 export interface JsonApiUserOutWithLinks {
@@ -7347,16 +7644,16 @@ export interface JsonApiUserOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiUserPatchAttributes}
+     * @type {JsonApiUserOutAttributes}
      * @memberof JsonApiUserOutWithLinks
      */
-    attributes?: JsonApiUserPatchAttributes;
+    attributes?: JsonApiUserOutAttributes;
     /**
      *
-     * @type {JsonApiUserPatchRelationships}
+     * @type {JsonApiUserOutRelationships}
      * @memberof JsonApiUserOutWithLinks
      */
-    relationships?: JsonApiUserPatchRelationships;
+    relationships?: JsonApiUserOutRelationships;
     /**
      *
      * @type {ObjectLinks}
@@ -7392,16 +7689,16 @@ export interface JsonApiUserPatch {
     id: string;
     /**
      *
-     * @type {JsonApiUserPatchAttributes}
+     * @type {JsonApiUserOutAttributes}
      * @memberof JsonApiUserPatch
      */
-    attributes?: JsonApiUserPatchAttributes;
+    attributes?: JsonApiUserOutAttributes;
     /**
      *
-     * @type {JsonApiUserPatchRelationships}
+     * @type {JsonApiUserOutRelationships}
      * @memberof JsonApiUserPatch
      */
-    relationships?: JsonApiUserPatchRelationships;
+    relationships?: JsonApiUserOutRelationships;
 }
 
 export const JsonApiUserPatchTypeEnum = {
@@ -7410,19 +7707,6 @@ export const JsonApiUserPatchTypeEnum = {
 
 export type JsonApiUserPatchTypeEnum = typeof JsonApiUserPatchTypeEnum[keyof typeof JsonApiUserPatchTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiUserPatchAttributes
- */
-export interface JsonApiUserPatchAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiUserPatchAttributes
-     */
-    authenticationId?: string;
-}
 /**
  *
  * @export
@@ -7435,19 +7719,6 @@ export interface JsonApiUserPatchDocument {
      * @memberof JsonApiUserPatchDocument
      */
     data: JsonApiUserPatch;
-}
-/**
- *
- * @export
- * @interface JsonApiUserPatchRelationships
- */
-export interface JsonApiUserPatchRelationships {
-    /**
-     *
-     * @type {JsonApiUserGroupPatchRelationshipsParents}
-     * @memberof JsonApiUserPatchRelationships
-     */
-    userGroups?: JsonApiUserGroupPatchRelationshipsParents;
 }
 /**
  * JSON:API representation of userSetting entity.
@@ -8420,16 +8691,16 @@ export interface JsonApiWorkspaceIn {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspacePatchAttributes}
+     * @type {JsonApiWorkspaceOutAttributes}
      * @memberof JsonApiWorkspaceIn
      */
-    attributes?: JsonApiWorkspacePatchAttributes;
+    attributes?: JsonApiWorkspaceOutAttributes;
     /**
      *
-     * @type {JsonApiWorkspacePatchRelationships}
+     * @type {JsonApiWorkspaceOutRelationships}
      * @memberof JsonApiWorkspaceIn
      */
-    relationships?: JsonApiWorkspacePatchRelationships;
+    relationships?: JsonApiWorkspaceOutRelationships;
 }
 
 export const JsonApiWorkspaceInTypeEnum = {
@@ -8505,16 +8776,16 @@ export interface JsonApiWorkspaceOut {
     meta?: JsonApiWorkspaceOutMeta;
     /**
      *
-     * @type {JsonApiWorkspacePatchAttributes}
+     * @type {JsonApiWorkspaceOutAttributes}
      * @memberof JsonApiWorkspaceOut
      */
-    attributes?: JsonApiWorkspacePatchAttributes;
+    attributes?: JsonApiWorkspaceOutAttributes;
     /**
      *
-     * @type {JsonApiWorkspacePatchRelationships}
+     * @type {JsonApiWorkspaceOutRelationships}
      * @memberof JsonApiWorkspaceOut
      */
-    relationships?: JsonApiWorkspacePatchRelationships;
+    relationships?: JsonApiWorkspaceOutRelationships;
 }
 
 export const JsonApiWorkspaceOutTypeEnum = {
@@ -8524,6 +8795,31 @@ export const JsonApiWorkspaceOutTypeEnum = {
 export type JsonApiWorkspaceOutTypeEnum =
     typeof JsonApiWorkspaceOutTypeEnum[keyof typeof JsonApiWorkspaceOutTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiWorkspaceOutAttributes
+ */
+export interface JsonApiWorkspaceOutAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspaceOutAttributes
+     */
+    name?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspaceOutAttributes
+     */
+    earlyAccess?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspaceOutAttributes
+     */
+    description?: string;
+}
 /**
  *
  * @export
@@ -8626,6 +8922,32 @@ export interface JsonApiWorkspaceOutMetaConfig {
 /**
  *
  * @export
+ * @interface JsonApiWorkspaceOutRelationships
+ */
+export interface JsonApiWorkspaceOutRelationships {
+    /**
+     *
+     * @type {JsonApiWorkspaceOutRelationshipsParent}
+     * @memberof JsonApiWorkspaceOutRelationships
+     */
+    parent?: JsonApiWorkspaceOutRelationshipsParent;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiWorkspaceOutRelationshipsParent
+ */
+export interface JsonApiWorkspaceOutRelationshipsParent {
+    /**
+     *
+     * @type {JsonApiWorkspaceToOneLinkage}
+     * @memberof JsonApiWorkspaceOutRelationshipsParent
+     */
+    data: JsonApiWorkspaceToOneLinkage | null;
+}
+/**
+ *
+ * @export
  * @interface JsonApiWorkspaceOutWithLinks
  */
 export interface JsonApiWorkspaceOutWithLinks {
@@ -8649,16 +8971,16 @@ export interface JsonApiWorkspaceOutWithLinks {
     meta?: JsonApiWorkspaceOutMeta;
     /**
      *
-     * @type {JsonApiWorkspacePatchAttributes}
+     * @type {JsonApiWorkspaceOutAttributes}
      * @memberof JsonApiWorkspaceOutWithLinks
      */
-    attributes?: JsonApiWorkspacePatchAttributes;
+    attributes?: JsonApiWorkspaceOutAttributes;
     /**
      *
-     * @type {JsonApiWorkspacePatchRelationships}
+     * @type {JsonApiWorkspaceOutRelationships}
      * @memberof JsonApiWorkspaceOutWithLinks
      */
-    relationships?: JsonApiWorkspacePatchRelationships;
+    relationships?: JsonApiWorkspaceOutRelationships;
     /**
      *
      * @type {ObjectLinks}
@@ -8694,16 +9016,16 @@ export interface JsonApiWorkspacePatch {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspacePatchAttributes}
+     * @type {JsonApiWorkspaceOutAttributes}
      * @memberof JsonApiWorkspacePatch
      */
-    attributes?: JsonApiWorkspacePatchAttributes;
+    attributes?: JsonApiWorkspaceOutAttributes;
     /**
      *
-     * @type {JsonApiWorkspacePatchRelationships}
+     * @type {JsonApiWorkspaceOutRelationships}
      * @memberof JsonApiWorkspacePatch
      */
-    relationships?: JsonApiWorkspacePatchRelationships;
+    relationships?: JsonApiWorkspaceOutRelationships;
 }
 
 export const JsonApiWorkspacePatchTypeEnum = {
@@ -8716,31 +9038,6 @@ export type JsonApiWorkspacePatchTypeEnum =
 /**
  *
  * @export
- * @interface JsonApiWorkspacePatchAttributes
- */
-export interface JsonApiWorkspacePatchAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspacePatchAttributes
-     */
-    name?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspacePatchAttributes
-     */
-    earlyAccess?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspacePatchAttributes
-     */
-    description?: string;
-}
-/**
- *
- * @export
  * @interface JsonApiWorkspacePatchDocument
  */
 export interface JsonApiWorkspacePatchDocument {
@@ -8750,32 +9047,6 @@ export interface JsonApiWorkspacePatchDocument {
      * @memberof JsonApiWorkspacePatchDocument
      */
     data: JsonApiWorkspacePatch;
-}
-/**
- *
- * @export
- * @interface JsonApiWorkspacePatchRelationships
- */
-export interface JsonApiWorkspacePatchRelationships {
-    /**
-     *
-     * @type {JsonApiWorkspacePatchRelationshipsParent}
-     * @memberof JsonApiWorkspacePatchRelationships
-     */
-    parent?: JsonApiWorkspacePatchRelationshipsParent;
-}
-/**
- *
- * @export
- * @interface JsonApiWorkspacePatchRelationshipsParent
- */
-export interface JsonApiWorkspacePatchRelationshipsParent {
-    /**
-     *
-     * @type {JsonApiWorkspaceToOneLinkage}
-     * @memberof JsonApiWorkspacePatchRelationshipsParent
-     */
-    data: JsonApiWorkspaceToOneLinkage | null;
 }
 /**
  * JSON:API representation of workspaceSetting entity.
@@ -10919,6 +11190,66 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          *
          * @param {string} workspaceId
+         * @param {JsonApiCustomApplicationSettingInDocument} jsonApiCustomApplicationSettingInDocument
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createEntityCustomApplicationSettings: async (
+            workspaceId: string,
+            jsonApiCustomApplicationSettingInDocument: JsonApiCustomApplicationSettingInDocument,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("createEntityCustomApplicationSettings", "workspaceId", workspaceId);
+            // verify required parameter 'jsonApiCustomApplicationSettingInDocument' is not null or undefined
+            assertParamExists(
+                "createEntityCustomApplicationSettings",
+                "jsonApiCustomApplicationSettingInDocument",
+                jsonApiCustomApplicationSettingInDocument,
+            );
+            const localVarPath =
+                `/api/v1/entities/workspaces/{workspaceId}/customApplicationSettings`.replace(
+                    `{${"workspaceId"}}`,
+                    encodeURIComponent(String(workspaceId)),
+                );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof jsonApiCustomApplicationSettingInDocument !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      jsonApiCustomApplicationSettingInDocument !== undefined
+                          ? jsonApiCustomApplicationSettingInDocument
+                          : {},
+                  )
+                : jsonApiCustomApplicationSettingInDocument || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} workspaceId
          * @param {JsonApiDashboardPluginInDocument} jsonApiDashboardPluginInDocument
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -11800,6 +12131,55 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} workspaceId
+         * @param {string} objectId
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteEntityCustomApplicationSettings: async (
+            workspaceId: string,
+            objectId: string,
+            filter?: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("deleteEntityCustomApplicationSettings", "workspaceId", workspaceId);
+            // verify required parameter 'objectId' is not null or undefined
+            assertParamExists("deleteEntityCustomApplicationSettings", "objectId", objectId);
+            const localVarPath =
+                `/api/v1/entities/workspaces/{workspaceId}/customApplicationSettings/{objectId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -12768,6 +13148,84 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             if (sort) {
                 localVarQueryParameter["sort"] = sort;
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} workspaceId
+         * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin]
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {number} [page] Zero-based page index (0..N)
+         * @param {number} [size] The size of the page to be returned
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllEntitiesCustomApplicationSettings: async (
+            workspaceId: string,
+            origin?: "ALL" | "PARENTS" | "NATIVE",
+            filter?: string,
+            page?: number,
+            size?: number,
+            sort?: Array<string>,
+            xGDCVALIDATERELATIONS?: boolean,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("getAllEntitiesCustomApplicationSettings", "workspaceId", workspaceId);
+            const localVarPath =
+                `/api/v1/entities/workspaces/{workspaceId}/customApplicationSettings`.replace(
+                    `{${"workspaceId"}}`,
+                    encodeURIComponent(String(workspaceId)),
+                );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (origin !== undefined) {
+                localVarQueryParameter["origin"] = origin;
+            }
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter["page"] = page;
+            }
+
+            if (size !== undefined) {
+                localVarQueryParameter["size"] = size;
+            }
+
+            if (sort) {
+                localVarQueryParameter["sort"] = sort;
+            }
+
+            if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+                localVarHeaderParameter["X-GDC-VALIDATE-RELATIONS"] = String(
+                    JSON.stringify(xGDCVALIDATERELATIONS),
+                );
             }
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -14599,6 +15057,63 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        getEntityCustomApplicationSettings: async (
+            workspaceId: string,
+            objectId: string,
+            filter?: string,
+            xGDCVALIDATERELATIONS?: boolean,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("getEntityCustomApplicationSettings", "workspaceId", workspaceId);
+            // verify required parameter 'objectId' is not null or undefined
+            assertParamExists("getEntityCustomApplicationSettings", "objectId", objectId);
+            const localVarPath =
+                `/api/v1/entities/workspaces/{workspaceId}/customApplicationSettings/{objectId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+                localVarHeaderParameter["X-GDC-VALIDATE-RELATIONS"] = String(
+                    JSON.stringify(xGDCVALIDATERELATIONS),
+                );
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} workspaceId
+         * @param {string} objectId
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         getEntityDashboardPlugins: async (
             workspaceId: string,
             objectId: string,
@@ -16065,6 +16580,75 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          *
          * @param {string} workspaceId
          * @param {string} objectId
+         * @param {JsonApiCustomApplicationSettingPatchDocument} jsonApiCustomApplicationSettingPatchDocument
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchEntityCustomApplicationSettings: async (
+            workspaceId: string,
+            objectId: string,
+            jsonApiCustomApplicationSettingPatchDocument: JsonApiCustomApplicationSettingPatchDocument,
+            filter?: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("patchEntityCustomApplicationSettings", "workspaceId", workspaceId);
+            // verify required parameter 'objectId' is not null or undefined
+            assertParamExists("patchEntityCustomApplicationSettings", "objectId", objectId);
+            // verify required parameter 'jsonApiCustomApplicationSettingPatchDocument' is not null or undefined
+            assertParamExists(
+                "patchEntityCustomApplicationSettings",
+                "jsonApiCustomApplicationSettingPatchDocument",
+                jsonApiCustomApplicationSettingPatchDocument,
+            );
+            const localVarPath =
+                `/api/v1/entities/workspaces/{workspaceId}/customApplicationSettings/{objectId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof jsonApiCustomApplicationSettingPatchDocument !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      jsonApiCustomApplicationSettingPatchDocument !== undefined
+                          ? jsonApiCustomApplicationSettingPatchDocument
+                          : {},
+                  )
+                : jsonApiCustomApplicationSettingPatchDocument || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} workspaceId
+         * @param {string} objectId
          * @param {JsonApiDashboardPluginPatchDocument} jsonApiDashboardPluginPatchDocument
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
@@ -17282,6 +17866,75 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          *
          * @param {string} workspaceId
          * @param {string} objectId
+         * @param {JsonApiCustomApplicationSettingInDocument} jsonApiCustomApplicationSettingInDocument
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateEntityCustomApplicationSettings: async (
+            workspaceId: string,
+            objectId: string,
+            jsonApiCustomApplicationSettingInDocument: JsonApiCustomApplicationSettingInDocument,
+            filter?: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("updateEntityCustomApplicationSettings", "workspaceId", workspaceId);
+            // verify required parameter 'objectId' is not null or undefined
+            assertParamExists("updateEntityCustomApplicationSettings", "objectId", objectId);
+            // verify required parameter 'jsonApiCustomApplicationSettingInDocument' is not null or undefined
+            assertParamExists(
+                "updateEntityCustomApplicationSettings",
+                "jsonApiCustomApplicationSettingInDocument",
+                jsonApiCustomApplicationSettingInDocument,
+            );
+            const localVarPath =
+                `/api/v1/entities/workspaces/{workspaceId}/customApplicationSettings/{objectId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "PUT", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof jsonApiCustomApplicationSettingInDocument !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      jsonApiCustomApplicationSettingInDocument !== undefined
+                          ? jsonApiCustomApplicationSettingInDocument
+                          : {},
+                  )
+                : jsonApiCustomApplicationSettingInDocument || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} workspaceId
+         * @param {string} objectId
          * @param {JsonApiDashboardPluginInDocument} jsonApiDashboardPluginInDocument
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
@@ -18314,6 +18967,30 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         /**
          *
          * @param {string} workspaceId
+         * @param {JsonApiCustomApplicationSettingInDocument} jsonApiCustomApplicationSettingInDocument
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createEntityCustomApplicationSettings(
+            workspaceId: string,
+            jsonApiCustomApplicationSettingInDocument: JsonApiCustomApplicationSettingInDocument,
+            options?: AxiosRequestConfig,
+        ): Promise<
+            (
+                axios?: AxiosInstance,
+                basePath?: string,
+            ) => AxiosPromise<JsonApiCustomApplicationSettingOutDocument>
+        > {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createEntityCustomApplicationSettings(
+                workspaceId,
+                jsonApiCustomApplicationSettingInDocument,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} workspaceId
          * @param {JsonApiDashboardPluginInDocument} jsonApiDashboardPluginInDocument
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -18652,6 +19329,28 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteEntityCspDirectives(
                 id,
+                filter,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} workspaceId
+         * @param {string} objectId
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteEntityCustomApplicationSettings(
+            workspaceId: string,
+            objectId: string,
+            filter?: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteEntityCustomApplicationSettings(
+                workspaceId,
+                objectId,
                 filter,
                 options,
             );
@@ -19076,6 +19775,42 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 page,
                 size,
                 sort,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} workspaceId
+         * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin]
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {number} [page] Zero-based page index (0..N)
+         * @param {number} [size] The size of the page to be returned
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAllEntitiesCustomApplicationSettings(
+            workspaceId: string,
+            origin?: "ALL" | "PARENTS" | "NATIVE",
+            filter?: string,
+            page?: number,
+            size?: number,
+            sort?: Array<string>,
+            xGDCVALIDATERELATIONS?: boolean,
+            options?: AxiosRequestConfig,
+        ): Promise<
+            (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiCustomApplicationSettingOutList>
+        > {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAllEntitiesCustomApplicationSettings(
+                workspaceId,
+                origin,
+                filter,
+                page,
+                size,
+                sort,
+                xGDCVALIDATERELATIONS,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -19746,7 +20481,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          */
         async getAllOptions(
             options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAllOptions(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -19758,7 +20493,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          */
         async getDataSourceDrivers(
             options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getDataSourceDrivers(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -19913,6 +20648,36 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEntityCspDirectives(
                 id,
                 filter,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} workspaceId
+         * @param {string} objectId
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getEntityCustomApplicationSettings(
+            workspaceId: string,
+            objectId: string,
+            filter?: string,
+            xGDCVALIDATERELATIONS?: boolean,
+            options?: AxiosRequestConfig,
+        ): Promise<
+            (
+                axios?: AxiosInstance,
+                basePath?: string,
+            ) => AxiosPromise<JsonApiCustomApplicationSettingOutDocument>
+        > {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEntityCustomApplicationSettings(
+                workspaceId,
+                objectId,
+                filter,
+                xGDCVALIDATERELATIONS,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -20585,6 +21350,36 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          *
          * @param {string} workspaceId
          * @param {string} objectId
+         * @param {JsonApiCustomApplicationSettingPatchDocument} jsonApiCustomApplicationSettingPatchDocument
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async patchEntityCustomApplicationSettings(
+            workspaceId: string,
+            objectId: string,
+            jsonApiCustomApplicationSettingPatchDocument: JsonApiCustomApplicationSettingPatchDocument,
+            filter?: string,
+            options?: AxiosRequestConfig,
+        ): Promise<
+            (
+                axios?: AxiosInstance,
+                basePath?: string,
+            ) => AxiosPromise<JsonApiCustomApplicationSettingOutDocument>
+        > {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchEntityCustomApplicationSettings(
+                workspaceId,
+                objectId,
+                jsonApiCustomApplicationSettingPatchDocument,
+                filter,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} workspaceId
+         * @param {string} objectId
          * @param {JsonApiDashboardPluginPatchDocument} jsonApiDashboardPluginPatchDocument
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
@@ -21067,6 +21862,36 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          *
          * @param {string} workspaceId
          * @param {string} objectId
+         * @param {JsonApiCustomApplicationSettingInDocument} jsonApiCustomApplicationSettingInDocument
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateEntityCustomApplicationSettings(
+            workspaceId: string,
+            objectId: string,
+            jsonApiCustomApplicationSettingInDocument: JsonApiCustomApplicationSettingInDocument,
+            filter?: string,
+            options?: AxiosRequestConfig,
+        ): Promise<
+            (
+                axios?: AxiosInstance,
+                basePath?: string,
+            ) => AxiosPromise<JsonApiCustomApplicationSettingOutDocument>
+        > {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateEntityCustomApplicationSettings(
+                workspaceId,
+                objectId,
+                jsonApiCustomApplicationSettingInDocument,
+                filter,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} workspaceId
+         * @param {string} objectId
          * @param {JsonApiDashboardPluginInDocument} jsonApiDashboardPluginInDocument
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {*} [options] Override http request option.
@@ -21513,6 +22338,24 @@ export const EntitiesApiFactory = function (
         },
         /**
          *
+         * @param {EntitiesApiCreateEntityCustomApplicationSettingsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createEntityCustomApplicationSettings(
+            requestParameters: EntitiesApiCreateEntityCustomApplicationSettingsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<JsonApiCustomApplicationSettingOutDocument> {
+            return localVarFp
+                .createEntityCustomApplicationSettings(
+                    requestParameters.workspaceId,
+                    requestParameters.jsonApiCustomApplicationSettingInDocument,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
          * @param {EntitiesApiCreateEntityDashboardPluginsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -21804,6 +22647,25 @@ export const EntitiesApiFactory = function (
         ): AxiosPromise<void> {
             return localVarFp
                 .deleteEntityCspDirectives(requestParameters.id, requestParameters.filter, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {EntitiesApiDeleteEntityCustomApplicationSettingsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteEntityCustomApplicationSettings(
+            requestParameters: EntitiesApiDeleteEntityCustomApplicationSettingsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .deleteEntityCustomApplicationSettings(
+                    requestParameters.workspaceId,
+                    requestParameters.objectId,
+                    requestParameters.filter,
+                    options,
+                )
                 .then((request) => request(axios, basePath));
         },
         /**
@@ -22128,6 +22990,29 @@ export const EntitiesApiFactory = function (
                     requestParameters.page,
                     requestParameters.size,
                     requestParameters.sort,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {EntitiesApiGetAllEntitiesCustomApplicationSettingsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllEntitiesCustomApplicationSettings(
+            requestParameters: EntitiesApiGetAllEntitiesCustomApplicationSettingsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<JsonApiCustomApplicationSettingOutList> {
+            return localVarFp
+                .getAllEntitiesCustomApplicationSettings(
+                    requestParameters.workspaceId,
+                    requestParameters.origin,
+                    requestParameters.filter,
+                    requestParameters.page,
+                    requestParameters.size,
+                    requestParameters.sort,
+                    requestParameters.xGDCVALIDATERELATIONS,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -22584,7 +23469,7 @@ export const EntitiesApiFactory = function (
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllOptions(options?: AxiosRequestConfig): AxiosPromise<void> {
+        getAllOptions(options?: AxiosRequestConfig): AxiosPromise<object> {
             return localVarFp.getAllOptions(options).then((request) => request(axios, basePath));
         },
         /**
@@ -22593,7 +23478,7 @@ export const EntitiesApiFactory = function (
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDataSourceDrivers(options?: AxiosRequestConfig): AxiosPromise<void> {
+        getDataSourceDrivers(options?: AxiosRequestConfig): AxiosPromise<object> {
             return localVarFp.getDataSourceDrivers(options).then((request) => request(axios, basePath));
         },
         /**
@@ -22701,6 +23586,26 @@ export const EntitiesApiFactory = function (
         ): AxiosPromise<JsonApiCspDirectiveOutDocument> {
             return localVarFp
                 .getEntityCspDirectives(requestParameters.id, requestParameters.filter, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {EntitiesApiGetEntityCustomApplicationSettingsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEntityCustomApplicationSettings(
+            requestParameters: EntitiesApiGetEntityCustomApplicationSettingsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<JsonApiCustomApplicationSettingOutDocument> {
+            return localVarFp
+                .getEntityCustomApplicationSettings(
+                    requestParameters.workspaceId,
+                    requestParameters.objectId,
+                    requestParameters.filter,
+                    requestParameters.xGDCVALIDATERELATIONS,
+                    options,
+                )
                 .then((request) => request(axios, basePath));
         },
         /**
@@ -23202,6 +24107,26 @@ export const EntitiesApiFactory = function (
         },
         /**
          *
+         * @param {EntitiesApiPatchEntityCustomApplicationSettingsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchEntityCustomApplicationSettings(
+            requestParameters: EntitiesApiPatchEntityCustomApplicationSettingsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<JsonApiCustomApplicationSettingOutDocument> {
+            return localVarFp
+                .patchEntityCustomApplicationSettings(
+                    requestParameters.workspaceId,
+                    requestParameters.objectId,
+                    requestParameters.jsonApiCustomApplicationSettingPatchDocument,
+                    requestParameters.filter,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
          * @param {EntitiesApiPatchEntityDashboardPluginsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -23561,6 +24486,26 @@ export const EntitiesApiFactory = function (
         },
         /**
          *
+         * @param {EntitiesApiUpdateEntityCustomApplicationSettingsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateEntityCustomApplicationSettings(
+            requestParameters: EntitiesApiUpdateEntityCustomApplicationSettingsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<JsonApiCustomApplicationSettingOutDocument> {
+            return localVarFp
+                .updateEntityCustomApplicationSettings(
+                    requestParameters.workspaceId,
+                    requestParameters.objectId,
+                    requestParameters.jsonApiCustomApplicationSettingInDocument,
+                    requestParameters.filter,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
          * @param {EntitiesApiUpdateEntityDashboardPluginsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -23899,6 +24844,18 @@ export interface EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiCreateEntityCustomApplicationSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    createEntityCustomApplicationSettings(
+        requestParameters: EntitiesApiCreateEntityCustomApplicationSettingsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<JsonApiCustomApplicationSettingOutDocument>;
+
+    /**
+     *
      * @param {EntitiesApiCreateEntityDashboardPluginsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -24098,6 +25055,18 @@ export interface EntitiesApiInterface {
      */
     deleteEntityCspDirectives(
         requestParameters: EntitiesApiDeleteEntityCspDirectivesRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
+
+    /**
+     *
+     * @param {EntitiesApiDeleteEntityCustomApplicationSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    deleteEntityCustomApplicationSettings(
+        requestParameters: EntitiesApiDeleteEntityCustomApplicationSettingsRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 
@@ -24316,6 +25285,18 @@ export interface EntitiesApiInterface {
         requestParameters: EntitiesApiGetAllEntitiesCspDirectivesRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiCspDirectiveOutList>;
+
+    /**
+     *
+     * @param {EntitiesApiGetAllEntitiesCustomApplicationSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    getAllEntitiesCustomApplicationSettings(
+        requestParameters: EntitiesApiGetAllEntitiesCustomApplicationSettingsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<JsonApiCustomApplicationSettingOutList>;
 
     /**
      *
@@ -24564,7 +25545,7 @@ export interface EntitiesApiInterface {
      * @throws {RequiredError}
      * @memberof EntitiesApiInterface
      */
-    getAllOptions(options?: AxiosRequestConfig): AxiosPromise<void>;
+    getAllOptions(options?: AxiosRequestConfig): AxiosPromise<object>;
 
     /**
      * Retrieves a list of all supported data sources along with information about the used drivers.
@@ -24573,7 +25554,7 @@ export interface EntitiesApiInterface {
      * @throws {RequiredError}
      * @memberof EntitiesApiInterface
      */
-    getDataSourceDrivers(options?: AxiosRequestConfig): AxiosPromise<void>;
+    getDataSourceDrivers(options?: AxiosRequestConfig): AxiosPromise<object>;
 
     /**
      *
@@ -24646,6 +25627,18 @@ export interface EntitiesApiInterface {
         requestParameters: EntitiesApiGetEntityCspDirectivesRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiCspDirectiveOutDocument>;
+
+    /**
+     *
+     * @param {EntitiesApiGetEntityCustomApplicationSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    getEntityCustomApplicationSettings(
+        requestParameters: EntitiesApiGetEntityCustomApplicationSettingsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<JsonApiCustomApplicationSettingOutDocument>;
 
     /**
      *
@@ -24962,6 +25955,18 @@ export interface EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiPatchEntityCustomApplicationSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    patchEntityCustomApplicationSettings(
+        requestParameters: EntitiesApiPatchEntityCustomApplicationSettingsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<JsonApiCustomApplicationSettingOutDocument>;
+
+    /**
+     *
      * @param {EntitiesApiPatchEntityDashboardPluginsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -25175,6 +26180,18 @@ export interface EntitiesApiInterface {
         requestParameters: EntitiesApiUpdateEntityCspDirectivesRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiCspDirectiveOutDocument>;
+
+    /**
+     *
+     * @param {EntitiesApiUpdateEntityCustomApplicationSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    updateEntityCustomApplicationSettings(
+        requestParameters: EntitiesApiUpdateEntityCustomApplicationSettingsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<JsonApiCustomApplicationSettingOutDocument>;
 
     /**
      *
@@ -25429,6 +26446,27 @@ export interface EntitiesApiCreateEntityCspDirectivesRequest {
      * @memberof EntitiesApiCreateEntityCspDirectives
      */
     readonly jsonApiCspDirectiveInDocument: JsonApiCspDirectiveInDocument;
+}
+
+/**
+ * Request parameters for createEntityCustomApplicationSettings operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiCreateEntityCustomApplicationSettingsRequest
+ */
+export interface EntitiesApiCreateEntityCustomApplicationSettingsRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiCreateEntityCustomApplicationSettings
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {JsonApiCustomApplicationSettingInDocument}
+     * @memberof EntitiesApiCreateEntityCustomApplicationSettings
+     */
+    readonly jsonApiCustomApplicationSettingInDocument: JsonApiCustomApplicationSettingInDocument;
 }
 
 /**
@@ -25805,6 +26843,34 @@ export interface EntitiesApiDeleteEntityCspDirectivesRequest {
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
      * @type {string}
      * @memberof EntitiesApiDeleteEntityCspDirectives
+     */
+    readonly filter?: string;
+}
+
+/**
+ * Request parameters for deleteEntityCustomApplicationSettings operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiDeleteEntityCustomApplicationSettingsRequest
+ */
+export interface EntitiesApiDeleteEntityCustomApplicationSettingsRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiDeleteEntityCustomApplicationSettings
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiDeleteEntityCustomApplicationSettings
+     */
+    readonly objectId: string;
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiDeleteEntityCustomApplicationSettings
      */
     readonly filter?: string;
 }
@@ -26376,6 +27442,62 @@ export interface EntitiesApiGetAllEntitiesCspDirectivesRequest {
      * @memberof EntitiesApiGetAllEntitiesCspDirectives
      */
     readonly sort?: Array<string>;
+}
+
+/**
+ * Request parameters for getAllEntitiesCustomApplicationSettings operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiGetAllEntitiesCustomApplicationSettingsRequest
+ */
+export interface EntitiesApiGetAllEntitiesCustomApplicationSettingsRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiGetAllEntitiesCustomApplicationSettings
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {'ALL' | 'PARENTS' | 'NATIVE'}
+     * @memberof EntitiesApiGetAllEntitiesCustomApplicationSettings
+     */
+    readonly origin?: "ALL" | "PARENTS" | "NATIVE";
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiGetAllEntitiesCustomApplicationSettings
+     */
+    readonly filter?: string;
+
+    /**
+     * Zero-based page index (0..N)
+     * @type {number}
+     * @memberof EntitiesApiGetAllEntitiesCustomApplicationSettings
+     */
+    readonly page?: number;
+
+    /**
+     * The size of the page to be returned
+     * @type {number}
+     * @memberof EntitiesApiGetAllEntitiesCustomApplicationSettings
+     */
+    readonly size?: number;
+
+    /**
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @type {Array<string>}
+     * @memberof EntitiesApiGetAllEntitiesCustomApplicationSettings
+     */
+    readonly sort?: Array<string>;
+
+    /**
+     *
+     * @type {boolean}
+     * @memberof EntitiesApiGetAllEntitiesCustomApplicationSettings
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean;
 }
 
 /**
@@ -27585,6 +28707,41 @@ export interface EntitiesApiGetEntityCspDirectivesRequest {
 }
 
 /**
+ * Request parameters for getEntityCustomApplicationSettings operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiGetEntityCustomApplicationSettingsRequest
+ */
+export interface EntitiesApiGetEntityCustomApplicationSettingsRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiGetEntityCustomApplicationSettings
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiGetEntityCustomApplicationSettings
+     */
+    readonly objectId: string;
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiGetEntityCustomApplicationSettings
+     */
+    readonly filter?: string;
+
+    /**
+     *
+     * @type {boolean}
+     * @memberof EntitiesApiGetEntityCustomApplicationSettings
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+/**
  * Request parameters for getEntityDashboardPlugins operation in EntitiesApi.
  * @export
  * @interface EntitiesApiGetEntityDashboardPluginsRequest
@@ -28441,6 +29598,41 @@ export interface EntitiesApiPatchEntityCspDirectivesRequest {
 }
 
 /**
+ * Request parameters for patchEntityCustomApplicationSettings operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiPatchEntityCustomApplicationSettingsRequest
+ */
+export interface EntitiesApiPatchEntityCustomApplicationSettingsRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiPatchEntityCustomApplicationSettings
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiPatchEntityCustomApplicationSettings
+     */
+    readonly objectId: string;
+
+    /**
+     *
+     * @type {JsonApiCustomApplicationSettingPatchDocument}
+     * @memberof EntitiesApiPatchEntityCustomApplicationSettings
+     */
+    readonly jsonApiCustomApplicationSettingPatchDocument: JsonApiCustomApplicationSettingPatchDocument;
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiPatchEntityCustomApplicationSettings
+     */
+    readonly filter?: string;
+}
+
+/**
  * Request parameters for patchEntityDashboardPlugins operation in EntitiesApi.
  * @export
  * @interface EntitiesApiPatchEntityDashboardPluginsRequest
@@ -29073,6 +30265,41 @@ export interface EntitiesApiUpdateEntityCspDirectivesRequest {
 }
 
 /**
+ * Request parameters for updateEntityCustomApplicationSettings operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiUpdateEntityCustomApplicationSettingsRequest
+ */
+export interface EntitiesApiUpdateEntityCustomApplicationSettingsRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiUpdateEntityCustomApplicationSettings
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiUpdateEntityCustomApplicationSettings
+     */
+    readonly objectId: string;
+
+    /**
+     *
+     * @type {JsonApiCustomApplicationSettingInDocument}
+     * @memberof EntitiesApiUpdateEntityCustomApplicationSettings
+     */
+    readonly jsonApiCustomApplicationSettingInDocument: JsonApiCustomApplicationSettingInDocument;
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiUpdateEntityCustomApplicationSettings
+     */
+    readonly filter?: string;
+}
+
+/**
  * Request parameters for updateEntityDashboardPlugins operation in EntitiesApi.
  * @export
  * @interface EntitiesApiUpdateEntityDashboardPluginsRequest
@@ -29651,6 +30878,26 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiCreateEntityCustomApplicationSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public createEntityCustomApplicationSettings(
+        requestParameters: EntitiesApiCreateEntityCustomApplicationSettingsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .createEntityCustomApplicationSettings(
+                requestParameters.workspaceId,
+                requestParameters.jsonApiCustomApplicationSettingInDocument,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
      * @param {EntitiesApiCreateEntityDashboardPluginsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -29968,6 +31215,27 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
     ) {
         return EntitiesApiFp(this.configuration)
             .deleteEntityCspDirectives(requestParameters.id, requestParameters.filter, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {EntitiesApiDeleteEntityCustomApplicationSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public deleteEntityCustomApplicationSettings(
+        requestParameters: EntitiesApiDeleteEntityCustomApplicationSettingsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .deleteEntityCustomApplicationSettings(
+                requestParameters.workspaceId,
+                requestParameters.objectId,
+                requestParameters.filter,
+                options,
+            )
             .then((request) => request(this.axios, this.basePath));
     }
 
@@ -30328,6 +31596,31 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.page,
                 requestParameters.size,
                 requestParameters.sort,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {EntitiesApiGetAllEntitiesCustomApplicationSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public getAllEntitiesCustomApplicationSettings(
+        requestParameters: EntitiesApiGetAllEntitiesCustomApplicationSettingsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .getAllEntitiesCustomApplicationSettings(
+                requestParameters.workspaceId,
+                requestParameters.origin,
+                requestParameters.filter,
+                requestParameters.page,
+                requestParameters.size,
+                requestParameters.sort,
+                requestParameters.xGDCVALIDATERELATIONS,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -30962,6 +32255,28 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiGetEntityCustomApplicationSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public getEntityCustomApplicationSettings(
+        requestParameters: EntitiesApiGetEntityCustomApplicationSettingsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .getEntityCustomApplicationSettings(
+                requestParameters.workspaceId,
+                requestParameters.objectId,
+                requestParameters.filter,
+                requestParameters.xGDCVALIDATERELATIONS,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
      * @param {EntitiesApiGetEntityDashboardPluginsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -31505,6 +32820,28 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiPatchEntityCustomApplicationSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public patchEntityCustomApplicationSettings(
+        requestParameters: EntitiesApiPatchEntityCustomApplicationSettingsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .patchEntityCustomApplicationSettings(
+                requestParameters.workspaceId,
+                requestParameters.objectId,
+                requestParameters.jsonApiCustomApplicationSettingPatchDocument,
+                requestParameters.filter,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
      * @param {EntitiesApiPatchEntityDashboardPluginsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -31892,6 +33229,28 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             .updateEntityCspDirectives(
                 requestParameters.id,
                 requestParameters.jsonApiCspDirectiveInDocument,
+                requestParameters.filter,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {EntitiesApiUpdateEntityCustomApplicationSettingsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public updateEntityCustomApplicationSettings(
+        requestParameters: EntitiesApiUpdateEntityCustomApplicationSettingsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .updateEntityCustomApplicationSettings(
+                requestParameters.workspaceId,
+                requestParameters.objectId,
+                requestParameters.jsonApiCustomApplicationSettingInDocument,
                 requestParameters.filter,
                 options,
             )
