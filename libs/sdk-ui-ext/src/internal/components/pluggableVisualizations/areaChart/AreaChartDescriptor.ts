@@ -71,6 +71,7 @@ export class AreaChartDescriptor extends BigChartDescriptor implements IVisualiz
         return {
             documentationUrl: "https://sdk.gooddata.com/gooddata-ui/docs/area_chart_component.html",
             supportsExport: true,
+            supportsZooming: true,
         };
     }
 

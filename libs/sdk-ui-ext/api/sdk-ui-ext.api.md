@@ -221,6 +221,7 @@ export interface ISizeInfo {
 export interface IVisualizationMeta {
     documentationUrl?: string;
     supportsExport: boolean;
+    supportsZooming: boolean;
 }
 
 // @alpha

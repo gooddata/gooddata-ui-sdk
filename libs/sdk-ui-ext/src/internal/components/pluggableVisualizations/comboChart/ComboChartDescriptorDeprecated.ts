@@ -14,6 +14,7 @@ export class ComboChartDescriptorDeprecated extends BigChartDescriptor {
     public getMeta(): IVisualizationMeta {
         return {
             supportsExport: true,
+            supportsZooming: true,
         };
     }
 }

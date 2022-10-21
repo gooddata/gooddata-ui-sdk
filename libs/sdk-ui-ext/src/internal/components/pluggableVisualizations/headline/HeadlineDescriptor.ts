@@ -95,6 +95,7 @@ export class HeadlineDescriptor implements IVisualizationDescriptor {
         return {
             documentationUrl: "https://sdk.gooddata.com/gooddata-ui/docs/headline_component.html",
             supportsExport: false,
+            supportsZooming: false,
         };
     }
 }

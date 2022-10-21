@@ -88,6 +88,7 @@ export class GeoPushpinChartDescriptor extends BaseChartDescriptor implements IV
         return {
             documentationUrl: "https://sdk.gooddata.com/gooddata-ui/docs/geo_pushpin_chart_component.html",
             supportsExport: true,
+            supportsZooming: false,
         };
     }
 

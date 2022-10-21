@@ -74,6 +74,7 @@ export class ColumnChartDescriptor extends BaseChartDescriptor implements IVisua
         return {
             documentationUrl: "https://sdk.gooddata.com/gooddata-ui/docs/column_chart_component.html",
             supportsExport: true,
+            supportsZooming: true,
         };
     }
 

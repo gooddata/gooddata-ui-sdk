@@ -74,6 +74,7 @@ export class BarChartDescriptor extends BaseChartDescriptor implements IVisualiz
         return {
             documentationUrl: "https://sdk.gooddata.com/gooddata-ui/docs/bar_chart_component.html",
             supportsExport: true,
+            supportsZooming: true,
         };
     }
 

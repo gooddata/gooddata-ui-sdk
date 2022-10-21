@@ -48,6 +48,7 @@ export class DonutChartDescriptor extends BaseChartDescriptor implements IVisual
         return {
             documentationUrl: "https://sdk.gooddata.com/gooddata-ui/docs/donut_chart_component.html",
             supportsExport: true,
+            supportsZooming: false,
         };
     }
 }

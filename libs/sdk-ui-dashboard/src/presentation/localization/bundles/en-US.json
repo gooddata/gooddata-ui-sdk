@@ -1693,6 +1693,33 @@
         "comment": "Type label of URL display form in parameter detail in 'Custom URL' editor.",
         "limit": 0
     },
+    "configurationPanel.zoomInsight|insight": {
+        "value": "Zoomable insight",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.zoomInsight|report": {
+        "value": "Zoomable report",
+        "comment": "",
+        "translate": false,
+        "limit": 0
+    },
+    "configurationPanel.zoomInsight.help|insight": {
+        "value": "Enable to zoom the insight to display a detailed view. Hold the shift key to pan the zoomed area.",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.zoomInsight.help|report": {
+        "value": "Enable to zoom the report to display a detailed view. Hold the shift key to pan the zoomed area.",
+        "comment": "",
+        "translate": false,
+        "limit": 0
+    },
+    "configurationPanel.zoomInsight.notice": {
+        "value": "Zoom will not be applied to exported dashboards",
+        "comment": "",
+        "limit": 0
+    },
     "configurationPanel.drillConfig.selectInsight|insight": {
         "value": "Choose insight…",
         "comment": "Hint guiding users that drill target insight in select box has to be selected. Use '…' as one character, not 3 dots ('...').",

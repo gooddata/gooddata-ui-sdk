@@ -89,6 +89,7 @@ export class XirrDescriptor implements IVisualizationDescriptor {
     public getMeta(): IVisualizationMeta {
         return {
             supportsExport: false,
+            supportsZooming: false,
         };
     }
 }
