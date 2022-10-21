@@ -1,11 +1,11 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { DashboardContext } from "../../types/commonTypes";
-import { RemoveSectionItem } from "../../commands";
+import { RemoveSectionItem, RemoveSectionItemByWidgetRef } from "../../commands";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher";
 import { invalidArgumentsProvided } from "../../events/general";
 import { selectLayout } from "../../store/layout/layoutSelectors";
-import { put, select } from "redux-saga/effects";
+import { call, put, select } from "redux-saga/effects";
 import { validateItemExists, validateSectionExists } from "./validation/layoutValidation";
 import { layoutSectionItemRemoved, layoutSectionRemoved } from "../../events/layout";
 import { layoutActions } from "../../store/layout";
@@ -13,7 +13,8 @@ import { ExtendedDashboardLayoutSection } from "../../types/layoutTypes";
 
 type RemoveSectionItemContext = {
     readonly ctx: DashboardContext;
-    readonly cmd: RemoveSectionItem;
+    readonly cmd: Omit<RemoveSectionItem, "type">;
+    originalCmd: RemoveSectionItem | RemoveSectionItemByWidgetRef;
     readonly layout: ReturnType<typeof selectLayout>;
 };
 
@@ -29,7 +30,7 @@ function validateAndResolve(commandCtx: RemoveSectionItemContext) {
     if (!validateSectionExists(layout, sectionIndex)) {
         throw invalidArgumentsProvided(
             ctx,
-            commandCtx.cmd,
+            commandCtx.originalCmd,
             `Attempting to remove item from non-existent section at ${sectionIndex}. There are only ${layout.sections.length} sections.`,
         );
     }
@@ -39,7 +40,7 @@ function validateAndResolve(commandCtx: RemoveSectionItemContext) {
     if (!validateItemExists(fromSection, itemIndex)) {
         throw invalidArgumentsProvided(
             ctx,
-            commandCtx.cmd,
+            commandCtx.originalCmd,
             `Attempting to remove non-existent item from index ${itemIndex} in section ${sectionIndex}. There are only ${fromSection.items.length} items in this section.`,
         );
     }
@@ -53,11 +54,21 @@ function validateAndResolve(commandCtx: RemoveSectionItemContext) {
 }
 
 export function* removeSectionItemHandler(ctx: DashboardContext, cmd: RemoveSectionItem): SagaIterator<void> {
+    return yield call(removeSectionItemSaga, ctx, cmd);
+}
+
+export function* removeSectionItemSaga(
+    ctx: DashboardContext,
+    cmd: RemoveSectionItem | RemoveSectionItemContext["cmd"],
+    originalCmd: RemoveSectionItemByWidgetRef = cmd as any,
+): SagaIterator<void> {
     const commandCtx: RemoveSectionItemContext = {
         ctx,
         cmd,
+        originalCmd,
         layout: yield select(selectLayout),
     };
+
     const { fromSection, itemToRemove } = validateAndResolve(commandCtx);
     const { sectionIndex, itemIndex, eager, stashIdentifier } = cmd.payload;
 
@@ -67,7 +78,7 @@ export function* removeSectionItemHandler(ctx: DashboardContext, cmd: RemoveSect
                 index: sectionIndex,
                 stashIdentifier,
                 undo: {
-                    cmd,
+                    cmd: originalCmd,
                 },
             }),
         );
@@ -107,7 +118,7 @@ export function* removeSectionItemHandler(ctx: DashboardContext, cmd: RemoveSect
                 itemIndex,
                 stashIdentifier,
                 undo: {
-                    cmd,
+                    cmd: originalCmd,
                 },
             }),
         );
