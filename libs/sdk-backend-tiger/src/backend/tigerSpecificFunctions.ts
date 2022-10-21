@@ -33,6 +33,8 @@ import {
     PlatformUsage,
     DeclarativeWorkspaceDataFilters,
     DataSourceParameter,
+    JsonApiCspDirectiveInTypeEnum,
+    JsonApiCspDirectiveInDocument,
 } from "@gooddata/api-client-tiger";
 import { convertApiError } from "../utils/errorHandling";
 import uniq from "lodash/uniq";
@@ -205,6 +207,20 @@ export interface IInvitationUserResponse {
 /**
  * @internal
  */
+export interface ICSPDirective {
+    id: string;
+    attributes: {
+        /**
+         * Representation values of the CSP directive entity.
+         * Ex: http://a.com, *.abc.com, 'self', ..
+         */
+        sources: Array<string>;
+    };
+}
+
+/**
+ * @internal
+ */
 export type OrganizationPermission = JsonApiOrganizationOutMetaPermissionsEnum;
 
 /**
@@ -328,6 +344,11 @@ export type TigerSpecificFunctions = {
     ) => Promise<IInvitationUserResponse>;
     getWorkspaceDataFiltersLayout?: () => Promise<WorkspaceDataFiltersLayout>;
     setWorkspaceDataFiltersLayout?: (workspaceDataFiltersLayout: WorkspaceDataFiltersLayout) => Promise<void>;
+    getAllCSPDirectives?: () => Promise<Array<ICSPDirective>>;
+    getCSPDirective?: (directiveId: string) => Promise<ICSPDirective>;
+    createCSPDirective?: (requestData: ICSPDirective) => Promise<ICSPDirective>;
+    updateCSPDirective?: (directiveId: string, requestData: ICSPDirective) => Promise<ICSPDirective>;
+    deleteCSPDirective?: (directiveId: string) => Promise<void>;
 };
 
 const getDataSourceErrorMessage = (error: unknown) => {
@@ -1049,5 +1070,87 @@ export const buildTigerSpecificFunctions = (
                 declarativeWorkspaceDataFilters: workspaceDataFiltersLayout,
             });
         });
+    },
+    getAllCSPDirectives: async (): Promise<Array<ICSPDirective>> => {
+        try {
+            return await authApiCall(async (sdk) => {
+                const result = await sdk.entities.getAllEntitiesCspDirectives({});
+                return result.data?.data || [];
+            });
+        } catch (error) {
+            return [];
+        }
+    },
+    getCSPDirective: async (directiveId: string): Promise<ICSPDirective> => {
+        try {
+            return await authApiCall(async (sdk) => {
+                const result = await sdk.entities.getEntityCspDirectives({ id: directiveId });
+                return result.data?.data;
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
+    },
+    createCSPDirective: async (requestData: ICSPDirective): Promise<ICSPDirective> => {
+        try {
+            return await authApiCall(async (sdk) => {
+                const jsonApiCspDirectiveInDocument: JsonApiCspDirectiveInDocument = {
+                    data: {
+                        id: requestData.id,
+                        type: JsonApiCspDirectiveInTypeEnum.CSP_DIRECTIVE,
+                        attributes: requestData.attributes,
+                    },
+                };
+                const result = await sdk.entities.createEntityCspDirectives({
+                    jsonApiCspDirectiveInDocument,
+                });
+
+                return result.data?.data;
+            });
+        } catch (error: any) {
+            if (error.response?.status === 400) {
+                const message = error?.response?.data?.detail
+                    ? error?.response?.data?.detail
+                    : "Server error";
+                throw new UnexpectedError(message, error);
+            }
+            throw convertApiError(error);
+        }
+    },
+    updateCSPDirective: async (directiveId: string, requestData: ICSPDirective): Promise<ICSPDirective> => {
+        try {
+            return await authApiCall(async (sdk) => {
+                const jsonApiCspDirectiveInDocument: JsonApiCspDirectiveInDocument = {
+                    data: {
+                        id: requestData.id,
+                        type: JsonApiCspDirectiveInTypeEnum.CSP_DIRECTIVE,
+                        attributes: requestData.attributes,
+                    },
+                };
+                const result = await sdk.entities.updateEntityCspDirectives({
+                    id: directiveId,
+                    jsonApiCspDirectiveInDocument,
+                });
+
+                return result.data?.data;
+            });
+        } catch (error: any) {
+            if (error.response?.status === 400) {
+                const message = error?.response?.data?.detail
+                    ? error?.response?.data?.detail
+                    : "Server error";
+                throw new UnexpectedError(message, error);
+            }
+            throw convertApiError(error);
+        }
+    },
+    deleteCSPDirective: async (directiveId: string) => {
+        try {
+            await authApiCall(async (sdk) => {
+                await sdk.entities.deleteEntityCspDirectives({ id: directiveId });
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
     },
 });
