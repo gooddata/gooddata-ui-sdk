@@ -2,4 +2,4 @@
 export { DefaultDashboardInsightMenu } from "./DefaultDashboardInsightMenu";
 export { DefaultDashboardInsightMenuButton } from "./DefaultDashboardInsightMenuButton";
 export { getDefaultInsightMenuItems } from "./getDefaultInsightMenuItems";
-export { getDefaultInsightEditMenuItems } from "./getDefaultInsightEditMenuItems";
+export { getDefaultInsightEditMenuItems, MenuItemDependencies } from "./getDefaultInsightEditMenuItems";

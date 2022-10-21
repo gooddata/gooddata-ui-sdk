@@ -1288,6 +1288,11 @@
         "comment": "Tooltip explaining the accessibility of the dashboard.",
         "limit": 0
     },
+    "configurationPanel.remove.form.dashboard": {
+        "value": "Remove from dashboard",
+        "comment": "",
+        "limit": 0
+    },
     "filterBar.filter.drop": {
         "value": "drop to add",
         "comment": "",

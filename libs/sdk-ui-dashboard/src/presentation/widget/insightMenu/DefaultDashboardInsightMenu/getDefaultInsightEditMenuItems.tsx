@@ -8,11 +8,24 @@ import { InsightConfiguration } from "../../insight/configuration/InsightConfigu
 import { InsightInteractions } from "../../insight/configuration/InsightInteractions";
 
 import { Icon } from "@gooddata/sdk-ui-kit";
+import { useDashboardDispatch, eagerRemoveSectionItemByWidgetRef } from "../../../../model";
+import { IInsightWidget } from "@gooddata/sdk-model";
 
 /**
  * @internal
  */
-export function getDefaultInsightEditMenuItems(intl: IntlShape): IInsightMenuItem[] {
+export type MenuItemDependencies = {
+    intl: IntlShape;
+    dispatch: ReturnType<typeof useDashboardDispatch>;
+};
+
+/**
+ * @internal
+ */
+export function getDefaultInsightEditMenuItems(
+    widget: IInsightWidget,
+    { intl, dispatch }: MenuItemDependencies,
+): IInsightMenuItem[] {
     return compact([
         {
             type: "submenu",
@@ -33,6 +46,20 @@ export function getDefaultInsightEditMenuItems(intl: IntlShape): IInsightMenuIte
             disabled: false,
             className: "s-configuration-panel-submenu",
             SubmenuComponent: InsightInteractions,
+        },
+        {
+            type: "separator",
+            itemId: "InteractionPanelRemoveSeparator",
+        },
+        {
+            type: "button",
+            itemId: "InteractionPanelRemove",
+            tooltip: "",
+            itemName: intl.formatMessage({ id: "configurationPanel.remove.form.dashboard" }),
+            icon: "gd-icon-trash",
+            disabled: false,
+            className: "s-delete-insight-item",
+            onClick: () => dispatch(eagerRemoveSectionItemByWidgetRef(widget.ref)),
         },
     ]);
 }

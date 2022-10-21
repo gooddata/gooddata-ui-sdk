@@ -53,6 +53,7 @@ import {
     UndoLayoutChanges,
     ResizeHeight,
     ResizeWidth,
+    RemoveSectionItemByWidgetRef,
 } from "./layout";
 import { CreateAlert, RemoveAlerts, UpdateAlert } from "./alerts";
 import { CreateScheduledEmail, SaveScheduledEmail } from "./scheduledEmail";
@@ -156,6 +157,10 @@ export {
     RemoveSectionItemPayload,
     removeSectionItem,
     eagerRemoveSectionItem,
+    RemoveSectionItemByWidgetRef,
+    RemoveSectionItemByWidgetRefPayload,
+    removeSectionItemByWidgetRef,
+    eagerRemoveSectionItemByWidgetRef,
     UndoLayoutChanges,
     UndoLayoutChangesPayload,
     undoLayoutChanges,
@@ -348,6 +353,7 @@ export type DashboardCommands =
     | ReplaceSectionItem
     | MoveSectionItem
     | RemoveSectionItem
+    | RemoveSectionItemByWidgetRef
     | UndoLayoutChanges
     | ChangeKpiWidgetHeader
     | ChangeKpiWidgetMeasure

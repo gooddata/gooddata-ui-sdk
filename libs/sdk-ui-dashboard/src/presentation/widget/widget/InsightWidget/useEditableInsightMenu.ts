@@ -5,6 +5,7 @@ import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 
 import { useDashboardCustomizationsContext } from "../../../dashboardContexts";
 import { getDefaultInsightEditMenuItems, IInsightMenuItem } from "../../insightMenu";
+import { useDashboardDispatch } from "../../../../model";
 
 type UseEditableInsightMenuConfig = {
     insight: IInsight;
@@ -18,11 +19,12 @@ export const useEditableInsightMenu = (
     const { insight, widget, closeMenu } = config;
 
     const intl = useIntl();
+    const dispatch = useDashboardDispatch();
 
     const { insightMenuItemsProvider } = useDashboardCustomizationsContext();
     const defaultMenuItems = useMemo<IInsightMenuItem[]>(() => {
-        return getDefaultInsightEditMenuItems(intl);
-    }, [intl]);
+        return getDefaultInsightEditMenuItems(widget, { intl, dispatch });
+    }, [dispatch, intl, widget]);
 
     const menuItems = useMemo<IInsightMenuItem[]>(() => {
         return insightMenuItemsProvider

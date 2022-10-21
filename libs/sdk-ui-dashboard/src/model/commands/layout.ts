@@ -2,7 +2,7 @@
 
 import { IDashboardCommand } from "./base";
 import { DashboardItemDefinition, RelativeIndex, StashedDashboardItemsId } from "../types/layoutTypes";
-import { IDashboardLayoutSectionHeader } from "@gooddata/sdk-model";
+import { IDashboardLayoutSectionHeader, ObjRef } from "@gooddata/sdk-model";
 
 /**
  * Payload of the {@link AddLayoutSection} command.
@@ -687,6 +687,109 @@ export function eagerRemoveSectionItem(
 //
 
 /**
+ * Payload of the {@link RemoveSectionItemByWidgetRef} command.
+ * @alpha
+ */
+export interface RemoveSectionItemByWidgetRefPayload {
+    /**
+     * Widget reference of the item to remove.
+     */
+    readonly widgetRef: ObjRef;
+
+    /**
+     * Specify stash identifier.
+     *
+     * @remarks
+     * If provided, the item will not be permanently removed but will be
+     * stored in the stash under this identifier. You can then use the stash identifier to 'resurrect' the item
+     * in different section.
+     *
+     * Default behavior with no stashIdentifier is to permanently remove the item as well.
+     */
+    readonly stashIdentifier?: StashedDashboardItemsId;
+
+    /**
+     * Specify whether to eagerly remove the entire section if the item being removed was the only
+     * item in the section.
+     *
+     * @remarks
+     * Default is false. Meaning an empty section will be left.
+     */
+    readonly eager?: boolean;
+}
+
+/**
+ * @alpha
+ */
+export interface RemoveSectionItemByWidgetRef extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM_BY_WIDGET_REF";
+    readonly payload: RemoveSectionItemByWidgetRefPayload;
+}
+
+/**
+ * Creates the RemoveSectionItemByWidgetRef command.
+ *
+ * @remarks
+ * Dispatching this command will result in removal
+ * of the item from a section. If the removed item was last in the section, the section will be left on the layout
+ * and will contain no items.
+ *
+ * @param widgetRef - widget reference of the item to remove;
+ * @param stashIdentifier - stash identifier to store the removed item under; if not specified the item will be removed
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function removeSectionItemByWidgetRef(
+    widgetRef: ObjRef,
+    stashIdentifier?: StashedDashboardItemsId,
+    correlationId?: string,
+): RemoveSectionItemByWidgetRef {
+    return {
+        type: "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM_BY_WIDGET_REF",
+        correlationId,
+        payload: {
+            widgetRef,
+            stashIdentifier,
+            eager: false,
+        },
+    };
+}
+
+/**
+ * Creates the RemoveSectionItemByWidgetRef configured to do eager remove of item.
+ *
+ * @remarks
+ * Dispatching this command will result in removal
+ * of the item from a section and if the section only contains that item then the whole section will be removed as well.
+ *
+ * You may optionally specify the stashIdentifier in order to stash the removed item for later resurrection.
+ *
+ * @param widgetRef - widget reference of the item to remove;
+ * @param stashIdentifier - stash identifier to store the removed item under; if not specified the item will be removed
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function eagerRemoveSectionItemByWidgetRef(
+    widgetRef: ObjRef,
+    stashIdentifier?: StashedDashboardItemsId,
+    correlationId?: string,
+): RemoveSectionItemByWidgetRef {
+    return {
+        type: "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM_BY_WIDGET_REF",
+        correlationId,
+        payload: {
+            widgetRef,
+            stashIdentifier,
+            eager: true,
+        },
+    };
+}
+
+/**
  * @alpha
  */
 export type DashboardLayoutCommands =
@@ -697,6 +800,7 @@ export type DashboardLayoutCommands =
     | AddSectionItems
     | MoveSectionItem
     | RemoveSectionItem
+    | RemoveSectionItemByWidgetRef
     | ResizeHeight;
 
 //
