@@ -15,7 +15,7 @@ const drillableItems = [
 export const GeoPushpinChartDrillExample: React.FC = () => {
     const [drillEvent, setDrillEvent] = useState<IDrillEvent | null>(null);
 
-    const onDrill = (drillEvent: any) => setDrillEvent(drillEvent);
+    const onDrill = (drillEvent: IDrillEvent) => setDrillEvent(drillEvent);
 
     const renderDrillEvent = () => {
         if (drillEvent) {
