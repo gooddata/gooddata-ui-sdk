@@ -39,10 +39,9 @@ function fixNumericalAxisOutOfMinMaxRange(axis: IHighchartsAxisExtend) {
 let previousChart: any = null;
 
 function getThemedConfiguration(theme: ITheme): any {
-    const backgroundColor =
-        theme?.chart?.backgroundColor ??
-        theme?.palette?.complementary?.c0 ??
-        styleVariables.gdColorBackground;
+    // This way it is possible to rewrite css variables in the limited scope.
+    const themedBackground = `var(--gd-chart-backgroundColor, var(--gd-palette-complementary-0, ${styleVariables.gdColorBackground}))`;
+    const backgroundColor = theme ? themedBackground : styleVariables.gdColorBackground;
     const axisLineColor =
         theme?.chart?.axisColor ?? theme?.palette?.complementary?.c4 ?? styleVariables.gdColorAxisLine;
 
