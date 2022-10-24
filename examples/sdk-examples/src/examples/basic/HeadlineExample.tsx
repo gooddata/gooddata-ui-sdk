@@ -4,19 +4,20 @@ import { OnLoadingChanged, OnError } from "@gooddata/sdk-ui";
 import { Headline } from "@gooddata/sdk-ui-charts";
 import { modifyMeasure } from "@gooddata/sdk-model";
 import * as Md from "../../md/full";
+import noop from "lodash/noop";
 
 const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) => m.format("#,##0").title("Franchise Fees"));
 const FranchiseFeesAdRoyalty = modifyMeasure(Md.$FranchiseFeesAdRoyalty, (m) => m.format("#,##0"));
 
 export const HeadlineExample: React.FC = () => {
-    const onLoadingChanged: OnLoadingChanged = (...params: any[]) => {
-        // eslint-disable-next-line no-console
-        return console.log("ColumnChartExample onLoadingChanged", ...params);
+    const onLoadingChanged: OnLoadingChanged = (_params) => {
+        // handle the callback here
+        return noop;
     };
 
-    const onError: OnError = (...params: any[]) => {
-        // eslint-disable-next-line no-console
-        return console.log("ColumnChartExample onError", ...params);
+    const onError: OnError = (_params) => {
+        // handle the callback here
+        return noop;
     };
 
     return (

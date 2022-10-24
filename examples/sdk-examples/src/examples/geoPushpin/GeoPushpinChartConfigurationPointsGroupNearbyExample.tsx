@@ -4,8 +4,10 @@ import React, { useState } from "react";
 import "@gooddata/sdk-ui-geo/styles/css/main.css";
 
 import { MAPBOX_TOKEN } from "../../constants/fixtures";
-import { GeoPushpinChart } from "@gooddata/sdk-ui-geo";
+import { CenterPositionChangedCallback, GeoPushpinChart, ZoomChangedCallback } from "@gooddata/sdk-ui-geo";
 import { locationAttribute } from "../../md/geoModel";
+import { OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
+import noop from "lodash/noop";
 
 export const GeoPushpinChartConfigurationPointsGroupNearbyExample: React.FC = () => {
     const [groupNearbyPoints, setGroupNearbyPoints] = useState<boolean>(false);
@@ -21,30 +23,24 @@ export const GeoPushpinChartConfigurationPointsGroupNearbyExample: React.FC = ()
         setGroupNearbyPoints((prevState) => !prevState);
     };
 
-    const onLoadingChanged = (...params: any[]) => {
-        // eslint-disable-next-line no-console
-        return console.log(
-            "GeoPushpinChartConfigurationPointsGroupNearbyExample onLoadingChanged",
-            ...params,
-        );
+    const onLoadingChanged: OnLoadingChanged = (_params) => {
+        // handle the callback here
+        return noop;
     };
 
-    const onError = (...params: any[]) => {
-        // eslint-disable-next-line no-console
-        return console.log("GeoPushpinChartConfigurationPointsGroupNearbyExample onError", ...params);
+    const onError: OnError = (_params) => {
+        // handle the callback here
+        return noop;
     };
 
-    const onZoomChanged = (...params: any[]) => {
-        // eslint-disable-next-line no-console
-        return console.log("GeoPushpinChartConfigurationPointsGroupNearbyExample onZoomChanged", ...params);
+    const onZoomChanged: ZoomChangedCallback = (_params) => {
+        // handle the callback here
+        return noop;
     };
 
-    const onCenterPositionChanged = (...params: any[]) => {
-        // eslint-disable-next-line no-console
-        return console.log(
-            "GeoPushpinChartConfigurationPointsGroupNearbyExample onCenterPositionChanged",
-            ...params,
-        );
+    const onCenterPositionChanged: CenterPositionChangedCallback = (_params) => {
+        // handle the callback here
+        return noop;
     };
 
     return (

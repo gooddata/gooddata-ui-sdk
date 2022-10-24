@@ -23,9 +23,7 @@ export const AttributeFilterDefinedByIdentifier = () => {
             <h4>Attribute filter defined by the display form identifier</h4>
             <AttributeFilter
                 filter={filter}
-                onApply={(filter, isInverted) => {
-                    // eslint-disable-next-line no-console
-                    console.log("Applying selection...", { filter, isInverted });
+                onApply={(filter, _isInverted) => {
                     setFilter(filter);
                 }}
             />
@@ -49,9 +47,7 @@ export const AttributeFilterDefinedByUri = () => {
             <h4>Attribute filter defined by the display form uri</h4>
             <AttributeFilter
                 filter={filter}
-                onApply={(filter, isInverted) => {
-                    // eslint-disable-next-line no-console
-                    console.log("Applying selection...", { filter, isInverted });
+                onApply={(filter, _isInverted) => {
                     setFilter(filter);
                 }}
             />
@@ -69,9 +65,7 @@ export const AttributeFilterDefinedByCatalogMd = () => {
             <h4>Attribute filter defined by the exported catalog attribute, with preselected elements</h4>
             <AttributeFilter
                 filter={filter}
-                onApply={(filter, isInverted) => {
-                    // eslint-disable-next-line no-console
-                    console.log("Applying selection...", { filter, isInverted });
+                onApply={(filter, _isInverted) => {
                     setFilter(filter);
                 }}
             />

@@ -6,18 +6,20 @@ import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import { MAPBOX_TOKEN } from "../../constants/fixtures";
 import { GeoPushpinChart, IGeoConfig } from "@gooddata/sdk-ui-geo";
 import { locationAttribute, segmentByAttribute, sizeMeasure } from "../../md/geoModel";
+import { OnError } from "@gooddata/sdk-ui";
+import noop from "lodash/noop";
+
+const GEO_CHART_CONFIG: IGeoConfig = {
+    mapboxToken: MAPBOX_TOKEN,
+    legend: {
+        position: "right", // could be "top", "right", "bottom" or "left"
+    },
+};
 
 export const GeoPushpinChartConfigurationLegendExample: React.FC = () => {
-    const onError = (...params: any[]) => {
-        // eslint-disable-next-line no-console
-        return console.log("GeoPushpinChartConfigurationLegendExample onError", ...params);
-    };
-
-    const geoConfig: IGeoConfig = {
-        mapboxToken: MAPBOX_TOKEN,
-        legend: {
-            position: "right", // could be "top", "right", "bottom" or "left"
-        },
+    const onError: OnError = (_params) => {
+        // handle the callback here
+        return noop;
     };
 
     return (
@@ -29,7 +31,7 @@ export const GeoPushpinChartConfigurationLegendExample: React.FC = () => {
                 location={locationAttribute}
                 segmentBy={segmentByAttribute}
                 size={sizeMeasure}
-                config={geoConfig}
+                config={GEO_CHART_CONFIG}
                 onError={onError}
             />
         </div>

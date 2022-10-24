@@ -1,31 +1,33 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
-import { GeoPushpinChart } from "@gooddata/sdk-ui-geo";
+import { CenterPositionChangedCallback, GeoPushpinChart, ZoomChangedCallback } from "@gooddata/sdk-ui-geo";
 
 import "@gooddata/sdk-ui-geo/styles/css/main.css";
 
 import { MAPBOX_TOKEN } from "../../constants/fixtures";
 import { locationAttribute, sizeMeasure, colorMeasure } from "../../md/geoModel";
+import noop from "lodash/noop";
+import { OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
 
 export const GeoPushpinChartWithColorLegendExample: React.FC = () => {
-    const onLoadingChanged = (...params: any[]) => {
-        // eslint-disable-next-line no-console
-        return console.log("GeoPushpinChartWithColorLegendExample onLoadingChanged", ...params);
+    const onLoadingChanged: OnLoadingChanged = (_params) => {
+        // handle the callback here
+        return noop;
     };
 
-    const onError = (...params: any[]) => {
-        // eslint-disable-next-line no-console
-        return console.log("GeoPushpinChartWithColorLegendExample onError", ...params);
+    const onError: OnError = (_params) => {
+        // handle the callback here
+        return noop;
     };
 
-    const onZoomChanged = (...params: any[]) => {
-        // eslint-disable-next-line no-console
-        return console.log("GeoPushpinChartWithColorLegendExample onZoomChanged", ...params);
+    const onZoomChanged: ZoomChangedCallback = (_params) => {
+        // handle the callback here
+        return noop;
     };
 
-    const onCenterPositionChanged = (...params: any[]) => {
-        // eslint-disable-next-line no-console
-        return console.log("GeoPushpinChartWithColorLegendExample onCenterPositionChanged", ...params);
+    const onCenterPositionChanged: CenterPositionChangedCallback = (_params) => {
+        // handle the callback here
+        return noop;
     };
 
     return (

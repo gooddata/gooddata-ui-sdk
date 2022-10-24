@@ -1,54 +1,31 @@
 // (C) 2020-2022 GoodData Corporation
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 
 import "@gooddata/sdk-ui-geo/styles/css/main.css";
 
 import { MAPBOX_TOKEN } from "../../constants/fixtures";
-import { GeoPushpinChart, IGeoConfig, PushpinSizeOption } from "@gooddata/sdk-ui-geo";
+import {
+    CenterPositionChangedCallback,
+    GeoPushpinChart,
+    IGeoConfig,
+    PushpinSizeOption,
+    ZoomChangedCallback,
+} from "@gooddata/sdk-ui-geo";
 import { locationAttribute, sizeMeasure } from "../../md/geoModel";
+import { OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
+import noop from "lodash/noop";
 
 const POINT_SIZE_OPTIONS = ["default", "0.5x", "0.75x", "normal", "1.25x", "1.5x"];
 
-export const GeoPushpinChartConfigurationPointsSizeExample: React.FC = () => {
-    const [minSize, setMinSize] = useState<PushpinSizeOption>("default");
-    const [maxSize, setMaxSize] = useState<PushpinSizeOption>("default");
+const PointSizeDropdown: React.FC<{ id: string; label: string; onChange: (event: any) => void }> = (
+    props,
+) => {
+    const { label, id, onChange } = props;
 
-    const onLoadingChanged = (...params: any[]) => {
-        // eslint-disable-next-line no-console
-        return console.log("GeoPushpinChartConfigurationPointsSizeExample onLoadingChanged", ...params);
-    };
-
-    const onError = (...params: any[]) => {
-        // eslint-disable-next-line no-console
-        return console.log("GeoPushpinChartConfigurationPointsSizeExample onError", ...params);
-    };
-
-    const onZoomChanged = (...params: any[]) => {
-        // eslint-disable-next-line no-console
-        return console.log("GeoPushpinChartConfigurationPointsSizeExample onZoomChanged", ...params);
-    };
-
-    const onCenterPositionChanged = (...params: any[]) => {
-        // eslint-disable-next-line no-console
-        return console.log(
-            "GeoPushpinChartConfigurationPointsSizeExample onCenterPositionChanged",
-            ...params,
-        );
-    };
-
-    const onPointSizeChange = (event: any) => {
-        const { id, value } = event.target;
-        if (id === "minSize") {
-            setMinSize(value);
-        } else {
-            setMaxSize(value);
-        }
-    };
-
-    const renderPointSizeDropDown = (id: string, label: string) => (
+    return (
         <span style={{ display: "inline-block", minWidth: "10em", verticalAlign: "middle" }}>
             {`${label}: `}
-            <select id={id} onChange={onPointSizeChange}>
+            <select id={id} onChange={onChange}>
                 {POINT_SIZE_OPTIONS.map((size) => (
                     <option key={size} value={size}>
                         {size}
@@ -57,6 +34,40 @@ export const GeoPushpinChartConfigurationPointsSizeExample: React.FC = () => {
             </select>
         </span>
     );
+};
+
+export const GeoPushpinChartConfigurationPointsSizeExample: React.FC = () => {
+    const [minSize, setMinSize] = useState<PushpinSizeOption>("default");
+    const [maxSize, setMaxSize] = useState<PushpinSizeOption>("default");
+
+    const onLoadingChanged: OnLoadingChanged = (_params) => {
+        // handle the callback here
+        return noop;
+    };
+
+    const onError: OnError = (_params) => {
+        // handle the callback here
+        return noop;
+    };
+
+    const onZoomChanged: ZoomChangedCallback = (_params) => {
+        // handle the callback here
+        return noop;
+    };
+
+    const onCenterPositionChanged: CenterPositionChangedCallback = (_params) => {
+        // handle the callback here
+        return noop;
+    };
+
+    const onPointSizeChange = (event: ChangeEvent<HTMLSelectElement>) => {
+        const { id, value } = event.target;
+        if (id === "minSize") {
+            setMinSize(value as PushpinSizeOption);
+        } else {
+            setMaxSize(value as PushpinSizeOption);
+        }
+    };
 
     const geoConfig: IGeoConfig = {
         mapboxToken: MAPBOX_TOKEN,
@@ -69,8 +80,8 @@ export const GeoPushpinChartConfigurationPointsSizeExample: React.FC = () => {
     return (
         <div className="s-geo-chart">
             <div style={{ marginTop: "10px" }}>
-                {renderPointSizeDropDown("minSize", "Min Size")}
-                {renderPointSizeDropDown("maxSize", "Max Size")}
+                <PointSizeDropdown id="minSize" label="Min Size" onChange={onPointSizeChange} />
+                <PointSizeDropdown id="maxSize" label="Max Size" onChange={onPointSizeChange} />
             </div>
             <div
                 style={{ height: "500px", position: "relative" }}

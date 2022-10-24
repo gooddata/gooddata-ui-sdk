@@ -4,7 +4,7 @@ import React from "react";
 import "@gooddata/sdk-ui-geo/styles/css/main.css";
 
 import { MAPBOX_TOKEN } from "../../constants/fixtures";
-import { GeoPushpinChart } from "@gooddata/sdk-ui-geo";
+import { CenterPositionChangedCallback, GeoPushpinChart, ZoomChangedCallback } from "@gooddata/sdk-ui-geo";
 import { CUSTOM_COLOR_PALETTE } from "../../constants/colors";
 import {
     tooltipTextAttribute,
@@ -14,8 +14,9 @@ import {
     colorMeasure,
     attributeUriPredicate,
 } from "../../md/geoModel";
-import { HeaderPredicates } from "@gooddata/sdk-ui";
+import { HeaderPredicates, OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
 import { IColorMapping } from "@gooddata/sdk-ui-charts";
+import noop from "lodash/noop";
 
 const colorMapping: IColorMapping[] = [
     {
@@ -34,35 +35,32 @@ const colorMapping: IColorMapping[] = [
     },
 ];
 
+const GEO_CHART_CONFIG = {
+    tooltipText: tooltipTextAttribute,
+    mapboxToken: MAPBOX_TOKEN,
+    colorPalette: CUSTOM_COLOR_PALETTE,
+    colorMapping,
+};
+
 export const GeoPushpinChartConfigurationColorMappingExample: React.FC = () => {
-    const geoConfig = {
-        tooltipText: tooltipTextAttribute,
-        mapboxToken: MAPBOX_TOKEN,
-        colorPalette: CUSTOM_COLOR_PALETTE,
-        colorMapping,
+    const onLoadingChanged: OnLoadingChanged = (_params) => {
+        // handle the callback here
+        return noop;
     };
 
-    const onLoadingChanged = (...params: any[]) => {
-        // eslint-disable-next-line no-console
-        return console.log("GeoPushpinChartConfigurationColorMappingExample onLoadingChanged", ...params);
+    const onError: OnError = (_params) => {
+        // handle the callback here
+        return noop;
     };
 
-    const onError = (...params: any[]) => {
-        // eslint-disable-next-line no-console
-        return console.log("GeoPushpinChartConfigurationColorMappingExample onError", ...params);
+    const onZoomChanged: ZoomChangedCallback = (_params) => {
+        // handle the callback here
+        return noop;
     };
 
-    const onZoomChanged = (...params: any[]) => {
-        // eslint-disable-next-line no-console
-        return console.log("GeoPushpinChartConfigurationColorMappingExample onZoomChanged", ...params);
-    };
-
-    const onCenterPositionChanged = (...params: any[]) => {
-        // eslint-disable-next-line no-console
-        return console.log(
-            "GeoPushpinChartConfigurationColorMappingExample onCenterPositionChanged",
-            ...params,
-        );
+    const onCenterPositionChanged: CenterPositionChangedCallback = (_params) => {
+        // handle the callback here
+        return noop;
     };
 
     return (
@@ -75,7 +73,7 @@ export const GeoPushpinChartConfigurationColorMappingExample: React.FC = () => {
                 size={sizeMeasure}
                 color={colorMeasure}
                 segmentBy={segmentByAttribute}
-                config={geoConfig}
+                config={GEO_CHART_CONFIG}
                 onZoomChanged={onZoomChanged}
                 onCenterPositionChanged={onCenterPositionChanged}
                 onLoadingChanged={onLoadingChanged}

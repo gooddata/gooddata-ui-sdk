@@ -17,38 +17,40 @@ export interface IMeasureValueFilterState {
     filters: IMeasureValueFilter[];
 }
 
+const PresetButton: React.FC<{ label: string; isActive: boolean; onClick: () => void }> = (props) => {
+    const { label, isActive, onClick } = props;
+
+    return (
+        <button
+            className={`gd-button gd-button-secondary ${isActive ? "is-active" : ""} s-filter-button`}
+            onClick={onClick}
+        >
+            {label}
+        </button>
+    );
+};
+
 export const FilterByValueExample: React.FC = () => {
     const [filters, setFilters] = useState<IMeasureValueFilter[]>([]);
-
-    const renderPresetButton = (
-        label: string,
-        appliedFilters: IMeasureValueFilter[],
-        isActive: boolean,
-    ): JSX.Element => {
-        return (
-            <button
-                className={`gd-button gd-button-secondary ${isActive ? "is-active" : ""} s-filter-button`}
-                onClick={() => setFilters(appliedFilters)}
-            >
-                {label}
-            </button>
-        );
-    };
 
     return (
         <div>
             <div>
-                {renderPresetButton("All franchise sales", [], filters.length === 0)}
-                {renderPresetButton(
-                    "Franchise sales greater than 7,000,000",
-                    [greaterThanFilter],
-                    filters[0] === greaterThanFilter,
-                )}
-                {renderPresetButton(
-                    "Franchise sales between 5,000,000 and 8,000,000",
-                    [betweenFilter],
-                    filters[0] === betweenFilter,
-                )}
+                <PresetButton
+                    label="All franchise sales"
+                    onClick={() => setFilters([])}
+                    isActive={filters.length === 0}
+                />
+                <PresetButton
+                    label="Franchise sales greater than 7,000,000"
+                    onClick={() => setFilters([greaterThanFilter])}
+                    isActive={filters[0] === greaterThanFilter}
+                />
+                <PresetButton
+                    label="Franchise sales between 5,000,000 and 8,000,000"
+                    onClick={() => setFilters([betweenFilter])}
+                    isActive={filters[0] === betweenFilter}
+                />
             </div>
             <hr className="separator" />
             <div style={{ height: 300 }} className="s-pivot-table">
