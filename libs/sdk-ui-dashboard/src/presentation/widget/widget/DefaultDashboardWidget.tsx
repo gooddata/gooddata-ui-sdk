@@ -19,7 +19,9 @@ import { RenderModeAwareDashboardInsightWidget } from "./InsightWidget";
 /**
  * @internal
  */
-export const DefaultDashboardWidget = (props: IDashboardWidgetProps): JSX.Element => {
+export const DefaultDashboardWidget = React.memo(function DefaultDashboardWidget(
+    props: IDashboardWidgetProps,
+): JSX.Element {
     const {
         onError,
         onFiltersChange,
@@ -98,4 +100,4 @@ export const DefaultDashboardWidget = (props: IDashboardWidgetProps): JSX.Elemen
     }
 
     return <div>Unknown widget</div>;
-};
+});

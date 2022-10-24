@@ -2193,7 +2193,7 @@ export const DefaultDashboardLayout: (props: IDashboardLayoutProps) => JSX.Eleme
 export const defaultDashboardThemeModifier: (theme: ITheme) => ITheme;
 
 // @internal (undocumented)
-export const DefaultDashboardWidget: (props: IDashboardWidgetProps) => JSX.Element;
+export const DefaultDashboardWidget: React_2.NamedExoticComponent<IDashboardWidgetProps>;
 
 // @internal (undocumented)
 export function DefaultEditButton({ isVisible, isEnabled, onEditClick }: IEditButtonProps): JSX.Element | null;
