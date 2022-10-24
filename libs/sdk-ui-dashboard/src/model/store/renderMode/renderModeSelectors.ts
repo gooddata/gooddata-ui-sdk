@@ -16,9 +16,9 @@ export const selectRenderMode = createSelector(selectSelf, (state) => state.rend
 /**
  * @internal
  */
-export const selectIsInViewMode = createSelector(selectSelf, (state) => state.renderMode === "view");
+export const selectIsInViewMode = createSelector(selectRenderMode, (renderMode) => renderMode === "view");
 
 /**
  * @internal
  */
-export const selectIsInEditMode = createSelector(selectSelf, (state) => state.renderMode === "edit");
+export const selectIsInEditMode = createSelector(selectRenderMode, (renderMode) => renderMode === "edit");

@@ -5577,10 +5577,10 @@ export const selectIsExport: OutputSelector<DashboardState, boolean, (res: Resol
 export const selectIsFilterAttributeSelectionOpen: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
 
 // @internal (undocumented)
-export const selectIsInEditMode: OutputSelector<DashboardState, boolean, (res: RenderModeState) => boolean>;
+export const selectIsInEditMode: OutputSelector<DashboardState, boolean, (res: RenderMode) => boolean>;
 
 // @internal (undocumented)
-export const selectIsInViewMode: OutputSelector<DashboardState, boolean, (res: RenderModeState) => boolean>;
+export const selectIsInViewMode: OutputSelector<DashboardState, boolean, (res: RenderMode) => boolean>;
 
 // @alpha (undocumented)
 export const selectIsKpiAlertHighlightedByWidgetRef: (ref: ObjRef | undefined) => (state: DashboardState) => boolean;
