@@ -22210,7 +22210,7 @@ packages:
     dev: false
 
   file:projects/dashboard-plugin-template.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-OLxiUPWNUghApkBjOcQAkrWPYwRmpDwMYsAttgNO+OJpHC7jqmO/5NYWexfrf2Pocnh617uj2ymF6mQwYjGYtA==, tarball: file:projects/dashboard-plugin-template.tgz}
+    resolution: {integrity: sha512-qtlB5wcOhbZNRo6zKb6tzND5gj/ApezfRUcPROA4x7XBFxuB61eV+Lx1icsB7VYCqhAlTHjZ/VRKeMOBrOlevA==, tarball: file:projects/dashboard-plugin-template.tgz}
     id: file:projects/dashboard-plugin-template.tgz
     name: '@rush-temp/dashboard-plugin-template'
     version: 0.0.0

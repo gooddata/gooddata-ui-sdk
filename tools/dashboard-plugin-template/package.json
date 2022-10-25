@@ -64,6 +64,7 @@
         "@gooddata/sdk-ui-ext": "^8.12.0-alpha.12",
         "@gooddata/sdk-ui-filters": "^8.12.0-alpha.12",
         "@gooddata/sdk-ui-geo": "^8.12.0-alpha.12",
+        "@gooddata/sdk-ui-kit": "^8.12.0-alpha.12",
         "@gooddata/sdk-ui-pivot": "^8.12.0-alpha.12",
         "react": "^16.10.0 || ^17.0.0",
         "react-dom": "^16.10.0 || ^17.0.0"
@@ -82,6 +83,7 @@
         "@gooddata/sdk-ui": "^8.12.0-alpha.12",
         "@gooddata/sdk-ui-charts": "^8.12.0-alpha.12",
         "@gooddata/sdk-ui-ext": "^8.12.0-alpha.12",
+        "@gooddata/sdk-ui-kit": "^8.12.0-alpha.12",
         "@gooddata/sdk-ui-loaders": "^8.12.0-alpha.12",
         "@types/enzyme": "^3.10.3",
         "@types/jest": "^27.0.1",
