@@ -1,17 +1,16 @@
 // (C) 2007-2022 GoodData Corporation
 import React, { useState, useMemo } from "react";
-import { AttributeElements } from "@gooddata/sdk-ui-filters";
+import { useAttributeFilterController } from "@gooddata/sdk-ui-filters";
 import { BarChart } from "@gooddata/sdk-ui-charts";
 import {
     newPositiveAttributeFilter,
-    attributeDisplayFormRef,
     ObjRef,
     idRef,
     modifyMeasure,
+    IAttributeFilter,
 } from "@gooddata/sdk-model";
 import Select from "react-select";
 import * as Md from "../../../md/full";
-import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 
 const locationIdAttributeIdentifier = "attr.restaurantlocation.locationid";
 const TotalSales = modifyMeasure(Md.$TotalSales, (m) => m.format("#,##0").alias("$ Total Sales"));
@@ -22,122 +21,119 @@ interface IFilterValue {
 }
 
 interface ICustomFilterProps {
-    displayForm: ObjRef;
-    filterValues: IFilterValue[] | null;
-    parentFilters?: IElementsQueryAttributeFilter[];
+    filter: IAttributeFilter;
+    parentFilters?: IAttributeFilter[];
+    parentFilterOverAttribute?: ObjRef;
     placeholder: string;
-    onChange: (filters: any) => void;
+    onChange: (filters: IAttributeFilter) => void;
     className: string;
 }
 
 const CustomFilter: React.FC<ICustomFilterProps> = ({
-    displayForm,
-    filterValues,
+    filter,
     parentFilters,
+    parentFilterOverAttribute,
     onChange,
     placeholder,
     className,
 }) => {
+    const {
+        isInitializing,
+        isFiltering,
+        initError,
+        elements,
+        committedSelectionElements,
+        onSelect,
+        onApply,
+    } = useAttributeFilterController({
+        filter,
+        parentFilters,
+        parentFilterOverAttribute,
+        onApply: onChange,
+    });
+
+    if (initError) {
+        // eslint-disable-next-line no-console
+        console.error("Loading attribute elements failed!", initError);
+    }
+    const selectOptions = useMemo(
+        () =>
+            !isInitializing && !isFiltering
+                ? elements.map(
+                      (item): IFilterValue => ({
+                          label: item.title,
+                          value: item.uri,
+                      }),
+                  )
+                : [],
+        [isInitializing, isFiltering, elements],
+    );
+
+    const value = useMemo(() => {
+        return committedSelectionElements.map(
+            (item): IFilterValue => ({
+                label: item.title,
+                value: item.uri,
+            }),
+        );
+    }, [committedSelectionElements]);
+
     return (
-        <AttributeElements displayForm={displayForm} filters={parentFilters}>
-            {({ validElements, isLoading, error }) => {
-                if (error) {
-                    // eslint-disable-next-line no-console
-                    console.error("Loading attribute elements failed!", error);
-                }
-                const selectOptions =
-                    !isLoading && validElements
-                        ? validElements.items.map((item) => ({
-                              label: item.title,
-                              value: item.uri,
-                          }))
-                        : [];
-                return (
-                    <span
-                        style={{
-                            display: "inline-block",
-                            minWidth: "10em",
-                            verticalAlign: "middle",
-                        }}
-                    >
-                        <Select
-                            className={className}
-                            onChange={onChange}
-                            options={selectOptions}
-                            isMulti
-                            isLoading={isLoading}
-                            placeholder={placeholder}
-                            value={filterValues}
-                        />
-                        {error ? <span style={{ color: "#e54d42" }}>Loading failed!</span> : null}
-                    </span>
-                );
+        <span
+            style={{
+                display: "inline-block",
+                minWidth: "10em",
+                verticalAlign: "middle",
             }}
-        </AttributeElements>
+        >
+            <Select
+                className={className}
+                onChange={(value) => {
+                    onSelect(
+                        value.map((v) => ({ uri: v.value, title: v.label })),
+                        false,
+                    );
+                    onApply();
+                }}
+                options={selectOptions}
+                isMulti
+                isLoading={isInitializing || isFiltering}
+                placeholder={placeholder}
+                value={value}
+            />
+            {initError ? <span style={{ color: "#e54d42" }}>Loading failed!</span> : null}
+        </span>
     );
 };
 
 export const ParentFilterExample: React.FC = () => {
-    const [stateFilterValues, setStateFilterValues] = useState<IFilterValue[] | null>([]);
-    const [cityFilterValues, setCityFilterValues] = useState<IFilterValue[] | null>([]);
-
-    const insightFilters = useMemo(() => {
-        const filters = [];
-
-        if (stateFilterValues?.length) {
-            filters.push(
-                newPositiveAttributeFilter(Md.LocationState, {
-                    uris: stateFilterValues.map((filter) => filter.value),
-                }),
-            );
-        }
-        if (cityFilterValues?.length) {
-            filters.push(
-                newPositiveAttributeFilter(Md.LocationCity, {
-                    uris: cityFilterValues.map((filter) => filter.value),
-                }),
-            );
-        }
-
-        return filters;
-    }, [stateFilterValues, cityFilterValues]);
-
-    const cityParentFilters = useMemo(() => {
-        return stateFilterValues?.length
-            ? [
-                  {
-                      attributeFilter: newPositiveAttributeFilter(Md.LocationState, {
-                          uris: stateFilterValues.map((filter) => filter.value),
-                      }),
-                      overAttribute: idRef(locationIdAttributeIdentifier),
-                  },
-              ]
-            : undefined;
-    }, [stateFilterValues]);
-
-    const onStateValueChange = (values: IFilterValue[] | null) => {
-        setStateFilterValues(values);
-        // clear cities on state change to avoid possible invalid state - city combinations
-        setCityFilterValues(null);
-    };
+    const [stateFilter, setStateFilter] = useState<IAttributeFilter>(
+        newPositiveAttributeFilter(Md.LocationState, {
+            uris: [],
+        }),
+    );
+    const [cityFilter, setCityFilter] = useState<IAttributeFilter>(
+        newPositiveAttributeFilter(Md.LocationCity, {
+            uris: [],
+        }),
+    );
 
     return (
         <div>
             <span>Total Sales per site in&emsp;</span>
             <CustomFilter
-                displayForm={attributeDisplayFormRef(Md.LocationState)}
-                filterValues={stateFilterValues}
-                onChange={onStateValueChange}
+                filter={stateFilter}
+                onChange={setStateFilter}
                 placeholder="all states"
                 className="s-select-state"
             />
             &emsp;and&emsp;{" "}
             <CustomFilter
-                displayForm={attributeDisplayFormRef(Md.LocationCity)}
-                filterValues={cityFilterValues}
-                onChange={setCityFilterValues}
+                filter={cityFilter}
+                onChange={setCityFilter}
                 placeholder="all cities"
-                parentFilters={cityParentFilters}
+                parentFilters={[stateFilter]}
+                parentFilterOverAttribute={idRef(locationIdAttributeIdentifier)}
                 className="s-select-city"
             />
             <hr className="separator" />
@@ -145,7 +141,7 @@ export const ParentFilterExample: React.FC = () => {
                 <BarChart
                     measures={[TotalSales]}
                     viewBy={Md.LocationName.Default}
-                    filters={insightFilters}
+                    filters={[stateFilter, cityFilter]}
                     height={500}
                 />
             </div>
