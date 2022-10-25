@@ -7,6 +7,7 @@ import { ISeparators } from "@gooddata/sdk-ui";
 import PreviewRows from "../shared/PreviewRows";
 import { IFormatTemplate } from "../../typings";
 import { Bubble } from "../../../Bubble";
+import { Typography } from "../../../Typography";
 
 interface ITemplateDropdownItemProps {
     template: IFormatTemplate;
@@ -59,7 +60,9 @@ export default class DropdownItem extends React.Component<
                         )}`}
                         alignPoints={[{ align: "cr cl" }, { align: "cr bl" }, { align: "cr tl" }]}
                     >
-                        <h3 className={"gd-measure-format-template-preview-bubble-title"}>{template.name}</h3>
+                        <Typography className="gd-measure-format-template-preview-bubble-title" tagName="h3">
+                            {template.name}
+                        </Typography>
                         <div
                             className={`gd-measure-format-template-preview-bubble-subtitle s-measure-format-template-help-preview-${stringUtils.simplifyText(
                                 template.name,
