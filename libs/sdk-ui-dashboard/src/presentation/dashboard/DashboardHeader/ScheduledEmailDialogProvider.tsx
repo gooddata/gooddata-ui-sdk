@@ -1,7 +1,9 @@
 // (C) 2022 GoodData Corporation
 
 import React from "react";
+
 import { ScheduledEmailDialog, ScheduledEmailManagementDialog } from "../../scheduledEmail";
+
 import { useDashboardScheduledEmails } from "../../../model";
 
 export const ScheduledEmailDialogProvider = () => {
@@ -14,6 +16,7 @@ export const ScheduledEmailDialogProvider = () => {
         onScheduleEmailingManagementAdd,
         onScheduleEmailingManagementEdit,
         scheduledEmailToEdit,
+        users,
         onScheduleEmailingSaveError,
         onScheduleEmailingSaveSuccess,
         onScheduleEmailingManagementClose,
@@ -44,6 +47,7 @@ export const ScheduledEmailDialogProvider = () => {
                     editSchedule={scheduledEmailToEdit}
                     onSaveError={onScheduleEmailingSaveError}
                     onSaveSuccess={onScheduleEmailingSaveSuccess}
+                    users={users}
                 />
             ) : null}
         </>

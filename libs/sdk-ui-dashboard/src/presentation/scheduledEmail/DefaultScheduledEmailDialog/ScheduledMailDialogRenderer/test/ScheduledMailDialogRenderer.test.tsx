@@ -28,6 +28,7 @@ describe("ScheduledMailDialogRenderer", () => {
 
     function renderComponent(customProps: Partial<IScheduledMailDialogRendererOwnProps> = {}) {
         const defaultProps: IScheduledMailDialogRendererOwnProps = {
+            users: [],
             onCancel: noop,
             onSubmit: noop,
             dashboard,

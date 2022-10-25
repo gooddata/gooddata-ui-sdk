@@ -1,13 +1,19 @@
 // (C) 2022 GoodData Corporation
 
-import { IScheduledMail } from "@gooddata/sdk-model";
+import { IScheduledMail, IWorkspaceUser } from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,
     useBackendStrict,
     useCancelablePromise,
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
+
 import { selectCanManageScheduledMail, selectDashboardRef, useDashboardSelector } from "../../../model";
+
+export interface IScheduledEmailManagement {
+    scheduledEmails: IScheduledMail[];
+    users: IWorkspaceUser[];
+}
 
 interface IUseScheduledEmailManagementProps {
     /**
@@ -23,7 +29,7 @@ interface IUseScheduledEmailManagementProps {
     /**
      * Callback to be called, when emails load.
      */
-    onSuccess: (scheduledEmails: IScheduledMail[]) => void;
+    onSuccess: (emailManagement: IScheduledEmailManagement) => void;
 }
 
 export const useScheduledEmailManagement = (props: IUseScheduledEmailManagementProps) => {
@@ -34,7 +40,7 @@ export const useScheduledEmailManagement = (props: IUseScheduledEmailManagementP
     const effectiveWorkspace = useWorkspaceStrict();
 
     const loadResultPromise = loadScheduledMails
-        ? async () => {
+        ? async (): Promise<IScheduledEmailManagement> => {
               const scheduledEmails = await effectiveBackend
                   .workspace(effectiveWorkspace)
                   .dashboards()
@@ -43,7 +49,9 @@ export const useScheduledEmailManagement = (props: IUseScheduledEmailManagementP
                       createdByCurrentUser: !canManageScheduledMail,
                   });
 
-              return scheduledEmails.reverse();
+              const users = await effectiveBackend.workspace(effectiveWorkspace).users().queryAll();
+
+              return { scheduledEmails: scheduledEmails.reverse(), users };
           }
         : null;
 
