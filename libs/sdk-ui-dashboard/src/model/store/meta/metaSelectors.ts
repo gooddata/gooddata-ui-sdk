@@ -409,7 +409,7 @@ export const selectDashboardWorkingDefinition = createSelector(
         filterContextIdentity,
         layout,
         dateFilterConfig,
-    ) => {
+    ): IDashboardDefinition => {
         const dashboardIdentity: Partial<IDashboardObjectIdentity> = {
             ref: persistedDashboard?.ref,
             uri: persistedDashboard?.uri,
@@ -418,7 +418,7 @@ export const selectDashboardWorkingDefinition = createSelector(
 
         const pluginsProp = persistedDashboard?.plugins ? { plugins: persistedDashboard.plugins } : {};
 
-        const dashboardFromState: IDashboardDefinition = {
+        return {
             type: "IDashboard",
             ...dashboardDescriptor,
             ...dashboardIdentity,
@@ -430,7 +430,5 @@ export const selectDashboardWorkingDefinition = createSelector(
             dateFilterConfig,
             ...pluginsProp,
         };
-
-        return dashboardFromState;
     },
 );
