@@ -7,7 +7,6 @@ import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import { MAPBOX_TOKEN } from "../../constants/fixtures";
 import { locationAttribute } from "../../md/geoModel";
 import { OnError } from "@gooddata/sdk-ui";
-import noop from "lodash/noop";
 
 const GEO_CHART_CONFIG: IGeoConfig = {
     mapboxToken: MAPBOX_TOKEN,
@@ -17,9 +16,8 @@ const GEO_CHART_CONFIG: IGeoConfig = {
 };
 
 export const GeoPushpinChartConfigurationViewportExample: React.FC = () => {
-    const onError: OnError = (_params) => {
+    const onError: OnError = () => {
         // handle the callback here
-        return noop;
     };
 
     return (

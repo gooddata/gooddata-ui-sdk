@@ -13,7 +13,6 @@ import {
 } from "@gooddata/sdk-ui-geo";
 import { locationAttribute, sizeMeasure } from "../../md/geoModel";
 import { OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
-import noop from "lodash/noop";
 
 const POINT_SIZE_OPTIONS = ["default", "0.5x", "0.75x", "normal", "1.25x", "1.5x"];
 
@@ -40,24 +39,20 @@ export const GeoPushpinChartConfigurationPointsSizeExample: React.FC = () => {
     const [minSize, setMinSize] = useState<PushpinSizeOption>("default");
     const [maxSize, setMaxSize] = useState<PushpinSizeOption>("default");
 
-    const onLoadingChanged: OnLoadingChanged = (_params) => {
+    const onLoadingChanged: OnLoadingChanged = () => {
         // handle the callback here
-        return noop;
     };
 
-    const onError: OnError = (_params) => {
+    const onError: OnError = () => {
         // handle the callback here
-        return noop;
     };
 
-    const onZoomChanged: ZoomChangedCallback = (_params) => {
+    const onZoomChanged: ZoomChangedCallback = () => {
         // handle the callback here
-        return noop;
     };
 
-    const onCenterPositionChanged: CenterPositionChangedCallback = (_params) => {
+    const onCenterPositionChanged: CenterPositionChangedCallback = () => {
         // handle the callback here
-        return noop;
     };
 
     const onPointSizeChange = (event: ChangeEvent<HTMLSelectElement>) => {

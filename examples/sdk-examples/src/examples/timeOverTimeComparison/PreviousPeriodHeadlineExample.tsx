@@ -5,7 +5,6 @@ import { Headline } from "@gooddata/sdk-ui-charts";
 import { modifyMeasure, newPreviousPeriodMeasure, newRelativeDateFilter } from "@gooddata/sdk-model";
 import * as Md from "../../md/full";
 import { OnLoadingChanged, OnError } from "@gooddata/sdk-ui";
-import noop from "lodash/noop";
 
 const TotalSales = modifyMeasure(Md.$TotalSales, (m) =>
     m.format("#,##0").alias("$ Total Sales").title("Total Sales"),
@@ -18,14 +17,12 @@ const secondaryMeasure = newPreviousPeriodMeasure(
 );
 
 export const PreviousPeriodHeadlineExample: React.FC = () => {
-    const onLoadingChanged: OnLoadingChanged = (_params) => {
+    const onLoadingChanged: OnLoadingChanged = () => {
         // handle the callback here
-        return noop;
     };
 
-    const onError: OnError = (_params) => {
+    const onError: OnError = () => {
         // handle the callback here
-        return noop;
     };
 
     return (

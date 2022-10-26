@@ -6,28 +6,23 @@ import "@gooddata/sdk-ui-geo/styles/css/main.css";
 
 import { MAPBOX_TOKEN } from "../../constants/fixtures";
 import { locationAttribute, sizeMeasure, colorMeasure, segmentByAttribute } from "../../md/geoModel";
-import noop from "lodash/noop";
 import { OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
 
 export const GeoPushpinChartWithCategoryLegendExample: React.FC = () => {
-    const onLoadingChanged: OnLoadingChanged = (_params) => {
+    const onLoadingChanged: OnLoadingChanged = () => {
         // handle the callback here
-        return noop;
     };
 
-    const onError: OnError = (_params) => {
+    const onError: OnError = () => {
         // handle the callback here
-        return noop;
     };
 
-    const onZoomChanged: ZoomChangedCallback = (_params) => {
+    const onZoomChanged: ZoomChangedCallback = () => {
         // handle the callback here
-        return noop;
     };
 
-    const onCenterPositionChanged: CenterPositionChangedCallback = (_params) => {
+    const onCenterPositionChanged: CenterPositionChangedCallback = () => {
         // handle the callback here
-        return noop;
     };
 
     return (

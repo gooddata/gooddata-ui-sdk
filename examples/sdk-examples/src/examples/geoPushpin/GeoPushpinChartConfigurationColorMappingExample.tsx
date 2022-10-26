@@ -16,7 +16,6 @@ import {
 } from "../../md/geoModel";
 import { HeaderPredicates, OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
 import { IColorMapping } from "@gooddata/sdk-ui-charts";
-import noop from "lodash/noop";
 
 const colorMapping: IColorMapping[] = [
     {
@@ -43,24 +42,20 @@ const GEO_CHART_CONFIG = {
 };
 
 export const GeoPushpinChartConfigurationColorMappingExample: React.FC = () => {
-    const onLoadingChanged: OnLoadingChanged = (_params) => {
+    const onLoadingChanged: OnLoadingChanged = () => {
         // handle the callback here
-        return noop;
     };
 
-    const onError: OnError = (_params) => {
+    const onError: OnError = () => {
         // handle the callback here
-        return noop;
     };
 
-    const onZoomChanged: ZoomChangedCallback = (_params) => {
+    const onZoomChanged: ZoomChangedCallback = () => {
         // handle the callback here
-        return noop;
     };
 
-    const onCenterPositionChanged: CenterPositionChangedCallback = (_params) => {
+    const onCenterPositionChanged: CenterPositionChangedCallback = () => {
         // handle the callback here
-        return noop;
     };
 
     return (

@@ -13,7 +13,6 @@ import {
     segmentByAttribute,
 } from "../../md/geoModel";
 import { OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
-import noop from "lodash/noop";
 
 const GEO_CHART_CONFIG = {
     center: {
@@ -26,24 +25,20 @@ const GEO_CHART_CONFIG = {
 };
 
 export const GeoPushpinChartConfigurationExample: React.FC = () => {
-    const onLoadingChanged: OnLoadingChanged = (_params) => {
+    const onLoadingChanged: OnLoadingChanged = () => {
         // handle the callback here
-        return noop;
     };
 
-    const onError: OnError = (_params) => {
+    const onError: OnError = () => {
         // handle the callback here
-        return noop;
     };
 
-    const onZoomChanged: ZoomChangedCallback = (_params) => {
+    const onZoomChanged: ZoomChangedCallback = () => {
         // handle the callback here
-        return noop;
     };
 
-    const onCenterPositionChanged: CenterPositionChangedCallback = (_params) => {
+    const onCenterPositionChanged: CenterPositionChangedCallback = () => {
         // handle the callback here
-        return noop;
     };
 
     return (

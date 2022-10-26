@@ -4,20 +4,17 @@ import { OnLoadingChanged, OnError } from "@gooddata/sdk-ui";
 import { Headline } from "@gooddata/sdk-ui-charts";
 import { modifyMeasure } from "@gooddata/sdk-model";
 import * as Md from "../../md/full";
-import noop from "lodash/noop";
 
 const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) => m.format("#,##0").title("Franchise Fees"));
 const FranchiseFeesAdRoyalty = modifyMeasure(Md.$FranchiseFeesAdRoyalty, (m) => m.format("#,##0"));
 
 export const HeadlineExample: React.FC = () => {
-    const onLoadingChanged: OnLoadingChanged = (_params) => {
+    const onLoadingChanged: OnLoadingChanged = () => {
         // handle the callback here
-        return noop;
     };
 
-    const onError: OnError = (_params) => {
+    const onError: OnError = () => {
         // handle the callback here
-        return noop;
     };
 
     return (
