@@ -24,19 +24,23 @@ import {
     selectSelectedWidgetRef,
     useDashboardSelector,
     selectImplicitDrillsToUrlByWidgetRef,
+    selectBackendCapabilities,
+    selectSettings,
 } from "../../../../../model";
 import invariant from "ts-invariant";
 import { ObjRefMap } from "../../../../../_staging/metadata/objRefMap";
 
 const getButtonValue = (
-    urlDrillTarget: UrlDrillTarget,
+    urlDrillTarget: UrlDrillTarget | undefined,
     attributeDisplayForms: ObjRefMap<IAttributeDisplayFormMetadataObject>,
     attributeDisplayFormsLoading: boolean,
     intl: IntlShape,
 ) => {
     if (isDrillToCustomUrlConfig(urlDrillTarget) && urlDrillTarget.customUrl) {
         return urlDrillTarget.customUrl;
-    } else if (
+    }
+
+    if (
         isDrillToAttributeUrlConfig(urlDrillTarget) &&
         urlDrillTarget.drillToAttributeDisplayForm &&
         urlDrillTarget.insightAttributeDisplayForm
@@ -52,9 +56,9 @@ const getButtonValue = (
         );
 
         return `${insightAttributeDisplayForm?.title} (${drillToAttributeDisplayForm?.title})`;
-    } else {
-        return intl.formatMessage({ id: "configurationPanel.drillIntoUrl.defaultButtonValue" });
     }
+
+    return intl.formatMessage({ id: "configurationPanel.drillIntoUrl.defaultButtonValue" });
 };
 
 const dropdownAlignPoints = [
@@ -75,20 +79,13 @@ export interface DrillUrlItemProps {
 export const DrillTargetUrlItem: React.FunctionComponent<DrillUrlItemProps> = (props) => {
     const { onSelect, urlDrillTarget } = props;
 
-    const attributeDisplayFormsLoading = false; // todo
-    const supportsAttributeHyperlinks = true; // todo
-    const widgetRef = useDashboardSelector(selectSelectedWidgetRef);
-    invariant(widgetRef, "mush have selected widget");
-    const attributeUrlDisplayForms = useDashboardSelector(selectImplicitDrillsToUrlByWidgetRef(widgetRef));
-    const drillTargets = useDashboardSelector(selectDrillTargetsByWidgetRef(widgetRef));
-    const allAttributes = useDashboardSelector(selectAllCatalogAttributesMap);
+    const invalidAttributeDisplayFormIdentifiers: string[] = []; // TODO
 
-    const targetAttributes = drillTargets?.availableDrillTargets?.attributes?.map((drillTarget) =>
-        allAttributes.get({ identifier: drillTarget.attribute.attributeHeader.formOf.identifier }),
-    );
-    const targetAttributesForms = targetAttributes?.flatMap((item) =>
-        isCatalogAttribute(item) ? item.displayForms : [],
-    );
+    const capabilities = useDashboardSelector(selectBackendCapabilities);
+    const settings = useDashboardSelector(selectSettings);
+
+    const { targetAttributesForms, attributeUrlDisplayForms, targetAttributesFormsLoading } =
+        useAttributesDisplayForms();
 
     const intl = useIntl();
 
@@ -113,27 +110,23 @@ export const DrillTargetUrlItem: React.FunctionComponent<DrillUrlItemProps> = (p
     const { client, dataProduct } = useClientWorkspaceIdentifiers();
     const displayForms = useDashboardSelector(selectAllCatalogDisplayFormsMap);
 
-    if (!urlDrillTarget) {
-        return null;
-    }
-
-    const buttonValue = getButtonValue(urlDrillTarget, displayForms, attributeDisplayFormsLoading, intl);
+    const buttonValue = getButtonValue(urlDrillTarget, displayForms, targetAttributesFormsLoading, intl);
 
     return (
         <>
             <Dropdown
                 alignPoints={dropdownAlignPoints}
-                renderButton={({ toggleDropdown }) => (
+                renderButton={({ toggleDropdown, isOpen }) => (
                     <Button
                         onClick={toggleDropdown}
                         className="gd-button gd-button-primary button-dropdown dropdown-button gd-button-small s-drill-to-url-button"
-                        // iconRight={dropdownIconRight} // TODO
+                        iconRight={isOpen ? "gd-icon-navigateup" : "gd-icon-navigatedown"}
                         value={buttonValue}
                     />
                 )}
                 renderBody={({ closeDropdown }) => (
                     <div className="gd-menu-wrapper gd-drill-to-url-body gd-drill-to-url-list s-gd-drill-to-url-body">
-                        {supportsAttributeHyperlinks ? (
+                        {capabilities.supportsHyperlinkAttributeLabels ? (
                             <AttributeUrlSection
                                 attributeDisplayForms={attributeUrlDisplayForms}
                                 onSelect={(insightAttributeDisplayForm, drillToAttributeDisplayForm) => {
@@ -143,7 +136,7 @@ export const DrillTargetUrlItem: React.FunctionComponent<DrillUrlItemProps> = (p
                                     );
                                     closeDropdown();
                                 }}
-                                loading={attributeDisplayFormsLoading}
+                                loading={targetAttributesFormsLoading}
                                 selected={
                                     isDrillToAttributeUrlConfig(urlDrillTarget) &&
                                     urlDrillTarget.drillToAttributeDisplayForm
@@ -164,13 +157,13 @@ export const DrillTargetUrlItem: React.FunctionComponent<DrillUrlItemProps> = (p
             {showModal ? (
                 <CustomUrlEditor
                     urlDrillTarget={urlDrillTarget}
+                    loadingAttributeDisplayForms={targetAttributesFormsLoading}
                     attributeDisplayForms={targetAttributesForms}
-                    invalidAttributeDisplayFormIdentifiers={[]} // TODO
-                    loadingAttributeDisplayForms={attributeDisplayFormsLoading}
-                    documentationLink={""} // TODO
+                    invalidAttributeDisplayFormIdentifiers={invalidAttributeDisplayFormIdentifiers}
+                    documentationLink={String(settings.drillIntoUrlDocumentationLink || "")}
                     enableClientIdParameter={!!client}
                     enableDataProductIdParameter={!!dataProduct}
-                    enableWidgetIdParameter={true} // TODO
+                    enableWidgetIdParameter={!!capabilities.supportsWidgetEntity}
                     onSelect={onCustomUrlHandler}
                     onClose={toggleModal}
                 />
@@ -178,3 +171,31 @@ export const DrillTargetUrlItem: React.FunctionComponent<DrillUrlItemProps> = (p
         </>
     );
 };
+
+function useAttributesDisplayForms() {
+    const widgetRef = useDashboardSelector(selectSelectedWidgetRef);
+    invariant(widgetRef, "mush have selected widget");
+
+    const attributeUrlDisplayForms = useDashboardSelector(selectImplicitDrillsToUrlByWidgetRef(widgetRef));
+
+    const drillTargets = useDashboardSelector(selectDrillTargetsByWidgetRef(widgetRef));
+    const allAttributes = useDashboardSelector(selectAllCatalogAttributesMap);
+
+    const attributes = drillTargets?.availableDrillTargets?.attributes;
+
+    const targetAttributes = attributes?.map((drillTarget) =>
+        allAttributes.get(drillTarget.attribute.attributeHeader.formOf.ref),
+    );
+
+    const targetAttributesForms = targetAttributes?.flatMap((item) =>
+        item && isCatalogAttribute(item.attribute) ? item.attribute.displayForms : [],
+    );
+
+    const targetAttributesFormsLoading = (attributes?.length ?? 0) > 0 && !targetAttributesForms;
+
+    return {
+        targetAttributesForms,
+        attributeUrlDisplayForms,
+        targetAttributesFormsLoading,
+    };
+}

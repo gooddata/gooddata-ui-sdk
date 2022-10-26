@@ -1,5 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import React from "react";
+import React, { useMemo } from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 import { stringUtils } from "@gooddata/util";
@@ -8,7 +8,13 @@ import { DrillOriginItem } from "./DrillOriginItem";
 import { IDrillTargetType } from "./useDrillTargetTypeItems";
 import { DrillTargetType } from "./DrillTargetType";
 import { DrillTargets } from "./DrillTargets/DrillTargets";
-import { areObjRefsEqual, InsightDrillDefinition, isAttributeDescriptor } from "@gooddata/sdk-model";
+import {
+    areObjRefsEqual,
+    InsightDrillDefinition,
+    isAttributeDescriptor,
+    UriRef,
+    IdentifierRef,
+} from "@gooddata/sdk-model";
 import {
     selectDrillTargetsByWidgetRef,
     selectSelectedWidgetRef,
@@ -19,22 +25,21 @@ import invariant from "ts-invariant";
 
 export interface IDrillConfigItemProps {
     item: IDrillConfigItem;
-    // onDelete: (item: IDrillConfigItem) => void;
+    enabledDrillTargetTypeItems: IDrillTargetType[];
+    onDelete: (item: IDrillConfigItem) => void;
     onSetup: (drill: InsightDrillDefinition, changedItem: IDrillConfigItem) => void;
     onIncompleteChange: (changedItem: IDrillConfigItem) => void;
-    enabledDrillTargetTypeItems: IDrillTargetType[];
-    // warning?: string;
 }
 
 const DrillConfigItem: React.FunctionComponent<IDrillConfigItemProps> = ({
-    // onDelete,
     item,
+    enabledDrillTargetTypeItems,
     onIncompleteChange,
     onSetup,
-    enabledDrillTargetTypeItems,
+    onDelete,
 }) => {
     const onDeleteClick = () => {
-        // onDelete(item);
+        onDelete(item);
     };
     const onDrillTargetTypeSelect = (target: DRILL_TARGET_TYPE) => {
         onIncompleteChange({
@@ -47,34 +52,18 @@ const DrillConfigItem: React.FunctionComponent<IDrillConfigItemProps> = ({
         "s-drill-config-item",
         `s-drill-config-item-${stringUtils.simplifyText(item.title)}`,
         {
-            // "s-drill-config-item-incomplete": !item.complete,
+            "s-drill-config-item-incomplete": !item.complete,
         },
     );
 
     const targetClassNames = cx("s-drill-config-target", "drill-config-target", {
-        // "drill-config-target-with-warning": !!item.warning,
+        "drill-config-target-with-warning": !!item.warning,
     });
 
     const widgetRef = useDashboardSelector(selectSelectedWidgetRef);
     invariant(widgetRef, "mush have widget selected");
-    const drillTargets = useDashboardSelector(selectDrillTargetsByWidgetRef(widgetRef));
-    const dateAttributes = useDashboardSelector(selectCatalogDateDatasets);
-    const attributeTarget = drillTargets?.availableDrillTargets?.attributes?.find(
-        (attribute) => attribute.attribute.attributeHeader.localIdentifier === item.localIdentifier,
-    );
 
-    const isFromDateAttribute = !!(
-        attributeTarget &&
-        isAttributeDescriptor(attributeTarget.attribute) &&
-        dateAttributes.some((attribute) =>
-            attribute.dateAttributes.some((dateAttribute) =>
-                areObjRefsEqual(
-                    dateAttribute.attribute.ref,
-                    attributeTarget.attribute.attributeHeader.formOf.ref,
-                ),
-            ),
-        )
-    );
+    const { isFromDateAttribute, showDateFilterTransferWarning } = useDateAttributeOptions(item, widgetRef);
 
     return (
         <div className={classNames}>
@@ -106,18 +95,73 @@ const DrillConfigItem: React.FunctionComponent<IDrillConfigItemProps> = ({
                     />
 
                     <DrillTargets item={item} onSetup={onSetup} />
-                    {/*{!!item.warning && (*/}
-                    {/*    <div className="drill-config-target-warning s-drill-config-target-warning">*/}
-                    {/*        <span className="icon-warning" />*/}
-                    {/*        <span>*/}
-                    {/*            <FormattedMessage id={item.warning} />*/}
-                    {/*        </span>*/}
-                    {/*    </div>*/}
-                    {/*)}*/}
+                    {!!item.warning && (
+                        <div className="drill-config-target-warning s-drill-config-target-warning">
+                            <span className="icon-warning" />
+                            <span>
+                                <FormattedMessage id={item.warning} />
+                            </span>
+                        </div>
+                    )}
+                    {!!showDateFilterTransferWarning && (
+                        <div className="drill-config-date-filter-warning s-drill-config-date-filter-warning">
+                            <span>
+                                <FormattedMessage id="configurationPanel.drillConfig.drillIntoDashboard.dateFilterWarning" />
+                            </span>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
     );
 };
+
+function useDateAttributeOptions(item: IDrillConfigItem, widgetRef: UriRef | IdentifierRef) {
+    const dateAttributes = useDashboardSelector(selectCatalogDateDatasets);
+    const drillTargets = useDashboardSelector(selectDrillTargetsByWidgetRef(widgetRef));
+
+    return useMemo(() => {
+        const attributeTarget = drillTargets?.availableDrillTargets?.attributes?.find(
+            (attribute) => attribute.attribute.attributeHeader.localIdentifier === item.localIdentifier,
+        );
+
+        const isFromDateAttribute = !!(
+            attributeTarget &&
+            isAttributeDescriptor(attributeTarget.attribute) &&
+            dateAttributes.some((attribute) =>
+                attribute.dateAttributes.some((dateAttribute) =>
+                    areObjRefsEqual(
+                        dateAttribute.attribute.ref,
+                        attributeTarget.attribute.attributeHeader.formOf.ref,
+                    ),
+                ),
+            )
+        );
+
+        const isDateAttributeInIntersection =
+            item.type === "measure" &&
+            item.attributes.some((attr) =>
+                dateAttributes.some((x) =>
+                    x.dateAttributes.some((d) => areObjRefsEqual(d.attribute.ref, attr.attributeHeader.ref)),
+                ),
+            );
+        const showDateFilterTransferWarning =
+            item.drillTargetType === DRILL_TARGET_TYPE.DRILL_TO_DASHBOARD &&
+            (isFromDateAttribute || isDateAttributeInIntersection);
+
+        return {
+            isFromDateAttribute,
+            isDateAttributeInIntersection,
+            showDateFilterTransferWarning,
+        };
+    }, [
+        drillTargets?.availableDrillTargets?.attributes,
+        dateAttributes,
+        item.type,
+        item.attributes,
+        item.drillTargetType,
+        item.localIdentifier,
+    ]);
+}
 
 export default DrillConfigItem;

@@ -6,6 +6,7 @@ import { Typography } from "@gooddata/sdk-ui-kit";
 import { InsightDrillConfigList } from "./InsightDrillConfigList";
 import {
     modifyDrillsForInsightWidget,
+    removeDrillsForInsightWidget,
     selectDrillTargetsByWidgetRef,
     selectSettings,
     selectWidgetByRef,
@@ -147,7 +148,7 @@ export const InsightDrillConfigPanel: React.FunctionComponent<IDrillConfigPanelP
 
     return (
         <>
-            {settings.enableKDZooming && <ZoomInsightConfiguration widget={widget} />}
+            {!!settings.enableKDZooming && <ZoomInsightConfiguration widget={widget} />}
             <div className="configuration-category s-drill-config-panel">
                 <Typography tagName="h3">
                     <span>
@@ -156,7 +157,12 @@ export const InsightDrillConfigPanel: React.FunctionComponent<IDrillConfigPanelP
                 </Typography>
                 <InsightDrillConfigList
                     drillConfigItems={mergedItems}
-                    // onDelete={onDeleteItem}
+                    onDelete={(item) => {
+                        if (item.complete) {
+                            dispatch(removeDrillsForInsightWidget(widgetRef, [item]));
+                        }
+                        deleteIncompleteItem(item);
+                    }}
                     onSetup={(drill: InsightDrillDefinition, changedItem: IDrillConfigItem) => {
                         dispatch(modifyDrillsForInsightWidget(widgetRef, [drill]));
                         deleteIncompleteItem(changedItem);
@@ -164,7 +170,7 @@ export const InsightDrillConfigPanel: React.FunctionComponent<IDrillConfigPanelP
                     onIncompleteChange={onChangeItem}
                     enabledDrillTargetTypeItems={enabledDrillTargetTypeItems}
                 />
-                {configItems?.availableDrillTargets && (
+                {!!configItems?.availableDrillTargets && (
                     <DrillOriginSelector
                         items={getUnusedDrillTargets(configItems?.availableDrillTargets, mergedItems)}
                         onSelect={onOriginSelect}

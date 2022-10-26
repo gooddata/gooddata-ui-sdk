@@ -1,6 +1,6 @@
 // (C) 2020-2022 GoodData Corporation
 import React from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, defineMessages } from "react-intl";
 import { DropdownSectionHeader } from "../DropdownSectionHeader";
 import { ProjectIdParameterDetail } from "../ParameterDetails/ProjectIdParameterDetail";
 import { DashboardIdParameterDetail } from "../ParameterDetails/DashboardIdParameterDetail";
@@ -21,33 +21,43 @@ interface IIdentifierParameter {
     placeholder: string;
 }
 
+const identifierParametersMessages = defineMessages({
+    insightIdParameterLabel: { id: "configurationPanel.drillIntoUrl.editor.insightIdParameterLabel" },
+    widgetIdParameterLabel: { id: "configurationPanel.drillIntoUrl.editor.widgetIdParameterLabel" },
+    dashboardIdParameterLabel: { id: "configurationPanel.drillIntoUrl.editor.dashboardIdParameterLabel" },
+    projectIdParameterLabel: { id: "configurationPanel.drillIntoUrl.editor.projectIdParameterLabel" },
+    workspaceIdParameterLabel: { id: "configurationPanel.drillIntoUrl.editor.workspaceIdParameterLabel" },
+    clientIdParameterLabel: { id: "configurationPanel.drillIntoUrl.editor.clientIdParameterLabel" },
+    dataProductIdParameterLabel: { id: "configurationPanel.drillIntoUrl.editor.dataProductIdParameterLabel" },
+});
+
 const identifierParametersSection: IIdentifierParameter[] = [
     {
-        titleIntlKey: "configurationPanel.drillIntoUrl.editor.insightIdParameterLabel",
+        titleIntlKey: identifierParametersMessages.insightIdParameterLabel.id,
         placeholder: DRILL_TO_URL_PLACEHOLDER.INSIGHT_ID,
     },
     {
-        titleIntlKey: "configurationPanel.drillIntoUrl.editor.widgetIdParameterLabel",
+        titleIntlKey: identifierParametersMessages.widgetIdParameterLabel.id,
         placeholder: DRILL_TO_URL_PLACEHOLDER.WIDGET_ID,
     },
     {
-        titleIntlKey: "configurationPanel.drillIntoUrl.editor.dashboardIdParameterLabel",
+        titleIntlKey: identifierParametersMessages.dashboardIdParameterLabel.id,
         placeholder: DRILL_TO_URL_PLACEHOLDER.DASHBOARD_ID,
     },
     {
-        titleIntlKey: "configurationPanel.drillIntoUrl.editor.projectIdParameterLabel",
+        titleIntlKey: identifierParametersMessages.projectIdParameterLabel.id,
         placeholder: DRILL_TO_URL_PLACEHOLDER.PROJECT_ID,
     },
     {
-        titleIntlKey: "configurationPanel.drillIntoUrl.editor.workspaceIdParameterLabel",
+        titleIntlKey: identifierParametersMessages.workspaceIdParameterLabel.id,
         placeholder: DRILL_TO_URL_PLACEHOLDER.WORKSPACE_ID,
     },
     {
-        titleIntlKey: "configurationPanel.drillIntoUrl.editor.clientIdParameterLabel",
+        titleIntlKey: identifierParametersMessages.clientIdParameterLabel.id,
         placeholder: DRILL_TO_URL_PLACEHOLDER.CLIENT_ID,
     },
     {
-        titleIntlKey: "configurationPanel.drillIntoUrl.editor.dataProductIdParameterLabel",
+        titleIntlKey: identifierParametersMessages.dataProductIdParameterLabel.id,
         placeholder: DRILL_TO_URL_PLACEHOLDER.DATA_PRODUCT_ID,
     },
 ];

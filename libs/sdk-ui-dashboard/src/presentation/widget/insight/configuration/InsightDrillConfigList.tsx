@@ -7,7 +7,7 @@ import { InsightDrillDefinition } from "@gooddata/sdk-model";
 
 export interface IDrillConfigListProps {
     drillConfigItems?: IDrillConfigItem[];
-    // onDelete: (item: IDrillConfigItem) => void;
+    onDelete: (item: IDrillConfigItem) => void;
     onSetup: (drill: InsightDrillDefinition, changedItem: IDrillConfigItem) => void;
     onIncompleteChange: (changedItem: IDrillConfigItem) => void;
     enabledDrillTargetTypeItems: IDrillTargetType[];
@@ -20,7 +20,7 @@ export const InsightDrillConfigList: React.FunctionComponent<IDrillConfigListPro
                 <InsightDrillConfigItem
                     item={item}
                     key={item.localIdentifier}
-                    // onDelete={props.onDelete}
+                    onDelete={props.onDelete}
                     onSetup={props.onSetup}
                     onIncompleteChange={props.onIncompleteChange}
                     enabledDrillTargetTypeItems={props.enabledDrillTargetTypeItems}

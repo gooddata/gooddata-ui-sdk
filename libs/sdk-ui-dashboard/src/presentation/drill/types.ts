@@ -11,12 +11,7 @@ import {
     isDrillToCustomUrl,
     IListedDashboard,
 } from "@gooddata/sdk-model";
-import {
-    DashboardDrillContext,
-    DashboardDrillDefinition,
-    IDashboardDrillEvent,
-    IDrillDownDefinition,
-} from "../../types";
+import { DashboardDrillContext, IDashboardDrillEvent, IDrillDownDefinition } from "../../types";
 import {
     DrillToLegacyDashboard,
     DashboardCommandFailed,
@@ -35,7 +30,6 @@ import {
     DashboardDrillToLegacyDashboardResolved,
     DashboardDrillCommand,
 } from "../../model";
-import { IAvailableDrillTargetItem } from "./DrillSelect/types";
 
 /**
  * @alpha
@@ -130,7 +124,7 @@ export interface DrillStep {
 
 export type IDrillToUrl = IDrillToCustomUrl | IDrillToAttributeUrl;
 
-export function isDrillToUrl(drillDefinition: DashboardDrillDefinition): drillDefinition is IDrillToUrl {
+export function isDrillToUrl(drillDefinition: unknown): drillDefinition is IDrillToUrl {
     return isDrillToCustomUrl(drillDefinition) || isDrillToAttributeUrl(drillDefinition);
 }
 
@@ -162,7 +156,7 @@ export interface IDrillToDashboardConfigTarget {
 
 export type IDrillToDashboardConfig = IDrillConfigItemBase & IDrillToDashboardConfigTarget;
 
-export function isDrillToDashboardConfig(item: IDrillConfigItem): item is IDrillToDashboardConfig {
+export function isDrillToDashboardConfig(item: unknown): item is IDrillToDashboardConfig {
     return !isEmpty(item) && (item as IDrillToDashboardConfig).dashboard !== undefined;
 }
 
@@ -172,7 +166,7 @@ export interface IDrillToInsightConfigTarget {
 
 export type IDrillToInsightConfig = IDrillConfigItemBase & IDrillToInsightConfigTarget;
 
-export function isDrillToInsightConfig(item: IDrillConfigItem): item is IDrillToInsightConfig {
+export function isDrillToInsightConfig(item: unknown): item is IDrillToInsightConfig {
     return !isEmpty(item) && (item as IDrillToInsightConfig).insightRef !== undefined;
 }
 
@@ -180,7 +174,7 @@ export interface IDrillToCustomUrlConfig {
     customUrl: string;
 }
 
-export function isDrillToCustomUrlConfig(item: UrlDrillTarget): item is IDrillToCustomUrlConfig {
+export function isDrillToCustomUrlConfig(item: unknown): item is IDrillToCustomUrlConfig {
     return !isEmpty(item) && (item as IDrillToCustomUrlConfig).customUrl !== undefined;
 }
 
@@ -189,7 +183,7 @@ export interface IDrillToAttributeUrlConfig {
     drillToAttributeDisplayForm: ObjRef;
 }
 
-export function isDrillToAttributeUrlConfig(item: UrlDrillTarget): item is IDrillToAttributeUrlConfig {
+export function isDrillToAttributeUrlConfig(item: unknown): item is IDrillToAttributeUrlConfig {
     return !isEmpty(item) && (item as IDrillToAttributeUrlConfig).insightAttributeDisplayForm !== undefined;
 }
 
@@ -201,7 +195,7 @@ export interface IDrillToUrlConfigTarget {
 
 export type IDrillToUrlConfig = IDrillConfigItemBase & IDrillToUrlConfigTarget;
 
-export function isDrillToUrlConfig(item: IDrillConfigItem): item is IDrillToUrlConfig {
+export function isDrillToUrlConfig(item: unknown): item is IDrillToUrlConfig {
     return !isEmpty(item) && (item as IDrillToUrlConfig).urlDrillTarget !== undefined;
 }
 
@@ -226,8 +220,6 @@ export interface IDefinitionValidationData {
     attributeDisplayForms?: IAttributeDisplayForm[];
 }
 
-export function isAvailableDrillTargetMeasure(
-    obj: IAvailableDrillTargetItem,
-): obj is IAvailableDrillTargetMeasure {
+export function isAvailableDrillTargetMeasure(obj: unknown): obj is IAvailableDrillTargetMeasure {
     return !isEmpty(obj) && (obj as IAvailableDrillTargetMeasure).measure !== undefined;
 }
