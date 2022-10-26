@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
-@import "@gooddata/sdk-ui-kit/styles/scss/variables.scss";
-@import "@gooddata/sdk-ui-kit/styles/scss/mixins.scss";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/mixins";
 
 .gd-select-menu {
     & * {
@@ -12,11 +12,11 @@
     padding: 6px 0;
     line-height: 1.4rem;
     border-radius: 3px;
-    font-family: $gd-font-primary;
-    background-color: $gd-color-light;
+    font-family: variables.$gd-font-primary;
+    background-color: variables.$gd-color-light;
     min-width: 100%;
 
-    @include box-shadow(0 1px 20px var(--gd-shadow-color, rgba(20, 56, 93, 0.2)));
+    @include mixins.box-shadow(0 1px 20px var(--gd-shadow-color, rgba(20, 56, 93, 0.2)));
 
     &-wrapper {
         position: relative;

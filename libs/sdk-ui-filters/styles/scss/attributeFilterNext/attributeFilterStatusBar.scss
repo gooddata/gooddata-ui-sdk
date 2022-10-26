@@ -1,5 +1,6 @@
 // (C) 2022 GoodData Corporation
-@import "./attributeFilterVariables";
+@use "attributeFilterVariables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables";
 
 .gd-attribute-filter-filtered-status__next {
     position: relative;
@@ -13,17 +14,17 @@
         align-items: center;
         height: 20px;
         line-height: 20px;
-        color: $gd-color-text;
-        background: $gd-color-white;
+        color: variables.$gd-color-text;
+        background: variables.$gd-color-white;
         font-size: 12px;
 
         .gd-icon-circle-question {
             top: 1px;
             padding: 5px;
-            color: $gd-color-state-blank;
+            color: variables.$gd-color-state-blank;
         }
 
-        @media #{$xsmall-only}, #{$small-only} {
+        @media #{variables.$xsmall-only}, #{variables.$small-only} {
             font-size: 14px;
         }
     }

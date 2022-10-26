@@ -1,8 +1,14 @@
 // (C) 2022 GoodData Corporation
-@import "./attributeFilterVariables";
+@use "sass:list";
+@use "sass:map";
+@use "attributeFilterVariables";
+@use "@gooddata/sdk-ui-kit/styles/scss/button";
+@use "@gooddata/sdk-ui-kit/styles/scss/mixins";
+@use "@gooddata/sdk-ui-kit/styles/scss/typo-mixins";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables";
 
 .gd-attribute-filter-dropdown-button__next {
-    @include gd-font-base;
+    @include typo-mixins.gd-font-base;
 
     position: relative;
     max-width: 185px;
@@ -21,7 +27,7 @@
     &::after {
         content: "";
         position: absolute;
-        transition: all $transition-length;
+        transition: all attributeFilterVariables.$transition-length;
     }
 
     &::before {
@@ -30,7 +36,7 @@
         left: 9px;
         width: 7px;
         height: 26px;
-        background: url($separator-icon) no-repeat;
+        background: url(attributeFilterVariables.$separator-icon) no-repeat;
         opacity: 0;
     }
 
@@ -42,7 +48,7 @@
         bottom: 0;
         left: 0;
         border: 1px solid transparent;
-        background: $gd-dashboards-filterBar-filterButton-backgroundColor;
+        background: attributeFilterVariables.$gd-dashboards-filterBar-filterButton-backgroundColor;
         transform: translateZ(-1px);
         border-radius: 3px;
     }
@@ -50,7 +56,8 @@
     &:hover {
         &.gd-is-draggable {
             &:not(.gd-is-active, .gd-is-filtering) {
-                box-shadow: 0 1px 3px 0 $button-shadow-lighter, 0 2px 9px 0 $button-shadow-darker;
+                box-shadow: 0 1px 3px 0 button.$button-shadow-lighter,
+                    0 2px 9px 0 button.$button-shadow-darker;
             }
             &::before {
                 opacity: 1;
@@ -58,13 +65,13 @@
         }
 
         &::after {
-            border-color: $button-normal-hover-border-color;
+            border-color: button.$button-normal-hover-border-color;
         }
     }
 
     &.gd-is-filtering {
         &:not(.gd-is-active) {
-            background: $gd-palette-primary-dimmed;
+            background: variables.$gd-palette-primary-dimmed;
             border-radius: 3px;
 
             &::before,
@@ -84,14 +91,14 @@
         &::after {
             &,
             .edit-mode-on & {
-                box-shadow: inset 0 1px 0 0 $button-normal-active-shadow;
-                border-color: var(--gd-palette-complementary-5, $button-normal-hover-border-color);
+                box-shadow: inset 0 1px 0 0 button.$button-normal-active-shadow;
+                border-color: var(--gd-palette-complementary-5, button.$button-normal-hover-border-color);
 
                 // refactor
                 // stylelint-disable-next-line max-line-length
-                @include gradient-linear(
-                    $button-normal-active-gradient-top,
-                    $button-normal-active-gradient-bottom
+                @include mixins.gradient-linear(
+                    button.$button-normal-active-gradient-top,
+                    button.$button-normal-active-gradient-bottom
                 );
             }
         }
@@ -162,11 +169,11 @@
     box-shadow: 0 1px 2px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.1));
     line-height: 25px;
     border-width: 1px 0;
-    border-top: 1px solid $gd-border-color;
-    border-bottom: 1px solid $gd-border-color;
-    font-size: nth(map-get($gd-typo, font-sizes), 4);
+    border-top: 1px solid variables.$gd-border-color;
+    border-bottom: 1px solid variables.$gd-border-color;
+    font-size: list.nth(map.get(variables.$gd-typo, font-sizes), 4);
     text-align: left;
-    background-color: $gd-color-white;
+    background-color: variables.$gd-color-white;
 
     &::after {
         display: none;
@@ -194,7 +201,7 @@
 
 .gd-attribute-filter-dropdown-button-title__next {
     overflow: hidden;
-    color: $gd-color-link;
+    color: variables.$gd-color-link;
 
     .gd-bubble-trigger,
     .shortened {
@@ -209,7 +216,7 @@
         flex: 0 0 auto;
         max-width: 100%;
         margin-right: 5px;
-        color: $gd-color-label;
+        color: variables.$gd-color-label;
 
         &::after {
             content: ":";
@@ -230,8 +237,8 @@
         font-weight: normal;
         font-size: inherit;
         vertical-align: top;
-        color: $gd-color-state-blank;
-        transition: $transition-length;
+        color: variables.$gd-color-state-blank;
+        transition: attributeFilterVariables.$transition-length;
     }
 
     &:only-child::after {
@@ -248,7 +255,7 @@
     overflow: hidden;
     font-weight: bold;
     text-overflow: ellipsis;
-    color: $gd-color-dark;
+    color: variables.$gd-color-dark;
 
     .overlay & {
         flex: 1 1 auto;
@@ -275,7 +282,7 @@
     max-width: 120px;
     text-overflow: ellipsis;
     vertical-align: bottom;
-    color: var(--gd-palette-complementary-8, $default-gd-color-text);
+    color: var(--gd-palette-complementary-8, variables.$default-gd-color-text);
 
     .overlay & {
         max-width: none;
@@ -286,7 +293,7 @@
     display: inline-block;
     flex: 0 0 auto;
     vertical-align: bottom;
-    color: var(--gd-palette-complementary-8, $default-gd-color-text);
+    color: var(--gd-palette-complementary-8, variables.$default-gd-color-text);
 }
 
 .gd-attribute-filter-dropdown-simple-button__next {

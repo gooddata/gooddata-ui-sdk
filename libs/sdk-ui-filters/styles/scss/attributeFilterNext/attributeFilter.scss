@@ -1,5 +1,6 @@
 // (C) 2022 GoodData Corporation
-@import "./attributeFilterVariables";
+@use "attributeFilterVariables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables";
 
 .gd-attribute-filter__next {
     display: inline-block;
@@ -20,7 +21,7 @@
 }
 
 .gd-filtered-message__next:hover {
-    color: $gd-color-text;
+    color: variables.$gd-color-text;
 }
 
 .gd-mobile-dropdown-content {

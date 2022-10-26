@@ -1,19 +1,21 @@
 // (C) 2007-2019 GoodData Corporation
-@import "@gooddata/sdk-ui-kit/styles/scss/typo-mixins";
-@import "@gooddata/sdk-ui-kit/styles/scss/variables.scss";
+@use "sass:list";
+@use "sass:map";
+@use "@gooddata/sdk-ui-kit/styles/scss/typo-mixins";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables";
 
 .gd-extended-date-filter-body {
     .gd-filter-list-item {
-        @include gd-font-base;
+        @include typo-mixins.gd-font-base;
 
         display: flex;
         justify-content: flex-start;
         width: 100%;
         border: none;
         outline: 0;
-        line-height: nth(map-get($gd-typo, line-heights), 1);
+        line-height: list.nth(map.get(variables.$gd-typo, line-heights), 1);
         background: transparent;
-        font-size: nth(map-get($gd-typo, font-sizes), 5);
+        font-size: list.nth(map.get(variables.$gd-typo, font-sizes), 5);
         text-align: left;
 
         span {

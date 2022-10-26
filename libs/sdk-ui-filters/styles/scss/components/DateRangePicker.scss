@@ -1,9 +1,13 @@
 // (C) 2007-2021 GoodData Corporation
+@use "sass:color";
 @use "react-day-picker/dist/style.css";
-@import "@gooddata/sdk-ui-kit/styles/scss/variables.scss";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
-$gd-date-range-picker-hover-bgcolor: $is-focused-background;
-$gd-date-range-picker-interval-bgcolor: var(--gd-palette-primary-lightest, lighten($gd-color-highlight, 45%));
+$gd-date-range-picker-hover-bgcolor: kit-variables.$is-focused-background;
+$gd-date-range-picker-interval-bgcolor: var(
+    --gd-palette-primary-lightest,
+    color.adjust(kit-variables.$gd-color-highlight, $lightness: 45%)
+);
 $gd-date-range-picker-shadow-color: #1f354a;
 
 $gd-color-warning-text: #888;
@@ -30,7 +34,7 @@ $gd-day-picker-width: 267px;
 
     &-dash {
         margin: 0 5px;
-        color: $gd-color-state-blank;
+        color: kit-variables.$gd-color-state-blank;
     }
 
     &-dash + &-to .gd-date-range-picker-picker {
@@ -49,14 +53,14 @@ $gd-day-picker-width: 267px;
 
     &.datetime {
         input {
-            @media #{$medium-up} {
+            @media #{kit-variables.$medium-up} {
                 width: 130px;
             }
         }
     }
 
     input[type="time"] {
-        @media #{$medium-up} {
+        @media #{kit-variables.$medium-up} {
             &::-webkit-calendar-picker-indicator {
                 display: none;
             }
@@ -73,7 +77,7 @@ $gd-day-picker-width: 267px;
             height: 30px;
             padding-left: 34px;
 
-            @media #{$medium-up} {
+            @media #{kit-variables.$medium-up} {
                 width: 126px;
             }
         }
@@ -92,10 +96,10 @@ $gd-day-picker-width: 267px;
             &[value=""]::before {
                 content: attr(placeholder);
                 margin-right: 5px;
-                color: transparentize($default-gd-color-link, 0.25);
+                color: color.adjust(kit-variables.$default-gd-color-link, $alpha: -0.25);
             }
 
-            @media #{$medium-up} {
+            @media #{kit-variables.$medium-up} {
                 min-width: 13em;
             }
         }
@@ -109,7 +113,7 @@ $gd-day-picker-width: 267px;
             align-items: center;
             height: 100%;
             font-size: 16px;
-            color: $gd-palette-primary-base;
+            color: kit-variables.$gd-palette-primary-base;
             pointer-events: none;
         }
 
@@ -117,7 +121,7 @@ $gd-day-picker-width: 267px;
             &,
             &:hover,
             &:focus {
-                border-color: $gd-palette-warning-base;
+                border-color: kit-variables.$gd-palette-warning-base;
             }
         }
     }
@@ -147,8 +151,8 @@ $gd-day-picker-width: 267px;
         width: $gd-day-picker-width;
         padding: 18px 15px 15px;
         box-shadow: 0 2px 5px 0
-            var(--gd-shadow-color, transparentize($gd-date-range-picker-shadow-color, 0.85));
-        background: $gd-color-white;
+            var(--gd-shadow-color, color.adjust($gd-date-range-picker-shadow-color, $alpha: -0.85));
+        background: kit-variables.$gd-color-white;
         user-select: none;
 
         //CSS for new RANGE PICKER
@@ -173,7 +177,7 @@ $gd-day-picker-width: 267px;
             cursor: pointer;
 
             &:hover {
-                color: $gd-color-state-blank;
+                color: kit-variables.$gd-color-state-blank;
             }
         }
 
@@ -183,9 +187,9 @@ $gd-day-picker-width: 267px;
             width: 2em;
             height: 2em;
             text-align: center;
-            color: $gd-palette-primary-base;
+            color: kit-variables.$gd-palette-primary-base;
             padding-top: 0.15em;
-            font-family: $gd-font-indigo;
+            font-family: kit-variables.$gd-font-indigo;
             font-size: 18px;
         }
 
@@ -195,9 +199,9 @@ $gd-day-picker-width: 267px;
             width: 2em;
             height: 2em;
             text-align: center;
-            color: $gd-palette-primary-base;
+            color: kit-variables.$gd-palette-primary-base;
             padding-top: 0.15em;
-            font-family: $gd-font-indigo;
+            font-family: kit-variables.$gd-font-indigo;
             font-size: 18px;
         }
 
@@ -208,18 +212,18 @@ $gd-day-picker-width: 267px;
         }
 
         .rdp-caption_label {
-            font-family: $gd-font-primary;
+            font-family: kit-variables.$gd-font-primary;
             font-size: 17px;
             text-align: center;
             font-weight: normal;
-            color: $gd-color-dark;
+            color: kit-variables.$gd-color-dark;
         }
 
         .rdp-head_cell {
             display: table-cell;
-            color: var(--gd-palette-complementary-8, $default-gd-color-state-blank);
+            color: var(--gd-palette-complementary-8, kit-variables.$default-gd-color-state-blank);
             cursor: help;
-            font-family: $gd-font-primary;
+            font-family: kit-variables.$gd-font-primary;
             font-weight: 400;
             font-size: 13px;
             text-transform: none;
@@ -233,8 +237,8 @@ $gd-day-picker-width: 267px;
 
         .rdp-day {
             padding: 0.3125em 0.55em;
-            color: $gd-color-text;
-            font-family: $gd-font-primary;
+            color: kit-variables.$gd-color-text;
+            font-family: kit-variables.$gd-font-primary;
             font-size: 14px;
             font-weight: 700;
             text-align: center;
@@ -247,24 +251,24 @@ $gd-day-picker-width: 267px;
         }
 
         .rdp-day_disabled {
-            color: $gd-color-disabled;
+            color: kit-variables.$gd-color-disabled;
             cursor: default;
             font-weight: 400;
         }
 
         .rdp-day_outside {
-            color: $gd-color-disabled;
+            color: kit-variables.$gd-color-disabled;
             cursor: default;
             font-weight: 400;
         }
 
         .rdp-day_selected:not(.rdp-day_disabled):not(.rdp-day_range_middle) {
-            color: $gd-color-text-light;
-            background: $gd-palette-primary-base;
+            color: kit-variables.$gd-color-text-light;
+            background: kit-variables.$gd-palette-primary-base;
         }
 
         .rdp-day_selected:not(.rdp-day_range_start):not(.rdp-day_range_end) {
-            color: $gd-color-text;
+            color: kit-variables.$gd-color-text;
             background: $gd-date-range-picker-interval-bgcolor;
 
             &:hover {
@@ -310,18 +314,18 @@ $gd-day-picker-width: 267px;
             &::before {
                 display: block;
                 padding-top: 0.15em;
-                font-family: $gd-font-indigo;
+                font-family: kit-variables.$gd-font-indigo;
                 font-size: 18px;
-                color: $gd-palette-primary-base;
+                color: kit-variables.$gd-palette-primary-base;
             }
 
             &:hover {
-                color: $gd-palette-primary-base;
+                color: kit-variables.$gd-palette-primary-base;
                 cursor: pointer;
             }
 
             &:hover::before {
-                color: $gd-color-state-blank;
+                color: kit-variables.$gd-color-state-blank;
             }
 
             &--prev {
@@ -346,11 +350,11 @@ $gd-day-picker-width: 267px;
             margin-left: 0.25em;
             margin-right: 0.25em;
             margin-bottom: 1em;
-            font-family: $gd-font-primary;
+            font-family: kit-variables.$gd-font-primary;
             font-weight: 400;
             font-size: 17px;
             text-align: center;
-            color: $gd-color-dark;
+            color: kit-variables.$gd-color-dark;
             cursor: default;
         }
 
@@ -365,11 +369,11 @@ $gd-day-picker-width: 267px;
         .DayPicker-Weekday {
             display: table-cell;
             padding-bottom: 0.5em;
-            font-family: $gd-font-primary;
+            font-family: kit-variables.$gd-font-primary;
             font-weight: 400;
             font-size: 13px;
             text-align: center;
-            color: var(--gd-palette-complementary-8, $default-gd-color-state-blank);
+            color: var(--gd-palette-complementary-8, kit-variables.$default-gd-color-state-blank);
             cursor: help;
 
             abbr {
@@ -389,11 +393,11 @@ $gd-day-picker-width: 267px;
         .DayPicker-Day {
             display: table-cell;
             padding: 0.3125em 0.55em;
-            font-family: $gd-font-primary;
+            font-family: kit-variables.$gd-font-primary;
             font-size: 14px;
             font-weight: 700;
             text-align: center;
-            color: $gd-color-text;
+            color: kit-variables.$gd-color-text;
             border-radius: 0;
 
             &:hover {
@@ -403,7 +407,7 @@ $gd-day-picker-width: 267px;
 
             &--disabled {
                 font-weight: 400;
-                color: $gd-color-disabled;
+                color: kit-variables.$gd-color-disabled;
 
                 &:hover {
                     background: transparent;
@@ -413,7 +417,7 @@ $gd-day-picker-width: 267px;
 
             &--outside {
                 font-weight: normal;
-                color: $gd-color-disabled;
+                color: kit-variables.$gd-color-disabled;
             }
         }
 
@@ -426,12 +430,12 @@ $gd-day-picker-width: 267px;
         }
 
         .DayPicker-Day--selected:not(.DayPicker-Day--disabled) {
-            color: $gd-color-text-light;
-            background: $gd-palette-primary-base;
+            color: kit-variables.$gd-color-text-light;
+            background: kit-variables.$gd-palette-primary-base;
         }
 
         .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end) {
-            color: $gd-color-text;
+            color: kit-variables.$gd-color-text;
             background: $gd-date-range-picker-interval-bgcolor;
         }
     }
@@ -442,7 +446,7 @@ $gd-day-picker-width: 267px;
         padding: 2px 10px;
         border-radius: 3px;
         color: $gd-color-warning-text;
-        background-color: $gd-palette-warning-base;
+        background-color: kit-variables.$gd-palette-warning-base;
     }
 }
 

@@ -1,12 +1,13 @@
 // (C) 2019 GoodData Corporation
-@import "@gooddata/sdk-ui/styles/scss/settings";
-@import "@gooddata/sdk-ui-kit/styles/scss/SVGicons";
-@import "@gooddata/sdk-ui-kit/styles/scss/dropdown";
-@import "@gooddata/sdk-ui-kit/styles/scss/indigoFont";
-@import "@gooddata/sdk-ui-kit/styles/scss/typo-mixins";
-@import "@gooddata/sdk-ui-kit/styles/scss/form";
-@import "@gooddata/sdk-ui-kit/styles/scss/button";
-@import "@gooddata/sdk-ui-kit/styles/scss/overlay";
+@use "sass:color";
+@use "@gooddata/sdk-ui/styles/scss/settings";
+@use "@gooddata/sdk-ui-kit/styles/scss/SVGicons";
+@use "@gooddata/sdk-ui-kit/styles/scss/dropdown";
+@use "@gooddata/sdk-ui-kit/styles/scss/indigoFont";
+@use "@gooddata/sdk-ui-kit/styles/scss/typo-mixins";
+@use "@gooddata/sdk-ui-kit/styles/scss/form";
+@use "@gooddata/sdk-ui-kit/styles/scss/button";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables";
 
 $dialog_width: 250px;
 
@@ -23,22 +24,25 @@ $dialog_width: 250px;
             line-height: 1.4em;
             font-size: 12px;
             border-radius: 3px;
-            font-family: $gd-font-primary;
+            font-family: variables.$gd-font-primary;
             margin-top: 4px;
 
             &.gd-mvf-warning-message-low {
-                color: $gd-palette-primary-base;
-                background: $gd-palette-primary-base-t80;
+                color: variables.$gd-palette-primary-base;
+                background: variables.$gd-palette-primary-base-t80;
             }
 
             &.gd-mvf-warning-message-medium {
-                color: $gd-color-warning-text;
-                background: var(--gd-palette-warning-base-t85, transparentize($gd-color-warning, 0.85));
+                color: variables.$gd-color-warning-text;
+                background: var(
+                    --gd-palette-warning-base-t85,
+                    color.adjust(variables.$gd-color-warning, $alpha: -0.85)
+                );
             }
 
             &.gd-mvf-warning-message-high {
-                color: $gd-color-negative;
-                background: transparentize($gd-color-negative, 0.85);
+                color: variables.$gd-color-negative;
+                background: color.adjust(variables.$gd-color-negative, $alpha: -0.85);
             }
         }
 
@@ -60,7 +64,7 @@ $dialog_width: 250px;
     .gd-mvf-dropdown-footer {
         margin: 0 10px;
         padding: 10px 0;
-        border-top: 1px solid $gd-border-color;
+        border-top: 1px solid variables.$gd-border-color;
         text-align: right;
     }
 }

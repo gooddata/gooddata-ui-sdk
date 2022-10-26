@@ -1,7 +1,10 @@
 // (C) 2019-2021 GoodData Corporation
-@import "@gooddata/sdk-ui-kit/styles/scss/variables.scss";
-@import "@gooddata/sdk-ui-kit/styles/scss/button";
-@import "@gooddata/sdk-ui-kit/styles/scss/typo-mixins";
+@use "sass:list";
+@use "sass:map";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/button";
+@use "@gooddata/sdk-ui-kit/styles/scss/mixins";
+@use "@gooddata/sdk-ui-kit/styles/scss/typo-mixins";
 
 $transition-length: 0.2s;
 $separator-icon: "data:image/svg+xml,%3Csvg width='7' height='26' viewBox='0 0 7 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 4h2v2H0V4zm0-4h2v2H0V0zm5 4h2v2H5V4zm0-4h2v2H5V0zm0 8h2v2H5V8zM0 8h2v2H0V8zm0 4h2v2H0v-2zm5 4h2v2H5v-2zm-5 0h2v2H0v-2zm5 4h2v2H5v-2zm-5 0h2v2H0v-2zm5 4h2v2H5v-2zm-5 0h2v2H0v-2zm5-12h2v2H5v-2z' fill='%23B0BECA' fill-rule='evenodd'/%3E%3C/svg%3E%0A";
@@ -11,7 +14,7 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
 );
 
 .gd-date-filter-button {
-    @include gd-font-base;
+    @include typo-mixins.gd-font-base;
 
     position: relative;
     height: 42px;
@@ -66,11 +69,11 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
 
     &:hover {
         &::after {
-            border-color: $button-normal-hover-border-color;
+            border-color: button.$button-normal-hover-border-color;
         }
 
         .edit-mode-on & {
-            @media #{$large-up} {
+            @media #{variables.$large-up} {
                 // refactor
                 // stylelint-disable-next-line max-nesting-depth
                 &::before {
@@ -81,8 +84,9 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
                 &::after {
                     // refactor
                     // stylelint-disable-next-line max-line-length
-                    box-shadow: 0 1px 3px 0 $button-shadow-lighter, 0 2px 9px 0 $button-shadow-darker;
-                    border-color: $button-normal-active-border-color;
+                    box-shadow: 0 1px 3px 0 button.$button-shadow-lighter,
+                        0 2px 9px 0 button.$button-shadow-darker;
+                    border-color: button.$button-normal-active-border-color;
                 }
             }
 
@@ -103,14 +107,14 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
         &::after {
             &,
             .edit-mode-on & {
-                box-shadow: inset 0 1px 0 0 $button-normal-active-shadow;
-                border-color: var(--gd-palette-complementary-5, $button-normal-hover-border-color);
+                box-shadow: inset 0 1px 0 0 button.$button-normal-active-shadow;
+                border-color: var(--gd-palette-complementary-5, button.$button-normal-hover-border-color);
 
                 // refactor
                 // stylelint-disable-next-line max-line-length
-                @include gradient-linear(
-                    $button-normal-active-gradient-top,
-                    $button-normal-active-gradient-bottom
+                @include mixins.gradient-linear(
+                    button.$button-normal-active-gradient-top,
+                    button.$button-normal-active-gradient-bottom
                 );
             }
         }
@@ -126,7 +130,7 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
     }
 
     .edit-mode-on & {
-        @media #{$large-up} {
+        @media #{variables.$large-up} {
             cursor: grab;
 
             &::after {
@@ -187,10 +191,10 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
             content: "\e612";
             display: none;
             vertical-align: top;
-            color: $gd-color-state-blank;
+            color: variables.$gd-color-state-blank;
             transition: $transition-length;
             margin-left: 0.5em;
-            font-family: $gd-font-indigo;
+            font-family: variables.$gd-font-indigo;
             font-weight: normal;
             font-size: inherit;
         }
@@ -206,7 +210,7 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
 
     .button-title {
         overflow: hidden;
-        color: $gd-color-link;
+        color: variables.$gd-color-link;
 
         .gd-bubble-trigger,
         .shortened {
@@ -219,7 +223,7 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
 
         .overlay & {
             flex: 0 0 auto;
-            color: $gd-color-label;
+            color: variables.$gd-color-label;
             max-width: 100%;
             margin-right: 5px;
 
@@ -232,7 +236,7 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
     .button-subtitle {
         display: inline-flex;
         overflow: hidden;
-        color: $gd-color-dark;
+        color: variables.$gd-color-dark;
         font-weight: bold;
         text-overflow: ellipsis;
 
@@ -257,7 +261,7 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
     &.dropdown-button,
     .gd-list-item {
         &.is-unrelated {
-            color: $gd-color-negative;
+            color: variables.$gd-color-negative;
         }
     }
 }
@@ -277,11 +281,11 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
     box-shadow: 0 1px 2px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.1));
     line-height: 25px;
     border-width: 1px 0;
-    border-top: 1px solid $gd-border-color;
-    border-bottom: 1px solid $gd-border-color;
-    font-size: nth(map-get($gd-typo, font-sizes), 4);
+    border-top: 1px solid variables.$gd-border-color;
+    border-bottom: 1px solid variables.$gd-border-color;
+    font-size: list.nth(map.get(variables.$gd-typo, font-sizes), 4);
     text-align: left;
-    background-color: $gd-color-white;
+    background-color: variables.$gd-color-white;
 
     &::after {
         display: none;

@@ -1,5 +1,6 @@
 // (C) 2019-2021 GoodData Corporation
-@import "@gooddata/sdk-ui-kit/styles/scss/variables.scss";
+@use "sass:color";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables";
 
 .gd-extended-date-filter-container {
     display: flex;
@@ -55,7 +56,7 @@
         flex: 1 1 auto;
         max-height: none;
         padding: 0;
-        border-bottom: 1px solid $gd-border-color;
+        border-bottom: 1px solid variables.$gd-border-color;
 
         .gd-list-item:last-child {
             border-bottom-color: transparent;
@@ -65,7 +66,7 @@
     &-actions {
         margin: 0 10px;
         padding: 10px 0;
-        border-top: 1px solid $gd-border-color;
+        border-top: 1px solid variables.$gd-border-color;
 
         &-buttons {
             display: flex;
@@ -85,7 +86,7 @@
 
     &-body-mobile &-exclude-current,
     &-body-mobile &-actions {
-        background-color: $gd-color-white;
+        background-color: variables.$gd-color-white;
     }
 
     &-body-mobile &-actions {
@@ -102,7 +103,7 @@
         margin: 6px 10px 0 10px;
         padding: 5px 0;
         font-size: 12px;
-        border-top: 1px solid $gd-border-color;
+        border-top: 1px solid variables.$gd-border-color;
 
         .input-checkbox-label {
             margin-left: -3px;
@@ -122,7 +123,7 @@
         margin: 0 10px 5px;
         font-size: 12px;
         line-height: 16px;
-        color: $gd-color-state-blank;
+        color: variables.$gd-color-state-blank;
 
         &-text {
             margin-bottom: 10px;
@@ -132,7 +133,7 @@
     &-body .gd-date-filter-item-mobile {
         &.gd-list-item {
             flex: 0 0 auto;
-            border-bottom: 1px solid $gd-border-color;
+            border-bottom: 1px solid variables.$gd-border-color;
         }
 
         &.gd-filter-list-item {
@@ -150,7 +151,7 @@
             &:active {
                 background-color: var(
                     --gd-palette-complementary-2,
-                    transparentize($default-gd-border-color, 0.8)
+                    color.adjust(variables.$default-gd-border-color, $alpha: -0.8)
                 );
             }
         }

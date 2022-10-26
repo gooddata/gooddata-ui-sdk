@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
-@import "@gooddata/sdk-ui-kit/styles/scss/form";
-@import "@gooddata/sdk-ui-kit/styles/scss/variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/form";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables";
 
 $dropdown_max_height: 300px;
 $ranking_filter_dropdown_width: 250px;
@@ -19,14 +19,14 @@ $measure_dropdown_width: $ranking_filter_dropdown_width - 20px;
 
         .gd-rf-value-tooltip-icon {
             padding: 0 1px;
-            color: $gd-color-text-dimmed;
+            color: variables.$gd-color-text-dimmed;
         }
     }
 
     .gd-rf-dropdown-header {
         padding: 6px 6px 6px 10px;
-        color: $gd-color-state-blank;
-        background: $is-focused-background;
+        color: variables.$gd-color-state-blank;
+        background: variables.$is-focused-background;
         font-size: 12px;
         text-transform: uppercase;
     }
@@ -48,7 +48,7 @@ $measure_dropdown_width: $ranking_filter_dropdown_width - 20px;
     .gd-rf-dropdown-footer {
         margin: 0 10px;
         padding: 10px 0;
-        border-top: 1px solid $gd-border-color;
+        border-top: 1px solid variables.$gd-border-color;
         text-align: right;
     }
 }
@@ -64,11 +64,11 @@ $measure_dropdown_width: $ranking_filter_dropdown_width - 20px;
         width: 100%;
         text-align: left;
         font-size: 12px;
-        color: $gd-color-text;
+        color: variables.$gd-color-text;
     }
 
     .gd-button-link.is-selected {
-        color: $gd-palette-primary-base;
+        color: variables.$gd-palette-primary-base;
     }
 }
 
@@ -116,30 +116,30 @@ $measure_dropdown_width: $ranking_filter_dropdown_width - 20px;
         width: 100%;
         text-align: left;
         font-size: 12px;
-        color: $gd-color-text;
+        color: variables.$gd-color-text;
     }
 
     .gd-button-link.is-selected {
-        color: $gd-palette-primary-base;
+        color: variables.$gd-palette-primary-base;
     }
 
     .gd-rf-attribute-all-records-icon {
         padding: 0 1px;
-        color: $gd-color-text;
+        color: variables.$gd-color-text;
     }
 
     .gd-button-link.disabled {
-        color: $gd-color-text;
+        color: variables.$gd-color-text;
     }
 
     .gd-button-link.disabled:hover {
-        background-color: $is-focused-background;
-        color: $gd-color-text;
+        background-color: variables.$is-focused-background;
+        color: variables.$gd-color-text;
     }
 }
 
 .gd-rf-attribute-dropdown-separator {
-    border-top: 1px solid $gd-border-color;
+    border-top: 1px solid variables.$gd-border-color;
 }
 
 .gd-rf-measure-dropdown-button {
@@ -156,11 +156,11 @@ $measure_dropdown_width: $ranking_filter_dropdown_width - 20px;
         width: 100%;
         text-align: left;
         font-size: 12px;
-        color: $gd-color-text;
+        color: variables.$gd-color-text;
     }
 
     .gd-button-link.is-selected {
-        color: $gd-palette-primary-base;
+        color: variables.$gd-palette-primary-base;
     }
 
     .gd-rf-measure-title {
@@ -172,9 +172,9 @@ $measure_dropdown_width: $ranking_filter_dropdown_width - 20px;
         flex-shrink: 0;
         font-size: 10px;
         line-height: 10px;
-        color: $gd-color-state-blank;
+        color: variables.$gd-color-state-blank;
         margin-left: 3px;
-        font-family: $measure_sequence_number_font;
+        font-family: variables.$measure_sequence_number_font;
     }
 }
 
