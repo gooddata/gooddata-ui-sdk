@@ -21,4 +21,4 @@ export {
     IEmbeddedPlugin,
 } from "./dashboard/types";
 export { useDashboardLoader, DashboardLoadStatus } from "./dashboard/useDashboardLoader";
-export { useDashboardLoaderWithPluginReload } from "./dashboard/useDashboardLoaderWithPluginReload";
+export { useDashboardLoaderWithReload } from "./dashboard/useDashboardLoaderWithPluginReload";

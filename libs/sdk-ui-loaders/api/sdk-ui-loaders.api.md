@@ -108,7 +108,7 @@ export type ModuleFederationIntegration = {
 export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoadStatus;
 
 // @internal
-export function useDashboardLoaderWithPluginReload(options: IDashboardLoadOptions): {
+export function useDashboardLoaderWithReload(options: IDashboardLoadOptions): {
     loaderStatus: DashboardLoadStatus;
     reloadPlugins: () => void;
 };

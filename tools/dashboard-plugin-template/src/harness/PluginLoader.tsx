@@ -1,11 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { idRef } from "@gooddata/sdk-model";
-import {
-    DashboardLoadStatus,
-    IEmbeddedPlugin,
-    useDashboardLoaderWithPluginReload,
-} from "@gooddata/sdk-ui-loaders";
+import { DashboardLoadStatus, IEmbeddedPlugin, useDashboardLoaderWithReload } from "@gooddata/sdk-ui-loaders";
 import PluginFactory from "../plugin";
 import { DEFAULT_DASHBOARD_ID } from "./constants";
 import { DashboardConfig } from "@gooddata/sdk-ui-dashboard";
@@ -35,7 +31,7 @@ const PluginLoaderBody: React.FC<IPluginLoaderBodyProps> = (props) => {
 };
 
 export const PluginLoader = () => {
-    const { loaderStatus, reloadPlugins } = useDashboardLoaderWithPluginReload({
+    const { loaderStatus, reloadPlugins } = useDashboardLoaderWithReload({
         dashboard: DashboardRef,
         loadingMode: "staticOnly",
         config: Config,

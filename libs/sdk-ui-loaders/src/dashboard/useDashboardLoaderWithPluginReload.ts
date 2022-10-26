@@ -19,12 +19,12 @@ function sanitizedDashboardRef(
 }
 
 /**
- * Wrapper around {@link useDashboardLoader} that adds option to reload plugins while keeping the current state of the dashboard intact.
+ * Wrapper around {@link useDashboardLoader} that adds the option to reload while keeping the current state of the dashboard intact.
  *
  * @param options - load options
  * @internal
  */
-export function useDashboardLoaderWithPluginReload(options: IDashboardLoadOptions): {
+export function useDashboardLoaderWithReload(options: IDashboardLoadOptions): {
     loaderStatus: DashboardLoadStatus;
     reloadPlugins: () => void;
 } {
