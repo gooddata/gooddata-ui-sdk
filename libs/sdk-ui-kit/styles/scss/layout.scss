@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-@import "./variables";
+@use "variables";
 
 @mixin flex-layout($type: "") {
     .gd-flex-wrapper#{$type} {
@@ -42,6 +42,6 @@
 
 @include flex-layout();
 
-@media #{$small-only} {
+@media #{variables.$small-only} {
     @include flex-layout("-mobile");
 }

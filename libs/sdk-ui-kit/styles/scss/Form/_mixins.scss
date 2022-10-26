@@ -1,5 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
-@import "../variables.scss";
+@use "../variables.scss";
+@use "../mixins";
 
 /* ==========================================================================
    Mixins, silent classes etc.
@@ -23,16 +24,16 @@
     box-sizing: border-box;
     margin: 0;
     padding: 6px 7px 5px;
-    border: 1px solid $gd-input-text-border;
+    border: 1px solid variables.$gd-input-text-border;
     line-height: normal;
     vertical-align: middle;
-    color: $gd-color-text;
-    background: $gd-color-white;
+    color: variables.$gd-color-text;
+    background: variables.$gd-color-white;
     font-size: 14px;
-    font-family: $gd-font-primary;
+    font-family: variables.$gd-font-primary;
     font-weight: 200;
 
-    @include transition(all, 0.25s, ease-in-out);
+    @include mixins.transition(all, 0.25s, ease-in-out);
 }
 
 @mixin gd-input-small-base {

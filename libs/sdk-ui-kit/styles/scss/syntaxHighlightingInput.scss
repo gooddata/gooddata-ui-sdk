@@ -1,6 +1,8 @@
 // (C) 2020 GoodData Corporation
 @use "codemirror";
-@import "./mixins";
+@use "sass:color";
+@use "mixins";
+@use "variables";
 
 $cm-color-matching-bracket: #000;
 $cm-color-matching-bracket-bg: #fef9d3;
@@ -17,38 +19,42 @@ $cm-color-keyword: #ab55a3;
         height: 100px;
         margin: 0;
         padding: 2px 2px 0 3px;
-        border: 1px solid $gd-input-text-border;
+        border: 1px solid variables.$gd-input-text-border;
         line-height: normal;
         vertical-align: middle;
-        color: $default-gd-color-text;
+        color: variables.$default-gd-color-text;
         background: #fff;
         font-size: 14px;
         font-family: monospace;
         font-weight: 200;
 
-        @include transition(all, 0.25s, ease-in-out);
+        @include mixins.transition(all, 0.25s, ease-in-out);
         // end of gd-input-base mixin body
 
-        @include border-radius(3px);
-        @include box-shadow(inset 0 1px 1px 0 transparentize($gd-input-text-box-shadow-color, 0.85));
+        @include mixins.border-radius(3px);
+        @include mixins.box-shadow(
+            inset 0 1px 1px 0 color.adjust(variables.$gd-input-text-box-shadow-color, $alpha: -0.85)
+        );
 
-        @include placeholder {
-            color: transparentize($default-gd-color-link, 0.25);
+        @include mixins.placeholder {
+            color: color.adjust(variables.$default-gd-color-link, $alpha: -0.25);
 
-            @include transition(color, 0.25s, ease-in-out);
+            @include mixins.transition(color, 0.25s, ease-in-out);
         }
 
         &:hover {
-            border-color: $gd-input-text-hover-border;
+            border-color: variables.$gd-input-text-hover-border;
 
-            @include placeholder {
-                color: $gd-color-link;
+            @include mixins.placeholder {
+                color: variables.$gd-color-link;
             }
         }
 
         &.CodeMirror-focused {
-            border-color: $gd-palette-primary-base;
-            @include box-shadow(inset 0 1px 1px 0 transparentize($gd-input-text-box-shadow-color, 0.85));
+            border-color: variables.$gd-palette-primary-base;
+            @include mixins.box-shadow(
+                inset 0 1px 1px 0 color.adjust(variables.$gd-input-text-box-shadow-color, $alpha: -0.85)
+            );
         }
     }
 
@@ -59,7 +65,7 @@ $cm-color-keyword: #ab55a3;
     }
 
     .CodeMirror-empty {
-        color: $gd-color-disabled;
+        color: variables.$gd-color-disabled;
     }
 
     .CodeMirror-code {

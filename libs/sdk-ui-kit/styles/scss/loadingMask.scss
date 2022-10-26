@@ -1,4 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
+@use "sass:math";
 .loading-mask {
     position: relative;
 
@@ -54,11 +55,11 @@
         $start-rotation: ($i - 1) * $step-increment-deg;
         $end-rotation: $i * $step-increment-deg;
 
-        #{percentage($animation-start-progress)} {
+        #{math.percentage($animation-start-progress)} {
             transform: rotate(#{$start-rotation}deg) translateZ(0.1px);
         }
 
-        #{percentage($animation-end-progress)} {
+        #{math.percentage($animation-end-progress)} {
             transform: rotate(#{$end-rotation}deg) translateZ(0);
         }
     }

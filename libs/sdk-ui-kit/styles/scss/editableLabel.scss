@@ -1,5 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
-@import "./EditableLabel/_mixins";
+@use "EditableLabel/_mixins" as form-mixins;
+@use "mixins";
 
 $editable-label-border: #b1c1d1;
 
@@ -48,7 +49,7 @@ $editable-label-border: #b1c1d1;
     vertical-align: inherit;
     min-width: 5em;
 
-    @include active-states {
+    @include mixins.active-states {
         cursor: text;
         border-color: $editable-label-border;
     }

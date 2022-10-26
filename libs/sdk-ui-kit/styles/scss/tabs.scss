@@ -1,10 +1,10 @@
 // (C) 2007-2020 GoodData Corporation
-@import "typo-mixins";
-@import "variables";
+@use "typo-mixins";
+@use "variables";
 
 .gd-tabs {
     display: flex;
-    border-bottom: 1px solid $gd-border-color;
+    border-bottom: 1px solid variables.$gd-border-color;
 
     &.small .gd-tab {
         padding: 3px 6px;
@@ -20,23 +20,23 @@
     align-items: flex-end;
     margin: 0 20px -1px 0;
     padding: 3px 0;
-    @include gd-font-base;
+    @include typo-mixins.gd-font-base;
 
     line-height: 16px;
-    color: $gd-color-link;
+    color: variables.$gd-color-link;
     cursor: pointer;
     border-bottom: 3px solid transparent;
     font-size: 14px;
     text-align: center;
 
     &:hover {
-        color: var(--gd-palette-complementary-8, $is-focused-color);
-        border-bottom: 3px solid $gd-border-color;
+        color: var(--gd-palette-complementary-8, variables.$is-focused-color);
+        border-bottom: 3px solid variables.$gd-border-color;
     }
 
     &.is-active {
-        color: $is-focused-color;
-        border-bottom: 3px solid $gd-palette-primary-base;
+        color: variables.$is-focused-color;
+        border-bottom: 3px solid variables.$gd-palette-primary-base;
         font-weight: 700;
     }
 

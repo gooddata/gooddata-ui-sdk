@@ -1,11 +1,8 @@
 // (C) 2021 GoodData Corporation
-@import "./Dialog/_mixins";
-@import "./variables";
-@import "./mixins.scss";
-@import "./Button/_variables";
+@use "variables";
 
 .gd-share-dialog {
-    @media #{$medium-up} {
+    @media #{variables.$medium-up} {
         width: 460px;
     }
 
@@ -22,7 +19,7 @@
     }
 }
 
-@media #{$small-only} {
+@media #{variables.$small-only} {
     .gd-share-dialog-overlay {
         // override the static position in case of dialog with long content, on mobile view
         // stylelint-disable-next-line declaration-no-important
@@ -48,14 +45,14 @@
     align-items: center;
     height: 50px;
     font-weight: normal;
-    font-family: $gd-font-primary;
+    font-family: variables.$gd-font-primary;
     font-size: 14px;
     line-height: 20px;
     color: var(--gd-palette-complementary-6, #94a1ad);
 }
 
 .gd-share-dialog-content-divider {
-    border-top: 1px solid $gd-border-color;
+    border-top: 1px solid variables.$gd-border-color;
     height: 0;
     margin: 10px 0 5px;
 }
@@ -71,7 +68,7 @@
         font-size: 11px;
         font-weight: bold;
         text-transform: uppercase;
-        color: $gd-color-state-blank;
+        color: variables.$gd-color-state-blank;
 
         &::after {
             content: "";
@@ -81,7 +78,7 @@
             width: 100%;
             height: 0;
             margin-left: 10px;
-            border-top: 1px solid $gd-border-color;
+            border-top: 1px solid variables.$gd-border-color;
         }
 
         + label {
@@ -106,11 +103,11 @@
 
     .gd-grantee-content-label {
         overflow: hidden;
-        font-family: $gd-font-primary;
+        font-family: variables.$gd-font-primary;
         font-size: 14px;
         line-height: 1.3rem;
         white-space: nowrap;
-        color: $gd-color-text;
+        color: variables.$gd-color-text;
         text-overflow: ellipsis;
         cursor: default;
         font-weight: bold;
@@ -118,7 +115,7 @@
 
     .gd-grantee-content-label-inactive {
         overflow: hidden;
-        font-family: $gd-font-primary;
+        font-family: variables.$gd-font-primary;
         font-size: 14px;
         line-height: 1.3rem;
         white-space: nowrap;
@@ -159,7 +156,7 @@
         font-size: 18px;
         line-height: 36px;
         text-align: center;
-        background: $is-focused-background;
+        background: variables.$is-focused-background;
     }
 
     .gd-grantee-item-icon-inactive {
@@ -167,7 +164,7 @@
         height: 32px;
         border-radius: 20px;
         font-size: 18px;
-        border: 1px dashed $is-focused-background;
+        border: 1px dashed variables.$is-focused-background;
         line-height: 36px;
         text-align: center;
         border-style: dashed;
@@ -183,7 +180,7 @@
         cursor: pointer;
     }
 
-    @media #{$small-only} {
+    @media #{variables.$small-only} {
         .gd-grantee-item-icon-right {
             display: block;
         }
@@ -210,8 +207,8 @@
             content: "\e602";
             position: relative;
             top: -3px;
-            font-family: $gd-font-indigo;
-            color: $gd-color-disabled;
+            font-family: variables.$gd-font-indigo;
+            color: variables.$gd-color-disabled;
             font-size: 14px;
             font-weight: 400;
         }
@@ -222,8 +219,8 @@
             content: "\e607";
             position: relative;
             top: -2px;
-            font-family: $gd-font-indigo;
-            color: $gd-color-disabled;
+            font-family: variables.$gd-font-indigo;
+            color: variables.$gd-color-disabled;
             font-size: 16px;
             font-weight: 400;
         }
@@ -234,8 +231,8 @@
             content: "\e61a";
             position: relative;
             top: -3px;
-            font-family: $gd-font-indigo;
-            color: $gd-color-disabled;
+            font-family: variables.$gd-font-indigo;
+            color: variables.$gd-color-disabled;
             font-size: 14px;
             font-weight: 700;
         }
@@ -287,7 +284,7 @@
     }
 
     &:hover {
-        background: $is-focused-background;
+        background: variables.$is-focused-background;
 
         .gd-grantee-item-icon-right {
             display: block;

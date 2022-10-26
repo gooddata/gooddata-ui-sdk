@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-@import "@gooddata/sdk-ui/styles/scss/settings";
+@use "sass:color";
 
 $include-html-classes: false;
 $include-html-global-classes: false;
@@ -44,17 +44,23 @@ $gd-palette-primary-base: var(--gd-palette-primary-base, $gd-color-highlight);
 // primary derived colors
 $gd-palette-primary-dimmed: var(
     --gd-palette-primary-dimmed,
-    mix($gd-color-highlight, $default-gd-color-text-light, 10%)
+    color.mix($gd-color-highlight, $default-gd-color-text-light, 10%)
 );
-$gd-palette-primary-base-t80: var(--gd-palette-primary-base-t80, transparentize($gd-color-highlight, 0.8));
-$gd-palette-primary-base-darken06: var(--gd-palette-primary-base-d06, darken($gd-color-highlight, 6%));
+$gd-palette-primary-base-t80: var(
+    --gd-palette-primary-base-t80,
+    color.adjust($gd-color-highlight, $alpha: -0.8)
+);
+$gd-palette-primary-base-darken06: var(
+    --gd-palette-primary-base-d06,
+    color.adjust($gd-color-highlight, $lightness: -6%)
+);
 
 // error color
 $gd-palette-error-base: var(--gd-palette-error-base, $gd-color-negative);
 // error derived colors
 $gd-palette-error-dimmed: var(
     --gd-palette-error-dimmed,
-    mix($gd-color-negative, $default-gd-color-text-light, 10%)
+    color.mix($gd-color-negative, $default-gd-color-text-light, 10%)
 );
 
 // success color
@@ -62,7 +68,7 @@ $gd-palette-success-base: var(--gd-palette-success-base, $gd-color-positive);
 // error derived colors
 $gd-palette-success-dimmed: var(
     --gd-palette-success-dimmed,
-    mix($gd-color-positive, $default-gd-color-text-light, 10%)
+    color.mix($gd-color-positive, $default-gd-color-text-light, 10%)
 );
 
 // warning colors
@@ -70,16 +76,19 @@ $gd-palette-warning-base: var(--gd-palette-warning-base, $gd-color-warning);
 $gd-palette-warning-base-text: var(--gd-palette-warning-base, $gd-color-warning-text);
 $gd-palette-warning-dimmed: var(
     --gd-palette-warning-dimmed,
-    mix($gd-color-warning, $default-gd-color-text-light, 20%)
+    color.mix($gd-color-warning, $default-gd-color-text-light, 20%)
 );
-$gd-palette-warning-base-t50: var(--gd-palette-warning-base-t50, transparentize($gd-color-warning, 0.5));
+$gd-palette-warning-base-t50: var(
+    --gd-palette-warning-base-t50,
+    color.adjust($gd-color-warning, $alpha: -0.5)
+);
 $gd-color-warning-label: var(
     --gd-palette-warning-text-dimmed,
-    mix($gd-color-warning, $default-gd-color-text, 20%)
+    color.mix($gd-color-warning, $default-gd-color-text, 20%)
 );
 $gd-color-warning-label-dimmed: var(
     --gd-palette-warning-dimmed40,
-    mix($gd-color-warning, $default-gd-color-text, 40%)
+    color.mix($gd-color-warning, $default-gd-color-text, 40%)
 );
 
 // font and typo
@@ -109,7 +118,7 @@ $is-selected-focused-background: $gd-palette-primary-dimmed;
 $is-negative-focused-color: #fff;
 $is-negative-focused-background: var(
     --gd-palette-error-dimmed90,
-    mix($gd-color-negative, $default-gd-color-text-light, 90%)
+    color.mix($gd-color-negative, $default-gd-color-text-light, 90%)
 );
 
 $navigation-bg: var(--gd-palette-complementary-1, #303442);
@@ -133,6 +142,20 @@ $gd-input-text-box-shadow-color: #1f354a;
 $gd-outside-background-color: #eff1f3;
 
 // Media queries
+@function lower-bound($range) {
+    @if length($range) <= 0 {
+        @return 0;
+    }
+    @return nth($range, 1);
+}
+
+@function upper-bound($range) {
+    @if length($range) < 2 {
+        @return 999999999999;
+    }
+    @return nth($range, 2);
+}
+
 $xsmall-breakpoint: 320px;
 $small-breakpoint: 640px;
 $medium-breakpoint: 940px;

@@ -1,6 +1,9 @@
 // (C) 2007-2020 GoodData Corporation
-@import "./Dialog/_mixins";
-@import "./variables";
+@use "Dialog/_mixins" as dialog-mixins;
+@use "variables";
+@use "Dialog/variables" as dialog-variables;
+@use "mixins";
+@use "typo-mixins";
 
 // STYLES FROM GOODSTRAP
 .modalityPlugin-mask {
@@ -12,7 +15,7 @@
     width: 100%;
     height: 100%;
     opacity: 0.9;
-    background-color: $gd-modal-outsideBackgroundColor;
+    background-color: dialog-variables.$gd-modal-outsideBackgroundColor;
 }
 
 .modalityPlugin-mask-visible {
@@ -25,12 +28,12 @@
     z-index: 2;
     padding: 20px;
     outline: 0;
-    max-width: $modalDialog-maxWidth;
+    max-width: dialog-variables.$modalDialog-maxWidth;
     border-style: solid;
-    border-color: $gd-modal-borderColor;
-    border-radius: $gd-modal-borderRadius;
-    border-width: $gd-modal-borderWidth;
-    box-shadow: $gd-modal-boxShadow $modal-shadow-darker;
+    border-color: dialog-variables.$gd-modal-borderColor;
+    border-radius: dialog-variables.$gd-modal-borderRadius;
+    border-width: dialog-variables.$gd-modal-borderWidth;
+    box-shadow: dialog-variables.$gd-modal-boxShadow dialog-variables.$modal-shadow-darker;
 
     /**
      * Row inside a row has negative margin.
@@ -40,8 +43,8 @@
      */
     .row {
         width: auto;
-        margin-left: calc(-#{$column-gutter} / 2);
-        margin-right: calc(-#{$column-gutter} / 2);
+        margin-left: calc(-#{dialog-variables.$column-gutter} / 2);
+        margin-right: calc(-#{dialog-variables.$column-gutter} / 2);
     }
 
     .gd-dialog-close,
@@ -53,15 +56,15 @@
         outline: none;
 
         &::before {
-            color: $gd-color-link;
+            color: variables.$gd-color-link;
         }
 
-        @include active-states {
+        @include mixins.active-states {
             box-shadow: none;
             border-color: transparent;
 
             &::before {
-                color: $gd-palette-primary-base;
+                color: variables.$gd-palette-primary-base;
             }
         }
     }
@@ -81,7 +84,7 @@
 }
 
 .gd-dialog-header {
-    @include text-overflow();
+    @include mixins.text-overflow();
 
     h1,
     h2,
@@ -98,38 +101,38 @@
     h2,
     h3,
     div {
-        @include text-overflow();
+        @include mixins.text-overflow();
 
         line-height: 1.2;
-        color: $gd-modal-title-color;
+        color: dialog-variables.$gd-modal-title-color;
     }
 
     h2 {
-        @include gd-heading-2;
+        @include typo-mixins.gd-heading-2;
 
-        color: $gd-modal-title-color;
+        color: dialog-variables.$gd-modal-title-color;
     }
 
     h3 {
-        @include gd-heading-3;
+        @include typo-mixins.gd-heading-3;
 
-        color: $gd-modal-title-color;
+        color: dialog-variables.$gd-modal-title-color;
     }
 }
 
 .gd-dialog-header.gd-dialog-header-with-border {
-    border-bottom: 1px solid $gd-modal-title-lineColor;
+    border-bottom: 1px solid dialog-variables.$gd-modal-title-lineColor;
 }
 
 .gd-dialog-icon {
-    @include gd-heading-1;
+    @include typo-mixins.gd-heading-1;
 
     display: inline-block;
     width: 35px;
     vertical-align: middle;
 
     &::before {
-        color: $gd-palette-primary-base;
+        color: variables.$gd-palette-primary-base;
     }
 }
 
@@ -145,7 +148,7 @@
     @extend .gd-dialog-section;
 
     padding-bottom: 20px;
-    border-bottom: 1px solid $gd-border-color;
+    border-bottom: 1px solid variables.$gd-border-color;
 
     & + & {
         margin-top: 20px;
@@ -158,7 +161,7 @@
     padding: 8px;
     border-radius: 4px;
     background-color: #fff3f2;
-    color: $gd-palette-error-base;
+    color: variables.$gd-palette-error-base;
 }
 
 .gd-dialog-content,
@@ -239,7 +242,7 @@
         }
 
         a {
-            color: $default-gd-color-link;
+            color: variables.$default-gd-color-link;
             text-decoration: underline;
         }
     }

@@ -1,6 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
-@import "../mixins.scss";
-@import "_variables";
+@use "../mixins.scss";
+@use "_variables" as button-variables;
+@use "../variables";
 
 /* ==========================================================================
    Silent classes - more clever mixins
@@ -14,15 +15,15 @@
     padding: 5px 14px;
     border: 1px solid transparent;
     outline: 0;
-    font: 400 14px/20px $gd-font-primary;
+    font: 400 14px/20px variables.$gd-font-primary;
     white-space: nowrap;
     vertical-align: middle;
     cursor: pointer;
     text-align: left;
-    border-radius: $button-border-radius;
-    text-transform: $button-text-capitalization;
+    border-radius: button-variables.$button-border-radius;
+    text-transform: button-variables.$button-text-capitalization;
 
-    @include transition(all, 0.25s, ease-in-out);
+    @include mixins.transition(all, 0.25s, ease-in-out);
 
     &::before,
     &::after {
@@ -30,12 +31,12 @@
         top: 50%;
         height: 20px;
         line-height: 20px;
-        color: $gd-color-text-dimmed;
+        color: variables.$gd-color-text-dimmed;
         transform: translateY(-50%);
         font-size: 18px;
         text-align: center;
 
-        @include transition(color, 0.25s, ease-in-out);
+        @include mixins.transition(color, 0.25s, ease-in-out);
     }
 
     &::before {
@@ -66,12 +67,12 @@
 
     .gd-button-icon {
         flex: 0 0 auto;
-        width: $button-icon-width;
-        height: $button-icon-width;
+        width: button-variables.$button-icon-width;
+        height: button-variables.$button-icon-width;
         margin: 0 0.5em;
-        line-height: $button-icon-width;
-        color: $gd-color-text-dimmed;
-        font-size: $button-icon-width;
+        line-height: button-variables.$button-icon-width;
+        color: variables.$gd-color-text-dimmed;
+        font-size: button-variables.$button-icon-width;
         text-align: center;
         text-decoration: none;
         background-size: contain;
@@ -82,7 +83,7 @@
         &::after {
             color: inherit;
 
-            @include transition(color, 0.25s, ease-in-out);
+            @include mixins.transition(color, 0.25s, ease-in-out);
         }
     }
 
@@ -123,7 +124,7 @@
 
         .gd-button-icon {
             &:only-child {
-                color: $button-normal-color;
+                color: button-variables.$button-normal-color;
             }
         }
     }
@@ -132,7 +133,7 @@
         &::before,
         &::after,
         .gd-button-icon {
-            color: $button-action-color;
+            color: button-variables.$button-action-color;
         }
     }
 

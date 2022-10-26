@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
-@import "./variables.scss";
-@import "./MeasureNumberFormat/_variables";
+@use "variables.scss";
+@use "MeasureNumberFormat/_variables" as measure-number-format-variables;
 
 .gd-measure-number-format-dropdown-body {
     padding: 5px 0;
@@ -14,7 +14,7 @@
         }
 
         & > .gd-format-preset-preview {
-            color: $gd-color-text-dimmed;
+            color: variables.$gd-color-text-dimmed;
             font-weight: normal;
             margin-right: 5px;
             text-align: right;
@@ -25,18 +25,18 @@
 .gd-measure-custom-format-dialog-body {
     display: flex;
     flex-direction: column;
-    width: $measure_number_format_custom_format_dialog_width;
+    width: measure-number-format-variables.$measure_number_format_custom_format_dialog_width;
     height: inherit;
     font-size: 12px;
 
     .gd-measure-custom-format-dialog-header {
         flex: 0 0 auto;
         padding: 10px 12px;
-        background-color: $is-focused-background;
-        border-bottom: 1px solid $gd-border-color;
+        background-color: variables.$is-focused-background;
+        border-bottom: 1px solid variables.$gd-border-color;
 
         & > span {
-            color: $gd-color-state-blank;
+            color: variables.$gd-color-state-blank;
             text-transform: uppercase;
             font-size: 11px;
             font-weight: bold;
@@ -86,12 +86,12 @@
         .gd-measure-format-button {
             display: flex;
             outline: none;
-            color: $gd-color-state-blank;
+            color: variables.$gd-color-state-blank;
             cursor: pointer;
             user-select: none;
 
             &:hover {
-                color: $gd-color-text;
+                color: variables.$gd-color-text;
             }
 
             &:hover > span {
@@ -111,10 +111,10 @@
         }
 
         .gd-measure-format-button-templates {
-            color: $gd-palette-primary-base;
+            color: variables.$gd-palette-primary-base;
 
             &:hover {
-                color: $button_templates_hover_color;
+                color: measure-number-format-variables.$button_templates_hover_color;
             }
         }
 
@@ -126,7 +126,7 @@
         }
 
         textarea {
-            height: $measure_number_format_custom_format_dialog_textarea_height;
+            height: measure-number-format-variables.$measure_number_format_custom_format_dialog_textarea_height;
             resize: none;
         }
     }
@@ -139,7 +139,7 @@
         flex: 0 0 auto;
         margin: 0 10px;
         padding: 10px 0;
-        border-top: 1px solid $gd-border-color;
+        border-top: 1px solid variables.$gd-border-color;
         text-align: right;
     }
 }
@@ -169,7 +169,7 @@
         .gd-measure-format-template-preview-bubble-title {
             margin: 0 0 10px;
             font-size: 14px;
-            color: $gd-color-text;
+            color: variables.$gd-color-text;
             font-weight: normal;
         }
 
@@ -178,7 +178,7 @@
             font-size: 10px;
             font-weight: normal;
             text-transform: uppercase;
-            color: $gd-color-state-blank;
+            color: variables.$gd-color-state-blank;
         }
     }
 }
@@ -187,7 +187,7 @@
     .gd-format-template-help {
         display: none;
         line-height: 10px;
-        color: $gd-color-label;
+        color: variables.$gd-color-label;
     }
 
     &:hover {

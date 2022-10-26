@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-@import "./variables.scss";
+@use "variables";
 
 .color-picker-wrapper {
     display: flex;
@@ -35,7 +35,7 @@
     &:focus,
     &:active {
         padding: 0;
-        border: 1px solid $gd-color-white;
+        border: 1px solid variables.$gd-color-white;
         transform: scale(1.1);
     }
 
@@ -58,7 +58,7 @@
 
 .color-picker-control-wrapper {
     margin: 0 20px;
-    color: $gd-color-label;
+    color: variables.$gd-color-label;
     text-transform: uppercase;
     font-size: 12px;
 
@@ -75,7 +75,7 @@
 .color-picker-pointer {
     width: 10px;
     height: 10px;
-    border: 1px solid $gd-color-white;
+    border: 1px solid variables.$gd-color-white;
     transform: translate(-5px, 7.5px);
     border-radius: 50%;
 }
@@ -84,7 +84,7 @@
     display: flex;
     justify-content: space-around;
     padding: 20px 0 10px;
-    border-top: 1px solid $gd-border-color;
+    border-top: 1px solid variables.$gd-border-color;
 
     .color-value {
         width: 30px;
@@ -103,7 +103,7 @@
     display: flex;
     justify-content: space-between;
     padding: 20px 0;
-    border-top: 1px solid $gd-border-color;
+    border-top: 1px solid variables.$gd-border-color;
 
     .gd-button {
         flex: 1;

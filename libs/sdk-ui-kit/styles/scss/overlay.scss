@@ -1,6 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
-@import "./mixins.scss";
-@import "typo-mixins";
+@use "mixins";
+@use "typo-mixins";
+@use "variables";
 
 .gd-dropdown.overlay {
     // reset overlays padding
@@ -12,23 +13,23 @@
 }
 
 .overlay {
-    @include gd-paragraph;
+    @include typo-mixins.gd-paragraph;
 
     position: relative;
     padding: 0.1px; // Prevent collapsing margins
     border-radius: 3px;
-    font-family: $gd-font-primary;
-    background-color: $gd-color-white;
+    font-family: variables.$gd-font-primary;
+    background-color: variables.$gd-color-white;
 
-    @include box-shadow(0 1px 20px var(--gd-shadow-color, rgba(20, 56, 93, 0.2)));
+    @include mixins.box-shadow(0 1px 20px var(--gd-shadow-color, rgba(20, 56, 93, 0.2)));
 
-    @media #{$small-only} {
+    @media #{variables.$small-only} {
         border-radius: 0;
     }
 }
 
 .gd-overlay-content {
-    @include default-styles();
+    @include mixins.default-styles();
 }
 
 .gd-error-overlay-content {
@@ -55,7 +56,7 @@
 
     .gd-error-overlay-text {
         line-height: 23px;
-        color: $gd-color-text;
+        color: variables.$gd-color-text;
         font-size: 14px;
     }
 

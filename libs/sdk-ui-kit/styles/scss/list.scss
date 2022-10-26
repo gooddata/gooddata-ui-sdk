@@ -1,10 +1,11 @@
 // (C) 2007-2020 GoodData Corporation
 @use "fixed-data-table";
-@import "./animations.scss";
-@import "./List/_mixins";
-@import "./variables.scss";
-@import "./mixins.scss";
-@import "./indigoFont.scss";
+@use "sass:color";
+@use "animations";
+@use "List/_mixins" as list-mixins;
+@use "variables";
+@use "mixins";
+@use "indigoFont";
 
 $menu-item-icon-width: 30px;
 
@@ -14,7 +15,7 @@ $menu-item-icon-width: 30px;
     height: 20px;
     margin: 1px 0 0;
     color: #b9b9b9;
-    font-family: $gd-font-indigo;
+    font-family: variables.$gd-font-indigo;
     font-size: 11px;
 }
 
@@ -25,15 +26,15 @@ $menu-item-icon-width: 30px;
     justify-content: center;
     align-items: center;
     height: 100%;
-    color: $gd-color-disabled;
-    font-family: $gd-font-indigo;
+    color: variables.$gd-color-disabled;
+    font-family: variables.$gd-font-indigo;
 }
 
 .gd-list-noResults {
     padding: 15px;
-    color: $gd-color-state-blank;
+    color: variables.$gd-color-state-blank;
     font-size: 14px;
-    font-family: $gd-font-primary;
+    font-family: variables.$gd-font-primary;
     text-align: center;
 }
 
@@ -51,8 +52,8 @@ $menu-item-icon-width: 30px;
     line-height: 20px;
     font-size: 12px;
     padding-top: 5px;
-    border-top: 1px solid $gd-border-color;
-    font-family: $gd-font-primary;
+    border-top: 1px solid variables.$gd-border-color;
+    font-family: variables.$gd-font-primary;
 
     span {
         flex: 0 0 auto;
@@ -81,7 +82,7 @@ $menu-item-icon-width: 30px;
 }
 
 .gd-list-actions {
-    font-family: $gd-font-primary;
+    font-family: variables.$gd-font-primary;
     margin: 0 10px 10px;
     line-height: 1;
     font-size: 12px;
@@ -97,7 +98,7 @@ $menu-item-icon-width: 30px;
         align-items: center;
         margin-bottom: 5px;
         padding-bottom: 5px;
-        border-bottom: 1px solid $gd-border-color;
+        border-bottom: 1px solid variables.$gd-border-color;
 
         .input-checkbox-label {
             flex: 0 1 auto;
@@ -117,7 +118,7 @@ $menu-item-icon-width: 30px;
 .gd-list-actions-selection-size {
     box-sizing: border-box;
     margin: 1px 0 0 5px;
-    color: $gd-color-label;
+    color: variables.$gd-color-label;
 }
 
 .gd-list {
@@ -140,27 +141,27 @@ $menu-item-icon-width: 30px;
     align-items: center;
     height: inherit;
     padding: 0 10px;
-    color: $gd-color-text;
+    color: variables.$gd-color-text;
     cursor: pointer;
-    font-family: $gd-font-primary;
+    font-family: variables.$gd-font-primary;
     font-size: 12px;
     text-decoration: none;
 
-    @include text-overflow();
+    @include mixins.text-overflow();
 
     &:hover,
     &:focus {
-        color: $is-focused-color;
-        background: $is-focused-background;
+        color: variables.$is-focused-color;
+        background: variables.$is-focused-background;
         text-decoration: none;
 
         &.is-selected {
-            background-color: $is-selected-focused-background;
+            background-color: variables.$is-selected-focused-background;
         }
     }
 
     .gd-mobile-dropdown-content & {
-        border-bottom: 1px solid $gd-border-color;
+        border-bottom: 1px solid variables.$gd-border-color;
         font-size: 14px;
         text-align: left;
     }
@@ -170,7 +171,7 @@ $menu-item-icon-width: 30px;
     }
 
     &.is-selected {
-        color: $gd-palette-primary-base;
+        color: variables.$gd-palette-primary-base;
         font-weight: bold;
 
         .gd-customizable-checkmark-mobile-navigation {
@@ -233,7 +234,7 @@ $menu-item-icon-width: 30px;
 
     .is-multiselect & {
         &.is-selected {
-            color: $gd-color-text;
+            color: variables.$gd-color-text;
             font-weight: bold;
 
             &::after {
@@ -245,7 +246,7 @@ $menu-item-icon-width: 30px;
 
         &.is-focused.is-selected,
         &:hover.is-selected {
-            color: $gd-color-text;
+            color: variables.$gd-color-text;
         }
     }
 
@@ -260,12 +261,12 @@ $menu-item-icon-width: 30px;
     .gd-list-item-only {
         display: none;
         flex: 0 0 auto;
-        color: $gd-palette-primary-base;
+        color: variables.$gd-palette-primary-base;
         margin-left: 7px;
         font-weight: normal;
 
-        @include active-states {
-            color: $gd-color-text;
+        @include mixins.active-states {
+            color: variables.$gd-color-text;
             text-decoration: underline;
         }
     }
@@ -274,10 +275,10 @@ $menu-item-icon-width: 30px;
     &.gd-list-item-header {
         cursor: default;
 
-        @include active-states {
+        @include mixins.active-states {
             &,
             & > div {
-                color: $gd-color-state-blank;
+                color: variables.$gd-color-state-blank;
                 background: transparent;
             }
         }
@@ -294,7 +295,7 @@ $menu-item-icon-width: 30px;
             right: 10px;
             left: 10px;
             height: 0;
-            border-bottom: 1px solid $gd-border-color;
+            border-bottom: 1px solid variables.$gd-border-color;
 
             .gd-menu-wrapper & {
                 right: $menu-item-icon-width;
@@ -311,11 +312,11 @@ $menu-item-icon-width: 30px;
     &.gd-list-item-header {
         padding: 12px 10px 0;
         line-height: 16px;
-        color: $gd-color-state-blank;
+        color: variables.$gd-color-state-blank;
         font-size: 10px;
         text-transform: uppercase;
 
-        @include text-overflow();
+        @include mixins.text-overflow();
 
         .gd-menu-wrapper & {
             padding: 12px 30px 0;
@@ -431,18 +432,18 @@ $menu-item-icon-width: 30px;
         &:hover,
         &Active {
             .public_Scrollbar_face::after {
-                background-color: $gd-color-disabled;
+                background-color: variables.$gd-color-disabled;
             }
         }
     }
 
     .public_Scrollbar_face {
         &::after {
-            background-color: transparentize($default-gd-color-disabled, 0.7);
+            background-color: color.adjust(variables.$default-gd-color-disabled, $alpha: -0.7);
         }
 
         &Active::after {
-            background-color: $gd-color-disabled;
+            background-color: variables.$gd-color-disabled;
         }
     }
 
@@ -462,7 +463,7 @@ $menu-item-icon-width: 30px;
     .public_fixedDataTableCell_cellContent {
         padding: 0;
         white-space: nowrap;
-        color: $gd-color-text;
+        color: variables.$gd-color-text;
 
         &:hover {
             background-color: transparent;
@@ -490,18 +491,18 @@ $menu-item-icon-width: 30px;
 .gd-list-footer {
     margin: 10px;
     line-height: 16px;
-    color: $gd-color-state-blank;
+    color: variables.$gd-color-state-blank;
     font-size: 12px;
 }
 
 .gd-list-header {
     padding-bottom: 10px;
-    border-bottom: 1px solid $gd-border-color;
+    border-bottom: 1px solid variables.$gd-border-color;
 }
 
 .gd-list-footer {
     padding-top: 10px;
-    border-top: 1px solid $gd-border-color;
+    border-top: 1px solid variables.$gd-border-color;
 }
 
 .gd-list-limitExceeded {
@@ -518,6 +519,6 @@ $menu-item-icon-width: 30px;
     display: inline-block;
     padding: 8px 0;
     box-shadow: 0 1px 20px var(--gd-shadow-color, rgba(20, 56, 93, 0.2));
-    background: $gd-color-white;
+    background: variables.$gd-color-white;
     border-radius: 3px;
 }

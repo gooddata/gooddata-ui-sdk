@@ -1,17 +1,19 @@
 // (C) 2007-2020 GoodData Corporation
-@import "variables";
+@use "sass:list";
+@use "sass:map";
+@use "variables";
 
 // BASE MIXINS
 @mixin gd-font-family {
-    font-family: $gd-font-primary;
+    font-family: variables.$gd-font-primary;
 }
 
 @mixin gd-font-regular {
-    font-weight: map-get(map-get($gd-typo, font-weights), regular);
+    font-weight: map.get(map.get(variables.$gd-typo, font-weights), regular);
 }
 
 @mixin gd-font-bold {
-    font-weight: map-get(map-get($gd-typo, font-weights), bold);
+    font-weight: map.get(map.get(variables.$gd-typo, font-weights), bold);
 }
 
 @mixin gd-font-base {
@@ -20,7 +22,7 @@
 }
 
 @mixin gd-heading-base {
-    color: $gd-color-dark;
+    color: variables.$gd-color-dark;
 
     @include gd-font-base;
 }
@@ -30,58 +32,58 @@
     @include gd-heading-base;
     @include gd-font-bold;
 
-    line-height: nth(map-get($gd-typo, heading-line-heights), 1);
-    font-size: nth(map-get($gd-typo, font-sizes), 1);
+    line-height: list.nth(map.get(variables.$gd-typo, heading-line-heights), 1);
+    font-size: list.nth(map.get(variables.$gd-typo, font-sizes), 1);
 }
 
 @mixin gd-heading-2 {
     @include gd-heading-base;
     @include gd-font-bold;
 
-    line-height: nth(map-get($gd-typo, heading-line-heights), 2);
-    font-size: nth(map-get($gd-typo, font-sizes), 2);
+    line-height: list.nth(map.get(variables.$gd-typo, heading-line-heights), 2);
+    font-size: list.nth(map.get(variables.$gd-typo, font-sizes), 2);
 }
 
 @mixin gd-heading-3 {
     @include gd-heading-base;
     @include gd-font-regular;
 
-    line-height: nth(map-get($gd-typo, heading-line-heights), 3);
-    font-size: nth(map-get($gd-typo, font-sizes), 3);
+    line-height: list.nth(map.get(variables.$gd-typo, heading-line-heights), 3);
+    font-size: list.nth(map.get(variables.$gd-typo, font-sizes), 3);
 }
 
 // PARAGRAPHS
 @mixin gd-paragraph {
     @include gd-font-base;
 
-    line-height: nth(map-get($gd-typo, line-heights), 1);
-    color: $gd-color-text;
-    font-size: nth(map-get($gd-typo, font-sizes), 4);
+    line-height: list.nth(map.get(variables.$gd-typo, line-heights), 1);
+    color: variables.$gd-color-text;
+    font-size: list.nth(map.get(variables.$gd-typo, font-sizes), 4);
 }
 
 // LABELS
 @mixin gd-label-base {
     @include gd-font-base;
 
-    line-height: nth(map-get($gd-typo, line-heights), 2);
-    color: $gd-color-label;
+    line-height: list.nth(map.get(variables.$gd-typo, line-heights), 2);
+    color: variables.$gd-color-label;
 }
 
 @mixin gd-label-top {
     @include gd-label-base;
 
-    font-size: nth(map-get($gd-typo, font-sizes), 6);
+    font-size: list.nth(map.get(variables.$gd-typo, font-sizes), 6);
     text-transform: uppercase;
 }
 
 @mixin gd-label {
     @include gd-label-base;
 
-    font-size: nth(map-get($gd-typo, font-sizes), 4);
+    font-size: list.nth(map.get(variables.$gd-typo, font-sizes), 4);
 }
 
 @mixin gd-label-small {
     @include gd-label-base;
 
-    font-size: nth(map-get($gd-typo, font-sizes), 5);
+    font-size: list.nth(map.get(variables.$gd-typo, font-sizes), 5);
 }

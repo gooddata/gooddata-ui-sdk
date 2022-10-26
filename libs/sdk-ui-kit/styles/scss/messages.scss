@@ -1,8 +1,8 @@
 // (C) 2007-2020 GoodData Corporation
 @use "mixins";
-@import "./variables.scss";
-@import "./layout.scss";
-@import "./Messages/_variables";
+@use "variables";
+@use "layout";
+@use "Messages/_variables" as messages-variables;
 
 /* ==========================================================================
    Messages
@@ -34,7 +34,7 @@ $gd-message-padding-vertical: 4px;
     max-width: 1000px;
     text-align: center;
 
-    @media #{$small-only} {
+    @media #{variables.$small-only} {
         top: 30px;
     }
 }
@@ -87,12 +87,12 @@ $gd-message-padding-vertical: 4px;
     @include mixins.clearfix();
 
     line-height: 1.4em;
-    color: $gd-palette-error-base;
-    background: $gd-message-error-backgroundColor;
+    color: variables.$gd-palette-error-base;
+    background: messages-variables.$gd-message-error-backgroundColor;
     pointer-events: all;
     max-width: 100%;
     border-radius: 3px;
-    font-family: $gd-font-primary;
+    font-family: variables.$gd-font-primary;
     font-size: 14px;
     text-align: left;
 
@@ -102,18 +102,18 @@ $gd-message-padding-vertical: 4px;
     }
 
     &.progress {
-        color: $gd-message-progress-color;
-        background: $gd-message-progress-backgroundColor;
+        color: messages-variables.$gd-message-progress-color;
+        background: messages-variables.$gd-message-progress-backgroundColor;
     }
 
     &.success {
-        color: $gd-palette-success-base;
-        background: $gd-message-success-backgroundColor;
+        color: variables.$gd-palette-success-base;
+        background: messages-variables.$gd-message-success-backgroundColor;
     }
 
     &.warning {
-        color: $gd-palette-warning-base-text;
-        background: $gd-message-warning-backgroundColor;
+        color: variables.$gd-palette-warning-base-text;
+        background: messages-variables.$gd-message-warning-backgroundColor;
     }
 
     &.contrast {
@@ -126,37 +126,37 @@ $gd-message-padding-vertical: 4px;
             bottom: 0;
             left: 0;
             border-radius: inherit;
-            background-color: $gd-color-white;
+            background-color: variables.$gd-color-white;
         }
     }
 }
 
 .gd-message-overlay,
 .gd-message.intensive {
-    color: $gd-color-text-light;
-    background: $gd-message-overlay-error-backgroundColor;
+    color: variables.$gd-color-text-light;
+    background: messages-variables.$gd-message-overlay-error-backgroundColor;
 
     &.success,
     &.progress,
     &.error {
-        color: $gd-color-text-light;
+        color: variables.$gd-color-text-light;
     }
 
     &.success {
-        background: $gd-message-overlay-success-backgroundColor;
+        background: messages-variables.$gd-message-overlay-success-backgroundColor;
     }
 
     &.progress {
-        background: $gd-message-overlay-progress-backgroundColor;
+        background: messages-variables.$gd-message-overlay-progress-backgroundColor;
     }
 
     &.error {
-        background: $gd-message-overlay-error-backgroundColor;
+        background: messages-variables.$gd-message-overlay-error-backgroundColor;
     }
 
     &.warning {
-        color: $gd-color-warning-label;
-        background: $gd-message-overlay-warning-backgroundColor;
+        color: variables.$gd-color-warning-label;
+        background: messages-variables.$gd-message-overlay-warning-backgroundColor;
     }
 }
 
@@ -175,7 +175,7 @@ $gd-message-padding-vertical: 4px;
         min-width: 620px;
         max-width: 350px;
 
-        @media #{$small-only} {
+        @media #{variables.$small-only} {
             min-width: auto;
             max-width: auto;
         }
@@ -210,22 +210,22 @@ $gd-message-padding-vertical: 4px;
         }
 
         &-showmorelink {
-            color: rgba($color: $gd-color-text-light, $alpha: 0.85);
+            color: rgba($color: variables.$gd-color-text-light, $alpha: 0.85);
             cursor: pointer;
             font-size: 13px;
             text-decoration: underline;
             padding-left: 5px;
 
             &.warning {
-                color: rgba($color: $gd-color-warning-label, $alpha: 1);
+                color: rgba($color: variables.$gd-color-warning-label, $alpha: 1);
             }
         }
 
         &-content {
             padding: 5px 10px;
-            color: rgba($color: $gd-color-text-light, $alpha: 0.85);
+            color: rgba($color: variables.$gd-color-text-light, $alpha: 0.85);
             font-size: 13px;
-            border-top: 1px solid rgba($color: $gd-color-text-light, $alpha: 0.85);
+            border-top: 1px solid rgba($color: variables.$gd-color-text-light, $alpha: 0.85);
 
             &.on {
                 visibility: visible;
@@ -241,8 +241,8 @@ $gd-message-padding-vertical: 4px;
             }
 
             &.warning {
-                color: rgba($color: $gd-color-warning-label, $alpha: 1);
-                border-color: rgba($color: $gd-color-warning-label, $alpha: 0.3);
+                color: rgba($color: variables.$gd-color-warning-label, $alpha: 1);
+                border-color: rgba($color: variables.$gd-color-warning-label, $alpha: 0.3);
             }
         }
     }

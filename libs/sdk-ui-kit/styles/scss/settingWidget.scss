@@ -1,4 +1,4 @@
-@import "./variables";
+@use "variables";
 
 .gd-setting-widget {
     box-sizing: border-box;
@@ -6,8 +6,8 @@
     flex-direction: column;
     overflow: hidden;
     width: 100%;
-    background-color: $gd-color-white;
-    border: 1px solid $is-focused-background;
+    background-color: variables.$gd-color-white;
+    border: 1px solid variables.$is-focused-background;
     border-radius: 3px;
 }
 
@@ -16,9 +16,9 @@
     flex-direction: row;
     align-items: center;
     flex-wrap: nowrap;
-    font-family: $gd-font-primary;
+    font-family: variables.$gd-font-primary;
     margin: 20px;
-    color: $gd-color-text;
+    color: variables.$gd-color-text;
     gap: 10px;
 }
 
@@ -35,17 +35,17 @@
     display: flex;
     font-size: 14px;
     height: auto;
-    color: $gd-color-state-blank;
+    color: variables.$gd-color-state-blank;
     cursor: help;
 }
 
 .gd-setting-widget-status-pill {
     font-size: 12px;
-    background-color: $is-focused-background;
+    background-color: variables.$is-focused-background;
     overflow: hidden;
     line-height: 20px;
     white-space: nowrap;
-    color: $gd-medium-gray;
+    color: variables.$gd-medium-gray;
     border-radius: 30px;
     padding-left: 7px;
     padding-right: 7px;
@@ -54,7 +54,7 @@
 }
 
 .gd-widget-separator {
-    border-bottom: 1px solid $gd-border-color;
+    border-bottom: 1px solid variables.$gd-border-color;
     margin-left: 20px;
     margin-right: 20px;
 }
