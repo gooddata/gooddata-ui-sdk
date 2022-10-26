@@ -209,11 +209,11 @@ const CustomUrlEditorDialog: React.FunctionComponent<CustomUrlEditorProps> = (pr
         <ConfirmDialogBase
             className="gd-drill-custom-url-editor s-gd-drill-custom-url-editor"
             isPositive={true}
-            headline={intl.formatMessage({
-                id: previousValue
-                    ? "configurationPanel.drillIntoUrl.editor.editUrlTitle"
-                    : "configurationPanel.drillIntoUrl.editor.addUrlTitle",
-            })}
+            headline={
+                previousValue
+                    ? intl.formatMessage({ id: "configurationPanel.drillIntoUrl.editor.editUrlTitle" })
+                    : intl.formatMessage({ id: "configurationPanel.drillIntoUrl.editor.addUrlTitle" })
+            }
             cancelButtonText={intl.formatMessage({
                 id: "configurationPanel.drillIntoUrl.editor.cancelButtonLabel",
             })}

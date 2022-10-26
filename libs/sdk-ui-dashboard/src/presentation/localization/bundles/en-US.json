@@ -1557,6 +1557,17 @@
         "comment": "Hint guiding users that drill actions in select box has to be selected. Use '…' as one character, not 3 dots ('...').",
         "limit": 0
     },
+    "configurationPanel.drillConfig.drillIntoDashboard.dateFilterWarning|insight": {
+        "value": "The date attribute value from the insight will not be transferred to filter the target dashboard.",
+        "comment": "Warning displayed in drill config when drill into dashboard has date attribute as source or in intersection",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.drillIntoDashboard.dateFilterWarning|report": {
+        "value": "The date attribute value from the report will not be transferred to filter the target dashboard.",
+        "comment": "Warning displayed in drill config when drill into dashboard has date attribute as source or in intersection",
+        "translate": false,
+        "limit": 0
+    },
     "configurationPanel.unlistedDashboardTab": {
         "value": "Unlisted dashboard",
         "comment": "",
@@ -1585,6 +1596,16 @@
     "configurationPanel.drillIntoUrl.customUrlSectionTitle": {
         "value": "Custom URL",
         "comment": "Title of 'Drill into URL' dropdown section.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.addUrlTitle": {
+        "value": "Add custom URL",
+        "comment": "Title of Drill to URL 'Custom URL' editor when URL is not defined.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.editUrlTitle": {
+        "value": "Edit custom URL",
+        "comment": "Title of Drill to URL 'Custom URL' editor when URL is defined.",
         "limit": 0
     },
     "configurationPanel.drillIntoUrl.editor.textAreaLabel": {
@@ -1625,6 +1646,47 @@
     "configurationPanel.drillIntoUrl.editor.parameterDetailMoreValues": {
         "value": "...and {count} more",
         "comment": "Translate only uppercase words In '...AND {count} MORE'. Info about number of other values not shown in parameter detail in 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.insightIdParameterLabel|insight": {
+        "value": "Insight ID",
+        "comment": "Label of the insight parameter in Drill to URL 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.insightIdParameterLabel|report": {
+        "value": "Report ID",
+        "comment": "Label of the report parameter in Drill to URL 'Custom URL' editor.",
+        "translate": false,
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.clientIdParameterLabel": {
+        "value": "Client ID",
+        "comment": "Label of the insight parameter in Drill to URL 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.dataProductIdParameterLabel": {
+        "value": "Data product ID",
+        "comment": "Label of the insight parameter in Drill to URL 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.projectIdParameterLabel": {
+        "value": "Project ID",
+        "comment": "Label of the insight parameter in Drill to URL 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.workspaceIdParameterLabel": {
+        "value": "Workspace ID",
+        "comment": "Label of the insight parameter in Drill to URL 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.widgetIdParameterLabel": {
+        "value": "Widget ID",
+        "comment": "Label of the insight parameter in Drill to URL 'Custom URL' editor.",
+        "limit": 0
+    },
+    "configurationPanel.drillIntoUrl.editor.dashboardIdParameterLabel": {
+        "value": "Dashboard ID",
+        "comment": "Label of the insight parameter in Drill to URL 'Custom URL' editor.",
         "limit": 0
     },
     "configurationPanel.drillIntoUrl.editor.identifierTypeLabel": {

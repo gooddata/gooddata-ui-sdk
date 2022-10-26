@@ -6,12 +6,17 @@ import {
     IDrillToInsight,
     IInsight,
     InsightDrillDefinition,
+    IDrillToCustomUrl,
+    IDrillToAttributeUrl,
 } from "@gooddata/sdk-model";
 import {
     DRILL_TARGET_TYPE,
     IDrillConfigItem,
     isDrillToDashboardConfig,
     isDrillToUrlConfig,
+    UrlDrillTarget,
+    isDrillToCustomUrlConfig,
+    isDrillToAttributeUrlConfig,
 } from "../../../../drill/types";
 import { DrillTargetInsightItem } from "./DrillTargetInsightItem";
 import { DrillTargetUrlItem } from "./DrillTargetUrlItem";
@@ -52,15 +57,36 @@ export const DrillTargets: React.FunctionComponent<IDrillTargetsProps> = (props)
         props.onSetup(drillConfigItem, { ...item, dashboard });
     };
 
-    const onCustomUrlTargetSelect = () => {
-        return;
-        // const drillConfigItem: IDrillToUrlConfig = {
-        //     ...props.item,
-        //     drillTargetType: DRILL_TARGET_TYPE.DRILL_TO_URL,
-        //     urlDrillTarget: selectedUrlDrillTarget,
-        //     complete: true,
-        // };
-        // props.onSetup(drillConfigItem, { urlDrillTarget: selectedUrlDrillTarget });
+    const onCustomUrlTargetSelect = (urlDrillTarget: UrlDrillTarget) => {
+        if (isDrillToCustomUrlConfig(urlDrillTarget)) {
+            const drillConfigItem: IDrillToCustomUrl = {
+                transition: "new-window",
+                origin: {
+                    type: "drillFromMeasure",
+                    measure: { localIdentifier: item.localIdentifier },
+                },
+                type: "drillToCustomUrl",
+                target: {
+                    url: urlDrillTarget.customUrl,
+                },
+            };
+            props.onSetup(drillConfigItem, { ...item, urlDrillTarget });
+        }
+        if (isDrillToAttributeUrlConfig(urlDrillTarget)) {
+            const drillConfigItem: IDrillToAttributeUrl = {
+                transition: "new-window",
+                origin: {
+                    type: "drillFromAttribute",
+                    attribute: { localIdentifier: item.localIdentifier },
+                },
+                type: "drillToAttributeUrl",
+                target: {
+                    hyperlinkDisplayForm: urlDrillTarget.drillToAttributeDisplayForm,
+                    displayForm: urlDrillTarget.insightAttributeDisplayForm,
+                },
+            };
+            props.onSetup(drillConfigItem, { ...item, urlDrillTarget });
+        }
     };
 
     switch (props.item.drillTargetType) {

@@ -12,7 +12,7 @@ type CloseDropdownCallback = (e: React.MouseEvent) => void;
 interface CustomUrlSectionProps {
     toggleModal: ToggleModalCallback;
     closeDropdown: CloseDropdownCallback;
-    urlDrillTarget: UrlDrillTarget;
+    urlDrillTarget?: UrlDrillTarget;
 }
 
 const UrlDropdownOption = ({
