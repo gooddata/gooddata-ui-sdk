@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import sdk from "@gooddata/api-client-bear";
 import { IAuthenticationProvider, IAuthenticatedPrincipal } from "@gooddata/sdk-backend-spi";
 import { ANONYMOUS_ACCESS } from "../../constants/env";
@@ -45,14 +45,19 @@ export class GoodDataAuthProvider implements IAuthenticationProvider {
         userId: string;
         userMeta: any;
     }> {
+        const user = await sdk.user.getCurrentProfile();
+
         if (ANONYMOUS_ACCESS) {
             return {
                 userId: "anonymous",
-                userMeta: {},
+                userMeta: {
+                    links: {
+                        // we need the actual self link of the user from the proxy, this is needed by some of the API calls
+                        self: user.links?.self,
+                    },
+                },
             };
         }
-
-        const user = await sdk.user.getCurrentProfile();
 
         return {
             userId: user.login!,
