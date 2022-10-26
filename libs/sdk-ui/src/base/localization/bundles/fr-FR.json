@@ -275,6 +275,7 @@
     "attributesDropdown.display_as": "Afficher en tant que : {title}",
     "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> est déjà filtré par le filtre <strong>{childTitle}</strong>, directement ou via d'autres filtres.",
     "attributesDropdown.attributeNameWithData": "avec les données de",
+    "attributesDropdown.noConnectionMessage": "<strong>{childTitle}</strong> ne peut pas être filtré par <strong>{parentTitle}</strong>. Il n'existe aucune connexion entre les attributs du filtre dans le modèle de données.",
     "shareDialog.share.grantee.title": "Partager avec des utilisateurs et groupes",
     "shareDialog.share.grantee.share": "Partage",
     "shareDialog.share.grantee.list.title": "Partagé avec",

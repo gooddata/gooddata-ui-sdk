@@ -275,6 +275,7 @@
     "attributesDropdown.display_as": "显示为：{title}",
     "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> 已被 <strong>{childTitle}</strong> 筛选器直接筛选或已通过其他筛选器筛选。",
     "attributesDropdown.attributeNameWithData": "带下列数据",
+    "attributesDropdown.noConnectionMessage": "<strong>{childTitle}</strong> 无法被 <strong>{parentTitle}</strong> 筛选。数据模型中的筛选器属性之间没有关联。",
     "shareDialog.share.grantee.title": "与用户和组共享",
     "shareDialog.share.grantee.share": "共享",
     "shareDialog.share.grantee.list.title": "共享给",
