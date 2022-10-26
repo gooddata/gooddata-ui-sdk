@@ -7,6 +7,7 @@ import cx from "classnames";
 import { Message } from "./Message";
 import { IMessage, IMessagesProps } from "./typings";
 import { Overlay } from "../Overlay";
+import { Typography } from "../Typography";
 
 /**
  * @internal
@@ -98,12 +99,12 @@ const MessageWithShowMore: React.FC<MessageWithShowMoreProps> = ({
 
     return (
         <div className="gd-message-text-showmore">
-            <p className="gd-message-text-header">
+            <Typography tagName="p" className="gd-message-text-header">
                 <MessageElement message={message} type="span" />
                 <span className={showMoreLinkClassNames} onClick={handleShowMore}>
                     {shouldShowMore ? showMore : showLess}
                 </span>
-            </p>
+            </Typography>
             <div className={contentClassNames}>{errorDetail}</div>
         </div>
     );

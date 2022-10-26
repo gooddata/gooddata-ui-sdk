@@ -5,6 +5,7 @@ import { useHubspotForm } from "@aaronhayes/react-use-hubspot-form";
 import { LoadingComponent } from "@gooddata/sdk-ui";
 
 import { Button } from "../Button";
+import { Typography } from "../Typography";
 
 declare global {
     interface Window {
@@ -193,7 +194,7 @@ export const HubspotConversionTouchPointDialogBase: React.FC<IHubspotConversionT
             {!formCreated ? <LoadingComponent /> : null}
             {formCreated ? (
                 <div className="conversion-touch-point-dialog-wrapper">
-                    {isFormReady && dialogTitle ? <h3>{dialogTitle}</h3> : null}
+                    {isFormReady && dialogTitle ? <Typography tagName="h3">{dialogTitle}</Typography> : null}
                     {/* After formCreated, the hubspot form will loaded in #get-in-touch-hubspot div. So it should be there.*/}
                     <div id={hubspotFormTargetId} className="hubspot-form"></div>
                     {/* The hubspot form doesn't include Cancel button. Adding the Cancel button to make Dialog consistent with other dialogs */}
