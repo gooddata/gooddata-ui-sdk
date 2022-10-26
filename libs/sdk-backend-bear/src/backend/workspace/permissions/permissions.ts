@@ -12,9 +12,15 @@ export class BearWorkspacePermissionsFactory implements IWorkspacePermissionsSer
 
     public async getPermissionsForCurrentUser(): Promise<IWorkspacePermissions> {
         const permissions = await this.authCall(async (sdk, { getPrincipal }) => {
-            const userLoginMd5 = await userLoginMd5FromAuthenticatedPrincipal(getPrincipal);
-            return sdk.project.getPermissions(this.workspace, userLoginMd5);
+            let userLoginMd5;
+            try {
+                userLoginMd5 = await userLoginMd5FromAuthenticatedPrincipal(getPrincipal);
+                return sdk.project.getPermissions(this.workspace, userLoginMd5);
+            } catch {
+                // if getting the userLoginMd5 fails, fall back to null -> empty permissions
+                return null;
+            }
         });
-        return convertPermissions(permissions.associatedPermissions || emptyPermissions);
+        return convertPermissions(permissions?.associatedPermissions || emptyPermissions);
     }
 }
