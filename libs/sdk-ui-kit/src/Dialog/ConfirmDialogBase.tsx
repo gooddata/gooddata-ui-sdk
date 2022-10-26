@@ -7,6 +7,7 @@ import { LoadingSpinner } from "../LoadingSpinner";
 import { DialogBase } from "./DialogBase";
 import { IConfirmDialogBaseProps } from "./typings";
 import { Bubble, BubbleHoverTrigger } from "../Bubble";
+import { Typography } from "../Typography";
 
 /**
  * @internal
@@ -64,7 +65,9 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
                     <div className="gd-dialog-header-wrapper">
                         {headerLeftButtonRenderer?.()}
                         <div className={headerClassNames}>
-                            <h3 className="gd-dialog-header-title">{headline}</h3>
+                            <Typography tagName="h3" className="gd-dialog-header-title">
+                                {headline}
+                            </Typography>
                             {titleRightIconRenderer?.()}
                         </div>
                     </div>
