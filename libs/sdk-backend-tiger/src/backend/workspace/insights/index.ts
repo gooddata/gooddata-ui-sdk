@@ -142,6 +142,8 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                     | VisualizationObjectModelV1.IVisualizationObject
                     | VisualizationObjectModelV2.IVisualizationObject,
                 visualizationObject.attributes!.title!,
+                visualizationObject.attributes!.description!,
+                visualizationObject.attributes!.tags,
             ),
             visualizationObject.id,
             links!.self,
