@@ -98,4 +98,5 @@ export {
     DependentEntitiesGraphResponse,
     WorkspaceDataFiltersLayout,
     ICSPDirective,
+    ICustomApplicationSetting,
 } from "./backend/tigerSpecificFunctions";
