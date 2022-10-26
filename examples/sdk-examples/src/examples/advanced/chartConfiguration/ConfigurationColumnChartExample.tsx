@@ -24,12 +24,12 @@ const ColumnChartConfigurationExample: React.FC = () => {
     });
 
     const onPaletteChange = (): void => {
-        const { config: currentConfig, customPaletteUsed } = state;
-        const colorPaletteProp = {
-            colorPalette: customPaletteUsed ? undefined : CUSTOM_COLOR_PALETTE,
-        };
-
         setState((prevState) => {
+            const { config: currentConfig, customPaletteUsed } = prevState;
+            const colorPaletteProp = {
+                colorPalette: customPaletteUsed ? undefined : CUSTOM_COLOR_PALETTE,
+            };
+
             return {
                 ...prevState,
                 config: {
@@ -42,14 +42,15 @@ const ColumnChartConfigurationExample: React.FC = () => {
     };
 
     const onLegendChange = (): void => {
-        const { config: currentConfig, customLegendUsed } = state;
-        const legendProp = {
-            legend: {
-                enabled: customLegendUsed,
-                position: "right",
-            },
-        };
         setState((prevState) => {
+            const { config: currentConfig, customLegendUsed } = prevState;
+            const legendProp = {
+                legend: {
+                    enabled: customLegendUsed,
+                    position: "right",
+                },
+            };
+
             return {
                 ...prevState,
                 config: {
@@ -62,13 +63,14 @@ const ColumnChartConfigurationExample: React.FC = () => {
     };
 
     const onSeparatorChange = (): void => {
-        const { config: currentConfig, customSeparatorUsed } = state;
-        const separatorProp = {
-            separators: customSeparatorUsed
-                ? { thousand: ".", decimal: "," }
-                : { thousand: ",", decimal: "." },
-        };
         setState((prevState) => {
+            const { config: currentConfig, customSeparatorUsed } = prevState;
+            const separatorProp = {
+                separators: customSeparatorUsed
+                    ? { thousand: ".", decimal: "," }
+                    : { thousand: ",", decimal: "." },
+            };
+
             return {
                 ...prevState,
                 config: {
