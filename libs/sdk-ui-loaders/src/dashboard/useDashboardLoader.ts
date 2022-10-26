@@ -1,5 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 import { useEffect, useMemo, useState } from "react";
+import stringify from "json-stable-stringify";
 import { IDashboardBasePropsForLoader, IDashboardLoadOptions, IEmbeddedPlugin } from "./types";
 import {
     IClientWorkspaceIdentifiers,
@@ -9,7 +10,7 @@ import {
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 import { DashboardConfig, IDashboardBaseProps } from "@gooddata/sdk-ui-dashboard";
-import { idRef, objRefToString, serializeObjRef } from "@gooddata/sdk-model";
+import { idRef, isDashboard, objRefToString } from "@gooddata/sdk-model";
 import isArray from "lodash/isArray";
 import compact from "lodash/compact";
 import { DashboardLoader } from "./dashboardLoader";
@@ -71,7 +72,8 @@ export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoa
         adaptiveLoadOptions,
         allowUnfinishedFeatures = "alwaysPrevent",
     } = options;
-    const dashboardRef = typeof dashboard === "string" ? idRef(dashboard) : dashboard;
+    const dashboardRef =
+        typeof dashboard === "string" ? idRef(dashboard) : isDashboard(dashboard) ? dashboard.ref : dashboard;
 
     useEffect(() => {
         return () => {
@@ -92,7 +94,7 @@ export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoa
         const baseProps: IDashboardBasePropsForLoader = {
             backend,
             workspace,
-            dashboard: dashboardRef,
+            dashboard,
             filterContextRef,
             config: dashboardConfig,
             permissions,
@@ -124,7 +126,7 @@ export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoa
     }, [
         backend,
         workspace,
-        dashboardRef && serializeObjRef(dashboardRef),
+        dashboard && stringify(dashboard),
         filterContextRef,
         config,
         permissions,

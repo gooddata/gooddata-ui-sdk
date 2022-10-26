@@ -7,6 +7,7 @@
 import { DashboardContext } from '@gooddata/sdk-ui-dashboard';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IClientWorkspaceIdentifiers } from '@gooddata/sdk-ui';
+import { IDashboard } from '@gooddata/sdk-model';
 import { IDashboardBaseProps } from '@gooddata/sdk-ui-dashboard';
 import { IDashboardEngine } from '@gooddata/sdk-ui-dashboard';
 import { IDashboardPluginContract_V1 } from '@gooddata/sdk-ui-dashboard';
@@ -61,7 +62,7 @@ export const DashboardStub: React_2.FC<IDashboardStubProps>;
 
 // @public
 export interface IDashboardBasePropsForLoader extends Omit<IDashboardBaseProps, "dashboard"> {
-    dashboard: string | ObjRef | undefined;
+    dashboard: string | ObjRef | undefined | IDashboard;
 }
 
 // @public
@@ -105,5 +106,11 @@ export type ModuleFederationIntegration = {
 
 // @public
 export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoadStatus;
+
+// @internal
+export function useDashboardLoaderWithReload(options: IDashboardLoadOptions): {
+    loaderStatus: DashboardLoadStatus;
+    reloadPlugins: () => void;
+};
 
 ```

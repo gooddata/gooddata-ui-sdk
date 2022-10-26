@@ -13,6 +13,7 @@ import {
 } from "@gooddata/sdk-model";
 import {
     ExtendedDashboardWidget,
+    isCustomWidget,
     selectEnableWidgetCustomHeight,
     selectInsightsMap,
     selectIsInEditMode,
@@ -167,7 +168,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                 LoadingComponent={LoadingComponent}
             />
 
-            {isInEditMode && !isAnyPlaceholderWidget(widget) ? (
+            {isInEditMode && !isAnyPlaceholderWidget(widget) && !isCustomWidget(widget) ? (
                 <>
                     <ResizeOverlay
                         isActive={isActive}

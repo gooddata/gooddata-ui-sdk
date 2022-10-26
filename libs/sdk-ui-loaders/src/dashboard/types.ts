@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 import { IDashboardBaseProps, IDashboardPluginContract_V1 } from "@gooddata/sdk-ui-dashboard";
 import { IClientWorkspaceIdentifiers } from "@gooddata/sdk-ui";
-import { ObjRef } from "@gooddata/sdk-model";
+import { IDashboard, ObjRef } from "@gooddata/sdk-model";
 
 /**
  * Embedded plugin is implemented, built and linked into the application that loads the dashboard.
@@ -36,8 +36,10 @@ export interface IDashboardBasePropsForLoader extends Omit<IDashboardBaseProps, 
      * @remarks
      * You may specify an `idRef` or `uriRef`; as a convenience you may also specify dashboard object
      * identifier (string) - that's same as using `idRef(objectIdentifier)`.
+     * You can also specify an {@link @gooddata/sdk-model#IDashboard} instance but this is reserved for internal use cases, avoid
+     * it unless you are absolutely certain you know what you are doing.
      */
-    dashboard: string | ObjRef | undefined;
+    dashboard: string | ObjRef | undefined | IDashboard;
 }
 
 /**

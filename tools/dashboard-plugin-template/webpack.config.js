@@ -71,6 +71,7 @@ module.exports = (_env, argv) => {
                 // fixes tilde imports in CSS from sdk-ui-* packages
                 "@gooddata/sdk-ui-dashboard": path.resolve("./node_modules/@gooddata/sdk-ui-dashboard"),
                 "@gooddata/sdk-ui-ext": path.resolve("./node_modules/@gooddata/sdk-ui-ext"),
+                "@gooddata/sdk-ui-kit": path.resolve("./node_modules/@gooddata/sdk-ui-kit"),
             },
 
             // Prefer ESM versions of packages to enable tree shaking

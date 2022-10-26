@@ -8,7 +8,7 @@ import { objectUtils } from "@gooddata/util";
 import { IDashboardStoreProviderProps } from "./types";
 import { newRenderingWorker } from "../commandHandlers/render/renderingWorker";
 import { DashboardEventHandler } from "../eventHandlers/eventHandler";
-import { initializeDashboard, InitialLoadCorrelationId } from "../commands";
+import { initializeDashboardWithPersistedDashboard, InitialLoadCorrelationId } from "../commands";
 import { createDashboardStore, ReduxedDashboardStore } from "../store/dashboardStore";
 import { dashboardDeinitialized } from "../events/dashboard";
 
@@ -70,7 +70,7 @@ function useNotifyDeinitializedOnUnmount(
 export const useInitializeDashboardStore = (
     props: IDashboardStoreProviderProps,
 ): ReduxedDashboardStore | null => {
-    const { dashboard } = props;
+    const { dashboard, persistedDashboard } = props;
     const backend = useBackendStrict(props.backend);
     const workspace = useWorkspace(props.workspace);
     const mapboxToken = useMapboxToken(props.config?.mapboxToken);
@@ -127,9 +127,10 @@ export const useInitializeDashboardStore = (
                 initialRenderMode: props.initialRenderMode ?? "view",
             });
             newDashboardStore.store.dispatch(
-                initializeDashboard(
+                initializeDashboardWithPersistedDashboard(
                     enrichMapboxToken(props.config, mapboxToken),
                     props.permissions,
+                    persistedDashboard,
                     InitialLoadCorrelationId,
                 ),
             );

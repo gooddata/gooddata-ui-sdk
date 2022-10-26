@@ -50,6 +50,7 @@ import { IDashboardAttributeFilter } from '@gooddata/sdk-model';
 import { IDashboardAttributeFilterParent } from '@gooddata/sdk-model';
 import { IDashboardDateFilter } from '@gooddata/sdk-model';
 import { IDashboardDateFilterConfig as IDashboardDateFilterConfig_2 } from '@gooddata/sdk-model';
+import { IDashboardDefinition } from '@gooddata/sdk-model';
 import { IDashboardFilterReference } from '@gooddata/sdk-model';
 import { IDashboardLayout } from '@gooddata/sdk-model';
 import { IDashboardLayoutItem } from '@gooddata/sdk-model';
@@ -3187,6 +3188,8 @@ export interface IDashboardPluginContract_V1 extends DashboardPluginDescriptor {
 export interface IDashboardProps extends IDashboardBaseProps, IDashboardExtensionProps {
     // (undocumented)
     children?: JSX.Element | ((dashboard: any) => JSX.Element);
+    // @internal
+    persistedDashboard?: IDashboard;
 }
 
 // @alpha
@@ -3229,6 +3232,8 @@ export interface IDashboardStoreProviderProps {
     onStateChange?: (state: DashboardState, dispatch: DashboardDispatch) => void;
     // (undocumented)
     permissions?: IWorkspacePermissions;
+    // (undocumented)
+    persistedDashboard?: IDashboard;
     // (undocumented)
     workspace?: string;
 }
@@ -3588,7 +3593,12 @@ export interface InitializeDashboardPayload {
     readonly config?: DashboardConfig;
     // (undocumented)
     readonly permissions?: IWorkspacePermissions;
+    // @internal (undocumented)
+    readonly persistedDashboard?: IDashboard;
 }
+
+// @internal
+export function initializeDashboardWithPersistedDashboard(config?: DashboardConfig, permissions?: IWorkspacePermissions, persistedDashboard?: IDashboard, correlationId?: string): InitializeDashboard;
 
 // @public
 export const InitialLoadCorrelationId = "initialLoad";
@@ -5332,6 +5342,9 @@ export const selectDashboardUri: OutputSelector<DashboardState, string | undefin
 // @public
 export const selectDashboardUriRef: OutputSelector<DashboardState, UriRef | undefined, (res: string | undefined) => UriRef | undefined>;
 
+// @internal (undocumented)
+export const selectDashboardWorkingDefinition: OutputSelector<DashboardState, IDashboardDefinition<IDashboardWidget>, (res1: IDashboard<IDashboardWidget> | undefined, res2: DashboardDescriptor, res3: IFilterContextDefinition, res4: IDashboardObjectIdentity | undefined, res5: IDashboardLayout<IWidget>, res6: IDashboardDateFilterConfig_2 | undefined) => IDashboardDefinition<IDashboardWidget>>;
+
 // @internal
 export const selectDateDatasetsForInsight: (query: QueryInsightDateDatasets) => Selector<DashboardState, QueryCacheEntryResult<InsightDateDatasets> | undefined>;
 
@@ -5564,10 +5577,10 @@ export const selectIsExport: OutputSelector<DashboardState, boolean, (res: Resol
 export const selectIsFilterAttributeSelectionOpen: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
 
 // @internal (undocumented)
-export const selectIsInEditMode: OutputSelector<DashboardState, boolean, (res: RenderModeState) => boolean>;
+export const selectIsInEditMode: OutputSelector<DashboardState, boolean, (res: RenderMode) => boolean>;
 
 // @internal (undocumented)
-export const selectIsInViewMode: OutputSelector<DashboardState, boolean, (res: RenderModeState) => boolean>;
+export const selectIsInViewMode: OutputSelector<DashboardState, boolean, (res: RenderMode) => boolean>;
 
 // @alpha (undocumented)
 export const selectIsKpiAlertHighlightedByWidgetRef: (ref: ObjRef | undefined) => (state: DashboardState) => boolean;
