@@ -1,93 +1,30 @@
 // (C) 2020-2022 GoodData Corporation
-import React, { Component } from "react";
+import React, { ChangeEvent, useState } from "react";
 
 import "@gooddata/sdk-ui-geo/styles/css/main.css";
 
 import { MAPBOX_TOKEN } from "../../constants/fixtures";
-import { GeoPushpinChart, IGeoConfig, PushpinSizeOption } from "@gooddata/sdk-ui-geo";
+import {
+    CenterPositionChangedCallback,
+    GeoPushpinChart,
+    IGeoConfig,
+    PushpinSizeOption,
+    ZoomChangedCallback,
+} from "@gooddata/sdk-ui-geo";
 import { locationAttribute, sizeMeasure } from "../../md/geoModel";
+import { OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
 
 const POINT_SIZE_OPTIONS = ["default", "0.5x", "0.75x", "normal", "1.25x", "1.5x"];
 
-type State = {
-    minSize: PushpinSizeOption;
-    maxSize: PushpinSizeOption;
-};
+const PointSizeDropdown: React.FC<{ id: string; label: string; onChange: (event: any) => void }> = (
+    props,
+) => {
+    const { label, id, onChange } = props;
 
-export class GeoPushpinChartConfigurationPointsSizeExample extends Component<unknown, State> {
-    state: State = {
-        minSize: "default",
-        maxSize: "default",
-    };
-
-    public render() {
-        const { minSize, maxSize } = this.state;
-        const geoConfig: IGeoConfig = {
-            mapboxToken: MAPBOX_TOKEN,
-            points: {
-                minSize,
-                maxSize,
-            },
-        };
-
-        return (
-            <div className="s-geo-chart">
-                <div style={{ marginTop: "10px" }}>
-                    {this.renderPointSizeDropDown("minSize", "Min Size")}
-                    {this.renderPointSizeDropDown("maxSize", "Max Size")}
-                </div>
-                <div
-                    style={{ height: "500px", position: "relative" }}
-                    className="s-geo-pushpin-chart-configuration-points-size"
-                >
-                    <GeoPushpinChart
-                        location={locationAttribute}
-                        size={sizeMeasure}
-                        config={geoConfig}
-                        onZoomChanged={this.onZoomChanged}
-                        onCenterPositionChanged={this.onCenterPositionChanged}
-                        onLoadingChanged={this.onLoadingChanged}
-                        onError={this.onError}
-                    />
-                </div>
-            </div>
-        );
-    }
-
-    private onLoadingChanged(...params: any[]) {
-        // eslint-disable-next-line no-console
-        return console.log("GeoPushpinChartConfigurationPointsSizeExample onLoadingChanged", ...params);
-    }
-
-    private onError(...params: any[]) {
-        // eslint-disable-next-line no-console
-        return console.log("GeoPushpinChartConfigurationPointsSizeExample onError", ...params);
-    }
-
-    private onZoomChanged(...params: any[]) {
-        // eslint-disable-next-line no-console
-        return console.log("GeoPushpinChartConfigurationPointsSizeExample onZoomChanged", ...params);
-    }
-
-    private onCenterPositionChanged(...params: any[]) {
-        // eslint-disable-next-line no-console
-        return console.log(
-            "GeoPushpinChartConfigurationPointsSizeExample onCenterPositionChanged",
-            ...params,
-        );
-    }
-
-    private onPointSizeChange = (event: any) => {
-        const { id, value } = event.target;
-        this.setState({
-            [id]: value,
-        } as any);
-    };
-
-    private renderPointSizeDropDown = (id: any, label: any) => (
+    return (
         <span style={{ display: "inline-block", minWidth: "10em", verticalAlign: "middle" }}>
             {`${label}: `}
-            <select id={id} onChange={this.onPointSizeChange}>
+            <select id={id} onChange={onChange}>
                 {POINT_SIZE_OPTIONS.map((size) => (
                     <option key={size} value={size}>
                         {size}
@@ -96,6 +33,67 @@ export class GeoPushpinChartConfigurationPointsSizeExample extends Component<unk
             </select>
         </span>
     );
-}
+};
+
+export const GeoPushpinChartConfigurationPointsSizeExample: React.FC = () => {
+    const [minSize, setMinSize] = useState<PushpinSizeOption>("default");
+    const [maxSize, setMaxSize] = useState<PushpinSizeOption>("default");
+
+    const onLoadingChanged: OnLoadingChanged = () => {
+        // handle the callback here
+    };
+
+    const onError: OnError = () => {
+        // handle the callback here
+    };
+
+    const onZoomChanged: ZoomChangedCallback = () => {
+        // handle the callback here
+    };
+
+    const onCenterPositionChanged: CenterPositionChangedCallback = () => {
+        // handle the callback here
+    };
+
+    const onPointSizeChange = (event: ChangeEvent<HTMLSelectElement>) => {
+        const { id, value } = event.target;
+        if (id === "minSize") {
+            setMinSize(value as PushpinSizeOption);
+        } else {
+            setMaxSize(value as PushpinSizeOption);
+        }
+    };
+
+    const geoConfig: IGeoConfig = {
+        mapboxToken: MAPBOX_TOKEN,
+        points: {
+            minSize,
+            maxSize,
+        },
+    };
+
+    return (
+        <div className="s-geo-chart">
+            <div style={{ marginTop: "10px" }}>
+                <PointSizeDropdown id="minSize" label="Min Size" onChange={onPointSizeChange} />
+                <PointSizeDropdown id="maxSize" label="Max Size" onChange={onPointSizeChange} />
+            </div>
+            <div
+                style={{ height: "500px", position: "relative" }}
+                className="s-geo-pushpin-chart-configuration-points-size"
+            >
+                <GeoPushpinChart
+                    location={locationAttribute}
+                    size={sizeMeasure}
+                    config={geoConfig}
+                    onZoomChanged={onZoomChanged}
+                    onCenterPositionChanged={onCenterPositionChanged}
+                    onLoadingChanged={onLoadingChanged}
+                    onError={onError}
+                />
+            </div>
+        </div>
+    );
+};
 
 export default GeoPushpinChartConfigurationPointsSizeExample;

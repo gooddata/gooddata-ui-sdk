@@ -13,13 +13,14 @@ import {
 } from "@gooddata/sdk-ui-filters";
 import { IAttributeFilter, newNegativeAttributeFilter } from "@gooddata/sdk-model";
 import * as Md from "../../../md/full";
+import noop from "lodash/noop";
 
 interface ICustomProps {
     onMyCallback: () => void;
 }
 
 const defaultCustomProps: ICustomProps = {
-    onMyCallback: () => {}, // noop
+    onMyCallback: noop,
 };
 
 const CustomPropsContext = React.createContext<ICustomProps>(defaultCustomProps);

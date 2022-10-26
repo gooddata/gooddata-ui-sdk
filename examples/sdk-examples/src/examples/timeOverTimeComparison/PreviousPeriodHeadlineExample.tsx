@@ -1,6 +1,6 @@
 // (C) 2007-2022 GoodData Corporation
 
-import React, { Component } from "react";
+import React from "react";
 import { Headline } from "@gooddata/sdk-ui-charts";
 import { modifyMeasure, newPreviousPeriodMeasure, newRelativeDateFilter } from "@gooddata/sdk-model";
 import * as Md from "../../md/full";
@@ -10,37 +10,32 @@ const TotalSales = modifyMeasure(Md.$TotalSales, (m) =>
     m.format("#,##0").alias("$ Total Sales").title("Total Sales"),
 );
 
-export class PreviousPeriodHeadlineExample extends Component {
-    public onLoadingChanged: OnLoadingChanged = (...params) => {
-        // eslint-disable-next-line no-console
-        return console.log("PreviousPeriodHeadlineExample onLoadingChanged", ...params);
+const secondaryMeasure = newPreviousPeriodMeasure(
+    TotalSales,
+    [{ dataSet: Md.DateDatasets.Date.identifier, periodsAgo: 1 }],
+    (m) => m.alias("$ Total Sales - period ago"),
+);
+
+export const PreviousPeriodHeadlineExample: React.FC = () => {
+    const onLoadingChanged: OnLoadingChanged = () => {
+        // handle the callback here
     };
 
-    public onError: OnError = (...params): void => {
-        // eslint-disable-next-line no-console
-        return console.log("PreviousPeriodHeadlineExample onError", ...params);
+    const onError: OnError = () => {
+        // handle the callback here
     };
 
-    public render() {
-        const primaryMeasure = TotalSales;
-        const secondaryMeasure = newPreviousPeriodMeasure(
-            TotalSales,
-            [{ dataSet: Md.DateDatasets.Date.identifier, periodsAgo: 1 }],
-            (m) => m.alias("$ Total Sales - period ago"),
-        );
-
-        return (
-            <div style={{ height: 125 }} className="s-headline">
-                <Headline
-                    primaryMeasure={primaryMeasure}
-                    secondaryMeasure={secondaryMeasure}
-                    filters={[newRelativeDateFilter(Md.DateDatasets.Date.ref, "GDC.time.year", -4, -3)]}
-                    onLoadingChanged={this.onLoadingChanged}
-                    onError={this.onError}
-                />
-            </div>
-        );
-    }
-}
+    return (
+        <div style={{ height: 125 }} className="s-headline">
+            <Headline
+                primaryMeasure={TotalSales}
+                secondaryMeasure={secondaryMeasure}
+                filters={[newRelativeDateFilter(Md.DateDatasets.Date.ref, "GDC.time.year", -4, -3)]}
+                onLoadingChanged={onLoadingChanged}
+                onError={onError}
+            />
+        </div>
+    );
+};
 
 export default PreviousPeriodHeadlineExample;

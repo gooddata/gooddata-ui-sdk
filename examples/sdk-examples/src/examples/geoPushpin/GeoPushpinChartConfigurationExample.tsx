@@ -1,6 +1,6 @@
 // (C) 2020-2022 GoodData Corporation
-import React, { Component } from "react";
-import { GeoPushpinChart } from "@gooddata/sdk-ui-geo";
+import React from "react";
+import { CenterPositionChangedCallback, GeoPushpinChart, ZoomChangedCallback } from "@gooddata/sdk-ui-geo";
 
 import "@gooddata/sdk-ui-geo/styles/css/main.css";
 
@@ -12,57 +12,50 @@ import {
     colorMeasure,
     segmentByAttribute,
 } from "../../md/geoModel";
+import { OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
 
-export class GeoPushpinChartConfigurationExample extends Component {
-    public render() {
-        const geoConfig = {
-            center: {
-                lat: 39,
-                lng: -80.5,
-            },
-            zoom: 6,
-            tooltipText: tooltipTextAttribute,
-            mapboxToken: MAPBOX_TOKEN,
-        };
-        return (
-            <div
-                style={{ height: "500px", position: "relative" }}
-                className="s-geo-pushpin-chart-configuration"
-            >
-                <GeoPushpinChart
-                    location={locationAttribute}
-                    size={sizeMeasure}
-                    color={colorMeasure}
-                    segmentBy={segmentByAttribute}
-                    config={geoConfig}
-                    onZoomChanged={this.onZoomChanged}
-                    onCenterPositionChanged={this.onCenterPositionChanged}
-                    onLoadingChanged={this.onLoadingChanged}
-                    onError={this.onError}
-                />
-            </div>
-        );
-    }
+const GEO_CHART_CONFIG = {
+    center: {
+        lat: 39,
+        lng: -80.5,
+    },
+    zoom: 6,
+    tooltipText: tooltipTextAttribute,
+    mapboxToken: MAPBOX_TOKEN,
+};
 
-    private onLoadingChanged(...params: any[]) {
-        // eslint-disable-next-line no-console
-        return console.log("GeoPushpinChartConfigurationExample onLoadingChanged", ...params);
-    }
+export const GeoPushpinChartConfigurationExample: React.FC = () => {
+    const onLoadingChanged: OnLoadingChanged = () => {
+        // handle the callback here
+    };
 
-    private onError(...params: any[]) {
-        // eslint-disable-next-line no-console
-        return console.log("GeoPushpinChartConfigurationExample onError", ...params);
-    }
+    const onError: OnError = () => {
+        // handle the callback here
+    };
 
-    private onZoomChanged(...params: any[]) {
-        // eslint-disable-next-line no-console
-        return console.log("GeoPushpinChartConfigurationExample onZoomChanged", ...params);
-    }
+    const onZoomChanged: ZoomChangedCallback = () => {
+        // handle the callback here
+    };
 
-    private onCenterPositionChanged(...params: any[]) {
-        // eslint-disable-next-line no-console
-        return console.log("GeoPushpinChartConfigurationExample onCenterPositionChanged", ...params);
-    }
-}
+    const onCenterPositionChanged: CenterPositionChangedCallback = () => {
+        // handle the callback here
+    };
+
+    return (
+        <div style={{ height: "500px", position: "relative" }} className="s-geo-pushpin-chart-configuration">
+            <GeoPushpinChart
+                location={locationAttribute}
+                size={sizeMeasure}
+                color={colorMeasure}
+                segmentBy={segmentByAttribute}
+                config={GEO_CHART_CONFIG}
+                onZoomChanged={onZoomChanged}
+                onCenterPositionChanged={onCenterPositionChanged}
+                onLoadingChanged={onLoadingChanged}
+                onError={onError}
+            />
+        </div>
+    );
+};
 
 export default GeoPushpinChartConfigurationExample;

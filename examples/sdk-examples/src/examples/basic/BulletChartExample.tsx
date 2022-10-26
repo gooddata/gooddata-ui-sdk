@@ -1,5 +1,5 @@
 // (C) 2007-2022 GoodData Corporation
-import React, { Component } from "react";
+import React from "react";
 import { BulletChart } from "@gooddata/sdk-ui-charts";
 import { modifyMeasure } from "@gooddata/sdk-model";
 
@@ -9,19 +9,17 @@ const FranchiseFeesAdRoyalty = modifyMeasure(Md.$FranchiseFeesAdRoyalty, (m) => 
 const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) => m.format("#,##0").title("Franchise Fees"));
 const FranchiseFeesOngoingRoyalty = modifyMeasure(Md.$FranchiseFeesOngoingRoyalty, (m) => m.format("#,##0"));
 
-export class BulletChartExample extends Component {
-    public render() {
-        return (
-            <div style={{ height: 300 }} className="s-bullet-chart">
-                <BulletChart
-                    primaryMeasure={FranchiseFeesAdRoyalty}
-                    targetMeasure={FranchiseFees}
-                    comparativeMeasure={FranchiseFeesOngoingRoyalty}
-                    viewBy={Md.LocationResort}
-                />
-            </div>
-        );
-    }
-}
+export const BulletChartExample: React.FC = () => {
+    return (
+        <div style={{ height: 300 }} className="s-bullet-chart">
+            <BulletChart
+                primaryMeasure={FranchiseFeesAdRoyalty}
+                targetMeasure={FranchiseFees}
+                comparativeMeasure={FranchiseFeesOngoingRoyalty}
+                viewBy={Md.LocationResort}
+            />
+        </div>
+    );
+};
 
 export default BulletChartExample;

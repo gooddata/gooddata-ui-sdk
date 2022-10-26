@@ -1,5 +1,5 @@
 // (C) 2020-2022 GoodData Corporation
-import React from "react";
+import React, { useState } from "react";
 import "@gooddata/sdk-ui-geo/styles/css/main.css";
 
 import { MAPBOX_TOKEN } from "../../constants/fixtures";
@@ -12,49 +12,41 @@ const drillableItems = [
     HeaderPredicates.localIdentifierMatch(colorMeasure),
 ];
 
-type State = {
-    drillEvent: IDrillEvent | null;
-};
+export const GeoPushpinChartDrillExample: React.FC = () => {
+    const [drillEvent, setDrillEvent] = useState<IDrillEvent | null>(null);
 
-export class GeoPushpinChartDrillExample extends React.Component<unknown, State> {
-    state: State = {
-        drillEvent: null,
-    };
+    const onDrill = (drillEvent: IDrillEvent) => setDrillEvent(drillEvent);
 
-    public render() {
-        return (
-            <div className="s-geo-pushpin-chart-on-drill">
-                <div style={{ height: 500, position: "relative" }} className="s-geo-pushpin-chart">
-                    <GeoPushpinChart
-                        location={locationAttribute}
-                        size={sizeMeasure}
-                        color={colorMeasure}
-                        segmentBy={segmentByAttribute}
-                        config={{
-                            mapboxToken: MAPBOX_TOKEN,
-                        }}
-                        drillableItems={drillableItems}
-                        onDrill={this.onDrill}
-                    />
-                </div>
-                {this.renderDrillEvent()}
-            </div>
-        );
-    }
-
-    private onDrill = (drillEvent: any) => this.setState({ drillEvent });
-
-    private renderDrillEvent = () => {
-        if (this.state.drillEvent) {
+    const renderDrillEvent = () => {
+        if (drillEvent) {
             return (
                 <pre style={{ height: 400, overflow: "scroll" }}>
-                    {JSON.stringify(this.state.drillEvent.drillContext, null, 4)}
+                    {JSON.stringify(drillEvent.drillContext, null, 4)}
                 </pre>
             );
         }
 
         return null;
     };
-}
+
+    return (
+        <div className="s-geo-pushpin-chart-on-drill">
+            <div style={{ height: 500, position: "relative" }} className="s-geo-pushpin-chart">
+                <GeoPushpinChart
+                    location={locationAttribute}
+                    size={sizeMeasure}
+                    color={colorMeasure}
+                    segmentBy={segmentByAttribute}
+                    config={{
+                        mapboxToken: MAPBOX_TOKEN,
+                    }}
+                    drillableItems={drillableItems}
+                    onDrill={onDrill}
+                />
+            </div>
+            {renderDrillEvent()}
+        </div>
+    );
+};
 
 export default GeoPushpinChartDrillExample;

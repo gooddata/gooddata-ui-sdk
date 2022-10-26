@@ -31,41 +31,39 @@ const RawExecuteExample: React.FC = () => {
         .forItems([Md.LocationState, Md.LocationName.Default]);
 
     return (
-        <div>
-            <RawExecute
-                execution={execution}
-                ErrorComponent={CustomErrorComponent}
-                LoadingComponent={LoadingComponent}
-            >
-                {({ result }) => {
-                    const [[locationStateHeaders, locationNameHeaders]] = result!.dataView.headerItems;
-                    const locationStates = locationStateHeaders.map(getAttributeHeaderItemName);
-                    const locations = locationNameHeaders.map(getAttributeHeaderItemName);
-                    const locationsByState = groupBy(
-                        locations,
-                        withIndex((index: number) => locationStates[index]),
-                    );
-                    const locationStateLocationsPairs = toPairs(locationsByState);
+        <RawExecute
+            execution={execution}
+            ErrorComponent={CustomErrorComponent}
+            LoadingComponent={LoadingComponent}
+        >
+            {({ result }) => {
+                const [[locationStateHeaders, locationNameHeaders]] = result!.dataView.headerItems;
+                const locationStates = locationStateHeaders.map(getAttributeHeaderItemName);
+                const locations = locationNameHeaders.map(getAttributeHeaderItemName);
+                const locationsByState = groupBy(
+                    locations,
+                    withIndex((index: number) => locationStates[index]),
+                );
+                const locationStateLocationsPairs = toPairs(locationsByState);
 
-                    return (
-                        <div>
-                            <ul className="attribute-values s-execute-attribute-values">
-                                {locationStateLocationsPairs.map(([locationState, _locations]) => (
-                                    <li key={locationState}>
-                                        <strong>{locationState}</strong>
-                                        <ul>
-                                            {_locations.map((location) => (
-                                                <li key={location}>{location}</li>
-                                            ))}
-                                        </ul>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    );
-                }}
-            </RawExecute>
-        </div>
+                return (
+                    <div>
+                        <ul className="attribute-values s-execute-attribute-values">
+                            {locationStateLocationsPairs.map(([locationState, _locations]) => (
+                                <li key={locationState}>
+                                    <strong>{locationState}</strong>
+                                    <ul>
+                                        {_locations.map((location) => (
+                                            <li key={location}>{location}</li>
+                                        ))}
+                                    </ul>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                );
+            }}
+        </RawExecute>
     );
 };
 

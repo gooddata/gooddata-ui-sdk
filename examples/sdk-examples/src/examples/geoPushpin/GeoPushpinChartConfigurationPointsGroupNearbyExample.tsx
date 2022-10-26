@@ -1,83 +1,63 @@
 // (C) 2020-2022 GoodData Corporation
-import React, { Component } from "react";
+import React, { useState } from "react";
 
 import "@gooddata/sdk-ui-geo/styles/css/main.css";
 
 import { MAPBOX_TOKEN } from "../../constants/fixtures";
-import { GeoPushpinChart } from "@gooddata/sdk-ui-geo";
+import { CenterPositionChangedCallback, GeoPushpinChart, ZoomChangedCallback } from "@gooddata/sdk-ui-geo";
 import { locationAttribute } from "../../md/geoModel";
+import { OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
 
-type State = {
-    groupNearbyPoints: boolean;
-};
+export const GeoPushpinChartConfigurationPointsGroupNearbyExample: React.FC = () => {
+    const [groupNearbyPoints, setGroupNearbyPoints] = useState<boolean>(false);
 
-export class GeoPushpinChartConfigurationPointsGroupNearbyExample extends Component<unknown, State> {
-    state: State = {
-        groupNearbyPoints: false,
+    const geoConfig = {
+        mapboxToken: MAPBOX_TOKEN,
+        points: {
+            groupNearbyPoints,
+        },
     };
 
-    public render() {
-        const { groupNearbyPoints } = this.state;
-        const geoConfig = {
-            mapboxToken: MAPBOX_TOKEN,
-            points: {
-                groupNearbyPoints,
-            },
-        };
+    const toggleGroupNearbyPoints = () => {
+        setGroupNearbyPoints((prevState) => !prevState);
+    };
 
-        return (
-            <div className="s-geo-chart">
-                <button className="s-change-group-nearby-points" onClick={this.toggleGroupNearbyPoints}>
-                    Toggle Group nearby points
-                </button>
-                <div
-                    style={{ height: "500px", position: "relative" }}
-                    className="s-geo-pushpin-chart-configuration-points-group-nearby"
-                >
-                    <GeoPushpinChart
-                        location={locationAttribute}
-                        config={geoConfig}
-                        onZoomChanged={this.onZoomChanged}
-                        onCenterPositionChanged={this.onCenterPositionChanged}
-                        onLoadingChanged={this.onLoadingChanged}
-                        onError={this.onError}
-                    />
-                </div>
+    const onLoadingChanged: OnLoadingChanged = () => {
+        // handle the callback here
+    };
+
+    const onError: OnError = () => {
+        // handle the callback here
+    };
+
+    const onZoomChanged: ZoomChangedCallback = () => {
+        // handle the callback here
+    };
+
+    const onCenterPositionChanged: CenterPositionChangedCallback = () => {
+        // handle the callback here
+    };
+
+    return (
+        <div className="s-geo-chart">
+            <button className="s-change-group-nearby-points" onClick={toggleGroupNearbyPoints}>
+                Toggle Group nearby points
+            </button>
+            <div
+                style={{ height: "500px", position: "relative" }}
+                className="s-geo-pushpin-chart-configuration-points-group-nearby"
+            >
+                <GeoPushpinChart
+                    location={locationAttribute}
+                    config={geoConfig}
+                    onZoomChanged={onZoomChanged}
+                    onCenterPositionChanged={onCenterPositionChanged}
+                    onLoadingChanged={onLoadingChanged}
+                    onError={onError}
+                />
             </div>
-        );
-    }
-
-    private toggleGroupNearbyPoints = () => {
-        this.setState((prevState) => ({
-            groupNearbyPoints: !prevState.groupNearbyPoints,
-        }));
-    };
-
-    private onLoadingChanged(...params: any[]) {
-        // eslint-disable-next-line no-console
-        return console.log(
-            "GeoPushpinChartConfigurationPointsGroupNearbyExample onLoadingChanged",
-            ...params,
-        );
-    }
-
-    private onError(...params: any[]) {
-        // eslint-disable-next-line no-console
-        return console.log("GeoPushpinChartConfigurationPointsGroupNearbyExample onError", ...params);
-    }
-
-    private onZoomChanged(...params: any[]) {
-        // eslint-disable-next-line no-console
-        return console.log("GeoPushpinChartConfigurationPointsGroupNearbyExample onZoomChanged", ...params);
-    }
-
-    private onCenterPositionChanged(...params: any[]) {
-        // eslint-disable-next-line no-console
-        return console.log(
-            "GeoPushpinChartConfigurationPointsGroupNearbyExample onCenterPositionChanged",
-            ...params,
-        );
-    }
-}
+        </div>
+    );
+};
 
 export default GeoPushpinChartConfigurationPointsGroupNearbyExample;

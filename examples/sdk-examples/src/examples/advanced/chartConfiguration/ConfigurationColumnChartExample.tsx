@@ -1,5 +1,5 @@
 // (C) 2007-2022 GoodData Corporation
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { InsightView } from "@gooddata/sdk-ui-ext";
 import * as Md from "../../../md/full";
 import { CUSTOM_COLOR_PALETTE } from "../../../constants/colors";
@@ -13,89 +13,92 @@ interface IConfigurationColumnChartExampleState {
 
 const style = { height: 300 };
 
-export class ConfigurationColumnChartExample extends Component<
-    unknown,
-    IConfigurationColumnChartExampleState
-> {
-    state: IConfigurationColumnChartExampleState = {
-        config: {},
-        customPaletteUsed: false,
-        customLegendUsed: true,
-        customSeparatorUsed: true,
-    };
-
-    public onPaletteChange = (): void => {
-        const { config: currentConfig, customPaletteUsed } = this.state;
-        const colorPaletteProp = {
-            colorPalette: customPaletteUsed ? undefined : CUSTOM_COLOR_PALETTE,
+const ColumnChartConfigurationExample: React.FC = () => {
+    const [state, setState] = useState<IConfigurationColumnChartExampleState>(() => {
+        return {
+            config: {},
+            customPaletteUsed: false,
+            customLegendUsed: true,
+            customSeparatorUsed: true,
         };
-        this.setState({
-            config: {
-                ...currentConfig,
-                ...colorPaletteProp,
-            },
-            customPaletteUsed: !customPaletteUsed,
+    });
+
+    const onPaletteChange = (): void => {
+        setState((prevState) => {
+            const { config: currentConfig, customPaletteUsed } = prevState;
+            const colorPaletteProp = {
+                colorPalette: customPaletteUsed ? undefined : CUSTOM_COLOR_PALETTE,
+            };
+
+            return {
+                ...prevState,
+                config: {
+                    ...currentConfig,
+                    ...colorPaletteProp,
+                },
+                customPaletteUsed: !customPaletteUsed,
+            };
         });
     };
 
-    public onLegendChange = (): void => {
-        const { config: currentConfig, customLegendUsed } = this.state;
-        const legendProp = {
-            legend: {
-                enabled: customLegendUsed,
-                position: "right",
-            },
-        };
-        this.setState({
-            config: {
-                ...currentConfig,
-                ...legendProp,
-            },
-            customLegendUsed: !customLegendUsed,
+    const onLegendChange = (): void => {
+        setState((prevState) => {
+            const { config: currentConfig, customLegendUsed } = prevState;
+            const legendProp = {
+                legend: {
+                    enabled: customLegendUsed,
+                    position: "right",
+                },
+            };
+
+            return {
+                ...prevState,
+                config: {
+                    ...currentConfig,
+                    ...legendProp,
+                },
+                customLegendUsed: !customLegendUsed,
+            };
         });
     };
 
-    public onSeparatorChange = (): void => {
-        const { config: currentConfig, customSeparatorUsed } = this.state;
-        const separatorProp = {
-            separators: customSeparatorUsed
-                ? { thousand: ".", decimal: "," }
-                : { thousand: ",", decimal: "." },
-        };
-        this.setState({
-            config: {
-                ...currentConfig,
-                ...separatorProp,
-            },
-            customSeparatorUsed: !customSeparatorUsed,
+    const onSeparatorChange = (): void => {
+        setState((prevState) => {
+            const { config: currentConfig, customSeparatorUsed } = prevState;
+            const separatorProp = {
+                separators: customSeparatorUsed
+                    ? { thousand: ".", decimal: "," }
+                    : { thousand: ",", decimal: "." },
+            };
+
+            return {
+                ...prevState,
+                config: {
+                    ...currentConfig,
+                    ...separatorProp,
+                },
+                customSeparatorUsed: !customSeparatorUsed,
+            };
         });
     };
 
-    public render() {
-        const { config } = this.state;
+    return (
+        <div className="s-insightView-column">
+            <button className="s-change-palette" onClick={onPaletteChange}>
+                Change palette
+            </button>
+            <button className="s-change-legend" onClick={onLegendChange}>
+                Change legend
+            </button>
+            <button className="s-change-separator" onClick={onSeparatorChange}>
+                Change separator
+            </button>
 
-        return (
-            <div>
-                <div className="s-insightView-column">
-                    <button className="s-change-palette" onClick={this.onPaletteChange}>
-                        Change palette
-                    </button>
-
-                    <button className="s-change-legend" onClick={this.onLegendChange}>
-                        Change legend
-                    </button>
-
-                    <button className="s-change-separator" onClick={this.onSeparatorChange}>
-                        Change separator
-                    </button>
-
-                    <div style={style}>
-                        <InsightView insight={Md.Insights.ColumnsChart} config={config} />
-                    </div>
-                </div>
+            <div style={style}>
+                <InsightView insight={Md.Insights.ColumnsChart} config={state.config} />
             </div>
-        );
-    }
-}
+        </div>
+    );
+};
 
-export default ConfigurationColumnChartExample;
+export default ColumnChartConfigurationExample;
