@@ -1449,6 +1449,11 @@
         "comment": "Will be used in sentence between two nouns. For instance 'Filter by AttributeX with data of MetricY'",
         "limit": 0
     },
+    "attributesDropdown.noConnectionMessage": {
+        "value": "<strong>{childTitle}</strong> cannot be filtered by <strong>{parentTitle}</strong>. There is no connection between the filter attributes in the data model.",
+        "comment": "Do not translate HTML markup enclosed in <> and placeholders enclosed in {}.",
+        "limit": 0
+    },
     "shareDialog.share.grantee.title": {
         "value": "Share with users and groups",
         "comment": "Title of dialog used for sharing of private dashboard with other users or user groups.",
