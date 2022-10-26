@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-@import "@gooddata/sdk-ui-kit/styles/scss/variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables";
 
 $item-border: 2px;
 $item-min-height: 178px;
@@ -15,10 +15,16 @@ $transition-length: 0.2s;
 $button-grey-background: var(--gd-palette-complementary-2, #ebeff4);
 
 // KPI-DASHBOARDS
-$gd-dashboards-content-backgroundColor: var(--gd-dashboards-content-backgroundColor, $gd-color-white);
+$gd-dashboards-content-backgroundColor: var(
+    --gd-dashboards-content-backgroundColor,
+    variables.$gd-color-white
+);
 
 // WIDGETS
-$gd-dashboards-content-widget-title-color: var(--gd-dashboards-content-widget-title-color, $gd-color-text);
+$gd-dashboards-content-widget-title-color: var(
+    --gd-dashboards-content-widget-title-color,
+    variables.$gd-color-text
+);
 $gd-dashboards-content-widget-title-textAlign: var(--gd-dashboards-content-widget-title-textAlign, center);
 $gd-dashboards-content-widget-borderRadius: var(--gd-dashboards-content-widget-borderRadius, 15px);
 $gd-dashboards-content-widget-borderColor: var(--gd-dashboards-content-widget-borderColor, transparent);
@@ -36,7 +42,7 @@ $gd-dashboards-content-kpiWidget-title-textAlign: var(
 );
 $gd-dashboards-content-kpiWidget-backgroundColor: var(
     --gd-dashboards-content-kpiWidget-backgroundColor,
-    $gd-color-white
+    variables.$gd-color-white
 );
 $gd-dashboards-content-kpiWidget-borderRadius: var(
     --gd-dashboards-content-kpiWidget-borderRadius,
@@ -54,7 +60,10 @@ $gd-dashboards-content-kpiWidget-dropShadow: var(
     --gd-dashboards-content-kpiWidget-dropShadow,
     $gd-dashboards-content-widget-dropShadow
 );
-$gd-kpi-primaryMeasureColor: var(--gd-dashboards-content-kpiWidget-kpi-primaryMeasureColor, $gd-color-link);
+$gd-kpi-primaryMeasureColor: var(
+    --gd-dashboards-content-kpiWidget-kpi-primaryMeasureColor,
+    variables.$gd-color-link
+);
 
 // INSIGHT TITLE
 $insight-title-lineHeight: 21px;

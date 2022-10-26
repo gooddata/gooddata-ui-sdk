@@ -1,61 +1,65 @@
 // (C) 2020 GoodData Corporation
-@import "@gooddata/sdk-ui-kit/styles/scss/variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables";
 
-@import "item-states-mixin";
+@use "item-states-mixin";
 
 // allow custom indentation
 // stylelint-disable indentation, at-rule-empty-line-before
-@include item-state(
+@include item-states-mixin.item-state(
     "has-set-alert",
-    $gd-palette-primary-base,
+    variables.$gd-palette-primary-base,
     transparent,
-    $gd-color-text-light,
-    $gd-palette-primary-base,
-    $gd-palette-primary-base,
-    $gd-palette-primary-dimmed
+    variables.$gd-color-text-light,
+    variables.$gd-palette-primary-base,
+    variables.$gd-palette-primary-base,
+    variables.$gd-palette-primary-dimmed
 );
 
-@include item-state(
+@include item-states-mixin.item-state(
     "is-alert-dialog",
     transparent,
     transparent,
-    $gd-color-text-light,
-    $gd-palette-primary-base,
-    $gd-color-text-light,
-    $gd-palette-primary-base
+    variables.$gd-color-text-light,
+    variables.$gd-palette-primary-base,
+    variables.$gd-color-text-light,
+    variables.$gd-palette-primary-base
 );
 
-@include item-state(
+@include item-states-mixin.item-state(
     "is-alert-highlighted",
-    $gd-color-text-light,
-    $gd-palette-primary-base,
-    $gd-color-text-light,
-    $gd-palette-primary-base,
-    $gd-color-text-light,
-    $gd-palette-primary-base
+    variables.$gd-color-text-light,
+    variables.$gd-palette-primary-base,
+    variables.$gd-color-text-light,
+    variables.$gd-palette-primary-base,
+    variables.$gd-color-text-light,
+    variables.$gd-palette-primary-base
 );
 
-@include item-state(
+@include item-states-mixin.item-state(
     "is-alert-triggered",
-    $gd-color-warning-label-dimmed,
-    $gd-palette-warning-base-t50,
-    $gd-color-warning-label,
-    $gd-palette-warning-base,
-    $gd-color-warning-label-dimmed,
-    $gd-palette-warning-base-t50
+    variables.$gd-color-warning-label-dimmed,
+    variables.$gd-palette-warning-base-t50,
+    variables.$gd-color-warning-label,
+    variables.$gd-palette-warning-base,
+    variables.$gd-color-warning-label-dimmed,
+    variables.$gd-palette-warning-base-t50
 );
 
-@include item-state(
+@include item-states-mixin.item-state(
     "is-alert-broken",
-    $gd-palette-error-base,
+    variables.$gd-palette-error-base,
     transparent,
-    $gd-color-white,
-    $gd-palette-error-base,
-    $gd-palette-error-base,
-    $gd-palette-error-dimmed
+    variables.$gd-color-white,
+    variables.$gd-palette-error-base,
+    variables.$gd-palette-error-base,
+    variables.$gd-palette-error-dimmed
 );
 
-@include item-state("is-alert-evaluating", $gd-color-disabled, $gd-color-white);
+@include item-states-mixin.item-state(
+    "is-alert-evaluating",
+    variables.$gd-color-disabled,
+    variables.$gd-color-white
+);
 
 // allow custom indentation
 // stylelint-enable indentation, at-rule-empty-line-before
