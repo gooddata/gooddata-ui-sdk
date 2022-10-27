@@ -5,8 +5,6 @@
 @use "mixins";
 @use "variables";
 
-@forward "Button/variables"; // forward variables as well so that importers of this can use them
-
 /* Basic button variants
    ========================================================================== */
 

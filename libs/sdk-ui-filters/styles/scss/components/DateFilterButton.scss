@@ -3,6 +3,7 @@
 @use "sass:map";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables";
 @use "@gooddata/sdk-ui-kit/styles/scss/button";
+@use "@gooddata/sdk-ui-kit/styles/scss/Button/variables" as button-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins";
 @use "@gooddata/sdk-ui-kit/styles/scss/typo-mixins";
 
@@ -69,7 +70,7 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
 
     &:hover {
         &::after {
-            border-color: button.$button-normal-hover-border-color;
+            border-color: button-variables.$button-normal-hover-border-color;
         }
 
         .edit-mode-on & {
@@ -84,9 +85,9 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
                 &::after {
                     // refactor
                     // stylelint-disable-next-line max-line-length
-                    box-shadow: 0 1px 3px 0 button.$button-shadow-lighter,
-                        0 2px 9px 0 button.$button-shadow-darker;
-                    border-color: button.$button-normal-active-border-color;
+                    box-shadow: 0 1px 3px 0 button-variables.$button-shadow-lighter,
+                        0 2px 9px 0 button-variables.$button-shadow-darker;
+                    border-color: button-variables.$button-normal-active-border-color;
                 }
             }
 
@@ -107,14 +108,17 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
         &::after {
             &,
             .edit-mode-on & {
-                box-shadow: inset 0 1px 0 0 button.$button-normal-active-shadow;
-                border-color: var(--gd-palette-complementary-5, button.$button-normal-hover-border-color);
+                box-shadow: inset 0 1px 0 0 button-variables.$button-normal-active-shadow;
+                border-color: var(
+                    --gd-palette-complementary-5,
+                    button-variables.$button-normal-hover-border-color
+                );
 
                 // refactor
                 // stylelint-disable-next-line max-line-length
                 @include mixins.gradient-linear(
-                    button.$button-normal-active-gradient-top,
-                    button.$button-normal-active-gradient-bottom
+                    button-variables.$button-normal-active-gradient-top,
+                    button-variables.$button-normal-active-gradient-bottom
                 );
             }
         }
