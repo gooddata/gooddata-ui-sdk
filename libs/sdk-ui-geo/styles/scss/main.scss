@@ -1,16 +1,11 @@
 // (C) 2007-2020 GoodData Corporation
 @use "mapbox-gl";
-@import "@gooddata/sdk-ui-kit/styles/scss/Bubble/_variables";
-@import "@gooddata/sdk-ui-kit/styles/scss/variables";
-@import "@gooddata/sdk-ui-kit/styles/scss/mixins";
-
-$border-color-circle-legend: var(--gd-palette-complementary-6, #acaeae);
-$gd-color-link: var(--gd-palette-complementary-7, #6d7680);
-
-$insight-small-only: "only screen and (max-width: 480px)";
-$footer-border: #e2e8ed;
-$footer-border-top: $gd-color-disabled;
-$font-stack-roman: gdcustomfont, "Avenir", "Helvetica Neue", arial, sans-serif;
+@use "sass:meta";
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "@gooddata/sdk-ui-vis-commons/styles/scss/legend";
+@use "tooltip";
+@use "charts";
 
 //
 //
@@ -151,7 +146,7 @@ $font-stack-roman: gdcustomfont, "Avenir", "Helvetica Neue", arial, sans-serif;
         font-size: 12px;
         line-height: 30px;
         white-space: nowrap;
-        color: $gd-color-link;
+        color: kit-variables.$gd-color-link;
         margin-right: 6px;
         text-overflow: ellipsis;
         max-width: 250px;
@@ -162,19 +157,19 @@ $font-stack-roman: gdcustomfont, "Avenir", "Helvetica Neue", arial, sans-serif;
         span:first-child {
             box-sizing: content-box;
             display: inline-block;
-            border: 1px solid $border-color-circle-legend;
+            border: 1px solid variables.$border-color-circle-legend;
             border-radius: 50%;
         }
 
         span {
             font-size: 11px;
             vertical-align: middle;
-            color: $gd-color-link;
+            color: kit-variables.$gd-color-link;
         }
 
         &::after {
-            color: $border-color-circle-legend;
-            font-family: $gd-font-primary;
+            color: variables.$border-color-circle-legend;
+            font-family: kit-variables.$gd-font-primary;
         }
 
         &:last-child {
@@ -245,11 +240,11 @@ $font-stack-roman: gdcustomfont, "Avenir", "Helvetica Neue", arial, sans-serif;
 /* Partially overwrite Mapbox blocker CSS */
 .mapboxgl-scroll-zoom-blocker,
 .mapboxgl-touch-pan-blocker {
-    font-family: $font-stack-roman;
+    font-family: variables.$font-stack-roman;
     // stylelint-disable-next-line declaration-no-important
     font-size: 16px !important;
-    color: $default-gd-color-text;
-    background: rgba($gd-outside-background-color, 0.9);
+    color: kit-variables.$default-gd-color-text;
+    background: rgba(kit-variables.$gd-outside-background-color, 0.9);
 }
 
 // this will fix the scale problem of mapbox canvas when exporting
@@ -259,7 +254,3 @@ $font-stack-roman: gdcustomfont, "Avenir", "Helvetica Neue", arial, sans-serif;
     // stylelint-disable-next-line declaration-no-important
     height: 100% !important;
 }
-
-@import "@gooddata/sdk-ui-vis-commons/styles/scss/legend";
-@import "tooltip";
-@import "charts";
