@@ -99,7 +99,12 @@ export const useInitializeDashboardStore = (
 
                 // When props are different and dashboardStore is already initialized or initializing,
                 // cancel all running sagas.
-                dashboardStore.rootSagaTask.cancel();
+                // In some cases (eg., re-initialization caused by a call from the event handler),
+                // this can lead to an error, but it should be safe to ignore it.
+                try {
+                    dashboardStore.rootSagaTask.cancel();
+                    // eslint-disable-next-line no-empty
+                } catch {}
             }
 
             const backgroundWorkers = [newRenderingWorker()];
