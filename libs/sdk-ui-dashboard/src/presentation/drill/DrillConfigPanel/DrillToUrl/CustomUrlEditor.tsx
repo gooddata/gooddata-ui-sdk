@@ -158,7 +158,7 @@ const getWarningTextForInvalidParameters = (parameters: string[]): React.ReactEl
 export interface CustomUrlEditorProps {
     urlDrillTarget?: UrlDrillTarget;
     attributeDisplayForms?: IAttributeDisplayFormMetadataObject[];
-    loadingAttributeDisplayForms: boolean;
+    loadingAttributeDisplayForms?: boolean;
     invalidAttributeDisplayFormIdentifiers: string[];
     documentationLink?: string;
     enableClientIdParameter: boolean;
@@ -175,7 +175,7 @@ const CustomUrlEditorDialog: React.FunctionComponent<CustomUrlEditorProps> = (pr
         onSelect,
         onClose,
         attributeDisplayForms,
-        loadingAttributeDisplayForms,
+        loadingAttributeDisplayForms = false,
         invalidAttributeDisplayFormIdentifiers,
         enableClientIdParameter,
         enableDataProductIdParameter,

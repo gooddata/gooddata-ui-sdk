@@ -8,6 +8,7 @@ import {
     isCatalogAttribute,
     ObjRef,
 } from "@gooddata/sdk-model";
+import invariant from "ts-invariant";
 import {
     isDrillToAttributeUrlConfig,
     isDrillToCustomUrlConfig,
@@ -27,13 +28,13 @@ import {
     selectBackendCapabilities,
     selectSettings,
 } from "../../../../../model";
-import invariant from "ts-invariant";
 import { ObjRefMap } from "../../../../../_staging/metadata/objRefMap";
+
+import { useInvalidAttributeDisplayFormIdentifiers } from "./useInvalidAttributeDisplayFormIdentifier";
 
 const getButtonValue = (
     urlDrillTarget: UrlDrillTarget | undefined,
     attributeDisplayForms: ObjRefMap<IAttributeDisplayFormMetadataObject>,
-    attributeDisplayFormsLoading: boolean,
     intl: IntlShape,
 ) => {
     if (isDrillToCustomUrlConfig(urlDrillTarget) && urlDrillTarget.customUrl) {
@@ -45,9 +46,6 @@ const getButtonValue = (
         urlDrillTarget.drillToAttributeDisplayForm &&
         urlDrillTarget.insightAttributeDisplayForm
     ) {
-        if (attributeDisplayFormsLoading) {
-            return intl.formatMessage({ id: "dropdown.loading" });
-        }
         const drillToAttributeDisplayForm = attributeDisplayForms.get(
             urlDrillTarget.drillToAttributeDisplayForm,
         );
@@ -79,13 +77,11 @@ export interface DrillUrlItemProps {
 export const DrillTargetUrlItem: React.FunctionComponent<DrillUrlItemProps> = (props) => {
     const { onSelect, urlDrillTarget } = props;
 
-    const invalidAttributeDisplayFormIdentifiers: string[] = []; // TODO
-
     const capabilities = useDashboardSelector(selectBackendCapabilities);
     const settings = useDashboardSelector(selectSettings);
 
-    const { targetAttributesForms, attributeUrlDisplayForms, targetAttributesFormsLoading } =
-        useAttributesDisplayForms();
+    const { targetAttributesForms, attributeUrlDisplayForms } = useAttributesDisplayForms();
+    const invalidAttributeDisplayFormIdentifiers = useInvalidAttributeDisplayFormIdentifiers(urlDrillTarget);
 
     const intl = useIntl();
 
@@ -110,7 +106,7 @@ export const DrillTargetUrlItem: React.FunctionComponent<DrillUrlItemProps> = (p
     const { client, dataProduct } = useClientWorkspaceIdentifiers();
     const displayForms = useDashboardSelector(selectAllCatalogDisplayFormsMap);
 
-    const buttonValue = getButtonValue(urlDrillTarget, displayForms, targetAttributesFormsLoading, intl);
+    const buttonValue = getButtonValue(urlDrillTarget, displayForms, intl);
 
     return (
         <>
@@ -136,7 +132,6 @@ export const DrillTargetUrlItem: React.FunctionComponent<DrillUrlItemProps> = (p
                                     );
                                     closeDropdown();
                                 }}
-                                loading={targetAttributesFormsLoading}
                                 selected={
                                     isDrillToAttributeUrlConfig(urlDrillTarget) &&
                                     urlDrillTarget.drillToAttributeDisplayForm
@@ -157,7 +152,6 @@ export const DrillTargetUrlItem: React.FunctionComponent<DrillUrlItemProps> = (p
             {showModal ? (
                 <CustomUrlEditor
                     urlDrillTarget={urlDrillTarget}
-                    loadingAttributeDisplayForms={targetAttributesFormsLoading}
                     attributeDisplayForms={targetAttributesForms}
                     invalidAttributeDisplayFormIdentifiers={invalidAttributeDisplayFormIdentifiers}
                     documentationLink={String(settings.drillIntoUrlDocumentationLink || "")}
@@ -191,11 +185,8 @@ function useAttributesDisplayForms() {
         item && isCatalogAttribute(item.attribute) ? item.attribute.displayForms : [],
     );
 
-    const targetAttributesFormsLoading = (attributes?.length ?? 0) > 0 && !targetAttributesForms;
-
     return {
         targetAttributesForms,
         attributeUrlDisplayForms,
-        targetAttributesFormsLoading,
     };
 }

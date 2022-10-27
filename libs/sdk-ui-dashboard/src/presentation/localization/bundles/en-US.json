@@ -1798,11 +1798,6 @@
         "translate": false,
         "limit": 0
     },
-    "dropdown.loading": {
-        "value": "Loading…",
-        "comment": "Use '…' as one character, not 3 dots ('...').",
-        "limit": 0
-    },
     "gs.date.date-dataset.recommended": {
         "value": "Recommended",
         "comment": "",
