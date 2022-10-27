@@ -3,18 +3,21 @@
 import React, { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import cx from "classnames";
-import { IScheduledMail } from "@gooddata/sdk-model";
+import { IScheduledMail, IWorkspaceUser } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
+
 import { getAttachmentType, getFormatsLabel, getRecipientsLabel } from "./utils";
+
 import { gdColorDisabled } from "../../constants/colors";
 
 interface IScheduledEmailProps {
     onDelete: (scheduledEmail: IScheduledMail) => void;
-    onEdit: (scheduledEmail: IScheduledMail) => void;
+    onEdit: (scheduledEmail: IScheduledMail, users: IWorkspaceUser[]) => void;
     scheduledEmail: IScheduledMail;
     currentUserEmail?: string;
     canManageScheduledMail: boolean;
+    users: IWorkspaceUser[];
 }
 
 const ICON_TOOLTIP_ALIGN_POINTS = [
@@ -30,7 +33,7 @@ export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
     const intl = useIntl();
     const theme = useTheme();
 
-    const { scheduledEmail, currentUserEmail, onDelete, onEdit, canManageScheduledMail } = props;
+    const { scheduledEmail, currentUserEmail, onDelete, onEdit, canManageScheduledMail, users } = props;
     const { subject, to, bcc, attachments } = scheduledEmail;
     const recipients = [...to, ...(bcc ?? [])];
     const recipientsLabel = getRecipientsLabel(intl, recipients, currentUserEmail);
@@ -40,9 +43,9 @@ export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
 
     const handleClick = useCallback(() => {
         if (canManageScheduledMail) {
-            onEdit(scheduledEmail);
+            onEdit(scheduledEmail, users);
         }
-    }, [scheduledEmail, canManageScheduledMail]);
+    }, [scheduledEmail, canManageScheduledMail, users]);
 
     return (
         <div className={cx("gd-scheduled-email", "s-scheduled-email", { editable: canManageScheduledMail })}>

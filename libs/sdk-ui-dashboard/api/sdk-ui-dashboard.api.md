@@ -120,6 +120,7 @@ import { IWidgetAlert } from '@gooddata/sdk-model';
 import { IWidgetAlertDefinition } from '@gooddata/sdk-model';
 import { IWidgetDefinition } from '@gooddata/sdk-model';
 import { IWorkspacePermissions } from '@gooddata/sdk-model';
+import { IWorkspaceUser } from '@gooddata/sdk-model';
 import { LocalIdRef } from '@gooddata/sdk-model';
 import { MemoizedFunction } from 'lodash';
 import { MessageDescriptor } from 'react-intl';
@@ -3800,6 +3801,7 @@ export interface IScheduledEmailDialogProps {
     onSaveSuccess?: () => void;
     onSubmit?: (scheduledEmailDefinition: IScheduledMailDefinition) => void;
     onSuccess?: () => void;
+    users: IWorkspaceUser[];
 }
 
 // @alpha (undocumented)
@@ -3809,7 +3811,7 @@ export interface IScheduledEmailManagementDialogProps {
     onClose?: () => void;
     onDeleteError?: (error: GoodDataSdkError) => void;
     onDeleteSuccess?: () => void;
-    onEdit?: (scheduledMail: IScheduledMail) => void;
+    onEdit?: (scheduledMail: IScheduledMail, users: IWorkspaceUser[]) => void;
     onLoadError?: (error: GoodDataSdkError) => void;
 }
 
@@ -6484,8 +6486,9 @@ export const useDashboardScheduledEmails: () => {
     isScheduleEmailingDialogOpen: boolean;
     isScheduleEmailingManagementDialogOpen: boolean;
     onScheduleEmailingOpen: (attachmentRef?: UriRef | IdentifierRef | undefined) => void;
-    onScheduleEmailingManagementEdit: (schedule: any) => void;
+    onScheduleEmailingManagementEdit: (schedule: any, users: any) => void;
     scheduledEmailToEdit: IScheduledMail | undefined;
+    users: IWorkspaceUser[];
     onScheduleEmailingCancel: () => void;
     onScheduleEmailingCreateError: () => void;
     onScheduleEmailingCreateSuccess: () => void;

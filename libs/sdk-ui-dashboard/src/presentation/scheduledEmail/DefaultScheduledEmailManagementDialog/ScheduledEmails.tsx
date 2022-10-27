@@ -1,7 +1,7 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
-import { IScheduledMail } from "@gooddata/sdk-model";
+import { IScheduledMail, IWorkspaceUser } from "@gooddata/sdk-model";
 import { LoadingSpinner } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
@@ -9,12 +9,13 @@ import { ScheduledEmail } from "./ScheduledEmail";
 
 interface IScheduledEmailsProps {
     onDelete: (scheduledEmail: IScheduledMail) => void;
-    onEdit: (scheduledEmail: IScheduledMail) => void;
+    onEdit: (scheduledEmail: IScheduledMail, users: IWorkspaceUser[]) => void;
     isLoading: boolean;
     scheduledEmails: IScheduledMail[];
     currentUserEmail?: string;
     noSchedulesMessageId: string;
     canManageScheduledMail: boolean;
+    users: IWorkspaceUser[];
 }
 
 export const ScheduledEmails: React.FC<IScheduledEmailsProps> = (props) => {
@@ -26,6 +27,7 @@ export const ScheduledEmails: React.FC<IScheduledEmailsProps> = (props) => {
         onEdit,
         noSchedulesMessageId,
         canManageScheduledMail,
+        users,
     } = props;
     const theme = useTheme();
 
@@ -59,6 +61,7 @@ export const ScheduledEmails: React.FC<IScheduledEmailsProps> = (props) => {
                     currentUserEmail={currentUserEmail}
                     onDelete={onDelete}
                     onEdit={onEdit}
+                    users={users}
                     canManageScheduledMail={canManageScheduledMail}
                 />
             ))}

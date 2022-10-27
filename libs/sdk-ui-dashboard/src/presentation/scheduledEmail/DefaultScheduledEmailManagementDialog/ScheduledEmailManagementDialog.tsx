@@ -3,12 +3,14 @@
 import React, { useCallback, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Button, Dialog, Typography, Tabs, ITab } from "@gooddata/sdk-ui-kit";
-import { IScheduledEmailManagementDialogProps } from "../types";
+import { areObjRefsEqual, IScheduledMail, IWorkspaceUser } from "@gooddata/sdk-model";
+
 import { ScheduledEmails } from "./ScheduledEmails";
-import { useScheduledEmailManagement } from "./useScheduledEmailManagement";
+import { IScheduledEmailManagement, useScheduledEmailManagement } from "./useScheduledEmailManagement";
 import { DeleteScheduleConfirmDialog } from "./DeleteScheduleConfirmDialog";
+
+import { IScheduledEmailManagementDialogProps } from "../types";
 import { selectCurrentUser, useDashboardSelector, selectCanManageScheduledMail } from "../../../model";
-import { areObjRefsEqual, IScheduledMail } from "@gooddata/sdk-model";
 import { messages } from "../../../locales";
 
 /**
@@ -22,16 +24,21 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
     const [scheduledEmails, setScheduledEmails] = useState<IScheduledMail[]>([]);
     const [selectedTabId, setSelectedTabId] = useState(messages.scheduleManagementTabUser.id);
     const [isFirstLoaded, setIsFirstLoaded] = useState(true);
+    const [users, setUsers] = useState<IWorkspaceUser[]>([]);
     const canManageScheduledMail = useDashboardSelector(selectCanManageScheduledMail);
     const currentUser = useDashboardSelector(selectCurrentUser);
     const intl = useIntl();
 
-    const onLoadSuccess = useCallback((emails: IScheduledMail[]) => {
-        const emailsByUser = emails.filter((email) => areObjRefsEqual(currentUser.ref, email.createdBy?.ref));
+    const onLoadSuccess = useCallback((emailManagement: IScheduledEmailManagement) => {
+        const { scheduledEmails, users } = emailManagement;
+        const emailsByUser = scheduledEmails.filter((scheduledEmail) =>
+            areObjRefsEqual(currentUser.ref, scheduledEmail.createdBy?.ref),
+        );
 
         setIsLoading(false);
-        setScheduledEmails(emails);
-        setScheduledEmailsByUser(canManageScheduledMail ? emailsByUser : emails);
+        setScheduledEmails(scheduledEmails);
+        setScheduledEmailsByUser(canManageScheduledMail ? emailsByUser : scheduledEmails);
+        setUsers(users);
 
         if (isFirstLoaded) {
             if (emailsByUser.length === 0 && canManageScheduledMail) {
@@ -45,8 +52,8 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
         setScheduledEmailToDelete(scheduledEmail);
     }, []);
 
-    const handleScheduleEdit = useCallback((scheduledEmail: IScheduledMail) => {
-        onEdit?.(scheduledEmail);
+    const handleScheduleEdit = useCallback((scheduledEmail: IScheduledMail, users: IWorkspaceUser[]) => {
+        onEdit?.(scheduledEmail, users);
     }, []);
 
     const handleScheduleDeleteSuccess = useCallback(() => {
@@ -103,6 +110,7 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
                         currentUserEmail={currentUser?.email}
                         noSchedulesMessageId={noSchedulesMessageId}
                         canManageScheduledMail={canManageScheduledMail}
+                        users={users}
                     />
                 </div>
                 <div className="gd-content-divider"></div>

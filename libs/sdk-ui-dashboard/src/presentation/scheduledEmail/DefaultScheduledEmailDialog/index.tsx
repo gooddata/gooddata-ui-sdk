@@ -1,10 +1,11 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
 import invariant from "ts-invariant";
-import { IScheduledEmailDialogProps } from "../types";
 
 import { ScheduledMailDialogRenderer } from "./ScheduledMailDialogRenderer/ScheduledMailDialogRenderer";
 import { useScheduledEmail } from "./useScheduledEmail";
+
+import { IScheduledEmailDialogProps } from "../types";
 
 /**
  * @alpha
@@ -20,6 +21,7 @@ export const DefaultScheduledEmailDialog = (props: IScheduledEmailDialogProps): 
         onCancel,
         isVisible,
         editSchedule,
+        users,
     } = props;
 
     const {
@@ -78,6 +80,7 @@ export const DefaultScheduledEmailDialog = (props: IScheduledEmailDialogProps): 
             onCancel={onCancel}
             onError={onError}
             defaultAttachment={defaultAttachment}
+            users={users}
         />
     );
 };

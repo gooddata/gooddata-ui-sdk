@@ -5,7 +5,6 @@ import differenceBy from "lodash/differenceBy";
 import isEqual from "lodash/isEqual";
 import omit from "lodash/omit";
 import { injectIntl, WrappedComponentProps, FormattedMessage } from "react-intl";
-import invariant from "ts-invariant";
 import parse from "date-fns/parse";
 import { normalizeTime, ConfirmDialogBase, Overlay, Alignment, Message } from "@gooddata/sdk-ui-kit";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -20,14 +19,9 @@ import {
     isDashboardAttachment,
     isWidgetAttachment,
     ScheduledMailAttachment,
+    IWorkspaceUser,
 } from "@gooddata/sdk-model";
-import {
-    CancelError,
-    GoodDataSdkError,
-    ICancelablePromise,
-    makeCancelable,
-    withContexts,
-} from "@gooddata/sdk-ui";
+import { GoodDataSdkError, withContexts } from "@gooddata/sdk-ui";
 import memoize from "lodash/memoize";
 
 import {
@@ -167,6 +161,11 @@ export interface IScheduledMailDialogRendererOwnProps {
      * Callback to be called, when error occurs.
      */
     onError?: (error: GoodDataSdkError) => void;
+
+    /**
+     * Workspace users.
+     */
+    users: IWorkspaceUser[];
 }
 
 export type IScheduledMailDialogRendererProps = IScheduledMailDialogRendererOwnProps &
@@ -202,7 +201,6 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
         dateFormat: "MM/dd/yyyy",
     };
 
-    private getUsersCancellable: ICancelablePromise<IUser[]> | undefined;
     // when editing, save initial state to compare if anything changed
     private originalEditState: IScheduledMailDialogRendererState | undefined;
 
@@ -210,12 +208,8 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
         super(props);
 
         this.state = this.props.editSchedule
-            ? this.getEditState(this.props.editSchedule)
+            ? this.getEditState(this.props.editSchedule, this.props.users)
             : this.getDefaultState();
-    }
-
-    public componentWillUnmount() {
-        this.getUsersCancellable?.cancel();
     }
 
     private getDefaultState(): IScheduledMailDialogRendererState {
@@ -253,24 +247,39 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
         };
     }
 
-    private getEditState(schedule: IScheduledMail): IScheduledMailDialogRendererState {
+    private getEditState(
+        schedule: IScheduledMail,
+        users: IWorkspaceUser[],
+    ): IScheduledMailDialogRendererState {
         const defaultState = this.getDefaultState();
 
+        const selectedRecipients = schedule.to.concat(schedule.bcc || []).map((email) => {
+            /**
+             * There can be the case that users might have different email and login address
+             * Need to make the comparison from user login, since email is not an unique value
+             */
+            if (email === schedule.createdBy?.login) {
+                return userToRecipient(schedule.createdBy);
+            } else {
+                return { email };
+            }
+        });
         /**
          *  At this point, all recipients except the author are stored as external (IScheduleEmailExternalRecipient).
          *  They will be compared with workspace users and potentially switched to workspace recipients (IScheduleEmailExistingRecipient)
-         *  silently by the method identifyWorkspaceRecipients.
+         *  and obtain correct values to be displayed on UI
          */
-        const selectedRecipients = schedule.to.concat(schedule.bcc || []).map((email) => {
-            // user that created the schedule can have different login and email address
-            if (email === schedule.createdBy?.email || email === schedule.createdBy?.login) {
-                return userToRecipient(schedule.createdBy);
+        const processedRecipients = selectedRecipients.map((recipient) => {
+            if (isScheduleEmailExternalRecipient(recipient)) {
+                // need to make the comparison from user login, since email is not an unique value
+                const user = users.find((user) => user.login === recipient.email);
+                if (user) {
+                    return { user };
+                }
             }
-            return {
-                email,
-            };
+
+            return recipient;
         });
-        this.identifyWorkspaceRecipients();
 
         const dashboardAttachments = schedule.attachments.filter(isDashboardAttachment);
         const widgetAttachments = schedule.attachments.filter(isWidgetAttachment);
@@ -294,11 +303,11 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
                       includeFilters: widgetAttachments[0].exportOptions?.includeFilters || false,
                   };
 
-        return {
+        const newState = {
             ...defaultState,
             emailSubject: schedule.subject,
             emailBody: schedule.body,
-            selectedRecipients,
+            selectedRecipients: processedRecipients,
             userTimezone: getTimezoneByIdentifier(schedule.when.timeZone) || TIMEZONE_DEFAULT,
             startDate: parse(schedule.when.startDate, PLATFORM_DATE_FORMAT, new Date()),
             isValidScheduleEmailData: true,
@@ -309,6 +318,9 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
                 configuration,
             },
         };
+        this.originalEditState = newState;
+
+        return newState;
     }
 
     private getDefaultAttachments() {
@@ -345,9 +357,7 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
         const isSubmitDisabled =
             !isValidScheduleEmailData ||
             (editSchedule &&
-                // in editing mode wait for email addresses to be processed by this.identifyWorkspaceRecipients() and check whether anything changed
-                (!this.getUsersCancellable?.getHasFulfilled() ||
-                    isEqual(omit(this.originalEditState, "alignment"), omit(this.state, "alignment"))));
+                isEqual(omit(this.originalEditState, "alignment"), omit(this.state, "alignment")));
 
         return (
             <Overlay
@@ -390,38 +400,6 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
                 </ConfirmDialogBase>
             </Overlay>
         );
-    }
-
-    private async identifyWorkspaceRecipients() {
-        const { backend, workspace } = this.props;
-        invariant(backend, "backend must be defined");
-        invariant(workspace, "workspace must be defined");
-        this.getUsersCancellable = makeCancelable(backend.workspace(workspace).users().queryAll());
-        this.getUsersCancellable.promise
-            .then((workspaceUsers: IUser[]) => {
-                // process recipients and convert the general-external type to workspace recipient type
-                const processedRecipients = this.state.selectedRecipients.map((recipient) => {
-                    if (isScheduleEmailExternalRecipient(recipient)) {
-                        const user = workspaceUsers.find((user) => user.email === recipient.email);
-                        if (user) {
-                            return { user };
-                        }
-                    }
-                    return recipient;
-                });
-                const newState = {
-                    ...this.state,
-                    selectedRecipients: processedRecipients,
-                };
-                this.originalEditState = newState;
-                this.setState(newState);
-            })
-            .catch((e) => {
-                // CancelError is expected from CancellablePromise and does not mean an actual error
-                if (!(e instanceof CancelError)) {
-                    throw e;
-                }
-            });
     }
 
     private getDashboardTitleMaxLength(displayDateString: string): number {

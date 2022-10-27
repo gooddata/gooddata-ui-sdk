@@ -2,7 +2,9 @@
 
 import { useCallback, useState } from "react";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
-import { IScheduledMail, ObjRef } from "@gooddata/sdk-model";
+import { IScheduledMail, IWorkspaceUser, ObjRef } from "@gooddata/sdk-model";
+
+import { useDashboardDispatch, useDashboardSelector } from "./DashboardStoreProvider";
 import {
     selectCanCreateScheduledMail,
     selectDashboardRef,
@@ -15,7 +17,7 @@ import {
     selectMenuButtonItemsVisibility,
     uiActions,
 } from "../store";
-import { useDashboardDispatch, useDashboardSelector } from "./DashboardStoreProvider";
+
 import { messages } from "../../locales";
 
 /**
@@ -50,6 +52,7 @@ export const useDashboardScheduledEmails = () => {
     const resetScheduledEmailDefaultAttachment = () =>
         enableInsightExportScheduling && dispatch(uiActions.resetScheduleEmailDialogDefaultAttachment());
     const [scheduledEmailToEdit, setScheduledEmailToEdit] = useState<IScheduledMail>();
+    const [users, setUsers] = useState<IWorkspaceUser[]>([]);
 
     const isScheduledEmailingVisible =
         isInViewMode &&
@@ -121,9 +124,10 @@ export const useDashboardScheduledEmails = () => {
         openScheduleEmailingDialog();
     }, []);
 
-    const onScheduleEmailingManagementEdit = useCallback((schedule) => {
+    const onScheduleEmailingManagementEdit = useCallback((schedule, users) => {
         closeScheduleEmailingManagementDialog();
         setScheduledEmailToEdit(schedule);
+        setUsers(users);
         openScheduleEmailingDialog();
     }, []);
 
@@ -150,6 +154,7 @@ export const useDashboardScheduledEmails = () => {
         onScheduleEmailingOpen,
         onScheduleEmailingManagementEdit,
         scheduledEmailToEdit,
+        users,
         onScheduleEmailingCancel,
         onScheduleEmailingCreateError,
         onScheduleEmailingCreateSuccess,
