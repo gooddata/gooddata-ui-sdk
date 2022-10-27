@@ -50,6 +50,7 @@ import SingleValuePlaceholders from "../examples/placeholders/SingleValuePlaceho
 import MultiValuePlaceholders from "../examples/placeholders/MultiValuePlaceholder";
 import ComposedPlaceholder from "../examples/placeholders/ComposedPlaceholder";
 import SimpleDashboardComponent from "../examples/dashboardComponent/SimpleDashboardComponent";
+import DrillToDashboard from "../examples/dashboardComponent/DrillToDashboard";
 import DashboardComponentWithLocalPlugin from "../examples/dashboardComponent/DashboardComponentWithLocalPlugin";
 import DashboardWithAccessor from "../examples/dashboardComponent/DashboardComponentWithAccessor";
 import DashboardWithUseDispatchDashboardCommand from "../examples/dashboardComponent/DashboardComponentWithUseDispatchDashboardCommand";
@@ -110,6 +111,11 @@ export const dashboardComponentUseCasesRoutes = [
         path: "/dashboard/accessor",
         title: "With store accessor",
         Component: DashboardWithAccessor,
+    },
+    {
+        path: "/dashboard/drill-to-dashboard",
+        title: "Drill to dashboard",
+        Component: DrillToDashboard,
     },
 ];
 
