@@ -1,38 +1,52 @@
 // (C) 2007-2018 GoodData Corporation
-@import "@gooddata/sdk-ui-kit/styles/scss/variables";
-@import "@gooddata/sdk-ui-kit/styles/scss/Button/_variables";
-@import "@gooddata/sdk-ui-kit/styles/scss/mixins";
+@use "sass:color";
+@use "sass:meta";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/Button/_variables" as button-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/mixins";
 
-$custom-foreground-color: var(--gd-table-valueColor, var(--gd-palette-complementary-8, $gd-color-text));
+$custom-foreground-color: var(
+    --gd-table-valueColor,
+    var(--gd-palette-complementary-8, kit-variables.$gd-color-text)
+);
 $custom-secondary-foreground-color: var(
     --gd-table-valueColor,
-    var(--gd-palette-complementary-8, $gd-color-text)
+    var(--gd-palette-complementary-8, kit-variables.$gd-color-text)
 );
 
-$default-background: $default-gd-color-white;
-$custom-background-color: $gd-table-background;
+$default-background: kit-variables.$default-gd-color-white;
+$custom-background-color: kit-variables.$gd-table-background;
 
 $cell-border: 1px dashed transparent;
 $cell-border-color: var(
     --gd-table-gridColor,
-    var(--gd-palette-complementary-4, transparentize($default-gd-color-disabled, 0.5))
+    var(--gd-palette-complementary-4, color.adjust(kit-variables.$default-gd-color-disabled, $alpha: -0.5))
 );
 $header-cell-resize-width: 20px;
 $table-menu-hover: var(
     --gd-palette-primary-base-dimmed-darken03,
-    darken(mix($gd-color-highlight, $default-gd-color-text-light, 10%), 3%)
+    color.adjust(
+        color.mix(kit-variables.$gd-color-highlight, kit-variables.$default-gd-color-text-light, 10%),
+        $lightness: -3%
+    )
 );
 
-$header-label-color: var(--gd-table-headerLabelColor, var(--gd-palette-complementary-7, $gd-color-text));
+$header-label-color: var(
+    --gd-table-headerLabelColor,
+    var(--gd-palette-complementary-7, kit-variables.$gd-color-text)
+);
 
 $header-hover-background-color: var(
     --gd-table-headerHoverBackgroundColor,
-    var(--gd-palette-complementary-1, $gd-palette-primary-dimmed)
+    var(--gd-palette-complementary-1, kit-variables.$gd-palette-primary-dimmed)
 );
 
 $total-background-color: var(--gd-table-totalBackgroundColor, var(--gd-palette-complementary-2, #e7ebef));
 
-$total-value-color: var(--gd-table-totalValueColor, var(--gd-palette-complementary-9, $gd-color-dark));
+$total-value-color: var(
+    --gd-table-totalValueColor,
+    var(--gd-palette-complementary-9, kit-variables.$gd-color-dark)
+);
 
 $subtotal-even-background-color: var(
     --gd-table-subtotalBackgroundColor,
@@ -43,16 +57,16 @@ $subtotal-odd-background-color: var(
     var(--gd-palette-complementary-1, #f7f8f9)
 );
 
-@import "@ag-grid-community/all-modules/dist/styles/ag-theme-balham/sass/ag-theme-balham-mixin";
+@use "@ag-grid-community/all-modules/dist/styles/ag-theme-balham/sass/ag-theme-balham-mixin" as ag-balham;
 
 .gd-table-component {
-    @import "@ag-grid-community/all-modules/dist/styles/ag-grid";
+    @include meta.load-css("@ag-grid-community/all-modules/dist/styles/ag-grid");
 
     // TODO really calculate disabled-foreground-color and chip-background-color, now here only because of foreground-color being a CSS variable
     // TODO really calculate modal-overlay-background-color, now here only because of background-color being a CSS variable
     // we must use the borders-critical: true with border-color: transparent so that the positioning of headers is the same as in ag-grid 22
     .ag-theme-balham {
-        @include ag-theme-balham(
+        @include ag-balham.ag-theme-balham(
             (
                 borders: false,
                 borders-critical: true,
@@ -61,7 +75,7 @@ $subtotal-odd-background-color: var(
                 disabled-foreground-color: null,
                 chip-background-color: null,
                 font-size: 12px,
-                font-family: $gd-font-primary,
+                font-family: kit-variables.$gd-font-primary,
                 background-color: $custom-background-color,
                 modal-overlay-background-color: $custom-background-color,
                 odd-row-background-color: transparent,
@@ -69,7 +83,10 @@ $subtotal-odd-background-color: var(
                 row-hover-color:
                     var(
                         --gd-table-hoverBackgroundColor,
-                        var(--gd-palette-complementary-1, transparentize($default-gd-color-label, 0.9))
+                        var(
+                            --gd-palette-complementary-1,
+                            color.adjust(kit-variables.$default-gd-color-label, $alpha: -0.9)
+                        )
                     ),
                 cell-horizontal-border: none,
                 header-background-color: $custom-background-color,
@@ -218,7 +235,7 @@ $subtotal-odd-background-color: var(
                 width: calc($header-cell-resize-width / 2);
                 margin-right: calc($header-cell-resize-width / 2);
                 margin-top: 8px;
-                border-right: 1px solid $gd-palette-primary-base;
+                border-right: 1px solid kit-variables.$gd-palette-primary-base;
                 text-indent: calc($header-cell-resize-width / 2);
                 height: 16px;
             }
@@ -459,18 +476,18 @@ $subtotal-odd-background-color: var(
                 // stylelint-disable-next-line max-nesting-depth
                 &,
                 &:hover {
-                    border-color: $button-normal-border-color;
-                    background-color: $button-normal-hover-bg;
+                    border-color: button-variables.$button-normal-border-color;
+                    background-color: button-variables.$button-normal-hover-bg;
                 }
 
                 // refactor?
                 // stylelint-disable-next-line max-nesting-depth
                 &:active {
-                    border-color: $button-normal-active-border-color;
+                    border-color: button-variables.$button-normal-active-border-color;
 
-                    @include gradient-linear(
-                        $button-normal-active-gradient-top,
-                        $button-normal-active-gradient-bottom
+                    @include mixins.gradient-linear(
+                        button-variables.$button-normal-active-gradient-top,
+                        button-variables.$button-normal-active-gradient-bottom
                     );
                 }
             }
@@ -491,7 +508,7 @@ $subtotal-odd-background-color: var(
             position: relative;
             top: 1px;
             display: inherit;
-            font-family: $gd-font-indigo;
+            font-family: kit-variables.$gd-font-indigo;
             font-size: 10px;
             vertical-align: bottom;
         }
@@ -546,10 +563,10 @@ $subtotal-odd-background-color: var(
 
 .gd-menuPosition-wrapper:hover {
     .gd-list-item.gd-menu-item.is-submenu {
-        background-color: $is-focused-background;
+        background-color: kit-variables.$is-focused-background;
     }
 
     .gd-list-item.gd-menu-item.is-submenu.is-selected {
-        background-color: $gd-palette-primary-dimmed;
+        background-color: kit-variables.$gd-palette-primary-dimmed;
     }
 }
