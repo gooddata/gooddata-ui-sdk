@@ -61,10 +61,16 @@ export const DrillTargets: React.FunctionComponent<IDrillTargetsProps> = (props)
         if (isDrillToCustomUrlConfig(urlDrillTarget)) {
             const drillConfigItem: IDrillToCustomUrl = {
                 transition: "new-window",
-                origin: {
-                    type: "drillFromMeasure",
-                    measure: { localIdentifier: item.localIdentifier },
-                },
+                origin:
+                    item.type === "attribute"
+                        ? {
+                              type: "drillFromAttribute",
+                              attribute: { localIdentifier: item.localIdentifier },
+                          }
+                        : {
+                              type: "drillFromMeasure",
+                              measure: { localIdentifier: item.localIdentifier },
+                          },
                 type: "drillToCustomUrl",
                 target: {
                     url: urlDrillTarget.customUrl,

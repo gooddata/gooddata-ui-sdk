@@ -1,7 +1,13 @@
 // (C) 2020-2022 GoodData Corporation
-import React from "react";
+import React, { useCallback } from "react";
 import { FormattedMessage } from "react-intl";
-import { areObjRefsEqual, isDrillToAttributeUrl, ObjRef, objRefToString } from "@gooddata/sdk-model";
+import {
+    areObjRefsEqual,
+    isDrillToAttributeUrl,
+    ObjRef,
+    objRefToString,
+    IDrillToAttributeUrlTarget,
+} from "@gooddata/sdk-model";
 
 import { AttributeUrlSectionItem } from "./AttributeUrlSectionItem";
 import { DropdownSectionHeader } from "./DropdownSectionHeader";
@@ -11,26 +17,22 @@ interface IAttributeUrlSectionOwnProps {
     attributeDisplayForms: IImplicitDrillWithPredicates[];
     onSelect: (insightAttributeDisplayForm: ObjRef, drillToAttributeDisplayForm: ObjRef) => void;
     closeDropdown: (e: React.SyntheticEvent) => void;
-    loading: boolean;
     selected: ObjRef | false;
+    loading?: boolean;
 }
 
 type AttributeUrlSectionProps = IAttributeUrlSectionOwnProps;
 
 export const AttributeUrlSection: React.FC<AttributeUrlSectionProps> = (props) => {
-    const { attributeDisplayForms, loading, selected } = props;
+    const { attributeDisplayForms, loading = false, selected, closeDropdown, onSelect } = props;
 
-    // const onClickHandler = useCallback(
-    //     (
-    //         event: React.SyntheticEvent,
-    //         insightAttributeDisplayFormRef: ObjRef,
-    //         drillToAttributeDisplayFormRef: ObjRef,
-    //     ) => {
-    //         onSelect(insightAttributeDisplayFormRef, drillToAttributeDisplayFormRef);
-    //         closeDropdown(event);
-    //     },
-    //     [onSelect, closeDropdown],
-    // );
+    const onClickHandler = useCallback(
+        (event: React.SyntheticEvent, target: IDrillToAttributeUrlTarget) => {
+            onSelect(target.displayForm, target.hyperlinkDisplayForm);
+            closeDropdown(event);
+        },
+        [onSelect, closeDropdown],
+    );
 
     if (!loading && attributeDisplayForms.length === 0) {
         return null;
@@ -51,24 +53,16 @@ export const AttributeUrlSection: React.FC<AttributeUrlSectionProps> = (props) =
                         if (!isDrillToAttributeUrl(item.drillDefinition)) {
                             return null;
                         }
+                        const target = item.drillDefinition.target;
                         return (
                             <AttributeUrlSectionItem
-                                key={objRefToString(item.drillDefinition.target.displayForm)}
+                                key={objRefToString(target.displayForm)}
                                 item={item.drillDefinition}
                                 isSelected={areObjRefsEqual(
-                                    item.drillDefinition.target.hyperlinkDisplayForm,
+                                    target.hyperlinkDisplayForm,
                                     selected || undefined,
                                 )}
-                                onClickHandler={
-                                    () => {
-                                        /**/
-                                    }
-                                    // onClickHandler(
-                                    //     e,
-                                    //     item.ref,
-                                    //     item.ref, // TODO
-                                    // )
-                                }
+                                onClickHandler={(e) => onClickHandler(e, target)}
                             />
                         );
                     })}
