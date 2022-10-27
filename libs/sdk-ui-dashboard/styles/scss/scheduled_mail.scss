@@ -1,15 +1,16 @@
 // (C) 2019-2020 GoodData Corporation
-@import "@gooddata/sdk-ui-kit/styles/scss/Button/_variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/Button/_variables" as button-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
 $horizontal-space: 20px;
 $vertical-space: 10px;
 
 @mixin input-styles {
-    color: $button-normal-color;
+    color: button-variables.$button-normal-color;
     font-size: 12px;
 }
 
-@media #{$small-only} {
+@media #{kit-variables.$small-only} {
     .gd-schedule-email-dialog-overlay {
         // override the static position in case of dialog with long content, on mobile view
         // stylelint-disable-next-line declaration-no-important
@@ -26,7 +27,7 @@ $vertical-space: 10px;
     .hr {
         height: 0;
         margin: 12px 0 14px;
-        border-top: 1px solid $gd-border-color;
+        border-top: 1px solid kit-variables.$gd-border-color;
     }
 
     .gd-schedule-email-dialog-filters-message {
@@ -43,9 +44,9 @@ $vertical-space: 10px;
     line-height: 16px;
     white-space: normal;
     font-size: 12px;
-    color: $gd-color-link;
+    color: kit-variables.$gd-color-link;
 
-    @media #{$small-only} {
+    @media #{kit-variables.$small-only} {
         margin-left: 0;
     }
 }
@@ -53,7 +54,7 @@ $vertical-space: 10px;
 .gd-input-component {
     margin-bottom: $vertical-space;
 
-    @media #{$small-only} {
+    @media #{kit-variables.$small-only} {
         .gd-label {
             display: block;
             margin-bottom: 7px;
@@ -64,7 +65,7 @@ $vertical-space: 10px;
         }
     }
 
-    @media #{$medium-up} {
+    @media #{kit-variables.$medium-up} {
         display: flex;
         align-items: center;
 
@@ -80,7 +81,7 @@ $vertical-space: 10px;
 }
 
 .gd-textarea-component {
-    @media #{$medium-up} {
+    @media #{kit-variables.$medium-up} {
         align-items: flex-start;
     }
 
@@ -88,7 +89,7 @@ $vertical-space: 10px;
         resize: vertical;
         min-height: 30px;
 
-        @media #{$small-only} {
+        @media #{kit-variables.$small-only} {
             resize: none;
         }
     }
@@ -97,7 +98,7 @@ $vertical-space: 10px;
         position: absolute;
         top: 10px;
         right: 10px;
-        color: $gd-color-text;
+        color: kit-variables.$gd-color-text;
         font-size: 14px;
         font-family: gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif;
     }
@@ -110,7 +111,7 @@ $vertical-space: 10px;
 }
 
 .gd-attachment-component {
-    @media #{$medium-up} {
+    @media #{kit-variables.$medium-up} {
         align-items: flex-start;
     }
 
@@ -118,7 +119,7 @@ $vertical-space: 10px;
         flex: 1;
         padding-left: 7px;
 
-        @media #{$medium-up} {
+        @media #{kit-variables.$medium-up} {
             margin-top: 3px;
             word-break: break-all;
         }
@@ -134,7 +135,7 @@ $vertical-space: 10px;
 }
 
 .gd-schedule-email-attachments {
-    @media #{$medium-up} {
+    @media #{kit-variables.$medium-up} {
         align-items: flex-start;
     }
 
@@ -154,7 +155,7 @@ $vertical-space: 10px;
         overflow: hidden;
         margin: -5px 0;
 
-        @media #{$small-only} {
+        @media #{kit-variables.$small-only} {
             max-width: none;
         }
 
@@ -178,8 +179,8 @@ $vertical-space: 10px;
             display: flex;
             align-items: center;
             height: 24px;
-            color: $gd-color-link;
-            background: $is-focused-background;
+            color: kit-variables.$gd-color-link;
+            background: kit-variables.$is-focused-background;
             border-radius: 3px 0 0 3px;
             text-transform: uppercase;
         }
@@ -190,8 +191,8 @@ $vertical-space: 10px;
             flex-wrap: nowrap;
             overflow: hidden;
             height: 24px;
-            color: $gd-color-text;
-            background: $button-normal-hover-bg;
+            color: kit-variables.$gd-color-text;
+            background: button-variables.$button-normal-hover-bg;
             border-radius: 0 3px 3px 0;
             padding-left: 7px;
             padding-right: 7px;
@@ -216,7 +217,7 @@ $vertical-space: 10px;
     align-items: flex-start;
     flex-direction: column;
 
-    @media #{$small-only} {
+    @media #{kit-variables.$small-only} {
         .gd-label {
             margin-bottom: 0;
         }
@@ -234,7 +235,7 @@ $vertical-space: 10px;
         .gd-datepicker {
             width: 119px;
 
-            @media #{$small-only} {
+            @media #{kit-variables.$small-only} {
                 width: calc(50% - 10px);
             }
 
@@ -256,12 +257,12 @@ $vertical-space: 10px;
         }
 
         .gd-schedule-email-dialog-datetime-timezone {
-            @media #{$small-only} {
+            @media #{kit-variables.$small-only} {
                 width: 100%;
                 margin-top: 15px;
             }
 
-            @media #{$medium-up} {
+            @media #{kit-variables.$medium-up} {
                 margin-left: $horizontal-space;
             }
         }
@@ -269,7 +270,7 @@ $vertical-space: 10px;
 }
 
 .gd-schedule-email-dialog-repeat {
-    @media #{$small-only} {
+    @media #{kit-variables.$small-only} {
         .gd-schedule-email-dialog-repeat-type {
             width: 100%;
             margin-bottom: $vertical-space;
@@ -284,9 +285,9 @@ $vertical-space: 10px;
         display: flex;
         align-items: center;
 
-        @media #{$small-only} {
+        @media #{kit-variables.$small-only} {
             flex-wrap: wrap;
-            border-left: 2px dotted $gd-border-color;
+            border-left: 2px dotted kit-variables.$gd-border-color;
         }
 
         .gd-schedule-email-dialog-repeat-every {
@@ -310,7 +311,7 @@ $vertical-space: 10px;
             margin-left: $horizontal-space;
         }
 
-        @media #{$small-only} {
+        @media #{kit-variables.$small-only} {
             .break-the-row {
                 height: 0;
                 flex-basis: 100%;
@@ -320,7 +321,7 @@ $vertical-space: 10px;
         .gd-schedule-email-dialog-repeat-execute-on {
             margin-left: $horizontal-space;
 
-            @media #{$small-only} {
+            @media #{kit-variables.$small-only} {
                 margin-top: $vertical-space;
             }
         }
@@ -333,7 +334,7 @@ $vertical-space: 10px;
     width: 460px;
     height: 460px;
 
-    @media #{$small-only} {
+    @media #{kit-variables.$small-only} {
         width: calc(100vw - 20px);
         height: 100vh;
         max-height: none;
@@ -342,7 +343,7 @@ $vertical-space: 10px;
     .gd-scheduled-email-management-dialog-title {
         margin-bottom: 10px;
         > h3 {
-            color: var(--gd-modal-title-color, $gd-color-dark);
+            color: var(--gd-modal-title-color, kit-variables.$gd-color-dark);
         }
     }
 
@@ -360,7 +361,7 @@ $vertical-space: 10px;
         max-height: 455px;
         overflow-y: auto;
 
-        @media #{$small-only} {
+        @media #{kit-variables.$small-only} {
             max-height: none;
         }
     }
@@ -372,7 +373,7 @@ $vertical-space: 10px;
         height: 100%;
         padding-top: 10px;
         text-align: center;
-        color: $gd-color-state-blank;
+        color: kit-variables.$gd-color-state-blank;
     }
 
     .gd-loading-equalizer {
@@ -388,7 +389,7 @@ $vertical-space: 10px;
         cursor: default;
 
         &:hover {
-            background: $is-focused-background;
+            background: kit-variables.$is-focused-background;
 
             .gd-scheduled-email-icon {
                 background: transparent;
@@ -410,7 +411,7 @@ $vertical-space: 10px;
         width: 30px;
         height: 30px;
         margin: auto 10px auto 0;
-        background-color: $is-focused-background;
+        background-color: kit-variables.$is-focused-background;
         border-radius: 100px;
         flex-shrink: 0;
     }
@@ -438,7 +439,7 @@ $vertical-space: 10px;
 
     .gd-scheduled-email-subtitle {
         white-space: nowrap;
-        color: $gd-color-state-blank;
+        color: kit-variables.$gd-color-state-blank;
     }
 
     .gd-scheduled-email-shortened-text {
@@ -464,7 +465,7 @@ $vertical-space: 10px;
         }
 
         .gd-scheduled-email-delete-icon::after {
-            color: $gd-palette-error-base;
+            color: kit-variables.$gd-palette-error-base;
         }
     }
 
@@ -472,22 +473,22 @@ $vertical-space: 10px;
         display: none;
         margin: auto;
 
-        @media #{$small-only} {
+        @media #{kit-variables.$small-only} {
             display: block;
         }
 
         &::after {
             content: "\e61a";
             position: relative;
-            font-family: $gd-font-indigo;
-            color: $gd-color-disabled;
+            font-family: kit-variables.$gd-font-indigo;
+            color: kit-variables.$gd-color-disabled;
             font-size: 16px;
             font-weight: 400;
         }
     }
 
     .gd-content-divider {
-        border-top: 1px solid $gd-border-color;
+        border-top: 1px solid kit-variables.$gd-border-color;
         height: 0;
         margin: 0 0 20px 0;
     }
@@ -505,7 +506,7 @@ $vertical-space: 10px;
 
     .gd-add-button {
         .gd-button-icon {
-            color: $button-action-color;
+            color: button-variables.$button-action-color;
         }
     }
 }
@@ -513,7 +514,7 @@ $vertical-space: 10px;
 .gd-scheduled-email-delete-dialog {
     width: 440px;
 
-    @media #{$small-only} {
+    @media #{kit-variables.$small-only} {
         width: calc(100vw - 20px);
     }
 
@@ -523,7 +524,7 @@ $vertical-space: 10px;
         text-overflow: ellipsis;
         line-height: 20px;
 
-        @media #{$small-only} {
+        @media #{kit-variables.$small-only} {
             height: auto;
         }
     }
@@ -534,7 +535,7 @@ $vertical-space: 10px;
         white-space: nowrap;
         text-overflow: ellipsis;
 
-        @media #{$small-only} {
+        @media #{kit-variables.$small-only} {
             > strong {
                 display: block;
                 overflow: hidden;
@@ -551,7 +552,7 @@ $vertical-space: 10px;
         z-index: 5001;
     }
 
-    @media #{$small-only} {
+    @media #{kit-variables.$small-only} {
         .modalityPlugin-mask {
             z-index: 5002;
         }
@@ -579,7 +580,7 @@ $vertical-space: 10px;
         border: none;
         outline: inherit;
         font: inherit;
-        color: $gd-color-link;
+        color: kit-variables.$gd-color-link;
         background: none;
         text-decoration: underline;
         font-size: 14px;
@@ -596,14 +597,14 @@ $vertical-space: 10px;
         }
 
         &-disabled {
-            color: $gd-color-disabled;
+            color: kit-variables.$gd-color-disabled;
 
             svg {
-                fill: $gd-color-disabled;
+                fill: kit-variables.$gd-color-disabled;
             }
 
             &:hover {
-                color: $gd-color-disabled;
+                color: kit-variables.$gd-color-disabled;
             }
         }
     }
@@ -614,7 +615,7 @@ $vertical-space: 10px;
         height: inherit;
         font-size: 12px;
 
-        @media #{$small-only} {
+        @media #{kit-variables.$small-only} {
             width: 100vw;
             max-height: calc(100vh - 30px);
         }
@@ -629,8 +630,8 @@ $vertical-space: 10px;
         overflow: hidden;
         height: 35px;
         white-space: nowrap;
-        color: $gd-color-state-blank;
-        background: $is-focused-background;
+        color: kit-variables.$gd-color-state-blank;
+        background: kit-variables.$is-focused-background;
         text-overflow: ellipsis;
         text-transform: uppercase;
         font-size: 11px;
@@ -642,7 +643,7 @@ $vertical-space: 10px;
         overflow-y: auto;
         max-height: 200px;
 
-        @media #{$small-only} {
+        @media #{kit-variables.$small-only} {
             overflow: auto;
             height: calc(100vh - 113px);
             max-height: calc(100vh - 113px);
@@ -653,7 +654,7 @@ $vertical-space: 10px;
         flex: 0 0 auto;
         height: 47px;
         padding: 10px;
-        border-top: 1px solid $gd-border-color;
+        border-top: 1px solid kit-variables.$gd-border-color;
         text-align: right;
     }
 }
@@ -662,7 +663,7 @@ $vertical-space: 10px;
     padding: 10px;
     min-width: 253px;
 
-    @media #{$small-only} {
+    @media #{kit-variables.$small-only} {
         width: 100%;
         min-width: none;
     }
@@ -682,11 +683,11 @@ $vertical-space: 10px;
 .gd-format-options-dropdown-xlsx {
     display: flex;
     flex-direction: column;
-    border-left: 1px dashed $gd-color-link;
+    border-left: 1px dashed kit-variables.$gd-color-link;
     padding-left: 10px;
     margin-top: 5px;
     font-size: 14px;
-    color: $gd-color-text;
+    color: kit-variables.$gd-color-text;
 
     & > div:not(:first-child) {
         margin-top: 10px;
@@ -715,7 +716,7 @@ $vertical-space: 10px;
     width: 253px;
     padding: 10px;
 
-    @media #{$small-only} {
+    @media #{kit-variables.$small-only} {
         width: 100%;
     }
 
@@ -729,7 +730,7 @@ $vertical-space: 10px;
         font-size: 11px;
         font-weight: bold;
         text-transform: uppercase;
-        color: $gd-color-state-blank;
+        color: kit-variables.$gd-color-state-blank;
 
         &::after {
             content: "";
@@ -739,7 +740,7 @@ $vertical-space: 10px;
             width: 100%;
             height: 0;
             margin-left: 10px;
-            border-top: 1px solid $gd-color-state-blank;
+            border-top: 1px solid kit-variables.$gd-color-state-blank;
         }
     }
 

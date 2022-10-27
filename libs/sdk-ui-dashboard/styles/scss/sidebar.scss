@@ -1,11 +1,14 @@
-@import "variables";
+@use "sass:color";
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/Button/variables" as button-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
 .gd-sidebar-container {
     position: sticky;
     top: 0;
     width: 230px;
     height: 100vh;
-    border-right: $nav-border;
+    border-right: variables.$nav-border;
 }
 
 .add-item-panel {
@@ -18,23 +21,27 @@
     align-items: center;
     height: 47px;
     padding: 0 10px 0 50px;
-    border: 1px solid transparentize($dialog-border, 1);
+    border: 1px solid color.adjust(variables.$dialog-border, $alpha: -1);
     border-radius: 2px;
     font-size: 12px;
     line-height: 14px;
-    color: $gd-color-text;
+    color: kit-variables.$gd-color-text;
     cursor: pointer;
 
     &.disabled {
-        color: $gd-color-disabled;
+        color: kit-variables.$gd-color-disabled;
         cursor: default;
         user-select: none;
     }
 
     &:hover:not(.disabled) {
-        border-color: var(--gd-palette-complementary-5, transparentize($dialog-border, 0.5));
-        box-shadow: 0 1px 3px 0 $button-shadow-lighter, 0 2px 9px 0 $button-shadow-darker;
-        background: var(--gd-palette-complementary-0-t10, transparentize($default-gd-color-white, 0.05));
+        border-color: var(--gd-palette-complementary-5, color.adjust(variables.$dialog-border, $alpha: -0.5));
+        box-shadow: 0 1px 3px 0 button-variables.$button-shadow-lighter,
+            0 2px 9px 0 button-variables.$button-shadow-darker;
+        background: var(
+            --gd-palette-complementary-0-t10,
+            color.adjust(kit-variables.$default-gd-color-white, $alpha: -0.05)
+        );
     }
 
     &::before {

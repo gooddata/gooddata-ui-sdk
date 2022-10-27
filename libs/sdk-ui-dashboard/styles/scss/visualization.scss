@@ -1,5 +1,6 @@
 // (C) 2021 GoodData Corporation
-@import "_variables";
+@use "_variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
 .visualization {
     text-align: center;
@@ -15,7 +16,7 @@
         font-size: 14px;
         font-weight: bold;
         line-height: normal;
-        color: $gd-color-state-blank;
+        color: kit-variables.$gd-color-state-blank;
 
         h2,
         p {
@@ -58,7 +59,7 @@
         right: 0;
         bottom: 0;
         left: 0;
-        background: $gd-color-white;
+        background: kit-variables.$gd-color-white;
         opacity: 0.6;
         animation-name: updatingFadeIn;
         animation-duration: 0.3s;
@@ -71,7 +72,7 @@
     }
 
     .highcharts-selection-marker {
-        fill: $highchart-selection-marker-color;
+        fill: variables.$highchart-selection-marker-color;
         fill-opacity: 0.2;
     }
 }

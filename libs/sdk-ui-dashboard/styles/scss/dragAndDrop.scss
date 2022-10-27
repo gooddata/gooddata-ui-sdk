@@ -1,5 +1,7 @@
 // (C) 2022 GoodData Corporation
-@import "variables";
+@use "sass:color";
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
 .attribute-filter-button {
     &.is-draggable,
@@ -16,8 +18,11 @@
         padding: 0 10px;
 
         &::after {
-            border-color: $gd-border-color;
-            background: var(--gd-palette-complementary-0, transparentize($default-gd-color-white, 0.05));
+            border-color: kit-variables.$gd-border-color;
+            background: var(
+                --gd-palette-complementary-0,
+                color.adjust(kit-variables.$default-gd-color-white, $alpha: -0.05)
+            );
         }
     }
 
@@ -37,7 +42,7 @@
         width: 7px;
         height: 26px;
         opacity: 0;
-        transition: all $transition-length;
+        transition: all variables.$transition-length;
     }
 }
 
@@ -53,7 +58,7 @@
     .drop-hint {
         width: 0;
         height: 100%;
-        border-left: 2px dashed $gd-palette-primary-base;
+        border-left: 2px dashed kit-variables.$gd-palette-primary-base;
     }
 
     &.next,
@@ -110,16 +115,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: $gd-color-white;
+    background-color: kit-variables.$gd-color-white;
 
     &::before {
         top: 10px;
         right: 10px;
         bottom: 10px;
         left: 10px;
-        border: 3px dashed $gd-palette-primary-base;
+        border: 3px dashed kit-variables.$gd-palette-primary-base;
         border-radius: 15px;
-        background-color: $gd-palette-primary-dimmed;
+        background-color: kit-variables.$gd-palette-primary-dimmed;
     }
 
     &::after {
@@ -134,14 +139,14 @@
         z-index: 1;
         flex: 1 1 auto;
         margin: 0 23px;
-        color: $gd-color-text;
+        color: kit-variables.$gd-color-text;
         font-size: 14px;
 
         &::before {
             content: "\E61A";
             display: block;
             line-height: 80px;
-            color: $gd-palette-primary-base;
+            color: kit-variables.$gd-palette-primary-base;
             font-family: Indigo, sans-serif;
             font-size: 50px;
         }
@@ -149,13 +154,13 @@
 
     &.gd-dropzone-over {
         &::after {
-            background-color: $gd-palette-primary-base;
+            background-color: kit-variables.$gd-palette-primary-base;
         }
 
         .gd-dropzone-message {
             &,
             &::before {
-                color: $gd-color-text-light;
+                color: kit-variables.$gd-color-text-light;
             }
         }
     }
@@ -356,11 +361,11 @@
 
         &.is-over {
             .drop-target-inner {
-                background-color: $gd-palette-primary-base;
+                background-color: kit-variables.$gd-palette-primary-base;
             }
 
             .drop-target-message {
-                color: $gd-color-text-light;
+                color: kit-variables.$gd-color-text-light;
             }
         }
     }
@@ -385,15 +390,19 @@
     margin: 110px auto 0;
     padding: 40px;
     border-radius: 15px;
-    border: 2px dashed var(--gd-palette-complementary-3, transparentize($default-gd-color-disabled, 0.55));
-    background: var(--gd-palette-complementary-1, transparentize($dialog-border, 0.95));
+    border: 2px dashed
+        var(
+            --gd-palette-complementary-3,
+            color.adjust(kit-variables.$default-gd-color-disabled, $alpha: -0.55)
+        );
+    background: var(--gd-palette-complementary-1, color.adjust(variables.$dialog-border, $alpha: -0.95));
     text-align: center;
 
     h2 {
         font-weight: bold;
         font-size: 20px;
         line-height: 28px;
-        color: $gd-color-state-blank;
+        color: kit-variables.$gd-color-state-blank;
     }
 
     p {
@@ -401,7 +410,7 @@
         font-size: 18px;
         line-height: 28px;
         font-weight: normal;
-        color: $gd-color-state-blank;
+        color: kit-variables.$gd-color-state-blank;
     }
 
     .gd-icon-insight {
@@ -425,9 +434,9 @@
     right: $outter-padding;
     bottom: $outter-padding;
     left: $outter-padding;
-    border: $item-border dashed $gd-palette-primary-base;
+    border: variables.$item-border dashed kit-variables.$gd-palette-primary-base;
     border-radius: 15px;
-    background-color: $gd-palette-primary-dimmed;
+    background-color: kit-variables.$gd-palette-primary-dimmed;
 }
 .drop-target-inner {
     $inner-padding: 8px;
@@ -450,7 +459,7 @@
     line-height: 22px;
     text-align: center;
     vertical-align: middle;
-    color: $info-text-color;
+    color: variables.$info-text-color;
     transform: translateY(-50%);
 }
 
@@ -464,7 +473,7 @@
     right: 10px;
     left: 10px;
     height: 2px;
-    background-color: $gd-color-disabled;
+    background-color: kit-variables.$gd-color-disabled;
 
     &-icon {
         position: absolute;
@@ -495,7 +504,7 @@
     }
 
     &.active {
-        background-color: $gd-palette-primary-base;
+        background-color: kit-variables.$gd-palette-primary-base;
     }
 }
 
@@ -521,7 +530,7 @@
 }
 
 .attributes-list {
-    width: $gd-configuration-panel-inner-width;
+    width: variables.$gd-configuration-panel-inner-width;
 
     .dropdown-body {
         flex-direction: column;

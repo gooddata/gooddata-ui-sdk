@@ -1,22 +1,42 @@
 // (C) 2007-2021 GoodData Corporation
-@import "@gooddata/sdk-ui-kit/styles/scss/Button/_variables";
-@import "@gooddata/sdk-ui-kit/styles/scss/Bubble/_variables";
-@import "@gooddata/sdk-ui-kit/styles/scss/variables";
+@use "sass:color";
+@use "@gooddata/sdk-ui-kit/styles/scss/Bubble/_variables" as bubble-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
 // CSS - variables
-$gd-palette-primary-base-t90: var(--gd-palette-primary-base-t90, transparentize($gd-color-highlight, 0.9));
-$gd-palette-primary-base-t85: var(--gd-palette-primary-base-t85, transparentize($gd-color-highlight, 0.85));
-$gd-palette-primary-base-t50: var(--gd-palette-primary-base-t50, transparentize($gd-color-highlight, 0.5));
+$gd-palette-primary-base-t90: var(
+    --gd-palette-primary-base-t90,
+    color.adjust(kit-variables.$gd-color-highlight, $alpha: -0.9)
+);
+$gd-palette-primary-base-t85: var(
+    --gd-palette-primary-base-t85,
+    color.adjust(kit-variables.$gd-color-highlight, $alpha: -0.85)
+);
+$gd-palette-primary-base-t50: var(
+    --gd-palette-primary-base-t50,
+    color.adjust(kit-variables.$gd-color-highlight, $alpha: -0.5)
+);
 $gd-palette-primary-base-mix15-white: var(
     --gd-palette-primary-base-mix15-white,
-    transparentize(mix($gd-color-highlight, $default-gd-color-text-light, 15%), 0.075)
+    color.adjust(
+        color.mix(kit-variables.$gd-color-highlight, kit-variables.$default-gd-color-text-light, 15%),
+        $alpha: -0.075
+    )
 );
 $gd-palette-primary-dimmed50: var(
     --gd-palette-primary-dimmed50,
-    mix($gd-color-highlight, $default-gd-color-white, 50%)
+    color.mix(kit-variables.$gd-color-highlight, kit-variables.$default-gd-color-white, 50%)
 );
-$gd-color-positive-dimmed: mix($gd-color-positive, $default-gd-color-text-light, 10%);
-$gd-color-negative-dimmed: mix($gd-color-negative, $default-gd-color-text-light, 10%);
+$gd-color-positive-dimmed: color.mix(
+    kit-variables.$gd-color-positive,
+    kit-variables.$default-gd-color-text-light,
+    10%
+);
+$gd-color-negative-dimmed: color.mix(
+    kit-variables.$gd-color-negative,
+    kit-variables.$default-gd-color-text-light,
+    10%
+);
 
 $grey-background: #eceff3;
 $darker-grey-background: var(--gd-palette-complementary-7, #b4c0cf);
@@ -33,53 +53,44 @@ $item-action-width: 36px;
 $widget-drop-shadow: none;
 $sidebar-width: 230px;
 
-$dialog-border: $default-bubble-light-border-base;
+$dialog-border: bubble-variables.$default-bubble-light-border-base;
 $dialog-background: var(--gd-palette-complementary-0, #fcfcfd);
 
 $transition-length: 0.2s;
 
 $button-grey-background: var(--gd-palette-complementary-2, #ebeff4);
 
-$gd-dashboards-content-backgroundColor: var(--gd-dashboards-content-backgroundColor, $gd-color-white);
+$gd-dashboards-content-backgroundColor: var(
+    --gd-dashboards-content-backgroundColor,
+    kit-variables.$gd-color-white
+);
 
 $filter-bar-height: 55px;
 $filter-bar-drop-zone-height: 30px;
 
-$gd-dashboards-filterBar-backgroundColor: var(--gd-dashboards-filterBar-backgroundColor, $gd-color-white);
+$gd-dashboards-filterBar-backgroundColor: var(
+    --gd-dashboards-filterBar-backgroundColor,
+    kit-variables.$gd-color-white
+);
 
 $nav-border-size: 1px;
-$nav-border: $nav-border-size solid $gd-border-color;
+$nav-border: $nav-border-size solid kit-variables.$gd-border-color;
 $default-gd-color-text: #464e56;
 $gd-color-text: var(--gd-palette-complementary-8, $default-gd-color-text);
 
-$gd-dashboards-title-color: var(--gd-dashboards-title-color, $gd-color-text);
+$gd-dashboards-title-color: var(--gd-dashboards-title-color, kit-variables.$gd-color-text);
 $default-button-normal-active-border-color: #b1c1d1;
 $editable-label-border: var(
     --gd-palette-complementary-4,
-    transparentize($default-button-normal-active-border-color, 0.5)
+    color.adjust($default-button-normal-active-border-color, $alpha: -0.5)
 );
 
 $sidebar-transition-length: 0.5s;
 
-$default-gd-color-white: #fff;
-$gd-color-white: var(--gd-palette-complementary-0, $default-gd-color-white);
-$gd-dashboards-title-backgroundColor: var(--gd-dashboards-title-backgroundColor, $gd-color-white);
-
-$default-gd-border-color: #dde4eb;
-$gd-border-color: var(--gd-palette-complementary-3, $default-gd-border-color);
-
-$default-gd-color-state-blank: #94a1ad;
-$gd-color-state-blank: var(--gd-palette-complementary-6, $default-gd-color-state-blank);
-
-$screen: "only screen";
-$xsmall-breakpoint: 320px;
-
-$xsmall-range: (0, $xsmall-breakpoint);
-$small-range: ($xsmall-breakpoint + 1px, $small-breakpoint);
-$medium-range: ($small-breakpoint + 1px, $medium-breakpoint);
-
-$xsmall-only: "#{$screen} and (max-width: #{upper-bound($xsmall-range)})";
-$medium-up: "#{$screen} and (min-width:#{lower-bound($medium-range)})";
+$gd-dashboards-title-backgroundColor: var(
+    --gd-dashboards-title-backgroundColor,
+    kit-variables.$gd-color-white
+);
 
 // configuration panel
 $gd-configuration-bubble-height: 450px;
@@ -90,7 +101,10 @@ $gd-configuration-right-scrollbar-spacer: $scrollbar-width;
 $gd-configuration-panel-inner-width: $gd-configuration-bubble-width - $gd-configuration-bubble-borders-width -
     (2 * $gd-configuration-bubble-margin) - $gd-configuration-right-scrollbar-spacer;
 
-$gd-dashboards-content-widget-title-color: var(--gd-dashboards-content-widget-title-color, $gd-color-text);
+$gd-dashboards-content-widget-title-color: var(
+    --gd-dashboards-content-widget-title-color,
+    kit-variables.$gd-color-text
+);
 $gd-dashboards-content-widget-title-textAlign: var(--gd-dashboards-content-widget-title-textAlign, center);
 $gd-dashboards-content-widget-borderRadius: var(--gd-dashboards-content-widget-borderRadius, 15px);
 $gd-dashboards-content-widget-borderColor: var(--gd-dashboards-content-widget-borderColor, transparent);
@@ -107,7 +121,7 @@ $gd-dashboards-content-kpiWidget-title-textAlign: var(
 );
 $gd-dashboards-content-kpiWidget-backgroundColor: var(
     --gd-dashboards-content-kpiWidget-backgroundColor,
-    $gd-widget-background
+    kit-variables.$gd-widget-background
 );
 $gd-dashboards-content-kpiWidget-borderRadius: var(
     --gd-dashboards-content-kpiWidget-borderRadius,
@@ -125,7 +139,10 @@ $gd-dashboards-content-kpiWidget-dropShadow: var(
     --gd-dashboards-content-kpiWidget-dropShadow,
     $gd-dashboards-content-widget-dropShadow
 );
-$gd-kpi-primaryMeasureColor: var(--gd-dashboards-content-kpiWidget-kpi-primaryMeasureColor, $gd-color-link);
+$gd-kpi-primaryMeasureColor: var(
+    --gd-dashboards-content-kpiWidget-kpi-primaryMeasureColor,
+    kit-variables.$gd-color-link
+);
 
 $highchart-selection-marker-color: var(--gd-palette-complementary-1, #b0beca);
 $info-text-color: #909293;
