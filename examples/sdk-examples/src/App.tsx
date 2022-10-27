@@ -100,7 +100,7 @@ export const App: React.FC = () => {
                                 flex-direction: column;
                                 justify-content: flex-start;
                                 align-items: center;
-                                padding-top: 124px;
+                                padding-top: 139px;
                             }
 
                             :global(h1),

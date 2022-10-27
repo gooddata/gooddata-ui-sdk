@@ -7,8 +7,6 @@ import { CustomLoading } from "./CustomLoading";
 import { workspace, backendUrlForInfo } from "../constants/fixtures";
 import favicon from "../static/favicon.ico";
 import logo from "../static/gooddata.svg";
-import icon from "../static/icon-gdui.svg";
-import chevron from "../static/chevron.svg";
 import { ANONYMOUS_ACCESS } from "../constants/env";
 
 const appName = "GoodData.UI Examples Gallery";
@@ -143,7 +141,7 @@ const CoreHeader: React.FC<IHeaderProps> = ({ location, routes = [], isUserLogge
                     max-width: 100%;
                     display: none;
                     margin: 0;
-                    padding: 0 10%;
+                    padding: 20px;
                     flex-direction: column;
                     list-style-type: none;
                     background-color: #fff;
@@ -164,9 +162,9 @@ const CoreHeader: React.FC<IHeaderProps> = ({ location, routes = [], isUserLogge
                 .gd-header-link,
                 .gd-header a.gd-header-link {
                     display: block;
-                    padding: 15px !important;
-                    line-height: 29px;
-                    font-size: 20px;
+                    padding: 8px 0 !important;
+                    line-height: 48px;
+                    font-size: 18px;
                     font-weight: bold;
                     text-align: left;
                     white-space: nowrap;
@@ -175,9 +173,9 @@ const CoreHeader: React.FC<IHeaderProps> = ({ location, routes = [], isUserLogge
                 @media only screen and (min-width: 1025px) {
                     .gd-header-link,
                     .gd-header a.gd-header-link {
-                        padding: 20px 20px 16px !important;
-                        line-height: 24px;
-                        font-size: 14px;
+                        padding: 20px 15px 16px !important;
+                        line-height: 40px;
+                        font-size: 18px;
                         text-align: center;
                     }
                 }
@@ -202,23 +200,20 @@ const CoreHeader: React.FC<IHeaderProps> = ({ location, routes = [], isUserLogge
                 .gd-header-link:visited,
                 .gd-header a.gd-header-link,
                 .gd-header a.gd-header-link:link,
-                .gd-header a.gd-header-link:visited {
-                    color: rgba(0, 0, 0, 0.7);
-                }
-
+                .gd-header a.gd-header-link:visited,
                 .gd-header-link:hover,
                 .gd-header-link:focus,
                 .gd-header-link:active,
                 .gd-header a.gd-header-link:hover,
                 .gd-header a.gd-header-link:focus,
                 .gd-header a.gd-header-link:active {
-                    color: #000;
+                    color: #1c0d3f;
                 }
 
                 .gd-header-link-item,
                 .gd-header a.gd-header-link-item {
                     padding: 0;
-                    border-top: 1px solid rgba(0, 0, 0, 0.4);
+                    border-top: 1px solid #dfe4e8;
                 }
 
                 .gd-header-link-item:first-child,
@@ -226,9 +221,30 @@ const CoreHeader: React.FC<IHeaderProps> = ({ location, routes = [], isUserLogge
                     border-top: none;
                 }
 
-                .gd-header-link-item:last-child,
-                .gd-header a.gd-header-link-item:last-child {
-                    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+                .gd-header-link-item__main .gd-header-link {
+                    font-size: 24px;
+                }
+
+                .button {
+                    display: inline-block;
+                    margin: 24px 0;
+                    padding: 10px 26px;
+                    border: 2px solid #1c0d3f;
+                    border-radius: 3.125rem;
+                    outline: none;
+                    font-size: 1.125rem;
+                    font-weight: bold;
+                    line-height: 27px;
+                    transition: all 0.3s;
+                    color: #1c0d3f;
+                }
+
+                .button:hover,
+                .button:focus,
+                .button:active {
+                    color: #675590;
+                    border-color: #675590;
+                    text-decoration: none;
                 }
 
                 @media only screen and (min-width: 1025px) {
@@ -248,6 +264,11 @@ const CoreHeader: React.FC<IHeaderProps> = ({ location, routes = [], isUserLogge
 
                     .gd-header-link-item-mobile-only,
                     .gd-header a.gd-header-link-item-mobile-only {
+                        display: none;
+                    }
+
+                    .gd-header-link-item__main,
+                    .gd-header-link-item__button {
                         display: none;
                     }
                 }
@@ -296,8 +317,11 @@ const CoreHeader: React.FC<IHeaderProps> = ({ location, routes = [], isUserLogge
                     .gd-header-link-active,
                     .gd-header-link-active:last-child,
                     .gd-header a.gd-header-link-active,
-                    .gd-header a.gd-header-link-active:last-child {
-                        border-bottom-color: #000;
+                    .gd-header a.gd-header-link-active:last-child,
+                    .gd-header-link-item:hover,
+                    .gd-header-link-item:focus,
+                    .gd-header-link-item:active {
+                        border-bottom-color: #ed26b7;
                     }
                 }
 
@@ -411,13 +435,13 @@ const CoreHeader: React.FC<IHeaderProps> = ({ location, routes = [], isUserLogge
 
                 .gd-docs-header-nav__first {
                     top: 0;
-                    min-height: 65px;
+                    min-height: 80px;
                     background-color: #fff;
                     z-index: 133;
                 }
 
                 .gd-docs-header-nav__second {
-                    top: 65px;
+                    top: 80px;
                     height: 59px;
                     background: #fafafa;
                     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
@@ -473,19 +497,46 @@ const CoreHeader: React.FC<IHeaderProps> = ({ location, routes = [], isUserLogge
                     display: block;
                 }
 
+                .gd-docs-header-nav__logo {
+                    display: flex;
+                    align-items: center;
+                }
+
                 .gd-docs-header-nav__logo img {
-                    width: 127px;
-                    height: 35px;
-                    margin-left: -4px;
+                    width: 182px;
+                    height: 40px;
+                }
+
+                .gd-header-nav__logo-text {
+                    display: none;
+                    margin-left: 16px;
+                    padding: 10px 16px;
+                    border-left: 1px solid #bfc9d1;
+                    color: #1c0d3f;
+                    font-size: 18px;
+                    font-weight: bold;
+                    line-height: 1.25;
+                }
+
+                @media screen and (min-width: 1025px) {
+                    .gd-header-nav__logo-text {
+                        display: block;
+                    }
                 }
 
                 .gd-docs-header-nav__title {
                     display: none;
                     font-size: 14px;
+                    color: #1c0d3f;
                 }
 
                 .gd-docs-header-nav__breadcrumb {
-                    color: #94a1ad;
+                    color: #1c0d3f;
+                }
+
+                .gd-docs-header-nav__breadcrumb::before {
+                    content: "/";
+                    margin: 0 4px;
                 }
 
                 @media screen and (min-width: 768px) {
@@ -640,14 +691,9 @@ const CoreHeader: React.FC<IHeaderProps> = ({ location, routes = [], isUserLogge
                         <a className="gd-docs-header-nav__logo" href="https://www.gooddata.com/">
                             <img src={logo} alt={appName} />
                         </a>
+                        <span className="gd-header-nav__logo-text">Learn</span>
                     </div>
                     <div className="gd-docs-header-nav__center">
-                        <img
-                            className="gd-header-mobile gd-header-mobile-icon"
-                            src="https://www.gooddata.com/learn-assets/img/navicon-documentation-gray.svg"
-                            alt="Documentation"
-                        />
-                        <span className="gd-header-mobile gd-header-mobile-title">Docs APIs</span>
                         <input
                             type="checkbox"
                             id="gd-header-mobile-menu-trigger-input"
@@ -661,28 +707,28 @@ const CoreHeader: React.FC<IHeaderProps> = ({ location, routes = [], isUserLogge
                             <span></span>
                         </label>
                         <ul className="gd-docs-header-nav__menu gd-header-links">
-                            <li className="gd-docs-header-nav__menuitem gd-docs-header-nav__menuhome gd-header-link-item gd-header-link-hub">
+                            <li className="gd-docs-header-nav__menuitem gd-header-link-item gd-header-link-item__main">
                                 <a
-                                    href="https://www.gooddata.com/developers/"
+                                    href="https://www.gooddata.com/learn/"
                                     className="gd-docs-header-nav__menulink gd-header-link"
                                 >
-                                    Developers
+                                    Learn
                                 </a>
                             </li>
                             <li className="gd-docs-header-nav__menuitem gd-header-link-item">
                                 <a
-                                    href="https://www.gooddata.com/developers/cloud-native/"
+                                    href="https://university.gooddata.com/"
                                     className="gd-docs-header-nav__menulink gd-header-link"
                                 >
-                                    GoodData.CN
+                                    University
                                 </a>
                             </li>
                             <li className="gd-docs-header-nav__menuitem gd-header-link-item">
                                 <a
-                                    href="https://sdk.gooddata.com/gooddata-ui/"
+                                    href="https://community.gooddata.com/"
                                     className="gd-docs-header-nav__menulink gd-header-link"
                                 >
-                                    GoodData.UI
+                                    Community
                                 </a>
                             </li>
                             <li className="gd-docs-header-nav__menuitem gd-header-link-item gd-header-link-active">
@@ -690,19 +736,25 @@ const CoreHeader: React.FC<IHeaderProps> = ({ location, routes = [], isUserLogge
                                     href="https://www.gooddata.com/developers/cloud-native/doc/"
                                     className="gd-docs-header-nav__menulink gd-header-link"
                                 >
-                                    Docs &amp; APIs
+                                    Documentation
+                                </a>
+                            </li>
+                            <li className="gd-docs-header-nav__menuitem gd-header-link-item">
+                                <a
+                                    href="https://support.gooddata.com/hc/en-us"
+                                    className="gd-docs-header-nav__menulink gd-header-link"
+                                >
+                                    Support
+                                </a>
+                            </li>
+                            <li className="gd-docs-header-nav__menuitem gd-header-link-item gd-header-link-item__button">
+                                <a href="https://www.gooddata.com/" className="button">
+                                    Go to GoodData.com
                                 </a>
                             </li>
                         </ul>
                     </div>
-                    <div className="gd-docs-header-nav__right">
-                        <a
-                            href="https://www.gooddata.com/developers/cloud-native-community-edition/"
-                            className="gd-docs-header-nav__cta"
-                        >
-                            Get GoodData.CN Community Edition
-                        </a>
-                    </div>
+                    <div className="gd-docs-header-nav__right"></div>
                 </nav>
 
                 <nav className="gd-docs-header-nav gd-docs-header-nav__second">
@@ -711,11 +763,9 @@ const CoreHeader: React.FC<IHeaderProps> = ({ location, routes = [], isUserLogge
                             className="gd-docs-header-nav__title"
                             href="https://www.gooddata.com/developers/cloud-native/doc/"
                         >
-                            <img src={icon} alt={appName} />
-                            Docs APIs
+                            Docs
                         </a>
                         <span className="gd-docs-header-nav__title gd-docs-header-nav__breadcrumb">
-                            <img src={chevron} />
                             GoodData.UI
                         </span>
                     </div>
