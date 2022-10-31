@@ -8,6 +8,8 @@ import {
     AttributeFilterDropdownButton,
     AttributeFilterElementsSelect,
     IAttributeFilterElementsSelectProps,
+    useAutoOpenAttributeFilterDropdownButton,
+    useOnCloseAttributeFilterDropdownButton,
 } from "@gooddata/sdk-ui-filters";
 
 import {
@@ -43,7 +45,7 @@ import { useMediaQuery } from "@gooddata/sdk-ui-kit";
  * @alpha
  */
 export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilterProps): JSX.Element => {
-    const { filter, onFilterChanged, isDraggable } = props;
+    const { filter, onFilterChanged, isDraggable, autoOpen, onClose } = props;
     const { parentFilters, parentFilterOverAttribute } = useParentFilters(filter);
     const locale = useDashboardSelector(selectLocale);
     const attributeFilter = useMemo(() => dashboardAttributeFilterToAttributeFilter(filter), [filter]);
@@ -67,10 +69,18 @@ export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilter
     const displayValuesAsText = intl.formatMessage({ id: "attributesDropdown.displayValuesAs" });
     const filterByText = intl.formatMessage({ id: "attributesDropdown.filterBy" });
 
+    const onCloseFilter = useCallback(() => {
+        if (onClose) {
+            onClose();
+        }
+    }, [onClose]);
+
     const CustomDropdownButton = useMemo(() => {
         return function DropdownButton(props: IAttributeFilterDropdownButtonProps) {
             const { isOpen } = props;
             const isMobile = useMediaQuery("mobileDevice");
+            useAutoOpenAttributeFilterDropdownButton(props, !!autoOpen);
+            useOnCloseAttributeFilterDropdownButton(props, onCloseFilter);
 
             let buttonSpacing: React.CSSProperties = isDraggable
                 ? { margin: "7px 11px 7px -10px" }
@@ -86,7 +96,7 @@ export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilter
                 </div>
             );
         };
-    }, [isDraggable]);
+    }, [isDraggable, autoOpen, onCloseFilter]);
 
     const CustomDropdownActions = useMemo(() => {
         return function DropdownActions(props: IAttributeFilterDropdownActionsProps) {

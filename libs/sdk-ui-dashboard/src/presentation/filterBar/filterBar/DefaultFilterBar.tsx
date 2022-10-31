@@ -1,5 +1,10 @@
 // (C) 2021-2022 GoodData Corporation
-import { IDashboardAttributeFilter, IDashboardDateFilter, objRefToString } from "@gooddata/sdk-model";
+import {
+    areObjRefsEqual,
+    IDashboardAttributeFilter,
+    IDashboardDateFilter,
+    objRefToString,
+} from "@gooddata/sdk-model";
 import React, { useCallback } from "react";
 import {
     changeAttributeFilterSelection,
@@ -83,8 +88,13 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
     const { filters, onAttributeFilterChanged, onDateFilterChanged } = props;
 
     const [
-        { dateFilter, attributeFiltersWithPlaceholder, attributeFiltersCount },
-        { addAttributeFilterPlaceholder, closeAttributeSelection, selectAttributeFilter },
+        { dateFilter, attributeFiltersWithPlaceholder, attributeFiltersCount, autoOpenFilter },
+        {
+            addAttributeFilterPlaceholder,
+            closeAttributeSelection,
+            selectAttributeFilter,
+            onCloseAttributeFilter,
+        },
     ] = useFiltersWithAddedPlaceholder(filters);
 
     const customFilterName = useDashboardSelector(selectEffectiveDateFilterTitle);
@@ -152,11 +162,13 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                     return (
                         <DraggableAttributeFilter
                             key={objRefToString(filter.attributeFilter.displayForm)}
+                            autoOpen={areObjRefsEqual(filter.attributeFilter.displayForm, autoOpenFilter)}
                             filter={filter}
                             filterIndex={filterIndex}
                             FilterComponent={CustomAttributeFilterComponent}
                             onAttributeFilterChanged={onAttributeFilterChanged}
                             onAttributeFilterAdded={addAttributeFilterPlaceholder}
+                            onAttributeFilterClose={onCloseAttributeFilter}
                         />
                     );
                 }

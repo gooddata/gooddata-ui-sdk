@@ -64,11 +64,13 @@ export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
         dateFilter: IDashboardDateFilter;
         attributeFiltersWithPlaceholder: FilterBarAttributeItems;
         attributeFiltersCount: number;
+        autoOpenFilter: ObjRef | undefined;
     },
     {
         addAttributeFilterPlaceholder: (index: number) => void;
         selectAttributeFilter: (displayForm: ObjRef) => void;
         closeAttributeSelection: () => void;
+        onCloseAttributeFilter: () => void;
     },
 ] {
     const dispatch = useDashboardDispatch();
@@ -76,6 +78,7 @@ export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
 
     const [[dateFilter], attributeFilters] = partition(filters, isDashboardDateFilter);
     const [selectedDisplayForm, setSelectedDisplayForm] = useState<ObjRef | undefined>();
+    const [autoOpenFilter, setAutoOpenFilter] = useState<ObjRef | undefined>();
 
     const addedAttributeFilter: FilterBarAttributeFilterPlaceholder | undefined = useMemo(() => {
         if (selectedFilterIndex !== undefined) {
@@ -144,22 +147,41 @@ export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
                 return;
             }
 
-            setSelectedDisplayForm(displayForm);
+            // this check control present of att filer for theirs DF to avoid error message in console
+            const exist = attributeFilters.find((x) =>
+                areObjRefsEqual(x.attributeFilter.displayForm, displayForm),
+            );
 
-            dispatchAndWaitFor(
-                dispatch,
-                addAttributeFilterAction(displayForm, addedAttributeFilter.filterIndex),
-            ).finally(clearAddedFilter);
+            if (!exist) {
+                setSelectedDisplayForm(displayForm);
+                setAutoOpenFilter(displayForm);
+                dispatchAndWaitFor(
+                    dispatch,
+                    addAttributeFilterAction(displayForm, addedAttributeFilter.filterIndex),
+                ).finally(clearAddedFilter);
+            } else {
+                setAutoOpenFilter(displayForm);
+                clearAddedFilter();
+            }
         },
-        [addedAttributeFilter, clearAddedFilter, dispatch],
+        [addedAttributeFilter, attributeFilters, clearAddedFilter, dispatch],
     );
 
+    const onCloseAttributeFilter = useCallback(() => {
+        setAutoOpenFilter(undefined);
+    }, []);
     return [
         {
             dateFilter,
             attributeFiltersWithPlaceholder,
             attributeFiltersCount: attributeFilters.length,
+            autoOpenFilter,
         },
-        { addAttributeFilterPlaceholder, selectAttributeFilter, closeAttributeSelection },
+        {
+            addAttributeFilterPlaceholder,
+            selectAttributeFilter,
+            closeAttributeSelection,
+            onCloseAttributeFilter,
+        },
     ];
 }

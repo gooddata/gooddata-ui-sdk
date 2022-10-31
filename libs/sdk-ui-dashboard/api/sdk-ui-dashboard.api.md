@@ -2894,8 +2894,10 @@ export interface IDashboardAttributeFilterPlaceholderProps {
 
 // @alpha (undocumented)
 export interface IDashboardAttributeFilterProps {
+    autoOpen?: boolean;
     filter: IDashboardAttributeFilter;
     isDraggable?: boolean;
+    onClose?: () => void;
     onFilterChanged: (filter: IDashboardAttributeFilter) => void;
 }
 
