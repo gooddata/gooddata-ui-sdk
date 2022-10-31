@@ -426,10 +426,7 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
 
     .gd-header-invite-icon {
         display: inline-block;
-        width: 14px;
-        height: 14px;
         margin: 14.5px auto;
-        background: url("~@gooddata/sdk-ui-kit/esm/assets/invite.svg") no-repeat;
     }
 }
 
@@ -461,7 +458,6 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
 .gd-header-invite,
 .gd-header-invite:active,
 .gd-header-invite:focus {
-    color: rgba(255, 255, 255, 0.8);
     text-decoration: none;
 }
 

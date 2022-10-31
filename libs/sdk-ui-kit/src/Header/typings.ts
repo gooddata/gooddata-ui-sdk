@@ -110,6 +110,7 @@ export interface IHeaderUpsellButtonProps {
  * @internal
  */
 export interface IHeaderInviteProps {
+    textColor?: string;
     onInviteItemClick?: (e: React.MouseEvent) => void;
 }
 
