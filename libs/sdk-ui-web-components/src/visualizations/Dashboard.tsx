@@ -10,7 +10,7 @@ import {
     LOAD_COMPONENT,
 } from "./CustomElementAdapter";
 
-import type { CustomElementContext } from "../context";
+import { CustomElementContext } from "../context";
 import type { Dashboard as OriginalDashboard } from "@gooddata/sdk-ui-dashboard";
 type IDashboard = typeof OriginalDashboard;
 
