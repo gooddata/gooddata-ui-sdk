@@ -24,6 +24,7 @@ import {
     insightSetFilters,
     insightUpdated,
     insightTags,
+    insightSummary,
 } from "@gooddata/sdk-model";
 import { v4 as uuidv4 } from "uuid";
 import sortBy from "lodash/sortBy";
@@ -167,7 +168,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                             id: uuidv4(),
                             type: JsonApiVisualizationObjectInTypeEnum.VISUALIZATION_OBJECT,
                             attributes: {
-                                description: insightTitle(insight),
+                                description: insightSummary(insight),
                                 content: convertInsight(insight),
                                 title: insightTitle(insight),
                                 tags: insightTags(insight),
@@ -200,7 +201,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                             id: insightId(insight),
                             type: JsonApiVisualizationObjectInTypeEnum.VISUALIZATION_OBJECT,
                             attributes: {
-                                description: insightTitle(insight),
+                                description: insightSummary(insight),
                                 content: convertInsight(insight),
                                 title: insightTitle(insight),
                                 tags: insightTags(insight),
