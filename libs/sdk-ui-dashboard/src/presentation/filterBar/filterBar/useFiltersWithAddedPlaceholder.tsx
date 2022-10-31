@@ -14,6 +14,7 @@ import {
 import {
     addAttributeFilter as addAttributeFilterAction,
     dispatchAndWaitFor,
+    selectCatalogAttributes,
     selectSelectedFilterIndex,
     uiActions,
     useDashboardDispatch,
@@ -75,6 +76,7 @@ export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
 ] {
     const dispatch = useDashboardDispatch();
     const selectedFilterIndex = useDashboardSelector(selectSelectedFilterIndex);
+    const allAttributes = useDashboardSelector(selectCatalogAttributes);
 
     const [[dateFilter], attributeFilters] = partition(filters, isDashboardDateFilter);
     const [selectedDisplayForm, setSelectedDisplayForm] = useState<ObjRef | undefined>();
@@ -147,12 +149,16 @@ export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
                 return;
             }
 
-            // this check control present of att filer for theirs DF to avoid error message in console
-            const exist = attributeFilters.find((x) =>
-                areObjRefsEqual(x.attributeFilter.displayForm, displayForm),
+            const relatedAttribute = allAttributes.find((att) =>
+                att.displayForms.some((df) => areObjRefsEqual(df.ref, displayForm)),
             );
 
-            if (!exist) {
+            const usedDisplayForm = relatedAttribute?.displayForms.find((df) => {
+                return attributeFilters.find((x) => areObjRefsEqual(x.attributeFilter.displayForm, df));
+            });
+
+            // We allowed just one attributeFilter for one attribute,
+            if (!usedDisplayForm) {
                 setSelectedDisplayForm(displayForm);
                 setAutoOpenFilter(displayForm);
                 dispatchAndWaitFor(
@@ -160,11 +166,11 @@ export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
                     addAttributeFilterAction(displayForm, addedAttributeFilter.filterIndex),
                 ).finally(clearAddedFilter);
             } else {
-                setAutoOpenFilter(displayForm);
+                setAutoOpenFilter(usedDisplayForm);
                 clearAddedFilter();
             }
         },
-        [addedAttributeFilter, attributeFilters, clearAddedFilter, dispatch],
+        [addedAttributeFilter, attributeFilters, allAttributes, clearAddedFilter, dispatch],
     );
 
     const onCloseAttributeFilter = useCallback(() => {

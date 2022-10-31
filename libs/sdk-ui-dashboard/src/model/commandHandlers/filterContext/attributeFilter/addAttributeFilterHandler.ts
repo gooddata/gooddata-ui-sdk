@@ -48,6 +48,12 @@ export function* addAttributeFilterHandler(
         );
     }
 
+    const displayFormMetadata = resolvedDisplayForm.resolved.get(displayForm);
+
+    invariant(displayFormMetadata);
+
+    const attributeRef = displayFormMetadata.attribute;
+
     const canBeAdded: PromiseFnReturnType<typeof canFilterBeAdded> = yield call(
         canFilterBeAdded,
         ctx,
@@ -59,12 +65,13 @@ export function* addAttributeFilterHandler(
         throw invalidArgumentsProvided(
             ctx,
             cmd,
-            `Filter for the displayForm ${objRefToString(displayForm)} already exists in the filter context.`,
+            `Filter for attribute ${objRefToString(
+                attributeRef,
+            )} represented by the displayForm ${objRefToString(
+                displayForm,
+            )} already exists in the filter context.`,
         );
     }
-
-    const displayFormMetadata = resolvedDisplayForm.resolved.get(displayForm);
-    invariant(displayFormMetadata);
 
     yield put(
         batchActions([

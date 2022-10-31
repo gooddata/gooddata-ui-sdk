@@ -27,5 +27,9 @@ export async function canFilterBeAdded(
         loadExistingDisplayForms,
     ]);
 
-    return !existingDisplayForms.some((existing) => areObjRefsEqual(existing, addedDisplayForm));
+    const attributeFilterRef = addedDisplayForm.attribute;
+    const existingAttributes = existingDisplayForms.map((df) => df.attribute);
+
+    // lookup has to be in existing Attributes array since we support only one DF for one Attribute
+    return !existingAttributes.some((existing) => areObjRefsEqual(existing, attributeFilterRef));
 }
