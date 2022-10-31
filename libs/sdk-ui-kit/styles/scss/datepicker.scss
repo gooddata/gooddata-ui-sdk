@@ -1,7 +1,9 @@
 // (C) 2007-2020 GoodData Corporation
 @use "react-day-picker/dist/style.css";
-@import "./mixins";
-@import "./Datepicker/_variables";
+@use "sass:color";
+@use "mixins";
+@use "Datepicker/_variables" as datepicker-variables;
+@use "variables";
 
 /* ==========================================================================
    Datepicker
@@ -13,7 +15,7 @@
         position: relative;
         padding-left: 36px;
 
-        @include transition("padding-left", 0);
+        @include mixins.transition("padding-left", 0);
     }
 
     &.small {
@@ -42,10 +44,10 @@
     bottom: 0;
     left: 10px;
     line-height: 30px;
-    color: $gd-palette-primary-base;
+    color: variables.$gd-palette-primary-base;
     font-size: 18px;
 
-    @include transition("color", 0.25s, ease-in-out);
+    @include mixins.transition("color", 0.25s, ease-in-out);
 }
 
 .gd-datepicker-OverlayWrapper {
@@ -68,7 +70,13 @@
     top: auto;
     bottom: 100%;
 
-    @include box-shadow(0 0 5px 0 var(--gd-shadow-color, transparentize($gd-datepicker-shadow-color, 0.85)));
+    @include mixins.box-shadow(
+        0 0 5px 0
+            var(
+                --gd-shadow-color,
+                color.adjust(datepicker-variables.$gd-datepicker-shadow-color, $alpha: -0.85)
+            )
+    );
 }
 
 .gd-datepicker-picker {
@@ -82,12 +90,16 @@
 
     position: absolute;
     padding: 18px 15px 15px;
-    background: $gd-color-white;
+    background: variables.$gd-color-white;
     user-select: none;
     text-align: left;
 
-    @include box-shadow(
-        0 2px 5px 0 var(--gd-shadow-color, transparentize($gd-datepicker-shadow-color, 0.85))
+    @include mixins.box-shadow(
+        0 2px 5px 0
+            var(
+                --gd-shadow-color,
+                color.adjust(datepicker-variables.$gd-datepicker-shadow-color, $alpha: -0.85)
+            )
     );
 
     //CSS for new DATEPICKER
@@ -107,7 +119,7 @@
         cursor: pointer;
 
         &:hover {
-            color: $gd-color-state-blank;
+            color: variables.$gd-color-state-blank;
         }
     }
 
@@ -117,9 +129,9 @@
         width: 2em;
         height: 2em;
         text-align: center;
-        color: $gd-palette-primary-base;
+        color: variables.$gd-palette-primary-base;
         padding-top: 0.15em;
-        font-family: $gd-font-indigo;
+        font-family: variables.$gd-font-indigo;
         font-size: 18px;
     }
 
@@ -129,9 +141,9 @@
         width: 2em;
         height: 2em;
         text-align: center;
-        color: $gd-palette-primary-base;
+        color: variables.$gd-palette-primary-base;
         padding-top: 0.15em;
-        font-family: $gd-font-indigo;
+        font-family: variables.$gd-font-indigo;
         font-size: 18px;
     }
 
@@ -142,11 +154,11 @@
     }
 
     .rdp-caption_label {
-        font-family: $gd-font-primary;
+        font-family: variables.$gd-font-primary;
         font-size: 17px;
         text-align: center;
         font-weight: normal;
-        color: $gd-color-dark;
+        color: variables.$gd-color-dark;
     }
 
     .rdp-table {
@@ -155,9 +167,9 @@
 
     .rdp-head_cell {
         display: table-cell;
-        color: var(--gd-palette-complementary-8, $default-gd-color-state-blank);
+        color: var(--gd-palette-complementary-8, variables.$default-gd-color-state-blank);
         cursor: help;
-        font-family: $gd-font-primary;
+        font-family: variables.$gd-font-primary;
         font-weight: 400;
         font-size: 13px;
         text-transform: none;
@@ -171,34 +183,34 @@
 
     .rdp-day {
         padding: 0.3125em 0.55em;
-        color: $gd-color-text;
-        font-family: $gd-font-primary;
+        color: variables.$gd-color-text;
+        font-family: variables.$gd-font-primary;
         font-size: 14px;
         font-weight: 700;
         text-align: center;
         border-radius: 0;
 
         &:hover {
-            background: $gd-datepicker-hover-bgcolor;
+            background: datepicker-variables.$gd-datepicker-hover-bgcolor;
             cursor: pointer;
         }
     }
 
     .rdp-day_disabled {
-        color: $gd-color-disabled;
+        color: variables.$gd-color-disabled;
         cursor: default;
         font-weight: 400;
     }
 
     .rdp-day_outside {
-        color: $gd-color-disabled;
+        color: variables.$gd-color-disabled;
         cursor: default;
         font-weight: 400;
     }
 
     .rdp-day_selected:not(.rdp-day_disabled):not(.rdp-day_outside) {
-        color: $gd-color-text-light;
-        background: $gd-palette-primary-base;
+        color: variables.$gd-color-text-light;
+        background: variables.$gd-palette-primary-base;
     }
 
     //CSS for old DATEPICKER due to RAIL-4460
@@ -246,14 +258,14 @@
 
         &::before {
             display: block;
-            color: $gd-palette-primary-base;
+            color: variables.$gd-palette-primary-base;
             padding-top: 0.15em;
-            font-family: $gd-font-indigo;
+            font-family: variables.$gd-font-indigo;
             font-size: 18px;
         }
 
         &:hover::before {
-            color: $gd-color-state-blank;
+            color: variables.$gd-color-state-blank;
         }
     }
 
@@ -275,18 +287,18 @@
 
     .DayPicker-NavButton--next:hover,
     .DayPicker-NavButton--prev:hover {
-        color: $gd-palette-primary-base;
+        color: variables.$gd-palette-primary-base;
         cursor: pointer;
     }
 
     .DayPicker-Caption {
         display: table-caption;
-        color: $gd-color-dark;
+        color: variables.$gd-color-dark;
         cursor: default;
         margin-left: 0.25em;
         margin-right: 0.25em;
         margin-bottom: 1em;
-        font-family: $gd-font-primary;
+        font-family: variables.$gd-font-primary;
         font-size: 17px;
         text-align: center;
     }
@@ -301,10 +313,10 @@
 
     .DayPicker-Weekday {
         display: table-cell;
-        color: var(--gd-palette-complementary-8, $default-gd-color-state-blank);
+        color: var(--gd-palette-complementary-8, variables.$default-gd-color-state-blank);
         cursor: help;
         padding-bottom: 0.5em;
-        font-family: $gd-font-primary;
+        font-family: variables.$gd-font-primary;
         font-weight: 400;
         font-size: 13px;
         text-align: center;
@@ -326,14 +338,14 @@
     .DayPicker-Day {
         display: table-cell;
         padding: 0.3125em 0.55em;
-        color: $gd-color-text;
-        font-family: $gd-font-primary;
+        color: variables.$gd-color-text;
+        font-family: variables.$gd-font-primary;
         font-size: 14px;
         font-weight: 700;
         text-align: center;
 
         &:hover {
-            background: $gd-datepicker-hover-bgcolor;
+            background: datepicker-variables.$gd-datepicker-hover-bgcolor;
             cursor: pointer;
         }
     }
@@ -343,19 +355,19 @@
     }
 
     .DayPicker-Day--disabled {
-        color: $gd-color-disabled;
+        color: variables.$gd-color-disabled;
         cursor: default;
         font-weight: 400;
     }
 
     .DayPicker-Day--outside {
-        color: $gd-color-disabled;
+        color: variables.$gd-color-disabled;
         cursor: default;
         font-weight: 400;
     }
 
     .DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
-        color: $gd-color-text-light;
-        background: $gd-palette-primary-base;
+        color: variables.$gd-color-text-light;
+        background: variables.$gd-palette-primary-base;
     }
 }

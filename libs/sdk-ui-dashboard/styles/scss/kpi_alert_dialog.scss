@@ -1,10 +1,12 @@
 // (C) 2007-2020 GoodData Corporation
-@import "@gooddata/sdk-ui-kit/styles/scss/Button/_variables";
-@import "@gooddata/sdk-ui-kit/styles/scss/Bubble/_variables";
-@import "variables";
+@use "sass:color";
+@use "@gooddata/sdk-ui-kit/styles/scss/Button/_variables" as button-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/Bubble/_variables" as bubble-variables;
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
-$dialog-border: $default-bubble-light-border-base;
-$dialog-background: $is-focused-background;
+$dialog-border: bubble-variables.$default-bubble-light-border-base;
+$dialog-background: kit-variables.$is-focused-background;
 
 .gd-icon-calendar-kpi {
     position: relative;
@@ -15,7 +17,7 @@ $dialog-background: $is-focused-background;
 }
 
 .kpi-alert-dialog-overlay {
-    @media #{$xsmall-only}, #{$small-only} {
+    @media #{kit-variables.$xsmall-only}, #{kit-variables.$small-only} {
         right: 15px;
         // Overwrite Overlay default positioning
         // stylelint-disable-next-line declaration-no-important
@@ -27,9 +29,10 @@ $dialog-background: $is-focused-background;
     position: relative;
     z-index: 1000;
     min-height: 148px;
-    border: 1px solid var(--gd-palette-complementary-3, transparentize($dialog-border, 0.5));
+    border: 1px solid var(--gd-palette-complementary-3, color.adjust($dialog-border, $alpha: -0.5));
     border-radius: 5px;
-    box-shadow: 0 1px 3px 0 $button-shadow-lighter, 0 2px 9px 0 $button-shadow-darker;
+    box-shadow: 0 1px 3px 0 button-variables.$button-shadow-lighter,
+        0 2px 9px 0 button-variables.$button-shadow-darker;
     background: $dialog-background;
 
     &::after,
@@ -52,7 +55,7 @@ $dialog-background: $is-focused-background;
         border-width: 11px;
     }
 
-    @media #{$medium-up} {
+    @media #{kit-variables.$medium-up} {
         width: 288px;
     }
 
@@ -60,7 +63,7 @@ $dialog-background: $is-focused-background;
         position: absolute;
         top: 15px;
         right: 19px;
-        color: $gd-color-label;
+        color: kit-variables.$gd-color-label;
         cursor: pointer;
     }
 
@@ -79,7 +82,7 @@ $dialog-background: $is-focused-background;
             text-align: left;
         }
 
-        @media #{$xsmall-only}, #{$small-only} {
+        @media #{kit-variables.$xsmall-only}, #{kit-variables.$small-only} {
             display: flex;
             flex-wrap: wrap;
             margin: 5px -5px 0;
@@ -158,7 +161,7 @@ $dialog-background: $is-focused-background;
         }
 
         &::before {
-            border-right-color: var(--gd-palette-complementary-3, transparentize($dialog-border, 0.5));
+            border-right-color: var(--gd-palette-complementary-3, color.adjust($dialog-border, $alpha: -0.5));
         }
 
         &::after {
@@ -182,7 +185,7 @@ $dialog-background: $is-focused-background;
         }
 
         &::before {
-            border-left-color: var(--gd-palette-complementary-3, transparentize($dialog-border, 0.5));
+            border-left-color: var(--gd-palette-complementary-3, color.adjust($dialog-border, $alpha: -0.5));
         }
     }
 }
@@ -243,7 +246,10 @@ $dialog-background: $is-focused-background;
         }
 
         &::before {
-            border-bottom-color: var(--gd-palette-complementary-3, transparentize($dialog-border, 0.5));
+            border-bottom-color: var(
+                --gd-palette-complementary-3,
+                color.adjust($dialog-border, $alpha: -0.5)
+            );
         }
 
         &::after {
@@ -262,7 +268,7 @@ $dialog-background: $is-focused-background;
         }
 
         &::before {
-            border-top-color: var(--gd-palette-complementary-3, transparentize($dialog-border, 0.5));
+            border-top-color: var(--gd-palette-complementary-3, color.adjust($dialog-border, $alpha: -0.5));
         }
 
         &::after {
@@ -310,7 +316,7 @@ $dialog-background: $is-focused-background;
     padding: 6px 35px 6px 15px;
     border: 1px solid $dialog-border;
     border-radius: 3px 3px 0 0;
-    background: $gd-color-light;
+    background: kit-variables.$gd-color-light;
 
     h3 {
         line-height: 29px;
@@ -320,7 +326,7 @@ $dialog-background: $is-focused-background;
 .kpi-alert-dialog-content {
     padding: 30px 15px 15px;
 
-    @media #{$xsmall-only}, #{$small-only} {
+    @media #{kit-variables.$xsmall-only}, #{kit-variables.$small-only} {
         padding: 15px 17px;
     }
 
@@ -330,7 +336,7 @@ $dialog-background: $is-focused-background;
         .button-dropdown {
             width: 100%;
 
-            @media #{$xsmall-only}, #{$small-only} {
+            @media #{kit-variables.$xsmall-only}, #{kit-variables.$small-only} {
                 line-height: 31px;
             }
         }
@@ -344,7 +350,7 @@ $dialog-background: $is-focused-background;
     .alert-select,
     .input-container,
     .button-dropdown {
-        @media #{$xsmall-only}, #{$small-only} {
+        @media #{kit-variables.$xsmall-only}, #{kit-variables.$small-only} {
             height: 33px;
             font-size: 14px;
             line-height: 21px;
@@ -355,7 +361,7 @@ $dialog-background: $is-focused-background;
     .gd-input-with-prefix,
     .gd-input-with-suffix {
         .gd-input-field {
-            @media #{$xsmall-only}, #{$small-only} {
+            @media #{kit-variables.$xsmall-only}, #{kit-variables.$small-only} {
                 font-size: 16px; // A trick to prevent input focus zoom on iPhone
             }
         }
@@ -370,7 +376,7 @@ $dialog-background: $is-focused-background;
 .kpi-alert-dialog-text {
     margin: 8px 0;
     font-size: 14px;
-    color: $gd-color-text;
+    color: kit-variables.$gd-color-text;
 
     &-on-top {
         padding-right: 30px;
@@ -379,26 +385,26 @@ $dialog-background: $is-focused-background;
     &.email-info {
         font-size: 12px;
 
-        @media #{$xlarge-up} {
+        @media #{kit-variables.$xlarge-up} {
             display: none;
         }
     }
 
     + .email-info {
         padding-top: 15px;
-        border-top: 1px solid $gd-border-color;
-        color: var(--gd-palette-complementary-8, $default-gd-color-label);
+        border-top: 1px solid kit-variables.$gd-border-color;
+        color: var(--gd-palette-complementary-8, kit-variables.$default-gd-color-label);
     }
 
     .underline-dotted {
-        @media #{$xsmall-only}, #{$small-only} {
+        @media #{kit-variables.$xsmall-only}, #{kit-variables.$small-only} {
             border-bottom: none;
         }
     }
 }
 
 .underline-dotted {
-    border-bottom: 1px dotted $gd-color-state-blank;
+    border-bottom: 1px dotted kit-variables.$gd-color-state-blank;
     cursor: help;
 }
 
@@ -412,7 +418,7 @@ $dialog-background: $is-focused-background;
         font-size: 11px;
         font-weight: bold;
         text-transform: uppercase;
-        color: $gd-color-state-blank;
+        color: kit-variables.$gd-color-state-blank;
     }
 
     .filter-section-content {
@@ -424,14 +430,14 @@ $dialog-background: $is-focused-background;
 
         &.more-items {
             padding: 5px 0;
-            border-top: 1px solid $gd-border-color;
-            border-bottom: 1px solid $gd-border-color;
+            border-top: 1px solid kit-variables.$gd-border-color;
+            border-bottom: 1px solid kit-variables.$gd-border-color;
         }
     }
 
     .info {
         font-size: 12px;
-        color: $gd-color-state-blank;
+        color: kit-variables.$gd-color-state-blank;
     }
 
     .count,

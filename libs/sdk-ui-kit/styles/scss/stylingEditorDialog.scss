@@ -1,9 +1,9 @@
 // (C) 2022 GoodData Corporation
-@import "./variables.scss";
+@use "variables";
 
 .gd-styling-editor-dialog {
     display: flex;
-    font-family: $gd-font-primary;
+    font-family: variables.$gd-font-primary;
     max-height: 560px;
     width: 100vw;
     height: 100vh;
@@ -15,12 +15,12 @@
     }
 
     &-header {
-        background-color: $gd-color-white;
+        background-color: variables.$gd-color-white;
         padding: 20px;
         line-height: 26px;
-        color: $gd-color-text;
+        color: variables.$gd-color-text;
         font-size: 20px;
-        border-bottom: 1px solid $gd-border-color;
+        border-bottom: 1px solid variables.$gd-border-color;
         margin-top: -20px;
         margin-left: -20px;
         margin-right: -20px;
@@ -30,7 +30,7 @@
 .gd-styling-editor-dialog-content {
     display: flex;
     flex: 1;
-    background-color: $gd-color-light;
+    background-color: variables.$gd-color-light;
     flex-direction: row;
     overflow: hidden;
     margin: 0 -20px 0 -20px;
@@ -44,7 +44,7 @@
         &-input {
             line-height: 21px;
             font-size: 14px;
-            color: $gd-color-link;
+            color: variables.$gd-color-link;
             margin-top: 20px;
         }
 
@@ -54,7 +54,7 @@
             flex-direction: column;
             line-height: 21px;
             font-size: 14px;
-            color: $gd-color-link;
+            color: variables.$gd-color-link;
             margin-top: 20px;
 
             textarea {
@@ -63,18 +63,18 @@
                 margin-bottom: 20px;
                 line-height: 18px;
                 font-size: 12px;
-                font-family: $measure_sequence_number_font;
-                color: $gd-color-text;
+                font-family: variables.$measure_sequence_number_font;
+                color: variables.$gd-color-text;
             }
         }
 
         &-invalid {
-            color: $gd-palette-error-base;
+            color: variables.$gd-palette-error-base;
 
             > .gd-input-field,
             :hover,
             :focus {
-                border-color: $gd-palette-error-base;
+                border-color: variables.$gd-palette-error-base;
             }
         }
 
@@ -87,7 +87,7 @@
         display: flex;
         overflow: hidden;
         width: 230px;
-        border-left: 1px solid $gd-border-color;
+        border-left: 1px solid variables.$gd-border-color;
         margin-left: 20px;
         margin-right: -20px;
         padding: 20px 0;
@@ -112,7 +112,7 @@
     gap: 20px 10px;
     margin: 0 -20px -20px -20px;
     padding: 20px;
-    border-top: 1px solid $gd-border-color;
+    border-top: 1px solid variables.$gd-border-color;
 
     .gd-loading-equalizer-spinner {
         margin-right: 10px;
@@ -130,19 +130,19 @@
         font-size: 11px;
         font-weight: bold;
         text-transform: uppercase;
-        color: $gd-color-state-blank;
+        color: variables.$gd-color-state-blank;
         margin-right: 10px;
     }
 
     &-icon {
-        color: $gd-color-state-blank;
+        color: variables.$gd-color-state-blank;
         margin-right: 10px;
         cursor: help;
     }
 
     &-divider {
         width: 100%;
-        border-top: 1px solid $gd-border-color;
+        border-top: 1px solid variables.$gd-border-color;
         margin: 10px 0;
     }
 }
@@ -152,9 +152,9 @@
     flex-direction: column;
     margin-bottom: 10px;
     padding: 10px;
-    border: 1px solid $gd-border-color;
+    border: 1px solid variables.$gd-border-color;
     border-radius: 3px;
-    background-color: $gd-color-white;
+    background-color: variables.$gd-color-white;
 
     &-label {
         display: flex;
@@ -162,7 +162,7 @@
         overflow: hidden;
         line-height: 17px;
         white-space: nowrap;
-        color: $gd-color-label;
+        color: variables.$gd-color-label;
         font-size: 14px;
         font-weight: 400;
         margin-bottom: 7px;
@@ -177,7 +177,7 @@
 
         &-action {
             display: none;
-            color: $gd-palette-primary-base;
+            color: variables.$gd-palette-primary-base;
             cursor: pointer;
         }
     }

@@ -1,7 +1,6 @@
 // (C) 2019-2021 GoodData Corporation
-@import "./variables";
-
-$info-text-color: #909293;
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
 $gd-width-resizer-hotpost-width: 40px;
 $gd-width-resizer-hotpost-height: 40px;
@@ -64,11 +63,11 @@ $gd-width-resizer-hotpost-height: 40px;
     padding: 0 4px;
 
     &.active {
-        background-color: $gd-palette-primary-base-t85;
+        background-color: variables.$gd-palette-primary-base-t85;
     }
 
     &.error {
-        background-color: $gd-palette-error-dimmed;
+        background-color: kit-variables.$gd-palette-error-dimmed;
     }
 
     .width-resizer-line {
@@ -76,15 +75,15 @@ $gd-width-resizer-hotpost-height: 40px;
         border-left: 2px dashed;
 
         &.muted {
-            border-color: $gd-color-text;
+            border-color: kit-variables.$gd-color-text;
         }
 
         &.active {
-            border-color: $gd-palette-primary-base;
+            border-color: kit-variables.$gd-palette-primary-base;
         }
 
         &.error {
-            border-color: $gd-palette-error-base;
+            border-color: kit-variables.$gd-palette-error-base;
         }
     }
 }
@@ -95,28 +94,28 @@ $gd-width-resizer-hotpost-height: 40px;
     padding: 4px 0;
 
     &.active {
-        background-color: $gd-palette-primary-base-t85;
+        background-color: variables.$gd-palette-primary-base-t85;
     }
 
     &.error {
-        background-color: $gd-palette-error-dimmed;
+        background-color: kit-variables.$gd-palette-error-dimmed;
     }
 
     .height-resizer-line {
         width: 100%;
         border-top: 2px dashed;
-        border-color: $gd-palette-primary-base;
+        border-color: kit-variables.$gd-palette-primary-base;
 
         &.muted {
-            border-color: $gd-color-text;
+            border-color: kit-variables.$gd-color-text;
         }
 
         &.active {
-            border-color: $gd-palette-primary-base;
+            border-color: kit-variables.$gd-palette-primary-base;
         }
 
         &.error {
-            border-color: $gd-palette-error-base;
+            border-color: kit-variables.$gd-palette-error-base;
         }
     }
 }
@@ -134,15 +133,15 @@ $gd-width-resizer-hotpost-height: 40px;
 .gd-resize-overlay {
     z-index: 2;
     border-width: 0;
-    border-radius: calc(#{$gd-dashboards-content-widget-borderRadius} + 5px);
+    border-radius: calc(#{variables.$gd-dashboards-content-widget-borderRadius} + 5px);
     background-color: var(--gd-palette-complementary-0-t50, rgba(255, 255, 255, 0.5));
 
     &.active {
-        background-color: $gd-palette-primary-base-mix15-white;
+        background-color: variables.$gd-palette-primary-base-mix15-white;
     }
 
     &.error {
-        background: $gd-palette-primary-base-mix15-white;
+        background: variables.$gd-palette-primary-base-mix15-white;
     }
 }
 
@@ -152,7 +151,7 @@ $gd-width-resizer-hotpost-height: 40px;
     justify-content: center;
     align-items: center;
     padding: 5px;
-    color: var(--gd-palette-complementary-6, $info-text-color);
+    color: var(--gd-palette-complementary-6, variables.$info-text-color);
     font-weight: bold;
     text-align: center;
 }
@@ -170,7 +169,7 @@ $gd-width-resizer-hotpost-height: 40px;
     height: 6px;
 
     .active {
-        fill: $gd-palette-primary-base;
+        fill: kit-variables.$gd-palette-primary-base;
     }
 
     .initial {
@@ -178,7 +177,7 @@ $gd-width-resizer-hotpost-height: 40px;
     }
 
     .passive {
-        fill: var(--gd-palette-complementary-6, $default-gd-color-disabled);
+        fill: var(--gd-palette-complementary-6, kit-variables.$default-gd-color-disabled);
     }
 }
 

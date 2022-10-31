@@ -1,5 +1,6 @@
 // (C) 2022 GoodData Corporation
-@import "./attributeFilterVariables";
+@use "attributeFilterVariables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables";
 
 .gd-attribute-filter-elements-select-item__next {
     min-height: 28px;
@@ -40,11 +41,11 @@ div.gd-empty-item-bubble {
 
     .gd-list-item {
         &:hover {
-            background-color: $is-focused-background;
+            background-color: variables.$is-focused-background;
 
             &.is-selected {
-                color: $gd-color-text;
-                background-color: $is-selected-focused-background;
+                color: variables.$gd-color-text;
+                background-color: variables.$is-selected-focused-background;
             }
 
             .input-label-text {
@@ -54,7 +55,7 @@ div.gd-empty-item-bubble {
 
         &.is-selected {
             font-weight: bold;
-            color: $gd-color-text;
+            color: variables.$gd-color-text;
         }
     }
 

@@ -1,5 +1,7 @@
 // (C) 2020 GoodData Corporation
-@import "./Bubble/_variables";
+@use "Bubble/_variables" as bubble-variables;
+@use "mixins";
+@use "variables";
 
 /* ==========================================================================
    Bubble
@@ -13,32 +15,32 @@
 // TODO: rename after removing of silver theme
 .inlineBubbleHelp {
     display: inline-block;
-    font: 14px/1 $gd-font-indigo;
+    font: 14px/1 variables.$gd-font-indigo;
     vertical-align: middle;
-    color: $bubble-help-color;
+    color: bubble-variables.$bubble-help-color;
 
     &::before {
         content: "\E60B"; // icon-circle-question
     }
 
-    @include active-states-and-self {
+    @include mixins.active-states-and-self {
         text-decoration: none;
     }
 
-    @include active-states {
-        color: $bubble-help-color-hover;
+    @include mixins.active-states {
+        color: bubble-variables.$bubble-help-color-hover;
         cursor: help;
     }
 }
 
 .bubble {
     position: absolute;
-    max-width: $bubble-max-width;
+    max-width: bubble-variables.$bubble-max-width;
 
-    @include transition(opacity, 0.2s, ease-in-out);
+    @include mixins.transition(opacity, 0.2s, ease-in-out);
 
     &.bubble-small {
-        max-width: $bubble-small-max-width;
+        max-width: bubble-variables.$bubble-small-max-width;
     }
 
     &.gd-bubble {
@@ -53,7 +55,7 @@
         position: absolute;
         background: white;
 
-        @include opacity(0.01);
+        @include mixins.opacity(0.01);
     }
 
     .bubble-content {
@@ -72,11 +74,11 @@
             pointer-events: auto;
 
             a {
-                color: $gd-color-text-light;
+                color: variables.$gd-color-text-light;
                 opacity: 0.8;
                 text-decoration: underline;
 
-                @include transition(all, 0.25s, ease-in-out);
+                @include mixins.transition(all, 0.25s, ease-in-out);
 
                 // refactor
                 // stylelint-disable-next-line max-nesting-depth
@@ -88,7 +90,7 @@
             &,
             p,
             a {
-                font: 400 12px/18px $gd-font-primary;
+                font: 400 12px/18px variables.$gd-font-primary;
             }
 
             p {
@@ -101,42 +103,42 @@
         }
     }
 
-    @each $skin in $bubble-skins {
-        $bubble-borderWidth: $bubble-primary-borderWidth;
-        $bubble-color: $bubble-primary-color;
-        $bubble-borderColor: $bubble-primary-borderColor;
-        $bubble-arrowColor: $bubble-primary-arrowColor;
-        $bubble-arrowBorderColor: $bubble-primary-arrowBorderColor;
-        $bubble-bgcolor: $bubble-primary-bgcolor;
+    @each $skin in bubble-variables.$bubble-skins {
+        $bubble-borderWidth: bubble-variables.$bubble-primary-borderWidth;
+        $bubble-color: bubble-variables.$bubble-primary-color;
+        $bubble-borderColor: bubble-variables.$bubble-primary-borderColor;
+        $bubble-arrowColor: bubble-variables.$bubble-primary-arrowColor;
+        $bubble-arrowBorderColor: bubble-variables.$bubble-primary-arrowBorderColor;
+        $bubble-bgcolor: bubble-variables.$bubble-primary-bgcolor;
 
         @if $skin == negative {
-            $bubble-borderWidth: $bubble-negative-borderWidth;
-            $bubble-color: $bubble-negative-color;
-            $bubble-borderColor: $bubble-negative-borderColor;
-            $bubble-arrowColor: $bubble-negative-arrowColor;
-            $bubble-arrowBorderColor: $bubble-negative-arrowBorderColor;
-            $bubble-bgcolor: $bubble-negative-bgcolor;
+            $bubble-borderWidth: bubble-variables.$bubble-negative-borderWidth;
+            $bubble-color: bubble-variables.$bubble-negative-color;
+            $bubble-borderColor: bubble-variables.$bubble-negative-borderColor;
+            $bubble-arrowColor: bubble-variables.$bubble-negative-arrowColor;
+            $bubble-arrowBorderColor: bubble-variables.$bubble-negative-arrowBorderColor;
+            $bubble-bgcolor: bubble-variables.$bubble-negative-bgcolor;
         } @else if $skin == secondary {
-            $bubble-borderWidth: $bubble-secondary-borderWidth;
-            $bubble-color: $bubble-secondary-color;
-            $bubble-borderColor: $bubble-secondary-borderColor;
-            $bubble-arrowColor: $bubble-secondary-arrowColor;
-            $bubble-arrowBorderColor: $bubble-secondary-arrowBorderColor;
-            $bubble-bgcolor: $bubble-secondary-bgcolor;
+            $bubble-borderWidth: bubble-variables.$bubble-secondary-borderWidth;
+            $bubble-color: bubble-variables.$bubble-secondary-color;
+            $bubble-borderColor: bubble-variables.$bubble-secondary-borderColor;
+            $bubble-arrowColor: bubble-variables.$bubble-secondary-arrowColor;
+            $bubble-arrowBorderColor: bubble-variables.$bubble-secondary-arrowBorderColor;
+            $bubble-bgcolor: bubble-variables.$bubble-secondary-bgcolor;
         } @else if $skin == light {
-            $bubble-borderWidth: $bubble-light-borderWidth;
-            $bubble-color: $bubble-light-color;
-            $bubble-borderColor: $bubble-light-borderColor;
-            $bubble-arrowColor: $bubble-light-arrowColor;
-            $bubble-arrowBorderColor: $bubble-light-arrowBorderColor;
-            $bubble-bgcolor: $bubble-light-bgcolor;
+            $bubble-borderWidth: bubble-variables.$bubble-light-borderWidth;
+            $bubble-color: bubble-variables.$bubble-light-color;
+            $bubble-borderColor: bubble-variables.$bubble-light-borderColor;
+            $bubble-arrowColor: bubble-variables.$bubble-light-arrowColor;
+            $bubble-arrowBorderColor: bubble-variables.$bubble-light-arrowBorderColor;
+            $bubble-bgcolor: bubble-variables.$bubble-light-bgcolor;
         } @else if $skin == warning {
-            $bubble-borderWidth: $bubble-warning-borderWidth;
-            $bubble-color: $bubble-warning-color;
-            $bubble-borderColor: $bubble-warning-borderColor;
-            $bubble-arrowColor: $bubble-warning-arrowColor;
-            $bubble-arrowBorderColor: $bubble-warning-arrowBorderColor;
-            $bubble-bgcolor: $bubble-warning-bgcolor;
+            $bubble-borderWidth: bubble-variables.$bubble-warning-borderWidth;
+            $bubble-color: bubble-variables.$bubble-warning-color;
+            $bubble-borderColor: bubble-variables.$bubble-warning-borderColor;
+            $bubble-arrowColor: bubble-variables.$bubble-warning-arrowColor;
+            $bubble-arrowBorderColor: bubble-variables.$bubble-warning-arrowBorderColor;
+            $bubble-bgcolor: bubble-variables.$bubble-warning-bgcolor;
         }
 
         &.bubble-#{$skin} {
@@ -146,7 +148,7 @@
             border-width: $bubble-borderWidth;
             border-color: $bubble-borderColor;
 
-            @include box-shadow($bubble-boxShadow);
+            @include mixins.box-shadow(bubble-variables.$bubble-boxShadow);
         }
 
         // do not wanna to touch it
@@ -252,7 +254,7 @@
         .helper {
             right: 0;
             left: 0;
-            height: $bubble-helper-size;
+            height: bubble-variables.$bubble-helper-size;
         }
 
         &.arrow-tl,
@@ -289,7 +291,7 @@
         }
 
         .helper {
-            top: -$bubble-helper-size;
+            top: -(bubble-variables.$bubble-helper-size);
         }
     }
 
@@ -303,7 +305,7 @@
         }
 
         .helper {
-            bottom: -$bubble-helper-size;
+            bottom: -(bubble-variables.$bubble-helper-size);
         }
     }
 
@@ -325,7 +327,7 @@
         .helper {
             top: 0;
             bottom: 0;
-            width: $bubble-helper-size;
+            width: bubble-variables.$bubble-helper-size;
         }
 
         &.arrow-tl,
@@ -362,7 +364,7 @@
         }
 
         .helper {
-            left: -$bubble-helper-size;
+            left: -(bubble-variables.$bubble-helper-size);
         }
     }
 
@@ -376,7 +378,7 @@
         }
 
         .helper {
-            right: -$bubble-helper-size;
+            right: -(bubble-variables.$bubble-helper-size);
         }
     }
 
@@ -388,14 +390,14 @@
 .gecko .bubble-chart,
 .chrome .bubble-chart,
 .safari .bubble-chart {
-    @include opacity(0);
+    @include mixins.opacity(0);
 }
 
 .gecko .bubble-anim,
 .chrome .bubble-anim,
 .safari .bubble-anim {
-    @include opacity(1);
-    @include transition((opacity, transform), 0.2s, ease-in-out);
+    @include mixins.opacity(1);
+    @include mixins.transition((opacity, transform), 0.2s, ease-in-out);
 }
 
 .gecko .bubble-anim.yui3-overlay-hidden,
@@ -406,7 +408,7 @@
     visibility: visible !important;
     -moz-transition-duration: 0s;
 
-    @include opacity(0);
+    @include mixins.opacity(0);
 }
 
 .bubble-none {

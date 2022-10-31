@@ -1,5 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
-@import "../variables";
+@use "sass:color";
+@use "../variables";
 
 /* ==========================================================================
    Variables
@@ -7,15 +8,15 @@
 $modalDialog-maxWidth: 600px;
 $column-gutter: 30px;
 $modal-shadow-color: #14385d;
-$modal-shadow-darker: var(--gd-shadow-color, transparentize($modal-shadow-color, 0.85));
+$modal-shadow-darker: var(--gd-shadow-color, color.adjust($modal-shadow-color, $alpha: -0.85));
 
-$gd-modal-title-color: var(--gd-modal-title-color, $gd-color-dark);
-$gd-modal-title-lineColor: var(--gd-modal-title-lineColor, $gd-border-color);
-$gd-modal-borderColor: var(--gd-modal-borderColor, $gd-border-color);
+$gd-modal-title-color: var(--gd-modal-title-color, variables.$gd-color-dark);
+$gd-modal-title-lineColor: var(--gd-modal-title-lineColor, variables.$gd-border-color);
+$gd-modal-borderColor: var(--gd-modal-borderColor, variables.$gd-border-color);
 $gd-modal-borderRadius: var(--gd-modal-borderRadius, 3px);
 $gd-modal-borderWidth: var(--gd-modal-borderWidth, 0);
 $gd-modal-boxShadow: var(--gd-modal-dropShadow, 0 1px 20px);
 $gd-modal-outsideBackgroundColor: var(
     --gd-modal-outsideBackgroundColor,
-    var(--gd-palette-complementary-2, $gd-outside-background-color)
+    var(--gd-palette-complementary-2, variables.$gd-outside-background-color)
 );

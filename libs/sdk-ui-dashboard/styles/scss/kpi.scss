@@ -1,9 +1,12 @@
 // (C) 2007-2020 GoodData Corporation
-@import "variables";
+@use "sass:map";
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
 $kpi-loading-fade-time: 0.3s;
 $pop-height: 53px;
-$kpi-min-height: $item-min-height - 2 * ($item-inner-padding + $item-outer-padding + $item-border);
+$kpi-min-height: variables.$item-min-height - 2 *
+    (variables.$item-inner-padding + variables.$item-outer-padding + variables.$item-border);
 $kpi-with-pop-min-height: $kpi-min-height + $pop-height;
 
 .kpi {
@@ -13,7 +16,7 @@ $kpi-with-pop-min-height: $kpi-min-height + $pop-height;
     &.kpi-with-pop {
         min-height: $kpi-with-pop-min-height;
 
-        @media #{$xsmall-only}, #{$small-only} {
+        @media #{kit-variables.$xsmall-only}, #{kit-variables.$small-only} {
             min-height: $kpi-with-pop-min-height - 5;
         }
     }
@@ -35,7 +38,7 @@ $kpi-with-pop-min-height: $kpi-min-height + $pop-height;
     &.content-loading {
         .kpi-value,
         h3 {
-            color: $gd-color-disabled;
+            color: kit-variables.$gd-color-disabled;
         }
 
         .kpi-link {
@@ -79,13 +82,13 @@ $kpi-with-pop-min-height: $kpi-min-height + $pop-height;
     }
 
     &:hover {
-        color: var(--gd-dashboards-content-kpiWidget-kpi-primaryMeasureColor, $gd-color-text);
+        color: var(--gd-dashboards-content-kpiWidget-kpi-primaryMeasureColor, kit-variables.$gd-color-text);
         opacity: 0.6;
     }
 
     &:focus {
         .kpi-value {
-            color: $gd-kpi-primaryMeasureColor;
+            color: variables.$gd-kpi-primaryMeasureColor;
         }
     }
 
@@ -107,7 +110,7 @@ $kpi-with-pop-min-height: $kpi-min-height + $pop-height;
             border-bottom: 2px solid
                 var(
                     --gd-dashboards-content-kpiWidget-kpi-primaryMeasureColor,
-                    var(--gd-palette-complementary-9, $default-gd-color-link)
+                    var(--gd-palette-complementary-9, kit-variables.$default-gd-color-link)
                 );
         }
 
@@ -124,14 +127,14 @@ $kpi-with-pop-min-height: $kpi-min-height + $pop-height;
 
     $value-height: 60px;
 
-    font-weight: map-get(map-get($gd-typo, font-weights), bold);
-    font-family: $gd-font-primary;
+    font-weight: map.get(map.get(kit-variables.$gd-typo, font-weights), bold);
+    font-family: kit-variables.$gd-font-primary;
     height: $value-height;
     font-size: 50px;
     line-height: $value-height;
     white-space: nowrap;
     vertical-align: bottom;
-    color: var(--gd-dashboards-content-kpiWidget-kpi-primaryMeasureColor, $gd-color-dark);
+    color: var(--gd-dashboards-content-kpiWidget-kpi-primaryMeasureColor, kit-variables.$gd-color-dark);
 
     &.is-smallest-height {
         margin: 0;
@@ -139,7 +142,10 @@ $kpi-with-pop-min-height: $kpi-min-height + $pop-height;
 
     &.is-empty-value,
     &.is-error-value {
-        color: var(--gd-dashboards-content-kpiWidget-kpi-secondaryInfoColor, $gd-color-state-blank);
+        color: var(
+            --gd-dashboards-content-kpiWidget-kpi-secondaryInfoColor,
+            kit-variables.$gd-color-state-blank
+        );
     }
 
     &.kpi-value-resize {
@@ -148,11 +154,11 @@ $kpi-with-pop-min-height: $kpi-min-height + $pop-height;
 }
 
 .is-kpi-positive {
-    color: $gd-color-positive;
+    color: kit-variables.$gd-color-positive;
 }
 
 .is-kpi-negative {
-    color: $gd-color-negative;
+    color: kit-variables.$gd-color-negative;
 }
 
 .gd-kpi-trend-icon {

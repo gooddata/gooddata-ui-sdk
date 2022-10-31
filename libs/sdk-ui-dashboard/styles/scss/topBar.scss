@@ -1,15 +1,17 @@
-@import "variables";
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/mixins";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
 .dash-header {
-    @include clearfix();
+    @include mixins.clearfix();
 
     position: relative;
     display: flex;
     align-items: center;
     height: 48px;
-    border-bottom: $nav-border;
-    border-bottom-color: var(--gd-dashboards-title-borderColor, $gd-border-color);
-    background: $gd-dashboards-title-backgroundColor;
+    border-bottom: variables.$nav-border;
+    border-bottom-color: var(--gd-dashboards-title-borderColor, kit-variables.$gd-border-color);
+    background: variables.$gd-dashboards-title-backgroundColor;
 
     .dash-control-buttons {
         flex: 0 0 auto;
@@ -69,7 +71,7 @@
     line-height: 32px;
     text-overflow: ellipsis;
     vertical-align: top;
-    color: $gd-dashboards-title-color;
+    color: variables.$gd-dashboards-title-color;
 
     // make sure the textarea uses the same font and color (that is not the default behavior)
     textarea {
@@ -92,11 +94,11 @@
 
     &.editable:hover,
     &.is-editing {
-        border-color: $editable-label-border;
+        border-color: variables.$editable-label-border;
     }
 
     &.placeholder {
-        color: $gd-color-state-blank;
+        color: kit-variables.$gd-color-state-blank;
     }
 }
 
@@ -104,15 +106,15 @@
     flex: 0 0 auto;
     text-align: center;
 
-    @media #{$xsmall-only}, #{$small-only} {
+    @media #{kit-variables.$xsmall-only}, #{kit-variables.$small-only} {
         width: 45px;
         align-self: stretch;
         padding: 0;
         border-radius: 0;
         border-width: 0 0 0 1px;
         font-size: 20px;
-        background: $gd-dashboards-title-backgroundColor;
-        border-color: var(--gd-dashboards-title-borderColor, $gd-border-color);
+        background: variables.$gd-dashboards-title-backgroundColor;
+        border-color: var(--gd-dashboards-title-borderColor, kit-variables.$gd-border-color);
 
         &,
         &:hover,
@@ -122,7 +124,7 @@
         }
     }
 
-    @media #{$medium-up} {
+    @media #{kit-variables.$medium-up} {
         margin-right: 10px;
     }
 }
@@ -134,6 +136,6 @@
 .gd-list-item.delete-button {
     &:hover {
         background-color: var(--gd-palette-error-lightest, #fff2f1);
-        color: $gd-palette-error-base;
+        color: kit-variables.$gd-palette-error-base;
     }
 }

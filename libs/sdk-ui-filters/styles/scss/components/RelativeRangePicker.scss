@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-@import "@gooddata/sdk-ui-kit/styles/scss/variables.scss";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables";
 
 .gd-relative-range-picker {
     position: relative;
@@ -30,7 +30,7 @@
                 position: relative;
                 z-index: auto;
                 border-radius: 0;
-                background-color: $gd-color-white;
+                background-color: variables.$gd-color-white;
                 box-shadow: none;
             }
 
@@ -42,6 +42,6 @@
 
     &-dash {
         margin: 0 5px;
-        color: $gd-color-state-blank;
+        color: variables.$gd-color-state-blank;
     }
 }

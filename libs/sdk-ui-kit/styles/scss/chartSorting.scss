@@ -1,8 +1,8 @@
 // (C) 2022 GoodData Corporation
-@import "./Dialog/_mixins";
-@import "./variables";
-@import "./mixins.scss";
-@import "./Button/_variables";
+@use "Dialog/_mixins" as dialog-mixins;
+@use "variables";
+@use "mixins.scss";
+@use "Button/_variables" as button-variables;
 
 %sorting-icon {
     content: "";
@@ -26,8 +26,8 @@
 
     .gd-sort-charting-dropdown-header {
         padding: 6px 6px 6px 10px;
-        color: $gd-color-state-blank;
-        background: $is-focused-background;
+        color: variables.$gd-color-state-blank;
+        background: variables.$is-focused-background;
         font-size: 12px;
         text-transform: uppercase;
     }
@@ -47,7 +47,7 @@
         border-top-left-radius: 3px;
         border-top-right-radius: 3px;
         font-size: 12px;
-        color: $gd-color-label;
+        color: variables.$gd-color-label;
 
         button {
             width: 100%;
@@ -57,7 +57,7 @@
     .gd-chart-sorting-dropdown-footer {
         margin: 0 10px;
         padding: 10px 0;
-        border-top: 1px solid $gd-border-color;
+        border-top: 1px solid variables.$gd-border-color;
         text-align: right;
 
         button + button {
@@ -70,7 +70,7 @@
         align-items: center;
         margin: 8px 0 0 6px;
         white-space: nowrap;
-        border-left: 2px dotted $gd-border-color;
+        border-left: 2px dotted variables.$gd-border-color;
 
         .select-label {
             flex: 0 0 auto;
@@ -105,9 +105,9 @@
         flex-shrink: 0;
         font-size: 10px;
         line-height: 10px;
-        color: $gd-color-state-blank;
+        color: variables.$gd-color-state-blank;
         margin-left: 3px;
-        font-family: $measure_sequence_number_font;
+        font-family: variables.$measure_sequence_number_font;
     }
 }
 

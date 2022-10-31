@@ -1,5 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
-@import "../variables.scss";
+@use "sass:color";
+@use "../variables.scss";
 
 /* ==========================================================================
    Variables
@@ -9,15 +10,15 @@ $button-icon-width: 18px;
 $button-small-icon-width: 16px;
 
 // Gray colors
-$button-action-color-hover: $gd-color-text;
+$button-action-color-hover: variables.$gd-color-text;
 
 $default-button-normal-border-color: #ccd8e2;
 
-$button-normal-bg: $gd-color-light;
+$button-normal-bg: variables.$gd-color-light;
 $button-normal-color: var(--gd-palette-complementary-7, #778491);
 $button-normal-border-color: var(--gd-palette-complementary-4, $default-button-normal-border-color);
 $button-normal-hover-bg: var(--gd-palette-complementary-1, #f5f8fa);
-$button-normal-hover-border-color: var(--gd-palette-complementary-4, transparentize(#1f3449, 0.8));
+$button-normal-hover-border-color: var(--gd-palette-complementary-4, color.adjust(#1f3449, $alpha: -0.8));
 $button-normal-active-gradient-top: var(--gd-palette-complementary-2, #dee6ef);
 $button-normal-active-gradient-bottom: var(--gd-palette-complementary-2, #ecf0f5);
 $default-button-normal-active-border-color: #b1c1d1;
@@ -27,66 +28,90 @@ $button-normal-active-border-color: var(
 );
 $button-normal-active-shadow: var(
     --gd-shadow-color,
-    transparentize($default-button-normal-active-border-color, 0.35)
+    color.adjust($default-button-normal-active-border-color, $alpha: -0.35)
 );
 $button-normal-hover-box-shadow: var(
     --gd-shadow-color,
-    transparentize($default-button-normal-active-border-color, 0.4)
+    color.adjust($default-button-normal-active-border-color, $alpha: -0.4)
 );
 
 $default-button-shadow-color: #14385d;
 $button-shadow-color: var(--gd-shadow-color, $default-button-shadow-color);
-$button-shadow-lighter: var(--gd-shadow-color, transparentize($default-button-shadow-color, 0.91));
-$button-shadow-darker: var(--gd-shadow-color, transparentize($default-button-shadow-color, 0.85));
+$button-shadow-lighter: var(--gd-shadow-color, color.adjust($default-button-shadow-color, $alpha: -0.91));
+$button-shadow-darker: var(--gd-shadow-color, color.adjust($default-button-shadow-color, $alpha: -0.85));
 
 // Branded colors calculation
 // primary color
-$button-action-color: $gd-palette-primary-base;
-$button-action-bg: $gd-palette-primary-base;
+$button-action-color: variables.$gd-palette-primary-base;
+$button-action-bg: variables.$gd-palette-primary-base;
 
-$button-action-color-t25: var(--gd-palette-primary-base-t25, transparentize($gd-color-highlight, 0.25));
-$button-action-color-t80: $gd-palette-primary-base-t80;
-$button-action-color-t70: var(--gd-palette-primary-base-t70, transparentize($gd-color-highlight, 0.7));
+$button-action-color-t25: var(
+    --gd-palette-primary-base-t25,
+    color.adjust(variables.$gd-color-highlight, $alpha: -0.25)
+);
+$button-action-color-t80: variables.$gd-palette-primary-base-t80;
+$button-action-color-t70: var(
+    --gd-palette-primary-base-t70,
+    color.adjust(variables.$gd-color-highlight, $alpha: -0.7)
+);
 
-$button-action-color-d12: var(--gd-palette-primary-base-d12, darken($gd-color-highlight, 12%));
+$button-action-color-d12: var(
+    --gd-palette-primary-base-d12,
+    color.adjust(variables.$gd-color-highlight, $lightness: -12%)
+);
 
-$button-action-disabled-color: transparentize(lighten($gd-color-highlight, 12%), 0.4);
+$button-action-disabled-color: color.adjust(
+    color.adjust(variables.$gd-color-highlight, $lightness: 12%),
+    $alpha: -0.4
+);
 $button-action-disabled-bg: var(--gd-palette-primary-disabled, $button-action-disabled-color);
-$button-action-hover-bg: $gd-palette-primary-base-darken06;
+$button-action-hover-bg: variables.$gd-palette-primary-base-darken06;
 $button-action-focus-shadow: var(
     --gd-palette-primary-focus,
-    transparentize(lighten($gd-color-highlight, 6%), 0.4)
+    color.adjust(color.adjust(variables.$gd-color-highlight, $lightness: 6%), $alpha: -0.4)
 );
 $button-action-active-gradient-top: $button-action-color-d12;
 $button-action-active-gradient-bottom: $button-action-hover-bg;
 
-$button-normal-focus-shadow: transparentize($button-action-disabled-color, 0.7);
+$button-normal-focus-shadow: color.adjust($button-action-disabled-color, $alpha: -0.7);
 
 // positive color
 $button-positive-disabled-bg: var(
     --gd-palette-success-disabled,
-    transparentize(lighten($gd-color-positive, 6%), 0.5)
+    color.adjust(color.adjust(variables.$gd-color-positive, $lightness: 6%), $alpha: -0.5)
 );
-$button-positive-hover-bg: var(--gd-palette-success-base-d06, darken($gd-color-positive, 6%));
+$button-positive-hover-bg: var(
+    --gd-palette-success-base-d06,
+    color.adjust(variables.$gd-color-positive, $lightness: -6%)
+);
 $button-positive-focus-shadow: var(
     --gd-palette-success-focus,
-    transparentize(lighten($gd-color-positive, 6%), 0.5)
+    color.adjust(color.adjust(variables.$gd-color-positive, $lightness: 6%), $alpha: -0.5)
 );
 
-$button-positive-active-gradient-top: var(--gd-palette-success-base-d12, darken($gd-color-positive, 12%));
+$button-positive-active-gradient-top: var(
+    --gd-palette-success-base-d12,
+    color.adjust(variables.$gd-color-positive, $lightness: -12%)
+);
 $button-positive-active-gradient-bottom: $button-positive-hover-bg;
 
 // negative color
 $button-negative-disabled-bg: var(
     --gd-palette-error-disabled,
-    transparentize(lighten($gd-color-negative, 20%), 0.4)
+    color.adjust(color.adjust(variables.$gd-color-negative, $lightness: 20%), $alpha: -0.4)
 );
-$button-negative-hover-bg: var(--gd-palette-error-base-d10, darken($gd-color-negative, 10%));
+$button-negative-hover-bg: var(
+    --gd-palette-error-base-d10,
+    color.adjust(variables.$gd-color-negative, $lightness: -10%)
+);
 $button-negative-focus-shadow: var(
     --gd-palette-error-focus,
-    transparentize(lighten($gd-color-negative, 10%), 0.4)
+    color.adjust(color.adjust(variables.$gd-color-negative, $lightness: 10%), $alpha: -0.4)
 );
-$button-negative-active-gradient-top: var(--gd-palette-error-base-d20, darken($gd-color-negative, 20%));
+$button-negative-active-gradient-top: var(
+    --gd-palette-error-base-d20,
+    color.adjust(variables.$gd-color-negative, $lightness: -20%)
+);
 
 $button-negative-active-gradient-bottom: $button-negative-hover-bg;
 

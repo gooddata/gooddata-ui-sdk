@@ -1,5 +1,9 @@
 // (C) 2007-2020 GoodData Corporation
-@import "./Button/_mixins";
+@use "sass:color";
+@use "Button/_mixins" as button-mixins;
+@use "Button/variables" as button-variables;
+@use "mixins";
+@use "variables";
 
 /* Basic button variants
    ========================================================================== */
@@ -17,33 +21,38 @@
 .gd-button-secondary {
     @extend %btn;
 
-    box-shadow: $button-box-shadow-x-offset $button-shadow-darker;
-    color: $button-normal-color;
-    background: $button-normal-bg;
-    border-color: $button-normal-border-color;
+    box-shadow: button-variables.$button-box-shadow-x-offset button-variables.$button-shadow-darker;
+    color: button-variables.$button-normal-color;
+    background: button-variables.$button-normal-bg;
+    border-color: button-variables.$button-normal-border-color;
 
     &:hover {
-        box-shadow: 0 1px 1px 0 $button-shadow-darker, inset 0 -1px 0 0 $button-normal-hover-box-shadow;
-        color: $gd-color-text;
-        background: $button-normal-hover-bg;
-        border-color: $button-normal-hover-border-color;
+        box-shadow: 0 1px 1px 0 button-variables.$button-shadow-darker,
+            inset 0 -1px 0 0 button-variables.$button-normal-hover-box-shadow;
+        color: variables.$gd-color-text;
+        background: button-variables.$button-normal-hover-bg;
+        border-color: button-variables.$button-normal-hover-border-color;
     }
 
     &:focus,
     &.is-focus {
-        box-shadow: $button-box-shadow-focus-x-offset $button-normal-focus-shadow,
-            $button-box-shadow-focus-y-offset $button-shadow-darker,
-            inset 0 -1px 0 0 $button-normal-hover-box-shadow;
-        border-color: $button-action-color-t25;
+        box-shadow: button-variables.$button-box-shadow-focus-x-offset
+                button-variables.$button-normal-focus-shadow,
+            button-variables.$button-box-shadow-focus-y-offset button-variables.$button-shadow-darker,
+            inset 0 -1px 0 0 button-variables.$button-normal-hover-box-shadow;
+        border-color: button-variables.$button-action-color-t25;
     }
 
     &:active,
     &.is-active {
-        box-shadow: inset 0 1px 0 0 $button-normal-active-shadow;
-        color: $gd-color-text;
-        border-color: $button-normal-active-border-color;
+        box-shadow: inset 0 1px 0 0 button-variables.$button-normal-active-shadow;
+        color: variables.$gd-color-text;
+        border-color: button-variables.$button-normal-active-border-color;
 
-        @include gradient-linear($button-normal-active-gradient-top, $button-normal-active-gradient-bottom);
+        @include mixins.gradient-linear(
+            button-variables.$button-normal-active-gradient-top,
+            button-variables.$button-normal-active-gradient-bottom
+        );
     }
 }
 
@@ -51,18 +60,18 @@
 .gd-button-negative,
 .gd-button-action {
     border: 1px solid rgba(0, 0, 0, 0.1);
-    color: $gd-color-text-light;
+    color: variables.$gd-color-text-light;
 
     &[class*="gd-icon-"],
     .gd-button-icon {
-        color: $gd-color-text-light;
+        color: variables.$gd-color-text-light;
 
         &,
         &:hover {
             &::before,
             &::after,
             .gd-button-icon {
-                color: $gd-color-text-light;
+                color: variables.$gd-color-text-light;
             }
         }
     }
@@ -76,19 +85,20 @@
 }
 
 .gd-button-positive {
-    box-shadow: $button-box-shadow-x-offset $button-shadow-lighter;
-    background: $gd-palette-success-base;
+    box-shadow: button-variables.$button-box-shadow-x-offset button-variables.$button-shadow-lighter;
+    background: variables.$gd-palette-success-base;
 
     @extend %btn;
 
     &:hover {
-        box-shadow: 0 1px 1px 0 $button-shadow-darker, inset 0 -1px 0 0 rgba(0, 0, 0, 0.15);
-        background: $button-positive-hover-bg;
+        box-shadow: 0 1px 1px 0 button-variables.$button-shadow-darker, inset 0 -1px 0 0 rgba(0, 0, 0, 0.15);
+        background: button-variables.$button-positive-hover-bg;
     }
 
     &:focus {
-        box-shadow: $button-box-shadow-focus-x-offset $button-positive-focus-shadow,
-            $button-positive-box-shadow-focus-y-offset $button-shadow-darker,
+        box-shadow: button-variables.$button-box-shadow-focus-x-offset
+                button-variables.$button-positive-focus-shadow,
+            button-variables.$button-positive-box-shadow-focus-y-offset button-variables.$button-shadow-darker,
             inset 0 -2px 0 0 rgba(0, 0, 0, 0.15);
     }
 
@@ -96,27 +106,28 @@
     &.is-active {
         box-shadow: inset 0 2px 0 0 rgba(0, 0, 0, 0.15);
 
-        @include gradient-linear(
-            $button-positive-active-gradient-top,
-            $button-positive-active-gradient-bottom
+        @include mixins.gradient-linear(
+            button-variables.$button-positive-active-gradient-top,
+            button-variables.$button-positive-active-gradient-bottom
         );
     }
 }
 
 .gd-button-negative {
-    box-shadow: $button-box-shadow-x-offset $button-shadow-lighter;
-    background: $gd-palette-error-base;
+    box-shadow: button-variables.$button-box-shadow-x-offset button-variables.$button-shadow-lighter;
+    background: variables.$gd-palette-error-base;
 
     @extend %btn;
 
     &:hover {
-        box-shadow: 0 1px 1px 0 $button-shadow-darker, inset 0 -1px 0 0 rgba(0, 0, 0, 0.15);
-        background: $button-negative-hover-bg;
+        box-shadow: 0 1px 1px 0 button-variables.$button-shadow-darker, inset 0 -1px 0 0 rgba(0, 0, 0, 0.15);
+        background: button-variables.$button-negative-hover-bg;
     }
 
     &:focus {
-        box-shadow: $button-box-shadow-focus-x-offset $button-negative-focus-shadow,
-            $button-negative-box-shadow-focus-y-offset $button-shadow-darker,
+        box-shadow: button-variables.$button-box-shadow-focus-x-offset
+                button-variables.$button-negative-focus-shadow,
+            button-variables.$button-negative-box-shadow-focus-y-offset button-variables.$button-shadow-darker,
             inset 0 -1px 0 0 rgba(0, 0, 0, 0.15);
     }
 
@@ -124,27 +135,28 @@
     &.is-active {
         box-shadow: inset 0 2px 0 0 rgba(0, 0, 0, 0.15);
 
-        @include gradient-linear(
-            $button-negative-active-gradient-top,
-            $button-negative-active-gradient-bottom
+        @include mixins.gradient-linear(
+            button-variables.$button-negative-active-gradient-top,
+            button-variables.$button-negative-active-gradient-bottom
         );
     }
 }
 
 .gd-button-action {
-    box-shadow: $button-action-box-shadow-x-offset $button-shadow-lighter;
-    background: $button-action-color;
+    box-shadow: button-variables.$button-action-box-shadow-x-offset button-variables.$button-shadow-lighter;
+    background: button-variables.$button-action-color;
 
     @extend %btn;
 
     &:hover {
-        box-shadow: 0 1px 1px 0 $button-shadow-darker, inset 0 -1px 0 0 rgba(0, 0, 0, 0.15);
-        background: $button-action-hover-bg;
+        box-shadow: 0 1px 1px 0 button-variables.$button-shadow-darker, inset 0 -1px 0 0 rgba(0, 0, 0, 0.15);
+        background: button-variables.$button-action-hover-bg;
     }
 
     &:focus {
-        box-shadow: $button-box-shadow-focus-x-offset $button-action-focus-shadow,
-            $button-action-box-shadow-focus-y-offset $button-shadow-darker,
+        box-shadow: button-variables.$button-box-shadow-focus-x-offset
+                button-variables.$button-action-focus-shadow,
+            button-variables.$button-action-box-shadow-focus-y-offset button-variables.$button-shadow-darker,
             inset 0 -1px 0 0 rgba(0, 0, 0, 0.15);
     }
 
@@ -152,7 +164,10 @@
     &.is-active {
         box-shadow: inset 0 2px 0 0 rgba(0, 0, 0, 0.15);
 
-        @include gradient-linear($button-action-active-gradient-top, $button-action-active-gradient-bottom);
+        @include mixins.gradient-linear(
+            button-variables.$button-action-active-gradient-top,
+            button-variables.$button-action-active-gradient-bottom
+        );
     }
 }
 
@@ -180,13 +195,13 @@
     display: inline-flex;
     padding: 0 6px;
     border: 1px solid transparent;
-    font: 400 14px/30px $gd-font-primary;
+    font: 400 14px/30px variables.$gd-font-primary;
     vertical-align: middle;
-    color: $button-action-color;
+    color: button-variables.$button-action-color;
     background: none;
     cursor: pointer;
 
-    @include transition(all, 0.25s, ease-in-out);
+    @include mixins.transition(all, 0.25s, ease-in-out);
 
     > span {
         text-decoration: none;
@@ -198,16 +213,16 @@
         top: 50%;
         width: 20px;
         transform: translateY(-50%);
-        font-size: $button-icon-width;
+        font-size: button-variables.$button-icon-width;
         text-align: center;
 
-        @include transition(color, 0.25s, ease-in-out);
+        @include mixins.transition(color, 0.25s, ease-in-out);
     }
 
     &::before,
     &::after,
     .gd-button-icon {
-        color: $button-action-color;
+        color: button-variables.$button-action-color;
     }
 
     &::before {
@@ -221,7 +236,7 @@
     .gd-button-icon {
         width: 20px;
         margin: 0 6px;
-        font-size: $button-icon-width;
+        font-size: button-variables.$button-icon-width;
 
         &:first-child {
             margin-left: 0;
@@ -240,19 +255,20 @@
     &:hover,
     &:active,
     &.is-active {
-        color: $button-action-color-hover;
+        color: button-variables.$button-action-color-hover;
 
         &::after,
         &::before,
         .gd-button-icon {
-            color: $button-action-color;
+            color: button-variables.$button-action-color;
         }
     }
 
     &:focus {
-        box-shadow: $button-link-box-shadow-x-offset $button-action-color-t80;
-        color: $button-action-color;
-        border-color: $button-action-color-t70;
+        box-shadow: button-variables.$button-link-box-shadow-x-offset
+            button-variables.$button-action-color-t80;
+        color: button-variables.$button-action-color;
+        border-color: button-variables.$button-action-color-t70;
         border-radius: 2px;
     }
 
@@ -269,19 +285,19 @@
 .gd-button-link-dimmed {
     @extend .gd-button-link;
 
-    color: $button-normal-color;
+    color: button-variables.$button-normal-color;
 
     &::before,
     &::after,
     .gd-button-icon {
-        color: $gd-color-text-dimmed;
+        color: variables.$gd-color-text-dimmed;
     }
 
     &.is-active,
     &:hover,
     &:focus,
     &:active {
-        color: var(--gd-palette-complementary-8, $default-gd-color-dark);
+        color: var(--gd-palette-complementary-8, variables.$default-gd-color-dark);
     }
 
     .gd-button-text {
@@ -296,7 +312,7 @@
 
     @extend .gd-button-primary;
 
-    @include active-states-and-self {
+    @include mixins.active-states-and-self {
         border: 0;
         box-shadow: none;
         background: none;
@@ -304,18 +320,18 @@
     }
 
     &.gd-button-small::before {
-        font-size: $button-small-icon-width;
+        font-size: button-variables.$button-small-icon-width;
     }
 
     &::before,
     .gd-button-icon {
-        color: $gd-color-link;
+        color: variables.$gd-color-link;
     }
 
     &:active {
         &::before,
         .gd-button-icon {
-            color: $button-action-hover-bg;
+            color: button-variables.$button-action-hover-bg;
         }
     }
 
@@ -323,15 +339,15 @@
     &:hover {
         &::before,
         .gd-button-icon {
-            color: $button-action-color;
+            color: button-variables.$button-action-color;
         }
     }
 
     &.disabled {
-        @include active-states-and-self {
+        @include mixins.active-states-and-self {
             &::before,
             .gd-button-icon {
-                color: $gd-color-disabled;
+                color: variables.$gd-color-disabled;
             }
         }
     }
@@ -361,7 +377,7 @@
     &::after,
     &::before,
     .gd-button-icon {
-        color: $gd-color-state-blank;
+        color: variables.$gd-color-state-blank;
     }
 
     &:focus,
@@ -371,7 +387,7 @@
         &::after,
         &::before,
         .gd-button-icon {
-            color: $gd-color-link;
+            color: variables.$gd-color-link;
         }
     }
 }
@@ -393,7 +409,7 @@
             width: 18px;
             font-size: 15px;
 
-            @include transition(color, 0.25s, ease-in-out);
+            @include mixins.transition(color, 0.25s, ease-in-out);
         }
 
         &::before {
@@ -414,10 +430,10 @@
     }
 
     .gd-button-icon {
-        width: $button-small-icon-width;
-        height: $button-small-icon-width;
-        line-height: $button-small-icon-width;
-        font-size: $button-small-icon-width;
+        width: button-variables.$button-small-icon-width;
+        height: button-variables.$button-small-icon-width;
+        line-height: button-variables.$button-small-icon-width;
+        font-size: button-variables.$button-small-icon-width;
     }
 }
 
@@ -432,7 +448,7 @@
     width: 31px;
     height: 29px;
     line-height: 27px;
-    color: $button-normal-color;
+    color: button-variables.$button-normal-color;
     padding-left: 0;
 
     &::before {
@@ -440,14 +456,14 @@
         left: 0;
         margin: 0;
         padding: 0;
-        color: $button-normal-color;
-        font-size: $button-small-icon-width;
+        color: button-variables.$button-normal-color;
+        font-size: button-variables.$button-small-icon-width;
     }
 
     &:hover {
         &::before,
         .gd-button-icon {
-            color: $button-action-color;
+            color: button-variables.$button-action-color;
         }
     }
 }
@@ -459,7 +475,7 @@
 // stylelint-disable-next-line no-duplicate-selectors
 .gd-button {
     &.disabled {
-        @include active-states-and-self {
+        @include mixins.active-states-and-self {
             box-shadow: none;
             background: transparent;
             cursor: default;
@@ -476,15 +492,15 @@
     &.disabled {
         cursor: default;
 
-        @include active-states-and-self {
-            color: $gd-color-disabled;
-            background: transparentize($default-gd-color-light, 0.7);
+        @include mixins.active-states-and-self {
+            color: variables.$gd-color-disabled;
+            background: color.adjust(variables.$default-gd-color-light, $alpha: -0.7);
             border-color: rgba(210, 219, 227, 0.75);
 
             &::before,
             &::after,
             .gd-button-icon {
-                color: $gd-color-disabled;
+                color: variables.$gd-color-disabled;
             }
         }
     }
@@ -496,14 +512,14 @@
     &.disabled {
         cursor: default;
 
-        @include active-states-and-self {
-            color: $gd-color-text-light;
-            background: $button-positive-disabled-bg;
+        @include mixins.active-states-and-self {
+            color: variables.$gd-color-text-light;
+            background: button-variables.$button-positive-disabled-bg;
 
             &::before,
             &::after,
             .gd-button-icon {
-                color: $gd-color-text-light;
+                color: variables.$gd-color-text-light;
             }
         }
     }
@@ -515,14 +531,14 @@
     &.disabled {
         cursor: default;
 
-        @include active-states-and-self {
-            color: $gd-color-text-light;
-            background: $button-negative-disabled-bg;
+        @include mixins.active-states-and-self {
+            color: variables.$gd-color-text-light;
+            background: button-variables.$button-negative-disabled-bg;
 
             &::before,
             &::after,
             .gd-button-icon {
-                color: $gd-color-text-light;
+                color: variables.$gd-color-text-light;
             }
         }
     }
@@ -534,16 +550,16 @@
     &.disabled {
         cursor: default;
 
-        @include active-states-and-self {
-            color: $gd-color-text-light;
-            background: $button-action-disabled-bg;
+        @include mixins.active-states-and-self {
+            color: variables.$gd-color-text-light;
+            background: button-variables.$button-action-disabled-bg;
 
-            @include disable-filter();
+            @include mixins.disable-filter();
 
             &::before,
             &::after,
             .gd-button-icon {
-                color: $gd-color-text-light;
+                color: variables.$gd-color-text-light;
             }
         }
     }
@@ -554,9 +570,9 @@
 .gd-button-link {
     &.disabled {
         cursor: default;
-        $color: $button-normal-border-color;
+        $color: button-variables.$button-normal-border-color;
 
-        @include active-states-and-self {
+        @include mixins.active-states-and-self {
             color: $color;
             border-color: transparent;
 
@@ -590,7 +606,7 @@
         position: relative;
         z-index: 1;
         margin: 0 -1px 0 0;
-        border-radius: $button-group-border-radius;
+        border-radius: button-variables.$button-group-border-radius;
 
         &:focus {
             z-index: 2;
@@ -603,13 +619,13 @@
 
     > .gd-button:first-child,
     > *:not(.gd-button):first-child .gd-button {
-        border-radius: $button-border-radius 0 0 $button-border-radius;
+        border-radius: button-variables.$button-border-radius 0 0 button-variables.$button-border-radius;
     }
 
     > .gd-button:last-child,
     > *:not(.gd-button):last-child .gd-button {
         margin-right: 0;
-        border-radius: 0 $button-border-radius $button-border-radius 0;
+        border-radius: 0 button-variables.$button-border-radius button-variables.$button-border-radius 0;
     }
 }
 

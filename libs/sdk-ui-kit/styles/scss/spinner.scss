@@ -1,12 +1,11 @@
 // (C) 2007-2020 GoodData Corporation
-
-@import "./variables";
+@use "variables";
 
 $class-slug: gd-dot-spinner !default;
 $spinner-items: 8;
 $spinner-item-size: 6px;
 $spinner-dimension: 34px;
-$spinner-item-background-color: $gd-color-state-blank;
+$spinner-item-background-color: variables.$gd-color-state-blank;
 
 .gd-dot-spinner {
     position: relative;

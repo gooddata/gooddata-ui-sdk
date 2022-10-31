@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-@import "./variables";
+@use "variables";
 
 .gd-dropdown.overlay {
     // reset overlays padding
@@ -33,7 +33,7 @@
     .gd-infinite-list {
         margin: 6px 0;
 
-        @media #{$small-only} {
+        @media #{variables.$small-only} {
             margin: 0;
         }
     }
@@ -41,7 +41,7 @@
     .gd-async-list {
         margin: 6px 0;
 
-        @media #{$small-only} {
+        @media #{variables.$small-only} {
             margin: 6px 0;
         }
     }
@@ -96,7 +96,7 @@
         .gd-header-project {
             margin: 0;
             box-shadow: 0 1px 2px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.1));
-            color: var(--gd-palette-complementary-8, $default-gd-color-dark);
+            color: var(--gd-palette-complementary-8, variables.$default-gd-color-dark);
             padding-right: 30px;
             border-bottom: 1px solid var(--gd-palette-complementary-4, #c9d5e0);
 
@@ -106,7 +106,7 @@
                 // stylelint-disable-next-line max-nesting-depth
                 &::after {
                     right: 10px;
-                    color: $gd-color-text;
+                    color: variables.$gd-color-text;
                     opacity: 1;
                 }
 
@@ -114,7 +114,7 @@
                 // stylelint-disable-next-line max-nesting-depth
                 &,
                 &:hover {
-                    background-color: $gd-color-white;
+                    background-color: variables.$gd-color-white;
                 }
             }
         }

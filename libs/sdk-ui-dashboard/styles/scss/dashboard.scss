@@ -1,19 +1,21 @@
 // (C) 2007-2020 GoodData Corporation
-@import "@gooddata/sdk-ui-kit/styles/scss/mixins";
+@use "sass:math";
+@use "@gooddata/sdk-ui-kit/styles/scss/mixins";
 
-@import "./variables";
-@import "./layout";
-@import "./kpi";
-@import "./kpi_alert_dialog";
-@import "./scheduled_mail";
-@import "./scheduled_mail_recipients";
-@import "./item-states";
+@use "variables";
+@use "layout";
+@use "kpi";
+@use "kpi_alert_dialog";
+@use "scheduled_mail";
+@use "scheduled_mail_recipients";
+@use "item-states";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
 // this must be used on the body element in gdc-dashboards
 .gd-dashboards-root {
     flex-wrap: nowrap;
-    background: $gd-dashboards-content-backgroundColor;
-    @include default-styles();
+    background: variables.$gd-dashboards-content-backgroundColor;
+    @include mixins.default-styles();
 }
 
 .gd-dash-content {
@@ -26,31 +28,31 @@
     box-sizing: border-box;
     display: flex;
     align-items: stretch;
-    min-height: $item-min-height;
-    padding: $item-outer-padding;
+    min-height: variables.$item-min-height;
+    padding: variables.$item-outer-padding;
     // Grid definition
 
-    @media #{$small-up} {
+    @media #{kit-variables.$small-up} {
         flex: 0 0 100%;
         max-width: 100%;
     }
 
-    @media #{$medium-up} {
+    @media #{kit-variables.$medium-up} {
         flex: 0 0 50%;
         max-width: 50%;
     }
 
-    @media #{$large-up} {
+    @media #{kit-variables.$large-up} {
         flex: 0 0 25%;
         max-width: 25%;
     }
 
-    @media #{$xxlarge-up} {
-        flex: 0 0 percentage(calc(1 / 6));
-        max-width: percentage(calc(1 / 6));
+    @media #{kit-variables.$xxlarge-up} {
+        flex: 0 0 math.percentage(calc(1 / 6));
+        max-width: math.percentage(calc(1 / 6));
     }
 
-    @media #{$xsmall-only}, #{$small-only} {
+    @media #{kit-variables.$xsmall-only}, #{kit-variables.$small-only} {
         flex-direction: column;
 
         &::after {
@@ -60,7 +62,7 @@
             bottom: 5px;
             left: 10px;
             height: 0;
-            border-bottom: 1px dashed $gd-color-disabled;
+            border-bottom: 1px dashed kit-variables.$gd-color-disabled;
         }
 
         &:last-child::after {
@@ -85,7 +87,7 @@
             .kpi-value {
                 color: var(
                     --gd-dashboards-content-kpiWidget-kpi-primaryMeasureColor,
-                    var(--gd-palette-complementary-9, $default-gd-color-link)
+                    var(--gd-palette-complementary-9, kit-variables.$default-gd-color-link)
                 );
             }
             .kpi-value.is-empty-value {
@@ -105,7 +107,7 @@
                 right: 0;
                 bottom: 0;
                 left: 0;
-                background-color: $gd-palette-primary-dimmed;
+                background-color: kit-variables.$gd-palette-primary-dimmed;
                 // in animations
                 animation-name: alert-highlighted;
                 animation-duration: 0.3s;
@@ -120,7 +122,7 @@
                 // refactor
                 // stylelint-disable-next-line max-nesting-depth
                 &::before {
-                    background-color: $gd-palette-warning-dimmed;
+                    background-color: kit-variables.$gd-palette-warning-dimmed;
                 }
             }
         }
@@ -130,13 +132,13 @@
         cursor: pointer;
 
         &.dash-item-content:hover {
-            border-color: $is-focused-background;
+            border-color: kit-variables.$is-focused-background;
         }
 
         &.is-selected.dash-item-content {
-            border-color: $gd-palette-primary-base;
+            border-color: kit-variables.$gd-palette-primary-base;
             &:hover {
-                border-color: $gd-palette-primary-base;
+                border-color: kit-variables.$gd-palette-primary-base;
             }
         }
     }
@@ -144,7 +146,7 @@
     &.is-selected {
         .dash-item-action-lw-options {
             display: block;
-            background-color: $darker-grey-background;
+            background-color: variables.$darker-grey-background;
             &::before {
                 color: var(--gd-palette-complementary-0, #fff);
             }
@@ -196,16 +198,16 @@
     );
 
     position: relative;
-    padding: $item-inner-padding;
-    border-width: $gd-dashboards-content-widget-borderWidth;
+    padding: variables.$item-inner-padding;
+    border-width: variables.$gd-dashboards-content-widget-borderWidth;
     border-style: solid;
-    border-color: $gd-dashboards-content-widget-borderColor;
-    border-radius: $gd-dashboards-content-widget-borderRadius;
-    box-shadow: $gd-dashboards-content-widget-dropShadow;
-    background-color: $gd-widget-background;
-    transition: $transition-length;
+    border-color: variables.$gd-dashboards-content-widget-borderColor;
+    border-radius: variables.$gd-dashboards-content-widget-borderRadius;
+    box-shadow: variables.$gd-dashboards-content-widget-dropShadow;
+    background-color: kit-variables.$gd-widget-background;
+    transition: variables.$transition-length;
 
-    @media #{$xsmall-only}, #{$small-only} {
+    @media #{kit-variables.$xsmall-only}, #{kit-variables.$small-only} {
         padding: 10px 5px 5px;
     }
 
@@ -225,33 +227,37 @@
 .viz-type-headline {
     .dash-item-action-alert,
     .dash-item-action-placeholder {
-        top: calc(-#{$item-outer-padding} - #{$gd-dashboards-content-kpiWidget-borderWidth});
-        right: calc(-#{$item-outer-padding} - #{$gd-dashboards-content-kpiWidget-borderWidth});
+        top: calc(
+            -#{variables.$item-outer-padding} - #{variables.$gd-dashboards-content-kpiWidget-borderWidth}
+        );
+        right: calc(
+            -#{variables.$item-outer-padding} - #{variables.$gd-dashboards-content-kpiWidget-borderWidth}
+        );
     }
 
     .dash-item-content {
-        border-width: $gd-dashboards-content-kpiWidget-borderWidth;
+        border-width: variables.$gd-dashboards-content-kpiWidget-borderWidth;
         border-style: solid;
-        border-color: $gd-dashboards-content-kpiWidget-borderColor;
-        border-radius: $gd-dashboards-content-kpiWidget-borderRadius;
-        background-color: $gd-dashboards-content-kpiWidget-backgroundColor;
-        box-shadow: $gd-dashboards-content-kpiWidget-dropShadow;
+        border-color: variables.$gd-dashboards-content-kpiWidget-borderColor;
+        border-radius: variables.$gd-dashboards-content-kpiWidget-borderRadius;
+        background-color: variables.$gd-dashboards-content-kpiWidget-backgroundColor;
+        box-shadow: variables.$gd-dashboards-content-kpiWidget-dropShadow;
     }
 
     .item-headline {
-        text-align: $gd-dashboards-content-kpiWidget-title-textAlign;
-        color: $gd-dashboards-content-kpiWidget-title-color;
+        text-align: variables.$gd-dashboards-content-kpiWidget-title-textAlign;
+        color: variables.$gd-dashboards-content-kpiWidget-title-color;
     }
 }
 
 .item-headline-outer {
     position: relative;
     z-index: 1;
-    height: ($item-headline-lineHeight + $item-headline-padding-vertical) * 2 + 2; // relate SD-956: please update HEADLINE_OUTER_HEIGHT in widgetHeightUtil.ts when height is changed
+    height: (variables.$item-headline-lineHeight + variables.$item-headline-padding-vertical) * 2 + 2; // relate SD-956: please update HEADLINE_OUTER_HEIGHT in widgetHeightUtil.ts when height is changed
     margin-top: 10px;
-    line-height: ($item-headline-lineHeight + $item-headline-padding-vertical) * 2;
+    line-height: (variables.$item-headline-lineHeight + variables.$item-headline-padding-vertical) * 2;
 
-    @media #{$xsmall-only}, #{$small-only} {
+    @media #{kit-variables.$xsmall-only}, #{kit-variables.$small-only} {
         margin-top: 0;
         padding: 0;
     }
@@ -265,12 +271,12 @@
     position: relative;
     display: inline-block;
     width: 100%;
-    max-height: ($item-headline-lineHeight + $item-headline-padding-vertical) * 2;
+    max-height: (variables.$item-headline-lineHeight + variables.$item-headline-padding-vertical) * 2;
     font-size: 17px;
-    line-height: $item-headline-lineHeight;
+    line-height: variables.$item-headline-lineHeight;
     vertical-align: middle;
-    text-align: $gd-dashboards-content-widget-title-textAlign;
-    color: $gd-dashboards-content-widget-title-color;
+    text-align: variables.$gd-dashboards-content-widget-title-textAlign;
+    color: variables.$gd-dashboards-content-widget-title-color;
 }
 
 .item-headline-inner {
@@ -290,11 +296,11 @@
     height: 36px;
     border: none;
     cursor: pointer;
-    transition: $transition-length;
+    transition: variables.$transition-length;
     border-radius: 50%;
-    background-color: $button-grey-background;
+    background-color: variables.$button-grey-background;
 
-    @media #{$xsmall-only}, #{$small-only} {
+    @media #{kit-variables.$xsmall-only}, #{kit-variables.$small-only} {
         top: -73px;
     }
 }
@@ -302,12 +308,12 @@
 .dash-item-action {
     position: absolute;
     z-index: 2;
-    top: calc(-#{$item-outer-padding} - #{$gd-dashboards-content-widget-borderWidth});
-    right: calc(-#{$item-outer-padding} - #{$gd-dashboards-content-widget-borderWidth});
-    width: $item-action-width;
+    top: calc(-#{variables.$item-outer-padding} - #{variables.$gd-dashboards-content-widget-borderWidth});
+    right: calc(-#{variables.$item-outer-padding} - #{variables.$gd-dashboards-content-widget-borderWidth});
+    width: variables.$item-action-width;
     height: 36px;
     line-height: 36px;
-    color: $gd-color-text-light;
+    color: kit-variables.$gd-color-text-light;
     cursor: pointer;
     border-radius: 20px;
     font-size: 18px;
@@ -322,15 +328,15 @@
     .dash-item-action-alert:not(.disabled):hover,
     .dash-item-action-options:not(.disabled):hover,
     .dash-item-action-widget-options-active {
-        color: $gd-color-text-light;
-        background-color: var(--gd-palette-complementary-7, $gd-color-text-dimmed);
+        color: kit-variables.$gd-color-text-light;
+        background-color: var(--gd-palette-complementary-7, kit-variables.$gd-color-text-dimmed);
     }
 }
 
 .is-mobile {
     .dash-item-action-alert:not(.disabled),
     .dash-item-action-options:not(.disabled) {
-        color: $gd-color-link;
+        color: kit-variables.$gd-color-link;
         background: none;
     }
 
@@ -340,21 +346,21 @@
     }
 
     .dash-item-action-widget-options:not(.disabled) {
-        color: $gd-color-label;
-        background-color: $is-focused-background;
+        color: kit-variables.$gd-color-label;
+        background-color: kit-variables.$is-focused-background;
     }
 
     .dash-item-action-widget-options-active:not(.disabled) {
-        background-color: $gd-color-text-dimmed;
+        background-color: kit-variables.$gd-color-text-dimmed;
     }
 }
 
 .dash-item-action.dash-item-action-alert,
 .dash-item-action.dash-item-action-options {
     display: none;
-    color: $gd-color-label;
-    background-color: $is-focused-background;
-    transition: $transition-length;
+    color: kit-variables.$gd-color-label;
+    background-color: kit-variables.$is-focused-background;
+    transition: variables.$transition-length;
 
     .is-mobile & {
         display: block;
@@ -385,30 +391,31 @@
 .dash-item-action-placeholder {
     position: absolute;
     z-index: 2;
-    top: calc(-#{$item-outer-padding} - #{$gd-dashboards-content-widget-borderWidth});
-    right: calc(-#{$item-outer-padding} - #{$gd-dashboards-content-widget-borderWidth});
+    top: calc(-#{variables.$item-outer-padding} - #{variables.$gd-dashboards-content-widget-borderWidth});
+    right: calc(-#{variables.$item-outer-padding} - #{variables.$gd-dashboards-content-widget-borderWidth});
 }
 
 .dash-item-action-placeholder {
-    width: $item-action-width;
-    height: $item-action-width;
+    width: variables.$item-action-width;
+    height: variables.$item-action-width;
 }
 
 .dash-item-action-placeholder-headline {
     right: calc(
-        -#{$item-outer-padding} - #{$gd-dashboards-content-widget-borderWidth} + #{$item-action-width} + 5px
+        -#{variables.$item-outer-padding} - #{variables.$gd-dashboards-content-widget-borderWidth} + #{variables.$item-action-width} +
+            5px
     );
 }
 
 .dash-item-action,
 .dash-item-action-options {
-    width: $item-action-width;
+    width: variables.$item-action-width;
     height: 36px;
     border-radius: 20px;
     font-size: 18px;
     line-height: 36px;
     text-align: center;
-    color: $gd-color-text-light;
+    color: kit-variables.$gd-color-text-light;
     cursor: pointer;
 
     &.disabled {
@@ -421,7 +428,7 @@
     top: 0;
     right: 0;
     padding-top: 1px;
-    background-color: $gd-palette-primary-base;
+    background-color: kit-variables.$gd-palette-primary-base;
 
     &.gd-icon-trash::before {
         content: url("~@gooddata/sdk-ui-dashboard/esm/assets/trash.svg");
@@ -435,15 +442,15 @@
     }
 
     &:hover {
-        background-color: $gd-palette-error-base;
+        background-color: kit-variables.$gd-palette-error-base;
     }
 }
 
 .dash-item-action-options {
     display: none;
-    color: $gd-color-label;
-    background-color: $is-focused-background;
-    transition: $transition-length;
+    color: kit-variables.$gd-color-label;
+    background-color: kit-variables.$is-focused-background;
+    transition: variables.$transition-length;
 
     .is-mobile & {
         display: block;
@@ -472,7 +479,7 @@
     &:hover,
     &.dash-item-action-widget-options-active {
         &::before {
-            color: $gd-color-white;
+            color: kit-variables.$gd-color-white;
         }
     }
 }
@@ -482,10 +489,10 @@
     right: 30px;
     display: none;
     border-radius: 50%;
-    background-color: var(--gd-palette-complementary-2, $grey-background);
+    background-color: var(--gd-palette-complementary-2, variables.$grey-background);
     width: 36px;
     height: 36px;
-    transition: $transition-length;
+    transition: variables.$transition-length;
 
     &::before {
         content: "...";
@@ -493,7 +500,7 @@
         position: relative;
         top: -5px;
         display: inline;
-        color: $darker-grey-background;
+        color: variables.$darker-grey-background;
     }
 }
 
@@ -501,7 +508,7 @@
     overflow: hidden;
     margin-bottom: 40px;
     padding: 20px;
-    border-bottom: 1px solid $gd-border-color;
+    border-bottom: 1px solid kit-variables.$gd-border-color;
 
     &:last-of-type {
         border-bottom: none;
@@ -511,7 +518,7 @@
 .dash-section-kpis {
     max-width: 100vw;
 
-    @media #{$xsmall-only}, #{$small-only} {
+    @media #{kit-variables.$xsmall-only}, #{kit-variables.$small-only} {
         margin: 0;
         padding-left: 5px;
         padding-right: 5px;
@@ -522,7 +529,7 @@
 .dash-section-header {
     margin-bottom: 20px;
 
-    @media #{$xsmall-only}, #{$small-only} {
+    @media #{kit-variables.$xsmall-only}, #{kit-variables.$small-only} {
         text-align: center;
     }
 
@@ -532,11 +539,11 @@
 
     h2 {
         margin-bottom: 0.25em;
-        color: $gd-color-dark;
+        color: kit-variables.$gd-color-dark;
     }
 
     p {
-        color: $gd-color-state-blank;
+        color: kit-variables.$gd-color-state-blank;
     }
 }
 

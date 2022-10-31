@@ -1,5 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
-@import "./mixins";
+@use "mixins";
+@use "variables";
 
 /* ==========================================================================
    Timepicker
@@ -16,12 +17,12 @@
     .button-dropdown:focus .gd-icon-timer,
     .button-dropdown:hover .gd-icon-timer,
     .button-dropdown.is-active .gd-icon-timer {
-        color: $gd-palette-primary-base;
+        color: variables.$gd-palette-primary-base;
     }
 }
 
 .gd-mobile-dropdown-header {
     .button-dropdown.is-active .gd-button-icon.gd-icon-timer {
-        color: $gd-palette-primary-base;
+        color: variables.$gd-palette-primary-base;
     }
 }

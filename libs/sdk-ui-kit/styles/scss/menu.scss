@@ -1,8 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
-@import "@gooddata/sdk-ui/styles/scss/settings";
-
-@import "./indigoFont";
-@import "./list";
+@use "indigoFont";
+@use "list";
 
 .gd-menuOpenner {
     position: relative;

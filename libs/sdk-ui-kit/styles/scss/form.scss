@@ -1,8 +1,9 @@
 // (C) 2007-2020 GoodData Corporation
-@import "./Form/_mixins";
-@import "./Form/_variables";
-@import "variables.scss";
-@import "mixins.scss";
+@use "sass:color";
+@use "Form/_mixins" as form-mixins;
+@use "Form/_variables" as form-variables;
+@use "variables";
+@use "mixins";
 
 /* ==========================================================================
    General styles for inputs & selects
@@ -26,46 +27,53 @@
 
 .gd-input-field,
 .input-text {
-    @include gd-input-base;
-    @include border-radius(3px);
-    @include box-shadow(inset 0 1px 1px 0 transparentize($gd-input-text-box-shadow-color, 0.85));
+    @include form-mixins.gd-input-base;
+    @include mixins.border-radius(3px);
+    @include mixins.box-shadow(
+        inset 0 1px 1px 0 color.adjust(variables.$gd-input-text-box-shadow-color, $alpha: -0.85)
+    );
 
-    @include placeholder {
-        color: var(--gd-palette-complementary-6, transparentize($default-gd-color-link, 0.25));
+    @include mixins.placeholder {
+        color: var(
+            --gd-palette-complementary-6,
+            color.adjust(variables.$default-gd-color-link, $alpha: -0.25)
+        );
 
-        @include transition(color, 0.25s, ease-in-out);
+        @include mixins.transition(color, 0.25s, ease-in-out);
     }
 
     &:hover {
-        border-color: $gd-input-text-hover-border;
+        border-color: variables.$gd-input-text-hover-border;
 
-        @include placeholder {
-            color: $gd-color-link;
+        @include mixins.placeholder {
+            color: variables.$gd-color-link;
         }
     }
 
     &:focus {
         outline: 0;
-        border-color: $gd-palette-primary-base;
+        border-color: variables.$gd-palette-primary-base;
 
-        @include box-shadow(inset 0 1px 1px 0 transparentize($gd-input-text-box-shadow-color, 0.8));
+        @include mixins.box-shadow(
+            inset 0 1px 1px 0 color.adjust(variables.$gd-input-text-box-shadow-color, $alpha: -0.8)
+        );
     }
 
     &:disabled,
     &.disabled {
         &,
         &:hover {
-            color: $gd-color-disabled;
-            border-color: $gd-input-text-border;
-            background-color: $gd-color-light;
+            color: variables.$gd-color-disabled;
+            border-color: variables.$gd-input-text-border;
+            background-color: variables.$gd-color-light;
 
-            @include box-shadow(none);
+            @include mixins.box-shadow(none);
         }
     }
 
     &.gd-input-field-small,
     &.small {
-        @include gd-input-small-base;
+        @include form-mixins.gd-input-small-base;
     }
 }
 
@@ -121,27 +129,27 @@ textarea {
 .gd-input-icon,
 .searchfield-icon {
     left: 10px;
-    color: $gd-color-disabled;
+    color: variables.$gd-color-disabled;
 
-    @include gd-searchfield-base;
-    @include transition(all, 0.25s, ease-in-out);
+    @include form-mixins.gd-searchfield-base;
+    @include mixins.transition(all, 0.25s, ease-in-out);
 
     :focus + & {
-        color: $gd-palette-primary-base;
+        color: variables.$gd-palette-primary-base;
     }
 }
 
 .gd-input-icon-clear,
 .searchfield-clear {
     right: 10px;
-    color: $gd-color-link;
+    color: variables.$gd-color-link;
     cursor: pointer;
 
-    @include gd-searchfield-base;
-    @include transition(all, 0.25s, ease-in-out);
+    @include form-mixins.gd-searchfield-base;
+    @include mixins.transition(all, 0.25s, ease-in-out);
 
     &:hover {
-        color: $gd-palette-primary-base;
+        color: variables.$gd-palette-primary-base;
     }
 }
 
@@ -150,22 +158,22 @@ textarea {
 
 .has-error {
     .gd-input-field {
-        color: $gd-color-text;
-        border-color: $gd-form-error-borderColor;
+        color: variables.$gd-color-text;
+        border-color: form-variables.$gd-form-error-borderColor;
 
-        @include box-shadow(inset 0 0 2px 0 $gd-form-error-shadowColor);
+        @include mixins.box-shadow(inset 0 0 2px 0 form-variables.$gd-form-error-shadowColor);
     }
 
     .gd-input-icon {
-        color: $gd-palette-error-base;
+        color: variables.$gd-palette-error-base;
     }
 }
 
 .has-warning {
     .gd-input-field {
-        border-color: $gd-palette-warning-base;
+        border-color: variables.$gd-palette-warning-base;
 
-        @include box-shadow(inset 0 0 2px 0 $gd-form-warning-shadowColor);
+        @include mixins.box-shadow(inset 0 0 2px 0 form-variables.$gd-form-warning-shadowColor);
     }
 }
 
@@ -182,14 +190,14 @@ textarea {
 
     &.is-disabled {
         .gd-input-label {
-            color: $gd-color-disabled;
+            color: variables.$gd-color-disabled;
             user-select: none;
         }
     }
 
     &.has-error {
         .gd-input-label {
-            color: $gd-palette-error-base;
+            color: variables.$gd-palette-error-base;
         }
     }
 }
@@ -198,7 +206,7 @@ textarea {
     flex: 0 0 auto;
     margin-right: 20px;
     white-space: nowrap;
-    color: $gd-color-label;
+    color: variables.$gd-color-label;
     font-size: 14px;
 }
 
@@ -227,12 +235,12 @@ textarea {
         .gd-input-field,
         .gd-input-prefix,
         .gd-input-suffix {
-            border-color: $gd-input-text-hover-border;
+            border-color: variables.$gd-input-text-hover-border;
         }
 
         .gd-input-field:disabled {
-            @include gd-input-and-prefix {
-                border-color: $gd-input-text-border;
+            @include form-mixins.gd-input-and-prefix {
+                border-color: variables.$gd-input-text-border;
             }
         }
     }
@@ -249,18 +257,18 @@ textarea {
         min-width: 0;
 
         &:focus {
-            @include gd-input-and-prefix {
-                border-color: $gd-palette-primary-base;
+            @include form-mixins.gd-input-and-prefix {
+                border-color: variables.$gd-palette-primary-base;
             }
         }
 
         &.gd-input-field-small,
         &.small {
-            @include gd-input-and-prefix {
-                @include gd-input-small-base;
+            @include form-mixins.gd-input-and-prefix {
+                @include form-mixins.gd-input-small-base;
             }
 
-            @include gd-input-prefix {
+            @include form-mixins.gd-input-prefix {
                 min-width: 27px;
             }
         }
@@ -272,8 +280,8 @@ textarea {
     }
 
     &.has-error .gd-input-field {
-        @include gd-input-and-prefix {
-            border-color: $gd-form-error-borderColor;
+        @include form-mixins.gd-input-and-prefix {
+            border-color: form-variables.$gd-form-error-borderColor;
         }
     }
 }
@@ -296,12 +304,12 @@ textarea {
 .gd-input-suffix {
     display: block;
     flex: 0 0 auto;
-    @include gd-input-base;
+    @include form-mixins.gd-input-base;
 
-    color: var(--gd-palette-complementary-6, $default-gd-color-disabled);
+    color: var(--gd-palette-complementary-6, variables.$default-gd-color-disabled);
     min-width: 30px;
     text-align: center;
-    background-color: var(--gd-palette-complementary-1, $default-gd-color-light);
+    background-color: var(--gd-palette-complementary-1, variables.$default-gd-color-light);
 }
 
 .gd-input-prefix {
@@ -329,7 +337,7 @@ textarea {
     .input-label-text {
         line-height: inherit;
         vertical-align: middle;
-        color: $gd-color-text;
+        color: variables.$gd-color-text;
 
         &::before,
         &::after {
@@ -344,9 +352,9 @@ textarea {
             left: 3px;
             width: 12px;
             height: 12px;
-            border: 1px solid $gd-input-text-hover-border;
+            border: 1px solid variables.$gd-input-text-hover-border;
             transition: all 0.2s;
-            background-color: $gd-color-text-light;
+            background-color: variables.$gd-color-text-light;
         }
 
         &::after {
@@ -369,9 +377,9 @@ textarea {
                 box-shadow: none;
                 border-color: var(
                     --gd-palette-complementary-3,
-                    transparentize($default-gd-input-text-border, 0.3)
+                    color.adjust(variables.$default-gd-input-text-border, $alpha: -0.3)
                 );
-                background-color: $gd-color-light;
+                background-color: variables.$gd-color-light;
             }
         }
     }
@@ -379,7 +387,8 @@ textarea {
     &:hover,
     &:active {
         .input-label-text::before {
-            box-shadow: inset 0 1px 2px 0 transparentize($gd-input-text-box-shadow-color, 0.75);
+            box-shadow: inset 0 1px 2px 0
+                color.adjust(variables.$gd-input-text-box-shadow-color, $alpha: -0.75);
         }
 
         input:checked ~ .input-label-text::before {
@@ -389,12 +398,12 @@ textarea {
     }
 
     &:hover .input-label-text::before {
-        border-color: $gd-color-state-blank;
+        border-color: variables.$gd-color-state-blank;
     }
 
     &:active .input-label-text::before {
-        border-color: $gd-palette-primary-base;
-        background-color: $gd-palette-primary-dimmed;
+        border-color: variables.$gd-palette-primary-base;
+        background-color: variables.$gd-palette-primary-dimmed;
     }
 
     input {
@@ -405,7 +414,7 @@ textarea {
         &:checked ~ .input-label-text {
             &::before {
                 border-color: transparent;
-                background-color: $gd-palette-primary-base;
+                background-color: variables.$gd-palette-primary-base;
             }
 
             &::after {
@@ -416,7 +425,7 @@ textarea {
         &:disabled,
         &.disabled {
             ~ .input-label-text {
-                color: $gd-color-disabled;
+                color: variables.$gd-color-disabled;
             }
 
             ~ .input-label-text::before,
@@ -425,7 +434,7 @@ textarea {
             }
 
             &:checked ~ .input-label-text::before {
-                background-color: $gd-input-text-border;
+                background-color: variables.$gd-input-text-border;
             }
         }
     }
@@ -443,7 +452,7 @@ textarea {
             width: 6px;
             height: 6px;
             border-radius: 50%;
-            background-color: $gd-color-text-light;
+            background-color: variables.$gd-color-text-light;
         }
     }
 }
@@ -461,8 +470,8 @@ textarea {
             height: 3px;
             transform: scale(0) rotate(315deg) skew(-2deg);
             transform-origin: top;
-            border-left: 2px solid $gd-color-text-light;
-            border-bottom: 2px solid $gd-color-text-light;
+            border-left: 2px solid variables.$gd-color-text-light;
+            border-bottom: 2px solid variables.$gd-color-text-light;
         }
     }
 
@@ -495,7 +504,7 @@ textarea {
         &:disabled,
         &.disabled {
             ~ .input-label-text {
-                color: $gd-color-disabled;
+                color: variables.$gd-color-disabled;
             }
         }
     }
@@ -530,7 +539,7 @@ textarea {
             right: 18px;
             width: 8px;
             height: 8px;
-            border: 1px solid $gd-color-disabled;
+            border: 1px solid variables.$gd-color-disabled;
             border-radius: 50%;
         }
     }
@@ -538,20 +547,20 @@ textarea {
     input:checked {
         ~ .input-label-text::after {
             right: 2px;
-            border: 1px solid $gd-palette-primary-base-darken06;
-            background: $gd-palette-primary-base;
+            border: 1px solid variables.$gd-palette-primary-base-darken06;
+            background: variables.$gd-palette-primary-base;
         }
     }
 
     &:hover,
     &:active {
         .input-label-text::after {
-            border: 1px solid var(--gd-palette-complementary-5, $default-gd-color-state-blank);
+            border: 1px solid var(--gd-palette-complementary-5, variables.$default-gd-color-state-blank);
             background: var(--gd-palette-complementary-3, #d7dfe5);
         }
 
         input:checked ~ .input-label-text::after {
-            background: $gd-palette-primary-base-darken06;
+            background: variables.$gd-palette-primary-base-darken06;
         }
     }
 
@@ -566,9 +575,9 @@ textarea {
                 cursor: default;
                 border-color: var(
                     --gd-palette-complementary-3,
-                    transparentize($default-gd-input-text-border, 0.5)
+                    color.adjust(variables.$default-gd-input-text-border, $alpha: -0.5)
                 );
-                background-color: $gd-color-light;
+                background-color: variables.$gd-color-light;
             }
         }
     }

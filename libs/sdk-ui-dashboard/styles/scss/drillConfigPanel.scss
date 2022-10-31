@@ -1,6 +1,8 @@
 // (C) 2019-2022 GoodData Corporation
-@import "@gooddata/sdk-ui-kit/styles/scss/mixins";
-@import "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/mixins";
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/Button/variables" as button-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
 .gd-drill-origin-selector {
     .dropdown-button {
@@ -29,9 +31,9 @@
 
 .gd-drill-item-selector-dropdown {
     overflow: hidden;
-    width: $gd-configuration-panel-inner-width;
+    width: variables.$gd-configuration-panel-inner-width;
     border-radius: 3px;
-    border: 1px solid $button-normal-border-color;
+    border: 1px solid button-variables.$button-normal-border-color;
 
     $item-padding-side: 12px;
     $item-height: 33px;
@@ -40,8 +42,8 @@
     .gd-drill-item-selector-header {
         position: relative;
         padding: 9px $item-padding-side;
-        color: $gd-color-link;
-        background: $is-focused-background;
+        color: kit-variables.$gd-color-link;
+        background: kit-variables.$is-focused-background;
         font-size: 12px;
 
         .gd-icon-cross {
@@ -78,7 +80,7 @@
         margin: 0 $item-padding-side;
         font-size: 11px;
         text-transform: uppercase;
-        color: $gd-color-state-blank;
+        color: kit-variables.$gd-color-state-blank;
         font-weight: bold;
 
         span {
@@ -104,7 +106,7 @@
         padding: 0 $item-padding-side 0 $item-padding-side + 23px;
         font-size: 12px;
         text-decoration: none;
-        color: $gd-color-link;
+        color: kit-variables.$gd-color-link;
 
         &::before {
             content: "";
@@ -121,7 +123,7 @@
         }
 
         &:hover {
-            background: $gd-palette-primary-dimmed;
+            background: kit-variables.$gd-palette-primary-dimmed;
         }
     }
 
@@ -148,11 +150,11 @@
     flex-wrap: nowrap;
     height: 27px;
     margin: 6px 0;
-    border: 1px solid $button-normal-border-color;
-    box-shadow: 0 1px 1px 0 $button-shadow-darker;
+    border: 1px solid button-variables.$button-normal-border-color;
+    box-shadow: 0 1px 1px 0 button-variables.$button-shadow-darker;
     line-height: 25px;
-    color: $button-normal-color;
-    background: $button-normal-bg;
+    color: button-variables.$button-normal-color;
+    background: button-variables.$button-normal-bg;
     border-radius: 15px;
     max-width: 100%;
     padding-left: 10px;
@@ -216,36 +218,36 @@
         box-shadow: none;
 
         &:hover {
-            background-color: $is-focused-background;
+            background-color: kit-variables.$is-focused-background;
 
             .content .date {
-                color: $is-focused-color;
+                color: kit-variables.$is-focused-color;
             }
         }
 
         &.is-selected {
             &:hover {
-                background-color: $gd-palette-primary-dimmed;
+                background-color: kit-variables.$gd-palette-primary-dimmed;
             }
         }
     }
 }
 
 .drill-config-target {
-    border-left: 2px dotted $gd-border-color;
+    border-left: 2px dotted kit-variables.$gd-border-color;
     margin-bottom: 10px;
     margin-top: 6px;
     padding-left: 10px;
 
     &.drill-config-target-with-warning {
         .drill-config-target-box {
-            background-color: $gd-palette-warning-dimmed;
+            background-color: kit-variables.$gd-palette-warning-dimmed;
         }
 
         .drill-config-target-warning {
             display: inline-block;
             margin-top: 8px;
-            color: $gd-color-warning-text;
+            color: kit-variables.$gd-color-warning-text;
 
             > span:first-child {
                 font-size: 14px;
@@ -258,8 +260,8 @@
         display: inline-block;
         margin-top: 10px;
         padding: 4px 8px 4px 10px;
-        color: $gd-color-warning-text;
-        background-color: $gd-palette-warning-dimmed;
+        color: kit-variables.$gd-color-warning-text;
+        background-color: kit-variables.$gd-palette-warning-dimmed;
         border-radius: 5px;
     }
 
@@ -276,14 +278,14 @@
 }
 
 .drill-config-item-target {
-    color: $gd-color-link;
+    color: kit-variables.$gd-color-link;
 }
 
 .drill-config-item-intro {
-    color: $gd-color-link;
+    color: kit-variables.$gd-color-link;
 
     .addon {
-        color: $gd-color-state-blank;
+        color: kit-variables.$gd-color-state-blank;
     }
 }
 
@@ -375,13 +377,13 @@ $gd-gd-drill-to-url-body-width: 230px;
 
             .addon {
                 flex: 1;
-                color: $gd-color-state-blank;
+                color: kit-variables.$gd-color-state-blank;
             }
         }
 
         &.is-selected {
             .addon {
-                color: $is-selected-color;
+                color: kit-variables.$is-selected-color;
             }
         }
 
@@ -412,7 +414,7 @@ $gd-gd-drill-to-url-body-width: 230px;
                 width: 100%;
                 height: 0;
                 margin-left: 10px;
-                border-top: 1px solid $gd-border-color;
+                border-top: 1px solid kit-variables.$gd-border-color;
             }
 
             &::before {
@@ -435,13 +437,13 @@ $gd-gd-drill-to-url-body-width: 230px;
 
         &.gd-icon-sharp::before {
             content: "\E63D";
-            color: $is-selected-color;
+            color: kit-variables.$is-selected-color;
             text-align: center;
         }
 
         &.gd-icon-earth::before {
             content: "\E624";
-            color: $gd-color-warning-text;
+            color: kit-variables.$gd-color-warning-text;
             text-align: center;
         }
     }
@@ -482,7 +484,7 @@ $gd-gd-drill-to-url-body-width: 230px;
         overflow: auto;
         width: 200px;
         height: 270px;
-        border: 1px solid var(--gd-palette-complementary-3, $dialog-border);
+        border: 1px solid var(--gd-palette-complementary-3, variables.$dialog-border);
         border-radius: 3px 3px 0 0;
 
         .gd-list-item {
@@ -533,7 +535,7 @@ $gd-gd-drill-to-url-body-width: 230px;
         padding-left: 0;
         margin-top: 8px;
         display: flex;
-        color: $gd-color-state-blank;
+        color: kit-variables.$gd-color-state-blank;
         font-size: 12px;
 
         .gd-icon-circle-question {
@@ -542,7 +544,7 @@ $gd-gd-drill-to-url-body-width: 230px;
         }
 
         &:hover {
-            color: $gd-color-text;
+            color: kit-variables.$gd-color-text;
 
             .gd-button-link-text {
                 text-decoration: underline;
@@ -567,16 +569,16 @@ $gd-gd-drill-to-url-body-width: 230px;
         }
 
         .cm-identifier {
-            color: $is-selected-color;
+            color: kit-variables.$is-selected-color;
         }
 
         .cm-attribute {
-            color: $gd-color-warning-text;
+            color: kit-variables.$gd-color-warning-text;
         }
 
         .cm-invalid-identifier,
         .cm-invalid-attribute {
-            color: $gd-palette-error-base;
+            color: kit-variables.$gd-palette-error-base;
         }
     }
 }
@@ -591,7 +593,7 @@ $gd-gd-drill-to-url-body-width: 230px;
     .gd-parameter-detail-title {
         margin: 6px 0 10px;
         font-size: 14px;
-        color: $gd-color-text;
+        color: kit-variables.$gd-color-text;
         font-weight: normal;
     }
 
@@ -599,11 +601,11 @@ $gd-gd-drill-to-url-body-width: 230px;
         font-size: 10px;
         font-weight: normal;
         text-transform: uppercase;
-        color: $gd-color-state-blank;
+        color: kit-variables.$gd-color-state-blank;
     }
 
     .gd-parameter-detail-info {
-        color: $gd-color-state-blank;
+        color: kit-variables.$gd-color-state-blank;
     }
 
     .gd-parameter-detail-ellipsis-row {
@@ -625,6 +627,6 @@ $gd-gd-drill-to-url-body-width: 230px;
     .gd-button-icon,
     .gd-list-icon {
         font-size: 14px;
-        color: $gd-color-highlight;
+        color: kit-variables.$gd-color-highlight;
     }
 }

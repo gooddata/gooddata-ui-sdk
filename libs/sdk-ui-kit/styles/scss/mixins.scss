@@ -2,7 +2,8 @@
 // Make sure the charset is set appropriately
 @charset 'utf-8';
 
-@import "variables";
+@use "sass:string";
+@use "variables";
 
 // core mixins
 
@@ -10,30 +11,40 @@
     background: $color url(#{$image-dir}#{$filename}) $position $repeat;
 }
 
-@mixin border-radius($radius: $gd-rounded-small) {
+@mixin border-radius($radius: variables.$gd-rounded-small) {
     border-radius: $radius;
 }
 
 @mixin box-shadow($shadow, $important: blank) {
-    box-shadow: #{$shadow}#{$importantFlag};
-
     @if $important == "important" {
-        $importantFlag: !important;
+        // stylelint-disable-next-line declaration-no-important
+        box-shadow: #{$shadow} !important;
+    } @else {
+        box-shadow: #{$shadow};
     }
 }
 
 @mixin disable-filter($important: blank) {
-    @if $important == "important" {
-        $importantFlag: !important;
-    }
     $disabledFilter: "progid:DXImageTransform.Microsoft.gradient(enabled=false)";
 
-    -ms-filter: unquote($disabledFilter) $importantFlag;
-    filter: unquote($disabledFilter) $importantFlag;
+    @if $important == "important" {
+        // stylelint-disable-next-line declaration-no-important
+        -ms-filter: string.unquote($disabledFilter) !important;
+        // stylelint-disable-next-line declaration-no-important
+        filter: string.unquote($disabledFilter) !important;
+    } @else {
+        -ms-filter: string.unquote($disabledFilter);
+        filter: string.unquote($disabledFilter);
+    }
 }
 
 @mixin opacity($value, $important: blank) {
-    opacity: $value#{$importantFlag};
+    @if $important == "important" {
+        // stylelint-disable-next-line declaration-no-important
+        opacity: $value !important;
+    } @else {
+        opacity: $value;
+    }
 }
 
 @mixin user-select($value) {
@@ -208,7 +219,7 @@
     background-image: linear-gradient(to top, $topColor, $bottomColor);
 }
 @mixin default-styles() {
-    font-family: $gd-font-primary;
+    font-family: variables.$gd-font-primary;
     line-height: 1.5;
 
     button,

@@ -1,9 +1,9 @@
 // (C) 2007-2018 GoodData Corporation
-@import "./variables";
+@use "variables";
 
 .gd-no-data {
     margin: 12px;
-    color: $gd-color-state-blank;
+    color: variables.$gd-color-state-blank;
     text-align: center;
 }
 

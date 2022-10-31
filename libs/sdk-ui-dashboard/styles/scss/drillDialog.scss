@@ -1,10 +1,12 @@
 // (C) 2007-2021 GoodData Corporation
-@import "variables";
-@import "@gooddata/sdk-ui-kit/styles/scss/Dialog/_variables";
+@use "sass:color";
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/Dialog/_variables" as dialog-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
 $header-height: 38px;
 $dialog-padding: 20px;
-$light-color: $gd-color-white;
+$light-color: kit-variables.$gd-color-white;
 $border-color: #dde4eb;
 
 .gd-dialog.gd-drill-modal-dialog {
@@ -20,7 +22,7 @@ $border-color: #dde4eb;
     padding: $dialog-padding;
     background-color: $light-color;
 
-    @media #{$small-only} {
+    @media #{kit-variables.$small-only} {
         position: absolute;
         top: 0;
         right: 0;
@@ -90,7 +92,7 @@ $border-color: #dde4eb;
 }
 
 .gd-drill-modal-dialog-footer.gd-drill-modal-dialog-footer-with-border {
-    border-top: 1px solid $gd-modal-title-lineColor;
+    border-top: 1px solid dialog-variables.$gd-modal-title-lineColor;
 }
 
 .gd-drill-modal-dialog-content {
@@ -118,15 +120,15 @@ $border-color: #dde4eb;
             transform: translateY(-50%);
             // override theming
             .headline-primary-item {
-                color: $gd-color-dark;
+                color: kit-variables.$gd-color-dark;
             }
             .headline-secondary-item {
-                border-left-color: transparentize($default-gd-color-disabled, 0.5);
+                border-left-color: color.adjust(kit-variables.$default-gd-color-disabled, $alpha: -0.5);
             }
             .headline-compare-section,
             .headline-compare-section-item,
             .headline-value--empty {
-                color: $gd-color-state-blank;
+                color: kit-variables.$gd-color-state-blank;
             }
         }
     }

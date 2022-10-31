@@ -1,6 +1,8 @@
 // (C) 2007-2020 GoodData Corporation
-@import "./variables.scss";
-@import "./Button/variables";
+@use "variables";
+@use "Button/variables" as button-variables;
+@use "indigoFont";
+
 $base-path: "~@gooddata/sdk-ui-kit/styles/images/visualization-types/";
 $visualization-types: area, bar, bubble, column, combo, combo2, donut, dual, funnel, headline, heatmap, line,
     pie, scatter, table, treemap, unknown, xirr, pushpin, region, bullet;
@@ -58,7 +60,8 @@ $visualization-types: area, bar, bubble, column, combo, combo2, donut, dual, fun
     &:hover {
         position: relative;
         border-color: var(--gd-palette-complementary-5, transparent);
-        box-shadow: 0 1px 3px 0 $button-shadow-lighter, 0 2px 9px 0 $button-shadow-darker;
+        box-shadow: 0 1px 3px 0 button-variables.$button-shadow-lighter,
+            0 2px 9px 0 button-variables.$button-shadow-darker;
         background-color: var(--gd-palette-complementary-0, #fff);
     }
 
@@ -67,7 +70,7 @@ $visualization-types: area, bar, bubble, column, combo, combo2, donut, dual, fun
             font-weight: bold;
 
             .gd-visualizations-list-item-content-name {
-                color: $gd-palette-primary-base;
+                color: variables.$gd-palette-primary-base;
             }
         }
     }
@@ -84,7 +87,7 @@ $visualization-types: area, bar, bubble, column, combo, combo2, donut, dual, fun
 
         .gd-visualizations-list-item-content-name {
             line-height: 14px;
-            color: $gd-color-text;
+            color: variables.$gd-color-text;
             font-size: 12px;
 
             span {
@@ -95,7 +98,7 @@ $visualization-types: area, bar, bubble, column, combo, combo2, donut, dual, fun
 
         .gd-visualizations-list-item-content-date {
             line-height: 12px;
-            color: $gd-color-state-blank;
+            color: variables.$gd-color-state-blank;
             font-size: 10px;
             text-transform: uppercase;
         }
@@ -110,7 +113,7 @@ $visualization-types: area, bar, bubble, column, combo, combo2, donut, dual, fun
     }
 
     .gd-icon-lock {
-        color: $gd-color-state-blank;
+        color: variables.$gd-color-state-blank;
         margin-right: 4px;
     }
 }

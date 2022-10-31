@@ -1,7 +1,7 @@
 // (C) 2007-2021 GoodData Corporation
-@import "variables";
-
-$dialog-background: var(--gd-palette-complementary-0, #fcfcfd);
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/Button/variables" as button-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
 .visualizations-flex-dimensions {
     height: 100%;
@@ -11,17 +11,17 @@ $dialog-background: var(--gd-palette-complementary-0, #fcfcfd);
     width: 100%;
     height: 100%;
     padding: 10px 0;
-    background-color: $dialog-background;
+    background-color: variables.$dialog-background;
 
     h2 {
         margin: 0 15px 6px;
         font-size: 16px;
         line-height: 24px;
-        color: $gd-color-state-blank;
+        color: kit-variables.$gd-color-state-blank;
     }
 
     .dropdown-button {
-        width: $gd-configuration-panel-inner-width;
+        width: variables.$gd-configuration-panel-inner-width;
         text-align: left;
     }
 
@@ -53,7 +53,7 @@ $dialog-background: var(--gd-palette-complementary-0, #fcfcfd);
 
     .gd-configuration-bubble {
         z-index: 1000;
-        width: $gd-configuration-bubble-width;
+        width: variables.$gd-configuration-bubble-width;
 
         &.is-sticky {
             z-index: 5;
@@ -67,14 +67,14 @@ $dialog-background: var(--gd-palette-complementary-0, #fcfcfd);
             padding: 0;
 
             .configuration-panel {
-                max-height: $gd-configuration-bubble-height;
+                max-height: variables.$gd-configuration-bubble-height;
                 overflow-x: hidden;
                 overflow-y: auto;
                 padding: 0;
             }
 
             .configuration-category {
-                margin: $gd-configuration-bubble-margin;
+                margin: variables.$gd-configuration-bubble-margin;
                 padding: 0;
             }
 
@@ -92,11 +92,11 @@ $dialog-background: var(--gd-palette-complementary-0, #fcfcfd);
                 align-items: center;
                 width: 100%;
                 padding: 8px 15px;
-                background: $is-focused-background;
+                background: kit-variables.$is-focused-background;
             }
 
             .configuration-panel-header-title {
-                color: $gd-color-state-blank;
+                color: kit-variables.$gd-color-state-blank;
                 font-size: 11px;
                 font-weight: bold;
                 text-transform: uppercase;
@@ -141,10 +141,10 @@ $dialog-background: var(--gd-palette-complementary-0, #fcfcfd);
         font-size: 11px;
         font-weight: bold;
         text-transform: uppercase;
-        color: $gd-color-state-blank;
+        color: kit-variables.$gd-color-state-blank;
 
         &.is-disabled {
-            color: $dialog-border;
+            color: variables.$dialog-border;
         }
 
         &::after {
@@ -155,7 +155,7 @@ $dialog-background: var(--gd-palette-complementary-0, #fcfcfd);
             width: 100%;
             height: 0;
             margin-left: 10px;
-            border-top: 1px solid $gd-border-color;
+            border-top: 1px solid kit-variables.$gd-border-color;
         }
 
         + label {
@@ -171,7 +171,7 @@ $dialog-background: var(--gd-palette-complementary-0, #fcfcfd);
         display: block;
         margin-top: 2px;
         font-size: 13px;
-        color: $gd-color-label;
+        color: kit-variables.$gd-color-label;
 
         + label {
             margin-top: 0;
@@ -191,7 +191,7 @@ $dialog-background: var(--gd-palette-complementary-0, #fcfcfd);
     }
 
     .subsection-disabled label {
-        color: $gd-color-disabled;
+        color: kit-variables.$gd-color-disabled;
     }
 
     .warning + h3 {
@@ -267,19 +267,20 @@ $dialog-background: var(--gd-palette-complementary-0, #fcfcfd);
 .date-filter-error,
 .attribute-filter-error {
     .title {
-        color: $gd-palette-error-base;
+        color: kit-variables.$gd-palette-error-base;
     }
 }
 
 .is-highlighted {
     // overwrite
     // stylelint-disable-next-line declaration-no-important
-    border: 1px solid $gd-palette-primary-base !important;
+    border: 1px solid kit-variables.$gd-palette-primary-base !important;
 
     // refactor
     // stylelint-disable-next-line max-line-length
-    box-shadow: 0 0 3px 0 $gd-palette-primary-base-t50, 0 1px 2px 0 $button-shadow-darker;
-    color: $gd-palette-primary-base;
+    box-shadow: 0 0 3px 0 variables.$gd-palette-primary-base-t50,
+        0 1px 2px 0 button-variables.$button-shadow-darker;
+    color: kit-variables.$gd-palette-primary-base;
 }
 
 .dataSets-list {
@@ -299,7 +300,7 @@ $dialog-background: var(--gd-palette-complementary-0, #fcfcfd);
     display: inline-block;
     // 25px is the space needed to accommodate both the X button and scrollbar on Windows (it is wider than on macOS)
     // allow the dropdown to shrink a bit if there is a wider scrollbar
-    max-width: $gd-configuration-panel-inner-width - 25px;
+    max-width: variables.$gd-configuration-panel-inner-width - 25px;
 
     &:last-child {
         width: 100%;
@@ -346,7 +347,7 @@ $dialog-background: var(--gd-palette-complementary-0, #fcfcfd);
     .gd-visualizations-list-no-data.gd-no-data {
         margin: 0;
         padding: 10px 20px;
-        color: $gd-color-state-blank;
+        color: kit-variables.$gd-color-state-blank;
         text-align: left;
 
         &.gd-visualization-list-not-found {
@@ -407,7 +408,7 @@ $dialog-background: var(--gd-palette-complementary-0, #fcfcfd);
 }
 
 .metrics-dropdown {
-    width: $gd-configuration-panel-inner-width;
+    width: variables.$gd-configuration-panel-inner-width;
 
     .dropdown-body {
         flex-direction: column;

@@ -1,24 +1,24 @@
 // (C) 2019 GoodData Corporation
-@import "@gooddata/sdk-ui-kit/styles/scss/variables.scss";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables";
 
 .gd-list-item.gd-select-option {
     padding: 5px 10px;
 
     &-is-selected {
         text-decoration: none;
-        color: $is-selected-color;
-        background: $is-selected-background;
+        color: variables.$is-selected-color;
+        background: variables.$is-selected-background;
         font-weight: bold;
     }
 
     &-is-focused {
         text-decoration: none;
-        color: $is-focused-color;
-        background: $is-focused-background;
+        color: variables.$is-focused-color;
+        background: variables.$is-focused-background;
     }
 
     &-is-selected.gd-select-option-is-focused {
-        color: $is-selected-color;
-        background: $is-selected-focused-background;
+        color: variables.$is-selected-color;
+        background: variables.$is-selected-focused-background;
     }
 }

@@ -1,15 +1,16 @@
 // (C) 2019-2020 GoodData Corporation
-@import "@gooddata/sdk-ui-kit/styles/scss/Button/_variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/Button/_variables" as button-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/variables";
 
 $horizontal-space: 20px;
 $vertical-space: 10px;
 
 @mixin input-styles {
-    color: $button-normal-color;
+    color: button-variables.$button-normal-color;
     font-size: 12px;
 }
 
-@media #{$small-only} {
+@media #{variables.$small-only} {
     .gd-schedule-email-dialog-overlay {
         // override the static position in case of dialog with long content, on mobile view
         // stylelint-disable-next-line declaration-no-important
@@ -26,14 +27,14 @@ $vertical-space: 10px;
     .hr {
         height: 0;
         margin: 12px 0 14px;
-        border-top: 1px solid $gd-border-color;
+        border-top: 1px solid variables.$gd-border-color;
     }
 }
 
 .gd-input-component {
     margin-bottom: $vertical-space;
 
-    @media #{$small-only} {
+    @media #{variables.$small-only} {
         .gd-label {
             display: block;
             margin-bottom: 7px;
@@ -44,7 +45,7 @@ $vertical-space: 10px;
         }
     }
 
-    @media #{$medium-up} {
+    @media #{variables.$medium-up} {
         display: flex;
         align-items: center;
 
@@ -60,7 +61,7 @@ $vertical-space: 10px;
 }
 
 .gd-textarea-component {
-    @media #{$medium-up} {
+    @media #{variables.$medium-up} {
         align-items: flex-start;
     }
 
@@ -68,7 +69,7 @@ $vertical-space: 10px;
         resize: vertical;
         min-height: 30px;
 
-        @media #{$small-only} {
+        @media #{variables.$small-only} {
             resize: none;
         }
     }
@@ -77,7 +78,7 @@ $vertical-space: 10px;
         position: absolute;
         top: 10px;
         right: 10px;
-        color: $gd-color-text;
+        color: variables.$gd-color-text;
         font-size: 14px;
         font-family: gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif;
     }
@@ -90,7 +91,7 @@ $vertical-space: 10px;
 }
 
 .gd-attachment-component {
-    @media #{$medium-up} {
+    @media #{variables.$medium-up} {
         align-items: flex-start;
     }
 
@@ -98,7 +99,7 @@ $vertical-space: 10px;
         flex: 1;
         padding-left: 7px;
 
-        @media #{$medium-up} {
+        @media #{variables.$medium-up} {
             margin-top: 3px;
             word-break: break-all;
         }
@@ -118,7 +119,7 @@ $vertical-space: 10px;
     align-items: flex-start;
     flex-direction: column;
 
-    @media #{$small-only} {
+    @media #{variables.$small-only} {
         .gd-label {
             margin-bottom: 0;
         }
@@ -136,7 +137,7 @@ $vertical-space: 10px;
         .gd-datepicker {
             width: 119px;
 
-            @media #{$small-only} {
+            @media #{variables.$small-only} {
                 width: calc((100vw - 20px - 20px - 20px - 20px) / 2);
             }
 
@@ -158,12 +159,12 @@ $vertical-space: 10px;
         }
 
         .gd-schedule-email-dialog-datetime-timezone {
-            @media #{$small-only} {
+            @media #{variables.$small-only} {
                 width: 100%;
                 margin-top: 15px;
             }
 
-            @media #{$medium-up} {
+            @media #{variables.$medium-up} {
                 margin-left: $horizontal-space;
             }
         }
@@ -171,7 +172,7 @@ $vertical-space: 10px;
 }
 
 .gd-schedule-email-dialog-repeat {
-    @media #{$small-only} {
+    @media #{variables.$small-only} {
         .gd-schedule-email-dialog-repeat-type {
             width: 100%;
             margin-bottom: $vertical-space;
@@ -186,9 +187,9 @@ $vertical-space: 10px;
         display: flex;
         align-items: center;
 
-        @media #{$small-only} {
+        @media #{variables.$small-only} {
             flex-wrap: wrap;
-            border-left: 2px dotted $gd-border-color;
+            border-left: 2px dotted variables.$gd-border-color;
         }
 
         .gd-schedule-email-dialog-repeat-every {
@@ -212,7 +213,7 @@ $vertical-space: 10px;
             margin-left: $horizontal-space;
         }
 
-        @media #{$small-only} {
+        @media #{variables.$small-only} {
             .break-the-row {
                 height: 0;
                 flex-basis: 100%;
@@ -222,7 +223,7 @@ $vertical-space: 10px;
         .gd-schedule-email-dialog-repeat-execute-on {
             margin-left: $horizontal-space;
 
-            @media #{$small-only} {
+            @media #{variables.$small-only} {
                 margin-top: $vertical-space;
             }
         }

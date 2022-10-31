@@ -1,13 +1,16 @@
 // (C) 2007-2019 GoodData Corporation
-@import "@gooddata/sdk-ui-kit/styles/scss/variables";
-@import "@gooddata/sdk-ui-kit/styles/scss/typo-mixins";
-@import "@gooddata/sdk-ui-kit/styles/scss/typo";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/typo-mixins";
+@use "@gooddata/sdk-ui-kit/styles/scss/typo";
 
-$gd-dashboards-section-title-color: var(--gd-dashboards-section-title-color, $gd-color-text);
-$gd-dashboards-section-title-lineColor: var(--gd-dashboards-section-title-lineColor, $gd-border-color);
+$gd-dashboards-section-title-color: var(--gd-dashboards-section-title-color, variables.$gd-color-text);
+$gd-dashboards-section-title-lineColor: var(
+    --gd-dashboards-section-title-lineColor,
+    variables.$gd-border-color
+);
 $gd-dashboards-section-description-color: var(
     --gd-dashboards-section-description-color,
-    $gd-color-state-blank
+    variables.$gd-color-state-blank
 );
 
 .gd-fluidlayout-container {
@@ -36,7 +39,7 @@ $gd-dashboards-section-description-color: var(
     width: 100%;
     height: 100%;
 
-    @media #{$xsmall-only} {
+    @media #{variables.$xsmall-only} {
         flex-direction: column;
 
         &::after {
@@ -46,7 +49,7 @@ $gd-dashboards-section-description-color: var(
             bottom: 5px;
             left: 10px;
             height: 0;
-            border-bottom: 1px dashed $gd-color-disabled;
+            border-bottom: 1px dashed variables.$gd-color-disabled;
         }
     }
 }
@@ -84,7 +87,7 @@ $gd-dashboards-section-description-color: var(
         margin-top: 16px;
     }
 
-    @media #{$medium-up} {
+    @media #{variables.$medium-up} {
         padding-right: 0;
         padding-left: 0;
         text-align: left;
@@ -127,7 +130,7 @@ $gd-dashboards-section-description-color: var(
             margin-left: 20px;
         }
 
-        @media #{$medium-up} {
+        @media #{variables.$medium-up} {
             &::before {
                 display: none;
             }
@@ -139,7 +142,7 @@ $gd-dashboards-section-description-color: var(
     }
 
     .title-align-center {
-        @media #{$medium-up} {
+        @media #{variables.$medium-up} {
             text-align: center;
 
             &::before {
@@ -149,7 +152,7 @@ $gd-dashboards-section-description-color: var(
     }
 
     .title-align-right {
-        @media #{$medium-up} {
+        @media #{variables.$medium-up} {
             text-align: right;
 
             &::before {
@@ -164,13 +167,13 @@ $gd-dashboards-section-description-color: var(
 
     .title,
     .gd-row-header-view .description {
-        @media #{$medium-up} {
+        @media #{variables.$medium-up} {
             max-width: 95%;
         }
     }
 
     .title {
-        @include gd-heading-2;
+        @include typo-mixins.gd-heading-2;
 
         flex: 0 1 auto;
         overflow: hidden;
@@ -188,7 +191,7 @@ $gd-dashboards-section-description-color: var(
 
         &:hover {
             .more-link {
-                color: $gd-color-link;
+                color: variables.$gd-color-link;
             }
 
             .underline {
@@ -199,13 +202,13 @@ $gd-dashboards-section-description-color: var(
 
     .more-link {
         display: inline-block;
-        color: $gd-color-state-blank;
+        color: variables.$gd-color-state-blank;
 
         &::before {
             vertical-align: top;
             margin-left: 0.5em;
             margin-right: 0.1em;
-            font-family: $gd-font-indigo;
+            font-family: variables.$gd-font-indigo;
         }
 
         &.active::before {

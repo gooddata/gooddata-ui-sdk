@@ -1,11 +1,12 @@
 // (C) 2020-2021 GoodData Corporation
-@import "variables";
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
 $widget-title-color: var(--gd-palette-complementary-8, #454e56);
 $insight-panel-header-bg: var(--gd-palette-primary-dimmed, rgba(142, 220, 244, 0.2));
 $insight-arrow-panel-bg: #e9f8fc;
 $insight-original-title-color: var(--gd-palette-complementary-7, #454e56);
-$insight-config-item-color: $gd-color-text;
+$insight-config-item-color: kit-variables.$gd-color-text;
 $insight-config-item-icon-color: var(--gd-palette-complementary-5, #b1c1d1);
 $delete-hover-status-bg: var(--gd-palette-error-lightest, #fff2f1);
 
@@ -38,7 +39,7 @@ $delete-hover-status-bg: var(--gd-palette-error-lightest, #fff2f1);
 
                 max-width: 204px;
                 line-height: normal;
-                color: $gd-color-link;
+                color: kit-variables.$gd-color-link;
                 font-size: 11px;
                 cursor: pointer;
             }
@@ -123,7 +124,7 @@ $delete-hover-status-bg: var(--gd-palette-error-lightest, #fff2f1);
     .insight-configuration .insight-configuration-panel-header {
         background-color: $insight-panel-header-bg;
         position: relative;
-        padding: $item-inner-padding $gd-configuration-bubble-margin;
+        padding: variables.$item-inner-padding variables.$gd-configuration-bubble-margin;
     }
     .insight-configuration .gd-menu-wrapper-small-spacing.gd-menu-wrapper {
         box-shadow: inherit;
@@ -137,7 +138,7 @@ $delete-hover-status-bg: var(--gd-palette-error-lightest, #fff2f1);
             color: $insight-config-item-color;
 
             &:hover {
-                color: var(--gd-palette-complementary-9, $default-gd-color-text);
+                color: var(--gd-palette-complementary-9, kit-variables.$default-gd-color-text);
             }
 
             .item-icon {
@@ -175,7 +176,7 @@ $delete-hover-status-bg: var(--gd-palette-error-lightest, #fff2f1);
         }
         &.s-delete-insight-item:hover {
             background-color: $delete-hover-status-bg;
-            color: $gd-palette-error-base;
+            color: kit-variables.$gd-palette-error-base;
 
             i {
                 color: inherit;
@@ -196,11 +197,11 @@ $delete-hover-status-bg: var(--gd-palette-error-lightest, #fff2f1);
 }
 
 .bubble-light.arrow-left-direction.edit-insight-config-arrow-submenu-color .arrow {
-    border-right-color: $is-focused-background;
+    border-right-color: kit-variables.$is-focused-background;
 }
 
 .bubble-light.arrow-right-direction.edit-insight-config-arrow-submenu-color .arrow {
-    border-left-color: $is-focused-background;
+    border-left-color: kit-variables.$is-focused-background;
 }
 
 .edit-insight-config .bubble-content .content a {
@@ -210,7 +211,7 @@ $delete-hover-status-bg: var(--gd-palette-error-lightest, #fff2f1);
 .gd-configuration-bubble-wrapper.overlay-wrapper {
     .edit-insight-config-arrow-submenu-color {
         .bubble-content .configuration-panel-header {
-            padding: $item-inner-padding $gd-configuration-bubble-margin;
+            padding: variables.$item-inner-padding variables.$gd-configuration-bubble-margin;
         }
     }
 

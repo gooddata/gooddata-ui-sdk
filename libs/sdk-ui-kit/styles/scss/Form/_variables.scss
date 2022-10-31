@@ -1,12 +1,16 @@
 // (C) 2020 GoodData Corporation
-@import "../variables";
+@use "sass:color";
+@use "../variables";
 
-$gd-form-error-borderColor: var(--gd-palette-error-base-t50, transparentize($gd-color-negative, 0.5));
+$gd-form-error-borderColor: var(
+    --gd-palette-error-base-t50,
+    color.adjust(variables.$gd-color-negative, $alpha: -0.5)
+);
 $gd-form-error-shadowColor: var(
     --gd-palette-error-base-t70d20,
-    transparentize(darken($gd-color-negative, 20%), 0.7)
+    color.adjust(color.adjust(variables.$gd-color-negative, $lightness: -20%), $alpha: -0.7)
 );
 $gd-form-warning-shadowColor: var(
     --gd-palette-warning-base-t70d20,
-    transparentize(darken($gd-color-warning, 20%), 0.7)
+    color.adjust(color.adjust(variables.$gd-color-warning, $lightness: -20%), $alpha: -0.7)
 );

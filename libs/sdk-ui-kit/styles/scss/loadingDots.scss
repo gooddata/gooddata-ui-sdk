@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-@import "./variables.scss";
+@use "variables";
 
 $loading-dots-dot-slug: gd-loading-dots !default;
 $loading-dots-count: 3;
@@ -22,7 +22,7 @@ $loading-dot-delay: 0.16;
         height: 8px;
         margin-right: 6px;
         border-radius: 100%;
-        background-color: var(--gd-palette-complementary-6, $default-gd-color-disabled);
+        background-color: var(--gd-palette-complementary-6, variables.$default-gd-color-disabled);
         animation: bouncedelay 1.4s infinite ease-in-out;
         animation-fill-mode: both;
     }

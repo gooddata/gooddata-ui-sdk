@@ -1,5 +1,6 @@
 // (C) 2022 GoodData Corporation
-@import "./attributeFilterVariables";
+@use "attributeFilterVariables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables";
 
 .gd-attribute-filter-empty-result__next {
     display: flex;
@@ -12,7 +13,7 @@
     padding: 10px;
     text-align: center;
     font-size: 14px;
-    color: $gd-color-state-blank;
+    color: variables.$gd-color-state-blank;
     cursor: default;
 
     .gd-filtered-message__next {
@@ -24,7 +25,7 @@
             top: 22px;
             padding: 5px;
 
-            @media #{$xsmall-only}, #{$small-only} {
+            @media #{variables.$xsmall-only}, #{variables.$small-only} {
                 top: 60px;
             }
         }

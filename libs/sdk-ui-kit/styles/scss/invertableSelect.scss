@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-@import "./variables.scss";
+@use "variables";
 
 .gd-invertable-select {
     display: flex;
@@ -57,8 +57,8 @@
     line-height: 20px;
     font-size: 12px;
     padding-top: 5px;
-    border-top: 1px solid $gd-border-color;
-    font-family: $gd-font-primary;
+    border-top: 1px solid variables.$gd-border-color;
+    font-family: variables.$gd-font-primary;
 
     span,
     b {

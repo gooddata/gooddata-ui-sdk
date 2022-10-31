@@ -1,4 +1,4 @@
-@import "./variables";
+@use "variables";
 
 .gd-hyperlink {
     display: flex;
@@ -7,8 +7,8 @@
     overflow: hidden;
     line-height: 20px;
     white-space: nowrap;
-    color: $gd-medium-gray;
-    font-family: $gd-font-primary;
+    color: variables.$gd-medium-gray;
+    font-family: variables.$gd-font-primary;
     font-size: 14px;
     text-decoration: none;
     gap: 10px;
@@ -16,7 +16,7 @@
 
     &-icon {
         display: flex;
-        color: $gd-color-state-blank;
+        color: variables.$gd-color-state-blank;
     }
 
     &-text {
@@ -28,11 +28,11 @@
 
     &:hover {
         .gd-hyperlink-icon {
-            color: $gd-color-text;
+            color: variables.$gd-color-text;
         }
 
         .gd-hyperlink-text {
-            color: $gd-color-text;
+            color: variables.$gd-color-text;
         }
     }
 }
