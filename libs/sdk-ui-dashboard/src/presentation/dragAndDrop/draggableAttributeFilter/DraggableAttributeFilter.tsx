@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { IDashboardAttributeFilter } from "@gooddata/sdk-model";
 import classNames from "classnames";
 import { useDashboardSelector, selectIsInEditMode, selectSupportsElementUris } from "../../../model";
@@ -11,17 +11,21 @@ import { convertDashboardAttributeFilterElementsUrisToValues } from "../../../_s
 type DraggableAttributeFilterProps = {
     filter: IDashboardAttributeFilter;
     filterIndex: number;
+    autoOpen: boolean;
     FilterComponent: CustomDashboardAttributeFilterComponent;
     onAttributeFilterChanged: (filter: IDashboardAttributeFilter) => void;
     onAttributeFilterAdded: (index: number) => void;
+    onAttributeFilterClose: () => void;
 };
 
 export function DraggableAttributeFilter({
     FilterComponent,
     filter,
     filterIndex,
+    autoOpen,
     onAttributeFilterChanged,
     onAttributeFilterAdded,
+    onAttributeFilterClose,
 }: DraggableAttributeFilterProps) {
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
     const [{ isDragging }, dragRef] = useDashboardDrag(
@@ -35,7 +39,7 @@ export function DraggableAttributeFilter({
         },
         [filter, filterIndex, isInEditMode],
     );
-    const showDropZones = isInEditMode && !isDragging;
+
     const supportElementUris = useDashboardSelector(selectSupportsElementUris);
     const filterToUse = useMemo(() => {
         if (supportElementUris) {
@@ -43,6 +47,12 @@ export function DraggableAttributeFilter({
         }
         return convertDashboardAttributeFilterElementsUrisToValues(filter);
     }, [filter, supportElementUris]);
+
+    const onClose = useCallback(() => {
+        onAttributeFilterClose();
+    }, [onAttributeFilterClose]);
+
+    const showDropZones = isInEditMode && !isDragging;
 
     return (
         <div className="draggable-attribute-filter">
@@ -64,6 +74,8 @@ export function DraggableAttributeFilter({
                     filter={filterToUse}
                     onFilterChanged={onAttributeFilterChanged}
                     isDraggable={isInEditMode}
+                    autoOpen={autoOpen}
+                    onClose={onClose}
                 />
             </div>
 
