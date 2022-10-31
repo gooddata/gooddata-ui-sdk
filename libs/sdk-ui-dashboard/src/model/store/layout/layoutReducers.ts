@@ -25,6 +25,7 @@ import {
     IKpiComparisonDirection,
     IKpiComparisonTypeComparison,
     IDrillToLegacyDashboard,
+    IInsightWidgetConfiguration,
 } from "@gooddata/sdk-model";
 import { WidgetHeader } from "../../types/widgetTypes";
 import flatMap from "lodash/flatMap";
@@ -411,6 +412,28 @@ const replaceInsightWidgetVisProperties: LayoutReducer<ReplaceWidgetVisPropertie
 //
 //
 
+type ReplaceWidgetVisConfiguration = {
+    ref: ObjRef;
+    config: IInsightWidgetConfiguration | undefined;
+};
+
+const replaceInsightWidgetVisConfiguration: LayoutReducer<ReplaceWidgetVisConfiguration> = (
+    state,
+    action,
+) => {
+    invariant(state.layout);
+
+    const { config, ref } = action.payload;
+    const widget = getWidgetByRef(state, ref);
+
+    invariant(widget && isInsightWidget(widget));
+    widget.configuration = config;
+};
+
+//
+//
+//
+
 type ReplaceWidgetFilterSettings = {
     ref: ObjRef;
     ignoreDashboardFilters?: IDashboardFilterReference[];
@@ -561,6 +584,7 @@ export const layoutReducers = {
     replaceWidgetHeader: withUndo(replaceWidgetHeader),
     replaceWidgetDrills: withUndo(replaceWidgetDrill),
     replaceInsightWidgetVisProperties: withUndo(replaceInsightWidgetVisProperties),
+    replaceInsightWidgetVisConfiguration: withUndo(replaceInsightWidgetVisConfiguration),
     replaceWidgetFilterSettings: withUndo(replaceWidgetFilterSettings),
     replaceWidgetDateDataset: withUndo(replaceWidgetDateDataset),
     replaceKpiWidgetMeasure: withUndo(replaceKpiWidgetMeasure),

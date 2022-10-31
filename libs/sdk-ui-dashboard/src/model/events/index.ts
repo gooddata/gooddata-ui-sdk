@@ -57,6 +57,7 @@ import {
     DashboardInsightWidgetHeaderChanged,
     DashboardInsightWidgetInsightSwitched,
     DashboardInsightWidgetVisPropertiesChanged,
+    DashboardInsightWidgetVisConfigurationChanged,
     DashboardInsightWidgetExportRequested,
     DashboardInsightWidgetExportResolved,
     DashboardInsightWidgetRefreshed,
@@ -248,6 +249,8 @@ export {
     DashboardInsightWidgetFilterSettingsChangedPayload,
     DashboardInsightWidgetVisPropertiesChanged,
     DashboardInsightWidgetVisPropertiesChangedPayload,
+    DashboardInsightWidgetVisConfigurationChanged,
+    DashboardInsightWidgetVisConfigurationChangedPayload,
     DashboardInsightWidgetInsightSwitched,
     DashboardInsightWidgetInsightSwitchedPayload,
     DashboardInsightWidgetDrillsModified,
@@ -269,6 +272,7 @@ export {
     isDashboardInsightWidgetHeaderChanged,
     isDashboardInsightWidgetInsightSwitched,
     isDashboardInsightWidgetVisPropertiesChanged,
+    isDashboardInsightWidgetVisConfigurationChanged,
     isDashboardInsightWidgetExportRequested,
     isDashboardInsightWidgetExportResolved,
     isDashboardInsightWidgetRefreshed,
@@ -441,6 +445,7 @@ export type DashboardEvents =
     | DashboardInsightWidgetHeaderChanged
     | DashboardInsightWidgetFilterSettingsChanged
     | DashboardInsightWidgetVisPropertiesChanged
+    | DashboardInsightWidgetVisConfigurationChanged
     | DashboardInsightWidgetInsightSwitched
     | DashboardInsightWidgetDrillsModified
     | DashboardInsightWidgetDrillsRemoved

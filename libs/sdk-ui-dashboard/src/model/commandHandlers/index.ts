@@ -64,6 +64,7 @@ import { resizeHeightHandler } from "./layout/resizeHeightHandler";
 import { resizeWidthHandler } from "./layout/resizeWidthHandler";
 import { refreshInsightWidgetHandler } from "./widgets/refreshInsightWidgetHandler";
 import { removeSectionItemByWidgetRefHandler } from "./layout/removeSectionItemByWidgetRefHandler";
+import { changeInsightWidgetVisConfigurationHandler } from "./widgets/changeInsightWidgetVisConfigurationHandler";
 
 function* notImplementedCommand(ctx: DashboardContext, cmd: IDashboardCommand): SagaIterator<void> {
     yield dispatchDashboardEvent(commandRejected(ctx, cmd.correlationId));
@@ -113,6 +114,7 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_HEADER": changeInsightWidgetHeaderHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_FILTER_SETTINGS": changeInsightWidgetFilterSettingsHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_PROPERTIES": changeInsightWidgetVisPropertiesHandler,
+    "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_CONFIGURATION": changeInsightWidgetVisConfigurationHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_INSIGHT": notImplementedCommand,
     "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILLS": modifyDrillsForInsightWidgetHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILLS": removeDrillsForInsightWidgetHandler,
