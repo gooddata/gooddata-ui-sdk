@@ -78,7 +78,6 @@
         "speed-measure-webpack-plugin": "^1.5.0",
         "style-loader": "^3.3.1",
         "styled-jsx": "^4.0.1",
-        "testcafe": "^1.18.3",
         "typescript": "4.0.2",
         "webpack": "^5.58.0",
         "webpack-cli": "^4.9.2",
@@ -125,7 +124,7 @@
         "yup": "^0.32.9"
     },
     "config": {
-        "eslint": "-c .eslintrc.js --ext ts,tsx src/ test/"
+        "eslint": "-c .eslintrc.js --ext ts,tsx src/"
     },
     "scripts": {
         "prettier-check": "prettier --check '{src,examples/src,examples/test}/**/*.{ts,js,tsx,jsx,json,scss,md,yaml,html}'",
@@ -139,9 +138,6 @@
         "examples?": "# Default is the public access proxy, other options: npm run examples [sec,secure,stg,stg2,stg3,demo,developer or URL]",
         "examples": "bash scripts/run-examples.sh",
         "build": "bash scripts/build-examples.sh ${EXAMPLES_BUILD_TYPE}",
-        "examples-testcafe": "./scripts/run-testcafe.sh visual",
-        "examples-testcafe-live": "./scripts/run-testcafe.sh live",
-        "examples-testcafe-ci": "./scripts/run-testcafe.sh ci",
         "refresh-md": "./scripts/refresh-md.sh && npm run build",
         "heroku-create-app": "heroku create ${PUBLIC_APP_NAME}; exit 0",
         "heroku-set-env": "run-s heroku-set-env:*",
