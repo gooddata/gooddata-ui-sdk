@@ -5,7 +5,6 @@ const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPl
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require("path");
 const npmPackage = require("./package.json");
-const SHADOW_STYLES = "assets/styles.shadow.css";
 
 module.exports = (env, argv) => ({
     mode: argv.mode,
@@ -80,14 +79,9 @@ module.exports = (env, argv) => ({
             },
             {
                 test: /\.css$/,
-                oneOf: [
-                    {
-                        test: /\.shadow\.css$/,
-                        use: [MiniCssExtractPlugin.loader, "css-loader"],
-                    },
-                    {
-                        use: ["style-loader", "css-loader"],
-                    },
+                use: [
+                    argv.mode === "production" ? MiniCssExtractPlugin.loader : "style-loader",
+                    "css-loader",
                 ],
             },
             {
@@ -121,15 +115,11 @@ module.exports = (env, argv) => ({
         new DefinePlugin({
             NPM_PACKAGE_NAME: JSON.stringify(npmPackage.name),
             NPM_PACKAGE_VERSION: JSON.stringify(npmPackage.version),
-            SHADOW_STYLES: JSON.stringify(SHADOW_STYLES),
         }),
         new ProvidePlugin({
             process: "process/browser",
         }),
-        new MiniCssExtractPlugin({
-            filename: SHADOW_STYLES,
-            runtime: false,
-        }),
+        argv.mode === "production" && new MiniCssExtractPlugin(),
         env.analyze &&
             new BundleAnalyzerPlugin({
                 analyzerMode: "static",

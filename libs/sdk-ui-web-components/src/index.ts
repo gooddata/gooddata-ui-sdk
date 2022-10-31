@@ -15,6 +15,12 @@ import { parseUrl } from "./parseUrl";
 import { Insight } from "./visualizations/Insight";
 import { Dashboard } from "./visualizations/Dashboard";
 
+// Include styles async to use native link injection from MiniCssExtractPlugin
+import("./visualizations/components.css").catch((error) => {
+    // eslint-disable-next-line no-console
+    console.error("Failed to load GoodData styles", error);
+});
+
 const authMethodsMap = {
     sso: async function configureTigerSso(hostname: string) {
         const {

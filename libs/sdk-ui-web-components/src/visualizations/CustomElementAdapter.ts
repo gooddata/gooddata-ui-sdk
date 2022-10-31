@@ -3,16 +3,10 @@ import React from "react";
 import ReactDom from "react-dom";
 import invariant from "ts-invariant";
 import { LoadingComponent } from "@gooddata/sdk-ui/esm/base/react/LoadingComponent";
-
 import { CustomElementContext, getContext } from "../context";
-// eslint-disable-next-line import/no-unassigned-import
-import "./components.shadow.css";
-// eslint-disable-next-line import/no-unassigned-import
-import "./components.css";
 
 // Since JS does not support private properties natively,
 // use Symbols to hide them. Otherwise, would be seen on the element instance.
-const MOUNT_POINT = Symbol("mountPoint");
 const RENDER = Symbol("render");
 const COMPONENT = Symbol("component");
 const CONTEXT = Symbol("context");
@@ -21,14 +15,6 @@ export const EVENT_HANDLER = Symbol("eventHandler");
 export const LOAD_COMPONENT = Symbol("loadComponent");
 
 export abstract class CustomElementAdapter<C> extends HTMLElement {
-    /**
-     * @remarks
-     * A mounting point for the React visualization
-     *
-     * @internal
-     */
-    private [MOUNT_POINT]: HTMLDivElement;
-
     /**
      * @remarks
      * A React Component to be used to render the visualization
@@ -48,30 +34,8 @@ export abstract class CustomElementAdapter<C> extends HTMLElement {
     constructor() {
         super();
 
-        // Attach Shadow DOM
-        const shadowRoot = this.attachShadow({ mode: "closed" });
-
-        // Inject styles to the node
-        const link = document.createElement("link");
-        link.type = "text/css";
-        link.rel = "stylesheet";
-        const stylesLoadPromise = new Promise((res, rej) => {
-            link.addEventListener("load", () => res());
-            link.addEventListener("error", rej);
-        });
-        const webpackWorkaround = SHADOW_STYLES;
-        link.href = new URL(webpackWorkaround, import.meta.url).href;
-        shadowRoot.appendChild(link);
-
-        // Attach a mounting point for React
-        this[MOUNT_POINT] = document.createElement("div");
-        this[MOUNT_POINT].style.display = "flex";
-        this[MOUNT_POINT].style.flex = "1";
-        this[MOUNT_POINT].style.flexDirection = "column";
-        shadowRoot.appendChild(this[MOUNT_POINT]);
-
         // Load the rest of the dependencies needed for React element rendering
-        Promise.all([this[LOAD_COMPONENT](), getContext(), stylesLoadPromise])
+        Promise.all([this[LOAD_COMPONENT](), getContext()])
             .then(([Component, context]) => {
                 this[COMPONENT] = Component;
                 this[CONTEXT] = context;
@@ -100,7 +64,7 @@ export abstract class CustomElementAdapter<C> extends HTMLElement {
 
     disconnectedCallback() {
         // Clean-up React app before custom element is unmounted
-        ReactDom.unmountComponentAtNode(this[MOUNT_POINT]);
+        ReactDom.unmountComponentAtNode(this);
     }
 
     /**
@@ -113,7 +77,7 @@ export abstract class CustomElementAdapter<C> extends HTMLElement {
         // Ensure all dependencies are ready and we are mounted
         if (!this.isConnected || !this[COMPONENT] || !this[CONTEXT]) {
             // Render LoadingComponent instead
-            ReactDom.render(React.createElement(LoadingComponent), this[MOUNT_POINT]);
+            ReactDom.render(React.createElement(LoadingComponent), this);
             return;
         }
 
@@ -129,7 +93,7 @@ export abstract class CustomElementAdapter<C> extends HTMLElement {
         });
 
         // Mount / update the React app
-        ReactDom.render(reactElement, this[MOUNT_POINT]);
+        ReactDom.render(reactElement, this);
     }
 
     /**
