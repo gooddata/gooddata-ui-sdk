@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { GdcMessageEventListener, IGdcMessageEventListenerConfig, IGdcMessageEvent } from "../iframe/common";
 
 /**
@@ -18,7 +18,7 @@ try {
     // eslint-disable-next-line no-restricted-globals
     host = parent; // do not use check `typeof parent` due to IE11 "Access denied error", instead wrap by try/catch
 } catch (e) {
-    host = {}; // use mocked host object when running in node (testcafe tests)
+    host = {}; // use mocked host object when running in node (e2e tests)
 }
 
 interface IReceiverEntry {
