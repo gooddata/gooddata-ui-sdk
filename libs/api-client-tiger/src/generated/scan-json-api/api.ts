@@ -324,6 +324,7 @@ export const TestDefinitionRequestTypeEnum = {
     PRESTO: "PRESTO",
     DREMIO: "DREMIO",
     DRILL: "DRILL",
+    GREENPLUM: "GREENPLUM",
 } as const;
 
 export type TestDefinitionRequestTypeEnum =

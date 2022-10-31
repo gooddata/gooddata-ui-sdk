@@ -543,7 +543,8 @@
                             "MSSQL",
                             "PRESTO",
                             "DREMIO",
-                            "DRILL"
+                            "DRILL",
+                            "GREENPLUM"
                         ]
                     },
                     "url": {
