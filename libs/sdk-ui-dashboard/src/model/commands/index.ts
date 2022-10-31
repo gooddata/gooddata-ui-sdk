@@ -27,6 +27,7 @@ import {
     ChangeInsightWidgetHeader,
     ChangeInsightWidgetInsight,
     ChangeInsightWidgetVisProperties,
+    ChangeInsightWidgetVisConfiguration,
     ModifyDrillsForInsightWidget,
     RefreshInsightWidget,
     RemoveDrillsForInsightWidget,
@@ -277,6 +278,9 @@ export {
     ChangeInsightWidgetVisProperties,
     ChangeInsightWidgetVisPropertiesPayload,
     changeInsightWidgetVisProperties,
+    ChangeInsightWidgetVisConfiguration,
+    ChangeInsightWidgetVisConfigurationPayload,
+    changeInsightWidgetVisConfiguration,
     ChangeInsightWidgetInsight,
     ChangeInsightWidgetInsightPayload,
     changeInsightWidgetInsight,
@@ -366,6 +370,7 @@ export type DashboardCommands =
     | ChangeInsightWidgetHeader
     | ChangeInsightWidgetFilterSettings
     | ChangeInsightWidgetVisProperties
+    | ChangeInsightWidgetVisConfiguration
     | ChangeInsightWidgetInsight
     | ModifyDrillsForInsightWidget
     | RemoveDrillsForInsightWidget

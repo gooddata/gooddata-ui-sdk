@@ -2,24 +2,17 @@
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Typography, Checkbox } from "@gooddata/sdk-ui-kit";
+import { IInsightWidget } from "@gooddata/sdk-model";
 
 interface IVisualizationTitleConfigProps {
-    // resetTitle: () => void;
-    isHidingOfWidgetTitleEnabled: boolean;
+    widget: IInsightWidget;
     hideTitle: boolean;
-    // setVisualPropsConfigurationTitle: (
-    //     widgetRef: ObjRef,
-    //     hideTitle: boolean,
-    // ) => IVisualPropsConfigurationAction;
+    isHidingOfWidgetTitleEnabled: boolean;
+    setVisualPropsConfigurationTitle: (widget: IInsightWidget, hideTitle: boolean) => void;
 }
 
 export function InsightTitleConfig(props: IVisualizationTitleConfigProps) {
-    const {
-        hideTitle,
-        // widget,
-        // setVisualPropsConfigurationTitle,
-        isHidingOfWidgetTitleEnabled,
-    } = props;
+    const { hideTitle, widget, setVisualPropsConfigurationTitle, isHidingOfWidgetTitleEnabled } = props;
 
     const intl = useIntl();
 
@@ -27,7 +20,7 @@ export function InsightTitleConfig(props: IVisualizationTitleConfigProps) {
 
     const handleHideTitleChange = (isChecked: boolean) => {
         setWidgetTitleState(isChecked);
-        // setVisualPropsConfigurationTitle(widget, isChecked);
+        setVisualPropsConfigurationTitle(widget, isChecked);
     };
 
     return (

@@ -8,6 +8,7 @@ import {
     IInsightWidget,
     IInsightWidgetDefinition,
     ICatalogDateDataset,
+    IInsightWidgetConfiguration,
 } from "@gooddata/sdk-model";
 
 import { IDashboardEvent } from "./base";
@@ -205,6 +206,71 @@ export function insightWidgetVisPropertiesChanged(
  */
 export const isDashboardInsightWidgetVisPropertiesChanged =
     eventGuard<DashboardInsightWidgetVisPropertiesChanged>("GDC.DASH/EVT.INSIGHT_WIDGET.PROPERTIES_CHANGED");
+
+//
+//
+//
+
+/**
+ * Payload of the {@link DashboardInsightWidgetVisPropertiesChanged} event.
+ * @alpha
+ */
+export interface DashboardInsightWidgetVisConfigurationChangedPayload {
+    /**
+     * Reference to Insight Widget that was changed.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * New visualization config that are now in effect for the insight widget. These config
+     * will be merged with the config defined on the insight itself. They will influence how the
+     * insight visually appears.
+     *
+     * Will be undefined if there are no widget-level visualization config set for the particular
+     * insight widget.
+     */
+    readonly config: IInsightWidgetConfiguration | undefined;
+}
+
+/**
+ * This event is emitted when the insight widget's visualization configuration change.
+ *
+ * The configuration specified influence how the insight rendered in the widget appears visually
+ *
+ * @alpha
+ */
+export interface DashboardInsightWidgetVisConfigurationChanged extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.CONFIGURATION_CHANGED";
+    readonly payload: DashboardInsightWidgetVisConfigurationChangedPayload;
+}
+
+export function insightWidgetVisConfigurationChanged(
+    ctx: DashboardContext,
+    ref: ObjRef,
+    config: IInsightWidgetConfiguration | undefined,
+    correlationId?: string,
+): DashboardInsightWidgetVisConfigurationChanged {
+    return {
+        type: "GDC.DASH/EVT.INSIGHT_WIDGET.CONFIGURATION_CHANGED",
+        ctx,
+        correlationId,
+        payload: {
+            ref,
+            config,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardInsightWidgetVisConfigurationChanged}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardInsightWidgetVisConfigurationChanged =
+    eventGuard<DashboardInsightWidgetVisConfigurationChanged>(
+        "GDC.DASH/EVT.INSIGHT_WIDGET.CONFIGURATION_CHANGED",
+    );
 
 //
 //

@@ -7,6 +7,7 @@ import {
     ObjRefInScope,
     VisualizationProperties,
     InsightDrillDefinition,
+    IInsightWidgetConfiguration,
 } from "@gooddata/sdk-model";
 import { FilterOpReplaceAll, WidgetFilterOperation, WidgetHeader } from "../types/widgetTypes";
 import { IExportConfig } from "../types/exportTypes";
@@ -343,6 +344,68 @@ export function changeInsightWidgetVisProperties(
         payload: {
             ref,
             properties,
+        },
+    };
+}
+
+//
+//
+//
+
+/**
+ * Payload of the {@link ChangeInsightWidgetVisConfiguration} command.
+ * @alpha
+ */
+export interface ChangeInsightWidgetVisConfigurationPayload {
+    /**
+     * Reference to Insight Widget whose visualization configuration to change.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * Visualization configuration to use for the insight that is rendered by the widget.
+     *
+     * These will replace the existing visualization configuration. To clear any widget-level configuration
+     * currently in effect for the widget, set the configuration to `undefined`.
+     */
+    readonly config: IInsightWidgetConfiguration | undefined;
+}
+
+/**
+ * @alpha
+ */
+export interface ChangeInsightWidgetVisConfiguration extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_CONFIGURATION";
+    readonly payload: ChangeInsightWidgetVisConfigurationPayload;
+}
+
+/**
+ *
+ * Creates the ChangeInsightWidgetVisConfiguration command. Dispatching this command will result is modification
+ * of the visualization configuration that are effective for the particular insight widget.
+ *
+ * Through visualization configuration, you can modify how particular visualization behaves
+ *
+ * If you want to clear any widget-level configuration, set config to `undefined`.
+ *
+ * @param ref - reference of the insight widget to modify
+ * @param config - new configuration to set, undefined to clear any widget level visualization config
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function changeInsightWidgetVisConfiguration(
+    ref: ObjRef,
+    config: IInsightWidgetConfiguration | undefined,
+    correlationId?: string,
+): ChangeInsightWidgetVisConfiguration {
+    return {
+        type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_CONFIGURATION",
+        correlationId,
+        payload: {
+            ref,
+            config,
         },
     };
 }
