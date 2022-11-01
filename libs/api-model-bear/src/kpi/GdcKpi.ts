@@ -33,11 +33,11 @@ export namespace GdcKpi {
 
     export interface IKpiDescriptionConfiguration {
         /**
-         * whether description should be visible or not
+         * Whether description should be visible or not
          */
         visible: boolean;
         /**
-         * whether description should be used from kpi or inherited from its metric
+         * Whether description should be used from kpi or inherited from its metric
          */
         source: KpiDescriptionSourceType;
     }

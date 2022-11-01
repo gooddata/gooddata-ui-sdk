@@ -86,6 +86,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enableMSSQLDataSource,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableDescriptions,
+            "enableDescriptions",
+            "BOOLEAN",
+            FeatureFlagsValues.enableDescriptions,
+        ),
     };
 }
 

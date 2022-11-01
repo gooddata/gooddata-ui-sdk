@@ -10,6 +10,7 @@ import {
     isCustomWidget,
     useDashboardScheduledEmails,
     selectCanExportReport,
+    selectSettings,
 } from "../../../../model";
 import {
     DashboardItem,
@@ -23,6 +24,7 @@ import { useDashboardComponentsContext } from "../../../dashboardContexts";
 import { useInsightMenu } from "./useInsightMenu";
 import { DashboardWidgetInsightGuard } from "./DashboardWidgetInsightGuard";
 import { IDefaultDashboardInsightWidgetProps } from "./types";
+import { InsightWidgetDescriptionTrigger } from "../../description/InsightWidgetDescriptionTrigger";
 
 export const DefaultDashboardInsightWidget: React.FC<Omit<IDefaultDashboardInsightWidgetProps, "insight">> = (
     props,
@@ -85,6 +87,8 @@ const DefaultDashboardInsightWidgetCore: React.FC<
         [InsightMenuComponentProvider, insight, widget],
     );
 
+    const settings = useDashboardSelector(selectSettings);
+
     return (
         <DashboardItem
             className={cx(
@@ -102,7 +106,14 @@ const DefaultDashboardInsightWidgetCore: React.FC<
                     )
                 }
                 renderBeforeVisualization={() => (
-                    <>
+                    <div className="gd-absolute-row">
+                        {settings?.enableDescriptions ? (
+                            <InsightWidgetDescriptionTrigger
+                                insight={insight}
+                                widget={widget}
+                                screen={screen}
+                            />
+                        ) : null}
                         <InsightMenuButtonComponent
                             insight={insight}
                             widget={widget}
@@ -110,7 +121,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
                             onClick={openMenu}
                             items={menuItems}
                         />
-                    </>
+                    </div>
                 )}
                 renderAfterContent={() => {
                     if (!isMenuOpen) {

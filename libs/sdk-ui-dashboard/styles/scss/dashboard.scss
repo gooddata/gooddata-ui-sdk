@@ -235,6 +235,18 @@
         );
     }
 
+    .dash-item-action-description {
+        top: calc(
+            -#{variables.$item-outer-padding} - #{variables.$gd-dashboards-content-kpiWidget-borderWidth} + (
+                    #{variables.$item-action-width} - #{variables.$item-action-icon-width}
+                ) / 2
+        );
+        right: calc(
+            -#{variables.$item-outer-padding} - #{variables.$gd-dashboards-content-kpiWidget-borderWidth} + #{variables.$item-action-width} +
+                #{variables.$item-action-gap}
+        );
+    }
+
     .dash-item-content {
         border-width: variables.$gd-dashboards-content-kpiWidget-borderWidth;
         border-style: solid;
@@ -302,6 +314,26 @@
 
     @media #{kit-variables.$xsmall-only}, #{kit-variables.$small-only} {
         top: -73px;
+    }
+}
+
+.gd-absolute-row {
+    position: absolute;
+    top: calc(-#{variables.$item-outer-padding} - #{variables.$gd-dashboards-content-widget-borderWidth});
+    right: calc(-#{variables.$item-outer-padding} - #{variables.$gd-dashboards-content-widget-borderWidth});
+    height: variables.$item-action-width;
+    z-index: 2;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: variables.$item-action-gap;
+
+    .dash-item-action,
+    .dash-item-action-placeholder {
+        position: relative;
+        top: auto;
+        right: auto;
     }
 }
 
@@ -405,6 +437,23 @@
         -#{variables.$item-outer-padding} - #{variables.$gd-dashboards-content-widget-borderWidth} + #{variables.$item-action-width} +
             5px
     );
+}
+
+.dash-item-action-description {
+    font-size: variables.$item-action-icon-width;
+    line-height: variables.$item-action-icon-width;
+    height: variables.$item-action-icon-width;
+    width: variables.$item-action-icon-width;
+
+    .gd-icon-circle-question-wrapper:not(.is-mobile) {
+        display: none;
+    }
+}
+
+.dash-item-content:hover {
+    .gd-icon-circle-question-wrapper:not(.is-mobile) {
+        display: block;
+    }
 }
 
 .dash-item-action,

@@ -1799,5 +1799,15 @@
         "value": "Applied item cannot be deleted.",
         "comment": "",
         "limit": 0
+    },
+    "descriptionPanel.button.more": {
+        "value": "Show more",
+        "comment": "The button title which will display more description text",
+        "limit": 0
+    },
+    "descriptionPanel.button.less": {
+        "value": "Show less",
+        "comment": "The button title which will display less description text.",
+        "limit": 0
     }
 }
