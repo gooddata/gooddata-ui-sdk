@@ -281,7 +281,7 @@
     "configurationPanel.drillConfig.drillIntoDashboard": "ダッシュボードにドリル",
     "configurationPanel.drillConfig.drillIntoInsight": "インサイトにドリル",
     "configurationPanel.drillConfig.drillIntoUrl": "URL にドリル",
-    "configurationPanel.drillConfig.select": "アクションを選択...",
+    "configurationPanel.drillConfig.select": "アクションを選択…",
     "configurationPanel.unlistedDashboardTab": "リストにないダッシュボード",
     "configurationPanel.visualprops.sectionTitle": "タイトル",
     "configurationPanel.visualprops.hideTitle": "タイトルを非表示",

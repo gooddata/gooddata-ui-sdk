@@ -230,7 +230,7 @@
     "addPanel.kpi.tooltip.no_measures.link": "了解更多",
     "visualizationsList.dragToAdd": "拖动以添加",
     "visualizationsList.savedVisualizations": "已保存的见解",
-    "configurationPanel.drillConfig.selectDashboard": "选择控制面板...",
+    "configurationPanel.drillConfig.selectDashboard": "选择控制面板…",
     "configurationPanel.drillConfig.drillIntoDashboard.searchPlaceholder": "搜索所有控制面板…",
     "configurationPanel.drillConfig.forbiddenDashboard.tooltip": "控制面板未共享给您，但其他用户可以访问此控制面板。",
     "configurationPanel.drillConfig.notSharedDashboard.tooltip": "控制面板未共享给您，但所有用户都可以访问它，如果想深入了解。",
