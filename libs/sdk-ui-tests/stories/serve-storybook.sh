@@ -13,4 +13,4 @@ docker run --rm \
         --volume ${STORYBOOK_ASSETS}:/usr/share/nginx/html:ro,Z \
         --volume ${STORYBOOK_CONF}:/etc/nginx/conf.d/storybook.conf:ro,Z \
         -p ${PORT}:8080 \
-        nginxinc/nginx-unprivileged:1.21.6-alpine
+        nginxinc/nginx-unprivileged:1.23.1-alpine

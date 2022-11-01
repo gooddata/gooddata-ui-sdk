@@ -51,7 +51,7 @@ docker network create "${BACKSTOP_NET}" || { echo "Network creation failed" && e
         --net "${BACKSTOP_NET}" --net-alias storybook \
         --volume ${STORYBOOK_ASSETS}:/usr/share/nginx/html:ro,Z \
         --volume ${STORYBOOK_CONF}:/etc/nginx/conf.d/storybook.conf:ro,Z \
-        nginxinc/nginx-unprivileged:1.21.6-alpine)
+        nginxinc/nginx-unprivileged:1.23.1-alpine)
 
     echo "waiting for nginx in container: ${NGINX_CONTAINER} to start serving storybook"
 
@@ -75,7 +75,7 @@ docker network create "${BACKSTOP_NET}" || { echo "Network creation failed" && e
             --user $UID:$GID \
             --net ${BACKSTOP_NET} --net-alias backstop \
             --volume ${BACKSTOP_DIR}:/src:Z,consistent \
-            backstopjs/backstopjs:5.1.0 --config=/src/backstop.config.js "$@"
+            backstopjs/backstopjs:6.1.3 --config=/src/backstop.config.js "$@"
 
         echo "BackstopJS finished. Killing nginx container ${NGINX_CONTAINER}"
     }
