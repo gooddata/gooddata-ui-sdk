@@ -49,7 +49,7 @@ export function enrichMapboxToken<T>(config?: T & {
 }) | undefined;
 
 // @public (undocumented)
-export const GeoPushpinChart: (props: IGeoPushpinChartProps) => JSX.Element;
+export const GeoPushpinChart: (props: IGeoPushpinChartProps | IGeoPushpinChartLatitudeLongitudeProps) => JSX.Element;
 
 export { getColorMappingPredicate }
 
@@ -266,7 +266,7 @@ export interface IGeoPointsConfig {
 }
 
 // @public (undocumented)
-export interface IGeoPushpinChartProps extends IVisualizationProps, IVisualizationCallbacks {
+export interface IGeoPushpinChartBaseProps extends IVisualizationProps, IVisualizationCallbacks {
     backend?: IAnalyticalBackend;
     // (undocumented)
     color?: AttributeMeasureOrPlaceholder;
@@ -275,8 +275,6 @@ export interface IGeoPushpinChartProps extends IVisualizationProps, IVisualizati
     execConfig?: IExecutionConfig;
     // (undocumented)
     filters?: NullableFiltersOrPlaceholders;
-    // (undocumented)
-    location: AttributeOrPlaceholder;
     onCenterPositionChanged?: CenterPositionChangedCallback;
     onZoomChanged?: ZoomChangedCallback;
     placeholdersResolutionContext?: any;
@@ -287,6 +285,17 @@ export interface IGeoPushpinChartProps extends IVisualizationProps, IVisualizati
     // (undocumented)
     sortBy?: SortsOrPlaceholders;
     workspace?: string;
+}
+
+// @public (undocumented)
+export interface IGeoPushpinChartLatitudeLongitudeProps extends IGeoPushpinChartBaseProps {
+    latitude: AttributeOrPlaceholder;
+    longitude: AttributeOrPlaceholder;
+}
+
+// @public (undocumented)
+export interface IGeoPushpinChartProps extends IGeoPushpinChartBaseProps {
+    location: AttributeOrPlaceholder;
 }
 
 // @public (undocumented)

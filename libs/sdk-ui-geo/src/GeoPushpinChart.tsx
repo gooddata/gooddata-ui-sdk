@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import React from "react";
 import compact from "lodash/compact";
 import omit from "lodash/omit";
@@ -12,7 +12,12 @@ import {
     withContexts,
     useResolveValuesWithPlaceholders,
 } from "@gooddata/sdk-ui";
-import { IGeoPushpinChartProps } from "./GeoChart";
+import {
+    GeoPushpinChartPropsUnion,
+    isGeoPushpinChartProps,
+    IGeoPushpinChartProps,
+    IGeoPushpinChartLatitudeLongitudeProps,
+} from "./GeoChart";
 import {
     bucketsAttributes,
     bucketsMeasures,
@@ -30,14 +35,22 @@ import {
 } from "@gooddata/sdk-model";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 
-const getBuckets = (props: IGeoPushpinChartProps): IBucket[] => {
-    const { color, location, segmentBy, size, config } = props;
+const getBuckets = (props: GeoPushpinChartPropsUnion): IBucket[] => {
+    const { color, segmentBy, size, config } = props;
     const buckets: IBucket[] = [
         newBucket(BucketNames.SIZE, ...(size ? [disableComputeRatio(size as IAttributeOrMeasure)] : [])),
         newBucket(BucketNames.COLOR, ...(color ? [disableComputeRatio(color as IAttributeOrMeasure)] : [])),
-        newBucket(BucketNames.LOCATION, ...(location ? [location as IAttribute] : [])),
-        newBucket(BucketNames.SEGMENT, ...(segmentBy ? [segmentBy as IAttribute] : [])),
     ];
+    if (isGeoPushpinChartProps(props)) {
+        const { location } = props;
+        buckets.push(newBucket(BucketNames.LOCATION, ...(location ? [location as IAttribute] : [])));
+    } else {
+        const { latitude, longitude } = props;
+        buckets.push(newBucket(BucketNames.LATITUDE, ...(latitude ? [latitude as IAttribute] : [])));
+        buckets.push(newBucket(BucketNames.LONGITUDE, ...(longitude ? [longitude as IAttribute] : [])));
+    }
+    buckets.push(newBucket(BucketNames.SEGMENT, ...(segmentBy ? [segmentBy as IAttribute] : [])));
+
     const tooltipText = config?.[BucketNames.TOOLTIP_TEXT];
     if (tooltipText) {
         buckets.push(newBucket(BucketNames.TOOLTIP_TEXT, tooltipText));
@@ -60,22 +73,30 @@ export function getGeoChartDimensions(def: IExecutionDefinition): IDimension[] {
  * Specifies props that are on geo chart props but not on core chart props - these must not be passed
  * down to core chart.
  */
-const NON_CORE_PROPS: Array<keyof IGeoPushpinChartProps> = [
-    "backend",
-    "workspace",
-    "segmentBy",
-    "filters",
-    "sortBy",
-    "location",
-    "color",
-    "size",
-];
+const getNonCoreProps = (
+    props: GeoPushpinChartPropsUnion,
+): Array<keyof IGeoPushpinChartProps | keyof IGeoPushpinChartLatitudeLongitudeProps> => {
+    const base: Array<keyof GeoPushpinChartPropsUnion> = [
+        "backend",
+        "workspace",
+        "segmentBy",
+        "filters",
+        "sortBy",
+        "color",
+        "size",
+    ];
 
-function GeoPushpinChartInner(props: IGeoPushpinChartProps): JSX.Element {
+    if (isGeoPushpinChartProps(props)) {
+        return [...base, "location"];
+    }
+    return [...base, "longitude", "latitude"];
+};
+
+function GeoPushpinChartInner(props: GeoPushpinChartPropsUnion): JSX.Element {
     const { backend, workspace, sortBy, filters, exportTitle, execConfig = {} } = props;
 
     const buckets = getBuckets(props);
-    const newProps = omit(props, NON_CORE_PROPS);
+    const newProps = omit(props, getNonCoreProps(props));
 
     const execution = backend!
         .withTelemetry("GeoPushpinChart", props)
@@ -106,14 +127,41 @@ function GeoPushpinChartInner(props: IGeoPushpinChartProps): JSX.Element {
 
 const WrappedGeoPushpinChart = withTheme(withContexts(GeoPushpinChartInner));
 
-/**
- * @public
- */
-export const GeoPushpinChart = (props: IGeoPushpinChartProps) => {
+const GeoPushpinChartLocation = (props: IGeoPushpinChartProps) => {
     const [location, size, color, segmentBy, filters, sortBy] = useResolveValuesWithPlaceholders(
         [props.location, props.size, props.color, props.segmentBy, props.filters, props.sortBy],
         props.placeholdersResolutionContext,
     );
-
     return <WrappedGeoPushpinChart {...props} {...{ location, size, color, segmentBy, filters, sortBy }} />;
+};
+
+const GeoPushpinChartLatitudeLongitude = (props: IGeoPushpinChartLatitudeLongitudeProps) => {
+    const [longitude, latitude, size, color, segmentBy, filters, sortBy] = useResolveValuesWithPlaceholders(
+        [
+            props.longitude,
+            props.latitude,
+            props.size,
+            props.color,
+            props.segmentBy,
+            props.filters,
+            props.sortBy,
+        ],
+        props.placeholdersResolutionContext,
+    );
+    return (
+        <WrappedGeoPushpinChart
+            {...props}
+            {...{ longitude, latitude, size, color, segmentBy, filters, sortBy }}
+        />
+    );
+};
+
+/**
+ * @public
+ */
+export const GeoPushpinChart = (props: IGeoPushpinChartProps | IGeoPushpinChartLatitudeLongitudeProps) => {
+    if (isGeoPushpinChartProps(props)) {
+        return <GeoPushpinChartLocation {...props} />;
+    }
+    return <GeoPushpinChartLatitudeLongitude {...props} />;
 };

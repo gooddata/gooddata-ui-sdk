@@ -127,6 +127,8 @@ export const BucketNames: {
     SEGMENT: string;
     COLUMNS: string;
     LOCATION: string;
+    LONGITUDE: string;
+    LATITUDE: string;
     SIZE: string;
     COLOR: string;
     TOOLTIP_TEXT: string;
