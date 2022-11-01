@@ -2070,6 +2070,7 @@ export interface ISettings {
     enableCustomColorPicker?: boolean;
     enableDataSampling?: boolean;
     enableDataSourceManagement?: boolean;
+    enableDescriptions?: boolean;
     enableDrilledInsightExport?: boolean;
     enableEmbedButtonInAD?: boolean;
     enableEmbedButtonInKD?: boolean;
