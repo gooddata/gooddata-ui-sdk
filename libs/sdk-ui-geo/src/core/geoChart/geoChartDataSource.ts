@@ -25,7 +25,7 @@ function transformPushpinDataSource(dataSourceProps: IGeoDataSourceProps): IGeoD
 
     if (!location) {
         /*
-         * short-circuit the processing at this point. if there is no location data then the featurs will
+         * short-circuit the processing at this point. if there is no location data then the features will
          * be empty
          */
         return [];

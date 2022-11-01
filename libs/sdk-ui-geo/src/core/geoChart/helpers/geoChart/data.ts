@@ -1,5 +1,13 @@
 // (C) 2020-2022 GoodData Corporation
-import { IAvailableLegends, IGeoData, IGeoLngLat } from "../../../../GeoChart";
+import {
+    IAvailableLegends,
+    IGeoData,
+    IGeoLngLat,
+    IGeoLocationItem,
+    IGeoMeasureItem,
+    IGeoSegmentItem,
+    IGeoAttributeItem,
+} from "../../../../GeoChart";
 import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
 import {
     dataValueAsFloat,
@@ -55,15 +63,45 @@ export function getLocation(latlng: string | null): IGeoLngLat | null {
     };
 }
 
+export function parseCoordinate(coordinate: string | null): number | null {
+    if (!coordinate) {
+        return null;
+    }
+
+    const numericalCoordinate = dataValueAsFloat(coordinate);
+    if (isNaN(numericalCoordinate)) {
+        // eslint-disable-next-line no-console
+        console.warn(
+            "UI-SDK: geoChartDataSource - getLocation: invalid latitude/longitude coordinate",
+            numericalCoordinate,
+        );
+        return null;
+    }
+
+    return numericalCoordinate;
+}
+
+interface IGeoDataBuckets {
+    location?: IGeoLocationItem;
+    latitude?: IGeoLocationItem;
+    longitude?: IGeoLocationItem;
+    size?: IGeoMeasureItem;
+    color?: IGeoMeasureItem;
+    segment?: IGeoSegmentItem;
+    tooltipText?: IGeoAttributeItem;
+}
+
 export function getGeoData(
     dv: DataViewFacade,
     emptyHeaderString: string,
     nullHeaderString: string,
 ): IGeoData {
-    const geoData: IGeoData = getBucketItemNameAndDataIndex(dv);
+    const geoData: IGeoDataBuckets = getBucketItemNameAndDataIndex(dv);
     const attributeHeaderItems = getGeoAttributeHeaderItems(dv, geoData);
 
     const locationIndex = geoData.location?.index;
+    const latitudeIndex = geoData.latitude?.index;
+    const longitudeIndex = geoData.longitude?.index;
     const segmentIndex = geoData?.segment?.index;
     const tooltipTextIndex = geoData?.tooltipText?.index;
     const sizeIndex = geoData?.size?.index;
@@ -77,6 +115,29 @@ export function getGeoData(
             nullHeaderString,
         );
         geoData[BucketNames.LOCATION].data = locationData.map(getLocation);
+    }
+
+    if (latitudeIndex !== undefined && longitudeIndex != undefined) {
+        const latitudeData = getAttributeData(
+            attributeHeaderItems,
+            latitudeIndex,
+            emptyHeaderString,
+            nullHeaderString,
+        );
+        const longitudeData = getAttributeData(
+            attributeHeaderItems,
+            longitudeIndex,
+            emptyHeaderString,
+            nullHeaderString,
+        );
+
+        geoData[BucketNames.LOCATION] = {
+            ...geoData[BucketNames.LATITUDE],
+            data: latitudeData.map((value, index) => ({
+                lat: parseCoordinate(value),
+                lng: parseCoordinate(longitudeData[index]),
+            })),
+        };
     }
 
     if (segmentIndex !== undefined) {
@@ -146,7 +207,7 @@ function getAttributeData(
 
 type BucketInfos = { [localId: string]: IBucketItemInfo | null };
 
-function getBucketItemNameAndDataIndex(dv: DataViewFacade): IGeoData {
+function getBucketItemNameAndDataIndex(dv: DataViewFacade): IGeoDataBuckets {
     const buckets = dv.def().buckets();
     const measureDescriptors = dv.meta().measureDescriptors();
     const attributeDescriptors = dv.meta().attributeDescriptors();
@@ -157,31 +218,35 @@ function getBucketItemNameAndDataIndex(dv: DataViewFacade): IGeoData {
     }, {});
 
     // init data
-    const result: IGeoData = {};
+    const result: IGeoDataBuckets = {};
 
-    [BucketNames.LOCATION, BucketNames.SEGMENT, BucketNames.TOOLTIP_TEXT].forEach(
-        (bucketName: string): void => {
-            const bucketItemInfo = bucketItemInfos[bucketName];
-            if (!bucketItemInfo) {
-                return;
-            }
-            const index = findIndex(
-                attributeDescriptors,
-                (desc: IAttributeDescriptor): boolean =>
-                    desc.attributeHeader.localIdentifier === bucketItemInfo.localIdentifier &&
-                    (desc.attributeHeader.uri === bucketItemInfo.uri ||
-                        desc.attributeHeader.identifier === bucketItemInfo.identifier),
-            );
+    [
+        BucketNames.LOCATION,
+        BucketNames.LATITUDE,
+        BucketNames.LONGITUDE,
+        BucketNames.SEGMENT,
+        BucketNames.TOOLTIP_TEXT,
+    ].forEach((bucketName: string): void => {
+        const bucketItemInfo = bucketItemInfos[bucketName];
+        if (!bucketItemInfo) {
+            return;
+        }
+        const index = findIndex(
+            attributeDescriptors,
+            (desc: IAttributeDescriptor): boolean =>
+                desc.attributeHeader.localIdentifier === bucketItemInfo.localIdentifier &&
+                (desc.attributeHeader.uri === bucketItemInfo.uri ||
+                    desc.attributeHeader.identifier === bucketItemInfo.identifier),
+        );
 
-            if (index !== -1) {
-                const {
-                    formOf: { name },
-                } = attributeDescriptors[index].attributeHeader;
+        if (index !== -1) {
+            const {
+                formOf: { name },
+            } = attributeDescriptors[index].attributeHeader;
 
-                result[bucketName] = { index, name };
-            }
-        },
-    );
+            result[bucketName] = { index, name };
+        }
+    });
 
     [BucketNames.SIZE, BucketNames.COLOR].forEach((bucketName: string): void => {
         const bucketItemInfo = bucketItemInfos[bucketName];

@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 const MEASURES = "measures";
 const SECONDARY_MEASURES = "secondary_measures";
 const TERTIARY_MEASURES = "tertiary_measures";
@@ -10,6 +10,8 @@ const TREND = "trend";
 const SEGMENT = "segment";
 const COLUMNS = "columns";
 const LOCATION = "location";
+const LONGITUDE = "longitude";
+const LATITUDE = "latitude";
 const SIZE = "size";
 const COLOR = "color";
 const TOOLTIP_TEXT = "tooltipText";
@@ -30,6 +32,8 @@ export const BucketNames = {
     SEGMENT,
     COLUMNS,
     LOCATION,
+    LONGITUDE,
+    LATITUDE,
     SIZE,
     COLOR,
     TOOLTIP_TEXT,

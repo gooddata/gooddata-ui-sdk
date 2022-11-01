@@ -23,10 +23,17 @@ export function isDataOfReasonableSize(dv: DataViewFacade, geoData: IGeoData, li
     return locationData.length <= limit;
 }
 
-export function isLocationMissing(buckets: IBucket[]): boolean {
-    const locationBucket = bucketsFind(buckets, BucketNames.LOCATION);
+const isBucketWithItem = (bucket?: IBucket) => bucket !== undefined && !bucketIsEmpty(bucket);
 
-    return !locationBucket || bucketIsEmpty(locationBucket);
+export function isLocationSet(buckets: IBucket[]): boolean {
+    const locationBucket = bucketsFind(buckets, BucketNames.LOCATION);
+    const latitudeBucket = bucketsFind(buckets, BucketNames.LATITUDE);
+    const longitudeBucket = bucketsFind(buckets, BucketNames.LONGITUDE);
+
+    return (
+        isBucketWithItem(locationBucket) ||
+        (isBucketWithItem(latitudeBucket) && isBucketWithItem(longitudeBucket))
+    );
 }
 
 export function calculateAverage(values: number[] = []): number {

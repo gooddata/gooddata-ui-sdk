@@ -13,7 +13,10 @@
 export {
     IGeoConfig,
     IGeoLngLat,
+    IGeoPushpinChartBaseProps,
     IGeoPushpinChartProps,
+    ILocationGeoPushpinChartProps,
+    ILongitudeLatitudeGeoPushpinChartProps,
     IGeoConfigViewport,
     IGeoPointsConfig,
     IGeoConfigViewportArea,
@@ -27,6 +30,8 @@ export {
     IGeoSegmentItem,
     IGeoMeasureItem,
     IGeoDataItem,
+    isLocationGeoPushpinChartProps,
+    isLatitudeLongitudeGeoPushpinChartProps,
 } from "./GeoChart";
 export { GeoPushpinChart, getGeoChartDimensions } from "./GeoPushpinChart";
 

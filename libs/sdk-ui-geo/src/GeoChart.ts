@@ -198,7 +198,7 @@ export type ZoomChangedCallback = (zoom: number) => void;
 /**
  * @public
  */
-export interface IGeoPushpinChartProps extends IVisualizationProps, IVisualizationCallbacks {
+export interface IGeoPushpinChartBaseProps extends IVisualizationProps, IVisualizationCallbacks {
     /**
      * Analytical backend, from which the chart will obtain data to visualize
      *
@@ -217,7 +217,6 @@ export interface IGeoPushpinChartProps extends IVisualizationProps, IVisualizati
      */
     workspace?: string;
 
-    location: AttributeOrPlaceholder;
     size?: AttributeMeasureOrPlaceholder;
     color?: AttributeMeasureOrPlaceholder;
     segmentBy?: AttributeOrPlaceholder;
@@ -246,6 +245,45 @@ export interface IGeoPushpinChartProps extends IVisualizationProps, IVisualizati
      * Specify function to call back when map zoom changes.
      */
     onZoomChanged?: ZoomChangedCallback;
+}
+
+/**
+ * @public
+ */
+export interface ILocationGeoPushpinChartProps extends IGeoPushpinChartBaseProps {
+    location: AttributeOrPlaceholder;
+}
+
+/**
+ * @public
+ */
+export interface ILongitudeLatitudeGeoPushpinChartProps extends IGeoPushpinChartBaseProps {
+    latitude: AttributeOrPlaceholder;
+    longitude: AttributeOrPlaceholder;
+}
+
+/**
+ * @public
+ */
+export type IGeoPushpinChartProps = ILocationGeoPushpinChartProps | ILongitudeLatitudeGeoPushpinChartProps;
+
+/**
+ * @public
+ */
+export function isLocationGeoPushpinChartProps(
+    props: IGeoPushpinChartProps,
+): props is ILocationGeoPushpinChartProps {
+    return (props as ILocationGeoPushpinChartProps).location !== undefined;
+}
+
+/**
+ * @public
+ */
+export function isLatitudeLongitudeGeoPushpinChartProps(
+    props: IGeoPushpinChartProps,
+): props is ILongitudeLatitudeGeoPushpinChartProps {
+    const latitudeLongitudeProps = props as ILongitudeLatitudeGeoPushpinChartProps;
+    return latitudeLongitudeProps.latitude !== undefined && latitudeLongitudeProps.longitude !== undefined;
 }
 
 /**

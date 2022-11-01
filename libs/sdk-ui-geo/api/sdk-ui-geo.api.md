@@ -266,7 +266,7 @@ export interface IGeoPointsConfig {
 }
 
 // @public (undocumented)
-export interface IGeoPushpinChartProps extends IVisualizationProps, IVisualizationCallbacks {
+export interface IGeoPushpinChartBaseProps extends IVisualizationProps, IVisualizationCallbacks {
     backend?: IAnalyticalBackend;
     // (undocumented)
     color?: AttributeMeasureOrPlaceholder;
@@ -275,8 +275,6 @@ export interface IGeoPushpinChartProps extends IVisualizationProps, IVisualizati
     execConfig?: IExecutionConfig;
     // (undocumented)
     filters?: NullableFiltersOrPlaceholders;
-    // (undocumented)
-    location: AttributeOrPlaceholder;
     onCenterPositionChanged?: CenterPositionChangedCallback;
     onZoomChanged?: ZoomChangedCallback;
     placeholdersResolutionContext?: any;
@@ -290,10 +288,33 @@ export interface IGeoPushpinChartProps extends IVisualizationProps, IVisualizati
 }
 
 // @public (undocumented)
+export type IGeoPushpinChartProps = ILocationGeoPushpinChartProps | ILongitudeLatitudeGeoPushpinChartProps;
+
+// @public (undocumented)
 export interface IGeoSegmentItem extends IGeoAttributeItem {
     // (undocumented)
     uris: string[];
 }
+
+// @public (undocumented)
+export interface ILocationGeoPushpinChartProps extends IGeoPushpinChartBaseProps {
+    // (undocumented)
+    location: AttributeOrPlaceholder;
+}
+
+// @public (undocumented)
+export interface ILongitudeLatitudeGeoPushpinChartProps extends IGeoPushpinChartBaseProps {
+    // (undocumented)
+    latitude: AttributeOrPlaceholder;
+    // (undocumented)
+    longitude: AttributeOrPlaceholder;
+}
+
+// @public (undocumented)
+export function isLatitudeLongitudeGeoPushpinChartProps(props: IGeoPushpinChartProps): props is ILongitudeLatitudeGeoPushpinChartProps;
+
+// @public (undocumented)
+export function isLocationGeoPushpinChartProps(props: IGeoPushpinChartProps): props is ILocationGeoPushpinChartProps;
 
 // @alpha (undocumented)
 export const MapboxTokenProvider: React_2.FC<{

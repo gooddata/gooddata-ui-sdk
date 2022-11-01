@@ -4,7 +4,7 @@ import isEqual from "lodash/isEqual";
 import { injectIntl } from "react-intl";
 
 import { IGeoChartInnerProps } from "./GeoChartInner";
-import { isLocationMissing } from "./helpers/geoChart/common";
+import { isLocationSet } from "./helpers/geoChart/common";
 import { IGeoConfig } from "../../GeoChart";
 import {
     ErrorCodes,
@@ -75,7 +75,7 @@ export function geoValidatorHOC<T>(InnerComponent: React.ComponentClass<T>): Rea
             const mapboxToken = this.props.config?.mapboxToken ?? "";
             const { execution } = this.props;
 
-            this.isLocationMissing = isLocationMissing(execution.definition.buckets);
+            this.isLocationMissing = !isLocationSet(execution.definition.buckets);
             this.isMapboxTokenMissing = !mapboxToken;
         }
 
