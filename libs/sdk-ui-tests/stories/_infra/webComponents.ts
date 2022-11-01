@@ -11,7 +11,7 @@ const configureWebComponentsBackend = (backend: IAnalyticalBackend, workspaceId:
     // preview-head.html loads after this file.
     // I.e. by the time this runs the global variables is not set yet
     const configureBackend = () => {
-        if (window.__setWebComponentsContext) {
+        if (typeof window.__setWebComponentsContext !== "undefined") {
             try {
                 window.__setWebComponentsContext({
                     backend: backend,
