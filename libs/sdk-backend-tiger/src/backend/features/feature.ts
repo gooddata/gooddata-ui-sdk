@@ -79,6 +79,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enableLongitudeAndLatitudeLabels,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableMSSQLDataSource,
+            "enableMSSQLDataSource",
+            "BOOLEAN",
+            FeatureFlagsValues.enableMSSQLDataSource,
+        ),
     };
 }
 

@@ -24,6 +24,8 @@ export enum TigerFeaturesNames {
     EnableDateFormats = "enableDateFormats",
     //boolean + possible values: enabled, disabled
     EnableLongitudeAndLatitudeLabels = "enableLongitudeAndLatitudeLabels",
+    //boolean + possible values: enabled, disabled
+    EnableMSSQLDataSource = "enableMSSQLDataSource",
 }
 
 export type ITigerFeatureFlags = {
@@ -36,6 +38,7 @@ export type ITigerFeatureFlags = {
     enableMetricSqlAndDataExplain: typeof FeatureFlagsValues["enableMetricSqlAndDataExplain"][number];
     enableDateFormats: typeof FeatureFlagsValues["enableDateFormats"][number];
     enableLongitudeAndLatitudeLabels: typeof FeatureFlagsValues["enableLongitudeAndLatitudeLabels"][number];
+    enableMSSQLDataSource: typeof FeatureFlagsValues["enableMSSQLDataSource"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -49,6 +52,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableMetricSqlAndDataExplain: false,
     enableDateFormats: false,
     enableLongitudeAndLatitudeLabels: false,
+    enableMSSQLDataSource: false,
 };
 
 export const FeatureFlagsValues = {
@@ -65,4 +69,5 @@ export const FeatureFlagsValues = {
     enableMetricSqlAndDataExplain: [true, false] as const,
     enableDateFormats: [true, false] as const,
     enableLongitudeAndLatitudeLabels: [true, false] as const,
+    enableMSSQLDataSource: [true, false] as const,
 };

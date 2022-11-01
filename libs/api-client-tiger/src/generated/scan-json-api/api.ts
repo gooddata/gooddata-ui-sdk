@@ -325,6 +325,8 @@ export const TestDefinitionRequestTypeEnum = {
     DREMIO: "DREMIO",
     DRILL: "DRILL",
     GREENPLUM: "GREENPLUM",
+    AZURESQL: "AZURESQL",
+    SYNAPSESQL: "SYNAPSESQL",
 } as const;
 
 export type TestDefinitionRequestTypeEnum =

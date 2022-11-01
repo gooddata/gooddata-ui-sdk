@@ -164,6 +164,8 @@ export {
     Total,
     TotalDimension,
     TotalFunctionEnum,
+    AttributeFormat,
+    ElementsResponseGranularityEnum,
 } from "./generated/afm-rest-api/api";
 export {
     ActionsApiFactory as AuthActionsApiFactory,
