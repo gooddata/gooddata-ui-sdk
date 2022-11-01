@@ -82,7 +82,6 @@
         "immer": "^9.0.3",
         "json-stable-stringify": "^1.0.1",
         "lodash": "^4.17.19",
-        "normalize.css": "^8.0.1",
         "react-dnd": "^14.0.5",
         "react-dnd-html5-backend": "^14.1.0",
         "react-grid-system": "^8.1.4",

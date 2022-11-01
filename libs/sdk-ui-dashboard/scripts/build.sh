@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 _build_styles() {
-    sass --load-path=node_modules --load-path=node_modules/normalize.css styles/scss:styles/css
+    sass --load-path=node_modules styles/scss:styles/css
 }
 
 _clean() {
