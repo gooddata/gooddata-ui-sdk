@@ -273,6 +273,7 @@
     "attributesDropdown.configuration": "Configuración",
     "attributesDropdown.removeTooltip": "Quitar del panel",
     "attributesDropdown.display_as": "Mostrar como: {title}",
+    "attributesDropdown.empty.item.tooltip": "Incluir valores que faltan (null) y vacíos (\"\").",
     "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> ya se ha filtrado por el filtro <strong>{childTitle}</strong> directamente o mediante otros filtros.",
     "attributesDropdown.attributeNameWithData": "con datos de",
     "shareDialog.share.grantee.title": "Compartir con usuarios y grupos",

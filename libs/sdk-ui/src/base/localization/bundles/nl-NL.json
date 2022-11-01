@@ -273,6 +273,7 @@
     "attributesDropdown.configuration": "Configuratie",
     "attributesDropdown.removeTooltip": "Verwijderen van dashboard",
     "attributesDropdown.display_as": "Weergeven als: {title}",
+    "attributesDropdown.empty.item.tooltip": "Ontbrekende (null) en lege (\"\") waarden.",
     "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> is al gefilterd op <strong>{childTitle}</strong>, rechtstreeks of via andere filters.",
     "attributesDropdown.attributeNameWithData": "met gegevens van",
     "shareDialog.share.grantee.title": "Delen met gebruikers en groepen",
