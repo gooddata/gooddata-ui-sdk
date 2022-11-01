@@ -426,6 +426,20 @@
     },
     "components": {
         "schemas": {
+            "AttributeFormat": {
+                "required": ["locale", "pattern"],
+                "type": "object",
+                "properties": {
+                    "locale": {
+                        "type": "string",
+                        "description": "Format locale"
+                    },
+                    "pattern": {
+                        "type": "string",
+                        "description": "Format pattern"
+                    }
+                }
+            },
             "Element": {
                 "required": ["primaryTitle", "title"],
                 "type": "object",
@@ -457,6 +471,30 @@
                     },
                     "paging": {
                         "$ref": "#/components/schemas/Paging"
+                    },
+                    "granularity": {
+                        "type": "string",
+                        "description": "Granularity of requested label in case of date attribute",
+                        "enum": [
+                            "MINUTE",
+                            "HOUR",
+                            "DAY",
+                            "WEEK",
+                            "MONTH",
+                            "QUARTER",
+                            "YEAR",
+                            "MINUTE_OF_HOUR",
+                            "HOUR_OF_DAY",
+                            "DAY_OF_WEEK",
+                            "DAY_OF_MONTH",
+                            "DAY_OF_YEAR",
+                            "WEEK_OF_YEAR",
+                            "MONTH_OF_YEAR",
+                            "QUARTER_OF_YEAR"
+                        ]
+                    },
+                    "format": {
+                        "$ref": "#/components/schemas/AttributeFormat"
                     }
                 },
                 "description": "Entity holding list of sorted & filtered label elements, related primary label of attribute owning requested label and paging."
@@ -1635,6 +1673,9 @@
                             },
                             "primaryLabel": {
                                 "$ref": "#/components/schemas/RestApiIdentifier"
+                            },
+                            "format": {
+                                "$ref": "#/components/schemas/AttributeFormat"
                             }
                         }
                     }

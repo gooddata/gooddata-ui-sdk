@@ -500,6 +500,25 @@ export interface AttributeFilterElements {
 /**
  *
  * @export
+ * @interface AttributeFormat
+ */
+export interface AttributeFormat {
+    /**
+     * Format locale
+     * @type {string}
+     * @memberof AttributeFormat
+     */
+    locale: string;
+    /**
+     * Format pattern
+     * @type {string}
+     * @memberof AttributeFormat
+     */
+    pattern: string;
+}
+/**
+ *
+ * @export
  * @interface AttributeHeaderOut
  */
 export interface AttributeHeaderOut {
@@ -558,6 +577,12 @@ export interface AttributeHeaderOutAttributeHeader {
      * @memberof AttributeHeaderOutAttributeHeader
      */
     primaryLabel: RestApiIdentifier;
+    /**
+     *
+     * @type {AttributeFormat}
+     * @memberof AttributeHeaderOutAttributeHeader
+     */
+    format?: AttributeFormat;
 }
 
 export const AttributeHeaderOutAttributeHeaderGranularityEnum = {
@@ -861,7 +886,41 @@ export interface ElementsResponse {
      * @memberof ElementsResponse
      */
     paging: Paging;
+    /**
+     * Granularity of requested label in case of date attribute
+     * @type {string}
+     * @memberof ElementsResponse
+     */
+    granularity?: ElementsResponseGranularityEnum;
+    /**
+     *
+     * @type {AttributeFormat}
+     * @memberof ElementsResponse
+     */
+    format?: AttributeFormat;
 }
+
+export const ElementsResponseGranularityEnum = {
+    MINUTE: "MINUTE",
+    HOUR: "HOUR",
+    DAY: "DAY",
+    WEEK: "WEEK",
+    MONTH: "MONTH",
+    QUARTER: "QUARTER",
+    YEAR: "YEAR",
+    MINUTE_OF_HOUR: "MINUTE_OF_HOUR",
+    HOUR_OF_DAY: "HOUR_OF_DAY",
+    DAY_OF_WEEK: "DAY_OF_WEEK",
+    DAY_OF_MONTH: "DAY_OF_MONTH",
+    DAY_OF_YEAR: "DAY_OF_YEAR",
+    WEEK_OF_YEAR: "WEEK_OF_YEAR",
+    MONTH_OF_YEAR: "MONTH_OF_YEAR",
+    QUARTER_OF_YEAR: "QUARTER_OF_YEAR",
+} as const;
+
+export type ElementsResponseGranularityEnum =
+    typeof ElementsResponseGranularityEnum[keyof typeof ElementsResponseGranularityEnum];
+
 /**
  *
  * @export
