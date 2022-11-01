@@ -51,8 +51,8 @@ const CAPABILITIES: IBackendCapabilities = {
     canCalculateSubTotals: true,
     canCalculateNativeTotals: false,
     canCalculateTotals: true,
-    canExportCsv: false,
-    canExportXlsx: false,
+    canExportCsv: true,
+    canExportXlsx: true,
     canSortData: false,
     canTransformExistingResult: false,
     maxDimensions: 2,
@@ -146,8 +146,6 @@ export class TigerBackend implements IAnalyticalBackend {
             const specificFunctions = buildTigerSpecificFunctions(this, this.authApiCall);
             this.implConfig.onTigerSpecificFunctionsReady(specificFunctions);
         }
-
-        this.updateCapabilities();
     }
 
     public onHostname(hostname: string): IAnalyticalBackend {
@@ -317,22 +315,6 @@ export class TigerBackend implements IAnalyticalBackend {
 
         return this.authProvider.authenticate({ client: this.client, backend: this });
     };
-
-    private updateCapabilities() {
-        // This is just for rollout of export csv/xls and can be removed after XSH-828 is fixed.
-        const EXPORT_API_URI = "/api/v1/schemas/export";
-        this.client.axios
-            .get(EXPORT_API_URI)
-            .then((data: any) => {
-                const exportFormats: string[] =
-                    data?.data?.components?.schemas?.TabularExportRequest?.properties?.format?.enum || [];
-                this.capabilities.canExportCsv = exportFormats.includes("CSV");
-                this.capabilities.canExportXlsx = exportFormats.includes("XLSX");
-            })
-            .catch(() => {
-                // silence the error, keep default capabilities
-            });
-    }
 }
 
 function createAxios(
