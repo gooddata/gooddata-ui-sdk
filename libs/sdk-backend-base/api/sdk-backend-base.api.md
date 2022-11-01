@@ -776,7 +776,7 @@ export class KpiWidgetBuilder extends WidgetBaseBuilder<IKpiWidget> implements I
     // (undocumented)
     measure: (valueOrUpdateCallback: ValueOrUpdateCallback<ObjRef>) => this;
     // (undocumented)
-    protected setKpiWidgetProp: <K extends "comparisonType" | "comparisonDirection" | "metric">(prop: K, valueOrUpdateCallback: ValueOrUpdateCallback<IKpi[K]>) => this;
+    protected setKpiWidgetProp: <K extends "comparisonType" | "metric" | "comparisonDirection">(prop: K, valueOrUpdateCallback: ValueOrUpdateCallback<IKpi[K]>) => this;
     // (undocumented)
     protected validator?: ((item: Partial<IKpiWidget>) => void) | undefined;
 }

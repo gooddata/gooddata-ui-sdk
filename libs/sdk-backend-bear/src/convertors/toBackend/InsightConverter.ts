@@ -92,6 +92,7 @@ export const convertInsightDefinition = (
         meta: {
             title: insightTitle(insight),
             category: "visualizationObject",
+            summary: insightSummary(insight),
         },
     } as GdcVisualizationObject.IVisualizationObject;
 };
@@ -113,7 +114,6 @@ export const convertInsight = (insight: IInsight): GdcVisualizationObject.IVisua
             updated: insightUpdated(insight),
             ...(locked && { locked }),
             tags: insightTags(insight).join(" "),
-            summary: insightSummary(insight),
         },
     };
 };

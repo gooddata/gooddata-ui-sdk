@@ -259,6 +259,7 @@ export const convertListedVisualization = (visualizationLink: GdcMetadata.IObjec
             tags: [],
             created: visualizationLink.created,
             updated: visualizationLink.updated,
+            summary: visualizationLink.summary,
         },
     };
 };

@@ -527,10 +527,15 @@ export {
     IKpiWidget,
     IKpiWidgetBase,
     IKpiWidgetDefinition,
+    IKpiWidgetConfiguration,
+    IKpiWidgetDescriptionConfiguration,
+    KpiWidgetDescriptionSourceType,
     IInsightWidget,
     IInsightWidgetBase,
     IInsightWidgetDefinition,
     IInsightWidgetConfiguration,
+    IInsightWidgetDescriptionConfiguration,
+    InsightWidgetDescriptionSourceType,
 } from "./dashboard/analyticalWidgets";
 
 export {
