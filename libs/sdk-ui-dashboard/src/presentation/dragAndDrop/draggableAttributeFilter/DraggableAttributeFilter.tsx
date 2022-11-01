@@ -66,6 +66,7 @@ export function DraggableAttributeFilter({
 
             <div
                 className={classNames("dash-filters-notdate", "dash-filters-attribute", {
+                    "dash-filter-is-edit-mode": isInEditMode,
                     "is-dragging": isDragging,
                 })}
                 ref={dragRef}
