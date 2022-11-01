@@ -50,3 +50,56 @@ Object {
   ],
 }
 `;
+
+exports[`transformExecutionResult should format date dimensions values with date format information 1`] = `
+Object {
+  "count": Array [
+    1,
+    2,
+  ],
+  "data": Array [
+    Array [
+      "20.0",
+      "40.2",
+    ],
+  ],
+  "headerItems": Array [
+    Array [
+      Array [
+        Object {
+          "measureHeaderItem": Object {
+            "name": "Sum of duration",
+            "order": 0,
+          },
+        },
+      ],
+    ],
+    Array [
+      Array [
+        Object {
+          "attributeHeaderItem": Object {
+            "formattedName": "Q4 1906",
+            "name": "1906-4",
+            "uri": "1906-4",
+          },
+        },
+        Object {
+          "attributeHeaderItem": Object {
+            "formattedName": "Q1 1910",
+            "name": "1910-1",
+            "uri": "1910-1",
+          },
+        },
+      ],
+    ],
+  ],
+  "offset": Array [
+    0,
+    0,
+  ],
+  "total": Array [
+    1,
+    2,
+  ],
+}
+`;

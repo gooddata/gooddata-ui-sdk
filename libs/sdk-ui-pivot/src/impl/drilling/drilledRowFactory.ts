@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 import { TableDescriptor } from "../structure/tableDescriptor";
 import { DataValue } from "@gooddata/sdk-model";
-import { getMappingHeaderUri } from "@gooddata/sdk-ui";
+import { getMappingHeaderName, getMappingHeaderUri, hasMappingHeaderFormattedName } from "@gooddata/sdk-ui";
 import { invariant } from "ts-invariant";
 import { IGridRow } from "../data/resultTypes";
 
@@ -67,7 +67,18 @@ export function createDrilledRow(row: IGridRow, tableDescriptor: TableDescriptor
                 result.push(createDrilledSliceDetail(null, null, null));
                 break;
             default:
-                result.push(createDrilledSliceDetail(id, drillItemUri, row[col.id]));
+                if (hasMappingHeaderFormattedName(mappingHeader)) {
+                    // we want to use the original name instead of the formatted name in drilling
+                    result.push(
+                        createDrilledSliceDetail(
+                            id,
+                            drillItemUri,
+                            getMappingHeaderName(mappingHeader) || row[col.id],
+                        ),
+                    );
+                } else {
+                    result.push(createDrilledSliceDetail(id, drillItemUri, row[col.id]));
+                }
                 break;
         }
     });

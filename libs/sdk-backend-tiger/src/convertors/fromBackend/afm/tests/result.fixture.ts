@@ -85,3 +85,47 @@ export const mockDimensions: IDimensionDescriptor[] = [
         ],
     },
 ];
+
+export const mockDimensionsWithDateFormat: IDimensionDescriptor[] = [
+    {
+        headers: [
+            {
+                measureGroupHeader: {
+                    items: [
+                        {
+                            measureHeaderItem: {
+                                localIdentifier: "cdc3d26d8b2d469eb73b61a07d2abc2d",
+                                name: "Sum of duration",
+                                format: "#,##0.00",
+                            },
+                        },
+                    ],
+                },
+            },
+        ],
+    },
+    {
+        headers: [
+            {
+                attributeHeader: {
+                    identifier: "event_date.quarter.label",
+                    localIdentifier: "fd48e8fd32b54b1baba3e3ccdd719f26",
+                    name: "event_date - Quarter/Year",
+                    uri: "foo",
+                    ref: idRef("event_date.quarter.label"),
+                    formOf: {
+                        identifier: "event_date.quarter",
+                        uri: "bar",
+                        name: "event_date - Quarter/Year",
+                        ref: idRef("event_date.quarter"),
+                    },
+                    granularity: "QUARTER",
+                    format: {
+                        locale: "cs-CZ",
+                        pattern: "'Q'Q y",
+                    },
+                },
+            },
+        ],
+    },
+];

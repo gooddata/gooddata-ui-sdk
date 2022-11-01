@@ -1,19 +1,19 @@
 // (C) 2020-2022 GoodData Corporation
-import { DateAttributeGranularity } from "@gooddata/sdk-model";
 import { parseDateValue } from "./dateValueParser";
-import { DateFormatter } from "./types";
+import { DateFormatter, DateParseFormatter } from "./types";
 
 /**
- * Creates a function that takes a string date attribute value and a granularity and returns a formatted date string.
+ * Creates a function that takes a string date attribute value, granularity, locale and formatting pattern
+ * and returns a formatted date string.
  * @param dateFormatter - function to use to format Date values to a string
  * @public
  */
-export function createDateValueFormatter(dateFormatter: DateFormatter) {
-    return (value: string | null, granularity: DateAttributeGranularity): string => {
+export function createDateValueFormatter(dateFormatter: DateFormatter): DateParseFormatter {
+    return (value, granularity, locale, pattern) => {
         if (value === null) {
             return "";
         }
         const parsed = parseDateValue(value, granularity);
-        return dateFormatter(parsed, granularity);
+        return dateFormatter(parsed, granularity, locale, pattern);
     };
 }

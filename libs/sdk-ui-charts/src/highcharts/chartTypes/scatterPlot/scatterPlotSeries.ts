@@ -1,5 +1,5 @@
 // (C) 2020-2022 GoodData Corporation
-import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
+import { BucketNames, DataViewFacade, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
 import { IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 import { IPointData, ISeriesItemConfig } from "../../typings/unsafe";
 import { parseValue } from "../_util/common";
@@ -27,7 +27,7 @@ export function getScatterPlotSeries(
                 y: !secondaryMeasuresBucketEmpty ? (primaryMeasuresBucketEmpty ? values[0] : values[1]) : 0,
                 name: stackByAttribute
                     ? valueWithEmptyHandling(
-                          stackByAttribute.items[seriesIndex].attributeHeaderItem.name,
+                          getMappingHeaderFormattedName(stackByAttribute.items[seriesIndex]),
                           emptyHeaderTitle,
                       )
                     : "",

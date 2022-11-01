@@ -7,6 +7,7 @@ import {
     isAttributeDescriptor,
     isMeasureDescriptor,
     isResultAttributeHeader,
+    IResultAttributeHeaderItem,
 } from "@gooddata/sdk-model";
 
 /**
@@ -35,6 +36,13 @@ export function hasMappingHeaderLocalIdentifier(header: IMappingHeader): boolean
 /**
  * @internal
  */
+export function hasMappingHeaderFormattedName(header: IMappingHeader): boolean {
+    return isResultAttributeHeader(header) && !!header.attributeHeaderItem.formattedName;
+}
+
+/**
+ * @internal
+ */
 export function getMappingHeaderLocalIdentifier(header: IMappingHeader): string {
     if (isAttributeDescriptor(header)) {
         return header.attributeHeader.localIdentifier;
@@ -56,6 +64,32 @@ export function getMappingHeaderName(header: IMappingHeader): string | undefined
     } else if (isMeasureDescriptor(header)) {
         return header.measureHeaderItem.name;
     }
+}
+
+/**
+ * Get formatted name of provided mapping header.
+ *
+ * Formatted name has higher priority than name when displaying in visualisations.
+ *
+ * @internal
+ */
+export function getMappingHeaderFormattedName(header: IMappingHeader): string | undefined {
+    if (isResultAttributeHeader(header)) {
+        return getAttributeHeaderItemName(header.attributeHeaderItem);
+    } else {
+        return getMappingHeaderName(header);
+    }
+}
+
+/**
+ * Get formatted name of provided attribute header item.
+ *
+ * Formatted name has higher priority than name when displaying in visualisations.
+ *
+ * @internal
+ */
+export function getAttributeHeaderItemName(attributeHeaderItem: IResultAttributeHeaderItem | undefined) {
+    return attributeHeaderItem?.formattedName ?? attributeHeaderItem?.name;
 }
 
 /**

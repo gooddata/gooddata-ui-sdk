@@ -1,5 +1,5 @@
 // (C) 2020-2022 GoodData Corporation
-import { DataViewFacade } from "@gooddata/sdk-ui";
+import { DataViewFacade, getAttributeHeaderItemName, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
 import { IMeasureGroupDescriptor, IResultAttributeHeader } from "@gooddata/sdk-model";
 import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess";
 import { getLighterColor, IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
@@ -48,7 +48,7 @@ function getLeafPoint(
 ) {
     return {
         name: valueWithEmptyHandling(
-            stackByAttribute.items[seriesIndex].attributeHeaderItem.name,
+            getMappingHeaderFormattedName(stackByAttribute.items[seriesIndex]),
             emptyHeaderTitle,
         ),
         parent: `${parentIndex}`,
@@ -93,7 +93,7 @@ export function getTreemapStackedSeriesDataWithViewBy(
             lastRoot = currentRoot;
             uncoloredLeafs = [];
             // create parent for pasted leafs
-            const lastRootName = lastRoot?.name;
+            const lastRootName = getAttributeHeaderItemName(lastRoot);
             roots.push(getRootPoint(lastRootName, rootId, format, colorStrategy, emptyHeaderTitle));
         }
         // create leafs which will be colored at the end of group
@@ -145,7 +145,7 @@ export function getTreemapStackedSeriesDataWithMeasures(
             const unsortedLeafs = seriesItems.map((seriesItem, seriesItemIndex): IPointData => {
                 return {
                     name: valueWithEmptyHandling(
-                        stackByAttribute.items[seriesItemIndex].attributeHeaderItem.name,
+                        getMappingHeaderFormattedName(stackByAttribute.items[seriesItemIndex]),
                         emptyHeaderTitle,
                     ),
                     parent: `${seriesIndex}`,

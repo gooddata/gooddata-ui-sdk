@@ -15,6 +15,7 @@ import {
     IDrillEventContextXirr,
     isSomeHeaderPredicateMatched,
     IHeaderPredicate,
+    getMappingHeaderFormattedName,
 } from "@gooddata/sdk-ui";
 import { IHeadlineData } from "../../../headline/Headlines";
 
@@ -61,7 +62,7 @@ function getExecutionData(dv: DataViewFacade): IXirrExecutionData[] {
               invariant(item.attributeHeaderItem, "Missing expected attributeHeaderItem");
 
               return {
-                  date: item.attributeHeaderItem.name,
+                  date: getMappingHeaderFormattedName(item),
                   value,
               };
           })

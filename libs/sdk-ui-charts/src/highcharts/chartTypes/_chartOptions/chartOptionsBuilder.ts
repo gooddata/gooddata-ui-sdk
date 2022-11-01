@@ -3,7 +3,12 @@ import { IDataView } from "@gooddata/sdk-backend-spi";
 import { ITheme, IMeasureDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 
-import { BucketNames, DataViewFacade, IHeaderPredicate } from "@gooddata/sdk-ui";
+import {
+    BucketNames,
+    DataViewFacade,
+    getMappingHeaderFormattedName,
+    IHeaderPredicate,
+} from "@gooddata/sdk-ui";
 import { IChartConfig, ViewByAttributesLimit } from "../../../interfaces";
 import {
     PARENT_ATTRIBUTE_INDEX,
@@ -87,12 +92,12 @@ function getCategories(
         return [
             viewByAttribute
                 ? viewByAttribute.items.map((item) =>
-                      valueWithEmptyHandling(item.attributeHeaderItem.name, emptyHeaderTitle),
+                      valueWithEmptyHandling(getMappingHeaderFormattedName(item), emptyHeaderTitle),
                   )
                 : [""],
             stackByAttribute
                 ? stackByAttribute.items.map((item) =>
-                      valueWithEmptyHandling(item.attributeHeaderItem.name, emptyHeaderTitle),
+                      valueWithEmptyHandling(getMappingHeaderFormattedName(item), emptyHeaderTitle),
                   )
                 : [""],
         ];
@@ -100,7 +105,7 @@ function getCategories(
     if (isScatterPlot(type)) {
         return stackByAttribute
             ? stackByAttribute.items.map((item) =>
-                  valueWithEmptyHandling(item.attributeHeaderItem.name, emptyHeaderTitle),
+                  valueWithEmptyHandling(getMappingHeaderFormattedName(item), emptyHeaderTitle),
               )
             : [""];
     }
@@ -109,7 +114,7 @@ function getCategories(
     // Measure only pie or treemap charts get categories from measure names
     if (viewByAttribute) {
         return viewByAttribute.items.map((item) =>
-            valueWithEmptyHandling(item.attributeHeaderItem.name, emptyHeaderTitle),
+            valueWithEmptyHandling(getMappingHeaderFormattedName(item), emptyHeaderTitle),
         );
     }
 

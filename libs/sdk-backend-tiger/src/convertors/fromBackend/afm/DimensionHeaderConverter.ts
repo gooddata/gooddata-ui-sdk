@@ -11,7 +11,7 @@ import {
     isAttributeDescriptor,
     isMeasureGroupDescriptor,
 } from "@gooddata/sdk-model";
-import { DateFormatter } from "../dateFormatting/types";
+import { DateFormatter, DateParseFormatter } from "../dateFormatting/types";
 import {
     AttributeExecutionResultHeader,
     DimensionHeader,
@@ -24,6 +24,15 @@ import {
 } from "@gooddata/api-client-tiger";
 import { createDateValueFormatter } from "../dateFormatting/dateValueFormatter";
 import { toSdkGranularity } from "../dateGranularityConversions";
+import { FormattingLocale } from "../dateFormatting/defaultDateFormatter";
+
+type DateAttributeFormatProps = {
+    granularity: DateAttributeGranularity;
+    format: {
+        locale: FormattingLocale;
+        pattern: string;
+    };
+};
 
 const supportedSuffixes: string[] = Object.keys(JsonApiAttributeOutAttributesGranularityEnum)
     .filter((item) => isNaN(Number(item)))
@@ -34,17 +43,27 @@ const supportedSuffixes: string[] = Object.keys(JsonApiAttributeOutAttributesGra
             ],
     );
 
-function getGranularity(header: IDimensionItemDescriptor): DateAttributeGranularity | undefined {
-    if (!isAttributeDescriptor(header)) {
+function getDateFormatProps(header: IDimensionItemDescriptor): DateAttributeFormatProps | undefined {
+    if (
+        !isAttributeDescriptor(header) ||
+        !header.attributeHeader.granularity ||
+        !supportedSuffixes.includes(header.attributeHeader.granularity) ||
+        !header.attributeHeader.format
+    ) {
         return undefined;
     }
 
-    const { identifier } = header.attributeHeader.formOf;
-    const suffix = identifier.substr(identifier.lastIndexOf(".") + 1);
+    const {
+        attributeHeader: { granularity, format },
+    } = header;
 
-    return supportedSuffixes.includes(suffix)
-        ? toSdkGranularity(suffix as JsonApiAttributeOutAttributesGranularityEnum)
-        : undefined; // not a date attribute
+    return {
+        granularity: toSdkGranularity(granularity as JsonApiAttributeOutAttributesGranularityEnum),
+        format: {
+            locale: format.locale as FormattingLocale,
+            pattern: format.pattern,
+        },
+    };
 }
 
 function getMeasuresFromDimensions(dimensions: IDimensionDescriptor[]): IMeasureDescriptor[] {
@@ -69,10 +88,12 @@ export function getTransformDimensionHeaders(
     return (dimensionHeaders: DimensionHeader[]) =>
         dimensionHeaders.map((dimensionHeader, dimensionIndex) => {
             return dimensionHeader.headerGroups.map((headerGroup, headerGroupIndex) => {
-                const granularity = getGranularity(dimensions[dimensionIndex].headers[headerGroupIndex]);
+                const dateFormatProps = getDateFormatProps(
+                    dimensions[dimensionIndex].headers[headerGroupIndex],
+                );
                 return headerGroup.headers.map((header): IResultHeader => {
                     if (isResultAttributeHeader(header)) {
-                        return attributeMeasureItem(header, granularity, dateValueFormatter);
+                        return attributeMeasureItem(header, dateFormatProps, dateValueFormatter);
                     }
 
                     if (isResultMeasureHeader(header)) {
@@ -92,15 +113,25 @@ export function getTransformDimensionHeaders(
 
 function attributeMeasureItem(
     header: AttributeExecutionResultHeader,
-    granularity: DateAttributeGranularity | undefined,
-    dateValueFormatter: (value: string | null, granularity: DateAttributeGranularity) => string,
+    dateFormatProps: DateAttributeFormatProps | undefined,
+    dateValueFormatter: DateParseFormatter,
 ): IResultAttributeHeader {
+    const formattedNameObj = dateFormatProps
+        ? {
+              formattedName: dateValueFormatter(
+                  header.attributeHeader.labelValue,
+                  dateFormatProps.granularity,
+                  dateFormatProps.format.locale,
+                  dateFormatProps.format.pattern,
+              ),
+          }
+        : {};
+
     return {
         attributeHeaderItem: {
             uri: header.attributeHeader.primaryLabelValue,
-            name: granularity
-                ? dateValueFormatter(header.attributeHeader.labelValue, granularity)
-                : header.attributeHeader.labelValue,
+            name: header.attributeHeader.labelValue,
+            ...formattedNameObj,
         },
     };
 }

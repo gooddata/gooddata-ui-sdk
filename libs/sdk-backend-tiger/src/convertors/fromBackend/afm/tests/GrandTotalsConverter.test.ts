@@ -8,7 +8,7 @@ import {
     mockDimensions2,
     mockResult2,
 } from "./GrandTotalsConverter.fixture";
-import { createDefaultDateFormatter } from "../../dateFormatting/defaultDateFormatter";
+import { defaultDateFormatter } from "../../dateFormatting/defaultDateFormatter";
 import { transformGrandTotalData } from "../GrandTotalsConverter";
 import { ExecutionResult } from "@gooddata/api-client-tiger";
 import { IDimensionDescriptor, IExecutionDefinition } from "@gooddata/sdk-model";
@@ -19,7 +19,7 @@ describe("transformGrandTotalData", () => {
         ["grand total data with two header groups", mockDefinition2, mockResult2, mockDimensions2],
     ];
     it.each(Scenarios)("should correctly transform %s", (_desc, def, result, dims) => {
-        const transformDimensionHeaders = getTransformDimensionHeaders(dims, createDefaultDateFormatter());
+        const transformDimensionHeaders = getTransformDimensionHeaders(dims, defaultDateFormatter);
         const dataHeaderItems = transformDimensionHeaders(mockResult1.dimensionHeaders);
         expect(
             transformGrandTotalData(result.grandTotals, def, dataHeaderItems, transformDimensionHeaders),

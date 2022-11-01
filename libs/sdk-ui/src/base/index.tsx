@@ -201,6 +201,9 @@ export {
     getMappingHeaderUri,
     getMappingHeaderName,
     getMappingHeaderIdentifier,
+    getAttributeHeaderItemName,
+    getMappingHeaderFormattedName,
+    hasMappingHeaderFormattedName,
 } from "./headerMatching/MappingHeader";
 export {
     IHeaderPredicate,

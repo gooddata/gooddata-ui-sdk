@@ -47,6 +47,7 @@ import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
 import { IRankingFilter } from '@gooddata/sdk-model';
 import { IRelativeDateFilter } from '@gooddata/sdk-model';
 import { IResultAttributeHeader } from '@gooddata/sdk-model';
+import { IResultAttributeHeaderItem } from '@gooddata/sdk-model';
 import { IResultHeader } from '@gooddata/sdk-model';
 import { IResultMeasureHeader } from '@gooddata/sdk-model';
 import { IResultTotalHeader } from '@gooddata/sdk-model';
@@ -445,6 +446,9 @@ export class GeoTokenMissingSdkError extends GoodDataSdkError {
     constructor(message?: string, cause?: Error);
 }
 
+// @internal
+export function getAttributeHeaderItemName(attributeHeaderItem: IResultAttributeHeaderItem | undefined): string | undefined;
+
 // @internal (undocumented)
 export function getDrillIntersection(drillItems: IMappingHeader[]): IDrillEventIntersectionElement[];
 
@@ -456,6 +460,9 @@ export function getIntersectionPartAfter(intersection: IDrillEventIntersectionEl
 
 // @internal
 export function getIntl(locale?: ILocale): IntlShape;
+
+// @internal
+export function getMappingHeaderFormattedName(header: IMappingHeader): string | undefined;
 
 // @internal (undocumented)
 export function getMappingHeaderIdentifier(header: IMappingHeader): string | undefined;
@@ -488,6 +495,9 @@ export abstract class GoodDataSdkError extends Error {
     // (undocumented)
     readonly seType: SdkErrorType;
 }
+
+// @internal (undocumented)
+export function hasMappingHeaderFormattedName(header: IMappingHeader): boolean;
 
 // @internal (undocumented)
 export function hasMappingHeaderLocalIdentifier(header: IMappingHeader): boolean;

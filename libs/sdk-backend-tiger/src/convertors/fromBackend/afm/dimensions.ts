@@ -49,6 +49,8 @@ function transformDimension(
                         localIdentifier: h.attributeHeader.localIdentifier,
                         name: h.attributeHeader.labelName,
                         totalItems: attrTotals[h.attributeHeader.localIdentifier] ?? [],
+                        granularity: h.attributeHeader.granularity,
+                        format: h.attributeHeader.format,
                     },
                 };
             } else {

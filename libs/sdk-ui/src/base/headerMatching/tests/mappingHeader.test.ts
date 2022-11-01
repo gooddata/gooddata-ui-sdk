@@ -3,14 +3,18 @@ import { isAttributeDescriptor, isMeasureDescriptor, isResultAttributeHeader } f
 import { isHeaderPredicate } from "../HeaderPredicate";
 import * as headerPredicateFactory from "../HeaderPredicateFactory";
 import {
+    getAttributeHeaderItemName,
+    getMappingHeaderFormattedName,
     getMappingHeaderIdentifier,
     getMappingHeaderLocalIdentifier,
     getMappingHeaderName,
     getMappingHeaderUri,
+    hasMappingHeaderFormattedName,
 } from "../MappingHeader";
 import {
     attributeDescriptor,
     attributeHeaderItem,
+    attributeHeaderItemWithFormattedName,
     measureDescriptors,
 } from "./HeaderPredicateFactory.fixtures";
 
@@ -111,5 +115,51 @@ describe("isHeaderPredicate", () => {
 
     it("should return false when is legacy drillable item", () => {
         expect(isHeaderPredicate({ uri: "/some-uri" })).toEqual(false);
+    });
+});
+
+describe("hasMappingHeaderFormattedName", () => {
+    it("should return true when attribute header has formatted name", () => {
+        expect(hasMappingHeaderFormattedName(attributeHeaderItemWithFormattedName)).toEqual(true);
+    });
+
+    it("should return false when attribute header does not have formatted name", () => {
+        expect(hasMappingHeaderFormattedName(attributeHeaderItem)).toEqual(false);
+    });
+
+    it("should return false when header is not attributeHeader", () => {
+        expect(hasMappingHeaderFormattedName(measureDescriptors.uriBasedMeasure)).toEqual(false);
+    });
+});
+
+describe("getMappingHeaderFormattedName", () => {
+    it("should return formatted name when header is resultAttributeHeader", () => {
+        expect(getMappingHeaderFormattedName(attributeHeaderItemWithFormattedName)).toEqual(
+            "formattedAttributeItemName",
+        );
+    });
+
+    it("should return name when header is not resultAttributeHeader", () => {
+        expect(getMappingHeaderFormattedName(measureDescriptors.uriBasedMeasure)).toEqual(
+            "uriBasedMeasureName",
+        );
+    });
+});
+
+describe("getAttributeHeaderItemName", () => {
+    it("should return formatted name when it exists", () => {
+        expect(getAttributeHeaderItemName(attributeHeaderItemWithFormattedName.attributeHeaderItem)).toEqual(
+            "formattedAttributeItemName",
+        );
+    });
+
+    it("should return name when formatted name does not exist", () => {
+        expect(getAttributeHeaderItemName(attributeHeaderItem.attributeHeaderItem)).toEqual(
+            "attributeItemName",
+        );
+    });
+
+    it("should return undefined when provided undefined", () => {
+        expect(getAttributeHeaderItemName(undefined)).toEqual(undefined);
     });
 });
