@@ -273,6 +273,7 @@
     "attributesDropdown.configuration": "Configuratie",
     "attributesDropdown.removeTooltip": "Verwijderen van dashboard",
     "attributesDropdown.display_as": "Weergeven als: {title}",
+    "attributesDropdown.empty.item.tooltip": "Ontbrekende (null) en lege (\"\") waarden.",
     "shareDialog.share.grantee.title": "Delen met gebruikers en groepen",
     "shareDialog.share.grantee.share": "Deel",
     "shareDialog.share.grantee.list.title": "Gedeeld met",

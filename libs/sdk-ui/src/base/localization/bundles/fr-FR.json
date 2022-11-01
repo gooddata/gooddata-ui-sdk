@@ -273,6 +273,7 @@
     "attributesDropdown.configuration": "Configuration",
     "attributesDropdown.removeTooltip": "Retirer du tableau de bord",
     "attributesDropdown.display_as": "Afficher en tant que : {title}",
+    "attributesDropdown.empty.item.tooltip": "Inclure les valeurs manquantes (null) et vides (\"\").",
     "shareDialog.share.grantee.title": "Partager avec des utilisateurs et groupes",
     "shareDialog.share.grantee.share": "Partage",
     "shareDialog.share.grantee.list.title": "Partagé avec",

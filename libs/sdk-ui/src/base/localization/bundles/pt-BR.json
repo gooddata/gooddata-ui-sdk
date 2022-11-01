@@ -273,6 +273,7 @@
     "attributesDropdown.configuration": "Configuração",
     "attributesDropdown.removeTooltip": "Remover do dashboard",
     "attributesDropdown.display_as": "Exibir como: {title}",
+    "attributesDropdown.empty.item.tooltip": "Incluir valores (\"\") (null) e vazios ausentes.",
     "shareDialog.share.grantee.title": "Compartilhar com usuários e grupos",
     "shareDialog.share.grantee.share": "Compartilhar",
     "shareDialog.share.grantee.list.title": "Compartilhado com",

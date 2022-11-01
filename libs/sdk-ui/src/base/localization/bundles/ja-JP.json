@@ -273,6 +273,7 @@
     "attributesDropdown.configuration": "設定",
     "attributesDropdown.removeTooltip": "ダッシュボードから削除",
     "attributesDropdown.display_as": "次のように表示: {title}",
+    "attributesDropdown.empty.item.tooltip": "欠損（NULL）および空の（\"\"）値を含めます。",
     "shareDialog.share.grantee.title": "ユーザやグループと共有",
     "shareDialog.share.grantee.share": "共有する",
     "shareDialog.share.grantee.list.title": "シェア相手",
