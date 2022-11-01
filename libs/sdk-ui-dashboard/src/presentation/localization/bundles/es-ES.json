@@ -1,7 +1,6 @@
 {
     "loading": "Cargando…",
     "untitled": "Sin título",
-    "apply": "Aplicar",
     "gs.list.cancel": "Cancelar",
     "gs.list.apply": "Aplicar",
     "gs.list.only": "Solo",
@@ -159,7 +158,6 @@
     "messages.sharingChangedSuccess": "Uso compartido actualizado.",
     "messages.sharingChangedError.general": "Error al actualizar los ajustes de uso compartido. Inténtelo de nuevo más tarde.",
     "messages.sharingDialogError.general": "Error al cargar los ajustes de uso compartido. Inténtelo de nuevo más tarde.",
-    "attributeFilterDropdown.searchPlaceholder": "Buscar…",
     "visualization.dataTooLarge.headline": "Demasiados puntos de datos para ser mostrados",
     "visualization.dataTooLarge.text": "Intente aplicar uno o más filtros a su panel.",
     "visualization.execute_protected_report.headline": "No tiene permiso para ver este informe.",
@@ -193,7 +191,6 @@
     "dashboard.shareDialog.removeAccessGranteeTooltip": "Eliminar acceso a este panel.",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "El usuario que creó este panel. Los creadores no se pueden eliminar.",
     "attributesDropdown.placeholder": "Buscar atributos…",
-    "attributesDropdown.noData": "Este atributo no tiene valores.",
     "attributesDropdown.configuration": "Configuración",
     "attributesDropdown.itemsFiltered": "Los elementos se han filtrado",
     "attributesDropdown.allItemsFiltered": "Todos los elementos están filtrados",
@@ -201,9 +198,7 @@
     "attributesDropdown.save": "Guardar",
     "attributesDropdown.filterBy": "Filtrar según",
     "attributesDropdown.displayValuesAs": "Mostrar valores como",
-    "attributesDropdown.attributeNameWithData": "con datos de",
     "attributesDropdown.noConnectionMessage": "<strong>{childTitle}</strong> no se puede filtrar por <strong>{parentTitle}</strong>. No hay ninguna conexión entre los atributos de filtro en el modelo de datos.",
-    "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> ya se ha filtrado por el filtro <strong>{childTitle}</strong> directamente o mediante otros filtros.",
     "attributesDropdown.removeTooltip": "Quitar del panel",
     "layout.header.characters.left": "Quedan {currentCharactersCount} / {maximumCharactersCount} caracteres",
     "layout.header.add.title.placeholder": "Añadir título aquí...",
@@ -331,5 +326,7 @@
     "deleteKpiConfirmationDialog.message": "Todas las alertas establecidas para este KPI se eliminarán.",
     "deleteKpiConfirmationDialog.submitButtonText": "Eliminar",
     "newDashboard.title": "Arrastre aquí la perspectiva",
-    "newDashboard.dropInsight": "Soltar perspectiva"
+    "newDashboard.dropInsight": "Soltar perspectiva",
+    "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> ya se ha filtrado por el filtro <strong>{childTitle}</strong> directamente o mediante otros filtros.",
+    "attributesDropdown.attributeNameWithData": "con datos de"
 }

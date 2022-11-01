@@ -1,7 +1,6 @@
 {
     "loading": "読み込んでいます…",
     "untitled": "無題",
-    "apply": "適用",
     "gs.list.cancel": "キャンセル",
     "gs.list.apply": "適用",
     "gs.list.only": "限定",
@@ -159,7 +158,6 @@
     "messages.sharingChangedSuccess": "共有を更新済み。",
     "messages.sharingChangedError.general": "共有設定を更新できませんでした。後で再試行してください。",
     "messages.sharingDialogError.general": "共有設定をロードできませんでした。後で再試行してください。",
-    "attributeFilterDropdown.searchPlaceholder": "検索…",
     "visualization.dataTooLarge.headline": "表示するデータポイントが多すぎます",
     "visualization.dataTooLarge.text": "ダッシュボードに1つまたは複数のフィルターを適用してみてください。",
     "visualization.execute_protected_report.headline": "このレポートを表示する権限がありません",
@@ -193,7 +191,6 @@
     "dashboard.shareDialog.removeAccessGranteeTooltip": "このダッシュボードへのアクセス権を外す。",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "このダッシュボードを作成したユーザー。作成者は削除できません。",
     "attributesDropdown.placeholder": "アトリビュートを検索…",
-    "attributesDropdown.noData": "このアトリビュートには値がありません。",
     "attributesDropdown.configuration": "設定",
     "attributesDropdown.itemsFiltered": "アイテムはフィルター済み",
     "attributesDropdown.allItemsFiltered": "すべてのアイテムはフィルター済み",
@@ -201,9 +198,7 @@
     "attributesDropdown.save": "保存",
     "attributesDropdown.filterBy": "次によりフィルター:",
     "attributesDropdown.displayValuesAs": "値の表示方法",
-    "attributesDropdown.attributeNameWithData": "データの",
     "attributesDropdown.noConnectionMessage": "<strong>{childTitle}</strong> フィルターが無効 <strong>{parentTitle}</strong>。フィルターアトリビュートとデータモデルが無関係です。",
-    "attributesDropdown.filterConfiguredMessage": "直接フィルターか、他のフィルターで<strong>{parentTitle}</strong> すでにフィルター済み <strong>{childTitle}</strong>。",
     "attributesDropdown.removeTooltip": "ダッシュボードから削除",
     "layout.header.characters.left": "残り {currentCharactersCount} / {maximumCharactersCount} 文字",
     "layout.header.add.title.placeholder": "こちらにタイトルを追加します…",
@@ -286,7 +281,7 @@
     "configurationPanel.drillConfig.drillIntoDashboard": "ダッシュボードにドリル",
     "configurationPanel.drillConfig.drillIntoInsight": "インサイトにドリル",
     "configurationPanel.drillConfig.drillIntoUrl": "URL にドリル",
-    "configurationPanel.drillConfig.select": "アクションを選択...",
+    "configurationPanel.drillConfig.select": "アクションを選択…",
     "configurationPanel.unlistedDashboardTab": "リストにないダッシュボード",
     "configurationPanel.visualprops.sectionTitle": "タイトル",
     "configurationPanel.visualprops.hideTitle": "タイトルを非表示",
@@ -331,5 +326,7 @@
     "deleteKpiConfirmationDialog.message": "このKPIに対して設定されたすべての通知も消去されます。",
     "deleteKpiConfirmationDialog.submitButtonText": "削除",
     "newDashboard.title": "インサイトをここにドラッグ",
-    "newDashboard.dropInsight": "インサイトをドラッグ&ドロップ"
+    "newDashboard.dropInsight": "インサイトをドラッグ&ドロップ",
+    "attributesDropdown.filterConfiguredMessage": "直接フィルターか、他のフィルターで<strong>{parentTitle}</strong> すでにフィルター済み <strong>{childTitle}</strong>。",
+    "attributesDropdown.attributeNameWithData": "データの"
 }

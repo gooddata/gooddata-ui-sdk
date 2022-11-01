@@ -1,7 +1,6 @@
 {
     "loading": "Lädt…",
     "untitled": "Unbenannt",
-    "apply": "Übernehmen",
     "gs.list.cancel": "Abbrechen",
     "gs.list.apply": "Übernehmen",
     "gs.list.only": "Nur",
@@ -159,7 +158,6 @@
     "messages.sharingChangedSuccess": "Freigabe aktualisiert.",
     "messages.sharingChangedError.general": "Fehler beim Aktualisieren der Freigabeeinstellungen. Bitte später erneut versuchen.",
     "messages.sharingDialogError.general": "Fehler beim Laden der Freigabeeinstellungen. Bitte später erneut versuchen.",
-    "attributeFilterDropdown.searchPlaceholder": "Sucht…",
     "visualization.dataTooLarge.headline": "Zu viele Datenpunkte zum Anzeigen",
     "visualization.dataTooLarge.text": "Versuchen Sie, einen oder mehrere Filter auf Ihr Dashboard anzuwenden.",
     "visualization.execute_protected_report.headline": "Sie sind nicht berechtigt, diesen Bericht anzuzeigen.",
@@ -193,7 +191,6 @@
     "dashboard.shareDialog.removeAccessGranteeTooltip": "Entfernt den Zugriff auf dieses Dashboard.",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "Dies ist der Benutzer, der dieses Dashboard erstellt hat. Ersteller können nicht entfernt werden.",
     "attributesDropdown.placeholder": "Sucht…",
-    "attributesDropdown.noData": "Dieses Attribut hat keine Werte.",
     "attributesDropdown.configuration": "Konfiguration",
     "attributesDropdown.itemsFiltered": "Elemente wurden gefiltert",
     "attributesDropdown.allItemsFiltered": "Alle Elemente sind ausgefiltert.",
@@ -201,9 +198,7 @@
     "attributesDropdown.save": "Speichern",
     "attributesDropdown.filterBy": "Filtern nach",
     "attributesDropdown.displayValuesAs": "Werte anzeigen als",
-    "attributesDropdown.attributeNameWithData": "mit Daten von",
     "attributesDropdown.noConnectionMessage": "<strong>{childTitle}</strong> kann nicht nach <strong>{parentTitle}</strong> gefiltert werden. Es besteht keine Verbindung zwischen den Filterattributen und dem Datenmodell.",
-    "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> ist bereits durch <strong>{childTitle}</strong> gefiltert, filtern Sie direkt oder durch andere Filter.",
     "attributesDropdown.removeTooltip": "Vom Dashboard entfernen",
     "layout.header.characters.left": "Noch {currentCharactersCount}/{maximumCharactersCount} Zeichen",
     "layout.header.add.title.placeholder": "Titel hier hinzufügen...",
@@ -320,7 +315,7 @@
     "gs.date.date-dataset.other": "Andere",
     "gs.date.date-dataset.related": "Zugehörig",
     "gs.date.date-dataset.unrelated": "Nicht zugehörig",
-    "layout.widget.width.min": "Das Widget kann nicht schmaler sein.",
+    "layout.widget.width.min": "Widget hat minimale Breite",
     "layout.widget.width.max": "Das Widget kann nicht breiter sein",
     "layout.widget.height.min": "Das Widget befindet sich auf der minimalen Höhe",
     "layout.widget.height.max": "Das Widget befindet sich auf der maximalen Höhe",
@@ -331,5 +326,7 @@
     "deleteKpiConfirmationDialog.message": "Alle für diesen KPI eingerichteten Alarme werden ebenfalls gelöscht.",
     "deleteKpiConfirmationDialog.submitButtonText": "Löschen",
     "newDashboard.title": "Betrachtungen hierher ziehen",
-    "newDashboard.dropInsight": "Betrachtung ablegen"
+    "newDashboard.dropInsight": "Betrachtung ablegen",
+    "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> ist bereits durch <strong>{childTitle}</strong> gefiltert, filtern Sie direkt oder durch andere Filter.",
+    "attributesDropdown.attributeNameWithData": "mit Daten von"
 }

@@ -1,7 +1,6 @@
 {
     "loading": "Загрузка…",
     "untitled": "Без названия",
-    "apply": "Применить",
     "gs.list.cancel": "Отмена",
     "gs.list.apply": "Применить",
     "gs.list.only": "Только",
@@ -159,7 +158,6 @@
     "messages.sharingChangedSuccess": "Общий доступ обновлен.",
     "messages.sharingChangedError.general": "Не удалось обновить настройки общего доступа. Попробуйте позже.",
     "messages.sharingDialogError.general": "Не удалось загрузить настройки общего доступа. Попробуйте позже.",
-    "attributeFilterDropdown.searchPlaceholder": "Поиск…",
     "visualization.dataTooLarge.headline": "Слишком много точек данных для отображения",
     "visualization.dataTooLarge.text": "Попробуйте применить один или несколько фильтров к своему дашборду.",
     "visualization.execute_protected_report.headline": "У вас нет прав для просмотра этого отчета",
@@ -193,7 +191,6 @@
     "dashboard.shareDialog.removeAccessGranteeTooltip": "Удалить доступ к этому дашборду.",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "Это пользователь, создавший этот дашборд. Создателя невозможно удалить.",
     "attributesDropdown.placeholder": "Поиск атрибутов…",
-    "attributesDropdown.noData": "Этот атрибут не имеет значений.",
     "attributesDropdown.configuration": "Конфигурация",
     "attributesDropdown.itemsFiltered": "Элементы фильтруются",
     "attributesDropdown.allItemsFiltered": "Все элементы отфильтрованы",
@@ -201,9 +198,7 @@
     "attributesDropdown.save": "Сохранить",
     "attributesDropdown.filterBy": "Фильтровать по",
     "attributesDropdown.displayValuesAs": "Отображать значения как",
-    "attributesDropdown.attributeNameWithData": "с данными",
     "attributesDropdown.noConnectionMessage": "<strong>{childTitle}</strong> нельзя фильтровать по <strong>{parentTitle}</strong>. В модели данных нет связи между атрибутами фильтра.",
-    "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> уже отфильтрован фильтром <strong>{childTitle}</strong> напрямую или через другие фильтры.",
     "attributesDropdown.removeTooltip": "Удалить с дашборда",
     "layout.header.characters.left": "осталось символов: {currentCharactersCount}/{maximumCharactersCount}",
     "layout.header.add.title.placeholder": "Добавьте заголовок здесь...",
@@ -331,5 +326,7 @@
     "deleteKpiConfirmationDialog.message": "Все оповещения, настроенные для этого КПЭ, также будут удалены.",
     "deleteKpiConfirmationDialog.submitButtonText": "Удалить",
     "newDashboard.title": "Перетащите анализ сюда",
-    "newDashboard.dropInsight": "Сбросьте анализ"
+    "newDashboard.dropInsight": "Сбросьте анализ",
+    "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> уже отфильтрован фильтром <strong>{childTitle}</strong> напрямую или через другие фильтры.",
+    "attributesDropdown.attributeNameWithData": "с данными"
 }

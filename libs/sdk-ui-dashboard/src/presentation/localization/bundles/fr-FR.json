@@ -1,7 +1,6 @@
 {
     "loading": "Chargement en cours…",
     "untitled": "Sans titre",
-    "apply": "Appliquer",
     "gs.list.cancel": "Annuler",
     "gs.list.apply": "Appliquer",
     "gs.list.only": "Uniquement",
@@ -159,7 +158,6 @@
     "messages.sharingChangedSuccess": "Partage mis à jour.",
     "messages.sharingChangedError.general": "La mise à jour des paramètres de partage a échoué. Veuillez réessayer ultérieurement.",
     "messages.sharingDialogError.general": "Le chargement des paramètres de partage a échoué. Veuillez réessayer ultérieurement.",
-    "attributeFilterDropdown.searchPlaceholder": "Rechercher…",
     "visualization.dataTooLarge.headline": "Trop de points de données à afficher",
     "visualization.dataTooLarge.text": "Essayez d'appliquer un ou plusieurs filtres à votre tableau de bord.",
     "visualization.execute_protected_report.headline": "Vous n'êtes pas autorisé à consulter ce rapport",
@@ -193,7 +191,6 @@
     "dashboard.shareDialog.removeAccessGranteeTooltip": "Retirer l'accès à ce tableau de bord.",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "L'utilisateur qui a créé ce tableau de bord. Les créateurs ne peuvent pas être retirés.",
     "attributesDropdown.placeholder": "Rechercher…",
-    "attributesDropdown.noData": "Cet attribut n'a aucune valeur.",
     "attributesDropdown.configuration": "Configuration",
     "attributesDropdown.itemsFiltered": "Les éléments sont filtrés.",
     "attributesDropdown.allItemsFiltered": "Tous les éléments ont été filtrés.",
@@ -201,9 +198,7 @@
     "attributesDropdown.save": "Enregistrer",
     "attributesDropdown.filterBy": "Filtrer par",
     "attributesDropdown.displayValuesAs": "Affichage des valeurs",
-    "attributesDropdown.attributeNameWithData": "avec les données de",
     "attributesDropdown.noConnectionMessage": "<strong>{childTitle}</strong> ne peut pas être filtré par <strong>{parentTitle}</strong>. Il n'existe aucune connexion entre les attributs du filtre dans le modèle de données.",
-    "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> est déjà filtré par le filtre <strong>{childTitle}</strong>, directement ou via d'autres filtres.",
     "attributesDropdown.removeTooltip": "Retirer du tableau de bord",
     "layout.header.characters.left": "{currentCharactersCount}/{maximumCharactersCount} caractères restant",
     "layout.header.add.title.placeholder": "Ajouter un titre ici...",
@@ -331,5 +326,7 @@
     "deleteKpiConfirmationDialog.message": "Toutes les alertes configurées pour ce KPI vont être supprimées.",
     "deleteKpiConfirmationDialog.submitButtonText": "Supprimer",
     "newDashboard.title": "Faire glisser une perception ici",
-    "newDashboard.dropInsight": "Déposer une perception"
+    "newDashboard.dropInsight": "Déposer une perception",
+    "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> est déjà filtré par le filtre <strong>{childTitle}</strong>, directement ou via d'autres filtres.",
+    "attributesDropdown.attributeNameWithData": "avec les données de"
 }
