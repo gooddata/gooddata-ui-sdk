@@ -47,7 +47,7 @@ export function isLimitingAttributeFiltersEmpty(limitingAttributeFilters: IEleme
  * @internal
  */
 export function getElementTitle(element: IAttributeElement, intl: IntlShape) {
-    return element.title || `(${intl.formatMessage({ id: "empty_value" })})`;
+    return element.formattedTitle || element.title || `(${intl.formatMessage({ id: "empty_value" })})`;
 }
 
 /**

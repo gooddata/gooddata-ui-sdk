@@ -32,12 +32,17 @@ import {
     convertAttributeWithSideloadedLabels,
     convertDatasetWithLinks,
 } from "../../../convertors/fromBackend/MetadataConverter";
+import { DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types";
 
 export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
-    constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
+    constructor(
+        private readonly authCall: TigerAuthenticatedCallGuard,
+        public readonly workspace: string,
+        private readonly dateFormatter: DateFormatter,
+    ) {}
 
     public elements(): IElementsQueryFactory {
-        return new TigerWorkspaceElements(this.authCall, this.workspace);
+        return new TigerWorkspaceElements(this.authCall, this.workspace, this.dateFormatter);
     }
 
     public getAttributeDisplayForm = async (ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject> => {
