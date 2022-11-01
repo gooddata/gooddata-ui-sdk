@@ -21,7 +21,7 @@ export const CreatableKpi: React.FC = () => {
             &nbsp;
             {!isWhiteLabeled && (
                 <a
-                    href="https://help.gooddata.com/display/doc/Data+Catalog+in+Analytical+Designer#DataCataloginAnalyticalDesigner-AdditemstoDataCatalog"
+                    href="https://help.gooddata.com/pages/viewpage.action?pageId=86794662#DataCataloginAnalyticalDesigner-AdditemstoDataCatalog"
                     rel="noopener noreferrer"
                     target="_blank"
                     className="s-add-kpi-tooltip-link"
