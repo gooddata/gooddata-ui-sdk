@@ -46,6 +46,9 @@ export class DashboardLoader implements IDashboardLoader {
 }
 
 // @public
+export type DashboardLoadingMode = "adaptive" | "staticOnly";
+
+// @public
 export type DashboardLoadResult = {
     ctx: DashboardContext;
     engine: IDashboardEngine;
@@ -83,7 +86,7 @@ export interface IDashboardLoadOptions extends IDashboardBasePropsForLoader {
     allowUnfinishedFeatures?: "staticOnly" | "alwaysAllow" | "alwaysPrevent";
     clientWorkspace?: IClientWorkspaceIdentifiers;
     extraPlugins?: IEmbeddedPlugin | IEmbeddedPlugin[];
-    loadingMode?: "adaptive" | "staticOnly";
+    loadingMode?: DashboardLoadingMode;
 }
 
 // @public (undocumented)
@@ -108,9 +111,13 @@ export type ModuleFederationIntegration = {
 export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoadStatus;
 
 // @internal
-export function useDashboardLoaderWithReload(options: IDashboardLoadOptions): {
+export function useDashboardLoaderWithPluginManipulation(options: IDashboardLoadOptions): {
     loaderStatus: DashboardLoadStatus;
     reloadPlugins: () => void;
+    changeLoadingMode: (loadingMode: DashboardLoadingMode) => void;
+    loadingMode: DashboardLoadingMode;
+    setExtraPlugins: (plugins: IEmbeddedPlugin | IEmbeddedPlugin[]) => void;
+    extraPlugins: IEmbeddedPlugin[] | undefined;
 };
 
 ```

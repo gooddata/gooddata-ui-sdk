@@ -43,6 +43,16 @@ export interface IDashboardBasePropsForLoader extends Omit<IDashboardBaseProps, 
 }
 
 /**
+ * Loading mode of the dashboard.
+ *
+ * @remarks
+ * See {@link IDashboardLoadOptions.loadingMode} for more information.
+ *
+ * @public
+ */
+export type DashboardLoadingMode = "adaptive" | "staticOnly";
+
+/**
  * Dashboard loading options.
  *
  * @public
@@ -75,7 +85,7 @@ export interface IDashboardLoadOptions extends IDashboardBasePropsForLoader {
      *
      * Default loadingMode is `adaptive`.
      */
-    loadingMode?: "adaptive" | "staticOnly";
+    loadingMode?: DashboardLoadingMode;
 
     /**
      * Specify client workspace identifiers to use in order to identify exact workspace to load

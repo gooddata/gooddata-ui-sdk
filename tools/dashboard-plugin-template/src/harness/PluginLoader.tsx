@@ -1,7 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { idRef } from "@gooddata/sdk-model";
-import { IEmbeddedPlugin, useDashboardLoaderWithReload } from "@gooddata/sdk-ui-loaders";
+import { IEmbeddedPlugin, useDashboardLoaderWithPluginManipulation } from "@gooddata/sdk-ui-loaders";
 import PluginFactory from "../plugin";
 import { DEFAULT_DASHBOARD_ID } from "./constants";
 import { DashboardConfig } from "@gooddata/sdk-ui-dashboard";
@@ -12,12 +12,23 @@ const Config: DashboardConfig = { mapboxToken: process.env.MAPBOX_TOKEN };
 const DashboardRef = idRef(process.env.DASHBOARD_ID || DEFAULT_DASHBOARD_ID, "analyticalDashboard");
 
 export const PluginLoader = () => {
-    const { loaderStatus, reloadPlugins } = useDashboardLoaderWithReload({
-        dashboard: DashboardRef,
-        loadingMode: "staticOnly",
-        config: Config,
-        extraPlugins: Plugins,
-    });
+    const { loaderStatus, reloadPlugins, setExtraPlugins, extraPlugins } =
+        useDashboardLoaderWithPluginManipulation({
+            dashboard: DashboardRef,
+            loadingMode: "staticOnly",
+            config: Config,
+            extraPlugins: Plugins,
+        });
+
+    const isPluginEnabled = !!extraPlugins?.length;
+
+    const togglePlugin = useCallback(() => {
+        if (isPluginEnabled) {
+            setExtraPlugins([]);
+        } else {
+            setExtraPlugins(Plugins);
+        }
+    }, [isPluginEnabled, setExtraPlugins]);
 
     const { status, error, result } = loaderStatus;
     const toolbarGroups = useMemo(() => {
@@ -33,10 +44,19 @@ export const PluginLoader = () => {
                         tooltip:
                             "This will reload the plugin keeping any changes you made to the dashboard intact",
                     },
+                    {
+                        icon: "circle-cross",
+                        onClick: togglePlugin,
+                        id: "toggle-plugins",
+                        disabled: status !== "success",
+                        isActive: !isPluginEnabled,
+                        tooltip:
+                            "This will reload the dashboard with or without the plugin applied keeping any changes you made to the dashboard intact",
+                    },
                 ],
             },
         ];
-    }, [reloadPlugins, status]);
+    }, [isPluginEnabled, reloadPlugins, status, togglePlugin]);
 
     if (status === "loading") {
         return <LoadingComponent />;

@@ -1,15 +1,18 @@
 // (C) 2022 GoodData Corporation
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import invariant from "ts-invariant";
+import compact from "lodash/compact";
+import isArray from "lodash/isArray";
 import { IDashboard, idRef, ObjRef } from "@gooddata/sdk-model";
 import {
+    DashboardConfig,
     DashboardSelectorEvaluator,
     DashboardState,
     RenderMode,
     selectDashboardWorkingDefinition,
     selectRenderMode,
 } from "@gooddata/sdk-ui-dashboard";
-import { IDashboardLoadOptions } from "./types";
+import { DashboardLoadingMode, IDashboardLoadOptions, IEmbeddedPlugin } from "./types";
 import { DashboardLoadStatus, useDashboardLoader } from "./useDashboardLoader";
 
 function sanitizedDashboardRef(
@@ -24,14 +27,22 @@ function sanitizedDashboardRef(
  * @param options - load options
  * @internal
  */
-export function useDashboardLoaderWithReload(options: IDashboardLoadOptions): {
+export function useDashboardLoaderWithPluginManipulation(options: IDashboardLoadOptions): {
     loaderStatus: DashboardLoadStatus;
     reloadPlugins: () => void;
+    changeLoadingMode: (loadingMode: DashboardLoadingMode) => void;
+    loadingMode: DashboardLoadingMode;
+    setExtraPlugins: (plugins: IEmbeddedPlugin | IEmbeddedPlugin[]) => void;
+    extraPlugins: IEmbeddedPlugin[] | undefined;
 } {
     const [dashboard, setDashboard] = useState(() => sanitizedDashboardRef(options.dashboard));
     const [renderMode, setRenderMode] = useState<RenderMode>(options.dashboard ? "view" : "edit");
+    const [loadingMode, setLoadingMode] = useState<DashboardLoadingMode>(options.loadingMode ?? "adaptive");
+    const [currentExtraPlugins, setCurrentExtraPlugins] = useState<IEmbeddedPlugin[]>(() =>
+        isArray(options.extraPlugins) ? options.extraPlugins : compact([options.extraPlugins]),
+    );
 
-    const augmentedConfig = useMemo(
+    const augmentedConfig = useMemo<DashboardConfig>(
         () => ({ ...options.config, initialRenderMode: renderMode }),
         [options.config, renderMode],
     );
@@ -47,6 +58,8 @@ export function useDashboardLoaderWithReload(options: IDashboardLoadOptions): {
     const loaderStatus = useDashboardLoader({
         ...options,
         dashboard,
+        loadingMode,
+        extraPlugins: currentExtraPlugins,
         config: augmentedConfig,
     });
 
@@ -63,6 +76,26 @@ export function useDashboardLoaderWithReload(options: IDashboardLoadOptions): {
         const renderMode = select(selectRenderMode);
         setDashboard(dashboardObject as any);
         setRenderMode(renderMode);
+    }, []);
+
+    const changeLoadingMode = useCallback((newLoadingMode: DashboardLoadingMode) => {
+        invariant(dashboardSelect.current, "changeLoadingMode used before initialization");
+        const select = dashboardSelect.current;
+        const dashboardObject = select(selectDashboardWorkingDefinition);
+        const renderMode = select(selectRenderMode);
+        setDashboard(dashboardObject as any);
+        setRenderMode(renderMode);
+        setLoadingMode(newLoadingMode);
+    }, []);
+
+    const setExtraPlugins = useCallback((extraPlugins: IEmbeddedPlugin | IEmbeddedPlugin[]) => {
+        invariant(dashboardSelect.current, "setExtraPlugins used before initialization");
+        const select = dashboardSelect.current;
+        const dashboardObject = select(selectDashboardWorkingDefinition);
+        const renderMode = select(selectRenderMode);
+        setDashboard(dashboardObject as any);
+        setRenderMode(renderMode);
+        setCurrentExtraPlugins(isArray(extraPlugins) ? extraPlugins : [extraPlugins]);
     }, []);
 
     return {
@@ -84,5 +117,9 @@ export function useDashboardLoaderWithReload(options: IDashboardLoadOptions): {
                   }
                 : loaderStatus,
         reloadPlugins,
+        changeLoadingMode,
+        loadingMode,
+        setExtraPlugins,
+        extraPlugins: currentExtraPlugins,
     };
 }

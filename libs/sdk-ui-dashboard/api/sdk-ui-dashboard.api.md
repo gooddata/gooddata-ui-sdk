@@ -3421,6 +3421,30 @@ export interface IDashboardThemingProps {
     themeModifier?: (theme: ITheme) => ITheme;
 }
 
+// @internal (undocumented)
+export interface IDashboardToolbarButton {
+    // (undocumented)
+    disabled?: boolean;
+    // (undocumented)
+    icon: string;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    isActive?: boolean;
+    // (undocumented)
+    onClick: () => void;
+    // (undocumented)
+    tooltip?: string;
+}
+
+// @internal (undocumented)
+export interface IDashboardToolbarGroup {
+    // (undocumented)
+    buttons: IDashboardToolbarButton[];
+    // (undocumented)
+    title: string;
+}
+
 // @public
 export interface IDashboardWidgetCustomizer {
     addCustomWidget(widgetType: string, Component: CustomDashboardWidgetComponent): IDashboardWidgetCustomizer;
