@@ -119,12 +119,25 @@ $attribute-filter-drag-handle-left: 10px;
     .dash-filters-date {
         position: relative;
 
-        &.dash-filter-is-edit-mode {
-            margin-left: -13px;
-        }
-
         .gd-attribute-filter-dropdown-button__next {
             margin: 7px 11px 7px 0;
+        }
+
+        //edit mode
+        &.dash-filter-is-edit-mode {
+            margin-left: -13px;
+
+            .gd-date-filter-button {
+                padding-left: 23px;
+            }
+
+            .gd-date-filter-button::before {
+                left: 9px;
+            }
+
+            .gd-date-filter-button::after {
+                left: 0;
+            }
         }
     }
 }

@@ -6,6 +6,7 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 import React, { useCallback } from "react";
+import classNames from "classnames";
 import {
     changeAttributeFilterSelection,
     changeDateFilterSelection,
@@ -19,6 +20,7 @@ import {
     selectSupportsElementUris,
     useDashboardDispatch,
     useDashboardSelector,
+    selectIsInEditMode,
 } from "../../../model";
 import { useDashboardComponentsContext } from "../../dashboardContexts";
 import {
@@ -97,6 +99,7 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
         },
     ] = useFiltersWithAddedPlaceholder(filters);
 
+    const isInEditMode = useDashboardSelector(selectIsInEditMode);
     const customFilterName = useDashboardSelector(selectEffectiveDateFilterTitle);
     const availableGranularities = useDashboardSelector(selectEffectiveDateFilterAvailableGranularities);
     const dateFilterOptions = useDashboardSelector(selectEffectiveDateFilterOptions);
@@ -120,7 +123,11 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
 
     return (
         <DefaultFilterBarContainer>
-            <div className="dash-filters-date">
+            <div
+                className={classNames("dash-filters-date", {
+                    "dash-filter-is-edit-mode": isInEditMode,
+                })}
+            >
                 {dateFilterMode === "hidden" ? (
                     <HiddenDashboardDateFilter />
                 ) : (
