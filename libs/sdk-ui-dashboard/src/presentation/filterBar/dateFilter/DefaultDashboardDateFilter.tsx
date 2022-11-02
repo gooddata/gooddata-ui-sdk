@@ -8,6 +8,7 @@ import { matchDateFilterToDateFilterOptionWithPreference } from "../../../_stagi
 import { IDashboardDateFilterProps } from "./types";
 import {
     selectBackendCapabilities,
+    selectIsInEditMode,
     selectLocale,
     selectSettings,
     useDashboardSelector,
@@ -24,6 +25,7 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
     const settings = useDashboardSelector(selectSettings);
     const capabilities = useDashboardSelector(selectBackendCapabilities);
     const locale = useDashboardSelector(selectLocale);
+    const isInEditMode = useDashboardSelector(selectIsInEditMode);
     const { filter, onFilterChanged, config, readonly } = props;
     const [lastSelectedOptionId, setLastSelectedOptionId] = useState("");
     const { dateFilterOption, excludeCurrentPeriod } = useMemo(
@@ -55,6 +57,7 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
             dateFormat={settings.responsiveUiDateFormat}
             locale={locale}
             isTimeForAbsoluteRangeEnabled={!!capabilities.supportsTimeGranularities}
+            isEditMode={isInEditMode}
         />
     );
 };

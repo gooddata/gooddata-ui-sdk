@@ -132,10 +132,23 @@ export function initializeDashboardWithPersistedDashboard(
 //
 
 /**
+ * Payload of the {@link SaveDashboard} command.
+ * @alpha
+ */
+export interface SaveDashboardPayload {
+    /**
+     * Specify new title for the dashboard that will be created during the Save operation. If not specified,
+     * the current dashboard title will be used.
+     */
+    readonly title?: string;
+}
+
+/**
  * @alpha
  */
 export interface SaveDashboard extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.SAVE";
+    readonly payload: SaveDashboardPayload;
 }
 
 /**
@@ -144,15 +157,19 @@ export interface SaveDashboard extends IDashboardCommand {
  *
  * The command will not have any effect if dashboard is not initialized or is empty.
  *
+ * @param title - new title for the dashboard; if not specified, the current title of the dashboard will be used
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha
  */
-export function saveDashboard(correlationId?: string): SaveDashboard {
+export function saveDashboard(title?: string, correlationId?: string): SaveDashboard {
     return {
         type: "GDC.DASH/CMD.SAVE",
         correlationId,
+        payload: {
+            title,
+        },
     };
 }
 
