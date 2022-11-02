@@ -14950,10 +14950,6 @@ packages:
     engines: {node: '>=8'}
     dev: false
 
-  /normalize.css/8.0.1:
-    resolution: {integrity: sha512-qizSNPO93t1YUuUhP22btGOo3chcvDFqFaj2TRybP0DMxkHOCTYwp3n34fel4a31ORXy4m1Xq0Gyqpb5m33qIg==}
-    dev: false
-
   /npm-run-all/4.1.5:
     resolution: {integrity: sha512-Oo82gJDAVcaMdi3nuoKFavkIHBRVqQ1qvMb+9LHk/cF4P6B2m8aP04hGf7oL6wZ9BuGwX1onlLhpuoofSyoQDQ==}
     engines: {node: '>= 4'}
@@ -22529,7 +22525,6 @@ packages:
       jest-junit: 3.7.0
       json-stable-stringify: 1.0.1
       lodash: 4.17.21
-      normalize.css: 8.0.1
       prettier: 2.5.1
       raf: 3.4.1
       react: 17.0.2
