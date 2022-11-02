@@ -11,6 +11,7 @@ import { IDashboardLayout, ScreenSize } from "@gooddata/sdk-model";
 import { DashboardLayoutSection } from "./DashboardLayoutSection";
 import {
     IDashboardLayoutRenderProps,
+    IDashboardLayoutSectionKeyGetter,
     IDashboardLayoutSectionRenderer,
     IDashboardLayoutWidgetRenderer,
 } from "./interfaces";
@@ -36,6 +37,9 @@ const removeHeights = <TWidget,>(layout: IDashboardLayout<TWidget>, enableCustom
     return getLayoutWithoutGridHeights(layout);
 };
 
+const defaultSectionKeyGetter: IDashboardLayoutSectionKeyGetter<unknown> = ({ section }) =>
+    section.index().toString();
+
 /**
  * DashboardLayout is customizable component for rendering {@link IDashboardLayout}.
  *
@@ -44,7 +48,7 @@ const removeHeights = <TWidget,>(layout: IDashboardLayout<TWidget>, enableCustom
 export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWidget>): JSX.Element {
     const {
         layout,
-        sectionKeyGetter = ({ section }) => section.index(),
+        sectionKeyGetter = defaultSectionKeyGetter,
         sectionRenderer,
         sectionHeaderRenderer,
         itemKeyGetter,

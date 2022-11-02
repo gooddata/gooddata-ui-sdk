@@ -42,12 +42,14 @@ const defaultSectionHeaderRenderer: IDashboardLayoutSectionHeaderRenderer<unknow
     <DashboardLayoutSectionHeaderRenderer {...props} />
 );
 
+const defaultItemKeyGetter: IDashboardLayoutItemKeyGetter<unknown> = ({ item }) => item.index().toString();
+
 export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionProps<TWidget>): JSX.Element {
     const {
         section,
         sectionRenderer = defaultSectionRenderer,
         sectionHeaderRenderer = defaultSectionHeaderRenderer,
-        itemKeyGetter = ({ item }) => item.index().toString(),
+        itemKeyGetter = defaultItemKeyGetter,
         gridRowRenderer,
         itemRenderer,
         widgetRenderer,

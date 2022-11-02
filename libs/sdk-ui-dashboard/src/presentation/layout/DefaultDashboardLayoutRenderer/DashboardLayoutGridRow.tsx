@@ -31,11 +31,13 @@ export interface DashboardLayoutGridRowProps<TWidget> {
     renderMode: RenderMode;
 }
 
+const defaultItemKeyGetter: IDashboardLayoutItemKeyGetter<unknown> = ({ item }) => item.index().toString();
+
 export function DashboardLayoutGridRow<TWidget>(props: DashboardLayoutGridRowProps<TWidget>): JSX.Element {
     const rowRef = useRef<HTMLDivElement>(null);
     const {
         section,
-        itemKeyGetter = ({ item }) => item.index(),
+        itemKeyGetter = defaultItemKeyGetter,
         gridRowRenderer,
         itemRenderer,
         widgetRenderer,
