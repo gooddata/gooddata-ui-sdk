@@ -193,9 +193,7 @@ Object {
     "decimal": ".",
     "thousand": ",",
   },
-  "settings": Object {
-    "dashboardEditModeDevRollout": Any<Boolean>,
-  },
+  "settings": Object {},
 }
 `;
 
