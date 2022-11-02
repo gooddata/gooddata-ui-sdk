@@ -227,6 +227,9 @@ const IconsTest: React.FC = () => {
                     <IconWrapper name="Leave">
                         <Icon.Leave color="#00f" width={18} height={18} />
                     </IconWrapper>
+                    <IconWrapper name="Invite">
+                        <Icon.Invite color="#f00" />
+                    </IconWrapper>
                 </ColumnWrapper>
             </RowWrapper>
         </div>

@@ -63,6 +63,7 @@ import { Token } from "./icons/Token";
 import { Leave } from "./icons/Leave";
 import { Copy } from "./icons/Copy";
 import { Run } from "./icons/Run";
+import { Invite } from "./icons/Invite";
 
 /**
  * @internal
@@ -132,6 +133,7 @@ export const Icon = {
     Leave,
     Copy,
     Run,
+    Invite,
 };
 
 export { IRowsIconProps };

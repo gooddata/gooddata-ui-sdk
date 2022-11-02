@@ -1099,6 +1099,7 @@ export const Icon: {
     Leave: FC<IIconProps>;
     Copy: FC<IIconProps>;
     Run: FC<IIconProps>;
+    Invite: FC<IIconProps>;
 };
 
 // @internal (undocumented)
@@ -1786,6 +1787,8 @@ export interface IHeaderDataMenuProps {
 export interface IHeaderInviteProps {
     // (undocumented)
     onInviteItemClick?: (e: React_2.MouseEvent) => void;
+    // (undocumented)
+    textColor?: string;
 }
 
 // @internal (undocumented)

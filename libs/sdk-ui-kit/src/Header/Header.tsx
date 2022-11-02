@@ -356,7 +356,8 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
     };
 
     private renderStandardNav = () => {
-        const { badges, helpMenuDropdownAlignPoints } = this.props;
+        const { badges, helpMenuDropdownAlignPoints, headerTextColor, headerColor } = this.props;
+        const textColor = getTextColor(headerTextColor, headerColor);
 
         return (
             <div className="gd-header-stretch gd-header-menu-wrapper">
@@ -389,7 +390,7 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
                 ) : null}
 
                 {this.props.showInviteItem ? (
-                    <HeaderInvite onInviteItemClick={this.props.onInviteItemClick} />
+                    <HeaderInvite onInviteItemClick={this.props.onInviteItemClick} textColor={textColor} />
                 ) : null}
 
                 <HeaderAccount
