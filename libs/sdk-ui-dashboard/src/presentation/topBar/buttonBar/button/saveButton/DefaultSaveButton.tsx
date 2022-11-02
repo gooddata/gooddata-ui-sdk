@@ -16,6 +16,7 @@ import {
     selectIsInEditMode,
     useDashboardDispatch,
     useDashboardSelector,
+    selectDashboardTitle,
 } from "../../../../../model";
 import { messages } from "../../../../../locales";
 import { selectCanSaveDashboard, selectIsPrivateDashboard } from "../selectors";
@@ -26,12 +27,21 @@ import { ISaveButtonProps } from "./types";
  */
 export function useSaveButtonProps(): ISaveButtonProps {
     const dispatch = useDashboardDispatch();
+
+    const title = useDashboardSelector(selectDashboardTitle);
+    const intl = useIntl();
+    const emptyTitle = intl.formatMessage({ id: "untitled" });
+
     const onSaveClick = useCallback(
         () =>
-            dispatchAndWaitFor(dispatch, saveDashboard()).then(() => {
+            dispatchAndWaitFor(
+                dispatch,
+                // the || is intentional, we want to replace empty string as well
+                saveDashboard(title || emptyTitle),
+            ).then(() => {
                 dispatch(cancelEditRenderMode());
             }),
-        [dispatch],
+        [dispatch, emptyTitle, title],
     );
 
     const isEditing = useDashboardSelector(selectIsInEditMode);

@@ -99,7 +99,7 @@ describe("save dashboard handler", () => {
         });
 
         it("should emit correct events", async () => {
-            await Tester.dispatchAndWaitFor(saveDashboard(TestCorrelation), "GDC.DASH/EVT.SAVED");
+            await Tester.dispatchAndWaitFor(saveDashboard(undefined, TestCorrelation), "GDC.DASH/EVT.SAVED");
 
             expect(Tester.emittedEventsDigest()).toMatchSnapshot();
         });

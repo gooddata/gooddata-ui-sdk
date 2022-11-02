@@ -83,6 +83,7 @@ export {
     SaveDashboardAsPayload,
     saveDashboardAs,
     SaveDashboard,
+    SaveDashboardPayload,
     saveDashboard,
     RenameDashboard,
     RenameDashboardPayload,

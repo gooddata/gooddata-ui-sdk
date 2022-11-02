@@ -5131,11 +5131,13 @@ export const SaveButton: (props: ISaveButtonProps) => JSX.Element;
 // @alpha (undocumented)
 export interface SaveDashboard extends IDashboardCommand {
     // (undocumented)
+    readonly payload: SaveDashboardPayload;
+    // (undocumented)
     readonly type: "GDC.DASH/CMD.SAVE";
 }
 
 // @alpha
-export function saveDashboard(correlationId?: string): SaveDashboard;
+export function saveDashboard(title?: string, correlationId?: string): SaveDashboard;
 
 // @public (undocumented)
 export interface SaveDashboardAs extends IDashboardCommand {
@@ -5153,6 +5155,11 @@ export interface SaveDashboardAsPayload {
     readonly switchToCopy?: boolean;
     readonly title?: string;
     readonly useOriginalFilterContext?: boolean;
+}
+
+// @alpha
+export interface SaveDashboardPayload {
+    readonly title?: string;
 }
 
 // @alpha
