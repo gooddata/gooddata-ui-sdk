@@ -76,9 +76,7 @@ describe("initialize dashboard handler", () => {
                         to: expect.any(String),
                     },
                 },
-                settings: {
-                    dashboardEditModeDevRollout: expect.any(Boolean),
-                },
+                settings: {},
             });
         });
 
