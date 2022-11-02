@@ -35,7 +35,6 @@ import {
     AttributeFilterParentFilteringProvider,
     useAttributeFilterParentFiltering,
 } from "./AttributeFilterParentFilteringContext";
-import { useMediaQuery } from "@gooddata/sdk-ui-kit";
 
 /**
  * Default implementation of the attribute filter to use on the dashboard's filter bar.
@@ -77,24 +76,9 @@ export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilter
 
     const CustomDropdownButton = useMemo(() => {
         return function DropdownButton(props: IAttributeFilterDropdownButtonProps) {
-            const { isOpen } = props;
-            const isMobile = useMediaQuery("mobileDevice");
             useAutoOpenAttributeFilterDropdownButton(props, !!autoOpen);
             useOnCloseAttributeFilterDropdownButton(props, onCloseFilter);
-
-            let buttonSpacing: React.CSSProperties = isDraggable
-                ? { margin: "7px 11px 7px -10px" }
-                : { margin: "7px 11px 7px 0" };
-
-            if (isOpen && isMobile) {
-                buttonSpacing = {};
-            }
-
-            return (
-                <div style={buttonSpacing}>
-                    <AttributeFilterDropdownButton {...props} isDraggable={isDraggable} />
-                </div>
-            );
+            return <AttributeFilterDropdownButton {...props} isDraggable={isDraggable} />;
         };
     }, [isDraggable, autoOpen, onCloseFilter]);
 
