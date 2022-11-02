@@ -34,11 +34,19 @@ export interface IDashboardLayoutSectionProps<TWidget> {
     renderMode: RenderMode;
 }
 
+const defaultSectionRenderer: IDashboardLayoutSectionRenderer<unknown> = (props) => (
+    <DashboardLayoutSectionRenderer {...props} />
+);
+
+const defaultSectionHeaderRenderer: IDashboardLayoutSectionHeaderRenderer<unknown> = (props) => (
+    <DashboardLayoutSectionHeaderRenderer {...props} />
+);
+
 export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionProps<TWidget>): JSX.Element {
     const {
         section,
-        sectionRenderer = DashboardLayoutSectionRenderer,
-        sectionHeaderRenderer = DashboardLayoutSectionHeaderRenderer,
+        sectionRenderer = defaultSectionRenderer,
+        sectionHeaderRenderer = defaultSectionHeaderRenderer,
         itemKeyGetter = ({ item }) => item.index().toString(),
         gridRowRenderer,
         itemRenderer,
