@@ -64,8 +64,6 @@ export function useInsightListItemDropHandler() {
                         drills: [],
                         title: insightTitle(insight),
                         description: "",
-                        configuration: { hideTitle: false },
-                        properties: {},
                     },
                     size: {
                         xl: {

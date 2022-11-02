@@ -12,6 +12,8 @@
     height: 100%;
     padding: 10px 0;
     background-color: variables.$dialog-background;
+    display: flex;
+    flex-direction: column;
 
     h2 {
         margin: 0 15px 6px;
@@ -104,6 +106,10 @@
 
             .configuration-panel-header-title.clickable {
                 cursor: pointer;
+            }
+
+            .configuration-panel-screen {
+                overflow: auto;
             }
 
             .configuration-panel-header-title i {

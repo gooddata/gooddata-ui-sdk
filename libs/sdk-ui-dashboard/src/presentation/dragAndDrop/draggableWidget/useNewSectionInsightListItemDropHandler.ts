@@ -57,8 +57,6 @@ export function useNewSectionInsightListItemDropHandler(sectionIndex: number) {
                         drills: [],
                         title: insightTitle(insight),
                         description: "",
-                        configuration: { hideTitle: false },
-                        properties: {},
                     },
                     size: {
                         xl: {
