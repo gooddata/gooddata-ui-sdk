@@ -2,6 +2,7 @@
 import React from "react";
 import { IInsightWidget, isInsightWidget, objRefToString } from "@gooddata/sdk-model";
 import { stringUtils } from "@gooddata/util";
+import omit from "lodash/omit";
 import cx from "classnames";
 
 import {
@@ -38,8 +39,8 @@ export const InsightConfiguration: React.FC<IInsightConfigurationProps> = ({ wid
                 setVisualPropsConfigurationTitle={(widget, hideTitle) => {
                     dispatch(
                         changeInsightWidgetVisConfiguration(widget.ref, {
-                            ...widget.configuration,
-                            hideTitle,
+                            ...omit(widget.configuration, ["hideTitle"]),
+                            ...(hideTitle ? { hideTitle } : {}),
                         }),
                     );
                 }}

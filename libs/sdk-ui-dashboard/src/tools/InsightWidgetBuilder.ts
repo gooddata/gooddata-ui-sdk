@@ -51,8 +51,6 @@ export class InsightWidgetBuilder {
         drills: [],
         title: "",
         description: "",
-        configuration: { hideTitle: false },
-        properties: {},
     };
 
     constructor(insightRef: ObjRef, title: string) {

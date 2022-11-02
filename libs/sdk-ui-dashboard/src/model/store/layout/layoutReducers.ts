@@ -32,6 +32,7 @@ import flatMap from "lodash/flatMap";
 import { Draft } from "immer";
 import { ObjRefMap } from "../../../_staging/metadata/objRefMap";
 import { IdentityMapping } from "../../../_staging/dashboard/dashboardLayout";
+import { setOrDelete } from "../../../_staging/objectUtils/setOrDelete";
 
 type LayoutReducer<A> = CaseReducer<LayoutState, PayloadAction<A>>;
 
@@ -404,8 +405,7 @@ const replaceInsightWidgetVisProperties: LayoutReducer<ReplaceWidgetVisPropertie
     const widget = getWidgetByRef(state, ref);
 
     invariant(widget && isInsightWidget(widget));
-
-    widget.properties = properties;
+    setOrDelete(widget, "properties", properties);
 };
 
 //
@@ -427,7 +427,7 @@ const replaceInsightWidgetVisConfiguration: LayoutReducer<ReplaceWidgetVisConfig
     const widget = getWidgetByRef(state, ref);
 
     invariant(widget && isInsightWidget(widget));
-    widget.configuration = config;
+    setOrDelete(widget, "configuration", config);
 };
 
 //

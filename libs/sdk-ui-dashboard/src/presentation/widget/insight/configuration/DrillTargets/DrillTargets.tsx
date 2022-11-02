@@ -8,6 +8,7 @@ import {
     InsightDrillDefinition,
     IDrillToCustomUrl,
     IDrillToAttributeUrl,
+    DrillOrigin,
 } from "@gooddata/sdk-model";
 import {
     DRILL_TARGET_TYPE,
@@ -33,10 +34,7 @@ export const DrillTargets: React.FunctionComponent<IDrillTargetsProps> = (props)
     const onInsightTargetSelect = (targetItem: IInsight) => {
         const drillConfigItem: IDrillToInsight = {
             transition: "pop-up",
-            origin: {
-                type: "drillFromMeasure",
-                measure: { localIdentifier: item.localIdentifier },
-            },
+            origin: getOrigin(item),
             type: "drillToInsight",
             target: targetItem.insight.ref,
         };
@@ -47,10 +45,7 @@ export const DrillTargets: React.FunctionComponent<IDrillTargetsProps> = (props)
         const dashboard = idRef(targetItem.identifier, "analyticalDashboard");
         const drillConfigItem: IDrillToDashboard = {
             transition: "in-place",
-            origin: {
-                type: "drillFromMeasure",
-                measure: { localIdentifier: item.localIdentifier },
-            },
+            origin: getOrigin(item),
             type: "drillToDashboard",
             target: dashboard,
         };
@@ -61,16 +56,7 @@ export const DrillTargets: React.FunctionComponent<IDrillTargetsProps> = (props)
         if (isDrillToCustomUrlConfig(urlDrillTarget)) {
             const drillConfigItem: IDrillToCustomUrl = {
                 transition: "new-window",
-                origin:
-                    item.type === "attribute"
-                        ? {
-                              type: "drillFromAttribute",
-                              attribute: { localIdentifier: item.localIdentifier },
-                          }
-                        : {
-                              type: "drillFromMeasure",
-                              measure: { localIdentifier: item.localIdentifier },
-                          },
+                origin: getOrigin(item),
                 type: "drillToCustomUrl",
                 target: {
                     url: urlDrillTarget.customUrl,
@@ -81,10 +67,7 @@ export const DrillTargets: React.FunctionComponent<IDrillTargetsProps> = (props)
         if (isDrillToAttributeUrlConfig(urlDrillTarget)) {
             const drillConfigItem: IDrillToAttributeUrl = {
                 transition: "new-window",
-                origin: {
-                    type: "drillFromAttribute",
-                    attribute: { localIdentifier: item.localIdentifier },
-                },
+                origin: getOrigin(item),
                 type: "drillToAttributeUrl",
                 target: {
                     hyperlinkDisplayForm: urlDrillTarget.drillToAttributeDisplayForm,
@@ -125,3 +108,15 @@ export const DrillTargets: React.FunctionComponent<IDrillTargetsProps> = (props)
 
     return null;
 };
+
+function getOrigin(item: IDrillConfigItem): DrillOrigin {
+    return item.type === "attribute"
+        ? {
+              type: "drillFromAttribute",
+              attribute: { localIdentifier: item.localIdentifier },
+          }
+        : {
+              type: "drillFromMeasure",
+              measure: { localIdentifier: item.localIdentifier },
+          };
+}

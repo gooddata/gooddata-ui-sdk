@@ -16,7 +16,7 @@ export const InsightInteractions: React.FC<IInsightConfigurationProps> = ({ widg
         ? stringUtils.simplifyText(objRefToString(widget.ref))
         : "";
 
-    const classes = cx("configuration-panel", `s-visualization-${widgetRefSuffix}`);
+    const classes = cx(`s-visualization-${widgetRefSuffix}`);
 
     return (
         <WidgetScrollablePanel className={classes}>

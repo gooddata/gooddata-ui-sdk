@@ -74,7 +74,7 @@ describe("change insight widget vis properties handler", () => {
             expect(widgetState!.properties).toBeUndefined();
         });
 
-        it("should set empty properties", async () => {
+        it("should clear properties if empty properties", async () => {
             const ref = ComplexDashboardWidgets.SecondSection.FirstTable.ref;
 
             const event: DashboardInsightWidgetVisPropertiesChanged = await Tester.dispatchAndWaitFor(
@@ -84,7 +84,7 @@ describe("change insight widget vis properties handler", () => {
 
             expect(event.payload.properties).toEqual({});
             const widgetState = selectAnalyticalWidgetByRef(ref)(Tester.state()) as IInsightWidget;
-            expect(widgetState!.properties).toEqual({});
+            expect(widgetState!.properties).toBeUndefined();
         });
 
         it("should fail if trying to change properties of KPI widget", async () => {
