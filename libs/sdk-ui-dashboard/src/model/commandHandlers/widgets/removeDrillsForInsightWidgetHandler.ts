@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { DashboardContext } from "../../types/commonTypes";
 import { RemoveDrillsForInsightWidget } from "../../commands";
@@ -24,10 +24,10 @@ export function* removeDrillsForInsightWidgetHandler(
     const insightWidget = validateExistingInsightWidget(widgets, cmd, ctx);
     const { ref: widgetRef, drills: currentInsightDrills } = insightWidget;
 
-    const drillToRemove = validateRemoveDrillsByOrigins(origins, currentInsightDrills, ctx, cmd);
+    const drillsToRemove = validateRemoveDrillsByOrigins(origins, currentInsightDrills, ctx, cmd);
 
     const notModifiedDrillDefinition = currentInsightDrills.filter(
-        (drillItem) => !existsDrillDefinitionInArray(drillItem, drillToRemove),
+        (drillItem) => !existsDrillDefinitionInArray(drillItem, drillsToRemove),
     );
 
     yield put(
@@ -40,5 +40,5 @@ export function* removeDrillsForInsightWidgetHandler(
         }),
     );
 
-    return insightWidgetDrillsRemoved(ctx, widgetRef, drillToRemove, correlationId);
+    return insightWidgetDrillsRemoved(ctx, widgetRef, drillsToRemove, correlationId);
 }

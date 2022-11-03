@@ -8,6 +8,7 @@ import { renderModeChanged } from "../../events/renderMode";
 import { renderModeActions } from "../../store/renderMode";
 import { selectDashboardEditModeDevRollout } from "../../store/config/configSelectors";
 import { resetDashboardHandler } from "../dashboard/resetDashboardHandler";
+import { validateDrills } from "./validateDrills";
 
 export function* changeRenderModeHandler(
     ctx: DashboardContext,
@@ -25,6 +26,10 @@ export function* changeRenderModeHandler(
 
         if (renderModeChangeOptions.resetDashboard) {
             yield call(resetDashboardHandler, ctx, resetDashboardCommand(correlationId));
+        }
+
+        if (renderMode === "edit") {
+            yield call(validateDrills, ctx, cmd);
         }
 
         return renderModeChanged(ctx, renderMode, correlationId);

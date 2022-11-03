@@ -5250,6 +5250,9 @@ export const selectAlerts: (state: DashboardState) => IWidgetAlert[];
 export const selectAlertsMap: OutputSelector<DashboardState, ObjRefMap<IWidgetAlert>, (res: IWidgetAlert[]) => ObjRefMap<IWidgetAlert>>;
 
 // @alpha
+export const selectAllAnalyticalWidgets: OutputSelector<DashboardState, IWidget[], (res: ExtendedDashboardWidget[]) => IWidget[]>;
+
+// @alpha
 export const selectAllCatalogAttributesMap: OutputSelector<DashboardState, ObjRefMap<ICatalogAttribute | ICatalogDateAttribute>, (res1: ICatalogAttribute[], res2: ICatalogDateDataset[], res3: IBackendCapabilities) => ObjRefMap<ICatalogAttribute | ICatalogDateAttribute>>;
 
 // @alpha
