@@ -11,7 +11,7 @@ import {
     uriRef,
 } from "@gooddata/sdk-model";
 import { createSelector } from "@reduxjs/toolkit";
-import { selectCatalogAttributeDisplayForms, useDashboardSelector } from "../../../model";
+import { selectCatalogAttributes, useDashboardSelector } from "../../../model";
 import { AttributeFilterDraggingComponent } from "../../componentDefinition";
 
 function isDisplayFormEqual(displayForm: IAttributeDisplayFormMetadataObject, identifierOrUriRef: ObjRef) {
@@ -21,17 +21,19 @@ function isDisplayFormEqual(displayForm: IAttributeDisplayFormMetadataObject, id
     );
 }
 
-const selectFilterDisplayForm = (filter: IDashboardAttributeFilter) =>
-    createSelector(selectCatalogAttributeDisplayForms, (displayForms) =>
-        displayForms.find((displayForm) =>
-            isDisplayFormEqual(displayForm, filter.attributeFilter.displayForm),
+const selectFilterAttribute = (filter: IDashboardAttributeFilter) =>
+    createSelector(selectCatalogAttributes, (attributes) =>
+        attributes.find((attribute) =>
+            attribute.displayForms.some((displayForm) =>
+                isDisplayFormEqual(displayForm, filter.attributeFilter.displayForm),
+            ),
         ),
     );
 
 export const DefaultAttributeFilterDraggingComponent: AttributeFilterDraggingComponent = ({ item }) => {
     const theme = useTheme();
-    const filterDisplayForm = useDashboardSelector(selectFilterDisplayForm(item.filter));
-    if (!filterDisplayForm) {
+    const filterAttribute = useDashboardSelector(selectFilterAttribute(item.filter));
+    if (!filterAttribute) {
         return null;
     }
 
@@ -45,7 +47,7 @@ export const DefaultAttributeFilterDraggingComponent: AttributeFilterDraggingCom
             />
             <div className="button-content">
                 <div className="button-title">
-                    <ShortenedText>{filterDisplayForm.title}</ShortenedText>
+                    <ShortenedText>{filterAttribute.attribute.title}</ShortenedText>
                 </div>
             </div>
         </div>
