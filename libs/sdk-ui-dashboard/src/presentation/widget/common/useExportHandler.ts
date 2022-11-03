@@ -2,9 +2,9 @@
 import { useCallback, useRef } from "react";
 import { isProtectedDataError } from "@gooddata/sdk-backend-spi";
 import { IExtendedExportConfig } from "@gooddata/sdk-ui";
-import { useToastMessage } from "@gooddata/sdk-ui-kit";
 import { downloadFile } from "../../../_staging/fileUtils/downloadFile";
 import { messages } from "../../../locales";
+import { useToastMessages } from "../../../model";
 
 type ExportHandler = (
     exportFunction: (config: IExtendedExportConfig) => Promise<string>,
@@ -12,7 +12,7 @@ type ExportHandler = (
 ) => Promise<void>;
 
 export const useExportHandler = (): ExportHandler => {
-    const { addProgress, addSuccess, addError, removeMessage } = useToastMessage();
+    const { addProgress, addSuccess, addError, removeMessage } = useToastMessages();
     const lastExportMessageId = useRef("");
     return useCallback<ExportHandler>(async (exportFunction, exportConfig) => {
         try {

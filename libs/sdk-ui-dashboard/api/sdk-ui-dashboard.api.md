@@ -246,6 +246,9 @@ export interface AddSectionItemsPayload {
 }
 
 // @internal (undocumented)
+export type AddToastMessage = (message: MessageDescriptor, options?: Pick<IToastMessageDefinition, "duration" | "intensive" | "titleValues">) => string;
+
+// @internal (undocumented)
 export type AlertsState = EntityState<IWidgetAlert>;
 
 // @internal
@@ -4195,6 +4198,36 @@ export interface ITitleProps {
     title: string;
 }
 
+// @internal
+export interface IToastMessage extends IToastMessageDefinition {
+    // (undocumented)
+    id: string;
+}
+
+// @internal
+export interface IToastMessageDefinition {
+    // (undocumented)
+    contrast?: boolean;
+    // (undocumented)
+    detailId?: string;
+    // (undocumented)
+    detailValues?: any;
+    // (undocumented)
+    duration?: number;
+    // (undocumented)
+    intensive?: boolean;
+    // (undocumented)
+    showLessId?: string;
+    // (undocumented)
+    showMoreId?: string;
+    // (undocumented)
+    titleId?: string;
+    // (undocumented)
+    titleValues?: any;
+    // (undocumented)
+    type: ToastMessageType;
+}
+
 // @alpha (undocumented)
 export interface ITopBarProps {
     // (undocumented)
@@ -5898,6 +5931,9 @@ export function switchToEditRenderMode(correlationId?: string): ChangeRenderMode
 // @internal (undocumented)
 export const Title: (props: ITitleProps) => JSX.Element;
 
+// @internal
+export type ToastMessageType = "success" | "progress" | "error" | "warning";
+
 // @internal (undocumented)
 export const TopBar: (props: ITopBarProps) => JSX.Element;
 
@@ -6005,6 +6041,15 @@ type: string;
 clearActiveSectionIndex: CaseReducer<UiState, AnyAction>;
 openCancelEditModeDialog: CaseReducer<UiState, AnyAction>;
 closeCancelEditModeDialog: CaseReducer<UiState, AnyAction>;
+addToastMessage: CaseReducer<UiState, {
+payload: IToastMessage;
+type: string;
+}>;
+removeToastMessage: CaseReducer<UiState, {
+payload: string;
+type: string;
+}>;
+removeAllToastMessages: CaseReducer<UiState, AnyAction>;
 }>;
 
 // @alpha (undocumented)
@@ -6067,6 +6112,8 @@ export interface UiState {
     shareDialog: {
         open: boolean;
     };
+    // (undocumented)
+    toastMessages: IToastMessage[];
     // (undocumented)
     widgetsLoadingAdditionalData: ObjRef[];
 }
@@ -6731,6 +6778,18 @@ export function useSaveButtonProps(): ISaveButtonProps;
 
 // @internal (undocumented)
 export function useShareButtonProps(): IShareButtonProps;
+
+// @internal
+export function useToastMessages(): {
+    toastMessages: IToastMessage[];
+    removeMessage: (id: string) => void;
+    removeAllMessages: () => void;
+    addMessage: (message: IToastMessageDefinition) => string;
+    addSuccess: AddToastMessage;
+    addProgress: AddToastMessage;
+    addWarning: AddToastMessage;
+    addError: AddToastMessage;
+};
 
 // @alpha (undocumented)
 export const useTopBarProps: () => ITopBarProps;

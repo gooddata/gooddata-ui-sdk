@@ -2,7 +2,6 @@
 import { useCallback, useMemo, useRef } from "react";
 import { useIntl } from "react-intl";
 import { isProtectedDataError } from "@gooddata/sdk-backend-spi";
-import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import {
     exportDashboardToPdf,
@@ -21,6 +20,7 @@ import {
     useDashboardDispatch,
     useDashboardScheduledEmails,
     useDashboardSelector,
+    useToastMessages,
 } from "../../../model";
 import { downloadFile } from "../../../_staging/fileUtils/downloadFile";
 import { IMenuButtonItem } from "../../topBar/types";
@@ -33,7 +33,7 @@ export const useDefaultMenuItems = function (): IMenuButtonItem[] {
     const intl = useIntl();
     const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
     const isEmptyLayout = useDashboardSelector(selectIsLayoutEmpty);
-    const { addSuccess, addError, addProgress, removeMessage } = useToastMessage();
+    const { addSuccess, addError, addProgress, removeMessage } = useToastMessages();
     const { isScheduledEmailingVisible, defaultOnScheduleEmailing } = useDashboardScheduledEmails();
 
     const dispatch = useDashboardDispatch();

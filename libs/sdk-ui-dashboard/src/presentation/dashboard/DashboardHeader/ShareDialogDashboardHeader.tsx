@@ -1,6 +1,5 @@
 // (C) 2020-2022 GoodData Corporation
 import React, { useCallback } from "react";
-import { useToastMessage } from "@gooddata/sdk-ui-kit";
 import {
     useDashboardSelector,
     selectIsShareDialogOpen,
@@ -11,6 +10,7 @@ import {
     useDashboardCommandProcessing,
     changeSharing,
     selectCanManageWorkspace,
+    useToastMessages,
 } from "../../../model";
 import { ShareDialog, ISharingApplyPayload } from "../../shareDialog";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
@@ -18,7 +18,7 @@ import { messages } from "../../../locales";
 
 const useShareDialogDashboardHeader = () => {
     const dispatch = useDashboardDispatch();
-    const { addSuccess, addError } = useToastMessage();
+    const { addSuccess, addError } = useToastMessages();
     const isShareDialogOpen = useDashboardSelector(selectIsShareDialogOpen);
     const persistedDashboard = useDashboardSelector(selectPersistedDashboard);
     const currentUserRef = useDashboardSelector(selectCurrentUserRef);
