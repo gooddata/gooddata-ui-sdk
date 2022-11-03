@@ -525,24 +525,25 @@ const CoreHeader: React.FC<IHeaderProps> = ({ location, routes = [], isUserLogge
                 }
 
                 .gd-docs-header-nav__title {
-                    display: none;
                     font-size: 14px;
                     color: #1c0d3f;
+                    white-space: nowrap;
+                    text-decoration: none;
                 }
 
-                .gd-docs-header-nav__breadcrumb {
-                    color: #1c0d3f;
+                .gd-docs-header-nav__inner:hover,
+                .gd-docs-header-nav__inner:focus,
+                .gd-docs-header-nav__inner:active {
+                    text-decoration: underline;
                 }
 
-                .gd-docs-header-nav__breadcrumb::before {
+                .gd-docs-header-nav__title::before {
                     content: "/";
                     margin: 0 4px;
                 }
 
-                @media screen and (min-width: 768px) {
-                    .gd-docs-header-nav__title {
-                        display: block;
-                    }
+                .gd-docs-header-nav__title:first-child::before {
+                    display: none;
                 }
 
                 .gd-docs-header-nav__title img {
@@ -595,6 +596,7 @@ const CoreHeader: React.FC<IHeaderProps> = ({ location, routes = [], isUserLogge
                     color: #000;
                     font-size: 0.75rem;
                     line-height: 1.75rem;
+                    white-space: nowrap;
                 }
 
                 .button-header,
@@ -763,10 +765,16 @@ const CoreHeader: React.FC<IHeaderProps> = ({ location, routes = [], isUserLogge
                             className="gd-docs-header-nav__title"
                             href="https://www.gooddata.com/developers/cloud-native/doc/"
                         >
-                            Docs
+                            <span className="gd-docs-header-nav__inner">Docs</span>
+                        </a>
+                        <a
+                            className="gd-docs-header-nav__title"
+                            href="https://sdk.gooddata.com/gooddata-ui/docs/about_gooddataui.html"
+                        >
+                            <span className="gd-docs-header-nav__inner">React SDK</span>
                         </a>
                         <span className="gd-docs-header-nav__title gd-docs-header-nav__breadcrumb">
-                            GoodData.UI
+                            Component library
                         </span>
                     </div>
                     <div className="gd-docs-header-nav__center"></div>
