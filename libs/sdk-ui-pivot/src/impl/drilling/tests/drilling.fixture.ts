@@ -23,17 +23,19 @@ export const OneMeasureAndRepeatingRowAttributesOnDifferentPositions = recordedD
 
 export function createTestRow(
     tableDescriptor: TableDescriptor,
-    rowHeaders: Array<{ uri: string; title: string }>,
+    rowHeaders: Array<{ uri: string; title: string; formattedName?: string }>,
 ): IGridRow {
     invariant(tableDescriptor.sliceColCount() === rowHeaders.length);
 
     const resultHeaders: [string, IResultAttributeHeader][] = rowHeaders.map((header, idx) => {
+        const formattedNameObj = header.formattedName ? { formattedName: header.formattedName } : {};
         return [
             `r_${idx}`,
             {
                 attributeHeaderItem: {
                     name: header.title,
                     uri: header.uri,
+                    ...formattedNameObj,
                 },
             },
         ];

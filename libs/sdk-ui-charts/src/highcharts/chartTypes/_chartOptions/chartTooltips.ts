@@ -9,6 +9,7 @@ import { multiMeasuresAlternatingTypes } from "./chartCapabilities";
 import cx from "classnames";
 import { IMeasureDescriptor } from "@gooddata/sdk-model";
 import { valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
+import { getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
 
 const TOOLTIP_PADDING = 10;
 
@@ -226,7 +227,7 @@ export function generateTooltipHeatmapFn(
                 customEscape(viewByAttribute.formOf.name),
                 customEscape(
                     valueWithEmptyHandling(
-                        viewByAttribute.items[point.x].attributeHeaderItem.name,
+                        getMappingHeaderFormattedName(viewByAttribute.items[point.x]),
                         emptyHeaderTitle,
                     ),
                 ),
@@ -237,7 +238,7 @@ export function generateTooltipHeatmapFn(
                 customEscape(stackByAttribute.formOf.name),
                 customEscape(
                     valueWithEmptyHandling(
-                        stackByAttribute.items[point.y].attributeHeaderItem.name,
+                        getMappingHeaderFormattedName(stackByAttribute.items[point.y]),
                         emptyHeaderTitle,
                     ),
                 ),
@@ -270,7 +271,7 @@ export function buildTooltipTreemapFactory(
                 customEscape(stackByAttribute.formOf.name),
                 customEscape(
                     valueWithEmptyHandling(
-                        stackByAttribute.items[point.y].attributeHeaderItem.name,
+                        getMappingHeaderFormattedName(stackByAttribute.items[point.y]),
                         emptyHeaderTitle,
                     ),
                 ),
@@ -282,7 +283,7 @@ export function buildTooltipTreemapFactory(
                 customEscape(viewByAttribute.formOf.name),
                 customEscape(
                     valueWithEmptyHandling(
-                        viewByAttribute.items[point.x].attributeHeaderItem.name,
+                        getMappingHeaderFormattedName(viewByAttribute.items[point.x]),
                         emptyHeaderTitle,
                     ),
                 ),

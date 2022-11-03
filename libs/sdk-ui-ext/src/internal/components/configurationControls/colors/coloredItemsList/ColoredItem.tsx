@@ -1,11 +1,11 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import { IColor, IColorPalette } from "@gooddata/sdk-model";
 import ColoredItemContent from "./ColoredItemContent";
 import ColorDropdown from "../colorDropdown/ColorDropdown";
 import { IColoredItem } from "../../../../interfaces/Colors";
-import { getMappingHeaderName, IMappingHeader } from "@gooddata/sdk-ui";
+import { getMappingHeaderFormattedName, IMappingHeader } from "@gooddata/sdk-ui";
 
 export interface IColoredItemProps {
     colorPalette: IColorPalette;
@@ -57,7 +57,7 @@ class ColoredItem extends React.PureComponent<IColoredItemProps & WrappedCompone
     };
 
     private getText(mappingHeader: IMappingHeader) {
-        return getMappingHeaderName(mappingHeader) || "";
+        return getMappingHeaderFormattedName(mappingHeader) || "";
     }
 }
 

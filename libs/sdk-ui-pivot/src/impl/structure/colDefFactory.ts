@@ -19,6 +19,7 @@ import {
 import { ISortItem, sortDirection } from "@gooddata/sdk-model";
 import { attributeSortMatcher, measureSortMatcher } from "./colSortItemMatching";
 import { valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
+import { getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
 
 type TransformState = {
     initialSorts: ISortItem[];
@@ -76,7 +77,10 @@ function createColumnGroupColDef(col: ScopeCol, state: TransformState): ColDef |
         const colDef: ColDef = {
             type: COLUMN_ATTRIBUTE_COLUMN,
             colId: col.id,
-            headerName: valueWithEmptyHandling(col.header.attributeHeaderItem.name, state.emptyHeaderTitle),
+            headerName: valueWithEmptyHandling(
+                getMappingHeaderFormattedName(col.header),
+                state.emptyHeaderTitle,
+            ),
         };
 
         state.allColDefs.push(colDef);
@@ -86,7 +90,10 @@ function createColumnGroupColDef(col: ScopeCol, state: TransformState): ColDef |
     } else {
         const colGroup: ColGroupDef = {
             groupId: col.id,
-            headerName: valueWithEmptyHandling(col.header.attributeHeaderItem.name, state.emptyHeaderTitle),
+            headerName: valueWithEmptyHandling(
+                getMappingHeaderFormattedName(col.header),
+                state.emptyHeaderTitle,
+            ),
             children,
         };
 

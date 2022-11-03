@@ -1,6 +1,6 @@
 // (C) 2020-2022 GoodData Corporation
 import { ISeriesItemConfig } from "../../typings/unsafe";
-import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
+import { BucketNames, DataViewFacade, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
 import { IMeasureGroupDescriptor } from "@gooddata/sdk-model";
 import { IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 import { parseValue, unwrap } from "../_util/common";
@@ -47,7 +47,7 @@ export function getBubbleChartSeries(
             return {
                 name: stackByAttribute
                     ? valueWithEmptyHandling(
-                          stackByAttribute.items[index].attributeHeaderItem.name,
+                          getMappingHeaderFormattedName(stackByAttribute.items[index]),
                           emptyHeaderTitle,
                       )
                     : "",

@@ -2,6 +2,7 @@
 import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess";
 import { IResultAttributeHeader } from "@gooddata/sdk-model";
 import { valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
+import { getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
 
 type NameAndCategories = {
     name: string;
@@ -38,9 +39,9 @@ export function getCategoriesForTwoAttributes(
     const combinedResult = parent.reduce(
         (result: Record<string, NameAndCategories>, parentAttr: IResultAttributeHeader, index: number) => {
             const uri = parentAttr?.attributeHeaderItem?.uri ?? "";
-            const name = valueWithEmptyHandling(parentAttr?.attributeHeaderItem?.name, emptyHeaderTitle);
+            const name = valueWithEmptyHandling(getMappingHeaderFormattedName(parentAttr), emptyHeaderTitle);
             const value = valueWithEmptyHandling(
-                children[index]?.attributeHeaderItem?.name,
+                getMappingHeaderFormattedName(children[index]),
                 emptyHeaderTitle,
             );
 

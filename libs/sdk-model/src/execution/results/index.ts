@@ -188,6 +188,19 @@ export interface IAttributeDescriptorBody {
      * Describes attributes to which the display form belongs.
      */
     formOf: IAttributeHeaderFormOf;
+
+    /**
+     * Specifies granularity in case of date attribute.
+     */
+    granularity?: string;
+
+    /**
+     * Describes format information in case of date attribute.
+     */
+    format?: {
+        locale: string;
+        pattern: string;
+    };
 }
 
 /**
@@ -289,6 +302,17 @@ export interface IResultAttributeHeaderItem {
      * but for now, if you expect NULLs in your data, treat this as string | null already.
      */
     uri: string;
+
+    /**
+     * Formatted name of attribute element.
+     *
+     * @remarks
+     * This property holds the formatted form of name property in case of date attributes. When using attribute
+     * elements in visualisations, formatted name should have precedence over original name to show a more
+     * readable form of dates. In other cases, such as drilling, original name property must be used to avoid
+     * inconsistencies.
+     */
+    formattedName?: string;
 }
 
 /**

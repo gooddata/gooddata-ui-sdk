@@ -481,7 +481,12 @@ export interface IAttributeDescriptor {
 
 // @public
 export interface IAttributeDescriptorBody {
+    format?: {
+        locale: string;
+        pattern: string;
+    };
     formOf: IAttributeHeaderFormOf;
+    granularity?: string;
     identifier: string;
     localIdentifier: string;
     name: string;
@@ -1818,6 +1823,7 @@ export interface IResultAttributeHeader {
 
 // @public
 export interface IResultAttributeHeaderItem {
+    formattedName?: string;
     name: string;
     uri: string;
 }

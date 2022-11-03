@@ -14,7 +14,7 @@ import {
     unwrap,
 } from "../_util/common";
 import { multiMeasuresAlternatingTypes } from "./chartCapabilities";
-import { DataViewFacade } from "@gooddata/sdk-ui";
+import { DataViewFacade, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
 import { getHeatmapSeries } from "../heatmap/heatmapChartSeries";
 import { getScatterPlotSeries } from "../scatterPlot/scatterPlotSeries";
 import { getBubbleChartSeries } from "../bubbleChart/bubbleChartSeries";
@@ -74,12 +74,12 @@ export function getSeriesItemData(
         if (stackByAttribute) {
             // if there is a stackBy attribute, then seriesIndex corresponds to stackBy label index
             pointData.name = valueWithEmptyHandling(
-                unwrap(stackByAttribute.items[seriesIndex]).name,
+                getMappingHeaderFormattedName(stackByAttribute.items[seriesIndex]),
                 emptyHeaderTitle,
             );
         } else if (isOneOfTypes(type, multiMeasuresAlternatingTypes) && viewByAttribute) {
             pointData.name = valueWithEmptyHandling(
-                unwrap(viewByAttribute.items[viewByIndex]).name,
+                getMappingHeaderFormattedName(viewByAttribute.items[viewByIndex]),
                 emptyHeaderTitle,
             );
         } else {
@@ -135,7 +135,7 @@ function getDefaultSeries(
                 // if stackBy attribute is available, seriesName is a stackBy attribute value of index seriesIndex
                 // this is a limitation of highcharts and a reason why you can not have multi-measure stacked charts
                 seriesItemConfig.name = valueWithEmptyHandling(
-                    stackByAttribute.items[seriesIndex].attributeHeaderItem.name,
+                    getMappingHeaderFormattedName(stackByAttribute.items[seriesIndex]),
                     emptyHeaderTitle,
                 );
             } else if (isOneOfTypes(type, multiMeasuresAlternatingTypes) && !viewByAttribute) {

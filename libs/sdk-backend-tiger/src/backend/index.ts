@@ -40,7 +40,7 @@ import {
     IAuthProviderCallGuard,
 } from "@gooddata/sdk-backend-base";
 import { DateFormatter } from "../convertors/fromBackend/dateFormatting/types";
-import { createDefaultDateFormatter } from "../convertors/fromBackend/dateFormatting/defaultDateFormatter";
+import { defaultDateFormatter } from "../convertors/fromBackend/dateFormatting/defaultDateFormatter";
 import { TigerOrganization, TigerOrganizations } from "./organization";
 import packageJson from "../../package.json";
 import { TigerSpecificFunctions, buildTigerSpecificFunctions } from "./tigerSpecificFunctions";
@@ -133,7 +133,7 @@ export class TigerBackend implements IAnalyticalBackend {
         this.implConfig = implConfig;
         this.telemetry = telemetry;
         this.authProvider = authProvider || new AnonymousAuthProvider();
-        this.dateFormatter = implConfig.dateFormatter ?? createDefaultDateFormatter();
+        this.dateFormatter = implConfig.dateFormatter ?? defaultDateFormatter;
 
         const axios = createAxios(this.config, this.implConfig, this.telemetry);
         interceptBackendErrorsToConsole(axios);

@@ -187,6 +187,14 @@ export const attributeHeaderItem: IResultAttributeHeader = {
     },
 };
 
+export const attributeHeaderItemWithFormattedName: IResultAttributeHeader = {
+    attributeHeaderItem: {
+        uri: "/attributeItemUri",
+        name: "attributeItemName",
+        formattedName: "formattedAttributeItemName",
+    },
+};
+
 export const context: IHeaderPredicateContext = {
     dv: barChartForDrillTests,
 };
