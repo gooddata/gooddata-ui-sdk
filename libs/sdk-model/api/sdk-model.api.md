@@ -1221,11 +1221,20 @@ export interface IInsightWidgetBase extends IAnalyticalWidget {
 // @alpha (undocumented)
 export interface IInsightWidgetConfiguration {
     // (undocumented)
+    description?: IInsightWidgetDescriptionConfiguration;
+    // (undocumented)
     hideTitle?: boolean;
 }
 
 // @alpha (undocumented)
 export interface IInsightWidgetDefinition extends IInsightWidgetBase, Partial<IDashboardObjectIdentity> {
+}
+
+// @alpha
+export interface IInsightWidgetDescriptionConfiguration {
+    includeMetrics: boolean;
+    source: InsightWidgetDescriptionSourceType;
+    visible: boolean;
 }
 
 // @alpha
@@ -1253,6 +1262,7 @@ export interface IKpiWidget extends IKpiWidgetBase, IDashboardObjectIdentity {
 
 // @alpha (undocumented)
 export interface IKpiWidgetBase extends IAnalyticalWidget {
+    readonly configuration?: IKpiWidgetConfiguration;
     readonly drills: KpiDrillDefinition[];
     readonly kpi: IKpi;
     // (undocumented)
@@ -1260,7 +1270,19 @@ export interface IKpiWidgetBase extends IAnalyticalWidget {
 }
 
 // @alpha (undocumented)
+export interface IKpiWidgetConfiguration {
+    // (undocumented)
+    description?: IKpiWidgetDescriptionConfiguration;
+}
+
+// @alpha (undocumented)
 export interface IKpiWidgetDefinition extends IKpiWidgetBase, Partial<IDashboardObjectIdentity> {
+}
+
+// @alpha
+export interface IKpiWidgetDescriptionConfiguration {
+    source: KpiWidgetDescriptionSourceType;
+    visible: boolean;
 }
 
 // @alpha
@@ -1631,6 +1653,9 @@ export function insightUri(insight: IInsight): string;
 
 // @alpha
 export function insightVisualizationUrl(insight: IInsightDefinition): string;
+
+// @alpha (undocumented)
+export type InsightWidgetDescriptionSourceType = "widget" | "insight";
 
 // @public
 export type INullableFilter = IFilter | undefined | null;
@@ -2070,6 +2095,7 @@ export interface ISettings {
     enableCustomColorPicker?: boolean;
     enableDataSampling?: boolean;
     enableDataSourceManagement?: boolean;
+    enableDescriptions?: boolean;
     enableDrilledInsightExport?: boolean;
     enableEmbedButtonInAD?: boolean;
     enableEmbedButtonInKD?: boolean;
@@ -2733,6 +2759,9 @@ export interface IWorkspaceUserGroup {
 
 // @alpha
 export type KpiDrillDefinition = IDrillToLegacyDashboard;
+
+// @alpha (undocumented)
+export type KpiWidgetDescriptionSourceType = "kpi" | "metric";
 
 // @alpha
 export type ListedDashboardAvailability = "full" | "viaLink";

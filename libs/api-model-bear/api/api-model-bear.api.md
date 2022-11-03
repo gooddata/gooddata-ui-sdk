@@ -1235,7 +1235,14 @@ export namespace GdcKpi {
     // (undocumented)
     export type IKpiComparisonTypeNoComparison = "none";
     // (undocumented)
+    export interface IKpiConfiguration {
+        // (undocumented)
+        description?: IKpiDescriptionConfiguration;
+    }
+    // (undocumented)
     export interface IKpiContentBase {
+        // (undocumented)
+        configuration?: IKpiConfiguration;
         // (undocumented)
         dateDataSet?: string;
         // (undocumented)
@@ -1260,6 +1267,11 @@ export namespace GdcKpi {
         comparisonType: IKpiComparisonTypeNoComparison;
     }
     // (undocumented)
+    export interface IKpiDescriptionConfiguration {
+        source: KpiDescriptionSourceType;
+        visible: boolean;
+    }
+    // (undocumented)
     export interface IKpiProjectDashboardLink {
         // (undocumented)
         projectDashboard: string;
@@ -1277,6 +1289,8 @@ export namespace GdcKpi {
         // (undocumented)
         kpi: IKPI;
     }
+    // (undocumented)
+    export type KpiDescriptionSourceType = "kpi" | "metric";
 }
 
 // @public (undocumented)
@@ -3107,13 +3121,26 @@ export namespace GdcVisualizationWidget {
     // (undocumented)
     export interface IVisualizationWidgetConfiguration {
         // (undocumented)
+        description?: IVisualizationWidgetDescriptionConfiguration;
+        // (undocumented)
         hideTitle?: boolean;
+    }
+    // (undocumented)
+    export interface IVisualizationWidgetDescriptionConfiguration {
+        // (undocumented)
+        includeMetrics: boolean;
+        // (undocumented)
+        source: VisualizatioWidgetDescriptionSourceType;
+        // (undocumented)
+        visible: boolean;
     }
     // (undocumented)
     export interface IWrappedVisualizationWidget {
         // (undocumented)
         visualizationWidget: IVisualizationWidget;
     }
+    // (undocumented)
+    export type VisualizatioWidgetDescriptionSourceType = "widget" | "insight";
 }
 
 // @public (undocumented)

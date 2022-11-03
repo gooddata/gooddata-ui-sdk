@@ -406,7 +406,7 @@ export const convertWidget = (
 
     if (widget.type === "kpi") {
         invariant(widget.kpi, "Widget type is kpi, but kpi props are not defined!");
-        const { kpi } = widget;
+        const { kpi, configuration } = widget;
 
         return {
             kpi: {
@@ -424,6 +424,7 @@ export const convertWidget = (
                     dateDataSet: convertedDateDataSet,
                     drillTo:
                         drills.length > 0 ? convertDrill(drills[0] as IDrillToLegacyDashboard) : undefined,
+                    ...(configuration ? { configuration } : {}),
                 },
                 meta,
             },

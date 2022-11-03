@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import { GdcMetadata } from "../meta/GdcMetadata";
 import { GdcExtendedDateFilters } from "../extendedDateFilters/GdcExtendedDateFilters";
 import isEmpty from "lodash/isEmpty";
@@ -24,7 +24,25 @@ export namespace GdcKpi {
         drillTo?: IKpiProjectDashboardLink;
         dateDimension?: string;
         dateDataSet?: string;
+        configuration?: IKpiConfiguration;
     }
+
+    export interface IKpiConfiguration {
+        description?: IKpiDescriptionConfiguration;
+    }
+
+    export interface IKpiDescriptionConfiguration {
+        /**
+         * whether description should be visible or not
+         */
+        visible: boolean;
+        /**
+         * whether description should be used from kpi or inherited from its metric
+         */
+        source: KpiDescriptionSourceType;
+    }
+
+    export type KpiDescriptionSourceType = "kpi" | "metric";
 
     export interface IKpiContentWithComparison extends IKpiContentBase {
         comparisonType: IKpiComparisonTypeComparison;

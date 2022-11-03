@@ -80,7 +80,16 @@ export namespace GdcVisualizationWidget {
 
     export interface IVisualizationWidgetConfiguration {
         hideTitle?: boolean;
+        description?: IVisualizationWidgetDescriptionConfiguration;
     }
+
+    export interface IVisualizationWidgetDescriptionConfiguration {
+        visible: boolean;
+        source: VisualizatioWidgetDescriptionSourceType;
+        includeMetrics: boolean;
+    }
+
+    export type VisualizatioWidgetDescriptionSourceType = "widget" | "insight";
 
     export function isDrillToVisualization(obj: unknown): obj is IDrillToVisualization {
         return !isEmpty(obj) && !!(obj as IDrillToVisualization).drillToVisualization;

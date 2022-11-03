@@ -69,7 +69,7 @@ export const convertKpi = (kpi: GdcKpi.IWrappedKPI): IWidget => {
     const {
         kpi: {
             content,
-            content: { dateDataSet, ignoreDashboardFilters, drillTo },
+            content: { dateDataSet, ignoreDashboardFilters, drillTo, configuration },
             meta: { identifier, uri, title, summary },
         },
     } = kpi;
@@ -86,6 +86,7 @@ export const convertKpi = (kpi: GdcKpi.IWrappedKPI): IWidget => {
             ? ignoreDashboardFilters.map(convertFilterReference)
             : [],
         drills: drillTo ? [convertKpiDrill(kpi)] : [],
+        ...(configuration ? { configuration } : {}),
         kpi: GdcKpi.isKpiContentWithoutComparison(content)
             ? {
                   comparisonType: content.comparisonType,

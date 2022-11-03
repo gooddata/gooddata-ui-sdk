@@ -254,6 +254,11 @@ export interface ISettings {
      */
     ["msf.enableTenantCustomModel"]?: boolean;
 
+    /**
+     * Enable usage of insights, widgets, kpis descriptions
+     */
+    enableDescriptions?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

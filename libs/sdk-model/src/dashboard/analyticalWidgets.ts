@@ -48,7 +48,39 @@ export interface IKpiWidgetBase extends IAnalyticalWidget {
      * Drill interactions configured for the kpi widget.
      */
     readonly drills: KpiDrillDefinition[];
+
+    /**
+     * Configuration of the kpi itself
+     */
+    readonly configuration?: IKpiWidgetConfiguration;
 }
+
+/**
+ * @alpha
+ */
+export interface IKpiWidgetConfiguration {
+    description?: IKpiWidgetDescriptionConfiguration;
+}
+
+/**
+ * Configuration of kpi's description
+ * @alpha
+ */
+export interface IKpiWidgetDescriptionConfiguration {
+    /**
+     * whether description should be visible or not
+     */
+    visible: boolean;
+    /**
+     * whether description should be used from kpi or inherited from its metric
+     */
+    source: KpiWidgetDescriptionSourceType;
+}
+
+/**
+ * @alpha
+ */
+export type KpiWidgetDescriptionSourceType = "kpi" | "metric";
 
 /**
  * @alpha
@@ -97,7 +129,32 @@ export interface IInsightWidgetBase extends IAnalyticalWidget {
  */
 export interface IInsightWidgetConfiguration {
     hideTitle?: boolean;
+    description?: IInsightWidgetDescriptionConfiguration;
 }
+
+/**
+ * Configuration of widget's description
+ * @alpha
+ */
+export interface IInsightWidgetDescriptionConfiguration {
+    /**
+     * whether description should be visible or not
+     */
+    visible: boolean;
+    /**
+     * whether description should be used from widget or inherited from its insight
+     */
+    source: InsightWidgetDescriptionSourceType;
+    /**
+     * whether description should include also info about insight's metrics
+     */
+    includeMetrics: boolean;
+}
+
+/**
+ * @alpha
+ */
+export type InsightWidgetDescriptionSourceType = "widget" | "insight";
 
 /**
  * @alpha
