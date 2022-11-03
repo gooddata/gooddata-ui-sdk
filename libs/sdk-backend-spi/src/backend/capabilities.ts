@@ -206,6 +206,12 @@ export interface IBackendCapabilities {
     supportsShowAllAttributeValues?: boolean;
 
     /**
+     * Indicates whether backend supports separate numerical labels (display forms) for geo chart's latitude and longitude.
+     * If false, string label with "latitude;longitude" values is expected.
+     */
+    supportsSeparateLatitudeLongitudeLabels?: boolean;
+
+    /**
      * Catchall for additional capabilities
      */
     [key: string]: undefined | boolean | number | string;
