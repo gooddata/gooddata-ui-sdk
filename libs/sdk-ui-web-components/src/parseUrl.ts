@@ -1,7 +1,5 @@
 // (C) 2022 GoodData Corporation
 
-import invariant from "ts-invariant";
-
 /**
  * "none" means programmatic backend setup
  * "sso" means automatic Tiger SSO with redirection
@@ -38,16 +36,29 @@ const mapAuthType = (auth: string | null): AuthType => {
  *
  * @internal
  */
-export const parseUrl = (scriptUrl: URL) => {
-    const protocol = scriptUrl.protocol.toLowerCase() === "http:" ? "http:" : "https:";
-    const host = scriptUrl.host;
-    const workspaceId = scriptUrl.searchParams.has("workspace")
-        ? scriptUrl.searchParams.get("workspace")
-        : scriptUrl.pathname.match(/^\/components\/(.+)\.js$/i)?.[1];
+export const parseUrl = (
+    scriptUrl: string,
+): {
+    hostname?: string;
+    workspaceId?: string;
+    authType: AuthType;
+} => {
+    let url: URL;
 
-    invariant(workspaceId, "Unable to parse workspace id based on the script URL");
+    try {
+        url = new URL(scriptUrl);
+    } catch (e) {
+        // Invalid URL provided...
+        return { hostname: undefined, workspaceId: undefined, authType: "none" };
+    }
 
-    const authType: AuthType = mapAuthType(scriptUrl.searchParams.get("auth"));
+    const protocol = url.protocol.toLowerCase() === "http:" ? "http:" : "https:";
+    const host = url.host;
+    const workspaceId = url.searchParams.has("workspace")
+        ? url.searchParams.get("workspace")!
+        : url.pathname.match(/^\/components\/(.+)\.js$/i)?.[1];
+
+    const authType: AuthType = mapAuthType(url.searchParams.get("auth"));
 
     return { hostname: `${protocol}//${host}`, workspaceId, authType };
 };

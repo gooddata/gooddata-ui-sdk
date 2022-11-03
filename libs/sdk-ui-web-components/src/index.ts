@@ -57,23 +57,31 @@ const authMethodsMap = {
     },
 };
 
-const initializeAutoAuth = async () => {
-    let parsedUrl: ReturnType<typeof parseUrl>;
+const timeout = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
-    try {
-        // Detect current host based on the script's URL
-        parsedUrl = parseUrl(new URL(import.meta.url));
-    } catch (e) {
-        // Can't parse the URL, user can still use manual configuration, though
-        return;
-    }
+const initializeAutoAuth = async () => {
+    // Detect current host based on the script's URL
+    const parsedUrl = parseUrl(import.meta.url);
 
     const { hostname, authType, workspaceId } = parsedUrl;
 
     const getBackend = authMethodsMap[authType];
 
-    // No auto-auth...
-    if (!getBackend) return;
+    // No auto-auth. Give a developer a margin of 5sec to define programmatic flow
+    if (!getBackend || !hostname) {
+        Promise.race([timeout(5000), getContext()]).then((res) => {
+            if (!res) {
+                // Resolved without a value === timeout
+                // eslint-disable-next-line no-console
+                console.warn(
+                    `Automatic authentication with ${
+                        hostname ?? "analytics server"
+                    } is not enabled. You can enable it by adding "?auth=sso" to your script URL or provide authentication context programmatically with "setContext" method.`,
+                );
+            }
+        });
+        return;
+    }
 
     const backend = await getBackend(hostname);
 
