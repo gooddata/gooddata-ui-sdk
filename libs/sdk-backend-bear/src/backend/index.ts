@@ -76,6 +76,7 @@ const CAPABILITIES: IBackendCapabilities = {
     supportsOrganizationSettings: false,
     supportsInlineMeasures: false,
     supportsBootstrapResource: true,
+    supportsSeparateLatitudeLongitudeLabels: false,
 };
 
 /**
