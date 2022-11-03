@@ -8,6 +8,8 @@ import { ShortenedText } from "@gooddata/sdk-ui-kit";
 enum AttributeDisplayFormType {
     HYPERLINK = "GDC.link",
     GEO_PUSHPIN = "GDC.geo.pin",
+    GEO_PUSHPIN_LATITUDE = "GDC.geo.pin_latitude",
+    GEO_PUSHPIN_LONGITUDE = "GDC.geo.pin_longitude",
 }
 
 const getDisplayFormIcon = (type: string) => {
@@ -15,6 +17,8 @@ const getDisplayFormIcon = (type: string) => {
         case AttributeDisplayFormType.HYPERLINK:
             return "gd-icon-hyperlink-warning";
         case AttributeDisplayFormType.GEO_PUSHPIN:
+        case AttributeDisplayFormType.GEO_PUSHPIN_LATITUDE:
+        case AttributeDisplayFormType.GEO_PUSHPIN_LONGITUDE:
             return "gd-icon-earth";
         default:
             return "gd-icon-label-warning";

@@ -202,6 +202,8 @@ export function isDrillToUrlConfig(item: unknown): item is IDrillToUrlConfig {
 export enum AttributeDisplayFormType {
     HYPERLINK = "GDC.link",
     GEO_PUSHPIN = "GDC.geo.pin",
+    GEO_PUSHPIN_LATITUDE = "GDC.geo.pin_latitude",
+    GEO_PUSHPIN_LONGITUDE = "GDC.geo.pin_longitude",
 }
 
 export interface IAttributeDisplayForm {

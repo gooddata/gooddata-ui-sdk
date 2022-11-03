@@ -48,6 +48,8 @@ const getDisplayFormIcon = (type: string | undefined) => {
         case AttributeDisplayFormType.HYPERLINK:
             return "gd-icon-hyperlink-warning";
         case AttributeDisplayFormType.GEO_PUSHPIN:
+        case AttributeDisplayFormType.GEO_PUSHPIN_LATITUDE:
+        case AttributeDisplayFormType.GEO_PUSHPIN_LONGITUDE:
             return "gd-icon-earth";
         default:
             return "gd-icon-label-warning";

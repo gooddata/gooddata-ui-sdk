@@ -6,13 +6,15 @@ import { stringUtils } from "@gooddata/util";
 import { ObjRef, IAttributeDisplayFormMetadataObject } from "@gooddata/sdk-model";
 import { ShortenedText } from "@gooddata/sdk-ui-kit";
 
-type AttributeDisplayFormType = "GDC.link" | "GDC.geo.pin";
+type AttributeDisplayFormType = "GDC.link" | "GDC.geo.pin" | "GDC.geo.pin_latitude" | "GDC.geo.pin_longitude";
 
 const getDisplayFormIcon = (type?: AttributeDisplayFormType) => {
     switch (type) {
         case "GDC.link":
             return "gd-icon-hyperlink-warning";
         case "GDC.geo.pin":
+        case "GDC.geo.pin_latitude":
+        case "GDC.geo.pin_longitude":
             return "gd-icon-earth";
         default:
             return "gd-icon-label-warning";

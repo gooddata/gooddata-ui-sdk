@@ -25,6 +25,8 @@ const getDisplayFormLabel = (type: string | undefined) => {
         case AttributeDisplayFormType.HYPERLINK:
             return messages.hyperlink;
         case AttributeDisplayFormType.GEO_PUSHPIN:
+        case AttributeDisplayFormType.GEO_PUSHPIN_LATITUDE:
+        case AttributeDisplayFormType.GEO_PUSHPIN_LONGITUDE:
             return messages.pushpin;
         default:
             return messages.default;
