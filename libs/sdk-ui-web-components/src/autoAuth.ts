@@ -22,6 +22,7 @@ const withRedirectGate =
         // Check if there was a request to the authentication
         if (hadRedirectToAuth) {
             // We already tried to authenticate, apparently it has failed...
+            // eslint-disable-next-line no-console
             console.error(
                 [
                     "Automatic authentication has failed! This could have happened for several reasons:",
