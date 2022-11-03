@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { IVisualizationClass } from "@gooddata/sdk-model";
 import sortBy from "lodash/sortBy";
 
@@ -172,19 +172,18 @@ export const visualizationClasses: IVisualizationClass[] = sortBy(
                 uri: "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/1000",
             },
         },
-        // geochart must be disabled for now on tiger backend due to missing mapbox token infrastructure there (RAIL-3058)
-        // {
-        //     visualizationClass: {
-        //         checksum: "local",
-        //         icon: "local:pushpin",
-        //         orderIndex: 20,
-        //         iconSelected: "local:pushpin.selected",
-        //         url: "local:pushpin",
-        //         title: "Geo Pushpin",
-        //         identifier: "gdc.visualization.pushpin",
-        //         uri: "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/1001",
-        //     },
-        // },
+        {
+            visualizationClass: {
+                checksum: "local",
+                icon: "local:pushpin",
+                orderIndex: 20,
+                iconSelected: "local:pushpin.selected",
+                url: "local:pushpin",
+                title: "Geo Pushpin",
+                identifier: "gdc.visualization.pushpin",
+                uri: "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/1001",
+            },
+        },
     ],
     (cls) => cls.visualizationClass.orderIndex,
 );
