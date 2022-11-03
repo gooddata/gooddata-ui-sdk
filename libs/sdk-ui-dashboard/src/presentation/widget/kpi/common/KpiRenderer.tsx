@@ -16,6 +16,7 @@ interface IKpiRendererProps {
     disableDrillUnderline?: boolean;
     isDrillable?: boolean;
     onDrill?: (drillContext: IDrillEventContext) => ReturnType<OnFiredDashboardDrillEvent>;
+    isKpiValueClickDisabled?: boolean;
     enableCompactSize?: boolean;
     error?: GoodDataSdkError;
     errorHelp?: string;
@@ -29,6 +30,7 @@ export const KpiRenderer: React.FC<IKpiRendererProps> = ({
     disableDrillUnderline,
     onDrill,
     isDrillable,
+    isKpiValueClickDisabled,
     kpi,
     kpiResult,
     filters,
@@ -64,6 +66,7 @@ export const KpiRenderer: React.FC<IKpiRendererProps> = ({
             kpiResult={kpiResult}
             isKpiUnderlineHiddenWhenClickable={disableDrillUnderline}
             onKpiValueClick={isDrillable && onDrill ? onPrimaryValueClick : undefined}
+            isKpiValueClickDisabled={isKpiValueClickDisabled}
             filters={filters}
             separators={separators}
             enableCompactSize={enableCompactSize}

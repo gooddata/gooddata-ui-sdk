@@ -2,9 +2,9 @@
 import React, { useCallback, useEffect, useMemo } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
-import noop from "lodash/noop";
 import { widgetRef } from "@gooddata/sdk-model";
-import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { IDataView } from "@gooddata/sdk-backend-spi";
+import { IDrillEventContext, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 import {
     useDashboardSelector,
@@ -20,7 +20,10 @@ import {
     selectIsDashboardSaving,
     changeKpiWidgetHeader,
     selectAllCatalogMeasuresMap,
+    selectIsEmbedded,
+    selectDisableDefaultDrills,
 } from "../../../../model";
+import { OnFiredDashboardDrillEvent } from "../../../../types";
 import { DashboardItemKpi } from "../../../presentationComponents";
 import { useDashboardComponentsContext } from "../../../dashboardContexts";
 
@@ -29,6 +32,7 @@ import { getKpiResult, KpiRenderer, useKpiData, useKpiExecutionDataView } from "
 import { IDashboardKpiProps } from "../types";
 import { useOptimisticMeasureUpdate } from "./useOptimisticMeasureUpdate";
 import { EditableKpiHeadline } from "./EditModeKpiHeadline";
+import { useKpiDrill } from "../common/useKpiDrill";
 
 export const EditModeDashboardKpi = (props: IDashboardKpiProps) => {
     const {
@@ -114,6 +118,24 @@ export const EditModeDashboardKpi = (props: IDashboardKpiProps) => {
         widgetRef(kpiWidget),
     );
 
+    const isEmbedded = useDashboardSelector(selectIsEmbedded);
+    const disableDefaultDrills = useDashboardSelector(selectDisableDefaultDrills);
+
+    const isClickEnabled = isSelected && !isEmbedded && !disableDefaultDrills;
+
+    const onDrill = useKpiDrill(kpiWidget);
+    const handleOnDrill = useCallback(
+        (drillContext: IDrillEventContext): ReturnType<OnFiredDashboardDrillEvent> => {
+            return onDrill({
+                dataView: result?.dataView as IDataView, // Even invalid Kpi can be drillable
+                drillContext,
+                drillDefinitions: kpiWidget.drills,
+                widgetRef: widgetRef(kpiWidget),
+            });
+        },
+        [onDrill, result, kpiWidget],
+    );
+
     const renderBeforeContent = useMemo(() => {
         const hasConfigComponent = !!KpiConfigurationComponent;
         const shouldHaveConfigRendered = isSelected && hasConfigPanelOpen;
@@ -189,9 +211,9 @@ export const EditModeDashboardKpi = (props: IDashboardKpiProps) => {
                         error={error}
                         errorHelp={intl.formatMessage({ id: "kpi.error.view" })}
                         isLoading={isLoading}
-                        // need to pass something so that the underline is shown...
-                        onDrill={noop}
+                        onDrill={handleOnDrill}
                         isDrillable={isDrillable}
+                        isKpiValueClickDisabled={!isClickEnabled}
                         disableDrillUnderline={disableDrillUnderline}
                     />
                 );
