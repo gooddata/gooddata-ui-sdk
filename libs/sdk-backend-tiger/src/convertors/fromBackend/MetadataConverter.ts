@@ -135,7 +135,7 @@ function convertLabelWithLinks(
             .uri(label.links!.self)
             .attribute(idRef(attributeId, "attribute"))
             .isDefault(isDefault)
-            .displayFormType(convertLabelType(label.attributes?.valueType)),
+            .displayFormType(convertLabelType(label.attributes?.valueType, label.id)),
     );
 }
 

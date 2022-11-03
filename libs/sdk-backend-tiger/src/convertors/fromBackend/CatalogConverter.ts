@@ -45,7 +45,7 @@ const tigerLabelToDisplayFormMd = (label: JsonApiLabelOutWithLinks): IAttributeD
         const labelBuilder = commonMetadataObjectModifications(label)(
             builder,
         ) as AttributeDisplayFormMetadataObjectBuilder;
-        labelBuilder.displayFormType(convertLabelType(label.attributes?.valueType));
+        labelBuilder.displayFormType(convertLabelType(label.attributes?.valueType, label.id));
         return labelBuilder;
     });
 };
