@@ -107,6 +107,9 @@ $attribute-filter-drag-handle-left: 10px;
 }
 
 .dash-filters-all {
+    $default_padding: 10px;
+    $default_space: 3px;
+
     position: relative;
     display: flex;
     align-items: stretch;
@@ -119,16 +122,19 @@ $attribute-filter-drag-handle-left: 10px;
     .dash-filters-date {
         position: relative;
 
-        .gd-attribute-filter-dropdown-button__next {
-            margin: 7px 11px 7px 0;
+        .gd-attribute-filter-dropdown-button__next,
+        .gd-date-filter-button {
+            margin: 7px 11px 7px $default_space;
         }
 
         //edit mode
         &.dash-filter-is-edit-mode {
-            margin-left: -13px;
+            margin-left: -$default_padding;
 
+            .gd-attribute-filter-dropdown-button__next,
             .gd-date-filter-button {
-                padding-left: 23px;
+                margin-left: 0;
+                padding-left: $default_padding + $default_padding + $default_space;
             }
 
             .gd-date-filter-button::before {
