@@ -25,9 +25,9 @@ const withRedirectGate =
             // eslint-disable-next-line no-console
             console.error(
                 [
-                    "Automatic authentication has failed! This could have happened for several reasons:",
-                    " - Your browser is blocking the authentication cookies.",
-                    " - The user who is trying to login exists on your SSO provider, but not on your analytics server.",
+                    "The authentication has failed.",
+                    " - Your browser is blocking the authentication cookies, or",
+                    " - The user who is trying to log in exists in your SSO provider but not in your analytics server.",
                 ].join("\n"),
             );
             return;
@@ -91,9 +91,9 @@ export default async (scriptSrc: string) => {
                 // Resolved without a value === timeout
                 // eslint-disable-next-line no-console
                 console.warn(
-                    `Automatic authentication with ${
-                        hostname ?? "analytics server"
-                    } is not enabled. You can enable it by adding "?auth=sso" to your script URL or provide authentication context programmatically with "setContext" method.`,
+                    `The automatic authentication with ${
+                        hostname ?? "the analytics server"
+                    } is not enabled. You can enable it by adding "?auth=sso" to your script URL or provide the authentication context programmatically with the "setContext" method.`,
                 );
             }
         });
