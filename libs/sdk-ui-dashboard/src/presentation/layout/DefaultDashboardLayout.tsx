@@ -29,8 +29,8 @@ import {
     IDashboardLayoutItemKeyGetter,
     IDashboardLayoutWidgetRenderer,
 } from "./DefaultDashboardLayoutRenderer";
-import { RenderModeAwareDashboardLayoutSectionRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionRenderer";
-import { RenderModeAwareDashboardLayoutSectionHeaderRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionHeaderRenderer";
+import { renderModeAwareDashboardLayoutSectionRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionRenderer";
+import { renderModeAwareDashboardLayoutSectionHeaderRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionHeaderRenderer";
 import { getMemoizedWidgetSanitizer } from "./DefaultDashboardLayoutUtils";
 import { SectionHotspot } from "../dragAndDrop";
 import { isInitialPlaceholderWidget } from "../../widgets";
@@ -150,8 +150,8 @@ export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Elemen
                 itemKeyGetter={itemKeyGetter}
                 widgetRenderer={widgetRenderer}
                 enableCustomHeight={enableWidgetCustomHeight}
-                sectionRenderer={RenderModeAwareDashboardLayoutSectionRenderer}
-                sectionHeaderRenderer={RenderModeAwareDashboardLayoutSectionHeaderRenderer}
+                sectionRenderer={renderModeAwareDashboardLayoutSectionRenderer}
+                sectionHeaderRenderer={renderModeAwareDashboardLayoutSectionHeaderRenderer}
                 renderMode={renderMode}
             />
             {!!shouldRenderSectionHotspot && (

@@ -1,4 +1,6 @@
 // (C) 2007-2022 GoodData Corporation
+
+import React from "react";
 import { ScreenSize } from "@gooddata/sdk-model";
 import {
     IDashboardLayoutItemRenderer,
@@ -19,8 +21,12 @@ export interface IDashboardLayoutItemProps<TWidget> {
     widgetRenderer: IDashboardLayoutWidgetRenderer<TWidget>;
 }
 
+const defaultItemRenderer: IDashboardLayoutItemRenderer<unknown> = (props) => (
+    <DashboardLayoutItemRenderer {...props} />
+);
+
 export function DashboardLayoutItem<TWidget>(props: IDashboardLayoutItemProps<TWidget>): JSX.Element {
-    const { item, itemRenderer = DashboardLayoutItemRenderer, widgetRenderer, screen } = props;
+    const { item, itemRenderer = defaultItemRenderer, widgetRenderer, screen } = props;
     const renderProps = {
         item,
         screen,

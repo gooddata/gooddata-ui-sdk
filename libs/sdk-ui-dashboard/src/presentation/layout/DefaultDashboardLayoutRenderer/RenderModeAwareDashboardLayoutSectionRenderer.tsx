@@ -6,9 +6,11 @@ import { EditableDashboardLayoutSectionRenderer } from "./EditableDashboardLayou
 import { IDashboardLayoutSectionRenderer } from "./interfaces";
 
 /**
+ * render function for DashboardLayoutSection respecting render mode
+ *
  * @internal
  */
-export const RenderModeAwareDashboardLayoutSectionRenderer = renderModeAware({
+export const renderModeAwareDashboardLayoutSectionRenderer = renderModeAware({
     view: DashboardLayoutSectionRenderer,
     edit: EditableDashboardLayoutSectionRenderer,
 }) as IDashboardLayoutSectionRenderer<unknown>;
