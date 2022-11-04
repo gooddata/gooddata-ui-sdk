@@ -8,7 +8,7 @@ import { renderModeChanged } from "../../events/renderMode";
 import { renderModeActions } from "../../store/renderMode";
 import { selectDashboardEditModeDevRollout } from "../../store/config/configSelectors";
 import { resetDashboardHandler } from "../dashboard/resetDashboardHandler";
-import { validateDrills } from "./validateDrills";
+import { validateDrills } from "../common/validateDrills";
 
 export function* changeRenderModeHandler(
     ctx: DashboardContext,

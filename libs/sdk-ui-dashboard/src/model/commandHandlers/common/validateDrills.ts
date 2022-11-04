@@ -11,7 +11,7 @@ import {
 import { SagaIterator } from "redux-saga";
 import { all, call, put, SagaReturnType, select } from "redux-saga/effects";
 import { v4 as uuid } from "uuid";
-import { ChangeRenderMode } from "../../commands";
+import { IDashboardCommand } from "../../commands";
 import { insightWidgetDrillsRemoved } from "../../events/insight";
 import { kpiWidgetDrillRemoved } from "../../events/kpi";
 import { selectAllAnalyticalWidgets, uiActions } from "../../store";
@@ -29,7 +29,7 @@ interface IInvalidDrillInfo {
     widget: IWidget;
 }
 
-export function* validateDrills(ctx: DashboardContext, cmd: ChangeRenderMode) {
+export function* validateDrills(ctx: DashboardContext, cmd: IDashboardCommand) {
     const widgets: ReturnType<typeof selectAllAnalyticalWidgets> = yield select(selectAllAnalyticalWidgets);
     const widgetsWithDrills = widgets.filter((widget) => widget.drills.length > 0);
     if (!widgetsWithDrills.length) {
@@ -108,7 +108,7 @@ function* removeKpiWidgetDrill(ctx: DashboardContext, widget: IKpiWidget) {
 
 function* validateWidgetDrills(
     ctx: DashboardContext,
-    cmd: ChangeRenderMode,
+    cmd: IDashboardCommand,
     widget: IWidget,
 ): SagaIterator<IInvalidDrillInfo> {
     if (isInsightWidget(widget)) {
@@ -132,7 +132,7 @@ function* validateWidgetDrills(
 
 function* validateInsightDrillDefinitions(
     ctx: DashboardContext,
-    cmd: ChangeRenderMode,
+    cmd: IDashboardCommand,
     widget: IInsightWidget,
 ): SagaIterator<IInvalidDrillInfo> {
     const validationData: SagaReturnType<typeof getValidationData> = yield call(
@@ -157,7 +157,7 @@ function* validateInsightDrillDefinitions(
 
 function* validateKpiDrillDefinitions(
     ctx: DashboardContext,
-    cmd: ChangeRenderMode,
+    cmd: IDashboardCommand,
     widget: IKpiWidget,
 ): SagaIterator<IInvalidDrillInfo> {
     try {
