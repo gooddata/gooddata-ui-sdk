@@ -51,8 +51,8 @@ export function* validateDrills(ctx: DashboardContext, cmd: IDashboardCommand) {
     yield all(
         invalidDrills.map((drillInfo) =>
             isInsightWidget(drillInfo.widget)
-                ? call(removeInsightWidgetDrills, ctx, drillInfo.widget, drillInfo.invalidDrills)
-                : call(removeKpiWidgetDrill, ctx, drillInfo.widget),
+                ? call(removeInsightWidgetDrills, ctx, cmd, drillInfo.widget, drillInfo.invalidDrills)
+                : call(removeKpiWidgetDrill, ctx, cmd, drillInfo.widget),
         ),
     );
 
@@ -71,6 +71,7 @@ export function* validateDrills(ctx: DashboardContext, cmd: IDashboardCommand) {
 
 function* removeInsightWidgetDrills(
     ctx: DashboardContext,
+    cmd: IDashboardCommand,
     widget: IInsightWidget,
     invalidDrills: DrillDefinition[],
 ) {
@@ -85,10 +86,10 @@ function* removeInsightWidgetDrills(
         }),
     );
 
-    yield put(insightWidgetDrillsRemoved(ctx, widgetRef(widget), invalidDrills));
+    yield put(insightWidgetDrillsRemoved(ctx, widgetRef(widget), invalidDrills, cmd.correlationId));
 }
 
-function* removeKpiWidgetDrill(ctx: DashboardContext, widget: IKpiWidget) {
+function* removeKpiWidgetDrill(ctx: DashboardContext, cmd: IDashboardCommand, widget: IKpiWidget) {
     yield put(
         layoutActions.replaceKpiWidgetDrillWithoutUndo({
             ref: widgetRef(widget),
@@ -96,7 +97,7 @@ function* removeKpiWidgetDrill(ctx: DashboardContext, widget: IKpiWidget) {
         }),
     );
 
-    yield put(kpiWidgetDrillRemoved(ctx, widgetRef(widget)));
+    yield put(kpiWidgetDrillRemoved(ctx, widgetRef(widget), cmd.correlationId));
 }
 
 function* validateWidgetDrills(
