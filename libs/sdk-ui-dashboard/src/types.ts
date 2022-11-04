@@ -256,3 +256,38 @@ export interface ILayoutCoordinates {
      */
     itemIndex: number;
 }
+
+/**
+ * Toast message type.
+ * @internal
+ */
+export type ToastMessageType = "success" | "progress" | "error" | "warning";
+
+/**
+ * Toast message definition.
+ * @internal
+ */
+export interface IToastMessageDefinition {
+    type: ToastMessageType;
+
+    titleId?: string;
+    titleValues?: any;
+
+    detailId?: string;
+    detailValues?: any;
+    showMoreId?: string;
+    showLessId?: string;
+
+    contrast?: boolean;
+    intensive?: boolean;
+
+    duration?: number;
+}
+
+/**
+ * Toast message definition.
+ * @internal
+ */
+export interface IToastMessage extends IToastMessageDefinition {
+    id: string;
+}

@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 import { ObjRef } from "@gooddata/sdk-model";
 
-import { ILayoutCoordinates, IMenuButtonItemsVisibility } from "../../../types";
+import { ILayoutCoordinates, IMenuButtonItemsVisibility, IToastMessage } from "../../../types";
 
 /**
  * @alpha
@@ -51,6 +51,7 @@ export interface UiState {
     selectedFilterIndex: number | undefined;
     isDraggingWidget: boolean;
     activeSectionIndex: number | undefined;
+    toastMessages: IToastMessage[];
 }
 
 export const uiInitialState: UiState = {
@@ -95,4 +96,5 @@ export const uiInitialState: UiState = {
     selectedFilterIndex: undefined,
     isDraggingWidget: false,
     activeSectionIndex: undefined,
+    toastMessages: [],
 };

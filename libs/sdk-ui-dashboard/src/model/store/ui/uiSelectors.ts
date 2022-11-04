@@ -216,3 +216,8 @@ export const selectIsDraggingWidget = createSelector(selectSelf, (state) => stat
  * @internal
  */
 export const selectActiveSectionIndex = createSelector(selectSelf, (state) => state.activeSectionIndex);
+
+/**
+ * @internal
+ */
+export const selectToastMessages = createSelector(selectSelf, (state) => state.toastMessages);
