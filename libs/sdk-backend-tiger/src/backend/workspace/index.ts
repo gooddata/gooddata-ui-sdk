@@ -69,7 +69,7 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
     }
 
     public attributes(): IWorkspaceAttributesService {
-        return new TigerWorkspaceAttributes(this.authCall, this.workspace);
+        return new TigerWorkspaceAttributes(this.authCall, this.workspace, this.dateFormatter);
     }
 
     public execution(): IExecutionFactory {

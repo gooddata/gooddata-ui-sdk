@@ -25,4 +25,13 @@ export interface IAttributeElement {
      * but for now, if you expect NULLs in your data, treat this as string | null already.
      */
     readonly uri: string;
+
+    /**
+     * Formatted title of attribute element for the given display form
+     *
+     * @remarks
+     * The property represents the formatted form of title property for the given display form.
+     * The formatted title should have precedence over original title to show a more readable form of dates.
+     */
+    readonly formattedTitle?: string;
 }

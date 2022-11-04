@@ -3,6 +3,7 @@ import {
     ElementsRequest,
     FilterByLabelTypeEnum,
     ElementsRequestSortOrderEnum,
+    ElementsResponseGranularityEnum,
 } from "@gooddata/api-client-tiger";
 import { InMemoryPaging, ServerPaging } from "@gooddata/sdk-backend-base";
 import {
@@ -30,12 +31,20 @@ import {
 import invariant from "ts-invariant";
 import { TigerAuthenticatedCallGuard } from "../../../../types";
 import { getRelativeDateFilterShiftedValues } from "./date";
+import { toSdkGranularity } from "../../../../convertors/fromBackend/dateGranularityConversions";
+import { createDateValueFormatter } from "../../../../convertors/fromBackend/dateFormatting/dateValueFormatter";
+import { DateFormatter } from "../../../../convertors/fromBackend/dateFormatting/types";
+import { FormattingLocale } from "../../../../convertors/fromBackend/dateFormatting/defaultDateFormatter";
 
 export class TigerWorkspaceElements implements IElementsQueryFactory {
-    constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
+    constructor(
+        private readonly authCall: TigerAuthenticatedCallGuard,
+        public readonly workspace: string,
+        private readonly dateFormatter: DateFormatter,
+    ) {}
 
     public forDisplayForm(ref: ObjRef): IElementsQuery {
-        return new TigerWorkspaceElementsQuery(this.authCall, ref, this.workspace);
+        return new TigerWorkspaceElementsQuery(this.authCall, ref, this.workspace, this.dateFormatter);
     }
 
     public forFilter(filter: FilterWithResolvableElements): IFilterElementsQuery {
@@ -52,6 +61,7 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
         private readonly authCall: TigerAuthenticatedCallGuard,
         private readonly ref: ObjRef,
         private readonly workspace: string,
+        private readonly dateFormatter: DateFormatter,
     ) {}
 
     public withLimit(limit: number): IElementsQuery {
@@ -167,15 +177,33 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
                     return client.labelElements.computeLabelElementsPost(elementsRequestWrapped);
                 });
 
-                const { paging, elements } = response.data;
+                const { paging, elements, format, granularity } = response.data;
+
+                const elementsGranularity = granularity as ElementsResponseGranularityEnum;
+                const sdkGranularity = toSdkGranularity(elementsGranularity);
+                const locale = format?.locale as FormattingLocale;
+                const pattern = format?.pattern as string;
+                const shouldFormatTitle = sdkGranularity && format;
+                const dateValueFormatter = createDateValueFormatter(this.dateFormatter);
 
                 return {
-                    items: elements.map(
-                        (element): IAttributeElement => ({
+                    items: elements.map((element): IAttributeElement => {
+                        const objWithFormattedTitle = shouldFormatTitle
+                            ? {
+                                  formattedTitle: dateValueFormatter(
+                                      element.title,
+                                      sdkGranularity,
+                                      locale,
+                                      pattern,
+                                  ),
+                              }
+                            : {};
+                        return {
                             title: element.title,
                             uri: element.primaryTitle ?? element.title,
-                        }),
-                    ),
+                            ...objWithFormattedTitle,
+                        };
+                    }),
                     totalCount: paging.total,
                 };
             },
