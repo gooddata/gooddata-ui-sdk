@@ -15,7 +15,6 @@ import flatMap from "lodash/flatMap";
 import { IDashboardCommand } from "../../commands";
 import { insightWidgetDrillsRemoved } from "../../events/insight";
 import { kpiWidgetDrillRemoved } from "../../events/kpi";
-import { selectAllAnalyticalWidgets, uiActions } from "../../store";
 import { layoutActions } from "../../store/layout";
 import { DashboardContext } from "../../types/commonTypes";
 import { existsDrillDefinitionInArray } from "../widgets/validation/insightDrillDefinitionUtils";
@@ -24,6 +23,8 @@ import {
     validateDrillDefinition,
 } from "../widgets/validation/insightDrillDefinitionValidation";
 import { validateKpiDrill } from "../widgets/validation/kpiDrillValidation";
+import { selectAllAnalyticalWidgets } from "../../store/layout/layoutSelectors";
+import { uiActions } from "../../store/ui";
 
 interface IInvalidDrillInfo {
     invalidDrills: DrillDefinition[];

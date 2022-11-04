@@ -5,7 +5,11 @@ import { InitializeDashboard } from "../../../commands/dashboard";
 import { DashboardInitialized, dashboardInitialized } from "../../../events/dashboard";
 import { insightsActions } from "../../../store/insights";
 import { loadingActions } from "../../../store/loading";
-import { DashboardContext, PrivateDashboardContext } from "../../../types/commonTypes";
+import {
+    DashboardContext,
+    PrivateDashboardContext,
+    ResolvedDashboardConfig,
+} from "../../../types/commonTypes";
 import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import { resolveDashboardConfig } from "./resolveDashboardConfig";
 import { configActions } from "../../../store/config";
@@ -70,6 +74,7 @@ function loadDashboardFromBackend(
 type DashboardLoadResult = {
     batch: BatchAction;
     event: DashboardInitialized;
+    config: ResolvedDashboardConfig;
 };
 
 function* loadExistingDashboard(
@@ -169,6 +174,7 @@ function* loadExistingDashboard(
     return {
         batch,
         event,
+        config,
     };
 }
 
@@ -228,6 +234,7 @@ function* initializeNewDashboard(
     return {
         batch,
         event,
+        config,
     };
 }
 
@@ -251,7 +258,9 @@ export function* initializeDashboardHandler(
 
         yield put(loadingActions.setLoadingSuccess());
 
-        yield fork(validateDrills, ctx, cmd);
+        if (result.config.initialRenderMode === "edit" && dashboardRef) {
+            yield fork(validateDrills, ctx, cmd);
+        }
 
         return result.event;
     } catch (e) {
