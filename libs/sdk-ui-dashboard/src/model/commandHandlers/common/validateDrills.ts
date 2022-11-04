@@ -11,6 +11,7 @@ import {
 import { SagaIterator } from "redux-saga";
 import { all, call, put, SagaReturnType, select } from "redux-saga/effects";
 import { v4 as uuid } from "uuid";
+import flatMap from "lodash/flatMap";
 import { IDashboardCommand } from "../../commands";
 import { insightWidgetDrillsRemoved } from "../../events/insight";
 import { kpiWidgetDrillRemoved } from "../../events/kpi";
@@ -36,20 +37,11 @@ export function* validateDrills(ctx: DashboardContext, cmd: IDashboardCommand) {
         return;
     }
 
-    const invalidDrills: IInvalidDrillInfo[] = [];
+    const possibleInvalidDrills: SagaReturnType<typeof validateWidgetDrills>[] = yield all(
+        widgetsWithDrills.map((widget) => call(validateWidgetDrills, ctx, cmd, widget)),
+    );
 
-    for (const widget of widgetsWithDrills) {
-        const validationResult: SagaReturnType<typeof validateWidgetDrills> = yield call(
-            validateWidgetDrills,
-            ctx,
-            cmd,
-            widget,
-        );
-
-        if (validationResult.invalidDrills.length) {
-            invalidDrills.push(validationResult);
-        }
-    }
+    const invalidDrills = possibleInvalidDrills.filter(({ invalidDrills }) => invalidDrills.length > 0);
 
     if (invalidDrills.length === 0) {
         return;
@@ -142,15 +134,14 @@ function* validateInsightDrillDefinitions(
         ctx,
     );
 
-    const invalidDrills: DrillDefinition[] = [];
-
-    for (const drillItem of widget.drills) {
+    const invalidDrills = flatMap(widget.drills, (drillItem) => {
         try {
             validateDrillDefinition(drillItem, validationData, ctx, cmd);
+            return [];
         } catch {
-            invalidDrills.push(drillItem);
+            return [drillItem];
         }
-    }
+    });
 
     return { invalidDrills, widget };
 }
