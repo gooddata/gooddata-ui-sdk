@@ -13,6 +13,7 @@ import {
     IAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,
     IDataSetMetadataObject,
+    IdentifierRef,
 } from "@gooddata/sdk-model";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { TigerWorkspaceElements } from "./elements";
@@ -95,11 +96,14 @@ async function loadAttributeDisplayForm(
     // to be able to get the defaultView value, we need to load the attribute itself and then find the appropriate label inside of it
     // otherwise, we would have to load the label first and then load its attribute to see the defaultView relation thus needing
     // an extra network request
+    // tiger RSQL does not support prefixed ids, so we strip the prefix to load matches with or without prefix
+    // and then find the prefixed value in the results
+    const idWithoutPrefix = last(ref.identifier.split(":"));
     const attributeRes = await client.entities.getAllEntitiesAttributes(
         {
             workspaceId,
             include: ["labels", "defaultView"],
-            filter: `labels.id==${ref.identifier}`, // use RSQL to load the appropriate attribute
+            filter: `labels.id==${idWithoutPrefix}`, // use RSQL to load the appropriate attribute
         },
         {
             headers: jsonApiHeaders,
@@ -114,13 +118,24 @@ async function loadAttributeDisplayForm(
         );
     }
 
-    const [attribute] = convertAttributesWithSideloadedLabels(attributeRes.data);
-
-    const matchingLabel = attribute.displayForms.find((df) => areObjRefsEqual(df.ref, ref));
-
+    const attributes = convertAttributesWithSideloadedLabels(attributeRes.data);
+    const matchingLabel = findLabelInAttributes(attributes, ref);
     invariant(matchingLabel, "inconsistent server response, RSQL matched but ref matching did not");
-
     return matchingLabel;
+}
+
+function findLabelInAttributes(
+    attributes: IAttributeMetadataObject[],
+    ref: IdentifierRef,
+): IAttributeDisplayFormMetadataObject | undefined {
+    for (const attr of attributes) {
+        for (const df of attr.displayForms) {
+            if (areObjRefsEqual(df.ref, ref)) {
+                return df;
+            }
+        }
+    }
+    return undefined;
 }
 
 function loadAttribute(
