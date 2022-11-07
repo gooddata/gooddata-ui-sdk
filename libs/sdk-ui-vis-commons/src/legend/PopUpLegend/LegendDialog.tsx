@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { Overlay, useMediaQuery } from "@gooddata/sdk-ui-kit";
 import { legendDialogAlignPoints, legendMobileDialogAlignPoints } from "./alignPoints";
@@ -57,6 +57,8 @@ export const LegendDialog: React.FC<ILegendDialogProps> = (props) => {
                         alignTo={alignTo}
                         alignPoints={isMobile ? legendMobileDialogAlignPoints : legendDialogAlignPoints}
                         closeOnOutsideClick={!isMobile}
+                        closeOnParentScroll={!isMobile}
+                        closeOnMouseDrag
                         onClose={onCloseDialog}
                         className="kpi-alert-dialog-overlay"
                     >

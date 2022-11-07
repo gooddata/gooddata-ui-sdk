@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import { getOptimalAlignment, getOptimalAlignmentForRegion } from "../overlay";
 
 function generateOverlay() {
@@ -113,6 +113,7 @@ describe("Overlay utils", () => {
                 targetRegion,
                 selfRegion,
                 alignPoints,
+                overlayRootElement: document.body,
             });
 
             expect(optimalAlignment).toMatchSnapshot();
@@ -133,6 +134,7 @@ describe("Overlay utils", () => {
                 targetRegion,
                 selfRegion: smallerSelfRegion,
                 alignPoints,
+                overlayRootElement: document.body,
             });
 
             expect(optimalAlignPoint).toEqual({
@@ -161,6 +163,7 @@ describe("Overlay utils", () => {
                 targetRegion,
                 selfRegion: biggerSelfRegion,
                 alignPoints,
+                overlayRootElement: document.body,
             });
 
             expect(optimalAlignPoint).toEqual({
@@ -200,6 +203,7 @@ describe("Overlay utils", () => {
                 targetRegion,
                 selfRegion,
                 alignPoints: alignPointsWithOffset,
+                overlayRootElement: document.body,
             });
 
             expect(optimalAlignPoint).toEqual({
@@ -227,6 +231,7 @@ describe("Overlay utils", () => {
                 targetRegion,
                 selfRegion: biggerSelfRegion,
                 alignPoints: alignPointsWithOffset,
+                overlayRootElement: document.body,
             });
 
             expect(optimalAlignPoint).toEqual({
@@ -252,6 +257,7 @@ describe("Overlay utils", () => {
                 targetRegion,
                 selfRegion,
                 alignPoints,
+                overlayRootElement: document.body,
             });
 
             expect(optimalAlignment).toMatchSnapshot();
@@ -267,6 +273,7 @@ describe("Overlay utils", () => {
                 targetRegion,
                 selfRegion,
                 alignPoints,
+                overlayRootElement: document.body,
             });
 
             expect(optimalAlignment).toMatchSnapshot();
@@ -282,6 +289,7 @@ describe("Overlay utils", () => {
                 targetRegion,
                 selfRegion,
                 alignPoints,
+                overlayRootElement: document.body,
             });
 
             expect(optimalAlignment).toMatchSnapshot();
@@ -297,6 +305,7 @@ describe("Overlay utils", () => {
                 targetRegion,
                 selfRegion,
                 alignPoints,
+                overlayRootElement: document.body,
             });
 
             expect(optimalAlignment).toMatchSnapshot();

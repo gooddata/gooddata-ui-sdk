@@ -18,6 +18,7 @@ export const WidgetScrollablePanel: React.FC<IWidgetScrollablePanelProps> = ({ c
 
     const onScroll = debounce(() => {
         if (node?.current) {
+            //TODO: RAIL-4614
             // fireGoodstrapScrollEvent(node.current, window); // TODO: what should this do?
         }
     }, 20);
