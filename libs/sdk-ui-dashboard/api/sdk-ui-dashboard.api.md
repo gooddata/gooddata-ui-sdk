@@ -6258,6 +6258,42 @@ export const useDashboardCommandProcessing: <TCommand extends DashboardCommands,
         type: TSuccessEventType;
     }> | Extract<DashboardSharingChanged, {
         type: TSuccessEventType;
+    }> | Extract<DashboardInsightWidgetHeaderChanged, {
+        type: TSuccessEventType;
+    }> | Extract<DashboardInsightWidgetFilterSettingsChanged, {
+        type: TSuccessEventType;
+    }> | Extract<DashboardInsightWidgetVisPropertiesChanged, {
+        type: TSuccessEventType;
+    }> | Extract<DashboardInsightWidgetVisConfigurationChanged, {
+        type: TSuccessEventType;
+    }> | Extract<DashboardInsightWidgetInsightSwitched, {
+        type: TSuccessEventType;
+    }> | Extract<DashboardInsightWidgetDrillsModified, {
+        type: TSuccessEventType;
+    }> | Extract<DashboardInsightWidgetDrillsRemoved, {
+        type: TSuccessEventType;
+    }> | Extract<DashboardInsightWidgetChanged, {
+        type: TSuccessEventType;
+    }> | Extract<DashboardInsightWidgetExportRequested, {
+        type: TSuccessEventType;
+    }> | Extract<DashboardInsightWidgetExportResolved, {
+        type: TSuccessEventType;
+    }> | Extract<DashboardInsightWidgetRefreshed, {
+        type: TSuccessEventType;
+    }> | Extract<DashboardKpiWidgetHeaderChanged, {
+        type: TSuccessEventType;
+    }> | Extract<DashboardKpiWidgetMeasureChanged, {
+        type: TSuccessEventType;
+    }> | Extract<DashboardKpiWidgetFilterSettingsChanged, {
+        type: TSuccessEventType;
+    }> | Extract<DashboardKpiWidgetComparisonChanged, {
+        type: TSuccessEventType;
+    }> | Extract<DashboardKpiWidgetDrillRemoved, {
+        type: TSuccessEventType;
+    }> | Extract<DashboardKpiWidgetDrillSet, {
+        type: TSuccessEventType;
+    }> | Extract<DashboardKpiWidgetChanged, {
+        type: TSuccessEventType;
     }> | Extract<DashboardDateFilterSelectionChanged, {
         type: TSuccessEventType;
     }> | Extract<DashboardAttributeFilterAdded, {
@@ -6289,42 +6325,6 @@ export const useDashboardCommandProcessing: <TCommand extends DashboardCommands,
     }> | Extract<DashboardLayoutSectionItemRemoved, {
         type: TSuccessEventType;
     }> | Extract<DashboardLayoutChanged, {
-        type: TSuccessEventType;
-    }> | Extract<DashboardKpiWidgetHeaderChanged, {
-        type: TSuccessEventType;
-    }> | Extract<DashboardKpiWidgetMeasureChanged, {
-        type: TSuccessEventType;
-    }> | Extract<DashboardKpiWidgetFilterSettingsChanged, {
-        type: TSuccessEventType;
-    }> | Extract<DashboardKpiWidgetComparisonChanged, {
-        type: TSuccessEventType;
-    }> | Extract<DashboardKpiWidgetDrillRemoved, {
-        type: TSuccessEventType;
-    }> | Extract<DashboardKpiWidgetDrillSet, {
-        type: TSuccessEventType;
-    }> | Extract<DashboardKpiWidgetChanged, {
-        type: TSuccessEventType;
-    }> | Extract<DashboardInsightWidgetHeaderChanged, {
-        type: TSuccessEventType;
-    }> | Extract<DashboardInsightWidgetFilterSettingsChanged, {
-        type: TSuccessEventType;
-    }> | Extract<DashboardInsightWidgetVisPropertiesChanged, {
-        type: TSuccessEventType;
-    }> | Extract<DashboardInsightWidgetVisConfigurationChanged, {
-        type: TSuccessEventType;
-    }> | Extract<DashboardInsightWidgetInsightSwitched, {
-        type: TSuccessEventType;
-    }> | Extract<DashboardInsightWidgetDrillsModified, {
-        type: TSuccessEventType;
-    }> | Extract<DashboardInsightWidgetDrillsRemoved, {
-        type: TSuccessEventType;
-    }> | Extract<DashboardInsightWidgetChanged, {
-        type: TSuccessEventType;
-    }> | Extract<DashboardInsightWidgetExportRequested, {
-        type: TSuccessEventType;
-    }> | Extract<DashboardInsightWidgetExportResolved, {
-        type: TSuccessEventType;
-    }> | Extract<DashboardInsightWidgetRefreshed, {
         type: TSuccessEventType;
     }> | Extract<DashboardWidgetExecutionStarted, {
         type: TSuccessEventType;
@@ -6419,6 +6419,42 @@ export const useDashboardCommandProcessing: <TCommand extends DashboardCommands,
         type: TErrorEventType;
     }> | Extract<DashboardSharingChanged, {
         type: TErrorEventType;
+    }> | Extract<DashboardInsightWidgetHeaderChanged, {
+        type: TErrorEventType;
+    }> | Extract<DashboardInsightWidgetFilterSettingsChanged, {
+        type: TErrorEventType;
+    }> | Extract<DashboardInsightWidgetVisPropertiesChanged, {
+        type: TErrorEventType;
+    }> | Extract<DashboardInsightWidgetVisConfigurationChanged, {
+        type: TErrorEventType;
+    }> | Extract<DashboardInsightWidgetInsightSwitched, {
+        type: TErrorEventType;
+    }> | Extract<DashboardInsightWidgetDrillsModified, {
+        type: TErrorEventType;
+    }> | Extract<DashboardInsightWidgetDrillsRemoved, {
+        type: TErrorEventType;
+    }> | Extract<DashboardInsightWidgetChanged, {
+        type: TErrorEventType;
+    }> | Extract<DashboardInsightWidgetExportRequested, {
+        type: TErrorEventType;
+    }> | Extract<DashboardInsightWidgetExportResolved, {
+        type: TErrorEventType;
+    }> | Extract<DashboardInsightWidgetRefreshed, {
+        type: TErrorEventType;
+    }> | Extract<DashboardKpiWidgetHeaderChanged, {
+        type: TErrorEventType;
+    }> | Extract<DashboardKpiWidgetMeasureChanged, {
+        type: TErrorEventType;
+    }> | Extract<DashboardKpiWidgetFilterSettingsChanged, {
+        type: TErrorEventType;
+    }> | Extract<DashboardKpiWidgetComparisonChanged, {
+        type: TErrorEventType;
+    }> | Extract<DashboardKpiWidgetDrillRemoved, {
+        type: TErrorEventType;
+    }> | Extract<DashboardKpiWidgetDrillSet, {
+        type: TErrorEventType;
+    }> | Extract<DashboardKpiWidgetChanged, {
+        type: TErrorEventType;
     }> | Extract<DashboardDateFilterSelectionChanged, {
         type: TErrorEventType;
     }> | Extract<DashboardAttributeFilterAdded, {
@@ -6450,42 +6486,6 @@ export const useDashboardCommandProcessing: <TCommand extends DashboardCommands,
     }> | Extract<DashboardLayoutSectionItemRemoved, {
         type: TErrorEventType;
     }> | Extract<DashboardLayoutChanged, {
-        type: TErrorEventType;
-    }> | Extract<DashboardKpiWidgetHeaderChanged, {
-        type: TErrorEventType;
-    }> | Extract<DashboardKpiWidgetMeasureChanged, {
-        type: TErrorEventType;
-    }> | Extract<DashboardKpiWidgetFilterSettingsChanged, {
-        type: TErrorEventType;
-    }> | Extract<DashboardKpiWidgetComparisonChanged, {
-        type: TErrorEventType;
-    }> | Extract<DashboardKpiWidgetDrillRemoved, {
-        type: TErrorEventType;
-    }> | Extract<DashboardKpiWidgetDrillSet, {
-        type: TErrorEventType;
-    }> | Extract<DashboardKpiWidgetChanged, {
-        type: TErrorEventType;
-    }> | Extract<DashboardInsightWidgetHeaderChanged, {
-        type: TErrorEventType;
-    }> | Extract<DashboardInsightWidgetFilterSettingsChanged, {
-        type: TErrorEventType;
-    }> | Extract<DashboardInsightWidgetVisPropertiesChanged, {
-        type: TErrorEventType;
-    }> | Extract<DashboardInsightWidgetVisConfigurationChanged, {
-        type: TErrorEventType;
-    }> | Extract<DashboardInsightWidgetInsightSwitched, {
-        type: TErrorEventType;
-    }> | Extract<DashboardInsightWidgetDrillsModified, {
-        type: TErrorEventType;
-    }> | Extract<DashboardInsightWidgetDrillsRemoved, {
-        type: TErrorEventType;
-    }> | Extract<DashboardInsightWidgetChanged, {
-        type: TErrorEventType;
-    }> | Extract<DashboardInsightWidgetExportRequested, {
-        type: TErrorEventType;
-    }> | Extract<DashboardInsightWidgetExportResolved, {
-        type: TErrorEventType;
-    }> | Extract<DashboardInsightWidgetRefreshed, {
         type: TErrorEventType;
     }> | Extract<DashboardWidgetExecutionStarted, {
         type: TErrorEventType;

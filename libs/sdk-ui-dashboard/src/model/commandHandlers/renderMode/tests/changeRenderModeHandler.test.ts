@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
-import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures";
+import { SimpleDashboardNoDrillsIdentifier } from "../../../tests/fixtures/SimpleDashboardNoDrills.fixtures";
 import { selectRenderMode } from "../../../store";
 import {
     changeRenderMode,
@@ -20,10 +20,9 @@ describe("changeRenderModeHandler", () => {
                 async (tester) => {
                     Tester = tester;
                 },
-                SimpleDashboardIdentifier,
+                SimpleDashboardNoDrillsIdentifier,
                 {
                     initCommand: initializeDashboard({
-                        allowUnfinishedFeatures: true,
                         settings: { dashboardEditModeDevRollout: true },
                     }),
                 },
@@ -96,7 +95,7 @@ describe("changeRenderModeHandler", () => {
                 async (tester) => {
                     Tester = tester;
                 },
-                SimpleDashboardIdentifier,
+                SimpleDashboardNoDrillsIdentifier,
                 {
                     initCommand: initializeDashboard({
                         initialRenderMode: "edit",
