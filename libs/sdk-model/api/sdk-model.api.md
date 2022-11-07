@@ -2102,6 +2102,7 @@ export interface ISettings {
     enableCustomColorPicker?: boolean;
     enableDataSampling?: boolean;
     enableDataSourceManagement?: boolean;
+    enableDateFormats?: boolean;
     enableDescriptions?: boolean;
     enableDrilledInsightExport?: boolean;
     enableEmbedButtonInAD?: boolean;
@@ -2129,6 +2130,7 @@ export interface ISettings {
     enableTableColumnsManualResizing?: boolean;
     enableTheming?: boolean;
     enableWeekFilters?: boolean;
+    formatLocale?: string;
     hideKpiDrillInEmbedded?: boolean;
     platformEdition?: PlatformEdition;
     responsiveUiDateFormat?: string;

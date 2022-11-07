@@ -250,6 +250,9 @@ export interface EmptyListItem {
 // @public
 export function filterVisibleDateFilterOptions(dateFilterOptions: IDateFilterOptionsByType): IDateFilterOptionsByType;
 
+// @internal
+export const getLocalizedIcuDateFormatPattern: (locale: string) => any;
+
 // @beta (undocumented)
 export type GranularityIntlKey = "day" | "minute" | "hour" | "week" | "month" | "quarter" | "year";
 

@@ -2213,6 +2213,8 @@ export namespace GdcUser {
         // (undocumented)
         firstName: string;
         // (undocumented)
+        formatLocale?: string;
+        // (undocumented)
         ipWhitelist?: string[] | null;
         // (undocumented)
         language?: string;
