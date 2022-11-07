@@ -22,7 +22,7 @@ import {
     SimpleDashboarddrillToAttributeUrlWidgetDrillTargets,
     SimpleDashboardIdentifier,
     SimpleDashboardSimpleSortedTableWidgetDrillTargets,
-    SimpleSortedTableWidgetInsightIdentifer,
+    SimpleSortedTableWidgetInsightIdentifier,
     SimpleSortedTableWidgetRef,
 } from "../../../tests/fixtures/SimpleDashboard.fixtures";
 import { ComplexDashboardWithReferences } from "../../../tests/fixtures/ComplexDashboard.fixtures";
@@ -133,7 +133,7 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
 
         it("should correctly update ref for drillToInsight target specified by Identifier", async () => {
             const drillToInsightIdentifierTarget = cloneDeep(DrillToToInsightFromWonMeasureDefinition);
-            drillToInsightIdentifierTarget.target = idRef(SimpleSortedTableWidgetInsightIdentifer);
+            drillToInsightIdentifierTarget.target = idRef(SimpleSortedTableWidgetInsightIdentifier);
             const drills = [drillToInsightIdentifierTarget];
 
             const event: DashboardInsightWidgetDrillsModified = await Tester.dispatchAndWaitFor(
