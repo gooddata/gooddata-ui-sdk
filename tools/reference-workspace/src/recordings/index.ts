@@ -2,7 +2,7 @@
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable header/header */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2022-07-26T12:13:00.555Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2022-11-07T09:55:13.479Z; */
 const fp_00ab8c432637030b305313405b3f4efc = {
     definition: require("./uiTestScenarios/executions/00ab8c432637030b305313405b3f4efc/definition.json"),
     executionResult: require("./uiTestScenarios/executions/00ab8c432637030b305313405b3f4efc/executionResult.json"),
@@ -4764,6 +4764,10 @@ const dash_aaI2dN741uaa = {
     obj: require("./metadata/dashboards/aaI2dN741uaa/obj.json"),
     alerts: require("./metadata/dashboards/aaI2dN741uaa/alerts.json"),
 };
+const dash_abpEJ9hwq9U8 = {
+    obj: require("./metadata/dashboards/abpEJ9hwq9U8/obj.json"),
+    alerts: require("./metadata/dashboards/abpEJ9hwq9U8/alerts.json"),
+};
 export const Recordings = {
     executions: {
         fp_00ab8c432637030b305313405b3f4efc,
@@ -5984,6 +5988,7 @@ export const Recordings = {
             dash_abK3yl1TcTWV,
             dash_emptyDashboard,
             dash_aaI2dN741uaa,
+            dash_abpEJ9hwq9U8,
         },
     },
 };
