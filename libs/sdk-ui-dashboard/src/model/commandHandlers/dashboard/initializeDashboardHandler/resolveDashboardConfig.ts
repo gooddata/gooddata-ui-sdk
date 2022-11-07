@@ -196,5 +196,6 @@ function applyConfigDefaults<T extends DashboardConfig>(config: T) {
         allowUnfinishedFeatures: config.allowUnfinishedFeatures ?? false,
         initialRenderMode: config.initialRenderMode ?? "view",
         hideSaveAsNewButton: config.hideSaveAsNewButton ?? false,
+        disableCloseOverlaysOnWindowScroll: config.disableCloseOverlaysOnWindowScroll ?? false,
     };
 }

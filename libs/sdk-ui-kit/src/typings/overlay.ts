@@ -11,6 +11,7 @@ export type GetOptimalAlignment = {
     selfRegion: IRegion;
     ignoreScrollOffsets?: boolean;
     alignPoints: IAlignPoint[];
+    overlayRootElement?: HTMLElement;
     getViewportRegion?: (ignoreScrollOffsets: boolean) => void;
     getDocumentRegion?: () => void;
 };
@@ -35,6 +36,7 @@ export type GetOptimalAlignmentForRegion = {
     targetRegion: any;
     selfRegion: any;
     alignPoints: IAlignPoint[];
+    overlayRootElement: HTMLElement;
 };
 
 /**
