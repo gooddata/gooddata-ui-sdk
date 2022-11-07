@@ -9,6 +9,8 @@ import {
     IDashboardLayout,
     IDashboardLayoutItem,
     areObjRefsEqual,
+    IInsightWidget,
+    IKpiWidget,
 } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import { DashboardState } from "../types";
@@ -236,6 +238,15 @@ export const selectAllInsightWidgets = createSelector(selectAllWidgets, (allWidg
  */
 export const selectAllCustomWidgets = createSelector(selectAllWidgets, (allWidgets) => {
     return allWidgets.filter(isCustomWidget);
+});
+
+/**
+ * Selects all non-custom widgets in the layout.
+ *
+ * @alpha
+ */
+export const selectAllAnalyticalWidgets = createSelector(selectAllWidgets, (allWidgets) => {
+    return allWidgets.filter((w): w is IKpiWidget | IInsightWidget => !isCustomWidget(w));
 });
 
 function getWidgetCoordinates(layout: IDashboardLayout<ExtendedDashboardWidget>, ref: ObjRef) {

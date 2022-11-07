@@ -1,7 +1,7 @@
-// (C) 2021 GoodData Corporation
+// (C) 2022 GoodData Corporation
 
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2021-12-03T08:00:54.375Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2022-11-07T09:44:01.930Z; */
 // @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
@@ -146,6 +146,11 @@ export const SalesRep = {
      * Display Form ID: label.owner.id
      */ Owner: newAttribute("label.owner.id"),
 };
+/**
+ * Attribute Title: Sort
+ * Attribute ID: attr.hardwaretest.sort
+ */
+export const Sort: IAttribute = newAttribute("label.hardwaretest.sort");
 /**
  * Attribute Title: Stage History
  * Attribute ID: attr.stagehistory.id
@@ -576,6 +581,43 @@ export const TimelineDate = {
      * Fact ID: dt.timeline.timeline
      * Fact Aggregation: runsum
      */ Runsum: newMeasure(idRef("dt.timeline.timeline", "fact"), (m) => m.aggregation("runsum")),
+};
+/**
+ * Fact Title: Values
+ * Fact ID: fact.hardwaretest.values
+ */
+export const Values = {
+    /**
+     * Fact Title: Values
+     * Fact ID: fact.hardwaretest.values
+     * Fact Aggregation: sum
+     */
+    Sum: newMeasure(idRef("fact.hardwaretest.values", "fact"), (m) => m.aggregation("sum")),
+    /**
+     * Fact Title: Values
+     * Fact ID: fact.hardwaretest.values
+     * Fact Aggregation: avg
+     */ Avg: newMeasure(idRef("fact.hardwaretest.values", "fact"), (m) => m.aggregation("avg")),
+    /**
+     * Fact Title: Values
+     * Fact ID: fact.hardwaretest.values
+     * Fact Aggregation: min
+     */ Min: newMeasure(idRef("fact.hardwaretest.values", "fact"), (m) => m.aggregation("min")),
+    /**
+     * Fact Title: Values
+     * Fact ID: fact.hardwaretest.values
+     * Fact Aggregation: max
+     */ Max: newMeasure(idRef("fact.hardwaretest.values", "fact"), (m) => m.aggregation("max")),
+    /**
+     * Fact Title: Values
+     * Fact ID: fact.hardwaretest.values
+     * Fact Aggregation: median
+     */ Median: newMeasure(idRef("fact.hardwaretest.values", "fact"), (m) => m.aggregation("median")),
+    /**
+     * Fact Title: Values
+     * Fact ID: fact.hardwaretest.values
+     * Fact Aggregation: runsum
+     */ Runsum: newMeasure(idRef("fact.hardwaretest.values", "fact"), (m) => m.aggregation("runsum")),
 };
 /**
  * Fact Title: Velocity
@@ -3327,6 +3369,10 @@ export const Insights = {
      * Insight Title: Insight new
      * Insight ID: aclJqJXpbSQq
      */ InsightNew: "aclJqJXpbSQq",
+    /**
+     * Insight Title: AreaChart with all buckets
+     * Insight ID: abMejN0pEA3j
+     */ AreaChartWithAllBuckets: "abMejN0pEA3j",
 };
 export const Dashboards = {
     /**
@@ -3386,4 +3432,12 @@ export const Dashboards = {
      * Dashboard Title: Locked dashboard
      * Dashboard ID: aaI2dN741uaa
      */ LockedDashboard: "aaI2dN741uaa",
+    /**
+     * Dashboard Title: JSC test
+     * Dashboard ID: aaSe33fywlFz
+     */ JSCTest: "aaSe33fywlFz",
+    /**
+     * Dashboard Title: simple dashboard no drills
+     * Dashboard ID: abpEJ9hwq9U8
+     */ SimpleDashboardNoDrills: "abpEJ9hwq9U8",
 };

@@ -44,6 +44,59 @@
         "comment": "",
         "limit": 0
     },
+    "messages.dashboard.invalidDrills.title": {
+        "value": "<b>Some interactions were removed</b>",
+        "comment": "Title of the warning message shown while editing KPI dashboard with some invalid drills.",
+        "limit": 0
+    },
+    "messages.dashboard.invalidDrills.body._measure|insight": {
+        "value": "One or more dashboard/insight/measure/attribute has been changed or deleted causing some interactions to be removed from following widgets: <b>{listOfWidgetTitles}</b>",
+        "comment": "Expanded text of the warning message shown while editing KPI dashboard with some invalid drills. Don't translate placeholder '{listOfWidgetTitles}'.",
+        "limit": 0
+    },
+    "messages.dashboard.invalidDrills.body._metric|insight": {
+        "value": "One or more dashboard/insight/metric/attribute has been changed or deleted causing some interactions to be removed from following widgets: <b>{listOfWidgetTitles}</b>",
+        "comment": "Expanded text of the warning message shown while editing KPI dashboard with some invalid drills. Don't translate placeholder '{listOfWidgetTitles}'.",
+        "limit": 0
+    },
+    "messages.dashboard.invalidDrills.body._measure|report": {
+        "value": "One or more dashboard/report/measure/attribute has been changed or deleted causing some interactions to be removed from following widgets: <b>{listOfWidgetTitles}</b>",
+        "comment": "Expanded text of the warning message shown while editing KPI dashboard with some invalid drills. Don't translate placeholder '{listOfWidgetTitles}'.",
+        "translate": false,
+        "limit": 0
+    },
+    "messages.dashboard.invalidDrills.body._metric|report": {
+        "value": "One or more dashboard/report/metric/attribute has been changed or deleted causing some interactions to be removed from following widgets: <b>{listOfWidgetTitles}</b>",
+        "comment": "Expanded text of the warning message shown while editing KPI dashboard with some invalid drills. Don't translate placeholder '{listOfWidgetTitles}'.",
+        "translate": false,
+        "limit": 0
+    },
+    "messages.dashboard.invalidCustomUrlDrills.title": {
+        "value": "<b>Some drill into URL interactions were disabled</b>",
+        "comment": "Title of the warning message shown while editing KPI dashboard with some invalid drills.",
+        "limit": 0
+    },
+    "messages.dashboard.invalidCustomUrlDrills.body|insight": {
+        "value": "Some of the drill into URL interactions on the following widgets were disabled because of changes in insight attributes: <b>{listOfWidgetTitles}</b>",
+        "comment": "Expanded text of the warning message shown while editing KPI dashboard with some invalid drills. Don't translate placeholder '{listOfWidgetTitles}'.",
+        "limit": 0
+    },
+    "messages.dashboard.invalidCustomUrlDrills.body|report": {
+        "value": "Some of the drill into URL interactions on the following widgets were disabled because of changes in report attributes: <b>{listOfWidgetTitles}</b>",
+        "comment": "Expanded text of the warning message shown while editing KPI dashboard with some invalid drills. Don't translate placeholder '{listOfWidgetTitles}'.",
+        "translate": false,
+        "limit": 0
+    },
+    "messages.dashboard.expandable.showMore": {
+        "value": "Show more",
+        "comment": "Title of the link to show more text of a notification message.",
+        "limit": 0
+    },
+    "messages.dashboard.expandable.showLess": {
+        "value": "Show less",
+        "comment": "Title of the link to collapse text of a notification message.",
+        "limit": 0
+    },
     "filterBar.showAll": {
         "value": "Show all",
         "comment": "",

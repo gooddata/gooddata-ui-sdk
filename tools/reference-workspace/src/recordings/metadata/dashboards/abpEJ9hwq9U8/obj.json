@@ -1,0 +1,299 @@
+{
+    "dashboard": {
+        "created": "2022-11-07 10:39:02",
+        "description": "",
+        "filterContext": {
+            "description": "",
+            "filters": [
+                {
+                    "dateFilter": {
+                        "from": "-6",
+                        "granularity": "GDC.time.date",
+                        "to": "0",
+                        "type": "relative"
+                    }
+                },
+                {
+                    "attributeFilter": {
+                        "attributeElements": { "uris": [] },
+                        "displayForm": { "uri": "/gdc/md/referenceworkspace/obj/1089" },
+                        "filterElementsBy": [],
+                        "localIdentifier": "8dd5d9818c5d45198cef0faa652b202b",
+                        "negativeSelection": true
+                    }
+                },
+                {
+                    "attributeFilter": {
+                        "attributeElements": { "uris": [] },
+                        "displayForm": { "uri": "/gdc/md/referenceworkspace/obj/1071" },
+                        "filterElementsBy": [],
+                        "localIdentifier": "10450fbbd67b4e42b3d1f58e038f2614",
+                        "negativeSelection": true
+                    }
+                }
+            ],
+            "identifier": "adMExvNYleEm",
+            "ref": { "uri": "/gdc/md/referenceworkspace/obj/1565" },
+            "title": "filterContext",
+            "uri": "/gdc/md/referenceworkspace/obj/1565"
+        },
+        "identifier": "abpEJ9hwq9U8",
+        "isLocked": false,
+        "layout": {
+            "sections": [
+                {
+                    "items": [
+                        {
+                            "size": { "xl": { "gridWidth": 2 } },
+                            "type": "IDashboardLayoutItem",
+                            "widget": {
+                                "dateDataSet": { "uri": "/gdc/md/referenceworkspace/obj/557" },
+                                "description": "",
+                                "drills": [],
+                                "identifier": "aboEJD8Rm3rQ",
+                                "ignoreDashboardFilters": [],
+                                "kpi": {
+                                    "comparisonDirection": "growIsGood",
+                                    "comparisonType": "previousPeriod",
+                                    "metric": { "uri": "/gdc/md/referenceworkspace/obj/1271" }
+                                },
+                                "ref": { "uri": "/gdc/md/referenceworkspace/obj/1560" },
+                                "title": "Amount",
+                                "type": "kpi",
+                                "uri": "/gdc/md/referenceworkspace/obj/1560"
+                            }
+                        }
+                    ],
+                    "type": "IDashboardLayoutSection"
+                },
+                {
+                    "items": [
+                        {
+                            "size": { "xl": { "gridWidth": 12 } },
+                            "type": "IDashboardLayoutItem",
+                            "widget": {
+                                "description": "",
+                                "drills": [],
+                                "identifier": "ab1EB1zEnJGi",
+                                "ignoreDashboardFilters": [
+                                    {
+                                        "displayForm": { "uri": "/gdc/md/referenceworkspace/obj/1071" },
+                                        "type": "attributeFilterReference"
+                                    }
+                                ],
+                                "insight": { "uri": "/gdc/md/referenceworkspace/obj/1308" },
+                                "properties": {},
+                                "ref": { "uri": "/gdc/md/referenceworkspace/obj/1563" },
+                                "title": "Simple Sorted Table",
+                                "type": "insight",
+                                "uri": "/gdc/md/referenceworkspace/obj/1563"
+                            }
+                        },
+                        {
+                            "size": { "xl": { "gridWidth": 4 } },
+                            "type": "IDashboardLayoutItem",
+                            "widget": {
+                                "description": "",
+                                "drills": [],
+                                "identifier": "adwEqOzBxhxA",
+                                "ignoreDashboardFilters": [],
+                                "insight": { "uri": "/gdc/md/referenceworkspace/obj/1308" },
+                                "properties": {},
+                                "ref": { "uri": "/gdc/md/referenceworkspace/obj/1564" },
+                                "title": "Simple Sorted Table",
+                                "type": "insight",
+                                "uri": "/gdc/md/referenceworkspace/obj/1564"
+                            }
+                        },
+                        {
+                            "size": { "xl": { "gridWidth": 6 } },
+                            "type": "IDashboardLayoutItem",
+                            "widget": {
+                                "dateDataSet": { "uri": "/gdc/md/referenceworkspace/obj/557" },
+                                "description": "",
+                                "drills": [],
+                                "identifier": "abvEF0CDoDz2",
+                                "ignoreDashboardFilters": [],
+                                "insight": { "uri": "/gdc/md/referenceworkspace/obj/1297" },
+                                "properties": {},
+                                "ref": { "uri": "/gdc/md/referenceworkspace/obj/1561" },
+                                "title": "Test insight",
+                                "type": "insight",
+                                "uri": "/gdc/md/referenceworkspace/obj/1561"
+                            }
+                        }
+                    ],
+                    "type": "IDashboardLayoutSection"
+                }
+            ],
+            "type": "IDashboardLayout"
+        },
+        "ref": { "uri": "/gdc/md/referenceworkspace/obj/1566" },
+        "shareStatus": "public",
+        "tags": [],
+        "title": "simple dashboard no drills",
+        "type": "IDashboard",
+        "updated": "2022-11-07 10:55:04",
+        "uri": "/gdc/md/referenceworkspace/obj/1566"
+    },
+    "references": {
+        "insights": [
+            {
+                "insight": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "aggregation": "sum",
+                                                "filters": [],
+                                                "item": { "uri": "/gdc/md/referenceworkspace/obj/1104" }
+                                            }
+                                        },
+                                        "format": "#,##0.00",
+                                        "localIdentifier": "1efdcdfefecb465fb6bee274df905f35",
+                                        "title": "Sum of Days to Close"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": { "uri": "/gdc/md/referenceworkspace/obj/1089" },
+                                        "localIdentifier": "454ca1db05c646e291fad2dd0f7d4174"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "view"
+                        }
+                    ],
+                    "created": "2020-07-28 06:51:01",
+                    "filters": [
+                        {
+                            "relativeDateFilter": {
+                                "dataSet": { "uri": "/gdc/md/referenceworkspace/obj/557" },
+                                "from": -29,
+                                "granularity": "GDC.time.date",
+                                "to": 0
+                            }
+                        }
+                    ],
+                    "identifier": "aagaIzlMbxR9",
+                    "properties": {},
+                    "ref": { "uri": "/gdc/md/referenceworkspace/obj/1297" },
+                    "sorts": [],
+                    "summary": "",
+                    "tags": [],
+                    "title": "Test insight",
+                    "updated": "2021-06-01 20:54:13",
+                    "uri": "/gdc/md/referenceworkspace/obj/1297",
+                    "visualizationUrl": "local:column"
+                }
+            },
+            {
+                "insight": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "computeRatio": false,
+                                                "filters": [],
+                                                "item": { "uri": "/gdc/md/referenceworkspace/obj/1272" }
+                                            }
+                                        },
+                                        "localIdentifier": "31c22194386b408aa80ab90b966e85a7",
+                                        "title": "Won"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": { "uri": "/gdc/md/referenceworkspace/obj/1055" },
+                                        "localIdentifier": "3b196b9f8de04b61ba37762fa28fcf4f"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "attribute"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": { "uri": "/gdc/md/referenceworkspace/obj/1089" },
+                                        "localIdentifier": "d25f36e4914f4ed18ee6b057d18decd9"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "columns"
+                        }
+                    ],
+                    "created": "2020-08-10 09:21:34",
+                    "filters": [],
+                    "identifier": "ab2pdQnmiqo5",
+                    "properties": {
+                        "sortItems": [
+                            {
+                                "measureSortItem": {
+                                    "direction": "desc",
+                                    "locators": [
+                                        {
+                                            "attributeLocatorItem": {
+                                                "attributeIdentifier": "d25f36e4914f4ed18ee6b057d18decd9",
+                                                "element": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                                            }
+                                        },
+                                        {
+                                            "measureLocatorItem": {
+                                                "measureIdentifier": "31c22194386b408aa80ab90b966e85a7"
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    "ref": { "uri": "/gdc/md/referenceworkspace/obj/1308" },
+                    "sorts": [
+                        {
+                            "measureSortItem": {
+                                "direction": "desc",
+                                "locators": [
+                                    {
+                                        "attributeLocatorItem": {
+                                            "attributeIdentifier": "d25f36e4914f4ed18ee6b057d18decd9",
+                                            "element": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                                        }
+                                    },
+                                    {
+                                        "measureLocatorItem": {
+                                            "measureIdentifier": "31c22194386b408aa80ab90b966e85a7"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "summary": "",
+                    "tags": [],
+                    "title": "Simple Sorted Table",
+                    "updated": "2020-08-16 20:07:15",
+                    "uri": "/gdc/md/referenceworkspace/obj/1308",
+                    "visualizationUrl": "local:table"
+                }
+            }
+        ],
+        "plugins": []
+    }
+}

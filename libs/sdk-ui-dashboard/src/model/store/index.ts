@@ -120,6 +120,7 @@ export {
     selectAllInsightWidgets,
     selectAllCustomWidgets,
     selectAllKpiWidgets,
+    selectAllAnalyticalWidgets,
     selectIsLayoutEmpty,
     selectWidgetDrills,
     selectWidgetCoordinatesByRef,

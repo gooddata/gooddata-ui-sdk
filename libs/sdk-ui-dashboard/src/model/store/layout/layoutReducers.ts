@@ -582,6 +582,7 @@ export const layoutReducers = {
     removeSectionItem: withUndo(removeSectionItem),
     replaceSectionItem: withUndo(replaceSectionItem),
     replaceWidgetHeader: withUndo(replaceWidgetHeader),
+    replaceWidgetDrillWithoutUndo: replaceWidgetDrill, // useful in internal sanitization use cases
     replaceWidgetDrills: withUndo(replaceWidgetDrill),
     replaceInsightWidgetVisProperties: withUndo(replaceInsightWidgetVisProperties),
     replaceInsightWidgetVisConfiguration: withUndo(replaceInsightWidgetVisConfiguration),
@@ -589,6 +590,7 @@ export const layoutReducers = {
     replaceWidgetDateDataset: withUndo(replaceWidgetDateDataset),
     replaceKpiWidgetMeasure: withUndo(replaceKpiWidgetMeasure),
     replaceKpiWidgetComparison: withUndo(replaceKpiWidgetComparison),
+    replaceKpiWidgetDrillWithoutUndo: replaceKpiWidgetDrill, // useful in internal sanitization use cases
     replaceKpiWidgetDrill: withUndo(replaceKpiWidgetDrill),
     undoLayout: undoReducer,
     clearLayoutHistory: resetUndoReducer,

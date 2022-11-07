@@ -35,7 +35,7 @@ export const KpiWidgetRef = (SimpleDashboardLayout.sections[0].items[0].widget a
 export const SimpleSortedTableWidgetRef = (SimpleDashboardLayout.sections[1].items[0].widget as any).ref;
 export const SimpleSortedTableWidgetInsightRef =
     SimpleDashboardWithReferences.references.insights[2].insight.ref;
-export const SimpleSortedTableWidgetInsightIdentifer =
+export const SimpleSortedTableWidgetInsightIdentifier =
     SimpleDashboardWithReferences.references.insights[2].insight.identifier;
 export const SimpleSortedTableWidgetInsight = SimpleDashboardWithReferences.references.insights[2];
 /**
