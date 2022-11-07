@@ -177,6 +177,7 @@ Object {
     ],
     "selectedOption": "THIS_MONTH",
   },
+  "disableCloseOverlaysOnWindowScroll": false,
   "disableDefaultDrills": false,
   "enableFilterValuesResolutionInDrillEvents": false,
   "hideSaveAsNewButton": false,
