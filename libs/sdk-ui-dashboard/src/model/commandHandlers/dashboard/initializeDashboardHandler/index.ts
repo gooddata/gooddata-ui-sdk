@@ -1,6 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { all, call, fork, put, SagaReturnType } from "redux-saga/effects";
+import { all, call, put, SagaReturnType } from "redux-saga/effects";
 import { InitializeDashboard } from "../../../commands/dashboard";
 import { DashboardInitialized, dashboardInitialized } from "../../../events/dashboard";
 import { insightsActions } from "../../../store/insights";
@@ -256,11 +256,11 @@ export function* initializeDashboardHandler(
 
         yield put(result.batch);
 
-        yield put(loadingActions.setLoadingSuccess());
-
         if (result.config.initialRenderMode === "edit" && dashboardRef) {
-            yield fork(validateDrills, ctx, cmd);
+            yield call(validateDrills, ctx, cmd);
         }
+
+        yield put(loadingActions.setLoadingSuccess());
 
         return result.event;
     } catch (e) {
