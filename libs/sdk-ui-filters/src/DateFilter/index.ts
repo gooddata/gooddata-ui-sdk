@@ -74,3 +74,4 @@ export {
 
 export { defaultDateFilterOptions } from "./constants/config";
 export { GranularityIntlKey } from "./constants/i18n";
+export { getLocalizedIcuDateFormatPattern } from "./utils/FormattingUtils";

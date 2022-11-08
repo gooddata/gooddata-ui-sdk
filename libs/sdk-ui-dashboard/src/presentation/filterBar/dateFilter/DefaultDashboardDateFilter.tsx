@@ -1,6 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 import React, { useCallback, useMemo, useState } from "react";
-import { DateFilter, IDateFilterProps } from "@gooddata/sdk-ui-filters";
+import { DateFilter, getLocalizedIcuDateFormatPattern, IDateFilterProps } from "@gooddata/sdk-ui-filters";
 
 import { dateFilterOptionToDashboardDateFilter } from "../../../_staging/dashboard/dashboardFilterConverter";
 import { matchDateFilterToDateFilterOptionWithPreference } from "../../../_staging/dateFilterConfig/dateFilterOptionMapping";
@@ -44,6 +44,10 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
         },
         [onFilterChanged],
     );
+    const dateFormat =
+        settings.enableDateFormats && settings.formatLocale
+            ? getLocalizedIcuDateFormatPattern(settings.formatLocale)
+            : settings.responsiveUiDateFormat;
 
     return (
         <DateFilter
@@ -54,7 +58,7 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
             availableGranularities={config.availableGranularities}
             customFilterName={config.customFilterName}
             onApply={onApply}
-            dateFormat={settings.responsiveUiDateFormat}
+            dateFormat={dateFormat}
             locale={locale}
             isTimeForAbsoluteRangeEnabled={!!capabilities.supportsTimeGranularities}
             isEditMode={isInEditMode}

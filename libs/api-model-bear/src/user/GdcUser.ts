@@ -33,6 +33,7 @@ export namespace GdcUser {
             domain?: Uri;
             auditEvents?: Uri;
         };
+        formatLocale?: string;
     }
 
     export interface IWrappedAccountSetting {

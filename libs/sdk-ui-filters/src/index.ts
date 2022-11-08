@@ -38,6 +38,7 @@ export {
     IDateAndMessageTranslator,
     IDateTranslator,
     IMessageTranslator,
+    getLocalizedIcuDateFormatPattern,
 } from "./DateFilter";
 export {
     MeasureValueFilter,

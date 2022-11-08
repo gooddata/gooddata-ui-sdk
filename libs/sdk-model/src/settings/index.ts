@@ -259,6 +259,16 @@ export interface ISettings {
      */
     enableDescriptions?: boolean;
 
+    /**
+     * Locale code to use for date formatting.
+     */
+    formatLocale?: string;
+
+    /**
+     * Enable date format patterns.
+     */
+    enableDateFormats?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 
