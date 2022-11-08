@@ -1,5 +1,5 @@
 // (C) 2020-2022 GoodData Corporation
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import isEqual from "lodash/isEqual";
 import {
     useDashboardSelector,
@@ -8,6 +8,7 @@ import {
     addDrillTargets,
     selectDrillableItemsByWidgetRef,
     selectConfiguredAndImplicitDrillsByWidgetRef,
+    selectIsInEditMode,
 } from "../../../../../model";
 import { OnWidgetDrill } from "../../../../drill/types";
 import { DataViewFacade, IDrillEvent, IPushData, isSomeHeaderPredicateMatched } from "@gooddata/sdk-ui";
@@ -45,7 +46,12 @@ export const useDashboardInsightDrills = ({
         [drillTargets],
     );
 
-    const drillableItems = useDashboardSelector(selectDrillableItemsByWidgetRef(widget.ref));
+    const isInEditMode = useDashboardSelector(selectIsInEditMode);
+    const rawDrillableItems = useDashboardSelector(selectDrillableItemsByWidgetRef(widget.ref));
+    const drillableItems = useMemo(() => {
+        return isInEditMode ? [] : rawDrillableItems;
+    }, [isInEditMode, rawDrillableItems]);
+
     const implicitDrillDefinitions = useDashboardSelector(
         selectConfiguredAndImplicitDrillsByWidgetRef(widget.ref),
     );

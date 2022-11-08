@@ -13,22 +13,14 @@ import { Typography } from "../Typography";
  * @internal
  */
 export const Messages: React.FC<IMessagesProps> = ({ messages = [], onMessageClose = noop }) => {
-    const [shouldShowMore, setShouldShowMore] = useState<boolean>(true);
+    const [expandedMessageIds, setExpandedMessageIds] = useState<string[]>([]);
 
     const handleMessageClose = useCallback(
         (messageId: string) => {
-            setShouldShowMore(true);
+            setExpandedMessageIds((old) => old.filter((expandedId) => expandedId !== messageId));
             onMessageClose(messageId);
         },
         [onMessageClose],
-    );
-
-    const handleShowMore = useCallback(
-        (e: React.MouseEvent<HTMLElement>) => {
-            e.preventDefault();
-            setShouldShowMore(!shouldShowMore);
-        },
-        [shouldShowMore],
     );
 
     return (
@@ -39,6 +31,7 @@ export const Messages: React.FC<IMessagesProps> = ({ messages = [], onMessageClo
                         <div>
                             {messages.map((message) => {
                                 const { id, component, showMore, type, contrast, intensive } = message;
+                                const isExpanded = expandedMessageIds.includes(message.id);
                                 return (
                                     <div key={id}>
                                         <Message
@@ -56,8 +49,18 @@ export const Messages: React.FC<IMessagesProps> = ({ messages = [], onMessageClo
                                                 <>
                                                     <MessageWithShowMore
                                                         message={message}
-                                                        shouldShowMore={shouldShowMore}
-                                                        handleShowMore={handleShowMore}
+                                                        shouldShowMore={!isExpanded}
+                                                        handleShowMore={() => {
+                                                            if (isExpanded) {
+                                                                setExpandedMessageIds((old) =>
+                                                                    old.filter(
+                                                                        (expandedId) => expandedId !== id,
+                                                                    ),
+                                                                );
+                                                            } else {
+                                                                setExpandedMessageIds((old) => [...old, id]);
+                                                            }
+                                                        }}
                                                     />
                                                     <MessageSimple message={message} />
                                                 </>

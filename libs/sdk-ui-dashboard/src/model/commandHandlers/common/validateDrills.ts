@@ -4,6 +4,7 @@ import {
     IInsightWidget,
     IKpiWidget,
     InsightDrillDefinition,
+    isDrillToCustomUrl,
     isInsightWidget,
     IWidget,
     widgetRef,
@@ -67,6 +68,25 @@ export function* validateDrills(ctx: DashboardContext, cmd: IDashboardCommand) {
             showLessId: "messages.dashboard.expandable.showLess",
         }),
     );
+
+    // custom URL drills have their own extra message
+    const invalidCustomUrlDrills = invalidDrills.filter((drillInfo) =>
+        drillInfo.invalidDrills.some((drill) => isDrillToCustomUrl(drill)),
+    );
+
+    if (invalidCustomUrlDrills.length > 0) {
+        yield put(
+            uiActions.addToastMessage({
+                id: uuid(),
+                type: "warning",
+                titleId: "messages.dashboard.invalidCustomUrlDrills.title",
+                detailId: "messages.dashboard.invalidCustomUrlDrills.body",
+                detailValues: { listOfWidgetTitles: invalidDrills.map((d) => d.widget.title).join(", ") },
+                showMoreId: "messages.dashboard.expandable.showMore",
+                showLessId: "messages.dashboard.expandable.showLess",
+            }),
+        );
+    }
 }
 
 function* removeInsightWidgetDrills(
