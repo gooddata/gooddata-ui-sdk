@@ -50,7 +50,7 @@ export const DashboardInsightMenuBubble: React.FC<IDashboardInsightMenuBubblePro
             )}
             closeOnOutsideClick
             onClose={onClose}
-            overlayClassName="gd-configuration-bubble-wrapper"
+            overlayClassName="gd-configuration-bubble-wrapper sdk-edit-mode-on"
         >
             {children}
         </Bubble>

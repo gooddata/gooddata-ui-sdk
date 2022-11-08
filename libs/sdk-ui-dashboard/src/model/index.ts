@@ -56,6 +56,7 @@ export {
     FilterOperations,
     WidgetFilterOperation,
     WidgetHeader,
+    WidgetDescription,
 } from "./types/widgetTypes";
 
 export {

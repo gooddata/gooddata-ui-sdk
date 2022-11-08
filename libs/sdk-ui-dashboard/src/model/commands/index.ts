@@ -25,6 +25,7 @@ import {
 import {
     ChangeInsightWidgetFilterSettings,
     ChangeInsightWidgetHeader,
+    ChangeInsightWidgetDescription,
     ChangeInsightWidgetInsight,
     ChangeInsightWidgetVisProperties,
     ChangeInsightWidgetVisConfiguration,
@@ -37,6 +38,8 @@ import {
     ChangeKpiWidgetComparison,
     ChangeKpiWidgetFilterSettings,
     ChangeKpiWidgetHeader,
+    ChangeKpiWidgetDescription,
+    ChangeKpiWidgetConfiguration,
     ChangeKpiWidgetMeasure,
     RefreshKpiWidget,
     SetDrillForKpiWidget,
@@ -244,6 +247,12 @@ export {
     ChangeKpiWidgetHeader,
     ChangeKpiWidgetHeaderPayload,
     changeKpiWidgetHeader,
+    ChangeKpiWidgetDescription,
+    ChangeKpiWidgetDescriptionPayload,
+    changeKpiWidgetDescription,
+    ChangeKpiWidgetConfiguration,
+    ChangeKpiWidgetConfigurationPayload,
+    changeKpiWidgetConfiguration,
     ChangeKpiWidgetMeasure,
     ChangeKpiWidgetMeasurePayload,
     changeKpiWidgetMeasure,
@@ -274,6 +283,9 @@ export {
     ChangeInsightWidgetHeader,
     ChangeInsightWidgetHeaderPayload,
     changeInsightWidgetHeader,
+    ChangeInsightWidgetDescription,
+    ChangeInsightWidgetDescriptionPayload,
+    changeInsightWidgetDescription,
     ChangeInsightWidgetFilterSettings,
     ChangeInsightWidgetFilterSettingsPayload,
     replaceInsightWidgetFilterSettings,
@@ -369,6 +381,8 @@ export type DashboardCommands =
     | RemoveSectionItemByWidgetRef
     | UndoLayoutChanges
     | ChangeKpiWidgetHeader
+    | ChangeKpiWidgetDescription
+    | ChangeKpiWidgetConfiguration
     | ChangeKpiWidgetMeasure
     | ChangeKpiWidgetFilterSettings
     | ChangeKpiWidgetComparison
@@ -376,6 +390,7 @@ export type DashboardCommands =
     | SetDrillForKpiWidget
     | RemoveDrillForKpiWidget
     | ChangeInsightWidgetHeader
+    | ChangeInsightWidgetDescription
     | ChangeInsightWidgetFilterSettings
     | ChangeInsightWidgetVisProperties
     | ChangeInsightWidgetVisConfiguration

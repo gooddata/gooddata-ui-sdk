@@ -450,6 +450,10 @@
     }
 }
 
+.type-kpi .dash-item-action-description {
+    position: absolute;
+}
+
 .dash-item-content:hover {
     .gd-icon-circle-question-wrapper:not(.is-mobile) {
         display: block;

@@ -12,7 +12,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { IDashboardEvent } from "./base";
-import { WidgetHeader } from "../types/widgetTypes";
+import { WidgetDescription, WidgetHeader } from "../types/widgetTypes";
 import { DashboardContext } from "../types/commonTypes";
 import { eventGuard } from "./util";
 import { IExportConfig } from "../types/exportTypes";
@@ -69,6 +69,62 @@ export function insightWidgetHeaderChanged(
 export const isDashboardInsightWidgetHeaderChanged = eventGuard<DashboardInsightWidgetHeaderChanged>(
     "GDC.DASH/EVT.INSIGHT_WIDGET.HEADER_CHANGED",
 );
+
+//
+//
+//
+
+/**
+ * Payload of the {@link DashboardInsightWidgetDescriptionChanged} event.
+ * @alpha
+ */
+export interface DashboardInsightWidgetDescriptionChangedPayload {
+    /**
+     * Reference to Insight Widget that was changed.
+     */
+    readonly ref: ObjRef;
+    /**
+     * New widget description that is now used on the widget.
+     */
+    readonly description: WidgetDescription;
+}
+
+/**
+ * This event is emitted when the description of an insight widget changed. The new value of the description (summary)
+ * is included in the event.
+ *
+ * @alpha
+ */
+export interface DashboardInsightWidgetDescriptionChanged extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.DESCRIPTION_CHANGED";
+    readonly payload: DashboardInsightWidgetDescriptionChangedPayload;
+}
+
+export function insightWidgetDescriptionChanged(
+    ctx: DashboardContext,
+    ref: ObjRef,
+    description: WidgetDescription,
+    correlationId?: string,
+): DashboardInsightWidgetDescriptionChanged {
+    return {
+        type: "GDC.DASH/EVT.INSIGHT_WIDGET.DESCRIPTION_CHANGED",
+        ctx,
+        correlationId,
+        payload: {
+            ref,
+            description,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardInsightWidgetDescriptionChanged}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardInsightWidgetDescriptionChanged =
+    eventGuard<DashboardInsightWidgetDescriptionChanged>("GDC.DASH/EVT.INSIGHT_WIDGET.DESCRIPTION_CHANGED");
 
 //
 //

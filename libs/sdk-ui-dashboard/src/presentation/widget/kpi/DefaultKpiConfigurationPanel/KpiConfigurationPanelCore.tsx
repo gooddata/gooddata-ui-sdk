@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
-import { IKpiWidget, ObjRef, widgetRef } from "@gooddata/sdk-model";
+import { IKpiWidget, IKpiWidgetDescriptionConfiguration, ObjRef, widgetRef } from "@gooddata/sdk-model";
 import { Typography } from "@gooddata/sdk-ui-kit";
 
 import { AttributeFilterConfiguration } from "../../common";
@@ -13,7 +13,18 @@ import { KpiConfigurationPanelHeader } from "./KpiConfigurationPanelHeader";
 import { KpiConfigurationMessages } from "./KpiConfigurationMessages";
 import { KpiDrillConfiguration } from "./KpiDrill/KpiDrillConfiguration";
 import { safeSerializeObjRef } from "../../../../_staging/metadata/safeSerializeObjRef";
-import { QueryWidgetAlertCount, queryWidgetAlertCount, useDashboardQueryProcessing } from "../../../../model";
+import {
+    changeKpiWidgetConfiguration,
+    changeKpiWidgetDescription,
+    QueryWidgetAlertCount,
+    queryWidgetAlertCount,
+    selectCatalogMeasures,
+    selectSettings,
+    useDashboardDispatch,
+    useDashboardQueryProcessing,
+    useDashboardSelector,
+} from "../../../../model";
+import { KpiDescriptionConfig } from "./KpiDescriptionConfig";
 
 interface IKpiConfigurationPanelCoreProps {
     widget?: IKpiWidget;
@@ -49,10 +60,19 @@ export const KpiConfigurationPanelCore: React.FC<IKpiConfigurationPanelCoreProps
 
     const sectionHeaderClasses = cx({ "is-disabled": !metric });
 
+    const defaultDescriptionConfig: IKpiWidgetDescriptionConfiguration = {
+        source: "metric",
+        visible: true,
+    };
+
+    const settings = useDashboardSelector(selectSettings);
+    const measures = useDashboardSelector(selectCatalogMeasures);
+    const dispatch = useDashboardDispatch();
+
     return (
         <>
             <KpiConfigurationPanelHeader onCloseButtonClick={onClose} />
-            <div className="configuration-panel">
+            <div className="configuration-panel configuration-panel-kpi">
                 <div className={configurationCategoryClasses}>
                     <KpiConfigurationMessages numberOfAlerts={numberOfAlerts} />
 
@@ -60,7 +80,29 @@ export const KpiConfigurationPanelCore: React.FC<IKpiConfigurationPanelCoreProps
                         <FormattedMessage id="configurationPanel.measure" />
                     </Typography>
                     <KpiMetricDropdown widget={widget} onMeasureChange={onMeasureChange} />
-
+                    {!!widget && (
+                        <KpiDescriptionConfig
+                            kpi={widget}
+                            metrics={measures}
+                            isKpiDescriptionEnabled={settings.enableDescriptions || false}
+                            descriptionConfig={widget.configuration?.description || defaultDescriptionConfig}
+                            setDescriptionConfiguration={(kpi, config) => {
+                                dispatch(
+                                    changeKpiWidgetConfiguration(kpi.ref!, {
+                                        ...kpi.configuration,
+                                        description: config,
+                                    }),
+                                );
+                            }}
+                            setKpiDescription={(kpi, description) => {
+                                dispatch(
+                                    changeKpiWidgetDescription(kpi.ref!, {
+                                        description,
+                                    }),
+                                );
+                            }}
+                        />
+                    )}
                     <Typography tagName="h3" className={sectionHeaderClasses}>
                         <FormattedMessage id="configurationPanel.filterBy" />
                     </Typography>

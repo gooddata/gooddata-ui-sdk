@@ -9,10 +9,11 @@ import {
     IMeasureMetadataObject,
     IKpi,
     IDrillToLegacyDashboard,
+    IKpiWidgetConfiguration,
 } from "@gooddata/sdk-model";
 
 import { IDashboardEvent } from "./base";
-import { WidgetHeader } from "../types/widgetTypes";
+import { WidgetDescription, WidgetHeader } from "../types/widgetTypes";
 import { DashboardContext } from "../types/commonTypes";
 import { eventGuard } from "./util";
 
@@ -67,6 +68,120 @@ export function kpiWidgetHeaderChanged(
  */
 export const isDashboardKpiWidgetHeaderChanged = eventGuard<DashboardKpiWidgetHeaderChanged>(
     "GDC.DASH/EVT.KPI_WIDGET.HEADER_CHANGED",
+);
+
+//
+//
+//
+
+/**
+ * Payload of the {@link DashboardKpiWidgetDescriptionChanged} event.
+ * @alpha
+ */
+export interface DashboardKpiWidgetDescriptionChangedPayload {
+    /**
+     * Reference to changed KPI Widget.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * New value of the widget description.
+     */
+    readonly description: WidgetDescription;
+}
+
+/**
+ * This event is emitted when the dashboard's KPI Widget description is modified.
+ *
+ * @alpha
+ */
+export interface DashboardKpiWidgetDescriptionChanged extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.KPI_WIDGET.DESCRIPTION_CHANGED";
+    readonly payload: DashboardKpiWidgetDescriptionChangedPayload;
+}
+
+export function kpiWidgetDescriptionChanged(
+    ctx: DashboardContext,
+    ref: ObjRef,
+    description: WidgetDescription,
+    correlationId?: string,
+): DashboardKpiWidgetDescriptionChanged {
+    return {
+        type: "GDC.DASH/EVT.KPI_WIDGET.DESCRIPTION_CHANGED",
+        ctx,
+        correlationId,
+        payload: {
+            ref,
+            description,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardKpiWidgetDescriptionChanged}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardKpiWidgetDescriptionChanged = eventGuard<DashboardKpiWidgetDescriptionChanged>(
+    "GDC.DASH/EVT.KPI_WIDGET.DESCRIPTION_CHANGED",
+);
+
+//
+//
+//
+
+/**
+ * Payload of the {@link DashboardKpiWidgetConfigurationChanged} event.
+ * @alpha
+ */
+export interface DashboardKpiWidgetConfigurationChangedPayload {
+    /**
+     * Reference to changed KPI Widget.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * New value of the widget configuration.
+     */
+    readonly configuration: IKpiWidgetConfiguration | undefined;
+}
+
+/**
+ * This event is emitted when the dashboard's KPI Widget configuration is modified.
+ *
+ * @alpha
+ */
+export interface DashboardKpiWidgetConfigurationChanged extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.KPI_WIDGET.CONFIGURATION_CHANGED";
+    readonly payload: DashboardKpiWidgetConfigurationChangedPayload;
+}
+
+export function kpiWidgetConfigurationChanged(
+    ctx: DashboardContext,
+    ref: ObjRef,
+    configuration: IKpiWidgetConfiguration | undefined,
+    correlationId?: string,
+): DashboardKpiWidgetConfigurationChanged {
+    return {
+        type: "GDC.DASH/EVT.KPI_WIDGET.CONFIGURATION_CHANGED",
+        ctx,
+        correlationId,
+        payload: {
+            ref,
+            configuration,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardKpiWidgetConfigurationChanged}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardKpiWidgetConfigurationChanged = eventGuard<DashboardKpiWidgetConfigurationChanged>(
+    "GDC.DASH/EVT.KPI_WIDGET.CONFIGURATION_CHANGED",
 );
 
 //

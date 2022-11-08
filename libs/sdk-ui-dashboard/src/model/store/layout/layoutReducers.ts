@@ -26,8 +26,9 @@ import {
     IKpiComparisonTypeComparison,
     IDrillToLegacyDashboard,
     IInsightWidgetConfiguration,
+    IKpiWidgetConfiguration,
 } from "@gooddata/sdk-model";
-import { WidgetHeader } from "../../types/widgetTypes";
+import { WidgetDescription, WidgetHeader } from "../../types/widgetTypes";
 import flatMap from "lodash/flatMap";
 import { Draft } from "immer";
 import { ObjRefMap } from "../../../_staging/metadata/objRefMap";
@@ -371,6 +372,29 @@ const replaceWidgetHeader: LayoutReducer<ReplaceWidgetHeader> = (state, action) 
 //
 //
 
+type ReplaceWidgetDescription = {
+    ref: ObjRef;
+    description: WidgetDescription;
+};
+
+const replaceWidgetDescription: LayoutReducer<ReplaceWidgetDescription> = (state, action) => {
+    invariant(state.layout);
+
+    const { description, ref } = action.payload;
+
+    const widget = getWidgetByRef(state, ref);
+
+    // this means command handler did not correctly validate that the widget exists before dispatching the
+    // reducer action
+    invariant(widget && (isKpiWidget(widget) || isInsightWidget(widget)));
+
+    widget.description = description.description ?? "";
+};
+
+//
+//
+//
+
 type ReplaceWidgetDrillDefinitions = {
     ref: ObjRef;
     drillDefinitions: InsightDrillDefinition[];
@@ -569,6 +593,25 @@ const replaceKpiWidgetDrill: LayoutReducer<ReplaceKpiWidgetDrill> = (state, acti
     widget.drills = drill ? [drill] : [];
 };
 
+//
+//
+//
+
+type ReplaceKpiWidgetConfiguration = {
+    ref: ObjRef;
+    config: IKpiWidgetConfiguration | undefined;
+};
+
+const replaceKpiWidgetConfiguration: LayoutReducer<ReplaceKpiWidgetConfiguration> = (state, action) => {
+    invariant(state.layout);
+
+    const { config, ref } = action.payload;
+    const widget = getWidgetByRef(state, ref);
+
+    invariant(widget && isKpiWidget(widget));
+    setOrDelete(widget, "configuration", config);
+};
+
 export const layoutReducers = {
     setLayout,
     updateWidgetIdentities,
@@ -582,6 +625,7 @@ export const layoutReducers = {
     removeSectionItem: withUndo(removeSectionItem),
     replaceSectionItem: withUndo(replaceSectionItem),
     replaceWidgetHeader: withUndo(replaceWidgetHeader),
+    replaceWidgetDescription: withUndo(replaceWidgetDescription),
     replaceWidgetDrillWithoutUndo: replaceWidgetDrill, // useful in internal sanitization use cases
     replaceWidgetDrills: withUndo(replaceWidgetDrill),
     replaceInsightWidgetVisProperties: withUndo(replaceInsightWidgetVisProperties),
@@ -592,6 +636,7 @@ export const layoutReducers = {
     replaceKpiWidgetComparison: withUndo(replaceKpiWidgetComparison),
     replaceKpiWidgetDrillWithoutUndo: replaceKpiWidgetDrill, // useful in internal sanitization use cases
     replaceKpiWidgetDrill: withUndo(replaceKpiWidgetDrill),
+    replaceKpiWidgetConfiguration: withUndo(replaceKpiWidgetConfiguration),
     undoLayout: undoReducer,
     clearLayoutHistory: resetUndoReducer,
     changeItemsHeight: changeItemsHeight,

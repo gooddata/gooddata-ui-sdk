@@ -10,10 +10,10 @@ export const InsightWidgetDescriptionTrigger: React.FC<IInsightWidgetDescription
     const description =
         widget.configuration?.description?.source === "widget" ? widget.description : insight.insight.summary;
 
-    if (visible && description !== "") {
+    if (visible && description && description !== "") {
         return (
             <div className="dash-item-action-description">
-                <DescriptionPanel description={description || ""} />
+                <DescriptionPanel description={description} />
             </div>
         );
     }

@@ -208,7 +208,9 @@ $delete-hover-status-bg: var(--gd-palette-error-lightest, #fff2f1);
     opacity: 1;
 }
 
-.gd-configuration-bubble-wrapper.overlay-wrapper {
+// sdk-edit-mode-on is in selector to override same classes in KD.
+// Can be removed when old implementation in KD removed
+.gd-configuration-bubble-wrapper.overlay-wrapper.sdk-edit-mode-on {
     .edit-insight-config-arrow-submenu-color {
         .bubble-content .configuration-panel-header {
             padding: variables.$item-inner-padding variables.$gd-configuration-bubble-margin;
