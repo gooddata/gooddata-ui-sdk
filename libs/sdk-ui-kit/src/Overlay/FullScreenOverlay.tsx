@@ -8,8 +8,8 @@ import { IOverlayProps, IOverlayState } from "./typings";
  */
 
 export class FullScreenOverlay extends Overlay<IOverlayState> {
-    constructor(props: IOverlayProps<any>) {
-        super(props);
+    constructor(props: IOverlayProps<any>, context: any) {
+        super(props, context);
 
         this.state = merge(this.state, {
             position: {},
