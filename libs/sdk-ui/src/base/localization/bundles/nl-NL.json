@@ -277,6 +277,7 @@
     "attributesDropdown.empty.item.tooltip": "Ontbrekende (null) en lege (\"\") waarden.",
     "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> is al gefilterd op <strong>{childTitle}</strong>, rechtstreeks of via andere filters.",
     "attributesDropdown.attributeNameWithData": "met gegevens van",
+    "attributesDropdown.noConnectionMessage": "<strong>{childTitle}</strong> kan niet worden gefilterd op <strong>{parentTitle}</strong>. Er is geen verbinding tussen de filterattributen in het gegevensmodel.",
     "shareDialog.share.grantee.title": "Delen met gebruikers en groepen",
     "shareDialog.share.grantee.share": "Deel",
     "shareDialog.share.grantee.list.title": "Gedeeld met",

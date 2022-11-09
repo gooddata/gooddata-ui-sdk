@@ -277,6 +277,7 @@
     "attributesDropdown.empty.item.tooltip": "Incluir valores que faltan (null) y vacíos (\"\").",
     "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> ya se ha filtrado por el filtro <strong>{childTitle}</strong> directamente o mediante otros filtros.",
     "attributesDropdown.attributeNameWithData": "con datos de",
+    "attributesDropdown.noConnectionMessage": "<strong>{childTitle}</strong> no se puede filtrar por <strong>{parentTitle}</strong>. No hay ninguna conexión entre los atributos de filtro en el modelo de datos.",
     "shareDialog.share.grantee.title": "Compartir con usuarios y grupos",
     "shareDialog.share.grantee.share": "Compartir",
     "shareDialog.share.grantee.list.title": "Compartido con",
