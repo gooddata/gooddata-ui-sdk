@@ -2,7 +2,42 @@
 import React from "react";
 import { Button } from "@gooddata/sdk-ui-kit";
 import { AttributeFilterConfigurationButton, AttributeFilterDeleteButton } from "@gooddata/sdk-ui-filters";
-import { selectIsDeleteFilterButtonEnabled, selectIsInEditMode, useDashboardSelector } from "../../../model";
+import { ObjRef } from "@gooddata/sdk-model";
+import invariant from "ts-invariant";
+import {
+    selectAllCatalogAttributesMap,
+    selectAttributeFilterDisplayFormsMap,
+    selectFilterContextAttributeFilters,
+    selectIsAlternativeDisplayFormSelectionEnabled,
+    selectIsDeleteFilterButtonEnabled,
+    selectIsInEditMode,
+    selectIsKPIDashboardDependentFiltersEnabled,
+    useDashboardSelector,
+} from "../../../model";
+
+function useIsConfigButtonVisible(filterDisplayFormRef: ObjRef) {
+    const isEditMode = useDashboardSelector(selectIsInEditMode);
+    const allAttributeFilters = useDashboardSelector(selectFilterContextAttributeFilters);
+
+    const isDependentFiltersEnabled = useDashboardSelector(selectIsKPIDashboardDependentFiltersEnabled);
+    const isDisplayFormSelectionEnabled = useDashboardSelector(
+        selectIsAlternativeDisplayFormSelectionEnabled,
+    );
+
+    const dfMap = useDashboardSelector(selectAttributeFilterDisplayFormsMap);
+    const filterDisplayForm = dfMap.get(filterDisplayFormRef);
+    invariant(filterDisplayForm);
+
+    const attrMap = useDashboardSelector(selectAllCatalogAttributesMap);
+    const filterAttribute = attrMap.get(filterDisplayForm.attribute);
+    invariant(filterAttribute);
+
+    const canConfigureDependentFilters = isDependentFiltersEnabled && allAttributeFilters.length > 1;
+    const canConfigureDisplayForm =
+        isDisplayFormSelectionEnabled && filterAttribute.attribute.displayForms.length > 1;
+
+    return isEditMode && (canConfigureDependentFilters || canConfigureDisplayForm);
+}
 
 /**
  * @internal
@@ -15,6 +50,7 @@ export interface ICustomAttributeFilterDropdownActionsProps {
     isApplyDisabled?: boolean;
     cancelText: string;
     applyText: string;
+    filterDisplayFormRef: ObjRef;
 }
 
 /**
@@ -28,9 +64,11 @@ export const CustomAttributeFilterDropdownActions: React.FC<ICustomAttributeFilt
     onDeleteButtonClick,
     cancelText,
     applyText,
+    filterDisplayFormRef,
 }) => {
     const isEditMode = useDashboardSelector(selectIsInEditMode);
     const isDeleteButtonEnabled = useDashboardSelector(selectIsDeleteFilterButtonEnabled);
+    const isConfigButtonVisible = useIsConfigButtonVisible(filterDisplayFormRef);
 
     return (
         <div className="gd-attribute-filter-dropdown-actions__next">
@@ -41,7 +79,7 @@ export const CustomAttributeFilterDropdownActions: React.FC<ICustomAttributeFilt
                         <div className="gd-button-separator" />
                     </>
                 ) : null}
-                {isEditMode ? (
+                {isConfigButtonVisible ? (
                     <AttributeFilterConfigurationButton onConfiguration={onConfigurationButtonClick} />
                 ) : null}
             </div>

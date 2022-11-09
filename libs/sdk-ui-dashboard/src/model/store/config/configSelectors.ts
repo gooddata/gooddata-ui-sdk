@@ -389,3 +389,23 @@ export const selectIsDeleteFilterButtonEnabled = createSelector(
     selectConfig,
     (state) => !!(state.settings?.enableKPIDashboardDeleteFilterButton || false),
 );
+
+/**
+ * Returns whether dependent filters are enabled.
+ *
+ * @internal
+ */
+export const selectIsKPIDashboardDependentFiltersEnabled = createSelector(
+    selectConfig,
+    (state) => !!(state.settings?.enableKPIDashboardDependentFilters || false),
+);
+
+/**
+ * Returns whether choice of alternate display forms is enabled.
+ *
+ * @internal
+ */
+export const selectIsAlternativeDisplayFormSelectionEnabled = createSelector(
+    selectConfig,
+    (state) => !!(state.settings?.enableAlternativeDisplayFormSelection || false),
+);

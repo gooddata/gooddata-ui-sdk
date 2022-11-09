@@ -105,6 +105,7 @@ export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilter
                     ) : (
                         <CustomAttributeFilterDropdownActions
                             {...props}
+                            filterDisplayFormRef={filter.attributeFilter.displayForm}
                             applyText={applyText}
                             cancelText={cancelText}
                             onConfigurationButtonClick={() => {
@@ -119,7 +120,14 @@ export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilter
                 </>
             );
         };
-    }, [isConfigurationOpen, cancelText, saveText, applyText, handleRemoveAttributeFilter]);
+    }, [
+        isConfigurationOpen,
+        cancelText,
+        saveText,
+        filter.attributeFilter.displayForm,
+        applyText,
+        handleRemoveAttributeFilter,
+    ]);
 
     const CustomElementsSelect = useMemo(() => {
         return function ElementsSelect(props: IAttributeFilterElementsSelectProps) {
