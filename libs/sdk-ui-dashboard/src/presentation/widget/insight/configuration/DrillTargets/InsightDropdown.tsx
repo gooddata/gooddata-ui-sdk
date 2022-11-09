@@ -47,6 +47,7 @@ export const InsightDropdown: React.FC<IInsightDropdownProps> = ({ insightConfig
         <Dropdown
             className="s-report_select report-select"
             closeOnMouseDrag
+            closeOnParentScroll
             alignPoints={DROPDOWN_ALIGN_POINTS}
             renderButton={({ isOpen, toggleDropdown }) => (
                 <DropdownButton
@@ -65,7 +66,7 @@ export const InsightDropdown: React.FC<IInsightDropdownProps> = ({ insightConfig
                             selectedRef={
                                 isDrillToInsightConfig(insightConfig) ? insightConfig.insightRef : undefined
                             }
-                            height={200}
+                            height={300}
                             onSelect={(insight) => {
                                 onSelect(insight);
                                 closeDropdown();

@@ -111,6 +111,7 @@ export const DrillTargetUrlItem: React.FunctionComponent<DrillUrlItemProps> = (p
     return (
         <>
             <Dropdown
+                closeOnParentScroll
                 alignPoints={dropdownAlignPoints}
                 renderButton={({ toggleDropdown, isOpen }) => (
                     <Button
