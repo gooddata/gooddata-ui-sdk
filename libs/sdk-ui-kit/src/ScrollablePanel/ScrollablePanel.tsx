@@ -31,11 +31,6 @@ const isElementInvisibleCheckDefault: isElementInvisibleType = (
     return false;
 };
 
-const isNotOnInput = (event: React.UIEvent<HTMLDivElement>) => {
-    const target = event.target as HTMLElement;
-    return target.tagName !== "INPUT";
-};
-
 /**
  * @internal
  */
@@ -67,8 +62,8 @@ export const ScrollablePanel = React.forwardRef<HTMLDivElement | undefined, IScr
             };
         }, [scrollToVisible, containerRef]);
 
-        const onPanelScroll = useCallback((event: React.UIEvent<HTMLDivElement>) => {
-            if (isNotOnInput(event) && containerRef?.current) {
+        const onPanelScroll = useCallback(() => {
+            if (containerRef?.current) {
                 handleOnScrollEvent(containerRef.current);
             }
         }, []);
