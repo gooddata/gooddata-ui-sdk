@@ -44,10 +44,10 @@
         "fast-glob": "^3.2.7",
         "lodash": "^4.17.19",
         "@formatjs/cli": "^4.8.4",
+        "@formatjs/icu-messageformat-parser": "^2.1.10",
         "chalk": "^4.1.1",
         "commander": "^8.1.0",
         "html-validate": "^6.11.1",
-        "intl-messageformat-parser": "3.6.4",
         "jsonschema": "^1.2.6",
         "util": "^0.12.3",
         "tslib": "^2.0.0"
