@@ -89,7 +89,6 @@ export const MetricDropdown: React.FC<IMetricDropdownProps> = (props) => {
             alignPoints={alignPoints}
             className="s-metric_select"
             closeOnMouseDrag
-            closeOnParentScroll
             openOnInit={openOnInit}
             ignoreClicksOnByClass={[".dash-content"]}
             onOpenStateChanged={onOpenStateChanged}

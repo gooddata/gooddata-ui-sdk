@@ -57,8 +57,6 @@ export const LegendDialog: React.FC<ILegendDialogProps> = (props) => {
                         alignTo={alignTo}
                         alignPoints={isMobile ? legendMobileDialogAlignPoints : legendDialogAlignPoints}
                         closeOnOutsideClick={!isMobile}
-                        closeOnParentScroll={!isMobile}
-                        closeOnMouseDrag
                         onClose={onCloseDialog}
                         className="kpi-alert-dialog-overlay"
                     >

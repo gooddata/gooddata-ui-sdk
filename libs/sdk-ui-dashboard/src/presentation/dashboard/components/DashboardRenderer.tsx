@@ -5,7 +5,11 @@ import {
     ErrorComponent as DefaultError,
     LoadingComponent as DefaultLoading,
 } from "@gooddata/sdk-ui";
-import { OverlayProvider, ToastMessageContextProvider } from "@gooddata/sdk-ui-kit";
+import {
+    OverlayController,
+    ToastMessageContextProvider,
+    OverlayControllerProvider,
+} from "@gooddata/sdk-ui-kit";
 import { ThemeProvider } from "@gooddata/sdk-ui-theme-provider";
 import React from "react";
 import { DashboardStoreProvider } from "../../../model";
@@ -37,7 +41,6 @@ import {
     DefaultEmptyLayoutDropZoneBody,
     DragLayerComponent,
     LayoutResizeStateProvider,
-    DragNotification,
 } from "../../dragAndDrop";
 import { RenderModeAwareDashboardSidebar } from "../DashboardSidebar/RenderModeAwareDashboardSidebar";
 
@@ -66,83 +69,85 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
     const dashboardRender = (
         <BackendProvider backend={backend}>
             <WorkspaceProvider workspace={workspace}>
-                <DashboardStoreProvider
-                    backend={props.backend}
-                    workspace={props.workspace}
-                    dashboard={dashboardOrRef}
-                    persistedDashboard={props.persistedDashboard}
-                    filterContextRef={props.filterContextRef}
-                    eventHandlers={props.eventHandlers}
-                    config={props.config}
-                    permissions={props.permissions}
-                    onStateChange={props.onStateChange}
-                    onEventingInitialized={props.onEventingInitialized}
-                    additionalReduxContext={props.additionalReduxContext}
-                    customizationFns={props.customizationFns}
-                >
-                    <ToastMessageContextProvider>
-                        <ExportDialogContextProvider>
-                            <DashboardCustomizationsProvider
-                                insightMenuItemsProvider={props.insightMenuItemsProvider}
-                            >
-                                <DashboardComponentsProvider
-                                    ErrorComponent={props.ErrorComponent ?? DefaultError}
-                                    LoadingComponent={props.LoadingComponent ?? DefaultLoading}
-                                    LayoutComponent={props.LayoutComponent ?? DefaultDashboardLayout}
-                                    InsightComponentProvider={insightProvider}
-                                    InsightBodyComponentProvider={insightBodyProvider}
-                                    InsightMenuButtonComponentProvider={insightMenuButtonProvider}
-                                    InsightMenuComponentProvider={insightMenuProvider}
-                                    KpiComponentProvider={kpiProvider}
-                                    WidgetComponentProvider={widgetProvider}
-                                    ButtonBarComponent={props.ButtonBarComponent ?? DefaultButtonBar}
-                                    MenuButtonComponent={props.MenuButtonComponent ?? DefaultMenuButton}
-                                    TopBarComponent={props.TopBarComponent ?? DefaultTopBar}
-                                    TitleComponent={props.TitleComponent ?? RenderModeAwareTitle}
-                                    ScheduledEmailDialogComponent={
-                                        props.ScheduledEmailDialogComponent ?? DefaultScheduledEmailDialog
-                                    }
-                                    ScheduledEmailManagementDialogComponent={
-                                        props.ScheduledEmailManagementDialogComponent ??
-                                        DefaultScheduledEmailManagementDialog
-                                    }
-                                    ShareDialogComponent={props.ShareDialogComponent ?? DefaultShareDialog}
-                                    SaveAsDialogComponent={props.SaveAsDialogComponent ?? DefaultSaveAsDialog}
-                                    DashboardAttributeFilterComponentProvider={attributeFilterProvider}
-                                    DashboardDateFilterComponentProvider={dateFilterProvider}
-                                    FilterBarComponent={props.FilterBarComponent ?? DefaultFilterBar}
-                                    SidebarComponent={
-                                        props.SidebarComponent ?? RenderModeAwareDashboardSidebar
-                                    }
-                                    InsightWidgetComponentSet={insightWidgetComponentSet}
-                                    KpiWidgetComponentSet={kpiWidgetComponentSet}
-                                    AttributeFilterComponentSet={attributeFilterComponentSet}
-                                    EmptyLayoutDropZoneBodyComponent={
-                                        props.EmptyLayoutDropZoneBodyComponent ??
-                                        DefaultEmptyLayoutDropZoneBody
-                                    }
-                                    SaveButtonComponent={props.SaveButtonComponent ?? DefaultSaveButton}
+                <OverlayControllerProvider overlayController={OverlayController.getInstance()}>
+                    <DashboardStoreProvider
+                        backend={props.backend}
+                        workspace={props.workspace}
+                        dashboard={dashboardOrRef}
+                        persistedDashboard={props.persistedDashboard}
+                        filterContextRef={props.filterContextRef}
+                        eventHandlers={props.eventHandlers}
+                        config={props.config}
+                        permissions={props.permissions}
+                        onStateChange={props.onStateChange}
+                        onEventingInitialized={props.onEventingInitialized}
+                        additionalReduxContext={props.additionalReduxContext}
+                        customizationFns={props.customizationFns}
+                    >
+                        <ToastMessageContextProvider>
+                            <ExportDialogContextProvider>
+                                <DashboardCustomizationsProvider
+                                    insightMenuItemsProvider={props.insightMenuItemsProvider}
                                 >
-                                    <DashboardConfigProvider menuButtonConfig={props.menuButtonConfig}>
-                                        <DndProvider backend={HTML5Backend}>
-                                            <LayoutResizeStateProvider>
-                                                {/* we need wrapping element for drag layer and dashboard for proper rendering in flex layout */}
-                                                <div className="component-root">
-                                                    <DragLayerComponent />
-                                                    <DragNotification>
-                                                        <OverlayProvider>
-                                                            <DashboardLoading {...props} />
-                                                        </OverlayProvider>
-                                                    </DragNotification>
-                                                </div>
-                                            </LayoutResizeStateProvider>
-                                        </DndProvider>
-                                    </DashboardConfigProvider>
-                                </DashboardComponentsProvider>
-                            </DashboardCustomizationsProvider>
-                        </ExportDialogContextProvider>
-                    </ToastMessageContextProvider>
-                </DashboardStoreProvider>
+                                    <DashboardComponentsProvider
+                                        ErrorComponent={props.ErrorComponent ?? DefaultError}
+                                        LoadingComponent={props.LoadingComponent ?? DefaultLoading}
+                                        LayoutComponent={props.LayoutComponent ?? DefaultDashboardLayout}
+                                        InsightComponentProvider={insightProvider}
+                                        InsightBodyComponentProvider={insightBodyProvider}
+                                        InsightMenuButtonComponentProvider={insightMenuButtonProvider}
+                                        InsightMenuComponentProvider={insightMenuProvider}
+                                        KpiComponentProvider={kpiProvider}
+                                        WidgetComponentProvider={widgetProvider}
+                                        ButtonBarComponent={props.ButtonBarComponent ?? DefaultButtonBar}
+                                        MenuButtonComponent={props.MenuButtonComponent ?? DefaultMenuButton}
+                                        TopBarComponent={props.TopBarComponent ?? DefaultTopBar}
+                                        TitleComponent={props.TitleComponent ?? RenderModeAwareTitle}
+                                        ScheduledEmailDialogComponent={
+                                            props.ScheduledEmailDialogComponent ?? DefaultScheduledEmailDialog
+                                        }
+                                        ScheduledEmailManagementDialogComponent={
+                                            props.ScheduledEmailManagementDialogComponent ??
+                                            DefaultScheduledEmailManagementDialog
+                                        }
+                                        ShareDialogComponent={
+                                            props.ShareDialogComponent ?? DefaultShareDialog
+                                        }
+                                        SaveAsDialogComponent={
+                                            props.SaveAsDialogComponent ?? DefaultSaveAsDialog
+                                        }
+                                        DashboardAttributeFilterComponentProvider={attributeFilterProvider}
+                                        DashboardDateFilterComponentProvider={dateFilterProvider}
+                                        FilterBarComponent={props.FilterBarComponent ?? DefaultFilterBar}
+                                        SidebarComponent={
+                                            props.SidebarComponent ?? RenderModeAwareDashboardSidebar
+                                        }
+                                        InsightWidgetComponentSet={insightWidgetComponentSet}
+                                        KpiWidgetComponentSet={kpiWidgetComponentSet}
+                                        AttributeFilterComponentSet={attributeFilterComponentSet}
+                                        EmptyLayoutDropZoneBodyComponent={
+                                            props.EmptyLayoutDropZoneBodyComponent ??
+                                            DefaultEmptyLayoutDropZoneBody
+                                        }
+                                        SaveButtonComponent={props.SaveButtonComponent ?? DefaultSaveButton}
+                                    >
+                                        <DashboardConfigProvider menuButtonConfig={props.menuButtonConfig}>
+                                            <DndProvider backend={HTML5Backend}>
+                                                <LayoutResizeStateProvider>
+                                                    {/* we need wrapping element for drag layer and dashboard for proper rendering in flex layout */}
+                                                    <div className="component-root">
+                                                        <DragLayerComponent />
+                                                        <DashboardLoading {...props} />
+                                                    </div>
+                                                </LayoutResizeStateProvider>
+                                            </DndProvider>
+                                        </DashboardConfigProvider>
+                                    </DashboardComponentsProvider>
+                                </DashboardCustomizationsProvider>
+                            </ExportDialogContextProvider>
+                        </ToastMessageContextProvider>
+                    </DashboardStoreProvider>
+                </OverlayControllerProvider>
             </WorkspaceProvider>
         </BackendProvider>
     );
