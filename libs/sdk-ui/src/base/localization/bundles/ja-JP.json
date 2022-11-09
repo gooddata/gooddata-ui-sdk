@@ -277,6 +277,7 @@
     "attributesDropdown.empty.item.tooltip": "欠損（NULL）および空の（\"\"）値を含めます。",
     "attributesDropdown.filterConfiguredMessage": "直接フィルターか、他のフィルターで<strong>{parentTitle}</strong> すでにフィルター済み <strong>{childTitle}</strong>。",
     "attributesDropdown.attributeNameWithData": "データの",
+    "attributesDropdown.noConnectionMessage": "<strong>{childTitle}</strong> フィルターが無効 <strong>{parentTitle}</strong>。フィルターアトリビュートとデータモデルが無関係です。",
     "shareDialog.share.grantee.title": "ユーザやグループと共有",
     "shareDialog.share.grantee.share": "共有する",
     "shareDialog.share.grantee.list.title": "シェア相手",
