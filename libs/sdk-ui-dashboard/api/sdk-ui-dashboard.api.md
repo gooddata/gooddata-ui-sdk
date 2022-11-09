@@ -5610,6 +5610,9 @@ itemIndex: number;
 } | undefined>;
 
 // @internal
+export const selectIsAlternativeDisplayFormSelectionEnabled: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
+
+// @internal
 export const selectIsAnalyticalDesignerEnabled: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
 // @internal (undocumented)
@@ -5668,6 +5671,9 @@ export const selectIsKpiAlertHighlightedByWidgetRef: (ref: ObjRef | undefined) =
 
 // @alpha (undocumented)
 export const selectIsKpiAlertOpenedByWidgetRef: (ref: ObjRef | undefined) => (state: DashboardState) => boolean;
+
+// @internal
+export const selectIsKPIDashboardDependentFiltersEnabled: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
 // @internal (undocumented)
 export const selectIsKpiDeleteDialogOpen: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;

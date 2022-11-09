@@ -55,6 +55,8 @@ export {
     selectDashboardEditModeDevRollout,
     selectIsAnalyticalDesignerEnabled,
     selectIsDeleteFilterButtonEnabled,
+    selectIsKPIDashboardDependentFiltersEnabled,
+    selectIsAlternativeDisplayFormSelectionEnabled,
 } from "./config/configSelectors";
 export { PermissionsState } from "./permissions/permissionsState";
 export {
