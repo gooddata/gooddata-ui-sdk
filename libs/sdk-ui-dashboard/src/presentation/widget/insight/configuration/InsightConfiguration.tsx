@@ -1,6 +1,7 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
 import { IInsightWidget, isInsightWidget, objRefToString } from "@gooddata/sdk-model";
+import { ScrollablePanel } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 import omit from "lodash/omit";
 import cx from "classnames";
@@ -11,7 +12,6 @@ import {
     useDashboardDispatch,
     changeInsightWidgetVisConfiguration,
 } from "../../../../model";
-import { WidgetScrollablePanel } from "../../common/WidgetScrollablePanel";
 import { InsightTitleConfig } from "./InsightTitleConfig";
 
 import InsightFilters from "./InsightFilters";
@@ -28,10 +28,14 @@ export const InsightConfiguration: React.FC<IInsightConfigurationProps> = ({ wid
     const settings = useDashboardSelector(selectSettings);
     const dispatch = useDashboardDispatch();
 
-    const classes = cx("configuration-panel", `s-visualization-${widgetRefSuffix}`);
+    const classes = cx(
+        "configuration-panel",
+        "configuration-scrollable-panel",
+        `s-visualization-${widgetRefSuffix}`,
+    );
 
     return (
-        <WidgetScrollablePanel className={classes}>
+        <ScrollablePanel className={classes}>
             <InsightTitleConfig
                 widget={widget}
                 isHidingOfWidgetTitleEnabled={settings.enableHidingOfWidgetTitle ?? false}
@@ -46,6 +50,6 @@ export const InsightConfiguration: React.FC<IInsightConfigurationProps> = ({ wid
                 }}
             />
             <InsightFilters widget={widget} />
-        </WidgetScrollablePanel>
+        </ScrollablePanel>
     );
 };

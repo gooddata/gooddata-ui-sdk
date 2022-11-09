@@ -7,6 +7,11 @@
     height: 100%;
 }
 
+.configuration-scrollable-panel {
+    width: 100%;
+    overflow: auto;
+}
+
 .configuration-panel {
     width: 100%;
     height: 100%;
@@ -109,7 +114,8 @@
             }
 
             .configuration-panel-screen {
-                overflow: auto;
+                overflow: hidden;
+                display: flex;
             }
 
             .configuration-panel-header-title i {
