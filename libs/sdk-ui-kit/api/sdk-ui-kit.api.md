@@ -3190,6 +3190,14 @@ export interface IRowsIconProps extends IIconProps {
 }
 
 // @internal (undocumented)
+export interface IScrollablePanelProps extends React_2.HTMLAttributes<HTMLDivElement> {
+    // (undocumented)
+    scrollToVisible?: (element: HTMLElement, container: HTMLElement, bottomMargin: number) => void;
+    // (undocumented)
+    tagName?: React_2.ReactType;
+}
+
+// @internal (undocumented)
 export interface IScrollGradientProps {
     // (undocumented)
     backgroundColor?: string;
@@ -3205,6 +3213,9 @@ export interface IScrollGradientProps {
 
 // @internal (undocumented)
 export const isDateDatasetHeader: (obj: unknown) => obj is IDateDatasetHeader;
+
+// @internal (undocumented)
+export type isElementInvisibleType = (element: HTMLElement, container: HTMLElement) => boolean;
 
 // @internal (undocumented)
 export function isFreemiumEdition(platformEdition: string | undefined): boolean;
@@ -3916,7 +3927,15 @@ export const ResponsiveText: React_2.FC<IResponsiveTextProps>;
 export type SameAsTargetPosition = "sameAsTarget";
 
 // @internal (undocumented)
+export const ScrollablePanel: React_2.ForwardRefExoticComponent<IScrollablePanelProps & React_2.RefAttributes<HTMLDivElement>>;
+
+// @internal (undocumented)
 export type ScrollCallback = (visibleRowsStartIndex: number, visibleRowsEndIndex: number) => void;
+
+// @internal (undocumented)
+export const scrollContextDefault: {
+    scrollIntoView: (_element: HTMLElement, _bottomMargin?: number, _isElementInvisibleCheck?: isElementInvisibleType) => void;
+};
 
 // @internal (undocumented)
 export const ScrollGradient: React_2.FC<IScrollGradientProps>;
@@ -4139,6 +4158,11 @@ export const useOverlayZIndex: (uuid: string) => number;
 
 // @internal
 export const useResponsiveContext: () => IResponsiveConfig;
+
+// @internal (undocumented)
+export const useScrollContext: () => {
+    scrollIntoView: (_element: HTMLElement, _bottomMargin?: number, _isElementInvisibleCheck?: isElementInvisibleType) => void;
+};
 
 // @internal (undocumented)
 export const useToastMessage: () => UseToastMessageType;

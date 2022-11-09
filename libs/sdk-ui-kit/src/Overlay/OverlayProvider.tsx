@@ -6,11 +6,7 @@ import { v4 as uuid } from "uuid";
 import throttle from "lodash/throttle";
 import CustomEventPolyfill from "custom-event"; // TODO: FET-772 Remove IE-specific polyfills, upgrade blocked dependencies
 
-/**
- * This is custom dom goodstrap event, it is used by Overlay to handle CloseOnParentScroll
- * @internal
- */
-export const fireGoodstrapScrollEvent = (
+const fireGoodstrapScrollEvent = (
     node: HTMLElement,
     windowInstance = { dispatchEvent: (_event: Event) => true },
 ) => {
@@ -25,7 +21,15 @@ export const fireGoodstrapScrollEvent = (
     );
 };
 
-const handleOnScrollEvent = throttle((node: HTMLElement) => fireGoodstrapScrollEvent(node, window), 500);
+/**
+ * This is custom dom goodstrap event, it is used by Overlay to handle CloseOnParentScroll
+ * This event is throttled by default
+ * @internal
+ */
+export const handleOnScrollEvent = throttle(
+    (node: HTMLElement) => fireGoodstrapScrollEvent(node, window),
+    500,
+);
 
 /**
  * Props of OverlayProvider

@@ -1,8 +1,12 @@
 // (C) 2019-2022 GoodData Corporation
-import React, { useRef, useImperativeHandle, useMemo } from "react";
+import React, { useRef, useImperativeHandle, useMemo, useCallback } from "react";
 
 import { ScrollContext, isElementInvisibleType } from "./ScrollContext";
+import { handleOnScrollEvent } from "../Overlay/OverlayProvider";
 
+/**
+ * @internal
+ */
 export interface IScrollablePanelProps extends React.HTMLAttributes<HTMLDivElement> {
     scrollToVisible?: (element: HTMLElement, container: HTMLElement, bottomMargin: number) => void;
     tagName?: React.ReactType;
@@ -27,9 +31,16 @@ const isElementInvisibleCheckDefault: isElementInvisibleType = (
     return false;
 };
 
-// eslint-disable-next-line react/display-name
+const isNotOnInput = (event: React.UIEvent<HTMLDivElement>) => {
+    const target = event.target as HTMLElement;
+    return target.tagName !== "INPUT";
+};
+
+/**
+ * @internal
+ */
 export const ScrollablePanel = React.forwardRef<HTMLDivElement | undefined, IScrollablePanelProps>(
-    (props, ref) => {
+    function ScrollablePanel(props, ref) {
         const {
             tagName: TagName = "div",
             scrollToVisible = scrollToVisibleDefault,
@@ -56,9 +67,15 @@ export const ScrollablePanel = React.forwardRef<HTMLDivElement | undefined, IScr
             };
         }, [scrollToVisible, containerRef]);
 
+        const onPanelScroll = useCallback((event: React.UIEvent<HTMLDivElement>) => {
+            if (isNotOnInput(event) && containerRef?.current) {
+                handleOnScrollEvent(containerRef.current);
+            }
+        }, []);
+
         return (
             <ScrollContext.Provider value={memoizeContext}>
-                <TagName {...divProps} ref={containerRef}>
+                <TagName {...divProps} ref={containerRef} onScroll={onPanelScroll}>
                     {children}
                 </TagName>
             </ScrollContext.Provider>
