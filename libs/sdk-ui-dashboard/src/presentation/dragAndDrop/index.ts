@@ -12,4 +12,3 @@ export * from "./Resize/HeightResizerHotspot";
 export * from "./Resize/WidthResizerHotspot";
 export * from "./Resize/ResizeOverlay";
 export * from "./Resize/BulletsBar/BulletsBar";
-export * from "./DragNotification";

@@ -42,16 +42,13 @@ export const RowLegendIcoButton: React.FC<IRowLegendIcoButton> = (props) => {
         return null;
     }
 
-    const handleOnClick = (e: React.MouseEvent<HTMLDivElement>) => {
-        e.preventDefault();
-        e.stopPropagation();
+    const handleOnClick = () => {
         onIconClick();
     };
 
     const iconClasses = cx("legend-popup-icon s-legend-popup-icon", {
         "legend-popup-icon-active": isActive,
     });
-
     return (
         <div className="legend-popup-button">
             <div onClick={handleOnClick} className={iconClasses}>
