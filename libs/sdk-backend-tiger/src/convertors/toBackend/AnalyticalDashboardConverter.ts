@@ -15,7 +15,6 @@ import {
     IDashboardPluginLink,
 } from "@gooddata/sdk-model";
 import omit from "lodash/omit";
-import updateWith from "lodash/updateWith";
 import { cloneWithSanitizedIds } from "./IdSanitization";
 import isEmpty from "lodash/isEmpty";
 import update from "lodash/fp/update";
@@ -35,8 +34,8 @@ function removeWidgetIdentifiersInLayout(layout: IDashboardLayout<IDashboardWidg
         widgetCallback: (_, widgetPath) => widgetsPaths.push(widgetPath),
     });
 
-    return widgetsPaths.reduce((layout, widgetPath) => {
-        return updateWith(layout, widgetPath, removeIdentifiers);
+    return widgetsPaths.reduce((newLayout, widgetPath) => {
+        return update(widgetPath, removeIdentifiers, newLayout);
     }, layout);
 }
 
