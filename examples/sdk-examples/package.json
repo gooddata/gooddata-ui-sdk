@@ -23,7 +23,6 @@
         "@babel/plugin-proposal-object-rest-spread": "^7.7.2",
         "@babel/plugin-transform-async-to-generator": "^7.7.2",
         "@babel/plugin-transform-typescript": "^7.7.2",
-        "@babel/polyfill": "^7.7.2",
         "@babel/preset-env": "^7.7.2",
         "@babel/preset-react": "^7.7.2",
         "@babel/preset-typescript": "^7.7.2",
@@ -84,6 +83,7 @@
         "webpack-dev-server": "^4.9.1"
     },
     "dependencies": {
+        "@babel/polyfill": "^7.7.2",
         "@gooddata/api-client-bear": "^8.12.0-alpha.31",
         "@gooddata/api-model-bear": "^8.12.0-alpha.31",
         "@gooddata/sdk-backend-base": "^8.12.0-alpha.31",
@@ -100,8 +100,6 @@
         "@gooddata/sdk-ui-loaders": "^8.12.0-alpha.31",
         "@gooddata/sdk-ui-pivot": "^8.12.0-alpha.31",
         "@gooddata/sdk-ui-theme-provider": "^8.12.0-alpha.31",
-        "babel-runtime": "^6.26.0",
-        "babel-polyfill": "^6.26.0",
         "formik": "^0.11.11",
         "history": "^4.7.2",
         "isomorphic-fetch": "^3.0.0",

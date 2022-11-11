@@ -511,14 +511,6 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "babel-polyfill",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
-      "name": "babel-runtime",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
       "name": "blessed",
       "allowedCategories": [ "tools" ]
     },

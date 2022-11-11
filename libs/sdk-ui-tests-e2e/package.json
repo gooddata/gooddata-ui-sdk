@@ -60,6 +60,7 @@
         "refresh-md": "./scripts/refresh-md.sh"
     },
     "dependencies": {
+        "@babel/polyfill": "^7.7.2",
         "@gooddata/catalog-export": "^8.12.0-alpha.31",
         "@gooddata/eslint-config": "^2.1.0",
         "@gooddata/sdk-backend-bear": "^8.12.0-alpha.31",
@@ -75,8 +76,6 @@
         "@gooddata/sdk-ui-pivot": "^8.12.0-alpha.31",
         "@gooddata/util": "^8.12.0-alpha.31",
         "axios": "^0.21.4",
-        "babel-polyfill": "^6.26.0",
-        "babel-runtime": "^6.26.0",
         "dotenv": "^10.0.0",
         "lodash": "^4.17.19",
         "react": "^17.0.2",
@@ -95,7 +94,6 @@
         "@babel/plugin-proposal-object-rest-spread": "^7.7.2",
         "@babel/plugin-transform-async-to-generator": "^7.7.2",
         "@babel/plugin-transform-typescript": "^7.7.2",
-        "@babel/polyfill": "^7.7.2",
         "@babel/preset-env": "^7.7.2",
         "@babel/preset-react": "^7.7.2",
         "@babel/preset-typescript": "^7.7.2",

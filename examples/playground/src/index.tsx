@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 // this line is to avoid the TS2580 error. We do have the required dependencies but the error still happens.
 declare const require: any;
 if (process.env.WDYR === "true") {
@@ -9,7 +9,7 @@ if (process.env.WDYR === "true") {
         include: [/WithLoading/],
     });
 }
-import "babel-polyfill";
+import "@babel/polyfill";
 import React from "react";
 import ReactDOM from "react-dom";
 
