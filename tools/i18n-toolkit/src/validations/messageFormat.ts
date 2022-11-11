@@ -20,7 +20,9 @@ export async function getIntlMessageFormatCheck(
         } catch (err) {
             fail(`Intl message check ends with error.`, true);
             throw new Error(
-                `Intl format of localization is not correct, see: ${JSON.stringify(localization)}`,
+                `Intl format of localization is not correct, see: ${JSON.stringify(localization)}, cause ${
+                    err.message ?? "unknown"
+                }`,
             );
         }
     });
