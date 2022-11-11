@@ -77,9 +77,14 @@ const DescriptionPanelCore: React.FC<IDescriptionPanelProps> = (props) => {
     return (
         <BubbleHoverTrigger showDelay={0} eventsOnBubble={true}>
             <div
-                className={cx("gd-icon-circle-question-wrapper", "gd-description-icon", {
-                    "is-mobile": isMobileDevice,
-                })}
+                className={cx(
+                    "gd-icon-circle-question-wrapper",
+                    "gd-description-icon",
+                    "s-description-trigger",
+                    {
+                        "is-mobile": isMobileDevice,
+                    },
+                )}
             >
                 <div className="gd-icon-circle-question" />
             </div>
@@ -99,7 +104,7 @@ const DescriptionPanelContentCore: React.FC<IDescriptionPanelProps> = (props) =>
     const { title, description } = props;
 
     return (
-        <div className="gd-description-panel">
+        <div className="gd-description-panel s-gd-description-panel">
             {!isEmpty(title) && <div className="gd-description-panel-title">{title}</div>}
             <div className="gd-description-panel-content">
                 {!isEmpty(description) && <EllipsisText text={description} />}

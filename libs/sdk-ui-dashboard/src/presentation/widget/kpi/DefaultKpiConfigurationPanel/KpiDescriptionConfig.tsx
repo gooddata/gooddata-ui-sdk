@@ -171,7 +171,7 @@ export function KpiDescriptionConfig(props: IKpiDescriptionConfigProps) {
                                 }
                                 isOpen={isOpen}
                                 onClick={openDropdown}
-                                className="description-config-dropdown-button"
+                                className="description-config-dropdown-button s-description-config-dropdown-button"
                             />
                         )}
                     />
