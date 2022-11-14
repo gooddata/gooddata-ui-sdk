@@ -1,0 +1,17 @@
+{
+    "name": "check-pull-request-title",
+    "version": "1.0.0",
+    "description": "Simple GitHub action that checks pull request title",
+    "main": "index.js",
+    "scripts": {
+        "build": "ncc build src/action.ts -o build"
+    },
+    "author": "GoodData",
+    "license": "MIT",
+    "devDependencies": {
+        "@vercel/ncc": "^0.34.0"
+    },
+    "dependencies": {
+        "@actions/core": "^1.10.0"
+    }
+}

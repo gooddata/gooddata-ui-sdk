@@ -1,0 +1,24 @@
+# (C) 2022 GoodData Corporation
+
+name: "Check pull request commits"
+description: "Simple action that checks pull request commits"
+author: "mort"
+
+inputs:
+    pr_head:
+        description: "SHA hash of the pull request head"
+        required: true
+    pr_base:
+        description: "SHA hash of the pull request base"
+        required: true
+    lint_config:
+        description: "Path to commit lint config file"
+        required: true
+
+runs:
+    using: "node16"
+    main: "src/action.js"
+
+branding:
+    icon: "git-pull-request"
+    color: "green"
