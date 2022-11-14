@@ -27,10 +27,11 @@ const arrowOffsets: ArrowOffsets = {
 interface IDashboardInsightMenuBubbleProps {
     widget: IWidget;
     onClose: () => void;
+    isSubmenu?: boolean;
 }
 
 export const DashboardInsightMenuBubble: React.FC<IDashboardInsightMenuBubbleProps> = (props) => {
-    const { onClose, widget, children } = props;
+    const { onClose, isSubmenu, widget, children } = props;
     const widgetRefAsString = objRefToString(widgetRef(widget));
 
     return (
@@ -44,8 +45,8 @@ export const DashboardInsightMenuBubble: React.FC<IDashboardInsightMenuBubblePro
                 "gd-configuration-bubble",
                 "edit-insight-config",
                 "s-edit-insight-config",
-                "edit-insight-config-arrow-color",
                 "edit-insight-config-title-1-line",
+                isSubmenu ? "edit-insight-config-arrow-submenu-color" : "edit-insight-config-arrow-color",
             )}
             closeOnOutsideClick
             onClose={onClose}
