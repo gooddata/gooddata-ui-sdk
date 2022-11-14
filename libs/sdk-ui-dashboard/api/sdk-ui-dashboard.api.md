@@ -3146,6 +3146,8 @@ export interface IDashboardCustomizationProps extends IDashboardCustomComponentP
     insightMenuItemsProvider?: InsightMenuItemsProvider;
     // @alpha
     menuButtonConfig?: IMenuButtonConfiguration;
+    // @internal (undocumented)
+    toolbarGroups?: IDashboardToolbarGroup[];
 }
 
 // @public (undocumented)
