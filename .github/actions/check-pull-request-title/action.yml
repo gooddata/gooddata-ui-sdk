@@ -1,0 +1,18 @@
+# (C) 2022 GoodData Corporation
+
+name: "Check pull request title"
+description: "Simple action that checks pull request title"
+author: "mort"
+
+inputs:
+    pull_request_title:
+        description: "GitHub pull request title"
+        required: true
+
+runs:
+    using: "node16"
+    main: "build/index.js"
+
+branding:
+    icon: "git-pull-request"
+    color: "green"

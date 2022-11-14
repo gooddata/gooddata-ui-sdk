@@ -1,0 +1,18 @@
+{
+    "name": "check-pull-request-commits",
+    "version": "1.0.0",
+    "description": "Simple GitHub action that checks pull request commits",
+    "main": "src/action.js",
+    "author": "GoodData",
+    "license": "MIT",
+    "devDependencies": {},
+    "dependencies": {
+        "@actions/core": "^1.10.0",
+        "@commitlint/cli": "^17.1.2",
+        "@commitlint/config-conventional": "^17.1.0",
+        "@commitlint/format": "^17.0.0",
+        "@commitlint/lint": "^17.1.0",
+        "@commitlint/load": "^17.1.2",
+        "@commitlint/read": "^17.1.0"
+    }
+}

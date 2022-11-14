@@ -1,0 +1,42 @@
+# (C) 2022 GoodData Corporation
+
+name: Check pull request
+
+on:
+    pull_request:
+        types: [opened, edited, synchronize, reopened]
+
+jobs:
+    validate-title:
+        name: Title validation
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+            - name: Check the pull request title
+              uses: ./.github/actions/check-pull-request-title
+              with:
+                  pull_request_title: ${{ github.event.pull_request.title }}
+
+    validate-commits:
+        name: Commits validation
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+              with:
+                  fetch-depth: 0
+            - name: Set commit range variables
+              run: |
+                  echo "PR_HEAD=${{ github.event.pull_request.head.sha }}" >> $GITHUB_ENV
+                  echo "PR_BASE=${{ github.event.pull_request.base.sha }}" >> $GITHUB_ENV
+            - name: Install dependencies
+              run: |
+                  cd ./.github/actions/check-pull-request-commits
+                  yarn install --frozen-lockfile
+            - name: Check the pull request commit messages
+              uses: ./.github/actions/check-pull-request-commits
+              with:
+                  pr_head: ${{ env.PR_HEAD }}
+                  pr_base: ${{ env.PR_BASE }}
+                  lint_config: ./.github/actions/check-pull-request-commits/commitlint.config.js

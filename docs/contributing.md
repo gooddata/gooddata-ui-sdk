@@ -172,14 +172,12 @@ rushx build
 
 ### What should the commits look like?
 
-You should write imperative commit messages with well-defined title and body (for more context, please see [this blog post](https://chris.beams.io/posts/git-commit/)).
+Commits should follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification.
 
-To give some examples of commit messages we'd like to see from this repo:
-
--   [e3d400e](https://github.com/gooddata/gooddata-ui-sdk/commit/e3d400e):
+Example:
 
 ```
-Clarify attribute area sort
+feat(sdk-model): clarify attribute area sort
 
 -  the attribute sort aggregation switches the attribute sort into
    area sort
@@ -188,41 +186,105 @@ Clarify attribute area sort
 -  it is more clear if the area sort has separate factory - even if it
    creates the same type.
 -  but this way, the intent is cleaner
--  also, the aggregation: boolean was not good. this is indeed a function that may one day support more.
+-  also, the aggregation: boolean was not good, this is indeed a function that may one day support more
 
 JIRA: RAIL-2175
 ```
 
--   [a19eade](https://github.com/gooddata/gooddata-ui-sdk/commit/a19eade):
+Commit message structure:
 
 ```
-Improve dashboard updating logic
+<type>(<scope>): <description>
 
-The order of operations matters here:
+<body>
 
-1. delete any alerts for to-be-deleted widgets
-2. update dashboard
-3. delete to-be-deleted widgets
-
-If we do it in any other order, the backend will complain
-that we are removing an object referenced by something else.
-
-JIRA: RAIL-2537
+<footer>
 ```
 
-Note the imperative, present tense voice in the title. A good rule of thumb is to imagine the commit title as the ending to "If applied, this commit will [commit title]".
+#### Type
 
-Also note how to add JIRA ticket reference: using a "JIRA: [ticket-id]" to the end of the commit body. We do not include the JIRA ticket in the first line because it wastes valuable space (the first line is visible in git log etc.) and the name of the change is more immediately useful.
+Must be one of the following:
+
+-   `feat` - A new feature
+-   `fix` - A bug fix of existing feature
+-   `build` - Changes that affect the build system or auxiliary tools and libraries such as eslint or prettier
+-   `ci` - Changes to our CI configuration files and scripts
+-   `docs` - Documentation changes, JSDoc, comments, changelog
+-   `perf` - A code change that improves performance
+-   `style` - Changes that do not affect the meaning of the code (white-space, formatting)
+-   `refactor` - A code change that neither fixes a bug nor adds a feature. Refactor and cleanup of the
+    source code that retains original functionality.
+-   `test` - Adding new tests or correcting existing tests
+
+#### Scope
+
+The scope should be the name of the affected package (e.g. `sdk-backend-spi`, `sdk-model`, `sdk-ui`, `catalog-export`, etc).
+You can omit scope for changes that are done across all packages (e.g. style: add missing semicolons).
+
+#### Description
+
+A short description of the change. The whole line should be
+preferably 50 characters long or less, and no more than 72 characters. It should be entirely in lowercase
+except of proper nouns, acronyms, and the words that refer to code, like function/variable names. There must
+not be a dot (full stop) at the end of the header line.
+
+#### Body
+
+Description of the commit content and more details to the short
+description in the title. The lines must be wrapped at 72 characters.
+
+#### Footer
+
+Footer should contain JIRA ID reference in the form of `JIRA: PROJECT-TICKET_ID`.
+Changes that do not require a JIRA ticket (e.g. typo fixes) should have `TRIVIAL` in the footer instead.
+
+#### Breaking changes
+
+When you are introducing a breaking change, you should suffix the type or scope with `!` and preferably include `BREAKING CHANGE: <description>` in the commit body.
+
+#### Revert
+
+If the commit reverts a previous commit, it should begin with revert: ,followed by the header of the reverted commit. In the body it should say: This reverts commit \<hash\>., where the hash is the SHA of the commit being reverted.
+
+---
+
+**Hint**:
+Usually, when you have trouble to pick a correct change type or describe changes in one line, the changes should have been structured in
+multiple commits instead.
+
+See [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification for more examples
+and complete description how commit message can be structured.
+
+---
 
 ### What should the pull requests look like?
 
 The PR title should follow this general template:
 
-```
-RELATED: RAIL-1234 add [feature name] to [package]
-```
+-   `CHANGE_TYPE: JIRA_TICKET_ID description of the pull request`
+-   `CHANGE_TYPE: JIRA_TICKET_ID1, JIRA_TICKET_ID2 description of the pull request`
+-   `CHANGE_TYPE: description of the pull request` (valid only for `CHANGE_TYPE` values `TRIVIAL` and `CONFIG`)
 
-This is to keep the PR title structure in line with our other frontend repositories.
+The `CHANGE_TYPE` can be the following:
+
+-   `FEATURE` - The pull request introduces a new feature. The JIRA ticket linked to this commit is of the "Story" type.
+-   `BUGFIX` - The pull request fixes some feature. The JIRA ticket linked to this commit is of the "Bug" type.
+-   `RELATED` - The pull request does not introduce or fix any feature. It only relates to another pull
+    request that has the actual _FEATURE_ or _BUGFIX_ keyword.
+-   `TRIVIAL` - The pull request does not need to have JIRA ticket ID. It is used to lower the need for "paperwork"
+    for simple changes such as fixing the typos.
+-   `CONFIG` - The pull request does not need to have JIRA ticket ID (but it is better if it has). It
+    can contain changes of the build configuration and similar updates.
+
+Examples:
+
+```
+FEATURE: RAIL-123 Support for drill to custom url
+BUGFIX: RAIL-196, RAIL-197, RAIL-198 Arithmetic measure bugfixes
+RELATED: RAIL-321 Poll on correct url after 303 redirect
+TRIVIAL: Update localization strings
+CONFIG: Update docker build base image
+```
 
 In the PR body, please follow the checklist and really try to explain the changes happening in the PR (for single commit PR this will be pre-filled from your well described commit already). All the communication about the PR should happen in the PR via comments so that the process is transparent and traceable.
 
