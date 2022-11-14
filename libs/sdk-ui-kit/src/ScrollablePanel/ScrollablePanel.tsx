@@ -1,7 +1,8 @@
 // (C) 2019-2022 GoodData Corporation
-import React, { useRef, useImperativeHandle, useMemo } from "react";
+import React, { useRef, useImperativeHandle, useMemo, useCallback } from "react";
 
 import { ScrollContext, isElementInvisibleType } from "./ScrollContext";
+import { handleOnScrollEvent } from "../utils/scroll";
 
 /**
  * @internal
@@ -61,9 +62,15 @@ export const ScrollablePanel = React.forwardRef<HTMLDivElement | undefined, IScr
             };
         }, [scrollToVisible, containerRef]);
 
+        const onPanelScroll = useCallback(() => {
+            if (containerRef?.current) {
+                handleOnScrollEvent(containerRef.current);
+            }
+        }, []);
+
         return (
             <ScrollContext.Provider value={memoizeContext}>
-                <TagName {...divProps} ref={containerRef}>
+                <TagName {...divProps} ref={containerRef} onScroll={onPanelScroll}>
                     {children}
                 </TagName>
             </ScrollContext.Provider>
