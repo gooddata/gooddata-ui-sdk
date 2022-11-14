@@ -1,6 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
 import React, { useState } from "react";
-import cx from "classnames";
 import { Separator } from "@gooddata/sdk-ui-kit";
 
 import { IDashboardInsightMenuProps, IInsightMenuSubmenu, IInsightMenuItem } from "../../types";
@@ -8,12 +7,16 @@ import { DashboardInsightMenuContainer } from "./DashboardInsightMenuContainer";
 import { DashboardInsightMenuItemButton } from "./DashboardInsightMenuItemButton";
 import { DashboardInsightSubmenuContainer } from "./DashboardInsightSubmenuContainer";
 import { selectIsInEditMode, useDashboardSelector } from "../../../../../model";
-import { ConfigurationBubble } from "../../../common";
 import { DashboardInsightMenuBubble } from "./DashboardInsightMenuBubble";
+import { DashboardInsightEditMenuBubble } from "./DashboardInsightEditMenuBubble";
 
-const DashboardInsightMenuBody: React.FC<IDashboardInsightMenuProps> = (props) => {
-    const { items, widget, onClose } = props;
-    const [submenu, setSubmenu] = useState<IInsightMenuSubmenu | null>(null);
+const DashboardInsightMenuBody: React.FC<
+    IDashboardInsightMenuProps & {
+        submenu: IInsightMenuSubmenu | null;
+        setSubmenu: React.Dispatch<React.SetStateAction<IInsightMenuSubmenu | null>>;
+    }
+> = (props) => {
+    const { items, widget, submenu, setSubmenu, onClose } = props;
 
     return submenu ? (
         <DashboardInsightSubmenuContainer
@@ -33,22 +36,15 @@ const DashboardInsightMenuBody: React.FC<IDashboardInsightMenuProps> = (props) =
 export const DashboardInsightMenu: React.FC<IDashboardInsightMenuProps> = (props) => {
     const { widget, onClose } = props;
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
+    const [submenu, setSubmenu] = useState<IInsightMenuSubmenu | null>(null);
 
     return isInEditMode ? (
-        <ConfigurationBubble
-            classNames={cx(
-                "edit-insight-config",
-                "s-edit-insight-config",
-                "edit-insight-config-arrow-color",
-                "edit-insight-config-title-1-line",
-            )}
-            onClose={onClose}
-        >
-            <DashboardInsightMenuBody {...props} />
-        </ConfigurationBubble>
+        <DashboardInsightEditMenuBubble onClose={onClose} isSubmenu={!!submenu}>
+            <DashboardInsightMenuBody {...props} submenu={submenu} setSubmenu={setSubmenu} />
+        </DashboardInsightEditMenuBubble>
     ) : (
-        <DashboardInsightMenuBubble onClose={onClose} widget={widget}>
-            <DashboardInsightMenuBody {...props} />
+        <DashboardInsightMenuBubble onClose={onClose} widget={widget} isSubmenu={!!submenu}>
+            <DashboardInsightMenuBody {...props} submenu={submenu} setSubmenu={setSubmenu} />
         </DashboardInsightMenuBubble>
     );
 };
