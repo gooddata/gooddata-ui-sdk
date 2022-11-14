@@ -75,6 +75,10 @@
       "allowedCategories": [ "tools" ]
     },
     {
+      "name": "@formatjs/icu-messageformat-parser",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "@formatjs/intl-pluralrules",
       "allowedCategories": [ "production" ]
     },
@@ -748,10 +752,6 @@
     },
     {
       "name": "inquirer",
-      "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "intl-messageformat-parser",
       "allowedCategories": [ "tools" ]
     },
     {
