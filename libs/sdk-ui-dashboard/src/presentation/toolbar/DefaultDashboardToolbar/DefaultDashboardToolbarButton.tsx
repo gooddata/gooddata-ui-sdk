@@ -2,7 +2,6 @@
 import React from "react";
 import cx from "classnames";
 import { Bubble, BubbleHoverTrigger, Button, IAlignPoint } from "@gooddata/sdk-ui-kit";
-import { IDashboardToolbarButton } from "./types";
 
 const ALIGN_POINTS: IAlignPoint[] = [{ align: "tc bc", offset: { x: 0, y: -5 } }];
 
@@ -25,7 +24,21 @@ const DashboardToolbarButtonBubbleWrapper: React.FC<IDashboardToolbarButtonBubbl
     );
 };
 
-export const DashboardToolbarButton: React.FC<IDashboardToolbarButton> = (props) => {
+/**
+ * @internal
+ */
+export interface IDefaultDashboardToolbarButtonProps {
+    icon: string;
+    onClick: () => void;
+    isActive?: boolean;
+    disabled?: boolean;
+    tooltip?: string;
+}
+
+/**
+ * @internal
+ */
+export const DefaultDashboardToolbarButton: React.FC<IDefaultDashboardToolbarButtonProps> = (props) => {
     const { tooltip, disabled, icon, onClick, isActive } = props;
     return (
         <DashboardToolbarButtonBubbleWrapper tooltip={tooltip}>

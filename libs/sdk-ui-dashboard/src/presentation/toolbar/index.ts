@@ -1,3 +1,5 @@
 // (C) 2022 GoodData Corporation
-export { DashboardToolbar, IDashboardToolbarProps } from "./DashboardToolbar";
+export * from "./DefaultDashboardToolbar";
+export * from "./HiddenToolbar";
+export * from "./Toolbar";
 export * from "./types";

@@ -1,21 +1,15 @@
 // (C) 2022 GoodData Corporation
+import { ComponentType } from "react";
 
 /**
  * @internal
  */
-export interface IDashboardToolbarButton {
-    icon: string;
-    id: string;
-    onClick: () => void;
-    isActive?: boolean;
-    disabled?: boolean;
-    tooltip?: string;
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface IToolbarProps {
+    // empty for now
 }
 
 /**
  * @internal
  */
-export interface IDashboardToolbarGroup {
-    title: string;
-    buttons: IDashboardToolbarButton[];
-}
+export type CustomToolbarComponent = ComponentType<IToolbarProps>;

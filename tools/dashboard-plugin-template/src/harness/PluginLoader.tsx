@@ -4,7 +4,13 @@ import { idRef } from "@gooddata/sdk-model";
 import { IEmbeddedPlugin, useDashboardLoaderWithPluginManipulation } from "@gooddata/sdk-ui-loaders";
 import PluginFactory from "../plugin";
 import { DEFAULT_DASHBOARD_ID } from "./constants";
-import { DashboardConfig } from "@gooddata/sdk-ui-dashboard";
+import {
+    DashboardConfig,
+    CustomToolbarComponent,
+    DefaultDashboardToolbar,
+    DefaultDashboardToolbarButton,
+    DefaultDashboardToolbarGroup,
+} from "@gooddata/sdk-ui-dashboard";
 import { ErrorComponent, LoadingComponent } from "@gooddata/sdk-ui";
 
 const Plugins: IEmbeddedPlugin[] = [{ factory: PluginFactory }];
@@ -31,32 +37,28 @@ export const PluginLoader = () => {
     }, [isPluginEnabled, setExtraPlugins]);
 
     const { status, error, result } = loaderStatus;
-    const toolbarGroups = useMemo(() => {
-        return [
-            {
-                title: "Plugins",
-                buttons: [
-                    {
-                        icon: "sync",
-                        onClick: reloadPlugins,
-                        id: "sync-plugins",
-                        disabled: status !== "success",
-                        tooltip:
-                            "This will reload the plugin keeping any changes you made to the dashboard intact",
-                    },
-                    {
-                        icon: "circle-cross",
-                        onClick: togglePlugin,
-                        id: "toggle-plugins",
-                        disabled: status !== "success",
-                        isActive: !isPluginEnabled,
-                        tooltip:
-                            "This will reload the dashboard with or without the plugin applied keeping any changes you made to the dashboard intact",
-                    },
-                ],
-            },
-        ];
-    }, [isPluginEnabled, reloadPlugins, status, togglePlugin]);
+
+    const ToolbarComponent = useMemo<CustomToolbarComponent>(() => {
+        return function CustomToolbar() {
+            return (
+                <DefaultDashboardToolbar>
+                    <DefaultDashboardToolbarGroup title="Plugins">
+                        <DefaultDashboardToolbarButton
+                            icon="sync"
+                            onClick={reloadPlugins}
+                            tooltip="This will reload the plugin keeping any changes you made to the dashboard intact"
+                        />
+                        <DefaultDashboardToolbarButton
+                            icon="circle-cross"
+                            onClick={togglePlugin}
+                            tooltip="This will reload the dashboard with or without the plugin applied keeping any changes you made to the dashboard intact"
+                            isActive={!isPluginEnabled}
+                        />
+                    </DefaultDashboardToolbarGroup>
+                </DefaultDashboardToolbar>
+            );
+        };
+    }, [isPluginEnabled, reloadPlugins, togglePlugin]);
 
     if (status === "loading") {
         return <LoadingComponent />;
@@ -66,5 +68,5 @@ export const PluginLoader = () => {
         return <ErrorComponent message={error?.message ?? ""} />;
     }
 
-    return <result.DashboardComponent {...result.props} toolbarGroups={toolbarGroups} />;
+    return <result.DashboardComponent {...result.props} ToolbarComponent={ToolbarComponent} />;
 };

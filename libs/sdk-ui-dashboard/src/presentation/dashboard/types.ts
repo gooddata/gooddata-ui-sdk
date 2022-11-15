@@ -41,7 +41,7 @@ import {
 } from "../dashboardContexts";
 import { CustomSidebarComponent } from "./DashboardSidebar/types";
 import { InsightComponentSetProvider } from "../componentDefinition/types";
-import { IDashboardToolbarGroup } from "../toolbar";
+import { CustomToolbarComponent } from "../toolbar";
 
 /**
  * These props allow you to specify custom components or custom component providers that the Dashboard
@@ -245,6 +245,13 @@ export interface IDashboardCustomComponentProps {
     TopBarComponent?: CustomTopBarComponent;
 
     /**
+     * Specify component to use for rendering the toolbar.
+     *
+     * @internal
+     */
+    ToolbarComponent?: CustomToolbarComponent;
+
+    /**
      * Specify component to use for rendering the title.
      *
      * @remarks
@@ -350,11 +357,6 @@ export interface IDashboardCustomizationProps extends IDashboardCustomComponentP
      * @alpha
      */
     insightMenuItemsProvider?: InsightMenuItemsProvider;
-
-    /**
-     * @internal
-     */
-    toolbarGroups?: IDashboardToolbarGroup[];
 
     /**
      * Specify customization functions.

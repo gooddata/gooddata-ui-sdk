@@ -9,10 +9,9 @@ import { DashboardMainContent } from "./DashboardMainContent";
 import { DashboardSidebar } from "../DashboardSidebar/DashboardSidebar";
 import { RenderModeAwareDashboardSidebar } from "../DashboardSidebar/RenderModeAwareDashboardSidebar";
 import { DragLayerComponent } from "../../dragAndDrop";
-import { DashboardToolbar } from "../../toolbar";
+import { Toolbar } from "../../toolbar";
 
-export const DashboardInner: React.FC<IDashboardProps> = (props) => {
-    const { toolbarGroups } = props;
+export const DashboardInner: React.FC<IDashboardProps> = () => {
     const locale = useDashboardSelector(selectLocale);
     const isEditMode = useDashboardSelector(selectIsInEditMode);
 
@@ -34,7 +33,7 @@ export const DashboardInner: React.FC<IDashboardProps> = (props) => {
                         <DashboardMainContent />
                     </div>
                 </div>
-                {toolbarGroups?.length ? <DashboardToolbar groups={toolbarGroups} /> : null}
+                <Toolbar />
             </div>
         </IntlWrapper>
     );

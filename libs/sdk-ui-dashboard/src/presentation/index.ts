@@ -18,7 +18,7 @@ export * from "./layout";
 export * from "./scheduledEmail";
 export * from "./saveAs";
 export * from "./topBar";
-export * from "./toolbar/types";
+export * from "./toolbar";
 export * from "./widget";
 export * from "./shareDialog";
 export * from "./insightList";
