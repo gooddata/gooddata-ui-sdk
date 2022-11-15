@@ -34,7 +34,7 @@ export const DashboardInner: React.FC<IDashboardProps> = (props) => {
                         <DashboardMainContent />
                     </div>
                 </div>
-                {isEditMode && toolbarGroups?.length ? <DashboardToolbar groups={toolbarGroups} /> : null}
+                {toolbarGroups?.length ? <DashboardToolbar groups={toolbarGroups} /> : null}
             </div>
         </IntlWrapper>
     );
