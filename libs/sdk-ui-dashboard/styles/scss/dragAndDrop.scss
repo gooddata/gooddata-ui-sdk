@@ -2,6 +2,15 @@
 @use "sass:color";
 @use "variables";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/Button/variables" as kit-button-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/mixins" as kit-mixins;
+
+.drag-layer {
+    @include kit-mixins.default-styles();
+
+    box-sizing: border-box;
+    flex-wrap: nowrap;
+}
 
 .attribute-filter-button {
     &.is-draggable,
@@ -166,7 +175,8 @@
     }
 }
 
-.add-kpi-placeholder::before {
+.add-kpi-placeholder::before,
+.move-kpi-placeholder::before {
     background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/add-kpi-placeholder.svg");
 }
 
@@ -179,6 +189,7 @@
 }
 
 .dropzone {
+    z-index: 99;
     &.next,
     &.prev {
         position: absolute;
@@ -346,6 +357,12 @@
         .drag-info-placeholder-drop-target {
             width: 100%;
         }
+    }
+
+    &.type-loading {
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .can-drop {
@@ -535,4 +552,81 @@
     .dropdown-body {
         flex-direction: column;
     }
+}
+.move-kpi-placeholder {
+    display: flex;
+    align-items: center;
+    width: 151px;
+    height: 42px;
+    padding: 0 10px 0 50px;
+    font-size: 12px;
+    border: 1px solid transparentize(variables.$dialog-border, 1);
+    border-color: var(--gd-palette-complementary-5, transparentize(variables.$dialog-border, 0.5));
+    border-radius: 2px;
+    box-shadow: 0 1px 3px 0 kit-button-variables.$button-shadow-lighter,
+        0 2px 9px 0 kit-button-variables.$button-shadow-darker;
+    line-height: 14px;
+    color: variables.$gd-color-text;
+    background: var(
+        --gd-palette-complementary-0-t10,
+        transparentize(kit-variables.$default-gd-color-white, 0.05)
+    );
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        display: block;
+        flex: 0 0 auto;
+        width: 50px;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    .shortened {
+        display: block;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+}
+
+.move-insight-placeholder {
+    width: 215px;
+    height: 42px;
+    border: 1px solid transparentize(variables.$dialog-border, 1);
+    border-color: var(--gd-palette-complementary-5, transparentize(variables.$dialog-border, 0.5));
+    border-radius: 2px;
+    box-shadow: 0 1px 3px 0 kit-button-variables.$button-shadow-lighter,
+        0 2px 9px 0 kit-button-variables.$button-shadow-darker;
+    color: variables.$gd-color-text;
+    background: var(
+        --gd-palette-complementary-0-t10,
+        transparentize(kit-variables.$default-gd-color-white, 0.05)
+    );
+
+    .shortened {
+        display: block;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+}
+
+.dashboard-widget-draggable-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 10;
+}
+
+.current-dragging-item {
+    width: 0;
+    display: none;
+}
+
+.gd-fluidlayout-column-row-end-hotspot {
+    flex-grow: 1;
+    position: relative;
+    align-self: stretch;
 }

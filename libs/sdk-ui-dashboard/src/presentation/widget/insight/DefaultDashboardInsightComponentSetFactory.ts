@@ -1,6 +1,7 @@
 // (C) 2022 GoodData Corporation
 import { InsightWidgetComponentSet } from "../../componentDefinition";
 import { InsightComponentProvider } from "../../dashboardContexts";
+import { InsightDraggingComponent } from "../../dragAndDrop/";
 
 /**
  * @internal
@@ -11,7 +12,7 @@ export function DefaultDashboardInsightComponentSetFactory(
     return {
         MainComponentProvider: insightProvider,
         dragging: {
-            DraggingComponent: undefined, // TODO when adding widget moving
+            DraggingComponent: InsightDraggingComponent,
             type: "insight",
         },
         configuration: {

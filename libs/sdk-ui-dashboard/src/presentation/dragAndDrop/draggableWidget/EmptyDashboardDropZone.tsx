@@ -29,9 +29,9 @@ export const EmptyDashboardDropZone: React.FC = () => {
 
     const { EmptyLayoutDropZoneBodyComponent } = useDashboardComponentsContext();
 
-    const handleInsightListItemDrop = useInsightListItemDropHandler();
-    const handleKpiPlaceholderDrop = useKpiPlaceholderDropHandler();
-    const handleInsightPlaceholderDrop = useInsightPlaceholderDropHandler();
+    const handleInsightListItemDrop = useInsightListItemDropHandler(0, 0);
+    const handleKpiPlaceholderDrop = useKpiPlaceholderDropHandler(0, 0);
+    const handleInsightPlaceholderDrop = useInsightPlaceholderDropHandler(0, 0);
 
     const [{ canDrop, isOver, itemType }, dropRef] = useDashboardDrop(
         ["insightListItem", "kpi-placeholder", "insight-placeholder"],

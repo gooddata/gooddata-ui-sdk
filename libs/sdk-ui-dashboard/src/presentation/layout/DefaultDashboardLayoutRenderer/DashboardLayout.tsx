@@ -1,4 +1,7 @@
 // (C) 2007-2022 GoodData Corporation
+import { IDashboardLayout, ScreenSize } from "@gooddata/sdk-model";
+import cx from "classnames";
+import isEqual from "lodash/isEqual";
 import React, { useCallback, useMemo } from "react";
 import {
     Container,
@@ -7,7 +10,9 @@ import {
     ScreenClassRender,
     setConfiguration,
 } from "react-grid-system";
-import { IDashboardLayout, ScreenSize } from "@gooddata/sdk-model";
+import { DashboardLayoutFacade } from "../../../_staging/dashboard/fluidLayout/facade/layout";
+import { DASHBOARD_LAYOUT_GRID_CONFIGURATION } from "../../constants";
+import { emptyDOMRect } from "../constants";
 import { DashboardLayoutSection } from "./DashboardLayoutSection";
 import {
     IDashboardLayoutRenderProps,
@@ -15,17 +20,11 @@ import {
     IDashboardLayoutSectionRenderer,
     IDashboardLayoutWidgetRenderer,
 } from "./interfaces";
-import cx from "classnames";
-import stringify from "json-stable-stringify";
-import { DashboardLayoutFacade } from "../../../_staging/dashboard/fluidLayout/facade/layout";
 import {
+    getLayoutWithoutGridHeights,
     getResizedItemPositions,
     unifyDashboardLayoutItemHeights,
-    getLayoutWithoutGridHeights,
 } from "./utils/sizing";
-import isEqual from "lodash/isEqual";
-import { DASHBOARD_LAYOUT_GRID_CONFIGURATION } from "../../constants";
-import { emptyDOMRect } from "../constants";
 
 setConfiguration(DASHBOARD_LAYOUT_GRID_CONFIGURATION);
 
@@ -110,7 +109,7 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
                 />
             );
         },
-        [debug, stringify(resizedItemPositions), widgetRenderer],
+        [debug, resizedItemPositions, widgetRenderer],
     );
 
     return (

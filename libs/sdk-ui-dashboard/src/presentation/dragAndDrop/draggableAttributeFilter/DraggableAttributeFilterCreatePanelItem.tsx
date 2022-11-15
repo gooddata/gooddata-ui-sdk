@@ -1,7 +1,6 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
 
-import { selectIsInEditMode, useDashboardSelector } from "../../../model";
 import { DraggableItem } from "../types";
 import { DraggableCreatePanelItem } from "../DraggableCreatePanelItem";
 import { CustomCreatePanelItemComponent } from "../../componentDefinition";
@@ -24,15 +23,11 @@ const dragItem: DraggableItem = {
 export const DraggableAttributeFilterCreatePanelItem: React.FC<
     IDraggableAttributeFilterCreatePanelItemProps
 > = ({ CreatePanelItemComponent, disabled }) => {
-    const isInEditMode = useDashboardSelector(selectIsInEditMode);
-    const dragEnabled = isInEditMode && !disabled;
-
     return (
         <DraggableCreatePanelItem
             Component={CreatePanelItemComponent}
-            disabled={disabled}
-            canDrag={dragEnabled}
             dragItem={dragItem}
+            disabled={disabled}
             hideDefaultPreview={false}
         />
     );

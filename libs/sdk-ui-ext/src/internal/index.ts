@@ -47,7 +47,13 @@ export {
 export { isDateFilter, isMeasureValueFilter, isAttributeFilter, isRankingFilter } from "./utils/bucketHelper";
 export { createInternalIntl, InternalIntlWrapper } from "./utils/internalIntlProvider";
 
-export { IVisualizationSizeInfo, ISizeInfo, IVisualizationMeta } from "./interfaces/VisualizationDescriptor";
+export {
+    IVisualizationSizeInfo,
+    ISizeInfo,
+    IVisualizationDefaultSizeInfo,
+    ISizeInfoDefault,
+    IVisualizationMeta,
+} from "./interfaces/VisualizationDescriptor";
 export { IFluidLayoutDescriptor, ILayoutDescriptor, LayoutType } from "./interfaces/LayoutDescriptor";
 
 export { ISortConfig, IAvailableSortsGroup } from "./interfaces/SortConfig";

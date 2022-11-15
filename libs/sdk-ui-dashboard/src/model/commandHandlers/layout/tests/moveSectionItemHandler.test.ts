@@ -10,6 +10,7 @@ import {
 } from "../../../events";
 import { selectLayout } from "../../../store/layout/layoutSelectors";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures";
+import { moveSectionItemAndRemoveOriginalSectionIfEmpty } from "../../../commands/layout";
 import {
     ComplexDashboardIdentifier,
     ComplexDashboardWithReferences,
@@ -159,6 +160,22 @@ describe("move layout section item handler", () => {
                 ThirdSectionFirstItem,
             ]);
             expect(layout.sections[2].items).toEqual([]);
+        });
+
+        it("should move last item from section and remove an empty section", async () => {
+            const event: DashboardLayoutSectionItemMoved = await Tester.dispatchAndWaitFor(
+                moveSectionItemAndRemoveOriginalSectionIfEmpty(2, 0, 1, -1),
+                "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED",
+            );
+
+            expect(event.payload.item).toEqual(ThirdSectionFirstItem);
+            const layout = selectLayout(Tester.state());
+            expect(layout.sections[1].items).toEqual([
+                SecondSectionFirstItem,
+                SecondSectionSecondItem,
+                ThirdSectionFirstItem,
+            ]);
+            expect(layout.sections.length).toEqual(2);
         });
 
         it("should be undoable", async () => {

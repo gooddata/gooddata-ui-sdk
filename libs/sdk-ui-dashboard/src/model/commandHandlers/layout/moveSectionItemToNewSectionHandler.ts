@@ -1,33 +1,35 @@
 // (C) 2021-2022 GoodData Corporation
+import { batchActions } from "redux-batched-actions";
 import { SagaIterator } from "redux-saga";
-import { DashboardContext } from "../../types/commonTypes";
-import { MoveSectionItem } from "../../commands";
-import { invalidArgumentsProvided } from "../../events/general";
-import { selectLayout } from "../../store/layout/layoutSelectors";
 import { put, select } from "redux-saga/effects";
+import { MoveSectionItemToNewSection } from "../../commands/layout";
+import { invalidArgumentsProvided } from "../../events/general";
+import {
+    DashboardLayoutSectionItemMovedToNewSection,
+    layoutSectionItemMovedToNewSection,
+} from "../../events/layout";
+import { layoutActions } from "../../store/layout";
+import { selectLayout } from "../../store/layout/layoutSelectors";
+import { DashboardContext } from "../../types/commonTypes";
+import { ExtendedDashboardLayoutSection } from "../../types/layoutTypes";
 import {
     validateItemExists,
-    validateItemPlacement,
     validateSectionExists,
     validateSectionPlacement,
 } from "./validation/layoutValidation";
-import { layoutActions } from "../../store/layout";
-import { DashboardLayoutSectionItemMoved, layoutSectionItemMoved } from "../../events/layout";
-import { resolveIndexOfNewItem, resolveRelativeIndex } from "../../utils/arrayOps";
-import { batchActions } from "redux-batched-actions";
 
-type MoveSectionItemContext = {
+type MoveSectionItemToNewSectionContext = {
     readonly ctx: DashboardContext;
-    readonly cmd: MoveSectionItem;
+    readonly cmd: MoveSectionItemToNewSection;
     readonly layout: ReturnType<typeof selectLayout>;
 };
 
-function validateAndResolve(commandCtx: MoveSectionItemContext) {
+function validateAndResolve(commandCtx: MoveSectionItemToNewSectionContext) {
     const {
         ctx,
         layout,
         cmd: {
-            payload: { sectionIndex, toSectionIndex, itemIndex, toItemIndex, removeOriginalSectionIfEmpty },
+            payload: { sectionIndex, toSectionIndex, itemIndex, removeOriginalSectionIfEmpty },
         },
     } = commandCtx;
 
@@ -59,46 +61,19 @@ function validateAndResolve(commandCtx: MoveSectionItemContext) {
         );
     }
 
-    const targetSectionIndex = resolveRelativeIndex(layout.sections, toSectionIndex);
-    const targetSection = layout.sections[targetSectionIndex];
-
-    if (!validateItemPlacement(targetSection, toItemIndex)) {
-        throw invalidArgumentsProvided(
-            ctx,
-            commandCtx.cmd,
-            `Attempting to move item to a wrong location at index ${toItemIndex}. Target section has ${targetSection.items.length} items.`,
-        );
-    }
-
-    let targetItemIndex = 0;
-
-    if (sectionIndex === targetSectionIndex) {
-        targetItemIndex = resolveRelativeIndex(targetSection.items, toItemIndex);
-
-        if (itemIndex === targetItemIndex) {
-            throw invalidArgumentsProvided(
-                ctx,
-                commandCtx.cmd,
-                `Attempting to move item to a same place where it already resides ${toItemIndex}.`,
-            );
-        }
-    } else {
-        targetItemIndex = resolveIndexOfNewItem(targetSection.items, toItemIndex);
-    }
-
     return {
-        targetSectionIndex,
-        targetItemIndex,
+        targetSectionIndex: toSectionIndex,
+        targetItemIndex: 0,
         itemToMove,
         shouldRemoveSection: Boolean(removeOriginalSectionIfEmpty) && fromSection.items.length === 1,
     };
 }
 
-export function* moveSectionItemHandler(
+export function* moveSectionItemToNewSectionHandler(
     ctx: DashboardContext,
-    cmd: MoveSectionItem,
-): SagaIterator<DashboardLayoutSectionItemMoved> {
-    const commandCtx: MoveSectionItemContext = {
+    cmd: MoveSectionItemToNewSection,
+): SagaIterator<DashboardLayoutSectionItemMovedToNewSection> {
+    const commandCtx: MoveSectionItemToNewSectionContext = {
         ctx,
         cmd,
         layout: yield select(selectLayout),
@@ -106,16 +81,31 @@ export function* moveSectionItemHandler(
 
     const { targetSectionIndex, targetItemIndex, itemToMove, shouldRemoveSection } =
         validateAndResolve(commandCtx);
-    const { itemIndex, sectionIndex } = cmd.payload;
+
+    const { itemIndex, sectionIndex, toSectionIndex } = cmd.payload;
+
+    const itemSectionIndex = toSectionIndex > sectionIndex ? sectionIndex : sectionIndex + 1;
+
+    const section: ExtendedDashboardLayoutSection = {
+        type: "IDashboardLayoutSection",
+        items: [],
+    };
 
     yield put(
         batchActions([
+            layoutActions.addSection({
+                index: targetSectionIndex,
+                section,
+                usedStashes: [],
+                undo: {
+                    cmd,
+                },
+            }),
             layoutActions.moveSectionItem({
-                sectionIndex,
+                sectionIndex: itemSectionIndex,
                 itemIndex,
                 toSectionIndex: targetSectionIndex,
                 toItemIndex: targetItemIndex,
-
                 undo: {
                     cmd,
                 },
@@ -123,7 +113,7 @@ export function* moveSectionItemHandler(
             ...(shouldRemoveSection
                 ? [
                       layoutActions.removeSection({
-                          index: sectionIndex,
+                          index: itemSectionIndex,
                           undo: {
                               cmd,
                           },
@@ -133,14 +123,11 @@ export function* moveSectionItemHandler(
         ]),
     );
 
-    const targetSectionIndexUpdated =
-        shouldRemoveSection && sectionIndex < targetSectionIndex ? sectionIndex - 1 : targetSectionIndex;
-
-    return layoutSectionItemMoved(
+    return layoutSectionItemMovedToNewSection(
         ctx,
         itemToMove,
         sectionIndex,
-        targetSectionIndexUpdated,
+        targetSectionIndex,
         itemIndex,
         targetItemIndex,
         shouldRemoveSection,

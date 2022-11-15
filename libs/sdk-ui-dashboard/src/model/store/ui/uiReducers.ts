@@ -3,6 +3,7 @@ import { Action, AnyAction, CaseReducer, PayloadAction } from "@reduxjs/toolkit"
 import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
 import { UiState } from "./uiState";
 import { ILayoutCoordinates, IMenuButtonItemsVisibility, IToastMessage } from "../../../types";
+import { DraggableLayoutItem } from "../../../presentation/dragAndDrop/types";
 
 type UiReducer<A extends Action = AnyAction> = CaseReducer<UiState, A>;
 
@@ -135,10 +136,6 @@ const clearFilterIndexSelection: UiReducer = (state) => {
     state.selectedFilterIndex = undefined;
 };
 
-const setIsDraggingWidget: UiReducer<PayloadAction<boolean>> = (state, action) => {
-    state.isDraggingWidget = action.payload;
-};
-
 const setActiveSectionIndex: UiReducer<PayloadAction<number>> = (state, action) => {
     state.activeSectionIndex = action.payload;
 };
@@ -157,6 +154,21 @@ const removeToastMessage: UiReducer<PayloadAction<string>> = (state, action) => 
 
 const removeAllToastMessages: UiReducer = (state) => {
     state.toastMessages = [];
+};
+const setDraggingWidgetSource: UiReducer<PayloadAction<DraggableLayoutItem>> = (state, action) => {
+    state.draggingWidgetSource = action.payload;
+};
+
+const clearDraggingWidgetSource: UiReducer<PayloadAction<void>> = (state) => {
+    state.draggingWidgetSource = undefined;
+};
+
+const setDraggingWidgetTarget: UiReducer<PayloadAction<ILayoutCoordinates>> = (state, action) => {
+    state.draggingWidgetTarget = action.payload;
+};
+
+const clearDraggingWidgetTarget: UiReducer<PayloadAction<void>> = (state) => {
+    state.draggingWidgetTarget = undefined;
 };
 
 export const uiReducers = {
@@ -189,7 +201,6 @@ export const uiReducers = {
     setFilterAttributeSelectionOpen,
     selectFilterIndex,
     clearFilterIndexSelection,
-    setIsDraggingWidget,
     setActiveSectionIndex,
     clearActiveSectionIndex,
     openCancelEditModeDialog,
@@ -197,4 +208,8 @@ export const uiReducers = {
     addToastMessage,
     removeToastMessage,
     removeAllToastMessages,
+    setDraggingWidgetSource,
+    clearDraggingWidgetSource,
+    setDraggingWidgetTarget,
+    clearDraggingWidgetTarget,
 };

@@ -7,14 +7,14 @@ import { DEBUG_SHOW_DROP_ZONES } from "../debug";
 import { DraggableContentItem, DraggableContentItemType } from "../types";
 import { DragPreviewProps } from "./types";
 
-function getItemStyles(initialOffset: XYCoord | null, currentOffset: XYCoord | null) {
-    if (!initialOffset || !currentOffset) {
+function getItemStyles(initialOffset: XYCoord | null, clientOffset: XYCoord | null) {
+    if (!initialOffset || !clientOffset) {
         return {
             display: "none",
         };
     }
 
-    const { x, y } = currentOffset;
+    const { x, y } = clientOffset;
 
     const transform = `translate(${x}px, ${y}px)`;
     return {
@@ -24,14 +24,21 @@ function getItemStyles(initialOffset: XYCoord | null, currentOffset: XYCoord | n
 }
 
 export const ContentDragPreview: FC<DragPreviewProps<DraggableContentItem>> = (props) => {
-    const { itemType, item, initialOffset, currentOffset } = props;
+    const { itemType, item, initialOffset, clientOffset } = props;
 
-    const { AttributeFilterComponentSet } = useDashboardComponentsContext();
+    const { AttributeFilterComponentSet, InsightWidgetComponentSet, KpiWidgetComponentSet } =
+        useDashboardComponentsContext();
     const previewComponentsMap = useMemo<Partial<Record<DraggableContentItemType, any>>>(
         () => ({
             attributeFilter: AttributeFilterComponentSet.dragging.DraggingComponent,
+            insight: InsightWidgetComponentSet.dragging.DraggingComponent,
+            kpi: KpiWidgetComponentSet.dragging.DraggingComponent,
         }),
-        [AttributeFilterComponentSet.dragging.DraggingComponent],
+        [
+            AttributeFilterComponentSet.dragging.DraggingComponent,
+            InsightWidgetComponentSet.dragging.DraggingComponent,
+            KpiWidgetComponentSet.dragging.DraggingComponent,
+        ],
     );
 
     const component = useMemo(() => {
@@ -48,7 +55,7 @@ export const ContentDragPreview: FC<DragPreviewProps<DraggableContentItem>> = (p
     }, [itemType, previewComponentsMap, item]);
 
     return (
-        <div className="drag-preview" style={getItemStyles(initialOffset, currentOffset)}>
+        <div className="drag-preview" style={getItemStyles(initialOffset, clientOffset)}>
             {component}
         </div>
     );

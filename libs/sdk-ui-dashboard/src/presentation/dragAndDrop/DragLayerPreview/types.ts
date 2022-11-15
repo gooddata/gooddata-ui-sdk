@@ -7,6 +7,7 @@ export type ReachedResizingLimit = "min" | "max" | "none";
 export type DragPreviewProps<TDraggableItem extends DraggableItem> = {
     itemType: TDraggableItem["type"];
     item: TDraggableItem;
+    clientOffset: XYCoord;
     currentOffset: XYCoord;
     initialOffset: XYCoord;
     differenceFromInitialOffset: XYCoord;

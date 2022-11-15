@@ -42,7 +42,7 @@ export const HeightResizerDragPreview = (props: HeightResizerDragPreviewProps) =
 
     const top = getLimitedYCoord(item, initialOffset.y, differenceFromInitialOffset.y, scrollCorrection.y);
     const style = {
-        top: `${top + 4 - dragLayerOffset.y + scrollCorrection.y}px`,
+        top: `${top - dragLayerOffset.y + scrollCorrection.y}px`,
         left: `${initialOffset.x - dragLayerOffset.x + scrollCorrection.x}px`,
         right: `30px`,
     };

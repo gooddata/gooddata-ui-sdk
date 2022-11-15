@@ -548,6 +548,11 @@ export interface DashboardLayoutSectionItemMovedPayload {
      * Index in `toSection` at which the item was inserted.
      */
     readonly toIndex: number;
+
+    /**
+     * Indicate, that original section has been removed.
+     */
+    readonly originalSectionRemoved: boolean;
 }
 
 /**
@@ -567,6 +572,7 @@ export function layoutSectionItemMoved(
     toSectionIndex: number,
     fromIndex: number,
     toIndex: number,
+    originalSectionRemoved: boolean,
     correlationId?: string,
 ): DashboardLayoutSectionItemMoved {
     return {
@@ -579,6 +585,7 @@ export function layoutSectionItemMoved(
             toSectionIndex,
             fromIndex,
             toIndex,
+            originalSectionRemoved,
         },
     };
 }
@@ -592,6 +599,94 @@ export function layoutSectionItemMoved(
 export const isDashboardLayoutSectionItemMoved = eventGuard<DashboardLayoutSectionItemMoved>(
     "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED",
 );
+
+//
+//
+//
+
+/**
+ * Payload of the {@link DashboardLayoutSectionItemMovedToNewSection} event.
+ * @alpha
+ */
+export interface DashboardLayoutSectionItemMovedToNewSectionPayload {
+    /**
+     * Item that was moved.
+     */
+    readonly item: ExtendedDashboardItem;
+
+    /**
+     * Index of section from which the item was moved.
+     */
+    readonly fromSectionIndex: number;
+
+    /**
+     * Index of section to which the item was moved.
+     *
+     * This may be the same as `fromSectionIndex` - which means the move happened within the same section.
+     */
+    readonly toSectionIndex: number;
+
+    /**
+     * Index within the `fromSection` from where the item was moved.
+     */
+    readonly fromIndex: number;
+
+    /**
+     * Index in `toSection` at which the item was inserted.
+     */
+    readonly toIndex: number;
+
+    /**
+     * Indicate, that original section has been removed.
+     */
+    readonly originalSectionRemoved: boolean;
+}
+
+/**
+ * This event is emitted when a dashboard item is moved to new section.
+ *
+ * @alpha
+ */
+export interface DashboardLayoutSectionItemMovedToNewSection extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED_TO_NEW_SECTION";
+    readonly payload: DashboardLayoutSectionItemMovedToNewSectionPayload;
+}
+
+export function layoutSectionItemMovedToNewSection(
+    ctx: DashboardContext,
+    item: ExtendedDashboardItem,
+    fromSectionIndex: number,
+    toSectionIndex: number,
+    fromIndex: number,
+    toIndex: number,
+    originalSectionRemoved: boolean,
+    correlationId?: string,
+): DashboardLayoutSectionItemMovedToNewSection {
+    return {
+        type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED_TO_NEW_SECTION",
+        ctx,
+        correlationId,
+        payload: {
+            item,
+            fromSectionIndex,
+            toSectionIndex,
+            fromIndex,
+            toIndex,
+            originalSectionRemoved,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardLayoutSectionItemMovedToNewSection}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardLayoutSectionItemMovedToNewSection =
+    eventGuard<DashboardLayoutSectionItemMovedToNewSection>(
+        "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED_TO_NEW_SECTION",
+    );
 
 //
 //

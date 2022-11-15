@@ -1,5 +1,6 @@
 // (C) 2022 GoodData Corporation
-import { IDashboardAttributeFilter, IInsight } from "@gooddata/sdk-model";
+import { IDashboardAttributeFilter, IInsight, IKpi } from "@gooddata/sdk-model";
+import { ICustomWidget } from "../../model/types/layoutTypes";
 
 /**
  * @internal
@@ -8,9 +9,10 @@ export type DraggableContentItemType =
     | "attributeFilter"
     | "attributeFilter-placeholder"
     | "insightListItem"
+    | "insight"
     | "insight-placeholder"
+    | "kpi"
     | "kpi-placeholder"
-    | "widget"
     | "custom";
 
 /**
@@ -48,6 +50,83 @@ export function isAttributeFilterDraggableItem(item: any): item is AttributeFilt
 /**
  * @internal
  */
+export type BaseDraggableLayoutItemSize = {
+    gridWidth: number;
+    gridHeight: number;
+};
+
+/**
+ * @internal
+ */
+export type BaseDraggableLayoutItem = {
+    size: BaseDraggableLayoutItemSize;
+};
+
+/**
+ * @internal
+ */
+export function isBaseDraggableLayoutItem(item: any): item is BaseDraggableMovingItem {
+    return item.size?.gridWidth !== undefined && item.size?.gridHeight !== undefined;
+}
+
+/**
+ * @internal
+ */
+export type BaseDraggableMovingItem = BaseDraggableLayoutItem & {
+    title: string;
+    isOnlyItemInSection: boolean;
+    sectionIndex: number;
+    itemIndex: number;
+};
+
+/**
+ * @internal
+ */
+export function isBaseDraggableMovingItem(item: any): item is BaseDraggableMovingItem {
+    return isBaseDraggableLayoutItem(item) && item.sectionIndex !== undefined && item.itemIndex !== undefined;
+}
+
+/**
+ * @internal
+ */
+export type InsightDraggableItem = BaseDraggableMovingItem & {
+    type: "insight";
+    insight: IInsight;
+};
+
+/**
+ * @internal
+ */
+export function isInsightDraggableItem(item: any): item is InsightDraggableItem {
+    return item.type === "insight";
+}
+
+/**
+ * @internal
+ */
+export type KpiDraggableItem = BaseDraggableMovingItem & {
+    type: "kpi";
+    kpi: IKpi;
+};
+
+/**
+ * @internal
+ */
+export function isKpiDraggableItem(item: any): item is KpiDraggableItem {
+    return item.type === "kpi";
+}
+
+/**
+ * @internal
+ */
+export type CustomWidgetDraggableItem = BaseDraggableMovingItem & {
+    type: "customWidget";
+    widget: ICustomWidget;
+};
+
+/**
+ * @internal
+ */
 export type AttributeFilterPlaceholderDraggableItem = {
     type: "attributeFilter-placeholder";
 };
@@ -64,7 +143,7 @@ export function isAttributeFilterPlaceholderDraggableItem(
 /**
  * @internal
  */
-export type KpiPlaceholderDraggableItem = {
+export type KpiPlaceholderDraggableItem = BaseDraggableLayoutItem & {
     type: "kpi-placeholder";
 };
 
@@ -78,7 +157,7 @@ export function isKpiPlaceholderDraggableItem(item: any): item is KpiPlaceholder
 /**
  * @internal
  */
-export type InsightPlaceholderDraggableItem = {
+export type InsightPlaceholderDraggableItem = BaseDraggableLayoutItem & {
     type: "insight-placeholder";
 };
 
@@ -92,7 +171,7 @@ export function isInsightPlaceholderDraggableItem(item: any): item is InsightPla
 /**
  * @internal
  */
-export type InsightDraggableListItem = {
+export type InsightDraggableListItem = BaseDraggableLayoutItem & {
     type: "insightListItem";
     insight: IInsight;
 };
@@ -115,22 +194,21 @@ export type CustomDraggableItem = {
 /**
  * @internal
  */
-export type WidgetDraggableItem = {
-    type: "widget";
-    widget: never;
-};
+export type DraggableContentItem =
+    | AttributeFilterDraggableItem
+    | AttributeFilterPlaceholderDraggableItem
+    | InsightDraggableItem
+    | InsightDraggableListItem
+    | InsightPlaceholderDraggableItem
+    | KpiDraggableItem
+    | KpiPlaceholderDraggableItem
+    | CustomWidgetDraggableItem
+    | CustomDraggableItem;
 
 /**
  * @internal
  */
-export type DraggableContentItem =
-    | AttributeFilterDraggableItem
-    | AttributeFilterPlaceholderDraggableItem
-    | InsightDraggableListItem
-    | InsightPlaceholderDraggableItem
-    | KpiPlaceholderDraggableItem
-    | CustomDraggableItem
-    | WidgetDraggableItem;
+export type DraggableLayoutItem = InsightDraggableItem | KpiDraggableItem | CustomWidgetDraggableItem;
 
 /**
  * @internal
@@ -153,11 +231,12 @@ export type DraggableItemTypeMapping = DraggableItemComponentTypeMapping & Dragg
 export type DraggableItemComponentTypeMapping = {
     attributeFilter: AttributeFilterDraggableItem;
     "attributeFilter-placeholder": AttributeFilterPlaceholderDraggableItem;
+    insight: InsightDraggableItem;
     insightListItem: InsightDraggableListItem;
     "insight-placeholder": InsightPlaceholderDraggableItem;
+    kpi: KpiDraggableItem;
     "kpi-placeholder": KpiPlaceholderDraggableItem;
     custom: CustomDraggableItem;
-    widget: WidgetDraggableItem;
 };
 
 /**

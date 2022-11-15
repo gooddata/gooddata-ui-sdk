@@ -48,6 +48,7 @@ import {
     ChangeLayoutSectionHeader,
     MoveLayoutSection,
     MoveSectionItem,
+    MoveSectionItemToNewSection,
     RemoveLayoutSection,
     RemoveSectionItem,
     ReplaceSectionItem,
@@ -156,6 +157,11 @@ export {
     MoveSectionItem,
     MoveSectionItemPayload,
     moveSectionItem,
+    moveSectionItemAndRemoveOriginalSectionIfEmpty,
+    MoveSectionItemToNewSection,
+    MoveSectionItemToNewSectionPayload,
+    moveSectionItemToNewSection,
+    moveSectionItemToNewSectionAndRemoveOriginalSectionIfEmpty,
     RemoveSectionItem,
     RemoveSectionItemPayload,
     removeSectionItem,
@@ -358,6 +364,7 @@ export type DashboardCommands =
     | AddSectionItems
     | ReplaceSectionItem
     | MoveSectionItem
+    | MoveSectionItemToNewSection
     | RemoveSectionItem
     | RemoveSectionItemByWidgetRef
     | UndoLayoutChanges

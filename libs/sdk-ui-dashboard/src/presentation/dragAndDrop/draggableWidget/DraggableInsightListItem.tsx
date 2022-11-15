@@ -3,14 +3,15 @@ import React from "react";
 import classNames from "classnames";
 import { IInsight } from "@gooddata/sdk-model";
 
-import { useDashboardSelector, selectIsInEditMode } from "../../../model";
+import { useDashboardSelector, selectIsInEditMode, selectSettings } from "../../../model";
 import { useDashboardDrag } from "../useDashboardDrag";
 import {
     CustomDashboardInsightListItemComponent,
     CustomDashboardInsightListItemComponentProps,
 } from "../types";
-import { useWidgetDragStartHandler } from "./useWidgetDragStartHandler";
 import { useWidgetDragEndHandler } from "./useWidgetDragEndHandler";
+import { getSizeInfo } from "../../../_staging/layout/sizing";
+import { INSIGHT_WIDGET_SIZE_INFO_DEFAULT } from "@gooddata/sdk-ui-ext";
 
 /**
  * @internal
@@ -30,24 +31,29 @@ export function DraggableInsightListItem({
     insight,
 }: IDraggableInsightListItemProps) {
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
+    const settings = useDashboardSelector(selectSettings);
 
-    const handleDragStart = useWidgetDragStartHandler();
     const handleDragEnd = useWidgetDragEndHandler();
 
     const [{ isDragging }, dragRef] = useDashboardDrag(
         {
-            dragItem: {
-                type: "insightListItem",
-                insight,
+            dragItem: () => {
+                const sizeInfo = getSizeInfo(settings, "insight", insight);
+                return {
+                    type: "insightListItem",
+                    insight,
+                    size: {
+                        gridHeight:
+                            sizeInfo.height.default || INSIGHT_WIDGET_SIZE_INFO_DEFAULT.height.default,
+                        gridWidth: sizeInfo.width.default || INSIGHT_WIDGET_SIZE_INFO_DEFAULT.width.default,
+                    },
+                };
             },
             canDrag: isInEditMode,
             hideDefaultPreview: false,
-            dragEnd: (_, monitor) => {
-                handleDragEnd(monitor.didDrop());
-            },
-            dragStart: handleDragStart,
+            dragEnd: handleDragEnd,
         },
-        [isInEditMode, insight, handleDragStart, handleDragEnd],
+        [isInEditMode, insight, handleDragEnd],
     );
 
     return (

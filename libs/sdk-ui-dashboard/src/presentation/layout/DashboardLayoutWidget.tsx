@@ -1,16 +1,18 @@
 // (C) 2020-2022 GoodData Corporation
-import React, { useRef } from "react";
 import {
-    IInsight,
     AnalyticalWidgetType,
+    IDashboardLayoutSize,
+    IDashboardLayoutSizeByScreenSize,
+    IInsight,
+    IKpi,
+    ISettings,
+    isInsightWidget,
+    isKpiWidget,
     isWidget,
     widgetType as getWidgetType,
-    isKpiWidget,
-    isInsightWidget,
-    IDashboardLayoutSize,
-    ISettings,
-    IKpi,
 } from "@gooddata/sdk-model";
+import { IVisualizationSizeInfo, WIDGET_DROPZONE_SIZE_INFO_DEFAULT } from "@gooddata/sdk-ui-ext";
+import React, { useRef } from "react";
 import {
     ExtendedDashboardWidget,
     isCustomWidget,
@@ -18,21 +20,33 @@ import {
     selectInsightsMap,
     selectIsInEditMode,
     selectSettings,
+    uiActions,
+    useDashboardDispatch,
     useDashboardSelector,
 } from "../../model";
+import { isAnyPlaceholderWidget, isPlaceholderWidget } from "../../widgets";
+import { getDashboardLayoutWidgetDefaultHeight, getSizeInfo } from "../../_staging/layout/sizing";
+import { getLayoutCoordinates } from "../../_staging/layout/coordinates";
+import { ObjRefMap } from "../../_staging/metadata/objRefMap";
+import { useDashboardComponentsContext } from "../dashboardContexts";
+import {
+    BaseDraggableLayoutItemSize,
+    DraggableLayoutItem,
+    Hotspot,
+    ResizeOverlay,
+    useDashboardDrag,
+    useResizeItemStatus,
+    useWidgetDragEndHandler,
+    WidthResizerHotspot,
+} from "../dragAndDrop";
 import { DashboardWidget, IDashboardWidgetProps } from "../widget";
+import { DEFAULT_COLUMN_CLIENT_WIDTH, DEFAULT_WIDTH_RESIZER_HEIGHT } from "./constants";
 import {
     getDashboardLayoutItemHeight,
     getDashboardLayoutItemHeightForRatioAndScreen,
     IDashboardLayoutItemFacade,
     IDashboardLayoutWidgetRenderer,
 } from "./DefaultDashboardLayoutRenderer";
-import { ObjRefMap } from "../../_staging/metadata/objRefMap";
-import { useDashboardComponentsContext } from "../dashboardContexts";
-import { Hotspot, WidthResizerHotspot, ResizeOverlay, useResizeItemStatus } from "../dragAndDrop";
-import { getDashboardLayoutWidgetDefaultHeight } from "../../_staging/layout/sizing";
-import { isAnyPlaceholderWidget } from "../../widgets";
-import { DEFAULT_COLUMN_CLIENT_WIDTH, DEFAULT_WIDTH_RESIZER_HEIGHT } from "./constants";
 
 function calculateWidgetMinHeight(
     widget: ExtendedDashboardWidget,
@@ -101,10 +115,27 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
     const { item, screen, DefaultWidgetRenderer, onDrill, onFiltersChange, onError, getLayoutDimensions } =
         props;
 
+    const dispatch = useDashboardDispatch();
     const insights = useDashboardSelector(selectInsightsMap);
     const settings = useDashboardSelector(selectSettings);
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
     const enableWidgetCustomHeight = useDashboardSelector(selectEnableWidgetCustomHeight);
+
+    const handleDragEnd = useWidgetDragEndHandler();
+
+    const [{ isDragging }, dragRef] = useDashboardDrag(
+        {
+            dragItem: () => {
+                return createDraggableItem(item, insights, settings);
+            },
+            canDrag: isInEditMode && !isPlaceholderWidget(item.widget()),
+            dragStart: (item) => {
+                dispatch(uiActions.setDraggingWidgetSource(item));
+            },
+            dragEnd: handleDragEnd,
+        },
+        [item, insights, isInEditMode],
+    );
 
     const { ErrorComponent, LoadingComponent } = useDashboardComponentsContext();
     // TODO: we should probably do something more meaningful when item has no widget; should that even
@@ -144,6 +175,8 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
         return columnWidthInPx / columnWidthInGC;
     }
 
+    const canShowHotspot = isInEditMode && !isDragging;
+
     return (
         <DefaultWidgetRenderer
             DefaultWidgetRenderer={DefaultWidgetRenderer}
@@ -156,19 +189,21 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
             contentRef={contentRef}
             getLayoutDimensions={getLayoutDimensions}
         >
-            <DashboardWidget
-                // @ts-expect-error Don't expose index prop on public interface (we need it only for css class for KD tests)
-                index={index}
-                screen={screen}
-                onDrill={onDrill}
-                onError={onError}
-                onFiltersChange={onFiltersChange}
-                widget={widget as ExtendedDashboardWidget}
-                ErrorComponent={ErrorComponent}
-                LoadingComponent={LoadingComponent}
-            />
+            <div ref={dragRef} className="dashboard-widget-draggable-wrapper">
+                <DashboardWidget
+                    // @ts-expect-error Don't expose index prop on public interface (we need it only for css class for KD tests)
+                    index={index}
+                    screen={screen}
+                    onDrill={onDrill}
+                    onError={onError}
+                    onFiltersChange={onFiltersChange}
+                    widget={widget as ExtendedDashboardWidget}
+                    ErrorComponent={ErrorComponent}
+                    LoadingComponent={LoadingComponent}
+                />
+            </div>
 
-            {isInEditMode && !isAnyPlaceholderWidget(widget) && !isCustomWidget(widget) ? (
+            {canShowHotspot && !isAnyPlaceholderWidget(widget) && !isCustomWidget(widget) ? (
                 <>
                     <ResizeOverlay
                         isActive={isActive}
@@ -200,3 +235,69 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
         </DefaultWidgetRenderer>
     );
 };
+
+function getFilledSize(
+    itemSize: IDashboardLayoutSizeByScreenSize,
+    sizeInfo?: IVisualizationSizeInfo,
+): BaseDraggableLayoutItemSize {
+    return {
+        gridWidth:
+            itemSize.xl?.gridWidth ||
+            sizeInfo?.width.default ||
+            WIDGET_DROPZONE_SIZE_INFO_DEFAULT.width.default,
+        gridHeight:
+            itemSize.xl?.gridHeight ||
+            sizeInfo?.height.default ||
+            WIDGET_DROPZONE_SIZE_INFO_DEFAULT.height.default,
+    };
+}
+
+function createDraggableItem(
+    item: IDashboardLayoutItemFacade<ExtendedDashboardWidget>,
+    insights: ObjRefMap<IInsight>,
+    settings: ISettings,
+): DraggableLayoutItem {
+    const widget = item.widget()!;
+
+    const { sectionIndex, itemIndex } = getLayoutCoordinates(item);
+    const size = item.size();
+
+    const isOnlyItemInSection = item.section().items().count() === 1;
+
+    if (isKpiWidget(widget)) {
+        const sizeInfo = getSizeInfo(settings, "kpi", widget.kpi);
+
+        return {
+            type: "kpi",
+            kpi: widget.kpi,
+            title: widget.title,
+            sectionIndex,
+            itemIndex,
+            isOnlyItemInSection,
+            size: getFilledSize(size, sizeInfo),
+        };
+    } else if (isInsightWidget(widget)) {
+        const insight = insights.get(widget.insight)!;
+        const sizeInfo = getSizeInfo(settings, "kpi", insight);
+
+        return {
+            type: "insight",
+            insight,
+            sectionIndex,
+            itemIndex,
+            title: widget.title,
+            isOnlyItemInSection,
+            size: getFilledSize(size, sizeInfo),
+        };
+    } else {
+        return {
+            type: widget.type,
+            widget,
+            sectionIndex,
+            itemIndex,
+            title: "",
+            isOnlyItemInSection,
+            size: getFilledSize(size),
+        };
+    }
+}

@@ -7,6 +7,7 @@ import { OnFiredDashboardDrillEvent } from "../../../../types";
 
 import { KpiContent } from "./KpiContent";
 import { IKpiResult } from "./types";
+import { useDashboardSelector, selectIsInEditMode } from "../../../../model";
 
 interface IKpiRendererProps {
     kpi: IKpiWidget | IKpiWidgetDefinition;
@@ -40,6 +41,8 @@ export const KpiRenderer: React.FC<IKpiRendererProps> = ({
     errorHelp,
     isLoading,
 }) => {
+    const isInEditMode = useDashboardSelector(selectIsInEditMode);
+
     const onPrimaryValueClick = useCallback(() => {
         if (!isDrillable || !onDrill) {
             return;
@@ -72,6 +75,7 @@ export const KpiRenderer: React.FC<IKpiRendererProps> = ({
             enableCompactSize={enableCompactSize}
             error={error}
             errorHelp={errorHelp}
+            isInEditMode={isInEditMode}
         />
     );
 };

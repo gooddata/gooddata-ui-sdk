@@ -511,6 +511,11 @@ export interface MoveSectionItemPayload {
      * items.
      */
     readonly toItemIndex: RelativeIndex;
+
+    /**
+     * If true and original section stays empty after move, then it will be removed.
+     */
+    readonly removeOriginalSectionIfEmpty: boolean;
 }
 
 /**
@@ -531,7 +536,7 @@ export interface MoveSectionItem extends IDashboardCommand {
  * @param sectionIndex - source section index
  * @param itemIndex - index of item to move
  * @param toSectionIndex - target section index; you may specify -1 to move to last section
- * @param toItemIndex - index wihtin target section where the item should be inserted; you may specify -1 to append
+ * @param toItemIndex - index within target section where the item should be inserted; you may specify -1 to append
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
@@ -552,6 +557,155 @@ export function moveSectionItem(
             itemIndex,
             toSectionIndex,
             toItemIndex,
+            removeOriginalSectionIfEmpty: false,
+        },
+    };
+}
+
+/**
+ * Creates the MoveSectionItem command.
+ *
+ * @remarks
+ * Dispatching this command will result in move of single item within
+ * section or from one section to another. If original section stays empty after move, then it will be removed.
+ *
+ * @param sectionIndex - source section index
+ * @param itemIndex - index of item to move
+ * @param toSectionIndex - target section index; you may specify -1 to move to last section
+ * @param toItemIndex - index within target section where the item should be inserted; you may specify -1 to append
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function moveSectionItemAndRemoveOriginalSectionIfEmpty(
+    sectionIndex: number,
+    itemIndex: number,
+    toSectionIndex: number,
+    toItemIndex: number,
+    correlationId?: string,
+): MoveSectionItem {
+    return {
+        type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM",
+        correlationId,
+        payload: {
+            sectionIndex,
+            itemIndex,
+            toSectionIndex,
+            toItemIndex,
+            removeOriginalSectionIfEmpty: true,
+        },
+    };
+}
+
+//
+//
+//
+
+/**
+ * Payload of the {@link MoveSectionItemToNewSection} command.
+ * @alpha
+ */
+export interface MoveSectionItemToNewSectionPayload {
+    /**
+     * Index of the section where the item to move is located.
+     *
+     * Index is zero-based.
+     */
+    readonly sectionIndex: number;
+
+    /**
+     * Index of section item that should be moved.
+     *
+     * Index is zero-based.
+     */
+    readonly itemIndex: number;
+
+    /**
+     * Index of section to which should be created and the item should be moved into.
+     *
+     * Index is zero-based. For convenience you may specify -1 to move to last section.
+     */
+    readonly toSectionIndex: RelativeIndex;
+
+    /**
+     * If true and original section stays empty after move, then it will be removed.
+     */
+    readonly removeOriginalSectionIfEmpty: boolean;
+}
+
+/**
+ * @alpha
+ */
+export interface MoveSectionItemToNewSection extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM_TO_NEW_SECTION";
+    readonly payload: MoveSectionItemToNewSectionPayload;
+}
+
+/**
+ * Creates the MoveSectionItemToNewSection command.
+ *
+ * @remarks
+ * Dispatching this command will result in move of single item within
+ * section or from one section to another.
+ *
+ * @param sectionIndex - source section index
+ * @param itemIndex - index of item to move
+ * @param toSectionIndex - target section index; you may specify -1 to move to last section
+ * @param removeOriginalSectionIfEmpty - specify if original section will be removed if it stays empty after move
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function moveSectionItemToNewSection(
+    sectionIndex: number,
+    itemIndex: number,
+    toSectionIndex: number,
+    correlationId?: string,
+): MoveSectionItemToNewSection {
+    return {
+        type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM_TO_NEW_SECTION",
+        correlationId,
+        payload: {
+            sectionIndex,
+            itemIndex,
+            toSectionIndex,
+            removeOriginalSectionIfEmpty: false,
+        },
+    };
+}
+
+/**
+ * Creates the MoveSectionItemToNewSection command.
+ *
+ * @remarks
+ * Dispatching this command will result in move of single item within
+ * section or from one section to another. If original section stays empty after move, then it will be removed.
+ *
+ * @param sectionIndex - source section index
+ * @param itemIndex - index of item to move
+ * @param toSectionIndex - target section index; you may specify -1 to move to last section
+ * @param removeOriginalSectionIfEmpty - specify if original section will be removed if it stays empty after move
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function moveSectionItemToNewSectionAndRemoveOriginalSectionIfEmpty(
+    sectionIndex: number,
+    itemIndex: number,
+    toSectionIndex: number,
+    correlationId?: string,
+): MoveSectionItemToNewSection {
+    return {
+        type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM_TO_NEW_SECTION",
+        correlationId,
+        payload: {
+            sectionIndex,
+            itemIndex,
+            toSectionIndex,
+            removeOriginalSectionIfEmpty: true,
         },
     };
 }

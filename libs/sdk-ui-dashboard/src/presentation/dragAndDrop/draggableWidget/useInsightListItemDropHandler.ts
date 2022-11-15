@@ -1,26 +1,26 @@
 // (C) 2022 GoodData Corporation
-import { useCallback } from "react";
 import { IInsight, insightRef, insightTitle } from "@gooddata/sdk-model";
-import invariant from "ts-invariant";
+import { useCallback } from "react";
 
 import {
+    addSectionItem,
+    ChangeInsightWidgetFilterSettings,
+    DashboardCommandFailed,
+    dispatchAndWaitFor,
+    enableInsightWidgetDateFilter,
+    replaceSectionItem,
     selectSettings,
+    uiActions,
+    useDashboardCommandProcessing,
     useDashboardDispatch,
     useDashboardSelector,
-    useDashboardCommandProcessing,
-    uiActions,
-    replaceSectionItem,
-    enableInsightWidgetDateFilter,
-    DashboardCommandFailed,
-    ChangeInsightWidgetFilterSettings,
-    selectWidgetPlaceholderCoordinates,
 } from "../../../model";
+import { newLoadingPlaceholderWidget } from "../../../widgets";
 import { getSizeInfo } from "../../../_staging/layout/sizing";
 
-export function useInsightListItemDropHandler() {
+export function useInsightListItemDropHandler(sectionIndex: number, itemIndex: number) {
     const dispatch = useDashboardDispatch();
     const settings = useDashboardSelector(selectSettings);
-    const widgetPlaceholderCoords = useDashboardSelector(selectWidgetPlaceholderCoordinates);
 
     const { run: preselectDateDataset } = useDashboardCommandProcessing({
         commandCreator: enableInsightWidgetDateFilter,
@@ -34,7 +34,7 @@ export function useInsightListItemDropHandler() {
         },
     });
 
-    const { run: replaceInsightOntoPlaceholder } = useDashboardCommandProcessing({
+    const { run: replaceSectionItemLoader } = useDashboardCommandProcessing({
         commandCreator: replaceSectionItem,
         errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
         successEvent: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED",
@@ -49,31 +49,53 @@ export function useInsightListItemDropHandler() {
 
     return useCallback(
         (insight: IInsight) => {
-            invariant(widgetPlaceholderCoords, "cannot drop onto placeholder, there is none");
+            const correlationId = `insert-insight-list-item-${sectionIndex}_${itemIndex}`;
 
             const sizeInfo = getSizeInfo(settings, "insight", insight);
-            replaceInsightOntoPlaceholder(
-                widgetPlaceholderCoords.sectionIndex,
-                widgetPlaceholderCoords.itemIndex,
-                {
-                    type: "IDashboardLayoutItem",
-                    widget: {
-                        type: "insight",
-                        insight: insightRef(insight),
-                        ignoreDashboardFilters: [],
-                        drills: [],
-                        title: insightTitle(insight),
-                        description: "",
+
+            dispatchAndWaitFor(
+                dispatch,
+                addSectionItem(
+                    sectionIndex,
+                    itemIndex,
+                    {
+                        type: "IDashboardLayoutItem",
+                        size: {
+                            xl: {
+                                gridHeight: sizeInfo.height.default,
+                                gridWidth: sizeInfo.width.default!,
+                            },
+                        },
+                        widget: newLoadingPlaceholderWidget(),
                     },
-                    size: {
-                        xl: {
-                            gridHeight: sizeInfo.height.default,
-                            gridWidth: sizeInfo.width.default!,
+                    false,
+                    correlationId,
+                ),
+            ).then(() => {
+                replaceSectionItemLoader(
+                    sectionIndex,
+                    itemIndex,
+                    {
+                        type: "IDashboardLayoutItem",
+                        widget: {
+                            type: "insight",
+                            insight: insightRef(insight),
+                            ignoreDashboardFilters: [],
+                            drills: [],
+                            title: insightTitle(insight),
+                            description: "",
+                        },
+                        size: {
+                            xl: {
+                                gridHeight: sizeInfo.height.default,
+                                gridWidth: sizeInfo.width.default!,
+                            },
                         },
                     },
-                },
-            );
+                    correlationId,
+                );
+            });
         },
-        [replaceInsightOntoPlaceholder, settings, widgetPlaceholderCoords],
+        [replaceSectionItemLoader, dispatch, itemIndex, sectionIndex, settings],
     );
 }

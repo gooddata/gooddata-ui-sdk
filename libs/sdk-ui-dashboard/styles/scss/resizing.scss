@@ -33,7 +33,7 @@ $gd-width-resizer-hotpost-height: 40px;
 .dash-height-resizer-hotspot,
 .height-resizer-drag-preview {
     position: absolute;
-    z-index: 1;
+    z-index: 101;
     display: flex;
     align-items: center;
     overflow: hidden;
@@ -47,12 +47,12 @@ $gd-width-resizer-hotpost-height: 40px;
 
 .resizer-drag-preview,
 .height-resizer-drag-preview {
-    z-index: 91;
+    z-index: 110;
 }
 
 .dash-width-resizer-hotspot {
     position: absolute;
-    z-index: 1;
+    z-index: 101;
     left: 10px;
     overflow: hidden;
     height: 100%;
@@ -131,7 +131,7 @@ $gd-width-resizer-hotpost-height: 40px;
 }
 
 .gd-resize-overlay {
-    z-index: 2;
+    z-index: 105;
     border-width: 0;
     border-radius: calc(#{variables.$gd-dashboards-content-widget-borderRadius} + 5px);
     background-color: var(--gd-palette-complementary-0-t50, rgba(255, 255, 255, 0.5));
@@ -146,7 +146,7 @@ $gd-width-resizer-hotpost-height: 40px;
 }
 
 .gd-resize-overlay-text {
-    z-index: 92;
+    z-index: 106;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -2,6 +2,7 @@
 import { ObjRef } from "@gooddata/sdk-model";
 
 import { ILayoutCoordinates, IMenuButtonItemsVisibility, IToastMessage } from "../../../types";
+import { DraggableLayoutItem } from "../../../presentation/dragAndDrop/types";
 
 /**
  * @alpha
@@ -49,9 +50,10 @@ export interface UiState {
     widgetsLoadingAdditionalData: ObjRef[];
     filterAttributeSelectionOpen: boolean;
     selectedFilterIndex: number | undefined;
-    isDraggingWidget: boolean;
     activeSectionIndex: number | undefined;
     toastMessages: IToastMessage[];
+    draggingWidgetSource: DraggableLayoutItem | undefined;
+    draggingWidgetTarget: ILayoutCoordinates | undefined;
 }
 
 export const uiInitialState: UiState = {
@@ -94,7 +96,8 @@ export const uiInitialState: UiState = {
     widgetsLoadingAdditionalData: [],
     filterAttributeSelectionOpen: false,
     selectedFilterIndex: undefined,
-    isDraggingWidget: false,
     activeSectionIndex: undefined,
     toastMessages: [],
+    draggingWidgetSource: undefined,
+    draggingWidgetTarget: undefined,
 };

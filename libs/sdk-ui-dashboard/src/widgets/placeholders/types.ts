@@ -66,6 +66,7 @@ export function newInsightPlaceholderWidget(): InsightPlaceholderWidget {
 export interface PlaceholderWidget extends ICustomWidget {
     readonly customType: "gd-widget-placeholder";
     readonly isInitial?: boolean;
+    readonly isLoading?: boolean;
 }
 
 /**
@@ -89,6 +90,16 @@ export function isInitialPlaceholderWidget(obj: unknown): obj is PlaceholderWidg
 }
 
 /**
+ * Tests whether an object is a {@link PlaceholderWidget} and is loading.
+ *
+ * @param obj - object to test
+ * @internal
+ */
+export function isLoadingPlaceholderWidget(obj: unknown): obj is PlaceholderWidget {
+    return isPlaceholderWidget(obj) && !!obj.isLoading;
+}
+
+/**
  * @internal
  */
 export const PLACEHOLDER_WIDGET_ID = "__placeholder__";
@@ -106,6 +117,15 @@ export function newPlaceholderWidget(): PlaceholderWidget {
 export function newInitialPlaceholderWidget(): PlaceholderWidget {
     return newCustomWidget(PLACEHOLDER_WIDGET_ID, "gd-widget-placeholder", {
         isInitial: true,
+    }) as PlaceholderWidget;
+}
+
+/**
+ * @internal
+ */
+export function newLoadingPlaceholderWidget(): PlaceholderWidget {
+    return newCustomWidget(PLACEHOLDER_WIDGET_ID, "gd-widget-placeholder", {
+        isLoading: true,
     }) as PlaceholderWidget;
 }
 

@@ -182,10 +182,10 @@ export interface ILayoutDescriptor {
 }
 
 // @internal (undocumented)
-export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationSizeInfo;
+export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo;
 
 // @internal (undocumented)
-export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT_LEGACY: IVisualizationSizeInfo;
+export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT_LEGACY: IVisualizationDefaultSizeInfo;
 
 // @internal (undocumented)
 export const InsightError: React_2.FC<WithIntlProps<IInsightErrorProps & WrappedComponentProps<"intl">>> & {
@@ -218,6 +218,19 @@ export interface ISizeInfo {
 }
 
 // @alpha
+export type ISizeInfoDefault = ISizeInfo & {
+    default: number;
+};
+
+// @alpha
+export interface IVisualizationDefaultSizeInfo {
+    // (undocumented)
+    height: ISizeInfoDefault;
+    // (undocumented)
+    width: ISizeInfoDefault;
+}
+
+// @alpha
 export interface IVisualizationMeta {
     documentationUrl?: string;
     supportsExport: boolean;
@@ -233,10 +246,10 @@ export interface IVisualizationSizeInfo {
 }
 
 // @internal (undocumented)
-export const KPI_WIDGET_SIZE_INFO_DEFAULT: IVisualizationSizeInfo;
+export const KPI_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo;
 
 // @internal (undocumented)
-export const KPI_WIDGET_SIZE_INFO_DEFAULT_LEGACY: IVisualizationSizeInfo;
+export const KPI_WIDGET_SIZE_INFO_DEFAULT_LEGACY: IVisualizationDefaultSizeInfo;
 
 // @alpha (undocumented)
 export type LayoutType = "fluid";
@@ -249,5 +262,8 @@ export const PluggableVisualizationErrorCodes: {
 
 // @alpha (undocumented)
 export type PluggableVisualizationErrorType = keyof typeof PluggableVisualizationErrorCodes;
+
+// @internal (undocumented)
+export const WIDGET_DROPZONE_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo;
 
 ```

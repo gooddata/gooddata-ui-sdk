@@ -1,12 +1,12 @@
 // (C) 2019-2022 GoodData Corporation
 import * as React from "react";
-import { DashboardLayoutItemRenderer } from "./DashboardLayoutItemRenderer";
 import { DashboardLayoutSectionHeader } from "./DashboardLayoutSectionHeader";
 import { IDashboardLayoutSectionHeaderRenderProps } from "./interfaces";
 import { SectionHeaderEditable } from "./EditableHeader/SectionHeaderEditable";
 import { emptyItemFacadeWithFullSize } from "./utils/emptyFacade";
 import { SectionHotspot } from "../../dragAndDrop";
 import { isInitialPlaceholderWidget } from "../../../widgets";
+import { DashboardLayoutItemViewRenderer } from "./DashboardLayoutItemViewRenderer";
 
 export function DashboardLayoutEditSectionHeaderRenderer(
     props: IDashboardLayoutSectionHeaderRenderProps<any>,
@@ -18,8 +18,8 @@ export function DashboardLayoutEditSectionHeaderRenderer(
         section.index() === 0 && section.items().every((i) => isInitialPlaceholderWidget(i.widget()));
 
     return (
-        <DashboardLayoutItemRenderer
-            DefaultItemRenderer={DashboardLayoutItemRenderer}
+        <DashboardLayoutItemViewRenderer
+            DefaultItemRenderer={DashboardLayoutItemViewRenderer}
             item={emptyItemFacadeWithFullSize}
             screen={screen}
         >
@@ -39,6 +39,6 @@ export function DashboardLayoutEditSectionHeaderRenderer(
                     )
                 }
             />
-        </DashboardLayoutItemRenderer>
+        </DashboardLayoutItemViewRenderer>
     );
 }

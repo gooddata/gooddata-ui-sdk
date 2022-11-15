@@ -7,6 +7,7 @@ export * from "./DeleteDropZone";
 export * from "./DraggableCreatePanelItem";
 export * from "./types";
 export * from "./useDashboardDrop";
+export * from "./useDashboardDrag";
 export * from "./LayoutResizeContext";
 export * from "./Resize/HeightResizerHotspot";
 export * from "./Resize/WidthResizerHotspot";

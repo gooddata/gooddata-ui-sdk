@@ -21,6 +21,7 @@ export const DragLayerComponent: FC = () => {
     const dragLayerProperties = useDragLayer((monitor) => ({
         item: monitor.getItem(),
         itemType: monitor.getItemType() as DraggableItemType,
+        clientOffset: monitor.getClientOffset(),
         currentOffset: monitor.getSourceClientOffset(),
         initialOffset: monitor.getInitialSourceClientOffset(),
         differenceFromInitialOffset: monitor.getDifferenceFromInitialOffset(),
@@ -52,7 +53,7 @@ export const DragLayerComponent: FC = () => {
             width: "100%",
             height: "100%",
         };
-    }, [itemType]);
+    }, [isResizing]);
 
     if (!isDragging) {
         return null;
@@ -67,7 +68,7 @@ export const DragLayerComponent: FC = () => {
         : dragLayerProperties;
 
     return (
-        <div style={layerStyles} ref={dragLayerRef}>
+        <div className="drag-layer" style={layerStyles} ref={dragLayerRef}>
             <Component {...previewProps} />
         </div>
     );

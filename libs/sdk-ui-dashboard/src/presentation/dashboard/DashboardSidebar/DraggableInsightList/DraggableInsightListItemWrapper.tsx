@@ -1,15 +1,16 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
 import { IInsightListItemProps, InsightListItem } from "@gooddata/sdk-ui-kit";
-import { DraggableInsightListItem, CustomDashboardInsightListItemComponent } from "../../../dragAndDrop";
 import { IInsight } from "@gooddata/sdk-model";
+import { DraggableInsightListItem } from "../../../dragAndDrop/draggableWidget/DraggableInsightListItem";
+import { CustomDashboardInsightListItemComponent } from "../../../dragAndDrop/types";
 
 interface IDraggableInsightListItemWrapperProps extends IInsightListItemProps {
     className?: string;
     insight: IInsight;
 }
 
-const DraggableInsightListItemBody: CustomDashboardInsightListItemComponent = (props) => {
+export const DraggableInsightListItemBody: CustomDashboardInsightListItemComponent = (props) => {
     const { className } = props;
     return (
         <div className={className}>

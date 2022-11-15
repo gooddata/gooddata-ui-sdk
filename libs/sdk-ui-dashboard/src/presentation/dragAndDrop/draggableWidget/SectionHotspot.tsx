@@ -1,23 +1,23 @@
 // (C) 2022 GoodData Corporation
-import React from "react";
 import cx from "classnames";
-import { getDropZoneDebugStyle } from "../debug";
+import React, { useEffect } from "react";
+import { useDashboardDispatch } from "../../../model";
 import {
-    eagerRemoveSectionItem,
-    selectWidgetPlaceholderCoordinates,
-    useDashboardDispatch,
-    useDashboardSelector,
-} from "../../../model";
-import { useDashboardDrop } from "../useDashboardDrop";
-import { SectionDropZoneBox } from "./SectionDropZoneBox";
-import {
+    isBaseDraggableMovingItem,
+    isInsightDraggableItem,
     isInsightDraggableListItem,
     isInsightPlaceholderDraggableItem,
+    isKpiDraggableItem,
     isKpiPlaceholderDraggableItem,
 } from "../../dragAndDrop/types";
+import { getDropZoneDebugStyle } from "../debug";
+import { useDashboardDrop } from "../useDashboardDrop";
+import { SectionDropZoneBox } from "./SectionDropZoneBox";
+import { useMoveWidgetToNewSectionDropHandler } from "./useMoveWidgetToNewSectionDropHandler";
 import { useNewSectionInsightListItemDropHandler } from "./useNewSectionInsightListItemDropHandler";
 import { useNewSectionInsightPlaceholderDropHandler } from "./useNewSectionInsightPlaceholderDropHandler";
 import { useNewSectionKpiPlaceholderDropHandler } from "./useNewSectionKpiPlaceholderDropHandler";
+import { useWidgetDragHoverHandlers } from "./useWidgetDragHoverHandlers";
 
 export type RowPosition = "above" | "below";
 
@@ -30,46 +30,49 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
     const { index, targetPosition } = props;
 
     const dispatch = useDashboardDispatch();
-    const widgetPlaceholderCoords = useDashboardSelector(selectWidgetPlaceholderCoordinates);
 
     const handleInsightListItemDrop = useNewSectionInsightListItemDropHandler(index);
     const handleKpiPlaceholderDrop = useNewSectionKpiPlaceholderDropHandler(index);
     const handleInsightPlaceholderDrop = useNewSectionInsightPlaceholderDropHandler(index);
+    const moveWidgetToNewSection = useMoveWidgetToNewSectionDropHandler(index);
+    const { handleDragHoverEnd } = useWidgetDragHoverHandlers();
 
     const [{ canDrop, isOver }, dropRef] = useDashboardDrop(
-        ["insightListItem", "kpi-placeholder", "insight-placeholder"],
+        ["insightListItem", "kpi-placeholder", "insight-placeholder", "kpi", "insight"],
         {
             drop: (item) => {
                 if (isInsightDraggableListItem(item)) {
                     handleInsightListItemDrop(item.insight);
                 }
-                if (isKpiPlaceholderDraggableItem(item)) {
-                    handleKpiPlaceholderDrop();
+                if (isInsightDraggableItem(item)) {
+                    moveWidgetToNewSection(item);
                 }
                 if (isInsightPlaceholderDraggableItem(item)) {
                     handleInsightPlaceholderDrop();
                 }
-            },
-            hover: () => {
-                if (widgetPlaceholderCoords) {
-                    dispatch(
-                        eagerRemoveSectionItem(
-                            widgetPlaceholderCoords.sectionIndex,
-                            widgetPlaceholderCoords.itemIndex,
-                        ),
-                    );
+                if (isKpiDraggableItem(item)) {
+                    moveWidgetToNewSection(item);
+                }
+                if (isKpiPlaceholderDraggableItem(item)) {
+                    handleKpiPlaceholderDrop();
                 }
             },
+            canDrop: (item) => {
+                if (isBaseDraggableMovingItem(item)) {
+                    const isAdjacentSection = index === item.sectionIndex || index === item.sectionIndex + 1;
+                    return !(item.isOnlyItemInSection && isAdjacentSection);
+                }
+                return true;
+            },
         },
-        [
-            dispatch,
-            widgetPlaceholderCoords,
-            index,
-            handleInsightListItemDrop,
-            handleKpiPlaceholderDrop,
-            handleInsightPlaceholderDrop,
-        ],
+        [dispatch, index, handleInsightListItemDrop, handleKpiPlaceholderDrop, handleInsightPlaceholderDrop],
     );
+
+    useEffect(() => {
+        if (isOver) {
+            handleDragHoverEnd();
+        }
+    }, [handleDragHoverEnd, isOver]);
 
     if (!canDrop) {
         return null;
