@@ -82,6 +82,7 @@ export const DefaultUiSettings: ISettings = {
     enableReversedStacking: true,
     enableSeparateTotalLabels: true,
     enableKPIDashboardExport: true,
+    enableKDZooming: true,
     ["msf.enableTenantCustomModel"]: false,
     drillIntoUrlDocumentationLink:
         "https://www.gooddata.com/developers/cloud-native/doc/cloud/create-dashboards/drilling-in-dashboards/set-drill-into-hyperlink/",
