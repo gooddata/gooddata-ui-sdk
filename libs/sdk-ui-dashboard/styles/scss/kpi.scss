@@ -170,3 +170,7 @@ $kpi-with-pop-min-height: $kpi-min-height + $pop-height;
     position: relative;
     flex: 1 1 auto;
 }
+
+.visualization-content.in-edit-mode {
+    pointer-events: none;
+}

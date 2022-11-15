@@ -32,6 +32,7 @@ import {
     useDashboardAsyncRender,
     useDashboardSelector,
     useWidgetExecutionsHandler,
+    selectIsInEditMode,
 } from "../../../../../model";
 import { useResolveDashboardInsightProperties } from "../useResolveDashboardInsightProperties";
 import { IDashboardInsightProps } from "../../types";
@@ -95,6 +96,7 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
     // State props
     const { locale, settings, colorPalette } = useDashboardSelector(selectCommonDashboardInsightProps);
     const { enableKDWidgetCustomHeight } = useDashboardSelector(selectSettings);
+    const isInEditMode = useDashboardSelector(selectIsInEditMode);
 
     const chartConfig = useDashboardSelector(selectChartConfig);
 
@@ -200,7 +202,7 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
     const isZoomable = visualizationProperties?.controls?.zoomInsight;
 
     return (
-        <div className="visualization-content">
+        <div className={cx("visualization-content", { "in-edit-mode": isInEditMode })}>
             <div
                 className={cx("gd-visualization-content", { zoomable: isZoomable })}
                 style={insightPositionStyle}

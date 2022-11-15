@@ -38,7 +38,7 @@ const defaultSectionRenderer: IDashboardLayoutSectionRenderer<unknown> = (props)
     <DashboardLayoutSectionRenderer {...props} />
 );
 
-const defaultSectionHeaderRenderer: IDashboardLayoutSectionHeaderRenderer<unknown> = (props) => (
+const defaultHeaderRenderer: IDashboardLayoutSectionHeaderRenderer<unknown> = (props) => (
     <DashboardLayoutSectionHeaderRenderer {...props} />
 );
 
@@ -48,7 +48,7 @@ export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionPr
     const {
         section,
         sectionRenderer = defaultSectionRenderer,
-        sectionHeaderRenderer = defaultSectionHeaderRenderer,
+        sectionHeaderRenderer = defaultHeaderRenderer,
         itemKeyGetter = defaultItemKeyGetter,
         gridRowRenderer,
         itemRenderer,

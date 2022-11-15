@@ -5,12 +5,12 @@ import { extendedWidgetDebugStr } from "../../../model";
 import { DefaultDashboardWidget } from "./DefaultDashboardWidget";
 import { isDashboardWidget } from "@gooddata/sdk-model";
 import { CustomDashboardWidgetComponent, IDashboardWidgetProps } from "./types";
-import { EmptyDashboardDropZone, WidgetDropZone } from "../../dragAndDrop";
+import { EmptyDashboardDropZone, LoadingDashboardPlaceholderWidget } from "../../dragAndDrop";
 import {
     isInitialPlaceholderWidget,
     isInsightPlaceholderWidget,
     isKpiPlaceholderWidget,
-    isPlaceholderWidget,
+    isLoadingPlaceholderWidget,
 } from "../../../widgets";
 
 const BadWidgetType: React.FC = () => {
@@ -53,8 +53,8 @@ export const DashboardWidget = (props: IDashboardWidgetProps): JSX.Element => {
             return EmptyDashboardDropZone;
         }
 
-        if (isPlaceholderWidget(widget)) {
-            return WidgetDropZone;
+        if (isLoadingPlaceholderWidget(widget)) {
+            return LoadingDashboardPlaceholderWidget;
         }
 
         if (isKpiPlaceholderWidget(widget) && KpiWidgetComponentSet.creating) {

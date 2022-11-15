@@ -17,6 +17,7 @@ import KpiPop from "./KpiPop";
 import { IKpiResult } from "../types";
 import { isDateFilterIrrelevant } from "../filterUtils";
 import { getKpiPopLabel } from "./utils/translations";
+import cx from "classnames";
 
 export interface IKpiContentProps {
     // KPI
@@ -28,6 +29,7 @@ export interface IKpiContentProps {
     error?: GoodDataSdkError | undefined;
     errorHelp?: string;
     enableCompactSize?: boolean;
+    isInEditMode: boolean;
 
     // Callbacks
     isKpiUnderlineHiddenWhenClickable?: boolean;
@@ -122,7 +124,7 @@ class KpiContent extends Component<IKpiContentProps & WrappedComponentProps> {
     render() {
         return (
             <div className="gd-kpi-widget-content">
-                <div className="visualization-content">
+                <div className={cx("visualization-content", { "in-edit-mode": this.props.isInEditMode })}>
                     <Measure client>
                         {({ measureRef, contentRect }) => {
                             return (

@@ -1,12 +1,10 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
 
-import { selectIsInEditMode, useDashboardSelector } from "../../../model";
-import { DraggableItem } from "../types";
-import { DraggableCreatePanelItem } from "../DraggableCreatePanelItem";
+import { KPI_WIDGET_SIZE_INFO_DEFAULT } from "@gooddata/sdk-ui-ext";
 import { CustomCreatePanelItemComponent } from "../../componentDefinition";
-import { useWidgetDragStartHandler } from "./useWidgetDragStartHandler";
-import { useWidgetDragEndHandler } from "./useWidgetDragEndHandler";
+import { DraggableCreatePanelItem } from "../DraggableCreatePanelItem";
+import { DraggableItem } from "../types";
 
 interface IDraggableKpiCreatePanelItemProps {
     CreatePanelItemComponent: CustomCreatePanelItemComponent;
@@ -15,28 +13,22 @@ interface IDraggableKpiCreatePanelItemProps {
 
 const dragItem: DraggableItem = {
     type: "kpi-placeholder",
+    size: {
+        gridHeight: KPI_WIDGET_SIZE_INFO_DEFAULT.height.default,
+        gridWidth: KPI_WIDGET_SIZE_INFO_DEFAULT.width.default,
+    },
 };
 
 export const DraggableKpiCreatePanelItem: React.FC<IDraggableKpiCreatePanelItemProps> = ({
     CreatePanelItemComponent,
     disabled,
 }) => {
-    const isInEditMode = useDashboardSelector(selectIsInEditMode);
-
-    const handleDragStart = useWidgetDragStartHandler();
-    const handleDragEnd = useWidgetDragEndHandler();
-
-    const dragEnabled = isInEditMode && !disabled;
-
     return (
         <DraggableCreatePanelItem
             Component={CreatePanelItemComponent}
             disabled={disabled}
-            canDrag={dragEnabled}
             dragItem={dragItem}
             hideDefaultPreview={false}
-            onDragEnd={handleDragEnd}
-            onDragStart={handleDragStart}
         />
     );
 };

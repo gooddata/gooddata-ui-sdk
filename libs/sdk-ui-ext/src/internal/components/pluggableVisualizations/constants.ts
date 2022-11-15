@@ -1,5 +1,5 @@
-// (C) 2021 GoodData Corporation
-import { IVisualizationSizeInfo } from "../../interfaces/VisualizationDescriptor";
+// (C) 2021-2022 GoodData Corporation
+import { IVisualizationDefaultSizeInfo } from "../../interfaces/VisualizationDescriptor";
 
 export const DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT = 22.5;
 export const DASHBOARD_LAYOUT_DEFAULT_KPI_HEIGHT = 12;
@@ -15,7 +15,7 @@ export const MIDDLE_VISUALIZATION_HEIGHT = 22;
 /**
  * @internal
  */
-export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT_LEGACY: IVisualizationSizeInfo = {
+export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT_LEGACY: IVisualizationDefaultSizeInfo = {
     width: {
         min: 4,
         default: 6,
@@ -28,7 +28,7 @@ export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT_LEGACY: IVisualizationSizeInfo = {
 /**
  * @internal
  */
-export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationSizeInfo = {
+export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo = {
     width: {
         min: 4,
         default: 6,
@@ -43,7 +43,7 @@ export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationSizeInfo = {
 /**
  * @internal
  */
-export const KPI_WIDGET_SIZE_INFO_DEFAULT_LEGACY: IVisualizationSizeInfo = {
+export const KPI_WIDGET_SIZE_INFO_DEFAULT_LEGACY: IVisualizationDefaultSizeInfo = {
     width: {
         min: 2,
         default: 2,
@@ -58,7 +58,7 @@ export const KPI_WIDGET_SIZE_INFO_DEFAULT_LEGACY: IVisualizationSizeInfo = {
 /**
  * @internal
  */
-export const KPI_WIDGET_SIZE_INFO_DEFAULT: IVisualizationSizeInfo = {
+export const KPI_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo = {
     width: {
         min: 2,
         default: 2,
@@ -69,3 +69,8 @@ export const KPI_WIDGET_SIZE_INFO_DEFAULT: IVisualizationSizeInfo = {
         max: 40,
     },
 };
+
+/**
+ * @internal
+ */
+export const WIDGET_DROPZONE_SIZE_INFO_DEFAULT = KPI_WIDGET_SIZE_INFO_DEFAULT;

@@ -1,6 +1,7 @@
 // (C) 2022 GoodData Corporation
 import { KpiWidgetComponentSet } from "../../componentDefinition";
 import { KpiComponentProvider } from "../../dashboardContexts";
+import { KpiDraggingComponent } from "../../dragAndDrop/";
 import { DefaultDashboardKpiPlaceholderWidget } from "../kpiPlaceholder";
 import { CreatableKpi } from "./CreatableKpi";
 import { DefaultKpiConfigurationPanel } from "./DefaultKpiConfigurationPanel/DefaultKpiConfigurationPanel";
@@ -20,7 +21,7 @@ export function DefaultDashboardKpiComponentSetFactory(
             priority: 5,
         },
         dragging: {
-            DraggingComponent: undefined, // TODO when adding widget moving
+            DraggingComponent: KpiDraggingComponent,
             type: "kpi",
         },
         configuration: {

@@ -21,6 +21,7 @@ export {
 export { DashboardLayout } from "./DashboardLayout";
 export { DashboardLayoutItem, IDashboardLayoutItemProps } from "./DashboardLayoutItem";
 export { DashboardLayoutItemRenderer } from "./DashboardLayoutItemRenderer";
+export { DashboardLayoutItemViewRenderer } from "./DashboardLayoutItemViewRenderer";
 export { DashboardLayoutSection, IDashboardLayoutSectionProps } from "./DashboardLayoutSection";
 export { DashboardLayoutSectionHeader } from "./DashboardLayoutSectionHeader";
 export { DashboardLayoutSectionHeaderRenderer } from "./DashboardLayoutSectionHeaderRenderer";

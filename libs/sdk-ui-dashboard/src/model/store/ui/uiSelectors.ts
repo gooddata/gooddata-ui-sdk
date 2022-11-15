@@ -210,7 +210,10 @@ export const selectSelectedFilterIndex = createSelector(selectSelf, (state) => s
 /**
  * @internal
  */
-export const selectIsDraggingWidget = createSelector(selectSelf, (state) => state.isDraggingWidget);
+export const selectIsDraggingWidget = createSelector(
+    selectSelf,
+    (state) => state.draggingWidgetSource !== undefined,
+);
 
 /**
  * @internal
@@ -221,3 +224,13 @@ export const selectActiveSectionIndex = createSelector(selectSelf, (state) => st
  * @internal
  */
 export const selectToastMessages = createSelector(selectSelf, (state) => state.toastMessages);
+
+/**
+ * @internal
+ */
+export const selectDraggingWidgetSource = createSelector(selectSelf, (state) => state.draggingWidgetSource);
+
+/**
+ * @internal
+ */
+export const selectDraggingWidgetTarget = createSelector(selectSelf, (state) => state.draggingWidgetTarget);

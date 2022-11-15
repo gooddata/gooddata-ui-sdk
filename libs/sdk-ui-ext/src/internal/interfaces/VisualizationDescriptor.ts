@@ -30,6 +30,13 @@ export interface ISizeInfo {
 }
 
 /**
+ * Info about min, max and default in layout units with required default value.
+ *
+ * @alpha
+ */
+export type ISizeInfoDefault = ISizeInfo & { default: number };
+
+/**
  * Info about visualization's min, max and default for width and height.
  *
  * @alpha
@@ -37,6 +44,16 @@ export interface ISizeInfo {
 export interface IVisualizationSizeInfo {
     width: ISizeInfo;
     height: ISizeInfo;
+}
+
+/**
+ * Info about visualization's min, max and default for width and height with required default value.
+ *
+ * @alpha
+ */
+export interface IVisualizationDefaultSizeInfo {
+    width: ISizeInfoDefault;
+    height: ISizeInfoDefault;
 }
 
 /**

@@ -27,6 +27,7 @@ const defaultItemRenderer: IDashboardLayoutItemRenderer<unknown> = (props) => (
 
 export function DashboardLayoutItem<TWidget>(props: IDashboardLayoutItemProps<TWidget>): JSX.Element {
     const { item, itemRenderer = defaultItemRenderer, widgetRenderer, screen } = props;
+
     const renderProps = {
         item,
         screen,

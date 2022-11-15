@@ -37,11 +37,7 @@ import { IDashboardProps } from "../types";
 import { DashboardLoading } from "./DashboardLoading";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import {
-    DefaultEmptyLayoutDropZoneBody,
-    DragLayerComponent,
-    LayoutResizeStateProvider,
-} from "../../dragAndDrop";
+import { DefaultEmptyLayoutDropZoneBody, LayoutResizeStateProvider } from "../../dragAndDrop";
 import { RenderModeAwareDashboardSidebar } from "../DashboardSidebar/RenderModeAwareDashboardSidebar";
 
 /**
@@ -134,11 +130,7 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
                                         <DashboardConfigProvider menuButtonConfig={props.menuButtonConfig}>
                                             <DndProvider backend={HTML5Backend}>
                                                 <LayoutResizeStateProvider>
-                                                    {/* we need wrapping element for drag layer and dashboard for proper rendering in flex layout */}
-                                                    <div className="component-root">
-                                                        <DragLayerComponent />
-                                                        <DashboardLoading {...props} />
-                                                    </div>
+                                                    <DashboardLoading {...props} />
                                                 </LayoutResizeStateProvider>
                                             </DndProvider>
                                         </DashboardConfigProvider>

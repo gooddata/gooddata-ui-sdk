@@ -9,6 +9,8 @@ import {
     AttributeFilterDraggableItem,
     CustomDraggableItem,
     DraggableContentItemType,
+    InsightDraggableItem,
+    KpiDraggableItem,
 } from "../dragAndDrop/types";
 import {
     AttributeFilterComponentProvider,
@@ -56,6 +58,22 @@ export type IAttributeFilterDraggingComponentProps = {
 /**
  * @internal
  */
+export type IInsightDraggingComponentProps = {
+    itemType: "insight";
+    item: InsightDraggableItem;
+};
+
+/**
+ * @internal
+ */
+export type IKpiDraggingComponentProps = {
+    itemType: "kpi";
+    item: KpiDraggableItem;
+};
+
+/**
+ * @internal
+ */
 export type ICustomDraggingComponentProps = {
     itemType: "custom";
     item: CustomDraggableItem;
@@ -65,6 +83,14 @@ export type ICustomDraggingComponentProps = {
  * @internal
  */
 export type AttributeFilterDraggingComponent = ComponentType<IAttributeFilterDraggingComponentProps>;
+/**
+ * @internal
+ */
+export type InsightDraggingComponent = ComponentType<IInsightDraggingComponentProps>;
+/**
+ * @internal
+ */
+export type KpiDraggingComponent = ComponentType<IKpiDraggingComponentProps>;
 
 /**
  * @internal
@@ -83,7 +109,7 @@ export type AttributeFilterDraggableComponent = {
  * @internal
  */
 export type InsightDraggableComponent = {
-    DraggingComponent?: undefined;
+    DraggingComponent?: InsightDraggingComponent;
     type: "insight";
 };
 
@@ -91,7 +117,7 @@ export type InsightDraggableComponent = {
  * @internal
  */
 export type KpiDraggableComponent = {
-    DraggingComponent?: undefined;
+    DraggingComponent?: KpiDraggingComponent;
     type: "kpi";
 };
 
