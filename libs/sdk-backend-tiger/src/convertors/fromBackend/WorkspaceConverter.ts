@@ -10,7 +10,7 @@ export const workspaceConverter = ({
     const parentWorkspace = relationships?.parent?.data?.id;
     return {
         description: attributes?.description || attributes?.name || id,
-        title: attributes?.name || id,
+        title: attributes?.name || "",
         id: id,
         parentWorkspace,
     };
