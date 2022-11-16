@@ -6,6 +6,7 @@ import { Portal } from "react-portal";
 import bindAll from "lodash/bindAll";
 import pick from "lodash/pick";
 import isEqual from "lodash/isEqual";
+import isReactEqual from "react-fast-compare";
 import findIndex from "lodash/findIndex";
 import debounce from "lodash/debounce";
 import noop from "lodash/noop";
@@ -148,7 +149,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
     }
 
     public shouldComponentUpdate(nextProps: IOverlayProps<T>, nextState: IOverlayState): boolean {
-        const propsChanged = !isEqual(this.props, nextProps);
+        const propsChanged = !isReactEqual(this.props, nextProps);
         const positionChanged = !isEqual(this.state.alignment, nextState.alignment);
 
         return propsChanged || positionChanged;
