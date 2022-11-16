@@ -8,6 +8,7 @@ import {
     ICatalogDateAttribute,
     IGroupableCatalogItemBase,
     IAttributeDisplayFormMetadataObject,
+    ObjRef,
 } from "@gooddata/sdk-model";
 import {
     JsonApiAttributeOutWithLinks,
@@ -40,12 +41,16 @@ const commonGroupableCatalogItemModifications =
         return builder.groups(tags);
     };
 
-const tigerLabelToDisplayFormMd = (label: JsonApiLabelOutWithLinks): IAttributeDisplayFormMetadataObject => {
+const tigerLabelToDisplayFormMd = (
+    label: JsonApiLabelOutWithLinks,
+    attributeRef: ObjRef,
+): IAttributeDisplayFormMetadataObject => {
     return newAttributeDisplayFormMetadataObject(idRef(label.id, "displayForm"), (builder) => {
         const labelBuilder = commonMetadataObjectModifications(label)(
             builder,
         ) as AttributeDisplayFormMetadataObjectBuilder;
         labelBuilder.displayFormType(convertLabelType(label.attributes?.valueType));
+        labelBuilder.attribute(attributeRef);
         return labelBuilder;
     });
 };
@@ -56,17 +61,18 @@ export const convertAttribute = (
     geoLabels: JsonApiLabelOutWithLinks[],
     allLabels: JsonApiLabelOutWithLinks[],
 ): ICatalogAttribute => {
-    const geoPinDisplayForms = geoLabels.map(tigerLabelToDisplayFormMd);
-    const displayForms = allLabels.map(tigerLabelToDisplayFormMd);
+    const attributeRef = idRef(attribute.id, "attribute");
+
+    const geoPinDisplayForms = geoLabels.map((df) => tigerLabelToDisplayFormMd(df, attributeRef));
+    const displayForms = allLabels.map((df) => tigerLabelToDisplayFormMd(df, attributeRef));
+    const defaultDisplayForm = displayForms.find((df) => df.id === defaultLabel.id)!;
 
     return newCatalogAttribute((catalogA) =>
         catalogA
-            .attribute(idRef(attribute.id, "attribute"), (a) =>
-                a.modify(commonMetadataObjectModifications(attribute)),
+            .attribute(attributeRef, (a) =>
+                a.modify(commonMetadataObjectModifications(attribute)).displayForms(displayForms),
             )
-            .defaultDisplayForm(idRef(defaultLabel.id, "displayForm"), (df) =>
-                df.modify(commonMetadataObjectModifications(defaultLabel)),
-            )
+            .defaultDisplayForm(defaultDisplayForm)
             .geoPinDisplayForms(geoPinDisplayForms)
             .displayForms(displayForms)
             .modify(commonGroupableCatalogItemModifications(attribute)),
@@ -102,7 +108,10 @@ export const convertDateAttribute = (
     label: JsonApiLabelOutWithLinks,
     allLabels: JsonApiLabelOutWithLinks[],
 ): ICatalogDateAttribute => {
-    const displayForms = allLabels.map(tigerLabelToDisplayFormMd);
+    const attributeRef = idRef(attribute.id, "attribute");
+
+    const displayForms = allLabels.map((df) => tigerLabelToDisplayFormMd(df, attributeRef));
+    const defaultDisplayForm = displayForms.find((df) => df.id === label.id)!;
 
     return newCatalogDateAttribute((dateAttribute) => {
         return dateAttribute
@@ -110,9 +119,7 @@ export const convertDateAttribute = (
             .attribute(idRef(attribute.id, "attribute"), (a) =>
                 a.modify(commonMetadataObjectModifications(attribute)).displayForms(displayForms),
             )
-            .defaultDisplayForm(idRef(label.id, "displayForm"), (df) =>
-                df.modify(commonMetadataObjectModifications(label)),
-            );
+            .defaultDisplayForm(defaultDisplayForm);
     });
 };
 
