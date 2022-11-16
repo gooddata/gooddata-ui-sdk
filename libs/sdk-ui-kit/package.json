@@ -96,7 +96,8 @@
         "tinycolor2": "^1.4.2",
         "ts-invariant": "^0.7.3",
         "tslib": "^2.0.0",
-        "uuid": "^8.3.2"
+        "uuid": "^8.3.2",
+        "react-fast-compare": "^3.2.0"
     },
     "peerDependencies": {
         "react": "^16.10.0 || ^17.0.0",
