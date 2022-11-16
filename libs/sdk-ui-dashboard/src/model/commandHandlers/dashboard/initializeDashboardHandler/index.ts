@@ -6,7 +6,7 @@ import { DashboardInitialized, dashboardInitialized } from "../../../events/dash
 import { insightsActions } from "../../../store/insights";
 import { loadingActions } from "../../../store/loading";
 import { DashboardContext, PrivateDashboardContext } from "../../../types/commonTypes";
-import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
+import { IDashboardWithReferences, walkLayout } from "@gooddata/sdk-backend-spi";
 import { resolveDashboardConfig } from "./resolveDashboardConfig";
 import { configActions } from "../../../store/config";
 import { PromiseFnReturnType } from "../../../types/sagas";
@@ -26,7 +26,14 @@ import { renderModeActions } from "../../../store/renderMode";
 import { loadDashboardList } from "./loadDashboardList";
 import { listedDashboardsActions } from "../../../store/listedDashboards";
 import { backendCapabilitiesActions } from "../../../store/backendCapabilities";
-import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
+import {
+    areObjRefsEqual,
+    IDashboard,
+    IInsight,
+    isInsightWidget,
+    ObjRef,
+    serializeObjRef,
+} from "@gooddata/sdk-model";
 import {
     actionsToInitializeExistingDashboard,
     actionsToInitializeNewDashboard,
@@ -38,16 +45,31 @@ import { accessibleDashboardsActions } from "../../../store/accessibleDashboards
 import { loadAccessibleDashboardList } from "./loadAccessibleDashboardList";
 import { loadLegacyDashboards } from "./loadLegacyDashboards";
 import { legacyDashboardsActions } from "../../../store/legacyDashboards";
+import uniqBy from "lodash/uniqBy";
 
-function loadDashboardFromBackend(
+async function loadDashboardFromBackend(
     ctx: DashboardContext,
     privateCtx: PrivateDashboardContext,
     dashboardRef: ObjRef,
+    hasPersistedDashboard: boolean,
 ): Promise<IDashboardWithReferences> {
     const { backend, workspace, filterContextRef } = ctx;
     const { preloadedDashboard } = privateCtx;
 
     if (preloadedDashboard && areObjRefsEqual(preloadedDashboard.ref, dashboardRef)) {
+        // with persisted dashboard we cannot use the backend for resolution of the referenced insights
+        // as our version of dashboard differs from what is on the backend
+        // hence we must do the resolution on the client
+        if (hasPersistedDashboard) {
+            const insights = await loadInsightsForPersistedDashboard(ctx, preloadedDashboard);
+            return {
+                dashboard: preloadedDashboard,
+                references: {
+                    insights,
+                    plugins: [],
+                },
+            };
+        }
         return backend
             .workspace(workspace)
             .dashboards()
@@ -64,6 +86,30 @@ function loadDashboardFromBackend(
         .workspace(workspace)
         .dashboards()
         .getDashboardWithReferences(dashboardRef, filterContextRef, { loadUserData: true }, ["insight"]);
+}
+
+async function loadInsightsForPersistedDashboard(
+    ctx: DashboardContext,
+    dashboard: IDashboard | undefined,
+): Promise<IInsight[]> {
+    if (!dashboard?.layout) {
+        return [];
+    }
+
+    const { backend, workspace } = ctx;
+
+    const referencedInsights: ObjRef[] = [];
+    walkLayout(dashboard.layout, {
+        widgetCallback: (widget) => {
+            if (isInsightWidget(widget)) {
+                referencedInsights.push(widget.insight);
+            }
+        },
+    });
+
+    const uniqueRefs = uniqBy(referencedInsights, serializeObjRef);
+
+    return Promise.all(uniqueRefs.map((ref) => backend.workspace(workspace).insights().getInsight(ref)));
 }
 
 type DashboardLoadResult = {
@@ -100,7 +146,7 @@ function* loadExistingDashboard(
         PromiseFnReturnType<typeof loadAccessibleDashboardList>,
         PromiseFnReturnType<typeof loadLegacyDashboards>,
     ] = yield all([
-        call(loadDashboardFromBackend, ctx, privateCtx, dashboardRef),
+        call(loadDashboardFromBackend, ctx, privateCtx, dashboardRef, !!cmd.payload.persistedDashboard),
         call(resolveDashboardConfig, ctx, cmd),
         call(resolvePermissions, ctx, cmd),
         call(loadCatalog, ctx),
