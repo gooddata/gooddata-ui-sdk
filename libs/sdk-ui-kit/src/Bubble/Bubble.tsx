@@ -3,6 +3,7 @@ import React from "react";
 import keys from "lodash/keys";
 import cloneDeep from "lodash/cloneDeep";
 import isEqual from "lodash/isEqual";
+import isReactEqual from "react-fast-compare";
 import result from "lodash/result";
 import noop from "lodash/noop";
 import cx from "classnames";
@@ -124,7 +125,7 @@ export class Bubble extends React.Component<IBubbleProps, IBubbleState> {
     }
 
     shouldComponentUpdate(nextProps: IBubbleProps, nextState: IBubbleState): boolean {
-        const propsChanged = !isEqual(this.props, nextProps);
+        const propsChanged = !isReactEqual(this.props, nextProps);
         const alignmentChanged = !isEqual(this.state.optimalAlignPoints, nextState.optimalAlignPoints);
 
         return propsChanged || alignmentChanged;
