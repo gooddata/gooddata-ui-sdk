@@ -8,7 +8,7 @@ import { action } from "@storybook/addon-actions";
 import { storiesOf } from "../../../../_infra/storyRepository";
 import { FilterStories } from "../../../../_infra/storyGroups";
 import { ReferenceWorkspaceId, StorybookBackend } from "../../../../_infra/backend";
-
+import { LongPostInteractionTimeout } from "../../../../_infra/backstopWrapper";
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
@@ -44,29 +44,51 @@ export const EmptyElementsSelectActionsComponent: React.VFC<IAttributeFilterElem
 };
 
 storiesOf(`${FilterStories}@next/Customization/ElementsSelectActionsComponent`)
-    .add("Custom component", () => {
-        return (
-            <div style={wrapperStyle} className="screenshot-target">
-                <AttributeFilter
-                    backend={backend}
-                    workspace={ReferenceWorkspaceId}
-                    filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
-                    onApply={action("on-apply")}
-                    ElementsSelectActionsComponent={CustomElementsSelectActionsComponent}
-                />
-            </div>
-        );
-    })
-    .add("Empty component", () => {
-        return (
-            <div style={wrapperStyle} className="screenshot-target">
-                <AttributeFilter
-                    backend={backend}
-                    workspace={ReferenceWorkspaceId}
-                    filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
-                    onApply={action("on-apply")}
-                    ElementsSelectActionsComponent={EmptyElementsSelectActionsComponent}
-                />
-            </div>
-        );
-    });
+    .add(
+        "Custom component",
+        () => {
+            return (
+                <div style={wrapperStyle} className="screenshot-target">
+                    <AttributeFilter
+                        backend={backend}
+                        workspace={ReferenceWorkspaceId}
+                        filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
+                        onApply={action("on-apply")}
+                        ElementsSelectActionsComponent={CustomElementsSelectActionsComponent}
+                    />
+                </div>
+            );
+        },
+        {
+            screenshots: {
+                opened: {
+                    clickSelector: ".gd-attribute-filter__next",
+                    postInteractionWait: LongPostInteractionTimeout,
+                },
+            },
+        },
+    )
+    .add(
+        "Empty component",
+        () => {
+            return (
+                <div style={wrapperStyle} className="screenshot-target">
+                    <AttributeFilter
+                        backend={backend}
+                        workspace={ReferenceWorkspaceId}
+                        filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
+                        onApply={action("on-apply")}
+                        ElementsSelectActionsComponent={EmptyElementsSelectActionsComponent}
+                    />
+                </div>
+            );
+        },
+        {
+            screenshots: {
+                opened: {
+                    clickSelector: ".gd-attribute-filter__next",
+                    postInteractionWait: LongPostInteractionTimeout,
+                },
+            },
+        },
+    );

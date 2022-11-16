@@ -117,12 +117,16 @@ const AttributeFilterDropdownButtonExamples: React.FC<AttributeFilterDropdownBut
 };
 
 storiesOf(`${FilterStories}@next/Components/AttributeFilterDropdownButton`)
-    .add("full-featured", () => <AttributeFilterDropdownButtonExamples />, {})
-    .add("full-featured-with-icon", () => <AttributeFilterDropdownButtonExamples icon={AttributeIcon} />, {})
-    .add("draggable", () => <AttributeFilterDropdownButtonExamples isDraggable={true} />, {})
+    .add("full-featured", () => <AttributeFilterDropdownButtonExamples />, { screenshot: true })
+    .add("full-featured-with-icon", () => <AttributeFilterDropdownButtonExamples icon={AttributeIcon} />, {
+        screenshot: true,
+    })
+    .add("draggable", () => <AttributeFilterDropdownButtonExamples isDraggable={true} />, {
+        screenshot: true,
+    })
     .add(
         "draggable-with-icon",
         () => <AttributeFilterDropdownButtonExamples isDraggable={true} icon={AttributeIcon} />,
-        {},
+        { screenshot: true },
     )
-    .add("themed", () => wrapWithTheme(<AttributeFilterDropdownButtonExamples />), {});
+    .add("themed", () => wrapWithTheme(<AttributeFilterDropdownButtonExamples />), { screenshot: true });

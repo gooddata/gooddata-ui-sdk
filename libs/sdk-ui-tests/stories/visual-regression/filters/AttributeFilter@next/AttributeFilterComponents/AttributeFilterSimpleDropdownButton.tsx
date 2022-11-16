@@ -96,5 +96,5 @@ const AttributeFilterButtonExamples = (): JSX.Element => {
 };
 
 storiesOf(`${FilterStories}@next/Components/AttributeFilterSimpleDropdownButton`)
-    .add("full-featured", () => <AttributeFilterButtonExamples />, {})
-    .add("themed", () => wrapWithTheme(<AttributeFilterButtonExamples />), {});
+    .add("full-featured", () => <AttributeFilterButtonExamples />, { screenshot: true })
+    .add("themed", () => wrapWithTheme(<AttributeFilterButtonExamples />), { screenshot: true });

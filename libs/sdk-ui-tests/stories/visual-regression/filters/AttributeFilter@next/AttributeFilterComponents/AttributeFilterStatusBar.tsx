@@ -89,5 +89,5 @@ const AttributeFilterStatusBarExamples = (): JSX.Element => {
 };
 
 storiesOf(`${FilterStories}@next/Components/AttributeFilterStatusBar`)
-    .add("full-featured", () => <AttributeFilterStatusBarExamples />, {})
-    .add("themed", () => wrapWithTheme(<AttributeFilterStatusBarExamples />), {});
+    .add("full-featured", () => <AttributeFilterStatusBarExamples />, { screenshot: true })
+    .add("themed", () => wrapWithTheme(<AttributeFilterStatusBarExamples />), { screenshot: true });

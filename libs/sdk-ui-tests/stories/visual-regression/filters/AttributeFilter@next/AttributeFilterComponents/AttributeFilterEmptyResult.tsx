@@ -46,5 +46,5 @@ const AttributeFilterEmptyResultExamples = (): JSX.Element => {
 };
 
 storiesOf(`${FilterStories}@next/Components/AttributeFilterEmptyResult`)
-    .add("full-featured", () => <AttributeFilterEmptyResultExamples />, {})
-    .add("themed", () => wrapWithTheme(<AttributeFilterEmptyResultExamples />), {});
+    .add("full-featured", () => <AttributeFilterEmptyResultExamples />, { screenshot: true })
+    .add("themed", () => wrapWithTheme(<AttributeFilterEmptyResultExamples />), { screenshot: true });
