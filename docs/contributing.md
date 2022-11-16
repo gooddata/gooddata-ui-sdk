@@ -139,6 +139,8 @@ consistent across subprojects.
 > Note: **never** add new packages by running package manager directly (e.g. `yarn add ...`).
 > This will break the node_modules.
 
+After adding new dependency run `rush update` to approve new package.
+
 ### How do I remove dependencies from a project?
 
 Remove the dependencies from package.json and then run `rush update`.
