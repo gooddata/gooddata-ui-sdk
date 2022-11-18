@@ -1,0 +1,136 @@
+// (C) 2020 GoodData Corporation
+@use "variables";
+
+.gd-description-panel-bubble {
+    &.bubble-light {
+        max-width: 220px;
+        .bubble-content {
+            padding: 0;
+        }
+    }
+
+    @media (max-width: 640px) {
+        /* stylelint-disable declaration-no-important */
+        max-width: calc(100vw - 30px) !important;
+        min-width: 108px;
+    }
+}
+
+.gd-icon-circle-question-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: variables.$gd-medium-gray;
+    cursor: help;
+
+    &:hover {
+        color: variables.$gd-color-text;
+    }
+}
+
+.gd-description-panel {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: variables.$gd-color-white;
+    font-family: variables.$gd-font-primary;
+    max-height: 510px;
+    overflow: hidden;
+    padding: 15px 0;
+
+    &-title {
+        flex-shrink: 0;
+        font-size: 14px;
+        line-height: 23px;
+        color: variables.$gd-color-text;
+        margin: 0 15px;
+        overflow: hidden;
+        overflow-wrap: break-word;
+    }
+
+    &-content {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        overflow: auto;
+        padding: 0 15px;
+    }
+}
+
+.gd-description-icon {
+    .gd-icon-circle-question {
+        color: variables.$gd-color-state-blank;
+    }
+    &:hover {
+        .gd-icon-circle-question {
+            color: variables.$gd-medium-gray;
+        }
+    }
+}
+
+.gd-ellipsis-text {
+    display: flex;
+    flex-direction: column;
+
+    &-content {
+        font-size: 13px;
+        line-height: 18px;
+        color: variables.$gd-medium-gray;
+        overflow-wrap: break-word;
+    }
+
+    &-button {
+        background: none;
+        border: none;
+        padding: 0;
+        font: inherit;
+        cursor: pointer;
+        outline: inherit;
+        font-size: 12px;
+        line-height: 27px;
+        color: variables.$gd-medium-gray;
+        text-decoration: underline;
+        width: fit-content;
+    }
+
+    &-button:hover {
+        color: variables.$gd-color-text;
+    }
+}
+
+.gd-metadata-list {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+
+    &-title {
+        font-size: 10px;
+        line-height: 14px;
+        color: variables.$gd-color-state-blank;
+        text-transform: uppercase;
+    }
+
+    &-element {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        font-size: 12px;
+        line-height: 19px;
+        color: variables.$gd-color-text;
+        overflow: hidden;
+        white-space: nowrap;
+
+        span {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+
+    &-icon {
+        color: variables.$gd-color-state-blank;
+        cursor: help;
+        flex-shrink: 0;
+        margin-left: 5px;
+    }
+}

@@ -1,8 +1,19 @@
 // (C) 2021-2022 GoodData Corporation
 
 import { IDashboardCommand } from "./base";
-import { isObjRef, ObjRef, IKpiComparisonDirection, IKpiComparisonTypeComparison } from "@gooddata/sdk-model";
-import { FilterOpReplaceAll, WidgetFilterOperation, WidgetHeader } from "../types/widgetTypes";
+import {
+    isObjRef,
+    ObjRef,
+    IKpiComparisonDirection,
+    IKpiComparisonTypeComparison,
+    IKpiWidgetConfiguration,
+} from "@gooddata/sdk-model";
+import {
+    FilterOpReplaceAll,
+    WidgetDescription,
+    WidgetFilterOperation,
+    WidgetHeader,
+} from "../types/widgetTypes";
 
 /**
  * Payload of the {@link ChangeKpiWidgetHeader} command.
@@ -51,6 +62,123 @@ export function changeKpiWidgetHeader(
         payload: {
             ref,
             header,
+        },
+    };
+}
+
+//
+//
+//
+
+/**
+ * Payload of the {@link ChangeKpiWidgetDescription} command.
+ * @alpha
+ */
+export interface ChangeKpiWidgetDescriptionPayload {
+    /**
+     * Reference to Kpi whose description to change.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * Description to use for the Kpi widget. Contents of the provided description will be used as-is and will be
+     * used to replace the current description values.
+     */
+    readonly description: WidgetDescription;
+}
+
+/**
+ * @alpha
+ */
+export interface ChangeKpiWidgetDescription extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_DESCRIPTION";
+    readonly payload: ChangeKpiWidgetDescriptionPayload;
+}
+
+/**
+ * Creates the ChangeKpiWidgetDescription command. Dispatching this command will result in change of the Kpi widget's
+ * description.
+ *
+ * @param ref - reference of the kpi widget to modify
+ * @param description - new description to use
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function changeKpiWidgetDescription(
+    ref: ObjRef,
+    description: WidgetDescription,
+    correlationId?: string,
+): ChangeKpiWidgetDescription {
+    return {
+        type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_DESCRIPTION",
+        correlationId,
+        payload: {
+            ref,
+            description,
+        },
+    };
+}
+
+//
+//
+//
+
+/**
+ * Payload of the {@link ChangeKpiWidgetConfiguration} command.
+ * @alpha
+ */
+export interface ChangeKpiWidgetConfigurationPayload {
+    /**
+     * Reference to Kpi Widget whose configuration to change.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * Configuration to use for the kpi that is rendered by the widget.
+     *
+     * These will replace the existing configuration. To clear any widget-level configuration
+     * currently in effect for the widget, set the configuration to `undefined`.
+     */
+    readonly config: IKpiWidgetConfiguration | undefined;
+}
+
+/**
+ * @alpha
+ */
+export interface ChangeKpiWidgetConfiguration extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_CONFIGURATION";
+    readonly payload: ChangeKpiWidgetConfigurationPayload;
+}
+
+/**
+ *
+ * Creates the ChangeKpiWidgetConfiguration command. Dispatching this command will result is modification
+ * of the configuration that are effective for the particular kpi widget.
+ *
+ * Through configuration, you can modify how is particular kpi rendered
+ *
+ * If you want to clear any widget-level configuration, set config to `undefined`.
+ *
+ * @param ref - reference of the insight widget to modify
+ * @param config - new configuration to set, undefined to clear any widget level  config
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function changeKpiWidgetConfiguration(
+    ref: ObjRef,
+    config: IKpiWidgetConfiguration | undefined,
+    correlationId?: string,
+): ChangeKpiWidgetConfiguration {
+    return {
+        type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_CONFIGURATION",
+        correlationId,
+        payload: {
+            ref,
+            config,
         },
     };
 }

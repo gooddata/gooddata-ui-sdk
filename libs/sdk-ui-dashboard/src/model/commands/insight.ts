@@ -9,7 +9,12 @@ import {
     InsightDrillDefinition,
     IInsightWidgetConfiguration,
 } from "@gooddata/sdk-model";
-import { FilterOpReplaceAll, WidgetFilterOperation, WidgetHeader } from "../types/widgetTypes";
+import {
+    FilterOpReplaceAll,
+    WidgetFilterOperation,
+    WidgetHeader,
+    WidgetDescription,
+} from "../types/widgetTypes";
 import { IExportConfig } from "../types/exportTypes";
 
 /**
@@ -714,3 +719,62 @@ export function exportInsightWidget(
         },
     };
 }
+
+//
+//
+//
+
+/**
+ * Payload of the {@link ChangeInsightWidgetDescription} command.
+ * @alpha
+ */
+export interface ChangeInsightWidgetDescriptionPayload {
+    /**
+     * Reference to Insight Widget whose description to change.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * Description to use for the Insight widget. Contents of the provided description will be used as-is and will be
+     * used to replace the current description values.
+     */
+    readonly description: WidgetDescription;
+}
+
+/**
+ * @alpha
+ */
+export interface ChangeInsightWidgetDescription extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_DESCRIPTION";
+    readonly payload: ChangeInsightWidgetDescriptionPayload;
+}
+
+/**
+ * Creates the ChangeInsightWidgetDescription command. Dispatching this command will result in change of the Insight widget's
+ * description.
+ *
+ * @param ref - reference of the insight widget to modify
+ * @param description - new description to use
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function changeInsightWidgetDescription(
+    ref: ObjRef,
+    description: WidgetDescription,
+    correlationId?: string,
+): ChangeInsightWidgetDescription {
+    return {
+        type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_DESCRIPTION",
+        correlationId,
+        payload: {
+            ref,
+            description,
+        },
+    };
+}
+
+//
+//
+//

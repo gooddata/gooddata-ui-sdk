@@ -35,7 +35,7 @@ export const ConfigurationBubble: React.FC<IConfigurationBubbleProps> = (props) 
     return (
         <Bubble
             className={cx("bubble-light gd-configuration-bubble s-gd-configuration-bubble", classNames)}
-            overlayClassName="gd-configuration-bubble-wrapper"
+            overlayClassName="gd-configuration-bubble-wrapper sdk-edit-mode-on"
             alignTo={".s-dash-item.is-selected"}
             alignPoints={alignPoints}
             arrowOffsets={arrowOffsets}

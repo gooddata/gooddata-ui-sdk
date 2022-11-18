@@ -43,8 +43,10 @@
     }
 }
 
-.gd-configuration-bubble-wrapper.overlay-wrapper {
-    $gd-configuration-bubble-arrow-offset: 35px;
+// sdk-edit-mode-on is in selector to override same classes in KD.
+// Can be removed when old implementation in KD removed
+.gd-configuration-bubble-wrapper.overlay-wrapper.sdk-edit-mode-on {
+    $gd-configuration-bubble-arrow-offset: 9px;
     $gd-configuration-bubble-arrow-height: 14px;
 
     z-index: 1000;
@@ -72,34 +74,119 @@
 
         .bubble-content {
             padding: 0;
+        }
 
-            .configuration-panel {
-                max-height: variables.$gd-configuration-bubble-height;
-                overflow-x: hidden;
-                overflow-y: auto;
-                padding: 0;
+        .configuration-panel-kpi {
+            .configuration-category.description-configuration-section {
+                margin: 25px 0 0 0;
+            }
+        }
+
+        .configuration-panel {
+            max-height: variables.$gd-configuration-bubble-height;
+            overflow-x: hidden;
+            overflow-y: auto;
+            padding: 0;
+        }
+
+        .configuration-category {
+            margin-top: variables.$gd-configuration-bubble-margin;
+            margin-left: variables.$gd-configuration-bubble-margin;
+            margin-right: variables.$gd-configuration-bubble-margin;
+            margin-bottom: 0;
+            padding: 0;
+            &:last-child {
+                margin-bottom: variables.$gd-configuration-bubble-margin;
+            }
+        }
+
+        .configuration-category h3 {
+            padding-left: 0;
+        }
+
+        .configuration-panel-header-title {
+            color: kit-variables.$gd-color-state-blank;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .configuration-panel-header-title.clickable {
+            cursor: pointer;
+        }
+
+        .configuration-panel-screen {
+            overflow: auto;
+        }
+
+        .configuration-panel-header-title i {
+            font-size: 14px;
+            margin-right: 5px;
+            position: relative;
+            top: 2px;
+        }
+
+        .configuration-panel-header-close-button::before {
+            font-size: 12px;
+            padding-right: 0;
+            margin-right: 0;
+        }
+
+        &.arrow-br .bubble-content .arrow-position,
+        &.arrow-bl .bubble-content .arrow-position {
+            top: auto;
+            bottom: $gd-configuration-bubble-arrow-offset;
+        }
+    }
+
+    .gd-configuration-bubble.edit-insight-config {
+        .arrow-position {
+            top: $gd-configuration-bubble-arrow-offset;
+        }
+
+        .configuration-panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 8px 15px;
+            background: kit-variables.$is-focused-background;
+        }
+    }
+}
+
+// sdk-edit-mode-on is in selector to override same classes in KD.
+// Can be removed when old implementation in KD removed
+.sdk-edit-mode-on {
+    .configuration-category {
+        margin-bottom: 20px;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        h3 {
+            position: relative;
+            overflow: hidden;
+            margin: 25px 0 10px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: kit-variables.$gd-color-state-blank;
+
+            &.is-disabled {
+                color: variables.$dialog-border;
             }
 
-            .configuration-category {
-                margin: variables.$gd-configuration-bubble-margin;
-                padding: 0;
-            }
-
-            .configuration-category h3 {
-                padding-left: 0;
-            }
-
-            .arrow-position {
-                top: $gd-configuration-bubble-arrow-offset;
-            }
-
-            .configuration-panel-header {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
+            &::after {
+                content: "";
+                position: absolute;
+                top: 50%;
+                display: inline-block;
                 width: 100%;
-                padding: 8px 15px;
-                background: kit-variables.$is-focused-background;
+                height: 0;
+                margin-left: 10px;
+                border-top: 1px solid kit-variables.$gd-border-color;
             }
 
             .configuration-panel-header-title {
@@ -131,340 +218,333 @@
                 margin-right: 0;
             }
         }
-        &.arrow-br .bubble-content .arrow-position,
-        &.arrow-bl .bubble-content .arrow-position {
-            top: auto;
-            bottom: $gd-configuration-bubble-arrow-offset;
-        }
-    }
-}
 
-.configuration-category {
-    margin-bottom: 20px;
-
-    &:last-child {
-        margin-bottom: 0;
-    }
-
-    h3 {
-        position: relative;
-        overflow: hidden;
-        margin: 25px 0 10px;
-        font-size: 11px;
-        font-weight: bold;
-        text-transform: uppercase;
-        color: kit-variables.$gd-color-state-blank;
-
-        &.is-disabled {
-            color: variables.$dialog-border;
-        }
-
-        &::after {
-            content: "";
-            position: absolute;
-            top: 50%;
-            display: inline-block;
-            width: 100%;
-            height: 0;
-            margin-left: 10px;
-            border-top: 1px solid kit-variables.$gd-border-color;
-        }
-
-        + label {
-            margin-top: 10px;
-        }
-    }
-
-    > h3:first-child {
-        margin-top: 0;
-    }
-
-    label {
-        display: block;
-        margin-top: 2px;
-        font-size: 13px;
-        color: kit-variables.$gd-color-label;
-
-        + label {
+        > h3:first-child {
             margin-top: 0;
         }
 
-        &.filter-by-item {
+        label {
+            display: block;
+            margin-top: 2px;
+            font-size: 13px;
+            color: kit-variables.$gd-color-label;
+
+            + label {
+                margin-top: 0;
+            }
+
+            &.filter-by-item {
+                display: flex;
+            }
+        }
+
+        .gd-input-search {
+            margin: 0 15px 10px;
+        }
+
+        .attribute-select {
+            margin-top: 10px;
+        }
+
+        .subsection-disabled label {
+            color: kit-variables.$gd-color-disabled;
+        }
+
+        .warning + h3 {
+            margin-top: 10px;
+        }
+
+        .gd-message {
+            display: block;
+            word-break: break-word;
+            overflow-wrap: break-word;
+
+            &.error {
+                // FIXME unify message boxes
+                margin: 15px 0;
+                padding: 10px;
+                font-size: 12px;
+                line-height: 18px;
+            }
+        }
+    }
+
+    .configuration-category-vis {
+        overflow: hidden;
+    }
+
+    .filter-by-item {
+        justify-content: space-between;
+        align-items: center;
+        padding-right: 0;
+
+        input,
+        .gd-spinner {
+            flex: 0 0 auto;
+        }
+
+        span {
+            flex: 1 1 auto;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .input-label-text {
             display: flex;
         }
-    }
 
-    .gd-input-search {
-        margin: 0 15px 10px;
-    }
+        .gd-bubble-trigger {
+            margin: 0;
+        }
 
-    .attribute-select {
-        margin-top: 10px;
-    }
-
-    .subsection-disabled label {
-        color: kit-variables.$gd-color-disabled;
-    }
-
-    .warning + h3 {
-        margin-top: 10px;
-    }
-
-    .gd-message {
-        display: block;
-        word-break: break-word;
-        overflow-wrap: break-word;
-
-        &.error {
-            // FIXME unify message boxes
-            margin: 15px 0;
-            padding: 10px;
-            font-size: 12px;
-            line-height: 18px;
+        .gd-spinner {
+            margin-left: 10px;
         }
     }
-}
 
-.configuration-category-vis {
-    overflow: hidden;
-}
-
-.filter-by-item {
-    justify-content: space-between;
-    align-items: center;
-    padding-right: 0;
-
-    input,
-    .gd-spinner {
-        flex: 0 0 auto;
+    .configuration-subcategory {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-left: 23px;
     }
 
-    span {
+    .subcategory-label {
+        flex: 0 0 auto;
+        margin-right: 10px;
+    }
+
+    .subcategory-dropdown {
         flex: 1 1 auto;
         overflow: hidden;
-        white-space: nowrap;
+        padding: 6px 0;
     }
 
-    .input-label-text {
-        display: flex;
+    .date-filter-error,
+    .attribute-filter-error {
+        .title {
+            color: kit-variables.$gd-palette-error-base;
+        }
     }
 
-    .gd-bubble-trigger {
-        margin: 0;
-    }
-
-    .gd-spinner {
-        margin-left: 10px;
-    }
-}
-
-.configuration-subcategory {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-left: 23px;
-}
-
-.subcategory-label {
-    flex: 0 0 auto;
-    margin-right: 10px;
-}
-
-.subcategory-dropdown {
-    flex: 1 1 auto;
-    overflow: hidden;
-    padding: 6px 0;
-}
-
-.date-filter-error,
-.attribute-filter-error {
-    .title {
-        color: kit-variables.$gd-palette-error-base;
-    }
-}
-
-.is-highlighted {
-    // overwrite
-    // stylelint-disable-next-line declaration-no-important
-    border: 1px solid kit-variables.$gd-palette-primary-base !important;
-
-    // refactor
-    // stylelint-disable-next-line max-line-length
-    box-shadow: 0 0 3px 0 variables.$gd-palette-primary-base-t50,
-        0 1px 2px 0 button-variables.$button-shadow-darker;
-    color: kit-variables.$gd-palette-primary-base;
-}
-
-.dataSets-list {
-    .gd-list-item-header {
-        padding: 11px 10px 6px;
-    }
-}
-
-.drill-to-dropdown-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    width: 100%;
-}
-
-.drill-to-dropdown {
-    display: inline-block;
-    // 25px is the space needed to accommodate both the X button and scrollbar on Windows (it is wider than on macOS)
-    // allow the dropdown to shrink a bit if there is a wider scrollbar
-    max-width: variables.$gd-configuration-panel-inner-width - 25px;
-
-    &:last-child {
-        width: 100%;
-    }
-}
-
-.button-remove-drill-to {
-    position: relative;
-    margin: -1px -8px -1px 0;
-    text-decoration: none;
-
-    &:hover {
-        text-decoration: none;
-    }
-}
-
-.gd-visualizations-list {
-    overflow: hidden;
-    text-align: left;
-
-    .gd-dropdown-tabs {
-        margin-left: 15px;
-        margin-right: 15px;
-    }
-
-    .fixedDataTableRowLayout_rowWrapper:hover {
+    .is-highlighted {
         // overwrite
         // stylelint-disable-next-line declaration-no-important
-        z-index: 1 !important;
+        border: 1px solid kit-variables.$gd-palette-primary-base !important;
+
+        // refactor
+        // stylelint-disable-next-line max-line-length
+        box-shadow: 0 0 3px 0 variables.$gd-palette-primary-base-t50,
+            0 1px 2px 0 button-variables.$button-shadow-darker;
+        color: kit-variables.$gd-palette-primary-base;
     }
 
-    .public_fixedDataTableRow_main,
-    .public_fixedDataTableCell_main {
-        background: none;
+    .dataSets-list {
+        .gd-list-item-header {
+            padding: 11px 10px 6px;
+        }
     }
 
-    .gd-visualizations-list-item {
-        margin-right: 7px;
-        margin-left: 7px;
-        padding-right: 10px;
-        padding-left: 10px;
+    .drill-to-dropdown-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        width: 100%;
     }
 
-    .gd-visualizations-list-no-data.gd-no-data {
-        margin: 0;
-        padding: 10px 20px;
-        color: kit-variables.$gd-color-state-blank;
+    .drill-to-dropdown {
+        display: inline-block;
+        // 25px is the space needed to accommodate both the X button and scrollbar on Windows (it is wider than on macOS)
+        // allow the dropdown to shrink a bit if there is a wider scrollbar
+        max-width: variables.$gd-configuration-panel-inner-width - 25px;
+
+        &:last-child {
+            width: 100%;
+        }
+    }
+
+    .button-remove-drill-to {
+        position: relative;
+        margin: -1px -8px -1px 0;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+
+    .gd-visualizations-list {
+        overflow: hidden;
         text-align: left;
 
-        &.gd-visualization-list-not-found {
-            text-align: center;
-            padding: 0 20px;
+        .gd-dropdown-tabs {
+            margin-left: 15px;
+            margin-right: 15px;
         }
 
-        .gd-button {
-            padding: 0;
+        .fixedDataTableRowLayout_rowWrapper:hover {
+            // overwrite
+            // stylelint-disable-next-line declaration-no-important
+            z-index: 1 !important;
+        }
+
+        .public_fixedDataTableRow_main,
+        .public_fixedDataTableCell_main {
+            background: none;
+        }
+
+        .gd-visualizations-list-item {
+            margin-right: 7px;
+            margin-left: 7px;
+            padding-right: 10px;
+            padding-left: 10px;
+        }
+
+        .gd-visualizations-list-no-data.gd-no-data {
+            margin: 0;
+            padding: 10px 20px;
+            color: kit-variables.$gd-color-state-blank;
+            text-align: left;
+
+            &.gd-visualization-list-not-found {
+                text-align: center;
+                padding: 0 20px;
+            }
+
+            .gd-button {
+                padding: 0;
+            }
         }
     }
-}
 
-.gd-visualizations-list-item-wrap {
-    &.is-first {
-        margin-top: 10px;
+    .gd-visualizations-list-item-wrap {
+        &.is-first {
+            margin-top: 10px;
+        }
+
+        &.is-last {
+            margin-bottom: 10px;
+        }
     }
 
-    &.is-last {
-        margin-bottom: 10px;
-    }
-}
-
-.flex-panel-full-vh-height {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    align-content: stretch;
-    height: 100vh;
-
-    .flex-panel-item-stretch {
+    .flex-panel-full-vh-height {
         display: flex;
-        flex-grow: 1;
         flex-direction: column;
         align-items: stretch;
         align-content: stretch;
+        height: 100vh;
 
-        .visualizations-list-wrap {
-            position: relative;
-            flex: 1 1 auto;
-            height: 0;
+        .flex-panel-item-stretch {
+            display: flex;
+            flex-grow: 1;
+            flex-direction: column;
+            align-items: stretch;
+            align-content: stretch;
 
-            .gd-visualizations-list {
+            .visualizations-list-wrap {
+                position: relative;
+                flex: 1 1 auto;
+                height: 0;
+
                 // refactor
                 // stylelint-disable-next-line max-nesting-depth
-                .gd-flex-item-stretch {
-                    overflow-x: hidden;
+                .gd-visualizations-list {
+                    // refactor
+                    // stylelint-disable-next-line max-nesting-depth
+                    .gd-flex-item-stretch {
+                        overflow-x: hidden;
+                    }
                 }
             }
         }
     }
-}
 
-.gd-kpi-date-dataset-dropdown {
-    .gd-button {
-        width: 159px;
+    .gd-kpi-date-dataset-dropdown {
+        .gd-button {
+            width: 159px;
+        }
     }
-}
 
-.metrics-dropdown {
-    width: variables.$gd-configuration-panel-inner-width;
+    .metrics-dropdown {
+        width: variables.$gd-configuration-panel-inner-width;
 
-    .dropdown-body {
+        .dropdown-body {
+            flex-direction: column;
+        }
+    }
+
+    .zoom-and-pan-section {
+        .gd-configuration-bubble-wrapper.overlay-wrapper .gd-configuration-bubble .bubble-content & {
+            margin-top: 10px;
+        }
+
+        h6 {
+            display: none;
+        }
+        .gd-icon-circle-question {
+            cursor: help;
+            margin-left: -12px;
+            margin-top: -3px;
+
+            &:hover::before {
+                color: var(--gd-palette-complementary-5, #999);
+            }
+            &::before {
+                font: 14px/1 "Indigo", sans-serif;
+                color: var(--gd-palette-complementary-5, #bbb);
+            }
+        }
+
+        .input-label-text {
+            font-size: 13px;
+            color: var(--gd-palette-complementary-8, #464e56);
+        }
+
+        .gd-message {
+            margin-top: 5px;
+        }
+
+        .input-checkbox-label {
+            display: inline-block;
+        }
+    }
+
+    .configuration-panel-content {
+        display: flex;
+        height: 100%;
         flex-direction: column;
     }
-}
 
-.zoom-and-pan-section {
-    .gd-configuration-bubble-wrapper.overlay-wrapper .gd-configuration-bubble .bubble-content & {
-        margin-top: 10px;
-    }
-
-    h6 {
-        display: none;
-    }
-    .gd-icon-circle-question {
-        cursor: help;
-        margin-left: -12px;
-        margin-top: -3px;
-
-        &:hover::before {
-            color: var(--gd-palette-complementary-5, #999);
+    .description-configuration-section {
+        .dropdown-button.description-config-dropdown-button {
+            width: auto;
+            padding: 0 10px 0 10px;
         }
-        &::before {
-            font: 14px/1 "Indigo", sans-serif;
-            color: var(--gd-palette-complementary-5, #bbb);
+        .gd-input {
+            margin-top: 10px;
+        }
+        .description {
+            font-size: 13px;
+            color: kit-variables.$gd-color-text;
+            resize: none;
+        }
+        .include-metrics-wrapper {
+            margin-top: 10px;
+            .input-checkbox-label {
+                display: inline-block;
+            }
+            .gd-bubble-trigger {
+                display: inline-block;
+                vertical-align: middle;
+            }
+        }
+        .gd-icon-circle-question {
+            cursor: help;
+            color: kit-variables.$gd-color-state-blank;
+
+            &:hover {
+                color: kit-variables.$gd-medium-gray;
+            }
         }
     }
-
-    .input-label-text {
-        font-size: 13px;
-        color: var(--gd-palette-complementary-8, #464e56);
-    }
-
-    .gd-message {
-        margin-top: 5px;
-    }
-
-    .input-checkbox-label {
-        display: inline-block;
-    }
-}
-
-.configuration-panel-content {
-    display: flex;
-    height: 100%;
-    flex-direction: column;
 }

@@ -14,6 +14,16 @@ export interface WidgetHeader {
 }
 
 /**
+ * @alpha
+ */
+export interface WidgetDescription {
+    /**
+     * Description to set. If not defined then widget will have no description.
+     */
+    description?: string;
+}
+
+/**
  * @internal
  */
 export function isWidgetHeader(obj: unknown): obj is WidgetHeader {

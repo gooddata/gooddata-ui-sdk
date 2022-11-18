@@ -1,4 +1,5 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
+import { IKpiWidgetDefinition } from "@gooddata/sdk-model";
 import { BrokenAlertType } from "../../../../../model";
 
 interface IBrokenAlertFilterBase {
@@ -26,4 +27,8 @@ export function isBrokenAlertAttributeFilter(obj: unknown): obj is IBrokenAlertA
 
 export function isBrokenAlertDateFilter(obj: unknown): obj is IBrokenAlertDateFilter {
     return (obj as IBrokenAlertDateFilter)?.type === "date";
+}
+
+export interface IKpiDescriptionTriggerProps {
+    kpi: IKpiWidgetDefinition;
 }

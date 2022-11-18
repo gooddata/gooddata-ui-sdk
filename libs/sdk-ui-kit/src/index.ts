@@ -53,3 +53,4 @@ export * from "./ChartSorting";
 export * from "./SettingWidget";
 export * from "./Hyperlink";
 export * from "./ScrollablePanel";
+export * from "./DescriptionPanel";

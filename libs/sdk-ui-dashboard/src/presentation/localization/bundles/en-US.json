@@ -1636,6 +1636,102 @@
         "comment": "",
         "limit": 0
     },
+
+    "configurationPanel.visualprops.sectionDescription": {
+        "value": "Description",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.visualprops.inheritDescription": {
+        "value": "Inherit",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.visualprops.inheritDescriptionHelp|insight": {
+        "value": "Inherit the description from the insight.",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.visualprops.inheritDescriptionHelp|report": {
+        "value": "Inherit the description from the report.",
+        "comment": "",
+        "translate": false,
+        "limit": 0
+    },
+    "configurationPanel.visualprops.inheritKpiDescriptionHelp._metric": {
+        "value": "Inherit the description from the metric.",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.visualprops.inheritKpiDescriptionHelp._measure": {
+        "value": "Inherit the description from the measure.",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.visualprops.customDescription": {
+        "value": "Custom",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.visualprops.customDescriptionHelp|insight": {
+        "value": "Add a custom description for this instance of the insight.",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.visualprops.customDescriptionHelp|report": {
+        "value": "Add a custom description for this instance of the report.",
+        "comment": "",
+        "translate": false,
+        "limit": 0
+    },
+    "configurationPanel.visualprops.customKpiDescriptionHelp": {
+        "value": "Add a custom description.",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.visualprops.noneDescription": {
+        "value": "None",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.visualprops.includeMetrics._measure": {
+        "value": "Include measure descriptions",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.visualprops.includeMetrics._metric": {
+        "value": "Include metric descriptions",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.visualprops.includeMetricsHelp._measure|insight": {
+        "value": "Display section with list of insight’s measures and their description.",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.visualprops.includeMetricsHelp._metric|insight": {
+        "value": "Display section with list of insight’s metrics and their description.",
+        "comment": "",
+        "limit": 0
+    },
+    "configurationPanel.visualprops.includeMetricsHelp._measure|report": {
+        "value": "Display section with list of report’s measures and their description.",
+        "comment": "",
+        "translate": false,
+        "limit": 0
+    },
+    "configurationPanel.visualprops.includeMetricsHelp._metric|report": {
+        "value": "Display section with list of report’s metrics and their description.",
+        "comment": "",
+        "translate": false,
+        "limit": 0
+    },
+    "configurationPanel.visualprops.descriptionPlaceholder": {
+        "value": "Add description…",
+        "comment": "",
+        "limit": 0
+    },
+
     "configurationPanel.drillIntoUrl.defaultButtonValue": {
         "value": "Choose URL",
         "comment": "Default value of 'Drill into URL' dropdown button before a value is selected.",

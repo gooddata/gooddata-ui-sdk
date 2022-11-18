@@ -32,6 +32,7 @@ import { changeKpiWidgetMeasureHandler } from "./widgets/changeKpiWidgetMeasureH
 import { changeKpiWidgetFilterSettingsHandler } from "./widgets/changeKpiWidgetFilterSettingsHandler";
 import { changeKpiWidgetComparisonHandler } from "./widgets/changeKpiWidgetComparisonHandler";
 import { changeInsightWidgetHeaderHandler } from "./widgets/changeInsightWidgetHeaderHandler";
+import { changeInsightWidgetDescriptionHandler } from "./widgets/changeInsightWidgetDescriptionHandler";
 import { changeInsightWidgetFilterSettingsHandler } from "./widgets/changeInsightWidgetFilterSettingsHandler";
 import { changeInsightWidgetVisPropertiesHandler } from "./widgets/changeInsightWidgetVisPropertiesHandler";
 import { modifyDrillsForInsightWidgetHandler } from "./widgets/modifyDrillsForInsightWidgetHandler";
@@ -66,6 +67,8 @@ import { refreshInsightWidgetHandler } from "./widgets/refreshInsightWidgetHandl
 import { removeSectionItemByWidgetRefHandler } from "./layout/removeSectionItemByWidgetRefHandler";
 import { changeInsightWidgetVisConfigurationHandler } from "./widgets/changeInsightWidgetVisConfigurationHandler";
 import { moveSectionItemToNewSectionHandler } from "./layout/moveSectionItemToNewSectionHandler";
+import { changeKpiWidgetDescriptionHandler } from "./widgets/changeKpiWidgetDescriptionHandler";
+import { changeKpiWidgetConfigurationHandler } from "./widgets/changeKpiWidgetConfigurationHandler";
 
 function* notImplementedCommand(ctx: DashboardContext, cmd: IDashboardCommand): SagaIterator<void> {
     yield dispatchDashboardEvent(commandRejected(ctx, cmd.correlationId));
@@ -113,7 +116,10 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.KPI_WIDGET.REMOVE_DRILL": removeDrillForKpiWidgetHandler,
     "GDC.DASH/CMD.KPI_WIDGET.SET_DRILL": setDrillForKpiWidgetHandler,
     "GDC.DASH/CMD.KPI_WIDGET.REFRESH": notImplementedCommand,
+    "GDC.DASH/CMD.KPI_WIDGET.CHANGE_DESCRIPTION": changeKpiWidgetDescriptionHandler,
+    "GDC.DASH/CMD.KPI_WIDGET.CHANGE_CONFIGURATION": changeKpiWidgetConfigurationHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_HEADER": changeInsightWidgetHeaderHandler,
+    "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_DESCRIPTION": changeInsightWidgetDescriptionHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_FILTER_SETTINGS": changeInsightWidgetFilterSettingsHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_PROPERTIES": changeInsightWidgetVisPropertiesHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_CONFIGURATION": changeInsightWidgetVisConfigurationHandler,

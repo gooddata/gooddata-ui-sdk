@@ -19,6 +19,7 @@ import { IAuditableUsers } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IColorPaletteDefinition } from '@gooddata/sdk-model';
 import { IMeasureSortTarget } from '@gooddata/sdk-model';
+import { IMetadataObjectBase } from '@gooddata/sdk-model';
 import { IntlShape } from 'react-intl';
 import { ISeparators } from '@gooddata/sdk-ui';
 import { ISettings } from '@gooddata/sdk-model';
@@ -333,6 +334,12 @@ export const defaultColorPaletteMetadataObject: IColorPaletteDefinition;
 export const defaultThemeMetadataObject: IThemeDefinition;
 
 // @internal (undocumented)
+export const DescriptionPanel: React_2.FC<IDescriptionPanelProps>;
+
+// @internal (undocumented)
+export const DescriptionPanelContent: React_2.FC<IDescriptionPanelProps>;
+
+// @internal (undocumented)
 export class Dialog extends Component<IDialogBaseProps> {
     // (undocumented)
     render(): JSX.Element;
@@ -451,6 +458,9 @@ export class EditableLabelInner extends Component<IEditableLabelInnerProps, IEdi
     // (undocumented)
     UNSAFE_componentWillReceiveProps(newProps: IEditableLabelProps): void;
 }
+
+// @internal (undocumented)
+export const EllipsisText: React_2.FC<IEllipsisTextProps>;
 
 // @internal (undocumented)
 export const EmbedInsightDialogBase: React_2.VFC<IEmbedInsightDialogBaseProps>;
@@ -1213,6 +1223,18 @@ export interface IDateTimeConfigOptions {
 }
 
 // @internal (undocumented)
+export interface IDescriptionPanelProps {
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    description?: string;
+    // (undocumented)
+    locale?: string;
+    // (undocumented)
+    title?: string;
+}
+
+// @internal (undocumented)
 export interface IDialogBaseProps {
     // (undocumented)
     children?: React_2.ReactNode;
@@ -1520,6 +1542,14 @@ export interface IEditableLabelState {
     textareaWidth: number;
     // (undocumented)
     value: string;
+}
+
+// @internal (undocumented)
+export interface IEllipsisTextProps {
+    // (undocumented)
+    maxLength?: number;
+    // (undocumented)
+    text: string;
 }
 
 // @internal (undocumented)
@@ -2650,6 +2680,14 @@ export interface IMessagesProps {
 export interface IMessagesState {
     // (undocumented)
     shouldShowMore: boolean;
+}
+
+// @internal (undocumented)
+export interface IMetadataListProps {
+    // (undocumented)
+    list?: IMetadataObjectBase[];
+    // (undocumented)
+    title?: string;
 }
 
 // @internal (undocumented)
@@ -3795,6 +3833,9 @@ export const Messages: React_2.FC<IMessagesProps>;
 
 // @internal (undocumented)
 export type MessageType = "success" | "progress" | "error" | "warning";
+
+// @internal (undocumented)
+export const MetadataList: React_2.FC<IMetadataListProps>;
 
 // @internal (undocumented)
 export const MultiSelectList: React_2.FC<WithIntlProps<IMultiSelectListProps<unknown>>> & {

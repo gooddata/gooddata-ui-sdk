@@ -11,6 +11,7 @@ import { DashboardItemKpi } from "../../../../presentationComponents";
 import { IKpiResult, IKpiAlertResult, KpiAlertOperationStatus } from "../../common";
 
 import { isAlertingTemporarilyDisabledForGivenFilter } from "./utils/filterUtils";
+import { KpiDescriptionTrigger } from "./KpiDescriptionTrigger";
 
 // adapted from jQuery:
 // https://github.com/jquery/jquery/blob/a503c691dc06c59acdafef6e54eca2613c6e4032/src/offset.js#L83-L97
@@ -76,7 +77,10 @@ export interface IDashboardItemWithKpiAlertProps {
      * When true, alert will not be highlighted when triggered.
      */
     suppressAlertTriggered?: boolean;
-
+    /**
+     * When true, description trigger will not be shown
+     */
+    suppressDescriptionTrigger?: boolean;
     children: (params: { clientWidth?: number; clientHeight?: number }) => React.ReactNode;
     renderHeadline: (clientHeight?: number) => React.ReactNode;
     renderAlertDialog: () => React.ReactNode;
@@ -103,6 +107,7 @@ export class DashboardItemWithKpiAlert extends Component<
         | "alertSavingStatus"
         | "alertUpdatingStatus"
         | "suppressAlertTriggered"
+        | "suppressDescriptionTrigger"
         | "isReadOnlyMode"
     > = {
         isAlertHighlighted: false,
@@ -111,6 +116,7 @@ export class DashboardItemWithKpiAlert extends Component<
         alertSavingStatus: "idle",
         alertUpdatingStatus: "idle",
         suppressAlertTriggered: false,
+        suppressDescriptionTrigger: false,
         isReadOnlyMode: false,
     };
 
@@ -317,6 +323,12 @@ export class DashboardItemWithKpiAlert extends Component<
                 visualizationClassName={classnames.kpi}
                 contentRef={this.node}
                 renderAfterContent={() => this.props.isAlertDialogOpen && this.props.renderAlertDialog()}
+                renderBeforeVisualization={() =>
+                    !this.props.suppressDescriptionTrigger &&
+                    this.props.userWorkspaceSettings?.enableDescriptions ? (
+                        <KpiDescriptionTrigger kpi={this.props.kpi} />
+                    ) : null
+                }
                 renderHeadline={(clientHeight) => (
                     <>
                         {/* TODO: the alert box should be rendered using renderBeforeKpi prop, but Graphene selectors */}

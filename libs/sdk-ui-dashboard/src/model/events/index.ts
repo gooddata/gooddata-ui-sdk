@@ -45,6 +45,8 @@ import {
     DashboardKpiWidgetComparisonChanged,
     DashboardKpiWidgetFilterSettingsChanged,
     DashboardKpiWidgetHeaderChanged,
+    DashboardKpiWidgetDescriptionChanged,
+    DashboardKpiWidgetConfigurationChanged,
     DashboardKpiWidgetMeasureChanged,
     DashboardKpiWidgetDrillRemoved,
     DashboardKpiWidgetDrillSet,
@@ -55,6 +57,7 @@ import {
     DashboardInsightWidgetDrillsRemoved,
     DashboardInsightWidgetFilterSettingsChanged,
     DashboardInsightWidgetHeaderChanged,
+    DashboardInsightWidgetDescriptionChanged,
     DashboardInsightWidgetInsightSwitched,
     DashboardInsightWidgetVisPropertiesChanged,
     DashboardInsightWidgetVisConfigurationChanged,
@@ -221,6 +224,10 @@ export {
 export {
     DashboardKpiWidgetHeaderChanged,
     DashboardKpiWidgetHeaderChangedPayload,
+    DashboardKpiWidgetDescriptionChanged,
+    DashboardKpiWidgetDescriptionChangedPayload,
+    DashboardKpiWidgetConfigurationChanged,
+    DashboardKpiWidgetConfigurationChangedPayload,
     DashboardKpiWidgetMeasureChanged,
     DashboardKpiWidgetMeasureChangedPayload,
     DashboardKpiWidgetFilterSettingsChanged,
@@ -237,6 +244,8 @@ export {
     isDashboardKpiWidgetComparisonChanged,
     isDashboardKpiWidgetFilterSettingsChanged,
     isDashboardKpiWidgetHeaderChanged,
+    isDashboardKpiWidgetDescriptionChanged,
+    isDashboardKpiWidgetConfigurationChanged,
     isDashboardKpiWidgetMeasureChanged,
     isDashboardKpiWidgetDrillRemoved,
     isDashboardKpiWidgetDrillSet,
@@ -245,6 +254,8 @@ export {
 export {
     DashboardInsightWidgetHeaderChanged,
     DashboardInsightWidgetHeaderChangedPayload,
+    DashboardInsightWidgetDescriptionChanged,
+    DashboardInsightWidgetDescriptionChangedPayload,
     DashboardInsightWidgetFilterSettingsChanged,
     DashboardInsightWidgetFilterSettingsChangedPayload,
     DashboardInsightWidgetVisPropertiesChanged,
@@ -270,6 +281,7 @@ export {
     isDashboardInsightWidgetDrillsRemoved,
     isDashboardInsightWidgetFilterSettingsChanged,
     isDashboardInsightWidgetHeaderChanged,
+    isDashboardInsightWidgetDescriptionChanged,
     isDashboardInsightWidgetInsightSwitched,
     isDashboardInsightWidgetVisPropertiesChanged,
     isDashboardInsightWidgetVisConfigurationChanged,
@@ -436,6 +448,8 @@ export type DashboardEvents =
     | DashboardLayoutSectionItemRemoved
     | DashboardLayoutChanged
     | DashboardKpiWidgetHeaderChanged
+    | DashboardKpiWidgetDescriptionChanged
+    | DashboardKpiWidgetConfigurationChanged
     | DashboardKpiWidgetMeasureChanged
     | DashboardKpiWidgetFilterSettingsChanged
     | DashboardKpiWidgetComparisonChanged
@@ -443,6 +457,7 @@ export type DashboardEvents =
     | DashboardKpiWidgetDrillSet
     | DashboardKpiWidgetChanged
     | DashboardInsightWidgetHeaderChanged
+    | DashboardInsightWidgetDescriptionChanged
     | DashboardInsightWidgetFilterSettingsChanged
     | DashboardInsightWidgetVisPropertiesChanged
     | DashboardInsightWidgetVisConfigurationChanged
