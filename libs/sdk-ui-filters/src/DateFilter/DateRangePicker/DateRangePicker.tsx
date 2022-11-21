@@ -222,38 +222,20 @@ class DateRangePickerComponent extends React.Component<DateRangePickerProps, IDa
         return result;
     }
 
-    private handleRangeSelect: SelectRangeEventHandler = (range: DateRange | undefined) => {
+    private handleRangeSelect: SelectRangeEventHandler = (
+        _range: DateRange | undefined,
+        selectedDate: Date,
+    ) => {
         let calculatedFrom: Date;
         let calculatedTo: Date;
 
-        if (!range) {
-            // range undefined: when reaching same date by "to" field
-            calculatedFrom = this.props.range.from;
-            calculatedTo = this.setTimeForDate(this.props.range.from, this.props.range.to);
-        } else if (!range.to) {
-            // range.to undefined: when reaching same date by "from" field
-            calculatedFrom = this.setTimeForDate(this.props.range.to, this.props.range.from);
-            calculatedTo = this.props.range.to;
+        // it is better to use selectedDate property as _range is not working correctly in corner cases
+        if (this.state.selectedInput == "from") {
+            calculatedFrom = this.setTimeForDate(selectedDate, this.state.inputFromValue);
+            calculatedTo = this.state.inputToValue;
         } else {
-            // distinct from/to dates
-            const { selectedInput } = this.state;
-            if (selectedInput === "from") {
-                // result has 0:00 and can be either in from or to field of range,
-                // it's because of the mode of operation and range selects in the picker
-                // library, see https://react-day-picker.js.org/basics/selecting-days#selecting-a-range-of-days
-                const isResultInToField = this.props.range.from.getTime() === range.from.getTime();
-
-                calculatedFrom = isResultInToField
-                    ? this.setTimeForDate(range.to, this.props.range.from)
-                    : this.setTimeForDate(range.from, this.props.range.from);
-                calculatedTo = this.props.range.to;
-            } else {
-                const isResultInToField = this.props.range.from.getTime() === range.from.getTime();
-                calculatedFrom = this.props.range.from;
-                calculatedTo = isResultInToField
-                    ? this.setTimeForDate(range.to, this.props.range.to)
-                    : this.setTimeForDate(range.from, this.props.range.from);
-            }
+            calculatedFrom = this.state.inputFromValue;
+            calculatedTo = this.setTimeForDate(selectedDate, this.state.inputToValue);
         }
 
         this.setState(
