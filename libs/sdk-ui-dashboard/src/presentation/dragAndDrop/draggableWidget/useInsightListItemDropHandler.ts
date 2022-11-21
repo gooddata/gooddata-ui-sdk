@@ -92,6 +92,8 @@ export function useInsightListItemDropHandler(sectionIndex: number, itemIndex: n
                             },
                         },
                     },
+                    undefined,
+                    false,
                     correlationId,
                 );
             });

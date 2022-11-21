@@ -3,19 +3,22 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import { Typography } from "@gooddata/sdk-ui-kit";
+import { Col } from "react-grid-system";
 
 import { useDashboardDrop } from "../useDashboardDrop";
 import {
+    BaseDraggableLayoutItem,
     DraggableItemType,
     isInsightDraggableListItem,
     isInsightPlaceholderDraggableItem,
     isKpiPlaceholderDraggableItem,
 } from "../types";
 import { useDashboardDispatch, useDashboardSelector, selectWidgetPlaceholder } from "../../../model";
-import { useInsightListItemDropHandler } from "./useInsightListItemDropHandler";
-import { useInsightPlaceholderDropHandler } from "./useInsightPlaceholderDropHandler";
-import { useKpiPlaceholderDropHandler } from "./useKpiPlaceholderDropHandler";
 import { useDashboardComponentsContext } from "../../dashboardContexts";
+import { useNewSectionInsightListItemDropHandler } from "./useNewSectionInsightListItemDropHandler";
+import { useNewSectionKpiPlaceholderDropHandler } from "./useNewSectionKpiPlaceholderDropHandler";
+import { useNewSectionInsightPlaceholderDropHandler } from "./useNewSectionInsightPlaceholderDropHandler";
+import { getDashboardLayoutItemHeightForGrid } from "../../layout/DefaultDashboardLayoutRenderer/utils/sizing";
 
 const widgetCategoryMapping: Partial<{ [D in DraggableItemType]: string }> = {
     "insight-placeholder": "insight",
@@ -29,11 +32,11 @@ export const EmptyDashboardDropZone: React.FC = () => {
 
     const { EmptyLayoutDropZoneBodyComponent } = useDashboardComponentsContext();
 
-    const handleInsightListItemDrop = useInsightListItemDropHandler(0, 0);
-    const handleKpiPlaceholderDrop = useKpiPlaceholderDropHandler(0, 0);
-    const handleInsightPlaceholderDrop = useInsightPlaceholderDropHandler(0, 0);
+    const handleInsightListItemDrop = useNewSectionInsightListItemDropHandler(0);
+    const handleKpiPlaceholderDrop = useNewSectionKpiPlaceholderDropHandler(0);
+    const handleInsightPlaceholderDrop = useNewSectionInsightPlaceholderDropHandler(0);
 
-    const [{ canDrop, isOver, itemType }, dropRef] = useDashboardDrop(
+    const [{ canDrop, isOver, itemType, item }, dropRef] = useDashboardDrop(
         ["insightListItem", "kpi-placeholder", "insight-placeholder"],
         {
             drop: (item) => {
@@ -57,19 +60,35 @@ export const EmptyDashboardDropZone: React.FC = () => {
         ],
     );
 
+    const size = (item as BaseDraggableLayoutItem)?.size;
+
+    if (!size) {
+        return null;
+    }
+
     const message = <FormattedMessage id="newDashboard.dropInsight" />;
     const widgetCategory = widgetCategoryMapping[itemType];
 
     return (
-        <div
+        <Col
+            xl={size.gridWidth}
+            lg={size.gridWidth}
+            md={size.gridWidth}
+            sm={size.gridWidth}
+            xs={size.gridWidth}
+            style={{
+                minHeight: getDashboardLayoutItemHeightForGrid(size.gridHeight),
+            }}
             className={cx("drag-info-placeholder", "dash-item", {
                 [`type-${widgetCategory}`]: !!widgetCategory,
                 "type-none": !widgetCategory,
                 "s-last-drop-position": canDrop,
             })}
-            ref={dropRef}
         >
-            <div className={cx("drag-info-placeholder-inner", { "can-drop": canDrop, "is-over": isOver })}>
+            <div
+                className={cx("drag-info-placeholder-inner", { "can-drop": canDrop, "is-over": isOver })}
+                ref={dropRef}
+            >
                 <EmptyLayoutDropZoneBodyComponent />
                 <div className="drag-info-placeholder-drop-target s-drag-info-placeholder-drop-target">
                     <div className="drop-target-inner">
@@ -82,6 +101,6 @@ export const EmptyDashboardDropZone: React.FC = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </Col>
     );
 };
