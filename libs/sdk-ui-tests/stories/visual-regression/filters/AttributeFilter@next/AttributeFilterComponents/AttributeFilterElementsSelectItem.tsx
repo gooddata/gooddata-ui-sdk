@@ -58,5 +58,5 @@ const AttributeFilterElementsSelectItemExamples = (): JSX.Element => {
 };
 
 storiesOf(`${FilterStories}@next/Components/AttributeFilterItem`)
-    .add("full-featured", () => <AttributeFilterElementsSelectItemExamples />, {})
-    .add("themed", () => wrapWithTheme(<AttributeFilterElementsSelectItemExamples />), {});
+    .add("full-featured", () => <AttributeFilterElementsSelectItemExamples />, { screenshot: true })
+    .add("themed", () => wrapWithTheme(<AttributeFilterElementsSelectItemExamples />), { screenshot: true });

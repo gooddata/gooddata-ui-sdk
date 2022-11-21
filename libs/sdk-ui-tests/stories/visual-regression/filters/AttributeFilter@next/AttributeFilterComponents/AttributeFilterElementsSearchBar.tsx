@@ -30,5 +30,5 @@ const AttributeFilterElementsSearchBarExamples = (): JSX.Element => {
 };
 
 storiesOf(`${FilterStories}@next/Components/AttributeFilterElementsSearchBar`)
-    .add("full-featured", () => <AttributeFilterElementsSearchBarExamples />, {})
-    .add("themed", () => wrapWithTheme(<AttributeFilterElementsSearchBarExamples />), {});
+    .add("full-featured", () => <AttributeFilterElementsSearchBarExamples />, { screenshot: true })
+    .add("themed", () => wrapWithTheme(<AttributeFilterElementsSearchBarExamples />), { screenshot: true });

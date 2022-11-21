@@ -24,5 +24,5 @@ const AttributeFilterLoadingExamples = (): JSX.Element => {
 };
 
 storiesOf(`${FilterStories}@next/Components/AttributeFilterLoading`)
-    .add("full-featured", () => <AttributeFilterLoadingExamples />, {})
-    .add("themed", () => wrapWithTheme(<AttributeFilterLoadingExamples />), {});
+    .add("full-featured", () => <AttributeFilterLoadingExamples />, { screenshot: true })
+    .add("themed", () => wrapWithTheme(<AttributeFilterLoadingExamples />), { screenshot: true });

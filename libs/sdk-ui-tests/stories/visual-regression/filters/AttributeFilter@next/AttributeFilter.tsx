@@ -5,7 +5,7 @@ import { storiesOf } from "../../../_infra/storyRepository";
 import { FilterStories } from "../../../_infra/storyGroups";
 import { ReferenceWorkspaceId, StorybookBackend } from "../../../_infra/backend";
 import { wrapWithTheme } from "../../themeWrapper";
-// import { LongPostInteractionTimeout } from "../../../_infra/backstopWrapper";
+import { LongPostInteractionTimeout } from "../../../_infra/backstopWrapper";
 import { ElementUris } from "./fixtures";
 
 import { action } from "@storybook/addon-actions";
@@ -40,16 +40,14 @@ storiesOf(`${FilterStories}@next/AttributeFilter`)
                 </div>
             );
         },
-        /* {
+        {
             screenshots: {
-                closed: {},
-                opened: { clickSelector: ".s-product", postInteractionWait: LongPostInteractionTimeout },
-                "select-all": {
-                    clickSelectors: [".s-product", ".s-select_all"],
+                opened: {
+                    clickSelector: ".gd-attribute-filter__next",
                     postInteractionWait: LongPostInteractionTimeout,
                 },
             },
-        },*/
+        },
     )
     .add(
         "not fit into content",
@@ -75,16 +73,14 @@ storiesOf(`${FilterStories}@next/AttributeFilter`)
                 </div>
             );
         },
-        /* {
-        screenshots: {
-            closed: {},
-            opened: { clickSelector: ".s-product", postInteractionWait: LongPostInteractionTimeout },
-            "select-all": {
-                clickSelectors: [".s-product", ".s-select_all"],
-                postInteractionWait: LongPostInteractionTimeout,
+        {
+            screenshots: {
+                opened: {
+                    clickSelector: ".gd-attribute-filter__next",
+                    postInteractionWait: LongPostInteractionTimeout,
+                },
             },
         },
-    },*/
     )
     .add(
         "empty default selection - localized",
@@ -101,16 +97,14 @@ storiesOf(`${FilterStories}@next/AttributeFilter`)
                 </div>
             );
         },
-        /*{
+        {
             screenshots: {
-                closed: {},
-                opened: { clickSelector: ".s-product", postInteractionWait: LongPostInteractionTimeout },
-                "select-all": {
-                    clickSelectors: [".s-product", ".s-alle_ausw_hlen"],
+                opened: {
+                    clickSelector: ".gd-attribute-filter__next",
                     postInteractionWait: LongPostInteractionTimeout,
                 },
             },
-        },*/
+        },
     )
     .add(
         "pre-selected elements",
@@ -128,19 +122,14 @@ storiesOf(`${FilterStories}@next/AttributeFilter`)
                 </div>
             );
         },
-        /* {
+        {
             screenshots: {
-                opened: { clickSelector: ".s-product", postInteractionWait: LongPostInteractionTimeout },
-                "select-all": {
-                    clickSelectors: [".s-product", ".s-select_all"],
-                    postInteractionWait: LongPostInteractionTimeout,
-                },
-                clear: {
-                    clickSelectors: [".s-product", ".s-clear"],
+                opened: {
+                    clickSelector: ".gd-attribute-filter__next",
                     postInteractionWait: LongPostInteractionTimeout,
                 },
             },
-        },*/
+        },
     )
     .add(
         "title with pre-selected elements - positive AttributeFilter",
@@ -159,23 +148,14 @@ storiesOf(`${FilterStories}@next/AttributeFilter`)
                 </div>
             );
         },
-        /*  {
+        {
             screenshots: {
-                closed: {},
                 opened: {
-                    clickSelector: ".s-product__wonderkid__explorer__touch___3_",
-                    postInteractionWait: LongPostInteractionTimeout,
-                },
-                "select-all": {
-                    clickSelectors: [".s-product__wonderkid__explorer__touch___3_", ".s-select_all"],
-                    postInteractionWait: LongPostInteractionTimeout,
-                },
-                clear: {
-                    clickSelectors: [".s-product__wonderkid__explorer__touch___3_", ".s-clear"],
+                    clickSelector: ".gd-attribute-filter__next",
                     postInteractionWait: LongPostInteractionTimeout,
                 },
             },
-        },*/
+        },
     )
     .add(
         "title with pre-selected elements - negative AttributeFilter",
@@ -194,23 +174,14 @@ storiesOf(`${FilterStories}@next/AttributeFilter`)
                 </div>
             );
         },
-        /* {
+        {
             screenshots: {
-                closed: {},
                 opened: {
-                    clickSelector: ".s-product__all_except_wonderkid__expl___3_",
-                    postInteractionWait: LongPostInteractionTimeout,
-                },
-                "select-all": {
-                    clickSelectors: [".s-product__all_except_wonderkid__expl___3_", ".s-select_all"],
-                    postInteractionWait: LongPostInteractionTimeout,
-                },
-                clear: {
-                    clickSelectors: [".s-product__all_except_wonderkid__expl___3_", ".s-clear"],
+                    clickSelector: ".gd-attribute-filter__next",
                     postInteractionWait: LongPostInteractionTimeout,
                 },
             },
-        },*/
+        },
     )
     .add(
         "all elements selected in negative selection",
@@ -236,19 +207,14 @@ storiesOf(`${FilterStories}@next/AttributeFilter`)
                 </div>
             );
         },
-        /* {
+        {
             screenshots: {
-                opened: { clickSelector: ".s-product", postInteractionWait: LongPostInteractionTimeout },
-                "select-all": {
-                    clickSelectors: [".s-product", ".s-select_all"],
-                    postInteractionWait: LongPostInteractionTimeout,
-                },
-                clear: {
-                    clickSelectors: [".s-product", ".s-clear"],
+                opened: {
+                    clickSelector: ".gd-attribute-filter__next",
                     postInteractionWait: LongPostInteractionTimeout,
                 },
             },
-        },*/
+        },
     )
     .add(
         "attibute filter error",
@@ -264,19 +230,7 @@ storiesOf(`${FilterStories}@next/AttributeFilter`)
                 </div>
             );
         },
-        /* {
-            screenshots: {
-                opened: { clickSelector: ".s-product", postInteractionWait: LongPostInteractionTimeout },
-                "select-all": {
-                    clickSelectors: [".s-product", ".s-select_all"],
-                    postInteractionWait: LongPostInteractionTimeout,
-                },
-                clear: {
-                    clickSelectors: [".s-product", ".s-clear"],
-                    postInteractionWait: LongPostInteractionTimeout,
-                },
-            },
-        },*/
+        { screenshot: true },
     )
     .add(
         "themed",
@@ -292,14 +246,12 @@ storiesOf(`${FilterStories}@next/AttributeFilter`)
                 </div>,
             );
         },
-        /* {
+        {
             screenshots: {
-                closed: {},
-                opened: { clickSelector: ".s-product", postInteractionWait: LongPostInteractionTimeout },
-                "select-all": {
-                    clickSelectors: [".s-product", ".s-select_all"],
+                opened: {
+                    clickSelector: ".gd-attribute-filter__next",
                     postInteractionWait: LongPostInteractionTimeout,
                 },
             },
-        },*/
+        },
     );

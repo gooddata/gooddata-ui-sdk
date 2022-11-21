@@ -24,5 +24,5 @@ const AttributeFilterErrorExamples = (): JSX.Element => {
 };
 
 storiesOf(`${FilterStories}@next/Components/AttributeFilterError`)
-    .add("full-featured", () => <AttributeFilterErrorExamples />, {})
-    .add("themed", () => wrapWithTheme(<AttributeFilterErrorExamples />), {});
+    .add("full-featured", () => <AttributeFilterErrorExamples />, { screenshot: true })
+    .add("themed", () => wrapWithTheme(<AttributeFilterErrorExamples />), { screenshot: true });

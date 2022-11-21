@@ -8,6 +8,7 @@ import { action } from "@storybook/addon-actions";
 import { storiesOf } from "../../../../_infra/storyRepository";
 import { FilterStories } from "../../../../_infra/storyGroups";
 import { ReferenceWorkspaceId, StorybookBackend } from "../../../../_infra/backend";
+import { LongPostInteractionTimeout } from "../../../../_infra/backstopWrapper";
 
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 
@@ -52,29 +53,51 @@ const CustomDropdownBodyDefinedWidth = (_props: IAttributeFilterDropdownBodyProp
 };
 
 storiesOf(`${FilterStories}@next/Customization/DropdownBodyComponent`)
-    .add("Custom component", () => {
-        return (
-            <div style={wrapperStyle} className="screenshot-target">
-                <AttributeFilter
-                    backend={backend}
-                    workspace={ReferenceWorkspaceId}
-                    filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
-                    onApply={action("onApply")}
-                    DropdownBodyComponent={CustomDropdownBody}
-                />
-            </div>
-        );
-    })
-    .add("Custom component with defined width", () => {
-        return (
-            <div style={wrapperStyle} className="screenshot-target">
-                <AttributeFilter
-                    backend={backend}
-                    workspace={ReferenceWorkspaceId}
-                    filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
-                    onApply={action("onApply")}
-                    DropdownBodyComponent={CustomDropdownBodyDefinedWidth}
-                />
-            </div>
-        );
-    });
+    .add(
+        "Custom component",
+        () => {
+            return (
+                <div style={wrapperStyle} className="screenshot-target">
+                    <AttributeFilter
+                        backend={backend}
+                        workspace={ReferenceWorkspaceId}
+                        filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
+                        onApply={action("onApply")}
+                        DropdownBodyComponent={CustomDropdownBody}
+                    />
+                </div>
+            );
+        },
+        {
+            screenshots: {
+                opened: {
+                    clickSelector: ".gd-attribute-filter__next",
+                    postInteractionWait: LongPostInteractionTimeout,
+                },
+            },
+        },
+    )
+    .add(
+        "Custom component with defined width",
+        () => {
+            return (
+                <div style={wrapperStyle} className="screenshot-target">
+                    <AttributeFilter
+                        backend={backend}
+                        workspace={ReferenceWorkspaceId}
+                        filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
+                        onApply={action("onApply")}
+                        DropdownBodyComponent={CustomDropdownBodyDefinedWidth}
+                    />
+                </div>
+            );
+        },
+        {
+            screenshots: {
+                opened: {
+                    clickSelector: ".gd-attribute-filter__next",
+                    postInteractionWait: LongPostInteractionTimeout,
+                },
+            },
+        },
+    );

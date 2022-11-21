@@ -10,6 +10,7 @@ import { FilterStories } from "../../../../_infra/storyGroups";
 import { ReferenceWorkspaceId, StorybookBackend } from "../../../../_infra/backend";
 
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
+import { LongPostInteractionTimeout } from "../../../../_infra/backstopWrapper";
 
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 const backend = StorybookBackend();
@@ -38,16 +39,27 @@ const CustomDropdownActions = (props: IAttributeFilterDropdownActionsProps) => {
     );
 };
 
-storiesOf(`${FilterStories}@next/Customization/DropdownActionsComponent`).add("Custom component", () => {
-    return (
-        <div style={wrapperStyle} className="screenshot-target">
-            <AttributeFilter
-                backend={backend}
-                workspace={ReferenceWorkspaceId}
-                filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
-                onApply={action("onApply")}
-                DropdownActionsComponent={CustomDropdownActions}
-            />
-        </div>
-    );
-});
+storiesOf(`${FilterStories}@next/Customization/DropdownActionsComponent`).add(
+    "Custom component",
+    () => {
+        return (
+            <div style={wrapperStyle} className="screenshot-target">
+                <AttributeFilter
+                    backend={backend}
+                    workspace={ReferenceWorkspaceId}
+                    filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
+                    onApply={action("onApply")}
+                    DropdownActionsComponent={CustomDropdownActions}
+                />
+            </div>
+        );
+    },
+    {
+        screenshots: {
+            opened: {
+                clickSelector: ".gd-attribute-filter__next",
+                postInteractionWait: LongPostInteractionTimeout,
+            },
+        },
+    },
+);
