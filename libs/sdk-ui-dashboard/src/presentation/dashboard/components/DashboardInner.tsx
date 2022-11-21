@@ -20,7 +20,9 @@ export const DashboardInner: React.FC<IDashboardProps> = () => {
             <div className="component-root">
                 <DragLayerComponent />
                 <div
-                    className={cx("gd-dashboards-root", "gd-flex-container", { "edit-mode-on": isEditMode })}
+                    className={cx("gd-dashboards-root", "gd-flex-container", {
+                        "sdk-edit-mode-on": isEditMode,
+                    })}
                 >
                     <DashboardSidebar DefaultSidebar={RenderModeAwareDashboardSidebar} />
                     <div className="gd-dash-content">

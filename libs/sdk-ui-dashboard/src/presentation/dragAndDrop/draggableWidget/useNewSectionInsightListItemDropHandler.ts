@@ -3,6 +3,7 @@ import { useCallback } from "react";
 import { IInsight, insightRef, insightTitle } from "@gooddata/sdk-model";
 
 import { getSizeInfo } from "../../../_staging/layout/sizing";
+import { newLoadingPlaceholderWidget } from "../../../widgets";
 import {
     selectSettings,
     useDashboardDispatch,
@@ -13,6 +14,8 @@ import {
     DashboardCommandFailed,
     ChangeInsightWidgetFilterSettings,
     addLayoutSection,
+    dispatchAndWaitFor,
+    replaceSectionItem,
 } from "../../../model";
 
 export function useNewSectionInsightListItemDropHandler(sectionIndex: number) {
@@ -31,8 +34,8 @@ export function useNewSectionInsightListItemDropHandler(sectionIndex: number) {
         },
     });
 
-    const { run: addNewSectionWithInsight } = useDashboardCommandProcessing({
-        commandCreator: addLayoutSection,
+    const { run: replaceSectionItemLoader } = useDashboardCommandProcessing({
+        commandCreator: replaceSectionItem,
         errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
         successEvent: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
         onSuccess: (event) => {
@@ -46,27 +49,58 @@ export function useNewSectionInsightListItemDropHandler(sectionIndex: number) {
 
     return useCallback(
         (insight: IInsight) => {
+            const correlationId = `insert-insight-list-item-${sectionIndex}`;
+            const itemIndex = 0;
+
             const sizeInfo = getSizeInfo(settings, "insight", insight);
-            addNewSectionWithInsight(sectionIndex, {}, [
-                {
-                    type: "IDashboardLayoutItem",
-                    widget: {
-                        type: "insight",
-                        insight: insightRef(insight),
-                        ignoreDashboardFilters: [],
-                        drills: [],
-                        title: insightTitle(insight),
-                        description: "",
-                    },
-                    size: {
-                        xl: {
-                            gridHeight: sizeInfo.height.default,
-                            gridWidth: sizeInfo.width.default!,
+
+            dispatchAndWaitFor(
+                dispatch,
+                addLayoutSection(
+                    sectionIndex,
+                    {},
+                    [
+                        {
+                            type: "IDashboardLayoutItem",
+                            size: {
+                                xl: {
+                                    gridHeight: sizeInfo.height.default,
+                                    gridWidth: sizeInfo.width.default!,
+                                },
+                            },
+                            widget: newLoadingPlaceholderWidget(),
+                        },
+                    ],
+                    false,
+                    correlationId,
+                ),
+            ).then(() => {
+                replaceSectionItemLoader(
+                    sectionIndex,
+                    itemIndex,
+                    {
+                        type: "IDashboardLayoutItem",
+                        widget: {
+                            type: "insight",
+                            insight: insightRef(insight),
+                            ignoreDashboardFilters: [],
+                            drills: [],
+                            title: insightTitle(insight),
+                            description: "",
+                        },
+                        size: {
+                            xl: {
+                                gridHeight: sizeInfo.height.default,
+                                gridWidth: sizeInfo.width.default!,
+                            },
                         },
                     },
-                },
-            ]);
+                    undefined,
+                    false,
+                    correlationId,
+                );
+            });
         },
-        [addNewSectionWithInsight, sectionIndex, settings],
+        [dispatch, replaceSectionItemLoader, sectionIndex, settings],
     );
 }
