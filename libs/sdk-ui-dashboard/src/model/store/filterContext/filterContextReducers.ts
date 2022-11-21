@@ -101,6 +101,13 @@ const addAttributeFilterDisplayForm: FilterContextReducer<
 > = (state, action) => {
     invariant(state.attributeFilterDisplayForms, "attempting to work with uninitialized state");
 
+    // if there is already a display form with the same ref, replace it
+    const existing = state.attributeFilterDisplayForms.find((df) => areObjRefsEqual(df, action.payload.ref));
+    if (existing) {
+        state.attributeFilterDisplayForms = state.attributeFilterDisplayForms.filter(
+            (df) => !areObjRefsEqual(df, action.payload),
+        );
+    }
     state.attributeFilterDisplayForms.push(action.payload);
 };
 

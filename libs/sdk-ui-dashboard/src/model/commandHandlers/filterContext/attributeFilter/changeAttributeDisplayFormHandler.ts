@@ -2,19 +2,18 @@
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import invariant from "ts-invariant";
+import { batchActions } from "redux-batched-actions";
 
 import { SetAttributeFilterDisplayForm } from "../../../commands/filters";
 import { attributeDisplayFormChanged } from "../../../events/filters";
 import { filterContextActions } from "../../../store/filterContext";
-import {
-    selectAttributeFilterDisplayFormsMap,
-    selectFilterContextAttributeFilterByLocalId,
-} from "../../../store/filterContext/filterContextSelectors";
+import { selectFilterContextAttributeFilterByLocalId } from "../../../store/filterContext/filterContextSelectors";
 import { DashboardContext } from "../../../types/commonTypes";
 import { dispatchFilterContextChanged } from "../common";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher";
 import { validateFilterDisplayForm } from "./validation/filterDisplayFormValidation";
 import { invalidArgumentsProvided } from "../../../events/general";
+import { selectAllCatalogDisplayFormsMap } from "../../../store/catalog/catalogSelectors";
 
 export function* changeAttributeDisplayFormHandler(
     ctx: DashboardContext,
@@ -22,26 +21,17 @@ export function* changeAttributeDisplayFormHandler(
 ): SagaIterator<void> {
     const { filterLocalId, displayForm } = cmd.payload;
 
-    yield put(
-        filterContextActions.changeAttributeDisplayForm({
-            filterLocalId,
-            displayForm,
-        }),
+    const displayFormsMap: ReturnType<typeof selectAllCatalogDisplayFormsMap> = yield select(
+        selectAllCatalogDisplayFormsMap,
     );
 
-    const displayFormsMap: ReturnType<typeof selectAttributeFilterDisplayFormsMap> = yield select(
-        selectAttributeFilterDisplayFormsMap,
-    );
-
-    const changedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByLocalId>> =
-        yield select(selectFilterContextAttributeFilterByLocalId(filterLocalId));
-
+    const displayFormData = displayFormsMap.get(displayForm);
     invariant(
-        changedFilter,
-        "Inconsistent state in changeAttributeDisplayFormHandler, cannot update attribute filter for given local identifier.",
+        displayFormData,
+        "Inconsistent state in changeAttributeDisplayFormHandler, cannot update attribute filter with display form not available in the catalog.",
     );
 
-    const attribute = displayFormsMap.get(changedFilter.attributeFilter.displayForm);
+    const attribute = displayFormData?.attribute;
 
     const validationResult: SagaReturnType<typeof validateFilterDisplayForm> = yield call(
         validateFilterDisplayForm,
@@ -58,6 +48,25 @@ export function* changeAttributeDisplayFormHandler(
 
         throw invalidArgumentsProvided(ctx, cmd, message);
     }
+
+    yield put(
+        batchActions([
+            // keep the attribute display form field up to date
+            filterContextActions.addAttributeFilterDisplayForm(displayFormData),
+            filterContextActions.changeAttributeDisplayForm({
+                filterLocalId,
+                displayForm,
+            }),
+        ]),
+    );
+
+    const changedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByLocalId>> =
+        yield select(selectFilterContextAttributeFilterByLocalId(filterLocalId));
+
+    invariant(
+        changedFilter,
+        "Inconsistent state in changeAttributeDisplayFormHandler, cannot update attribute filter for given local identifier.",
+    );
 
     yield dispatchDashboardEvent(attributeDisplayFormChanged(ctx, changedFilter, cmd.correlationId));
     yield call(dispatchFilterContextChanged, ctx, cmd);
