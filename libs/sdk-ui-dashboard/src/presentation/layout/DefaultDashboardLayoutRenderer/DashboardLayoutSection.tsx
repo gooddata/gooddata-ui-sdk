@@ -4,6 +4,15 @@ import flatMap from "lodash/flatMap";
 import React from "react";
 import { RenderMode } from "../../../types";
 import { IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/fluidLayout/facade/interfaces";
+import {
+    useDashboardSelector,
+    selectIsInEditMode,
+    useDashboardDispatch,
+    selectWidgetsOverlayState,
+    selectSectionModification,
+    uiActions,
+} from "../../../model";
+import { DashboardItemOverlay } from "../DashboardItemOverlay/DashboardItemOverlay";
 import { DashboardLayoutGridRow } from "./DashboardLayoutGridRow";
 import { DashboardLayoutSectionHeaderRenderer } from "./DashboardLayoutSectionHeaderRenderer";
 import { DashboardLayoutSectionRenderer } from "./DashboardLayoutSectionRenderer";
@@ -16,6 +25,7 @@ import {
     IDashboardLayoutSectionRenderer,
     IDashboardLayoutWidgetRenderer,
 } from "./interfaces";
+import { getRefsForSection } from "../refs";
 
 /**
  * @alpha
@@ -59,6 +69,13 @@ export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionPr
     } = props;
     const renderProps = { section, screen, renderMode };
 
+    const dispatch = useDashboardDispatch();
+    const isInEditMode = useDashboardSelector(selectIsInEditMode);
+
+    const refs = getRefsForSection(section);
+    const overlayShow = useDashboardSelector(selectWidgetsOverlayState(refs));
+    const sectionModifications = useDashboardSelector(selectSectionModification(refs));
+
     const items = flatMap(section.items().asGridRows(screen), (itemsInRow, index) => {
         return (
             <DashboardLayoutGridRow
@@ -87,6 +104,19 @@ export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionPr
                     DefaultSectionHeaderRenderer: DashboardLayoutSectionHeaderRenderer,
                 })}
                 {items}
+                <DashboardItemOverlay
+                    type="column"
+                    onHide={() =>
+                        dispatch(
+                            uiActions.toggleWidgetsOverlay({
+                                visible: false,
+                                refs: section.items().map((item) => item.ref()),
+                            }),
+                        )
+                    }
+                    render={Boolean(isInEditMode && overlayShow)}
+                    modifications={sectionModifications}
+                />
             </>
         ),
     });

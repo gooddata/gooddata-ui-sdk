@@ -23,6 +23,9 @@ import {
     uiActions,
     useDashboardDispatch,
     useDashboardSelector,
+    selectWidgetsOverlayState,
+    selectWidgetsModification,
+    selectSectionModification,
 } from "../../model";
 import { isAnyPlaceholderWidget, isPlaceholderWidget } from "../../widgets";
 import { getDashboardLayoutWidgetDefaultHeight, getSizeInfo } from "../../_staging/layout/sizing";
@@ -47,6 +50,8 @@ import {
     IDashboardLayoutItemFacade,
     IDashboardLayoutWidgetRenderer,
 } from "./DefaultDashboardLayoutRenderer";
+import { DashboardItemOverlay } from "./DashboardItemOverlay/DashboardItemOverlay";
+import { getRefsForSection, getRefsForItem } from "./refs";
 
 function calculateWidgetMinHeight(
     widget: ExtendedDashboardWidget,
@@ -152,6 +157,13 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
     const className = enableWidgetCustomHeight ? "custom-height" : undefined;
     const index = getWidgetIndex(item);
 
+    const refs = getRefsForItem(item);
+    const sectionModifications = useDashboardSelector(
+        selectSectionModification(getRefsForSection(item.section())),
+    );
+    const itemModifications = useDashboardSelector(selectWidgetsModification(refs));
+    const overlayShow = useDashboardSelector(selectWidgetsOverlayState(refs));
+
     const { isActive, isResizingColumnOrRow, heightLimitReached, widthLimitReached } = useResizeItemStatus(
         widget.identifier,
     );
@@ -232,6 +244,22 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                     />
                 </>
             ) : null}
+
+            <DashboardItemOverlay
+                type="column"
+                onHide={() =>
+                    dispatch(
+                        uiActions.toggleWidgetsOverlay({
+                            visible: false,
+                            refs: [item.ref()],
+                        }),
+                    )
+                }
+                render={
+                    Boolean(isInEditMode && overlayShow) && !sectionModifications.includes("insertedByPlugin")
+                }
+                modifications={itemModifications}
+            />
         </DefaultWidgetRenderer>
     );
 };

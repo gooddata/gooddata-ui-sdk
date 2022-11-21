@@ -4,6 +4,7 @@ import { DashboardCustomizationLogger } from "../customizationLogging";
 import { DefaultLayoutCustomizer } from "../layoutCustomizer";
 import { ExtendedDashboardWidget } from "../../../model";
 import { idRef, IDashboard } from "@gooddata/sdk-model";
+import { createCustomizerMutationsContext } from "../types";
 
 const EmptyDashboard: IDashboard<ExtendedDashboardWidget> = {
     type: "IDashboard",
@@ -25,7 +26,10 @@ describe("layout customizer", () => {
     let Customizer: DefaultLayoutCustomizer;
 
     beforeEach(() => {
-        Customizer = new DefaultLayoutCustomizer(new DashboardCustomizationLogger());
+        Customizer = new DefaultLayoutCustomizer(
+            new DashboardCustomizationLogger(),
+            createCustomizerMutationsContext(),
+        );
     });
 
     it("should allow fluid layout customization and deal with transform returning undefined", () => {

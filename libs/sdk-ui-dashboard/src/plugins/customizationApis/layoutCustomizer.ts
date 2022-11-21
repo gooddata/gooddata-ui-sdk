@@ -4,12 +4,16 @@ import { IDashboardCustomizationLogger } from "./customizationLogging";
 import { FluidLayoutCustomizer } from "./fluidLayoutCustomizer";
 import { IDashboardLayout } from "@gooddata/sdk-model";
 import { DashboardTransformFn, ExtendedDashboardWidget } from "../../model";
+import { CustomizerMutationsContext } from "./types";
 
 export class DefaultLayoutCustomizer implements IDashboardLayoutCustomizer {
     private sealed = false;
     private readonly fluidLayoutTransformations: FluidLayoutCustomizationFn[] = [];
 
-    constructor(private readonly logger: IDashboardCustomizationLogger) {}
+    constructor(
+        private readonly logger: IDashboardCustomizationLogger,
+        private readonly mutationContext: CustomizerMutationsContext,
+    ) {}
 
     public customizeFluidLayout = (
         customizationFn: FluidLayoutCustomizationFn,
@@ -52,7 +56,7 @@ export class DefaultLayoutCustomizer implements IDashboardLayoutCustomizer {
 
             const newLayout = snapshot.reduce((currentLayout, fn) => {
                 // Create a new fluid layout customizer just for this round of processing
-                const customizer = new FluidLayoutCustomizer(this.logger);
+                const customizer = new FluidLayoutCustomizer(this.logger, this.mutationContext);
 
                 try {
                     // call out to the plugin-provided function with the current value of the layout & the

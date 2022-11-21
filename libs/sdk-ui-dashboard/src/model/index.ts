@@ -25,6 +25,8 @@ export {
     IResolvedAttributeFilterValues,
     IResolvedDateFilterValue,
     IResolvedFilterValues,
+    WidgetsOverlayFn,
+    IDashboardWidgetOverlay,
 } from "./types/commonTypes";
 export {
     ICustomWidget,

@@ -4,6 +4,7 @@ import { FluidLayoutCustomizer } from "../fluidLayoutCustomizer";
 import { IDashboardLayout, IDashboardLayoutSection, IDashboardLayoutItem } from "@gooddata/sdk-model";
 import { ExtendedDashboardWidget, ICustomWidget, newCustomWidget } from "../../../model";
 import { DashboardCustomizationLogger } from "../customizationLogging";
+import { createCustomizerMutationsContext, CustomizerMutationsContext } from "../types";
 
 const EmptyLayout: IDashboardLayout<ExtendedDashboardWidget> = {
     type: "IDashboardLayout",
@@ -36,9 +37,11 @@ function createTestItem(widget: ICustomWidget): IDashboardLayoutItem<ICustomWidg
 // has its own battery of tests
 describe("fluid layout customizer", () => {
     let Customizer: FluidLayoutCustomizer;
+    let mutationContext: CustomizerMutationsContext;
 
     beforeEach(() => {
-        Customizer = new FluidLayoutCustomizer(new DashboardCustomizationLogger());
+        mutationContext = createCustomizerMutationsContext();
+        Customizer = new FluidLayoutCustomizer(new DashboardCustomizationLogger(), mutationContext);
     });
 
     it("should add new section with custom widgets", () => {
@@ -57,6 +60,14 @@ describe("fluid layout customizer", () => {
 
         const updatedNonEmptyLayout = Customizer.applyTransformations(LayoutWithOneSection);
         expect(updatedNonEmptyLayout.sections[1]).toEqual(newSection);
+        expect(mutationContext).toEqual({
+            kpi: [],
+            insight: [],
+            layouts: {
+                "1": "inserted",
+                "2": "inserted",
+            },
+        });
     });
 
     it("should not add empty section", () => {
@@ -69,6 +80,11 @@ describe("fluid layout customizer", () => {
 
         const updatedEmptyLayout = Customizer.applyTransformations(EmptyLayout);
         expect(updatedEmptyLayout.sections.length).toEqual(0);
+        expect(mutationContext).toEqual({
+            kpi: [],
+            insight: [],
+            layouts: {},
+        });
     });
 
     it("should not add section with item that has no widget", () => {
@@ -91,6 +107,11 @@ describe("fluid layout customizer", () => {
 
         const updatedEmptyLayout = Customizer.applyTransformations(EmptyLayout);
         expect(updatedEmptyLayout.sections.length).toEqual(0);
+        expect(mutationContext).toEqual({
+            kpi: [],
+            insight: [],
+            layouts: {},
+        });
     });
 
     it("should add new item into an existing section", () => {
@@ -100,6 +121,13 @@ describe("fluid layout customizer", () => {
         const updatedNonEmptyLayout = Customizer.applyTransformations(LayoutWithOneSection);
 
         expect(updatedNonEmptyLayout.sections[0].items).toEqual([item]);
+        expect(mutationContext).toEqual({
+            kpi: [],
+            insight: [],
+            layouts: {
+                "1": "inserted",
+            },
+        });
     });
 
     it("should not add item without widget", () => {
@@ -114,6 +142,11 @@ describe("fluid layout customizer", () => {
 
         const updatedNonEmptyLayout = Customizer.applyTransformations(LayoutWithOneSection);
         expect(updatedNonEmptyLayout.sections[0]).toEqual(LayoutWithOneSection.sections[0]);
+        expect(mutationContext).toEqual({
+            kpi: [],
+            insight: [],
+            layouts: {},
+        });
     });
 
     it("should first add new items then new sections", () => {
@@ -130,5 +163,14 @@ describe("fluid layout customizer", () => {
 
         expect(updatedNonEmptyLayout.sections[0]).toEqual(newSection);
         expect(updatedNonEmptyLayout.sections[1].items).toEqual([newItem]);
+
+        expect(mutationContext).toEqual({
+            kpi: [],
+            insight: [],
+            layouts: {
+                "1": "inserted",
+                "2": "inserted",
+            },
+        });
     });
 });

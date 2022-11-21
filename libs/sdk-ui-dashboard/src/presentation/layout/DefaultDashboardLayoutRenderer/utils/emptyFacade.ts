@@ -6,6 +6,7 @@ export const emptyItemFacadeWithFullSize: IDashboardLayoutItemFacade<unknown> = 
     index: () => 0,
     raw: () => null as any, // TODO: should we allow this in the interface?
     widget: () => null,
+    ref: () => undefined,
     section: () => undefined as any, // TODO: should we allow this in the interface?
     size: () => ({ xl: { gridWidth: 12 } }),
     sizeForScreen: () => ({ gridWidth: 12 }),

@@ -11,8 +11,10 @@ import {
 } from "../../presentation";
 import { InvariantError } from "ts-invariant";
 import includes from "lodash/includes";
+import union from "lodash/union";
 import { insightTags } from "@gooddata/sdk-model";
 import { IDashboardCustomizationLogger } from "./customizationLogging";
+import { CustomizerMutationsContext } from "./types";
 
 const DefaultDashboardInsightComponentProvider: InsightComponentProvider = () => {
     return DefaultDashboardInsight;
@@ -227,14 +229,17 @@ class SealedInsightCustomizerState implements IInsightCustomizerState {
  */
 export class DefaultInsightCustomizer implements IDashboardInsightCustomizer {
     private readonly logger: IDashboardCustomizationLogger;
+    private readonly mutationContext: CustomizerMutationsContext;
     private state: IInsightCustomizerState;
 
     constructor(
         logger: IDashboardCustomizationLogger,
+        mutationContext: CustomizerMutationsContext,
         defaultCoreProvider: InsightComponentProvider = DefaultDashboardInsightComponentProvider,
         defaultInsightBodyProvider: InsightBodyComponentProvider = DefaultInsightBodyComponentProvider,
     ) {
         this.logger = logger;
+        this.mutationContext = mutationContext;
         this.state = new DefaultInsightCustomizerState(
             logger,
             defaultCoreProvider,
@@ -257,18 +262,21 @@ export class DefaultInsightCustomizer implements IDashboardInsightCustomizer {
         };
 
         this.state.addTagProvider(tag, newProvider);
+        this.mutationContext.insight = union(this.mutationContext.insight, ["tag"]);
 
         return this;
     };
 
     public withCustomProvider = (provider: OptionalInsightComponentProvider): this => {
         this.state.addCustomProvider(provider);
+        this.mutationContext.insight = union(this.mutationContext.insight, ["provider"]);
 
         return this;
     };
 
     withCustomInsightBodyProvider(provider: OptionalInsightBodyComponentProvider): this {
         this.state.addInsightBodyProvider(provider);
+        this.mutationContext.insight = union(this.mutationContext.insight, ["body"]);
 
         return this;
     }
@@ -296,6 +304,7 @@ export class DefaultInsightCustomizer implements IDashboardInsightCustomizer {
         // finally modify the root provider; next time someone registers decorator, it will be on top of
         // this currently registered one
         this.state.switchRootProvider(newRootProvider);
+        this.mutationContext.insight = union(this.mutationContext.insight, ["decorator"]);
 
         return this;
     };

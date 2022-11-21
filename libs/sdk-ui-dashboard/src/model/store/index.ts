@@ -240,6 +240,9 @@ export {
     selectIsCancelEditModeDialogOpen,
     selectDraggingWidgetSource,
     selectDraggingWidgetTarget,
+    selectWidgetsOverlayState,
+    selectWidgetsModification,
+    selectSectionModification,
 } from "./ui/uiSelectors";
 export { uiActions } from "./ui";
 export { RenderModeState } from "./renderMode/renderModeState";
