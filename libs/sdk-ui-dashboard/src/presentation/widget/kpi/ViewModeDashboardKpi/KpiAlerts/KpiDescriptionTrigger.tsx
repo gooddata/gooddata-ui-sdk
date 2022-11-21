@@ -12,7 +12,7 @@ const getKpiMetricDescription = (metrics: ICatalogMeasure[], ref: ObjRef): strin
 
 export const KpiDescriptionTrigger: React.FC<IKpiDescriptionTriggerProps> = (props) => {
     const { kpi } = props;
-    const visible = kpi.configuration?.description?.visible;
+    const visible = kpi.configuration?.description?.visible ?? true;
     const metrics = useDashboardSelector(selectCatalogMeasures);
 
     const description =

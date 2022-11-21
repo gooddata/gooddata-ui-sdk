@@ -6,7 +6,7 @@ import { IInsightWidgetDescriptionTriggerProps } from "./types";
 
 export const InsightWidgetDescriptionTrigger: React.FC<IInsightWidgetDescriptionTriggerProps> = (props) => {
     const { widget, insight } = props;
-    const visible = widget.configuration?.description?.visible;
+    const visible = widget.configuration?.description?.visible ?? true;
     const description =
         widget.configuration?.description?.source === "widget" ? widget.description : insight.insight.summary;
 
