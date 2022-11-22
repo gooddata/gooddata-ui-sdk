@@ -1,12 +1,13 @@
 // (C) 2021-2022 GoodData Corporation
+import React, { useCallback } from "react";
+import classNames from "classnames";
+import invariant from "ts-invariant";
 import {
     areObjRefsEqual,
     IDashboardAttributeFilter,
     IDashboardDateFilter,
     objRefToString,
 } from "@gooddata/sdk-model";
-import React, { useCallback } from "react";
-import classNames from "classnames";
 import {
     changeAttributeFilterSelection,
     changeDateFilterSelection,
@@ -21,6 +22,7 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
     selectIsInEditMode,
+    selectAttributeFilterDisplayFormsMap,
 } from "../../../model";
 import { useDashboardComponentsContext } from "../../dashboardContexts";
 import {
@@ -108,6 +110,7 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
     const { AttributeFilterComponentSet, DashboardDateFilterComponentProvider } =
         useDashboardComponentsContext();
     const supportElementUris = useDashboardSelector(selectSupportsElementUris);
+    const displayFormsMap = useDashboardSelector(selectAttributeFilterDisplayFormsMap);
 
     if (isExport) {
         return <HiddenFilterBar {...props} />;
@@ -166,9 +169,20 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                     const CustomAttributeFilterComponent =
                         AttributeFilterComponentSet.MainComponentProvider(convertedFilter);
 
+                    /**
+                     * Use the attribute as key, not the display form.
+                     * This is to make sure we do not remount this when user changes the display form used:
+                     * it should just reload the elements, not close and remount the whole filter.
+                     *
+                     * This is fine because we do not allow multiple filters of the same attribute to be on
+                     * the same dashboard.
+                     */
+                    const displayForm = displayFormsMap.get(convertedFilter.attributeFilter.displayForm);
+                    invariant(displayForm, "inconsistent state, display form for a filter was not found");
+
                     return (
                         <DraggableAttributeFilter
-                            key={objRefToString(filter.attributeFilter.displayForm)}
+                            key={objRefToString(displayForm.attribute)}
                             autoOpen={areObjRefsEqual(filter.attributeFilter.displayForm, autoOpenFilter)}
                             filter={filter}
                             filterIndex={filterIndex}
