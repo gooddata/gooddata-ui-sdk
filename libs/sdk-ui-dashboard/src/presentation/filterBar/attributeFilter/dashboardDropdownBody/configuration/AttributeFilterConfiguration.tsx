@@ -7,6 +7,7 @@ import {
     useDashboardSelector,
     selectOtherContextAttributeFilters,
     selectFilterContextAttributeFilters,
+    selectSupportsElementsQueryParentFiltering,
 } from "../../../../../model";
 import { IDashboardAttributeFilter, ObjRef } from "@gooddata/sdk-model";
 import { ParentFiltersList } from "./parentFilters/ParentFiltersList";
@@ -40,6 +41,7 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
     const neighborFilters: IDashboardAttributeFilter[] = useDashboardSelector(
         selectOtherContextAttributeFilters(filterRef),
     );
+    const isDependentFiltersEnabled = useDashboardSelector(selectSupportsElementsQueryParentFiltering);
 
     const neighborFilterDisplayForms = useMemo(() => {
         return neighborFilters.map((filter) => filter.attributeFilter.displayForm);
@@ -88,7 +90,9 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
     return (
         <div className="s-attribute-filter-dropdown-configuration attribute-filter-dropdown-configuration">
             <ConfigurationPanelHeader />
-            {parents.length > 0 ? <ConfigurationCategory categoryTitle={filterByText} /> : null}
+            {isDependentFiltersEnabled && parents.length > 0 ? (
+                <ConfigurationCategory categoryTitle={filterByText} />
+            ) : null}
             <ParentFiltersList
                 currentFilterLocalId={currentFilter.attributeFilter.localIdentifier!}
                 parents={parents}
