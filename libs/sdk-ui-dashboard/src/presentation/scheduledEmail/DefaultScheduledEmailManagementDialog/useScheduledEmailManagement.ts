@@ -49,7 +49,9 @@ export const useScheduledEmailManagement = (props: IUseScheduledEmailManagementP
                       createdByCurrentUser: !canManageScheduledMail,
                   });
 
-              const users = await effectiveBackend.workspace(effectiveWorkspace).users().queryAll();
+              const users = canManageScheduledMail
+                  ? await effectiveBackend.workspace(effectiveWorkspace).users().queryAll()
+                  : [];
 
               return { scheduledEmails: scheduledEmails.reverse(), users };
           }
