@@ -1,23 +1,49 @@
 // (C) 2019-2022 GoodData Corporation
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 import { idRef } from "@gooddata/sdk-model";
-import { DashboardLoadStatus, IEmbeddedPlugin, useDashboardLoaderWithReload } from "@gooddata/sdk-ui-loaders";
+import { IEmbeddedPlugin, useDashboardLoaderWithPluginManipulation } from "@gooddata/sdk-ui-loaders";
 import PluginFactory from "../plugin";
 import { DEFAULT_DASHBOARD_ID } from "./constants";
-import { DashboardConfig } from "@gooddata/sdk-ui-dashboard";
+import { DashboardConfig, CustomToolbarComponent } from "@gooddata/sdk-ui-dashboard";
 import { ErrorComponent, LoadingComponent } from "@gooddata/sdk-ui";
-import { Toolbar } from "./Toolbar";
+import { PluginToolbar } from "./PluginToolbar";
 
 const Plugins: IEmbeddedPlugin[] = [{ factory: PluginFactory }];
 const Config: DashboardConfig = { mapboxToken: process.env.MAPBOX_TOKEN };
 const DashboardRef = idRef(process.env.DASHBOARD_ID || DEFAULT_DASHBOARD_ID, "analyticalDashboard");
 
-interface IPluginLoaderBodyProps {
-    loaderStatus: DashboardLoadStatus;
-}
+export const PluginLoader = () => {
+    const { loaderStatus, reloadPlugins, setExtraPlugins, extraPlugins } =
+        useDashboardLoaderWithPluginManipulation({
+            dashboard: DashboardRef,
+            loadingMode: "staticOnly",
+            config: Config,
+            extraPlugins: Plugins,
+        });
 
-const PluginLoaderBody: React.FC<IPluginLoaderBodyProps> = (props) => {
-    const { status, error, result } = props.loaderStatus;
+    const isPluginEnabled = !!extraPlugins?.length;
+
+    const togglePlugin = useCallback(() => {
+        if (isPluginEnabled) {
+            setExtraPlugins([]);
+        } else {
+            setExtraPlugins(Plugins);
+        }
+    }, [isPluginEnabled, setExtraPlugins]);
+
+    const { status, error, result } = loaderStatus;
+
+    const ToolbarComponent = useMemo<CustomToolbarComponent>(() => {
+        return function CustomToolbar() {
+            return (
+                <PluginToolbar
+                    isPluginEnabled={isPluginEnabled}
+                    reloadPlugins={reloadPlugins}
+                    togglePlugin={togglePlugin}
+                />
+            );
+        };
+    }, [isPluginEnabled, reloadPlugins, togglePlugin]);
 
     if (status === "loading") {
         return <LoadingComponent />;
@@ -27,21 +53,5 @@ const PluginLoaderBody: React.FC<IPluginLoaderBodyProps> = (props) => {
         return <ErrorComponent message={error?.message ?? ""} />;
     }
 
-    return <result.DashboardComponent {...result.props} />;
-};
-
-export const PluginLoader = () => {
-    const { loaderStatus, reloadPlugins } = useDashboardLoaderWithReload({
-        dashboard: DashboardRef,
-        loadingMode: "staticOnly",
-        config: Config,
-        extraPlugins: Plugins,
-    });
-
-    return (
-        <>
-            <Toolbar onReloadPlugin={reloadPlugins} reloadDisabled={loaderStatus.status !== "success"} />
-            <PluginLoaderBody loaderStatus={loaderStatus} />
-        </>
-    );
+    return <result.DashboardComponent {...result.props} ToolbarComponent={ToolbarComponent} />;
 };

@@ -27,6 +27,7 @@ import {
     DefaultTopBar,
     RenderModeAwareTitle,
 } from "../../topBar";
+import { HiddenToolbar } from "../../toolbar";
 import { defaultDashboardThemeModifier } from "../defaultDashboardThemeModifier";
 import { useDashboard } from "../hooks/useDashboard";
 import { IDashboardProps } from "../types";
@@ -97,6 +98,7 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
                                     ButtonBarComponent={props.ButtonBarComponent ?? DefaultButtonBar}
                                     MenuButtonComponent={props.MenuButtonComponent ?? DefaultMenuButton}
                                     TopBarComponent={props.TopBarComponent ?? DefaultTopBar}
+                                    ToolbarComponent={props.ToolbarComponent ?? HiddenToolbar}
                                     TitleComponent={props.TitleComponent ?? RenderModeAwareTitle}
                                     ScheduledEmailDialogComponent={
                                         props.ScheduledEmailDialogComponent ?? DefaultScheduledEmailDialog

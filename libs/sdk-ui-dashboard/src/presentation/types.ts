@@ -6,5 +6,6 @@ export * from "./filterBar/types";
 export * from "./layout/types";
 export * from "./scheduledEmail/types";
 export * from "./topBar/types";
+export * from "./toolbar/types";
 export * from "./insightList/types";
 export * from "./widget/types";

@@ -9,6 +9,7 @@ import { DashboardMainContent } from "./DashboardMainContent";
 import { DashboardSidebar } from "../DashboardSidebar/DashboardSidebar";
 import { RenderModeAwareDashboardSidebar } from "../DashboardSidebar/RenderModeAwareDashboardSidebar";
 import { DragLayerComponent } from "../../dragAndDrop";
+import { Toolbar } from "../../toolbar";
 
 export const DashboardInner: React.FC<IDashboardProps> = () => {
     const locale = useDashboardSelector(selectLocale);
@@ -32,6 +33,7 @@ export const DashboardInner: React.FC<IDashboardProps> = () => {
                         <DashboardMainContent />
                     </div>
                 </div>
+                <Toolbar />
             </div>
         </IntlWrapper>
     );

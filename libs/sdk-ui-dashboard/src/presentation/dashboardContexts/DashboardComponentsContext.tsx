@@ -39,6 +39,7 @@ import {
     InsightWidgetComponentSet,
     KpiWidgetComponentSet,
 } from "../componentDefinition/types";
+import { CustomToolbarComponent } from "../toolbar/types";
 
 /**
  * @internal
@@ -57,6 +58,7 @@ interface IDashboardComponentsContext {
     MenuButtonComponent: CustomMenuButtonComponent;
     TitleComponent: CustomTitleComponent;
     TopBarComponent: CustomTopBarComponent;
+    ToolbarComponent: CustomToolbarComponent;
     ScheduledEmailDialogComponent: CustomScheduledEmailDialogComponent;
     ScheduledEmailManagementDialogComponent: CustomScheduledEmailManagementDialogComponent;
     ShareDialogComponent: CustomShareDialogComponent;
@@ -95,6 +97,7 @@ const DashboardComponentsContext = createContext<IDashboardComponentsContext>({
     MenuButtonComponent: ThrowMissingComponentError("MenuButtonComponent"),
     TitleComponent: ThrowMissingComponentError("TitleComponent"),
     TopBarComponent: ThrowMissingComponentError("TopBarComponent"),
+    ToolbarComponent: ThrowMissingComponentError("ToolbarComponent"),
     ScheduledEmailDialogComponent: ThrowMissingComponentError("ScheduledEmailDialogComponent"),
     ScheduledEmailManagementDialogComponent: ThrowMissingComponentError(
         "ScheduledEmailManagementDialogComponent",

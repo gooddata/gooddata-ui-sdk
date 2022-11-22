@@ -878,6 +878,9 @@ export type CustomSidebarComponent = ComponentType<ISidebarProps>;
 // @alpha (undocumented)
 export type CustomTitleComponent = ComponentType<ITitleProps>;
 
+// @internal (undocumented)
+export type CustomToolbarComponent = ComponentType<IToolbarProps>;
+
 // @alpha (undocumented)
 export type CustomTopBarComponent = ComponentType<ITopBarProps>;
 
@@ -2351,6 +2354,15 @@ export const DefaultDashboardLayout: (props: IDashboardLayoutProps) => JSX.Eleme
 export const defaultDashboardThemeModifier: (theme: ITheme) => ITheme;
 
 // @internal (undocumented)
+export const DefaultDashboardToolbar: CustomToolbarComponent;
+
+// @internal (undocumented)
+export const DefaultDashboardToolbarButton: React_2.FC<IDefaultDashboardToolbarButtonProps>;
+
+// @internal (undocumented)
+export const DefaultDashboardToolbarGroup: React_2.FC<IDefaultDashboardToolbarGroupProps>;
+
+// @internal (undocumented)
 export const DefaultDashboardWidget: React_2.NamedExoticComponent<IDashboardWidgetProps>;
 
 // @internal (undocumented)
@@ -2910,6 +2922,9 @@ export const HiddenShareButton: () => JSX.Element | null;
 // @alpha
 export const HiddenTitle: () => JSX.Element | null;
 
+// @internal
+export const HiddenToolbar: CustomToolbarComponent;
+
 // @alpha
 export const HiddenTopBar: (_props: ITopBarProps) => JSX.Element | null;
 
@@ -3134,6 +3149,8 @@ export interface IDashboardCustomComponentProps {
     SidebarComponent?: CustomSidebarComponent;
     // @alpha
     TitleComponent?: CustomTitleComponent;
+    // @internal
+    ToolbarComponent?: CustomToolbarComponent;
     // @alpha
     TopBarComponent?: CustomTopBarComponent;
     WidgetComponentProvider?: OptionalWidgetComponentProvider;
@@ -3457,6 +3474,26 @@ export interface IDashboardWidgetProps {
 // @public
 export interface IDateFiltersCustomizer {
     withCustomProvider(provider: OptionalDateFilterComponentProvider): IDateFiltersCustomizer;
+}
+
+// @internal (undocumented)
+export interface IDefaultDashboardToolbarButtonProps {
+    // (undocumented)
+    disabled?: boolean;
+    // (undocumented)
+    icon: string;
+    // (undocumented)
+    isActive?: boolean;
+    // (undocumented)
+    onClick: () => void;
+    // (undocumented)
+    tooltip?: string;
+}
+
+// @internal (undocumented)
+export interface IDefaultDashboardToolbarGroupProps {
+    // (undocumented)
+    title: string;
 }
 
 // @internal (undocumented)
@@ -4393,6 +4430,10 @@ export interface IToastMessageDefinition {
     titleValues?: any;
     // (undocumented)
     type: ToastMessageType;
+}
+
+// @internal (undocumented)
+export interface IToolbarProps {
 }
 
 // @alpha (undocumented)
@@ -6155,6 +6196,9 @@ export const Title: (props: ITitleProps) => JSX.Element;
 
 // @internal
 export type ToastMessageType = "success" | "progress" | "error" | "warning";
+
+// @internal (undocumented)
+export const Toolbar: (props: IToolbarProps) => JSX.Element;
 
 // @internal (undocumented)
 export const TopBar: (props: ITopBarProps) => JSX.Element;

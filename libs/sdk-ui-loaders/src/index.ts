@@ -19,6 +19,7 @@ export {
     ModuleFederationIntegration,
     AdaptiveLoadOptions,
     IEmbeddedPlugin,
+    DashboardLoadingMode,
 } from "./dashboard/types";
 export { useDashboardLoader, DashboardLoadStatus } from "./dashboard/useDashboardLoader";
-export { useDashboardLoaderWithReload } from "./dashboard/useDashboardLoaderWithPluginReload";
+export { useDashboardLoaderWithPluginManipulation } from "./dashboard/useDashboardLoaderWithPluginManipulation";

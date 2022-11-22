@@ -41,6 +41,7 @@ import {
 } from "../dashboardContexts";
 import { CustomSidebarComponent } from "./DashboardSidebar/types";
 import { InsightComponentSetProvider } from "../componentDefinition/types";
+import { CustomToolbarComponent } from "../toolbar";
 
 /**
  * These props allow you to specify custom components or custom component providers that the Dashboard
@@ -242,6 +243,13 @@ export interface IDashboardCustomComponentProps {
      * @alpha
      */
     TopBarComponent?: CustomTopBarComponent;
+
+    /**
+     * Specify component to use for rendering the toolbar.
+     *
+     * @internal
+     */
+    ToolbarComponent?: CustomToolbarComponent;
 
     /**
      * Specify component to use for rendering the title.
