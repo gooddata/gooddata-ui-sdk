@@ -60,24 +60,20 @@ export const EmptyDashboardDropZone: React.FC = () => {
         ],
     );
 
-    const size = (item as BaseDraggableLayoutItem)?.size;
-
-    if (!size) {
-        return null;
-    }
+    const { gridWidth = 12, gridHeight } = (item as BaseDraggableLayoutItem)?.size || {};
 
     const message = <FormattedMessage id="newDashboard.dropInsight" />;
     const widgetCategory = widgetCategoryMapping[itemType];
 
     return (
         <Col
-            xl={size.gridWidth}
-            lg={size.gridWidth}
-            md={size.gridWidth}
-            sm={size.gridWidth}
-            xs={size.gridWidth}
+            xl={gridWidth}
+            lg={gridWidth}
+            md={gridWidth}
+            sm={gridWidth}
+            xs={gridWidth}
             style={{
-                minHeight: getDashboardLayoutItemHeightForGrid(size.gridHeight),
+                minHeight: gridHeight ? getDashboardLayoutItemHeightForGrid(gridHeight) : undefined,
             }}
             className={cx("drag-info-placeholder", "dash-item", {
                 [`type-${widgetCategory}`]: !!widgetCategory,
