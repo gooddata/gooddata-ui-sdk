@@ -3,15 +3,12 @@ import React from "react";
 
 import { IAttributeMetadataObject, ObjRef } from "@gooddata/sdk-model";
 import { ParentFiltersListItem } from "./ParentFiltersListItem";
-import { LoadingComponent } from "@gooddata/sdk-ui";
 import {
     useDashboardSelector,
     selectSupportsElementsQueryParentFiltering,
     IDashboardAttributeFilterParentItem,
     IConnectingAttribute,
 } from "../../../../../../model";
-
-const LOADING_MASK_HEIGHT = 150;
 
 interface IConfigurationParentItemsProps {
     currentFilterLocalId: string;
@@ -36,15 +33,6 @@ export const ParentFiltersList: React.FC<IConfigurationParentItemsProps> = (prop
 
     if (!isDependentFiltersEnabled || parents.length < 1) {
         return null;
-    }
-
-    if (!parents.length) {
-        return (
-            <LoadingComponent
-                height={LOADING_MASK_HEIGHT}
-                className="s-attribute-filter-dropdown-configuration-loading"
-            />
-        );
     }
 
     return (
