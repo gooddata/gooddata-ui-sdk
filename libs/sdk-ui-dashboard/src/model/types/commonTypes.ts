@@ -176,6 +176,12 @@ export interface DashboardConfig {
      * Hide "Save as new" button in ButtonBar and MenuButton
      */
     hideSaveAsNewButton?: boolean;
+
+    /**
+     * @internal
+     * Disable closing overlays on window scroll event
+     */
+    disableCloseOverlaysOnWindowScroll?: boolean;
 }
 
 /**
