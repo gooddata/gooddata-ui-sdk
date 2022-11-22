@@ -342,6 +342,12 @@
             "shouldPublish": true
         },
         {
+            "packageName": "@gooddata/react-app-template",
+            "projectFolder": "tools/react-app-template",
+            "reviewCategory": "tools",
+            "shouldPublish": false
+        },
+        {
             "packageName": "@gooddata/sdk-ui-theme-provider",
             "projectFolder": "libs/sdk-ui-theme-provider",
             "reviewCategory": "production",
