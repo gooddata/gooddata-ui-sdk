@@ -4,14 +4,9 @@ import { idRef } from "@gooddata/sdk-model";
 import { IEmbeddedPlugin, useDashboardLoaderWithPluginManipulation } from "@gooddata/sdk-ui-loaders";
 import PluginFactory from "../plugin";
 import { DEFAULT_DASHBOARD_ID } from "./constants";
-import {
-    DashboardConfig,
-    CustomToolbarComponent,
-    DefaultDashboardToolbar,
-    DefaultDashboardToolbarButton,
-    DefaultDashboardToolbarGroup,
-} from "@gooddata/sdk-ui-dashboard";
+import { DashboardConfig, CustomToolbarComponent } from "@gooddata/sdk-ui-dashboard";
 import { ErrorComponent, LoadingComponent } from "@gooddata/sdk-ui";
+import { PluginToolbar } from "./PluginToolbar";
 
 const Plugins: IEmbeddedPlugin[] = [{ factory: PluginFactory }];
 const Config: DashboardConfig = { mapboxToken: process.env.MAPBOX_TOKEN };
@@ -41,21 +36,11 @@ export const PluginLoader = () => {
     const ToolbarComponent = useMemo<CustomToolbarComponent>(() => {
         return function CustomToolbar() {
             return (
-                <DefaultDashboardToolbar>
-                    <DefaultDashboardToolbarGroup title="Plugins">
-                        <DefaultDashboardToolbarButton
-                            icon="sync"
-                            onClick={reloadPlugins}
-                            tooltip="This will reload the plugin keeping any changes you made to the dashboard intact"
-                        />
-                        <DefaultDashboardToolbarButton
-                            icon="circle-cross"
-                            onClick={togglePlugin}
-                            tooltip="This will reload the dashboard with or without the plugin applied keeping any changes you made to the dashboard intact"
-                            isActive={!isPluginEnabled}
-                        />
-                    </DefaultDashboardToolbarGroup>
-                </DefaultDashboardToolbar>
+                <PluginToolbar
+                    isPluginEnabled={isPluginEnabled}
+                    reloadPlugins={reloadPlugins}
+                    togglePlugin={togglePlugin}
+                />
             );
         };
     }, [isPluginEnabled, reloadPlugins, togglePlugin]);
