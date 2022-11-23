@@ -48,8 +48,8 @@ export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element | null =
                 alignTo=".s-header-options-button"
                 alignPoints={overlayAlignPoints}
                 className="gd-header-menu-overlay"
-                closeOnMouseDrag
-                closeOnOutsideClick
+                closeOnMouseDrag={true}
+                closeOnOutsideClick={true}
                 onClose={onMenuButtonClick}
             >
                 <ItemsWrapper smallItemsSpacing>

@@ -5,11 +5,7 @@ import { OverlayController } from "./OverlayController";
 /**
  * @internal
  */
-export const OverlayContext = createContext<IOverlayControllerProviderProps>({
-    overlayController: undefined,
-    overlaysRootId: undefined,
-    portalsRootId: undefined,
-});
+export const OverlayContext = createContext<OverlayController | undefined>(undefined);
 OverlayContext.displayName = "OverlayContext";
 
 /**
@@ -22,17 +18,6 @@ export interface IOverlayControllerProviderProps {
      * Overlay controller singleton class for z-index handling.
      */
     overlayController: OverlayController;
-
-    /**
-     * Html element id that wraps content where overlays will be rendered
-     * This element has to has position defined as relative
-     */
-    overlaysRootId?: string;
-
-    /**
-     * Html element id that is inside of overlaysRootId element and is used to render overlays in it
-     */
-    portalsRootId?: string;
 }
 
 /**
@@ -40,20 +25,21 @@ export interface IOverlayControllerProviderProps {
  *
  * @internal
  */
-export const OverlayControllerProvider: React.FC<IOverlayControllerProviderProps> = (props) => {
-    const { children, ...resProps } = props;
-
-    return <OverlayContext.Provider value={resProps}>{children}</OverlayContext.Provider>;
+export const OverlayControllerProvider: React.FC<IOverlayControllerProviderProps> = ({
+    children,
+    overlayController,
+}) => {
+    return <OverlayContext.Provider value={overlayController}>{children}</OverlayContext.Provider>;
 };
 
 /**
- * Hook to get current instance of the {@link IOverlayControllerProviderProps}
+ * Hook to get current instance of the {@link OverlayController}
  *
- * @returns an instance of the {@link IOverlayControllerProviderProps}
+ * @returns an instance of the {@link OverlayController}
  *
  * @internal
  */
-export const useOverlayController = (): IOverlayControllerProviderProps => {
+export const useOverlayController = (): OverlayController => {
     return useContext(OverlayContext);
 };
 
@@ -67,6 +53,6 @@ export const useOverlayController = (): IOverlayControllerProviderProps => {
  * @internal
  */
 export const useOverlayZIndex = (uuid: string): number => {
-    const { overlayController } = useContext(OverlayContext);
+    const overlayController = useContext(OverlayContext);
     return overlayController.getZIndex(uuid);
 };

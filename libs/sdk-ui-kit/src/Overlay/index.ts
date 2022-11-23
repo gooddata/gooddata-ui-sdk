@@ -11,5 +11,3 @@ export {
     useOverlayZIndex,
 } from "./OverlayContext";
 export { ErrorOverlay, IErrorOverlayProps } from "./ErrorOverlay";
-
-export { OverlayProvider, IOverlayProviderProps } from "./OverlayProvider";

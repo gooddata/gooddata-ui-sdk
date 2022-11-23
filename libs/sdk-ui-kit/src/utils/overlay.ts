@@ -59,19 +59,6 @@ function getDefaultViewportRegion(ignoreScrollOffsets: boolean) {
     };
 }
 
-export function getCustomViewPortRegion(element: HTMLElement) {
-    return function Internal(ignoreScrollOffsets: boolean) {
-        const region: IRegion = elementRegion(element);
-
-        return {
-            top: ignoreScrollOffsets ? 0 : element.scrollTop,
-            left: ignoreScrollOffsets ? 0 : element.scrollLeft,
-            width: region.width,
-            height: region.height,
-        };
-    };
-}
-
 function getDefaultDocumentRegion() {
     return {
         top: 0,
@@ -225,10 +212,8 @@ export function getOptimalAlignmentForRegion({
     targetRegion,
     selfRegion,
     alignPoints,
-    overlayRootElement,
 }: GetOptimalAlignmentForRegion): IOptimalAlignment {
-    const bodyRegion: IRegion = elementRegion(overlayRootElement);
-
+    const bodyRegion: IRegion = elementRegion(document.body);
     let mostVisibleAlignment = FULLY_HIDDEN_ALIGNMENT;
 
     for (let i = 0; i < alignPoints.length; i += 1) {
@@ -276,7 +261,6 @@ export function getOptimalAlignment({
     selfRegion,
     ignoreScrollOffsets,
     alignPoints,
-    overlayRootElement = document.body,
     getViewportRegion = getDefaultViewportRegion,
     getDocumentRegion = getDefaultDocumentRegion,
 }: GetOptimalAlignment): IOptimalAlignment {
@@ -285,7 +269,6 @@ export function getOptimalAlignment({
         targetRegion,
         selfRegion,
         alignPoints,
-        overlayRootElement,
     });
 
     if (isFullyHidden(optimalAlign)) {
@@ -294,7 +277,6 @@ export function getOptimalAlignment({
             targetRegion,
             selfRegion,
             alignPoints,
-            overlayRootElement,
         });
     }
 

@@ -14,17 +14,13 @@ import { v4 as uuid } from "uuid";
 // eslint-disable-next-line import/no-unassigned-import
 import "element-closest-polyfill";
 
-import {
-    DEFAULT_ALIGN_POINTS,
-    getCustomViewPortRegion,
-    getOptimalAlignment,
-    getOverlayStyles,
-} from "../utils/overlay";
+import { DEFAULT_ALIGN_POINTS, getOptimalAlignment, getOverlayStyles } from "../utils/overlay";
 import { elementRegion, isFixedPosition } from "../utils/domUtilities";
 import { ENUM_KEY_CODE } from "../typings/utilities";
 import { IOverlayProps, IOverlayState } from "./typings";
 import { Alignment, OverlayPositionType, SameAsTargetPosition } from "../typings/overlay";
-import { IOverlayControllerProviderProps, OverlayContext } from "./OverlayContext";
+import { OverlayController } from "./OverlayController";
+import { OverlayContext } from "./OverlayContext";
 
 const events = [
     { name: "click", handler: "closeOnOutsideClick", target: document },
@@ -103,10 +99,10 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
     private clickedInside: boolean;
     private id = uuid();
     private alignmentTimeoutId: number;
-    static contextType: React.Context<IOverlayControllerProviderProps> = OverlayContext;
-    context!: React.ContextType<typeof OverlayContext>;
-    constructor(props: IOverlayProps<T>, context: React.ContextType<typeof OverlayContext>) {
-        super(props, context);
+    static contextType: React.Context<OverlayController> = OverlayContext;
+
+    constructor(props: IOverlayProps<T>) {
+        super(props);
 
         this.state = {
             alignment: {
@@ -131,7 +127,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
 
     public UNSAFE_componentWillMount(): void {
         // reserve the zIndex via the context as soon as possible so that Overlays in the children get higher zIndex
-        this.context?.overlayController?.addOverlay(this.id);
+        this.context?.addOverlay(this.id);
     }
 
     public componentDidMount(): void {
@@ -174,7 +170,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
 
         this.removePortalNodeAfterAllTreeUnmount();
 
-        this.context?.overlayController?.removeOverlay(this.id);
+        this.context?.removeOverlay(this.id);
 
         afterOverlayClosed();
     }
@@ -224,8 +220,6 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
             selfRegion: elementRegion(overlay),
             alignPoints,
             ignoreScrollOffsets: isSameAsTarget,
-            overlayRootElement: this.getOverlayRootElement(),
-            getViewportRegion: getCustomViewPortRegion(this.getOverlayRootElement()),
         });
 
         if (alignExceedsThreshold(this.state.alignment, optimalAlign.alignment)) {
@@ -263,11 +257,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
     };
 
     protected getZIndex(): number | undefined {
-        if (this.context?.overlayController) {
-            return this.context.overlayController.getZIndex(this.id);
-        }
-
-        return this.props.zIndex;
+        return this.context ? this.context.getZIndex(this.id) : this.props.zIndex;
     }
 
     protected getOverlayStyles = (): React.CSSProperties => {
@@ -305,39 +295,15 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
         return `target-${align[0]} self-${align[1]}`;
     };
 
-    private getPortalRootElement(): HTMLElement {
-        const portalsRootId = this.context?.portalsRootId;
-
-        if (portalsRootId) {
-            const element = document.getElementById(portalsRootId);
-            return element ? element : document.body;
-        }
-
-        return document.body;
-    }
-
-    private getOverlayRootElement(): HTMLElement {
-        const overlaysRootId = this.context?.overlaysRootId;
-
-        if (overlaysRootId) {
-            const element = document.getElementById(overlaysRootId);
-            return element ? element : document.body;
-        }
-
-        return document.body;
-    }
-
     private createPortalNode(): void {
         this.portalNode = document.createElement("div");
-        const modalRoot = this.getPortalRootElement();
-        modalRoot.appendChild(this.portalNode);
+        document.body.appendChild(this.portalNode);
     }
 
     private removePortalNodeAfterAllTreeUnmount(): void {
         setTimeout(() => {
-            const modalRoot = this.getPortalRootElement();
-            if (this.portalNode && modalRoot.contains(this.portalNode)) {
-                modalRoot.removeChild(this.portalNode);
+            if (this.portalNode && document.body.contains(this.portalNode)) {
+                document.body.removeChild(this.portalNode);
             }
             this.portalNode = null;
         });
@@ -471,9 +437,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
 
     private renderMask = (): false | JSX.Element => {
         const styles = {
-            zIndex: this.context?.overlayController
-                ? this.context.overlayController.getZIndex(this.id)
-                : null,
+            zIndex: this.context ? this.context.getZIndex(this.id) : null,
         };
         return this.props.isModal ? (
             <div
