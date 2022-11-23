@@ -1,0 +1,21 @@
+{
+    "_note": "This file is only for IDE. For build use tsconfig.[dev/build].json (dev mode is less strict)",
+    "compilerOptions": {
+        "esModuleInterop": true,
+        "target": "es5",
+        "module": "commonjs",
+        "lib": ["es6", "dom"],
+        "importHelpers": true,
+        "moduleResolution": "node",
+        "strict": true,
+        "noImplicitAny": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "outDir": "dist",
+        "sourceMap": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "baseUrl": ".."
+    },
+    "compileOnSave": false,
+    "exclude": ["**/node_modules", "dist", "esm", "**/__mocks__/**/*"]
+}

@@ -9,16 +9,16 @@ PRETTIER_BIN="${PACKAGE_DIR}/node_modules/.bin/prettier"
 TSNODE_BIN="${PACKAGE_DIR}/node_modules/.bin/ts-node"
 PREPARE_PACKAGE_JSON="${TSNODE_BIN} ${PACKAGE_DIR}/scripts/preparePackageJson.ts"
 
-DASHBOARD_PLUGIN_TEMPLATE_DIR="${PACKAGE_DIR}/../dashboard-plugin-template"
-JS_CONFIG_TEMPLATES="${DASHBOARD_PLUGIN_TEMPLATE_DIR}/configTemplates/js/*"
-JS_CONFIG_TEMPLATES_DOT="${DASHBOARD_PLUGIN_TEMPLATE_DIR}/configTemplates/js/.[^.]*"
-TS_CONFIG_TEMPLATES="${DASHBOARD_PLUGIN_TEMPLATE_DIR}/configTemplates/ts/*"
-TS_CONFIG_TEMPLATES_DOT="${DASHBOARD_PLUGIN_TEMPLATE_DIR}/configTemplates/ts/.[^.]*"
+REACT_APP_TEMPLATE_DIR="${PACKAGE_DIR}/../react-app-template"
+JS_CONFIG_TEMPLATES="${REACT_APP_TEMPLATE_DIR}/configTemplates/js/*"
+JS_CONFIG_TEMPLATES_DOT="${REACT_APP_TEMPLATE_DIR}/configTemplates/js/.[^.]*"
+TS_CONFIG_TEMPLATES="${REACT_APP_TEMPLATE_DIR}/configTemplates/ts/*"
+TS_CONFIG_TEMPLATES_DOT="${REACT_APP_TEMPLATE_DIR}/configTemplates/ts/.[^.]*"
 BUILD_DIR="${PACKAGE_DIR}/build"
-JS_BUILD_DIR="${BUILD_DIR}/dashboard-plugin-template.js"
-TS_BUILD_DIR="${BUILD_DIR}/dashboard-plugin-template.ts"
-JS_TAR="${DIST_DIR}/dashboard-plugin-template.js.tgz"
-TS_TAR="${DIST_DIR}/dashboard-plugin-template.ts.tgz"
+JS_BUILD_DIR="${BUILD_DIR}/react-app-template.js"
+TS_BUILD_DIR="${BUILD_DIR}/react-app-template.ts"
+JS_TAR="${DIST_DIR}/react-app-template.js.tgz"
+TS_TAR="${DIST_DIR}/react-app-template.ts.tgz"
 
 # cleanup & dir setup
 rm -rf "${DIST_DIR}"
@@ -26,25 +26,21 @@ rm -rf "${BUILD_DIR}"
 mkdir "${DIST_DIR}"
 mkdir "${BUILD_DIR}"
 
-# first build main Plugin Development Toolkit assets
+# first build main Application Development Toolkit assets
 npm run build-cjs
 
 #######################################################################
-# Build dashboard-plugin-template for Typescript
+# Build react-app-template for Typescript
 #######################################################################
 
-# copy sources & essential config from dashboard plugin template project
+# copy sources & essential config from application template project
 # this will be used as-is for TypeScript template
 mkdir -p "${TS_BUILD_DIR}/src"
-cp -R "${DASHBOARD_PLUGIN_TEMPLATE_DIR}/src" "${TS_BUILD_DIR}"
-mkdir -p "${TS_BUILD_DIR}/scripts"
-cp -R "${DASHBOARD_PLUGIN_TEMPLATE_DIR}/scripts" "${TS_BUILD_DIR}"
-cp "${DASHBOARD_PLUGIN_TEMPLATE_DIR}/package.json" "${TS_BUILD_DIR}"
-cp "${DASHBOARD_PLUGIN_TEMPLATE_DIR}/webpack.config.js" "${TS_BUILD_DIR}"
-cp "${DASHBOARD_PLUGIN_TEMPLATE_DIR}/.env.template" "${TS_BUILD_DIR}/.env"
-cp "${DASHBOARD_PLUGIN_TEMPLATE_DIR}/.env.secrets.template" "${TS_BUILD_DIR}/.env.secrets"
-cp "${DASHBOARD_PLUGIN_TEMPLATE_DIR}/.gitignore" "${TS_BUILD_DIR}"
-cp "${DASHBOARD_PLUGIN_TEMPLATE_DIR}/README.template.md" "${TS_BUILD_DIR}/README.md"
+cp -R "${REACT_APP_TEMPLATE_DIR}/src" "${TS_BUILD_DIR}"
+cp "${REACT_APP_TEMPLATE_DIR}/package.json" "${TS_BUILD_DIR}"
+cp "${REACT_APP_TEMPLATE_DIR}/webpack.config.js" "${TS_BUILD_DIR}"
+cp "${REACT_APP_TEMPLATE_DIR}/.gitignore" "${TS_BUILD_DIR}"
+cp "${REACT_APP_TEMPLATE_DIR}/README.template.md" "${TS_BUILD_DIR}/README.md"
 
 $PREPARE_PACKAGE_JSON remove-gd-stuff "${TS_BUILD_DIR}"
 
@@ -59,7 +55,7 @@ cp ${TS_CONFIG_TEMPLATES_DOT} "${TS_BUILD_DIR}"
 tar -czf "${TS_TAR}" -C "${TS_BUILD_DIR}" .
 
 #######################################################################
-# Build dashboard-plugin-template for JavaScript
+# Build react-app-template for JavaScript
 #######################################################################
 
 $PREPARE_PACKAGE_JSON remove-ts "${JS_BUILD_DIR}"
@@ -87,4 +83,4 @@ $PRETTIER_BIN --write "${JS_BUILD_DIR}/**/*.{js,jsx}" \
   --trailing-comma all
 
 # build tar with JavaScript bootstrap files
-tar -czf ./dist/dashboard-plugin-template.js.tgz -C "${JS_BUILD_DIR}" .
+tar -czf ./dist/react-app-template.js.tgz -C "${JS_BUILD_DIR}" .
