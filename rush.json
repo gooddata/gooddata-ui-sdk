@@ -348,6 +348,13 @@
             "shouldPublish": false
         },
         {
+            "packageName": "@gooddata/app-toolkit",
+            "projectFolder": "tools/app-toolkit",
+            "reviewCategory": "tools",
+            "versionPolicyName": "sdk",
+            "shouldPublish": true
+        },
+        {
             "packageName": "@gooddata/sdk-ui-theme-provider",
             "projectFolder": "libs/sdk-ui-theme-provider",
             "reviewCategory": "production",
