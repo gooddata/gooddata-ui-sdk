@@ -130,7 +130,7 @@ export function KpiDescriptionConfig(props: IKpiDescriptionConfigProps) {
             if (config === "kpi") {
                 setKpiDescription(kpi, getKpiMetricDescription(metrics, kpi.kpi.metric) ?? "");
             }
-            if (config === "metric") {
+            if (config === "none" || config === "metric") {
                 setKpiDescription(kpi, "");
             }
         },

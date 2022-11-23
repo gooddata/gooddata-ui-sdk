@@ -126,7 +126,7 @@ export function InsightDescriptionConfig(props: IInsightDescriptionConfigProps) 
             if (config === "widget") {
                 setWidgetDescription(widget, insight?.insight.summary ?? "");
             }
-            if (config === "insight") {
+            if (config === "none" || config === "insight") {
                 setWidgetDescription(widget, "");
             }
         },
