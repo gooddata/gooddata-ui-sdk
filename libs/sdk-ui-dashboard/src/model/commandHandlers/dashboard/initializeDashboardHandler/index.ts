@@ -30,6 +30,7 @@ import {
     areObjRefsEqual,
     IDashboard,
     IInsight,
+    isDrillToInsight,
     isInsightWidget,
     ObjRef,
     serializeObjRef,
@@ -102,7 +103,12 @@ async function loadInsightsForPersistedDashboard(
     walkLayout(dashboard.layout, {
         widgetCallback: (widget) => {
             if (isInsightWidget(widget)) {
-                referencedInsights.push(widget.insight);
+                referencedInsights.push(
+                    // insight itself
+                    widget.insight,
+                    // insights in drills to insight
+                    ...widget.drills.filter(isDrillToInsight).map((drill) => drill.target),
+                );
             }
         },
     });
