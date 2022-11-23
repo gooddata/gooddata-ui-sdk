@@ -40,7 +40,6 @@ export const ConfigurationBubble: React.FC<IConfigurationBubbleProps> = (props) 
             alignPoints={alignPoints}
             arrowOffsets={arrowOffsets}
             arrowDirections={arrowDirections}
-            closeOnParentScroll={false}
             onClose={onClose}
         >
             {children}

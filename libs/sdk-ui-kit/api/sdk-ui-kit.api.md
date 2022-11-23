@@ -105,7 +105,6 @@ export class Bubble extends React_2.Component<IBubbleProps, IBubbleState> {
         arrowStyle: {};
         className: string;
         closeOnOutsideClick: boolean;
-        closeOnParentScroll: boolean;
         onClose: (...args: any[]) => void;
         onMouseEnter: (...args: any[]) => void;
         onMouseLeave: (...args: any[]) => void;
@@ -533,7 +532,7 @@ export function formatTime(h: number, m: number, format?: string): string;
 
 // @internal (undocumented)
 export class FullScreenOverlay extends Overlay<IOverlayState> {
-    constructor(props: IOverlayProps<any>, context: any);
+    constructor(props: IOverlayProps<any>);
     // (undocumented)
     componentWillUnmount(): void;
     // (undocumented)
@@ -590,7 +589,6 @@ export type GetOptimalAlignment = {
     selfRegion: IRegion;
     ignoreScrollOffsets?: boolean;
     alignPoints: IAlignPoint[];
-    overlayRootElement?: HTMLElement;
     getViewportRegion?: (ignoreScrollOffsets: boolean) => void;
     getDocumentRegion?: () => void;
 };
@@ -601,7 +599,6 @@ export type GetOptimalAlignmentForRegion = {
     targetRegion: any;
     selfRegion: any;
     alignPoints: IAlignPoint[];
-    overlayRootElement: HTMLElement;
 };
 
 // @internal (undocumented)
@@ -891,8 +888,6 @@ export interface IBubbleProps {
     className?: string;
     // (undocumented)
     closeOnOutsideClick?: boolean;
-    // (undocumented)
-    closeOnParentScroll?: boolean;
     ignoreClicksOn?: any[];
     // (undocumented)
     ignoreClicksOnByClass?: string[];
@@ -3086,8 +3081,6 @@ export interface IOptionsByReference {
 // @internal
 export interface IOverlayControllerProviderProps {
     overlayController: OverlayController;
-    overlaysRootId?: string;
-    portalsRootId?: string;
 }
 
 // @internal (undocumented)
@@ -3130,11 +3123,6 @@ export interface IOverlayProps<T> {
     shouldCloseOnClick?: (e: Event) => boolean;
     // (undocumented)
     zIndex?: number | undefined;
-}
-
-// @internal
-export interface IOverlayProviderProps {
-    fireGlobalScrollEvent?: boolean;
 }
 
 // @internal (undocumented)
@@ -3880,7 +3868,7 @@ export const otherHeader: IDateDatasetHeader;
 
 // @internal (undocumented)
 export class Overlay<T = HTMLElement> extends React_2.Component<IOverlayProps<T>, IOverlayState> {
-    constructor(props: IOverlayProps<T>, context: React_2.ContextType<typeof OverlayContext>);
+    constructor(props: IOverlayProps<T>);
     // (undocumented)
     align: () => void;
     // (undocumented)
@@ -3898,9 +3886,7 @@ export class Overlay<T = HTMLElement> extends React_2.Component<IOverlayProps<T>
     // (undocumented)
     componentWillUnmount(): void;
     // (undocumented)
-    context: React_2.ContextType<typeof OverlayContext>;
-    // (undocumented)
-    static contextType: React_2.Context<IOverlayControllerProviderProps>;
+    static contextType: React_2.Context<OverlayController>;
     // (undocumented)
     static defaultProps: Partial<IOverlayProps<any>>;
     // (undocumented)
@@ -3920,7 +3906,7 @@ export class Overlay<T = HTMLElement> extends React_2.Component<IOverlayProps<T>
 }
 
 // @internal (undocumented)
-export const OverlayContext: React_2.Context<IOverlayControllerProviderProps>;
+export const OverlayContext: React_2.Context<OverlayController>;
 
 // @internal
 export class OverlayController {
@@ -3936,9 +3922,6 @@ export const OverlayControllerProvider: React_2.FC<IOverlayControllerProviderPro
 
 // @internal (undocumented)
 export type OverlayPositionType = "absolute" | "fixed" | SameAsTargetPosition;
-
-// @internal
-export const OverlayProvider: React_2.FC<IOverlayProviderProps>;
 
 // @internal (undocumented)
 export function preselectDateDataset<T extends IDateDataset>(dateDatasets: T[], recommendedDate: T): Array<T | IDateDatasetHeader>;
@@ -4192,7 +4175,7 @@ export const unrelatedHeader: IDateDatasetHeader;
 export const useMediaQuery: (mediaQueryName: keyof IMediaQueries) => boolean;
 
 // @internal
-export const useOverlayController: () => IOverlayControllerProviderProps;
+export const useOverlayController: () => OverlayController;
 
 // @internal
 export const useOverlayZIndex: (uuid: string) => number;

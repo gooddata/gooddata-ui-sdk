@@ -1084,8 +1084,6 @@ export interface DashboardConfig {
     allowUnfinishedFeatures?: boolean;
     colorPalette?: IColorPalette;
     dateFilterConfig?: IDateFilterConfig;
-    // @internal
-    disableCloseOverlaysOnWindowScroll?: boolean;
     disableDefaultDrills?: boolean;
     enableFilterValuesResolutionInDrillEvents?: boolean;
     // @internal
