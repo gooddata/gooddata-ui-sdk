@@ -333,7 +333,9 @@ export class DashboardLoader implements IDashboardLoader {
             ...extensionProps,
             workspace,
             dashboard: isDashboard(dashboard) ? dashboard : dashboardWithPlugins?.dashboard,
-            persistedDashboard: dashboardWithPlugins?.dashboard,
+            // do not pass persisted dashboard if we did not pass a dashboard object to the dashboard prop
+            // it would be redundant as they are equal
+            persistedDashboard: isDashboard(dashboard) ? dashboardWithPlugins?.dashboard : undefined,
         };
 
         /*
