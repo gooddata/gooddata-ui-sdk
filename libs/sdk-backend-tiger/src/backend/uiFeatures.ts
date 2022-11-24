@@ -53,7 +53,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     dashboardEditModeDevRollout: false,
     enableTheming: true,
     enableMetricSqlAndDataExplain: false,
-    enableDateFormats: false,
+    enableDateFormats: true,
     enableLongitudeAndLatitudeLabels: false,
     enableMSSQLDataSource: false,
     enableDescriptions: false,
