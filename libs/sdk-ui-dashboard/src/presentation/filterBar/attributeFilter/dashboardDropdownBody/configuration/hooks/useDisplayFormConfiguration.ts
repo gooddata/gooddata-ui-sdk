@@ -14,9 +14,7 @@ export function useDisplayFormConfiguration(currentFilter: IDashboardAttributeFi
 
     const changeDisplayFormCommand = useDispatchDashboardCommand(setAttributeFilterDisplayForm);
 
-    const [originalDisplayForm] = useState<ObjRef>(currentFilter.attributeFilter.displayForm);
-
-    const [displayFormChanged, setDisplayFormChanged] = useState<boolean>(false);
+    const originalDisplayForm = currentFilter.attributeFilter.displayForm;
 
     const [filterDisplayForms, setFilterDisplayForms] = useState<IDashboardAttributeFilterDisplayForms>(
         () => {
@@ -33,15 +31,17 @@ export function useDisplayFormConfiguration(currentFilter: IDashboardAttributeFi
             };
         },
     );
+
+    const displayFormChanged = !areObjRefsEqual(originalDisplayForm, filterDisplayForms.selectedDisplayForm);
+
     const onDisplayFormSelect = useCallback(
         (displayForm: ObjRef) => {
             const updatedDisplayForms = { ...filterDisplayForms };
             updatedDisplayForms.selectedDisplayForm = displayForm;
 
             setFilterDisplayForms(updatedDisplayForms);
-            setDisplayFormChanged(!areObjRefsEqual(displayForm, originalDisplayForm));
         },
-        [filterDisplayForms, originalDisplayForm],
+        [filterDisplayForms],
     );
 
     const onDisplayFormChange = useCallback(() => {
