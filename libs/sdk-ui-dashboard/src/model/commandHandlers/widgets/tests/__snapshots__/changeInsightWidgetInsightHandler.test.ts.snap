@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`change insight widget vis properties handler should emit correct events 1`] = `
+Array [
+  Object {
+    "commandType": "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_INSIGHT",
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  Object {
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.INSIGHT_WIDGET.INSIGHT_SWITCHED",
+  },
+]
+`;
