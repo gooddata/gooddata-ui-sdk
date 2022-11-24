@@ -54,3 +54,4 @@ export * from "./SettingWidget";
 export * from "./Hyperlink";
 export * from "./ScrollablePanel";
 export * from "./DescriptionPanel";
+export * from "./SettingItem";

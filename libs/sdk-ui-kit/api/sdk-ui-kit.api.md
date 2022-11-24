@@ -39,6 +39,9 @@ import { WithIntlProps } from 'react-intl';
 import { WrappedComponentProps } from 'react-intl';
 
 // @internal (undocumented)
+export type ActionType = "LinkButton" | "Button" | "Switcher";
+
+// @internal (undocumented)
 export function activateHeaderMenuItems(items: IHeaderMenuItem[][], ids: Array<string>): IHeaderMenuItem[][];
 
 // @internal (undocumented)
@@ -3244,6 +3247,40 @@ export const isDateDatasetHeader: (obj: unknown) => obj is IDateDatasetHeader;
 export type isElementInvisibleType = (element: HTMLElement, container: HTMLElement) => boolean;
 
 // @internal (undocumented)
+export interface ISettingItem {
+    // (undocumented)
+    actionTooltipText?: string;
+    // (undocumented)
+    actionType: ActionType;
+    // (undocumented)
+    actionValue: string | boolean;
+    // (undocumented)
+    alignPointActionTooltip?: {
+        align: string;
+    }[];
+    // (undocumented)
+    alignPointTitleTooltip?: {
+        align: string;
+    }[];
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    hasDivider?: boolean;
+    // (undocumented)
+    isDisableAction?: boolean;
+    // (undocumented)
+    isLoading?: boolean;
+    // (undocumented)
+    onAction?: () => void;
+    // (undocumented)
+    title: string;
+    // (undocumented)
+    titleTooltipText?: string;
+    // (undocumented)
+    value: string | ReactNode;
+}
+
+// @internal (undocumented)
 export function isFreemiumEdition(platformEdition: string | undefined): boolean;
 
 // @internal (undocumented)
@@ -3978,6 +4015,9 @@ export type Separators = {
     thousand: string;
     decimal: string;
 };
+
+// @internal (undocumented)
+export const SettingItem: React_2.FC<ISettingItem>;
 
 // @internal (undocumented)
 export const ShareDialog: React_2.FC<IShareDialogProps>;
