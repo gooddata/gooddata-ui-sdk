@@ -143,6 +143,7 @@ export function* actionsToInitializeExistingDashboard(
     const privateCtx: PrivateDashboardContext = yield call(getPrivateContext);
     const customizedDashboard =
         privateCtx?.existingDashboardTransformFn?.(sanitizedDashboard) ?? sanitizedDashboard;
+    const modifiedWidgets = privateCtx?.widgetsOverlayFn?.(customizedDashboard) ?? {};
 
     const filterContextDefinition = dashboardFilterContextDefinition(customizedDashboard, dateFilterConfig);
     const filterContextIdentity = dashboardFilterContextIdentity(customizedDashboard);
@@ -179,5 +180,6 @@ export function* actionsToInitializeExistingDashboard(
         }),
         metaActions.setDashboardTitle(dashboard.title), // even when using persistedDashboard, use the working title of the dashboard
         uiActions.clearWidgetSelection(),
+        uiActions.setWidgetsOverlay(modifiedWidgets),
     ];
 }

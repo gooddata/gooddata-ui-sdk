@@ -12,6 +12,7 @@ import { render } from "@testing-library/react";
 import invariant from "ts-invariant";
 import { DefaultKpiCustomizer } from "../kpiCustomizer";
 import { DashboardCustomizationLogger } from "../customizationLogging";
+import { createCustomizerMutationsContext, CustomizerMutationsContext } from "../types";
 
 //
 //
@@ -107,10 +108,13 @@ function renderToHtml(customizer: DefaultKpiCustomizer, widget: IKpiWidget) {
 
 describe("KPI customizer", () => {
     let Customizer: DefaultKpiCustomizer;
+    let mutationContext: CustomizerMutationsContext;
 
     beforeEach(() => {
+        mutationContext = createCustomizerMutationsContext();
         Customizer = new DefaultKpiCustomizer(
             new DashboardCustomizationLogger(),
+            mutationContext,
             DefaultTestComponentProvider,
         );
     });
@@ -128,6 +132,11 @@ describe("KPI customizer", () => {
             Customizer.withCustomProvider(provider);
 
             expect(renderToHtml(Customizer, TestKpiWidgetWithCustomTitle)).toMatchSnapshot();
+            expect(mutationContext).toEqual({
+                kpi: ["provider"],
+                insight: [],
+                layouts: {},
+            });
         });
 
         it("should fallback to default component if insight does not match provider criteria", () => {
@@ -138,6 +147,11 @@ describe("KPI customizer", () => {
             Customizer.withCustomProvider(provider);
 
             expect(renderToHtml(Customizer, TestKpiWidget)).toMatchSnapshot();
+            expect(mutationContext).toEqual({
+                kpi: ["provider"],
+                insight: [],
+                layouts: {},
+            });
         });
 
         it("should use component from latest registered provider that matches the insight", () => {
@@ -159,6 +173,11 @@ describe("KPI customizer", () => {
 
             // component from last registered and matching provider is `fromCustomProvider3`
             expect(renderToHtml(Customizer, TestKpiWidgetWithCustomTitle)).toMatchSnapshot();
+            expect(mutationContext).toEqual({
+                kpi: ["provider"],
+                insight: [],
+                layouts: {},
+            });
         });
     });
 
@@ -168,6 +187,11 @@ describe("KPI customizer", () => {
             Customizer.withCustomDecorator(factory);
 
             expect(renderToHtml(Customizer, TestKpiWidget)).toMatchSnapshot();
+            expect(mutationContext).toEqual({
+                kpi: ["decorator"],
+                insight: [],
+                layouts: {},
+            });
         });
 
         it("should decorate custom component registered for an insight", () => {
@@ -181,6 +205,11 @@ describe("KPI customizer", () => {
             Customizer.withCustomProvider(provider);
 
             expect(renderToHtml(Customizer, TestKpiWidgetWithCustomTitle)).toMatchSnapshot();
+            expect(mutationContext).toEqual({
+                kpi: ["decorator", "provider"],
+                insight: [],
+                layouts: {},
+            });
         });
 
         it("should decorate default component if insight does not match custom component criteria ", () => {
@@ -193,6 +222,11 @@ describe("KPI customizer", () => {
             Customizer.withCustomProvider(provider);
 
             expect(renderToHtml(Customizer, TestKpiWidget)).toMatchSnapshot();
+            expect(mutationContext).toEqual({
+                kpi: ["decorator", "provider"],
+                insight: [],
+                layouts: {},
+            });
         });
 
         it("should decorate if insight matches criteria", () => {
@@ -203,6 +237,11 @@ describe("KPI customizer", () => {
             Customizer.withCustomDecorator(factory);
 
             expect(renderToHtml(Customizer, TestKpiWidgetWithCustomTitle)).toMatchSnapshot();
+            expect(mutationContext).toEqual({
+                kpi: ["decorator"],
+                insight: [],
+                layouts: {},
+            });
         });
 
         it("should not decorate if insight does not match criteria", () => {
@@ -213,6 +252,11 @@ describe("KPI customizer", () => {
             Customizer.withCustomDecorator(factory);
 
             expect(renderToHtml(Customizer, TestKpiWidget)).toMatchSnapshot();
+            expect(mutationContext).toEqual({
+                kpi: ["decorator"],
+                insight: [],
+                layouts: {},
+            });
         });
 
         it("should use multiple decorators if insight matches criteria", () => {
@@ -229,6 +273,11 @@ describe("KPI customizer", () => {
 
             // decoration starts from last register; so need to see decorator2 -> decorator1 -> default component
             expect(renderToHtml(Customizer, TestKpiWidgetWithCustomTitle)).toMatchSnapshot();
+            expect(mutationContext).toEqual({
+                kpi: ["decorator"],
+                insight: [],
+                layouts: {},
+            });
         });
 
         it("should use multiple decorators and custom component if insight matches criteria", () => {
@@ -250,6 +299,11 @@ describe("KPI customizer", () => {
 
             // decoration starts from last register; so need to see decorator2 -> decorator1 -> custom component
             expect(renderToHtml(Customizer, TestKpiWidgetWithCustomTitle)).toMatchSnapshot();
+            expect(mutationContext).toEqual({
+                kpi: ["decorator", "provider"],
+                insight: [],
+                layouts: {},
+            });
         });
 
         it("should only use only those decorators that match criteria and then use custom component", () => {
@@ -269,6 +323,11 @@ describe("KPI customizer", () => {
 
             // This will use decorator2 on top of customProvider1
             expect(renderToHtml(Customizer, TestKpiWidgetWithCustomTitle)).toMatchSnapshot();
+            expect(mutationContext).toEqual({
+                kpi: ["decorator", "provider"],
+                insight: [],
+                layouts: {},
+            });
         });
     });
 });

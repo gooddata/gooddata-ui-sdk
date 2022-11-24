@@ -24,6 +24,7 @@ import {
     ScreenSize,
     isDashboardLayout,
     isDashboardLayoutItem,
+    isObjRef,
 } from "@gooddata/sdk-model";
 import { IDashboardLayoutItemFacade, IDashboardLayoutSectionFacade } from "./interfaces";
 
@@ -70,6 +71,13 @@ export class DashboardLayoutItemFacade<TWidget> implements IDashboardLayoutItemF
 
     public widget(): TWidget | undefined {
         return this.item.widget;
+    }
+
+    public ref(): ObjRef | undefined {
+        if (isObjRef(this.item.widget)) {
+            return this.item.widget;
+        }
+        return undefined;
     }
 
     public widgetEquals(widget: TWidget | undefined): boolean {

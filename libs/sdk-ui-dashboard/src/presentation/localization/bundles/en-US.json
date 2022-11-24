@@ -1987,6 +1987,21 @@
         "comment": "Shown as red text inside of widget if resized under max limit.",
         "limit": 0
     },
+    "layout.widget.addedByPlugin": {
+        "value": "Added by plugin",
+        "comment": "",
+        "limit": 0
+    },
+    "layout.widget.modifiedByPlugin": {
+        "value": "Modified by plugin",
+        "comment": "",
+        "limit": 0
+    },
+    "layout.widget.hideOverlay": {
+        "value": "Hide overlay",
+        "comment": "",
+        "limit": 0
+    },
     "dropzone.new.row.desc": {
         "value": "Drop to create a{nbsp}<b>new section</b>",
         "comment": "Used as placeholder when user drags some widget and tries to drop it on dashboard. Dropping the widget over such placeholder creates new section of a dashboard. Do not translate HTML markup enclosed in <>. Translate words 'new section'.",

@@ -11,6 +11,7 @@ import {
     DashboardEventHandler,
     DashboardModelCustomizationFns,
     DashboardState,
+    WidgetsOverlayFn,
 } from "../../model";
 import { CustomFilterBarComponent } from "../filterBar";
 import { CustomDashboardLayoutComponent, CustomEmptyLayoutDropZoneBodyComponent } from "../layout";
@@ -371,6 +372,24 @@ export interface IDashboardCustomizationProps extends IDashboardCustomComponentP
 }
 
 /**
+ * Properties for {@link Dashboard} widgets overlay.
+ *
+ * @remarks
+ * IMPORTANT: while this interface is marked as public, you also need to heed the maturity annotations
+ * on each property. A lot of these properties are at this moment alpha level.
+ *
+ * @public
+ */
+export interface IDashboardWidgetsOverlayProps {
+    /**
+     * Provide settings for widgets overlay
+     *
+     * @alpha
+     */
+    widgetsOverlayFn?: WidgetsOverlayFn;
+}
+
+/**
  * @public
  */
 export interface IDashboardThemingProps {
@@ -538,6 +557,7 @@ export interface IDashboardBaseProps {
 export interface IDashboardExtensionProps
     extends IDashboardEventing,
         IDashboardCustomizationProps,
+        IDashboardWidgetsOverlayProps,
         IDashboardThemingProps {
     /**
      * Pass instance of ReactReduxContext where the dashboard component's store should be saved.

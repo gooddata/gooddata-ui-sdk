@@ -80,6 +80,7 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
                         onEventingInitialized={props.onEventingInitialized}
                         additionalReduxContext={props.additionalReduxContext}
                         customizationFns={props.customizationFns}
+                        widgetsOverlayFn={props.widgetsOverlayFn}
                     >
                         <ToastMessageContextProvider>
                             <ExportDialogContextProvider>

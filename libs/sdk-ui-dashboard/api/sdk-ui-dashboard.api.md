@@ -3238,7 +3238,7 @@ export interface IDashboardEventsContext {
 }
 
 // @public
-export interface IDashboardExtensionProps extends IDashboardEventing, IDashboardCustomizationProps, IDashboardThemingProps {
+export interface IDashboardExtensionProps extends IDashboardEventing, IDashboardCustomizationProps, IDashboardWidgetsOverlayProps, IDashboardThemingProps {
     additionalReduxContext?: React_2.Context<ReactReduxContextValue>;
 }
 
@@ -3424,6 +3424,8 @@ export interface IDashboardStoreProviderProps {
     // (undocumented)
     persistedDashboard?: IDashboard;
     // (undocumented)
+    widgetsOverlayFn?: WidgetsOverlayFn;
+    // (undocumented)
     workspace?: string;
 }
 
@@ -3437,6 +3439,12 @@ export interface IDashboardThemingProps {
 // @public
 export interface IDashboardWidgetCustomizer {
     addCustomWidget(widgetType: string, Component: CustomDashboardWidgetComponent): IDashboardWidgetCustomizer;
+}
+
+// @alpha (undocumented)
+export interface IDashboardWidgetOverlay {
+    modification?: "insertedByPlugin" | "modifiedByPlugin";
+    showOverlay: boolean;
 }
 
 // @public
@@ -3467,6 +3475,12 @@ export interface IDashboardWidgetProps {
     widget?: ExtendedDashboardWidget;
     // @alpha
     workspace?: string;
+}
+
+// @public
+export interface IDashboardWidgetsOverlayProps {
+    // @alpha
+    widgetsOverlayFn?: WidgetsOverlayFn;
 }
 
 // @public
@@ -6029,6 +6043,9 @@ export const selectRenderMode: OutputSelector<DashboardState, RenderMode, (res: 
 // @alpha (undocumented)
 export const selectScheduleEmailDialogDefaultAttachment: OutputSelector<DashboardState, UriRef | IdentifierRef | undefined, (res: UiState) => UriRef | IdentifierRef | undefined>;
 
+// @internal (undocumented)
+export const selectSectionModification: (refs: (ObjRef | undefined)[]) => OutputSelector<DashboardState, ("insertedByPlugin" | "modifiedByPlugin")[], (res: Record<string, IDashboardWidgetOverlay>) => ("insertedByPlugin" | "modifiedByPlugin")[]>;
+
 // @alpha (undocumented)
 export const selectSelectedFilterIndex: OutputSelector<DashboardState, number | undefined, (res: UiState) => number | undefined>;
 
@@ -6091,6 +6108,12 @@ export const selectWidgets: OutputSelector<DashboardState, ExtendedDashboardWidg
 
 // @internal
 export const selectWidgetsMap: OutputSelector<DashboardState, ObjRefMap<ExtendedDashboardWidget>, (res: ExtendedDashboardWidget[]) => ObjRefMap<ExtendedDashboardWidget>>;
+
+// @internal (undocumented)
+export const selectWidgetsModification: (refs: (ObjRef | undefined)[]) => OutputSelector<DashboardState, ("insertedByPlugin" | "modifiedByPlugin")[], (res: Record<string, IDashboardWidgetOverlay>) => ("insertedByPlugin" | "modifiedByPlugin")[]>;
+
+// @internal (undocumented)
+export const selectWidgetsOverlayState: (refs: (ObjRef | undefined)[]) => OutputSelector<DashboardState, boolean, (res: Record<string, IDashboardWidgetOverlay>) => boolean>;
 
 // @internal (undocumented)
 export interface SetAttributeFilterDisplayForm extends IDashboardCommand {
@@ -6326,6 +6349,18 @@ clearDraggingWidgetTarget: CaseReducer<UiState, {
 payload: void;
 type: string;
 }>;
+toggleWidgetsOverlay: CaseReducer<UiState, {
+payload: {
+refs: (UriRef | IdentifierRef | undefined)[];
+visible: boolean;
+};
+type: string;
+}>;
+setWidgetsOverlay: CaseReducer<UiState, {
+payload: Record<string, IDashboardWidgetOverlay>;
+type: string;
+}>;
+hideAllWidgetsOverlay: CaseReducer<UiState, AnyAction>;
 }>;
 
 // @alpha (undocumented)
@@ -6394,6 +6429,8 @@ export interface UiState {
     toastMessages: IToastMessage[];
     // (undocumented)
     widgetsLoadingAdditionalData: ObjRef[];
+    // (undocumented)
+    widgetsOverlay: Record<string, IDashboardWidgetOverlay>;
 }
 
 // @alpha
@@ -7125,6 +7162,9 @@ export type WidgetFilterOperation = FilterOpEnableDateFilter | FilterOpDisableDa
 export interface WidgetHeader {
     title?: string;
 }
+
+// @alpha (undocumented)
+export type WidgetsOverlayFn = (dashboard: IDashboard<ExtendedDashboardWidget>) => Record<string, IDashboardWidgetOverlay>;
 
 // @internal (undocumented)
 export interface WidthResizerDragItem {

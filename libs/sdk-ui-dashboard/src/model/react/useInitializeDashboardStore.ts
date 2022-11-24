@@ -127,6 +127,7 @@ export const useInitializeDashboardStore = (
                 backgroundWorkers,
                 privateContext: {
                     ...props.customizationFns,
+                    widgetsOverlayFn: props.widgetsOverlayFn,
                     preloadedDashboard: isDashboard(dashboard) ? dashboard : undefined,
                 },
                 initialRenderMode: props.initialRenderMode ?? "view",

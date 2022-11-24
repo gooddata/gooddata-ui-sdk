@@ -29,6 +29,7 @@ export interface IDashboardLayoutItemFacade<TWidget> {
     sizeForScreen(screen: ScreenSize): IDashboardLayoutSize | undefined;
     widget(): TWidget | undefined;
     section(): IDashboardLayoutSectionFacade<TWidget>;
+    ref(): ObjRef | undefined;
     // item predicates
     indexIs(index: number): boolean;
     isFirst(): boolean;

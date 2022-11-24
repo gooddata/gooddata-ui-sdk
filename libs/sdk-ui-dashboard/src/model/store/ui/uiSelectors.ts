@@ -1,10 +1,13 @@
 // (C) 2021-2022 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
-import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
+import { areObjRefsEqual, ObjRef, objRefToString } from "@gooddata/sdk-model";
+import union from "lodash/union";
+import filter from "lodash/filter";
 import { selectWidgetsMap } from "../layout/layoutSelectors";
 import { DashboardState } from "../types";
 import { createMemoizedSelector } from "../_infra/selectors";
+import { IDashboardWidgetOverlay } from "../../types/commonTypes";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -234,3 +237,54 @@ export const selectDraggingWidgetSource = createSelector(selectSelf, (state) => 
  * @internal
  */
 export const selectDraggingWidgetTarget = createSelector(selectSelf, (state) => state.draggingWidgetTarget);
+
+/**
+ * @internal
+ */
+export const selectWidgetsOverlay = createSelector(selectSelf, (state) => state.widgetsOverlay);
+
+/**
+ * @internal
+ */
+export const selectWidgetsOverlayState = createMemoizedSelector((refs: (ObjRef | undefined)[]) =>
+    createSelector(selectWidgetsOverlay, (overlay): boolean => {
+        return refs.every((ref) => {
+            return (ref && overlay[objRefToString(ref)]?.showOverlay) ?? false;
+        });
+    }),
+);
+
+/**
+ * @internal
+ */
+export const selectWidgetsModification = createMemoizedSelector((refs: (ObjRef | undefined)[]) =>
+    createSelector(selectWidgetsOverlay, (overlay): Required<IDashboardWidgetOverlay>["modification"][] => {
+        return refs.reduce((modification, ref) => {
+            const item = ref && overlay[objRefToString(ref)];
+            if (item?.modification) {
+                return union(modification, [item.modification]);
+            }
+            return modification;
+        }, [] as Required<IDashboardWidgetOverlay>["modification"][]);
+    }),
+);
+
+/**
+ * @internal
+ */
+export const selectSectionModification = createMemoizedSelector((refs: (ObjRef | undefined)[]) =>
+    createSelector(selectWidgetsOverlay, (overlay): Required<IDashboardWidgetOverlay>["modification"][] => {
+        const modifications = refs.map((ref) => {
+            const item = ref && overlay[objRefToString(ref)];
+            return item?.modification;
+        });
+
+        const inserted = filter(modifications, (a) => a === "insertedByPlugin");
+        const modified = filter(modifications, (a) => a === "modifiedByPlugin");
+
+        return [
+            ...(inserted.length === refs.length ? ["insertedByPlugin"] : []),
+            ...(modified.length === refs.length ? ["modifiedByPlugin"] : []),
+        ] as Required<IDashboardWidgetOverlay>["modification"][];
+    }),
+);

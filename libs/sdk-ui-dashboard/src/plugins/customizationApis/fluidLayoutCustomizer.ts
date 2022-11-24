@@ -1,11 +1,17 @@
 // (C) 2021-2022 GoodData Corporation
-import { IDashboardLayout, IDashboardLayoutSection, IDashboardLayoutItem } from "@gooddata/sdk-model";
+import {
+    IDashboardLayout,
+    IDashboardLayoutSection,
+    IDashboardLayoutItem,
+    objRefToString,
+} from "@gooddata/sdk-model";
+import isEmpty from "lodash/isEmpty";
+import cloneDeep from "lodash/cloneDeep";
 import { IFluidLayoutCustomizer } from "../customizer";
 import { ExtendedDashboardWidget, ICustomWidget } from "../../model";
 import { DashboardLayoutBuilder } from "../../_staging/dashboard/fluidLayout";
-import isEmpty from "lodash/isEmpty";
 import { IDashboardCustomizationLogger } from "./customizationLogging";
-import cloneDeep from "lodash/cloneDeep";
+import { CustomizerMutationsContext } from "./types";
 
 type AddItemOp = {
     sectionIdx: number;
@@ -22,7 +28,10 @@ export class FluidLayoutCustomizer implements IFluidLayoutCustomizer {
     private readonly addItemOps: AddItemOp[] = [];
     private readonly addSectionOps: AddSectionOp[] = [];
 
-    constructor(private readonly logger: IDashboardCustomizationLogger) {}
+    constructor(
+        private readonly logger: IDashboardCustomizationLogger,
+        private readonly mutationContext: CustomizerMutationsContext,
+    ) {}
 
     public addItem = (
         sectionIdx: number,
@@ -83,6 +92,7 @@ export class FluidLayoutCustomizer implements IFluidLayoutCustomizer {
     ): IDashboardLayout<ExtendedDashboardWidget> => {
         const builder = DashboardLayoutBuilder.for(layout);
         const facade = builder.facade();
+        const { layouts } = this.mutationContext;
 
         this.addItemOps.forEach((op) => {
             const { sectionIdx, itemIdx, item } = op;
@@ -90,7 +100,9 @@ export class FluidLayoutCustomizer implements IFluidLayoutCustomizer {
 
             builder.modifySection(actualSectionIdx, (sectionBuilder) => {
                 sectionBuilder.addItem(item, itemIdx === -1 ? undefined : itemIdx);
-
+                if (item.widget) {
+                    layouts[objRefToString(item.widget)] = "inserted";
+                }
                 return sectionBuilder;
             });
         });
@@ -99,6 +111,11 @@ export class FluidLayoutCustomizer implements IFluidLayoutCustomizer {
             const { sectionIdx, section } = op;
 
             builder.addSection(section, sectionIdx === -1 ? undefined : sectionIdx);
+            section.items.forEach((item) => {
+                if (item.widget) {
+                    layouts[objRefToString(item.widget)] = "inserted";
+                }
+            });
         });
 
         return builder.build();

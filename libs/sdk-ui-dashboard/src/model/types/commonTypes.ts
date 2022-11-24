@@ -269,6 +269,15 @@ export type PrivateDashboardContext = DashboardModelCustomizationFns & {
      * loading dashboard from backend.
      */
     preloadedDashboard?: IDashboard;
+    /**
+     * Provide a function that will be used during dashboard initialization and can add overlays with some info
+     * about modification or insertion by plugin
+     *
+     * @remarks
+     *
+     * -  If the function is not defined, then no overlays will be rendered
+     */
+    widgetsOverlayFn?: WidgetsOverlayFn;
 };
 
 /**
@@ -293,6 +302,39 @@ export interface DashboardModelCustomizationFns {
      *    dashboard will be used as-is.
      */
     existingDashboardTransformFn?: DashboardTransformFn;
+}
+
+/**
+ * @alpha
+ */
+export type WidgetsOverlayFn = (
+    dashboard: IDashboard<ExtendedDashboardWidget>,
+) => Record<string, IDashboardWidgetOverlay>;
+
+/**
+ * @alpha
+ */
+export interface IDashboardWidgetOverlay {
+    /**
+     * Overlay over widget is display
+     *
+     * @alpha
+     */
+    showOverlay: boolean;
+
+    /**
+     * Modifications type for widget
+     *
+     * @remarks
+     * "insertedByPlugin"
+     * Widget is inserted by plugin and is not originally in layout
+     *
+     * "modifiedByPlugin"
+     * Widget is originally in layout but was modified by plugin by adding some decorators, tags, providers and so on
+     *
+     * @alpha
+     */
+    modification?: "insertedByPlugin" | "modifiedByPlugin";
 }
 
 /**

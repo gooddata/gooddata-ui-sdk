@@ -3,7 +3,7 @@ import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { ObjRef, IDashboard, IWorkspacePermissions } from "@gooddata/sdk-model";
 import { DashboardEventHandler } from "../eventHandlers/eventHandler";
 import { DashboardDispatch, DashboardState } from "../store";
-import { DashboardConfig, DashboardModelCustomizationFns } from "../types/commonTypes";
+import { DashboardConfig, DashboardModelCustomizationFns, WidgetsOverlayFn } from "../types/commonTypes";
 import React from "react";
 import { ReactReduxContextValue } from "react-redux";
 import { RenderMode } from "../../types";
@@ -29,5 +29,6 @@ export interface IDashboardStoreProviderProps {
     ) => void;
     additionalReduxContext?: React.Context<ReactReduxContextValue>;
     customizationFns?: DashboardModelCustomizationFns;
+    widgetsOverlayFn?: WidgetsOverlayFn;
     initialRenderMode?: RenderMode;
 }

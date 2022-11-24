@@ -3,6 +3,8 @@ import { IDashboardKpiCustomizer } from "../customizer";
 import { DefaultDashboardKpi, KpiComponentProvider, OptionalKpiComponentProvider } from "../../presentation";
 import { InvariantError } from "ts-invariant";
 import { IDashboardCustomizationLogger } from "./customizationLogging";
+import { CustomizerMutationsContext } from "./types";
+import union from "lodash/union";
 
 const DefaultKpiRendererProvider: KpiComponentProvider = () => {
     return DefaultDashboardKpi;
@@ -116,18 +118,22 @@ class SealedKpiCustomizerState implements IKpiCustomizerState {
  */
 export class DefaultKpiCustomizer implements IDashboardKpiCustomizer {
     private readonly logger: IDashboardCustomizationLogger;
+    private readonly mutationContext: CustomizerMutationsContext;
     private state: IKpiCustomizerState;
 
     constructor(
         logger: IDashboardCustomizationLogger,
+        mutationContext: CustomizerMutationsContext,
         defaultProvider: KpiComponentProvider = DefaultKpiRendererProvider,
     ) {
         this.logger = logger;
+        this.mutationContext = mutationContext;
         this.state = new DefaultKpiCustomizerState(defaultProvider);
     }
 
     public withCustomProvider = (provider: OptionalKpiComponentProvider): IDashboardKpiCustomizer => {
         this.state.addCustomProvider(provider);
+        this.mutationContext.kpi = union(this.mutationContext.kpi, ["provider"]);
 
         return this;
     };
@@ -155,6 +161,7 @@ export class DefaultKpiCustomizer implements IDashboardKpiCustomizer {
         // finally modify the root provider; next time someone registers decorator, it will be on top of
         // this currently registered one
         this.state.switchRootProvider(newRootProvider);
+        this.mutationContext.kpi = union(this.mutationContext.kpi, ["decorator"]);
 
         return this;
     };

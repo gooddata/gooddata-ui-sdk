@@ -1,6 +1,17 @@
 // (C) 2021-2022 GoodData Corporation
 
 import {
+    IDashboardLayout,
+    isInsightWidget,
+    isInsightWidgetDefinition,
+    isKpiWidget,
+    isKpiWidgetDefinition,
+    objRefToString,
+    isObjRef,
+} from "@gooddata/sdk-model";
+import { walkLayout } from "@gooddata/sdk-backend-spi";
+
+import {
     IDashboardCustomizer,
     IDashboardInsightCustomizer,
     IDashboardKpiCustomizer,
@@ -18,16 +29,28 @@ import { DefaultWidgetCustomizer } from "./widgetCustomizer";
 import { DefaultLayoutCustomizer } from "./layoutCustomizer";
 import { DefaultFilterBarCustomizer } from "./filterBarCustomizer";
 import { DefaultFiltersCustomizer } from "./filtersCustomizer";
+import { createCustomizerMutationsContext } from "./types";
+import { WidgetsOverlayFn, IDashboardWidgetOverlay } from "../../model";
 
 /**
  * @internal
  */
 export class DashboardCustomizationBuilder implements IDashboardCustomizer {
+    private readonly mutations = createCustomizerMutationsContext();
     private readonly logger: DashboardCustomizationLogger = new DashboardCustomizationLogger();
-    private readonly insightCustomizer: DefaultInsightCustomizer = new DefaultInsightCustomizer(this.logger);
-    private readonly kpiCustomizer: DefaultKpiCustomizer = new DefaultKpiCustomizer(this.logger);
+    private readonly insightCustomizer: DefaultInsightCustomizer = new DefaultInsightCustomizer(
+        this.logger,
+        this.mutations,
+    );
+    private readonly kpiCustomizer: DefaultKpiCustomizer = new DefaultKpiCustomizer(
+        this.logger,
+        this.mutations,
+    );
     private readonly widgetCustomizer: DefaultWidgetCustomizer = new DefaultWidgetCustomizer(this.logger);
-    private readonly layoutCustomizer: DefaultLayoutCustomizer = new DefaultLayoutCustomizer(this.logger);
+    private readonly layoutCustomizer: DefaultLayoutCustomizer = new DefaultLayoutCustomizer(
+        this.logger,
+        this.mutations,
+    );
     private readonly filterBarCustomizer: DefaultFilterBarCustomizer = new DefaultFilterBarCustomizer(
         this.logger,
     );
@@ -99,6 +122,7 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
             customizationFns: {
                 existingDashboardTransformFn: this.layoutCustomizer.getExistingDashboardTransformFn(),
             },
+            widgetsOverlayFn: this.getWidgetsOverlayFn(),
             // only set the value if there is anything to set
             ...(filterBarCustomizerResult.FilterBarComponent
                 ? { FilterBarComponent: filterBarCustomizerResult.FilterBarComponent }
@@ -109,4 +133,45 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
 
         return props;
     };
+
+    private getWidgetsOverlayFn(): WidgetsOverlayFn {
+        return (dashboard) => {
+            const { insight, kpi, layouts } = this.mutations;
+            const { layout } = dashboard;
+            const overlays: Record<string, IDashboardWidgetOverlay> = {};
+
+            walkLayout(layout as IDashboardLayout, {
+                itemCallback: (item) => {
+                    if (
+                        (isInsightWidget(item.widget) || isInsightWidgetDefinition(item.widget)) &&
+                        isObjRef(item.widget) &&
+                        insight.length > 0
+                    ) {
+                        overlays[objRefToString(item.widget)] = {
+                            showOverlay: true,
+                            modification: "modifiedByPlugin",
+                        };
+                    }
+                    if (
+                        (isKpiWidget(item.widget) || isKpiWidgetDefinition(item.widget)) &&
+                        isObjRef(item.widget) &&
+                        kpi.length > 0
+                    ) {
+                        overlays[objRefToString(item.widget)] = {
+                            showOverlay: true,
+                            modification: "modifiedByPlugin",
+                        };
+                    }
+                },
+            });
+
+            Object.keys(layouts).forEach((ref) => {
+                if (layouts[ref] === "inserted") {
+                    overlays[ref] = { showOverlay: true, modification: "insertedByPlugin" };
+                }
+            });
+
+            return overlays;
+        };
+    }
 }

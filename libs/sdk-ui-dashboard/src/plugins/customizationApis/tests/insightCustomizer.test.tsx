@@ -16,6 +16,7 @@ import {
     InsightComponentProvider,
     OptionalInsightComponentProvider,
 } from "../../../presentation";
+import { createCustomizerMutationsContext, CustomizerMutationsContext } from "../types";
 
 //
 //
@@ -111,10 +112,13 @@ function renderToHtml(customizer: DefaultInsightCustomizer, insight: IInsight) {
 
 describe("insight customizer", () => {
     let Customizer: DefaultInsightCustomizer;
+    let mutationContext: CustomizerMutationsContext;
 
     beforeEach(() => {
+        mutationContext = createCustomizerMutationsContext();
         Customizer = new DefaultInsightCustomizer(
             new DashboardCustomizationLogger(),
+            mutationContext,
             DefaultTestComponentProvider,
         );
     });
@@ -129,12 +133,22 @@ describe("insight customizer", () => {
 
             expect(renderToHtml(Customizer, TestInsightWithTag1)).toMatchSnapshot();
             expect(renderToHtml(Customizer, TestInsightWithBothTags)).toMatchSnapshot();
+            expect(mutationContext).toEqual({
+                kpi: [],
+                insight: ["tag"],
+                layouts: {},
+            });
         });
 
         it("should fallback to default component if insight does not have tag", () => {
             Customizer.withTag("tag1", createTestComponent("forTag1"));
 
             expect(renderToHtml(Customizer, TestInsightWithTag2)).toMatchSnapshot();
+            expect(mutationContext).toEqual({
+                kpi: [],
+                insight: ["tag"],
+                layouts: {},
+            });
         });
 
         it("should use last registered component if insight has both tags", () => {
@@ -143,6 +157,11 @@ describe("insight customizer", () => {
             // component for tag1 was registered last, so the insight that has both tags must be rendered
             // using that component
             expect(renderToHtml(Customizer, TestInsightWithBothTags)).toMatchSnapshot();
+            expect(mutationContext).toEqual({
+                kpi: [],
+                insight: ["tag"],
+                layouts: {},
+            });
         });
 
         it("should override already registered component for a tag", () => {
@@ -151,17 +170,31 @@ describe("insight customizer", () => {
             Customizer.withTag("tag1", createTestComponent("forTag1c"));
 
             expect(renderToHtml(Customizer, TestInsightWithBothTags)).toMatchSnapshot();
+            expect(mutationContext).toEqual({
+                kpi: [],
+                insight: ["tag"],
+                layouts: {},
+            });
         });
 
         it("should print a warning if tag is an empty string", () => {
             const logger = new DashboardCustomizationLogger();
-            const customizer = new DefaultInsightCustomizer(logger, DefaultTestComponentProvider);
+            const customizer = new DefaultInsightCustomizer(
+                logger,
+                createCustomizerMutationsContext(),
+                DefaultTestComponentProvider,
+            );
 
             const consoleSpy = jest.spyOn(logger, "warn");
 
             customizer.withTag("", createTestComponent("forTag1"));
 
             expect(consoleSpy).toHaveBeenCalled();
+            expect(mutationContext).toEqual({
+                kpi: [],
+                insight: [],
+                layouts: {},
+            });
 
             consoleSpy.mockReset();
             consoleSpy.mockRestore();
@@ -177,6 +210,11 @@ describe("insight customizer", () => {
             Customizer.withCustomProvider(provider);
 
             expect(renderToHtml(Customizer, TestInsightWithCustomTitle)).toMatchSnapshot();
+            expect(mutationContext).toEqual({
+                kpi: [],
+                insight: ["provider"],
+                layouts: {},
+            });
         });
 
         it("should fallback to default component if insight does not match provider criteria", () => {
@@ -187,6 +225,11 @@ describe("insight customizer", () => {
             Customizer.withCustomProvider(provider);
 
             expect(renderToHtml(Customizer, TestInsight)).toMatchSnapshot();
+            expect(mutationContext).toEqual({
+                kpi: [],
+                insight: ["provider"],
+                layouts: {},
+            });
         });
 
         it("should use component from latest registered provider that matches the insight", () => {
@@ -208,6 +251,11 @@ describe("insight customizer", () => {
 
             // component from last registered and matching provider is `fromCustomProvider3`
             expect(renderToHtml(Customizer, TestInsightWithCustomTitle)).toMatchSnapshot();
+            expect(mutationContext).toEqual({
+                kpi: [],
+                insight: ["provider"],
+                layouts: {},
+            });
         });
     });
 
@@ -217,6 +265,11 @@ describe("insight customizer", () => {
             Customizer.withCustomDecorator(factory);
 
             expect(renderToHtml(Customizer, TestInsight)).toMatchSnapshot();
+            expect(mutationContext).toEqual({
+                kpi: [],
+                insight: ["decorator"],
+                layouts: {},
+            });
         });
 
         it("should decorate custom component registered for an insight", () => {

@@ -280,3 +280,74 @@ $gd-dashboards-section-description-color: var(
         position: absolute !important;
     }
 }
+
+.gd-fluidlayout-item-changed {
+    position: absolute;
+    //need z-index over draggable overlay also
+    z-index: 11;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+
+    &.none {
+        display: none;
+    }
+
+    &.added,
+    &.modified {
+        background: var(
+            --gd-dashboards-content-backgroundColor,
+            var(--gd-palette-complementary-0, rgba(255, 255, 255, 0.95))
+        );
+    }
+
+    .gd-fluidlayout-item-changed-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+    &.small .gd-fluidlayout-item-changed-content {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        max-height: 100%;
+    }
+
+    .gd-fluidlayout-item-changed-icon {
+        display: flex;
+        align-items: center;
+
+        svg {
+            max-height: 100%;
+        }
+    }
+    &.small .gd-fluidlayout-item-changed-icon {
+        svg {
+            top: -4px;
+            position: relative;
+        }
+    }
+    &.big .gd-fluidlayout-item-changed-icon {
+        // stylelint-disable-next-line declaration-no-important
+        height: auto !important;
+    }
+
+    .gd-fluidlayout-item-changed-info {
+        display: block;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 19px;
+    }
+    .gd-button {
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 19px;
+        color: var(--gd-palette-complementary-6, #94a1ad);
+    }
+}

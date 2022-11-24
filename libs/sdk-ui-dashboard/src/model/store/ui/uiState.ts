@@ -3,6 +3,7 @@ import { ObjRef } from "@gooddata/sdk-model";
 
 import { ILayoutCoordinates, IMenuButtonItemsVisibility, IToastMessage } from "../../../types";
 import { DraggableLayoutItem } from "../../../presentation/dragAndDrop/types";
+import { IDashboardWidgetOverlay } from "../../types/commonTypes";
 
 /**
  * @alpha
@@ -54,6 +55,7 @@ export interface UiState {
     toastMessages: IToastMessage[];
     draggingWidgetSource: DraggableLayoutItem | undefined;
     draggingWidgetTarget: ILayoutCoordinates | undefined;
+    widgetsOverlay: Record<string, IDashboardWidgetOverlay>;
 }
 
 export const uiInitialState: UiState = {
@@ -100,4 +102,5 @@ export const uiInitialState: UiState = {
     toastMessages: [],
     draggingWidgetSource: undefined,
     draggingWidgetTarget: undefined,
+    widgetsOverlay: {},
 };

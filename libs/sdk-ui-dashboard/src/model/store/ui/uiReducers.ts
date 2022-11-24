@@ -1,9 +1,10 @@
 // (C) 2021-2022 GoodData Corporation
 import { Action, AnyAction, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
-import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
+import { areObjRefsEqual, ObjRef, objRefToString } from "@gooddata/sdk-model";
 import { UiState } from "./uiState";
 import { ILayoutCoordinates, IMenuButtonItemsVisibility, IToastMessage } from "../../../types";
 import { DraggableLayoutItem } from "../../../presentation/dragAndDrop/types";
+import { IDashboardWidgetOverlay } from "../../types/commonTypes";
 
 type UiReducer<A extends Action = AnyAction> = CaseReducer<UiState, A>;
 
@@ -171,6 +172,46 @@ const clearDraggingWidgetTarget: UiReducer<PayloadAction<void>> = (state) => {
     state.draggingWidgetTarget = undefined;
 };
 
+const setWidgetsOverlay: UiReducer<PayloadAction<Record<string, IDashboardWidgetOverlay>>> = (
+    state,
+    action,
+) => {
+    state.widgetsOverlay = action.payload;
+};
+
+type ToggleWidgetsOverlay = {
+    refs: (ObjRef | undefined)[];
+    visible: boolean;
+};
+
+const toggleWidgetsOverlay: UiReducer<PayloadAction<ToggleWidgetsOverlay>> = (state, action) => {
+    const { visible, refs } = action.payload;
+
+    refs.forEach((ref) => {
+        if (!ref) {
+            return;
+        }
+
+        const refId = objRefToString(ref);
+        const overlay = (state.widgetsOverlay[refId] = state.widgetsOverlay[refId] || {
+            showOverlay: visible,
+        });
+        overlay.showOverlay = visible;
+    });
+};
+
+const hideAllWidgetsOverlay: UiReducer = (state) => {
+    state.widgetsOverlay = Object.keys(state.widgetsOverlay).reduce((prev, key) => {
+        return {
+            ...prev,
+            [key]: {
+                ...state.widgetsOverlay[key],
+                showOverlay: false,
+            },
+        };
+    }, {} as Record<string, IDashboardWidgetOverlay>);
+};
+
 export const uiReducers = {
     openScheduleEmailDialog,
     closeScheduleEmailDialog,
@@ -212,4 +253,7 @@ export const uiReducers = {
     clearDraggingWidgetSource,
     setDraggingWidgetTarget,
     clearDraggingWidgetTarget,
+    toggleWidgetsOverlay,
+    setWidgetsOverlay,
+    hideAllWidgetsOverlay,
 };
