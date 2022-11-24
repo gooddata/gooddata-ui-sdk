@@ -76,7 +76,11 @@ export class SaveAsNewDashboardDialog extends React.PureComponent<
     onSubmit = (): void => {
         const title = this.state.dashboardTitle.trim();
         if (this.canCreateDashboard() && title !== "") {
-            this.props.onSubmit(title, true, true);
+            this.props.onSubmit(
+                title,
+                true, // switch to the new dashboard
+                false, // do not reuse the filter context, create a new one with the current filter state
+            );
         }
     };
 

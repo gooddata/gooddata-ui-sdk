@@ -66,7 +66,8 @@ export const useTopBarProps = (): ITopBarProps => {
         },
         shareStatusProps: {
             shareStatus: shareInfo.shareStatus,
-            isUnderStrictControl: !!persistedDashboard?.isUnderStrictControl,
+            // new dashboards are considered under strict control as well for the share status purposes
+            isUnderStrictControl: !persistedDashboard || !!persistedDashboard.isUnderStrictControl,
         },
         lockedStatusProps: {
             isLocked: !!shareInfo.isLocked,
