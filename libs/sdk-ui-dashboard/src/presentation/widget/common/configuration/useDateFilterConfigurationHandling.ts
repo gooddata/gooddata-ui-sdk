@@ -11,25 +11,8 @@ import {
     enableKpiWidgetDateFilter,
     useDashboardCommandProcessing,
 } from "../../../../model";
-import { getRecommendedDateDataset } from "@gooddata/sdk-ui-kit";
 import { safeSerializeObjRef } from "../../../../_staging/metadata/safeSerializeObjRef";
-
-function getRecommendedCatalogDateDataset(
-    dateDatasets: readonly ICatalogDateDataset[],
-): ICatalogDateDataset | undefined {
-    const recommendedDateDataSetId = getRecommendedDateDataset(
-        dateDatasets.map((ds) => {
-            return {
-                id: ds.dataSet.id,
-                title: ds.dataSet.title,
-            };
-        }),
-    )?.id;
-
-    return recommendedDateDataSetId
-        ? dateDatasets.find((ds) => ds.dataSet.id === recommendedDateDataSetId)
-        : undefined;
-}
+import { getRecommendedCatalogDateDataset } from "../../../../_staging/dateDatasets/getRecommendedCatalogDateDataset";
 
 export function useDateFilterConfigurationHandling(
     widget: IWidget,

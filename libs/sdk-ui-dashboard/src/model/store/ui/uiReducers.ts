@@ -107,8 +107,8 @@ const setConfigurationPanelOpened: UiReducer<PayloadAction<boolean>> = (state, a
     state.configurationPanelOpened = action.payload;
 };
 
-const setKpiDateDatasetAutoOpen: UiReducer<PayloadAction<boolean>> = (state, action) => {
-    state.kpiDateDatasetAutoOpen = action.payload;
+const setKpiDateDatasetAutoSelect: UiReducer<PayloadAction<boolean>> = (state, action) => {
+    state.kpiDateDatasetAutoSelect = action.payload;
 };
 
 const requestInsightListUpdate: UiReducer = (state) => {
@@ -235,7 +235,7 @@ export const uiReducers = {
     selectWidget,
     clearWidgetSelection,
     setConfigurationPanelOpened,
-    setKpiDateDatasetAutoOpen,
+    setKpiDateDatasetAutoSelect,
     requestInsightListUpdate,
     setWidgetLoadingAdditionalDataStarted,
     setWidgetLoadingAdditionalDataStopped,
