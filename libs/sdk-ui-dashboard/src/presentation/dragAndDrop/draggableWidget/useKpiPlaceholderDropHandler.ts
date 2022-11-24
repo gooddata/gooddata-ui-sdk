@@ -25,7 +25,7 @@ export function useKpiPlaceholderDropHandler(sectionIndex: number, itemIndex: nu
             const ref = event.payload.itemsAdded[0].widget!.ref;
             dispatch(uiActions.selectWidget(idRef(KPI_PLACEHOLDER_WIDGET_ID)));
             dispatch(uiActions.setConfigurationPanelOpened(true));
-            dispatch(uiActions.setKpiDateDatasetAutoOpen(true));
+            dispatch(uiActions.setKpiDateDatasetAutoSelect(true));
             dispatch(uiActions.setWidgetLoadingAdditionalDataStarted(ref));
         },
     });

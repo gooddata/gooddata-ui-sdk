@@ -5978,7 +5978,7 @@ export const selectIsWhiteLabeled: OutputSelector<DashboardState, boolean, (res:
 export const selectIsWidgetLoadingAdditionalDataByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, boolean, (res: ObjRef[]) => boolean>;
 
 // @internal (undocumented)
-export const selectKpiDateDatasetAutoOpen: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
+export const selectKpiDateDatasetAutoSelect: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
 
 // @internal (undocumented)
 export const selectKpiDeleteDialogWidgetCoordinates: OutputSelector<DashboardState, ILayoutCoordinates | undefined, (res: UiState) => ILayoutCoordinates | undefined>;
@@ -6295,7 +6295,7 @@ setConfigurationPanelOpened: CaseReducer<UiState, {
 payload: boolean;
 type: string;
 }>;
-setKpiDateDatasetAutoOpen: CaseReducer<UiState, {
+setKpiDateDatasetAutoSelect: CaseReducer<UiState, {
 payload: boolean;
 type: string;
 }>;
@@ -6395,7 +6395,7 @@ export interface UiState {
         highlightedWidgetRef: ObjRef | undefined;
     };
     // (undocumented)
-    kpiDateDatasetAutoOpen: boolean;
+    kpiDateDatasetAutoSelect: boolean;
     // (undocumented)
     kpiDeleteDialog: {
         widgetCoordinates: ILayoutCoordinates | undefined;

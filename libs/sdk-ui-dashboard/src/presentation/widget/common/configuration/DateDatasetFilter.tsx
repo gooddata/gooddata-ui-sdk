@@ -19,6 +19,7 @@ interface IDateDatasetFilterProps {
     dateFromVisualization?: ICatalogDateDataset;
     dateFilterCheckboxDisabled: boolean;
     shouldPickDateDataset?: boolean;
+    shouldOpenDateDatasetPicker?: boolean;
     isLoadingAdditionalData?: boolean;
     onDateDatasetChanged?: (id: string) => void;
 }
@@ -31,6 +32,7 @@ export const DateDatasetFilter: React.FC<IDateDatasetFilterProps> = (props) => {
         dateFromVisualization,
         isDatasetsLoading,
         shouldPickDateDataset,
+        shouldOpenDateDatasetPicker,
         onDateDatasetChanged,
         isLoadingAdditionalData,
     } = props;
@@ -98,7 +100,7 @@ export const DateDatasetFilter: React.FC<IDateDatasetFilterProps> = (props) => {
                     selectedDateDatasetHidden={selectedDateDatasetHiddenByObjectAvailability}
                     unrelatedDateDataset={unrelatedDateDataset}
                     onDateDatasetChange={handleDateDatasetChanged}
-                    autoOpen={shouldPickDateDataset}
+                    autoOpen={shouldOpenDateDatasetPicker}
                     isLoading={isDropdownLoading}
                 />
             )}
