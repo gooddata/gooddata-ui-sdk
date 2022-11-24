@@ -8,6 +8,7 @@ import { QueryWidgetAlertCount } from "../queries/widgets";
 import { selectWidgetByRef } from "../store/layout/layoutSelectors";
 import { createQueryService } from "../store/_infra/queryService";
 import { DashboardContext } from "../types/commonTypes";
+import { isTemporaryIdentity } from "../utils/dashboardItemUtils";
 
 export const QueryWidgetAlertCountService = createQueryService(
     "GDC.DASH/QUERY.WIDGET.ALERT_COUNT",
@@ -29,7 +30,8 @@ function* queryService(ctx: DashboardContext, query: QueryWidgetAlertCount): Sag
         );
     }
 
-    if (!isKpiWidget(widget)) {
+    // just added KPIs with temporary identity cannot have alerts, do not try to load their count, it will fail
+    if (!isKpiWidget(widget) || isTemporaryIdentity(widget)) {
         return 0;
     }
 
