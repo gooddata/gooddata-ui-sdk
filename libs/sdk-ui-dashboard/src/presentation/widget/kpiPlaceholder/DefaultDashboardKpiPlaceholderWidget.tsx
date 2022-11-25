@@ -1,11 +1,12 @@
 // (C) 2022 GoodData Corporation
-import React, { useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import invariant from "ts-invariant";
 
 import { isKpiPlaceholderWidget } from "../../../widgets";
 import {
     eagerRemoveSectionItem,
     selectWidgetCoordinatesByRef,
+    uiActions,
     useDashboardDispatch,
     useDashboardSelector,
     useWidgetSelection,
@@ -43,11 +44,16 @@ export const DefaultDashboardKpiPlaceholderWidget: CustomDashboardWidgetComponen
         }
     }, [dispatch, isSelected, itemIndex, sectionIndex]);
 
+    const onClose = useCallback(() => {
+        dispatch(uiActions.setConfigurationPanelOpened(false));
+        dispatch(eagerRemoveSectionItem(sectionIndex, itemIndex));
+    }, [dispatch, itemIndex, sectionIndex]);
+
     return (
         <DashboardItem className="is-selected is-placeholder is-edit-mode" screen={screen}>
             <DashboardItemContent isSelected={isSelected} isSelectable={isSelectable}>
-                <ConfigurationBubble>
-                    <KpiPlaceholderConfigurationPanel widget={widget} />
+                <ConfigurationBubble onClose={onClose}>
+                    <KpiPlaceholderConfigurationPanel widget={widget} onClose={onClose} />
                 </ConfigurationBubble>
                 <div className="kpi-placeholder select-measure" />
             </DashboardItemContent>
