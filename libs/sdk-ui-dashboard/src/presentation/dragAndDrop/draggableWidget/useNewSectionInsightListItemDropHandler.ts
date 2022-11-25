@@ -37,9 +37,9 @@ export function useNewSectionInsightListItemDropHandler(sectionIndex: number) {
     const { run: replaceSectionItemLoader } = useDashboardCommandProcessing({
         commandCreator: replaceSectionItem,
         errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
-        successEvent: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
+        successEvent: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED",
         onSuccess: (event) => {
-            const ref = event.payload.section.items[0].widget!.ref;
+            const ref = event.payload.items[0].widget!.ref;
             dispatch(uiActions.selectWidget(ref));
             dispatch(uiActions.setConfigurationPanelOpened(true));
             dispatch(uiActions.setWidgetLoadingAdditionalDataStarted(ref));
