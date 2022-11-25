@@ -5,7 +5,7 @@ import { DropdownSectionHeader } from "../DropdownSectionHeader";
 import { AttributeDisplayFormParameterDetail } from "../ParameterDetails/AttributeDisplayFormParameterDetail";
 import { Parameter } from "./Parameter";
 import { useWorkspaceStrict } from "@gooddata/sdk-ui";
-import { IParametersPanelSectionsCommonProps } from "../types";
+import { IAttributeWithDisplayForm, IParametersPanelSectionsCommonProps } from "../types";
 import { IAttributeDisplayFormMetadataObject } from "@gooddata/sdk-model";
 import { AttributeDisplayFormType } from "../../../types";
 import { selectAllCatalogAttributesMap, useDashboardSelector } from "../../../../../model";
@@ -55,7 +55,7 @@ const getDisplayFormIcon = (type: string | undefined) => {
 };
 
 export interface IInsightParametersSectionProps extends IParametersPanelSectionsCommonProps {
-    attributeDisplayForms?: IAttributeDisplayFormMetadataObject[];
+    attributeDisplayForms?: IAttributeWithDisplayForm[];
     loadingAttributeDisplayForms: boolean;
 }
 
@@ -77,7 +77,7 @@ export const InsightParametersSection: React.FC<IInsightParametersSectionProps> 
                         </div>
                     ) : (
                         attributeDisplayForms?.map((item) => (
-                            <ParameterX key={item.id} item={item} onAdd={onAdd} />
+                            <ParameterX key={item.displayForm.id} item={item.displayForm} onAdd={onAdd} />
                         ))
                     )}
                 </>

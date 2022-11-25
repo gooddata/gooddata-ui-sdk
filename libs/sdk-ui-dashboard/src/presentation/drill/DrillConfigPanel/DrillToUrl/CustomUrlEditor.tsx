@@ -10,7 +10,7 @@ import {
 } from "@gooddata/sdk-ui-kit";
 import { ParametersPanel } from "./CustomUrlEditorParameters";
 import { isDrillToCustomUrlConfig, UrlDrillTarget } from "../../types";
-import { IAttributeDisplayFormMetadataObject } from "@gooddata/sdk-model";
+import { IAttributeWithDisplayForm } from "./types";
 
 export interface IUrlInputProps {
     currentUrlValue: string;
@@ -56,19 +56,17 @@ interface IUrlInputPanelProps {
     currentUrlValue: string;
     onChange: (value: string) => void;
     onCursor: (from: number, to: number) => void;
-    attributeDisplayForms?: IAttributeDisplayFormMetadataObject[];
+    attributeDisplayForms?: IAttributeWithDisplayForm[];
     documentationLink?: string;
     intl: IntlShape;
 }
 
-const buildValidDisplayFormsFormattingRule = (
-    attributeDisplayForms: IAttributeDisplayFormMetadataObject[],
-) => {
+const buildValidDisplayFormsFormattingRule = (attributeDisplayForms: IAttributeWithDisplayForm[]) => {
     if (attributeDisplayForms.length === 0) {
         return undefined;
     }
     const validAttributePlaceholders = attributeDisplayForms
-        .map((displayForm) => `{attribute_title\\(${displayForm.id}\\)}`)
+        .map(({ displayForm }) => `{attribute_title\\(${displayForm.id}\\)}`)
         .join("|");
     return { regex: new RegExp(validAttributePlaceholders), token: "attribute" };
 };
@@ -97,9 +95,7 @@ const DEFAULT_RULES: IFormattingRule[] = [
     INVALID_IDENTIFIER_RULE,
 ];
 
-const buildFormattingRules = (
-    attributeDisplayForms: IAttributeDisplayFormMetadataObject[],
-): IFormattingRules => {
+const buildFormattingRules = (attributeDisplayForms: IAttributeWithDisplayForm[]): IFormattingRules => {
     const validDisplayFormsRule = buildValidDisplayFormsFormattingRule(attributeDisplayForms);
     return {
         start: validDisplayFormsRule ? [validDisplayFormsRule, ...DEFAULT_RULES] : DEFAULT_RULES,
@@ -157,7 +153,7 @@ const getWarningTextForInvalidParameters = (parameters: string[]): React.ReactEl
 
 export interface CustomUrlEditorProps {
     urlDrillTarget?: UrlDrillTarget;
-    attributeDisplayForms?: IAttributeDisplayFormMetadataObject[];
+    attributeDisplayForms?: IAttributeWithDisplayForm[];
     loadingAttributeDisplayForms?: boolean;
     invalidAttributeDisplayFormIdentifiers: string[];
     documentationLink?: string;

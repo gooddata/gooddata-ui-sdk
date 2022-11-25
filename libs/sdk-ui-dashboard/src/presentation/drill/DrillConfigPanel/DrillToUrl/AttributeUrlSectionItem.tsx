@@ -1,13 +1,10 @@
 // (C) 2020-2022 GoodData Corporation
 import React from "react";
 import cx from "classnames";
-import { isDrillToAttributeUrl } from "@gooddata/sdk-model";
-import { DashboardDrillDefinition } from "../../../../types";
-import invariant from "ts-invariant";
-import { selectAllCatalogDisplayFormsMap, useDashboardSelector } from "../../../../model";
+import { IAttributeWithDisplayForm } from "./types";
 
 export interface IAttributeUrlSectionItemProps {
-    item: DashboardDrillDefinition;
+    item: IAttributeWithDisplayForm;
     isSelected: boolean;
     onClickHandler?: (e: React.SyntheticEvent) => void;
 }
@@ -18,22 +15,16 @@ export const AttributeUrlSectionItem: React.FC<IAttributeUrlSectionItemProps> = 
     isSelected,
 }) => {
     const className = cx(
-        "gd-list-item gd-menu-item gd-drill-to-attribute-url-option s-drill-to-attribute-url-option icon-hyperlink-warning",
+        "gd-list-item gd-menu-item gd-drill-to-attribute-url-option s-drill-to-attribute-url-option gd-icon-hyperlink-warning",
         {
             "is-selected": isSelected,
         },
     );
 
-    invariant(isDrillToAttributeUrl(item), "must match");
-
-    const displayForms = useDashboardSelector(selectAllCatalogDisplayFormsMap);
-    const displayForm = displayForms.get(item.target.displayForm);
-    const hyperlinkDisplayForm = displayForms.get(item.target.hyperlinkDisplayForm);
-
     return (
         <div className={className} onClick={onClickHandler}>
-            <span className="gd-parameter-title">{displayForm?.title}</span>
-            <span className="addon">({hyperlinkDisplayForm?.title})</span>
+            <span className="gd-parameter-title">{item.attribute.title}</span>
+            <span className="addon">({item.displayForm.title})</span>
         </div>
     );
 };

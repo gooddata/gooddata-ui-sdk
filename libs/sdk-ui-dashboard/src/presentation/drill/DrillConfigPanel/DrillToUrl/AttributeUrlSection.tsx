@@ -1,20 +1,14 @@
 // (C) 2020-2022 GoodData Corporation
 import React, { useCallback } from "react";
 import { FormattedMessage } from "react-intl";
-import {
-    areObjRefsEqual,
-    isDrillToAttributeUrl,
-    ObjRef,
-    objRefToString,
-    IDrillToAttributeUrlTarget,
-} from "@gooddata/sdk-model";
+import { areObjRefsEqual, ObjRef, objRefToString } from "@gooddata/sdk-model";
 
 import { AttributeUrlSectionItem } from "./AttributeUrlSectionItem";
 import { DropdownSectionHeader } from "./DropdownSectionHeader";
-import { IImplicitDrillWithPredicates } from "../../../../model";
+import { IAttributeWithDisplayForm } from "./types";
 
 interface IAttributeUrlSectionOwnProps {
-    attributeDisplayForms: IImplicitDrillWithPredicates[];
+    attributeDisplayForms: IAttributeWithDisplayForm[];
     onSelect: (insightAttributeDisplayForm: ObjRef, drillToAttributeDisplayForm: ObjRef) => void;
     closeDropdown: (e: React.SyntheticEvent) => void;
     selected: ObjRef | false;
@@ -27,8 +21,8 @@ export const AttributeUrlSection: React.FC<AttributeUrlSectionProps> = (props) =
     const { attributeDisplayForms, loading = false, selected, closeDropdown, onSelect } = props;
 
     const onClickHandler = useCallback(
-        (event: React.SyntheticEvent, target: IDrillToAttributeUrlTarget) => {
-            onSelect(target.displayForm, target.hyperlinkDisplayForm);
+        (event: React.SyntheticEvent, target: IAttributeWithDisplayForm) => {
+            onSelect(target.displayForm, target.displayForm);
             closeDropdown(event);
         },
         [onSelect, closeDropdown],
@@ -49,23 +43,14 @@ export const AttributeUrlSection: React.FC<AttributeUrlSectionProps> = (props) =
                 </div>
             ) : (
                 <div className="gd-drill-to-url-section-items">
-                    {attributeDisplayForms.map((item) => {
-                        if (!isDrillToAttributeUrl(item.drillDefinition)) {
-                            return null;
-                        }
-                        const target = item.drillDefinition.target;
-                        return (
-                            <AttributeUrlSectionItem
-                                key={objRefToString(target.displayForm)}
-                                item={item.drillDefinition}
-                                isSelected={areObjRefsEqual(
-                                    target.hyperlinkDisplayForm,
-                                    selected || undefined,
-                                )}
-                                onClickHandler={(e) => onClickHandler(e, target)}
-                            />
-                        );
-                    })}
+                    {attributeDisplayForms.map((item) => (
+                        <AttributeUrlSectionItem
+                            key={objRefToString(item.displayForm.ref)}
+                            item={item}
+                            isSelected={areObjRefsEqual(item.displayForm.ref, selected || undefined)}
+                            onClickHandler={(e) => onClickHandler(e, item)}
+                        />
+                    ))}
                 </div>
             )}
         </>
