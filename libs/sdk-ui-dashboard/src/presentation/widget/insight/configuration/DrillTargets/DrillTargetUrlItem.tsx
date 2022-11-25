@@ -10,6 +10,7 @@ import {
 } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import {
+    AttributeDisplayFormType,
     isDrillToAttributeUrlConfig,
     isDrillToCustomUrlConfig,
     UrlDrillTarget,
@@ -24,7 +25,6 @@ import {
     selectDrillTargetsByWidgetRef,
     selectSelectedWidgetRef,
     useDashboardSelector,
-    selectImplicitDrillsToUrlByWidgetRef,
     selectBackendCapabilities,
     selectSettings,
 } from "../../../../../model";
@@ -80,7 +80,7 @@ export const DrillTargetUrlItem: React.FunctionComponent<DrillUrlItemProps> = (p
     const capabilities = useDashboardSelector(selectBackendCapabilities);
     const settings = useDashboardSelector(selectSettings);
 
-    const { targetAttributesForms, attributeUrlDisplayForms } = useAttributesDisplayForms();
+    const targetAttributesForms = useAttributesWithLinkDisplayForms();
     const invalidAttributeDisplayFormIdentifiers = useInvalidAttributeDisplayFormIdentifiers(urlDrillTarget);
 
     const intl = useIntl();
@@ -125,7 +125,7 @@ export const DrillTargetUrlItem: React.FunctionComponent<DrillUrlItemProps> = (p
                     <div className="gd-menu-wrapper gd-drill-to-url-body gd-drill-to-url-list s-gd-drill-to-url-body">
                         {capabilities.supportsHyperlinkAttributeLabels ? (
                             <AttributeUrlSection
-                                attributeDisplayForms={attributeUrlDisplayForms}
+                                attributeDisplayForms={targetAttributesForms}
                                 onSelect={(insightAttributeDisplayForm, drillToAttributeDisplayForm) => {
                                     onAttributeUrlHandler(
                                         insightAttributeDisplayForm,
@@ -167,27 +167,30 @@ export const DrillTargetUrlItem: React.FunctionComponent<DrillUrlItemProps> = (p
     );
 };
 
-function useAttributesDisplayForms() {
+function useAttributesWithLinkDisplayForms() {
     const widgetRef = useDashboardSelector(selectSelectedWidgetRef);
     invariant(widgetRef, "mush have selected widget");
-
-    const attributeUrlDisplayForms = useDashboardSelector(selectImplicitDrillsToUrlByWidgetRef(widgetRef));
 
     const drillTargets = useDashboardSelector(selectDrillTargetsByWidgetRef(widgetRef));
     const allAttributes = useDashboardSelector(selectAllCatalogAttributesMap);
 
-    const attributes = drillTargets?.availableDrillTargets?.attributes;
-
-    const targetAttributes = attributes?.map((drillTarget) =>
+    const availableAttributes = drillTargets?.availableDrillTargets?.attributes ?? [];
+    const attributes = availableAttributes.map((drillTarget) =>
         allAttributes.get(drillTarget.attribute.attributeHeader.formOf.ref),
     );
 
-    const targetAttributesForms = targetAttributes?.flatMap((item) =>
-        item && isCatalogAttribute(item.attribute) ? item.attribute.displayForms : [],
-    );
+    return attributes.flatMap((item) => {
+        if (!item || !isCatalogAttribute(item.attribute)) {
+            return [];
+        }
 
-    return {
-        targetAttributesForms,
-        attributeUrlDisplayForms,
-    };
+        const linkDisplayForms = item.attribute.displayForms.filter(
+            (df) => df.displayFormType === AttributeDisplayFormType.HYPERLINK,
+        );
+
+        return linkDisplayForms.map((df) => ({
+            attribute: item.attribute,
+            displayForm: df,
+        }));
+    });
 }
