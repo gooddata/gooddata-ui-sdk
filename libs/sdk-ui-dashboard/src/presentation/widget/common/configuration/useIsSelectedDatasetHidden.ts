@@ -46,7 +46,7 @@ export function useIsSelectedDatasetHidden(selectedDateDatasetRef: ObjRef | unde
     );
 
     const selectedDateDatasetHiddenByObjectAvailability = useMemo(() => {
-        if (!visibleDateDatasets) {
+        if (!visibleDateDatasets || !selectedDateDatasetRef) {
             return false;
         }
 

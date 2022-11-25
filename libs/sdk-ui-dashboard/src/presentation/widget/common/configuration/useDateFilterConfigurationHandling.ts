@@ -1,7 +1,6 @@
 // (C) 2022 GoodData Corporation
 import { useCallback, useState } from "react";
 import { ICatalogDateDataset, idRef, isInsightWidget, IWidget, ObjRef, widgetRef } from "@gooddata/sdk-model";
-import invariant from "ts-invariant";
 import first from "lodash/first";
 
 import {
@@ -76,10 +75,9 @@ export function useDateFilterConfigurationHandling(
     const handleDateFilterEnabled = useCallback(
         (enabled: boolean, dateDatasetRef: ObjRef | undefined) => {
             const getPreselectedDateDataset = () => {
-                invariant(
-                    relatedDateDatasets?.length,
-                    "Date filtering enabled without a date dataset available.",
-                );
+                if (!relatedDateDatasets?.length) {
+                    return null;
+                }
 
                 // preselect the recommended if any, or the first one
                 const recommendedDateDataSet = getRecommendedCatalogDateDataset(relatedDateDatasets);
@@ -98,7 +96,7 @@ export function useDateFilterConfigurationHandling(
                     enable(ref, dateDatasetRef);
                 } else {
                     const preselectedDateDataSetRef = getPreselectedDateDataset();
-                    enable(ref, preselectedDateDataSetRef);
+                    enable(ref, preselectedDateDataSetRef ?? "default");
                 }
             } else {
                 disable(ref);
