@@ -1,15 +1,17 @@
 // (C) 2022 GoodData Corporation
 import React, { useMemo, useState } from "react";
+import { useIntl } from "react-intl";
+import cx from "classnames";
+import noop from "lodash/noop";
+import { IColorPalette, ITheme, ObjRef } from "@gooddata/sdk-model";
+import { IntlWrapper } from "@gooddata/sdk-ui";
+
+import { StylingExample } from "./StylingExample";
+import { BubbleHeaderSeparator } from "./BubbleHeaderSeparator";
+import { Button } from "../../Button";
 import { Dialog } from "../Dialog";
 import { Typography } from "../../Typography";
-import cx from "classnames";
-import { StylingExample } from "./StylingExample";
-import { IColorPalette, ITheme, ObjRef } from "@gooddata/sdk-model";
-import { BubbleHeaderSeparator } from "./BubbleHeaderSeparator";
 import { StylingEditorDialogFooter, IStylingEditorDialogFooterProps } from "./StylingEditorDialogFooter";
-import { IntlWrapper } from "@gooddata/sdk-ui";
-import { useIntl } from "react-intl";
-import noop from "lodash/noop";
 
 /**
  * @internal
@@ -37,6 +39,7 @@ export interface IStylingEditorDialogProps<T> extends IStylingEditorDialogFooter
     locale?: string;
     onExit?: (name: string, definition: string) => void;
     onInvalidDefinition?: (ref: ObjRef) => void;
+    showBackButton?: boolean;
 }
 
 /**
@@ -65,8 +68,10 @@ const StylingEditorDialogCore = <T extends StylingPickerItemContent>(props: ISty
         onCancel,
         disableSubmit,
         showProgressIndicator,
+        showBackButton,
         onHelpClick,
         onExit = noop,
+        className,
         onInvalidDefinition = noop,
     } = props;
     const intl = useIntl();
@@ -136,9 +141,13 @@ const StylingEditorDialogCore = <T extends StylingPickerItemContent>(props: ISty
 
     return (
         <Dialog
-            className={cx("gd-styling-editor-dialog", {
-                "gd-styling-editor-dialog-create": providedExamples,
-            })}
+            className={cx(
+                "gd-styling-editor-dialog",
+                {
+                    "gd-styling-editor-dialog-create": providedExamples,
+                },
+                className,
+            )}
             onClose={() => {
                 onExit(nameField, definitionField);
                 onClose();
@@ -146,9 +155,24 @@ const StylingEditorDialogCore = <T extends StylingPickerItemContent>(props: ISty
             displayCloseButton={true}
             submitOnEnterKey={false}
         >
-            <Typography tagName="h2" className="gd-styling-editor-dialog-header">
-                {title}
-            </Typography>
+            <div className="gd-styling-editor-dialog-header">
+                {showBackButton && (
+                    <div className="gd-styling-editor-dialog-header-back-button">
+                        <Button
+                            className={
+                                "gd-button-primary gd-button-icon-only gd-icon-navigateleft s-navigate-back-button"
+                            }
+                            onClick={() => {
+                                onExit(nameField, definitionField);
+                                onClose();
+                            }}
+                        />
+                    </div>
+                )}
+                <Typography tagName="h2" className="gd-styling-editor-dialog-header-title">
+                    {title}
+                </Typography>
+            </div>
             <div className="gd-styling-editor-dialog-content">
                 <form className="gd-styling-editor-dialog-content-form" onSubmit={(e) => e.preventDefault()}>
                     <label className="gd-styling-editor-dialog-content-form-input">

@@ -34,7 +34,10 @@ export interface IStylingSettingWidgetProps<T> {
     footerHelpTitle?: string;
     footerMobileMessage?: string;
     className?: string;
+    disabledCancelButton?: boolean;
+    disabledApplyButton?: boolean;
     onApply?: (ref: ObjRef) => void;
+    onCancel?: () => void;
     onListActionClick?: () => void;
     onItemEdit?: (modifiedItem: IStylingPickerItem<T>) => void;
     onItemDelete?: (ref: ObjRef) => void;
@@ -59,7 +62,10 @@ const StylingSettingWidgetCore = <T extends StylingPickerItemContent>(
         footerHelpLink,
         footerHelpTitle,
         footerMobileMessage,
+        disabledCancelButton,
+        disabledApplyButton,
         onApply,
+        onCancel,
         onListActionClick,
         onItemEdit,
         onItemDelete,
@@ -99,10 +105,6 @@ const StylingSettingWidgetCore = <T extends StylingPickerItemContent>(
         () => areObjRefsEqual(currentItemRef, selectedItemRef),
         [currentItemRef, selectedItemRef],
     );
-
-    const handleCancel = useCallback(() => {
-        setCurrentItemRef(selectedItemRef);
-    }, [selectedItemRef]);
 
     const handleApply = useCallback(() => {
         onApply?.(currentItemRef);
@@ -147,14 +149,14 @@ const StylingSettingWidgetCore = <T extends StylingPickerItemContent>(
                     <FooterButtons>
                         <Button
                             className="gd-button-secondary"
-                            onClick={handleCancel}
-                            disabled={isApplyButtonDisabled}
+                            onClick={onCancel}
+                            disabled={disabledCancelButton ?? isApplyButtonDisabled}
                             value={intl.formatMessage({ id: "cancel" })}
                         />
                         <Button
                             className="gd-button-action"
                             onClick={handleApply}
-                            disabled={isApplyButtonDisabled}
+                            disabled={disabledApplyButton ?? isApplyButtonDisabled}
                             value={intl.formatMessage({ id: "apply" })}
                         />
                     </FooterButtons>

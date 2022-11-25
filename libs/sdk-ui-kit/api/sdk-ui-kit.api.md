@@ -3510,6 +3510,8 @@ export interface IStylingEditorDialogProps<T> extends IStylingEditorDialogFooter
     // (undocumented)
     onInvalidDefinition?: (ref: ObjRef) => void;
     // (undocumented)
+    showBackButton?: boolean;
+    // (undocumented)
     stylingItem?: IStylingPickerItem<T>;
     // (undocumented)
     title: string;
@@ -3546,6 +3548,10 @@ export interface IStylingSettingWidgetProps<T> {
     // (undocumented)
     defaultItem: IStylingPickerItem<T>;
     // (undocumented)
+    disabledApplyButton?: boolean;
+    // (undocumented)
+    disabledCancelButton?: boolean;
+    // (undocumented)
     emptyMessage: () => JSX.Element;
     // (undocumented)
     footerHelpLink?: string;
@@ -3561,6 +3567,8 @@ export interface IStylingSettingWidgetProps<T> {
     locale?: string;
     // (undocumented)
     onApply?: (ref: ObjRef) => void;
+    // (undocumented)
+    onCancel?: () => void;
     // (undocumented)
     onHelpClick?: () => void;
     // (undocumented)

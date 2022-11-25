@@ -89,7 +89,7 @@ describe("StylingPicker", () => {
 
     it("should disable footer buttons when currently selected item is the same as provided selected item", () => {
         const selectedItemRef = customItemsMock[0].ref;
-        renderComponent({ selectedItemRef });
+        renderComponent({ selectedItemRef, disabledApplyButton: undefined, disabledCancelButton: undefined });
 
         expectedButtonsState(screen.getAllByRole("button"));
     });
@@ -104,22 +104,13 @@ describe("StylingPicker", () => {
         expectedButtonsState(buttons, false);
     });
 
-    it("should reset list selection to provided selected item when cancel button is clicked", async () => {
+    it("should call onClose dialog when cancel button is clicked", async () => {
         const selectedItemRef = customItemsMock[0].ref;
-        renderComponent({ selectedItemRef });
-
-        expect(screen.getByLabelText("first_theme")).toBeChecked();
-        expect(screen.queryByLabelText("second_theme")).not.toBeChecked();
-
-        await userEvent.click(screen.getByText("Second theme"));
-
-        expect(screen.queryByLabelText("first_theme")).not.toBeChecked();
-        expect(screen.getByLabelText("second_theme")).toBeChecked();
+        const onCancel = jest.fn();
+        renderComponent({ selectedItemRef, disabledCancelButton: false, onCancel });
 
         await userEvent.click(screen.getByText("Cancel"));
-
-        expect(screen.getByLabelText("first_theme")).toBeChecked();
-        expect(screen.queryByLabelText("second_theme")).not.toBeChecked();
+        expect(onCancel).toBeCalledTimes(1);
     });
 
     it("should call onListButtonClick when list action link is clicked", async () => {
