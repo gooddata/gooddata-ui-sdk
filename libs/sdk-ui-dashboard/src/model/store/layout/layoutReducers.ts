@@ -458,6 +458,36 @@ const replaceInsightWidgetVisConfiguration: LayoutReducer<ReplaceWidgetVisConfig
 //
 //
 
+type ReplaceWidgetInsight = {
+    ref: ObjRef;
+    insightRef: ObjRef;
+    properties: VisualizationProperties | undefined;
+    header: WidgetHeader | undefined;
+};
+
+const replaceInsightWidgetInsight: LayoutReducer<ReplaceWidgetInsight> = (state, action) => {
+    invariant(state.layout);
+
+    const { insightRef, properties, ref, header } = action.payload;
+    const widget = getWidgetByRef(state, ref);
+
+    invariant(isInsightWidget(widget));
+
+    if (properties) {
+        widget.properties = properties;
+    }
+
+    if (header?.title) {
+        widget.title = header.title;
+    }
+
+    widget.insight = insightRef;
+};
+
+//
+//
+//
+
 type ReplaceWidgetFilterSettings = {
     ref: ObjRef;
     ignoreDashboardFilters?: IDashboardFilterReference[];
@@ -630,6 +660,7 @@ export const layoutReducers = {
     replaceWidgetDrills: withUndo(replaceWidgetDrill),
     replaceInsightWidgetVisProperties: withUndo(replaceInsightWidgetVisProperties),
     replaceInsightWidgetVisConfiguration: withUndo(replaceInsightWidgetVisConfiguration),
+    replaceInsightWidgetInsight: withUndo(replaceInsightWidgetInsight),
     replaceWidgetFilterSettings: withUndo(replaceWidgetFilterSettings),
     replaceWidgetDateDataset: withUndo(replaceWidgetDateDataset),
     replaceKpiWidgetMeasure: withUndo(replaceKpiWidgetMeasure),
