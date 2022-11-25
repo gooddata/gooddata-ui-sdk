@@ -1,7 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
 import { InsightDrillDefinition, isInsightWidget, ObjRef } from "@gooddata/sdk-model";
 import React, { useState } from "react";
-import { FormattedMessage } from "react-intl";
+import { defineMessages, FormattedMessage } from "react-intl";
 import { Typography } from "@gooddata/sdk-ui-kit";
 import { InsightDrillConfigList } from "./InsightDrillConfigList";
 import {
@@ -12,6 +12,7 @@ import {
     selectWidgetByRef,
     useDashboardDispatch,
     useDashboardSelector,
+    useToastMessages,
 } from "../../../../model";
 import { DrillOriginSelector } from "./DrillOriginSelector/DrillOriginSelector";
 import invariant from "ts-invariant";
@@ -21,6 +22,11 @@ import { IDrillConfigItem, isAvailableDrillTargetMeasure } from "../../../drill/
 import { IAvailableDrillTargetItem } from "../../../drill/DrillSelect/types";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import { ZoomInsightConfiguration } from "./ZoomInsightConfiguration";
+
+const messages = defineMessages({
+    added: { id: "messages.drill.InteractionConfiguredSuccess" },
+    modified: { id: "messages.drill.InteractionUpdatedSuccess" },
+});
 
 const mergeDrillConfigItems = (
     drillConfigItems: IDrillConfigItem[],
@@ -146,6 +152,8 @@ export const InsightDrillConfigPanel: React.FunctionComponent<IDrillConfigPanelP
 
     const settings = useDashboardSelector(selectSettings);
 
+    const { addSuccess } = useToastMessages();
+
     return (
         <>
             {!!settings.enableKDZooming && <ZoomInsightConfiguration widget={widget} />}
@@ -165,6 +173,12 @@ export const InsightDrillConfigPanel: React.FunctionComponent<IDrillConfigPanelP
                     }}
                     onSetup={(drill: InsightDrillDefinition, changedItem: IDrillConfigItem) => {
                         dispatch(modifyDrillsForInsightWidget(widgetRef, [drill]));
+                        // interaction is new if it has an incomplete item associated with it
+                        const isNew = incompleteItems.some(
+                            (incompleteItem) =>
+                                incompleteItem.localIdentifier === changedItem.localIdentifier,
+                        );
+                        addSuccess(isNew ? messages.added : messages.modified, { duration: 3000 });
                         deleteIncompleteItem(changedItem);
                     }}
                     onIncompleteChange={onChangeItem}
