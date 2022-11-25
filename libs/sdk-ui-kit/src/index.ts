@@ -15,6 +15,7 @@ export * from "./typings/domNative";
 export * from "./typings/overlay";
 export * from "./utils/constants";
 export * from "./utils/featureFlags";
+export * from "./utils/drag";
 export * from "./measureNumberFormat";
 export * from "./syntaxHighlightingInput";
 export * from "./Button";

@@ -10,6 +10,7 @@
 import { ColorFormats } from 'tinycolor2';
 import { Component } from 'react';
 import { CSSProperties } from 'react';
+import { DebouncedFunc } from 'lodash';
 import { FC } from 'react';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
 import { IAccessControlAware } from '@gooddata/sdk-model';
@@ -629,6 +630,9 @@ export type GranteeType = "user" | "inactive_owner" | "group" | "groupAll";
 
 // @internal
 export function guidFor(obj: any): string;
+
+// @internal
+export const handleOnGoodstrapDragEvent: DebouncedFunc<() => void>;
 
 // @internal (undocumented)
 export const Header: React_2.FC<IHeaderProps>;
