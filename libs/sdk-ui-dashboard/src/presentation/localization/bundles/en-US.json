@@ -97,6 +97,16 @@
         "comment": "Title of the link to collapse text of a notification message.",
         "limit": 0
     },
+    "messages.drill.InteractionConfiguredSuccess": {
+        "value": "Interaction configured.",
+        "comment": "Dialog. Configure of drill interaction is created.",
+        "limit": 0
+    },
+    "messages.drill.InteractionUpdatedSuccess": {
+        "value": "Interaction updated.",
+        "comment": "Dialog. Configure of drill interaction is updated.",
+        "limit": 0
+    },
     "filterBar.showAll": {
         "value": "Show all",
         "comment": "",
