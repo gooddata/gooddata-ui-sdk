@@ -1,11 +1,12 @@
 // (C) 2022 GoodData Corporation
 
 import { ConnectDragSource, DragSourceMonitor, useDrag } from "react-dnd";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { DraggableItem } from "./types";
 
 import { getEmptyImage } from "react-dnd-html5-backend";
 import isFunction from "lodash/isFunction";
+import { useBeforeDrag } from "./useBeforeDrag";
 
 type CollectedProps<TItem> = {
     isDragging: boolean;
@@ -50,18 +51,31 @@ export function useDashboardDrag<DragObject extends DraggableItem>(
         deps,
     );
 
+    const beforeDrag = useBeforeDrag();
+
+    const onInternalDragStart = useCallback(
+        (item: DragObject) => {
+            beforeDrag();
+
+            if (dragStart) {
+                dragStart(item);
+            }
+        },
+        [dragStart, beforeDrag],
+    );
+
     const hasHandledStart = useRef(false);
     useEffect(() => {
         if (collectedProps.isDragging) {
-            if (!hasHandledStart.current && dragStart) {
+            if (!hasHandledStart.current) {
                 const item = isFunction(dragItem) ? dragItem() : dragItem;
                 hasHandledStart.current = true;
-                dragStart(item);
+                onInternalDragStart(item);
             }
         } else {
             hasHandledStart.current = false;
         }
-    }, [collectedProps.isDragging]);
+    }, [collectedProps.isDragging, onInternalDragStart, dragItem]);
 
     useEffect(() => {
         if (hideDefaultPreview) {

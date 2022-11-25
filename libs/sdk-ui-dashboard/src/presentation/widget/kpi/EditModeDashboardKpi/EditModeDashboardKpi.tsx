@@ -136,6 +136,11 @@ export const EditModeDashboardKpi = (props: IDashboardKpiProps) => {
         [onDrill, result, kpiWidget],
     );
 
+    const handlePanelClosed = useCallback(
+        () => dispatch(uiActions.setConfigurationPanelOpened(false)),
+        [dispatch],
+    );
+
     const renderBeforeContent = useMemo(() => {
         const hasConfigComponent = !!KpiConfigurationComponent;
         const shouldHaveConfigRendered = isSelected && hasConfigPanelOpen;
@@ -146,12 +151,12 @@ export const EditModeDashboardKpi = (props: IDashboardKpiProps) => {
 
         return function KpiConfiguration() {
             return (
-                <ConfigurationBubble>
+                <ConfigurationBubble onClose={handlePanelClosed}>
                     <KpiConfigurationComponent widget={kpiWidget} />
                 </ConfigurationBubble>
             );
         };
-    }, [KpiConfigurationComponent, hasConfigPanelOpen, isSelected, kpiWidget]);
+    }, [KpiConfigurationComponent, hasConfigPanelOpen, isSelected, kpiWidget, handlePanelClosed]);
 
     useEffect(() => {
         if (error) {

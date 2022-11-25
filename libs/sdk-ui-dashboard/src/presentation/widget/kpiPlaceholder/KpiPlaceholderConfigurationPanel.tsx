@@ -4,7 +4,6 @@ import { ObjRef } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 
 import {
-    eagerRemoveSectionItem,
     replaceSectionItem,
     selectAllCatalogMeasuresMap,
     selectSettings,
@@ -21,10 +20,11 @@ import { KpiPlaceholderWidget } from "../../../widgets";
 
 interface IKpiPlaceholderConfigurationPanelProps {
     widget: KpiPlaceholderWidget;
+    onClose: () => void;
 }
 
 export const KpiPlaceholderConfigurationPanel: React.FC<IKpiPlaceholderConfigurationPanelProps> = (props) => {
-    const { widget } = props;
+    const { widget, onClose } = props;
 
     const dispatch = useDashboardDispatch();
 
@@ -78,10 +78,5 @@ export const KpiPlaceholderConfigurationPanel: React.FC<IKpiPlaceholderConfigura
         [measuresMap, settings, replaceKpiProcessing, sectionIndex, itemIndex],
     );
 
-    const handlePanelClosed = useCallback(() => {
-        dispatch(uiActions.setConfigurationPanelOpened(false));
-        dispatch(eagerRemoveSectionItem(sectionIndex, itemIndex));
-    }, [dispatch, itemIndex, sectionIndex]);
-
-    return <KpiConfigurationPanelCore onMeasureChange={handleMeasureChanged} onClose={handlePanelClosed} />;
+    return <KpiConfigurationPanelCore onMeasureChange={handleMeasureChanged} onClose={onClose} />;
 };
