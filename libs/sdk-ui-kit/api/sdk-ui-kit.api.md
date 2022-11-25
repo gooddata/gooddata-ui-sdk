@@ -3510,6 +3510,8 @@ export interface IStylingEditorDialogProps<T> extends IStylingEditorDialogFooter
     // (undocumented)
     onInvalidDefinition?: (ref: ObjRef) => void;
     // (undocumented)
+    showBackButton?: boolean;
+    // (undocumented)
     stylingItem?: IStylingPickerItem<T>;
     // (undocumented)
     title: string;
