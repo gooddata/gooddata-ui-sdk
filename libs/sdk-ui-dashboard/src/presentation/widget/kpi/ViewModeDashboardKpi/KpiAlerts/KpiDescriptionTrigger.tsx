@@ -20,10 +20,12 @@ export const KpiDescriptionTrigger: React.FC<IKpiDescriptionTriggerProps> = (pro
             ? kpi.description
             : getKpiMetricDescription(metrics, kpi.kpi.metric);
 
-    if (visible && description && description !== "") {
+    const trimmedDescription = description?.trim();
+
+    if (visible && trimmedDescription && trimmedDescription !== "") {
         return (
             <div className="dash-item-action-description">
-                <DescriptionPanel description={description} />
+                <DescriptionPanel description={trimmedDescription} />
             </div>
         );
     }

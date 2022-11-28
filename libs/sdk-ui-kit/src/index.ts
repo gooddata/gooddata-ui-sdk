@@ -56,3 +56,4 @@ export * from "./Hyperlink";
 export * from "./ScrollablePanel";
 export * from "./DescriptionPanel";
 export * from "./SettingItem";
+export * from "./TextAreaWithSubmit";
