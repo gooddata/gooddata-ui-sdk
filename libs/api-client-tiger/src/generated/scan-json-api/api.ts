@@ -333,6 +333,25 @@ export type TestDefinitionRequestTypeEnum =
     typeof TestDefinitionRequestTypeEnum[keyof typeof TestDefinitionRequestTypeEnum];
 
 /**
+ * A structure containing duration of the test queries run on a data source. It is omitted if an error happens.
+ * @export
+ * @interface TestQueryDuration
+ */
+export interface TestQueryDuration {
+    /**
+     * Field containing duration of a test select query on a data source. In milliseconds.
+     * @type {number}
+     * @memberof TestQueryDuration
+     */
+    simpleSelect: number;
+    /**
+     * Field containing duration of a test \'create table as select\' query on a datasource. In milliseconds. The field is omitted if a data source doesn\'t support caching.
+     * @type {number}
+     * @memberof TestQueryDuration
+     */
+    createCacheTable?: number;
+}
+/**
  * A request containing all information for testing existing data source.
  * @export
  * @interface TestRequest
@@ -405,6 +424,12 @@ export interface TestResponse {
      * @memberof TestResponse
      */
     error?: string;
+    /**
+     *
+     * @type {TestQueryDuration}
+     * @memberof TestResponse
+     */
+    queryDurationMillis?: TestQueryDuration;
 }
 
 /**

@@ -1179,6 +1179,8 @@ export const DeclarativeSingleWorkspacePermissionNameEnum = {
     MANAGE: "MANAGE",
     ANALYZE: "ANALYZE",
     EXPORT: "EXPORT",
+    EXPORT_TABULAR: "EXPORT_TABULAR",
+    EXPORT_PDF: "EXPORT_PDF",
     VIEW: "VIEW",
 } as const;
 
@@ -1290,6 +1292,24 @@ export interface DeclarativeUser {
      * @memberof DeclarativeUser
      */
     settings?: Array<DeclarativeSetting>;
+    /**
+     * User first name
+     * @type {string}
+     * @memberof DeclarativeUser
+     */
+    firstname?: string;
+    /**
+     * User last name
+     * @type {string}
+     * @memberof DeclarativeUser
+     */
+    lastname?: string;
+    /**
+     * User email address
+     * @type {string}
+     * @memberof DeclarativeUser
+     */
+    email?: string;
 }
 /**
  * A user-group and its properties
@@ -1309,6 +1329,12 @@ export interface DeclarativeUserGroup {
      * @memberof DeclarativeUserGroup
      */
     parents?: Array<UserGroupIdentifier>;
+    /**
+     * Name of UserGroup
+     * @type {string}
+     * @memberof DeclarativeUserGroup
+     */
+    name?: string;
 }
 /**
  * Declarative form of userGroups and its properties.
@@ -1575,6 +1601,9 @@ export interface DeclarativeWorkspaceHierarchyPermission {
 export const DeclarativeWorkspaceHierarchyPermissionNameEnum = {
     MANAGE: "MANAGE",
     ANALYZE: "ANALYZE",
+    EXPORT: "EXPORT",
+    EXPORT_TABULAR: "EXPORT_TABULAR",
+    EXPORT_PDF: "EXPORT_PDF",
     VIEW: "VIEW",
 } as const;
 
@@ -1910,10 +1939,10 @@ export interface JsonApiAnalyticalDashboardIn {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardInAttributes}
      * @memberof JsonApiAnalyticalDashboardIn
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
 }
 
 export const JsonApiAnalyticalDashboardInTypeEnum = {
@@ -1923,6 +1952,43 @@ export const JsonApiAnalyticalDashboardInTypeEnum = {
 export type JsonApiAnalyticalDashboardInTypeEnum =
     typeof JsonApiAnalyticalDashboardInTypeEnum[keyof typeof JsonApiAnalyticalDashboardInTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiAnalyticalDashboardInAttributes
+ */
+export interface JsonApiAnalyticalDashboardInAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiAnalyticalDashboardInAttributes
+     */
+    title?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiAnalyticalDashboardInAttributes
+     */
+    description?: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof JsonApiAnalyticalDashboardInAttributes
+     */
+    tags?: Array<string>;
+    /**
+     *
+     * @type {boolean}
+     * @memberof JsonApiAnalyticalDashboardInAttributes
+     */
+    areRelationsValid?: boolean;
+    /**
+     * Free-form JSON content.
+     * @type {object}
+     * @memberof JsonApiAnalyticalDashboardInAttributes
+     */
+    content?: object;
+}
 /**
  *
  * @export
@@ -1983,10 +2049,16 @@ export interface JsonApiAnalyticalDashboardOut {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardOutMeta}
      * @memberof JsonApiAnalyticalDashboardOut
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    meta?: JsonApiAnalyticalDashboardOutMeta;
+    /**
+     *
+     * @type {JsonApiAnalyticalDashboardInAttributes}
+     * @memberof JsonApiAnalyticalDashboardOut
+     */
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationships}
@@ -2065,6 +2137,47 @@ export interface JsonApiAnalyticalDashboardOutList {
      */
     included?: Array<JsonApiAnalyticalDashboardOutIncludes>;
 }
+/**
+ *
+ * @export
+ * @interface JsonApiAnalyticalDashboardOutMeta
+ */
+export interface JsonApiAnalyticalDashboardOutMeta {
+    /**
+     *
+     * @type {JsonApiAnalyticalDashboardOutMetaOrigin}
+     * @memberof JsonApiAnalyticalDashboardOutMeta
+     */
+    origin?: JsonApiAnalyticalDashboardOutMetaOrigin;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiAnalyticalDashboardOutMetaOrigin
+ */
+export interface JsonApiAnalyticalDashboardOutMetaOrigin {
+    /**
+     * defines type of the origin of the entity
+     * @type {string}
+     * @memberof JsonApiAnalyticalDashboardOutMetaOrigin
+     */
+    originType: JsonApiAnalyticalDashboardOutMetaOriginOriginTypeEnum;
+    /**
+     * defines id of the workspace where the entity comes from
+     * @type {string}
+     * @memberof JsonApiAnalyticalDashboardOutMetaOrigin
+     */
+    originId: string;
+}
+
+export const JsonApiAnalyticalDashboardOutMetaOriginOriginTypeEnum = {
+    LOCAL: "LOCAL",
+    REMOTE: "REMOTE",
+} as const;
+
+export type JsonApiAnalyticalDashboardOutMetaOriginOriginTypeEnum =
+    typeof JsonApiAnalyticalDashboardOutMetaOriginOriginTypeEnum[keyof typeof JsonApiAnalyticalDashboardOutMetaOriginOriginTypeEnum];
+
 /**
  *
  * @export
@@ -2225,10 +2338,16 @@ export interface JsonApiAnalyticalDashboardOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardOutMeta}
      * @memberof JsonApiAnalyticalDashboardOutWithLinks
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    meta?: JsonApiAnalyticalDashboardOutMeta;
+    /**
+     *
+     * @type {JsonApiAnalyticalDashboardInAttributes}
+     * @memberof JsonApiAnalyticalDashboardOutWithLinks
+     */
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationships}
@@ -2270,10 +2389,10 @@ export interface JsonApiAnalyticalDashboardPatch {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardInAttributes}
      * @memberof JsonApiAnalyticalDashboardPatch
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
 }
 
 export const JsonApiAnalyticalDashboardPatchTypeEnum = {
@@ -2283,43 +2402,6 @@ export const JsonApiAnalyticalDashboardPatchTypeEnum = {
 export type JsonApiAnalyticalDashboardPatchTypeEnum =
     typeof JsonApiAnalyticalDashboardPatchTypeEnum[keyof typeof JsonApiAnalyticalDashboardPatchTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiAnalyticalDashboardPatchAttributes
- */
-export interface JsonApiAnalyticalDashboardPatchAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiAnalyticalDashboardPatchAttributes
-     */
-    title?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiAnalyticalDashboardPatchAttributes
-     */
-    description?: string;
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof JsonApiAnalyticalDashboardPatchAttributes
-     */
-    tags?: Array<string>;
-    /**
-     *
-     * @type {boolean}
-     * @memberof JsonApiAnalyticalDashboardPatchAttributes
-     */
-    areRelationsValid?: boolean;
-    /**
-     * Free-form JSON content.
-     * @type {object}
-     * @memberof JsonApiAnalyticalDashboardPatchAttributes
-     */
-    content?: object;
-}
 /**
  *
  * @export
@@ -2541,6 +2623,12 @@ export interface JsonApiAttributeOut {
      * @memberof JsonApiAttributeOut
      */
     id: string;
+    /**
+     *
+     * @type {JsonApiAnalyticalDashboardOutMeta}
+     * @memberof JsonApiAttributeOut
+     */
+    meta?: JsonApiAnalyticalDashboardOutMeta;
     /**
      *
      * @type {JsonApiAttributeOutAttributes}
@@ -2771,6 +2859,12 @@ export interface JsonApiAttributeOutWithLinks {
      * @memberof JsonApiAttributeOutWithLinks
      */
     id: string;
+    /**
+     *
+     * @type {JsonApiAnalyticalDashboardOutMeta}
+     * @memberof JsonApiAttributeOutWithLinks
+     */
+    meta?: JsonApiAnalyticalDashboardOutMeta;
     /**
      *
      * @type {JsonApiAttributeOutAttributes}
@@ -3065,10 +3159,10 @@ export interface JsonApiCookieSecurityConfigurationIn {
     id: string;
     /**
      *
-     * @type {JsonApiCookieSecurityConfigurationOutAttributes}
+     * @type {JsonApiCookieSecurityConfigurationInAttributes}
      * @memberof JsonApiCookieSecurityConfigurationIn
      */
-    attributes?: JsonApiCookieSecurityConfigurationOutAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationInAttributes;
 }
 
 export const JsonApiCookieSecurityConfigurationInTypeEnum = {
@@ -3078,6 +3172,25 @@ export const JsonApiCookieSecurityConfigurationInTypeEnum = {
 export type JsonApiCookieSecurityConfigurationInTypeEnum =
     typeof JsonApiCookieSecurityConfigurationInTypeEnum[keyof typeof JsonApiCookieSecurityConfigurationInTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiCookieSecurityConfigurationInAttributes
+ */
+export interface JsonApiCookieSecurityConfigurationInAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiCookieSecurityConfigurationInAttributes
+     */
+    lastRotation?: string;
+    /**
+     * Length of interval between automatic rotations expressed in format of ISO 8601 duration
+     * @type {string}
+     * @memberof JsonApiCookieSecurityConfigurationInAttributes
+     */
+    rotationInterval?: string;
+}
 /**
  *
  * @export
@@ -3111,10 +3224,10 @@ export interface JsonApiCookieSecurityConfigurationOut {
     id: string;
     /**
      *
-     * @type {JsonApiCookieSecurityConfigurationOutAttributes}
+     * @type {JsonApiCookieSecurityConfigurationInAttributes}
      * @memberof JsonApiCookieSecurityConfigurationOut
      */
-    attributes?: JsonApiCookieSecurityConfigurationOutAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationInAttributes;
 }
 
 export const JsonApiCookieSecurityConfigurationOutTypeEnum = {
@@ -3124,25 +3237,6 @@ export const JsonApiCookieSecurityConfigurationOutTypeEnum = {
 export type JsonApiCookieSecurityConfigurationOutTypeEnum =
     typeof JsonApiCookieSecurityConfigurationOutTypeEnum[keyof typeof JsonApiCookieSecurityConfigurationOutTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiCookieSecurityConfigurationOutAttributes
- */
-export interface JsonApiCookieSecurityConfigurationOutAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiCookieSecurityConfigurationOutAttributes
-     */
-    lastRotation?: string;
-    /**
-     * Length of interval between automatic rotations expressed in format of ISO 8601 duration
-     * @type {string}
-     * @memberof JsonApiCookieSecurityConfigurationOutAttributes
-     */
-    rotationInterval?: string;
-}
 /**
  *
  * @export
@@ -3182,10 +3276,10 @@ export interface JsonApiCookieSecurityConfigurationPatch {
     id: string;
     /**
      *
-     * @type {JsonApiCookieSecurityConfigurationOutAttributes}
+     * @type {JsonApiCookieSecurityConfigurationInAttributes}
      * @memberof JsonApiCookieSecurityConfigurationPatch
      */
-    attributes?: JsonApiCookieSecurityConfigurationOutAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationInAttributes;
 }
 
 export const JsonApiCookieSecurityConfigurationPatchTypeEnum = {
@@ -3456,10 +3550,10 @@ export interface JsonApiCustomApplicationSettingIn {
     id: string;
     /**
      *
-     * @type {JsonApiCustomApplicationSettingOutAttributes}
+     * @type {JsonApiCustomApplicationSettingInAttributes}
      * @memberof JsonApiCustomApplicationSettingIn
      */
-    attributes: JsonApiCustomApplicationSettingOutAttributes;
+    attributes: JsonApiCustomApplicationSettingInAttributes;
 }
 
 export const JsonApiCustomApplicationSettingInTypeEnum = {
@@ -3469,6 +3563,25 @@ export const JsonApiCustomApplicationSettingInTypeEnum = {
 export type JsonApiCustomApplicationSettingInTypeEnum =
     typeof JsonApiCustomApplicationSettingInTypeEnum[keyof typeof JsonApiCustomApplicationSettingInTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiCustomApplicationSettingInAttributes
+ */
+export interface JsonApiCustomApplicationSettingInAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiCustomApplicationSettingInAttributes
+     */
+    applicationName: string;
+    /**
+     *
+     * @type {object}
+     * @memberof JsonApiCustomApplicationSettingInAttributes
+     */
+    content: object;
+}
 /**
  *
  * @export
@@ -3502,10 +3615,16 @@ export interface JsonApiCustomApplicationSettingOut {
     id: string;
     /**
      *
-     * @type {JsonApiCustomApplicationSettingOutAttributes}
+     * @type {JsonApiAnalyticalDashboardOutMeta}
      * @memberof JsonApiCustomApplicationSettingOut
      */
-    attributes: JsonApiCustomApplicationSettingOutAttributes;
+    meta?: JsonApiAnalyticalDashboardOutMeta;
+    /**
+     *
+     * @type {JsonApiCustomApplicationSettingInAttributes}
+     * @memberof JsonApiCustomApplicationSettingOut
+     */
+    attributes: JsonApiCustomApplicationSettingInAttributes;
 }
 
 export const JsonApiCustomApplicationSettingOutTypeEnum = {
@@ -3515,25 +3634,6 @@ export const JsonApiCustomApplicationSettingOutTypeEnum = {
 export type JsonApiCustomApplicationSettingOutTypeEnum =
     typeof JsonApiCustomApplicationSettingOutTypeEnum[keyof typeof JsonApiCustomApplicationSettingOutTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiCustomApplicationSettingOutAttributes
- */
-export interface JsonApiCustomApplicationSettingOutAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiCustomApplicationSettingOutAttributes
-     */
-    applicationName: string;
-    /**
-     *
-     * @type {object}
-     * @memberof JsonApiCustomApplicationSettingOutAttributes
-     */
-    content: object;
-}
 /**
  *
  * @export
@@ -3592,10 +3692,16 @@ export interface JsonApiCustomApplicationSettingOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiCustomApplicationSettingOutAttributes}
+     * @type {JsonApiAnalyticalDashboardOutMeta}
      * @memberof JsonApiCustomApplicationSettingOutWithLinks
      */
-    attributes: JsonApiCustomApplicationSettingOutAttributes;
+    meta?: JsonApiAnalyticalDashboardOutMeta;
+    /**
+     *
+     * @type {JsonApiCustomApplicationSettingInAttributes}
+     * @memberof JsonApiCustomApplicationSettingOutWithLinks
+     */
+    attributes: JsonApiCustomApplicationSettingInAttributes;
     /**
      *
      * @type {ObjectLinks}
@@ -3696,10 +3802,10 @@ export interface JsonApiDashboardPluginIn {
     id: string;
     /**
      *
-     * @type {JsonApiDashboardPluginPatchAttributes}
+     * @type {JsonApiDashboardPluginInAttributes}
      * @memberof JsonApiDashboardPluginIn
      */
-    attributes?: JsonApiDashboardPluginPatchAttributes;
+    attributes?: JsonApiDashboardPluginInAttributes;
 }
 
 export const JsonApiDashboardPluginInTypeEnum = {
@@ -3709,6 +3815,43 @@ export const JsonApiDashboardPluginInTypeEnum = {
 export type JsonApiDashboardPluginInTypeEnum =
     typeof JsonApiDashboardPluginInTypeEnum[keyof typeof JsonApiDashboardPluginInTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiDashboardPluginInAttributes
+ */
+export interface JsonApiDashboardPluginInAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiDashboardPluginInAttributes
+     */
+    title?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiDashboardPluginInAttributes
+     */
+    description?: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof JsonApiDashboardPluginInAttributes
+     */
+    tags?: Array<string>;
+    /**
+     *
+     * @type {boolean}
+     * @memberof JsonApiDashboardPluginInAttributes
+     */
+    areRelationsValid?: boolean;
+    /**
+     * Free-form JSON content.
+     * @type {object}
+     * @memberof JsonApiDashboardPluginInAttributes
+     */
+    content?: object;
+}
 /**
  *
  * @export
@@ -3769,10 +3912,16 @@ export interface JsonApiDashboardPluginOut {
     id: string;
     /**
      *
-     * @type {JsonApiDashboardPluginPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardOutMeta}
      * @memberof JsonApiDashboardPluginOut
      */
-    attributes?: JsonApiDashboardPluginPatchAttributes;
+    meta?: JsonApiAnalyticalDashboardOutMeta;
+    /**
+     *
+     * @type {JsonApiDashboardPluginInAttributes}
+     * @memberof JsonApiDashboardPluginOut
+     */
+    attributes?: JsonApiDashboardPluginInAttributes;
 }
 
 export const JsonApiDashboardPluginOutTypeEnum = {
@@ -3840,10 +3989,16 @@ export interface JsonApiDashboardPluginOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiDashboardPluginPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardOutMeta}
      * @memberof JsonApiDashboardPluginOutWithLinks
      */
-    attributes?: JsonApiDashboardPluginPatchAttributes;
+    meta?: JsonApiAnalyticalDashboardOutMeta;
+    /**
+     *
+     * @type {JsonApiDashboardPluginInAttributes}
+     * @memberof JsonApiDashboardPluginOutWithLinks
+     */
+    attributes?: JsonApiDashboardPluginInAttributes;
     /**
      *
      * @type {ObjectLinks}
@@ -3879,10 +4034,10 @@ export interface JsonApiDashboardPluginPatch {
     id: string;
     /**
      *
-     * @type {JsonApiDashboardPluginPatchAttributes}
+     * @type {JsonApiDashboardPluginInAttributes}
      * @memberof JsonApiDashboardPluginPatch
      */
-    attributes?: JsonApiDashboardPluginPatchAttributes;
+    attributes?: JsonApiDashboardPluginInAttributes;
 }
 
 export const JsonApiDashboardPluginPatchTypeEnum = {
@@ -3892,43 +4047,6 @@ export const JsonApiDashboardPluginPatchTypeEnum = {
 export type JsonApiDashboardPluginPatchTypeEnum =
     typeof JsonApiDashboardPluginPatchTypeEnum[keyof typeof JsonApiDashboardPluginPatchTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiDashboardPluginPatchAttributes
- */
-export interface JsonApiDashboardPluginPatchAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiDashboardPluginPatchAttributes
-     */
-    title?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiDashboardPluginPatchAttributes
-     */
-    description?: string;
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof JsonApiDashboardPluginPatchAttributes
-     */
-    tags?: Array<string>;
-    /**
-     *
-     * @type {boolean}
-     * @memberof JsonApiDashboardPluginPatchAttributes
-     */
-    areRelationsValid?: boolean;
-    /**
-     * Free-form JSON content.
-     * @type {object}
-     * @memberof JsonApiDashboardPluginPatchAttributes
-     */
-    content?: object;
-}
 /**
  *
  * @export
@@ -4867,6 +4985,12 @@ export interface JsonApiDatasetOut {
     id: string;
     /**
      *
+     * @type {JsonApiAnalyticalDashboardOutMeta}
+     * @memberof JsonApiDatasetOut
+     */
+    meta?: JsonApiAnalyticalDashboardOutMeta;
+    /**
+     *
      * @type {JsonApiDatasetOutAttributes}
      * @memberof JsonApiDatasetOut
      */
@@ -5107,6 +5231,12 @@ export interface JsonApiDatasetOutWithLinks {
     id: string;
     /**
      *
+     * @type {JsonApiAnalyticalDashboardOutMeta}
+     * @memberof JsonApiDatasetOutWithLinks
+     */
+    meta?: JsonApiAnalyticalDashboardOutMeta;
+    /**
+     *
      * @type {JsonApiDatasetOutAttributes}
      * @memberof JsonApiDatasetOutWithLinks
      */
@@ -5315,6 +5445,12 @@ export interface JsonApiFactOut {
     id: string;
     /**
      *
+     * @type {JsonApiAnalyticalDashboardOutMeta}
+     * @memberof JsonApiFactOut
+     */
+    meta?: JsonApiAnalyticalDashboardOutMeta;
+    /**
+     *
      * @type {JsonApiFactOutAttributes}
      * @memberof JsonApiFactOut
      */
@@ -5453,6 +5589,12 @@ export interface JsonApiFactOutWithLinks {
     id: string;
     /**
      *
+     * @type {JsonApiAnalyticalDashboardOutMeta}
+     * @memberof JsonApiFactOutWithLinks
+     */
+    meta?: JsonApiAnalyticalDashboardOutMeta;
+    /**
+     *
      * @type {JsonApiFactOutAttributes}
      * @memberof JsonApiFactOutWithLinks
      */
@@ -5498,10 +5640,10 @@ export interface JsonApiFilterContextIn {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardInAttributes}
      * @memberof JsonApiFilterContextIn
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
 }
 
 export const JsonApiFilterContextInTypeEnum = {
@@ -5571,10 +5713,16 @@ export interface JsonApiFilterContextOut {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardOutMeta}
      * @memberof JsonApiFilterContextOut
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    meta?: JsonApiAnalyticalDashboardOutMeta;
+    /**
+     *
+     * @type {JsonApiAnalyticalDashboardInAttributes}
+     * @memberof JsonApiFilterContextOut
+     */
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
     /**
      *
      * @type {JsonApiFilterContextOutRelationships}
@@ -5707,10 +5855,16 @@ export interface JsonApiFilterContextOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardOutMeta}
      * @memberof JsonApiFilterContextOutWithLinks
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    meta?: JsonApiAnalyticalDashboardOutMeta;
+    /**
+     *
+     * @type {JsonApiAnalyticalDashboardInAttributes}
+     * @memberof JsonApiFilterContextOutWithLinks
+     */
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
     /**
      *
      * @type {JsonApiFilterContextOutRelationships}
@@ -5752,10 +5906,10 @@ export interface JsonApiFilterContextPatch {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardInAttributes}
      * @memberof JsonApiFilterContextPatch
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
 }
 
 export const JsonApiFilterContextPatchTypeEnum = {
@@ -5823,6 +5977,12 @@ export interface JsonApiLabelOut {
      * @memberof JsonApiLabelOut
      */
     id: string;
+    /**
+     *
+     * @type {JsonApiAnalyticalDashboardOutMeta}
+     * @memberof JsonApiLabelOut
+     */
+    meta?: JsonApiAnalyticalDashboardOutMeta;
     /**
      *
      * @type {JsonApiLabelOutAttributes}
@@ -6000,6 +6160,12 @@ export interface JsonApiLabelOutWithLinks {
     id: string;
     /**
      *
+     * @type {JsonApiAnalyticalDashboardOutMeta}
+     * @memberof JsonApiLabelOutWithLinks
+     */
+    meta?: JsonApiAnalyticalDashboardOutMeta;
+    /**
+     *
      * @type {JsonApiLabelOutAttributes}
      * @memberof JsonApiLabelOutWithLinks
      */
@@ -6052,10 +6218,10 @@ export interface JsonApiMetricIn {
     id: string;
     /**
      *
-     * @type {JsonApiMetricOutAttributes}
+     * @type {JsonApiMetricInAttributes}
      * @memberof JsonApiMetricIn
      */
-    attributes: JsonApiMetricOutAttributes;
+    attributes: JsonApiMetricInAttributes;
 }
 
 export const JsonApiMetricInTypeEnum = {
@@ -6064,6 +6230,62 @@ export const JsonApiMetricInTypeEnum = {
 
 export type JsonApiMetricInTypeEnum = typeof JsonApiMetricInTypeEnum[keyof typeof JsonApiMetricInTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiMetricInAttributes
+ */
+export interface JsonApiMetricInAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiMetricInAttributes
+     */
+    title?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiMetricInAttributes
+     */
+    description?: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof JsonApiMetricInAttributes
+     */
+    tags?: Array<string>;
+    /**
+     *
+     * @type {boolean}
+     * @memberof JsonApiMetricInAttributes
+     */
+    areRelationsValid?: boolean;
+    /**
+     *
+     * @type {JsonApiMetricInAttributesContent}
+     * @memberof JsonApiMetricInAttributes
+     */
+    content: JsonApiMetricInAttributesContent;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiMetricInAttributesContent
+ */
+export interface JsonApiMetricInAttributesContent {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiMetricInAttributesContent
+     */
+    format?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiMetricInAttributesContent
+     */
+    maql: string;
+}
 /**
  *
  * @export
@@ -6124,10 +6346,16 @@ export interface JsonApiMetricOut {
     id: string;
     /**
      *
-     * @type {JsonApiMetricOutAttributes}
+     * @type {JsonApiAnalyticalDashboardOutMeta}
      * @memberof JsonApiMetricOut
      */
-    attributes: JsonApiMetricOutAttributes;
+    meta?: JsonApiAnalyticalDashboardOutMeta;
+    /**
+     *
+     * @type {JsonApiMetricInAttributes}
+     * @memberof JsonApiMetricOut
+     */
+    attributes: JsonApiMetricInAttributes;
     /**
      *
      * @type {JsonApiMetricOutRelationships}
@@ -6142,43 +6370,6 @@ export const JsonApiMetricOutTypeEnum = {
 
 export type JsonApiMetricOutTypeEnum = typeof JsonApiMetricOutTypeEnum[keyof typeof JsonApiMetricOutTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiMetricOutAttributes
- */
-export interface JsonApiMetricOutAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiMetricOutAttributes
-     */
-    title?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiMetricOutAttributes
-     */
-    description?: string;
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof JsonApiMetricOutAttributes
-     */
-    tags?: Array<string>;
-    /**
-     *
-     * @type {boolean}
-     * @memberof JsonApiMetricOutAttributes
-     */
-    areRelationsValid?: boolean;
-    /**
-     *
-     * @type {JsonApiMetricPatchAttributesContent}
-     * @memberof JsonApiMetricOutAttributes
-     */
-    content: JsonApiMetricPatchAttributesContent;
-}
 /**
  *
  * @export
@@ -6310,10 +6501,16 @@ export interface JsonApiMetricOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiMetricOutAttributes}
+     * @type {JsonApiAnalyticalDashboardOutMeta}
      * @memberof JsonApiMetricOutWithLinks
      */
-    attributes: JsonApiMetricOutAttributes;
+    meta?: JsonApiAnalyticalDashboardOutMeta;
+    /**
+     *
+     * @type {JsonApiMetricInAttributes}
+     * @memberof JsonApiMetricOutWithLinks
+     */
+    attributes: JsonApiMetricInAttributes;
     /**
      *
      * @type {JsonApiMetricOutRelationships}
@@ -6400,29 +6597,10 @@ export interface JsonApiMetricPatchAttributes {
     areRelationsValid?: boolean;
     /**
      *
-     * @type {JsonApiMetricPatchAttributesContent}
+     * @type {JsonApiMetricInAttributesContent}
      * @memberof JsonApiMetricPatchAttributes
      */
-    content?: JsonApiMetricPatchAttributesContent;
-}
-/**
- *
- * @export
- * @interface JsonApiMetricPatchAttributesContent
- */
-export interface JsonApiMetricPatchAttributesContent {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiMetricPatchAttributesContent
-     */
-    format?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiMetricPatchAttributesContent
-     */
-    maql: string;
+    content?: JsonApiMetricInAttributesContent;
 }
 /**
  *
@@ -6795,10 +6973,10 @@ export interface JsonApiOrganizationSettingIn {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceSettingPatchAttributes}
+     * @type {JsonApiWorkspaceSettingInAttributes}
      * @memberof JsonApiOrganizationSettingIn
      */
-    attributes?: JsonApiWorkspaceSettingPatchAttributes;
+    attributes?: JsonApiWorkspaceSettingInAttributes;
 }
 
 export const JsonApiOrganizationSettingInTypeEnum = {
@@ -6841,10 +7019,10 @@ export interface JsonApiOrganizationSettingOut {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceSettingPatchAttributes}
+     * @type {JsonApiWorkspaceSettingInAttributes}
      * @memberof JsonApiOrganizationSettingOut
      */
-    attributes?: JsonApiWorkspaceSettingPatchAttributes;
+    attributes?: JsonApiWorkspaceSettingInAttributes;
 }
 
 export const JsonApiOrganizationSettingOutTypeEnum = {
@@ -6912,10 +7090,10 @@ export interface JsonApiOrganizationSettingOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceSettingPatchAttributes}
+     * @type {JsonApiWorkspaceSettingInAttributes}
      * @memberof JsonApiOrganizationSettingOutWithLinks
      */
-    attributes?: JsonApiWorkspaceSettingPatchAttributes;
+    attributes?: JsonApiWorkspaceSettingInAttributes;
     /**
      *
      * @type {ObjectLinks}
@@ -6951,10 +7129,10 @@ export interface JsonApiOrganizationSettingPatch {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceSettingPatchAttributes}
+     * @type {JsonApiWorkspaceSettingInAttributes}
      * @memberof JsonApiOrganizationSettingPatch
      */
-    attributes?: JsonApiWorkspaceSettingPatchAttributes;
+    attributes?: JsonApiWorkspaceSettingInAttributes;
 }
 
 export const JsonApiOrganizationSettingPatchTypeEnum = {
@@ -7197,6 +7375,12 @@ export interface JsonApiUserGroupIn {
     id: string;
     /**
      *
+     * @type {JsonApiUserGroupInAttributes}
+     * @memberof JsonApiUserGroupIn
+     */
+    attributes?: JsonApiUserGroupInAttributes;
+    /**
+     *
      * @type {JsonApiUserGroupInRelationships}
      * @memberof JsonApiUserGroupIn
      */
@@ -7210,6 +7394,19 @@ export const JsonApiUserGroupInTypeEnum = {
 export type JsonApiUserGroupInTypeEnum =
     typeof JsonApiUserGroupInTypeEnum[keyof typeof JsonApiUserGroupInTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiUserGroupInAttributes
+ */
+export interface JsonApiUserGroupInAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiUserGroupInAttributes
+     */
+    name?: string;
+}
 /**
  *
  * @export
@@ -7296,6 +7493,12 @@ export interface JsonApiUserGroupOut {
     id: string;
     /**
      *
+     * @type {JsonApiUserGroupInAttributes}
+     * @memberof JsonApiUserGroupOut
+     */
+    attributes?: JsonApiUserGroupInAttributes;
+    /**
+     *
      * @type {JsonApiUserGroupInRelationships}
      * @memberof JsonApiUserGroupOut
      */
@@ -7379,6 +7582,12 @@ export interface JsonApiUserGroupOutWithLinks {
     id: string;
     /**
      *
+     * @type {JsonApiUserGroupInAttributes}
+     * @memberof JsonApiUserGroupOutWithLinks
+     */
+    attributes?: JsonApiUserGroupInAttributes;
+    /**
+     *
      * @type {JsonApiUserGroupInRelationships}
      * @memberof JsonApiUserGroupOutWithLinks
      */
@@ -7416,6 +7625,12 @@ export interface JsonApiUserGroupPatch {
      * @memberof JsonApiUserGroupPatch
      */
     id: string;
+    /**
+     *
+     * @type {JsonApiUserGroupInAttributes}
+     * @memberof JsonApiUserGroupPatch
+     */
+    attributes?: JsonApiUserGroupInAttributes;
     /**
      *
      * @type {JsonApiUserGroupInRelationships}
@@ -7501,6 +7716,24 @@ export interface JsonApiUserInAttributes {
      * @memberof JsonApiUserInAttributes
      */
     authenticationId?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiUserInAttributes
+     */
+    firstname?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiUserInAttributes
+     */
+    lastname?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiUserInAttributes
+     */
+    email?: string;
 }
 /**
  *
@@ -7759,10 +7992,10 @@ export interface JsonApiUserSettingIn {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceSettingPatchAttributes}
+     * @type {JsonApiWorkspaceSettingInAttributes}
      * @memberof JsonApiUserSettingIn
      */
-    attributes?: JsonApiWorkspaceSettingPatchAttributes;
+    attributes?: JsonApiWorkspaceSettingInAttributes;
 }
 
 export const JsonApiUserSettingInTypeEnum = {
@@ -7805,10 +8038,10 @@ export interface JsonApiUserSettingOut {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceSettingPatchAttributes}
+     * @type {JsonApiWorkspaceSettingInAttributes}
      * @memberof JsonApiUserSettingOut
      */
-    attributes?: JsonApiWorkspaceSettingPatchAttributes;
+    attributes?: JsonApiWorkspaceSettingInAttributes;
 }
 
 export const JsonApiUserSettingOutTypeEnum = {
@@ -7876,10 +8109,10 @@ export interface JsonApiUserSettingOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceSettingPatchAttributes}
+     * @type {JsonApiWorkspaceSettingInAttributes}
      * @memberof JsonApiUserSettingOutWithLinks
      */
-    attributes?: JsonApiWorkspaceSettingPatchAttributes;
+    attributes?: JsonApiWorkspaceSettingInAttributes;
     /**
      *
      * @type {ObjectLinks}
@@ -7922,10 +8155,10 @@ export interface JsonApiVisualizationObjectIn {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardInAttributes}
      * @memberof JsonApiVisualizationObjectIn
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
 }
 
 export const JsonApiVisualizationObjectInTypeEnum = {
@@ -7995,10 +8228,16 @@ export interface JsonApiVisualizationObjectOut {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardOutMeta}
      * @memberof JsonApiVisualizationObjectOut
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    meta?: JsonApiAnalyticalDashboardOutMeta;
+    /**
+     *
+     * @type {JsonApiAnalyticalDashboardInAttributes}
+     * @memberof JsonApiVisualizationObjectOut
+     */
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
     /**
      *
      * @type {JsonApiMetricOutRelationships}
@@ -8084,10 +8323,16 @@ export interface JsonApiVisualizationObjectOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardOutMeta}
      * @memberof JsonApiVisualizationObjectOutWithLinks
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    meta?: JsonApiAnalyticalDashboardOutMeta;
+    /**
+     *
+     * @type {JsonApiAnalyticalDashboardInAttributes}
+     * @memberof JsonApiVisualizationObjectOutWithLinks
+     */
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
     /**
      *
      * @type {JsonApiMetricOutRelationships}
@@ -8129,10 +8374,10 @@ export interface JsonApiVisualizationObjectPatch {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardInAttributes}
      * @memberof JsonApiVisualizationObjectPatch
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    attributes?: JsonApiAnalyticalDashboardInAttributes;
 }
 
 export const JsonApiVisualizationObjectPatchTypeEnum = {
@@ -8175,16 +8420,16 @@ export interface JsonApiWorkspaceDataFilterIn {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterPatchAttributes}
+     * @type {JsonApiWorkspaceDataFilterInAttributes}
      * @memberof JsonApiWorkspaceDataFilterIn
      */
-    attributes?: JsonApiWorkspaceDataFilterPatchAttributes;
+    attributes?: JsonApiWorkspaceDataFilterInAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterPatchRelationships}
+     * @type {JsonApiWorkspaceDataFilterInRelationships}
      * @memberof JsonApiWorkspaceDataFilterIn
      */
-    relationships?: JsonApiWorkspaceDataFilterPatchRelationships;
+    relationships?: JsonApiWorkspaceDataFilterInRelationships;
 }
 
 export const JsonApiWorkspaceDataFilterInTypeEnum = {
@@ -8197,6 +8442,31 @@ export type JsonApiWorkspaceDataFilterInTypeEnum =
 /**
  *
  * @export
+ * @interface JsonApiWorkspaceDataFilterInAttributes
+ */
+export interface JsonApiWorkspaceDataFilterInAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspaceDataFilterInAttributes
+     */
+    title?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspaceDataFilterInAttributes
+     */
+    description?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspaceDataFilterInAttributes
+     */
+    columnName?: string;
+}
+/**
+ *
+ * @export
  * @interface JsonApiWorkspaceDataFilterInDocument
  */
 export interface JsonApiWorkspaceDataFilterInDocument {
@@ -8206,6 +8476,32 @@ export interface JsonApiWorkspaceDataFilterInDocument {
      * @memberof JsonApiWorkspaceDataFilterInDocument
      */
     data: JsonApiWorkspaceDataFilterIn;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiWorkspaceDataFilterInRelationships
+ */
+export interface JsonApiWorkspaceDataFilterInRelationships {
+    /**
+     *
+     * @type {JsonApiWorkspaceDataFilterInRelationshipsFilterSettings}
+     * @memberof JsonApiWorkspaceDataFilterInRelationships
+     */
+    filterSettings?: JsonApiWorkspaceDataFilterInRelationshipsFilterSettings;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiWorkspaceDataFilterInRelationshipsFilterSettings
+ */
+export interface JsonApiWorkspaceDataFilterInRelationshipsFilterSettings {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     * @type {Array<JsonApiWorkspaceDataFilterSettingLinkage>}
+     * @memberof JsonApiWorkspaceDataFilterInRelationshipsFilterSettings
+     */
+    data: Array<JsonApiWorkspaceDataFilterSettingLinkage>;
 }
 /**
  * The \\\"type\\\" and \\\"id\\\" to non-empty members.
@@ -8254,16 +8550,16 @@ export interface JsonApiWorkspaceDataFilterOut {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterPatchAttributes}
+     * @type {JsonApiWorkspaceDataFilterInAttributes}
      * @memberof JsonApiWorkspaceDataFilterOut
      */
-    attributes?: JsonApiWorkspaceDataFilterPatchAttributes;
+    attributes?: JsonApiWorkspaceDataFilterInAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterPatchRelationships}
+     * @type {JsonApiWorkspaceDataFilterInRelationships}
      * @memberof JsonApiWorkspaceDataFilterOut
      */
-    relationships?: JsonApiWorkspaceDataFilterPatchRelationships;
+    relationships?: JsonApiWorkspaceDataFilterInRelationships;
 }
 
 export const JsonApiWorkspaceDataFilterOutTypeEnum = {
@@ -8343,16 +8639,16 @@ export interface JsonApiWorkspaceDataFilterOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterPatchAttributes}
+     * @type {JsonApiWorkspaceDataFilterInAttributes}
      * @memberof JsonApiWorkspaceDataFilterOutWithLinks
      */
-    attributes?: JsonApiWorkspaceDataFilterPatchAttributes;
+    attributes?: JsonApiWorkspaceDataFilterInAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterPatchRelationships}
+     * @type {JsonApiWorkspaceDataFilterInRelationships}
      * @memberof JsonApiWorkspaceDataFilterOutWithLinks
      */
-    relationships?: JsonApiWorkspaceDataFilterPatchRelationships;
+    relationships?: JsonApiWorkspaceDataFilterInRelationships;
     /**
      *
      * @type {ObjectLinks}
@@ -8388,16 +8684,16 @@ export interface JsonApiWorkspaceDataFilterPatch {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterPatchAttributes}
+     * @type {JsonApiWorkspaceDataFilterInAttributes}
      * @memberof JsonApiWorkspaceDataFilterPatch
      */
-    attributes?: JsonApiWorkspaceDataFilterPatchAttributes;
+    attributes?: JsonApiWorkspaceDataFilterInAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterPatchRelationships}
+     * @type {JsonApiWorkspaceDataFilterInRelationships}
      * @memberof JsonApiWorkspaceDataFilterPatch
      */
-    relationships?: JsonApiWorkspaceDataFilterPatchRelationships;
+    relationships?: JsonApiWorkspaceDataFilterInRelationships;
 }
 
 export const JsonApiWorkspaceDataFilterPatchTypeEnum = {
@@ -8410,31 +8706,6 @@ export type JsonApiWorkspaceDataFilterPatchTypeEnum =
 /**
  *
  * @export
- * @interface JsonApiWorkspaceDataFilterPatchAttributes
- */
-export interface JsonApiWorkspaceDataFilterPatchAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspaceDataFilterPatchAttributes
-     */
-    title?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspaceDataFilterPatchAttributes
-     */
-    description?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspaceDataFilterPatchAttributes
-     */
-    columnName?: string;
-}
-/**
- *
- * @export
  * @interface JsonApiWorkspaceDataFilterPatchDocument
  */
 export interface JsonApiWorkspaceDataFilterPatchDocument {
@@ -8444,32 +8715,6 @@ export interface JsonApiWorkspaceDataFilterPatchDocument {
      * @memberof JsonApiWorkspaceDataFilterPatchDocument
      */
     data: JsonApiWorkspaceDataFilterPatch;
-}
-/**
- *
- * @export
- * @interface JsonApiWorkspaceDataFilterPatchRelationships
- */
-export interface JsonApiWorkspaceDataFilterPatchRelationships {
-    /**
-     *
-     * @type {JsonApiWorkspaceDataFilterPatchRelationshipsFilterSettings}
-     * @memberof JsonApiWorkspaceDataFilterPatchRelationships
-     */
-    filterSettings?: JsonApiWorkspaceDataFilterPatchRelationshipsFilterSettings;
-}
-/**
- *
- * @export
- * @interface JsonApiWorkspaceDataFilterPatchRelationshipsFilterSettings
- */
-export interface JsonApiWorkspaceDataFilterPatchRelationshipsFilterSettings {
-    /**
-     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
-     * @type {Array<JsonApiWorkspaceDataFilterSettingLinkage>}
-     * @memberof JsonApiWorkspaceDataFilterPatchRelationshipsFilterSettings
-     */
-    data: Array<JsonApiWorkspaceDataFilterSettingLinkage>;
 }
 /**
  * The \\\"type\\\" and \\\"id\\\" to non-empty members.
@@ -8939,6 +9184,8 @@ export const JsonApiWorkspaceOutMetaPermissionsEnum = {
     MANAGE: "MANAGE",
     ANALYZE: "ANALYZE",
     EXPORT: "EXPORT",
+    EXPORT_TABULAR: "EXPORT_TABULAR",
+    EXPORT_PDF: "EXPORT_PDF",
     VIEW: "VIEW",
 } as const;
 
@@ -9087,10 +9334,10 @@ export interface JsonApiWorkspaceSettingIn {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceSettingPatchAttributes}
+     * @type {JsonApiWorkspaceSettingInAttributes}
      * @memberof JsonApiWorkspaceSettingIn
      */
-    attributes?: JsonApiWorkspaceSettingPatchAttributes;
+    attributes?: JsonApiWorkspaceSettingInAttributes;
 }
 
 export const JsonApiWorkspaceSettingInTypeEnum = {
@@ -9100,6 +9347,19 @@ export const JsonApiWorkspaceSettingInTypeEnum = {
 export type JsonApiWorkspaceSettingInTypeEnum =
     typeof JsonApiWorkspaceSettingInTypeEnum[keyof typeof JsonApiWorkspaceSettingInTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiWorkspaceSettingInAttributes
+ */
+export interface JsonApiWorkspaceSettingInAttributes {
+    /**
+     *
+     * @type {object}
+     * @memberof JsonApiWorkspaceSettingInAttributes
+     */
+    content?: object;
+}
 /**
  *
  * @export
@@ -9133,10 +9393,16 @@ export interface JsonApiWorkspaceSettingOut {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceSettingPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardOutMeta}
      * @memberof JsonApiWorkspaceSettingOut
      */
-    attributes?: JsonApiWorkspaceSettingPatchAttributes;
+    meta?: JsonApiAnalyticalDashboardOutMeta;
+    /**
+     *
+     * @type {JsonApiWorkspaceSettingInAttributes}
+     * @memberof JsonApiWorkspaceSettingOut
+     */
+    attributes?: JsonApiWorkspaceSettingInAttributes;
 }
 
 export const JsonApiWorkspaceSettingOutTypeEnum = {
@@ -9204,10 +9470,16 @@ export interface JsonApiWorkspaceSettingOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceSettingPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardOutMeta}
      * @memberof JsonApiWorkspaceSettingOutWithLinks
      */
-    attributes?: JsonApiWorkspaceSettingPatchAttributes;
+    meta?: JsonApiAnalyticalDashboardOutMeta;
+    /**
+     *
+     * @type {JsonApiWorkspaceSettingInAttributes}
+     * @memberof JsonApiWorkspaceSettingOutWithLinks
+     */
+    attributes?: JsonApiWorkspaceSettingInAttributes;
     /**
      *
      * @type {ObjectLinks}
@@ -9243,10 +9515,10 @@ export interface JsonApiWorkspaceSettingPatch {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceSettingPatchAttributes}
+     * @type {JsonApiWorkspaceSettingInAttributes}
      * @memberof JsonApiWorkspaceSettingPatch
      */
-    attributes?: JsonApiWorkspaceSettingPatchAttributes;
+    attributes?: JsonApiWorkspaceSettingInAttributes;
 }
 
 export const JsonApiWorkspaceSettingPatchTypeEnum = {
@@ -9256,19 +9528,6 @@ export const JsonApiWorkspaceSettingPatchTypeEnum = {
 export type JsonApiWorkspaceSettingPatchTypeEnum =
     typeof JsonApiWorkspaceSettingPatchTypeEnum[keyof typeof JsonApiWorkspaceSettingPatchTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiWorkspaceSettingPatchAttributes
- */
-export interface JsonApiWorkspaceSettingPatchAttributes {
-    /**
-     *
-     * @type {object}
-     * @memberof JsonApiWorkspaceSettingPatchAttributes
-     */
-    content?: object;
-}
 /**
  *
  * @export
@@ -12842,6 +13101,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {number} [size] The size of the page to be returned
          * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -12863,6 +13123,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             size?: number,
             sort?: Array<string>,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
@@ -12903,6 +13164,10 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             if (sort) {
                 localVarQueryParameter["sort"] = sort;
+            }
+
+            if (metaInclude) {
+                localVarQueryParameter["metaInclude"] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -12998,6 +13263,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {number} [size] The size of the page to be returned
          * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -13010,6 +13276,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             size?: number,
             sort?: Array<string>,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
@@ -13050,6 +13317,10 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             if (sort) {
                 localVarQueryParameter["sort"] = sort;
+            }
+
+            if (metaInclude) {
+                localVarQueryParameter["metaInclude"] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -13192,6 +13463,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {number} [size] The size of the page to be returned
          * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -13203,6 +13475,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             size?: number,
             sort?: Array<string>,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
@@ -13242,6 +13515,10 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 localVarQueryParameter["sort"] = sort;
             }
 
+            if (metaInclude) {
+                localVarQueryParameter["metaInclude"] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+            }
+
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
                 localVarHeaderParameter["X-GDC-VALIDATE-RELATIONS"] = String(
                     JSON.stringify(xGDCVALIDATERELATIONS),
@@ -13270,6 +13547,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {number} [size] The size of the page to be returned
          * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -13281,6 +13559,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             size?: number,
             sort?: Array<string>,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
@@ -13317,6 +13596,10 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             if (sort) {
                 localVarQueryParameter["sort"] = sort;
+            }
+
+            if (metaInclude) {
+                localVarQueryParameter["metaInclude"] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -13535,6 +13818,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {number} [size] The size of the page to be returned
          * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -13547,6 +13831,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             size?: number,
             sort?: Array<string>,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
@@ -13587,6 +13872,10 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             if (sort) {
                 localVarQueryParameter["sort"] = sort;
+            }
+
+            if (metaInclude) {
+                localVarQueryParameter["metaInclude"] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -13674,6 +13963,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {number} [size] The size of the page to be returned
          * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -13686,6 +13976,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             size?: number,
             sort?: Array<string>,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
@@ -13728,6 +14019,10 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 localVarQueryParameter["sort"] = sort;
             }
 
+            if (metaInclude) {
+                localVarQueryParameter["metaInclude"] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+            }
+
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
                 localVarHeaderParameter["X-GDC-VALIDATE-RELATIONS"] = String(
                     JSON.stringify(xGDCVALIDATERELATIONS),
@@ -13757,6 +14052,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {number} [size] The size of the page to be returned
          * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -13769,6 +14065,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             size?: number,
             sort?: Array<string>,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
@@ -13811,6 +14108,10 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 localVarQueryParameter["sort"] = sort;
             }
 
+            if (metaInclude) {
+                localVarQueryParameter["metaInclude"] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+            }
+
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
                 localVarHeaderParameter["X-GDC-VALIDATE-RELATIONS"] = String(
                     JSON.stringify(xGDCVALIDATERELATIONS),
@@ -13840,6 +14141,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {number} [size] The size of the page to be returned
          * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -13852,6 +14154,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             size?: number,
             sort?: Array<string>,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
@@ -13894,6 +14197,10 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 localVarQueryParameter["sort"] = sort;
             }
 
+            if (metaInclude) {
+                localVarQueryParameter["metaInclude"] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+            }
+
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
                 localVarHeaderParameter["X-GDC-VALIDATE-RELATIONS"] = String(
                     JSON.stringify(xGDCVALIDATERELATIONS),
@@ -13923,6 +14230,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {number} [size] The size of the page to be returned
          * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -13935,6 +14243,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             size?: number,
             sort?: Array<string>,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
@@ -13975,6 +14284,10 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             if (sort) {
                 localVarQueryParameter["sort"] = sort;
+            }
+
+            if (metaInclude) {
+                localVarQueryParameter["metaInclude"] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -14306,6 +14619,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {number} [size] The size of the page to be returned
          * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -14318,6 +14632,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             size?: number,
             sort?: Array<string>,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
@@ -14358,6 +14673,10 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             if (sort) {
                 localVarQueryParameter["sort"] = sort;
+            }
+
+            if (metaInclude) {
+                localVarQueryParameter["metaInclude"] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -14555,6 +14874,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {number} [size] The size of the page to be returned
          * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -14566,6 +14886,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             size?: number,
             sort?: Array<string>,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
@@ -14602,6 +14923,10 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             if (sort) {
                 localVarQueryParameter["sort"] = sort;
+            }
+
+            if (metaInclude) {
+                localVarQueryParameter["metaInclude"] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -14760,6 +15085,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'visualizationObjects' | 'analyticalDashboards' | 'labels' | 'metrics' | 'datasets' | 'filterContexts' | 'dashboardPlugins' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -14778,6 +15104,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 | "ALL"
             >,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
@@ -14803,6 +15130,10 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             if (include) {
                 localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            }
+
+            if (metaInclude) {
+                localVarQueryParameter["metaInclude"] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -14879,6 +15210,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'datasets' | 'labels' | 'dataset' | 'defaultView' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -14888,6 +15220,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             filter?: string,
             include?: Array<"datasets" | "labels" | "dataset" | "defaultView" | "ALL">,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
@@ -14913,6 +15246,10 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             if (include) {
                 localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            }
+
+            if (metaInclude) {
+                localVarQueryParameter["metaInclude"] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -15075,6 +15412,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} objectId
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -15083,6 +15421,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             objectId: string,
             filter?: string,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
@@ -15105,6 +15444,10 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
+            }
+
+            if (metaInclude) {
+                localVarQueryParameter["metaInclude"] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -15132,6 +15475,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} objectId
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -15140,6 +15484,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             objectId: string,
             filter?: string,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
@@ -15161,6 +15506,10 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
+            }
+
+            if (metaInclude) {
+                localVarQueryParameter["metaInclude"] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -15339,6 +15688,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'attributes' | 'facts' | 'datasets' | 'references' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -15348,6 +15698,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             filter?: string,
             include?: Array<"attributes" | "facts" | "datasets" | "references" | "ALL">,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
@@ -15373,6 +15724,10 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             if (include) {
                 localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            }
+
+            if (metaInclude) {
+                localVarQueryParameter["metaInclude"] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -15446,6 +15801,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'datasets' | 'dataset' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -15455,6 +15811,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             filter?: string,
             include?: Array<"datasets" | "dataset" | "ALL">,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
@@ -15480,6 +15837,10 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             if (include) {
                 localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            }
+
+            if (metaInclude) {
+                localVarQueryParameter["metaInclude"] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -15508,6 +15869,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'attributes' | 'datasets' | 'labels' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -15517,6 +15879,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             filter?: string,
             include?: Array<"attributes" | "datasets" | "labels" | "ALL">,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
@@ -15542,6 +15905,10 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             if (include) {
                 localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            }
+
+            if (metaInclude) {
+                localVarQueryParameter["metaInclude"] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -15570,6 +15937,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'attributes' | 'attribute' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -15579,6 +15947,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             filter?: string,
             include?: Array<"attributes" | "attribute" | "ALL">,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
@@ -15604,6 +15973,10 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             if (include) {
                 localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            }
+
+            if (metaInclude) {
+                localVarQueryParameter["metaInclude"] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -15632,6 +16005,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -15641,6 +16015,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             filter?: string,
             include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
@@ -15666,6 +16041,10 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             if (include) {
                 localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            }
+
+            if (metaInclude) {
+                localVarQueryParameter["metaInclude"] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -15991,6 +16370,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -16000,6 +16380,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             filter?: string,
             include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
@@ -16025,6 +16406,10 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             if (include) {
                 localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            }
+
+            if (metaInclude) {
+                localVarQueryParameter["metaInclude"] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -16177,6 +16562,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} objectId
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -16185,6 +16571,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             objectId: string,
             filter?: string,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
@@ -16206,6 +16593,10 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             if (filter !== undefined) {
                 localVarQueryParameter["filter"] = filter;
+            }
+
+            if (metaInclude) {
+                localVarQueryParameter["metaInclude"] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -19647,6 +20038,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {number} [size] The size of the page to be returned
          * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -19668,6 +20060,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             size?: number,
             sort?: Array<string>,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options?: AxiosRequestConfig,
         ): Promise<
             (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiAnalyticalDashboardOutList>
@@ -19681,6 +20074,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 size,
                 sort,
                 xGDCVALIDATERELATIONS,
+                metaInclude,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -19724,6 +20118,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {number} [size] The size of the page to be returned
          * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -19736,6 +20131,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             size?: number,
             sort?: Array<string>,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiAttributeOutList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAllEntitiesAttributes(
@@ -19747,6 +20143,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 size,
                 sort,
                 xGDCVALIDATERELATIONS,
+                metaInclude,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -19810,6 +20207,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {number} [size] The size of the page to be returned
          * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -19821,6 +20219,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             size?: number,
             sort?: Array<string>,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options?: AxiosRequestConfig,
         ): Promise<
             (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiCustomApplicationSettingOutList>
@@ -19833,6 +20232,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 size,
                 sort,
                 xGDCVALIDATERELATIONS,
+                metaInclude,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -19846,6 +20246,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {number} [size] The size of the page to be returned
          * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -19857,6 +20258,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             size?: number,
             sort?: Array<string>,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options?: AxiosRequestConfig,
         ): Promise<
             (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiDashboardPluginOutList>
@@ -19869,6 +20271,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 size,
                 sort,
                 xGDCVALIDATERELATIONS,
+                metaInclude,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -19971,6 +20374,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {number} [size] The size of the page to be returned
          * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -19983,6 +20387,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             size?: number,
             sort?: Array<string>,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiDatasetOutList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAllEntitiesDatasets(
@@ -19994,6 +20399,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 size,
                 sort,
                 xGDCVALIDATERELATIONS,
+                metaInclude,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -20033,6 +20439,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {number} [size] The size of the page to be returned
          * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -20045,6 +20452,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             size?: number,
             sort?: Array<string>,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiFactOutList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAllEntitiesFacts(
@@ -20056,6 +20464,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 size,
                 sort,
                 xGDCVALIDATERELATIONS,
+                metaInclude,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -20070,6 +20479,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {number} [size] The size of the page to be returned
          * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -20082,6 +20492,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             size?: number,
             sort?: Array<string>,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiFilterContextOutList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAllEntitiesFilterContexts(
@@ -20093,6 +20504,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 size,
                 sort,
                 xGDCVALIDATERELATIONS,
+                metaInclude,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -20107,6 +20519,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {number} [size] The size of the page to be returned
          * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -20119,6 +20532,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             size?: number,
             sort?: Array<string>,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiLabelOutList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAllEntitiesLabels(
@@ -20130,6 +20544,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 size,
                 sort,
                 xGDCVALIDATERELATIONS,
+                metaInclude,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -20144,6 +20559,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {number} [size] The size of the page to be returned
          * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -20156,6 +20572,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             size?: number,
             sort?: Array<string>,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiMetricOutList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAllEntitiesMetrics(
@@ -20167,6 +20584,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 size,
                 sort,
                 xGDCVALIDATERELATIONS,
+                metaInclude,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -20318,6 +20736,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {number} [size] The size of the page to be returned
          * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -20330,6 +20749,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             size?: number,
             sort?: Array<string>,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options?: AxiosRequestConfig,
         ): Promise<
             (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiVisualizationObjectOutList>
@@ -20343,6 +20763,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 size,
                 sort,
                 xGDCVALIDATERELATIONS,
+                metaInclude,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -20438,6 +20859,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {number} [size] The size of the page to be returned
          * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -20449,6 +20871,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             size?: number,
             sort?: Array<string>,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options?: AxiosRequestConfig,
         ): Promise<
             (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWorkspaceSettingOutList>
@@ -20461,6 +20884,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 size,
                 sort,
                 xGDCVALIDATERELATIONS,
+                metaInclude,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -20527,6 +20951,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'visualizationObjects' | 'analyticalDashboards' | 'labels' | 'metrics' | 'datasets' | 'filterContexts' | 'dashboardPlugins' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -20545,6 +20970,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 | "ALL"
             >,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options?: AxiosRequestConfig,
         ): Promise<
             (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiAnalyticalDashboardOutDocument>
@@ -20555,6 +20981,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 filter,
                 include,
                 xGDCVALIDATERELATIONS,
+                metaInclude,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -20588,6 +21015,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'datasets' | 'labels' | 'dataset' | 'defaultView' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -20597,6 +21025,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             filter?: string,
             include?: Array<"datasets" | "labels" | "dataset" | "defaultView" | "ALL">,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiAttributeOutDocument>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEntityAttributes(
@@ -20605,6 +21034,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 filter,
                 include,
                 xGDCVALIDATERELATIONS,
+                metaInclude,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -20681,6 +21111,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {string} objectId
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -20689,6 +21120,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             objectId: string,
             filter?: string,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options?: AxiosRequestConfig,
         ): Promise<
             (
@@ -20701,6 +21133,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 objectId,
                 filter,
                 xGDCVALIDATERELATIONS,
+                metaInclude,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -20711,6 +21144,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {string} objectId
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -20719,6 +21153,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             objectId: string,
             filter?: string,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options?: AxiosRequestConfig,
         ): Promise<
             (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiDashboardPluginOutDocument>
@@ -20728,6 +21163,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 objectId,
                 filter,
                 xGDCVALIDATERELATIONS,
+                metaInclude,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -20809,6 +21245,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'attributes' | 'facts' | 'datasets' | 'references' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -20818,6 +21255,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             filter?: string,
             include?: Array<"attributes" | "facts" | "datasets" | "references" | "ALL">,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiDatasetOutDocument>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEntityDatasets(
@@ -20826,6 +21264,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 filter,
                 include,
                 xGDCVALIDATERELATIONS,
+                metaInclude,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -20858,6 +21297,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'datasets' | 'dataset' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -20867,6 +21307,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             filter?: string,
             include?: Array<"datasets" | "dataset" | "ALL">,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiFactOutDocument>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEntityFacts(
@@ -20875,6 +21316,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 filter,
                 include,
                 xGDCVALIDATERELATIONS,
+                metaInclude,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -20886,6 +21328,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'attributes' | 'datasets' | 'labels' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -20895,6 +21338,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             filter?: string,
             include?: Array<"attributes" | "datasets" | "labels" | "ALL">,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options?: AxiosRequestConfig,
         ): Promise<
             (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiFilterContextOutDocument>
@@ -20905,6 +21349,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 filter,
                 include,
                 xGDCVALIDATERELATIONS,
+                metaInclude,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -20916,6 +21361,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'attributes' | 'attribute' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -20925,6 +21371,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             filter?: string,
             include?: Array<"attributes" | "attribute" | "ALL">,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiLabelOutDocument>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEntityLabels(
@@ -20933,6 +21380,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 filter,
                 include,
                 xGDCVALIDATERELATIONS,
+                metaInclude,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -20944,6 +21392,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -20953,6 +21402,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             filter?: string,
             include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiMetricOutDocument>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEntityMetrics(
@@ -20961,6 +21411,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 filter,
                 include,
                 xGDCVALIDATERELATIONS,
+                metaInclude,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -21103,6 +21554,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -21112,6 +21564,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             filter?: string,
             include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options?: AxiosRequestConfig,
         ): Promise<
             (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiVisualizationObjectOutDocument>
@@ -21122,6 +21575,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 filter,
                 include,
                 xGDCVALIDATERELATIONS,
+                metaInclude,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -21195,6 +21649,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {string} objectId
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
          * @param {boolean} [xGDCVALIDATERELATIONS]
+         * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -21203,6 +21658,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             objectId: string,
             filter?: string,
             xGDCVALIDATERELATIONS?: boolean,
+            metaInclude?: Array<"origin" | "all" | "ALL">,
             options?: AxiosRequestConfig,
         ): Promise<
             (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiWorkspaceSettingOutDocument>
@@ -21212,6 +21668,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 objectId,
                 filter,
                 xGDCVALIDATERELATIONS,
+                metaInclude,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -22928,6 +23385,7 @@ export const EntitiesApiFactory = function (
                     requestParameters.size,
                     requestParameters.sort,
                     requestParameters.xGDCVALIDATERELATIONS,
+                    requestParameters.metaInclude,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -22974,6 +23432,7 @@ export const EntitiesApiFactory = function (
                     requestParameters.size,
                     requestParameters.sort,
                     requestParameters.xGDCVALIDATERELATIONS,
+                    requestParameters.metaInclude,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -23037,6 +23496,7 @@ export const EntitiesApiFactory = function (
                     requestParameters.size,
                     requestParameters.sort,
                     requestParameters.xGDCVALIDATERELATIONS,
+                    requestParameters.metaInclude,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -23060,6 +23520,7 @@ export const EntitiesApiFactory = function (
                     requestParameters.size,
                     requestParameters.sort,
                     requestParameters.xGDCVALIDATERELATIONS,
+                    requestParameters.metaInclude,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -23147,6 +23608,7 @@ export const EntitiesApiFactory = function (
                     requestParameters.size,
                     requestParameters.sort,
                     requestParameters.xGDCVALIDATERELATIONS,
+                    requestParameters.metaInclude,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -23191,6 +23653,7 @@ export const EntitiesApiFactory = function (
                     requestParameters.size,
                     requestParameters.sort,
                     requestParameters.xGDCVALIDATERELATIONS,
+                    requestParameters.metaInclude,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -23215,6 +23678,7 @@ export const EntitiesApiFactory = function (
                     requestParameters.size,
                     requestParameters.sort,
                     requestParameters.xGDCVALIDATERELATIONS,
+                    requestParameters.metaInclude,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -23239,6 +23703,7 @@ export const EntitiesApiFactory = function (
                     requestParameters.size,
                     requestParameters.sort,
                     requestParameters.xGDCVALIDATERELATIONS,
+                    requestParameters.metaInclude,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -23263,6 +23728,7 @@ export const EntitiesApiFactory = function (
                     requestParameters.size,
                     requestParameters.sort,
                     requestParameters.xGDCVALIDATERELATIONS,
+                    requestParameters.metaInclude,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -23391,6 +23857,7 @@ export const EntitiesApiFactory = function (
                     requestParameters.size,
                     requestParameters.sort,
                     requestParameters.xGDCVALIDATERELATIONS,
+                    requestParameters.metaInclude,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -23462,6 +23929,7 @@ export const EntitiesApiFactory = function (
                     requestParameters.size,
                     requestParameters.sort,
                     requestParameters.xGDCVALIDATERELATIONS,
+                    requestParameters.metaInclude,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -23523,6 +23991,7 @@ export const EntitiesApiFactory = function (
                     requestParameters.filter,
                     requestParameters.include,
                     requestParameters.xGDCVALIDATERELATIONS,
+                    requestParameters.metaInclude,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -23563,6 +24032,7 @@ export const EntitiesApiFactory = function (
                     requestParameters.filter,
                     requestParameters.include,
                     requestParameters.xGDCVALIDATERELATIONS,
+                    requestParameters.metaInclude,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -23629,6 +24099,7 @@ export const EntitiesApiFactory = function (
                     requestParameters.objectId,
                     requestParameters.filter,
                     requestParameters.xGDCVALIDATERELATIONS,
+                    requestParameters.metaInclude,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -23649,6 +24120,7 @@ export const EntitiesApiFactory = function (
                     requestParameters.objectId,
                     requestParameters.filter,
                     requestParameters.xGDCVALIDATERELATIONS,
+                    requestParameters.metaInclude,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -23727,6 +24199,7 @@ export const EntitiesApiFactory = function (
                     requestParameters.filter,
                     requestParameters.include,
                     requestParameters.xGDCVALIDATERELATIONS,
+                    requestParameters.metaInclude,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -23762,6 +24235,7 @@ export const EntitiesApiFactory = function (
                     requestParameters.filter,
                     requestParameters.include,
                     requestParameters.xGDCVALIDATERELATIONS,
+                    requestParameters.metaInclude,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -23783,6 +24257,7 @@ export const EntitiesApiFactory = function (
                     requestParameters.filter,
                     requestParameters.include,
                     requestParameters.xGDCVALIDATERELATIONS,
+                    requestParameters.metaInclude,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -23804,6 +24279,7 @@ export const EntitiesApiFactory = function (
                     requestParameters.filter,
                     requestParameters.include,
                     requestParameters.xGDCVALIDATERELATIONS,
+                    requestParameters.metaInclude,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -23825,6 +24301,7 @@ export const EntitiesApiFactory = function (
                     requestParameters.filter,
                     requestParameters.include,
                     requestParameters.xGDCVALIDATERELATIONS,
+                    requestParameters.metaInclude,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -23951,6 +24428,7 @@ export const EntitiesApiFactory = function (
                     requestParameters.filter,
                     requestParameters.include,
                     requestParameters.xGDCVALIDATERELATIONS,
+                    requestParameters.metaInclude,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -24013,6 +24491,7 @@ export const EntitiesApiFactory = function (
                     requestParameters.objectId,
                     requestParameters.filter,
                     requestParameters.xGDCVALIDATERELATIONS,
+                    requestParameters.metaInclude,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -27294,6 +27773,13 @@ export interface EntitiesApiGetAllEntitiesAnalyticalDashboardsRequest {
      * @memberof EntitiesApiGetAllEntitiesAnalyticalDashboards
      */
     readonly xGDCVALIDATERELATIONS?: boolean;
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof EntitiesApiGetAllEntitiesAnalyticalDashboards
+     */
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
 }
 
 /**
@@ -27399,6 +27885,13 @@ export interface EntitiesApiGetAllEntitiesAttributesRequest {
      * @memberof EntitiesApiGetAllEntitiesAttributes
      */
     readonly xGDCVALIDATERELATIONS?: boolean;
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof EntitiesApiGetAllEntitiesAttributes
+     */
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
 }
 
 /**
@@ -27525,6 +28018,13 @@ export interface EntitiesApiGetAllEntitiesCustomApplicationSettingsRequest {
      * @memberof EntitiesApiGetAllEntitiesCustomApplicationSettings
      */
     readonly xGDCVALIDATERELATIONS?: boolean;
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof EntitiesApiGetAllEntitiesCustomApplicationSettings
+     */
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
 }
 
 /**
@@ -27581,6 +28081,13 @@ export interface EntitiesApiGetAllEntitiesDashboardPluginsRequest {
      * @memberof EntitiesApiGetAllEntitiesDashboardPlugins
      */
     readonly xGDCVALIDATERELATIONS?: boolean;
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof EntitiesApiGetAllEntitiesDashboardPlugins
+     */
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
 }
 
 /**
@@ -27770,6 +28277,13 @@ export interface EntitiesApiGetAllEntitiesDatasetsRequest {
      * @memberof EntitiesApiGetAllEntitiesDatasets
      */
     readonly xGDCVALIDATERELATIONS?: boolean;
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof EntitiesApiGetAllEntitiesDatasets
+     */
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
 }
 
 /**
@@ -27868,6 +28382,13 @@ export interface EntitiesApiGetAllEntitiesFactsRequest {
      * @memberof EntitiesApiGetAllEntitiesFacts
      */
     readonly xGDCVALIDATERELATIONS?: boolean;
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof EntitiesApiGetAllEntitiesFacts
+     */
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
 }
 
 /**
@@ -27931,6 +28452,13 @@ export interface EntitiesApiGetAllEntitiesFilterContextsRequest {
      * @memberof EntitiesApiGetAllEntitiesFilterContexts
      */
     readonly xGDCVALIDATERELATIONS?: boolean;
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof EntitiesApiGetAllEntitiesFilterContexts
+     */
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
 }
 
 /**
@@ -27994,6 +28522,13 @@ export interface EntitiesApiGetAllEntitiesLabelsRequest {
      * @memberof EntitiesApiGetAllEntitiesLabels
      */
     readonly xGDCVALIDATERELATIONS?: boolean;
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof EntitiesApiGetAllEntitiesLabels
+     */
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
 }
 
 /**
@@ -28057,6 +28592,13 @@ export interface EntitiesApiGetAllEntitiesMetricsRequest {
      * @memberof EntitiesApiGetAllEntitiesMetrics
      */
     readonly xGDCVALIDATERELATIONS?: boolean;
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof EntitiesApiGetAllEntitiesMetrics
+     */
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
 }
 
 /**
@@ -28316,6 +28858,13 @@ export interface EntitiesApiGetAllEntitiesVisualizationObjectsRequest {
      * @memberof EntitiesApiGetAllEntitiesVisualizationObjects
      */
     readonly xGDCVALIDATERELATIONS?: boolean;
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof EntitiesApiGetAllEntitiesVisualizationObjects
+     */
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
 }
 
 /**
@@ -28498,6 +29047,13 @@ export interface EntitiesApiGetAllEntitiesWorkspaceSettingsRequest {
      * @memberof EntitiesApiGetAllEntitiesWorkspaceSettings
      */
     readonly xGDCVALIDATERELATIONS?: boolean;
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof EntitiesApiGetAllEntitiesWorkspaceSettings
+     */
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
 }
 
 /**
@@ -28598,6 +29154,13 @@ export interface EntitiesApiGetEntityAnalyticalDashboardsRequest {
      * @memberof EntitiesApiGetEntityAnalyticalDashboards
      */
     readonly xGDCVALIDATERELATIONS?: boolean;
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof EntitiesApiGetEntityAnalyticalDashboards
+     */
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
 }
 
 /**
@@ -28668,6 +29231,13 @@ export interface EntitiesApiGetEntityAttributesRequest {
      * @memberof EntitiesApiGetEntityAttributes
      */
     readonly xGDCVALIDATERELATIONS?: boolean;
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof EntitiesApiGetEntityAttributes
+     */
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
 }
 
 /**
@@ -28766,6 +29336,13 @@ export interface EntitiesApiGetEntityCustomApplicationSettingsRequest {
      * @memberof EntitiesApiGetEntityCustomApplicationSettings
      */
     readonly xGDCVALIDATERELATIONS?: boolean;
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof EntitiesApiGetEntityCustomApplicationSettings
+     */
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
 }
 
 /**
@@ -28801,6 +29378,13 @@ export interface EntitiesApiGetEntityDashboardPluginsRequest {
      * @memberof EntitiesApiGetEntityDashboardPlugins
      */
     readonly xGDCVALIDATERELATIONS?: boolean;
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof EntitiesApiGetEntityDashboardPlugins
+     */
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
 }
 
 /**
@@ -28927,6 +29511,13 @@ export interface EntitiesApiGetEntityDatasetsRequest {
      * @memberof EntitiesApiGetEntityDatasets
      */
     readonly xGDCVALIDATERELATIONS?: boolean;
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof EntitiesApiGetEntityDatasets
+     */
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
 }
 
 /**
@@ -28990,6 +29581,13 @@ export interface EntitiesApiGetEntityFactsRequest {
      * @memberof EntitiesApiGetEntityFacts
      */
     readonly xGDCVALIDATERELATIONS?: boolean;
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof EntitiesApiGetEntityFacts
+     */
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
 }
 
 /**
@@ -29032,6 +29630,13 @@ export interface EntitiesApiGetEntityFilterContextsRequest {
      * @memberof EntitiesApiGetEntityFilterContexts
      */
     readonly xGDCVALIDATERELATIONS?: boolean;
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof EntitiesApiGetEntityFilterContexts
+     */
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
 }
 
 /**
@@ -29074,6 +29679,13 @@ export interface EntitiesApiGetEntityLabelsRequest {
      * @memberof EntitiesApiGetEntityLabels
      */
     readonly xGDCVALIDATERELATIONS?: boolean;
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof EntitiesApiGetEntityLabels
+     */
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
 }
 
 /**
@@ -29116,6 +29728,13 @@ export interface EntitiesApiGetEntityMetricsRequest {
      * @memberof EntitiesApiGetEntityMetrics
      */
     readonly xGDCVALIDATERELATIONS?: boolean;
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof EntitiesApiGetEntityMetrics
+     */
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
 }
 
 /**
@@ -29319,6 +29938,13 @@ export interface EntitiesApiGetEntityVisualizationObjectsRequest {
      * @memberof EntitiesApiGetEntityVisualizationObjects
      */
     readonly xGDCVALIDATERELATIONS?: boolean;
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof EntitiesApiGetEntityVisualizationObjects
+     */
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
 }
 
 /**
@@ -29438,6 +30064,13 @@ export interface EntitiesApiGetEntityWorkspaceSettingsRequest {
      * @memberof EntitiesApiGetEntityWorkspaceSettings
      */
     readonly xGDCVALIDATERELATIONS?: boolean;
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof EntitiesApiGetEntityWorkspaceSettings
+     */
+    readonly metaInclude?: Array<"origin" | "all" | "ALL">;
 }
 
 /**
@@ -31530,6 +32163,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.size,
                 requestParameters.sort,
                 requestParameters.xGDCVALIDATERELATIONS,
+                requestParameters.metaInclude,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -31580,6 +32214,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.size,
                 requestParameters.sort,
                 requestParameters.xGDCVALIDATERELATIONS,
+                requestParameters.metaInclude,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -31649,6 +32284,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.size,
                 requestParameters.sort,
                 requestParameters.xGDCVALIDATERELATIONS,
+                requestParameters.metaInclude,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -31674,6 +32310,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.size,
                 requestParameters.sort,
                 requestParameters.xGDCVALIDATERELATIONS,
+                requestParameters.metaInclude,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -31769,6 +32406,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.size,
                 requestParameters.sort,
                 requestParameters.xGDCVALIDATERELATIONS,
+                requestParameters.metaInclude,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -31817,6 +32455,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.size,
                 requestParameters.sort,
                 requestParameters.xGDCVALIDATERELATIONS,
+                requestParameters.metaInclude,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -31843,6 +32482,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.size,
                 requestParameters.sort,
                 requestParameters.xGDCVALIDATERELATIONS,
+                requestParameters.metaInclude,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -31869,6 +32509,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.size,
                 requestParameters.sort,
                 requestParameters.xGDCVALIDATERELATIONS,
+                requestParameters.metaInclude,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -31895,6 +32536,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.size,
                 requestParameters.sort,
                 requestParameters.xGDCVALIDATERELATIONS,
+                requestParameters.metaInclude,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -32035,6 +32677,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.size,
                 requestParameters.sort,
                 requestParameters.xGDCVALIDATERELATIONS,
+                requestParameters.metaInclude,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -32112,6 +32755,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.size,
                 requestParameters.sort,
                 requestParameters.xGDCVALIDATERELATIONS,
+                requestParameters.metaInclude,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -32185,6 +32829,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.filter,
                 requestParameters.include,
                 requestParameters.xGDCVALIDATERELATIONS,
+                requestParameters.metaInclude,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -32229,6 +32874,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.filter,
                 requestParameters.include,
                 requestParameters.xGDCVALIDATERELATIONS,
+                requestParameters.metaInclude,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -32299,6 +32945,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.objectId,
                 requestParameters.filter,
                 requestParameters.xGDCVALIDATERELATIONS,
+                requestParameters.metaInclude,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -32321,6 +32968,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.objectId,
                 requestParameters.filter,
                 requestParameters.xGDCVALIDATERELATIONS,
+                requestParameters.metaInclude,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -32407,6 +33055,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.filter,
                 requestParameters.include,
                 requestParameters.xGDCVALIDATERELATIONS,
+                requestParameters.metaInclude,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -32443,6 +33092,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.filter,
                 requestParameters.include,
                 requestParameters.xGDCVALIDATERELATIONS,
+                requestParameters.metaInclude,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -32466,6 +33116,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.filter,
                 requestParameters.include,
                 requestParameters.xGDCVALIDATERELATIONS,
+                requestParameters.metaInclude,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -32489,6 +33140,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.filter,
                 requestParameters.include,
                 requestParameters.xGDCVALIDATERELATIONS,
+                requestParameters.metaInclude,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -32512,6 +33164,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.filter,
                 requestParameters.include,
                 requestParameters.xGDCVALIDATERELATIONS,
+                requestParameters.metaInclude,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -32649,6 +33302,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.filter,
                 requestParameters.include,
                 requestParameters.xGDCVALIDATERELATIONS,
+                requestParameters.metaInclude,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -32717,6 +33371,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.objectId,
                 requestParameters.filter,
                 requestParameters.xGDCVALIDATERELATIONS,
+                requestParameters.metaInclude,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));

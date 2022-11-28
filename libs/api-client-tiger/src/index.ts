@@ -198,6 +198,7 @@ export {
     TableWarning,
     TestDefinitionRequest,
     TestDefinitionRequestTypeEnum,
+    TestQueryDuration,
     TestResponse,
     ColumnWarning,
     DataSourceParameter,
