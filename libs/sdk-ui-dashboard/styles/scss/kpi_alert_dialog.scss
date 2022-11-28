@@ -44,7 +44,6 @@ $dialog-background: kit-variables.$is-focused-background;
         height: 0;
         margin-right: 0;
         border: solid transparent;
-        pointer-events: none;
     }
 
     &::before {

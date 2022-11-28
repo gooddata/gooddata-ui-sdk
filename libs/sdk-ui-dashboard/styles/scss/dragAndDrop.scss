@@ -630,3 +630,11 @@
     position: relative;
     align-self: stretch;
 }
+
+.sdk-edit-mode-on {
+    .highcharts-container {
+        // no pointer events for charts in edit mode,
+        // this kills tooltips but allows dragging
+        pointer-events: none;
+    }
+}
