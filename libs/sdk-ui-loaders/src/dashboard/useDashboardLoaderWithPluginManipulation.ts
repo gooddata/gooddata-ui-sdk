@@ -8,9 +8,11 @@ import {
     DashboardConfig,
     DashboardSelectorEvaluator,
     DashboardState,
+    DashboardDispatch,
     RenderMode,
-    selectDashboardWorkingDefinition,
     selectRenderMode,
+    selectDashboardWorkingDefinition,
+    uiActions,
 } from "@gooddata/sdk-ui-dashboard";
 import { DashboardLoadingMode, IDashboardLoadOptions, IEmbeddedPlugin } from "./types";
 import { DashboardLoadStatus, useDashboardLoader } from "./useDashboardLoader";
@@ -30,6 +32,7 @@ function sanitizedDashboardRef(
 export function useDashboardLoaderWithPluginManipulation(options: IDashboardLoadOptions): {
     loaderStatus: DashboardLoadStatus;
     reloadPlugins: () => void;
+    hidePluginOverlays: () => void;
     changeLoadingMode: (loadingMode: DashboardLoadingMode) => void;
     loadingMode: DashboardLoadingMode;
     setExtraPlugins: (plugins: IEmbeddedPlugin | IEmbeddedPlugin[]) => void;
@@ -64,9 +67,11 @@ export function useDashboardLoaderWithPluginManipulation(options: IDashboardLoad
     });
 
     const dashboardSelect = useRef<DashboardSelectorEvaluator>();
+    const dashboardDispatch = useRef<DashboardDispatch>();
 
-    const onStateChange = useCallback((state: DashboardState) => {
+    const onStateChange = useCallback((state: DashboardState, dispatch: DashboardDispatch) => {
         dashboardSelect.current = (select) => select(state);
+        dashboardDispatch.current = dispatch;
     }, []);
 
     const reloadPlugins = useCallback(() => {
@@ -76,6 +81,11 @@ export function useDashboardLoaderWithPluginManipulation(options: IDashboardLoad
         const renderMode = select(selectRenderMode);
         setDashboard(dashboardObject as any);
         setRenderMode(renderMode);
+    }, []);
+
+    const hidePluginOverlays = useCallback(() => {
+        invariant(dashboardDispatch.current, "hidePluginOverlays used before initialization");
+        dashboardDispatch.current(uiActions.hideAllWidgetsOverlay());
     }, []);
 
     const changeLoadingMode = useCallback((newLoadingMode: DashboardLoadingMode) => {
@@ -109,7 +119,7 @@ export function useDashboardLoaderWithPluginManipulation(options: IDashboardLoad
                               ...loaderStatus.result.props,
                               onStateChange: (state, dispatch) => {
                                   // tap into the resulting props so that the usage is transparent to the user
-                                  onStateChange(state);
+                                  onStateChange(state, dispatch);
                                   loaderStatus.result.props.onStateChange?.(state, dispatch);
                               },
                           },
@@ -117,6 +127,7 @@ export function useDashboardLoaderWithPluginManipulation(options: IDashboardLoad
                   }
                 : loaderStatus,
         reloadPlugins,
+        hidePluginOverlays,
         changeLoadingMode,
         loadingMode,
         setExtraPlugins,

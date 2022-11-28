@@ -9,11 +9,13 @@ import React from "react";
 interface IPluginToolbarProps {
     reloadPlugins: () => void;
     togglePlugin: () => void;
+    hideOverlays: () => void;
     isPluginEnabled: boolean;
+    isHideOverlaysEnabled: boolean;
 }
 
 export const PluginToolbar: React.FC<IPluginToolbarProps> = (props) => {
-    const { isPluginEnabled, reloadPlugins, togglePlugin } = props;
+    const { isPluginEnabled, isHideOverlaysEnabled, reloadPlugins, togglePlugin, hideOverlays } = props;
     return (
         <DefaultDashboardToolbar>
             <DefaultDashboardToolbarGroup title="Plugins">
@@ -21,6 +23,12 @@ export const PluginToolbar: React.FC<IPluginToolbarProps> = (props) => {
                     icon="sync"
                     onClick={reloadPlugins}
                     tooltip="This will reload the plugin keeping any changes you made to the dashboard intact"
+                />
+                <DefaultDashboardToolbarButton
+                    icon="invisible"
+                    onClick={hideOverlays}
+                    tooltip="This will hide all overlays over widgets and sections, that was added or modified by plugin"
+                    disabled={!isHideOverlaysEnabled}
                 />
                 <DefaultDashboardToolbarButton
                     icon="circle-cross"
