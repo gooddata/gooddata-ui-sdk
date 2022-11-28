@@ -278,6 +278,15 @@ export const selectEnableKPIDashboardImplicitDrillDown = createSelector(selectCo
 });
 
 /**
+ * Returns whether drill fromAttribute is enabled
+ *
+ * @public
+ */
+export const selectEnableKPIDashboardDrillFromAttribute = createSelector(selectConfig, (state) => {
+    return state.settings?.enableKPIDashboardDrillFromAttribute ?? false;
+});
+
+/**
  * Returns whether Kpi drills in embedded mode are disabled.
  *
  * @public

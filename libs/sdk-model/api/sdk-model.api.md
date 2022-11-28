@@ -2113,6 +2113,7 @@ export interface ISettings {
     enableInsightToReport?: boolean;
     enableKDWidgetCustomHeight?: boolean;
     enableKDZooming?: boolean;
+    enableKPIDashboardDrillFromAttribute?: boolean;
     enableKPIDashboardDrillToDashboard?: boolean;
     enableKPIDashboardDrillToInsight?: boolean;
     enableKPIDashboardDrillToURL?: boolean;

@@ -9,9 +9,16 @@ import {
     selectDrillableItemsByWidgetRef,
     selectConfiguredAndImplicitDrillsByWidgetRef,
     selectIsInEditMode,
+    selectEnableKPIDashboardDrillFromAttribute,
 } from "../../../../../model";
 import { OnWidgetDrill } from "../../../../drill/types";
-import { DataViewFacade, IDrillEvent, IPushData, isSomeHeaderPredicateMatched } from "@gooddata/sdk-ui";
+import {
+    DataViewFacade,
+    IAvailableDrillTargets,
+    IDrillEvent,
+    IPushData,
+    isSomeHeaderPredicateMatched,
+} from "@gooddata/sdk-ui";
 import { IDashboardDrillEvent } from "../../../../../types";
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 /**
@@ -33,17 +40,20 @@ export const useDashboardInsightDrills = ({
 }: UseDashboardInsightDrillsProps) => {
     const dispatch = useDashboardDispatch();
     const drillTargets = useDashboardSelector(selectDrillTargetsByWidgetRef(widget.ref));
+    const isDrillFromAttributeEnabled = useDashboardSelector(selectEnableKPIDashboardDrillFromAttribute);
 
     const onPushData = useCallback(
         (data: IPushData): void => {
-            if (
-                data?.availableDrillTargets &&
-                !isEqual(drillTargets?.availableDrillTargets, data.availableDrillTargets)
-            ) {
-                dispatch(addDrillTargets(widget.ref, data.availableDrillTargets));
+            const targets = sanitizeAvailableDrillTargets(
+                data?.availableDrillTargets,
+                isDrillFromAttributeEnabled,
+            );
+
+            if (targets && !isEqual(drillTargets?.availableDrillTargets, targets)) {
+                dispatch(addDrillTargets(widget.ref, targets));
             }
         },
-        [drillTargets],
+        [drillTargets, widget.ref, isDrillFromAttributeEnabled, dispatch],
     );
 
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
@@ -86,4 +96,14 @@ export const useDashboardInsightDrills = ({
         onPushData,
         onDrill,
     };
+};
+
+const sanitizeAvailableDrillTargets = (
+    availableDrillTargets: IAvailableDrillTargets | undefined,
+    isDrillFromAttributeEnabled: boolean,
+) => {
+    // base on ff we remove attributes targets if is not supported
+    return isDrillFromAttributeEnabled
+        ? availableDrillTargets
+        : { ...availableDrillTargets, attributes: undefined };
 };

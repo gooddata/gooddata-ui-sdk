@@ -5762,6 +5762,9 @@ export const selectEnableFilterValuesResolutionInDrillEvents: OutputSelector<Das
 export const selectEnableInsightExportScheduling: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
 // @public
+export const selectEnableKPIDashboardDrillFromAttribute: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
+
+// @public
 export const selectEnableKPIDashboardDrillToDashboard: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
 // @public

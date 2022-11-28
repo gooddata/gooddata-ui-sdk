@@ -30,6 +30,16 @@ type DashboardTesterConfig = {
     customizationFns?: DashboardModelCustomizationFns;
 };
 
+/**
+ * Default global setting for DashboardTester
+ * @internal
+ */
+export const defaultConfig: RecordedBackendConfig = {
+    globalSettings: {
+        enableKPIDashboardDrillFromAttribute: true,
+    },
+};
+
 export class DashboardTester extends HeadlessDashboard {
     protected constructor(ctx: DashboardContext, config?: DashboardTesterConfig) {
         const headlessDahboardConfig: HeadlessDashboardConfig = {
@@ -57,6 +67,7 @@ export class DashboardTester extends HeadlessDashboard {
             backend: recordedBackend(
                 ReferenceRecordings.Recordings,
                 {
+                    ...defaultConfig,
                     ...backendConfig,
                     getCommonAttributesResponses: {
                         ...commonAttributeResponses,
