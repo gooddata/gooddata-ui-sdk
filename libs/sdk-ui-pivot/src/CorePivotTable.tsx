@@ -438,10 +438,11 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         }
     }
 
-    private handleMouseDown(e: React.MouseEvent): void {
+    private stopEventWhenResizeHeader(e: React.MouseEvent): void {
         // Do not propagate event when it originates from the table resizer.
         // This means for example that we can resize columns without triggering drag in the application.
         if ((e.target as Element)?.className?.includes?.("ag-header-cell-resize")) {
+            e.preventDefault();
             e.stopPropagation();
         }
     }
@@ -524,7 +525,8 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
                 className="gd-table-component"
                 style={style}
                 id={this.pivotTableId}
-                onMouseDown={this.handleMouseDown}
+                onMouseDown={this.stopEventWhenResizeHeader}
+                onDragStart={this.stopEventWhenResizeHeader}
             >
                 <div
                     className="gd-table ag-theme-balham s-pivot-table"
