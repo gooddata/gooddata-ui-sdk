@@ -29,6 +29,9 @@ const arrowDirections: ArrowDirections = {
     "br br": "right",
 };
 
+const alignTo = ".s-dash-item.is-selected";
+const ignoreClicksOnByClass = [alignTo]; // do not close on click to the widget
+
 export const ConfigurationBubble: React.FC<IConfigurationBubbleProps> = (props) => {
     const { children, classNames, onClose } = props;
 
@@ -36,11 +39,12 @@ export const ConfigurationBubble: React.FC<IConfigurationBubbleProps> = (props) 
         <Bubble
             className={cx("bubble-light gd-configuration-bubble s-gd-configuration-bubble", classNames)}
             overlayClassName="gd-configuration-bubble-wrapper sdk-edit-mode-on"
-            alignTo={".s-dash-item.is-selected"}
+            alignTo={alignTo}
             alignPoints={alignPoints}
             arrowOffsets={arrowOffsets}
             arrowDirections={arrowDirections}
             closeOnOutsideClick
+            ignoreClicksOnByClass={ignoreClicksOnByClass}
             onClose={onClose}
         >
             {children}
