@@ -61,16 +61,26 @@ export const AttributeFilterParentFilteringProvider: React.FC<
         onParentSelect,
         onConnectingAttributeChanged,
         onParentFiltersChange,
-        onConfigurationClose,
+        onConfigurationClose: onParentFiltersClose,
     } = useParentsConfiguration(neighborFilters, currentFilter);
 
-    const { onDisplayFormSelect, filterDisplayForms, displayFormChanged, onDisplayFormChange } =
-        useDisplayFormConfiguration(currentFilter);
+    const {
+        onDisplayFormSelect,
+        filterDisplayForms,
+        displayFormChanged,
+        onDisplayFormChange,
+        onConfigurationClose: onDisplayFormClose,
+    } = useDisplayFormConfiguration(currentFilter);
 
     const onConfigurationSave = useCallback(() => {
         onParentFiltersChange();
         onDisplayFormChange();
     }, [onParentFiltersChange, onDisplayFormChange]);
+
+    const onConfigurationClose = useCallback(() => {
+        onParentFiltersClose();
+        onDisplayFormClose();
+    }, [onParentFiltersClose, onDisplayFormClose]);
 
     const showDisplayFormPicker = filterDisplayForms.availableDisplayForms.length > 1;
 
