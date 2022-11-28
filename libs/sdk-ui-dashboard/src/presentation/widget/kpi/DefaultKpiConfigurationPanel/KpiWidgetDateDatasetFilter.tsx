@@ -80,7 +80,7 @@ export const KpiWidgetDateDatasetFilter: React.FC<{
     const shouldOpenDateDatasetPicker =
         isKpiDateDatasetAutoSelect &&
         result?.dateDatasets &&
-        !!getRecommendedCatalogDateDataset(result?.dateDatasets);
+        !getRecommendedCatalogDateDataset(result.dateDatasets);
 
     useEffect(() => {
         return () => {
