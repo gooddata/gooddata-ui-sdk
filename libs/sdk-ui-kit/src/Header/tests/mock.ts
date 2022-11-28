@@ -44,6 +44,8 @@ export const getWorkspacePermissionsMock = (
         canCreateVisualization: true,
         canExecuteRaw: true,
         canExportReport: true,
+        canExportTabular: true,
+        canExportPdf: true,
         canListUsersInProject: true,
         canManageAnalyticalDashboard: true,
         canManageDomain: true,

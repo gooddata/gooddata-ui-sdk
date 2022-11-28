@@ -9,7 +9,7 @@ import {
     useDashboardSelector,
     isCustomWidget,
     useDashboardScheduledEmails,
-    selectCanExportReport,
+    selectCanExportTabular,
     selectSettings,
 } from "../../../../model";
 import {
@@ -50,7 +50,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
 
     const { isScheduledEmailingVisible, enableInsightExportScheduling, onScheduleEmailingOpen } =
         useDashboardScheduledEmails();
-    const canExportReport = useDashboardSelector(selectCanExportReport);
+    const canExportTabular = useDashboardSelector(selectCanExportTabular);
 
     const onScheduleExport = useCallback(() => {
         onScheduleEmailingOpen(widgetRef);
@@ -67,7 +67,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
         onExportXLSX,
         onScheduleExport,
         isScheduleExportVisible:
-            isScheduledEmailingVisible && canExportReport && enableInsightExportScheduling,
+            isScheduledEmailingVisible && canExportTabular && enableInsightExportScheduling,
     });
 
     const {

@@ -65,6 +65,8 @@ export {
     selectCanListUsersInWorkspace,
     selectCanManageWorkspace,
     selectCanExportReport,
+    selectCanExportTabular,
+    selectCanExportPdf,
     selectCanCreateAnalyticalDashboard,
     selectCanManageACL,
     selectCanManageAnalyticalDashboard,

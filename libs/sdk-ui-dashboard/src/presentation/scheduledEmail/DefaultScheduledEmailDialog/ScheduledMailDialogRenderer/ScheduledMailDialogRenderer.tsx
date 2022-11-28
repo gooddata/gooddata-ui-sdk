@@ -118,9 +118,9 @@ export interface IScheduledMailDialogRendererOwnProps {
     canListUsersInProject?: boolean;
 
     /**
-     * Has user canExportReport permission?
+     * Is user allowed to perform tabular exports?
      */
-    canExportReport?: boolean;
+    canExportTabular?: boolean;
 
     /**
      * Is enableKPIDashboardScheduleRecipients feature flag turned on?
@@ -418,7 +418,7 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
             dashboardTitle,
             dashboardInsightWidgets,
             enableWidgetExportScheduling,
-            canExportReport,
+            canExportTabular,
         } = this.props;
 
         const { dashboardSelected, widgetsSelected, configuration } = this.state.attachments;
@@ -432,7 +432,7 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
                 dashboardSelected={dashboardSelected}
                 widgetsSelected={widgetsSelected}
                 configuration={configuration}
-                canExportReport={canExportReport}
+                canExportTabular={canExportTabular}
                 onAttachmentsSelectionChanged={this.onAttachmentsChange}
                 onAttachmentsConfigurationChanged={this.onAttachmentsConfigurationChange}
             />

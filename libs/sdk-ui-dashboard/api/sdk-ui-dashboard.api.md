@@ -5597,7 +5597,13 @@ export const selectCanCreateVisualization: OutputSelector<DashboardState, boolea
 export const selectCanExecuteRaw: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
 
 // @public
+export const selectCanExportPdf: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
+
+// @public
 export const selectCanExportReport: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
+
+// @public
+export const selectCanExportTabular: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
 
 // @public
 export const selectCanInitData: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;

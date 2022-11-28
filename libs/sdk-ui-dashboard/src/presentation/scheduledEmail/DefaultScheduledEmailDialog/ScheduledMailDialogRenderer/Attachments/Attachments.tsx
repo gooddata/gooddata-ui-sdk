@@ -15,7 +15,7 @@ export interface IAttachmentsProps {
     dashboardSelected: boolean;
     widgetsSelected: IWidgetsSelection;
     configuration: IWidgetExportConfiguration;
-    canExportReport?: boolean;
+    canExportTabular?: boolean;
     onAttachmentsSelectionChanged(dashboardSelected: boolean, widgetsSelected: IWidgetsSelection): void;
     onAttachmentsConfigurationChanged(configuration: IWidgetExportConfiguration): void;
 }
@@ -34,7 +34,7 @@ export const Attachments = (props: IAttachmentsProps) => {
         widgetsSelected,
         insightWidgets = [],
         configuration,
-        canExportReport,
+        canExportTabular,
         onAttachmentsSelectionChanged,
         onAttachmentsConfigurationChanged,
     } = props;
@@ -66,7 +66,7 @@ export const Attachments = (props: IAttachmentsProps) => {
                         </AttachmentItem>
                     ) : null}
                 </div>
-                {canExportReport ? (
+                {canExportTabular ? (
                     <div className="gd-schedule-email-dialog-attachments">
                         <AttachmentsSelectionDropdown
                             dashboardTitle={dashboardTitle}

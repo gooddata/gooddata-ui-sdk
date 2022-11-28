@@ -6,7 +6,7 @@ import { isProtectedDataError } from "@gooddata/sdk-backend-spi";
 import {
     exportDashboardToPdf,
     selectCanCreateAnalyticalDashboard,
-    selectCanExportReport,
+    selectCanExportPdf,
     selectEnableKPIDashboardExportPDF,
     selectIsInEditMode,
     selectIsInViewMode,
@@ -94,7 +94,7 @@ export const useDefaultMenuItems = function (): IMenuButtonItem[] {
     const canCreateDashboard = useDashboardSelector(selectCanCreateAnalyticalDashboard);
     const isSaveAsNewHidden = useDashboardSelector(selectIsSaveAsNewButtonHidden);
 
-    const canExportReport = useDashboardSelector(selectCanExportReport);
+    const canExport = useDashboardSelector(selectCanExportPdf);
     const isKPIDashboardExportPDFEnabled = !!useDashboardSelector(selectEnableKPIDashboardExportPDF);
 
     const menuButtonItemsVisibility = useDashboardSelector(selectMenuButtonItemsVisibility);
@@ -111,7 +111,7 @@ export const useDefaultMenuItems = function (): IMenuButtonItem[] {
 
         const isPdfExportVisible =
             isInViewMode &&
-            canExportReport &&
+            canExport &&
             isKPIDashboardExportPDFEnabled &&
             (menuButtonItemsVisibility.pdfExportButton ?? true);
 
@@ -164,7 +164,7 @@ export const useDefaultMenuItems = function (): IMenuButtonItem[] {
         isNewDashboard,
         isReadOnly,
         menuButtonItemsVisibility,
-        canExportReport,
+        canExport,
         isKPIDashboardExportPDFEnabled,
         isScheduledEmailingVisible,
     ]);

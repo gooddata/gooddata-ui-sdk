@@ -34,7 +34,7 @@ export const DefaultScheduledEmailDialog = (props: IScheduledEmailDialogProps): 
         handleSaveScheduledEmail,
         locale,
         canListUsersInWorkspace,
-        canExportReport,
+        canExportTabular,
         dateFormat,
         enableKPIDashboardSchedule,
         enableKPIDashboardScheduleRecipients,
@@ -66,7 +66,7 @@ export const DefaultScheduledEmailDialog = (props: IScheduledEmailDialogProps): 
             editSchedule={editSchedule}
             locale={locale}
             canListUsersInProject={canListUsersInWorkspace}
-            canExportReport={canExportReport}
+            canExportTabular={canExportTabular}
             enableKPIDashboardScheduleRecipients={enableKPIDashboardScheduleRecipients}
             enableWidgetExportScheduling={enableWidgetExportScheduling}
             dateFormat={dateFormat}

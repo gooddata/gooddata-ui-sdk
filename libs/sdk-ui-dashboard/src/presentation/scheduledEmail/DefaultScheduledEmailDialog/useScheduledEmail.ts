@@ -29,7 +29,7 @@ import {
     selectOriginalFilterContextFilters,
     selectWidgets,
     isCustomWidget,
-    selectCanExportReport,
+    selectCanExportTabular,
     selectScheduleEmailDialogDefaultAttachment,
     selectInsightsMap,
 } from "../../../model";
@@ -74,9 +74,9 @@ interface UseScheduledEmailResult {
     canListUsersInWorkspace?: boolean;
 
     /**
-     * Has user permissions to list users in the canExportReport?
+     * Has user permissions to export tabular?
      */
-    canExportReport?: boolean;
+    canExportTabular?: boolean;
 
     /**
      * Is user able to create scheduled emails?
@@ -203,7 +203,7 @@ export const useScheduledEmail = (props: UseScheduledEmailProps): UseScheduledEm
         selectEnableKPIDashboardScheduleRecipients,
     );
     const canListUsersInWorkspace = useDashboardSelector(selectCanListUsersInWorkspace);
-    const canExportReport = useDashboardSelector(selectCanExportReport);
+    const canExportTabular = useDashboardSelector(selectCanExportTabular);
     const enableKPIDashboardSchedule = useDashboardSelector(selectEnableKPIDashboardSchedule);
     const enableWidgetExportScheduling = useDashboardSelector(selectEnableInsightExportScheduling);
     const defaultAttachment = useDashboardSelector(selectScheduleEmailDialogDefaultAttachment);
@@ -252,7 +252,7 @@ export const useScheduledEmail = (props: UseScheduledEmailProps): UseScheduledEm
         dashboardInsightWidgets,
         hasDefaultFilters,
         canListUsersInWorkspace,
-        canExportReport,
+        canExportTabular,
         enableKPIDashboardSchedule,
         enableKPIDashboardScheduleRecipients,
         enableWidgetExportScheduling,

@@ -68,12 +68,30 @@ export const selectCanManageWorkspace = createSelector(selectPermissions, (state
 });
 
 /**
- * Returns whether the current user has permissions necessary to export insights to CSV and XLSX.
+ * Returns whether the current user has permissions necessary to export insights.
  *
  * @public
  */
 export const selectCanExportReport = createSelector(selectPermissions, (state) => {
     return state?.canExportReport ?? false;
+});
+
+/**
+ * Returns whether the current user has permissions necessary to export insights to CSV, XLSX
+ *
+ * @public
+ */
+export const selectCanExportTabular = createSelector(selectPermissions, (state) => {
+    return (state?.canExportReport || state?.canExportTabular) ?? false;
+});
+
+/**
+ * Returns whether the current user has permissions necessary to export insights to PDF
+ *
+ * @public
+ */
+export const selectCanExportPdf = createSelector(selectPermissions, (state) => {
+    return (state?.canExportReport || state?.canExportPdf) ?? false;
 });
 
 /**

@@ -7,7 +7,7 @@ import { useIntl } from "react-intl";
 import { Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";
 import { VisType } from "@gooddata/sdk-ui";
 
-import { selectCanExportReport, selectSettings, useDashboardSelector } from "../../../../../model";
+import { selectCanExportTabular, selectSettings, useDashboardSelector } from "../../../../../model";
 import { IDashboardInsightMenuButtonProps } from "../../types";
 
 const nonExportableVisTypes: VisType[] = ["headline", "xirr"];
@@ -29,9 +29,9 @@ export const LegacyInsightMenuButton: React.FC<IDashboardInsightMenuButtonProps>
     }, [onClick]);
 
     const settings = useDashboardSelector(selectSettings);
-    const canExportReport = useDashboardSelector(selectCanExportReport);
+    const canExportTabular = useDashboardSelector(selectCanExportTabular);
     const areExportsEnabled = settings.enableKPIDashboardExport;
-    const hasExportReportPermissions = canExportReport;
+    const hasExportReportPermissions = canExportTabular;
 
     const visType = insightVisualizationUrl(insight).split(":")[1] as VisType;
     const isExportableVisType = isExportableVisualization(visType);
