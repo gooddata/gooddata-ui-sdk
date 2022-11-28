@@ -55,14 +55,14 @@ export function EditableLabelWithBubble({
     }, [onEditingStart]);
 
     const onCancelCallback = useCallback(() => {
-        setEditing(true);
+        setEditing(false);
         setCurrentValue(value);
         onCancel?.();
     }, [onCancel, value]);
 
     const onSubmitCallback = useCallback(
         (newValue: string) => {
-            setEditing(true);
+            setEditing(false);
             setCurrentValue(newValue);
             onSubmit(newValue);
         },
