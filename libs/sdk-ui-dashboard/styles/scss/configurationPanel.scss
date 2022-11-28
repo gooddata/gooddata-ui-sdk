@@ -525,8 +525,10 @@
         }
         .description {
             font-size: 13px;
-            color: kit-variables.$gd-color-text;
             resize: none;
+            &:not(:disabled) {
+                color: kit-variables.$gd-color-text;
+            }
         }
         .include-metrics-wrapper {
             margin-top: 10px;

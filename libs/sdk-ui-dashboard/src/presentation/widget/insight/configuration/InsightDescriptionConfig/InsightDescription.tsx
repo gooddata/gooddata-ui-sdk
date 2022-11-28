@@ -6,11 +6,12 @@ import { TextAreaWithSubmit } from "@gooddata/sdk-ui-kit";
 
 interface IInsightDescriptionProps {
     description: string;
+    readOnly?: boolean;
     setDescription: (newDescription: string) => void;
 }
 
 export function InsightDescription(props: IInsightDescriptionProps) {
-    const { description, setDescription } = props;
+    const { description, setDescription, readOnly = false } = props;
 
     const intl = useIntl();
 
@@ -29,6 +30,7 @@ export function InsightDescription(props: IInsightDescriptionProps) {
                     id: "configurationPanel.visualprops.descriptionPlaceholder",
                 })}
                 onSubmit={onChange}
+                disabled={readOnly}
             />
         </label>
     );
