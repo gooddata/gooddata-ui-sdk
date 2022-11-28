@@ -72,6 +72,7 @@ export interface IBubbleProps {
     onClose?: () => void;
     onMouseEnter?: () => void;
     onMouseLeave?: () => void;
+    onKeyDown?: () => void;
     overlayClassName?: string;
 }
 
@@ -194,6 +195,7 @@ export class Bubble extends React.Component<IBubbleProps, IBubbleState> {
                 <div
                     onMouseEnter={this.props.onMouseEnter}
                     onMouseLeave={this.props.onMouseLeave}
+                    onKeyDown={this.props.onKeyDown}
                     className={this.getClassnames()}
                 >
                     <div className="bubble-content">

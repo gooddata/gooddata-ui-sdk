@@ -901,6 +901,8 @@ export interface IBubbleProps {
     // (undocumented)
     onClose?: () => void;
     // (undocumented)
+    onKeyDown?: () => void;
+    // (undocumented)
     onMouseEnter?: () => void;
     // (undocumented)
     onMouseLeave?: () => void;
