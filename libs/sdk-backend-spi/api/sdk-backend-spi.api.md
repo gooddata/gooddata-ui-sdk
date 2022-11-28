@@ -385,6 +385,7 @@ export interface IBackendCapabilities {
     supportsInlineMeasures?: boolean;
     supportsKpiWidget?: boolean;
     supportsMetadataObjectLocking?: boolean;
+    supportsNonProductionDatasets?: boolean;
     supportsObjectUris?: boolean;
     supportsOrganizationSettings?: boolean;
     supportsOwners?: boolean;
