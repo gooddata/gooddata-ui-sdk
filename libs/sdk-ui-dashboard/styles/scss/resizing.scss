@@ -45,17 +45,19 @@ $gd-width-resizer-hotpost-height: 40px;
     width: 100%;
 }
 
-.resizer-drag-preview,
-.height-resizer-drag-preview {
-    z-index: 110;
-}
+.sdk-edit-mode-on {
+    .resizer-drag-preview,
+    .height-resizer-drag-preview {
+        z-index: 110;
+    }
 
-.dash-width-resizer-hotspot {
-    position: absolute;
-    z-index: 101;
-    left: 10px;
-    overflow: hidden;
-    height: 100%;
+    .dash-width-resizer-hotspot {
+        position: absolute;
+        z-index: 101;
+        left: 10px;
+        overflow: hidden;
+        height: 100%;
+    }
 }
 
 .gd-fluidlayout-width-resizer {
