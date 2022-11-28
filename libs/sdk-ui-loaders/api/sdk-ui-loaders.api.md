@@ -114,6 +114,7 @@ export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoa
 export function useDashboardLoaderWithPluginManipulation(options: IDashboardLoadOptions): {
     loaderStatus: DashboardLoadStatus;
     reloadPlugins: () => void;
+    hidePluginOverlays: () => void;
     changeLoadingMode: (loadingMode: DashboardLoadingMode) => void;
     loadingMode: DashboardLoadingMode;
     setExtraPlugins: (plugins: IEmbeddedPlugin | IEmbeddedPlugin[]) => void;
