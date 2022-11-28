@@ -58,6 +58,10 @@
                                     "An example of a successful connection": {
                                         "description": "An example of a successful connection",
                                         "value": {
+                                            "queryDurationMillis": {
+                                                "simpleSelect": 562,
+                                                "createCacheTable": 235
+                                            },
                                             "successful": true
                                         }
                                     },
@@ -188,6 +192,10 @@
                                     "An example of a successful connection": {
                                         "description": "An example of a successful connection",
                                         "value": {
+                                            "queryDurationMillis": {
+                                                "simpleSelect": 562,
+                                                "createCacheTable": 235
+                                            },
                                             "successful": true
                                         }
                                     },
@@ -257,6 +265,25 @@
     },
     "components": {
         "schemas": {
+            "TestQueryDuration": {
+                "required": ["simpleSelect"],
+                "type": "object",
+                "properties": {
+                    "simpleSelect": {
+                        "type": "integer",
+                        "description": "Field containing duration of a test select query on a data source. In milliseconds.",
+                        "format": "int32",
+                        "example": 562
+                    },
+                    "createCacheTable": {
+                        "type": "integer",
+                        "description": "Field containing duration of a test 'create table as select' query on a datasource. In milliseconds. The field is omitted if a data source doesn't support caching.",
+                        "format": "int32",
+                        "example": 235
+                    }
+                },
+                "description": "A structure containing duration of the test queries run on a data source. It is omitted if an error happens."
+            },
             "TestResponse": {
                 "required": ["successful"],
                 "type": "object",
@@ -270,6 +297,9 @@
                         "type": "string",
                         "description": "Field containing more details in case of a failure. Details are available to a privileged user only.",
                         "example": "Connection exception: Failed to initialize pool: FATAL: password authentication failed for user \"user\""
+                    },
+                    "queryDurationMillis": {
+                        "$ref": "#/components/schemas/TestQueryDuration"
                     }
                 },
                 "description": "Response from data source testing."
