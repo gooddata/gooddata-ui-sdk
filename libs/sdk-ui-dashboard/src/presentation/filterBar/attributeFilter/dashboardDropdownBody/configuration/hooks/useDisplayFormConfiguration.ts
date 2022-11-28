@@ -53,10 +53,18 @@ export function useDisplayFormConfiguration(currentFilter: IDashboardAttributeFi
         }
     }, [filterDisplayForms, originalDisplayForm, currentFilter, changeDisplayFormCommand]);
 
+    const onConfigurationClose = useCallback(() => {
+        setFilterDisplayForms((old) => ({
+            ...old,
+            selectedDisplayForm: originalDisplayForm,
+        }));
+    }, [originalDisplayForm]);
+
     return {
         onDisplayFormSelect,
         filterDisplayForms,
         displayFormChanged,
         onDisplayFormChange,
+        onConfigurationClose,
     };
 }
