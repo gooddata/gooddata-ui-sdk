@@ -19,21 +19,17 @@ export const PluginToolbar: React.FC<IPluginToolbarProps> = (props) => {
     return (
         <DefaultDashboardToolbar>
             <DefaultDashboardToolbarGroup title="Plugins">
-                <DefaultDashboardToolbarButton
-                    icon="sync"
-                    onClick={reloadPlugins}
-                    tooltip="This will reload the plugin keeping any changes you made to the dashboard intact"
-                />
+                <DefaultDashboardToolbarButton icon="sync" onClick={reloadPlugins} tooltip="Reload" />
                 <DefaultDashboardToolbarButton
                     icon="invisible"
                     onClick={hideOverlays}
-                    tooltip="This will hide all overlays over widgets and sections, that was added or modified by plugin"
+                    tooltip="Hide overlays"
                     disabled={!isHideOverlaysEnabled}
                 />
                 <DefaultDashboardToolbarButton
                     icon="circle-cross"
                     onClick={togglePlugin}
-                    tooltip="This will reload the dashboard with or without the plugin applied keeping any changes you made to the dashboard intact"
+                    tooltip={isPluginEnabled ? "Disable temporarily" : "Enable"}
                     isActive={!isPluginEnabled}
                 />
             </DefaultDashboardToolbarGroup>
