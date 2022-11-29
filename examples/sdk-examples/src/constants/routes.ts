@@ -32,7 +32,6 @@ import { ThemedComponents } from "../examples/theming";
 
 import { ChartResponsiveness } from "../examples/chartResponsiveness";
 
-import { Login } from "../components/login";
 import { WithSubRoutes } from "../components/WithSubRoutes";
 import { AboutThisWorkspace } from "../components/AboutThisWorkspace";
 
@@ -352,8 +351,6 @@ export const backendInfoRoutes = [
     { path: "/about-this-project", title: "About This Workspace", Component: AboutThisWorkspace },
     { path: "/about-this-workspace", title: "About This Workspace", Component: AboutThisWorkspace },
 ];
-
-export const userRoutes = [{ path: "/login", title: "Login", Component: Login }];
 
 export const routes = [
     ...sideNavigationRoutes,

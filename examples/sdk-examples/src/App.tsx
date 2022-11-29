@@ -1,19 +1,16 @@
 // (C) 2019-2022 GoodData Corporation
 import React, { useEffect } from "react";
 import ReactGA from "react-ga";
-import { Redirect, Route, Router, Switch } from "react-router-dom";
+import { Route, Router } from "react-router-dom";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
-import { CustomLoading } from "./components/CustomLoading";
 import { Header } from "./components/Header";
 import { Menu } from "./components/Menu";
-import { useAuth, AuthStatus } from "./context/auth";
-import { routes, sideNavigationRoutes, userRoutes } from "./constants/routes";
+import { routes, sideNavigationRoutes } from "./constants/routes";
 import { workspace } from "./constants/fixtures";
 import { history } from "./history";
+import { backend } from "./backend";
 
 export const App: React.FC = () => {
-    const { authStatus, logout, backend } = useAuth();
-
     useEffect(() => {
         ReactGA.pageview(window.location.pathname + window.location.search);
     }, []);
@@ -164,67 +161,20 @@ export const App: React.FC = () => {
                                 padding: 20px 40px;
                             }
                         `}</style>
-                        <Header
-                            routes={routes}
-                            isUserLoggedIn={authStatus === AuthStatus.AUTHORIZED}
-                            logoutAction={logout}
-                        />
+                        <Header routes={routes} />
                         <div className="pageWrapper">
-                            {(authStatus === AuthStatus.AUTHORIZED) === true && (
+                            <Menu
                                 // @ts-expect-error the sideNavigationRoutes typings are behaving strange here
-                                <Menu sideNavigationRoutes={sideNavigationRoutes} routes={routes} />
-                            )}
+                                sideNavigationRoutes={sideNavigationRoutes}
+                                routes={routes}
+                            />
+
                             <main>
-                                {authStatus === AuthStatus.AUTHORIZING && (
-                                    <div className="flexWrapper flexWrapper--center">
-                                        <CustomLoading
-                                            height={undefined}
-                                            label="Checking if user is already logged in&hellip;"
-                                        />
-                                    </div>
-                                )}
-                                {authStatus === AuthStatus.LOGGING_OUT && (
-                                    <div className="flexWrapper flexWrapper--center">
-                                        <CustomLoading height={undefined} label="Logging out&hellip;" />
-                                    </div>
-                                )}
-                                {authStatus !== AuthStatus.AUTHORIZING && (
-                                    <div className="flexWrapper">
-                                        <Switch>
-                                            {userRoutes.map(
-                                                ({ title: _, path, Component, ...routeProps }) => (
-                                                    <Route
-                                                        key={path}
-                                                        path={path}
-                                                        component={Component}
-                                                        {...routeProps}
-                                                    />
-                                                ),
-                                            )}
-                                            {authStatus === AuthStatus.UNAUTHORIZED && (
-                                                <Redirect
-                                                    to={{
-                                                        pathname: "/login",
-                                                        state: {
-                                                            redirectUriAfterLogin: "/",
-                                                            defaultRoute: true,
-                                                        },
-                                                    }}
-                                                />
-                                            )}
-                                        </Switch>
-                                        {authStatus === AuthStatus.AUTHORIZED &&
-                                            // eslint-disable-next-line sonarjs/no-identical-functions
-                                            routes.map(({ title: _, path, Component, ...routeProps }) => (
-                                                <Route
-                                                    key={path}
-                                                    path={path}
-                                                    component={Component}
-                                                    {...routeProps}
-                                                />
-                                            ))}
-                                    </div>
-                                )}
+                                <div className="flexWrapper">
+                                    {routes.map(({ title: _, path, Component, ...routeProps }) => (
+                                        <Route key={path} path={path} component={Component} {...routeProps} />
+                                    ))}
+                                </div>
                             </main>
                         </div>
                     </div>

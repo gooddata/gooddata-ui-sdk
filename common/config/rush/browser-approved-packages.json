@@ -475,10 +475,6 @@
       "allowedCategories": [ "tools" ]
     },
     {
-      "name": "@types/yup",
-      "allowedCategories": [ "examples" ]
-    },
-    {
       "name": "@typescript-eslint/eslint-plugin",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
@@ -689,10 +685,6 @@
     {
       "name": "fork-ts-checker-webpack-plugin",
       "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "formik",
-      "allowedCategories": [ "examples" ]
     },
     {
       "name": "fs-extra",
@@ -1105,10 +1097,6 @@
     {
       "name": "xml2js",
       "allowedCategories": [ "production", "tools" ]
-    },
-    {
-      "name": "yup",
-      "allowedCategories": [ "examples" ]
     }
   ]
 }

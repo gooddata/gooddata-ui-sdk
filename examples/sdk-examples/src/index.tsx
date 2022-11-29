@@ -12,15 +12,9 @@ import "@gooddata/sdk-ui-ext/styles/css/main.css";
 import "@gooddata/sdk-ui-dashboard/styles/css/main.css";
 
 import { App } from "./App";
-import { AppProviders } from "./context";
 import "./react-ga";
 
 const root = document.createElement("div");
 root.className = "root";
 document.body.appendChild(root);
-ReactDOM.render(
-    <AppProviders>
-        <App />
-    </AppProviders>,
-    root,
-);
+ReactDOM.render(<App />, root);
