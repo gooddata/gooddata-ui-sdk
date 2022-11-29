@@ -8,8 +8,10 @@ export {
 export {
     CustomDashboardInsightMenuButtonComponent,
     CustomDashboardInsightMenuComponent,
+    CustomDashboardInsightMenuTitleComponent,
     IDashboardInsightMenuButtonProps,
     IDashboardInsightMenuProps,
+    IDashboardInsightMenuTitleProps,
     IInsightMenuItem,
     IInsightMenuItemButton,
     IInsightMenuItemSeparator,

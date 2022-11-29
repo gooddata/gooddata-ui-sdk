@@ -19,6 +19,7 @@ import {
     DefaultDashboardKpi,
     DefaultDashboardInsightComponentSetFactory,
     DefaultDashboardKpiComponentSetFactory,
+    DefaultDashboardInsightMenuTitle,
 } from "../../widget";
 import { IDashboardProps } from "../types";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -31,6 +32,7 @@ import {
     InsightMenuComponentProvider,
     KpiComponentProvider,
     DateFilterComponentProvider,
+    InsightMenuTitleComponentProvider,
 } from "../../dashboardContexts";
 import {
     AttributeFilterComponentSet,
@@ -50,6 +52,7 @@ interface IUseDashboardResult {
     insightBodyProvider: InsightBodyComponentProvider;
     insightMenuButtonProvider: InsightMenuButtonComponentProvider;
     insightMenuProvider: InsightMenuComponentProvider;
+    insightMenuTitleProvider: InsightMenuTitleComponentProvider;
     kpiProvider: KpiComponentProvider;
     insightWidgetComponentSet: InsightWidgetComponentSet;
     kpiWidgetComponentSet: KpiWidgetComponentSet;
@@ -67,6 +70,7 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         InsightMenuButtonComponentProvider,
         insightMenuItemsProvider,
         InsightMenuComponentProvider,
+        InsightMenuTitleComponentProvider,
         InsightComponentSetProvider,
         KpiComponentProvider,
     } = props;
@@ -138,6 +142,14 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         [InsightMenuComponentProvider],
     );
 
+    const insightMenuTitleProvider = useCallback<InsightMenuTitleComponentProvider>(
+        (insight, widget) => {
+            const userSpecified = InsightMenuTitleComponentProvider?.(insight, widget);
+            return userSpecified ?? DefaultDashboardInsightMenuTitle;
+        },
+        [InsightMenuTitleComponentProvider],
+    );
+
     const kpiProvider = useCallback<KpiComponentProvider>(
         (kpi, widget) => {
             const userSpecified = KpiComponentProvider?.(kpi, widget);
@@ -180,6 +192,7 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         insightBodyProvider,
         insightMenuButtonProvider,
         insightMenuProvider,
+        insightMenuTitleProvider,
         kpiProvider,
         insightWidgetComponentSet,
         kpiWidgetComponentSet,

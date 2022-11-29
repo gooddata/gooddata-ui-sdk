@@ -1,16 +1,18 @@
 // (C) 2021-2022 GoodData Corporation
 import React from "react";
-
-import { IInsightWidget } from "@gooddata/sdk-model";
 import { Typography } from "@gooddata/sdk-ui-kit";
+import { CustomDashboardInsightMenuTitleComponent } from "../types";
+import { widgetTitle } from "@gooddata/sdk-model";
 
-interface IDashboardInsightMenuHeaderProps {
-    widget: IInsightWidget;
-    title?: React.ReactNode;
-}
+/**
+ * @internal
+ */
+export const DefaultDashboardInsightMenuTitle: CustomDashboardInsightMenuTitleComponent = (props) => {
+    const { widget } = props;
 
-export const DashboardInsightMenuHeader: React.FC<IDashboardInsightMenuHeaderProps> = (props) => {
-    const renderedTitle = props.title ? (
+    const title = widgetTitle(widget);
+
+    const renderedTitle = title ? (
         <span title={props.widget.title} className="insight-title s-insight-title s-insight-title-simple">
             {props.widget.title}
         </span>

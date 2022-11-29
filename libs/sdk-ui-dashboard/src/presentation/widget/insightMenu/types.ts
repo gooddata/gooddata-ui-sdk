@@ -1,6 +1,7 @@
 // (C) 2020-2022 GoodData Corporation
 import { ComponentType, MouseEvent } from "react";
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
+import { RenderMode } from "../../../types";
 
 ///
 /// Component props
@@ -80,6 +81,15 @@ export interface IDashboardInsightMenuProps {
     items: IInsightMenuItem[];
 }
 
+/**
+ * @internal
+ */
+export interface IDashboardInsightMenuTitleProps {
+    widget: IInsightWidget;
+    insight: IInsight;
+    renderMode: RenderMode;
+}
+
 ///
 /// Custom component types
 ///
@@ -93,3 +103,8 @@ export type CustomDashboardInsightMenuButtonComponent = ComponentType<IDashboard
  * @alpha
  */
 export type CustomDashboardInsightMenuComponent = ComponentType<IDashboardInsightMenuProps>;
+
+/**
+ * @internal
+ */
+export type CustomDashboardInsightMenuTitleComponent = ComponentType<IDashboardInsightMenuTitleProps>;
