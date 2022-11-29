@@ -67,6 +67,10 @@ $gd-dashboards-section-description-color: var(
 
 .gd-fluidlayout-row {
     position: relative;
+
+    &.hidden {
+        display: none;
+    }
 }
 
 .gd-fluidlayout-row-debug {

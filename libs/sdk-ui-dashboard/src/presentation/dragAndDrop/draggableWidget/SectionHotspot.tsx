@@ -3,7 +3,6 @@ import cx from "classnames";
 import React, { useEffect } from "react";
 import { useDashboardDispatch } from "../../../model";
 import {
-    isBaseDraggableMovingItem,
     isInsightDraggableItem,
     isInsightDraggableListItem,
     isInsightPlaceholderDraggableItem,
@@ -56,13 +55,6 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
                 if (isKpiPlaceholderDraggableItem(item)) {
                     handleKpiPlaceholderDrop();
                 }
-            },
-            canDrop: (item) => {
-                if (isBaseDraggableMovingItem(item)) {
-                    const isAdjacentSection = index === item.sectionIndex || index === item.sectionIndex + 1;
-                    return !(item.isOnlyItemInSection && isAdjacentSection);
-                }
-                return true;
             },
         },
         [dispatch, index, handleInsightListItemDrop, handleKpiPlaceholderDrop, handleInsightPlaceholderDrop],
