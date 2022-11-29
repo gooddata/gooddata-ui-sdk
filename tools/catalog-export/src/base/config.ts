@@ -22,6 +22,7 @@ function mergeConfigs(config: CatalogExportConfig, prevConfig = DEFAULT_CONFIG):
                 "password",
                 "output",
                 "backend",
+                "demo",
             ]),
             identity,
         ),
@@ -39,6 +40,7 @@ function retrieveConfigFromObject(obj: OptionValues): CatalogExportConfig {
         password: obj.password ?? null,
         output: obj.output ?? null,
         backend: obj.backend ?? "bear",
+        demo: obj.demo ?? false,
     };
 }
 

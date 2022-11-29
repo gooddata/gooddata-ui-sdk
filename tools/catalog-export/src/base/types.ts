@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import { logWarn } from "../cli/loggers";
 
@@ -77,6 +77,11 @@ export type CatalogExportConfig = {
      * Indicates type of backend
      */
     backend: SupportedBackendTypes | null;
+
+    /**
+     * Indicates whether to export demo data without need of the authentication.
+     */
+    demo: boolean;
 };
 
 export function getConfiguredWorkspaceId(
