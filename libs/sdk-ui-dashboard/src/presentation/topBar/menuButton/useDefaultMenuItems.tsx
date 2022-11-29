@@ -160,6 +160,7 @@ export const useDefaultMenuItems = function (): IMenuButtonItem[] {
     }, [
         defaultOnScheduleEmailing,
         defaultOnExportToPdf,
+        isEmptyLayout,
         isNewDashboard,
         isReadOnly,
         menuButtonItemsVisibility,

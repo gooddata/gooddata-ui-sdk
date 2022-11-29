@@ -53,7 +53,7 @@ export function useSaveButtonProps(): ISaveButtonProps {
     const isDashboardDirty = useDashboardSelector(selectIsDashboardDirty);
 
     const isVisible = isEditing;
-    const isEnabled = isDashboardDirty;
+    const isEnabled = isDashboardDirty && !isEmptyDashboard && canSaveDashboard;
 
     const buttonValue = arePermissionsEnabled
         ? messages.controlButtonsSaveValue
