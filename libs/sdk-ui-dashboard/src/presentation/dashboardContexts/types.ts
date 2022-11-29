@@ -3,6 +3,7 @@ import {
     CustomDashboardInsightComponent,
     CustomDashboardInsightMenuButtonComponent,
     CustomDashboardInsightMenuComponent,
+    CustomDashboardInsightMenuTitleComponent,
     CustomDashboardKpiComponent,
     CustomDashboardWidgetComponent,
     CustomInsightBodyComponent,
@@ -91,6 +92,19 @@ export type InsightMenuComponentProvider = (
  * @alpha
  */
 export type OptionalInsightMenuComponentProvider = OptionalProvider<InsightMenuComponentProvider>;
+
+/**
+ * @internal
+ */
+export type InsightMenuTitleComponentProvider = (
+    insight: IInsight,
+    widget: IInsightWidget,
+) => CustomDashboardInsightMenuTitleComponent;
+
+/**
+ * @internal
+ */
+export type OptionalInsightMenuTitleComponentProvider = OptionalProvider<InsightMenuTitleComponentProvider>;
 
 /**
  * @alpha

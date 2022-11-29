@@ -39,6 +39,7 @@ import {
     OptionalKpiComponentProvider,
     OptionalWidgetComponentProvider,
     OptionalDateFilterComponentProvider,
+    OptionalInsightMenuTitleComponentProvider,
 } from "../dashboardContexts";
 import { CustomSidebarComponent } from "./DashboardSidebar/types";
 import { InsightComponentSetProvider } from "../componentDefinition/types";
@@ -168,6 +169,19 @@ export interface IDashboardCustomComponentProps {
      * @alpha
      */
     InsightMenuComponentProvider?: OptionalInsightMenuComponentProvider;
+
+    /**
+     * Specify function to obtain custom component to use for rendering the title of the insight menu.
+     *
+     * @remarks
+     * -  If not provided, the default implementation {@link DefaultDashboardInsightMenuTitle} will be used.
+     * -  If factory function is provided and it returns undefined, then the default implementation {@link DefaultDashboardInsightMenuTitle} will be used.
+     *    This is useful if you want to customize just one particular insight and keep default rendering for
+     *    the other insights.
+     *
+     * @internal
+     */
+    InsightMenuTitleComponentProvider?: OptionalInsightMenuTitleComponentProvider;
 
     /**
      * Specify function to obtain insight component set.

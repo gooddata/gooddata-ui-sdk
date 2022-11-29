@@ -812,6 +812,9 @@ export type CustomDashboardInsightMenuButtonComponent = ComponentType<IDashboard
 // @alpha (undocumented)
 export type CustomDashboardInsightMenuComponent = ComponentType<IDashboardInsightMenuProps>;
 
+// @internal (undocumented)
+export type CustomDashboardInsightMenuTitleComponent = ComponentType<IDashboardInsightMenuTitleProps>;
+
 // @public (undocumented)
 export type CustomDashboardKpiComponent = ComponentType<IDashboardKpiProps>;
 
@@ -1488,6 +1491,9 @@ export const DashboardInsightMenu: (props: IDashboardInsightMenuProps) => JSX.El
 
 // @internal (undocumented)
 export const DashboardInsightMenuButton: (props: IDashboardInsightMenuButtonProps) => JSX.Element;
+
+// @internal (undocumented)
+export const DashboardInsightMenuTitle: (props: IDashboardInsightMenuTitleProps) => JSX.Element;
 
 // @alpha
 export interface DashboardInsightWidgetChanged extends IDashboardEvent {
@@ -2337,6 +2343,9 @@ export const DefaultDashboardInsightMenu: (props: IDashboardInsightMenuProps) =>
 export const DefaultDashboardInsightMenuButton: (props: IDashboardInsightMenuButtonProps) => JSX.Element;
 
 // @internal (undocumented)
+export const DefaultDashboardInsightMenuTitle: CustomDashboardInsightMenuTitleComponent;
+
+// @internal (undocumented)
 export const DefaultDashboardKpi: ComponentType<IDashboardKpiProps>;
 
 // @internal (undocumented)
@@ -3126,6 +3135,8 @@ export interface IDashboardCustomComponentProps {
     InsightMenuButtonComponentProvider?: OptionalInsightMenuButtonComponentProvider;
     // @alpha
     InsightMenuComponentProvider?: OptionalInsightMenuComponentProvider;
+    // @internal
+    InsightMenuTitleComponentProvider?: OptionalInsightMenuTitleComponentProvider;
     KpiComponentProvider?: OptionalKpiComponentProvider;
     // @alpha
     LayoutComponent?: CustomDashboardLayoutComponent;
@@ -3278,6 +3289,16 @@ export interface IDashboardInsightMenuProps {
     items: IInsightMenuItem[];
     // (undocumented)
     onClose: () => void;
+    // (undocumented)
+    widget: IInsightWidget;
+}
+
+// @internal (undocumented)
+export interface IDashboardInsightMenuTitleProps {
+    // (undocumented)
+    insight: IInsight;
+    // (undocumented)
+    renderMode: RenderMode;
     // (undocumented)
     widget: IInsightWidget;
 }
@@ -3896,6 +3917,9 @@ export type InsightMenuComponentProvider = (insight: IInsight, widget: IInsightW
 
 // @alpha (undocumented)
 export type InsightMenuItemsProvider = (insight: IInsight, widget: IInsightWidget, defaultItems: IInsightMenuItem[], closeMenu: () => void, renderMode: RenderMode) => IInsightMenuItem[];
+
+// @internal (undocumented)
+export type InsightMenuTitleComponentProvider = (insight: IInsight, widget: IInsightWidget) => CustomDashboardInsightMenuTitleComponent;
 
 // @internal (undocumented)
 export type InsightPlaceholderDraggableItem = BaseDraggableLayoutItem & {
@@ -4853,6 +4877,9 @@ export type OptionalInsightMenuButtonComponentProvider = OptionalProvider<Insigh
 
 // @alpha (undocumented)
 export type OptionalInsightMenuComponentProvider = OptionalProvider<InsightMenuComponentProvider>;
+
+// @internal (undocumented)
+export type OptionalInsightMenuTitleComponentProvider = OptionalProvider<InsightMenuTitleComponentProvider>;
 
 // @public (undocumented)
 export type OptionalKpiComponentProvider = OptionalProvider<KpiComponentProvider>;
