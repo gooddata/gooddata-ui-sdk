@@ -4,7 +4,6 @@
 
 ```ts
 
-import { AnonymousAuthProvider } from '@gooddata/sdk-backend-base';
 import { FilterContextItem } from '@gooddata/sdk-model';
 import { GdcDashboard } from '@gooddata/api-model-bear';
 import { GdcDashboardLayout } from '@gooddata/api-model-bear';
@@ -43,7 +42,17 @@ import { NotAuthenticated } from '@gooddata/sdk-backend-spi';
 import { NotAuthenticatedHandler } from '@gooddata/sdk-backend-spi';
 import { VisualizationProperties } from '@gooddata/sdk-model';
 
-export { AnonymousAuthProvider }
+// @public
+export class AnonymousAuthProvider implements IAuthenticationProvider {
+    // (undocumented)
+    authenticate(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal>;
+    // (undocumented)
+    deauthenticate(_context: IAuthenticationContext): Promise<void>;
+    // (undocumented)
+    getCurrentPrincipal(_context: IAuthenticationContext): Promise<IAuthenticatedPrincipal | null>;
+    // (undocumented)
+    reset(): void;
+}
 
 // @internal
 export const BackendToBearConvertors: {
