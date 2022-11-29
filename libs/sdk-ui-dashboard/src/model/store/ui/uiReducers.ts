@@ -166,10 +166,12 @@ const clearDraggingWidgetSource: UiReducer<PayloadAction<void>> = (state) => {
 
 const setDraggingWidgetTarget: UiReducer<PayloadAction<ILayoutCoordinates>> = (state, action) => {
     state.draggingWidgetTarget = action.payload;
+    state.activeSectionIndex = action.payload.sectionIndex;
 };
 
 const clearDraggingWidgetTarget: UiReducer<PayloadAction<void>> = (state) => {
     state.draggingWidgetTarget = undefined;
+    state.activeSectionIndex = undefined;
 };
 
 const setWidgetsOverlay: UiReducer<PayloadAction<Record<string, IDashboardWidgetOverlay>>> = (

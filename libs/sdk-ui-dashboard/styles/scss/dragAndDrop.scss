@@ -627,6 +627,7 @@
 
 .gd-fluidlayout-column-row-end-hotspot {
     flex-grow: 1;
+    min-height: 60px;
     position: relative;
     align-self: stretch;
 }

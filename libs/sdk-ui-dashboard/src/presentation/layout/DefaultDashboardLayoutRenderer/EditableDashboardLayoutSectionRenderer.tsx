@@ -13,7 +13,11 @@ function useBorderStatus(sectionIndex: number): DashboardLayoutSectionBorderStat
     const activeSectionIndex = useDashboardSelector(selectActiveSectionIndex);
     const isActive = activeSectionIndex === sectionIndex;
 
-    return !isDraggingWidget && !isActive ? "invisible" : "muted";
+    if (isDraggingWidget) {
+        return "muted";
+    }
+
+    return !isActive ? "invisible" : "muted";
 }
 
 export const EditableDashboardLayoutSectionRenderer: IDashboardLayoutSectionRenderer<unknown> = (props) => {
