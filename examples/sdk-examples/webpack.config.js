@@ -13,12 +13,6 @@ const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 const backendShortcuts = {
-    sec: "https://secure.gooddata.com",
-    secure: "https://secure.gooddata.com",
-    stg: "https://staging.intgdc.com",
-    stg2: "https://staging2.intgdc.com",
-    stg3: "https://staging3.intgdc.com",
-    developer: "https://developer.na.gooddata.com",
     public: "https://live-examples-proxy.herokuapp.com",
 };
 
