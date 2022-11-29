@@ -300,6 +300,25 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
         );
     };
 
+    private renderTrialItems = () => {
+        if (this.props.expiredDate || this.props.showUpsellButton) {
+            return (
+                <div className="gd-header-menu-trial gd-header-measure">
+                    {this.props.expiredDate ? (
+                        <div className="gd-header-expiration-date">
+                            {this.getTrialCountdown(this.props.expiredDate)}
+                        </div>
+                    ) : null}
+
+                    {this.props.showUpsellButton ? (
+                        <HeaderUpsellButton onUpsellButtonClick={this.props.onUpsellButtonClick} />
+                    ) : null}
+                </div>
+            );
+        }
+        return null;
+    };
+
     private renderVerticalMenu = () => {
         const { badges } = this.props;
 
@@ -318,6 +337,7 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
                         sections={menuItemsGroups}
                         className="gd-header-menu-vertical"
                     />
+                    {this.renderTrialItems()}
                 </div>
                 <div className="gd-header-menu-vertical-footer">
                     {!!badges && <div className="gd-header-vertical-badges">{badges}</div>}
@@ -367,15 +387,7 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
                     className="gd-header-menu-horizontal"
                 />
 
-                {this.props.expiredDate ? (
-                    <div className="gd-header-expiration-date">
-                        {this.getTrialCountdown(this.props.expiredDate)}
-                    </div>
-                ) : null}
-
-                {this.props.showUpsellButton ? (
-                    <HeaderUpsellButton onUpsellButtonClick={this.props.onUpsellButtonClick} />
-                ) : null}
+                {this.renderTrialItems()}
 
                 {this.props.helpMenuItems.length ? (
                     <HeaderHelp

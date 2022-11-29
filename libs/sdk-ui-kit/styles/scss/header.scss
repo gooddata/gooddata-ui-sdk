@@ -240,6 +240,58 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
     .gd-header-menu {
         display: block;
     }
+
+    .gd-header-menu li:last-child a {
+        border-bottom: 1px solid
+            var(
+                --gd-palette-complementary-4,
+                color.adjust(variables.$default-gd-color-state-blank, $alpha: -0.8)
+            );
+
+        &::after {
+            display: none;
+        }
+    }
+
+    .gd-header-menu-trial {
+        display: flex;
+        flex-direction: column;
+        padding: 15px;
+        border-bottom: 1px solid
+            var(
+                --gd-palette-complementary-4,
+                color.adjust(variables.$default-gd-color-state-blank, $alpha: -0.8)
+            );
+    }
+
+    .gd-header-expiration-date {
+        font-size: 16px;
+        line-height: 20px;
+        margin-bottom: 10px;
+    }
+
+    .gd-button-primary.gd-upsell-button {
+        display: flex;
+        justify-content: center;
+        height: 33px;
+        margin-top: 4px;
+
+        .gd-icon-star {
+            margin-top: 4px;
+        }
+
+        &.gd-button-small {
+            font-size: 14px;
+            line-height: 14px;
+        }
+    }
+
+    .gd-header-expiration-date,
+    .gd-button-primary.gd-upsell-button {
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+    }
 }
 
 .gd-header-menu-vertical-footer {
@@ -330,9 +382,12 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
     }
 }
 
-.gd-header-expiration-date {
+.gd-header-menu-trial {
     display: flex;
     align-items: center;
+}
+
+.gd-header-expiration-date {
     font-weight: 400;
     font-size: 12px;
     line-height: 14px;
@@ -899,24 +954,19 @@ button.gd-button-primary {
 }
 
 button.gd-button-primary.gd-upsell-button {
-    height: 27px;
     font-style: normal;
     font-weight: normal;
-    font-size: 14px;
     margin: auto 7px;
     padding: 0;
     border: 1px solid transparent;
-    line-height: 14px;
     text-align: center;
     border-radius: 3px;
     color: #fff;
     background: #8351a4;
-    font-family: gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif;
+    font-family: variables.$gd-font-primary;
 
     .gd-upgrade-button-text {
         margin-right: 11px;
-        font-size: 12px;
-        font-family: variables.$gd-font-primary;
     }
 
     .gd-icon-star {
