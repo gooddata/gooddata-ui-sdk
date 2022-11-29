@@ -8,7 +8,7 @@ import { useMediaQuery } from "../responsive";
 import cx from "classnames";
 
 const MOBILE_ALIGN_POINTS = [{ align: "br tr" }, { align: "tr br" }];
-const MOBILE_ARROW_OFFSETS = { "br tr": [45, 5], "tr br": [45, -5] };
+const MOBILE_ARROW_OFFSETS = { "br tr": [0, 5], "tr br": [0, -5] };
 const ALIGN_POINTS = [
     { align: "cr cl" },
     { align: "tr tl" },
@@ -78,12 +78,12 @@ const DescriptionPanelCore: React.FC<IDescriptionPanelProps> = (props) => {
         <BubbleHoverTrigger showDelay={0} eventsOnBubble={true}>
             <div
                 className={cx(
-                    "gd-icon-circle-question-wrapper",
-                    "gd-description-icon",
                     "s-description-trigger",
                     {
                         "is-mobile": isMobileDevice,
+                        "gd-icon-circle-question-wrapper": !props.className,
                     },
+                    props.className,
                 )}
             >
                 <div className="gd-icon-circle-question" />
