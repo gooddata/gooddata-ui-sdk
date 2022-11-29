@@ -1,35 +1,34 @@
 version: "3.7"
 services:
-  isolated-tests:
-    image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/3rdparty/cypress/included:10.10.0
-    entrypoint: node ./scripts/run_isolated_compose.js --$MODE --filter=$FILTER
-    volumes:
-      - ../../:/gooddata-ui-sdk-e2e:rw
-    working_dir: /gooddata-ui-sdk-e2e/libs/sdk-ui-tests-e2e
-    user: "$USER_UID:$USER_GID"
-    depends_on:
-      - gooddata-ui-sdk-scenarios
-      - backend-mock
-    environment:
-      - CYPRESS_HOST=http://gooddata-ui-sdk-scenarios:9500
-      - NPM_TOKEN
-      - MODE
-      - FILTER
-      - NO_COLOR
-      - BUILD_URL
+    isolated-tests:
+        image: cypress/included:10.10.0
+        entrypoint: node ./scripts/run_isolated_compose.js --$MODE --filter=$FILTER
+        volumes:
+            - ./:/sdk-ui-tests-e2e:rw
+        working_dir: /sdk-ui-tests-e2e
+        user: "$USER_UID:$USER_GID"
+        depends_on:
+            - gooddata-ui-sdk-scenarios
+            - backend-mock
+        environment:
+            - CYPRESS_HOST=http://gooddata-ui-sdk-scenarios:9500
+            - MODE
+            - FILTER
 
-  gooddata-ui-sdk-scenarios:
-    image: $IMAGE_ID
-    volumes:
-      - ./nginx/proxy-isolated-tests.conf:/etc/nginx/extra-conf.d/proxy-isolated-tests.conf
-    depends_on:
-      - backend-mock
+    gooddata-ui-sdk-scenarios:
+        image: $IMAGE_ID
+        volumes:
+            - ./nginx/proxy-isolated-tests.conf:/etc/nginx/extra-conf.d/proxy-isolated-tests.conf
+        depends_on:
+            - backend-mock
 
-  backend-mock:
-    image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/3rdparty/wiremock/wiremock:2.34.0
-    command: "--preserve-host-header --proxy-all=https://${HOST:-staging3.intgdc.com} --extensions org.gooddata.extensions.ResponseHeadersTransformer,org.gooddata.extensions.RequestHeadersTransformer"
-#    --extensions org.gooddata.extensions.ResponseHeadersTransformer,org.gooddata.extensions.RequestHeadersTransformer --verbose"
-    volumes:
-      - ./recordings/wiremock_extension/jar/:/var/wiremock/extensions:ro
-    environment:
-      - PROXY_HOST=https://${HOST:-staging3.intgdc.com}
+    backend-mock:
+        image: wiremock/wiremock:2.34.0
+        # Use "--print-all-network-traffic --verbose" for verbose logging
+        # Note that we need --preserve-host-header for BEAR backend only and it must be missing for TIGER (see run_isolated.sh)
+        command: "${PRESERVE_HOST_HEADER_OPTION} --proxy-all=${HOST:-https://staging3.intgdc.com} --extensions org.gooddata.extensions.ResponseHeadersTransformer,org.gooddata.extensions.RequestHeadersTransformer"
+        user: "$USER_UID:$USER_GID"
+        volumes:
+            - ./recordings/wiremock_extension/jar/:/var/wiremock/extensions:ro
+        environment:
+            - PROXY_HOST=${HOST:-https://staging3.intgdc.com}

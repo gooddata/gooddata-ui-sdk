@@ -14,6 +14,7 @@ module.exports = {
     ],
     rules: {
         "import/no-unassigned-import": "off",
+        "no-console": "off",
     },
     parserOptions: { tsconfigRootDir: __dirname },
 };

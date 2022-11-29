@@ -2,7 +2,7 @@
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 import React from "react";
-import * as ReferenceMd from "../../../../../md/full";
+import * as ReferenceMd from "../../../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_bear";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 
 const measures = [ReferenceMd.Amount, ReferenceMd.Won];

@@ -2,7 +2,7 @@
 import React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { TotalsOrPlaceholders, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
-import * as ReferenceMd from "../../../../md/full";
+import * as ReferenceMd from "../../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_bear";
 import { newTotal } from "@gooddata/sdk-model";
 
 const measures = [ReferenceMd.Amount, ReferenceMd.Won];

@@ -1,16 +1,19 @@
 #!/usr/bin/env node
 // (C) 2021-2022 GoodData Corporation
 
-const { spawn } = require("child_process");
+import { spawn, execSync } from "child_process";
+
 const DEFAULT_CONFIG = {
     specFilesFilter: "",
     tagsFilter: [],
     workspaceId: "",
+    childWorkspaceId: "",
     customCypressConfig: {},
     updateSnapshots: false,
+    deleteCypressResults: true,
 };
 
-function runCypress(configParam = {}) {
+export function runCypress(configParams = {}) {
     process.stdout.write("Running Cypress\n");
 
     const {
@@ -21,11 +24,18 @@ function runCypress(configParam = {}) {
         specFilesFilter,
         tagsFilter,
         workspaceId,
+        childWorkspaceId,
         customCypressConfig,
+        deleteCypressResults,
         updateSnapshots,
         config,
         browser,
-    } = { ...DEFAULT_CONFIG, ...configParam };
+        sdkBackend,
+        tigerPermissionDatasourceName,
+        tigerPermissionDatasourcePassword,
+        tigerApiToken,
+        tigerApiTokenNamePrefix,
+    } = { ...DEFAULT_CONFIG, ...configParams };
 
     const cypressProps = {
         CYPRESS_HOST: appHost,
@@ -55,18 +65,47 @@ function runCypress(configParam = {}) {
         cypressProps["CYPRESS_COMMAND_DELAY"] = 0;
     }
 
-    const args = [visual ? "open" : "run", "--e2e"];
-    if (specFilesFilter) {
-        args.push("--spec", `./**/${specFilesFilter}*`);
+    if (sdkBackend) {
+        cypressProps["CYPRESS_SDK_BACKEND"] = sdkBackend;
+    }
+
+    const args = [visual ? "open" : "run"];
+    if (!visual && specFilesFilter !== "") {
+        args.push("--spec", `./**/*${specFilesFilter}*`);
     }
     if (tagsFilter && tagsFilter.length > 0) {
         args.push("--env", `grepTags="${tagsFilter.join(" ")}"`);
     }
+
     if (config) {
         args.push("--config", config);
     }
     if (browser) {
         args.push("--browser", browser);
+    }
+
+    if (deleteCypressResults) {
+        execSync(`rm -rf cypress/results`);
+    }
+
+    if (childWorkspaceId) {
+        cypressProps["CYPRESS_TEST_CHILD_WORKSPACE_ID"] = childWorkspaceId;
+    }
+
+    if (tigerPermissionDatasourcePassword) {
+        cypressProps["CYPRESS_TIGER_PERMISSION_DATASOURCE_PASSWORD"] = tigerPermissionDatasourcePassword;
+    }
+
+    if (tigerPermissionDatasourceName) {
+        cypressProps["CYPRESS_TIGER_DATASOURCES_NAME"] = tigerPermissionDatasourceName;
+    }
+
+    if (tigerApiTokenNamePrefix) {
+        cypressProps["CYPRESS_TIGER_API_TOKEN_NAME_PREFIX"] = tigerApiTokenNamePrefix;
+    }
+
+    if (tigerApiToken) {
+        cypressProps["CYPRESS_TIGER_API_TOKEN"] = tigerApiToken;
     }
 
     const cypressProcess = spawn("cypress", args, {
@@ -84,7 +123,3 @@ function runCypress(configParam = {}) {
     });
     return cypressProcess;
 }
-
-module.exports = {
-    runCypress,
-};

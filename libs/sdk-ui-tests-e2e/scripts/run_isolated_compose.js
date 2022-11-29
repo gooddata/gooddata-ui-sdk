@@ -1,56 +1,99 @@
 #!/usr/bin/env node
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
-/*
-This file is supposed to run within the Cypress container, controlling the execution of the isolated tests in docker-compose
+/**
+ * This file is supposed to run within the Cypress container.
+ * It controls the execution of the isolated tests in docker-compose
  */
-const dotenv = require("dotenv");
-const fs = require("fs");
-const { execSync } = require("child_process");
+import { execSync } from "child_process";
+import fs from "fs";
 
-const {
+import "./env.js";
+
+import {
+    wiremockExportMappings,
+    wiremockReset,
+    wiremockImportMappings,
     wiremockStartRecording,
     wiremockStopRecording,
+    wiremockSettings,
     wiremockMockLogRequests,
     wiremockWait,
-    wiremockSettings,
-    wiremockExportMappings,
-    wiremockImportMappings,
-    wiremockReset,
-} = require("./wiremock.js");
-
-const {
+} from "./lib/wiremock.js";
+import {
     deleteRecordings,
     getRecordingsWorkspaceId,
     recordingsPresent,
     sanitizeCredentials,
-} = require("./recordings.js");
-const { runCypress } = require("./cypress.js");
-const wiremockHost = "backend-mock:8080";
+    sanitizeWorkspaceId,
+    fileContainsString,
+} from "./lib/recordings.js";
+import { runCypress } from "./lib/cypress.js";
 
-const { getAllFiles } = require("./getSpecFiles.js");
+const wiremockHost = "backend-mock:8080";
 
 async function main() {
     try {
         process.stderr.write("Running the isolated tests. Run only in docker-compose\n");
-        const recording = process.argv.indexOf("--record") != -1;
+
+        const recording = process.argv.indexOf("--record") !== -1;
         const filterArg = process.argv.find((arg) => arg.indexOf("--filter") === 0);
         const specFilesFilter = filterArg ? filterArg.slice("--filter=".length) : "";
 
-        dotenv.config({ path: ".env" });
+        const {
+            SDK_BACKEND,
+            USER_NAME,
+            PASSWORD,
+            TIGER_API_TOKEN,
+            TEST_WORKSPACE_ID,
+            HOST,
+            CYPRESS_HOST,
+            CYPRESS_TEST_TAGS,
+            ZUUL_PIPELINE,
+        } = process.env;
 
-        const { HOST, USER_NAME, PASSWORD, TEST_WORKSPACE_ID, CYPRESS_HOST } = process.env;
+        if (!CYPRESS_TEST_TAGS) {
+            process.stderr.write("Isolated tests need CYPRESS_TEST_TAGS\n");
+            process.exit(1);
+        }
 
-        if (recording && !HOST && !USER_NAME && !PASSWORD && !TEST_WORKSPACE_ID) {
-            process.stderr.write(
-                "For recording HOST, USER_NAME, PASSWORD, and TEST_WORKSPACE_ID has to be specified in the .env file\n",
-            );
-            process.exit(e);
+        let authorization = {};
+        if (SDK_BACKEND === "BEAR") {
+            if (recording) {
+                if (!USER_NAME || !PASSWORD || !TEST_WORKSPACE_ID || !HOST) {
+                    process.stderr.write(
+                        `Isolated tests recordings for ${SDK_BACKEND} need HOST, USER_NAME, PASSWORD, and TEST_WORKSPACE_ID\n`,
+                    );
+                    process.exit(1);
+                }
+
+                authorization = {
+                    credentials: {
+                        userName: USER_NAME,
+                        password: PASSWORD,
+                    },
+                };
+            }
+        }
+
+        if (SDK_BACKEND === "TIGER") {
+            if (recording) {
+                if (!TIGER_API_TOKEN || !TEST_WORKSPACE_ID) {
+                    process.stderr.write(
+                        `Isolated tests recordings for ${SDK_BACKEND} need TIGER_API_TOKEN and TEST_WORKSPACE_ID\n`,
+                    );
+                    process.exit(1);
+                }
+
+                authorization = {
+                    token: TIGER_API_TOKEN,
+                };
+            }
         }
 
         if (recording) {
-            deleteRecordings(specFilesFilter);
-        } else if (!recordingsPresent()) {
+            deleteRecordings(specFilesFilter, SDK_BACKEND, CYPRESS_TEST_TAGS.split(","));
+        } else if (!recordingsPresent(SDK_BACKEND)) {
             process.stderr.write("Recordings are missing. Run again with the --record parameter.\n");
             process.exit(0);
         }
@@ -62,36 +105,42 @@ async function main() {
         await wiremockSettings(wiremockHost);
 
         let testWorkspaceId = TEST_WORKSPACE_ID;
-        if (!recording) {
+        let recordingsWorkspaceId;
+        if (recording) {
+            recordingsWorkspaceId = getRecordingsWorkspaceId();
+        } else {
             testWorkspaceId = getRecordingsWorkspaceId();
         }
 
-        const authorization = recording
-            ? {
-                  credentials: {
-                      userName: USER_NAME,
-                      password: PASSWORD,
-                  },
-              }
-            : {};
+        const TESTS_DIR = "./cypress/integration/01-sdk-ui-dashboard";
+        const files = fs
+            .readdirSync(TESTS_DIR)
+            .filter((file) => file.includes(".spec.ts"))
+            .filter((file) => {
+                if (specFilesFilter === "") {
+                    return true;
+                }
 
-        const TESTS_DIR = "./cypress/integration/";
-
-        const files = getAllFiles(TESTS_DIR).filter((file) => {
-            if (specFilesFilter === "") {
-                return true;
-            }
-
-            return file.startsWith(specFilesFilter);
-        });
+                return file.startsWith(specFilesFilter);
+            });
 
         execSync(`rm -rf ./cypress/results`);
 
+        const testTags = CYPRESS_TEST_TAGS.split(",");
+        let cypressExitCode = 0;
         for (let i = 0; i < files.length; i++) {
             let file = files[i];
             process.stdout.write(`file: ${file} (${i + 1} of ${files.length})\n`);
 
-            const currentTestFileMappings = `./recordings/mappings/mapping-${file}.json`;
+            // skip if we have tags and the file does not contain at least one of the gats
+            if (testTags.length && !fileContainsString(`${TESTS_DIR}/${file}`, testTags)) {
+                process.stdout.write(
+                    `skip: ${file} as it does not contain requested tags (${CYPRESS_TEST_TAGS})\n`,
+                );
+                continue;
+            }
+
+            const currentTestFileMappings = `./recordings/mappings/${SDK_BACKEND}/mapping-${file}.json`;
 
             if (recording) {
                 await wiremockStartRecording(wiremockHost, HOST);
@@ -100,7 +149,9 @@ async function main() {
             }
             await wiremockMockLogRequests(wiremockHost);
 
-            await new Promise((resolve) => {
+            process.stdout.write(`sdk_backend ${SDK_BACKEND}, recording: ${recording}\n`);
+
+            cypressExitCode += await new Promise((resolve) => {
                 const cypressProcess = runCypress({
                     visual: false,
                     appHost: CYPRESS_HOST,
@@ -108,28 +159,45 @@ async function main() {
                     authorization,
                     specFilesFilter: file,
                     workspaceId: testWorkspaceId,
-                    config: recording ? "retries=0" : undefined, // override cypress.json and have no retries when recording, this breaks mappings storage
+                    tagsFilter: testTags,
+                    config: recording ? "retries=0,baseUrl=http://gooddata-ui-sdk-scenarios:9500" : undefined, // override cypress.json and have no retries when recording, this breaks mappings storage,
+                    sdkBackend: SDK_BACKEND,
+                    deleteCypressResults: false,
                 });
 
-                cypressProcess.on("exit", async (_e) => {
+                cypressProcess.on("exit", async (exitCode) => {
                     if (recording) {
                         process.stdout.write(`starting wiremock mappings export for: ${file}\n`);
                         const result = await wiremockStopRecording(wiremockHost);
                         await wiremockExportMappings(currentTestFileMappings, result);
                     }
 
-                    resolve();
+                    resolve(exitCode);
                 });
             });
             await wiremockReset(wiremockHost);
+
+            // This is to terminate tests sooner, when running in the gate pipeline (i.e. ONLY during merge)
+            if (ZUUL_PIPELINE === "gate" && cypressExitCode) {
+                process.stdout.write(
+                    `Running in gate pipeline and a spec file failed. Skipping other tests and terminating now.\n`,
+                );
+                break;
+            }
         }
 
         if (recording) {
-            sanitizeCredentials(specFilesFilter);
+            const testFileMappings = files.map(
+                (fileName) => `./recordings/mappings/${SDK_BACKEND}/mapping-${fileName}.json`,
+            );
+            process.stdout.write(`Sanitizing mappings for: ${JSON.stringify(testFileMappings)}\n`);
+            sanitizeCredentials(testFileMappings);
+            sanitizeWorkspaceId(testWorkspaceId, recordingsWorkspaceId, testFileMappings);
         }
 
         // all done, create github report
         execSync(`node ./scripts/create_github_report.js`);
+        process.exit(cypressExitCode);
     } catch (e) {
         process.stderr.write(`${e.toString()}\n`);
         process.exit(e);

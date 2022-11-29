@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { AttributeFilterButton } from "@gooddata/sdk-ui-filters";
 import { attributeDisplayFormRef, IAttributeFilter, newPositiveAttributeFilter } from "@gooddata/sdk-model";
 
-import * as Md from "../../../md/full";
+import * as Md from "../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_bear";
 
 const attributeFilter = newPositiveAttributeFilter(attributeDisplayFormRef(Md.Opportunity.Name), {
     uris: ["/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1063/elements?id=108112"],

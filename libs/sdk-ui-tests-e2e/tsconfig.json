@@ -4,7 +4,7 @@
         "target": "es5",
         "jsx": "react",
         "lib": ["es7", "dom"],
-        "module": "commonjs",
+        "module": "ESNext",
         "moduleResolution": "node",
         "esModuleInterop": true,
         "importHelpers": true,
@@ -16,7 +16,7 @@
         "sourceMap": true,
         "suppressImplicitAnyIndexErrors": true,
         "baseUrl": "..",
-        "types": ["cypress-real-events", "node"]
+        "types": ["cypress-real-events", "node", "@cypress/grep"]
     },
     "compileOnSave": false,
     "exclude": ["**/node_modules", "dist", "esm"]

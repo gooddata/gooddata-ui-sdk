@@ -1,11 +1,9 @@
 // (C) 2022 GoodData Corporation
 import { attributeLocalId, measureLocalId } from "@gooddata/sdk-model";
-import * as Md from "../../../scenarios/src/md/full";
+import * as Md from "../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_bear";
 import * as Navigation from "../../tools/navigation";
 import { Table } from "../../tools/table";
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const constants = require("../../constants");
+import { getProjectId } from "../../support/constants";
 
 const TABLE_SELECTOR_STR_COMPLEX = ".s-pivot-table-sizing-complex";
 const CHANGE_WIDTH_BUTTON_ATTRIBUTE_STR = ".s-change-width-button-attribute";
@@ -28,7 +26,7 @@ const MEASURE_LOCATOR_ITEM = measureLocalId(Md.Amount);
 const ATTRIBUTE_LOCATOR_ITEM_ATT_ID = attributeLocalId(Md.Region);
 
 // rep from workspace variable
-const ATTRIBUTE_LOCATOR_ITEM_ATT_ELM = `/gdc/md/${constants.WORKSPACE_ID}/obj/1083/elements?id=460488`;
+const ATTRIBUTE_LOCATOR_ITEM_ATT_ELM = `/gdc/md/${getProjectId()}/obj/1083/elements?id=460488`;
 
 export const getCallbackArray = () => {
     const callbackSelector = `.s-pivot-table-sizing-complex-callback`;

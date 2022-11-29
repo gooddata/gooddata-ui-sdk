@@ -8,35 +8,69 @@ const CompressionPlugin = require("compression-webpack-plugin");
 const webpack = require("webpack");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
+require("dotenv").config({ path: "./.env" });
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 module.exports = async (env, argv) => {
-    const backendParam = "stg3";
-    const [backendUrl, workspace] = ["https://staging3.intgdc.com", "frho3i7qc6epdek7mcgergm9vtm6o5ty"];
+    const [backendUrl, workspace, backendType] = [
+        process.env.HOST,
+        process.env.TEST_WORKSPACE_ID,
+        process.env.SDK_BACKEND,
+    ];
+    console.log(
+        "Backend URI:",
+        backendUrl,
+        ", ",
+        "Backend Type:",
+        backendType,
+        ", ",
+        "Workspace to use:",
+        workspace,
+    );
 
     const basePath = env?.basePath || "";
 
     const isProduction = argv.mode === "production";
 
-    const proxy = {
-        "/gdc": {
-            changeOrigin: true,
-            cookieDomainRewrite: "localhost",
-            secure: false,
-            target: backendUrl,
-            headers: {
-                host: backendUrl.replace(/^https:\/\//, ""),
-                // This is essential for Tiger backends. To ensure 401 flies when not authenticated and using proxy
-                "X-Requested-With": "XMLHttpRequest",
-            },
-            onProxyReq: function (proxyReq, _req, _res) {
-                // changeOrigin: true does not work well for POST requests, so remove origin like this to be safe
-                proxyReq.removeHeader("origin");
-                proxyReq.setHeader("accept-encoding", "identity");
-            },
-        },
-    };
+    const proxy =
+        backendType === "BEAR"
+            ? {
+                  "/gdc": {
+                      changeOrigin: true,
+                      cookieDomainRewrite: "localhost",
+                      secure: false,
+                      target: backendUrl,
+                      headers: {
+                          host: backendUrl.replace(/^https:\/\//, ""),
+                          // This is essential for Tiger backends. To ensure 401 flies when not authenticated and using proxy
+                          "X-Requested-With": "XMLHttpRequest",
+                      },
+                      onProxyReq: function (proxyReq, _req, _res) {
+                          // changeOrigin: true does not work well for POST requests, so remove origin like this to be safe
+                          proxyReq.removeHeader("origin");
+                          proxyReq.setHeader("accept-encoding", "identity");
+                      },
+                  },
+              }
+            : {
+                  "/api": {
+                      changeOrigin: true,
+                      cookieDomainRewrite: "localhost",
+                      secure: false,
+                      target: backendUrl,
+                      headers: {
+                          host: backendUrl,
+                          // This is essential for Tiger backends. To ensure 401 flies when not authenticated and using proxy
+                          "X-Requested-With": "XMLHttpRequest",
+                      },
+                      onProxyReq(proxyReq) {
+                          // changeOrigin: true does not work well for POST requests, so remove origin like this to be safe
+                          proxyReq.removeHeader("origin");
+                          proxyReq.setHeader("accept-encoding", "identity");
+                      },
+                  },
+              };
 
     const plugins = [
         new CleanWebpackPlugin(),
@@ -54,10 +88,10 @@ module.exports = async (env, argv) => {
         }),
         new webpack.DefinePlugin({
             BACKEND_URL: JSON.stringify(backendUrl),
-            WORKSPACE: JSON.stringify(workspace),
+            BACKEND_TYPE: JSON.stringify(backendType),
+            WORKSPACE_ID: JSON.stringify(workspace),
             BASEPATH: JSON.stringify(basePath),
             BUILTIN_MAPBOX_TOKEN: JSON.stringify(process.env.EXAMPLE_MAPBOX_ACCESS_TOKEN || ""),
-            BUILD_TYPE: JSON.stringify(backendParam),
         }),
         new ForkTsCheckerWebpackPlugin({
             issue: {
@@ -100,6 +134,7 @@ module.exports = async (env, argv) => {
                 "@gooddata/sdk-ui-pivot": path.resolve("./node_modules/@gooddata/sdk-ui-pivot"),
                 "@gooddata/sdk-model": path.resolve("./node_modules/@gooddata/sdk-model"),
                 "@gooddata/sdk-backend-bear": path.resolve("./node_modules/@gooddata/sdk-backend-bear"),
+                "@gooddata/sdk-backend-tiger": path.resolve("./node_modules/@gooddata/sdk-backend-tiger"),
             },
 
             // Prefer ESM versions of packages to enable tree shaking and easier dev experience
@@ -114,6 +149,16 @@ module.exports = async (env, argv) => {
                 {
                     test: /\.s[ac]ss$/,
                     use: ["style-loader", "css-loader", "sass-loader"],
+                },
+                {
+                    test: /\.[jt]sx?$/,
+                    include: path.resolve(__dirname, "../reference_workspace/workspace_objects"),
+                    use: {
+                        loader: "babel-loader",
+                        options: {
+                            configFile: path.resolve(__dirname, ".babelrc"),
+                        },
+                    },
                 },
                 {
                     test: /\.[jt]sx?$/,

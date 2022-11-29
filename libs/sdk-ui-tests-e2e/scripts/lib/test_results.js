@@ -1,18 +1,19 @@
-// (C) 2021 GoodData Corporation
-const util = require("util");
-const fs = require("fs");
-const path = require("path");
+// (C) 2021-2022 GoodData Corporation
 
-const xml = require("xml2js");
+import util from "util";
+import fs from "fs";
+import path from "path";
 
-const RESULTS_DIR = path.resolve("./cypress/results");
+import xml from "xml2js";
+
+export const RESULTS_DIR = path.resolve("./cypress/results");
 
 function handleError(e) {
     console.error(e);
     process.exit(1);
 }
 
-async function getTestResults() {
+export async function getTestResults() {
     const fileNames = await util.promisify(fs.readdir)(RESULTS_DIR).catch(handleError);
     const resultFileNames = fileNames.filter((name) => name.match(/result\..+\.xml/g));
     const result = [];
@@ -35,8 +36,3 @@ async function getTestResults() {
 
     return result;
 }
-
-module.exports = {
-    RESULTS_DIR,
-    getTestResults,
-};

@@ -9,7 +9,7 @@ import {
     IMeasureColumnWidthItem,
 } from "@gooddata/sdk-ui-pivot";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
-import * as ReferenceMd from "../../../../../md/full";
+import * as ReferenceMd from "../../../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_bear";
 import {
     IAttributeLocatorItem,
     ILocatorItem,
@@ -20,9 +20,7 @@ import {
     measureLocalId,
     newAttributeLocator,
 } from "@gooddata/sdk-model";
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const constants = require("../../../../../../../cypress/constants");
+import { workspace } from "../../../../../constants";
 
 const measures = [ReferenceMd.Amount];
 const attributes = [ReferenceMd.Product.Name];
@@ -109,7 +107,7 @@ const isSameWidthItem = (item: any, newItem: any) => {
     return false;
 };
 
-const EastCoastUri = `/gdc/md/${constants.WORKSPACE_ID}/obj/1083/elements?id=460488`;
+const EastCoastUri = `/gdc/md/${workspace}/obj/1083/elements?id=460488`;
 
 const measureWidth = (width: number) =>
     measureColumnWidthItemSimple(measures[0], width, [newAttributeLocator(ReferenceMd.Region, EastCoastUri)]);

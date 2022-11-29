@@ -2,7 +2,7 @@
 
 export const getHost = (): string => Cypress.env("HOST");
 
-export const getProjectId = (): string => Cypress.env("WORKSPACE");
+export const getProjectId = (): string => Cypress.env("TEST_WORKSPACE_ID");
 
 export const getUsername = (): string => Cypress.env("USERNAME");
 

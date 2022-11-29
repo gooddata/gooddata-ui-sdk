@@ -1,7 +1,5 @@
-// (C) 2022 GoodData Corporation
-
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2022-02-22T12:50:57.649Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2022-11-29T13:33:08.333Z; */
 // @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
@@ -3235,23 +3233,323 @@ export const DateDatasets = {
 };
 export const Insights = {
     /**
-     * Insight Title: Headline won
-     * Insight ID: aabkoPO5Reu7
+     * Insight Title: Table Activity by Year and Department
+     * Insight ID: aastYYHna5kR
      */
-    HeadlineWon: "aabkoPO5Reu7",
+    TableActivityByYearAndDepartment: "aastYYHna5kR",
     /**
-     * Insight Title: Implicit drill to attribute url
-     * Insight ID: aabkE4IhTBg5
-     */ ImplicitDrillToAttributeUrl: "aabkE4IhTBg5",
+     * Insight Title: Bar chart Activity by Date
+     * Insight ID: aadt2oXtas2o
+     */ BarChartActivityByDate: "aadt2oXtas2o",
+    /**
+     * Insight Title: Column chart stacked
+     * Insight ID: aadt2o3VarXu
+     */ ColumnChartStacked: "aadt2o3VarXu",
+    /**
+     * Insight Title: Bubble chart
+     * Insight ID: aact2pgJbVWT
+     */ BubbleChart: "aact2pgJbVWT",
+    /**
+     * Insight Title: Donut chart
+     * Insight ID: aattYYHna5kR
+     */ DonutChart: "aattYYHna5kR",
+    /**
+     * Insight Title: Treemap
+     * Insight ID: aaet2o3VarXu
+     */ Treemap: "aaet2o3VarXu",
+    /**
+     * Insight Title: Area chart
+     * Insight ID: aautYYHna5kR
+     */ AreaChart: "aautYYHna5kR",
+    /**
+     * Insight Title: Table
+     * Insight ID: aavtYYHna5kR
+     */ Table: "aavtYYHna5kR",
+    /**
+     * Insight Title: Headline
+     * Insight ID: aaft2o3VarXu
+     */ Headline: "aaft2o3VarXu",
+    /**
+     * Insight Title: Line chart segmented
+     * Insight ID: aawtYYHna5kR
+     */ LineChartSegmented: "aawtYYHna5kR",
+    /**
+     * Insight Title: Combo chart
+     * Insight ID: aagt2o3VarXu
+     */ ComboChart: "aagt2o3VarXu",
+    /**
+     * Insight Title: Scatter plot
+     * Insight ID: aaet2oXtas2o
+     */ ScatterPlot: "aaet2oXtas2o",
+    /**
+     * Insight Title: Pie chart multiple measures
+     * Insight ID: aadt2pgJbVWT
+     */ PieChartMultipleMeasures: "aadt2pgJbVWT",
+    /**
+     * Insight Title: Heatmap
+     * Insight ID: aaxtYYHna5kR
+     */ Heatmap: "aaxtYYHna5kR",
+    /**
+     * Insight Title: Bullet chart
+     * Insight ID: aaft2oXtas2o
+     */ BulletChart: "aaft2oXtas2o",
+    /**
+     * Insight Title: Column chart
+     * Insight ID: aabtCY6Binfm
+     */ ColumnChart: "aabtCY6Binfm",
+    /**
+     * Insight Title: Table Sales rep, Forecast category
+     * Insight ID: aajycKF6dLcr
+     */ TableSalesRepForecastCategory: "aajycKF6dLcr",
+    /**
+     * Insight Title: Table days
+     * Insight ID: aasS8rSHdVC6
+     */ TableDays: "aasS8rSHdVC6",
+    /**
+     * Insight Title: Table with attribute and measure
+     * Insight ID: aafbovmugboW
+     */ TableWithAttributeAndMeasure: "aafbovmugboW",
+    /**
+     * Insight Title: Table with multiple attribute drill
+     * Insight ID: aah642rzbWxD
+     */ TableWithMultipleAttributeDrill: "aah642rzbWxD",
+    /**
+     * Insight Title: Column with two measures by date
+     * Insight ID: aap610g5VJFB
+     */ ColumnWithTwoMeasuresByDate: "aap610g5VJFB",
+    /**
+     * Insight Title: Table with many attributes and measure
+     * Insight ID: aaciGXBKfzf9
+     */ TableWithManyAttributesAndMeasure: "aaciGXBKfzf9",
+    /**
+     * Insight Title: Execution request error
+     * Insight ID: aatb40LhhnAI
+     */ ExecutionRequestError: "aatb40LhhnAI",
+    /**
+     * Insight Title: Execution response error
+     * Insight ID: aaub6CUdhBfC
+     */ ExecutionResponseError: "aaub6CUdhBfC",
+    /**
+     * Insight Title: No data
+     * Insight ID: aabcpF6VeMwx
+     */ NoData: "aabcpF6VeMwx",
+    /**
+     * Insight Title: Column with drill to uri from attribute
+     * Insight ID: aabuSU6Ua6G4
+     */ ColumnWithDrillToUriFromAttribute: "aabuSU6Ua6G4",
+    /**
+     * Insight Title: Bar chart with date attribute
+     * Insight ID: aadMv283MZta
+     */ BarChartWithDateAttribute: "aadMv283MZta",
+    /**
+     * Insight Title: Table with hyperlink attribute
+     * Insight ID: aadn5gKbtsFd
+     */ TableWithHyperlinkAttribute: "aadn5gKbtsFd",
+    /**
+     * Insight Title: Bar chart with drilled insight export
+     * Insight ID: aabIxJpPGpkn
+     */ BarChartWithDrilledInsightExport: "aabIxJpPGpkn",
+    /**
+     * Insight Title: Unsupported drilled insight export
+     * Insight ID: aabINLhKfFPZ
+     */ UnsupportedDrilledInsightExport: "aabINLhKfFPZ",
+    /**
+     * Insight Title: Export too many data points
+     * Insight ID: aab4JlpOivP0
+     */ ExportTooManyDataPoints: "aab4JlpOivP0",
+    /**
+     * Insight Title: Metric with date filter
+     * Insight ID: aaduHBnWe2cz
+     */ MetricWithDateFilter: "aaduHBnWe2cz",
+    /**
+     * Insight Title: Table with measures and attributes
+     * Insight ID: aablqfCvgrnw
+     */ TableWithMeasuresAndAttributes: "aablqfCvgrnw",
+    /**
+     * Insight Title: Bar chart with measures and attribute
+     * Insight ID: aablz4Ypdqzj
+     */ BarChartWithMeasuresAndAttribute: "aablz4Ypdqzj",
+    /**
+     * Insight Title: Table with arithmetic measure
+     * Insight ID: aablDiwDdST5
+     */ TableWithArithmeticMeasure: "aablDiwDdST5",
+    /**
+     * Insight Title: Table with years
+     * Insight ID: aabmbFDLehb8
+     */ TableWithYears: "aabmbFDLehb8",
+    /**
+     * Insight Title: Column chart with years
+     * Insight ID: aacmbZuYTQWJ
+     */ ColumnChartWithYears: "aacmbZuYTQWJ",
+    /**
+     * Insight Title: Table with url display form
+     * Insight ID: aauD1i8dBiyA
+     */ TableWithUrlDisplayForm: "aauD1i8dBiyA",
+    /**
+     * Insight Title: Bar chart sliced by multiple dates
+     * Insight ID: aacECeWgxg79
+     */ BarChartSlicedByMultipleDates: "aacECeWgxg79",
+    /**
+     * Insight Title: Chart sort bucket items modifications
+     * Insight ID: aacKswTkyDMK
+     */ ChartSortBucketItemsModifications: "aacKswTkyDMK",
+    /**
+     * Insight Title: Table with stage name and atribute filter
+     * Insight ID: aauDDoj1dayS
+     */ TableWithStageNameAndAtributeFilter: "aauDDoj1dayS",
+    /**
+     * Insight Title: With own description
+     * Insight ID: aa84cd0bv9i0
+     */ WithOwnDescription: "aa84cd0bv9i0",
 };
 export const Dashboards = {
     /**
-     * Dashboard Title: E2E RAIL Dashboard Tests
-     * Dashboard ID: aabko5VzQ210
+     * Dashboard Title: Test dashboard
+     * Dashboard ID: aaht2o3VarXu
      */
-    E2ERAILDashboardTests: "aabko5VzQ210",
+    TestDashboard: "aaht2o3VarXu",
+    /**
+     * Dashboard Title: Many filters test
+     * Dashboard ID: aait2o3VarXu
+     */ ManyFiltersTest: "aait2o3VarXu",
+    /**
+     * Dashboard Title: No filters
+     * Dashboard ID: aajt2pgJbVWT
+     */ NoFilters: "aajt2pgJbVWT",
+    /**
+     * Dashboard Title: Layout dashboard
+     * Dashboard ID: aalt2oXtas2o
+     */ LayoutDashboard: "aalt2oXtas2o",
+    /**
+     * Dashboard Title: All Visualizations and KPI
+     * Dashboard ID: aaguzeGrhTEw
+     */ AllVisualizationsAndKPI: "aaguzeGrhTEw",
+    /**
+     * Dashboard Title: KPIs
+     * Dashboard ID: aaclg1ijggcR
+     */ KPIs: "aaclg1ijggcR",
+    /**
+     * Dashboard Title: Pivot table
+     * Dashboard ID: aaowZjzAgyxR
+     */ PivotTable: "aaowZjzAgyxR",
+    /**
+     * Dashboard Title: Drill to insight
+     * Dashboard ID: aabbYhXlekak
+     */ DrillToInsight: "aabbYhXlekak",
+    /**
+     * Dashboard Title: Date filter
+     * Dashboard ID: aapS7mmVfs1j
+     */ DateFilter: "aapS7mmVfs1j",
+    /**
+     * Dashboard Title: Multiple drills on attribute
+     * Dashboard ID: aah65ePTWkFU
+     */ MultipleDrillsOnAttribute: "aah65ePTWkFU",
+    /**
+     * Dashboard Title: Widget error states
+     * Dashboard ID: aatb5fUNilzk
+     */ WidgetErrorStates: "aatb5fUNilzk",
+    /**
+     * Dashboard Title: Invalid drill measure
+     * Dashboard ID: aabdi60EfQkH
+     */ InvalidDrillMeasure: "aabdi60EfQkH",
+    /**
+     * Dashboard Title: Invalid drill measure and failed execution
+     * Dashboard ID: aaldym28idLS
+     */ InvalidDrillMeasureAndFailedExecution: "aaldym28idLS",
+    /**
+     * Dashboard Title: Drill to uri from attribute
+     * Dashboard ID: aafuL51nBxMk
+     */ DrillToUriFromAttribute: "aafuL51nBxMk",
+    /**
+     * Dashboard Title: Drill to dashboard
+     * Dashboard ID: aaity9U4fiGr
+     */ DrillToDashboard: "aaity9U4fiGr",
+    /**
+     * Dashboard Title: Date filter incorrect presets
+     * Dashboard ID: aabveuPOejBo
+     */ DateFilterIncorrectPresets: "aabveuPOejBo",
+    /**
+     * Dashboard Title: Drill to custom url
+     * Dashboard ID: aabhILDMaH47
+     */ DrillToCustomUrl: "aabhILDMaH47",
+    /**
+     * Dashboard Title: Invalid drill to url attribute display form param
+     * Dashboard ID: aacntXcwmJum
+     */ InvalidDrillToUrlAttributeDisplayFormParam: "aacntXcwmJum",
+    /**
+     * Dashboard Title: Invalid drill to url measure identifier
+     * Dashboard ID: aabnXl08fmXK
+     */ InvalidDrillToUrlMeasureIdentifier: "aabnXl08fmXK",
+    /**
+     * Dashboard Title: Drill to attribute url
+     * Dashboard ID: aabn6cs7g3S1
+     */ DrillToAttributeUrl: "aabn6cs7g3S1",
+    /**
+     * Dashboard Title: Drill to invalid attribute url
+     * Dashboard ID: aabobRXoDlew
+     */ DrillToInvalidAttributeUrl: "aabobRXoDlew",
+    /**
+     * Dashboard Title: Export drilled insight
+     * Dashboard ID: aabIxRLch6p2
+     */ ExportDrilledInsight: "aabIxRLch6p2",
+    /**
+     * Dashboard Title: Drill to custom url with filters
+     * Dashboard ID: aach9lCvJLWx
+     */ DrillToCustomUrlWithFilters: "aach9lCvJLWx",
+    /**
+     * Dashboard Title: With invalid widget URI
+     * Dashboard ID: aabEyaXNepo5
+     */ WithInvalidWidgetURI: "aabEyaXNepo5",
+    /**
+     * Dashboard Title: With invalid layout
+     * Dashboard ID: aaeEEwIKgSYj
+     */ WithInvalidLayout: "aaeEEwIKgSYj",
+    /**
+     * Dashboard Title: Layout height resizing
+     * Dashboard ID: aaiiPYp5Cuhv
+     */ LayoutHeightResizing: "aaiiPYp5Cuhv",
     /**
      * Dashboard Title: Implicit drill to attribute url
-     * Dashboard ID: aackEGSRSdLz
-     */ ImplicitDrillToAttributeUrl_1: "aackEGSRSdLz",
+     * Dashboard ID: aa7DX7K6edDT
+     */ ImplicitDrillToAttributeUrl: "aa7DX7K6edDT",
+    /**
+     * Dashboard Title: Post message drilling
+     * Dashboard ID: aaelpuNvACYA
+     */ PostMessageDrilling: "aaelpuNvACYA",
+    /**
+     * Dashboard Title: Implicit drill
+     * Dashboard ID: aadman78eg7g
+     */ ImplicitDrill: "aadman78eg7g",
+    /**
+     * Dashboard Title: Section headers
+     * Dashboard ID: aajYQxcMixzF
+     */ SectionHeaders: "aajYQxcMixzF",
+    /**
+     * Dashboard Title: Attribute filters
+     * Dashboard ID: aacRqneCK9ux
+     */ AttributeFilters: "aacRqneCK9ux",
+    /**
+     * Dashboard Title: Private dashboard
+     * Dashboard ID: aap49tdZpuVV
+     */ PrivateDashboard: "aap49tdZpuVV",
+    /**
+     * Dashboard Title: First locked
+     * Dashboard ID: aadPktG0nLVL
+     */ FirstLocked: "aadPktG0nLVL",
+    /**
+     * Dashboard Title: Second locked
+     * Dashboard ID: aasPjOnUS6a7
+     */ SecondLocked: "aasPjOnUS6a7",
+    /**
+     * Dashboard Title: Dashboard to lock
+     * Dashboard ID: aagOYs1nk17A
+     */ DashboardToLock: "aagOYs1nk17A",
+    /**
+     * Dashboard Title: KD with stage name
+     * Dashboard ID: aanDEh5rdlai
+     */ KDWithStageName: "aanDEh5rdlai",
+    /**
+     * Dashboard Title: Widget tooltips
+     * Dashboard ID: aau4cNWWv9FB
+     */ WidgetTooltips: "aau4cNWWv9FB",
 };

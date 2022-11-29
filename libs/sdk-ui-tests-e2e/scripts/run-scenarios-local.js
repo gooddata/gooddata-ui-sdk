@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // (C) 2021 GoodData Corporation
 
-const { spawn } = require("child_process");
+import { spawn } from "child_process";
 
 async function main() {
     console.log("Process environment PWD", process.env.PWD);
@@ -10,16 +10,14 @@ async function main() {
         "run",
         "-p",
         "9500:9500",
-        "-e NGINX_ENTRYPOINT_QUIET_LOGS=1",
-        "-e BACKEND_HOST=staging3.intgdc.com",
-        "-e BACKEND_URL=https://staging3.intgdc.com",
+        "--add-host=host.docker.internal:host-gateway",
         "-v",
         `${process.env.PWD}/scenarios/build:/usr/share/nginx/html/gooddata-ui-sdk:ro`,
         "-v",
         `${process.env.PWD}/nginx/nginx.conf:/etc/nginx/nginx.conf:ro`,
         "-v",
         `${process.env.PWD}/nginx/proxy-isolated-tests-local.conf:/etc/nginx/extra-conf.d/proxy-isolated-tests-local.conf:ro`,
-        "020413372491.dkr.ecr.us-east-1.amazonaws.com/3rdparty/nginxinc/nginx-unprivileged:1.23.1-alpine",
+        "nginxinc/nginx-unprivileged:1.23.1-alpine",
     ]);
 
     editorNginxProcess.stdout.on("data", (data) => {
