@@ -270,6 +270,9 @@ Object {
             },
           ],
         },
+        "globalSettings": Object {
+          "enableKPIDashboardDrillFromAttribute": true,
+        },
       },
       "currentUser": [Function],
       "deauthenticate": [Function],

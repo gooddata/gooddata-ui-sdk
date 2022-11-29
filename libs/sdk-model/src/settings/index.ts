@@ -190,6 +190,11 @@ export interface ISettings {
     enableKPIDashboardImplicitDrillDown?: boolean;
 
     /**
+     * Enable drill from attributes
+     */
+    enableKPIDashboardDrillFromAttribute?: boolean;
+
+    /**
      * Enable usage of Dashboard permissions
      */
     enableAnalyticalDashboardPermissions?: boolean;

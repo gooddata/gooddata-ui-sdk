@@ -193,7 +193,9 @@ Object {
     "decimal": ".",
     "thousand": ",",
   },
-  "settings": Object {},
+  "settings": Object {
+    "enableKPIDashboardDrillFromAttribute": true,
+  },
 }
 `;
 

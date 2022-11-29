@@ -57,6 +57,7 @@ export {
     selectIsDeleteFilterButtonEnabled,
     selectIsKPIDashboardDependentFiltersEnabled,
     selectIsAlternativeDisplayFormSelectionEnabled,
+    selectEnableKPIDashboardDrillFromAttribute,
 } from "./config/configSelectors";
 export { PermissionsState } from "./permissions/permissionsState";
 export {
