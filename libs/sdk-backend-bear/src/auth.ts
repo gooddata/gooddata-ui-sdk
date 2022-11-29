@@ -115,3 +115,40 @@ export class ContextDeferredAuthProvider extends BearAuthProviderBase implements
         return this.principal!;
     }
 }
+
+const AnonymousUser: IAuthenticatedPrincipal = {
+    userId: "anonymous",
+};
+
+/**
+ * This is a noop implementation of bear authentication provider - it does nothing and assumes anonymous user.
+ *
+ * @public
+ */
+export class AnonymousAuthProvider implements IAuthenticationProvider {
+    public async authenticate(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal> {
+        const user = await (context.client as SDK).user.getCurrentProfile();
+
+        return Promise.resolve({
+            ...AnonymousUser,
+            userMeta: {
+                links: {
+                    // we need the actual self link of the user from the proxy, this is needed by some of the API calls
+                    self: user.links?.self,
+                },
+            },
+        });
+    }
+
+    public getCurrentPrincipal(_context: IAuthenticationContext): Promise<IAuthenticatedPrincipal | null> {
+        return Promise.resolve(null);
+    }
+
+    public deauthenticate(_context: IAuthenticationContext): Promise<void> {
+        return Promise.resolve();
+    }
+
+    public reset(): void {
+        return;
+    }
+}
