@@ -21,8 +21,7 @@ const DashboardLayoutItemEditRenderer: IDashboardLayoutItemRenderer<unknown> = (
     const { sectionIndex, itemIndex } = getLayoutCoordinates(item);
 
     const isDraggingCurrentItem = useIsDraggingCurrentItem(sectionIndex, itemIndex);
-    isDraggingCurrentItem &&
-        console.log("isDraggingCurrentItem", isDraggingCurrentItem, sectionIndex, itemIndex);
+
     return (
         <>
             <WidgetDropZoneColumn screen={screen} sectionIndex={sectionIndex} itemIndex={itemIndex} />

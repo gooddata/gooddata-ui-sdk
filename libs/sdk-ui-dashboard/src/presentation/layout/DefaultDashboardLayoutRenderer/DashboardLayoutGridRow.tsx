@@ -7,7 +7,7 @@ import {
     IDashboardLayoutItemFacade,
     IDashboardLayoutSectionFacade,
 } from "../../../_staging/dashboard/fluidLayout/facade/interfaces";
-import { HeightResizerHotspot } from "../../dragAndDrop";
+import { HeightResizerHotspot, useIsDraggingWidget } from "../../dragAndDrop";
 import { DashboardLayoutItem } from "./DashboardLayoutItem";
 import {
     IDashboardLayoutGridRowRenderer,
@@ -34,6 +34,8 @@ export interface DashboardLayoutGridRowProps<TWidget> {
 const defaultItemKeyGetter: IDashboardLayoutItemKeyGetter<unknown> = ({ item }) => item.index().toString();
 
 export function DashboardLayoutGridRow<TWidget>(props: DashboardLayoutGridRowProps<TWidget>): JSX.Element {
+    const isDraggingWidget = useIsDraggingWidget();
+
     const rowRef = useRef<HTMLDivElement>(null);
     const {
         section,
@@ -77,7 +79,7 @@ export function DashboardLayoutGridRow<TWidget>(props: DashboardLayoutGridRowPro
                           renderMode,
                       })
                     : rowItems}
-                {renderMode === "edit" && (
+                {renderMode === "edit" && !isDraggingWidget ? (
                     <HeightResizerHotspot
                         section={section}
                         items={items}
@@ -85,7 +87,7 @@ export function DashboardLayoutGridRow<TWidget>(props: DashboardLayoutGridRowPro
                         getContainerDimensions={getContainerDimensions}
                         getLayoutDimensions={getLayoutDimensions}
                     />
-                )}
+                ) : null}
             </Row>
         </div>
     );
