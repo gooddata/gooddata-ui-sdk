@@ -64,6 +64,13 @@
         animation-name: updatingFadeIn;
         animation-duration: 0.3s;
     }
+
+    .gd-bubble-trigger-zoom-out {
+        left: calc(
+            -#{variables.$item-outer-padding} - #{variables.$gd-dashboards-content-widget-borderWidth} - 8px
+        );
+        right: unset;
+    }
 }
 
 .zoomable {

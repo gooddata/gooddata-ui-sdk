@@ -13,7 +13,10 @@ export const InsightWidgetDescriptionTrigger: React.FC<IInsightWidgetDescription
     if (visible && description && description !== "") {
         return (
             <div className="dash-item-action-description">
-                <DescriptionPanel description={description} />
+                <DescriptionPanel
+                    description={description}
+                    className="dash-item-action-description-trigger"
+                />
             </div>
         );
     }
