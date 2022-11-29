@@ -6,7 +6,6 @@ import { VisType } from "@gooddata/sdk-ui";
 
 import {
     DashboardItem,
-    DashboardItemHeadline,
     DashboardItemVisualization,
     getVisTypeCssClass,
 } from "../../../presentationComponents";
@@ -16,6 +15,7 @@ import { selectIsDashboardSaving, useDashboardSelector, useWidgetSelection } fro
 import { useEditableInsightMenu } from "./useEditableInsightMenu";
 import { IDefaultDashboardInsightWidgetProps } from "./types";
 import { DashboardWidgetInsightGuard } from "./DashboardWidgetInsightGuard";
+import { EditableDashboardInsightWidgetHeader } from "./EditableDashboardInsightWidgetHeader";
 
 export const EditableDashboardInsightWidget: React.FC<
     Omit<IDefaultDashboardInsightWidgetProps, "insight">
@@ -66,7 +66,11 @@ const EditableDashboardInsightWidgetCore: React.FC<
                 onSelected={onSelected}
                 renderHeadline={(clientHeight) =>
                     !widget.configuration?.hideTitle && (
-                        <DashboardItemHeadline title={widget.title} clientHeight={clientHeight} />
+                        <EditableDashboardInsightWidgetHeader
+                            clientHeight={clientHeight}
+                            widget={widget}
+                            insight={insight}
+                        />
                     )
                 }
                 renderAfterContent={() => {
