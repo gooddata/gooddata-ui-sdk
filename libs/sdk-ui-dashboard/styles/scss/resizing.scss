@@ -30,22 +30,22 @@ $gd-width-resizer-hotpost-height: 40px;
     cursor: col-resize;
 }
 
-.dash-height-resizer-hotspot,
-.height-resizer-drag-preview {
-    position: absolute;
-    z-index: 101;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-    height: $gd-width-resizer-hotpost-height;
-    cursor: row-resize;
-}
-
-.dash-height-resizer-hotspot {
-    width: 100%;
-}
-
 .sdk-edit-mode-on {
+    .dash-height-resizer-hotspot,
+    .height-resizer-drag-preview {
+        position: absolute;
+        z-index: 101;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        height: $gd-width-resizer-hotpost-height;
+        cursor: row-resize;
+    }
+
+    .dash-height-resizer-hotspot {
+        width: 100%;
+    }
+
     .resizer-drag-preview,
     .height-resizer-drag-preview {
         z-index: 110;

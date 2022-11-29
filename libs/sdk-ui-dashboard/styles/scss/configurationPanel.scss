@@ -427,12 +427,12 @@
         }
     }
 
-    .flex-panel-full-vh-height {
+    .flex-panel-full-height {
         display: flex;
         flex-direction: column;
         align-items: stretch;
         align-content: stretch;
-        height: 100vh;
+        height: 100%;
 
         .flex-panel-item-stretch {
             display: flex;

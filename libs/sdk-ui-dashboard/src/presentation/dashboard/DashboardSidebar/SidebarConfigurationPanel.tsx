@@ -14,7 +14,7 @@ export const SidebarConfigurationPanel: React.FC<Omit<ISidebarProps, "DefaultSid
     const { deselectWidgets } = useWidgetSelection();
     return (
         <div className="col gd-flex-item gd-sidebar-container" onClick={deselectWidgets}>
-            <div className="flex-panel-full-vh-height">
+            <div className="flex-panel-full-height">
                 <CreationPanel className={configurationPanelClassName} />
             </div>
             <DeleteDropZone />
