@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { CatalogExportConfig } from "./types";
 
 export const DEFAULT_HOSTNAME = "https://secure.gooddata.com";
@@ -15,4 +15,5 @@ export const DEFAULT_CONFIG: CatalogExportConfig = {
     password: null,
     output: null,
     backend: "bear",
+    demo: false,
 };

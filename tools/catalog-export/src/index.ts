@@ -47,6 +47,7 @@ program
         "Indicates type of the backend that runs on the hostname. Can be either bear for the GoodData platform or tiger for GoodData Cloud or GoodData.CN. Default: bear",
     )
     .option("--accept-untrusted-ssl", "Allows to run the tool with host, that has untrusted ssl certificate")
+    .option("--demo", "Allows to export catalog with demo data without authentication.")
     .parse(process.argv);
 
 async function loadProjectMetadataFromBackend(config: CatalogExportConfig): Promise<WorkspaceMetadata> {

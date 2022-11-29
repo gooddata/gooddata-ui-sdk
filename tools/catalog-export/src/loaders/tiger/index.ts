@@ -63,18 +63,22 @@ function getTigerApiToken(): string | undefined {
  * @param hostname - hostname to use
  * @param usernameFromConfig - username that may have been provided in a config or CLI
  */
-async function getTigerClient(hostname: string): Promise<ITigerClient> {
+async function getTigerClient(config: CatalogExportConfig): Promise<ITigerClient> {
     const token = getTigerApiToken();
     const hasToken = token !== undefined;
     let askedForLogin: boolean = false;
 
-    const client = createTigerClient(hostname, token);
+    const client = createTigerClient(config.hostname!, token);
+
+    if (config.demo) {
+        return client;
+    }
 
     try {
         // check if user has access; if the auth is not enabled, it is no problem that user does not have
         // token set
         const hasAccess = await probeAccess(client);
-        const settingsPage = `${hostname.replace(/\/$/, "")}/settings`;
+        const settingsPage = `${config.hostname!.replace(/\/$/, "")}/settings`;
 
         if (!hasAccess) {
             if (hasToken) {
@@ -162,9 +166,7 @@ async function lookupWorkspaceId(client: ITigerClient, workspaceName: string): P
 export async function loadWorkspaceMetadataFromTiger(
     config: CatalogExportConfig,
 ): Promise<WorkspaceMetadata> {
-    const { hostname } = config;
-
-    const client = await getTigerClient(hostname!);
+    const client = await getTigerClient(config);
 
     let workspaceId = getConfiguredWorkspaceId(config, true);
     const workspaceName = getConfiguredWorkspaceName(config, true);
@@ -177,14 +179,18 @@ export async function loadWorkspaceMetadataFromTiger(
         }
     }
 
-    if (!workspaceId) {
+    if (!workspaceId && !config.demo) {
         workspaceId = await selectWorkspace(client);
+    } else if (!workspaceId && config.demo) {
+        logError(
+            "Unable to get workspaceId. Please set workspaceId in your configuration file or provide it with --workspace-id parameter.",
+        );
     }
 
     const workspaceSpinner = ora();
     try {
         // await is important here, otherwise errors thrown from the load would not be handled by this catch block
-        return await tigerLoad(client, workspaceId);
+        return await tigerLoad(client, workspaceId!);
     } catch (err) {
         workspaceSpinner.stop();
 

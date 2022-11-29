@@ -3,6 +3,7 @@
 exports[`getConfigFromProgram should complement config from defaults 1`] = `
 Object {
   "backend": "bear",
+  "demo": false,
   "hostname": null,
   "output": null,
   "password": null,
@@ -17,6 +18,7 @@ Object {
 exports[`getConfigFromProgram should handle case sensitivity 1`] = `
 Object {
   "backend": "bear",
+  "demo": false,
   "hostname": null,
   "output": null,
   "password": null,
@@ -31,6 +33,7 @@ Object {
 exports[`getConfigFromProgram should handle empty object 1`] = `
 Object {
   "backend": "bear",
+  "demo": false,
   "hostname": null,
   "output": null,
   "password": null,
@@ -45,6 +48,7 @@ Object {
 exports[`getConfigFromProgram should handle object with just some of the needed props 1`] = `
 Object {
   "backend": "bear",
+  "demo": false,
   "hostname": null,
   "output": null,
   "password": null,
@@ -59,6 +63,7 @@ Object {
 exports[`getConfigFromProgram should prefer input over default 1`] = `
 Object {
   "backend": "bear",
+  "demo": false,
   "hostname": null,
   "output": null,
   "password": null,
@@ -73,6 +78,7 @@ Object {
 exports[`getConfigFromProgram should propagate tiger backend type 1`] = `
 Object {
   "backend": "tiger",
+  "demo": false,
   "hostname": null,
   "output": null,
   "password": null,
