@@ -9,7 +9,7 @@ import {
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 import { Headline } from "@gooddata/sdk-ui-charts";
-import { Won } from "../../../../md/full";
+import { Won } from "../../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_bear";
 import { measureLocalId, measureIdentifier } from "@gooddata/sdk-model";
 
 interface IHeadDrillingProps {

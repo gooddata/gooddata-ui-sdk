@@ -71,6 +71,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@cypress/grep",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@formatjs/cli",
       "allowedCategories": [ "tools" ]
     },
@@ -104,6 +108,10 @@
     },
     {
       "name": "@gooddata/experimental-workspace",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@gooddata/fixtures",
       "allowedCategories": [ "production" ]
     },
     {

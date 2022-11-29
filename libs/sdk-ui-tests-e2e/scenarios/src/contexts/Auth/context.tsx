@@ -1,7 +1,9 @@
+// (C) 2022 GoodData Corporation
+
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
-import { backendWithCredentials, createBackend } from "./backend";
+import { createBackend } from "./backend";
 import { useAuthState, initialState, IAuthInitialState } from "./state";
 
 const noop = (): Promise<void> => Promise.resolve();
@@ -36,10 +38,10 @@ export const AuthProvider: React.FC = ({ children }) => {
 
     const [backend, setBackend] = useState(defaultContext.backend);
 
-    const login = async (username: string, password: string) => {
+    const login = async () => {
         onLoginStart();
         try {
-            const newBackend = backendWithCredentials(backend, username, password);
+            const newBackend = createBackend();
             await newBackend.authenticate();
             setBackend(newBackend);
             onLoginSuccess();

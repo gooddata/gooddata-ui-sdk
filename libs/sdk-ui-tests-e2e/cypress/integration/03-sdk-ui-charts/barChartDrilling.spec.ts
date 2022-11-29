@@ -27,7 +27,7 @@ const scenarios = [
     },
 ];
 
-describe("BarChart drilling", () => {
+describe("BarChart drilling", { tags: ["pre-merge_isolated_bear"] }, () => {
     before(() => {
         cy.login();
 

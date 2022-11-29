@@ -14,7 +14,7 @@ Cypress.on("uncaught:exception", (error) => {
 
 Cypress.Cookies.debug(true);
 
-describe("Dashboard", () => {
+describe("Dashboard", { tags: ["pre-merge_isolated_bear"] }, () => {
     describe("TopBar rendering", () => {
         beforeEach(() => {
             cy.login();
@@ -31,7 +31,7 @@ describe("Dashboard", () => {
         it("should render title", () => {
             const topBar = new TopBar();
 
-            topBar.dashboardTitleExist().dashboardTitleHasValue("E2E RAIL Dashboard Tests");
+            topBar.dashboardTitleExist().dashboardTitleHasValue("Test dashboard");
         });
 
         it("should not render edit button", () => {

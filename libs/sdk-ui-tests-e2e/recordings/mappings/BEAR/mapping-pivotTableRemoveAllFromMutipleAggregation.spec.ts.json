@@ -1,0 +1,173 @@
+{
+    "mappings": [
+        {
+            "id": "88fb6781-1ca2-42f4-b686-2c3c9c62aaca",
+            "name": "gdc_account_login",
+            "request": {
+                "url": "/gdc/account/login",
+                "method": "POST"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"userLogin\":{\"profile\":\"/gdc/account/profile/3ece989b2330f96ae7049a928bd1bc60\",\"state\":\"/gdc/account/login/3ece989b2330f96ae7049a928bd1bc60\"}}",
+                "headers": {
+                    "expires": "Thu, 01 Jan 1970 00:00:00 GMT",
+                    "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+                    "vary": "origin",
+                    "content-type": "application/json",
+                    "cache-control": "no-store, no-cache, must-revalidate, max-age=0",
+                    "p3p": "CP='IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT'",
+                    "pragma": "no-cache"
+                }
+            },
+            "uuid": "88fb6781-1ca2-42f4-b686-2c3c9c62aaca"
+        },
+        {
+            "id": "04079953-b65f-4140-aac3-ed158886ed5e",
+            "name": "gdc_account_profile_current",
+            "request": {
+                "url": "/gdc/account/profile/current",
+                "method": "GET"
+            },
+            "response": {
+                "status": 307,
+                "base64Body": "",
+                "headers": {
+                    "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+                    "vary": "origin,X-GDC-VERSION",
+                    "location": "/gdc/account/profile/3ece989b2330f96ae7049a928bd1bc60",
+                    "cache-control": "no-cache, no-store, must-revalidate"
+                }
+            },
+            "uuid": "04079953-b65f-4140-aac3-ed158886ed5e"
+        },
+        {
+            "id": "9fc52752-bc08-436b-aae7-105a0e28aea3",
+            "name": "gdc_app_projects_c76e0537d0614abb0027f7c992656b964922506f_executeafm",
+            "request": {
+                "url": "/gdc/app/projects/c76e0537d0614abb0027f7c992656b964922506f/executeAfm",
+                "method": "POST",
+                "bodyPatterns": [
+                    {
+                        "equalToJson": "{\"execution\":{\"afm\":{\"measures\":[{\"localIdentifier\":\"m_aangOxLSeztu\",\"definition\":{\"measure\":{\"item\":{\"identifier\":\"aangOxLSeztu\"}}}},{\"localIdentifier\":\"m_acugFHNJgsBy\",\"definition\":{\"measure\":{\"item\":{\"identifier\":\"acugFHNJgsBy\"}}}}],\"attributes\":[{\"displayForm\":{\"identifier\":\"label.product.id.name\"},\"localIdentifier\":\"a_label.product.id.name\"},{\"displayForm\":{\"identifier\":\"label.owner.department\"},\"localIdentifier\":\"a_label.owner.department\"},{\"displayForm\":{\"identifier\":\"label.opportunitysnapshot.forecastcategory\"},\"localIdentifier\":\"a_label.opportunitysnapshot.forecastcategory\"},{\"displayForm\":{\"identifier\":\"label.owner.region\"},\"localIdentifier\":\"a_label.owner.region\"}]},\"resultSpec\":{\"dimensions\":[{\"itemIdentifiers\":[\"a_label.product.id.name\",\"a_label.owner.department\"],\"totals\":[{\"type\":\"sum\",\"attributeIdentifier\":\"a_label.product.id.name\",\"measureIdentifier\":\"m_aangOxLSeztu\"},{\"type\":\"sum\",\"attributeIdentifier\":\"a_label.product.id.name\",\"measureIdentifier\":\"m_acugFHNJgsBy\"}]},{\"itemIdentifiers\":[\"a_label.opportunitysnapshot.forecastcategory\",\"a_label.owner.region\",\"measureGroup\"]}]}}}",
+                        "ignoreArrayOrder": false,
+                        "ignoreExtraElements": false
+                    }
+                ]
+            },
+            "response": {
+                "status": 201,
+                "body": "{\"executionResponse\":{\"dimensions\":[{\"headers\":[{\"attributeHeader\":{\"name\":\"Product Name\",\"localIdentifier\":\"a_label.product.id.name\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1052\",\"identifier\":\"label.product.id.name\",\"formOf\":{\"name\":\"Product\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051\",\"identifier\":\"attr.product.id\"},\"totalItems\":[{\"totalHeaderItem\":{\"name\":\"sum\"}}]}},{\"attributeHeader\":{\"name\":\"Department\",\"localIdentifier\":\"a_label.owner.department\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1086\",\"identifier\":\"label.owner.department\",\"formOf\":{\"name\":\"Department\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1085\",\"identifier\":\"attr.owner.department\"}}}]},{\"headers\":[{\"attributeHeader\":{\"name\":\"Forecast Category\",\"localIdentifier\":\"a_label.opportunitysnapshot.forecastcategory\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1060\",\"identifier\":\"label.opportunitysnapshot.forecastcategory\",\"formOf\":{\"name\":\"Forecast Category\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1059\",\"identifier\":\"attr.opportunitysnapshot.forecastcategory\"}}},{\"attributeHeader\":{\"name\":\"Region\",\"localIdentifier\":\"a_label.owner.region\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1084\",\"identifier\":\"label.owner.region\",\"formOf\":{\"name\":\"Region\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083\",\"identifier\":\"attr.owner.region\"}}},{\"measureGroupHeader\":{\"items\":[{\"measureHeaderItem\":{\"name\":\"Amount\",\"format\":\"$#,##0.00\",\"localIdentifier\":\"m_aangOxLSeztu\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1225\",\"identifier\":\"aangOxLSeztu\"}},{\"measureHeaderItem\":{\"name\":\"Won\",\"format\":\"$#,##0.00\",\"localIdentifier\":\"m_acugFHNJgsBy\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1226\",\"identifier\":\"acugFHNJgsBy\"}}]}}]}],\"links\":{\"executionResult\":\"/gdc/app/projects/c76e0537d0614abb0027f7c992656b964922506f/executionResults/106026048920616944?c=80ad45ff5c6cb2318ce7436fca55092c&q=eAGtVF1rwjAU%2FSsS91jWWq10whhjX%2Fgyhkz2UPoQkyjtmqYk6ZxK%2F%2FtuDO0m6ITWpwRyc8%2B955x7%0Ad4iIrOS5QpNoh1TJOZYbNEHIQTrRGYPrs5CMYKV7D1izlYBnBy2wYk8Z4yzX89kUgtwVJS6n7paN%0AqMpInob5Zulr%2Fztdb1NB%2FGURrIX%2F9emKReoOvODGZfa7ukvorUETGmemiih2ojh2ENZaJotSsylt%0Akx9SNhne%2F%2BmEJqrI8Aaa5G2Axh6qnF3D1YytEpED9gGTHTHC0bFmGqimzTb1h0PI3VXNcHhGzcpB%0AnIGc5EWKskCgrhRra7mu2MHgNLZRAcAie3b21OCYDG9S0JJoeOqocuBDjgPb1ANYQxijHQ14ZAWW%0A2gzjJcQMThN6idEMg%2B5chWPI0fi%2BHu8%2FNFTGYqwQUr9ibpbYPN%2BzSeGfdaJ1n723GBzfN23UCt1z%0AUe7JX8IawRrwrvpOv%2B9dex5E%2FWpm43oWtUeZIjIptNkYRtsOxRg%2B6mI%2B9gvoTCWoiqsf1zoIbQ%3D%3D%0A&offset=0%2C0&limit=1000%2C1000&dimensions=2&totals=1%2C0\"}}}",
+                "headers": {
+                    "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+                    "Cache-Control": "no-cache, no-store, must-revalidate",
+                    "vary": "accept-encoding,origin,X-GDC-VERSION",
+                    "Content-Type": "application/json;charset=utf-8"
+                }
+            },
+            "uuid": "9fc52752-bc08-436b-aae7-105a0e28aea3"
+        },
+        {
+            "id": "be130019-ede0-4f0e-8478-58e3d9675b31",
+            "name": "gdc_account_profile_3ece989b2330f96ae7049a928bd1bc60",
+            "request": {
+                "url": "/gdc/account/profile/3ece989b2330f96ae7049a928bd1bc60",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"accountSetting\":{\"ssoProvider\":null,\"updated\":\"2018-07-10 05:03:49\",\"timezone\":null,\"position\":null,\"phoneNumber\":null,\"login\":\"chhung@lhv.vn\",\"lastName\":\"Cao\",\"firstName\":\"Hung\",\"created\":\"2018-07-10 05:01:50\",\"country\":null,\"companyName\":null,\"email\":\"chhung@lhv.vn\",\"authenticationModes\":[],\"language\":\"en-US\",\"ipWhitelist\":null,\"effectiveIpWhitelist\":null,\"links\":{\"self\":\"/gdc/account/profile/3ece989b2330f96ae7049a928bd1bc60\",\"projects\":\"/gdc/account/profile/3ece989b2330f96ae7049a928bd1bc60/projects\",\"domain\":\"/gdc/domains/default\",\"auditEvents\":\"/gdc/account/profile/3ece989b2330f96ae7049a928bd1bc60/auditEvents\"}}}",
+                "headers": {
+                    "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+                    "vary": "origin,X-GDC-VERSION",
+                    "content-type": "application/json;charset=utf-8",
+                    "cache-control": "no-cache, no-store, must-revalidate"
+                }
+            },
+            "uuid": "be130019-ede0-4f0e-8478-58e3d9675b31"
+        },
+        {
+            "id": "41e34bd5-656f-48ff-b184-282d0992bc88",
+            "name": "gdc_internal_projects",
+            "request": {
+                "url": "/gdc/internal/projects/?limit=100&offset=0&userId=3ece989b2330f96ae7049a928bd1bc60&projectStates=ENABLED&userState=ENABLED",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"userProjects\":{\"paging\":{\"offset\":0,\"limit\":100,\"count\":4,\"totalCount\":4},\"items\":[{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"_project many users, user groups - DO NOT DELETE\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/su97m0sh11g2apwq8zgg3khpla6dkfy9\",\"projectUser\":\"/gdc/projects/su97m0sh11g2apwq8zgg3khpla6dkfy9/users/3ece989b2330f96ae7049a928bd1bc60\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"GS Multiple Filters - DO NOT DELETE\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/l6486kmy6wsy2t4yj9qh98tst4cfd7xw\",\"projectUser\":\"/gdc/projects/l6486kmy6wsy2t4yj9qh98tst4cfd7xw/users/3ece989b2330f96ae7049a928bd1bc60\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"Test reference workspace Dec 12, 2022, 06:27\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/c76e0537d0614abb0027f7c992656b964922506f\",\"projectUser\":\"/gdc/projects/c76e0537d0614abb0027f7c992656b964922506f/users/3ece989b2330f96ae7049a928bd1bc60\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"Test reference workspace Dec 12, 2022, 11:42\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/nvcoxu8llumsyasb35pvbw3o0oi3m2u1\",\"projectUser\":\"/gdc/projects/nvcoxu8llumsyasb35pvbw3o0oi3m2u1/users/3ece989b2330f96ae7049a928bd1bc60\"}}}]}}",
+                "headers": {
+                    "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+                    "Cache-Control": "no-cache, no-store, must-revalidate",
+                    "vary": "accept-encoding,origin,X-GDC-VERSION",
+                    "Content-Type": "application/json;charset=utf-8"
+                }
+            },
+            "uuid": "41e34bd5-656f-48ff-b184-282d0992bc88"
+        },
+        {
+            "id": "e585ffcd-3a0b-42e4-915d-f5acd51a5f65",
+            "name": "gdc_app_projects_c76e0537d0614abb0027f7c992656b964922506f_executeafm",
+            "request": {
+                "url": "/gdc/app/projects/c76e0537d0614abb0027f7c992656b964922506f/executeAfm",
+                "method": "POST",
+                "bodyPatterns": [
+                    {
+                        "equalToJson": "{\"execution\":{\"afm\":{\"measures\":[{\"localIdentifier\":\"m_aangOxLSeztu\",\"definition\":{\"measure\":{\"item\":{\"identifier\":\"aangOxLSeztu\"}}}},{\"localIdentifier\":\"m_acugFHNJgsBy\",\"definition\":{\"measure\":{\"item\":{\"identifier\":\"acugFHNJgsBy\"}}}}],\"attributes\":[{\"displayForm\":{\"identifier\":\"label.product.id.name\"},\"localIdentifier\":\"a_label.product.id.name\"},{\"displayForm\":{\"identifier\":\"label.owner.department\"},\"localIdentifier\":\"a_label.owner.department\"},{\"displayForm\":{\"identifier\":\"label.opportunitysnapshot.forecastcategory\"},\"localIdentifier\":\"a_label.opportunitysnapshot.forecastcategory\"},{\"displayForm\":{\"identifier\":\"label.owner.region\"},\"localIdentifier\":\"a_label.owner.region\"}]},\"resultSpec\":{\"dimensions\":[{\"itemIdentifiers\":[\"a_label.product.id.name\",\"a_label.owner.department\"]},{\"itemIdentifiers\":[\"a_label.opportunitysnapshot.forecastcategory\",\"a_label.owner.region\",\"measureGroup\"]}]}}}",
+                        "ignoreArrayOrder": false,
+                        "ignoreExtraElements": false
+                    }
+                ]
+            },
+            "response": {
+                "status": 201,
+                "body": "{\"executionResponse\":{\"dimensions\":[{\"headers\":[{\"attributeHeader\":{\"name\":\"Product Name\",\"localIdentifier\":\"a_label.product.id.name\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1052\",\"identifier\":\"label.product.id.name\",\"formOf\":{\"name\":\"Product\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051\",\"identifier\":\"attr.product.id\"}}},{\"attributeHeader\":{\"name\":\"Department\",\"localIdentifier\":\"a_label.owner.department\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1086\",\"identifier\":\"label.owner.department\",\"formOf\":{\"name\":\"Department\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1085\",\"identifier\":\"attr.owner.department\"}}}]},{\"headers\":[{\"attributeHeader\":{\"name\":\"Forecast Category\",\"localIdentifier\":\"a_label.opportunitysnapshot.forecastcategory\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1060\",\"identifier\":\"label.opportunitysnapshot.forecastcategory\",\"formOf\":{\"name\":\"Forecast Category\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1059\",\"identifier\":\"attr.opportunitysnapshot.forecastcategory\"}}},{\"attributeHeader\":{\"name\":\"Region\",\"localIdentifier\":\"a_label.owner.region\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1084\",\"identifier\":\"label.owner.region\",\"formOf\":{\"name\":\"Region\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083\",\"identifier\":\"attr.owner.region\"}}},{\"measureGroupHeader\":{\"items\":[{\"measureHeaderItem\":{\"name\":\"Amount\",\"format\":\"$#,##0.00\",\"localIdentifier\":\"m_aangOxLSeztu\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1225\",\"identifier\":\"aangOxLSeztu\"}},{\"measureHeaderItem\":{\"name\":\"Won\",\"format\":\"$#,##0.00\",\"localIdentifier\":\"m_acugFHNJgsBy\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1226\",\"identifier\":\"acugFHNJgsBy\"}}]}}]}],\"links\":{\"executionResult\":\"/gdc/app/projects/c76e0537d0614abb0027f7c992656b964922506f/executionResults/7895697310239521792?c=552050dbfb8b1f7901d39944065fafec&q=eAGtVEtrwkAQ%2Fiuy9hiaGI1EoZTSF15KkZYexMO6u0rSbDbsTmpV8t87MWqMVQpJz7P7zXyPmQ3R%0AamnIcLIhFEAHsxTEiJMhsRec2ZLba9HjJmJx6MeruQvud7hch4q588RbKvfr01az0O44XodYJcJb%0AAJFAkFeteMoASzwwSURXT0rLWvAuYoACGuWzTqbWZDq1iEmlpHqFjfLqr54zasRjJKSI4X08qsPJ%0AFsV3cxvwG5JZG9IU0%2FeqmOXcDyKhGvJhkUyV2SnvhmL6fexwcHvvVaX%2FoVrHLN8jGbrDVJTKuMhW%0AU9m8wSXZMFGCUQOtewpioTANjcPWd%2FI4nYpeseSgz169c2McHtUR0Rv8T966l4Qbi0Wg4j%2BZNs1a%0A7zhrdYTwu8cIe71302cWkQLPFnvWKk0Ipk6LRGl4oTK%2FP%2B%2Fx9ipwRCieFWksrbyTKo2hVRRbXBim%0AgwR2uuwOSvEGIeZ4vCgg7FXbaredayfPSfG1BjHXxTXBi9IAIN%2FjLUGc6WPr5dkRS7q4l9kPMfoF%0AOw%3D%3D%0A&offset=0%2C0&limit=1000%2C1000&dimensions=2&totals=0%2C0\"}}}",
+                "headers": {
+                    "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+                    "Cache-Control": "no-cache, no-store, must-revalidate",
+                    "vary": "accept-encoding,origin,X-GDC-VERSION",
+                    "Content-Type": "application/json;charset=utf-8"
+                }
+            },
+            "uuid": "e585ffcd-3a0b-42e4-915d-f5acd51a5f65"
+        },
+        {
+            "id": "96cedd9d-b771-4c47-88d2-3f6699ba12a4",
+            "name": "gdc_app_projects_c76e0537d0614abb0027f7c992656b964922506f_executionresults_106026048920616944",
+            "request": {
+                "url": "/gdc/app/projects/c76e0537d0614abb0027f7c992656b964922506f/executionResults/106026048920616944?c=80ad45ff5c6cb2318ce7436fca55092c&q=eAGtVF1rwjAU%2FSsS91jWWq10whhjX%2Fgyhkz2UPoQkyjtmqYk6ZxK%2F%2FtuDO0m6ITWpwRyc8%2B955x7%0Ad4iIrOS5QpNoh1TJOZYbNEHIQTrRGYPrs5CMYKV7D1izlYBnBy2wYk8Z4yzX89kUgtwVJS6n7paN%0AqMpInob5Zulr%2Fztdb1NB%2FGURrIX%2F9emKReoOvODGZfa7ukvorUETGmemiih2ojh2ENZaJotSsylt%0Akx9SNhne%2F%2BmEJqrI8Aaa5G2Axh6qnF3D1YytEpED9gGTHTHC0bFmGqimzTb1h0PI3VXNcHhGzcpB%0AnIGc5EWKskCgrhRra7mu2MHgNLZRAcAie3b21OCYDG9S0JJoeOqocuBDjgPb1ANYQxijHQ14ZAWW%0A2gzjJcQMThN6idEMg%2B5chWPI0fi%2BHu8%2FNFTGYqwQUr9ibpbYPN%2BzSeGfdaJ1n723GBzfN23UCt1z%0AUe7JX8IawRrwrvpOv%2B9dex5E%2FWpm43oWtUeZIjIptNkYRtsOxRg%2B6mI%2B9gvoTCWoiqsf1zoIbQ%3D%3D%0A&offset=0%2C0&limit=100%2C1000&dimensions=2&totals=1%2C0",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"executionResult\":{\"data\":[[\"2174478.26\",\"883793.08\",\"5917286.73\",\"2370306.08\",\"1989393.54\",\"817756.22\",\"5501537.16\",\"2039952.64\"],[\"405767.14\",\"194123.92\",\"3156945.21\",\"1270431.27\",\"529670.6\",\"219798.78\",\"7547821\",\"1441807.88\"],[\"2008366.85\",\"754830.5\",\"4088621.31\",\"1350035.81\",\"3467615.16\",\"1160639.56\",\"6623534.92\",\"2612041.49\"],[\"590536.1\",\"283569.17\",\"3053141.34\",\"1746096.06\",\"547704.36\",\"108422.01\",\"2567375.43\",\"841972.46\"],[\"2610784.51\",\"989426.6\",\"6011398.61\",\"2305188\",\"2935008.02\",\"1106550.62\",\"18472467\",\"2097915.19\"],[\"793939.81\",\"430585.96\",\"3135777.62\",\"1226965.38\",\"1929950.34\",\"223202.05\",\"2706868.95\",\"867705.82\"],[\"1964931.93\",\"826188.69\",\"1060976.15\",\"389910.95\",\"361332.16\",\"259178.39\",\"2476731.94\",\"1434946.69\"],[\"268112.52\",\"167291.74\",\"877547.53\",\"510727.21\",\"167554.65\",\"148902.34\",\"864845.04\",\"236060.2\"],[\"1827108.25\",\"229646.4\",\"1980712.38\",\"1150517.74\",\"536526.06\",\"329035.25\",\"1418895.61\",\"583354.19\"],[\"120416.22\",\"87001.62\",\"1358755.87\",\"272152.06\",\"180781.87\",\"158881.03\",\"2102661.65\",\"563803.9\"],[\"1374944.56\",\"550627.31\",\"2542872.97\",\"1109596.41\",\"728206.16\",\"476598.4\",\"2332594.72\",\"676823.87\"],[\"278916.58\",\"119311.53\",\"1330301.14\",\"398431.88\",\"225050.77\",\"17398.48\",\"1478689.84\",\"271250.62\"]],\"paging\":{\"count\":[12,8],\"offset\":[0,0],\"total\":[12,8]},\"headerItems\":[[[{\"attributeHeaderItem\":{\"name\":\"CompuSci\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165678\"}},{\"attributeHeaderItem\":{\"name\":\"CompuSci\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165678\"}},{\"attributeHeaderItem\":{\"name\":\"Educationly\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165847\"}},{\"attributeHeaderItem\":{\"name\":\"Educationly\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165847\"}},{\"attributeHeaderItem\":{\"name\":\"Explorer\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=342345\"}},{\"attributeHeaderItem\":{\"name\":\"Explorer\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=342345\"}},{\"attributeHeaderItem\":{\"name\":\"Grammar Plus\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=168737\"}},{\"attributeHeaderItem\":{\"name\":\"Grammar Plus\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=168737\"}},{\"attributeHeaderItem\":{\"name\":\"PhoenixSoft\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166339\"}},{\"attributeHeaderItem\":{\"name\":\"PhoenixSoft\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166339\"}},{\"attributeHeaderItem\":{\"name\":\"WonderKid\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166497\"}},{\"attributeHeaderItem\":{\"name\":\"WonderKid\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166497\"}},{\"totalHeaderItem\":{\"name\":\"sum\",\"type\":\"sum\"}}],[{\"attributeHeaderItem\":{\"name\":\"Direct Sales\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1085/elements?id=460487\"}},{\"attributeHeaderItem\":{\"name\":\"Inside Sales\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1085/elements?id=460490\"}},{\"attributeHeaderItem\":{\"name\":\"Direct Sales\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1085/elements?id=460487\"}},{\"attributeHeaderItem\":{\"name\":\"Inside Sales\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1085/elements?id=460490\"}},{\"attributeHeaderItem\":{\"name\":\"Direct Sales\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1085/elements?id=460487\"}},{\"attributeHeaderItem\":{\"name\":\"Inside Sales\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1085/elements?id=460490\"}},{\"attributeHeaderItem\":{\"name\":\"Direct Sales\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1085/elements?id=460487\"}},{\"attributeHeaderItem\":{\"name\":\"Inside Sales\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1085/elements?id=460490\"}},{\"attributeHeaderItem\":{\"name\":\"Direct Sales\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1085/elements?id=460487\"}},{\"attributeHeaderItem\":{\"name\":\"Inside Sales\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1085/elements?id=460490\"}},{\"attributeHeaderItem\":{\"name\":\"Direct Sales\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1085/elements?id=460487\"}},{\"attributeHeaderItem\":{\"name\":\"Inside Sales\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1085/elements?id=460490\"}},{\"totalHeaderItem\":{\"name\":\"sum\",\"type\":\"sum\"}}]],[[{\"attributeHeaderItem\":{\"name\":\"Exclude\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1059/elements?id=165680\"}},{\"attributeHeaderItem\":{\"name\":\"Exclude\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1059/elements?id=165680\"}},{\"attributeHeaderItem\":{\"name\":\"Exclude\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1059/elements?id=165680\"}},{\"attributeHeaderItem\":{\"name\":\"Exclude\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1059/elements?id=165680\"}},{\"attributeHeaderItem\":{\"name\":\"Include\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1059/elements?id=165682\"}},{\"attributeHeaderItem\":{\"name\":\"Include\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1059/elements?id=165682\"}},{\"attributeHeaderItem\":{\"name\":\"Include\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1059/elements?id=165682\"}},{\"attributeHeaderItem\":{\"name\":\"Include\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1059/elements?id=165682\"}}],[{\"attributeHeaderItem\":{\"name\":\"East Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460488\"}},{\"attributeHeaderItem\":{\"name\":\"East Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460488\"}},{\"attributeHeaderItem\":{\"name\":\"West Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460489\"}},{\"attributeHeaderItem\":{\"name\":\"West Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460489\"}},{\"attributeHeaderItem\":{\"name\":\"East Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460488\"}},{\"attributeHeaderItem\":{\"name\":\"East Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460488\"}},{\"attributeHeaderItem\":{\"name\":\"West Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460489\"}},{\"attributeHeaderItem\":{\"name\":\"West Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460489\"}}],[{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}},{\"measureHeaderItem\":{\"name\":\"Won\",\"order\":1}},{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}},{\"measureHeaderItem\":{\"name\":\"Won\",\"order\":1}},{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}},{\"measureHeaderItem\":{\"name\":\"Won\",\"order\":1}},{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}},{\"measureHeaderItem\":{\"name\":\"Won\",\"order\":1}}]]],\"totals\":[[[\"14418302.73\",\"5516396.52\",\"34514336.86\",\"14100358.85\",\"13598793.69\",\"5026363.13\",\"54094023.26\",\"13667634.95\"]],[]]}}",
+                "headers": {
+                    "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+                    "Cache-Control": "max-age=86400,private",
+                    "vary": "accept,accept-encoding,origin,X-GDC-VERSION",
+                    "Content-Type": "application/json;charset=utf-8"
+                }
+            },
+            "uuid": "96cedd9d-b771-4c47-88d2-3f6699ba12a4"
+        },
+        {
+            "id": "e3285bc6-f998-4336-8333-e014b7a78020",
+            "name": "gdc_app_projects_c76e0537d0614abb0027f7c992656b964922506f_executionresults_7895697310239521792",
+            "request": {
+                "url": "/gdc/app/projects/c76e0537d0614abb0027f7c992656b964922506f/executionResults/7895697310239521792?c=552050dbfb8b1f7901d39944065fafec&q=eAGtVEtrwkAQ%2Fiuy9hiaGI1EoZTSF15KkZYexMO6u0rSbDbsTmpV8t87MWqMVQpJz7P7zXyPmQ3R%0AamnIcLIhFEAHsxTEiJMhsRec2ZLba9HjJmJx6MeruQvud7hch4q588RbKvfr01az0O44XodYJcJb%0AAJFAkFeteMoASzwwSURXT0rLWvAuYoACGuWzTqbWZDq1iEmlpHqFjfLqr54zasRjJKSI4X08qsPJ%0AFsV3cxvwG5JZG9IU0%2FeqmOXcDyKhGvJhkUyV2SnvhmL6fexwcHvvVaX%2FoVrHLN8jGbrDVJTKuMhW%0AU9m8wSXZMFGCUQOtewpioTANjcPWd%2FI4nYpeseSgz169c2McHtUR0Rv8T966l4Qbi0Wg4j%2BZNs1a%0A7zhrdYTwu8cIe71302cWkQLPFnvWKk0Ipk6LRGl4oTK%2FP%2B%2Fx9ipwRCieFWksrbyTKo2hVRRbXBim%0AgwR2uuwOSvEGIeZ4vCgg7FXbaredayfPSfG1BjHXxTXBi9IAIN%2FjLUGc6WPr5dkRS7q4l9kPMfoF%0AOw%3D%3D%0A&offset=0%2C0&limit=22%2C1000&dimensions=2&totals=0%2C0",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"executionResult\":{\"data\":[[\"2174478.26\",\"883793.08\",\"5917286.73\",\"2370306.08\",\"1989393.54\",\"817756.22\",\"5501537.16\",\"2039952.64\"],[\"405767.14\",\"194123.92\",\"3156945.21\",\"1270431.27\",\"529670.6\",\"219798.78\",\"7547821\",\"1441807.88\"],[\"2008366.85\",\"754830.5\",\"4088621.31\",\"1350035.81\",\"3467615.16\",\"1160639.56\",\"6623534.92\",\"2612041.49\"],[\"590536.1\",\"283569.17\",\"3053141.34\",\"1746096.06\",\"547704.36\",\"108422.01\",\"2567375.43\",\"841972.46\"],[\"2610784.51\",\"989426.6\",\"6011398.61\",\"2305188\",\"2935008.02\",\"1106550.62\",\"18472467\",\"2097915.19\"],[\"793939.81\",\"430585.96\",\"3135777.62\",\"1226965.38\",\"1929950.34\",\"223202.05\",\"2706868.95\",\"867705.82\"],[\"1964931.93\",\"826188.69\",\"1060976.15\",\"389910.95\",\"361332.16\",\"259178.39\",\"2476731.94\",\"1434946.69\"],[\"268112.52\",\"167291.74\",\"877547.53\",\"510727.21\",\"167554.65\",\"148902.34\",\"864845.04\",\"236060.2\"],[\"1827108.25\",\"229646.4\",\"1980712.38\",\"1150517.74\",\"536526.06\",\"329035.25\",\"1418895.61\",\"583354.19\"],[\"120416.22\",\"87001.62\",\"1358755.87\",\"272152.06\",\"180781.87\",\"158881.03\",\"2102661.65\",\"563803.9\"],[\"1374944.56\",\"550627.31\",\"2542872.97\",\"1109596.41\",\"728206.16\",\"476598.4\",\"2332594.72\",\"676823.87\"],[\"278916.58\",\"119311.53\",\"1330301.14\",\"398431.88\",\"225050.77\",\"17398.48\",\"1478689.84\",\"271250.62\"]],\"paging\":{\"count\":[12,8],\"offset\":[0,0],\"total\":[12,8]},\"headerItems\":[[[{\"attributeHeaderItem\":{\"name\":\"CompuSci\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165678\"}},{\"attributeHeaderItem\":{\"name\":\"CompuSci\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165678\"}},{\"attributeHeaderItem\":{\"name\":\"Educationly\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165847\"}},{\"attributeHeaderItem\":{\"name\":\"Educationly\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165847\"}},{\"attributeHeaderItem\":{\"name\":\"Explorer\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=342345\"}},{\"attributeHeaderItem\":{\"name\":\"Explorer\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=342345\"}},{\"attributeHeaderItem\":{\"name\":\"Grammar Plus\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=168737\"}},{\"attributeHeaderItem\":{\"name\":\"Grammar Plus\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=168737\"}},{\"attributeHeaderItem\":{\"name\":\"PhoenixSoft\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166339\"}},{\"attributeHeaderItem\":{\"name\":\"PhoenixSoft\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166339\"}},{\"attributeHeaderItem\":{\"name\":\"WonderKid\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166497\"}},{\"attributeHeaderItem\":{\"name\":\"WonderKid\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166497\"}}],[{\"attributeHeaderItem\":{\"name\":\"Direct Sales\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1085/elements?id=460487\"}},{\"attributeHeaderItem\":{\"name\":\"Inside Sales\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1085/elements?id=460490\"}},{\"attributeHeaderItem\":{\"name\":\"Direct Sales\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1085/elements?id=460487\"}},{\"attributeHeaderItem\":{\"name\":\"Inside Sales\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1085/elements?id=460490\"}},{\"attributeHeaderItem\":{\"name\":\"Direct Sales\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1085/elements?id=460487\"}},{\"attributeHeaderItem\":{\"name\":\"Inside Sales\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1085/elements?id=460490\"}},{\"attributeHeaderItem\":{\"name\":\"Direct Sales\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1085/elements?id=460487\"}},{\"attributeHeaderItem\":{\"name\":\"Inside Sales\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1085/elements?id=460490\"}},{\"attributeHeaderItem\":{\"name\":\"Direct Sales\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1085/elements?id=460487\"}},{\"attributeHeaderItem\":{\"name\":\"Inside Sales\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1085/elements?id=460490\"}},{\"attributeHeaderItem\":{\"name\":\"Direct Sales\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1085/elements?id=460487\"}},{\"attributeHeaderItem\":{\"name\":\"Inside Sales\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1085/elements?id=460490\"}}]],[[{\"attributeHeaderItem\":{\"name\":\"Exclude\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1059/elements?id=165680\"}},{\"attributeHeaderItem\":{\"name\":\"Exclude\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1059/elements?id=165680\"}},{\"attributeHeaderItem\":{\"name\":\"Exclude\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1059/elements?id=165680\"}},{\"attributeHeaderItem\":{\"name\":\"Exclude\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1059/elements?id=165680\"}},{\"attributeHeaderItem\":{\"name\":\"Include\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1059/elements?id=165682\"}},{\"attributeHeaderItem\":{\"name\":\"Include\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1059/elements?id=165682\"}},{\"attributeHeaderItem\":{\"name\":\"Include\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1059/elements?id=165682\"}},{\"attributeHeaderItem\":{\"name\":\"Include\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1059/elements?id=165682\"}}],[{\"attributeHeaderItem\":{\"name\":\"East Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460488\"}},{\"attributeHeaderItem\":{\"name\":\"East Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460488\"}},{\"attributeHeaderItem\":{\"name\":\"West Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460489\"}},{\"attributeHeaderItem\":{\"name\":\"West Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460489\"}},{\"attributeHeaderItem\":{\"name\":\"East Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460488\"}},{\"attributeHeaderItem\":{\"name\":\"East Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460488\"}},{\"attributeHeaderItem\":{\"name\":\"West Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460489\"}},{\"attributeHeaderItem\":{\"name\":\"West Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460489\"}}],[{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}},{\"measureHeaderItem\":{\"name\":\"Won\",\"order\":1}},{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}},{\"measureHeaderItem\":{\"name\":\"Won\",\"order\":1}},{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}},{\"measureHeaderItem\":{\"name\":\"Won\",\"order\":1}},{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}},{\"measureHeaderItem\":{\"name\":\"Won\",\"order\":1}}]]]}}",
+                "headers": {
+                    "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+                    "Cache-Control": "max-age=86400,private",
+                    "vary": "accept,accept-encoding,origin,X-GDC-VERSION",
+                    "Content-Type": "application/json;charset=utf-8"
+                }
+            },
+            "uuid": "e3285bc6-f998-4336-8333-e014b7a78020"
+        }
+    ]
+}

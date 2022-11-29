@@ -28,7 +28,11 @@ export default defineConfig({
         },
         viewportWidth: 1400,
         viewportHeight: 800,
-        defaultCommandTimeout: 20000,
+        defaultCommandTimeout: 30000,
+        retries: {
+            runMode: 2,
+            openMode: 0,
+        },
         trashAssetsBeforeRuns: false,
         reporter: "junit",
         reporterOptions: {

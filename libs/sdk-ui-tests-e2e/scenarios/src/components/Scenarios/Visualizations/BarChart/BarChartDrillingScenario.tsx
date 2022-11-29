@@ -9,7 +9,12 @@ import {
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 import { BarChart } from "@gooddata/sdk-ui-charts";
-import { Amount, Won, Product, Region } from "../../../../md/full";
+import {
+    Amount,
+    Won,
+    Product,
+    Region,
+} from "../../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_bear";
 import {
     measureLocalId,
     measureIdentifier,

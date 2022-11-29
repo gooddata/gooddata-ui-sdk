@@ -5,7 +5,7 @@ import { clickOutside } from "../../tools/utils";
 import { DateFilterAbsoluteForm } from "../../tools/dateFilterAbsoluteForm";
 import { DateFilterRelativeForm } from "../../tools/dateFilterRelativeForm";
 
-describe("DateFilter", () => {
+describe("DateFilter", { tags: ["pre-merge_isolated_bear"] }, () => {
     beforeEach(() => {
         Navigation.visit("filters/date-filter");
     });

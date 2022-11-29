@@ -1,0 +1,10 @@
+# (C) 2022 GoodData Corporation
+node_modules
+package.json
+dist
+esm
+cypress/results
+cypress/screenshots
+cypress/videos
+**/build
+.rush

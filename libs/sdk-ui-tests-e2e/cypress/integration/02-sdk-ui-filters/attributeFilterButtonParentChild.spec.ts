@@ -5,7 +5,7 @@ import * as Navigation from "../../tools/navigation";
 const PARENT_FILTER_SELECTOR = ".s-attribute-filter.s-product";
 const CHILD_FILTER_SELECTOR = ".s-attribute-filter.s-department";
 
-describe("Parent-child filtering on AttributeFilterButton", () => {
+describe("Parent-child filtering on AttributeFilterButton", { tags: ["pre-merge_isolated_bear"] }, () => {
     beforeEach(() => {
         cy.login();
 

@@ -4,7 +4,7 @@ import { Table } from "../../tools/table";
 
 const CELL_AUTO_RESIZE_WIDTH = 105;
 
-describe("should autoresized all columns", () => {
+describe("should autoresized all columns", { tags: ["pre-merge_isolated_bear"] }, () => {
     beforeEach(() => {
         cy.login();
 

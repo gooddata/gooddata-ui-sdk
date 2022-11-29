@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import React, { useMemo, useState } from "react";
 import {
     Dashboard,
@@ -26,7 +26,7 @@ export const ImplicitDrillToAttributeUrlScenario: React.FC = () => {
 
     return (
         <>
-            {attributeUrl && <div className="s-attribute-url">{attributeUrl}</div>}
+            {attributeUrl ? <div className="s-attribute-url">{attributeUrl}</div> : null}
             <Dashboard dashboard={dashboardIdRef} eventHandlers={eventHandlers} />
         </>
     );

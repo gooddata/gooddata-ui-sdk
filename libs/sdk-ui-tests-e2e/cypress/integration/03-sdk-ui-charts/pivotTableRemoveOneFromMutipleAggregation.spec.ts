@@ -2,7 +2,7 @@
 import * as Navigation from "../../tools/navigation";
 import { nonEmptyValue, Table } from "../../tools/table";
 
-describe("Pivot Table Aggregations remove all totals", () => {
+describe("Pivot Table Aggregations remove all totals", { tags: ["pre-merge_isolated_bear"] }, () => {
     beforeEach(() => {
         cy.login();
         Navigation.visit("visualizations/pivot-table/pivot-table-all-total-aggregations-menu");
