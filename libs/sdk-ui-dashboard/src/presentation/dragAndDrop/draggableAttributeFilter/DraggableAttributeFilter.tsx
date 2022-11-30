@@ -2,7 +2,12 @@
 import React, { useCallback, useMemo } from "react";
 import { IDashboardAttributeFilter } from "@gooddata/sdk-model";
 import classNames from "classnames";
-import { useDashboardSelector, selectIsInEditMode, selectSupportsElementUris } from "../../../model";
+import {
+    useDashboardSelector,
+    selectIsInEditMode,
+    selectSupportsElementUris,
+    selectCanAddMoreAttributeFilters,
+} from "../../../model";
 import { AttributeFilterDropZoneHint } from "./AttributeFilterDropZoneHint";
 import { CustomDashboardAttributeFilterComponent } from "../../filterBar/types";
 import { useDashboardDrag } from "../useDashboardDrag";
@@ -41,6 +46,7 @@ export function DraggableAttributeFilter({
     );
 
     const supportElementUris = useDashboardSelector(selectSupportsElementUris);
+    const canAddMoreAttributeFilters = useDashboardSelector(selectCanAddMoreAttributeFilters);
     const filterToUse = useMemo(() => {
         if (supportElementUris) {
             return filter;
@@ -61,6 +67,7 @@ export function DraggableAttributeFilter({
                     hintPosition="prev"
                     targetIndex={filterIndex}
                     onAddAttributePlaceholder={onAttributeFilterAdded}
+                    acceptPlaceholder={canAddMoreAttributeFilters}
                 />
             ) : null}
 
@@ -85,6 +92,7 @@ export function DraggableAttributeFilter({
                     hintPosition="next"
                     targetIndex={filterIndex}
                     onAddAttributePlaceholder={onAttributeFilterAdded}
+                    acceptPlaceholder={canAddMoreAttributeFilters}
                 />
             ) : null}
         </div>

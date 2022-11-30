@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { initializeDashboard } from "../../../commands";
 import { DashboardTester } from "../../../tests/DashboardTester";
 import { EmptyDashboardIdentifier } from "../../../tests/fixtures/Dashboard.fixtures";
@@ -29,7 +29,7 @@ describe("renderingWorker", () => {
             await Tester.waitFor("GDC.DASH/EVT.RENDER.REQUESTED");
             await Tester.dispatchAndWaitFor(initializeDashboard(), "GDC.DASH/EVT.INITIALIZED");
             Tester.dispatch(requestAsyncRender(componentId));
-            await Tester.waitFor("GDC.DASH/EVT.RENDER.RESOLVED", maxTimeout);
+            await Tester.waitFor("GDC.DASH/EVT.RENDER.RESOLVED", maxTimeout + 100); // wait for a bit longer to stabilize this test
             expect(Tester.emittedEventsDigest()).toMatchSnapshot();
         });
     });

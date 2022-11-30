@@ -10,6 +10,7 @@ import { attributeFilterAdded } from "../../../events/filters";
 import { filterContextActions } from "../../../store/filterContext";
 import {
     selectAttributeFilterDisplayFormsMap,
+    selectCanAddMoreAttributeFilters,
     selectFilterContextAttributeFilterByDisplayForm,
     selectFilterContextAttributeFilters,
 } from "../../../store/filterContext/filterContextSelectors";
@@ -29,6 +30,18 @@ export function* addAttributeFilterHandler(
     cmd: AddAttributeFilter,
 ): SagaIterator<void> {
     const { displayForm, index, initialIsNegativeSelection, initialSelection, parentFilters } = cmd.payload;
+
+    const isUnderFilterCountLimit: ReturnType<typeof selectCanAddMoreAttributeFilters> = yield select(
+        selectCanAddMoreAttributeFilters,
+    );
+
+    if (!isUnderFilterCountLimit) {
+        throw invalidArgumentsProvided(
+            ctx,
+            cmd,
+            `Attempting to add filter, even though the limit on the count of filters has been reached.`,
+        );
+    }
 
     const allFilters: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
         selectFilterContextAttributeFilters,
