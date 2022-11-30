@@ -122,6 +122,18 @@ describe("StylingPicker", () => {
         expect(screen.queryByLabelText("second_theme")).not.toBeChecked();
     });
 
+    it("should call onCancel when shouldDisableCancelButton is false and cancel button is clicked", async () => {
+        const selectedItemRef = customItemsMock[0].ref;
+        const onCancel = jest.fn();
+        renderComponent({ selectedItemRef, shouldDisableCancelButton: false, onCancel });
+
+        await userEvent.click(screen.getByText("Cancel"));
+
+        await waitFor(() => {
+            expect(onCancel).toHaveBeenCalled();
+        });
+    });
+
     it("should call onListButtonClick when list action link is clicked", async () => {
         const onListActionClick = jest.fn();
         renderComponent({ onListActionClick });

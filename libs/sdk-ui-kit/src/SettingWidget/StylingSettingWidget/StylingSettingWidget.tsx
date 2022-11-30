@@ -34,7 +34,10 @@ export interface IStylingSettingWidgetProps<T> {
     footerHelpTitle?: string;
     footerMobileMessage?: string;
     className?: string;
+    shouldDisableCancelButton?: boolean;
+    shouldDisableApplyButton?: boolean;
     onApply?: (ref: ObjRef) => void;
+    onCancel?: () => void;
     onListActionClick?: () => void;
     onItemEdit?: (modifiedItem: IStylingPickerItem<T>) => void;
     onItemDelete?: (ref: ObjRef) => void;
@@ -59,7 +62,10 @@ const StylingSettingWidgetCore = <T extends StylingPickerItemContent>(
         footerHelpLink,
         footerHelpTitle,
         footerMobileMessage,
+        shouldDisableCancelButton,
+        shouldDisableApplyButton,
         onApply,
+        onCancel,
         onListActionClick,
         onItemEdit,
         onItemDelete,
@@ -102,6 +108,7 @@ const StylingSettingWidgetCore = <T extends StylingPickerItemContent>(
 
     const handleCancel = useCallback(() => {
         setCurrentItemRef(selectedItemRef);
+        onCancel?.();
     }, [selectedItemRef]);
 
     const handleApply = useCallback(() => {
@@ -148,13 +155,13 @@ const StylingSettingWidgetCore = <T extends StylingPickerItemContent>(
                         <Button
                             className="gd-button-secondary"
                             onClick={handleCancel}
-                            disabled={isApplyButtonDisabled}
+                            disabled={shouldDisableCancelButton ?? isApplyButtonDisabled}
                             value={intl.formatMessage({ id: "cancel" })}
                         />
                         <Button
                             className="gd-button-action"
                             onClick={handleApply}
-                            disabled={isApplyButtonDisabled}
+                            disabled={shouldDisableApplyButton ?? isApplyButtonDisabled}
                             value={intl.formatMessage({ id: "apply" })}
                         />
                     </FooterButtons>
