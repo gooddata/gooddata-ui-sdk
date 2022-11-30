@@ -95,6 +95,7 @@ export {
     selectAttributeFilterDescendants,
     selectAttributeFilterDisplayFormByLocalId,
     selectIsCircularDependency,
+    selectCanAddMoreAttributeFilters,
 } from "./filterContext/filterContextSelectors";
 export {
     // Core drills

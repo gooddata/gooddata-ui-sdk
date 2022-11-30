@@ -301,8 +301,26 @@ export const selectAttributeFilterDisplayFormByLocalId = createMemoizedSelector(
  * @internal
  */
 export const selectIsCircularDependency = createMemoizedSelector(
-    (currentFilterLocalId: string, neighborFilterLocalid: string) =>
+    (currentFilterLocalId: string, neighborFilterLocalId: string) =>
         createSelector(selectAttributeFilterDescendants(currentFilterLocalId), (descendants) => {
-            return descendants.some((descendant) => descendant === neighborFilterLocalid);
+            return descendants.some((descendant) => descendant === neighborFilterLocalId);
         }),
+);
+
+const MAX_ATTRIBUTE_FILTERS_COUNT = 30;
+
+/**
+ * This selector returns whether any more attribute filters can be added.
+ *
+ * @remarks
+ * It is expected that the selector is called only after the filter context state is correctly initialized.
+ * Invocations before initialization lead to invariant errors.
+ *
+ * @public
+ */
+export const selectCanAddMoreAttributeFilters = createSelector(
+    selectFilterContextAttributeFilters,
+    (attributeFilters) => {
+        return attributeFilters.length < MAX_ATTRIBUTE_FILTERS_COUNT;
+    },
 );

@@ -5585,6 +5585,9 @@ export const selectAttributesWithDrillDown: OutputSelector<DashboardState, (ICat
 export const selectBackendCapabilities: OutputSelector<DashboardState, IBackendCapabilities, (res: BackendCapabilitiesState) => IBackendCapabilities>;
 
 // @public
+export const selectCanAddMoreAttributeFilters: OutputSelector<DashboardState, boolean, (res: IDashboardAttributeFilter[]) => boolean>;
+
+// @public
 export const selectCanCreateAnalyticalDashboard: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
 
 // @public
@@ -5915,7 +5918,7 @@ export const selectIsAnalyticalDesignerEnabled: OutputSelector<DashboardState, b
 export const selectIsCancelEditModeDialogOpen: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
 
 // @internal
-export const selectIsCircularDependency: (currentFilterLocalId: string, neighborFilterLocalid: string) => OutputSelector<DashboardState, boolean, (res: string[]) => boolean>;
+export const selectIsCircularDependency: (currentFilterLocalId: string, neighborFilterLocalId: string) => OutputSelector<DashboardState, boolean, (res: string[]) => boolean>;
 
 // @internal
 export const selectIsDashboardDirty: OutputSelector<DashboardState, boolean, (res1: boolean, res2: IDashboardLayout<IWidget>, res3: boolean, res4: boolean, res5: boolean) => boolean>;

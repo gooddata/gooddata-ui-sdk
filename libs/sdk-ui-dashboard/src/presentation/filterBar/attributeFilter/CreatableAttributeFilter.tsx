@@ -4,16 +4,22 @@ import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage } from "react-intl";
 import { DraggableAttributeFilterCreatePanelItem } from "../../dragAndDrop";
 import { AddAttributeFilterPlaceholder } from "./addAttributeFilter";
-import { useDashboardSelector, selectHasCatalogAttributes, selectIsWhiteLabeled } from "../../../model";
+import {
+    useDashboardSelector,
+    selectHasCatalogAttributes,
+    selectIsWhiteLabeled,
+    selectCanAddMoreAttributeFilters,
+} from "../../../model";
 
 /**
  * @internal
  */
 export function CreatableAttributeFilter() {
     const hasAttributes = useDashboardSelector(selectHasCatalogAttributes);
+    const canAddMoreAttributeFilters = useDashboardSelector(selectCanAddMoreAttributeFilters);
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
 
-    const disabled = !hasAttributes;
+    const disabled = !hasAttributes || !canAddMoreAttributeFilters;
 
     const tooltip =
         disabled && !hasAttributes ? (

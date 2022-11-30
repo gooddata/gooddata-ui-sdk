@@ -23,6 +23,7 @@ import {
     useDashboardSelector,
     selectIsInEditMode,
     selectAttributeFilterDisplayFormsMap,
+    selectCanAddMoreAttributeFilters,
 } from "../../../model";
 import { useDashboardComponentsContext } from "../../dashboardContexts";
 import {
@@ -111,6 +112,7 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
         useDashboardComponentsContext();
     const supportElementUris = useDashboardSelector(selectSupportsElementUris);
     const displayFormsMap = useDashboardSelector(selectAttributeFilterDisplayFormsMap);
+    const canAddMoreAttributeFilters = useDashboardSelector(selectCanAddMoreAttributeFilters);
 
     if (isExport) {
         return <HiddenFilterBar {...props} />;
@@ -146,6 +148,7 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                             hintPosition="next"
                             targetIndex={0}
                             onAddAttributePlaceholder={addAttributeFilterPlaceholder}
+                            acceptPlaceholder={canAddMoreAttributeFilters}
                         />
                     </>
                 )}
@@ -194,10 +197,12 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                     );
                 }
             })}
-            <AttributeFilterDropZone
-                targetIndex={attributeFiltersCount}
-                onDrop={addAttributeFilterPlaceholder}
-            />
+            {canAddMoreAttributeFilters ? (
+                <AttributeFilterDropZone
+                    targetIndex={attributeFiltersCount}
+                    onDrop={addAttributeFilterPlaceholder}
+                />
+            ) : null}
             <div className="filter-bar-dropzone-container">
                 <AttributeFilterDropZoneHint
                     placement="outside"
