@@ -37,3 +37,7 @@ export function getDateOptionsDisabledForInsight(insight: IInsightDefinition): b
     const measures = insightMeasures(insight);
     return isEmpty(measures) ? false : measures.every(isDateFiltered);
 }
+
+export function removeDateFromTitle(title: string): string {
+    return title.trim().replace(/^Date \((.*)\)$/, "$1");
+}
