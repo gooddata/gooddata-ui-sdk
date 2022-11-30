@@ -3595,6 +3595,8 @@ export interface IStylingSettingWidgetProps<T> {
     // (undocumented)
     onApply?: (ref: ObjRef) => void;
     // (undocumented)
+    onCancel?: () => void;
+    // (undocumented)
     onHelpClick?: () => void;
     // (undocumented)
     onItemDelete?: (ref: ObjRef) => void;
@@ -3608,6 +3610,10 @@ export interface IStylingSettingWidgetProps<T> {
     onListActionClick?: () => void;
     // (undocumented)
     selectedItemRef?: ObjRef;
+    // (undocumented)
+    shouldDisableApplyButton?: boolean;
+    // (undocumented)
+    shouldDisableCancelButton?: boolean;
     // (undocumented)
     title: string;
     // (undocumented)
