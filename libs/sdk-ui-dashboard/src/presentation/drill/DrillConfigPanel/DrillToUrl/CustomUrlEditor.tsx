@@ -11,6 +11,7 @@ import {
 import { ParametersPanel } from "./CustomUrlEditorParameters";
 import { isDrillToCustomUrlConfig, UrlDrillTarget } from "../../types";
 import { IAttributeWithDisplayForm } from "./types";
+import { selectIsWhiteLabeled, useDashboardSelector } from "../../../../model";
 
 export interface IUrlInputProps {
     currentUrlValue: string;
@@ -104,6 +105,8 @@ const buildFormattingRules = (attributeDisplayForms: IAttributeWithDisplayForm[]
 
 const UrlInputPanel: React.FC<IUrlInputPanelProps> = (props) => {
     const { currentUrlValue, onChange, onCursor, documentationLink, attributeDisplayForms, intl } = props;
+    const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
+
     const syntaxHighlightingRules = useMemo(
         () => attributeDisplayForms && buildFormattingRules(attributeDisplayForms),
         [attributeDisplayForms],
@@ -120,7 +123,7 @@ const UrlInputPanel: React.FC<IUrlInputPanelProps> = (props) => {
                 syntaxHighlightingRules={syntaxHighlightingRules}
                 intl={intl}
             />
-            {documentationLink ? <HelpLink link={documentationLink} /> : null}
+            {!isWhiteLabeled && documentationLink ? <HelpLink link={documentationLink} /> : null}
         </div>
     );
 };
