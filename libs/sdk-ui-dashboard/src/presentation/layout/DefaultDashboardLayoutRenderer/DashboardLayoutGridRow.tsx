@@ -7,7 +7,7 @@ import {
     IDashboardLayoutItemFacade,
     IDashboardLayoutSectionFacade,
 } from "../../../_staging/dashboard/fluidLayout/facade/interfaces";
-import { HeightResizerHotspot, useIsDraggingWidget } from "../../dragAndDrop";
+import { HeightResizerHotspot } from "../../dragAndDrop";
 import { DashboardLayoutItem } from "./DashboardLayoutItem";
 import {
     IDashboardLayoutGridRowRenderer,
@@ -34,7 +34,8 @@ export interface DashboardLayoutGridRowProps<TWidget> {
 const defaultItemKeyGetter: IDashboardLayoutItemKeyGetter<unknown> = ({ item }) => item.index().toString();
 
 export function DashboardLayoutGridRow<TWidget>(props: DashboardLayoutGridRowProps<TWidget>): JSX.Element {
-    const isDraggingWidget = useIsDraggingWidget();
+    // TODO this is not usable in old KD edit mode
+    const isDraggingWidget = false; //useIsDraggingWidget();
 
     const rowRef = useRef<HTMLDivElement>(null);
     const {
