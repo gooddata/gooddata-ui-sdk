@@ -1,16 +1,9 @@
 // (C) 2020-2022 GoodData Corporation
 import React, { useState } from "react";
 import { IntlShape, useIntl } from "react-intl";
-import { Button, Dropdown } from "@gooddata/sdk-ui-kit";
+import { Button, Dropdown, IAlignPoint } from "@gooddata/sdk-ui-kit";
+import { IAttributeDescriptor, IAttributeDisplayFormMetadataObject, ObjRef } from "@gooddata/sdk-model";
 import {
-    IAttributeDescriptor,
-    IAttributeDisplayFormMetadataObject,
-    isCatalogAttribute,
-    ObjRef,
-} from "@gooddata/sdk-model";
-import invariant from "ts-invariant";
-import {
-    AttributeDisplayFormType,
     isDrillToAttributeUrlConfig,
     isDrillToCustomUrlConfig,
     UrlDrillTarget,
@@ -20,10 +13,7 @@ import { CustomUrlEditor } from "../../../../drill/DrillConfigPanel/DrillToUrl/C
 import { useClientWorkspaceIdentifiers } from "@gooddata/sdk-ui";
 import { AttributeUrlSection } from "../../../../drill/DrillConfigPanel/DrillToUrl/AttributeUrlSection";
 import {
-    selectAllCatalogAttributesMap,
     selectAllCatalogDisplayFormsMap,
-    selectDrillTargetsByWidgetRef,
-    selectSelectedWidgetRef,
     useDashboardSelector,
     selectBackendCapabilities,
     selectSettings,
@@ -31,6 +21,7 @@ import {
 import { ObjRefMap } from "../../../../../_staging/metadata/objRefMap";
 
 import { useInvalidAttributeDisplayFormIdentifiers } from "./useInvalidAttributeDisplayFormIdentifier";
+import { useAttributesWithDisplayForms } from "./useAttributesWithDisplayForms";
 
 const getButtonValue = (
     urlDrillTarget: UrlDrillTarget | undefined,
@@ -59,14 +50,7 @@ const getButtonValue = (
     return intl.formatMessage({ id: "configurationPanel.drillIntoUrl.defaultButtonValue" });
 };
 
-const dropdownAlignPoints = [
-    {
-        align: "bl tl",
-    },
-    {
-        align: "tl bl",
-    },
-];
+const dropdownAlignPoints: IAlignPoint[] = [{ align: "bl tl" }, { align: "tl bl" }];
 
 export interface DrillUrlItemProps {
     urlDrillTarget?: UrlDrillTarget;
@@ -80,7 +64,9 @@ export const DrillTargetUrlItem: React.FunctionComponent<DrillUrlItemProps> = (p
     const capabilities = useDashboardSelector(selectBackendCapabilities);
     const settings = useDashboardSelector(selectSettings);
 
-    const targetAttributesForms = useAttributesWithLinkDisplayForms();
+    const { allDisplayForms: targetAttributesFormsAll, linkDisplayForms: targetAttributesFormsWithLinks } =
+        useAttributesWithDisplayForms();
+
     const invalidAttributeDisplayFormIdentifiers = useInvalidAttributeDisplayFormIdentifiers(urlDrillTarget);
 
     const intl = useIntl();
@@ -125,7 +111,7 @@ export const DrillTargetUrlItem: React.FunctionComponent<DrillUrlItemProps> = (p
                     <div className="gd-menu-wrapper gd-drill-to-url-body gd-drill-to-url-list s-gd-drill-to-url-body">
                         {capabilities.supportsHyperlinkAttributeLabels ? (
                             <AttributeUrlSection
-                                attributeDisplayForms={targetAttributesForms}
+                                attributeDisplayForms={targetAttributesFormsWithLinks}
                                 onSelect={(insightAttributeDisplayForm, drillToAttributeDisplayForm) => {
                                     onAttributeUrlHandler(
                                         insightAttributeDisplayForm,
@@ -153,7 +139,7 @@ export const DrillTargetUrlItem: React.FunctionComponent<DrillUrlItemProps> = (p
             {showModal ? (
                 <CustomUrlEditor
                     urlDrillTarget={urlDrillTarget}
-                    attributeDisplayForms={targetAttributesForms}
+                    attributeDisplayForms={targetAttributesFormsAll}
                     invalidAttributeDisplayFormIdentifiers={invalidAttributeDisplayFormIdentifiers}
                     documentationLink={String(settings.drillIntoUrlDocumentationLink || "")}
                     enableClientIdParameter={!!client}
@@ -166,31 +152,3 @@ export const DrillTargetUrlItem: React.FunctionComponent<DrillUrlItemProps> = (p
         </>
     );
 };
-
-function useAttributesWithLinkDisplayForms() {
-    const widgetRef = useDashboardSelector(selectSelectedWidgetRef);
-    invariant(widgetRef, "mush have selected widget");
-
-    const drillTargets = useDashboardSelector(selectDrillTargetsByWidgetRef(widgetRef));
-    const allAttributes = useDashboardSelector(selectAllCatalogAttributesMap);
-
-    const availableAttributes = drillTargets?.availableDrillTargets?.attributes ?? [];
-    const attributes = availableAttributes.map((drillTarget) =>
-        allAttributes.get(drillTarget.attribute.attributeHeader.formOf.ref),
-    );
-
-    return attributes.flatMap((item) => {
-        if (!item || !isCatalogAttribute(item.attribute)) {
-            return [];
-        }
-
-        const linkDisplayForms = item.attribute.displayForms.filter(
-            (df) => df.displayFormType === AttributeDisplayFormType.HYPERLINK,
-        );
-
-        return linkDisplayForms.map((df) => ({
-            attribute: item.attribute,
-            displayForm: df,
-        }));
-    });
-}
