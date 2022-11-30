@@ -14,6 +14,7 @@ import {
     ShortenedText,
 } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
+import { removeDateFromTitle } from "./utils";
 
 const DEFAULT_HYPHEN_CHAR = "-";
 const alignPoints: IAlignPoint[] = [{ align: "bl tl" }, { align: "tl bl" }];
@@ -89,10 +90,6 @@ function catalogDateDatasetToDateDataset(ds: ICatalogDateDataset): IDateDataset 
         title: ds.dataSet.title,
         relevance: ds.relevance,
     };
-}
-
-function removeDateFromTitle(title: string) {
-    return title.trim().replace(/^Date \((.*)\)$/, "$1");
 }
 
 export const DateDatasetDropdown: React.FC<IDateDatasetDropdownProps> = (props) => {

@@ -4,7 +4,7 @@ import { ICatalogDateDataset, isInsightWidget, IWidget } from "@gooddata/sdk-mod
 import { FormattedMessage } from "react-intl";
 import Measure from "react-measure";
 import { DateDatasetDropdown } from "./DateDatasetDropdown";
-import { getUnrelatedDateDataset } from "./utils";
+import { getUnrelatedDateDataset, removeDateFromTitle } from "./utils";
 
 export interface IDateDatasetPickerProps {
     autoOpen?: boolean;
@@ -79,12 +79,12 @@ export const DateDatasetPicker: React.FC<IDateDatasetPickerProps> = (props) => {
                     {isInsightWidget(widget) ? (
                         <FormattedMessage
                             id="configurationPanel.unrelatedVizDateInfo"
-                            values={{ dateDataSet: unrelatedDateDataset.dataSet.title }}
+                            values={{ dateDataSet: removeDateFromTitle(unrelatedDateDataset.dataSet.title) }}
                         />
                     ) : (
                         <FormattedMessage
                             id="configurationPanel.unrelatedKpiDateInfo"
-                            values={{ dateDataSet: unrelatedDateDataset.dataSet.title }}
+                            values={{ dateDataSet: removeDateFromTitle(unrelatedDateDataset.dataSet.title) }}
                         />
                     )}
                 </div>
