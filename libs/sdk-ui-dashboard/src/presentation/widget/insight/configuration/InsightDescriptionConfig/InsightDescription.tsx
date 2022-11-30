@@ -1,36 +1,36 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
 import { useIntl } from "react-intl";
+import cx from "classnames";
+import { TextAreaWithSubmit } from "@gooddata/sdk-ui-kit";
 
 interface IInsightDescriptionProps {
     description: string;
+    readOnly?: boolean;
     setDescription: (newDescription: string) => void;
 }
 
 export function InsightDescription(props: IInsightDescriptionProps) {
-    const { description, setDescription } = props;
+    const { description, setDescription, readOnly = false } = props;
 
     const intl = useIntl();
 
-    const omitPlaceholder = description?.length > 0;
-
-    const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
-        setDescription(e.target.value);
+    const onChange = (value: string): void => {
+        setDescription(value.trim());
     };
 
     return (
         <label className="gd-input">
-            <textarea
-                className="gd-input-field description"
-                maxLength={2000}
-                placeholder={
-                    omitPlaceholder
-                        ? undefined
-                        : intl.formatMessage({ id: "configurationPanel.visualprops.descriptionPlaceholder" })
-                }
-                value={description}
+            <TextAreaWithSubmit
+                className={cx("gd-input-field description gd-widget-description-input")}
                 rows={4}
-                onChange={onChange}
+                defaultValue={(description || "").trim()}
+                maxLength={2000}
+                placeholder={intl.formatMessage({
+                    id: "configurationPanel.visualprops.descriptionPlaceholder",
+                })}
+                onSubmit={onChange}
+                disabled={readOnly}
             />
         </label>
     );

@@ -8,7 +8,7 @@ import {
     SingleSelectListItem,
     DropdownButton,
 } from "@gooddata/sdk-ui-kit";
-import { IInsightWidget, IInsightWidgetDescriptionConfiguration, IInsight } from "@gooddata/sdk-model";
+import { IInsightWidget, IInsightWidgetDescriptionConfiguration } from "@gooddata/sdk-model";
 import { InsightDescription } from "./InsightDescription";
 import { useDashboardSelector, selectInsightByRef } from "../../../../../model";
 import { IncludeMetrics } from "./IncludeMetrics";
@@ -34,8 +34,8 @@ interface IDescriptionConfigState {
 
 const getStateFromConfig = (
     descriptionConfig: IInsightWidgetDescriptionConfiguration,
-    widget: IInsightWidget,
-    insight?: IInsight,
+    widgetDescription: string | undefined,
+    insightDescription: string | undefined,
 ): IDescriptionConfigState => {
     if (!descriptionConfig.visible) {
         return {
@@ -44,13 +44,11 @@ const getStateFromConfig = (
             includeMetrics: false,
         };
     }
-    const widgetSummaryEmpty = widget.description === undefined || widget.description === "";
-    const useInsightDescription =
-        descriptionConfig.source === "insight" ||
-        (descriptionConfig.source === "widget" && widgetSummaryEmpty);
+
+    const useInsightDescription = descriptionConfig.source === "insight";
     return {
         config: descriptionConfig.source,
-        description: useInsightDescription ? insight?.insight.summary : widget.description,
+        description: useInsightDescription ? insightDescription : widgetDescription,
         includeMetrics: descriptionConfig.includeMetrics ?? false,
     };
 };
@@ -93,13 +91,15 @@ export function InsightDescriptionConfig(props: IInsightDescriptionConfigProps) 
     const insight = useDashboardSelector(selectInsightByRef(widget.insight));
 
     const [widgetDescriptionState, setWidgetDescriptionState] = useState(
-        getStateFromConfig(descriptionConfig, widget, insight),
+        getStateFromConfig(descriptionConfig, widget.description, insight?.insight?.summary),
     );
+    const [lastCustomWidgetDescription, setLastCustomWidgetDescription] = useState(widget.description);
 
     const handleDescriptionChange = useCallback(
         (newDescription: string) => {
             setWidgetDescription(widget, newDescription);
             setWidgetDescriptionState((prevState) => ({ ...prevState, description: newDescription }));
+            setLastCustomWidgetDescription(newDescription);
         },
         [widget, setWidgetDescription, setWidgetDescriptionState],
     );
@@ -107,24 +107,33 @@ export function InsightDescriptionConfig(props: IInsightDescriptionConfigProps) 
     const handleDescriptionConfigChange = useCallback(
         (config: DescriptionStateConfig) => {
             let newConfig: IInsightWidgetDescriptionConfiguration;
+            const insightDescription = insight?.insight?.summary;
+
             if (config === "none") {
                 newConfig = {
                     includeMetrics: false,
                     visible: false,
                     source: "insight",
                 };
+                setWidgetDescriptionState(getStateFromConfig(newConfig, "", ""));
             } else {
                 newConfig = {
                     includeMetrics: widgetDescriptionState.includeMetrics,
                     visible: true,
                     source: config,
                 };
+                setWidgetDescriptionState(
+                    getStateFromConfig(
+                        newConfig,
+                        config === "widget" ? lastCustomWidgetDescription : "",
+                        insightDescription,
+                    ),
+                );
             }
 
-            setWidgetDescriptionState(getStateFromConfig(newConfig, widget, insight));
             setDescriptionConfiguration(widget, newConfig);
             if (config === "widget") {
-                setWidgetDescription(widget, insight?.insight.summary ?? "");
+                setWidgetDescription(widget, lastCustomWidgetDescription ?? "");
             }
             if (config === "none" || config === "insight") {
                 setWidgetDescription(widget, "");
@@ -136,6 +145,7 @@ export function InsightDescriptionConfig(props: IInsightDescriptionConfigProps) 
             setDescriptionConfiguration,
             setWidgetDescription,
             widgetDescriptionState.includeMetrics,
+            lastCustomWidgetDescription,
         ],
     );
 
@@ -192,10 +202,12 @@ export function InsightDescriptionConfig(props: IInsightDescriptionConfigProps) 
                             />
                         )}
                     />
-                    {widgetDescriptionState.config === "widget" ? (
+                    {widgetDescriptionState.config === "widget" ||
+                    widgetDescriptionState.config === "insight" ? (
                         <InsightDescription
                             description={widgetDescriptionState.description ?? ""}
                             setDescription={handleDescriptionChange}
+                            readOnly={widgetDescriptionState.config === "insight"}
                         />
                     ) : null}
                     {

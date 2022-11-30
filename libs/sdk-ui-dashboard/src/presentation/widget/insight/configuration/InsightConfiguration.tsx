@@ -9,7 +9,6 @@ import {
 import { ScrollablePanel } from "@gooddata/sdk-ui-kit";
 
 import { stringUtils } from "@gooddata/util";
-import omit from "lodash/omit";
 import cx from "classnames";
 
 import {
@@ -57,8 +56,8 @@ export const InsightConfiguration: React.FC<IInsightConfigurationProps> = ({ wid
                 setVisualPropsConfigurationTitle={(widget, hideTitle) => {
                     dispatch(
                         changeInsightWidgetVisConfiguration(widget.ref, {
-                            ...omit(widget.configuration, ["hideTitle"]),
-                            ...(hideTitle ? { hideTitle } : {}),
+                            ...widget.configuration,
+                            ...{ hideTitle },
                         }),
                     );
                 }}

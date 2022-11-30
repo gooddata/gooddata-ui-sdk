@@ -3671,6 +3671,42 @@ export const Item: React_2.FC<IItemProps>;
 export const ItemsWrapper: React_2.FC<IItemsWrapperProps>;
 
 // @internal (undocumented)
+export interface ITextAreaWithSubmitProps {
+    // (undocumented)
+    autofocus?: boolean;
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    defaultValue: string;
+    // (undocumented)
+    disabled?: boolean;
+    // (undocumented)
+    maxLength?: number;
+    // (undocumented)
+    onCancel?: (value: string) => void;
+    // (undocumented)
+    onChange?: (value: string) => void;
+    // (undocumented)
+    onEditingStart?: () => void;
+    // (undocumented)
+    onSubmit: (value: string) => void;
+    // (undocumented)
+    placeholder?: string;
+    // (undocumented)
+    rows?: number;
+    // (undocumented)
+    scrollToEndOnEditingStart?: boolean;
+}
+
+// @internal (undocumented)
+export interface ITextAreaWithSubmitState {
+    // (undocumented)
+    isEditing: boolean;
+    // (undocumented)
+    value: string;
+}
+
+// @internal (undocumented)
 export interface ITimepickerOwnProps {
     // (undocumented)
     className?: string;
@@ -4175,6 +4211,67 @@ export class Tabs extends Component<ITabsProps, ITabsState> {
     };
     // (undocumented)
     render(): JSX.Element;
+}
+
+// @internal (undocumented)
+export class TextAreaWithSubmit extends Component<ITextAreaWithSubmitProps, ITextAreaWithSubmitState> {
+    constructor(props: ITextAreaWithSubmitProps);
+    // (undocumented)
+    componentDidMount(): void;
+    // (undocumented)
+    componentWillUnmount(): void;
+    // (undocumented)
+    static defaultProps: {
+        className: string;
+        maxLength: number;
+        rows: number;
+        onCancel: {
+            <T>(value: T): T;
+            (): undefined;
+        };
+        onEditingStart: {
+            <T>(value: T): T;
+            (): undefined;
+        };
+        onChange: {
+            <T>(value: T): T;
+            (): undefined;
+        };
+        placeholder: string;
+        scrollToEndOnEditingStart: boolean;
+        autofocus: boolean;
+        disabled: boolean;
+    };
+    // (undocumented)
+    edit: (_e?: React_2.MouseEvent<HTMLDivElement>) => void;
+    // (undocumented)
+    isClickOutsideTextarea(clickedTarget: EventTarget): boolean;
+    // (undocumented)
+    isMultiLine(): boolean;
+    // (undocumented)
+    onCancel: () => void;
+    // (undocumented)
+    onChange: (e: React_2.ChangeEvent<HTMLTextAreaElement>) => void;
+    // (undocumented)
+    onDocumentClick: (e: MouseEvent) => void;
+    // (undocumented)
+    onKeyDown: (e: React_2.KeyboardEvent<HTMLTextAreaElement>) => void;
+    // (undocumented)
+    onSelectStart(e: React_2.MouseEvent): void;
+    // (undocumented)
+    onSubmit: () => void;
+    // (undocumented)
+    removeListeners(): void;
+    // (undocumented)
+    render(): ReactNode;
+    // (undocumented)
+    renderTextarea(style?: {}): ReactNode;
+    // (undocumented)
+    renderTextAreaWithSubmitEdit(): ReactNode;
+    // (undocumented)
+    selectAndFocus: () => void;
+    // (undocumented)
+    UNSAFE_componentWillReceiveProps(newProps: ITextAreaWithSubmitProps): void;
 }
 
 // @internal (undocumented)

@@ -42,8 +42,8 @@ const getKpiMetricDescription = (metrics: ICatalogMeasure[], ref: ObjRef): strin
 
 const getStateFromConfig = (
     descriptionConfig: IKpiWidgetDescriptionConfiguration,
-    kpi: IKpiWidgetDefinition,
-    metrics: ICatalogMeasure[],
+    kpiDescription: string,
+    metricDescription: string,
 ): IDescriptionConfigState => {
     if (!descriptionConfig.visible) {
         return {
@@ -51,14 +51,10 @@ const getStateFromConfig = (
             description: "",
         };
     }
-    const useMetricDescription =
-        descriptionConfig.source === "metric" ||
-        (descriptionConfig.source === "kpi" && (kpi.description === undefined || kpi.description === ""));
+    const useMetricDescription = descriptionConfig.source === "metric";
     return {
         config: descriptionConfig.source,
-        description: useMetricDescription
-            ? getKpiMetricDescription(metrics, kpi.kpi.metric)
-            : kpi.description,
+        description: useMetricDescription ? metricDescription : kpiDescription,
     };
 };
 
@@ -98,14 +94,19 @@ export function KpiDescriptionConfig(props: IKpiDescriptionConfigProps) {
         [intl],
     );
 
+    const metricDescription = getKpiMetricDescription(metrics, kpi.kpi.metric) ?? "";
+
     const [kpiDescriptionState, setKpiDescriptionState] = useState(
-        getStateFromConfig(descriptionConfig, kpi, metrics),
+        getStateFromConfig(descriptionConfig, kpi.description, metricDescription),
     );
+
+    const [lastCustomKpiDescription, setLastCustomKpiDescription] = useState(kpi.description);
 
     const handleDescriptionChange = useCallback(
         (newDescription: string) => {
             setKpiDescription(kpi, newDescription);
             setKpiDescriptionState((prevState) => ({ ...prevState, description: newDescription }));
+            setLastCustomKpiDescription(newDescription);
         },
         [kpi, setKpiDescription, setKpiDescriptionState],
     );
@@ -118,23 +119,30 @@ export function KpiDescriptionConfig(props: IKpiDescriptionConfigProps) {
                     visible: false,
                     source: "metric",
                 };
+                setKpiDescriptionState(getStateFromConfig(newConfig, "", ""));
             } else {
                 newConfig = {
                     visible: true,
                     source: config,
                 };
+                setKpiDescriptionState(
+                    getStateFromConfig(
+                        newConfig,
+                        config === "kpi" ? lastCustomKpiDescription : "",
+                        metricDescription,
+                    ),
+                );
             }
 
-            setKpiDescriptionState(getStateFromConfig(newConfig, kpi, metrics));
             setDescriptionConfiguration(kpi, newConfig);
             if (config === "kpi") {
-                setKpiDescription(kpi, getKpiMetricDescription(metrics, kpi.kpi.metric) ?? "");
+                setKpiDescription(kpi, lastCustomKpiDescription ?? "");
             }
             if (config === "none" || config === "metric") {
                 setKpiDescription(kpi, "");
             }
         },
-        [kpi, metrics, setDescriptionConfiguration, setKpiDescription],
+        [kpi, metricDescription, setDescriptionConfiguration, setKpiDescription, lastCustomKpiDescription],
     );
 
     return (
@@ -175,10 +183,11 @@ export function KpiDescriptionConfig(props: IKpiDescriptionConfigProps) {
                             />
                         )}
                     />
-                    {kpiDescriptionState.config === "kpi" ? (
+                    {kpiDescriptionState.config === "kpi" || kpiDescriptionState.config === "metric" ? (
                         <InsightDescription
                             description={kpiDescriptionState.description ?? ""}
                             setDescription={handleDescriptionChange}
+                            readOnly={kpiDescriptionState.config === "metric"}
                         />
                     ) : null}
                 </div>
