@@ -2,18 +2,25 @@
 import React from "react";
 import { IDashboardLayoutSectionRenderer } from "./interfaces";
 import cx from "classnames";
-import { DashboardLayoutSectionBorder, DashboardLayoutSectionBorderStatus } from "../../dragAndDrop";
-import { selectActiveSectionIndex, selectIsDraggingWidget, useDashboardSelector } from "../../../model";
+import {
+    DashboardLayoutSectionBorder,
+    DashboardLayoutSectionBorderStatus,
+    useIsDraggingWidget,
+} from "../../dragAndDrop";
+import { selectActiveSectionIndex, useDashboardSelector } from "../../../model";
 
 const isHiddenStyle = { height: 0, width: 0, overflow: "hidden", flex: 0 };
 const defaultStyle = {};
 
 function useBorderStatus(sectionIndex: number): DashboardLayoutSectionBorderStatus {
-    const isDraggingWidget = useDashboardSelector(selectIsDraggingWidget);
     const activeSectionIndex = useDashboardSelector(selectActiveSectionIndex);
-    const isActive = activeSectionIndex === sectionIndex;
+    const isDraggingWidget = useIsDraggingWidget();
+    if (isDraggingWidget) {
+        return "muted";
+    }
 
-    return !isDraggingWidget && !isActive ? "invisible" : "muted";
+    const isActive = activeSectionIndex === sectionIndex;
+    return !isActive ? "invisible" : "muted";
 }
 
 export const EditableDashboardLayoutSectionRenderer: IDashboardLayoutSectionRenderer<unknown> = (props) => {

@@ -10,6 +10,7 @@ export * from "./WidgetDropZoneColumn";
 export * from "./EmptyDashboardDropZone";
 export * from "./LoadingDashboardWidget";
 export * from "./useIsDraggingCurrentItem";
+export * from "./useIsDraggingWidget";
 export * from "./useWidgetDragEndHandler";
 export * from "./useWidgetDragHoverHandlers";
 export * from "./DashboardLayoutSectionBorder";
