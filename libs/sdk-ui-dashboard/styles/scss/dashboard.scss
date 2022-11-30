@@ -237,9 +237,7 @@
 
     .dash-item-action-description {
         top: calc(
-            -#{variables.$item-outer-padding} - #{variables.$gd-dashboards-content-kpiWidget-borderWidth} + (
-                    #{variables.$item-action-width} - #{variables.$item-action-icon-width}
-                ) / 2
+            -#{variables.$item-outer-padding} - #{variables.$gd-dashboards-content-kpiWidget-borderWidth}
         );
         right: calc(
             -#{variables.$item-outer-padding} - #{variables.$gd-dashboards-content-kpiWidget-borderWidth} + #{variables.$item-action-width} +
