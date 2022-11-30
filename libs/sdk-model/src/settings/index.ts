@@ -235,11 +235,6 @@ export interface ISettings {
     enableReversedStacking?: boolean;
 
     /**
-     * Enable floating data range form with excluded period control in AD date filter
-     */
-    enableAdFloatingDateRangeFilter?: boolean;
-
-    /**
      * Enable visibility control for total labels
      */
     enableSeparateTotalLabels?: boolean;

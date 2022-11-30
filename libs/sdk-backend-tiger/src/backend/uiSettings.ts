@@ -78,7 +78,6 @@ export const DefaultUiSettings: ISettings = {
     enableAxisNameViewByTwoAttributes: true,
     enableAxisNameConfiguration: true,
     enableDataSourceManagement: true,
-    enableAdFloatingDateRangeFilter: true,
     enableReversedStacking: true,
     enableSeparateTotalLabels: true,
     enableKPIDashboardExport: true,
