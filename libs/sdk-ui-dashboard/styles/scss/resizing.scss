@@ -45,22 +45,6 @@ $gd-width-resizer-hotpost-height: 40px;
     width: 100%;
 }
 
-.sdk-edit-mode-on {
-    .resizer-drag-preview,
-    .dash-height-resizer-hotspot,
-    .height-resizer-drag-preview {
-        z-index: 110;
-    }
-
-    .dash-width-resizer-hotspot {
-        position: absolute;
-        z-index: 101;
-        left: 10px;
-        overflow: hidden;
-        height: 100%;
-    }
-}
-
 .gd-fluidlayout-width-resizer {
     height: 100%;
     padding: 0 4px;
@@ -123,40 +107,56 @@ $gd-width-resizer-hotpost-height: 40px;
     }
 }
 
-.gd-resize-overlay,
-.gd-resize-overlay-text {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    margin: 5px;
-}
-
-.gd-resize-overlay {
-    z-index: 105;
-    border-width: 0;
-    border-radius: calc(#{variables.$gd-dashboards-content-widget-borderRadius} + 5px);
-    background-color: var(--gd-palette-complementary-0-t50, rgba(255, 255, 255, 0.5));
-
-    &.active {
-        background-color: variables.$gd-palette-primary-base-mix15-white;
+.sdk-edit-mode-on {
+    .resizer-drag-preview,
+    .dash-height-resizer-hotspot,
+    .height-resizer-drag-preview {
+        z-index: 110;
     }
 
-    &.error {
-        background: variables.$gd-palette-primary-base-mix15-white;
+    .dash-width-resizer-hotspot {
+        position: absolute;
+        z-index: 101;
+        left: 10px;
+        overflow: hidden;
+        height: 100%;
     }
-}
 
-.gd-resize-overlay-text {
-    z-index: 106;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 5px;
-    color: var(--gd-palette-complementary-6, variables.$info-text-color);
-    font-weight: bold;
-    text-align: center;
+    .gd-resize-overlay,
+    .gd-resize-overlay-text {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: 5px;
+    }
+
+    .gd-resize-overlay {
+        z-index: 105;
+        border-width: 0;
+        border-radius: calc(#{variables.$gd-dashboards-content-widget-borderRadius} + 5px);
+        background-color: var(--gd-palette-complementary-0-t50, rgba(255, 255, 255, 0.5));
+
+        &.active {
+            background-color: variables.$gd-palette-primary-base-mix15-white;
+        }
+
+        &.error {
+            background: variables.$gd-palette-primary-base-mix15-white;
+        }
+    }
+
+    .gd-resize-overlay-text {
+        z-index: 106;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 5px;
+        color: var(--gd-palette-complementary-6, variables.$info-text-color);
+        font-weight: bold;
+        text-align: center;
+    }
 }
 
 .gd-resize-bullet {
