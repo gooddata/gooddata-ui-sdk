@@ -463,7 +463,7 @@ export class EditableLabelInner extends Component<IEditableLabelInnerProps, IEdi
     UNSAFE_componentWillReceiveProps(newProps: IEditableLabelProps): void;
 }
 
-// @internal (undocumented)
+// @internal
 export const EllipsisText: React_2.FC<IEllipsisTextProps>;
 
 // @internal (undocumented)
@@ -1556,7 +1556,7 @@ export interface IEditableLabelState {
 // @internal (undocumented)
 export interface IEllipsisTextProps {
     // (undocumented)
-    maxLength?: number;
+    maxLines?: number;
     // (undocumented)
     text: string;
 }

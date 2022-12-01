@@ -22,7 +22,7 @@ const DescriptionPanelTest: React.FC = () => {
     const style: CSSProperties = {
         display: "flex",
         flexDirection: "column",
-        maxWidth: "640px",
+        maxWidth: "220px",
     };
     return (
         <div className="library-component screenshot-target">

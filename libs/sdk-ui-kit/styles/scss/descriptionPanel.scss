@@ -78,6 +78,11 @@
         line-height: 18px;
         color: variables.$gd-medium-gray;
         overflow-wrap: break-word;
+        white-space: pre-wrap;
+    }
+
+    &-fixed {
+        width: 188px;
     }
 
     &-button {
