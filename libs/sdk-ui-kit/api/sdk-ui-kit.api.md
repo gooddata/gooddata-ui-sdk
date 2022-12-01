@@ -3228,6 +3228,20 @@ export interface IRowsIconProps extends IIconProps {
 }
 
 // @internal (undocumented)
+export interface IScrollableItemProps {
+    // (undocumented)
+    bottomMargin?: number;
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    isElementInvisibleCheck?: isElementInvisibleType;
+    // (undocumented)
+    scrollIntoView: boolean;
+    // (undocumented)
+    tagName?: React_2.ElementType;
+}
+
+// @internal (undocumented)
 export interface IScrollablePanelProps extends React_2.HTMLAttributes<HTMLDivElement> {
     // (undocumented)
     scrollToVisible?: (element: HTMLElement, container: HTMLElement, bottomMargin: number) => void;
@@ -4039,6 +4053,9 @@ export const ResponsiveText: React_2.FC<IResponsiveTextProps>;
 
 // @internal (undocumented)
 export type SameAsTargetPosition = "sameAsTarget";
+
+// @internal (undocumented)
+export const ScrollableItem: React_2.FunctionComponent<IScrollableItemProps>;
 
 // @internal (undocumented)
 export const ScrollablePanel: React_2.ForwardRefExoticComponent<IScrollablePanelProps & React_2.RefAttributes<HTMLDivElement>>;
