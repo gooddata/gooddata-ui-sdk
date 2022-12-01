@@ -33,6 +33,7 @@ export interface IDashboardLayoutSectionProps<TWidget> {
     getLayoutDimensions: () => DOMRect;
     screen: ScreenSize;
     renderMode: RenderMode;
+    isDraggingWidget?: boolean;
 }
 
 const defaultSectionRenderer: IDashboardLayoutSectionRenderer<unknown> = (props) => (
@@ -57,6 +58,7 @@ export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionPr
         getLayoutDimensions,
         screen,
         renderMode,
+        isDraggingWidget,
     } = props;
     const renderProps = { section, screen, renderMode };
 
@@ -72,6 +74,7 @@ export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionPr
                 itemRenderer={itemRenderer}
                 widgetRenderer={widgetRenderer}
                 renderMode={renderMode}
+                isDraggingWidget={isDraggingWidget}
                 getLayoutDimensions={getLayoutDimensions}
             />
         );
