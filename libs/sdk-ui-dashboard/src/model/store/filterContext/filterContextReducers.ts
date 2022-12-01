@@ -3,6 +3,7 @@
 import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
 import invariant from "ts-invariant";
+import partition from "lodash/partition";
 import { FilterContextState } from "./filterContextState";
 import {
     areObjRefsEqual,
@@ -47,20 +48,28 @@ const setFilterContext: FilterContextReducer<PayloadAction<SetFilterContextPaylo
         attributeFilterDisplayForms,
     } = action.payload;
 
+    // make sure attribute filters always have localId
+    const filtersWithLocalId = filterContextDefinition.filters?.map((filter: FilterContextItem) =>
+        isDashboardAttributeFilter(filter)
+            ? {
+                  attributeFilter: {
+                      ...filter.attributeFilter,
+                      localIdentifier:
+                          filter.attributeFilter.localIdentifier ?? generateFilterLocalIdentifier(),
+                  },
+              }
+            : filter,
+    );
+
+    // make sure that date filter is always first if present (when DateFilter is set to all time than is missing in filterContextDefinition and originalFilterContextDefinition)
+    // we have to keep order of rest of array (attributeFilters) it represent order of filters in filter bar
+    const [dateFilter, attributeFilters] = partition(filtersWithLocalId, isDashboardDateFilter);
+    const filters = [...dateFilter, ...attributeFilters];
+
     state.filterContextDefinition = {
         ...filterContextDefinition,
-        // make sure attribute filters always have localId
-        filters: filterContextDefinition.filters?.map((filter: FilterContextItem) =>
-            isDashboardAttributeFilter(filter)
-                ? {
-                      attributeFilter: {
-                          ...filter.attributeFilter,
-                          localIdentifier:
-                              filter.attributeFilter.localIdentifier ?? generateFilterLocalIdentifier(),
-                      },
-                  }
-                : filter,
-        ),
+
+        filters: filters,
     };
 
     state.originalFilterContextDefinition = originalFilterContextDefinition;
@@ -235,10 +244,15 @@ const addAttributeFilter: FilterContextReducer<PayloadAction<IAddAttributeFilter
         },
     };
 
+    // Filters are indexed just for attribute filters, if DateFilter is present should be always first item
+    const isDateFilterPresent = state.filterContextDefinition.filters.findIndex(isDashboardDateFilter) >= 0;
+
     if (index === -1) {
         state.filterContextDefinition.filters.push(filter);
     } else {
-        state.filterContextDefinition.filters.splice(index, 0, filter);
+        // If DateFilter is present we have to move index by 1 because index of filter is calculated just for AttributeFilers array
+        const attributeFilterIndex = isDateFilterPresent ? index + 1 : index;
+        state.filterContextDefinition.filters.splice(attributeFilterIndex, 0, filter);
     }
 };
 
@@ -290,10 +304,15 @@ const moveAttributeFilter: FilterContextReducer<PayloadAction<IMoveAttributeFilt
 
     state.filterContextDefinition.filters.splice(currentFilterIndex, 1);
 
+    // Filters are indexed just for attribute filters, if DateFilter is present should be always first item
+    const isDateFilterPresent = state.filterContextDefinition.filters.findIndex(isDashboardDateFilter) >= 0;
+
     if (index === -1) {
         state.filterContextDefinition.filters.push(filter);
     } else {
-        state.filterContextDefinition.filters.splice(index, 0, filter);
+        // If DateFilter is present we have to move index by 1 because index of filter is calculated just for AttributeFilers array
+        const attributeFilterIndex = isDateFilterPresent ? index + 1 : index;
+        state.filterContextDefinition.filters.splice(attributeFilterIndex, 0, filter);
     }
 };
 
