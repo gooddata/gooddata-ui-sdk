@@ -178,7 +178,7 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps> = (props) => {
             if (result.rawData().isEmpty()) {
                 executionsHandler.onError(new NoDataSdkError());
             } else {
-                executionsHandler.onSuccess(result.result());
+                executionsHandler.onSuccess(result.result(), result.warnings());
             }
         }
     }, [result]);

@@ -4,7 +4,7 @@ import cx from "classnames";
 import { useIntl } from "react-intl";
 import { widgetRef } from "@gooddata/sdk-model";
 import { IDataView } from "@gooddata/sdk-backend-spi";
-import { IDrillEventContext, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { IDrillEventContext, NoDataSdkError, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 import {
     useDashboardSelector,
@@ -164,6 +164,17 @@ export const EditModeDashboardKpi = (props: IDashboardKpiProps) => {
             executionsHandler.onError(error);
         }
     }, [error, executionsHandler, onError]);
+
+    useEffect(() => {
+        if (result) {
+            // empty data is considered an error for execution handling
+            if (result.rawData().isEmpty()) {
+                executionsHandler.onError(new NoDataSdkError());
+            } else {
+                executionsHandler.onSuccess(result.result(), result.warnings());
+            }
+        }
+    }, [result]);
 
     return (
         <DashboardItemKpi

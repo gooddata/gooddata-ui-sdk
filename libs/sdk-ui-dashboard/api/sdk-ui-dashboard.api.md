@@ -104,6 +104,7 @@ import { IPositiveAttributeFilter } from '@gooddata/sdk-model';
 import { IPushData } from '@gooddata/sdk-ui';
 import { IRelativeDateFilter } from '@gooddata/sdk-model';
 import { IRenderListItemProps } from '@gooddata/sdk-ui-kit';
+import { IResultWarning } from '@gooddata/sdk-model';
 import { IScheduledMail } from '@gooddata/sdk-model';
 import { IScheduledMailDefinition } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-model';
@@ -3586,6 +3587,8 @@ export interface IExecutionResultEnvelope {
     id: string;
     // (undocumented)
     isLoading: boolean;
+    // (undocumented)
+    warnings?: IResultWarning[];
 }
 
 // @alpha (undocumented)
@@ -6207,7 +6210,7 @@ export interface SetDrillForKpiWidgetPayload {
 }
 
 // @alpha
-export function setExecutionResultData(id: ObjRef | string, executionResult: IExecutionResult, correlationId?: string): UpsertExecutionResult;
+export function setExecutionResultData(id: ObjRef | string, executionResult: IExecutionResult, executionWarnings: IResultWarning[] | undefined, correlationId?: string): UpsertExecutionResult;
 
 // @alpha
 export function setExecutionResultError(id: ObjRef | string, error: GoodDataSdkError, correlationId?: string): UpsertExecutionResult;
@@ -7164,7 +7167,7 @@ export function useWidgetDragEndHandler(): () => void;
 export function useWidgetExecutionsHandler(widgetRef: ObjRef): {
     onLoadingChanged: OnLoadingChanged;
     onError: OnError;
-    onSuccess: (executionResult: IExecutionResult) => void;
+    onSuccess: (executionResult: IExecutionResult, warnings: IResultWarning[] | undefined) => void;
     onPushData: (data: IPushData) => void;
 };
 
