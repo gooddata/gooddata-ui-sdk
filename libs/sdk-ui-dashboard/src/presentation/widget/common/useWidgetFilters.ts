@@ -24,6 +24,7 @@ import {
     QueryWidgetFilters,
     queryWidgetFilters,
     selectFilterContextFilters,
+    selectIsInEditMode,
     useDashboardQueryProcessing,
     useDashboardSelector,
 } from "../../../model";
@@ -122,6 +123,7 @@ export function useWidgetFilters(
  */
 function useNonIgnoredFilters(widget: ExtendedDashboardWidget | undefined) {
     const dashboardFilters = useDashboardSelector(selectFilterContextFilters);
+    const isInEditMode = useDashboardSelector(selectIsInEditMode);
     const widgetIgnoresDateFilter = !widget?.dateDataSet;
 
     const [nonIgnoredFilterRefs, setNonIgnoredFilterRefs] = useState<ObjRef[]>([]);
@@ -152,7 +154,10 @@ function useNonIgnoredFilters(widget: ExtendedDashboardWidget | undefined) {
             // force ignore the insight -> this way we get only the dashboard level filters even for InsightWidgets
             run(widget.ref, null);
         }
-    }, [safeSerializeObjRef(widget?.ref), filtersDigest(dashboardFilters, widgetIgnoresDateFilter)]);
+    }, [
+        safeSerializeObjRef(widget?.ref),
+        filtersDigest(dashboardFilters, widgetIgnoresDateFilter, isInEditMode),
+    ]);
 
     const nonIgnoredFilters = useMemo(
         () =>
@@ -204,18 +209,29 @@ function combineQueryProcessingStatuses(...statuses: QueryProcessingStatus[]): Q
  *
  * @param filters - filters to get digest for
  * @param ignoreDateFilter - whether to ignore date filters
+ * @param isInEditMode - whether or not we are in edit mode
  * @returns
  */
-function filtersDigest(filters: FilterContextItem[], ignoreDateFilter: boolean): string {
+function filtersDigest(
+    filters: FilterContextItem[],
+    ignoreDateFilter: boolean,
+    isInEditMode: boolean,
+): string {
     return filters
         .filter((filter) => {
             if (isDashboardAttributeFilter(filter)) {
-                // remove noop attribute filters as they would cause a useless query when a new filter (noop by default) is added
+                /**
+                 * Remove noop attribute filters in edit mode as they would cause a useless query when a new filter (noop by default) is added.
+                 * Keep them in view mode so that switching to and from All on an ignored filter does not show loading.
+                 * This is a tradeoff so that we optimize for the view mode performance and also keep the more frequent use case in edit mode
+                 * (adding a new filter) loading-free as well. Switching to and from All in edit mode will still show loading, but have no way
+                 * of telling whether a noop filter is noop because it was just added or because it was set that way by the user.
+                 */
                 const isNoop =
                     filter.attributeFilter.negativeSelection &&
                     attributeElementsIsEmpty(filter.attributeFilter.attributeElements);
 
-                return !isNoop;
+                return !isNoop || !isInEditMode;
             } else {
                 // if the widget ignores date filters, remove it from the digest to avoid false positives
                 // when date filter changes to or from All time (this effectively adds/removes the date filter in the filters set,
