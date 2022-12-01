@@ -69,6 +69,7 @@ export const InsightConfiguration: React.FC<IInsightConfigurationProps> = ({ wid
                 setDescriptionConfiguration={(widget, config) => {
                     dispatch(
                         changeInsightWidgetVisConfiguration(widget.ref, {
+                            hideTitle: false, // hideTitle is mandatory part of config on Bear
                             ...widget.configuration,
                             description: config,
                         }),
