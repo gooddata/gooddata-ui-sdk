@@ -71,8 +71,8 @@ export const convertFilterContextItem = (
         dateFilter: {
             granularity,
             type,
-            from,
-            to,
+            from: type === "relative" ? Number(from) : from,
+            to: type === "relative" ? Number(to) : to,
         },
     };
     if (attribute) {
