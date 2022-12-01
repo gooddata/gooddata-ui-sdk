@@ -109,6 +109,7 @@ export class Bubble extends React_2.Component<IBubbleProps, IBubbleState> {
         arrowStyle: {};
         className: string;
         closeOnOutsideClick: boolean;
+        closeOnParentScroll: boolean;
         onClose: (...args: any[]) => void;
         onMouseEnter: (...args: any[]) => void;
         onMouseLeave: (...args: any[]) => void;
@@ -895,6 +896,8 @@ export interface IBubbleProps {
     className?: string;
     // (undocumented)
     closeOnOutsideClick?: boolean;
+    // (undocumented)
+    closeOnParentScroll?: boolean;
     ignoreClicksOn?: any[];
     // (undocumented)
     ignoreClicksOnByClass?: string[];

@@ -44,6 +44,7 @@ export const ConfigurationBubble: React.FC<IConfigurationBubbleProps> = (props) 
             arrowOffsets={arrowOffsets}
             arrowDirections={arrowDirections}
             closeOnOutsideClick
+            closeOnParentScroll={false}
             ignoreClicksOnByClass={ignoreClicksOnByClass}
             onClose={onClose}
         >
