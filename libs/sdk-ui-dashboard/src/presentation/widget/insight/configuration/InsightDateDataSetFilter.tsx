@@ -2,10 +2,12 @@
 import React, { useEffect } from "react";
 import { DateDatasetFilter } from "../../common";
 import { IInsightWidget, isInsightWidget, widgetRef } from "@gooddata/sdk-model";
+import invariant from "ts-invariant";
 import {
     MeasureDateDatasets,
     queryDateDatasetsForInsight,
     QueryInsightDateDatasets,
+    selectInsightByRef,
     selectIsWidgetLoadingAdditionalDataByWidgetRef,
     useDashboardQueryProcessing,
     useDashboardSelector,
@@ -32,9 +34,13 @@ export default function InsightDateDataSetFilter({ widget }: IConfigurationPanel
         selectIsWidgetLoadingAdditionalDataByWidgetRef(widgetRef(widget)),
     );
 
+    const insight = useDashboardSelector(selectInsightByRef(widget.insight));
+    invariant(insight, "inconsistent state in InsightDateDataSetFilter");
+
     useEffect(() => {
-        queryDateDatasets(widget.insight);
-    }, [queryDateDatasets, widget.insight]);
+        // use the whole insight to improve cache hits: other calls to this query also use whole insights
+        queryDateDatasets(insight);
+    }, [queryDateDatasets, insight]);
 
     if (isInsightWidget(widget)) {
         return (
