@@ -1,7 +1,7 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { IExecutionResult } from "@gooddata/sdk-backend-spi";
-import { ObjRef, serializeObjRef } from "@gooddata/sdk-model";
+import { IResultWarning, ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import isString from "lodash/isString";
 import { IExecutionResultEnvelope } from "../store/executionResults/types";
@@ -47,6 +47,7 @@ export function setExecutionResultLoading(
             isLoading: true,
             executionResult: undefined,
             error: undefined,
+            warnings: undefined,
         },
         correlationId,
     );
@@ -68,6 +69,7 @@ export function setExecutionResultError(
             isLoading: false,
             error,
             executionResult: undefined,
+            warnings: undefined,
         },
         correlationId,
     );
@@ -81,6 +83,7 @@ export function setExecutionResultError(
 export function setExecutionResultData(
     id: ObjRef | string,
     executionResult: IExecutionResult,
+    executionWarnings: IResultWarning[] | undefined,
     correlationId?: string,
 ): UpsertExecutionResult {
     return upsertExecutionResult(
@@ -89,6 +92,7 @@ export function setExecutionResultData(
             isLoading: false,
             error: undefined,
             executionResult,
+            warnings: executionWarnings,
         },
         correlationId,
     );

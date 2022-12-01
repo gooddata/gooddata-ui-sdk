@@ -1,6 +1,6 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { useCallback } from "react";
-import { ObjRef } from "@gooddata/sdk-model";
+import { IResultWarning, ObjRef } from "@gooddata/sdk-model";
 import { IPushData, OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
 import { IExecutionResult } from "@gooddata/sdk-backend-spi";
 
@@ -24,8 +24,8 @@ export function useWidgetExecutionsHandler(widgetRef: ObjRef) {
     );
 
     const onSuccess = useCallback(
-        (executionResult: IExecutionResult) => {
-            setData(widgetRef, executionResult);
+        (executionResult: IExecutionResult, warnings: IResultWarning[] | undefined) => {
+            setData(widgetRef, executionResult, warnings);
         },
         [widgetRef],
     );
@@ -33,7 +33,7 @@ export function useWidgetExecutionsHandler(widgetRef: ObjRef) {
     const onPushData = useCallback(
         (data: IPushData): void => {
             if (data.dataView) {
-                onSuccess(data.dataView.result);
+                onSuccess(data.dataView.result, data.dataView.warnings);
             }
         },
         [widgetRef, onSuccess],

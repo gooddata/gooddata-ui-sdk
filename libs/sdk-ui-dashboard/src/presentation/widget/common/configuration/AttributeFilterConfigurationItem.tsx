@@ -15,6 +15,7 @@ import {
 
 import { selectAttributeFilterDisplayFormsMap, useDashboardSelector } from "../../../../model";
 import { useAttributeFilterConfigurationHandling } from "./useAttributeFilterConfigurationHandling";
+import { useIsFilterNotApplied } from "./useIsFilterNotApplied";
 
 const tooltipAlignPoints: IAlignPoint[] = [{ align: "cl cr", offset: { x: -20, y: 0 } }];
 
@@ -40,13 +41,15 @@ export const AttributeFilterConfigurationItem: React.FC<IAttributeFilterConfigur
             }),
     );
 
+    const isFilterNotApplied = useIsFilterNotApplied(widget, displayFormRef);
+
     const { handleIgnoreChanged, status } = useAttributeFilterConfigurationHandling(
         widget,
         displayFormRef,
         setIsApplied,
     );
 
-    const isError = status === "error";
+    const isError = isApplied && (status === "error" || isFilterNotApplied);
     const isLoading = status === "loading";
 
     const classNames = cx(
