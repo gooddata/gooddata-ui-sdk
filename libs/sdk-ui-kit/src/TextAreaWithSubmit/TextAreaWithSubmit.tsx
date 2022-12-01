@@ -2,8 +2,6 @@
 import React, { Component, ReactNode, RefObject } from "react";
 import identity from "lodash/identity";
 
-import { ENUM_KEY_CODE } from "../typings/utilities";
-
 import { ITextAreaWithSubmitProps, ITextAreaWithSubmitState } from "./typings";
 
 /**
@@ -76,8 +74,8 @@ export class TextAreaWithSubmit extends Component<ITextAreaWithSubmitProps, ITex
     }
 
     onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>): void => {
-        const isSubmit = e.keyCode === ENUM_KEY_CODE.KEY_CODE_ENTER;
-        const isCancel = e.keyCode === ENUM_KEY_CODE.KEY_CODE_ESCAPE;
+        const isSubmit = e.key === "Enter" && !e.shiftKey;
+        const isCancel = e.key === "Escape";
 
         if (isSubmit || isCancel) {
             e.preventDefault();
