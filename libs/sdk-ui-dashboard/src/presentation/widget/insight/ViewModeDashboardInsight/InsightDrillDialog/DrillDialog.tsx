@@ -2,7 +2,7 @@
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { Button, Bubble, BubbleHoverTrigger, ShortenedText, IAlignPoint } from "@gooddata/sdk-ui-kit";
-import { selectCanExportReport, selectSettings, useDashboardSelector } from "../../../../../model";
+import { selectCanExportTabular, selectSettings, useDashboardSelector } from "../../../../../model";
 import { PoweredByGDLogo } from "./PoweredByGDLogo";
 import { DrillModalFooter } from "./DrillModalFooter";
 import { getTitleWithBreadcrumbs } from "./getTitleWithBreadcrumbs";
@@ -42,8 +42,8 @@ export const DrillDialog: React.FC<DrillDialogProps> = ({
     isLoading,
 }) => {
     const settings = useDashboardSelector(selectSettings);
-    const canExportReport = useDashboardSelector(selectCanExportReport);
-    const shouldShowDrilledInsightExport = settings?.enableDrilledInsightExport && canExportReport;
+    const canExport = useDashboardSelector(selectCanExportTabular);
+    const shouldShowDrilledInsightExport = settings?.enableDrilledInsightExport && canExport;
 
     const titleWithBreadcrumbs = getTitleWithBreadcrumbs(insightTitle, breadcrumbs);
 

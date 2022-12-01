@@ -3286,6 +3286,14 @@ export type WorkspacePermission =
 /**
 * Whether the current user has permissions to manage scheduled email objects.
 */
-| "canManageScheduledMail";
+| "canManageScheduledMail"
+/**
+* Whether the current user has permissions to export as tabular reports.
+*/
+| "canExportTabular"
+/**
+* Whether the current user has permissions to export as pdf documents.
+*/
+| "canExportPdf";
 
 ```
