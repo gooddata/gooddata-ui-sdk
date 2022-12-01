@@ -46,6 +46,7 @@ $visualization-types: area, bar, bubble, column, combo, combo2, donut, dual, fun
 .gd-visualizations-list-item {
     display: flex;
     align-items: stretch;
+    flex-direction: row-reverse;
     margin: 0 3px 0 15px;
     padding: 5px 2px;
     border: 1px solid transparent;
@@ -104,12 +105,39 @@ $visualization-types: area, bar, bubble, column, combo, combo2, donut, dual, fun
         }
     }
 
-    .gd-vis-type {
+    .gd-vis-type-container {
         flex: 0 0 32px;
+    }
+
+    .gd-visualizations-list-item-description {
+        flex: 0 0 15px;
+        padding-top: 8px;
     }
 
     .gd-visualizations-list-item-actions {
         flex: 0 0 40px;
+
+        &:hover {
+            background: var(--gd-palette-error-lightest, #fff2f1);
+
+            ~ .gd-visualizations-list-item-content {
+                background: var(--gd-palette-error-lightest, #fff2f1);
+            }
+
+            ~ .gd-visualizations-list-item-description {
+                background: var(--gd-palette-error-lightest, #fff2f1);
+            }
+
+            ~ .gd-vis-type-container {
+                background: var(--gd-palette-error-lightest, #fff2f1);
+            }
+
+            .gd-visualizations-list-item-action-delete {
+                &::before {
+                    color: variables.$gd-palette-error-base;
+                }
+            }
+        }
     }
 
     .gd-icon-lock {
@@ -119,6 +147,14 @@ $visualization-types: area, bar, bubble, column, combo, combo2, donut, dual, fun
 }
 
 .gd-visualizations-list-item-actions {
+    opacity: 0;
+
+    .gd-visualizations-list-item:hover & {
+        opacity: 1;
+    }
+}
+
+.gd-visualizations-list-item-description {
     opacity: 0;
 
     .gd-visualizations-list-item:hover & {
