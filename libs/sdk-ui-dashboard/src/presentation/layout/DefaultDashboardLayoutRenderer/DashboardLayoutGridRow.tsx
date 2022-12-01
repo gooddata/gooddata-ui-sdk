@@ -29,14 +29,12 @@ export interface DashboardLayoutGridRowProps<TWidget> {
     getLayoutDimensions: () => DOMRect;
     items: IDashboardLayoutItemFacade<TWidget>[];
     renderMode: RenderMode;
+    isDraggingWidget?: boolean;
 }
 
 const defaultItemKeyGetter: IDashboardLayoutItemKeyGetter<unknown> = ({ item }) => item.index().toString();
 
 export function DashboardLayoutGridRow<TWidget>(props: DashboardLayoutGridRowProps<TWidget>): JSX.Element {
-    // TODO this is not usable in old KD edit mode
-    const isDraggingWidget = false; //useIsDraggingWidget();
-
     const rowRef = useRef<HTMLDivElement>(null);
     const {
         section,
@@ -48,6 +46,7 @@ export function DashboardLayoutGridRow<TWidget>(props: DashboardLayoutGridRowPro
         screen,
         items,
         renderMode,
+        isDraggingWidget,
     } = props;
 
     const rowItems = items.map((item) => (

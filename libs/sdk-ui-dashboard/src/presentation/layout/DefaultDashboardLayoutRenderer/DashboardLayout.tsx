@@ -59,6 +59,7 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
         onMouseLeave,
         enableCustomHeight,
         renderMode = "view",
+        isDraggingWidget = false,
     } = props;
 
     const layoutRef = React.useRef<HTMLDivElement>(null);
@@ -137,6 +138,7 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
                                             widgetRenderer={widgetRendererWrapped}
                                             screen={screen}
                                             renderMode={renderMode}
+                                            isDraggingWidget={isDraggingWidget}
                                             getLayoutDimensions={getLayoutDimensions}
                                         />
                                     );

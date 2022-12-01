@@ -402,6 +402,11 @@ export interface IDashboardLayoutRenderProps<TWidget = IDashboardWidget> {
      * Dashboard render mode
      */
     renderMode?: RenderMode;
+
+    /**
+     * Indicate if dragging is in progress
+     */
+    isDraggingWidget?: boolean;
 }
 
 /**

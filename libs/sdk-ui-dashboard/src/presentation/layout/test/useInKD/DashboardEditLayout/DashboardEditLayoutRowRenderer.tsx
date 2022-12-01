@@ -27,7 +27,6 @@ export const RenderDashboardEditLayoutRowRenderer: React.FC<IDashboardEditLayout
     return (
         <div key={rowId} ref={contentRef} className="gd-fluid-layout-row s-gd-fluid-layout-row">
             <Fragment>{children}</Fragment>
-            {/* <HeightResizerHotspot contentRef={contentRef} layoutItems={layoutItems} screen={screen} /> */}
         </div>
     );
 };
