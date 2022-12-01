@@ -1311,6 +1311,7 @@ function getZoomingAndPanningConfiguration(
 }
 
 function getReversedStacking(chartOptions: IChartOptions, _config: any, chartConfig: IChartConfig) {
+    const { yAxes = [] } = chartOptions;
     const hasAnyStackOptionSelected =
         chartConfig?.stackMeasures ||
         chartConfig?.stackMeasuresToPercent ||
@@ -1319,11 +1320,14 @@ function getReversedStacking(chartOptions: IChartOptions, _config: any, chartCon
         isBarChart(chartConfig?.type) && chartConfig?.enableReversedStacking && hasAnyStackOptionSelected;
 
     return {
-        yAxis: [
-            {
-                reversedStacks: shouldReverseStacking ? false : true,
-            },
-        ],
+        yAxis: yAxes.map(
+            (axis: IAxis): YAxisOptions =>
+                axis
+                    ? {
+                          reversedStacks: shouldReverseStacking ? false : true,
+                      }
+                    : {},
+        ),
     };
 }
 
