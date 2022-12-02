@@ -5,7 +5,7 @@ import {
     JsonApiVisualizationObjectOutWithLinks,
 } from "@gooddata/api-client-tiger";
 import { idRef, IInsight, IInsightDefinition } from "@gooddata/sdk-model";
-import { isInheritedObject } from "./utils";
+import { isInheritedObject } from "./ObjectInheritance";
 import { convertVisualizationObject } from "./visualizationObjects/VisualizationObjectConverter";
 
 export const insightFromInsightDefinition = (
@@ -13,6 +13,7 @@ export const insightFromInsightDefinition = (
     id: string,
     uri: string,
     tags: string[] | undefined,
+    isLocked: boolean | undefined,
 ): IInsight => {
     return {
         insight: {
@@ -20,8 +21,7 @@ export const insightFromInsightDefinition = (
             identifier: id,
             uri,
             ref: idRef(id, "insight"),
-            // TODO: TIGER-HACK: inherited objects must be locked; they are read-only for all
-            isLocked: isInheritedObject(id),
+            isLocked,
             tags,
         },
     };
@@ -45,5 +45,7 @@ export const visualizationObjectsItemToInsight = (
         id,
         links!.self,
         tags,
+        // TODO: TIGER-HACK: inherited objects must be locked; they are read-only for all
+        isInheritedObject(visualizationObject),
     );
 };

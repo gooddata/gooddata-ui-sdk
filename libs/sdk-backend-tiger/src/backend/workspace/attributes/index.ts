@@ -23,9 +23,9 @@ import {
     MetadataUtilities,
     JsonApiDatasetOutWithLinks,
     JsonApiDatasetOutWithLinksTypeEnum,
+    EntitiesApiGetAllEntitiesAttributesRequest,
 } from "@gooddata/api-client-tiger";
 import flatMap from "lodash/flatMap";
-import last from "lodash/last";
 import { invariant } from "ts-invariant";
 
 import {
@@ -34,6 +34,7 @@ import {
     convertDatasetWithLinks,
 } from "../../../convertors/fromBackend/MetadataConverter";
 import { DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types";
+import { getIdOrigin } from "../../../convertors/fromBackend/ObjectInheritance";
 
 export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
     constructor(
@@ -98,22 +99,10 @@ async function loadAttributeDisplayForm(
 ): Promise<IAttributeDisplayFormMetadataObject> {
     invariant(isIdentifierRef(ref), "tiger backend only supports referencing by identifier");
 
-    // to be able to get the defaultView value, we need to load the attribute itself and then find the appropriate label inside of it
-    // otherwise, we would have to load the label first and then load its attribute to see the defaultView relation thus needing
-    // an extra network request
-    // tiger RSQL does not support prefixed ids, so we strip the prefix to load matches with or without prefix
-    // and then find the prefixed value in the results
-    const idWithoutPrefix = last(ref.identifier.split(":"));
-    const attributeRes = await client.entities.getAllEntitiesAttributes(
-        {
-            workspaceId,
-            include: ["labels", "defaultView"],
-            filter: `labels.id==${idWithoutPrefix}`, // use RSQL to load the appropriate attribute
-        },
-        {
-            headers: jsonApiHeaders,
-        },
-    );
+    const attributeRes = await getAllEntitiesAttributesWithFilter(client, workspaceId, ref, [
+        "labels",
+        "defaultView",
+    ]);
 
     if (!attributeRes.data.data.length) {
         throw new UnexpectedResponseError(
@@ -171,37 +160,22 @@ function loadAttributeByDisplayForm(
 ): Promise<IAttributeMetadataObject> {
     invariant(isIdentifierRef(ref), "tiger backend only supports referencing by identifier");
 
-    // tiger RSQL does not support prefixed ids, so we strip the prefix to load matches with or without prefix
-    // and then find the prefixed value in the results
-    const idWithoutPrefix = last(ref.identifier.split(":"));
+    return getAllEntitiesAttributesWithFilter(client, workspaceId, ref, ["labels"]).then((res) => {
+        const convertedAttributes = convertAttributesWithSideloadedLabels(res.data);
+        const match = convertedAttributes.find((attr) =>
+            attr.displayForms.some((df) => df.id === ref.identifier),
+        );
 
-    return client.entities
-        .getAllEntitiesAttributes(
-            {
-                workspaceId,
-                filter: `labels.id==${idWithoutPrefix}`,
-                include: ["labels"],
-            },
-            {
-                headers: jsonApiHeaders,
-            },
-        )
-        .then((res) => {
-            const convertedAttributes = convertAttributesWithSideloadedLabels(res.data);
-            const match = convertedAttributes.find((attr) =>
-                attr.displayForms.some((df) => df.id === ref.identifier),
+        if (!match) {
+            throw new UnexpectedResponseError(
+                `The displayForm with id ${ref.identifier} was not found`,
+                404,
+                res,
             );
+        }
 
-            if (!match) {
-                throw new UnexpectedResponseError(
-                    `The displayForm with id ${ref.identifier} was not found`,
-                    404,
-                    res,
-                );
-            }
-
-            return match;
-        });
+        return match;
+    });
 }
 
 function loadAttributes(client: ITigerClient, workspaceId: string): Promise<IAttributeMetadataObject[]> {
@@ -243,4 +217,29 @@ function loadAttributeDataset(
 
             return convertDatasetWithLinks(datasets[0]);
         });
+}
+
+function getAllEntitiesAttributesWithFilter(
+    client: ITigerClient,
+    workspaceId: string,
+    ref: ObjRef,
+    includes: EntitiesApiGetAllEntitiesAttributesRequest["include"],
+) {
+    invariant(isIdentifierRef(ref), "tiger backend only supports referencing by identifier");
+
+    return client.entities.getAllEntitiesAttributes(
+        {
+            workspaceId,
+            // to be able to get the defaultView value, we need to load the attribute itself and then find the appropriate label inside it
+            // otherwise, we would have to load the label first and then load its attribute to see the defaultView relation thus needing
+            // an extra network request
+            // tiger RSQL does not support prefixed ids, so we strip the prefix to load matches with or without prefix
+            // and then find the prefixed value in the results
+            filter: `labels.id==${getIdOrigin(ref.identifier).id}`,
+            include: includes,
+        },
+        {
+            headers: jsonApiHeaders,
+        },
+    );
 }

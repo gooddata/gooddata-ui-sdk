@@ -29,7 +29,7 @@ import {
     newCatalogMeasure,
 } from "@gooddata/sdk-backend-base";
 import { commonMetadataObjectModifications, MetadataObjectFromApi } from "./MetadataConverter";
-import { isInheritedObject } from "./utils";
+import { isInheritedObject } from "./ObjectInheritance";
 import { convertLabelType } from "./LabelTypeConverter";
 
 const commonGroupableCatalogItemModifications =
@@ -89,7 +89,7 @@ export const convertMeasure = (measure: JsonApiMetricOutWithLinks): ICatalogMeas
                     .modify(commonMetadataObjectModifications(measure))
                     .expression(maql)
                     .format(format)
-                    .isLocked(isInheritedObject(measure.id)),
+                    .isLocked(isInheritedObject(measure)),
             )
             .modify(commonGroupableCatalogItemModifications(measure)),
     );

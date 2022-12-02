@@ -100,3 +100,5 @@ export {
     ICSPDirective,
     ICustomApplicationSetting,
 } from "./backend/tigerSpecificFunctions";
+
+export { getIdOrigin, OriginInfoWithId } from "./convertors/fromBackend/ObjectInheritance";
