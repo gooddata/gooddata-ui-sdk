@@ -19,6 +19,7 @@ export interface ISaveAsDialogRendererOwnProps {
     isDashboardLoaded: boolean;
     isKpiWidgetEnabled: boolean;
     isScheduleEmailsEnabled: boolean;
+    isInEditMode: boolean;
     locale?: string;
 
     onSubmit: (title: string, switchToCopy?: boolean, useOriginalFilterContext?: boolean) => void;
@@ -79,7 +80,9 @@ export class SaveAsNewDashboardDialog extends React.PureComponent<
             this.props.onSubmit(
                 title,
                 true, // switch to the new dashboard
-                false, // do not reuse the filter context, create a new one with the current filter state
+                // do not reuse the filter context in edit mode, create a new one with the current filter state
+                // otherwise use the original filter context values when creating a copy
+                !this.props.isInEditMode,
             );
         }
     };
