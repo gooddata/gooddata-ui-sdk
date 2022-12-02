@@ -8,11 +8,6 @@
             padding: 0;
         }
     }
-
-    @media (max-width: 640px) {
-        /* stylelint-disable declaration-no-important */
-        max-width: calc(100vw - 102px) !important;
-    }
 }
 
 .gd-icon-circle-question-wrapper {
