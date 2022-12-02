@@ -16,6 +16,7 @@ describe("Test SaveAsNewDashboardDialog: ", () => {
         locale: "en-US",
         onCancel: noop,
         onSubmit: noop,
+        isInEditMode: false,
     };
 
     function renderComponent(props = defaultProps) {

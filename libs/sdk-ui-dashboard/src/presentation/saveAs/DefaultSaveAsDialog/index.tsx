@@ -59,6 +59,7 @@ export const DefaultSaveAsDialog = (props: ISaveAsDialogProps): JSX.Element | nu
         isDashboardSaving,
         isDashboardLoaded,
         handleSaveAs,
+        isInEditMode,
     } = useSaveAs({ onSubmit, onSubmitSuccess: onSuccess, onSubmitError: onError });
 
     if (!isVisible) {
@@ -73,6 +74,7 @@ export const DefaultSaveAsDialog = (props: ISaveAsDialogProps): JSX.Element | nu
             isDashboardLoaded={isDashboardLoaded}
             isDashboardSaving={isDashboardSaving}
             isScheduleEmailsEnabled={isScheduleEmailsEnabled}
+            isInEditMode={isInEditMode}
             onSubmit={handleSaveAs}
             onCancel={onCancel}
         />

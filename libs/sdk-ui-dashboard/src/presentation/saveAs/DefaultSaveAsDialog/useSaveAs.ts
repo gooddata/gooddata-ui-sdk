@@ -8,6 +8,7 @@ import {
     selectDashboardTitle,
     selectEnableKPIDashboardSchedule,
     selectIsDashboardSaving,
+    selectIsInEditMode,
     selectLocale,
     useDashboardCommandProcessing,
     useDashboardSelector,
@@ -21,6 +22,7 @@ interface UseSaveAsResult {
     isDashboardLoaded: boolean;
     isKpiWidgetEnabled: boolean;
     isScheduleEmailsEnabled: boolean;
+    isInEditMode: boolean;
 
     /**
      * Function that triggers the SaveAs functionality. Optionally specify new title for
@@ -64,6 +66,7 @@ export const useSaveAs = (props: UseSaveAsProps): UseSaveAsResult => {
     const isScheduleEmailsEnabled = useDashboardSelector(selectEnableKPIDashboardSchedule);
     const capabilities = useDashboardSelector(selectBackendCapabilities);
     const isDashboardSaving = useDashboardSelector(selectIsDashboardSaving);
+    const isInEditMode = useDashboardSelector(selectIsInEditMode);
 
     const saveAsCommandProcessing = useDashboardCommandProcessing({
         commandCreator: saveDashboardAs,
@@ -94,6 +97,7 @@ export const useSaveAs = (props: UseSaveAsProps): UseSaveAsResult => {
         isKpiWidgetEnabled: capabilities.supportsKpiWidget ?? false,
         isDashboardLoaded: true,
         isDashboardSaving,
+        isInEditMode,
         handleSaveAs,
         saveAsStatus: saveAsCommandProcessing.status,
     };
