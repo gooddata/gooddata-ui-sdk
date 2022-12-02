@@ -7,10 +7,11 @@ import { DraggableInsightListCore } from "./DraggableInsightListCore";
 interface IDraggableInsightListProps {
     recalculateSizeReference?: string;
     searchAutofocus?: boolean;
+    enableDescriptions?: boolean;
 }
 
 export const DraggableInsightList: React.FC<IDraggableInsightListProps> = (props) => {
-    const { recalculateSizeReference, searchAutofocus } = props;
+    const { recalculateSizeReference, searchAutofocus, enableDescriptions } = props;
 
     const flexRef = useRef<FlexDimensions>(null);
 
@@ -26,7 +27,10 @@ export const DraggableInsightList: React.FC<IDraggableInsightListProps> = (props
                 measureWidth={false}
                 className="visualizations-flex-dimensions"
             >
-                <DraggableInsightListCore searchAutofocus={searchAutofocus} />
+                <DraggableInsightListCore
+                    searchAutofocus={searchAutofocus}
+                    enableDescriptions={enableDescriptions}
+                />
             </FlexDimensions>
         </div>
     );

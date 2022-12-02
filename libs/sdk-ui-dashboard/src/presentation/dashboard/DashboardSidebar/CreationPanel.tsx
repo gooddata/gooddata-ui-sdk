@@ -11,6 +11,7 @@ import {
     selectIsAnalyticalDesignerEnabled,
     useDashboardSelector,
     selectIsNewDashboard,
+    selectSettings,
 } from "../../../model";
 import { useDashboardComponentsContext } from "../../dashboardContexts";
 import cx from "classnames";
@@ -22,6 +23,7 @@ export const CreationPanel: React.FC<ICreationPanelProps> = ({ className }) => {
     const supportsKpis = useDashboardSelector(selectSupportsKpiWidgetCapability);
     const isAnalyticalDesignerEnabled = useDashboardSelector(selectIsAnalyticalDesignerEnabled);
     const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
+    const settings = useDashboardSelector(selectSettings);
 
     const { KpiWidgetComponentSet, AttributeFilterComponentSet, InsightWidgetComponentSet } =
         useDashboardComponentsContext();
@@ -58,6 +60,7 @@ export const CreationPanel: React.FC<ICreationPanelProps> = ({ className }) => {
                         <DraggableInsightList
                             recalculateSizeReference={className}
                             searchAutofocus={!isNewDashboard}
+                            enableDescriptions={settings?.enableDescriptions}
                         />
                     </div>
                 ) : null}

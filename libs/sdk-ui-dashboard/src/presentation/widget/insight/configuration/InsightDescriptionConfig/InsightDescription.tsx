@@ -26,9 +26,13 @@ export function InsightDescription(props: IInsightDescriptionProps) {
                 rows={4}
                 defaultValue={(description || "").trim()}
                 maxLength={2000}
-                placeholder={intl.formatMessage({
-                    id: "configurationPanel.visualprops.descriptionPlaceholder",
-                })}
+                placeholder={
+                    readOnly
+                        ? undefined
+                        : intl.formatMessage({
+                              id: "configurationPanel.visualprops.descriptionPlaceholder",
+                          })
+                }
                 onSubmit={onChange}
                 disabled={readOnly}
             />

@@ -1997,6 +1997,8 @@ export interface IInsightListItemDateProps {
 // @internal (undocumented)
 export interface IInsightListItemProps {
     // (undocumented)
+    description?: string;
+    // (undocumented)
     isLoading?: boolean;
     // (undocumented)
     isLocked?: boolean;

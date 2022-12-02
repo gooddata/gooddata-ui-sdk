@@ -802,6 +802,7 @@ export type CustomDashboardInsightListItemComponent = React.ComponentType<Custom
 export type CustomDashboardInsightListItemComponentProps = {
     isLocked?: boolean;
     title?: string;
+    description?: string;
     updated?: string;
     type?: string;
     className?: string;
@@ -3661,6 +3662,8 @@ export type IInsightDraggingComponentProps = {
 
 // @internal (undocumented)
 export interface IInsightListProps {
+    // (undocumented)
+    enableDescriptions?: boolean;
     // (undocumented)
     height?: number;
     // (undocumented)
