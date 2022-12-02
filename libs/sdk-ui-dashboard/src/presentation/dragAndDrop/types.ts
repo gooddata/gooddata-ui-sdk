@@ -281,6 +281,7 @@ export type DraggableItemInternalTypeMapping = {
 export type CustomDashboardInsightListItemComponentProps = {
     isLocked?: boolean;
     title?: string;
+    description?: string;
     updated?: string;
     type?: string;
     className?: string;

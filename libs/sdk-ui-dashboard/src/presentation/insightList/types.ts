@@ -12,6 +12,7 @@ export interface IInsightListProps {
     renderItem?: (props: IRenderListItemProps<IInsight>) => JSX.Element;
     selectedRef?: ObjRef;
     onSelect?: (insight: IInsight) => void;
+    enableDescriptions?: boolean;
 }
 
 /**
