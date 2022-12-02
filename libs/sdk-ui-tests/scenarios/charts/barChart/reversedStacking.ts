@@ -1,10 +1,13 @@
 // (C) 2022 GoodData Corporation
 
 import { BarChart, IBarChartProps } from "@gooddata/sdk-ui-charts";
+import { measureLocalId } from "@gooddata/sdk-model";
+import { ReferenceMdExt } from "@gooddata/reference-workspace";
 
-import { BarChartWithTwoMeasuresAndTwoViewBy } from "./base";
-import { scenariosFor } from "../../../src";
+import { BarChartWithTwoMeasuresAndTwoViewBy, BarChartWithArithmeticMeasuresAndViewBy } from "./base";
+
 import { ScenarioGroupNames } from "../_infra/groupNames";
+import { scenariosFor } from "../../../src";
 
 export default scenariosFor<IBarChartProps>("BarChart", BarChart)
     .withGroupNames(ScenarioGroupNames.StackingReverse)
@@ -15,5 +18,15 @@ export default scenariosFor<IBarChartProps>("BarChart", BarChart)
         config: {
             enableReversedStacking: true,
             stackMeasures: true,
+        },
+    })
+    .addScenario("reversed three measures and one viewBy with top axis and stackMeasures", {
+        ...BarChartWithArithmeticMeasuresAndViewBy,
+        config: {
+            enableReversedStacking: true,
+            stackMeasures: true,
+            secondary_xaxis: {
+                measures: [measureLocalId(ReferenceMdExt.CalculatedWonLostRatio)],
+            },
         },
     });
