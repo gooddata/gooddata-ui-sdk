@@ -9,6 +9,7 @@ import {
     insightIsLocked,
     isUriRef,
     areObjRefsEqual,
+    insightSummary,
 } from "@gooddata/sdk-model";
 import debounce from "lodash/debounce";
 import range from "lodash/range";
@@ -20,6 +21,7 @@ import { InsightListNoData } from "./InsightListNoData";
 import {
     selectCurrentUserRef,
     selectInsightListLastUpdateRequested,
+    selectSettings,
     useDashboardSelector,
 } from "../../model";
 import { IInsightListProps } from "./types";
@@ -68,6 +70,7 @@ export const InsightList: React.FC<IInsightListProps> = ({
     const userRef = useDashboardSelector(selectCurrentUserRef);
     const userUri = isUriRef(userRef) ? userRef.uri : undefined;
     const insightListLastUpdateRequested = useDashboardSelector(selectInsightListLastUpdateRequested);
+    const settings = useDashboardSelector(selectSettings);
 
     const params = pagesToLoad.map((pageNumber) => ({
         limit: ITEMS_PER_PAGE,
@@ -177,12 +180,14 @@ export const InsightList: React.FC<IInsightListProps> = ({
                     }
 
                     const title = insightTitle(insight);
+                    const description = settings?.enableDescriptions ? insightSummary(insight) : undefined;
                     const insightListSourceItem = getInsightListSourceItem(insight);
                     const isSelected = areObjRefsEqual(insight.insight.ref, selectedRef);
 
                     return (
                         <InsightListItem
                             title={title}
+                            description={description}
                             type={insightListSourceItem.insightType}
                             width={width}
                             isSelected={isSelected}
