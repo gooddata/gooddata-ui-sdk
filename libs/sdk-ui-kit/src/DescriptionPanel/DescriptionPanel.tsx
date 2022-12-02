@@ -7,13 +7,6 @@ import { Bubble, BubbleHoverTrigger } from "../Bubble";
 import { useMediaQuery } from "../responsive";
 import cx from "classnames";
 
-const MOBILE_ALIGN_POINTS = [{ align: "br tr" }, { align: "tr br" }, { align: "bc tc" }, { align: "tc bc" }];
-const MOBILE_ARROW_OFFSETS = {
-    "br tr": [0, 5],
-    "tr br": [0, -5],
-    "bc tc": [0, 5],
-    "tc bc": [0, -5],
-};
 const ALIGN_POINTS = [
     { align: "cr cl" },
     { align: "tr tl" },
@@ -95,8 +88,8 @@ const DescriptionPanelCore: React.FC<IDescriptionPanelProps> = (props) => {
             </div>
             <Bubble
                 className="bubble-light gd-description-panel-bubble"
-                alignPoints={isMobileDevice ? MOBILE_ALIGN_POINTS : ALIGN_POINTS}
-                arrowOffsets={isMobileDevice ? MOBILE_ARROW_OFFSETS : ARROW_OFFSETS}
+                alignPoints={ALIGN_POINTS}
+                arrowOffsets={ARROW_OFFSETS}
                 arrowStyle={{ display: "none" }}
             >
                 <DescriptionPanelContentCore {...props} />
