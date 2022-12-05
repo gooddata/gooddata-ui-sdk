@@ -12,6 +12,7 @@ import {
     useDashboardQueryProcessing,
     useDashboardSelector,
 } from "../../../../model";
+import { useDateDatasetFilter } from "../../common/configuration/useDateDatasetFilter";
 
 export interface IConfigurationPanelProps {
     widget: IInsightWidget;
@@ -42,6 +43,10 @@ export default function InsightDateDataSetFilter({ widget }: IConfigurationPanel
         queryDateDatasets(insight);
     }, [queryDateDatasets, insight]);
 
+    const { handleDateDatasetChanged, shouldOpenDateDatasetPicker } = useDateDatasetFilter(
+        result?.dateDatasets,
+    );
+
     if (isInsightWidget(widget)) {
         return (
             <DateDatasetFilter
@@ -50,6 +55,8 @@ export default function InsightDateDataSetFilter({ widget }: IConfigurationPanel
                 isDatasetsLoading={status === "running" || status === "pending" || isLoadingAdditionalData}
                 relatedDateDatasets={result?.dateDatasetsOrdered}
                 isLoadingAdditionalData={isLoadingAdditionalData}
+                shouldOpenDateDatasetPicker={shouldOpenDateDatasetPicker}
+                onDateDatasetChanged={handleDateDatasetChanged}
             />
         );
     }

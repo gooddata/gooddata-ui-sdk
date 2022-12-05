@@ -231,7 +231,7 @@ export {
     selectScheduleEmailDialogDefaultAttachment,
     selectSelectedWidgetRef,
     selectConfigurationPanelOpened,
-    selectKpiDateDatasetAutoSelect,
+    selectWidgetDateDatasetAutoSelect,
     selectIsDeleteDialogOpen,
     selectIsKpiDeleteDialogOpen,
     selectKpiDeleteDialogWidgetCoordinates,

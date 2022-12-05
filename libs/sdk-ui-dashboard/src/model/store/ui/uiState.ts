@@ -46,7 +46,7 @@ export interface UiState {
     };
     selectedWidgetRef: ObjRef | undefined;
     configurationPanelOpened: boolean;
-    kpiDateDatasetAutoSelect: boolean;
+    widgetDateDatasetAutoSelect: boolean;
     insightListLastUpdateRequested: number;
     widgetsLoadingAdditionalData: ObjRef[];
     filterAttributeSelectionOpen: boolean;
@@ -93,7 +93,7 @@ export const uiInitialState: UiState = {
     },
     selectedWidgetRef: undefined,
     configurationPanelOpened: true,
-    kpiDateDatasetAutoSelect: false,
+    widgetDateDatasetAutoSelect: false,
     insightListLastUpdateRequested: 0,
     widgetsLoadingAdditionalData: [],
     filterAttributeSelectionOpen: false,
