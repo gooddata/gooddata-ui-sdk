@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
 import Measure, { ContentRect, MeasuredComponentProps } from "react-measure";
 import cx from "classnames";
@@ -235,7 +235,7 @@ function renderPushpinSizeLegend(
 
     const { geoData, numericSymbols = [], responsive, contentRect } = props;
 
-    if (!geoData || !geoData.size) {
+    if (!geoData?.size) {
         return null;
     }
 

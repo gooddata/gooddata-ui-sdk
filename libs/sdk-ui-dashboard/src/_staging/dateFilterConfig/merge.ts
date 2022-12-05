@@ -115,11 +115,7 @@ const hideRelativePresets: DashboardConfigMerger = (dashboardConfig) => (project
     const canDashboardConfigHideRelativePreset =
         dashboardConfig.hideOptions || dashboardConfig.hideGranularities;
 
-    if (
-        !projectConfig.relativePresets ||
-        !projectConfig.relativePresets.length ||
-        !canDashboardConfigHideRelativePreset
-    ) {
+    if (!projectConfig.relativePresets?.length || !canDashboardConfigHideRelativePreset) {
         return projectConfig;
     }
 
@@ -139,11 +135,7 @@ const hideRelativePresets: DashboardConfigMerger = (dashboardConfig) => (project
 };
 
 const hideRelativeFormGranularities: DashboardConfigMerger = (dashboardConfig) => (projectConfig) => {
-    if (
-        !projectConfig.relativeForm ||
-        !projectConfig.relativeForm.visible ||
-        !dashboardConfig.hideGranularities
-    ) {
+    if (!projectConfig.relativeForm?.visible || !dashboardConfig.hideGranularities) {
         return projectConfig;
     }
 

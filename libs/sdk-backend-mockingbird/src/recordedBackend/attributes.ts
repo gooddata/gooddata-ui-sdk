@@ -32,7 +32,7 @@ export class RecordedAttributes implements IWorkspaceAttributesService {
     }
 
     public getAttributeDisplayForm = async (ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject> => {
-        if (!this.recordings.metadata || !this.recordings.metadata.displayForms) {
+        if (!this.recordings.metadata?.displayForms) {
             throw new UnexpectedResponseError("No displayForm recordings", 404, {});
         }
 
@@ -48,7 +48,7 @@ export class RecordedAttributes implements IWorkspaceAttributesService {
     };
 
     public getAttribute = async (ref: ObjRef): Promise<IAttributeMetadataObject> => {
-        if (!this.recordings.metadata || !this.recordings.metadata.catalog) {
+        if (!this.recordings.metadata?.catalog) {
             throw new UnexpectedResponseError("No recordings", 404, {});
         }
 
@@ -66,7 +66,7 @@ export class RecordedAttributes implements IWorkspaceAttributesService {
     };
 
     public getAttributeByDisplayForm = async (ref: ObjRef): Promise<IAttributeMetadataObject> => {
-        if (!this.recordings.metadata || !this.recordings.metadata.catalog) {
+        if (!this.recordings.metadata?.catalog) {
             throw new UnexpectedResponseError("No recordings", 404, {});
         }
 

@@ -116,7 +116,7 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
         const { intl, colId, menu, getTableDescriptor, getExecutionDefinition, getColumnTotals } = this.props;
         const { isMenuOpen, isMenuButtonVisible } = this.state;
 
-        if (!menu || !menu.aggregations) {
+        if (!menu?.aggregations) {
             return null;
         }
 

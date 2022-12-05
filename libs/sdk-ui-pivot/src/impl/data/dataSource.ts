@@ -275,7 +275,7 @@ function isSortedByFirstAttribute(tableDescriptor: TableDescriptor, sortingCols:
 
 function isDataViewSortedByFirstAttribute(dv: DataViewFacade): boolean {
     const { sortBy } = dv.definition;
-    if (!sortBy || !sortBy.length) {
+    if (!sortBy?.length) {
         // this is somewhat dangerous assumption: no explicit sort == sorted by first col
         //  (bear and tiger backend behaves thusly)
         return true;

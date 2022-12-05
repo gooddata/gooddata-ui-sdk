@@ -32,7 +32,7 @@ export interface IXirrDrillItemContext {
 
 const computeXirr = (executionData: IXirrExecutionData[]): number => {
     // prevent errors on invalid inputs
-    if (!executionData || !executionData.length) {
+    if (!executionData?.length) {
         return NaN;
     }
 

@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import mapboxgl from "mapbox-gl";
 
 import { DEFAULT_CENTER, DEFAULT_ZOOM, VIEWPORTS, DEFAULT_WORLD_BOUNDS } from "../../constants/geoChart";
@@ -57,7 +57,7 @@ export function getViewportOptions(data: IGeoLngLat[], config: IGeoConfig): IGeo
  * ```
  */
 export function getLngLatBounds(lnglats: IGeoLngLat[]): IGeoLngLatBounds | undefined {
-    if (!lnglats || !lnglats.length) {
+    if (!lnglats?.length) {
         return;
     }
 

@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { GridApi } from "@ag-grid-community/all-modules";
 import ApiWrapper from "../base/agApiWrapper";
 import isEqual from "lodash/isEqual";
@@ -39,7 +39,7 @@ export function isSomeTotal(rowType: string | undefined): boolean {
 }
 
 export function getSubtotalStyles(dimension: IDimension | undefined): (string | null)[] {
-    if (!dimension || !dimension.totals) {
+    if (!dimension?.totals) {
         return [];
     }
 

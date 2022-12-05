@@ -59,7 +59,7 @@ class RecordedElements implements IElementsQuery {
     ) {}
 
     public query(): Promise<IElementsQueryResult> {
-        if (!this.recordings.metadata || !this.recordings.metadata.displayForms) {
+        if (!this.recordings.metadata?.displayForms) {
             return Promise.reject(new UnexpectedResponseError("No displayForm recordings", 404, {}));
         }
 
@@ -151,7 +151,7 @@ class RecordedFilterElements implements IFilterElementsQuery {
     }
 
     public query(): Promise<IElementsQueryResult> {
-        if (!this.recordings.metadata || !this.recordings.metadata.displayForms) {
+        if (!this.recordings.metadata?.displayForms) {
             return Promise.reject(new UnexpectedResponseError("No displayForm recordings", 404, {}));
         }
 

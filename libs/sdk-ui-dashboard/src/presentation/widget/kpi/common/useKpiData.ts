@@ -102,9 +102,9 @@ function getSecondaryMeasure(
     dateDatasetsMap: ObjRefMap<ICatalogDateDataset>,
 ): IMeasure<IPoPMeasureDefinition> | IMeasure<IPreviousPeriodMeasureDefinition> | undefined {
     const comparison = kpiWidget.kpi.comparisonType;
-    const isAllTime =
-        !effectiveFilters ||
-        !effectiveFilters.some((filter) => isDateFilter(filter) && !isAllTimeDateFilter(filter));
+    const isAllTime = !effectiveFilters?.some(
+        (filter) => isDateFilter(filter) && !isAllTimeDateFilter(filter),
+    );
 
     if (comparison === "none" || isAllTime || !kpiWidget.dateDataSet) {
         return undefined;
