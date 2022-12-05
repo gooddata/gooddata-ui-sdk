@@ -70,6 +70,7 @@ export const AttributeFilterParentFilteringProvider: React.FC<
         displayFormChanged,
         onDisplayFormChange,
         onConfigurationClose: onDisplayFormClose,
+        displayFormChangeStatus,
     } = useDisplayFormConfiguration(currentFilter);
 
     const onConfigurationSave = useCallback(() => {
@@ -99,6 +100,7 @@ export const AttributeFilterParentFilteringProvider: React.FC<
                 onConfigurationClose,
                 showDisplayFormPicker,
                 configurationChanged,
+                displayFormChangeStatus,
             }}
         >
             {children}
