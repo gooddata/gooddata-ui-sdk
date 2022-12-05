@@ -1,13 +1,16 @@
 // (C) 2020-2022 GoodData Corporation
 import {
+    areObjRefsEqual,
+    IAttributeDescriptor,
     IAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,
-    isCatalogAttribute,
 } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
+import intersectionWith from "lodash/intersectionWith";
 import { AttributeDisplayFormType } from "../../../../drill/types";
 import {
     selectAllCatalogAttributesMap,
+    selectAllCatalogDisplayFormsMap,
     selectDrillTargetsByWidgetRef,
     selectSelectedWidgetRef,
     useDashboardSelector,
@@ -23,38 +26,53 @@ interface IUseAttributesWithDisplayFormsResult {
     allDisplayForms: IAttributeWithDisplayForm[];
 }
 
-export function useAttributesWithDisplayForms(): IUseAttributesWithDisplayFormsResult {
+export function useAttributesWithDisplayForms(
+    attributes: IAttributeDescriptor[],
+): IUseAttributesWithDisplayFormsResult {
     const widgetRef = useDashboardSelector(selectSelectedWidgetRef);
     invariant(widgetRef, "must have selected widget");
 
     const drillTargets = useDashboardSelector(selectDrillTargetsByWidgetRef(widgetRef));
     const allAttributes = useDashboardSelector(selectAllCatalogAttributesMap);
+    const allDisplayForms = useDashboardSelector(selectAllCatalogDisplayFormsMap);
 
-    const availableAttributes = drillTargets?.availableDrillTargets?.attributes ?? [];
-    const attributes = availableAttributes.map((drillTarget) =>
-        allAttributes.get(drillTarget.attribute.attributeHeader.formOf.ref),
+    // restrict the possible attributes be the available drill targets
+    const drillTargetDisplayFormRefs =
+        drillTargets?.availableDrillTargets?.attributes?.map((a) => a.attribute.attributeHeader.ref) ?? [];
+
+    const incomingDisplayFormRefs = attributes.map((a) => a.attributeHeader.ref);
+
+    const candidateDisplayFormRefs = intersectionWith(
+        drillTargetDisplayFormRefs,
+        incomingDisplayFormRefs,
+        areObjRefsEqual,
     );
 
-    return attributes.reduce(
-        (result: IUseAttributesWithDisplayFormsResult, item) => {
-            if (!item || !isCatalogAttribute(item.attribute)) {
+    return candidateDisplayFormRefs.reduce(
+        (result: IUseAttributesWithDisplayFormsResult, ref) => {
+            const displayForm = allDisplayForms.get(ref);
+            if (!displayForm) {
+                return result;
+            }
+            const attribute = allAttributes.get(displayForm.attribute);
+            if (!attribute) {
                 return result;
             }
 
-            const linkDisplayForms = item.attribute.displayForms.filter(
+            const linkDisplayForms = attribute.attribute.displayForms.filter(
                 (df) => df.displayFormType === AttributeDisplayFormType.HYPERLINK,
             );
 
             result.linkDisplayForms.push(
                 ...linkDisplayForms.map((df) => ({
-                    attribute: item.attribute,
+                    attribute: attribute.attribute,
                     displayForm: df,
                 })),
             );
 
             result.allDisplayForms.push(
-                ...item.attribute.displayForms.map((df) => ({
-                    attribute: item.attribute,
+                ...attribute.attribute.displayForms.map((df) => ({
+                    attribute: attribute.attribute,
                     displayForm: df,
                 })),
             );

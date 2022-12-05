@@ -59,13 +59,13 @@ export interface DrillUrlItemProps {
 }
 
 export const DrillTargetUrlItem: React.FunctionComponent<DrillUrlItemProps> = (props) => {
-    const { onSelect, urlDrillTarget } = props;
+    const { onSelect, urlDrillTarget, attributes } = props;
 
     const capabilities = useDashboardSelector(selectBackendCapabilities);
     const settings = useDashboardSelector(selectSettings);
 
     const { allDisplayForms: targetAttributesFormsAll, linkDisplayForms: targetAttributesFormsWithLinks } =
-        useAttributesWithDisplayForms();
+        useAttributesWithDisplayForms(attributes);
 
     const invalidAttributeDisplayFormIdentifiers = useInvalidAttributeDisplayFormIdentifiers(urlDrillTarget);
 
