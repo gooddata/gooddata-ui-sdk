@@ -56,7 +56,6 @@ export const verifyDateFormat = (dateFormat: string): string => {
         return dateFormat;
     } catch {
         // If an error occurs, then dateFormat is invalid and the default format should be used instead. Also, a warning is written in the console.
-        // eslint-disable-next-line no-console
         console.warn(
             `Unsupported date format ${dateFormat}, the default format ${DEFAULT_DATE_FORMAT} is used instead.`,
         );

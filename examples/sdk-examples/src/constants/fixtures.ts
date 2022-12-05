@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 const demoProject: { [domain: string]: string } = {
     "https://secure.gooddata.com": "k26dtejorcqlqf11crn6imbeevp2q4kg",
     "https://staging3.intgdc.com": "mbuumy476p78ybcceiru61hcyr8i8lo8",
@@ -12,7 +12,6 @@ const backendUrl = BACKEND_URL;
 const demoProjectId = demoProject[backendUrl];
 
 if (!demoProjectId) {
-    // eslint-disable-next-line no-console
     console.error(`[fixtures.js] ProjectId for backend "${backendUrl}" is not in `, demoProject);
 }
 

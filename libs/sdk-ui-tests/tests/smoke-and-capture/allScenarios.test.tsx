@@ -38,7 +38,6 @@ function scenarioSaveDataCaptureRequests(
             const existingRequests = readJsonSync(requestsFile);
 
             if (!isObject(existingRequests)) {
-                // eslint-disable-next-line no-console
                 console.warn(
                     `The requests file ${requestsFile} seems invalid. It should contain object describing what data view requests should be captured for the recording.`,
                 );
@@ -46,7 +45,6 @@ function scenarioSaveDataCaptureRequests(
                 requests = existingRequests as DataViewRequests;
             }
         } catch (err) {
-            // eslint-disable-next-line no-console
             console.warn("Unable to read or parse exec requests file in ", requestsFile);
         }
     }
@@ -113,7 +111,6 @@ function scenarioSaveDescriptors(
             const existingScenarios = readJsonSync(scenariosFile);
 
             if (!isArray(existingScenarios)) {
-                // eslint-disable-next-line no-console
                 console.warn(
                     `The scenarios file ${scenariosFile} seems invalid. It should contain array of scenario metadata.`,
                 );
@@ -121,7 +118,6 @@ function scenarioSaveDescriptors(
                 scenarioDescriptors = existingScenarios;
             }
         } catch (err) {
-            // eslint-disable-next-line no-console
             console.warn("Unable to read or parse exec definition scenario file in ", scenariosFile);
         }
     }

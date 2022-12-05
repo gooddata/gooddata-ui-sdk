@@ -44,7 +44,6 @@ export const ContentDragPreview: FC<DragPreviewProps<DraggableContentItem>> = (p
     const component = useMemo(() => {
         if (!(itemType in previewComponentsMap)) {
             if (DEBUG_SHOW_DROP_ZONES) {
-                // eslint-disable-next-line no-console
                 console.warn(`DND: dnd item ${itemType} not handled by CustomDragLayer`);
             }
             return null;

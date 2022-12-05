@@ -22,7 +22,6 @@ export function* rootSaga(): SagaIterator<void> {
             ].map((worker) => fork(worker)),
         );
     } catch (e) {
-        // eslint-disable-next-line no-console
         console.error("Root saga failed", e);
     }
 }

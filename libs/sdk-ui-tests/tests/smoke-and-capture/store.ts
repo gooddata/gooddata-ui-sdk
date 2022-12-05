@@ -20,7 +20,6 @@ function initializeStores(): DefinitionStores | undefined {
     const rootDir = process.env[StoreEnvVar];
 
     if (!rootDir) {
-        // eslint-disable-next-line no-console
         console.warn(
             `The smoke-and-capture suite is not configured with store root. The suite will run but will not store any recording definitions.`,
         );
@@ -60,7 +59,6 @@ function initializeStore(
     }
 
     if (!fs.statSync(dir).isDirectory()) {
-        // eslint-disable-next-line no-console
         console.error(
             `Path ${dir} already exists but is not a directory. Not going to store any definitions.`,
         );

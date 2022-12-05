@@ -37,7 +37,6 @@ const limiterFilteringPredicateAbstractFactory =
         const id = ref?.identifier;
         const spec = id && specs?.[id];
         if (!spec) {
-            // eslint-disable-next-line no-console
             console.warn(`No ${name} limiting config found for id: ${id}. Ignoring...`);
             return undefined;
         }

@@ -65,7 +65,6 @@ export class BearPreparedExecutionByRef implements IPreparedExecution {
     }
 
     public explain<T extends ExplainType | undefined>(): IExplainProvider<T> {
-        // eslint-disable-next-line no-console
         console.warn("Backend does not support explain mode");
         return {
             data: () => Promise.reject(new Error(`Backend does not support explain mode data call.`)),
@@ -101,7 +100,6 @@ export class BearPreparedExecutionByRef implements IPreparedExecution {
 
     public withExecConfig(config: IExecutionConfig): IPreparedExecution {
         if (!isEmpty(config?.dataSamplingPercentage)) {
-            // eslint-disable-next-line no-console
             console.warn("Backend does not support data sampling, result will be not affected");
         }
         return this.executionFactory.forDefinition(this.definition);

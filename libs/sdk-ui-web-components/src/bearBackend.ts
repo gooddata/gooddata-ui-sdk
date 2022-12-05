@@ -29,7 +29,6 @@ export const redirectToBearSsoAuthentication = (context: IAuthenticationContext)
     sdkFactory({ domain: context.backend.config.hostname })
         .user.initiateSamlSso(window.location.href)
         .catch((error) => {
-            // eslint-disable-next-line no-console
             console.error("Failed to initialize Bear SAML SSO authentication.", error);
         });
 };

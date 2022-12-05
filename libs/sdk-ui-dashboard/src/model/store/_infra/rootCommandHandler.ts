@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { actionChannel, call, take } from "redux-saga/effects";
 import noop from "lodash/noop";
@@ -101,7 +101,6 @@ function* processCommand(
         try {
             envelope.onStart(command);
         } catch (e) {
-            // eslint-disable-next-line no-console
             console.warn(
                 `An error has occurred while calling onStart function provided for ${type}@${correlationIdForLog} processing:`,
                 e,
@@ -117,7 +116,6 @@ function* processCommand(
         try {
             envelope.onSuccess(result);
         } catch (e) {
-            // eslint-disable-next-line no-console
             console.warn(
                 `An error has occurred while calling onSuccess function provided for ${type}@${correlationIdForLog} processing`,
                 e,
@@ -127,7 +125,6 @@ function* processCommand(
         try {
             envelope.onError(e);
         } catch (ne) {
-            // eslint-disable-next-line no-console
             console.warn(
                 `An error has occurred while calling onError function provided for ${type}@${correlationIdForLog} processing:`,
                 ne,

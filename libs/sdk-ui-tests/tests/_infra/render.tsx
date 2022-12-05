@@ -16,7 +16,6 @@ function errorHandler(error: GoodDataSdkError) {
         return;
     }
 
-    // eslint-disable-next-line no-console
     console.error("Possibly unexpected exception during enzyme mount of the chart", error);
 }
 

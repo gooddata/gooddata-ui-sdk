@@ -32,7 +32,6 @@ export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element | null =
     if (!visibleMenuItems.length) {
         if (!menuItems.length) {
             // only warn if the items were really empty before filtering
-            // eslint-disable-next-line no-console
             console.warn(
                 "DefaultMenuButton rendered without menu items. Make sure you are passing some items there.",
             );

@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { DashboardStateChangeCallback, IDashboardEventHandling } from "../customizer";
 import {
@@ -52,7 +52,6 @@ export class DefaultDashboardEventHandling implements IDashboardEventHandling {
             try {
                 cb(state, dispatch);
             } catch (e: any) {
-                // eslint-disable-next-line no-console
                 console.warn(`OnStateChange callback ${cb} threw an exception.`, e);
             }
         });
@@ -153,7 +152,6 @@ export class DefaultDashboardEventHandling implements IDashboardEventHandling {
 
     public addCustomEventHandler = (handler: DashboardEventHandler): IDashboardEventHandling => {
         if (findIndex(this.handlers, sameHandlerPredicateFactory(handler)) > -1) {
-            // eslint-disable-next-line no-console
             console.warn(`Attempting double-registration of the same handler ${handler}. Ignoring.`);
 
             return this;
@@ -201,7 +199,6 @@ export class DefaultDashboardEventHandling implements IDashboardEventHandling {
         const idx = findIndex(this.handlers, sameHandlerPredicateFactory(handler));
 
         if (idx === -1) {
-            // eslint-disable-next-line no-console
             console.warn(`Attempting remove non-existing handler ${handler}. Ignoring.`);
 
             return this;
@@ -221,7 +218,6 @@ export class DefaultDashboardEventHandling implements IDashboardEventHandling {
 
     public subscribeToStateChanges = (callback: DashboardStateChangeCallback): IDashboardEventHandling => {
         if (findIndex(this.stateChangesChain, (fn) => fn === callback) > -1) {
-            // eslint-disable-next-line no-console
             console.warn(
                 `Attempting double-subscription of the same state change callback ${callback}. Ignoring.`,
             );

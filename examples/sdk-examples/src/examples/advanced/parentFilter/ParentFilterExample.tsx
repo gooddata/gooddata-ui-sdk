@@ -53,7 +53,6 @@ const CustomFilter: React.FC<ICustomFilterProps> = ({
     });
 
     if (initError) {
-        // eslint-disable-next-line no-console
         console.error("Loading attribute elements failed!", initError);
     }
     const selectOptions = useMemo(

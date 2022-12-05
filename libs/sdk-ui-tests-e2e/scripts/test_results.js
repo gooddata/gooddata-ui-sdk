@@ -8,7 +8,6 @@ const xml = require("xml2js");
 const RESULTS_DIR = path.resolve("./cypress/results");
 
 function handleError(e) {
-    // eslint-disable-next-line no-console
     console.error(e);
     process.exit(1);
 }

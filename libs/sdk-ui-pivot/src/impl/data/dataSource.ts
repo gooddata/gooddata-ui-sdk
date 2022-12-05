@@ -178,7 +178,6 @@ export class AgGridDatasource implements IDatasource {
                     .catch((err) => {
                         this.config.onTransformedExecutionFailed();
 
-                        // eslint-disable-next-line no-console
                         console.error("Error while doing execution to obtain data view", err);
 
                         failCallback();
@@ -187,7 +186,6 @@ export class AgGridDatasource implements IDatasource {
             .catch((err) => {
                 this.config.onTransformedExecutionFailed();
 
-                // eslint-disable-next-line no-console
                 console.error("Error while doing execution to obtain transformed results", err);
 
                 failCallback();
@@ -246,7 +244,6 @@ export class AgGridDatasource implements IDatasource {
                     this.processData(DataViewFacade.for(dataView), params);
                 })
                 .catch((err) => {
-                    // eslint-disable-next-line no-console
                     console.error("Error while doing execution to obtain data view", err);
 
                     failCallback();

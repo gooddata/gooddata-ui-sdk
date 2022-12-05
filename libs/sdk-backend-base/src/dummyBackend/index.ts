@@ -391,7 +391,6 @@ function dummyPreparedExecution(
             return Promise.resolve(dummyExecutionResult(definition, executionFactory, config));
         },
         explain<T extends ExplainType | undefined>(): IExplainProvider<T> {
-            // eslint-disable-next-line no-console
             console.warn("Backend does not support explain mode");
             return {
                 data: () => Promise.reject(new Error(`Backend does not support explain mode data call.`)),
@@ -406,7 +405,6 @@ function dummyPreparedExecution(
         },
         withExecConfig(config: IExecutionConfig): IPreparedExecution {
             if (!isEmpty(config?.dataSamplingPercentage)) {
-                // eslint-disable-next-line no-console
                 console.warn("Backend does not support data sampling, result will be not affected");
             }
             return executionFactory.forDefinition(definition);

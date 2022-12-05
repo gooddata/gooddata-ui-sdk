@@ -102,7 +102,6 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
         const { elements, uris } = options;
         if (elements) {
             if (uris) {
-                // eslint-disable-next-line no-console
                 console.warn(
                     "Both 'elements' and 'uris' used in IElementsQueryOptions, 'uris' property will be ignored.",
                 );

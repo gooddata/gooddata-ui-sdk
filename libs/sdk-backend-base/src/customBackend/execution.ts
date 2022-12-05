@@ -81,7 +81,6 @@ class CustomPreparedExecution implements IPreparedExecution {
     };
 
     public explain = <T extends ExplainType | undefined>(): IExplainProvider<T> => {
-        // eslint-disable-next-line no-console
         console.warn("Backend does not support explain mode");
         return {
             data: () => Promise.reject(new Error(`Backend does not support explain mode data call.`)),

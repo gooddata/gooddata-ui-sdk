@@ -118,7 +118,6 @@ function* processQuery(
         try {
             envelope.onStart(query);
         } catch (e) {
-            // eslint-disable-next-line no-console
             console.warn(
                 `An error has occurred while calling onStart function provided for ${type}@${correlationIdForLog} processing:`,
                 e,
@@ -137,7 +136,6 @@ function* processQuery(
         try {
             envelope.onSuccess(result);
         } catch (e) {
-            // eslint-disable-next-line no-console
             console.warn(
                 `An error has occurred while calling onSuccess function provided for ${type}@${correlationIdForLog} processing`,
                 e,
@@ -148,7 +146,6 @@ function* processQuery(
         try {
             envelope.onError(e);
         } catch (ne) {
-            // eslint-disable-next-line no-console
             console.warn(
                 `An error has occurred while calling onError function provided for ${type}@${correlationIdForLog} processing:`,
                 ne,

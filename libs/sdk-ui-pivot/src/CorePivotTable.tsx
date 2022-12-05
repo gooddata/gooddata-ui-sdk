@@ -431,7 +431,6 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         const parentWrapper = document.getElementById(this.pivotTableId)?.parentElement;
         const parentHeight = parentWrapper?.offsetHeight ?? 0;
         if (parentHeight < 20) {
-            // eslint-disable-next-line no-console
             console.warn(
                 `The wrapper height of the pivot table has not been set or is suspiciously small. This might cause pivot table rendering issues. If so, please set an appropriate height for the wrapper. Use document.getElementById("${this.pivotTableId}") to find the PivotTable element in the DOM, which will help you to identify its wrapper.`,
             );
@@ -561,7 +560,6 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         invariant(this.internal.table);
 
         if (this.internal.firstDataRendered) {
-            // eslint-disable-next-line no-console
             console.error("onFirstDataRendered called multiple times");
         }
 
@@ -647,7 +645,6 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
 
     private onSortChanged = (event: SortChangedEvent): void => {
         if (!this.internal.table) {
-            // eslint-disable-next-line no-console
             console.warn("changing sorts without prior execution cannot work");
             return;
         }

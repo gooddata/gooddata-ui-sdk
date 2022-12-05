@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import range from "lodash/range";
 import cloneDeep from "lodash/cloneDeep";
 import { HighchartsResponsiveOptions, XAxisOptions, YAxisOptions } from "../../../highcharts/lib";
@@ -58,7 +58,6 @@ const getResponsiveConfigOptions = (
                             (heightRatio === 0 && widthRatio < BOTTOM_LIMIT_WIDTH_RATIO) ||
                             (widthRatio === 0 && heightRatio < BOTTOM_LIMIT_HEIGHT_RATIO);
                         if (isZeroRatio) {
-                            // eslint-disable-next-line no-console
                             console.warn("container is very small and chart might not be render correctly");
                         }
                         return isZeroRatio;

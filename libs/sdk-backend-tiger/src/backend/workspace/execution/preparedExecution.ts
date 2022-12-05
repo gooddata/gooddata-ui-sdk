@@ -70,7 +70,6 @@ export class TigerPreparedExecution implements IPreparedExecution {
                             response && downloadFile(getExplainFileName(explainType), response.data),
                     )
                     .catch((error) => {
-                        // eslint-disable-next-line no-console
                         console.warn(error);
                     });
             },

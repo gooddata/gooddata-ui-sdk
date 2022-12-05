@@ -64,7 +64,6 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     // Public methods
     public getDashboards = async (options?: IGetDashboardOptions): Promise<IListedDashboard[]> => {
         if (options?.loadUserData) {
-            // eslint-disable-next-line no-console
             console.warn(
                 "Tiger backend does not support the 'loadUserData' option of getDashboards. Ignoring.",
             );
@@ -91,7 +90,6 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         options?: IGetDashboardOptions,
     ): Promise<IDashboard> => {
         if (options?.loadUserData) {
-            // eslint-disable-next-line no-console
             console.warn(
                 "Tiger backend does not support the 'loadUserData' option of getDashboard. Ignoring.",
             );
@@ -130,7 +128,6 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         types: SupportedDashboardReferenceTypes[] = ["insight", "dashboardPlugin"],
     ): Promise<IDashboardWithReferences> => {
         if (options?.loadUserData) {
-            // eslint-disable-next-line no-console
             console.warn(
                 "Tiger backend does not support the 'loadUserData' option of getDashboardWithReferences. Ignoring.",
             );

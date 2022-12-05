@@ -21,7 +21,6 @@ function getDuplicateIdentifiers(options: IDateFilterOption[]): string[] {
     const duplicates = Object.keys(groups).filter((localIdentifier) => groups[localIdentifier].length > 1);
 
     if (duplicates.length) {
-        // eslint-disable-next-line no-console
         console.warn(
             `There were duplicate localIdentifiers in the date filter config: ${duplicates.join(",")}`,
         );

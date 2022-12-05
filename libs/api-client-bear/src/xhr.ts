@@ -395,7 +395,6 @@ export class XhrModule {
     }
 
     private logDeprecatedRestApiCall(deprecatedVersionDetails: string) {
-        // eslint-disable-next-line no-console
         console.warn(
             `The REST API version ${LATEST_REST_API_VERSION} is deprecated (${deprecatedVersionDetails}). ` +
                 "Please migrate your application to use GoodData.UI SDK or @gooddata/api-client-bear package that " +

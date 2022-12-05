@@ -210,7 +210,6 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
         try {
             visFactory = this.props.visualizationCatalog.forUri(visUri).getFactory();
         } catch (e) {
-            // eslint-disable-next-line no-console
             console.error(`Error: unsupported visualization type - ${visUri}`);
         }
 

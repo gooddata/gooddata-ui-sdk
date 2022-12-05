@@ -334,7 +334,6 @@ function interceptBackendErrorsToConsole(client: AxiosInstance): AxiosInstance {
 
         // If there is no response object (for example for blocked requests), print the whole error.
         if (!response) {
-            // eslint-disable-next-line no-console
             console.error("Tiger backend threw an error:", error);
         }
         // Else if the response is an object (JSON parsed by axios) and there is a problem, then log error
@@ -342,7 +341,6 @@ function interceptBackendErrorsToConsole(client: AxiosInstance): AxiosInstance {
         else if (inRange(response.status, 400, 600) && typeof response.data === "object") {
             // Title is redundant (Bad Request)
             const details = omit(response.data, ["title"]);
-            // eslint-disable-next-line no-console
             console.error("Tiger backend threw an error:", details);
         }
 

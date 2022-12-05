@@ -44,7 +44,6 @@ export abstract class CustomElementAdapter<C> extends HTMLElement {
                 this[RENDER]();
             })
             .catch((error) => {
-                // eslint-disable-next-line no-console
                 console.error("Failed to load dependencies for the visualization", error);
             });
     }

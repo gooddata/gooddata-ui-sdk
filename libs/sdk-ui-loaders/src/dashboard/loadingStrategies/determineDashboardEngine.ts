@@ -33,7 +33,6 @@ export function isPluginCompatibleWithDashboardEngine(
         includePrerelease: true,
     });
     if (!matchesEngineVersion) {
-        // eslint-disable-next-line no-console
         console.error(
             `The dashboard plugin ${
                 debugName ?? displayName

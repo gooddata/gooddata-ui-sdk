@@ -284,7 +284,6 @@ ScenarioGroupsByVis.forEach((groups) => {
 
             if (!insight) {
                 if (window.location.hostname === "localhost") {
-                    // eslint-disable-next-line no-console
                     console.warn(
                         `Ignoring test scenario for ${scenario.vis}: ${scenario.name} - insight does not exist.`,
                     );

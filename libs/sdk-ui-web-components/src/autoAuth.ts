@@ -22,7 +22,6 @@ const withRedirectGate =
         // Check if there was a request to the authentication
         if (hadRedirectToAuth) {
             // We already tried to authenticate, apparently it has failed...
-            // eslint-disable-next-line no-console
             console.error(
                 [
                     "The authentication has failed.",
@@ -89,7 +88,6 @@ export default async (scriptSrc: string) => {
         Promise.race([timeout(5000), getContext()]).then((res) => {
             if (!res) {
                 // Resolved without a value === timeout
-                // eslint-disable-next-line no-console
                 console.warn(
                     `The automatic authentication with ${
                         hostname ?? "the analytics server"
