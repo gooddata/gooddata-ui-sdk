@@ -76,6 +76,9 @@ const CAPABILITIES: IBackendCapabilities = {
     supportsOrganizationSettings: false,
     supportsInlineMeasures: false,
     supportsBootstrapResource: true,
+    supportsMetadataObjectLocking: true,
+    supportsGranularAccessControl: false,
+    supportsEveryoneUserGroupForAccessControl: true,
 };
 
 /**

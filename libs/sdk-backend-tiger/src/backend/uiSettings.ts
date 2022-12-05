@@ -64,7 +64,6 @@ export const DefaultUiSettings: ISettings = {
     enableAdAdditionalDateAttributes: true,
     enableAlternativeDisplayFormSelection: true,
     enableNewAnalyticalDashboardsNavigation: true,
-    enableAnalyticalDashboardPermissions: false,
 
     // enable the plugin-ready Dashboard component in gdc-dashboards
     dashboardComponentDevRollout: true,
