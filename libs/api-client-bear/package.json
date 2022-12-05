@@ -61,7 +61,7 @@
         "tslib": "^2.0.0"
     },
     "devDependencies": {
-        "@gooddata/eslint-config": "^2.1.0",
+        "@gooddata/eslint-config": "^4.1.0",
         "@types/fast-levenshtein": "0.0.1",
         "@types/isomorphic-fetch": "^0.0.34",
         "@types/jest": "^27.0.1",

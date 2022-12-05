@@ -110,7 +110,7 @@
     },
     "devDependencies": {
         "@componentdriven/csf": "^0.0.2-alpha.0",
-        "@gooddata/eslint-config": "^2.1.0",
+        "@gooddata/eslint-config": "^4.1.0",
         "@gooddata/sdk-ui-charts": "^8.12.0-alpha.71",
         "@gooddata/sdk-ui-ext": "^8.12.0-alpha.71",
         "@gooddata/sdk-ui-filters": "^8.12.0-alpha.71",

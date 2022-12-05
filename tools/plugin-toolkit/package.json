@@ -70,7 +70,7 @@
         "tslib": "^2.0.0"
     },
     "devDependencies": {
-        "@gooddata/eslint-config": "^2.1.0",
+        "@gooddata/eslint-config": "^4.1.0",
         "@types/cross-spawn": "^6.0.2",
         "@types/columnify": "^1.5.1",
         "@types/fs-extra": "^9.0.13",

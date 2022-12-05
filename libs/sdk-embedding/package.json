@@ -58,7 +58,7 @@
         "ts-invariant": "^0.7.3"
     },
     "devDependencies": {
-        "@gooddata/eslint-config": "^2.1.0",
+        "@gooddata/eslint-config": "^4.1.0",
         "@microsoft/api-documenter": "^7.17.0",
         "@microsoft/api-extractor": "^7.20.0",
         "@types/jest": "^27.0.1",

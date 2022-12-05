@@ -2155,18 +2155,18 @@ packages:
     resolution: {integrity: sha512-k2Ty1JcVojjJFwrg/ThKi2ujJ7XNLYaFGNB/bWT9wGR+oSMJHMa5w+CUq6p/pVrKeNNgA7pCqEcjSnHVoqJQFw==}
     dev: false
 
-  /@gooddata/eslint-config/2.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77:
-    resolution: {integrity: sha512-DwB//alPfbTXMTYlvEyj1nsLTRt/5xcYm/ytZ58Mb70stBBY7/FD3jL9QTcZVXa2Ox0hmDw0yFtzX2yM/1IyzA==}
+  /@gooddata/eslint-config/4.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77:
+    resolution: {integrity: sha512-59fOsukUqIlweZJki0Jd5Rm2Tkev7Psl9pCOLHZFRnU71Rk4J/ZSgKX59+GWb/8Rj0sKabxQEG/yknU404Pq7g==}
     peerDependencies:
-      '@typescript-eslint/eslint-plugin': '>=2.16.0'
-      eslint: '>=6.0.0'
+      '@typescript-eslint/eslint-plugin': '>=5.29.0'
+      eslint: '>=8.18.0'
       eslint-plugin-header: '>=3.0.0'
-      eslint-plugin-import: '>=2.20.0'
-      eslint-plugin-jest: '>=23.6.0'
+      eslint-plugin-import: '>=2.26.0'
+      eslint-plugin-jest: '>=26.5.3'
       eslint-plugin-no-only-tests: '>=2.4.0'
     dependencies:
       '@typescript-eslint/eslint-plugin': 5.18.0_99323e11f95188b2bd36c66beda2638d
-      '@typescript-eslint/parser': 2.34.0_eslint@8.25.0+typescript@4.0.2
+      '@typescript-eslint/parser': 5.45.0_eslint@8.25.0+typescript@4.0.2
       eslint: 8.25.0
       eslint-plugin-header: 3.1.1_eslint@8.25.0
       eslint-plugin-import: 2.26.0_eslint@8.25.0
@@ -3205,7 +3205,7 @@ packages:
     resolution: {integrity: sha512-8KG5RD0GVP4ydEzRn/I4BNDuxDtqVbOdm8675T49OIG/NGhaK0pjPX7ZcDlvKYbA+ulvVK3ztfcF4uBdOxuJbQ==}
     dependencies:
       '@gar/promisify': 1.1.3
-      semver: 7.3.6
+      semver: 7.3.8
     dev: false
 
   /@npmcli/move-file/1.1.2:
@@ -3272,7 +3272,7 @@ packages:
       '@oclif/help': 1.0.1
       '@oclif/parser': 3.8.7
       debug: 4.3.4
-      semver: 7.3.6
+      semver: 7.3.8
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -5125,10 +5125,6 @@ packages:
       '@types/estree': 0.0.51
     dev: false
 
-  /@types/eslint-visitor-keys/1.0.0:
-    resolution: {integrity: sha512-OCutwjDZ4aFS6PB1UZ988C4YgwlBHJd6wCeQqaLdmadZ/7e+w79+hbMUFC1QXDNCmdyoRfAFdm0RypzwR+Qpag==}
-    dev: false
-
   /@types/eslint/7.29.0:
     resolution: {integrity: sha512-VNcvioYDH8/FxaeTKkM4/TiTwt6pBV9E3OfGmvaw8tPl0rrHCJ4Ll15HRT+pMiFAf/MLQvAzC+6RzUMEL9Ceng==}
     dependencies:
@@ -5704,42 +5700,6 @@ packages:
       - supports-color
     dev: false
 
-  /@typescript-eslint/experimental-utils/2.34.0_eslint@8.25.0+typescript@4.0.2:
-    resolution: {integrity: sha512-eS6FTkq+wuMJ+sgtuNTtcqavWXqsflWcfBnlYhg/nS4aZ1leewkXGbvBhaapn1q6qf4M71bsR1tez5JTRMuqwA==}
-    engines: {node: ^8.10.0 || ^10.13.0 || >=11.10.1}
-    peerDependencies:
-      eslint: '*'
-    dependencies:
-      '@types/json-schema': 7.0.11
-      '@typescript-eslint/typescript-estree': 2.34.0_typescript@4.0.2
-      eslint: 8.25.0
-      eslint-scope: 5.1.1
-      eslint-utils: 2.1.0
-    transitivePeerDependencies:
-      - supports-color
-      - typescript
-    dev: false
-
-  /@typescript-eslint/parser/2.34.0_eslint@8.25.0+typescript@4.0.2:
-    resolution: {integrity: sha512-03ilO0ucSD0EPTw2X4PntSIRFtDPWjrVq7C3/Z3VQHRC7+13YB55rcJI3Jt+YgeHbjUdJPcPa7b23rXCBokuyA==}
-    engines: {node: ^8.10.0 || ^10.13.0 || >=11.10.1}
-    peerDependencies:
-      eslint: ^5.0.0 || ^6.0.0
-      typescript: '*'
-    peerDependenciesMeta:
-      typescript:
-        optional: true
-    dependencies:
-      '@types/eslint-visitor-keys': 1.0.0
-      '@typescript-eslint/experimental-utils': 2.34.0_eslint@8.25.0+typescript@4.0.2
-      '@typescript-eslint/typescript-estree': 2.34.0_typescript@4.0.2
-      eslint: 8.25.0
-      eslint-visitor-keys: 1.3.0
-      typescript: 4.0.2
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
-
   /@typescript-eslint/parser/5.18.0_eslint@8.25.0+typescript@4.0.2:
     resolution: {integrity: sha512-+08nYfurBzSSPndngnHvFw/fniWYJ5ymOrn/63oMIbgomVQOvIDhBoJmYZ9lwQOCnQV9xHGvf88ze3jFGUYooQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
@@ -5760,12 +5720,40 @@ packages:
       - supports-color
     dev: false
 
+  /@typescript-eslint/parser/5.45.0_eslint@8.25.0+typescript@4.0.2:
+    resolution: {integrity: sha512-brvs/WSM4fKUmF5Ot/gEve6qYiCMjm6w4HkHPfS6ZNmxTS0m0iNN4yOChImaCkqc1hRwFGqUyanMXuGal6oyyQ==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    peerDependencies:
+      eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      '@typescript-eslint/scope-manager': 5.45.0
+      '@typescript-eslint/types': 5.45.0
+      '@typescript-eslint/typescript-estree': 5.45.0_typescript@4.0.2
+      debug: 4.3.4
+      eslint: 8.25.0
+      typescript: 4.0.2
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
   /@typescript-eslint/scope-manager/5.18.0:
     resolution: {integrity: sha512-C0CZML6NyRDj+ZbMqh9FnPscg2PrzSaVQg3IpTmpe0NURMVBXlghGZgMYqBw07YW73i0MCqSDqv2SbywnCS8jQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dependencies:
       '@typescript-eslint/types': 5.18.0
       '@typescript-eslint/visitor-keys': 5.18.0
+    dev: false
+
+  /@typescript-eslint/scope-manager/5.45.0:
+    resolution: {integrity: sha512-noDMjr87Arp/PuVrtvN3dXiJstQR1+XlQ4R1EvzG+NMgXi8CuMCXpb8JqNtFHKceVSQ985BZhfRdowJzbv4yKw==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    dependencies:
+      '@typescript-eslint/types': 5.45.0
+      '@typescript-eslint/visitor-keys': 5.45.0
     dev: false
 
   /@typescript-eslint/type-utils/5.18.0_eslint@8.25.0+typescript@4.0.2:
@@ -5792,25 +5780,9 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: false
 
-  /@typescript-eslint/typescript-estree/2.34.0_typescript@4.0.2:
-    resolution: {integrity: sha512-OMAr+nJWKdlVM9LOqCqh3pQQPwxHAN7Du8DR6dmwCrAmxtiXQnhHJ6tBNtf+cggqfo51SG/FCwnKhXCIM7hnVg==}
-    engines: {node: ^8.10.0 || ^10.13.0 || >=11.10.1}
-    peerDependencies:
-      typescript: '*'
-    peerDependenciesMeta:
-      typescript:
-        optional: true
-    dependencies:
-      debug: 4.3.4
-      eslint-visitor-keys: 1.3.0
-      glob: 7.2.0
-      is-glob: 4.0.3
-      lodash: 4.17.21
-      semver: 7.3.6
-      tsutils: 3.21.0_typescript@4.0.2
-      typescript: 4.0.2
-    transitivePeerDependencies:
-      - supports-color
+  /@typescript-eslint/types/5.45.0:
+    resolution: {integrity: sha512-QQij+u/vgskA66azc9dCmx+rev79PzX8uDHpsqSjEFtfF2gBUTRCpvYMh2gw2ghkJabNkPlSUCimsyBEQZd1DA==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: false
 
   /@typescript-eslint/typescript-estree/5.18.0_typescript@4.0.2:
@@ -5828,6 +5800,27 @@ packages:
       globby: 11.1.0
       is-glob: 4.0.3
       semver: 7.3.6
+      tsutils: 3.21.0_typescript@4.0.2
+      typescript: 4.0.2
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
+  /@typescript-eslint/typescript-estree/5.45.0_typescript@4.0.2:
+    resolution: {integrity: sha512-maRhLGSzqUpFcZgXxg1qc/+H0bT36lHK4APhp0AEUVrpSwXiRAomm/JGjSG+kNUio5kAa3uekCYu/47cnGn5EQ==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    peerDependencies:
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      '@typescript-eslint/types': 5.45.0
+      '@typescript-eslint/visitor-keys': 5.45.0
+      debug: 4.3.4
+      globby: 11.1.0
+      is-glob: 4.0.3
+      semver: 7.3.8
       tsutils: 3.21.0_typescript@4.0.2
       typescript: 4.0.2
     transitivePeerDependencies:
@@ -5857,6 +5850,14 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dependencies:
       '@typescript-eslint/types': 5.18.0
+      eslint-visitor-keys: 3.3.0
+    dev: false
+
+  /@typescript-eslint/visitor-keys/5.45.0:
+    resolution: {integrity: sha512-jc6Eccbn2RtQPr1s7th6jJWQHBHI6GBVQkCHoJFQ5UreaKm59Vxw+ynQUPPY2u2Amquc+7tmEoC2G52ApsGNNg==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    dependencies:
+      '@typescript-eslint/types': 5.45.0
       eslint-visitor-keys: 3.3.0
     dev: false
 
@@ -9964,13 +9965,6 @@ packages:
       estraverse: 5.3.0
     dev: false
 
-  /eslint-utils/2.1.0:
-    resolution: {integrity: sha512-w94dQYoauyvlDc43XnGB8lU3Zt713vNChgt4EWwhXAP2XkBvndfxF0AgIqKOOasjPIPzj9JqgwkwbCYD0/V3Zg==}
-    engines: {node: '>=6'}
-    dependencies:
-      eslint-visitor-keys: 1.3.0
-    dev: false
-
   /eslint-utils/3.0.0_eslint@8.25.0:
     resolution: {integrity: sha512-uuQC43IGctw68pJA1RgbQS8/NP7rch6Cwd4j3ZBtgo4/8Flj4eGE7ZYSZRN3iq5pVUv6GPdW5Z1RFleo84uLDA==}
     engines: {node: ^10.0.0 || ^12.0.0 || >= 14.0.0}
@@ -9979,11 +9973,6 @@ packages:
     dependencies:
       eslint: 8.25.0
       eslint-visitor-keys: 2.1.0
-    dev: false
-
-  /eslint-visitor-keys/1.3.0:
-    resolution: {integrity: sha512-6J72N8UNa462wa/KFODt/PJ3IU60SDpC3QXC1Hjc1BXXpfL2C9R5+AU7jhe0F6GREqVMh4Juu+NY7xn+6dipUQ==}
-    engines: {node: '>=4'}
     dev: false
 
   /eslint-visitor-keys/2.1.0:
@@ -15772,7 +15761,7 @@ packages:
       loader-utils: 2.0.4
       postcss: 7.0.39
       schema-utils: 3.1.1
-      semver: 7.3.6
+      semver: 7.3.8
       webpack: 4.46.0
     dev: false
 
@@ -17709,6 +17698,14 @@ packages:
       lru-cache: 7.8.0
     dev: false
 
+  /semver/7.3.8:
+    resolution: {integrity: sha512-NB1ctGL5rlHrPJtFDVIVzTyQylMLu9N9VICA6HSFJo8MCGVTMW6gfpicwKmmK/dAjTOrqu5l63JJOpDSrAis3A==}
+    engines: {node: '>=10'}
+    hasBin: true
+    dependencies:
+      lru-cache: 6.0.0
+    dev: false
+
   /send/0.17.2:
     resolution: {integrity: sha512-UJYB6wFSJE3G00nEivR5rgWp8c2xXvJ3OPWPhmuteU0IKj8nKbG3DrjiOmLwpnHGYWAVwA69zmTm++YG0Hmwww==}
     engines: {node: '>= 0.8.0'}
@@ -18041,6 +18038,7 @@ packages:
 
   /sourcemap-codec/1.4.8:
     resolution: {integrity: sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==}
+    deprecated: Please use @jridgewell/sourcemap-codec instead
     dev: false
 
   /space-separated-tokens/1.1.5:
@@ -20874,12 +20872,12 @@ packages:
     dev: false
 
   file:projects/api-client-bear.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-U0ivXEWYqrHiTaqJpj4d/Gx0V3nzdh7P6RUg1NXYN2a9pUCyL2AoymeVDC5yI25CA7gfvJS8bdTZMBslXXTHSA==, tarball: file:projects/api-client-bear.tgz}
+    resolution: {integrity: sha512-/3u2vfkHBrTQkqXpSoycomcIA0avHsKH/ZKcktQoezaTt9sR6jasTlwKEHeYzLrqaI2SzxF5hipYUq8kYVNNKA==, tarball: file:projects/api-client-bear.tgz}
     id: file:projects/api-client-bear.tgz
     name: '@rush-temp/api-client-bear'
     version: 0.0.0
     dependencies:
-      '@gooddata/eslint-config': 2.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
+      '@gooddata/eslint-config': 4.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
       '@types/fast-levenshtein': 0.0.1
       '@types/isomorphic-fetch': 0.0.34
       '@types/jest': 27.4.1
@@ -20942,12 +20940,12 @@ packages:
     dev: false
 
   file:projects/api-client-tiger.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-dJC3jT8A5krUe12i6oE4NAW7mrY2JCeXKAYYuAy+1XZ3V/znfEYjLIzWyYi/X/irGe/LlHh0b7s+4tnL5BMhHA==, tarball: file:projects/api-client-tiger.tgz}
+    resolution: {integrity: sha512-obUAcReUGXw64HCPhdHh7Yv6EZLgzKLwQEylp1bowAaMW8+0kx+Wx0jGZWpFPsyrhI+Ay2fSw9n+2MS5XPpSFw==, tarball: file:projects/api-client-tiger.tgz}
     id: file:projects/api-client-tiger.tgz
     name: '@rush-temp/api-client-tiger'
     version: 0.0.0
     dependencies:
-      '@gooddata/eslint-config': 2.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
+      '@gooddata/eslint-config': 4.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
       '@microsoft/api-documenter': 7.17.2
       '@microsoft/api-extractor': 7.20.1
       '@openapitools/openapi-generator-cli': 2.4.26
@@ -20999,12 +20997,12 @@ packages:
     dev: false
 
   file:projects/api-model-bear.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-U+6Z6dVTWll+GmAM+KnXptOJzbCtJZ4uNo5ulDPtPN2waXJi+RDK3TlUr8R597YpQtdU/FlBFU6/UfnPjjVnKA==, tarball: file:projects/api-model-bear.tgz}
+    resolution: {integrity: sha512-+nU6dKTxGROxi/Jt5Ff4qYNf7a7zm03zsJCujYdi0Afb1lXp9xOZPhaj03r9dO5qfbcudiCAED9prRtl0pj5sw==, tarball: file:projects/api-model-bear.tgz}
     id: file:projects/api-model-bear.tgz
     name: '@rush-temp/api-model-bear'
     version: 0.0.0
     dependencies:
-      '@gooddata/eslint-config': 2.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
+      '@gooddata/eslint-config': 4.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
       '@microsoft/api-documenter': 7.17.2
       '@microsoft/api-extractor': 7.20.1
       '@types/jest': 27.4.1
@@ -21043,11 +21041,11 @@ packages:
     dev: false
 
   file:projects/applink.tgz:
-    resolution: {integrity: sha512-p8tEBy8oGYlgxUUnpe6vfA/q3vZ3687idfQJIGoHWBx97fcXp6dNeFvYzAuKRVSBCw6enO/lKN4FV3JQUk++4A==, tarball: file:projects/applink.tgz}
+    resolution: {integrity: sha512-y9NNyqJybLG00aMRx81cfSOjAQ3/XwwYwq7rO7+S0kVi2E111ND8xEF02HYWk8EJsF+44HNdvBsLUuCKy5gYoQ==, tarball: file:projects/applink.tgz}
     name: '@rush-temp/applink'
     version: 0.0.0
     dependencies:
-      '@gooddata/eslint-config': 2.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
+      '@gooddata/eslint-config': 4.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
       '@types/blessed': 0.1.19
       '@types/cross-spawn': 6.0.2
       '@types/jest': 27.4.1
@@ -21095,13 +21093,13 @@ packages:
     dev: false
 
   file:projects/catalog-export.tgz:
-    resolution: {integrity: sha512-d8WF2igsJXQsgf21IyHPjobX0Yhp2z47HA7e2akHYNjnFd0W+3JlgVAjRm83opSWZz5RsYSmegFn7nSNucxtuA==, tarball: file:projects/catalog-export.tgz}
+    resolution: {integrity: sha512-PS8+kdGF7Q+F7cJrdXVeh3z95uyw8gLhD/iz5Ux6FtHYywzcgtScOXXk2tyFcBNXK+Bc7Mpv+yr9BrtBoVps5w==, tarball: file:projects/catalog-export.tgz}
     name: '@rush-temp/catalog-export'
     version: 0.0.0
     dependencies:
       '@babel/core': 7.17.9
       '@babel/plugin-transform-typescript': 7.16.8_@babel+core@7.17.9
-      '@gooddata/eslint-config': 2.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
+      '@gooddata/eslint-config': 4.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
       '@types/inquirer': 7.3.3
       '@types/jest': 27.4.1
       '@types/lodash': 4.14.181
@@ -21150,7 +21148,7 @@ packages:
     dev: false
 
   file:projects/dashboard-plugin-template.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-NV7jys3LtJEfkUAFfskybJ8wL4uLYWfTSPh+Rlw+HnAi9jAG9HbVkAlfJUO1lzWe3PH26iUn8eDbAGnl61lA2Q==, tarball: file:projects/dashboard-plugin-template.tgz}
+    resolution: {integrity: sha512-q/gIZZqVfJ6ClWJP+mE9o4OLdy0PSBPW2kvwDB3u95dIRQmkHM8U+8xJILViGXYGQzoZM+tCkK3LPi6bcdsfYw==, tarball: file:projects/dashboard-plugin-template.tgz}
     id: file:projects/dashboard-plugin-template.tgz
     name: '@rush-temp/dashboard-plugin-template'
     version: 0.0.0
@@ -21158,7 +21156,7 @@ packages:
       '@babel/core': 7.17.9
       '@babel/preset-env': 7.16.11_@babel+core@7.17.9
       '@babel/preset-react': 7.16.7_@babel+core@7.17.9
-      '@gooddata/eslint-config': 2.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
+      '@gooddata/eslint-config': 4.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
       '@types/enzyme': 3.10.11
       '@types/jest': 27.4.1
       '@types/json-stable-stringify': 1.0.34
@@ -21229,7 +21227,7 @@ packages:
     dev: false
 
   file:projects/dashboard-plugin-tests.tgz:
-    resolution: {integrity: sha512-U2dkkVjtD56KZ97Cr9qxoYqDpYEMH+R22Y6i84KlJm+CRp2dMfq+3/4mR/nD5AlFvOYfw5VBp/FGUPOkEgZWGQ==, tarball: file:projects/dashboard-plugin-tests.tgz}
+    resolution: {integrity: sha512-edmmq2rdzyBMg7DXGabQqvFmy+V5OwLeiuubT3z0yNbpobg9NoAk85hBCWfgbtkUlSiltubM4sARrlSsWLUDzQ==, tarball: file:projects/dashboard-plugin-tests.tgz}
     name: '@rush-temp/dashboard-plugin-tests'
     version: 0.0.0
     dependencies:
@@ -21244,7 +21242,7 @@ packages:
       '@babel/preset-react': 7.16.7_@babel+core@7.17.9
       '@babel/preset-typescript': 7.16.7_@babel+core@7.17.9
       '@babel/runtime': 7.18.9
-      '@gooddata/eslint-config': 2.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
+      '@gooddata/eslint-config': 4.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
       '@microsoft/api-documenter': 7.17.2
       '@microsoft/api-extractor': 7.20.1
       '@types/enzyme': 3.10.11
@@ -21320,12 +21318,12 @@ packages:
     dev: false
 
   file:projects/experimental-workspace.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-KIUBWkTSAfPQk4PG1XdJgQPDtBm+u+LL74sEGH0c397j/n4aR+ZPBUQKA4MqzNNbP6b/a2Z6kBLDc7+3Wbzh1A==, tarball: file:projects/experimental-workspace.tgz}
+    resolution: {integrity: sha512-bAS9Q3F3+G0NPsR0LInsmxXwg/Q204wqVSAeDxuW8m0K8KbYgRUobl7/7D8JAnATZw/wWomvlE5xVJZv1ZnZXA==, tarball: file:projects/experimental-workspace.tgz}
     id: file:projects/experimental-workspace.tgz
     name: '@rush-temp/experimental-workspace'
     version: 0.0.0
     dependencies:
-      '@gooddata/eslint-config': 2.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
+      '@gooddata/eslint-config': 4.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
       '@microsoft/api-extractor': 7.20.1
       '@types/jest': 27.4.1
       '@types/lodash': 4.14.181
@@ -21363,14 +21361,14 @@ packages:
     dev: false
 
   file:projects/i18n-toolkit.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-Tvtrw/VempYM77+0Hd72Ej70bwDYPaxJCagn63r4IiOMBDYtReaeXm3GaUxuic8RAxbQqI/DT8ZIOW1EW08h4g==, tarball: file:projects/i18n-toolkit.tgz}
+    resolution: {integrity: sha512-4sucPKAwFBDra4+m/73Xe9N6J0Bj6X5BGnLGe+O4JdaoRaWA98otTG4sXS/cJlpDoa/lX74wbEdhkHD86wamOQ==, tarball: file:projects/i18n-toolkit.tgz}
     id: file:projects/i18n-toolkit.tgz
     name: '@rush-temp/i18n-toolkit'
     version: 0.0.0
     dependencies:
       '@formatjs/cli': 4.8.4_ts-jest@27.1.4
       '@formatjs/icu-messageformat-parser': 2.1.10
-      '@gooddata/eslint-config': 2.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
+      '@gooddata/eslint-config': 4.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
       '@types/jest': 27.4.1
       '@types/lodash': 4.14.181
       '@types/node': 16.11.26
@@ -21419,12 +21417,12 @@ packages:
     dev: false
 
   file:projects/live-examples-workspace.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-qfLN5geGRsHqW9xAmrqIp9cpmcFUWgHugwLdwDXgIYa2LDSMzfL3uYxPCCh1QtHhCVdtTFcCb9WWt3fXhMvJfw==, tarball: file:projects/live-examples-workspace.tgz}
+    resolution: {integrity: sha512-0kyXKEgGmJp2VUQp1BPvpOMTEq8Wq9bWT9mkep4/8AR3XhwzJF5pYaB9qZ6gFReBBsqKFT+FGxuGag482jh0bA==, tarball: file:projects/live-examples-workspace.tgz}
     id: file:projects/live-examples-workspace.tgz
     name: '@rush-temp/live-examples-workspace'
     version: 0.0.0
     dependencies:
-      '@gooddata/eslint-config': 2.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
+      '@gooddata/eslint-config': 4.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
       '@types/jest': 27.4.1
       '@types/lodash': 4.14.181
       '@types/node': 16.11.26
@@ -21461,11 +21459,11 @@ packages:
     dev: false
 
   file:projects/mock-handling.tgz:
-    resolution: {integrity: sha512-BEy1RyLy41L+fKIZ5FWRbmuGcJJ/S3SolTIQiwDBj5UyvzLcPrKgZxJCUe8LpYEZC3zjc3QbgwV/gXRFG86f6g==, tarball: file:projects/mock-handling.tgz}
+    resolution: {integrity: sha512-i8kazDSchkIyoSD4K8BZYEAHR8Uzuni1nJjoJ1rMaTjmcl7bfrXGkURyXzTXEmLQTb37qMK89otLHs6F8Pzpsw==, tarball: file:projects/mock-handling.tgz}
     name: '@rush-temp/mock-handling'
     version: 0.0.0
     dependencies:
-      '@gooddata/eslint-config': 2.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
+      '@gooddata/eslint-config': 4.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
       '@types/inquirer': 7.3.3
       '@types/jest': 27.4.1
       '@types/json-stable-stringify': 1.0.34
@@ -21516,7 +21514,7 @@ packages:
     dev: false
 
   file:projects/playground.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-/pWa7cZVLFFDlU1ukqGG4s34sopWqCUfxR2BlgqJ/z6MIK+WLhdPrFu0PVXRkMQlkiFpvIka0AYGQWLbY1f3Vw==, tarball: file:projects/playground.tgz}
+    resolution: {integrity: sha512-HHo7hc9k19zoJn0Zf3HJ2edqtQ5pCyz2AavW8Y2j2TZnZV5oMfstYEiI9r30FQKrQgHnUplXrXrJBUuwUgDyZw==, tarball: file:projects/playground.tgz}
     id: file:projects/playground.tgz
     name: '@rush-temp/playground'
     version: 0.0.0
@@ -21532,7 +21530,7 @@ packages:
       '@babel/preset-react': 7.16.7_@babel+core@7.17.9
       '@babel/preset-typescript': 7.16.7_@babel+core@7.17.9
       '@babel/runtime': 7.18.9
-      '@gooddata/eslint-config': 2.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
+      '@gooddata/eslint-config': 4.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
       '@types/lodash': 4.14.181
       '@types/react': 17.0.44
       '@types/react-dom': 17.0.15
@@ -21598,7 +21596,7 @@ packages:
     dev: false
 
   file:projects/plugin-toolkit.tgz:
-    resolution: {integrity: sha512-IXlziirsimF9zHcIpraT9kqJA+k6vwcCqs1Jfum4gZ1dxLHLLXIaMFUaRhnUPlyyp37d7S6kdWJjvqxJKluyNg==, tarball: file:projects/plugin-toolkit.tgz}
+    resolution: {integrity: sha512-aBco+3PcL9KiQg3dVbf953That1jrK4AqaJ/NXjrNBQ4/GjqFQWQAwYZBnnwUrTQRAQ+4SowZOAnQrDn9Go/xw==, tarball: file:projects/plugin-toolkit.tgz}
     name: '@rush-temp/plugin-toolkit'
     version: 0.0.0
     dependencies:
@@ -21606,7 +21604,7 @@ packages:
       '@babel/core': 7.17.9
       '@babel/preset-env': 7.16.11_@babel+core@7.17.9
       '@babel/preset-typescript': 7.16.7_@babel+core@7.17.9
-      '@gooddata/eslint-config': 2.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
+      '@gooddata/eslint-config': 4.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
       '@types/columnify': 1.5.1
       '@types/cross-spawn': 6.0.2
       '@types/fs-extra': 9.0.13
@@ -21663,12 +21661,12 @@ packages:
     dev: false
 
   file:projects/reference-workspace-mgmt.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-G+dZoNbbMW1z49cwa53a4DGNy6afEF5ma3VqDgXsFpNRtBb0o7MI319Ne1s40E3OvvZeIarJVtTJ8wKzX05DDw==, tarball: file:projects/reference-workspace-mgmt.tgz}
+    resolution: {integrity: sha512-d3DNOs1HGSrQ5TQEJ3vw1YOpt31OK0pAymoKyKxsHlo5NEhATbEB/DlCH/mkld/LerpZPCBKlsOOEyxCLyIlCg==, tarball: file:projects/reference-workspace-mgmt.tgz}
     id: file:projects/reference-workspace-mgmt.tgz
     name: '@rush-temp/reference-workspace-mgmt'
     version: 0.0.0
     dependencies:
-      '@gooddata/eslint-config': 2.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
+      '@gooddata/eslint-config': 4.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
       '@types/jest': 27.4.1
       '@types/lodash': 4.14.181
       '@types/node': 16.11.26
@@ -21704,12 +21702,12 @@ packages:
     dev: false
 
   file:projects/reference-workspace.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-QgGmQilCmwmmxnbmAh6Vb0pJabhqrBUB07rGZq/bNd+rRA8sLSqCsSEMDlCfjNgMhmDA6qZCqQSkNZnYhTzInw==, tarball: file:projects/reference-workspace.tgz}
+    resolution: {integrity: sha512-cW+A5TIJ+g+DqOxtU7V+YLEX9EamlYvSOAveZDbcyHiKYSw1EotFY76Hu4yACpJATdVm5qLnzIE9vEkBlPV5rg==, tarball: file:projects/reference-workspace.tgz}
     id: file:projects/reference-workspace.tgz
     name: '@rush-temp/reference-workspace'
     version: 0.0.0
     dependencies:
-      '@gooddata/eslint-config': 2.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
+      '@gooddata/eslint-config': 4.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
       '@types/jest': 27.4.1
       '@types/lodash': 4.14.181
       '@types/node': 16.11.26
@@ -21746,13 +21744,13 @@ packages:
     dev: false
 
   file:projects/sdk-backend-base.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-j7lF/kfAGqznGC5emouNu2WBnOAz5I4C9RBGK0dI43cg0eABN55EM20a8OJqMPkxl7+kMhtShYEQvqJ58XeyKg==, tarball: file:projects/sdk-backend-base.tgz}
+    resolution: {integrity: sha512-gElp6Ft7cMRNoM8qUjcNoGjVJH0gCzlLtiHsUDTv7KI8xNVOvaY/NuxbD33Wev4GHtKxpnK1Ig0vs5KO5vGSOA==, tarball: file:projects/sdk-backend-base.tgz}
     id: file:projects/sdk-backend-base.tgz
     name: '@rush-temp/sdk-backend-base'
     version: 0.0.0
     dependencies:
       '@braintree/sanitize-url': 6.0.0
-      '@gooddata/eslint-config': 2.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
+      '@gooddata/eslint-config': 4.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
       '@microsoft/api-documenter': 7.17.2
       '@microsoft/api-extractor': 7.20.1
       '@types/jest': 27.4.1
@@ -21798,12 +21796,12 @@ packages:
     dev: false
 
   file:projects/sdk-backend-bear.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-qZHzFXtmQXNPe5SssN5XvZVROcPA27LEFfriFs05KdPu2FcIqLOZNzmJc5HoFll4dE8X3X7xxfaCQcD9mdXvCw==, tarball: file:projects/sdk-backend-bear.tgz}
+    resolution: {integrity: sha512-n9KLE+0j7ML4ZbNA43XFtCFCHb37R9sZTUtcrgREDvqeQe2+K7yqjEDAv72qKyRolQosN7EBh8JHriJnAxtBZQ==, tarball: file:projects/sdk-backend-bear.tgz}
     id: file:projects/sdk-backend-bear.tgz
     name: '@rush-temp/sdk-backend-bear'
     version: 0.0.0
     dependencies:
-      '@gooddata/eslint-config': 2.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
+      '@gooddata/eslint-config': 4.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
       '@microsoft/api-documenter': 7.17.2
       '@microsoft/api-extractor': 7.20.1
       '@types/jest': 27.4.1
@@ -21852,12 +21850,12 @@ packages:
     dev: false
 
   file:projects/sdk-backend-mockingbird.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-uhe0H0mNw+Eqkfsaa4oXvekklG3zzZIEdB6sMyUiLzdVjBoahLmSSFe5A0NF1DOyc91bra3mq1lVJUDu3LUOIw==, tarball: file:projects/sdk-backend-mockingbird.tgz}
+    resolution: {integrity: sha512-wB9RLTY009J7/WiqGnewGH6zjqp156fWEXQRMYpsuaYFe7oUi9yfdHhbjsrK4TuZwLZy7PNYibi6K3Utx3qdIA==, tarball: file:projects/sdk-backend-mockingbird.tgz}
     id: file:projects/sdk-backend-mockingbird.tgz
     name: '@rush-temp/sdk-backend-mockingbird'
     version: 0.0.0
     dependencies:
-      '@gooddata/eslint-config': 2.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
+      '@gooddata/eslint-config': 4.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
       '@microsoft/api-documenter': 7.17.2
       '@microsoft/api-extractor': 7.20.1
       '@types/jest': 27.4.1
@@ -21899,12 +21897,12 @@ packages:
     dev: false
 
   file:projects/sdk-backend-spi.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-H6e+qXg6Hq3rNDRpyf+ValUVqYGDUUmUURFJ8keC7AMhm/BhAMkPH/FJgNYIDxkbaN0OGUJiUvi++g84dlOGUQ==, tarball: file:projects/sdk-backend-spi.tgz}
+    resolution: {integrity: sha512-qYf7MWReMZcADqMlxoFgElQeimgtEYXaGlPNWA17sLMSTNINJT+2R0YQ16Duva5TIWvaIMBuLirekZlBnGwHfw==, tarball: file:projects/sdk-backend-spi.tgz}
     id: file:projects/sdk-backend-spi.tgz
     name: '@rush-temp/sdk-backend-spi'
     version: 0.0.0
     dependencies:
-      '@gooddata/eslint-config': 2.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
+      '@gooddata/eslint-config': 4.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
       '@microsoft/api-documenter': 7.17.2
       '@microsoft/api-extractor': 7.20.1
       '@types/jest': 27.4.1
@@ -21944,12 +21942,12 @@ packages:
     dev: false
 
   file:projects/sdk-backend-tiger.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-huZm4S3ZnrFJO7i5mCmfQHsGy9FpLjYBXfoztSWHzWeXI6gg1eW64K1SrR7SlSJhpvBI4f5ox0sJiIlbfzz+Lw==, tarball: file:projects/sdk-backend-tiger.tgz}
+    resolution: {integrity: sha512-iQCAvDdvYVEszMWVuwdvVdZvhOyD5q1kYguhVWxZjEXcmwel35wT1B7UtMd+4iHHcNLo29Md0bH6xD7C9doLyg==, tarball: file:projects/sdk-backend-tiger.tgz}
     id: file:projects/sdk-backend-tiger.tgz
     name: '@rush-temp/sdk-backend-tiger'
     version: 0.0.0
     dependencies:
-      '@gooddata/eslint-config': 2.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
+      '@gooddata/eslint-config': 4.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
       '@microsoft/api-documenter': 7.17.2
       '@microsoft/api-extractor': 7.20.1
       '@types/jest': 27.4.1
@@ -21997,12 +21995,12 @@ packages:
     dev: false
 
   file:projects/sdk-embedding.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-EjrQo0dWpp/X78SjPsUeOQblg8755VWNmZJ83j4UtvqwjmOhz0OBWRGCBY2caksRxwswmRukO1F5GdkRMktDCg==, tarball: file:projects/sdk-embedding.tgz}
+    resolution: {integrity: sha512-PZkR450CWa1FodEaK0ZtSg8I2UpC13B8MuYxA5HdId5Lbfrkp0DFEEFQLX6gpgC7KyHAAMauu6L9TrmEYtwqbQ==, tarball: file:projects/sdk-embedding.tgz}
     id: file:projects/sdk-embedding.tgz
     name: '@rush-temp/sdk-embedding'
     version: 0.0.0
     dependencies:
-      '@gooddata/eslint-config': 2.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
+      '@gooddata/eslint-config': 4.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
       '@microsoft/api-documenter': 7.17.2
       '@microsoft/api-extractor': 7.20.1
       '@types/jest': 27.4.1
@@ -22042,7 +22040,7 @@ packages:
     dev: false
 
   file:projects/sdk-examples.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-fny/trxxpKPqZkL/v6uHoMM7RE2d6grR2PV2NrhEzxffa2Cp6Ki0/06CbFNfD2WramH2aWPQMx0hEuOhm0BwGg==, tarball: file:projects/sdk-examples.tgz}
+    resolution: {integrity: sha512-4yb//+bnQv5jywdC1Gd2pxmPCZCWXvDHXum074hCvOrww8PtRZjOWfdmsU/qMzVucV5/PfcbbWKaUwNEHS8GwQ==, tarball: file:projects/sdk-examples.tgz}
     id: file:projects/sdk-examples.tgz
     name: '@rush-temp/sdk-examples'
     version: 0.0.0
@@ -22058,7 +22056,7 @@ packages:
       '@babel/preset-react': 7.16.7_@babel+core@7.17.9
       '@babel/preset-typescript': 7.16.7_@babel+core@7.17.9
       '@babel/runtime': 7.18.9
-      '@gooddata/eslint-config': 2.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
+      '@gooddata/eslint-config': 4.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
       '@types/history': 4.7.11
       '@types/isomorphic-fetch': 0.0.34
       '@types/lodash': 4.14.181
@@ -22156,12 +22154,12 @@ packages:
     dev: false
 
   file:projects/sdk-model.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-JDlkRqgWWaubneCdASYjF+mT6qvCXSbzX21CfXLU1ergfGZhKpzADyxZpTvx9anBQdkinap/DPLtDzNnjdI/Ng==, tarball: file:projects/sdk-model.tgz}
+    resolution: {integrity: sha512-q+TDvzwwvORUcum4lKq3NqyqtmfnzDSfRQ+n26ChAsUGM3K44BcUBJd+oNTs9CzbIn7+1IG36aRS2/Bqt8wzvw==, tarball: file:projects/sdk-model.tgz}
     id: file:projects/sdk-model.tgz
     name: '@rush-temp/sdk-model'
     version: 0.0.0
     dependencies:
-      '@gooddata/eslint-config': 2.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
+      '@gooddata/eslint-config': 4.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
       '@microsoft/api-documenter': 7.17.2
       '@microsoft/api-extractor': 7.20.1
       '@types/jest': 27.4.1
@@ -22207,12 +22205,12 @@ packages:
     dev: false
 
   file:projects/sdk-skel-ts.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-Uv52GYTIIojU4bWi0Vx3sLAmRkMoTP+yfJXy0mHYsZaQsPOZcBryebfsvAdXHQEspX0NnUwy7L28+58uz51gyQ==, tarball: file:projects/sdk-skel-ts.tgz}
+    resolution: {integrity: sha512-s8Qq9swvk8fcGPN7BfcMPcZl8+FVII7v52fBgdCj+YlmXYFt9WkUQXCeY5XVlGMvSr5p4DcGi4PAE7U2XG62eQ==, tarball: file:projects/sdk-skel-ts.tgz}
     id: file:projects/sdk-skel-ts.tgz
     name: '@rush-temp/sdk-skel-ts'
     version: 0.0.0
     dependencies:
-      '@gooddata/eslint-config': 2.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
+      '@gooddata/eslint-config': 4.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
       '@microsoft/api-documenter': 7.17.2
       '@microsoft/api-extractor': 7.20.1
       '@types/jest': 27.4.1
@@ -22251,12 +22249,12 @@ packages:
     dev: false
 
   file:projects/sdk-skel-tsx.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-mLF1YUuNFtAjPXajXYmUKlKKTeeD4We/7Wdun3ECmDaCZl+rCPmJhE+4PErs9pRVnH+dpTrvUGHSj8UBjEkR4A==, tarball: file:projects/sdk-skel-tsx.tgz}
+    resolution: {integrity: sha512-4jjAg5YaINdO5/2YR5/r7HMzHiZCXV/qPU0oBoxvycA6nyaxkafn9CggQFA/Xas7WPUnGRCc9kCneEWyHNR2BA==, tarball: file:projects/sdk-skel-tsx.tgz}
     id: file:projects/sdk-skel-tsx.tgz
     name: '@rush-temp/sdk-skel-tsx'
     version: 0.0.0
     dependencies:
-      '@gooddata/eslint-config': 2.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
+      '@gooddata/eslint-config': 4.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
       '@microsoft/api-documenter': 7.17.2
       '@microsoft/api-extractor': 7.20.1
       '@types/enzyme': 3.10.11
@@ -22308,12 +22306,12 @@ packages:
     dev: false
 
   file:projects/sdk-ui-all.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-wEjG5pEdy1nS7fM7eaS41nCZGBv17KC+MfQ8Sjk9o+6JywqtBEvjGvAIJuawwqmQuW5r7GKRTWJaQ/9/K7ZCXg==, tarball: file:projects/sdk-ui-all.tgz}
+    resolution: {integrity: sha512-fpcDoSXK5yFWNYJVooZUL0UrJD44R3+WpHF8KgaHc8LtstE5DjQHJH1HjA+6sdRkS819xuJ6YB4qiRlOQu3N7Q==, tarball: file:projects/sdk-ui-all.tgz}
     id: file:projects/sdk-ui-all.tgz
     name: '@rush-temp/sdk-ui-all'
     version: 0.0.0
     dependencies:
-      '@gooddata/eslint-config': 2.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
+      '@gooddata/eslint-config': 4.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
       '@microsoft/api-documenter': 7.17.2
       '@microsoft/api-extractor': 7.20.1
       '@types/jest': 27.4.1
@@ -22350,12 +22348,12 @@ packages:
     dev: false
 
   file:projects/sdk-ui-charts.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-GuBqTb9EoJMELWwWxZ5MWg0EPhb8RxTeObCAEnmQtKiijG7oreC8hiXZ9H3RQfdhDhW+AYMYTQk7AmamUQyMoQ==, tarball: file:projects/sdk-ui-charts.tgz}
+    resolution: {integrity: sha512-dJvIq9qlhQb4rPnaRiGXgIbNvAZSHywNeJPsqAJNiHKWzDLQMRKAtCWK+d7yekhlW79+F+ayyaZvMzi9vh5uvw==, tarball: file:projects/sdk-ui-charts.tgz}
     id: file:projects/sdk-ui-charts.tgz
     name: '@rush-temp/sdk-ui-charts'
     version: 0.0.0
     dependencies:
-      '@gooddata/eslint-config': 2.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
+      '@gooddata/eslint-config': 4.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
       '@gooddata/numberjs': 4.0.3
       '@gooddata/stylelint-config': 5.0.2
       '@microsoft/api-documenter': 7.17.2
@@ -22427,12 +22425,12 @@ packages:
     dev: false
 
   file:projects/sdk-ui-dashboard.tgz_a7e570fd5a4985262571d64f4bc94b86:
-    resolution: {integrity: sha512-1E+f0++AAwh1gQHUitStVGxeBxTDL7ey9mc6qaAItOESocnkYvWaHtQXvi1ABRvijJQ0it3Eaf4Urz45lZ2weQ==, tarball: file:projects/sdk-ui-dashboard.tgz}
+    resolution: {integrity: sha512-e9j+HaCdzIIjdwKo0XhowmL35MGsp6wEMSu98GwLv9XMEA4zH3p1wll+1N6zCySuXbt0kia6SZ2X7JjCUMgoKA==, tarball: file:projects/sdk-ui-dashboard.tgz}
     id: file:projects/sdk-ui-dashboard.tgz
     name: '@rush-temp/sdk-ui-dashboard'
     version: 0.0.0
     dependencies:
-      '@gooddata/eslint-config': 2.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
+      '@gooddata/eslint-config': 4.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
       '@gooddata/numberjs': 4.0.3
       '@microsoft/api-documenter': 7.17.2
       '@microsoft/api-extractor': 7.20.1
@@ -22523,13 +22521,13 @@ packages:
     dev: false
 
   file:projects/sdk-ui-ext.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-pvYDuVYGWQ/jmD26qkAaDd6JuDDH3VyQbzITVLjZbU/Dc3CFQ9PpTCcT/P36FSOv3L4lBSdwqHYS6Y7183A6GQ==, tarball: file:projects/sdk-ui-ext.tgz}
+    resolution: {integrity: sha512-QyUYINSIfewcayT5LvjvHu8+qA6hOhVREaNS2Vaja8/OGndn+39fKBWUF7h6zF4nMU73VmUp0bgOLOEaUd9q2A==, tarball: file:projects/sdk-ui-ext.tgz}
     id: file:projects/sdk-ui-ext.tgz
     name: '@rush-temp/sdk-ui-ext'
     version: 0.0.0
     dependencies:
       '@formatjs/intl-pluralrules': 1.3.9
-      '@gooddata/eslint-config': 2.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
+      '@gooddata/eslint-config': 4.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
       '@gooddata/numberjs': 4.0.3
       '@gooddata/stylelint-config': 5.0.2
       '@microsoft/api-documenter': 7.17.2
@@ -22610,12 +22608,12 @@ packages:
     dev: false
 
   file:projects/sdk-ui-filters.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-ZlSdAZN5zwN+rFpAWZ9FQlWF23TqqLaZJ7jbiP4sbgol7ikeI9HFyb24uPCc5JsGg5ivdBbDaB6oSZqVvVcFTw==, tarball: file:projects/sdk-ui-filters.tgz}
+    resolution: {integrity: sha512-iVZgDMcFsp0WSgLc+pnY+hZh/RD48Ckmx807I0pxTTWqq88Q1rj0VUBCu/WSteGs0b2jhaZehtAn/tXSt40ybw==, tarball: file:projects/sdk-ui-filters.tgz}
     id: file:projects/sdk-ui-filters.tgz
     name: '@rush-temp/sdk-ui-filters'
     version: 0.0.0
     dependencies:
-      '@gooddata/eslint-config': 2.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
+      '@gooddata/eslint-config': 4.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
       '@gooddata/numberjs': 4.0.3
       '@gooddata/stylelint-config': 5.0.2
       '@microsoft/api-documenter': 7.17.2
@@ -22693,12 +22691,12 @@ packages:
     dev: false
 
   file:projects/sdk-ui-geo.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-oLycZVnBUWgEy3kbsN36PLawEkmT5Fv3WCpt2ESibeaWyjX9FLYnzYSd8bFzk+agIRo40+XhyF+cPU830hTl8A==, tarball: file:projects/sdk-ui-geo.tgz}
+    resolution: {integrity: sha512-eVW9XrHnc6hSKN9FuwQghIpGS5FJS5gsnQ2FsMGjXJygThTiLpHbKfFGSZTqj1/eMnrrWT9ECPjY/LQU2R0gHw==, tarball: file:projects/sdk-ui-geo.tgz}
     id: file:projects/sdk-ui-geo.tgz
     name: '@rush-temp/sdk-ui-geo'
     version: 0.0.0
     dependencies:
-      '@gooddata/eslint-config': 2.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
+      '@gooddata/eslint-config': 4.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
       '@gooddata/numberjs': 4.0.3
       '@gooddata/stylelint-config': 5.0.2
       '@microsoft/api-documenter': 7.17.2
@@ -22764,7 +22762,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-kit.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-1E2no7tt0MYMXk0s09YsH8k6BFtCOXovoECC5Tj9ZXAxoOVc7EqNc8Q7ot4TRwslEHLdPN5RUWE1QM8Mc4a55g==, tarball: file:projects/sdk-ui-kit.tgz}
+    resolution: {integrity: sha512-LkO1bRuhI3MMkYPqFzoq1iqe3OEuYtBiaIemRZy5CtQWeOnV8mkDpFrpSvyMkTIB+pGnOz1Pr+qPfO2WH/wh7A==, tarball: file:projects/sdk-ui-kit.tgz}
     id: file:projects/sdk-ui-kit.tgz
     name: '@rush-temp/sdk-ui-kit'
     version: 0.0.0
@@ -22773,7 +22771,7 @@ packages:
       '@codemirror/language': 6.2.1
       '@codemirror/state': 6.1.1
       '@codemirror/view': 6.1.2
-      '@gooddata/eslint-config': 2.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
+      '@gooddata/eslint-config': 4.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
       '@gooddata/numberjs': 4.0.3
       '@gooddata/stylelint-config': 5.0.2
       '@microsoft/api-documenter': 7.17.2
@@ -22878,12 +22876,12 @@ packages:
     dev: false
 
   file:projects/sdk-ui-loaders.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-TkuAG9ZQ86ekVIeGZplVDpP5GaCdWLdo5yIkonG9Ltkjyz/M++XHw1NIkUvoSyJJDM+5/+3Gxi1zdja/kBs1Wg==, tarball: file:projects/sdk-ui-loaders.tgz}
+    resolution: {integrity: sha512-Vftv+VRbyfbKS9imnov6JIf9Ahl6penJEh2rV0KvMfee2qHt9vHvIqs0/QQ+KjMWdSWkdcgvDgqBN4irRUHB0g==, tarball: file:projects/sdk-ui-loaders.tgz}
     id: file:projects/sdk-ui-loaders.tgz
     name: '@rush-temp/sdk-ui-loaders'
     version: 0.0.0
     dependencies:
-      '@gooddata/eslint-config': 2.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
+      '@gooddata/eslint-config': 4.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
       '@microsoft/api-documenter': 7.17.2
       '@microsoft/api-extractor': 7.20.1
       '@types/enzyme': 3.10.11
@@ -22940,7 +22938,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-pivot.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-JjyfKAInvP2dvc5qG5UsuoL6rsFWFKM1JOpZKvxPwWnFphgjMceBq1b+8FMspSldCxcqp5JXT321aCd2jUZSIw==, tarball: file:projects/sdk-ui-pivot.tgz}
+    resolution: {integrity: sha512-KBpEqcfXVan4QvmX408NpkrQycz+GKZcPDrqI+lIEdx7qnCEQNKQxtZoGwV3psphFl90rFm0xsWVr+tGXhqirw==, tarball: file:projects/sdk-ui-pivot.tgz}
     id: file:projects/sdk-ui-pivot.tgz
     name: '@rush-temp/sdk-ui-pivot'
     version: 0.0.0
@@ -22948,7 +22946,7 @@ packages:
       '@ag-grid-community/all-modules': 25.3.0
       '@ag-grid-community/react': 25.3.0_react-dom@17.0.2+react@17.0.2
       '@formatjs/intl-pluralrules': 1.3.9
-      '@gooddata/eslint-config': 2.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
+      '@gooddata/eslint-config': 4.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
       '@gooddata/numberjs': 4.0.3
       '@gooddata/stylelint-config': 5.0.2
       '@microsoft/api-documenter': 7.17.2
@@ -23014,7 +23012,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-tests-e2e.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-bCIYbpNeH1hZrof+FuhgezN53xVOH5eSC7yVbCdMzk48CNkKiBeleXB0x47U0bULMPvD/I6SvRDDT3IxgbchTA==, tarball: file:projects/sdk-ui-tests-e2e.tgz}
+    resolution: {integrity: sha512-EAEuuwYr1p/UrMzTsNjNuucD4hbj55S3oc0vY6rnV6ZMZTQiKNBDXYN90s0yIP4opp07AaOVZzCyM6986GRI+g==, tarball: file:projects/sdk-ui-tests-e2e.tgz}
     id: file:projects/sdk-ui-tests-e2e.tgz
     name: '@rush-temp/sdk-ui-tests-e2e'
     version: 0.0.0
@@ -23030,7 +23028,7 @@ packages:
       '@babel/preset-react': 7.16.7_@babel+core@7.17.9
       '@babel/preset-typescript': 7.16.7_@babel+core@7.17.9
       '@babel/runtime': 7.18.9
-      '@gooddata/eslint-config': 2.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
+      '@gooddata/eslint-config': 4.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
       '@microsoft/api-documenter': 7.17.2
       '@microsoft/api-extractor': 7.20.1
       '@types/enzyme': 3.10.11
@@ -23116,7 +23114,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-tests.tgz:
-    resolution: {integrity: sha512-ak0Mfa5u7ZZ/oMo/rCXNUNZZdx9WA6ZW8Xu4nCo7cUSGtTc3dHPGnvIRkSQq1s4vWIAICvxkBlszPjwd9YRPxQ==, tarball: file:projects/sdk-ui-tests.tgz}
+    resolution: {integrity: sha512-r/RcJ+lwxCc4xZCYl1BBnk53SPR1coOuwrtl5Pi/HIYK/c9wVRFVdidT6iiMxtEG97NKLgOWui19BqQ36B34aA==, tarball: file:projects/sdk-ui-tests.tgz}
     name: '@rush-temp/sdk-ui-tests'
     version: 0.0.0
     dependencies:
@@ -23127,7 +23125,7 @@ packages:
       '@babel/preset-react': 7.16.7_@babel+core@7.17.9
       '@babel/runtime': 7.18.9
       '@componentdriven/csf': 0.0.2-alpha.0
-      '@gooddata/eslint-config': 2.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
+      '@gooddata/eslint-config': 4.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
       '@gooddata/numberjs': 4.0.3
       '@gooddata/stylelint-config': 5.0.2
       '@storybook/addon-actions': 6.5.6_react-dom@17.0.2+react@17.0.2
@@ -23227,12 +23225,12 @@ packages:
     dev: false
 
   file:projects/sdk-ui-theme-provider.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-LVKbL8oPNqpCb9S9QXL/QHg7E9PgLNMPBI9BQ+G25kOnQoS9Gt3y4LGJ+/z5RIHYXav80LNwf2+Bp9FjzB8Niw==, tarball: file:projects/sdk-ui-theme-provider.tgz}
+    resolution: {integrity: sha512-SS61zq4oJHHI2Bq+AytW7AJV6tGqCtpYT8VbbLkFSMt97Ys41het0ShXR/MnOXQB9zFZvAH09ec3bIOByP3RvQ==, tarball: file:projects/sdk-ui-theme-provider.tgz}
     id: file:projects/sdk-ui-theme-provider.tgz
     name: '@rush-temp/sdk-ui-theme-provider'
     version: 0.0.0
     dependencies:
-      '@gooddata/eslint-config': 2.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
+      '@gooddata/eslint-config': 4.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
       '@microsoft/api-documenter': 7.17.2
       '@microsoft/api-extractor': 7.20.1
       '@types/enzyme': 3.10.11
@@ -23285,12 +23283,12 @@ packages:
     dev: false
 
   file:projects/sdk-ui-vis-commons.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-E434rXAIkDZyl+ZwlFb6RFwtatirs7cFOrgv6MGyfIK2AwpZoVKFQQxkO/mJd8Q3Hw+AoI2JXBzwsrfCoyGLIg==, tarball: file:projects/sdk-ui-vis-commons.tgz}
+    resolution: {integrity: sha512-aCLjh1S6R3UctcfVKQw+GL9utXUn26Xiv216Vgw3UCJXZ8nb64KXD8R3aldVH2lup64R4NvqjChbLuxb6GSxcA==, tarball: file:projects/sdk-ui-vis-commons.tgz}
     id: file:projects/sdk-ui-vis-commons.tgz
     name: '@rush-temp/sdk-ui-vis-commons'
     version: 0.0.0
     dependencies:
-      '@gooddata/eslint-config': 2.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
+      '@gooddata/eslint-config': 4.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
       '@gooddata/numberjs': 4.0.3
       '@gooddata/stylelint-config': 5.0.2
       '@microsoft/api-documenter': 7.17.2
@@ -23350,13 +23348,13 @@ packages:
     dev: false
 
   file:projects/sdk-ui-web-components.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-p7R09cWcShd/smbTWWhW+mfQqZcDxAOnoMyb00ewxJx/fT4SYQSGzG/FIqAJwpN/RKcxWYW/kz/01jLS3RVK3g==, tarball: file:projects/sdk-ui-web-components.tgz}
+    resolution: {integrity: sha512-sOx9c98LCFjQHRc0/nXFpP5wh1zDkPJ/8RZe2DPTXEgH1oplMFRA7ddychPpgiIRj/4itJL/0atQ9KDE/d8DSw==, tarball: file:projects/sdk-ui-web-components.tgz}
     id: file:projects/sdk-ui-web-components.tgz
     name: '@rush-temp/sdk-ui-web-components'
     version: 0.0.0
     dependencies:
       '@babel/preset-react': 7.16.7
-      '@gooddata/eslint-config': 2.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
+      '@gooddata/eslint-config': 4.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
       '@microsoft/api-documenter': 7.17.2
       '@microsoft/api-extractor': 7.20.1
       '@types/enzyme': 3.10.11
@@ -23424,13 +23422,13 @@ packages:
     dev: false
 
   file:projects/sdk-ui.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-I9oFHlepXyOh41TwKWQE0UWk9XcwNpsFgvRIqhC97yoTi8t5pSwl3W+hVKwrBaVHtcrSztA/ujomJSrJv2bOoQ==, tarball: file:projects/sdk-ui.tgz}
+    resolution: {integrity: sha512-2u3pFG9STPwvb1/Va75WG8DnC96rSzKv0QX7ZGW96674Kt/iCR1G1yt7Ykl1o1+FS3WLnW9WNo5H7dqa5D52Vw==, tarball: file:projects/sdk-ui.tgz}
     id: file:projects/sdk-ui.tgz
     name: '@rush-temp/sdk-ui'
     version: 0.0.0
     dependencies:
       '@formatjs/intl-pluralrules': 1.3.9
-      '@gooddata/eslint-config': 2.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
+      '@gooddata/eslint-config': 4.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
       '@gooddata/numberjs': 4.0.3
       '@gooddata/stylelint-config': 5.0.2
       '@microsoft/api-documenter': 7.17.2
@@ -23504,12 +23502,12 @@ packages:
     dev: false
 
   file:projects/util.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-3WdPYeuphnPCaWf7N43/DFQO/y3apDqDvhExBPvNF1gY4BgyDyMc5h65pT+pSKPwhSx4MBaCjmS4knj4KGKKEg==, tarball: file:projects/util.tgz}
+    resolution: {integrity: sha512-ZcqCCSfJNG8B17XmPmrQ+s9pkFdLijYtAPJ03EcWZOSCbeL1Qg3v4t7G+9+udS/k9oaponbUU1sm+8gNlt3omw==, tarball: file:projects/util.tgz}
     id: file:projects/util.tgz
     name: '@rush-temp/util'
     version: 0.0.0
     dependencies:
-      '@gooddata/eslint-config': 2.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
+      '@gooddata/eslint-config': 4.1.0_5a45fa3c8a1b0bd4afd5a3f2cdb97c77
       '@microsoft/api-documenter': 7.17.2
       '@microsoft/api-extractor': 7.20.1
       '@types/jest': 27.4.1

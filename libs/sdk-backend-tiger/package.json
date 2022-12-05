@@ -71,7 +71,7 @@
     },
     "devDependencies": {
         "@gooddata/catalog-export": "^8.12.0-alpha.71",
-        "@gooddata/eslint-config": "^2.1.0",
+        "@gooddata/eslint-config": "^4.1.0",
         "@gooddata/reference-workspace": "^8.12.0-alpha.71",
         "@microsoft/api-documenter": "^7.17.0",
         "@microsoft/api-extractor": "^7.20.0",
