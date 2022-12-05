@@ -53,12 +53,13 @@ const selectCommonDashboardInsightProps = createSelector(
 );
 
 const selectChartConfig = createSelector(
-    [selectMapboxToken, selectSeparators, selectDrillableItems, selectIsExport],
-    (mapboxToken, separators, drillableItems, isExport) => ({
+    [selectMapboxToken, selectSeparators, selectDrillableItems, selectIsExport, selectIsInEditMode],
+    (mapboxToken, separators, drillableItems, isExportMode, isInEditMode) => ({
         mapboxToken,
         separators,
         forceDisableDrillOnAxes: !drillableItems?.length, // to keep in line with KD, enable axes drilling only if using explicit drills
-        isExportMode: isExport,
+        isExportMode,
+        isInEditMode,
     }),
 );
 
