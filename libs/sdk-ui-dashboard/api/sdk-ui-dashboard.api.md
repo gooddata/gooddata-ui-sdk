@@ -6023,9 +6023,6 @@ export const selectIsWhiteLabeled: OutputSelector<DashboardState, boolean, (res:
 export const selectIsWidgetLoadingAdditionalDataByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, boolean, (res: ObjRef[]) => boolean>;
 
 // @internal (undocumented)
-export const selectKpiDateDatasetAutoSelect: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
-
-// @internal (undocumented)
 export const selectKpiDeleteDialogWidgetCoordinates: OutputSelector<DashboardState, ILayoutCoordinates | undefined, (res: UiState) => ILayoutCoordinates | undefined>;
 
 // @internal (undocumented)
@@ -6132,6 +6129,9 @@ export const selectWidgetByRef: (ref: ObjRef | undefined) => OutputSelector<Dash
 
 // @alpha
 export const selectWidgetCoordinatesByRef: (ref: ObjRef) => OutputSelector<DashboardState, ILayoutCoordinates, (res: IDashboardLayout<ExtendedDashboardWidget>) => ILayoutCoordinates>;
+
+// @internal (undocumented)
+export const selectWidgetDateDatasetAutoSelect: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
 
 // @alpha
 export const selectWidgetDrills: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IDrillToLegacyDashboard[] | InsightDrillDefinition[], (res: IKpiWidget | IInsightWidget | undefined) => IDrillToLegacyDashboard[] | InsightDrillDefinition[]>;
@@ -6340,7 +6340,7 @@ setConfigurationPanelOpened: CaseReducer<UiState, {
 payload: boolean;
 type: string;
 }>;
-setKpiDateDatasetAutoSelect: CaseReducer<UiState, {
+setWidgetDateDatasetAutoSelect: CaseReducer<UiState, {
 payload: boolean;
 type: string;
 }>;
@@ -6440,8 +6440,6 @@ export interface UiState {
         highlightedWidgetRef: ObjRef | undefined;
     };
     // (undocumented)
-    kpiDateDatasetAutoSelect: boolean;
-    // (undocumented)
     kpiDeleteDialog: {
         widgetCoordinates: ILayoutCoordinates | undefined;
     };
@@ -6472,6 +6470,8 @@ export interface UiState {
     };
     // (undocumented)
     toastMessages: IToastMessage[];
+    // (undocumented)
+    widgetDateDatasetAutoSelect: boolean;
     // (undocumented)
     widgetsLoadingAdditionalData: ObjRef[];
     // (undocumented)

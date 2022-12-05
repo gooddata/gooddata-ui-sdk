@@ -42,6 +42,7 @@ export function useNewSectionInsightListItemDropHandler(sectionIndex: number) {
             const ref = event.payload.items[0].widget!.ref;
             dispatch(uiActions.selectWidget(ref));
             dispatch(uiActions.setConfigurationPanelOpened(true));
+            dispatch(uiActions.setWidgetDateDatasetAutoSelect(true));
             dispatch(uiActions.setWidgetLoadingAdditionalDataStarted(ref));
             preselectDateDataset(ref, "default");
         },

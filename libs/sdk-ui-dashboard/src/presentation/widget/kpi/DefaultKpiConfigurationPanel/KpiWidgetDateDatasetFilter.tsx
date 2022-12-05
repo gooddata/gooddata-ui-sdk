@@ -9,7 +9,7 @@ import {
     queryDateDatasetsForMeasure,
     QueryMeasureDateDatasets,
     selectIsWidgetLoadingAdditionalDataByWidgetRef,
-    selectKpiDateDatasetAutoSelect,
+    selectWidgetDateDatasetAutoSelect,
     uiActions,
     useDashboardCommandProcessing,
     useDashboardDispatch,
@@ -40,7 +40,7 @@ export const KpiWidgetDateDatasetFilter: React.FC<{
         queryDateDatasets(widget.kpi.metric);
     }, [queryDateDatasets, widget.kpi.metric]);
 
-    const isKpiDateDatasetAutoSelect = useDashboardSelector(selectKpiDateDatasetAutoSelect);
+    const isWidgetDateDatasetAutoSelect = useDashboardSelector(selectWidgetDateDatasetAutoSelect);
     const isLoadingAdditionalData = useDashboardSelector(selectIsWidgetLoadingAdditionalDataByWidgetRef(ref));
 
     const dispatch = useDashboardDispatch();
@@ -50,7 +50,7 @@ export const KpiWidgetDateDatasetFilter: React.FC<{
         errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
         onError: () => {
             dispatch(uiActions.setWidgetLoadingAdditionalDataStopped(ref));
-            dispatch(uiActions.setKpiDateDatasetAutoSelect(false));
+            dispatch(uiActions.setWidgetDateDatasetAutoSelect(false));
         },
         onSuccess: () => {
             dispatch(uiActions.setWidgetLoadingAdditionalDataStopped(ref));
@@ -59,13 +59,13 @@ export const KpiWidgetDateDatasetFilter: React.FC<{
 
     // preselect the first dataset upon loading if the auto select was true
     useEffect(() => {
-        if (isKpiDateDatasetAutoSelect) {
+        if (isWidgetDateDatasetAutoSelect) {
             preselectDateDataset(ref, "default");
         }
-    }, [isKpiDateDatasetAutoSelect, dispatch, ref, preselectDateDataset]);
+    }, [isWidgetDateDatasetAutoSelect, dispatch, ref, preselectDateDataset]);
 
     const handleDateDatasetChanged = useCallback(() => {
-        dispatch(uiActions.setKpiDateDatasetAutoSelect(false));
+        dispatch(uiActions.setWidgetDateDatasetAutoSelect(false));
     }, [dispatch]);
 
     /**
@@ -78,7 +78,7 @@ export const KpiWidgetDateDatasetFilter: React.FC<{
      * with the automatically opened picker.
      */
     const shouldOpenDateDatasetPicker =
-        isKpiDateDatasetAutoSelect &&
+        isWidgetDateDatasetAutoSelect &&
         result?.dateDatasets &&
         !getRecommendedCatalogDateDataset(result.dateDatasets);
 
@@ -86,7 +86,7 @@ export const KpiWidgetDateDatasetFilter: React.FC<{
         return () => {
             // once the config panel disappears set the auto-select flag to false so that editing existing KPIs
             // does not have it set to true
-            dispatch(uiActions.setKpiDateDatasetAutoSelect(false));
+            dispatch(uiActions.setWidgetDateDatasetAutoSelect(false));
         };
     }, [dispatch]);
 
@@ -97,7 +97,7 @@ export const KpiWidgetDateDatasetFilter: React.FC<{
                 dateFilterCheckboxDisabled={false} // for KPI date checkbox is always enabled
                 isDatasetsLoading={status === "running" || status === "pending" || isLoadingAdditionalData}
                 relatedDateDatasets={result?.dateDatasetsOrdered}
-                shouldPickDateDataset={isKpiDateDatasetAutoSelect}
+                shouldPickDateDataset={isWidgetDateDatasetAutoSelect}
                 shouldOpenDateDatasetPicker={shouldOpenDateDatasetPicker}
                 isLoadingAdditionalData={isLoadingAdditionalData}
                 onDateDatasetChanged={handleDateDatasetChanged}

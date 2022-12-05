@@ -170,9 +170,9 @@ export const selectConfigurationPanelOpened = createSelector(
 /**
  * @internal
  */
-export const selectKpiDateDatasetAutoSelect = createSelector(
+export const selectWidgetDateDatasetAutoSelect = createSelector(
     selectSelf,
-    (state) => state.kpiDateDatasetAutoSelect,
+    (state) => state.widgetDateDatasetAutoSelect,
 );
 
 /**
