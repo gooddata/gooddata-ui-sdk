@@ -35,11 +35,7 @@ export const InsightConfiguration: React.FC<IInsightConfigurationProps> = ({ wid
     const settings = useDashboardSelector(selectSettings);
     const dispatch = useDashboardDispatch();
 
-    const classes = cx(
-        "configuration-panel",
-        "configuration-scrollable-panel",
-        `s-visualization-${widgetRefSuffix}`,
-    );
+    const classes = cx("configuration-scrollable-panel", `s-visualization-${widgetRefSuffix}`);
 
     const defaultDescriptionConfig: IInsightWidgetDescriptionConfiguration = {
         source: "insight",
