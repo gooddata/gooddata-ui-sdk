@@ -3,16 +3,20 @@ import { areObjRefsEqual, IDashboardAttributeFilter, ObjRef } from "@gooddata/sd
 import { useState, useCallback } from "react";
 import {
     useDashboardSelector,
-    useDispatchDashboardCommand,
     selectCatalogAttributes,
     IDashboardAttributeFilterDisplayForms,
     setAttributeFilterDisplayForm,
+    useDashboardCommandProcessing,
 } from "../../../../../../model";
 
 export function useDisplayFormConfiguration(currentFilter: IDashboardAttributeFilter) {
     const catalogAttributes = useDashboardSelector(selectCatalogAttributes);
 
-    const changeDisplayFormCommand = useDispatchDashboardCommand(setAttributeFilterDisplayForm);
+    const { run: changeDisplayForm, status: displayFormChangeStatus } = useDashboardCommandProcessing({
+        commandCreator: setAttributeFilterDisplayForm,
+        successEvent: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.DISPLAY_FORM_CHANGED",
+        errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
+    });
 
     const originalDisplayForm = currentFilter.attributeFilter.displayForm;
 
@@ -46,12 +50,12 @@ export function useDisplayFormConfiguration(currentFilter: IDashboardAttributeFi
 
     const onDisplayFormChange = useCallback(() => {
         if (!areObjRefsEqual(originalDisplayForm, filterDisplayForms.selectedDisplayForm)) {
-            changeDisplayFormCommand(
+            changeDisplayForm(
                 currentFilter.attributeFilter.localIdentifier!,
                 filterDisplayForms.selectedDisplayForm,
             );
         }
-    }, [filterDisplayForms, originalDisplayForm, currentFilter, changeDisplayFormCommand]);
+    }, [filterDisplayForms, originalDisplayForm, currentFilter, changeDisplayForm]);
 
     const onConfigurationClose = useCallback(() => {
         setFilterDisplayForms((old) => ({
@@ -66,5 +70,6 @@ export function useDisplayFormConfiguration(currentFilter: IDashboardAttributeFi
         displayFormChanged,
         onDisplayFormChange,
         onConfigurationClose,
+        displayFormChangeStatus,
     };
 }

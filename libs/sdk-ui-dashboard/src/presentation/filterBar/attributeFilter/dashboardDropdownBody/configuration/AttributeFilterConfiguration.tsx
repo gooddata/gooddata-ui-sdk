@@ -22,7 +22,6 @@ import { useAttributes } from "./hooks/useAttributes";
 
 interface IAttributeFilterConfigurationProps {
     closeHandler: () => void;
-    onChange: () => void;
     filterRef?: ObjRef;
     filterByText: string;
     displayValuesAsText: string;

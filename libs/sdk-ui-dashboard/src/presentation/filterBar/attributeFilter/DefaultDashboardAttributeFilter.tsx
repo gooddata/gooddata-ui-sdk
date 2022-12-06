@@ -35,6 +35,7 @@ import {
     AttributeFilterParentFilteringProvider,
     useAttributeFilterParentFiltering,
 } from "./AttributeFilterParentFilteringContext";
+import { LoadingMask, LOADING_HEIGHT } from "@gooddata/sdk-ui-kit";
 
 /**
  * Default implementation of the attribute filter to use on the dashboard's filter bar.
@@ -131,16 +132,22 @@ export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilter
 
     const CustomElementsSelect = useMemo(() => {
         return function ElementsSelect(props: IAttributeFilterElementsSelectProps) {
+            const { displayFormChangeStatus } = useAttributeFilterParentFiltering();
+
             const closeHandler = useCallback(() => {
                 setIsConfigurationOpen(false);
             }, []);
+
+            if (displayFormChangeStatus === "running") {
+                return <LoadingMask height={LOADING_HEIGHT} />;
+            }
+
             return (
                 <>
                     {isConfigurationOpen ? (
                         <AttributeFilterConfiguration
                             closeHandler={closeHandler}
                             filterRef={filterRef}
-                            onChange={() => {}}
                             filterByText={filterByText}
                             displayValuesAsText={displayValuesAsText}
                         />
