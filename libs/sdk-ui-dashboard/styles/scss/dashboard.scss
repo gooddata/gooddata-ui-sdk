@@ -240,8 +240,7 @@
             -#{variables.$item-outer-padding} - #{variables.$gd-dashboards-content-kpiWidget-borderWidth}
         );
         right: calc(
-            -#{variables.$item-outer-padding} - #{variables.$gd-dashboards-content-kpiWidget-borderWidth} + #{variables.$item-action-width} +
-                #{variables.$item-action-gap}
+            -#{variables.$item-outer-padding} - #{variables.$gd-dashboards-content-kpiWidget-borderWidth} + #{variables.$item-action-width}
         );
     }
 
@@ -325,7 +324,6 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: variables.$item-action-gap;
 
     .dash-item-action,
     .dash-item-action-placeholder {
@@ -451,10 +449,11 @@
     width: 36px;
     height: 36px;
     background-color: kit-variables.$is-focused-background;
-    cursor: help;
+    cursor: pointer;
     transition: 0.2s;
     font-size: variables.$item-action-icon-width;
     line-height: variables.$item-action-icon-width;
+    margin-right: variables.$item-action-gap;
 
     .gd-icon-circle-question {
         margin-top: 2px;
@@ -470,11 +469,20 @@
     }
 }
 
+.dash-item-action-description-active .dash-item-action-description-trigger {
+    background-color: var(--gd-palette-complementary-7, kit-variables.$gd-color-text-dimmed);
+
+    .gd-icon-circle-question {
+        color: kit-variables.$gd-color-text-light;
+    }
+}
+
 .type-kpi .dash-item-action-description {
     position: absolute;
 }
 
-.dash-item-content:hover {
+.dash-item-content:hover,
+.dash-item-action-description-active {
     .dash-item-action-description-trigger:not(.is-mobile) {
         display: flex;
     }

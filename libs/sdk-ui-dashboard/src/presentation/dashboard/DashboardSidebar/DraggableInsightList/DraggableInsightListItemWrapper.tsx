@@ -20,11 +20,19 @@ export const DraggableInsightListItemBody: CustomDashboardInsightListItemCompone
 };
 
 export const DraggableInsightListItemWrapper: React.FC<IDraggableInsightListItemWrapperProps> = (props) => {
-    const { className, isLocked, title, description, type, updated, insight } = props;
+    const { className, isLocked, title, description, showDescriptionPanel, type, updated, insight } = props;
     return (
         <DraggableInsightListItem
             ListItemComponent={DraggableInsightListItemBody}
-            listItemComponentProps={{ className, isLocked, title, description, type, updated }}
+            listItemComponentProps={{
+                className,
+                isLocked,
+                title,
+                description,
+                type,
+                updated,
+                showDescriptionPanel,
+            }}
             insight={insight}
         />
     );

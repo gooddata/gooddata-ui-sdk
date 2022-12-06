@@ -6,3 +6,8 @@ export interface IInsightWidgetDescriptionTriggerProps {
     insight: IInsight;
     screen: ScreenSize;
 }
+
+export interface IDescriptionClickTriggerProps {
+    className: string;
+    description?: string;
+}

@@ -180,7 +180,7 @@ export const InsightList: React.FC<IInsightListProps> = ({
                     }
 
                     const title = insightTitle(insight);
-                    const description = settings?.enableDescriptions ? insightSummary(insight) : undefined;
+                    const description = insightSummary(insight)?.trim();
                     const insightListSourceItem = getInsightListSourceItem(insight);
                     const isSelected = areObjRefsEqual(insight.insight.ref, selectedRef);
 
@@ -188,6 +188,7 @@ export const InsightList: React.FC<IInsightListProps> = ({
                         <InsightListItem
                             title={title}
                             description={description}
+                            showDescriptionPanel={settings?.enableDescriptions}
                             type={insightListSourceItem.insightType}
                             width={width}
                             isSelected={isSelected}

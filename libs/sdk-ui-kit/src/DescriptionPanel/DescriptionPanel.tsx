@@ -7,7 +7,10 @@ import { Bubble, BubbleHoverTrigger } from "../Bubble";
 import { useMediaQuery } from "../responsive";
 import cx from "classnames";
 
-const ALIGN_POINTS = [
+/**
+ * @internal
+ */
+export const DESCRIPTION_PANEL_ALIGN_POINTS = [
     { align: "cr cl" },
     { align: "tr tl" },
     { align: "br bl" },
@@ -24,7 +27,10 @@ const ALIGN_POINTS = [
     { align: "tl tr" },
     { align: "bl br" },
 ];
-const ARROW_OFFSETS = {
+/**
+ * @internal
+ */
+export const DESCRIPTION_PANEL_ARROW_OFFSETS = {
     "br tr": [0, 5],
     "bc tc": [0, 5],
     "bl tl": [0, 5],
@@ -45,6 +51,14 @@ const ARROW_OFFSETS = {
 /**
  * @internal
  */
+export interface IDescriptionTriggerProps {
+    className?: string;
+}
+
+/**
+ * @internal
+ */
+
 export interface IDescriptionPanelProps {
     title?: string;
     description?: string;
@@ -69,27 +83,35 @@ export const DescriptionPanelContent: React.FC<IDescriptionPanelProps> = (props)
         <DescriptionPanelContentCore {...props} />
     </IntlWrapper>
 );
-
-const DescriptionPanelCore: React.FC<IDescriptionPanelProps> = (props) => {
+/**
+ * @internal
+ */
+export const DescriptionIcon: React.FC<IDescriptionTriggerProps> = ({ className }) => {
     const isMobileDevice = useMediaQuery("mobileDevice");
     return (
+        <div
+            className={cx(
+                "s-description-trigger",
+                {
+                    "is-mobile": isMobileDevice,
+                    "gd-icon-circle-question-wrapper": !className,
+                },
+                className,
+            )}
+        >
+            <div className="gd-icon-circle-question" />
+        </div>
+    );
+};
+
+const DescriptionPanelCore: React.FC<IDescriptionPanelProps> = (props) => {
+    return (
         <BubbleHoverTrigger showDelay={0} eventsOnBubble={true}>
-            <div
-                className={cx(
-                    "s-description-trigger",
-                    {
-                        "is-mobile": isMobileDevice,
-                        "gd-icon-circle-question-wrapper": !props.className,
-                    },
-                    props.className,
-                )}
-            >
-                <div className="gd-icon-circle-question" />
-            </div>
+            <DescriptionIcon className={props.className} />
             <Bubble
                 className="bubble-light gd-description-panel-bubble"
-                alignPoints={ALIGN_POINTS}
-                arrowOffsets={ARROW_OFFSETS}
+                alignPoints={DESCRIPTION_PANEL_ALIGN_POINTS}
+                arrowOffsets={DESCRIPTION_PANEL_ARROW_OFFSETS}
                 arrowStyle={{ display: "none" }}
             >
                 <DescriptionPanelContentCore {...props} />
@@ -104,9 +126,11 @@ const DescriptionPanelContentCore: React.FC<IDescriptionPanelProps> = (props) =>
     return (
         <div className="gd-description-panel s-gd-description-panel">
             {!isEmpty(title) && <div className="gd-description-panel-title">{title}</div>}
-            <div className="gd-description-panel-content">
-                {!isEmpty(description) && <EllipsisText text={description} />}
-            </div>
+            {!isEmpty(description) && (
+                <div className="gd-description-panel-content">
+                    <EllipsisText text={description} />
+                </div>
+            )}
         </div>
     );
 };
