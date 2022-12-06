@@ -34,12 +34,13 @@ import {
     IListedDashboard,
     IDashboardPlugin,
 } from "@gooddata/sdk-model";
-import { isInheritedObject } from "../utils";
+import { getShareStatus, isInheritedObject } from "../utils";
 
 export const convertAnalyticalDashboard = (
     analyticalDashboard: JsonApiAnalyticalDashboardOutWithLinks,
 ): IListedDashboard => {
     const attributes = analyticalDashboard.attributes;
+    const shared = (attributes as any)?.shared; // TODO remove "any" after client is regenerated
     return {
         ref: idRef(analyticalDashboard.id, "analyticalDashboard"),
         uri: analyticalDashboard.links!.self,
@@ -50,7 +51,7 @@ export const convertAnalyticalDashboard = (
         updated: "",
         tags: attributes?.tags ?? [],
         isLocked: isInheritedObject(analyticalDashboard.id),
-        shareStatus: "public",
+        shareStatus: getShareStatus(shared),
         isUnderStrictControl: true,
         availability: "full",
     };
