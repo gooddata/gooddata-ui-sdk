@@ -1,3 +1,7 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 
-export const DRILL_SELECT_DROPDOWN_Z_INDEX = 5003;
+// Z index of all overlays in Dashboard component
+export const DASHBOARD_OVERLAYS_Z_INDEX = 5000;
+
+// Z index of all overlays in Dashboard header component
+export const DASHBOARD_HEADER_OVERLAYS_Z_INDEX = 6000;
