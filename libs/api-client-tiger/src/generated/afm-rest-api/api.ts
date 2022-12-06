@@ -624,6 +624,12 @@ export interface AttributeItem {
      * @memberof AttributeItem
      */
     label: AfmObjectIdentifierLabel;
+    /**
+     * Specifies that the label should be outer-joined.
+     * @type {boolean}
+     * @memberof AttributeItem
+     */
+    showAllValues?: boolean;
 }
 /**
  * Header containing the information related to attributes.

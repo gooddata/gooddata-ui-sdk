@@ -45,6 +45,7 @@ import { UnexpectedError, ErrorConverter, IAnalyticalBackend } from "@gooddata/s
 import isEmpty from "lodash/isEmpty";
 import { AuthenticatedAsyncCall } from "@gooddata/sdk-backend-base";
 import { AxiosRequestConfig } from "axios";
+import { IUser } from "@gooddata/sdk-model";
 
 /**
  * @internal
@@ -407,6 +408,15 @@ export type TigerSpecificFunctions = {
      * @param settingId - id of the custom setting that should be deleted
      */
     deleteWorkspaceCustomAppSetting?: (workspaceId: string, settingId: string) => Promise<void>;
+
+    /**
+     * Get the User Entity data
+     *
+     * @param id - id of the current userId
+     * @returns IUser
+     *
+     */
+    getEntityUser?: (id: string) => Promise<IUser>;
 };
 
 const getDataSourceErrorMessage = (error: unknown) => {
@@ -1271,6 +1281,24 @@ export const buildTigerSpecificFunctions = (
                     objectId: settingId,
                     workspaceId,
                 });
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
+    },
+
+    getEntityUser: async (id: string) => {
+        try {
+            return await authApiCall(async (sdk) => {
+                const result = await sdk.entities.getEntityUsers({
+                    id,
+                });
+                const { firstname, lastname, ...userInfo } = result.data?.data.attributes || {};
+                return {
+                    ...userInfo,
+                    firstName: firstname,
+                    lastName: lastname,
+                } as IUser;
             });
         } catch (error: any) {
             throw convertApiError(error);

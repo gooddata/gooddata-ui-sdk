@@ -25,6 +25,7 @@ import { IAuthenticatedPrincipal } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationContext } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationProvider } from '@gooddata/sdk-backend-spi';
 import { ITigerClient } from '@gooddata/api-client-tiger';
+import { IUser } from '@gooddata/sdk-model';
 import { JsonApiDataSourceInAttributesTypeEnum } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInDocument } from '@gooddata/api-client-tiger';
 import { JsonApiOrganizationOutMetaPermissionsEnum } from '@gooddata/api-client-tiger';
@@ -363,6 +364,7 @@ export type TigerSpecificFunctions = {
     getWorkspaceCustomAppSettings?: (workspaceId: string, applicationName?: string) => Promise<ICustomApplicationSetting[]>;
     createWorkspaceCustomAppSetting?: (workspaceId: string, id: string, applicationName: string, content: object) => Promise<ICustomApplicationSetting>;
     deleteWorkspaceCustomAppSetting?: (workspaceId: string, settingId: string) => Promise<void>;
+    getEntityUser?: (id: string) => Promise<IUser>;
 };
 
 // @public

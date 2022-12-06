@@ -106,7 +106,18 @@
                     "202": {
                         "description": "Request is accepted, provided exportId exists, but export is not yet ready.",
                         "content": {
-                            "application/json": {}
+                            "text/csv": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            },
+                            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            }
                         }
                     }
                 },

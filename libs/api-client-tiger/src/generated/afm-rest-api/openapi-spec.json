@@ -904,6 +904,11 @@
                     },
                     "label": {
                         "$ref": "#/components/schemas/AfmObjectIdentifierLabel"
+                    },
+                    "showAllValues": {
+                        "type": "boolean",
+                        "description": "Specifies that the label should be outer-joined.",
+                        "default": false
                     }
                 }
             },
