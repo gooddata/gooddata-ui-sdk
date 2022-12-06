@@ -1,7 +1,10 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
+import { objRefToString, widgetRef } from "@gooddata/sdk-model";
+import { stringUtils } from "@gooddata/util";
 
-import { DescriptionPanel } from "@gooddata/sdk-ui-kit";
+import { DescriptionClickTrigger } from "./DescriptionClickTrigger";
+
 import { IInsightWidgetDescriptionTriggerProps } from "./types";
 
 export const InsightWidgetDescriptionTrigger: React.FC<IInsightWidgetDescriptionTriggerProps> = (props) => {
@@ -11,15 +14,14 @@ export const InsightWidgetDescriptionTrigger: React.FC<IInsightWidgetDescription
         widget.configuration?.description?.source === "widget" ? widget.description : insight.insight.summary;
 
     const trimmedDescription = description?.trim();
+    const widgetRefAsString = objRefToString(widgetRef(widget));
 
     if (visible && trimmedDescription && trimmedDescription !== "") {
         return (
-            <div className="dash-item-action-description">
-                <DescriptionPanel
-                    description={description}
-                    className="dash-item-action-description-trigger"
-                />
-            </div>
+            <DescriptionClickTrigger
+                className={`widget-description-${stringUtils.simplifyText(widgetRefAsString)}`}
+                description={trimmedDescription}
+            />
         );
     }
     return null;
