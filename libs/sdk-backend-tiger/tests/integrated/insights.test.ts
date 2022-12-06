@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
 
-import { testBackend, testWorkspace } from "./backend";
+import { testBackend, testWorkspace, sanitizeKeyWithNewValue } from "./backend";
 const backend = testBackend();
 
 beforeAll(async () => {
@@ -10,14 +10,14 @@ beforeAll(async () => {
 describe("tiger insights", () => {
     it("should load insights", async () => {
         const result = await backend.workspace(testWorkspace()).insights().getInsights();
-
-        expect(result).toMatchSnapshot();
+        const sanitizeResult = sanitizeKeyWithNewValue(result, "uri", "sanitize_uri");
+        expect(sanitizeResult).toMatchSnapshot();
     });
 
     it("should load empty insights for out-of-range page", async () => {
         const result = await backend.workspace(testWorkspace()).insights().getInsights();
-
         const page = await result.goTo(4);
-        expect(page).toMatchSnapshot();
+        const sanitizeResult = sanitizeKeyWithNewValue(page, "uri", "sanitize_uri");
+        expect(sanitizeResult).toMatchSnapshot();
     });
 });

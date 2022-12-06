@@ -1,8 +1,8 @@
 {
-    "id": "032e0e5b-366a-4ffe-9147-68889e43258a",
-    "name": "api_v1_entities_workspaces_4dc4e033e611421791adea58d34d958c_attributes",
+    "id": "322f5ab6-06fb-43fa-9572-3398a46b0b55",
+    "name": "api_v1_entities_workspaces_2b7da2afb0d34f4397481c4d2a2d50b0_attributes",
     "request": {
-        "url": "/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes?include=labels%2CdefaultView%2Cdataset&size=250&page=0",
+        "url": "/api/v1/entities/workspaces/2b7da2afb0d34f4397481c4d2a2d50b0/attributes?include=labels%2CdefaultView%2Cdataset&size=250&page=0",
         "method": "GET",
         "headers": {
             "Accept": {
@@ -16,12 +16,17 @@
     },
     "response": {
         "status": 200,
-        "bodyFileName": "api_v1_entities_workspaces_4dc4e033e611421791adea58d34d958c_attributes-032e0e5b-366a-4ffe-9147-68889e43258a.json",
+        "bodyFileName": "api_v1_entities_workspaces_2b7da2afb0d34f4397481c4d2a2d50b0_attributes-322f5ab6-06fb-43fa-9572-3398a46b0b55.json",
         "headers": {
-            "Date": "Wed, 11 Jan 2023 07:56:43 GMT",
+            "Date": "Mon, 27 Mar 2023 09:33:56 GMT",
             "Content-Type": "application/vnd.gooddata.api+json",
-            "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
-            "X-GDC-TRACE-ID": "830d8061d420aabf",
+            "Vary": [
+                "Accept-Encoding",
+                "Origin",
+                "Access-Control-Request-Method",
+                "Access-Control-Request-Headers"
+            ],
+            "X-GDC-TRACE-ID": "e45fb041e8c3e8d5",
             "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
             "Pragma": "no-cache",
             "Expires": "0",
@@ -33,7 +38,7 @@
             "Permission-Policy": "geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'none'; payment 'none';"
         }
     },
-    "uuid": "032e0e5b-366a-4ffe-9147-68889e43258a",
+    "uuid": "322f5ab6-06fb-43fa-9572-3398a46b0b55",
     "persistent": true,
-    "insertionIndex": 12
+    "insertionIndex": 13
 }

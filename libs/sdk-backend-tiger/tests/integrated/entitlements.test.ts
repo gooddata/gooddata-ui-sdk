@@ -12,6 +12,7 @@ describe("tiger entitlements", () => {
         const result = await backend.entitlements();
         const entitlements = await result.resolveEntitlements();
 
-        expect(entitlements).toMatchSnapshot();
+        expect(entitlements).toContainEqual({ name: "UnlimitedWorkspaces" });
+        expect(entitlements).toContainEqual({ name: "UnlimitedUsers" });
     });
 });

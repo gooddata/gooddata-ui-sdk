@@ -1,5 +1,5 @@
 {
-    "id": "f0824cd4-d7db-4150-a465-3a33e0810ec3",
+    "id": "4b1e36d0-2427-48a5-88c9-250efec0d341",
     "name": "api_v1_actions_resolveentitlements",
     "request": {
         "url": "/api/v1/actions/resolveEntitlements",
@@ -14,10 +14,15 @@
         "status": 200,
         "body": "[{\"expiry\":\"2026-04-26\",\"name\":\"Contract\"},{\"name\":\"UnlimitedWorkspaces\"},{\"name\":\"UnlimitedUsers\"},{\"name\":\"CustomTheming\"},{\"name\":\"UiLocalization\"},{\"name\":\"WhiteLabeling\"},{\"name\":\"PdfExports\"}]",
         "headers": {
-            "Date": "Wed, 11 Jan 2023 07:56:51 GMT",
+            "Date": "Mon, 27 Mar 2023 09:34:10 GMT",
             "Content-Type": "application/json",
-            "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
-            "X-GDC-TRACE-ID": "7d2c18a38b4288a6",
+            "Vary": [
+                "Accept-Encoding",
+                "Origin",
+                "Access-Control-Request-Method",
+                "Access-Control-Request-Headers"
+            ],
+            "X-GDC-TRACE-ID": "1adefa6d7296b824",
             "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
             "Pragma": "no-cache",
             "Expires": "0",
@@ -29,7 +34,7 @@
             "Permission-Policy": "geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'none'; payment 'none';"
         }
     },
-    "uuid": "f0824cd4-d7db-4150-a465-3a33e0810ec3",
+    "uuid": "4b1e36d0-2427-48a5-88c9-250efec0d341",
     "persistent": true,
-    "insertionIndex": 14
+    "insertionIndex": 15
 }

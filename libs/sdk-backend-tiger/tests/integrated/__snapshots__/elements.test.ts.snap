@@ -166,21 +166,11 @@ InMemoryPaging {
 `;
 
 exports[`tiger elements forFilter should return correct page for given displayForm 1`] = `
-ServerPaging {
+Object {
   "all": [Function],
   "allSorted": [Function],
   "getData": [Function],
   "goTo": [Function],
-  "items": Array [
-    Object {
-      "title": "1-888-OhioComp",
-      "uri": "1-888-OhioComp",
-    },
-    Object {
-      "title": "1 Source Consulting",
-      "uri": "1 Source Consulting",
-    },
-  ],
   "limit": 2,
   "next": [Function],
   "offset": 6,

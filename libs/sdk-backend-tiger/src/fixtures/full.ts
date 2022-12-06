@@ -1,7 +1,7 @@
-// (C) 2022 GoodData Corporation
+// (C) 2023 GoodData Corporation
 
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2022-01-05T11:17:43.842Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-03-09T07:06:19.896Z; */
 // @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
@@ -18,14 +18,14 @@ import {
  */
 export const Account = {
     /**
-     * Display Form Title: Account
-     * Display Form ID: label.f_account.account.accountid
-     */
-    Default: newAttribute("label.f_account.account.accountid"),
-    /**
      * Display Form Title: Name
-     * Display Form ID: label.f_account.account
-     */ Name: newAttribute("label.f_account.account"),
+     * Display Form ID: label.f_account.account.name
+     */
+    Name: newAttribute("label.f_account.account.name"),
+    /**
+     * Display Form Title: Account
+     * Display Form ID: attr.f_account.account
+     */ Default: newAttribute("attr.f_account.account"),
 };
 /**
  * Attribute Title: Account Id
@@ -38,14 +38,14 @@ export const AccountId: IAttribute = newAttribute("f_account.id");
  */
 export const Activity = {
     /**
-     * Display Form Title: Activity
-     * Display Form ID: label.f_activity.activity
-     */
-    Default: newAttribute("label.f_activity.activity"),
-    /**
      * Display Form Title: Subject
-     * Display Form ID: label.f_activity.activity.name
-     */ Subject: newAttribute("label.f_activity.activity.name"),
+     * Display Form ID: label.f_activity.subject
+     */
+    Subject: newAttribute("label.f_activity.subject"),
+    /**
+     * Display Form Title: Activity
+     * Display Form ID: attr.f_activity.activity
+     */ Default: newAttribute("attr.f_activity.activity"),
 };
 /**
  * Attribute Title: Activity Type
@@ -78,23 +78,78 @@ export const Priority: IAttribute = newAttribute("f_activity.priority_id");
  */
 export const Status: IAttribute = newAttribute("f_activity.status_id");
 /**
+ * Attribute Title: County name
+ * Attribute ID: county_name
+ */
+export const CountyName: IAttribute = newAttribute("county_name");
+/**
+ * Attribute Title: City
+ * Attribute ID: f_city.id
+ */
+export const City = {
+    /**
+     * Display Form Title: Location
+     * Display Form ID: f_city.id.location
+     */
+    Location: newAttribute("f_city.id.location"),
+    /**
+     * Display Form Title: City ascii name
+     * Display Form ID: f_city.id.cityasciiname
+     */ AsciiName: newAttribute("f_city.id.cityasciiname"),
+    /**
+     * Display Form Title: City name
+     * Display Form ID: f_city.id.cityname
+     */ Name: newAttribute("f_city.id.cityname"),
+    /**
+     * Display Form Title: Latitude
+     * Display Form ID: f_city.id.latitude
+     */ Latitude: newAttribute("f_city.id.latitude"),
+    /**
+     * Display Form Title: City short name
+     * Display Form ID: f_city.id.cityshortname
+     */ ShortName: newAttribute("f_city.id.cityshortname"),
+    /**
+     * Display Form Title: City
+     * Display Form ID: f_city.id
+     */ Default: newAttribute("f_city.id"),
+    /**
+     * Display Form Title: Longitude
+     * Display Form ID: f_city.id.longitude
+     */ Longitude: newAttribute("f_city.id.longitude"),
+};
+/**
+ * Attribute Title: State
+ * Attribute ID: state_id
+ */
+export const State = {
+    /**
+     * Display Form Title: State
+     * Display Form ID: state_id
+     */
+    Default: newAttribute("state_id"),
+    /**
+     * Display Form Title: State name
+     * Display Form ID: state_id.statename
+     */ Name: newAttribute("state_id.statename"),
+};
+/**
  * Attribute Title: Opportunity
  * Attribute ID: attr.f_opportunity.opportunity
  */
 export const Opportunity = {
     /**
-     * Display Form Title: Opportunity Name
-     * Display Form ID: label.f_opportunity.opportunity
-     */
-    Name: newAttribute("label.f_opportunity.opportunity"),
-    /**
-     * Display Form Title: Opportunity
-     * Display Form ID: label.f_opportunity.opportunity.opportunity
-     */ Default: newAttribute("label.f_opportunity.opportunity.opportunity"),
-    /**
      * Display Form Title: SFDC URL
      * Display Form ID: label.f_opportunity.opportunity.sfdcurl
-     */ SFDCURL: newAttribute("label.f_opportunity.opportunity.sfdcurl"),
+     */
+    SFDCURL: newAttribute("label.f_opportunity.opportunity.sfdcurl"),
+    /**
+     * Display Form Title: Opportunity
+     * Display Form ID: attr.f_opportunity.opportunity
+     */ Default: newAttribute("attr.f_opportunity.opportunity"),
+    /**
+     * Display Form Title: Opportunity Name
+     * Display Form ID: label.f_opportunity.opportunity.name
+     */ Name: newAttribute("label.f_opportunity.opportunity.name"),
 };
 /**
  * Attribute Title: Opportunity Id
@@ -105,7 +160,7 @@ export const OpportunityId: IAttribute = newAttribute("f_opportunity.id");
  * Attribute Title: Opp. Snapshot
  * Attribute ID: attr.f_opportunitysnapshot.oppsnapshot
  */
-export const OppSnapshot: IAttribute = newAttribute("label.f_opportunitysnapshot.oppsnapshot");
+export const OppSnapshot: IAttribute = newAttribute("attr.f_opportunitysnapshot.oppsnapshot");
 /**
  * Attribute Title: Forecast Category
  * Attribute ID: f_opportunitysnapshot.forecastcategory_id
@@ -123,13 +178,13 @@ export const OppSnapshotId: IAttribute = newAttribute("f_opportunitysnapshot.id"
 export const SalesRep = {
     /**
      * Display Form Title: Owner Name
-     * Display Form ID: label.f_owner.salesrep
+     * Display Form ID: label.f_owner.salesrep.ownername
      */
-    OwnerName: newAttribute("label.f_owner.salesrep"),
+    OwnerName: newAttribute("label.f_owner.salesrep.ownername"),
     /**
-     * Display Form Title: Owner
-     * Display Form ID: label.f_owner.salesrep.owner
-     */ Owner: newAttribute("label.f_owner.salesrep.owner"),
+     * Display Form Title: Sales Rep
+     * Display Form ID: attr.f_owner.salesrep
+     */ Default: newAttribute("attr.f_owner.salesrep"),
 };
 /**
  * Attribute Title: Department
@@ -153,13 +208,13 @@ export const Region: IAttribute = newAttribute("f_owner.region_id");
 export const Product = {
     /**
      * Display Form Title: Product Name
-     * Display Form ID: label.f_product.product
+     * Display Form ID: label.f_product.product.name
      */
-    Name: newAttribute("label.f_product.product"),
+    Name: newAttribute("label.f_product.product.name"),
     /**
      * Display Form Title: Product
-     * Display Form ID: label.f_product.product.productid
-     */ Default: newAttribute("label.f_product.product.productid"),
+     * Display Form ID: attr.f_product.product
+     */ Default: newAttribute("attr.f_product.product"),
 };
 /**
  * Attribute Title: Product Id
@@ -173,9 +228,9 @@ export const ProductId: IAttribute = newAttribute("f_product.id");
 export const StageName = {
     /**
      * Display Form Title: Stage Name
-     * Display Form ID: label.f_stage.stagename
+     * Display Form ID: attr.f_stage.stagename
      */
-    Default: newAttribute("label.f_stage.stagename"),
+    Default: newAttribute("attr.f_stage.stagename"),
     /**
      * Display Form Title: Order
      * Display Form ID: label.f_stage.stagename.order
@@ -214,7 +269,7 @@ export const Status_1: IAttribute = newAttribute("f_stage.status_id");
  * Attribute Title: Stage History
  * Attribute ID: attr.f_stagehistory.stagehistory
  */
-export const StageHistory: IAttribute = newAttribute("label.f_stagehistory.stagehistory");
+export const StageHistory: IAttribute = newAttribute("attr.f_stagehistory.stagehistory");
 /**
  * Attribute Title: Stage History Id
  * Attribute ID: f_stagehistory.id
@@ -226,22 +281,6 @@ export const StageHistoryId: IAttribute = newAttribute("f_stagehistory.id");
  */
 export const Timeline: IAttribute = newAttribute("f_timeline.id");
 /**
- * Metric Title: Sample XIRR
- * Metric ID: 1327700d-6708-4fce-8615-bd737c0efffd
- * Metric Type: MAQL Metric
- */
-export const SampleXIRR: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("1327700d-6708-4fce-8615-bd737c0efffd", "measure"),
-);
-/**
- * Metric Title: Won
- * Metric ID: 58b9cb35-f532-4da2-a895-fc012454f7e7
- * Metric Type: MAQL Metric
- */
-export const Won: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("58b9cb35-f532-4da2-a895-fc012454f7e7", "measure"),
-);
-/**
  * Metric Title: _Timeline [EOP]
  * Metric ID: 6b1411d5-e253-418e-8fd3-137a9f56ea92
  * Metric Type: MAQL Metric
@@ -250,7 +289,7 @@ export const TimelineEOP: IMeasure<IMeasureDefinition> = newMeasure(
     idRef("6b1411d5-e253-418e-8fd3-137a9f56ea92", "measure"),
 );
 /**
- * Metric Title: # of Opportunities
+ * Metric Title: # Of Opportunities
  * Metric ID: 768414e1-4bbe-4f01-b125-0cdc6305dc76
  * Metric Type: MAQL Metric
  */
@@ -282,6 +321,18 @@ export const WinRate: IMeasure<IMeasureDefinition> = newMeasure(
     idRef("973a14c4-acb1-45fb-ba52-5d96fa02f7ba", "measure"),
 );
 /**
+ * Metric Title: Amount [BOP]
+ * Metric ID: amount_bop
+ * Metric Type: MAQL Metric
+ */
+export const AmountBOP: IMeasure<IMeasureDefinition> = newMeasure(idRef("amount_bop", "measure"));
+/**
+ * Metric Title: Avg. Amount
+ * Metric ID: avg._amount
+ * Metric Type: MAQL Metric
+ */
+export const AvgAmount: IMeasure<IMeasureDefinition> = newMeasure(idRef("avg._amount", "measure"));
+/**
  * Metric Title: Probability
  * Metric ID: b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa
  * Metric Type: MAQL Metric
@@ -289,6 +340,12 @@ export const WinRate: IMeasure<IMeasureDefinition> = newMeasure(
 export const Probability: IMeasure<IMeasureDefinition> = newMeasure(
     idRef("b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa", "measure"),
 );
+/**
+ * Metric Title: Best Case
+ * Metric ID: best_case
+ * Metric Type: MAQL Metric
+ */
+export const BestCase: IMeasure<IMeasureDefinition> = newMeasure(idRef("best_case", "measure"));
 /**
  * Metric Title: _Snapshot [EOP]
  * Metric ID: c5ee7836-126c-41aa-bd69-1873d379a065
@@ -298,67 +355,59 @@ export const SnapshotEOP: IMeasure<IMeasureDefinition> = newMeasure(
     idRef("c5ee7836-126c-41aa-bd69-1873d379a065", "measure"),
 );
 /**
+ * Metric Title: _Close [BOP]
+ * Metric ID: close_bop
+ * Metric Type: MAQL Metric
+ */
+export const CloseBOP: IMeasure<IMeasureDefinition> = newMeasure(idRef("close_bop", "measure"));
+/**
  * Metric Title: _Close [EOP]
- * Metric ID: 1179c888-3d63-452c-bd1a-0a2a0a5caa06
+ * Metric ID: close_eop
  * Metric Type: MAQL Metric
  */
-export const CloseEOP: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("1179c888-3d63-452c-bd1a-0a2a0a5caa06", "measure"),
+export const CloseEOP: IMeasure<IMeasureDefinition> = newMeasure(idRef("close_eop", "measure"));
+/**
+ * Metric Title: Parent metric
+ * Metric ID: e519fa2a-86c3-4e32-8313-0c03061626b1
+ * Metric Type: MAQL Metric
+ */
+export const ParentMetric: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("e519fa2a-86c3-4e32-8313-0c03061626b1", "measure"),
 );
 /**
- * Metric Title: metricAmountPercent
- * Metric ID: 325d8a8e-d6f2-4151-b49e-d6e6e81563d0
+ * Metric Title: Won
+ * Metric ID: e519fa2a-86c3-4e32-8313-0c03062348j3
  * Metric Type: MAQL Metric
  */
-export const MetricAmountPercent: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("325d8a8e-d6f2-4151-b49e-d6e6e81563d0", "measure"),
+export const Won: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"),
 );
 /**
- * Metric Title: metricCloseEOPPercent
- * Metric ID: 6d7de3ba-3747-11ec-8d3d-0242ac130003
+ * Metric Title: Metric has null value
+ * Metric ID: metric_has_null_value
  * Metric Type: MAQL Metric
  */
-export const MetricCloseEOPPercent: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("6d7de3ba-3747-11ec-8d3d-0242ac130003", "measure"),
+export const MetricHasNullValue: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("metric_has_null_value", "measure"),
 );
 /**
  * Metric Title: # of Activities
- * Metric ID: bb512c36-4627-4dd8-8b92-3ef5d364e8f5
+ * Metric ID: of_activities
  * Metric Type: MAQL Metric
  */
-export const NrOfActivities: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("bb512c36-4627-4dd8-8b92-3ef5d364e8f5", "measure"),
-);
+export const NrOfActivities: IMeasure<IMeasureDefinition> = newMeasure(idRef("of_activities", "measure"));
 /**
  * Metric Title: # of Lost Opps.
- * Metric ID: number_of_lost_opps
+ * Metric ID: of_lost_opps.
  * Metric Type: MAQL Metric
  */
-export const NrOfLostOpps: IMeasure<IMeasureDefinition> = newMeasure(idRef("number_of_lost_opps", "measure"));
+export const NrOfLostOpps: IMeasure<IMeasureDefinition> = newMeasure(idRef("of_lost_opps.", "measure"));
 /**
- * Metric Title: _Timeline [BOP]
- * Metric ID: timeline_bop
+ * Metric Title: # of Won Opps.
+ * Metric ID: of_won_opps.
  * Metric Type: MAQL Metric
  */
-export const TimelineBOP: IMeasure<IMeasureDefinition> = newMeasure(idRef("timeline_bop", "measure"));
-/**
- * Metric Title: _Snapshot [BOP]
- * Metric ID: snapshot_bop
- * Metric Type: MAQL Metric
- */
-export const SnapshotBOP: IMeasure<IMeasureDefinition> = newMeasure(idRef("snapshot_bop", "measure"));
-/**
- * Metric Title: Amount [BOP]
- * Metric ID: amount_bop
- * Metric Type: MAQL Metric
- */
-export const AmountBOP: IMeasure<IMeasureDefinition> = newMeasure(idRef("amount_bop", "measure"));
-/**
- * Metric Title: Best Case
- * Metric ID: best_case
- * Metric Type: MAQL Metric
- */
-export const BestCase: IMeasure<IMeasureDefinition> = newMeasure(idRef("best_case", "measure"));
+export const NrOfWonOpps: IMeasure<IMeasureDefinition> = newMeasure(idRef("of_won_opps.", "measure"));
 /**
  * Metric Title: _Opp. First Snapshot
  * Metric ID: opp._first_snapshot
@@ -368,17 +417,17 @@ export const OppFirstSnapshot: IMeasure<IMeasureDefinition> = newMeasure(
     idRef("opp._first_snapshot", "measure"),
 );
 /**
- * Metric Title: Avg. Amount
- * Metric ID: avg_amount
+ * Metric Title: _Snapshot [BOP]
+ * Metric ID: snapshot_bop
  * Metric Type: MAQL Metric
  */
-export const AvgAmount: IMeasure<IMeasureDefinition> = newMeasure(idRef("avg_amount", "measure"));
+export const SnapshotBOP: IMeasure<IMeasureDefinition> = newMeasure(idRef("snapshot_bop", "measure"));
 /**
- * Metric Title: # of Won Opps.
- * Metric ID: of_won_opps
+ * Metric Title: _Timeline [BOP]
+ * Metric ID: timeline_bop
  * Metric Type: MAQL Metric
  */
-export const NrOfWonOpps: IMeasure<IMeasureDefinition> = newMeasure(idRef("of_won_opps", "measure"));
+export const TimelineBOP: IMeasure<IMeasureDefinition> = newMeasure(idRef("timeline_bop", "measure"));
 /**
  * Fact Title: Activity (Date)
  * Fact ID: fact.f_activity.activitydate
@@ -415,6 +464,80 @@ export const ActivityDate = {
      * Fact ID: fact.f_activity.activitydate
      * Fact Aggregation: runsum
      */ Runsum: newMeasure(idRef("fact.f_activity.activitydate", "fact"), (m) => m.aggregation("runsum")),
+};
+/**
+ * Fact Title: Density
+ * Fact ID: f_density
+ */
+export const Density = {
+    /**
+     * Fact Title: Density
+     * Fact ID: f_density
+     * Fact Aggregation: sum
+     */
+    Sum: newMeasure(idRef("f_density", "fact"), (m) => m.aggregation("sum")),
+    /**
+     * Fact Title: Density
+     * Fact ID: f_density
+     * Fact Aggregation: avg
+     */ Avg: newMeasure(idRef("f_density", "fact"), (m) => m.aggregation("avg")),
+    /**
+     * Fact Title: Density
+     * Fact ID: f_density
+     * Fact Aggregation: min
+     */ Min: newMeasure(idRef("f_density", "fact"), (m) => m.aggregation("min")),
+    /**
+     * Fact Title: Density
+     * Fact ID: f_density
+     * Fact Aggregation: max
+     */ Max: newMeasure(idRef("f_density", "fact"), (m) => m.aggregation("max")),
+    /**
+     * Fact Title: Density
+     * Fact ID: f_density
+     * Fact Aggregation: median
+     */ Median: newMeasure(idRef("f_density", "fact"), (m) => m.aggregation("median")),
+    /**
+     * Fact Title: Density
+     * Fact ID: f_density
+     * Fact Aggregation: runsum
+     */ Runsum: newMeasure(idRef("f_density", "fact"), (m) => m.aggregation("runsum")),
+};
+/**
+ * Fact Title: Population
+ * Fact ID: f_population
+ */
+export const Population = {
+    /**
+     * Fact Title: Population
+     * Fact ID: f_population
+     * Fact Aggregation: sum
+     */
+    Sum: newMeasure(idRef("f_population", "fact"), (m) => m.aggregation("sum")),
+    /**
+     * Fact Title: Population
+     * Fact ID: f_population
+     * Fact Aggregation: avg
+     */ Avg: newMeasure(idRef("f_population", "fact"), (m) => m.aggregation("avg")),
+    /**
+     * Fact Title: Population
+     * Fact ID: f_population
+     * Fact Aggregation: min
+     */ Min: newMeasure(idRef("f_population", "fact"), (m) => m.aggregation("min")),
+    /**
+     * Fact Title: Population
+     * Fact ID: f_population
+     * Fact Aggregation: max
+     */ Max: newMeasure(idRef("f_population", "fact"), (m) => m.aggregation("max")),
+    /**
+     * Fact Title: Population
+     * Fact ID: f_population
+     * Fact Aggregation: median
+     */ Median: newMeasure(idRef("f_population", "fact"), (m) => m.aggregation("median")),
+    /**
+     * Fact Title: Population
+     * Fact ID: f_population
+     * Fact Aggregation: runsum
+     */ Runsum: newMeasure(idRef("f_population", "fact"), (m) => m.aggregation("runsum")),
 };
 /**
  * Fact Title: Opp. Created (Date)
@@ -2097,9 +2220,71 @@ export const DateDatasets = {
 };
 export const Insights = {
     /**
-     * Insight Title: Insight Activities
-     * Insight ID: 2ec4862e-4559-42d9-a628-fd4e80c16d59
+     * Insight Title: merge cells insight
+     * Insight ID: 3ef94acb-1e15-49ef-88d5-e9e2931be959
      */
-    InsightActivities: "2ec4862e-4559-42d9-a628-fd4e80c16d59",
+    MergeCellsInsight: "3ef94acb-1e15-49ef-88d5-e9e2931be959",
+    /**
+     * Insight Title: big insight
+     * Insight ID: 5517045e-661f-4d6b-b0b0-98030ab9f68c
+     */ BigInsight: "5517045e-661f-4d6b-b0b0-98030ab9f68c",
+    /**
+     * Insight Title: invalid insight
+     * Insight ID: 81452cc9-558b-4b4e-a70b-0a80f3bd2924
+     */ InvalidInsight: "81452cc9-558b-4b4e-a70b-0a80f3bd2924",
+    /**
+     * Insight Title: AD has null value
+     * Insight ID: b3b665b7-bca2-0322-82f1-b86ky73k90f8afe
+     */ ADHasNullValue: "b3b665b7-bca2-0322-82f1-b86ky73k90f8afe",
+    /**
+     * Insight Title: Parent Insight
+     * Insight ID: b3b665b7-bca2-4462-82f1-b0e01dff8afe
+     */ ParentInsight: "b3b665b7-bca2-4462-82f1-b0e01dff8afe",
+    /**
+     * Insight Title: many data
+     * Insight ID: dcce2234-9097-47e7-a165-36cdbaa2e134
+     */ ManyData: "dcce2234-9097-47e7-a165-36cdbaa2e134",
+    /**
+     * Insight Title: No data
+     * Insight ID: f00bd5d5-91da-4139-9e7e-5498d9fe49b5
+     */ NoData: "f00bd5d5-91da-4139-9e7e-5498d9fe49b5",
+    /**
+     * Insight Title: unmerge cells insight
+     * Insight ID: fb53ecfb-3874-4bee-8612-afecd3fa3e04
+     */ UnmergeCellsInsight: "fb53ecfb-3874-4bee-8612-afecd3fa3e04",
 };
-export const Dashboards = {};
+export const Dashboards = {
+    /**
+     * Dashboard Title: KD has null value
+     * Dashboard ID: 5a224af3-902c-4acd-ac75-bfa88d80e044
+     */
+    KDHasNullValue: "5a224af3-902c-4acd-ac75-bfa88d80e044",
+    /**
+     * Dashboard Title: KD with No data
+     * Dashboard ID: 61cbcfcd-efee-407f-ba3a-6c3170f50e03
+     */ KDWithNoData: "61cbcfcd-efee-407f-ba3a-6c3170f50e03",
+    /**
+     * Dashboard Title: KD with big insight
+     * Dashboard ID: 75a429f8-6c26-422a-8e0d-9e52981f5403
+     */ KDWithBigInsight: "75a429f8-6c26-422a-8e0d-9e52981f5403",
+    /**
+     * Dashboard Title: Target KD has null value
+     * Dashboard ID: a87209e0-c53f-4a6f-abf3-17c7d8d4079e
+     */ TargetKDHasNullValue: "a87209e0-c53f-4a6f-abf3-17c7d8d4079e",
+    /**
+     * Dashboard Title: Parent Dashboard
+     * Dashboard ID: d1965687-f7bd-41ba-9fa2-f63793d62a62
+     */ ParentDashboard: "d1965687-f7bd-41ba-9fa2-f63793d62a62",
+    /**
+     * Dashboard Title: KD with merge and unmerge insights
+     * Dashboard ID: dfb03d5e-ba83-4105-badb-0a02e2e668ee
+     */ KDWithMergeAndUnmergeInsights: "dfb03d5e-ba83-4105-badb-0a02e2e668ee",
+    /**
+     * Dashboard Title: KD with many data insight
+     * Dashboard ID: e1e6e5fe-95bc-41b9-bd8c-d9cf5e88a5d0
+     */ KDWithManyDataInsight: "e1e6e5fe-95bc-41b9-bd8c-d9cf5e88a5d0",
+    /**
+     * Dashboard Title: KD with invalid insight
+     * Dashboard ID: f50c7076-1d45-4031-a4fd-564459254b12
+     */ KDWithInvalidInsight: "f50c7076-1d45-4031-a4fd-564459254b12",
+};

@@ -2211,8 +2211,8 @@ packages:
       - typescript
     dev: false
 
-  /@gooddata/fixtures/1.16.3:
-    resolution: {integrity: sha512-vhT645/6pOXiN9DN2flfR4LmuH23bxe5R6SrR1JWHs7fjtapguE0aT1ehRJ8Qgmom0UfY1h/MoXsiPsfGF2kwQ==}
+  /@gooddata/fixtures/1.19.2:
+    resolution: {integrity: sha512-rqUlLrIVYqgTCufP1Q7Szik1JK58DO6gK/FQdd2PHHDzO94WcgqPyX9w/hVvEHbLiEFD5okW46ST2Hoy3a/TzA==}
     dependencies:
       '@gooddata/api-client-bear': 8.11.0
       '@gooddata/api-client-tiger': 8.11.0
@@ -5230,7 +5230,7 @@ packages:
     dev: false
 
   /@types/fast-levenshtein/0.0.1:
-    resolution: {integrity: sha1-OjYVzxc2Rcj8pY0FHk4ygk5L0oY=}
+    resolution: {integrity: sha512-P58dA2S0iEdzlPIys4nwHZqbzqNyDPrNo8BX8yibQy4jgBnlUu2gxWviQmXSZqjlV/AHurL9qlyCqqIJdeLTBg==}
     dev: false
 
   /@types/fs-extra/9.0.13:
@@ -7228,7 +7228,7 @@ packages:
     dev: false
 
   /batch/0.6.1:
-    resolution: {integrity: sha1-3DQxT05nkxgJP8dgJyUl+UvyXBY=}
+    resolution: {integrity: sha512-x+VAiMRL6UPkx+kudNvxTl6hB2XNNCG2r+7wixVfIYwu/2HKRXimwQyaumLjMveWvT2Hkd/cAJw+QBMfJ/EKVw==}
     dev: false
 
   /bcrypt-pbkdf/1.0.2:
@@ -8131,7 +8131,7 @@ packages:
     dev: false
 
   /co-wait/0.0.0:
-    resolution: {integrity: sha1-wiNyAyIY7b9u2RXkM1RsIeRFYos=}
+    resolution: {integrity: sha512-VC5Deck9wK285o/kV4i0eEQ3rTMbIte6geRWn5p3f0/orWuQqwcnFWsl+ijckb6INZHtsvFeBJNJ/gCv9NViVg==}
     dev: false
 
   /co/4.6.0:
@@ -8401,7 +8401,7 @@ packages:
     dev: false
 
   /console.table/0.10.0:
-    resolution: {integrity: sha1-CRcCVYiHW+/XDPLv9L7yxuLXXQQ=}
+    resolution: {integrity: sha512-dPyZofqggxuvSf7WXvNjuRfnsOk1YazkVP8FdxH4tcH2c37wc79/Yl6Bhr7Lsu00KMgy2ql/qCMuNu8xctZM8g==}
     engines: {node: '> 0.10'}
     dependencies:
       easy-table: 1.1.0
@@ -8430,7 +8430,7 @@ packages:
     dev: false
 
   /cookie-signature/1.0.6:
-    resolution: {integrity: sha1-4wOogrNCzD7oylE6eZmXNNqzriw=}
+    resolution: {integrity: sha512-QADzlaHc8icV8I7vbaJXJwod9HWYp8uCqf1xa4OfNu1T7JVxQIrUgOWtHdNDtPiywmFbiS12VjotIXLrKM3orQ==}
     dev: false
 
   /cookie/0.4.2:
@@ -9270,7 +9270,7 @@ packages:
     dev: false
 
   /discontinuous-range/1.0.0:
-    resolution: {integrity: sha1-44Mx8IRLukm5qctxx3FYWqsbxlo=}
+    resolution: {integrity: sha512-c68LpLbO+7kP/b1Hr1qs8/BJ09F5khZGTxqxZuhzxpmwJKOgRFHJWIb9/KmqnqHhLdO55aOxFH/EGBvUQbL/RQ==}
     dev: false
 
   /dnd-core/14.0.1:
@@ -9474,7 +9474,7 @@ packages:
     dev: false
 
   /easy-table/1.1.0:
-    resolution: {integrity: sha1-hvmrTBAvA3G3KXuSplHVgkvIy3M=}
+    resolution: {integrity: sha512-oq33hWOSSnl2Hoh00tZWaIPi1ievrD9aFG82/IgjlycAnW9hHx5PkJiXpxPsgEE+H7BsbVQXFVFST8TEXS6/pA==}
     optionalDependencies:
       wcwidth: 1.0.1
     dev: false
@@ -9497,7 +9497,7 @@ packages:
     dev: false
 
   /ee-first/1.1.1:
-    resolution: {integrity: sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=}
+    resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
     dev: false
 
   /electron-to-chromium/1.4.106:
@@ -10889,7 +10889,7 @@ packages:
     dev: false
 
   /fresh/0.5.2:
-    resolution: {integrity: sha1-PYyt2Q2XZWn6g1qx+OSyOhBWBac=}
+    resolution: {integrity: sha512-zJ2mQYM18rEFOudeV4GShTGIQ7RbzA7ozbU9I/XBpm7kqgMywgmylMwXHxZJmkVoYkna9d2pVXVXPdYTP9ej8Q==}
     engines: {node: '>= 0.6'}
     dev: false
 
@@ -11626,7 +11626,7 @@ packages:
     dev: false
 
   /here/0.0.2:
-    resolution: {integrity: sha1-acGvPwISHz2HiOAuhNyLOQXXEZU=}
+    resolution: {integrity: sha512-U7VYImCTcPoY27TSmzoiFsmWLEqQFaYNdpsPb9K0dXJhE6kufUqycaz51oR09CW85dDU9iWyy7At8M+p7hb3NQ==}
     dev: false
 
   /heroku-cli-util/8.0.12:
@@ -13598,7 +13598,7 @@ packages:
     dev: false
 
   /json-buffer/3.0.0:
-    resolution: {integrity: sha1-Wx85evx11ne96Lz8Dkfh+aPZqJg=}
+    resolution: {integrity: sha512-CuUqjv0FUZIdXkHPI8MezCnFCdaTAacej1TZYulLoAg1h/PhwkdXFN4V/gzY4g+fMBCOV2xF+rp7t2XD2ns/NQ==}
     dev: false
 
   /json-parse-better-errors/1.0.2:
@@ -14091,7 +14091,7 @@ packages:
     dev: false
 
   /lodash.topath/4.5.2:
-    resolution: {integrity: sha1-NhY1Hzu6YZlKCTGYlmC9AyVP0Ak=}
+    resolution: {integrity: sha512-1/W4dM+35DwvE/iEd1M9ekewOSTlpFekhw9mhAtrwjVqUr83/ilQiyAvmg4tVX7Unkcfl1KC+i9WdaT4B6aQcg==}
     dev: false
 
   /lodash.truncate/4.4.2:
@@ -14099,7 +14099,7 @@ packages:
     dev: false
 
   /lodash.uniq/4.5.0:
-    resolution: {integrity: sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=}
+    resolution: {integrity: sha512-xfBaXQd9ryd9dlSDvnvI0lvxfLJlYAZzXomUYzLKtUeOQvOP5piqAWuGtrhWeqaXK9hhoM/iyJc5AV+XfsX3HQ==}
     dev: false
 
   /lodash/4.17.21:
@@ -14386,7 +14386,7 @@ packages:
     dev: false
 
   /media-typer/0.3.0:
-    resolution: {integrity: sha1-hxDXrwqmJvj/+hzgAWhUUmMlV0g=}
+    resolution: {integrity: sha512-dq+qelQ9akHpcOl/gUVRTxVIOkAJ1wR3QAvb4RsVjS8oVoFjDGTc679wJYmUmknUF5HwMLOgb5O+a3KxfWapPQ==}
     engines: {node: '>= 0.6'}
     dev: false
 
@@ -14475,7 +14475,7 @@ packages:
     dev: false
 
   /merge-descriptors/1.0.1:
-    resolution: {integrity: sha1-sAqqVW3YtEVoFQ7J0blT8/kMu2E=}
+    resolution: {integrity: sha512-cCi6g3/Zr1iqQi6ySbseM1Xvooa98N0w31jzUYrXPX2xqObmFGHJ0tQ5u74H3mVh7wLouTseZyYIq39g8cNp1w==}
     dev: false
 
   /merge-stream/2.0.0:
@@ -14812,7 +14812,7 @@ packages:
     dev: false
 
   /mute-stream/0.0.7:
-    resolution: {integrity: sha1-MHXOk7whuPq0PhvE2n6BFe0ee6s=}
+    resolution: {integrity: sha512-r65nCZhrbXXb6dXOACihYApHw2Q6pV0M3V0PSxd74N0+D8nzAdEAITq2oAjA1jVnKI+tGvEBUpqiMh0+rW6zDQ==}
     dev: false
 
   /mute-stream/0.0.8:
@@ -19444,7 +19444,6 @@ packages:
 
   /trim/0.0.1:
     resolution: {integrity: sha512-YzQV+TZg4AxpKxaTHK3c3D+kRDCGVEE7LemdlQZoQXn0iennk10RsIoY6ikzAqJTc9Xjl9C1/waHom/J86ziAQ==}
-    deprecated: Use String.prototype.trim() instead
     dev: false
 
   /trough/1.0.5:
@@ -19678,7 +19677,7 @@ packages:
     dev: false
 
   /tty-browserify/0.0.0:
-    resolution: {integrity: sha1-oVe6QC2iTpv5V/mqadUk7tQpAaY=}
+    resolution: {integrity: sha512-JVa5ijo+j/sOoHGjw0sxw734b1LhBkQ3bvUGNdxnVXDCX81Yx7TFgnZygxrIIWn23hbfTaMYLwRmAxFyDuFmIw==}
     dev: false
 
   /tunnel-agent/0.6.0:
@@ -20150,7 +20149,7 @@ packages:
     dev: false
 
   /utils-merge/1.0.1:
-    resolution: {integrity: sha1-n5VxD1CiZ5R7LMwSR0HBAoQn5xM=}
+    resolution: {integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==}
     engines: {node: '>= 0.4.0'}
     dev: false
 
@@ -20240,7 +20239,7 @@ packages:
     dev: false
 
   /verror/1.10.0:
-    resolution: {integrity: sha1-OhBcoXBTr1XW4nDB+CiGguGNpAA=}
+    resolution: {integrity: sha512-ZZKSmDAEFOijERBLkmYfJ+vmk3w+7hOLYDNkRCuRuMJGEmqYNCNLyBBFwWKVMhfwaEF3WOd0Zlw86U/WC/+nYw==}
     engines: {'0': node >=0.6.0}
     dependencies:
       assert-plus: 1.0.0
@@ -22171,12 +22170,13 @@ packages:
     dev: false
 
   file:projects/sdk-backend-tiger.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-psOFG05Wm+tKkT3Nlc3L9/0rBhacUkw/Ua6fEHzLeuW7ridTVbjoXjuLlDsOKX5Y/NFoO8x5ZXBRoiDV+X0GRw==, tarball: file:projects/sdk-backend-tiger.tgz}
+    resolution: {integrity: sha512-7fgl6eRhOePTGW/WjBVBAptguUw6rl9TjHo6ujuFIsKD1NuDJuLWyYaOn7UU+8OnhoI5A9RkRD6S+W8JXnk1TQ==, tarball: file:projects/sdk-backend-tiger.tgz}
     id: file:projects/sdk-backend-tiger.tgz
     name: '@rush-temp/sdk-backend-tiger'
     version: 0.0.0
     dependencies:
       '@gooddata/eslint-config': 4.1.0_cd2f0915658aeeb0a01481b0c0e4032e
+      '@gooddata/fixtures': 1.19.2
       '@microsoft/api-documenter': 7.17.2
       '@microsoft/api-extractor': 7.20.1
       '@types/jest': 27.4.1
@@ -22215,6 +22215,7 @@ packages:
       - bufferutil
       - canvas
       - debug
+      - encoding
       - esbuild
       - eslint-config-prettier
       - node-notifier
@@ -23233,7 +23234,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-tests-e2e.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-ovuxnYEEpCOy7M/UPFpMX+y8mYJWi9eUszUeMIt2/4eiuZba+eC1t/jyX/BgR2yIjDgTiWgPygBUcImXlU/kFA==, tarball: file:projects/sdk-ui-tests-e2e.tgz}
+    resolution: {integrity: sha512-uZGQNHWa63xd6B+oLlYYA+oS9f6494hGoaXACxeEpiT+SL+eYQGjEr/2zrGpDKd0oWcBlT5piubGQdmnCDaQvw==, tarball: file:projects/sdk-ui-tests-e2e.tgz}
     id: file:projects/sdk-ui-tests-e2e.tgz
     name: '@rush-temp/sdk-ui-tests-e2e'
     version: 0.0.0
@@ -23251,7 +23252,7 @@ packages:
       '@babel/runtime': 7.18.9
       '@cypress/grep': 3.1.3_cypress@10.10.0
       '@gooddata/eslint-config': 4.1.0_cd2f0915658aeeb0a01481b0c0e4032e
-      '@gooddata/fixtures': 1.16.3
+      '@gooddata/fixtures': 1.19.2
       '@microsoft/api-documenter': 7.17.2
       '@microsoft/api-extractor': 7.20.1
       '@types/enzyme': 3.10.11
