@@ -34,7 +34,8 @@ export const DraggableInsightListCore: React.FC<IInsightListProps> = (props) => 
                 return (
                     <DraggableInsightListItemWrapper
                         title={insightTitle(insight)}
-                        description={enableDescriptions ? insightSummary(insight) : undefined}
+                        description={insightSummary(insight)?.trim()}
+                        showDescriptionPanel={enableDescriptions}
                         type={visualizationType}
                         width={width}
                         className={classNames}

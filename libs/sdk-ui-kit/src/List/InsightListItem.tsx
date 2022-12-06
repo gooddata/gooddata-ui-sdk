@@ -44,6 +44,8 @@ export interface IInsightListItemProps {
 
     onClick?: () => void;
     onDelete?: () => void;
+
+    showDescriptionPanel?: boolean;
 }
 
 /**
@@ -61,6 +63,7 @@ export class InsightListItemCore extends Component<IInsightListItemProps & Wrapp
             isSelected,
             isLoading,
             onClick,
+            showDescriptionPanel = false,
         } = this.props;
 
         const iconClassName = cx("gd-vis-type", `gd-vis-type-${type}`);
@@ -77,16 +80,19 @@ export class InsightListItemCore extends Component<IInsightListItemProps & Wrapp
             <div className={visualizationListItemClassname} onClick={onClick}>
                 {/* reversed order of items because of hover effect for whole item when hovering over trash bin - css hack with flex-direction: row-reverse; */}
                 {this.renderActions()}
-                <div className="gd-visualizations-list-item-description">
-                    {/* TODO INE Change this condition to handle metrics too in TNT-1138 */}
-                    {description?.length > 0 ? (
+                {showDescriptionPanel ? (
+                    <div className="gd-visualizations-list-item-description">
                         <DescriptionPanel title={title} description={description} />
-                    ) : null}
-                </div>
+                    </div>
+                ) : null}
                 <div className="gd-visualizations-list-item-content">
                     <div className="gd-visualizations-list-item-content-name">
                         {this.renderLock()}
-                        <ShortenedText ref={this.shortenedTextRef} tooltipAlignPoints={tooltipAlignPoints}>
+                        <ShortenedText
+                            ref={this.shortenedTextRef}
+                            tooltipAlignPoints={tooltipAlignPoints}
+                            displayTooltip={!showDescriptionPanel}
+                        >
                             {isLoading
                                 ? this.props.intl.formatMessage({ id: "gs.visualizationsList.loading" })
                                 : title}

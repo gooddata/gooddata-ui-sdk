@@ -4,6 +4,7 @@ export {
     DescriptionIcon,
     DescriptionPanelContent,
     IDescriptionPanelProps,
+    IDescriptionTriggerProps,
     DESCRIPTION_PANEL_ALIGN_POINTS,
     DESCRIPTION_PANEL_ARROW_OFFSETS,
 } from "./DescriptionPanel";

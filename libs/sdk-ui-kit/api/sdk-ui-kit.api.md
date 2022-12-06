@@ -339,6 +339,30 @@ export const defaultColorPaletteMetadataObject: IColorPaletteDefinition;
 export const defaultThemeMetadataObject: IThemeDefinition;
 
 // @internal (undocumented)
+export const DESCRIPTION_PANEL_ALIGN_POINTS: {
+    align: string;
+}[];
+
+// @internal (undocumented)
+export const DESCRIPTION_PANEL_ARROW_OFFSETS: {
+    "br tr": number[];
+    "bc tc": number[];
+    "bl tl": number[];
+    "tr br": number[];
+    "tc bc": number[];
+    "tl bl": number[];
+    "tr tl": number[];
+    "cr cl": number[];
+    "br bl": number[];
+    "tl tr": number[];
+    "cl cr": number[];
+    "bl br": number[];
+};
+
+// @internal (undocumented)
+export const DescriptionIcon: React_2.FC<IDescriptionTriggerProps>;
+
+// @internal (undocumented)
 export const DescriptionPanel: React_2.FC<IDescriptionPanelProps>;
 
 // @internal (undocumented)
@@ -1247,6 +1271,12 @@ export interface IDescriptionPanelProps {
 }
 
 // @internal (undocumented)
+export interface IDescriptionTriggerProps {
+    // (undocumented)
+    className?: string;
+}
+
+// @internal (undocumented)
 export interface IDialogBaseProps {
     // (undocumented)
     children?: React_2.ReactNode;
@@ -2008,6 +2038,8 @@ export interface IInsightListItemProps {
     onClick?: () => void;
     // (undocumented)
     onDelete?: () => void;
+    // (undocumented)
+    showDescriptionPanel?: boolean;
     // (undocumented)
     title?: string;
     // (undocumented)

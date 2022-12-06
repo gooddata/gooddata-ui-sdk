@@ -806,6 +806,7 @@ export type CustomDashboardInsightListItemComponentProps = {
     updated?: string;
     type?: string;
     className?: string;
+    showDescriptionPanel?: boolean;
 };
 
 // @alpha (undocumented)

@@ -7,6 +7,9 @@ import { Bubble, BubbleHoverTrigger } from "../Bubble";
 import { useMediaQuery } from "../responsive";
 import cx from "classnames";
 
+/**
+ * @internal
+ */
 export const DESCRIPTION_PANEL_ALIGN_POINTS = [
     { align: "cr cl" },
     { align: "tr tl" },
@@ -24,6 +27,9 @@ export const DESCRIPTION_PANEL_ALIGN_POINTS = [
     { align: "tl tr" },
     { align: "bl br" },
 ];
+/**
+ * @internal
+ */
 export const DESCRIPTION_PANEL_ARROW_OFFSETS = {
     "br tr": [0, 5],
     "bc tc": [0, 5],
@@ -77,7 +83,9 @@ export const DescriptionPanelContent: React.FC<IDescriptionPanelProps> = (props)
         <DescriptionPanelContentCore {...props} />
     </IntlWrapper>
 );
-
+/**
+ * @internal
+ */
 export const DescriptionIcon: React.FC<IDescriptionTriggerProps> = ({ className }) => {
     const isMobileDevice = useMediaQuery("mobileDevice");
     return (
@@ -118,9 +126,11 @@ const DescriptionPanelContentCore: React.FC<IDescriptionPanelProps> = (props) =>
     return (
         <div className="gd-description-panel s-gd-description-panel">
             {!isEmpty(title) && <div className="gd-description-panel-title">{title}</div>}
-            <div className="gd-description-panel-content">
-                {!isEmpty(description) && <EllipsisText text={description} />}
-            </div>
+            {!isEmpty(description) && (
+                <div className="gd-description-panel-content">
+                    <EllipsisText text={description} />
+                </div>
+            )}
         </div>
     );
 };
