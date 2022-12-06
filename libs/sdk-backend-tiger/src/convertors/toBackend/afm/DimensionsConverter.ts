@@ -155,7 +155,6 @@ function dimensionsWithSorts(dims: Dimension[], sorts: ISortItem[]): Dimension[]
             sorting[dimIdx].push(attributeSortKey);
         } else {
             if (nonMeasureDimIdx < 0) {
-                // eslint-disable-next-line no-console
                 console.warn(
                     "Trying to use measure sort in an execution that only contains dimension with MeasureGroup. " +
                         "This is not valid sort. Measure sort is used to sort the non-measure dimension by values from measure dimension. Ignoring",
@@ -165,7 +164,6 @@ function dimensionsWithSorts(dims: Dimension[], sorts: ISortItem[]): Dimension[]
             }
 
             if (!measureDim) {
-                // eslint-disable-next-line no-console
                 console.warn(
                     "Trying to use measure sort in an execution that does not contain MeasureGroup. Ignoring.",
                 );

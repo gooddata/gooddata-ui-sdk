@@ -207,7 +207,6 @@ function* rootSaga(
             yield fork(worker, dashboardContext);
         }
     } catch (e) {
-        // eslint-disable-next-line no-console
         console.error("Root saga failed", e);
     }
 }

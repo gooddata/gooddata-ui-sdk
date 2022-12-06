@@ -109,7 +109,7 @@ export function parseStringToArray(str: string): string[] | null {
  */
 
 export function hashCodeString(value: string): number {
-    if (!value || !value.length) {
+    if (!value?.length) {
         return 0;
     }
 

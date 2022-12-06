@@ -8,7 +8,6 @@ Cypress.Cookies.defaults({
 });
 
 Cypress.on("uncaught:exception", (error) => {
-    // eslint-disable-next-line no-console
     console.error("Uncaught excepton cause", error);
     return false;
 });

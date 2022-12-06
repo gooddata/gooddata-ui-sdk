@@ -243,7 +243,6 @@ export class DashboardLoader implements IDashboardLoader {
         );
 
         if (!areLoadedPluginsCompatibleWithDashboardEngine) {
-            // eslint-disable-next-line no-console
             console.error(
                 "Some external dashboard plugin is incompatible with the loaded dashboard engine. " +
                     "None of the external plugins will be initialized.",
@@ -298,7 +297,6 @@ export class DashboardLoader implements IDashboardLoader {
         const pluginsAreValid =
             !dashboardWithPlugins || (await validatePluginsBeforeLoading(ctx, dashboardWithPlugins));
         if (!pluginsAreValid) {
-            // eslint-disable-next-line no-console
             console.error(
                 "Dashboard is configured with plugins that contain invalid URLs or " +
                     "are not located on allowed hosts. Loader is falling back to the " +
@@ -388,7 +386,6 @@ async function initializeLoadedPlugins(
             }
             validPlugins.push(plugin);
         } catch (e: any) {
-            // eslint-disable-next-line no-console
             console.error(
                 `The onPluginLoaded call for ${plugin.displayName} failed: ${e?.message}. Ignoring the plugin.`,
             );

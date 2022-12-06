@@ -11,7 +11,6 @@ const GITHUB_MESSAGE_FILE = path.resolve(RESULTS_DIR, "github_message.md");
 const { BUILD_URL } = process.env;
 
 function handleError(e) {
-    // eslint-disable-next-line no-console
     console.error(e);
     process.exit(1);
 }

@@ -52,7 +52,6 @@ export function createRootEventEmitter(
                         }
                     });
                 } catch (e) {
-                    // eslint-disable-next-line no-console
                     console.error("Error has occurred while dispatching event", event, e);
                 }
             }

@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { ICellRendererParams } from "@ag-grid-community/all-modules";
 import { isSomeTotal } from "../data/dataSourceUtils";
 import escape from "lodash/escape";
@@ -9,7 +9,7 @@ import { agColId } from "../structure/tableDescriptorTypes";
 function hasTotalForCurrentColumn(params: ICellRendererParams): boolean {
     const row = params.data as IGridTotalsRow;
 
-    if (!row || !row.calculatedForColumns || !params.colDef) {
+    if (!row?.calculatedForColumns || !params.colDef) {
         return false;
     }
 

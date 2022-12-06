@@ -37,7 +37,6 @@ export const DashboardWidget = (props: IDashboardWidgetProps): JSX.Element => {
         //  components (or possibly the model) should deal with layout items that have no valid widgets associated
         //  and thus short-circuit.
         if (!widget) {
-            // eslint-disable-next-line no-console
             console.warn("Attempting render an undefined widget.");
             return MissingWidget;
         }
@@ -69,7 +68,6 @@ export const DashboardWidget = (props: IDashboardWidgetProps): JSX.Element => {
             return DefaultDashboardWidget;
         }
 
-        // eslint-disable-next-line no-console
         console.warn(`Unable to render widget ${extendedWidgetDebugStr(widget)}`);
         return BadWidgetType;
     }, [widget]);

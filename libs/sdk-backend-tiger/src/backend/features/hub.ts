@@ -25,7 +25,6 @@ export async function getFeatureHubFeatures(
         const featuresMap = data.reduce((prev, item) => ({ ...prev, [item.key]: item }), {} as FeaturesMap);
         return mapFeatures(featuresMap);
     } catch (err) {
-        // eslint-disable-next-line no-console
         console.error("Loading features from FeatureHub was not successful. Err: " + err);
         return {};
     }

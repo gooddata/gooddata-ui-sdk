@@ -561,7 +561,6 @@ export class ExperimentalExecutionsModule {
         settings: any = {},
     ): Promise<any> {
         if (process.env.NODE_ENV !== "test") {
-            // eslint-disable-next-line no-console
             console.warn(
                 "ExperimentalExecutionsModule is deprecated and is no longer being maintained. " +
                     "Please migrate to the ExecuteAfmModule.",

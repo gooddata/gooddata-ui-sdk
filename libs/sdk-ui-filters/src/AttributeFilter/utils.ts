@@ -126,7 +126,6 @@ export function validateAttributeFilterProps(props: IAttributeFilterBaseProps) {
     );
 
     if (identifier) {
-        // eslint-disable-next-line no-console
         console.warn(
             "Definition of an attribute display form using 'identifier' is deprecated, use 'filter' property instead. Please see the documentation of [AttributeFilter component](https://sdk.gooddata.com/gooddata-ui/docs/attribute_filter_component.html) for further details.",
         );

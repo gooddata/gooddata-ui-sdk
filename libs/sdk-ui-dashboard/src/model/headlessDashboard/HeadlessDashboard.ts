@@ -143,7 +143,6 @@ export class HeadlessDashboard {
         const commandFailed = this.getOrCreateMonitoredAction("GDC.DASH/EVT.COMMAND.FAILED");
 
         return commandFailed.promise.then((evt) => {
-            // eslint-disable-next-line no-console
             console.error(`Command processing failed: ${evt.payload.reason} - ${evt.payload.message}`);
 
             throw evt.payload.error;
@@ -154,7 +153,6 @@ export class HeadlessDashboard {
         const commandRejected = this.getOrCreateMonitoredAction("GDC.DASH/EVT.COMMAND.REJECTED");
 
         return commandRejected.promise.then((evt) => {
-            // eslint-disable-next-line no-console
             console.error(
                 "Command was rejected because dashboard does not know how to handle it. " +
                     "This is likely because the handler for the rejected command is not registered in the system. See root command handler.",

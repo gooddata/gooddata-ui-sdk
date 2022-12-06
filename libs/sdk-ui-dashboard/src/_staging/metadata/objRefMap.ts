@@ -133,7 +133,6 @@ export class ObjRefMap<T> {
             const strictMatch = this.itemsByIdentifier[this.idRefToKey(key.identifier, key.type)];
 
             if (!strictMatch && !key.type && this.config.strictTypeCheck) {
-                // eslint-disable-next-line no-console
                 console.warn(
                     "You are working with an analytical backend which can only match entities by idRefs that contain both identifier and type. However, while trying to find match an object by ref your code supplied just the identifier without type.",
                 );

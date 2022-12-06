@@ -62,12 +62,12 @@
         "tslib": "^2.0.0"
     },
     "devDependencies": {
-        "@gooddata/eslint-config": "^2.1.0",
+        "@gooddata/eslint-config": "^4.1.0",
         "@microsoft/api-documenter": "^7.17.0",
         "@microsoft/api-extractor": "^7.20.0",
         "@types/jest": "^27.0.1",
-        "@typescript-eslint/eslint-plugin": "^5.5.0",
-        "@typescript-eslint/parser": "^5.5.0",
+        "@typescript-eslint/eslint-plugin": "^5.45.0",
+        "@typescript-eslint/parser": "^5.45.0",
         "concurrently": "^6.0.2",
         "dependency-cruiser": "^10.1.1",
         "eslint": "^8.25.0",

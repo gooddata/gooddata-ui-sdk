@@ -60,14 +60,14 @@
         "tslib": "^2.0.0"
     },
     "devDependencies": {
-        "@gooddata/eslint-config": "^2.1.0",
+        "@gooddata/eslint-config": "^4.1.0",
         "@types/inquirer": "^7.3.1",
         "@types/jest": "^27.0.1",
         "@types/lodash": "^4.14.158",
         "@types/node": "^16.11.11",
         "@types/prettier": "~1.18.2",
-        "@typescript-eslint/eslint-plugin": "^5.5.0",
-        "@typescript-eslint/parser": "^5.5.0",
+        "@typescript-eslint/eslint-plugin": "^5.45.0",
+        "@typescript-eslint/parser": "^5.45.0",
         "dependency-cruiser": "^10.1.1",
         "eslint": "^8.25.0",
         "eslint-plugin-header": "^3.0.0",

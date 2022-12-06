@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { validatePluginUrlIsSane } from "@gooddata/sdk-backend-base";
 import { ISecuritySettingsService, ValidationContext } from "@gooddata/sdk-backend-spi";
 import { BearAuthenticatedCallGuard } from "../../types/auth";
@@ -41,7 +41,6 @@ export class SecuritySettingsService implements ISecuritySettingsService {
         const sanitizationError = validatePluginUrlIsSane(url);
 
         if (sanitizationError) {
-            // eslint-disable-next-line no-console
             console.warn("Dashboard plugin URL is not valid: ", sanitizationError);
 
             return false;

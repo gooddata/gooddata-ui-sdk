@@ -89,7 +89,6 @@ export function newRenderingWorker(
             // Notify that the dashboard is fully rendered.
             yield put(renderResolved(ctx, correlationId));
         } catch (err) {
-            // eslint-disable-next-line no-console
             console.error("Rendering worker failed", err);
         }
     };

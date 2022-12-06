@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { ISecuritySettingsService, ValidationContext } from "@gooddata/sdk-backend-spi";
 import { validatePluginUrlIsSane } from "@gooddata/sdk-backend-base";
 
@@ -12,7 +12,6 @@ export class SecuritySettingsService implements ISecuritySettingsService {
     constructor(public readonly scope: string) {}
 
     public isUrlValid = (url: string, context: ValidationContext): Promise<boolean> => {
-        // eslint-disable-next-line no-console
         console.warn(
             "'isUrlValid' function is not supported by Tiger backend, true is returned for parameters:",
             url,
@@ -25,7 +24,6 @@ export class SecuritySettingsService implements ISecuritySettingsService {
         const sanitizationError = validatePluginUrlIsSane(url);
 
         if (sanitizationError) {
-            // eslint-disable-next-line no-console
             console.warn("Dashboard plugin URL is not valid: ", sanitizationError);
 
             return false;

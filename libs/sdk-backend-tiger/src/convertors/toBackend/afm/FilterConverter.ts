@@ -236,7 +236,6 @@ export function convertFilter(filter0: IFilter | IFilterWithApplyOnResult): Filt
     } else if (isRankingFilter(filter)) {
         return convertRankingFilter(filter, applyOnResultProp);
     } else {
-        // eslint-disable-next-line no-console
         console.warn("Tiger does not support this filter. The filter will be ignored");
         return null;
     }

@@ -128,7 +128,6 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
 
     private static checkInitialFilterOption = (filterOption: DateFilterOption) => {
         if (isAbsoluteDateFilterForm(filterOption) && (isNil(filterOption.from) || isNil(filterOption.to))) {
-            // eslint-disable-next-line no-console
             console.warn(
                 "The default filter option is not valid. Values 'from' and 'to' from absoluteForm filter option must be specified.",
             );
@@ -138,7 +137,6 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
             isUiRelativeDateFilterForm(filterOption) &&
             (isNil(filterOption.from) || isNil(filterOption.to))
         ) {
-            // eslint-disable-next-line no-console
             console.warn(
                 "The default filter option is not valid. Values 'from' and 'to' from relativeForm filter option must be specified.",
             );

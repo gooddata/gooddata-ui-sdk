@@ -107,7 +107,7 @@ export function handleGeoPushpinDrillEvent(
         locationIndex,
     );
 
-    if (!drillIntersection || !drillIntersection.length) {
+    if (!drillIntersection?.length) {
         return;
     }
 

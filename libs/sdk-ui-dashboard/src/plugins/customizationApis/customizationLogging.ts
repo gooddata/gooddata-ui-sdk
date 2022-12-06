@@ -31,11 +31,9 @@ export class DashboardCustomizationLogger implements IDashboardCustomizationLogg
         console.log(addPluginInfoToMessage(this.currentPlugin, message), optionalParams);
     };
     public warn = (message: string, ...optionalParams: any[]): void => {
-        // eslint-disable-next-line no-console
         console.warn(addPluginInfoToMessage(this.currentPlugin, message), optionalParams);
     };
     public error = (message: string, ...optionalParams: any[]): void => {
-        // eslint-disable-next-line no-console
         console.error(addPluginInfoToMessage(this.currentPlugin, message), optionalParams);
     };
 }

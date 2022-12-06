@@ -19,7 +19,7 @@ export function useIsFilterNotApplied(widget: IWidget, displayFormRef: ObjRef): 
         return true;
     }
 
-    if (!allWarnings || !allWarnings.length) {
+    if (!allWarnings?.length) {
         return false;
     }
 

@@ -228,7 +228,6 @@ export function redirectToTigerAuthentication(
     error: NotAuthenticated,
 ): void {
     if (!error.authenticationFlow) {
-        // eslint-disable-next-line no-console
         console.error("Analytical Backend did not provide detail where to start authentication flow. ");
 
         return;

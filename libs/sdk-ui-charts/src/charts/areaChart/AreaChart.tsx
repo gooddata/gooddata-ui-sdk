@@ -127,7 +127,6 @@ function verifyBuckets(props: IAreaChartProps): void {
 
     const { measures = [], stackBy } = props;
     if (measures.length > 1 || stackBy) {
-        // eslint-disable-next-line no-console
         console.warn(
             "When there are two attributes in viewBy, only first measure is taken and attribute in stackBy is ignored",
         );

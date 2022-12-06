@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 import every from "lodash/every";
 import { BucketNames } from "@gooddata/sdk-ui";
@@ -35,7 +35,7 @@ export function tryToMapForeignBuckets(
         }
 
         const targetBucketUiConfig = newReferencePoint.uiConfig.buckets[targetBucket.localIdentifier];
-        if (!targetBucketUiConfig || !targetBucketUiConfig.enabled) {
+        if (!targetBucketUiConfig?.enabled) {
             allMeasuresCompatible = false;
             continue;
         }

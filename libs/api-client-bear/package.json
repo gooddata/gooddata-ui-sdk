@@ -61,7 +61,7 @@
         "tslib": "^2.0.0"
     },
     "devDependencies": {
-        "@gooddata/eslint-config": "^2.1.0",
+        "@gooddata/eslint-config": "^4.1.0",
         "@types/fast-levenshtein": "0.0.1",
         "@types/isomorphic-fetch": "^0.0.34",
         "@types/jest": "^27.0.1",
@@ -69,8 +69,8 @@
         "@types/node-fetch": "^1.6.7",
         "@types/qs": "^6.5.1",
         "@types/spark-md5": "^3.0.1",
-        "@typescript-eslint/eslint-plugin": "^5.5.0",
-        "@typescript-eslint/parser": "^5.5.0",
+        "@typescript-eslint/eslint-plugin": "^5.45.0",
+        "@typescript-eslint/parser": "^5.45.0",
         "async": "^2.6.4",
         "concurrently": "^6.0.2",
         "dependency-cruiser": "^10.1.1",

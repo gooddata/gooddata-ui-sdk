@@ -129,7 +129,6 @@ class BearWorkspaceElementsQuery implements IElementsQuery {
         const { elements, uris, ...restOptions } = options;
 
         if (elements && uris) {
-            // eslint-disable-next-line no-console
             console.warn(
                 "Both 'elements' and 'uris' used in IElementsQueryOptions, 'uris' property will be ignored.",
             );

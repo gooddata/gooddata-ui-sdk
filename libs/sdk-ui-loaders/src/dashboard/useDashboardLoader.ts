@@ -141,7 +141,6 @@ export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoa
                 setLoadStatus(InitialStatus);
             },
             onError: (error) => {
-                // eslint-disable-next-line no-console
                 console.error("Dashboard load failed", error);
 
                 setLoadStatus({

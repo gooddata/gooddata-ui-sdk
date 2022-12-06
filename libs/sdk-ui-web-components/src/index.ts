@@ -17,12 +17,10 @@ import initializeAutoAuth from "./autoAuth";
 
 // Include styles async to use native link injection from MiniCssExtractPlugin
 import("./visualizations/components.css").catch((error) => {
-    // eslint-disable-next-line no-console
     console.error("Failed to load analytics styles", error);
 });
 
 initializeAutoAuth(import.meta.url).catch((error) => {
-    // eslint-disable-next-line no-console
     console.error("Failed to configure automatic authentication flow", error);
 });
 

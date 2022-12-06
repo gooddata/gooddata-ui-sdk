@@ -401,7 +401,7 @@ class GeoChartRenderer extends React.Component<IGeoChartRendererProps> {
     private handleLayerLoaded = () => {
         const { chart } = this;
 
-        if (!chart || !chart.isStyleLoaded()) {
+        if (!chart?.isStyleLoaded()) {
             return;
         }
 

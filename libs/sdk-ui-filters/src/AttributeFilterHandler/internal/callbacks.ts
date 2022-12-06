@@ -109,7 +109,6 @@ const newCallbackRegistrationsWithGlobalUnsubscribe = () => {
 function logError(activity: string, error: GoodDataSdkError): void {
     const cause = error.getCause();
     const formattedCause = cause ? `\nInner error: ${cause}` : "";
-    // eslint-disable-next-line no-console
     console.error(`Error while ${activity}: ${error.getMessage()}${formattedCause}`);
 }
 

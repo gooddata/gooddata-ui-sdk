@@ -178,7 +178,6 @@ export class AgGridDatasource implements IDatasource {
                     .catch((err) => {
                         this.config.onTransformedExecutionFailed();
 
-                        // eslint-disable-next-line no-console
                         console.error("Error while doing execution to obtain data view", err);
 
                         failCallback();
@@ -187,7 +186,6 @@ export class AgGridDatasource implements IDatasource {
             .catch((err) => {
                 this.config.onTransformedExecutionFailed();
 
-                // eslint-disable-next-line no-console
                 console.error("Error while doing execution to obtain transformed results", err);
 
                 failCallback();
@@ -246,7 +244,6 @@ export class AgGridDatasource implements IDatasource {
                     this.processData(DataViewFacade.for(dataView), params);
                 })
                 .catch((err) => {
-                    // eslint-disable-next-line no-console
                     console.error("Error while doing execution to obtain data view", err);
 
                     failCallback();
@@ -275,7 +272,7 @@ function isSortedByFirstAttribute(tableDescriptor: TableDescriptor, sortingCols:
 
 function isDataViewSortedByFirstAttribute(dv: DataViewFacade): boolean {
     const { sortBy } = dv.definition;
-    if (!sortBy || !sortBy.length) {
+    if (!sortBy?.length) {
         // this is somewhat dangerous assumption: no explicit sort == sorted by first col
         //  (bear and tiger backend behaves thusly)
         return true;

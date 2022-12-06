@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { DashboardContext } from "@gooddata/sdk-ui-dashboard";
 import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 
@@ -24,7 +24,6 @@ export async function validatePluginsBeforeLoading(
             .isDashboardPluginUrlValid(plugin.url, workspace);
 
         if (!pluginResult) {
-            // eslint-disable-next-line no-console
             console.error(`Dashboard plugin URL is not valid: ${plugin.url}`);
 
             return false;
