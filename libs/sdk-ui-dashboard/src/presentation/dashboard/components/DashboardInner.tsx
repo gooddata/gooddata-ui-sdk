@@ -10,6 +10,10 @@ import { DashboardSidebar } from "../DashboardSidebar/DashboardSidebar";
 import { RenderModeAwareDashboardSidebar } from "../DashboardSidebar/RenderModeAwareDashboardSidebar";
 import { DragLayerComponent } from "../../dragAndDrop";
 import { Toolbar } from "../../toolbar";
+import { OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
+import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../constants";
+
+const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
 
 export const DashboardInner: React.FC<IDashboardProps> = () => {
     const locale = useDashboardSelector(selectLocale);
@@ -28,7 +32,10 @@ export const DashboardInner: React.FC<IDashboardProps> = () => {
                     <DashboardSidebar DefaultSidebar={RenderModeAwareDashboardSidebar} />
                     <div className="gd-dash-content">
                         <div className="gd-dash-header-wrapper">
-                            <DashboardHeader />
+                            {/* Header z-index start at  6000 so we need force all overlays z-indexes start at 6000 to be under header */}
+                            <OverlayControllerProvider overlayController={overlayController}>
+                                <DashboardHeader />
+                            </OverlayControllerProvider>
                         </div>
                         <DashboardMainContent />
                     </div>

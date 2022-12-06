@@ -42,7 +42,9 @@ export const RowLegendIcoButton: React.FC<IRowLegendIcoButton> = (props) => {
         return null;
     }
 
-    const handleOnClick = () => {
+    const handleOnClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        e.stopPropagation();
+        e.preventDefault();
         onIconClick();
     };
 

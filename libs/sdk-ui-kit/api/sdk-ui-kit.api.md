@@ -4018,7 +4018,7 @@ export const OverlayContext: React_2.Context<OverlayController>;
 export class OverlayController {
     addOverlay(uuid: string): void;
     // (undocumented)
-    static getInstance(): OverlayController;
+    static getInstance(initialZIndex?: number): OverlayController;
     getZIndex(uuid: string): number;
     removeOverlay(uuid: string): void;
 }

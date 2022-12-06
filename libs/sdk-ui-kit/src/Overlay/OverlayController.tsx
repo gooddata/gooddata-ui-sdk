@@ -5,26 +5,24 @@
  */
 const Z_INDEX_STEP = 10;
 
+const DEFAULT_INIT_Z_INDEX = 5001;
 /**
  * Overlay stacking controller.
  *
  * @internal
  */
 export class OverlayController {
-    private static instance: OverlayController | undefined;
     private currentCount = 0;
-    private initialZIndex: number = 5001;
+    private initialZIndex: number = DEFAULT_INIT_Z_INDEX;
     private overlays: Map<string, number>;
 
-    private constructor() {
+    private constructor(initialZIndex: number = DEFAULT_INIT_Z_INDEX) {
         this.overlays = new Map<string, number>();
+        this.initialZIndex = initialZIndex;
     }
 
-    public static getInstance() {
-        if (!this.instance) {
-            this.instance = new OverlayController();
-        }
-        return this.instance;
+    public static getInstance(initialZIndex: number = DEFAULT_INIT_Z_INDEX) {
+        return new OverlayController(initialZIndex);
     }
 
     /**

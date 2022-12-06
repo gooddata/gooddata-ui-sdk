@@ -28,7 +28,6 @@ import {
     useDashboardSelector,
 } from "../../../model";
 import { dashboardMatch } from "../utils/dashboardPredicate";
-import { DRILL_SELECT_DROPDOWN_Z_INDEX } from "../../constants";
 import { getDrillOriginLocalIdentifier } from "../../../_staging/drills/drillingUtils";
 import { ObjRefMap } from "../../../_staging/metadata/objRefMap";
 
@@ -66,7 +65,6 @@ export const DrillSelectDropdown: React.FC<DrillSelectDropdownProps> = (props) =
                 closeOnOutsideClick={true}
                 closeOnEscape={true}
                 alignTo={`.${dropDownAnchorClass}`}
-                zIndex={DRILL_SELECT_DROPDOWN_Z_INDEX}
                 onClose={onClose}
             >
                 <DrillSelectListBody items={drillSelectItems} onSelect={onSelect} />

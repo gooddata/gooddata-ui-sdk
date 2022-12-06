@@ -1,7 +1,13 @@
 // (C) 2020-2022 GoodData Corporation
 import React, { useCallback, useState } from "react";
 import { idRef, IInsight, insightTitle, IInsightWidget } from "@gooddata/sdk-model";
-import { FullScreenOverlay, Overlay, useMediaQuery } from "@gooddata/sdk-ui-kit";
+import {
+    FullScreenOverlay,
+    Overlay,
+    OverlayController,
+    OverlayControllerProvider,
+    useMediaQuery,
+} from "@gooddata/sdk-ui-kit";
 import { ILocale, OnLoadingChanged } from "@gooddata/sdk-ui";
 import { DOWNLOADER_ID } from "../../../../../_staging/fileUtils/downloadFile";
 import { useInsightExport } from "../../../common";
@@ -13,6 +19,10 @@ import { useWidgetExecutionsHandler } from "../../../../../model";
 import { getTitleWithBreadcrumbs } from "./getTitleWithBreadcrumbs";
 import { useDashboardComponentsContext } from "../../../../dashboardContexts";
 import { ThemedLoadingEqualizer } from "../../../../presentationComponents";
+import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../../constants";
+
+// Header z-index start at  6000 so we need force all overlays z-indexes start at 6000 to be above header
+const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
 
 /**
  * @internal
@@ -70,50 +80,52 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
     const OverlayComponent = isMobileDevice ? FullScreenOverlay : Overlay;
 
     return (
-        <OverlayComponent
-            className="gd-drill-modal-overlay"
-            isModal
-            closeOnEscape
-            closeOnOutsideClick
-            ignoreClicksOnByClass={overlayIgnoredClasses}
-            onClose={onClose}
-            positionType="fixed"
-        >
-            <IntlWrapper locale={locale}>
-                <DrillDialog
-                    insightTitle={baseInsightTitle}
-                    isBackButtonVisible={breadcrumbs.length > 1}
-                    onBackButtonClick={onBackButtonClick}
-                    onCloseDialog={onClose}
-                    breadcrumbs={breadcrumbs}
-                    exportAvailable={exportXLSXEnabled || exportCSVEnabled}
-                    exportXLSXEnabled={exportXLSXEnabled}
-                    exportCSVEnabled={exportCSVEnabled}
-                    onExportXLSX={onExportXLSX}
-                    onExportCSV={onExportCSV}
-                    isLoading={isLoading}
-                >
-                    <WithDrillSelect
-                        widgetRef={widget.ref}
-                        insight={props.insight}
-                        onDrillDownSuccess={onDrillDown}
+        <OverlayControllerProvider overlayController={overlayController}>
+            <OverlayComponent
+                className="gd-drill-modal-overlay"
+                isModal
+                closeOnEscape
+                closeOnOutsideClick
+                ignoreClicksOnByClass={overlayIgnoredClasses}
+                onClose={onClose}
+                positionType="fixed"
+            >
+                <IntlWrapper locale={locale}>
+                    <DrillDialog
+                        insightTitle={baseInsightTitle}
+                        isBackButtonVisible={breadcrumbs.length > 1}
+                        onBackButtonClick={onBackButtonClick}
+                        onCloseDialog={onClose}
+                        breadcrumbs={breadcrumbs}
+                        exportAvailable={exportXLSXEnabled || exportCSVEnabled}
+                        exportXLSXEnabled={exportXLSXEnabled}
+                        exportCSVEnabled={exportCSVEnabled}
+                        onExportXLSX={onExportXLSX}
+                        onExportCSV={onExportCSV}
+                        isLoading={isLoading}
                     >
-                        {({ onDrill }) => {
-                            return (
-                                <DrillDialogInsight
-                                    {...props}
-                                    onDrill={onDrill}
-                                    onLoadingChanged={handleLoadingChanged}
-                                    onError={executionsHandler.onError}
-                                    pushData={executionsHandler.onPushData}
-                                    ErrorComponent={ErrorComponent}
-                                    LoadingComponent={LoadingComponent}
-                                />
-                            );
-                        }}
-                    </WithDrillSelect>
-                </DrillDialog>
-            </IntlWrapper>
-        </OverlayComponent>
+                        <WithDrillSelect
+                            widgetRef={widget.ref}
+                            insight={props.insight}
+                            onDrillDownSuccess={onDrillDown}
+                        >
+                            {({ onDrill }) => {
+                                return (
+                                    <DrillDialogInsight
+                                        {...props}
+                                        onDrill={onDrill}
+                                        onLoadingChanged={handleLoadingChanged}
+                                        onError={executionsHandler.onError}
+                                        pushData={executionsHandler.onPushData}
+                                        ErrorComponent={ErrorComponent}
+                                        LoadingComponent={LoadingComponent}
+                                    />
+                                );
+                            }}
+                        </WithDrillSelect>
+                    </DrillDialog>
+                </IntlWrapper>
+            </OverlayComponent>
+        </OverlayControllerProvider>
     );
 };
