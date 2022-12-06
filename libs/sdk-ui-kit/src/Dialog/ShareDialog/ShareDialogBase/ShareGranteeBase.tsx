@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import React, { useMemo } from "react";
 import { useIntl } from "react-intl";
 
@@ -24,11 +24,13 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
         onCancel,
         onSubmit,
         onGranteeDelete,
+        onGranularGranteeChange,
         onAddGranteeButtonClick,
         onLockChange,
         onUnderLenientControlChange,
     } = props;
-    const { owner, isLeniencyControlSupported, isLockingSupported } = sharedObject;
+    const { owner, isLeniencyControlSupported, isLockingSupported, areGranularPermissionsSupported } =
+        sharedObject;
 
     const intl = useIntl();
 
@@ -59,8 +61,10 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
             <ShareGranteeContent
                 isLoading={isLoading}
                 grantees={granteeList}
+                areGranularPermissionsSupported={areGranularPermissionsSupported}
                 onAddGrantee={onAddGranteeButtonClick}
                 onDelete={onGranteeDelete}
+                onChange={onGranularGranteeChange}
             />
             <ContentDivider />
             <SharedObjectUnderLenientControl

@@ -40,6 +40,9 @@ import { WithIntlProps } from 'react-intl';
 import { WrappedComponentProps } from 'react-intl';
 
 // @internal (undocumented)
+export type AccessGranularPermission = "view" | "edit" | "share";
+
+// @internal (undocumented)
 export type ActionType = "LinkButton" | "Button" | "Switcher";
 
 // @internal (undocumented)
@@ -618,7 +621,7 @@ export type GetPositionedSelfRegion = {
 export function getRecommendedDateDataset<T extends IDateDataset>(items: T[]): T;
 
 // @internal (undocumented)
-export type GranteeItem = IGranteeUser | IGranteeInactiveOwner | IGranteeGroup | IGranteeGroupAll;
+export type GranteeItem = IGranteeUser | IGranteeInactiveOwner | IGranteeGroup | IGranteeGroupAll | IGranularGranteeUser | IGranularGranteeGroup;
 
 // @internal (undocumented)
 export const GranteeItemComponent: React_2.FC<IGranteeItemProps>;
@@ -697,6 +700,8 @@ export interface IAddGranteeBaseProps {
     // (undocumented)
     appliedGrantees: GranteeItem[];
     // (undocumented)
+    areGranularPermissionsSupported?: boolean;
+    // (undocumented)
     currentUserRef: ObjRef;
     // (undocumented)
     isDirty: boolean;
@@ -714,6 +719,8 @@ export interface IAddGranteeBaseProps {
 
 // @internal (undocumented)
 export interface IAffectedSharedObject {
+    // (undocumented)
+    areGranularPermissionsSupported?: boolean;
     // (undocumented)
     isLeniencyControlSupported: boolean;
     // (undocumented)
@@ -1748,9 +1755,13 @@ export interface IGranteeInactiveOwner extends IGranteeBase {
 // @internal (undocumented)
 export interface IGranteeItemProps {
     // (undocumented)
+    areGranularPermissionsSupported?: boolean;
+    // (undocumented)
     grantee: GranteeItem;
     // (undocumented)
     mode: DialogModeType;
+    // (undocumented)
+    onChange?: (grantee: GranteeItem) => void;
     // (undocumented)
     onDelete: (grantee: GranteeItem) => void;
 }
@@ -1758,7 +1769,7 @@ export interface IGranteeItemProps {
 // @internal (undocumented)
 export interface IGranteeUser extends IGranteeBase {
     // (undocumented)
-    email: string;
+    email?: string;
     // (undocumented)
     isCurrentUser: boolean;
     // (undocumented)
@@ -1769,6 +1780,22 @@ export interface IGranteeUser extends IGranteeBase {
     status: GranteeStatus;
     // (undocumented)
     type: "user";
+}
+
+// @internal (undocumented)
+export interface IGranularGranteeGroup extends IGranteeGroup {
+    // (undocumented)
+    inheritedPermissions: AccessGranularPermission[];
+    // (undocumented)
+    permissions: AccessGranularPermission[];
+}
+
+// @internal (undocumented)
+export interface IGranularGranteeUser extends IGranteeUser {
+    // (undocumented)
+    inheritedPermissions: AccessGranularPermission[];
+    // (undocumented)
+    permissions: AccessGranularPermission[];
 }
 
 // @internal (undocumented)
@@ -3315,6 +3342,12 @@ export const isGranteeGroup: (obj: unknown) => obj is IGranteeGroup;
 export const isGranteeUser: (obj: unknown) => obj is IGranteeUser;
 
 // @internal (undocumented)
+export const isGranularGranteeGroup: (obj: unknown) => obj is IGranularGranteeGroup;
+
+// @internal (undocumented)
+export const isGranularGranteeUser: (obj: unknown) => obj is IGranularGranteeUser;
+
+// @internal (undocumented)
 export interface IShareDialogBaseProps {
     // (undocumented)
     currentUserRef: ObjRef;
@@ -3391,6 +3424,8 @@ export interface IShareGranteeBaseProps {
     // (undocumented)
     onGranteeDelete: (grantee: GranteeItem) => void;
     // (undocumented)
+    onGranularGranteeChange?: (grantee: GranteeItem) => void;
+    // (undocumented)
     onLockChange: (locked: boolean) => void;
     // (undocumented)
     onSubmit: () => void;
@@ -3403,11 +3438,15 @@ export interface IShareGranteeBaseProps {
 // @internal (undocumented)
 export interface IShareGranteeContentProps {
     // (undocumented)
+    areGranularPermissionsSupported?: boolean;
+    // (undocumented)
     grantees: GranteeItem[];
     // (undocumented)
     isLoading: boolean;
     // (undocumented)
     onAddGrantee: () => void;
+    // (undocumented)
+    onChange?: (grantee: GranteeItem) => void;
     // (undocumented)
     onDelete: (grantee: GranteeItem) => void;
 }

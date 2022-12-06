@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { IntlShape } from "react-intl";
 import { areObjRefsEqual, objRefToString, uriRef } from "@gooddata/sdk-model";
 import {
@@ -133,4 +133,12 @@ export const getGranteeItemTestId = (grantee: GranteeItem, prefix?: "option"): s
     const prefixValue = prefix ? `${prefix}-` : "";
     const id = objRefToString(grantee.id).split("/").pop();
     return `s-gd-grantee-item-id-${prefixValue}${id}`;
+};
+
+/**
+ * @internal
+ */
+export const getGranularGranteeClassNameId = (grantee: GranteeItem): string => {
+    const id = objRefToString(grantee.id).split("/").pop();
+    return `gd-granular-grantee-item-id-${id}`;
 };

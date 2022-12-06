@@ -1,4 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
+
 import React, { useCallback, useMemo } from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 import cx from "classnames";
@@ -10,6 +11,11 @@ import {
     IGranteeItemProps,
     IGranteeUser,
     IGranteeInactiveOwner,
+    isGranteeUser,
+    isGranteeGroup,
+    isGranularGranteeUser,
+    isGranularGranteeGroup,
+    isGranteeGroupAll,
 } from "./types";
 import { getGranteeLabel, getGranteeItemTestId } from "./utils";
 import {
@@ -20,6 +26,8 @@ import {
     GranteeUserInactiveIcon,
 } from "./GranteeIcons";
 import { Button } from "../../../Button";
+import { GranularGranteeUserItem } from "./GranularPermissions/GranularGranteeUserItem";
+import { GranularGranteeGroupItem } from "./GranularPermissions/GranularGranteeGroupItem";
 
 interface IGranteeUserItemProps {
     grantee: IGranteeUser;
@@ -162,13 +170,21 @@ const GranteeGroupItem: React.FC<IGranteeGroupItemProps> = (props) => {
  * @internal
  */
 export const GranteeItemComponent: React.FC<IGranteeItemProps> = (props) => {
-    const { grantee, mode, onDelete } = props;
+    const { grantee, mode, areGranularPermissionsSupported, onDelete, onChange } = props;
 
-    if (grantee.type === "user") {
-        return <GranteeUserItem grantee={grantee} mode={mode} onDelete={onDelete} />;
-    } else if (grantee.type === "inactive_owner") {
-        return <GranteeUserInactiveItem grantee={grantee} />;
+    if (areGranularPermissionsSupported) {
+        if (isGranularGranteeUser(grantee)) {
+            return <GranularGranteeUserItem grantee={grantee} onChange={onChange} onDelete={onDelete} />;
+        } else if (isGranularGranteeGroup(grantee)) {
+            return <GranularGranteeGroupItem grantee={grantee} onChange={onChange} onDelete={onDelete} />;
+        }
     } else {
-        return <GranteeGroupItem grantee={grantee} mode={mode} onDelete={onDelete} />;
+        if (isGranteeUser(grantee)) {
+            return <GranteeUserItem grantee={grantee} mode={mode} onDelete={onDelete} />;
+        } else if (grantee.type === "inactive_owner") {
+            return <GranteeUserInactiveItem grantee={grantee} />;
+        } else if (isGranteeGroup(grantee) || isGranteeGroupAll(grantee)) {
+            return <GranteeGroupItem grantee={grantee} mode={mode} onDelete={onDelete} />;
+        }
     }
 };

@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { useCallback, useMemo, useState } from "react";
 import { areObjRefsEqual } from "@gooddata/sdk-model";
 import {
@@ -31,6 +31,7 @@ interface IUseShareDialogStateReturnType {
     onAddGranteeBackClick: () => void;
     onUnderLenientControlChange: (isUnderLenientControl: boolean) => void;
     onLockChange: (isLocked: boolean) => void;
+    onGranularGranteeChange?: (grantee: GranteeItem) => void;
 }
 
 /**
@@ -128,6 +129,7 @@ export interface IUseShareDialogBaseReturnType {
     isUnderLenientControlNow: boolean;
     onLockChange: (locked: boolean) => void;
     onUnderLenientControlChange: (isUnderLenientControl: boolean) => void;
+    onGranularGranteeChange?: (grantee: GranteeItem) => void;
 }
 
 /**
@@ -135,7 +137,8 @@ export interface IUseShareDialogBaseReturnType {
  */
 export const useShareDialogBase = (props: IShareDialogBaseProps): IUseShareDialogBaseReturnType => {
     const { sharedObject, currentUserRef, onSubmit, onError } = props;
-    const { ref, shareStatus, owner, isUnderLenientControl, isLocked } = sharedObject;
+    const { ref, shareStatus, owner, isUnderLenientControl, isLocked, areGranularPermissionsSupported } =
+        sharedObject;
 
     const {
         dialogMode,
@@ -153,12 +156,17 @@ export const useShareDialogBase = (props: IShareDialogBaseProps): IUseShareDialo
         onAddGranteeBackClick,
         onLockChange,
         onUnderLenientControlChange,
+        onGranularGranteeChange,
     } = useShareDialogState(isUnderLenientControl, isLocked);
 
     const onLoadGranteesSuccess = useCallback(
         (result: GranteeItem[]) => {
-            const groupAll = mapShareStatusToGroupAll(shareStatus);
-            onLoadGrantees(result, groupAll);
+            if (areGranularPermissionsSupported) {
+                onLoadGrantees(result, undefined);
+            } else {
+                const groupAll = mapShareStatusToGroupAll(shareStatus);
+                onLoadGrantees(result, groupAll);
+            }
         },
         [onLoadGrantees, shareStatus],
     );
@@ -236,6 +244,7 @@ export const useShareDialogBase = (props: IShareDialogBaseProps): IUseShareDialo
         appliedGranteesWithOwner,
         onLockChange,
         onUnderLenientControlChange,
+        onGranularGranteeChange,
         isUnderLenientControlNow,
         isLockedNow,
     };

@@ -1544,6 +1544,26 @@
         "comment": "Text of the tooltip shown above button that removes user or group from unsaved selection of newly added grantees that will gain access right to the dashboard after changes in share dialog are saved.",
         "limit": 0
     },
+    "shareDialog.share.granular.grantee.permission.edit": {
+        "value": "Can edit & share",
+        "comment": "",
+        "limit": 0
+    },
+    "shareDialog.share.granular.grantee.permission.share": {
+        "value": "Can view & share",
+        "comment": "",
+        "limit": 0
+    },
+    "shareDialog.share.granular.grantee.permission.view": {
+        "value": "Can view",
+        "comment": "",
+        "limit": 0
+    },
+    "shareDialog.share.granular.grantee.permission.remove": {
+        "value": "Remove",
+        "comment": "",
+        "limit": 0
+    },
     "sorting.dropdown.header|insight": {
         "value": "Sort insight",
         "comment": "The title of sorting dropdown where you can choose which sort options you want to use. For example sort by attribute A1.",
