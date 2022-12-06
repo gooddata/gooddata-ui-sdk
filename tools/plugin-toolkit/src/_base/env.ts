@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 
 import { logInfo } from "./terminal/loggers";
 import fse from "fs-extra";
@@ -24,7 +24,7 @@ function readDotEnv(): Record<string, string> {
  */
 export function loadEnv(backend: TargetBackendType): Record<string, string> {
     const dotEnvContent: Record<string, string> = readDotEnv();
-    const { GDC_USERNAME, GDC_PASSWORD, TIGER_API_TOKEN } = process.env;
+    const { GDC_USERNAME, GDC_PASSWORD, TIGER_API_TOKEN, WORKSPACE_ID } = process.env;
 
     if (backend === "bear" && GDC_USERNAME) {
         logInfo(
@@ -44,6 +44,9 @@ export function loadEnv(backend: TargetBackendType): Record<string, string> {
 
     if (backend === "tiger" && TIGER_API_TOKEN) {
         dotEnvContent.TIGER_API_TOKEN = TIGER_API_TOKEN;
+        if (WORKSPACE_ID) {
+            dotEnvContent.WORKSPACE_ID = WORKSPACE_ID;
+        }
     }
 
     return dotEnvContent;

@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`tiger insights should load empty insights for out-of-range page 1`] = `
-InMemoryPaging {
+Object {
   "allItems": Array [
     Object {
       "insight": Object {
@@ -39,9 +39,8 @@ InMemoryPaging {
         },
         "sorts": Array [],
         "summary": "Insight Activities",
-        "tags": undefined,
         "title": "Insight Activities",
-        "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/visualizationObjects/2ec4862e-4559-42d9-a628-fd4e80c16d59",
+        "uri": Any<String>,
         "visualizationUrl": "local:column",
       },
     },
@@ -54,7 +53,7 @@ InMemoryPaging {
 `;
 
 exports[`tiger insights should load insights 1`] = `
-InMemoryPaging {
+Object {
   "allItems": Array [
     Object {
       "insight": Object {
@@ -92,9 +91,8 @@ InMemoryPaging {
         },
         "sorts": Array [],
         "summary": "Insight Activities",
-        "tags": undefined,
         "title": "Insight Activities",
-        "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/visualizationObjects/2ec4862e-4559-42d9-a628-fd4e80c16d59",
+        "uri": Any<String>,
         "visualizationUrl": "local:column",
       },
     },
@@ -136,9 +134,8 @@ InMemoryPaging {
         },
         "sorts": Array [],
         "summary": "Insight Activities",
-        "tags": undefined,
         "title": "Insight Activities",
-        "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/visualizationObjects/2ec4862e-4559-42d9-a628-fd4e80c16d59",
+        "uri": Any<String>,
         "visualizationUrl": "local:column",
       },
     },

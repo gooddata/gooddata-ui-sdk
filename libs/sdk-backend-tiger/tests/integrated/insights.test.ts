@@ -11,13 +11,35 @@ describe("tiger insights", () => {
     it("should load insights", async () => {
         const result = await backend.workspace(testWorkspace()).insights().getInsights();
 
-        expect(result).toMatchSnapshot();
+        expect(JSON.parse(JSON.stringify(result))).toMatchSnapshot({
+            allItems: [
+                {
+                    insight: {
+                        uri: expect.any(String),
+                    },
+                },
+            ],
+            items: [
+                {
+                    insight: {
+                        uri: expect.any(String),
+                    },
+                },
+            ],
+        });
     });
 
     it("should load empty insights for out-of-range page", async () => {
         const result = await backend.workspace(testWorkspace()).insights().getInsights();
-
         const page = await result.goTo(4);
-        expect(page).toMatchSnapshot();
+        expect(JSON.parse(JSON.stringify(page))).toMatchSnapshot({
+            allItems: [
+                {
+                    insight: {
+                        uri: expect.any(String),
+                    },
+                },
+            ],
+        });
     });
 });

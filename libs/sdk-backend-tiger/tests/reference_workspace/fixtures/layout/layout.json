@@ -1,0 +1,1376 @@
+{
+    "analytics": {
+        "analyticalDashboards": [
+            {
+                "content": {
+                    "filterContextRef": {
+                        "identifier": {
+                            "id": "e06af0a6-7f15-471d-8b20-51b497e26239",
+                            "type": "filterContext"
+                        }
+                    },
+                    "layout": {
+                        "type": "IDashboardLayout",
+                        "sections": [
+                            {
+                                "type": "IDashboardLayoutSection",
+                                "items": [
+                                    {
+                                        "type": "IDashboardLayoutItem",
+                                        "size": {
+                                            "xl": {
+                                                "gridWidth": 6
+                                            }
+                                        },
+                                        "widget": {
+                                            "type": "insight",
+                                            "title": "Insight Activities",
+                                            "description": "",
+                                            "ignoreDashboardFilters": [],
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_activity_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "2ec4862e-4559-42d9-a628-fd4e80c16d59",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "drills": [],
+                                            "properties": {}
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "version": "2"
+                },
+                "description": "",
+                "id": "9a3c6863-f0a3-412f-8c17-f3acd79afa13",
+                "title": "MAP - test dashboard"
+            }
+        ],
+        "dashboardPlugins": [],
+        "filterContexts": [
+            {
+                "content": {
+                    "filters": [
+                        {
+                            "dateFilter": {
+                                "from": "0",
+                                "to": "0",
+                                "granularity": "GDC.time.month",
+                                "type": "relative"
+                            }
+                        }
+                    ],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "04f44990-1b71-4143-be7e-fa565a5d8f2b",
+                "title": "filterContext"
+            },
+            {
+                "content": {
+                    "filters": [
+                        {
+                            "attributeFilter": {
+                                "displayForm": {
+                                    "identifier": {
+                                        "id": "f_opportunitysnapshot.forecastcategory_id",
+                                        "type": "label"
+                                    }
+                                },
+                                "negativeSelection": true,
+                                "attributeElements": {
+                                    "uris": [
+                                        "Exclude"
+                                    ]
+                                },
+                                "localIdentifier": "348cfe567f734573bb2546472067eb82",
+                                "filterElementsBy": []
+                            }
+                        }
+                    ],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "5e1ce6df-0d5c-4972-95c0-103103c417a2",
+                "title": "filterContext"
+            },
+            {
+                "content": {
+                    "filters": [],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "614ee1bf-5513-4312-b97a-4ac52a52ea52",
+                "title": "filterContext"
+            },
+            {
+                "content": {
+                    "filters": [],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "6d09461a-131c-4087-bb2d-ebd5a8ac3eab",
+                "title": "filterContext"
+            },
+            {
+                "content": {
+                    "filters": [
+                        {
+                            "attributeFilter": {
+                                "displayForm": {
+                                    "identifier": {
+                                        "id": "attr.f_account.account",
+                                        "type": "label"
+                                    }
+                                },
+                                "negativeSelection": true,
+                                "attributeElements": {
+                                    "uris": []
+                                },
+                                "localIdentifier": "7767aae5babd4224968ab1d2b42734fe",
+                                "filterElementsBy": []
+                            }
+                        }
+                    ],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "e06af0a6-7f15-471d-8b20-51b497e26239",
+                "title": "filterContext"
+            }
+        ],
+        "metrics": [
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT MAX({fact/fact.f_opportunitysnapshot.oppclosedate}) where {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}"
+                },
+                "description": "",
+                "id": "1179c888-3d63-452c-bd1a-0a2a0a5caa06",
+                "title": "_Close [EOP]"
+            },
+            {
+                "content": {
+                    "format": "#,##0",
+                    "maql": "SELECT CASE WHEN {label/dt_timeline_timestamp.year} = \"2018\" THEN -123400, WHEN {label/dt_timeline_timestamp.year} = \"2019\" THEN 36200, WHEN {label/dt_timeline_timestamp.year} = \"2020\" THEN 54800, WHEN {label/dt_timeline_timestamp.year} = \"2021\" THEN 48100 END"
+                },
+                "description": "",
+                "id": "1327700d-6708-4fce-8615-bd737c0efffd",
+                "title": "Sample XIRR"
+            },
+            {
+                "content": {
+                    "format": "#,##0%",
+                    "maql": "SELECT SUM({metric/87a053b0-3947-49f3-b0c5-de53fd01f050})"
+                },
+                "description": "",
+                "id": "325d8a8e-d6f2-4151-b49e-d6e6e81563d0",
+                "title": "metricAmountPercent"
+            },
+            {
+                "content": {
+                    "format": "#,##0",
+                    "maql": "SELECT {metric/87a053b0-3947-49f3-b0c5-de53fd01f050} WHERE {label/f_stage.status_id} = \"Won\""
+                },
+                "description": "",
+                "id": "58b9cb35-f532-4da2-a895-fc012454f7e7",
+                "title": "Won"
+            },
+            {
+                "content": {
+                    "format": "#,##0",
+                    "maql": "SELECT MAX({fact/fact.f_timeline.timelinedate}) BY ALL IN ALL OTHER DIMENSIONS EXCEPT {attribute/dt_timeline_timestamp.day}"
+                },
+                "description": "",
+                "id": "6b1411d5-e253-418e-8fd3-137a9f56ea92",
+                "title": "_Timeline [EOP]"
+            },
+            {
+                "content": {
+                    "format": "#,##0%",
+                    "maql": "SELECT SUM({metric/1179c888-3d63-452c-bd1a-0a2a0a5caa06})"
+                },
+                "description": "",
+                "id": "6d7de3ba-3747-11ec-8d3d-0242ac130003",
+                "title": "metricCloseEOPPercent"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT COUNT({attribute/f_opportunity.id}, {label/f_opportunitysnapshot.id}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}"
+                },
+                "description": "",
+                "id": "768414e1-4bbe-4f01-b125-0cdc6305dc76",
+                "title": "# of Opportunities"
+            },
+            {
+                "content": {
+                    "format": "$#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}"
+                },
+                "description": "",
+                "id": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                "title": "Amount"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76} WHERE {label/f_stage.status_id} = \"Won\""
+                },
+                "description": "",
+                "id": "8d33a0b1-cfdf-4074-a26a-4c4357774967",
+                "title": "# Of Opportunities Won"
+            },
+            {
+                "content": {
+                    "format": "#,##0.0%",
+                    "maql": "SELECT {metric/8d33a0b1-cfdf-4074-a26a-4c4357774967} / {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76}"
+                },
+                "description": "",
+                "id": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
+                "title": "Win Rate"
+            },
+            {
+                "content": {
+                    "format": "$#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/snapshot_bop}"
+                },
+                "description": "",
+                "id": "amount_bop",
+                "title": "Amount [BOP]"
+            },
+            {
+                "content": {
+                    "format": "$#,##0.00",
+                    "maql": "SELECT AVG({fact/f_opportunitysnapshot.f_amount}) where {fact/fact.f_opportunitysnapshot.oppsnapshotdate}={metric/c5ee7836-126c-41aa-bd69-1873d379a065}"
+                },
+                "description": "",
+                "id": "avg_amount",
+                "title": "Avg. Amount"
+            },
+            {
+                "content": {
+                    "format": "#,##0.0%",
+                    "maql": "SELECT AVG({fact/f_opportunitysnapshot.f_probability}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}"
+                },
+                "description": "",
+                "id": "b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa",
+                "title": "Probability"
+            },
+            {
+                "content": {
+                    "format": "#,##0",
+                    "maql": "SELECT COUNT({label/f_activity.id})"
+                },
+                "description": "",
+                "id": "bb512c36-4627-4dd8-8b92-3ef5d364e8f5",
+                "title": "# of Activities"
+            },
+            {
+                "content": {
+                    "format": "#,##0",
+                    "maql": "SELECT SUM(SELECT {metric/87a053b0-3947-49f3-b0c5-de53fd01f050} WHERE {label/f_stage.status_id} = \"Open\")"
+                },
+                "description": "",
+                "id": "best_case",
+                "title": "Best Case"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT MAX({fact/fact.f_opportunitysnapshot.oppsnapshotdate}) BY ALL IN ALL OTHER DIMENSIONS EXCEPT {attribute/dt_snapshotdate_timestamp.day} WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} <= {metric/6b1411d5-e253-418e-8fd3-137a9f56ea92}"
+                },
+                "description": "",
+                "id": "c5ee7836-126c-41aa-bd69-1873d379a065",
+                "title": "_Snapshot [EOP]"
+            },
+            {
+                "content": {
+                    "format": "#,##0",
+                    "maql": "SELECT {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76} where {label/f_stage.status_id} = \"Lost\""
+                },
+                "description": "",
+                "id": "number_of_lost_opps",
+                "title": "# of Lost Opps."
+            },
+            {
+                "content": {
+                    "format": "#,##0",
+                    "maql": "select {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76} where {label/f_stage.status_id} = \"Won\""
+                },
+                "description": "",
+                "id": "of_won_opps",
+                "title": "# of Won Opps."
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "select min({fact/fact.f_opportunitysnapshot.oppsnapshotdate}) by all in all other dimensions except {attribute/f_opportunity.id}"
+                },
+                "description": "",
+                "id": "opp._first_snapshot",
+                "title": "_Opp. First Snapshot"
+            },
+            {
+                "content": {
+                    "format": "#,##0",
+                    "maql": "SELECT MIN({fact/fact.f_opportunitysnapshot.oppsnapshotdate}) BY ALL IN ALL OTHER DIMENSIONS EXCEPT {attribute/dt_snapshotdate_timestamp.day} WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} >= {metric/timeline_bop}"
+                },
+                "description": "",
+                "id": "snapshot_bop",
+                "title": "_Snapshot [BOP]"
+            },
+            {
+                "content": {
+                    "format": "#,##0",
+                    "maql": "SELECT MIN({fact/fact.f_timeline.timelinedate}) BY ALL IN ALL OTHER DIMENSIONS EXCEPT {attribute/dt_timeline_timestamp.day}"
+                },
+                "description": "",
+                "id": "timeline_bop",
+                "title": "_Timeline [BOP]"
+            }
+        ],
+        "visualizationObjects": [
+            {
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "localIdentifier": "e7ffd6fe32b04f2eb28eac903f3df8eb",
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "bb512c36-4627-4dd8-8b92-3ef5d364e8f5",
+                                                        "type": "metric"
+                                                    }
+                                                },
+                                                "filters": []
+                                            }
+                                        },
+                                        "title": "# of Activities"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        }
+                    ],
+                    "filters": [],
+                    "sorts": [],
+                    "properties": {},
+                    "visualizationUrl": "local:column",
+                    "version": "2"
+                },
+                "description": "Insight Activities",
+                "id": "2ec4862e-4559-42d9-a628-fd4e80c16d59",
+                "title": "Insight Activities"
+            }
+        ]
+    },
+    "ldm": {
+        "datasets": [
+            {
+                "attributes": [
+                    {
+                        "description": "Account",
+                        "id": "attr.f_account.account",
+                        "labels": [
+                            {
+                                "description": "",
+                                "id": "label.f_account.account.accountid",
+                                "sourceColumn": "ls__id__nm_id",
+                                "tags": [
+                                    "Account"
+                                ],
+                                "title": "Account"
+                            }
+                        ],
+                        "sourceColumn": "ls__id__nm_name",
+                        "tags": [
+                            "Account"
+                        ],
+                        "title": "Account"
+                    },
+                    {
+                        "description": "Account",
+                        "id": "f_account.id",
+                        "labels": [],
+                        "sourceColumn": "id",
+                        "tags": [
+                            "Account"
+                        ],
+                        "title": "Account Id"
+                    }
+                ],
+                "dataSourceTableId": {
+                    "dataSourceId": "pg_staging-goodsales",
+                    "id": "f_account",
+                    "type": "dataSource"
+                },
+                "description": "",
+                "facts": [],
+                "grain": [
+                    {
+                        "id": "f_account.id",
+                        "type": "attribute"
+                    }
+                ],
+                "id": "f_account",
+                "references": [],
+                "tags": [
+                    "Account"
+                ],
+                "title": "Account"
+            },
+            {
+                "attributes": [
+                    {
+                        "description": "Activity",
+                        "id": "attr.f_activity.activity",
+                        "labels": [
+                            {
+                                "description": "",
+                                "id": "label.f_activity.activity",
+                                "sourceColumn": "ls__id__nm_id",
+                                "tags": [
+                                    "Activity"
+                                ],
+                                "title": "Activity"
+                            }
+                        ],
+                        "sourceColumn": "ls__id__nm_subject",
+                        "tags": [
+                            "Activity"
+                        ],
+                        "title": "Activity"
+                    },
+                    {
+                        "description": "Activity Type",
+                        "id": "f_activity.activitytype_id",
+                        "labels": [],
+                        "sourceColumn": "ls__activitytype_id__nm_activitytype",
+                        "tags": [
+                            "Activity"
+                        ],
+                        "title": "Activity Type"
+                    },
+                    {
+                        "description": "Activity Id",
+                        "id": "f_activity.id",
+                        "labels": [],
+                        "sourceColumn": "id",
+                        "tags": [
+                            "Activity"
+                        ],
+                        "title": "Activity Id"
+                    },
+                    {
+                        "description": "Is Closed?",
+                        "id": "f_activity.isclosed_id",
+                        "labels": [],
+                        "sourceColumn": "ls__isclosed_id__nm_isclosed",
+                        "tags": [
+                            "Activity"
+                        ],
+                        "title": "Is Closed?"
+                    },
+                    {
+                        "description": "Is Task?",
+                        "id": "f_activity.istask_id",
+                        "labels": [],
+                        "sourceColumn": "ls__istask_id__nm_istask",
+                        "tags": [
+                            "Activity"
+                        ],
+                        "title": "Is Task?"
+                    },
+                    {
+                        "description": "Priority",
+                        "id": "f_activity.priority_id",
+                        "labels": [],
+                        "sourceColumn": "ls__priority_id__nm_priority",
+                        "tags": [
+                            "Activity"
+                        ],
+                        "title": "Priority"
+                    },
+                    {
+                        "description": "Status",
+                        "id": "f_activity.status_id",
+                        "labels": [],
+                        "sourceColumn": "ls__status_id__nm_status",
+                        "tags": [
+                            "Activity"
+                        ],
+                        "title": "Status"
+                    }
+                ],
+                "dataSourceTableId": {
+                    "dataSourceId": "pg_staging-goodsales",
+                    "id": "f_activity",
+                    "type": "dataSource"
+                },
+                "description": "",
+                "facts": [
+                    {
+                        "description": "Activity (Date)",
+                        "id": "fact.f_activity.activitydate",
+                        "sourceColumn": "f__dt_activity",
+                        "tags": [
+                            "Activity"
+                        ],
+                        "title": "Activity (Date)"
+                    }
+                ],
+                "grain": [
+                    {
+                        "id": "f_activity.id",
+                        "type": "attribute"
+                    }
+                ],
+                "id": "f_activity",
+                "references": [
+                    {
+                        "identifier": {
+                            "id": "dt_activity_timestamp",
+                            "type": "dataset"
+                        },
+                        "multivalue": false,
+                        "sourceColumns": [
+                            "dt_activity_timestamp"
+                        ]
+                    },
+                    {
+                        "identifier": {
+                            "id": "f_account",
+                            "type": "dataset"
+                        },
+                        "multivalue": false,
+                        "sourceColumns": [
+                            "accountid_id"
+                        ]
+                    },
+                    {
+                        "identifier": {
+                            "id": "f_opportunity",
+                            "type": "dataset"
+                        },
+                        "multivalue": false,
+                        "sourceColumns": [
+                            "opportunityid_id"
+                        ]
+                    },
+                    {
+                        "identifier": {
+                            "id": "f_owner",
+                            "type": "dataset"
+                        },
+                        "multivalue": false,
+                        "sourceColumns": [
+                            "ownerid_id"
+                        ]
+                    }
+                ],
+                "tags": [
+                    "Activity"
+                ],
+                "title": "Activity"
+            },
+            {
+                "attributes": [
+                    {
+                        "description": "Opportunity",
+                        "id": "attr.f_opportunity.opportunity",
+                        "labels": [
+                            {
+                                "description": "",
+                                "id": "label.f_opportunity.opportunity.opportunity",
+                                "sourceColumn": "ls__id__nm_id",
+                                "tags": [
+                                    "Opportunity"
+                                ],
+                                "title": "Opportunity"
+                            },
+                            {
+                                "description": "",
+                                "id": "label.f_opportunity.opportunity.sfdcurl",
+                                "sourceColumn": "ls__id__nm_url",
+                                "tags": [
+                                    "Opportunity"
+                                ],
+                                "title": "SFDC URL"
+                            }
+                        ],
+                        "sourceColumn": "ls__id__nm_name",
+                        "tags": [
+                            "Opportunity"
+                        ],
+                        "title": "Opportunity"
+                    },
+                    {
+                        "description": "Opportunity Id",
+                        "id": "f_opportunity.id",
+                        "labels": [],
+                        "sourceColumn": "id",
+                        "tags": [
+                            "Opportunity"
+                        ],
+                        "title": "Opportunity Id"
+                    }
+                ],
+                "dataSourceTableId": {
+                    "dataSourceId": "pg_staging-goodsales",
+                    "id": "f_opportunity",
+                    "type": "dataSource"
+                },
+                "description": "",
+                "facts": [
+                    {
+                        "description": "Opp. Created (Date)",
+                        "id": "fact.f_opportunity.oppcreateddate",
+                        "sourceColumn": "f__dt_oppcreated",
+                        "tags": [
+                            "Opportunity"
+                        ],
+                        "title": "Opp. Created (Date)"
+                    }
+                ],
+                "grain": [
+                    {
+                        "id": "f_opportunity.id",
+                        "type": "attribute"
+                    }
+                ],
+                "id": "f_opportunity",
+                "references": [
+                    {
+                        "identifier": {
+                            "id": "dt_oppcreated_timestamp",
+                            "type": "dataset"
+                        },
+                        "multivalue": false,
+                        "sourceColumns": [
+                            "dt_oppcreated_timestamp"
+                        ]
+                    }
+                ],
+                "tags": [
+                    "Opportunity"
+                ],
+                "title": "Opportunity"
+            },
+            {
+                "attributes": [
+                    {
+                        "description": "Opp. Snapshot",
+                        "id": "attr.f_opportunitysnapshot.oppsnapshot",
+                        "labels": [],
+                        "sourceColumn": "ls__id__nm_id",
+                        "tags": [
+                            "OpportunitySnapshot"
+                        ],
+                        "title": "Opp. Snapshot"
+                    },
+                    {
+                        "description": "Forecast Category",
+                        "id": "f_opportunitysnapshot.forecastcategory_id",
+                        "labels": [],
+                        "sourceColumn": "ls__forecastcategory_id__nm_forecastcategory",
+                        "tags": [
+                            "OpportunitySnapshot"
+                        ],
+                        "title": "Forecast Category"
+                    },
+                    {
+                        "description": "Opp. Snapshot Id",
+                        "id": "f_opportunitysnapshot.id",
+                        "labels": [],
+                        "sourceColumn": "id",
+                        "tags": [
+                            "OpportunitySnapshot"
+                        ],
+                        "title": "Opp. Snapshot Id"
+                    }
+                ],
+                "dataSourceTableId": {
+                    "dataSourceId": "pg_staging-goodsales",
+                    "id": "f_opportunitysnapshot",
+                    "type": "dataSource"
+                },
+                "description": "",
+                "facts": [
+                    {
+                        "description": "Amount",
+                        "id": "f_opportunitysnapshot.f_amount",
+                        "sourceColumn": "f_amount",
+                        "tags": [
+                            "OpportunitySnapshot"
+                        ],
+                        "title": "Amount"
+                    },
+                    {
+                        "description": "Days to Close",
+                        "id": "f_opportunitysnapshot.f_daystoclose",
+                        "sourceColumn": "f_daystoclose",
+                        "tags": [
+                            "OpportunitySnapshot"
+                        ],
+                        "title": "Days to Close"
+                    },
+                    {
+                        "description": "Probability",
+                        "id": "f_opportunitysnapshot.f_probability",
+                        "sourceColumn": "f_probability",
+                        "tags": [
+                            "OpportunitySnapshot"
+                        ],
+                        "title": "Probability"
+                    },
+                    {
+                        "description": "Opp. Close (Date)",
+                        "id": "fact.f_opportunitysnapshot.oppclosedate",
+                        "sourceColumn": "f__dt_closedate",
+                        "tags": [
+                            "OpportunitySnapshot"
+                        ],
+                        "title": "Opp. Close (Date)"
+                    },
+                    {
+                        "description": "Opp. Snapshot (Date)",
+                        "id": "fact.f_opportunitysnapshot.oppsnapshotdate",
+                        "sourceColumn": "f__dt_snapshotdate",
+                        "tags": [
+                            "OpportunitySnapshot"
+                        ],
+                        "title": "Opp. Snapshot (Date)"
+                    }
+                ],
+                "grain": [
+                    {
+                        "id": "f_opportunitysnapshot.id",
+                        "type": "attribute"
+                    }
+                ],
+                "id": "f_opportunitysnapshot",
+                "references": [
+                    {
+                        "identifier": {
+                            "id": "dt_closedate_timestamp",
+                            "type": "dataset"
+                        },
+                        "multivalue": false,
+                        "sourceColumns": [
+                            "dt_closedate_timestamp"
+                        ]
+                    },
+                    {
+                        "identifier": {
+                            "id": "dt_snapshotdate_timestamp",
+                            "type": "dataset"
+                        },
+                        "multivalue": false,
+                        "sourceColumns": [
+                            "dt_snapshotdate_timestamp"
+                        ]
+                    },
+                    {
+                        "identifier": {
+                            "id": "f_account",
+                            "type": "dataset"
+                        },
+                        "multivalue": false,
+                        "sourceColumns": [
+                            "accountid_id"
+                        ]
+                    },
+                    {
+                        "identifier": {
+                            "id": "f_opportunity",
+                            "type": "dataset"
+                        },
+                        "multivalue": false,
+                        "sourceColumns": [
+                            "opportunityid_id"
+                        ]
+                    },
+                    {
+                        "identifier": {
+                            "id": "f_owner",
+                            "type": "dataset"
+                        },
+                        "multivalue": false,
+                        "sourceColumns": [
+                            "ownerid_id"
+                        ]
+                    },
+                    {
+                        "identifier": {
+                            "id": "f_product",
+                            "type": "dataset"
+                        },
+                        "multivalue": false,
+                        "sourceColumns": [
+                            "productid_id"
+                        ]
+                    },
+                    {
+                        "identifier": {
+                            "id": "f_stage",
+                            "type": "dataset"
+                        },
+                        "multivalue": false,
+                        "sourceColumns": [
+                            "stage_id"
+                        ]
+                    }
+                ],
+                "tags": [
+                    "OpportunitySnapshot"
+                ],
+                "title": "OpportunitySnapshot"
+            },
+            {
+                "attributes": [
+                    {
+                        "description": "",
+                        "id": "attr.f_owner.salesrep",
+                        "labels": [
+                            {
+                                "description": "",
+                                "id": "label.f_owner.salesrep.owner",
+                                "sourceColumn": "ls__id__nm_id",
+                                "tags": [
+                                    "owner"
+                                ],
+                                "title": "Owner"
+                            }
+                        ],
+                        "sourceColumn": "ls__id__nm_name",
+                        "tags": [
+                            "owner"
+                        ],
+                        "title": "Sales Rep"
+                    },
+                    {
+                        "description": "Department",
+                        "id": "f_owner.department_id",
+                        "labels": [],
+                        "sourceColumn": "ls__department_id__nm_department",
+                        "tags": [
+                            "owner"
+                        ],
+                        "title": "Department"
+                    },
+                    {
+                        "description": "Id",
+                        "id": "f_owner.id",
+                        "labels": [],
+                        "sourceColumn": "id",
+                        "tags": [
+                            "owner"
+                        ],
+                        "title": "Owner Id"
+                    },
+                    {
+                        "description": "Region",
+                        "id": "f_owner.region_id",
+                        "labels": [],
+                        "sourceColumn": "ls__region_id__nm_region",
+                        "tags": [
+                            "owner"
+                        ],
+                        "title": "Region"
+                    }
+                ],
+                "dataSourceTableId": {
+                    "dataSourceId": "pg_staging-goodsales",
+                    "id": "f_owner",
+                    "type": "dataSource"
+                },
+                "description": "",
+                "facts": [],
+                "grain": [
+                    {
+                        "id": "f_owner.id",
+                        "type": "attribute"
+                    }
+                ],
+                "id": "f_owner",
+                "references": [],
+                "tags": [
+                    "owner"
+                ],
+                "title": "owner"
+            },
+            {
+                "attributes": [
+                    {
+                        "description": "Product Name",
+                        "id": "attr.f_product.product",
+                        "labels": [
+                            {
+                                "description": "",
+                                "id": "label.f_product.product.productid",
+                                "sourceColumn": "ls__id__nm_id",
+                                "tags": [
+                                    "product"
+                                ],
+                                "title": "Product Name"
+                            }
+                        ],
+                        "sourceColumn": "ls__id__nm_name",
+                        "tags": [
+                            "product"
+                        ],
+                        "title": "Product"
+                    },
+                    {
+                        "description": "Product",
+                        "id": "f_product.id",
+                        "labels": [],
+                        "sourceColumn": "id",
+                        "tags": [
+                            "product"
+                        ],
+                        "title": "Product Id"
+                    }
+                ],
+                "dataSourceTableId": {
+                    "dataSourceId": "pg_staging-goodsales",
+                    "id": "f_product",
+                    "type": "dataSource"
+                },
+                "description": "",
+                "facts": [],
+                "grain": [
+                    {
+                        "id": "f_product.id",
+                        "type": "attribute"
+                    }
+                ],
+                "id": "f_product",
+                "references": [],
+                "tags": [
+                    "product"
+                ],
+                "title": "product"
+            },
+            {
+                "attributes": [
+                    {
+                        "description": "Stage Name",
+                        "id": "attr.f_stage.stagename",
+                        "labels": [
+                            {
+                                "description": "",
+                                "id": "label.f_stage.stagename.order",
+                                "sourceColumn": "ls__id__nm_order",
+                                "tags": [
+                                    "Stage"
+                                ],
+                                "title": "Order"
+                            },
+                            {
+                                "description": "",
+                                "id": "label.f_stage.stagename.stagename",
+                                "sourceColumn": "ls__id__nm_name",
+                                "tags": [
+                                    "Stage"
+                                ],
+                                "title": "Stage Name"
+                            }
+                        ],
+                        "sourceColumn": "ls__id__nm_stagename",
+                        "tags": [
+                            "Stage"
+                        ],
+                        "title": "Stage Name"
+                    },
+                    {
+                        "description": "Stage Id",
+                        "id": "f_stage.id",
+                        "labels": [],
+                        "sourceColumn": "id",
+                        "tags": [
+                            "Stage"
+                        ],
+                        "title": "Stage Id"
+                    },
+                    {
+                        "description": "Is Active?",
+                        "id": "f_stage.isactive_id",
+                        "labels": [],
+                        "sourceColumn": "ls__isactive_id__nm_isactive",
+                        "tags": [
+                            "Stage"
+                        ],
+                        "title": "Is Active?"
+                    },
+                    {
+                        "description": "Is Closed?",
+                        "id": "f_stage.isclosed_id",
+                        "labels": [],
+                        "sourceColumn": "ls__isclosed_id__nm_isclosed",
+                        "tags": [
+                            "Stage"
+                        ],
+                        "title": "Is Closed?"
+                    },
+                    {
+                        "description": "Is Won?",
+                        "id": "f_stage.iswon_id",
+                        "labels": [],
+                        "sourceColumn": "ls__iswon_id__nm_iswon",
+                        "tags": [
+                            "Stage"
+                        ],
+                        "title": "Is Won?"
+                    },
+                    {
+                        "description": "Status",
+                        "id": "f_stage.status_id",
+                        "labels": [],
+                        "sourceColumn": "ls__status_id__nm_status",
+                        "tags": [
+                            "Stage"
+                        ],
+                        "title": "Status"
+                    }
+                ],
+                "dataSourceTableId": {
+                    "dataSourceId": "pg_staging-goodsales",
+                    "id": "f_stage",
+                    "type": "dataSource"
+                },
+                "description": "",
+                "facts": [],
+                "grain": [
+                    {
+                        "id": "f_stage.id",
+                        "type": "attribute"
+                    }
+                ],
+                "id": "f_stage",
+                "references": [],
+                "tags": [
+                    "Stage"
+                ],
+                "title": "Stage"
+            },
+            {
+                "attributes": [
+                    {
+                        "description": "Stage History",
+                        "id": "attr.f_stagehistory.stagehistory",
+                        "labels": [],
+                        "sourceColumn": "ls__id__nm_id",
+                        "tags": [
+                            "stagehistory"
+                        ],
+                        "title": "Stage History"
+                    },
+                    {
+                        "description": "Stage History Id",
+                        "id": "f_stagehistory.id",
+                        "labels": [],
+                        "sourceColumn": "id",
+                        "tags": [
+                            "stagehistory"
+                        ],
+                        "title": "Stage History Id"
+                    }
+                ],
+                "dataSourceTableId": {
+                    "dataSourceId": "pg_staging-goodsales",
+                    "id": "f_stagehistory",
+                    "type": "dataSource"
+                },
+                "description": "",
+                "facts": [
+                    {
+                        "description": "Duration",
+                        "id": "f_stagehistory.f_duration",
+                        "sourceColumn": "f_duration",
+                        "tags": [
+                            "stagehistory"
+                        ],
+                        "title": "Duration"
+                    },
+                    {
+                        "description": "Velocity",
+                        "id": "f_stagehistory.f_velocity",
+                        "sourceColumn": "f_velocity",
+                        "tags": [
+                            "stagehistory"
+                        ],
+                        "title": "Velocity"
+                    }
+                ],
+                "grain": [
+                    {
+                        "id": "f_stagehistory.id",
+                        "type": "attribute"
+                    }
+                ],
+                "id": "f_stagehistory",
+                "references": [
+                    {
+                        "identifier": {
+                            "id": "f_account",
+                            "type": "dataset"
+                        },
+                        "multivalue": false,
+                        "sourceColumns": [
+                            "accountid_id"
+                        ]
+                    },
+                    {
+                        "identifier": {
+                            "id": "f_opportunity",
+                            "type": "dataset"
+                        },
+                        "multivalue": false,
+                        "sourceColumns": [
+                            "opportunityid_id"
+                        ]
+                    },
+                    {
+                        "identifier": {
+                            "id": "f_product",
+                            "type": "dataset"
+                        },
+                        "multivalue": false,
+                        "sourceColumns": [
+                            "productid_id"
+                        ]
+                    },
+                    {
+                        "identifier": {
+                            "id": "f_stage",
+                            "type": "dataset"
+                        },
+                        "multivalue": false,
+                        "sourceColumns": [
+                            "stage_id"
+                        ]
+                    }
+                ],
+                "tags": [
+                    "stagehistory"
+                ],
+                "title": "stagehistory"
+            },
+            {
+                "attributes": [
+                    {
+                        "description": "Timeline",
+                        "id": "f_timeline.id",
+                        "labels": [],
+                        "sourceColumn": "id",
+                        "tags": [
+                            "Timeline"
+                        ],
+                        "title": "Timeline"
+                    }
+                ],
+                "dataSourceTableId": {
+                    "dataSourceId": "pg_staging-goodsales",
+                    "id": "f_timeline",
+                    "type": "dataSource"
+                },
+                "description": "",
+                "facts": [
+                    {
+                        "description": "Timeline (Date)",
+                        "id": "fact.f_timeline.timelinedate",
+                        "sourceColumn": "f__dt_timeline",
+                        "tags": [
+                            "Timeline"
+                        ],
+                        "title": "Timeline (Date)"
+                    }
+                ],
+                "grain": [
+                    {
+                        "id": "f_timeline.id",
+                        "type": "attribute"
+                    }
+                ],
+                "id": "f_timeline",
+                "references": [
+                    {
+                        "identifier": {
+                            "id": "dt_timeline_timestamp",
+                            "type": "dataset"
+                        },
+                        "multivalue": false,
+                        "sourceColumns": [
+                            "dt_timeline_timestamp"
+                        ]
+                    }
+                ],
+                "tags": [
+                    "Timeline"
+                ],
+                "title": "Timeline"
+            }
+        ],
+        "dateInstances": [
+            {
+                "description": "",
+                "granularities": [
+                    "MINUTE",
+                    "HOUR",
+                    "DAY",
+                    "WEEK",
+                    "MONTH",
+                    "QUARTER",
+                    "YEAR",
+                    "MINUTE_OF_HOUR",
+                    "HOUR_OF_DAY",
+                    "DAY_OF_WEEK",
+                    "DAY_OF_MONTH",
+                    "DAY_OF_YEAR",
+                    "WEEK_OF_YEAR",
+                    "MONTH_OF_YEAR",
+                    "QUARTER_OF_YEAR"
+                ],
+                "granularitiesFormatting": {
+                    "titleBase": "",
+                    "titlePattern": "%titleBase - %granularityTitle"
+                },
+                "id": "dt_activity_timestamp",
+                "tags": [
+                    "Activity"
+                ],
+                "title": "Activity"
+            },
+            {
+                "description": "",
+                "granularities": [
+                    "MINUTE",
+                    "HOUR",
+                    "DAY",
+                    "WEEK",
+                    "MONTH",
+                    "QUARTER",
+                    "YEAR",
+                    "MINUTE_OF_HOUR",
+                    "HOUR_OF_DAY",
+                    "DAY_OF_WEEK",
+                    "DAY_OF_MONTH",
+                    "DAY_OF_YEAR",
+                    "WEEK_OF_YEAR",
+                    "MONTH_OF_YEAR",
+                    "QUARTER_OF_YEAR"
+                ],
+                "granularitiesFormatting": {
+                    "titleBase": "",
+                    "titlePattern": "%titleBase - %granularityTitle"
+                },
+                "id": "dt_closedate_timestamp",
+                "tags": [
+                    "Closed"
+                ],
+                "title": "Closed"
+            },
+            {
+                "description": "",
+                "granularities": [
+                    "MINUTE",
+                    "HOUR",
+                    "DAY",
+                    "WEEK",
+                    "MONTH",
+                    "QUARTER",
+                    "YEAR",
+                    "MINUTE_OF_HOUR",
+                    "HOUR_OF_DAY",
+                    "DAY_OF_WEEK",
+                    "DAY_OF_MONTH",
+                    "DAY_OF_YEAR",
+                    "WEEK_OF_YEAR",
+                    "MONTH_OF_YEAR",
+                    "QUARTER_OF_YEAR"
+                ],
+                "granularitiesFormatting": {
+                    "titleBase": "",
+                    "titlePattern": "%titleBase - %granularityTitle"
+                },
+                "id": "dt_oppcreated_timestamp",
+                "tags": [
+                    "Created"
+                ],
+                "title": "Created"
+            },
+            {
+                "description": "",
+                "granularities": [
+                    "MINUTE",
+                    "HOUR",
+                    "DAY",
+                    "WEEK",
+                    "MONTH",
+                    "QUARTER",
+                    "YEAR",
+                    "MINUTE_OF_HOUR",
+                    "HOUR_OF_DAY",
+                    "DAY_OF_WEEK",
+                    "DAY_OF_MONTH",
+                    "DAY_OF_YEAR",
+                    "WEEK_OF_YEAR",
+                    "MONTH_OF_YEAR",
+                    "QUARTER_OF_YEAR"
+                ],
+                "granularitiesFormatting": {
+                    "titleBase": "",
+                    "titlePattern": "%titleBase - %granularityTitle"
+                },
+                "id": "dt_snapshotdate_timestamp",
+                "tags": [
+                    "Snapshot"
+                ],
+                "title": "Snapshot"
+            },
+            {
+                "description": "",
+                "granularities": [
+                    "MINUTE",
+                    "HOUR",
+                    "DAY",
+                    "WEEK",
+                    "MONTH",
+                    "QUARTER",
+                    "YEAR",
+                    "MINUTE_OF_HOUR",
+                    "HOUR_OF_DAY",
+                    "DAY_OF_WEEK",
+                    "DAY_OF_MONTH",
+                    "DAY_OF_YEAR",
+                    "WEEK_OF_YEAR",
+                    "MONTH_OF_YEAR",
+                    "QUARTER_OF_YEAR"
+                ],
+                "granularitiesFormatting": {
+                    "titleBase": "",
+                    "titlePattern": "%titleBase - %granularityTitle"
+                },
+                "id": "dt_timeline_timestamp",
+                "tags": [
+                    "Timeline"
+                ],
+                "title": "Timeline"
+            }
+        ]
+    }
+}
