@@ -178,6 +178,24 @@ export interface IBackendCapabilities {
     supportsBootstrapResource?: boolean;
 
     /**
+     * Indicates whether backends supports locking of metadata objects that prevents their edit by other
+     * users than admins.
+     */
+    supportsMetadataObjectLocking?: boolean;
+
+    /**
+     * Indicates whether backend supports granular access controls of metadata objects or if permissions
+     * are tied to the user role.
+     */
+    supportsGranularAccessControl?: boolean;
+
+    /**
+     * Indicates whether backend supports virtual "Everyone" group that is used when we want
+     * to assign permissions for all current and future users of the platform.
+     */
+    supportsEveryoneUserGroupForAccessControl?: boolean;
+
+    /**
      * Catchall for additional capabilities
      */
     [key: string]: undefined | boolean | number | string;

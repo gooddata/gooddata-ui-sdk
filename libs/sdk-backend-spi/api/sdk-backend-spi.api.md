@@ -376,12 +376,15 @@ export interface IBackendCapabilities {
     supportsCustomColorPalettes?: boolean;
     supportsElementsQueryParentFiltering?: boolean;
     supportsElementUris?: boolean;
+    supportsEveryoneUserGroupForAccessControl?: boolean;
     supportsExplain?: boolean;
     supportsGenericDateAttributeElements?: boolean;
+    supportsGranularAccessControl?: boolean;
     supportsHierarchicalWorkspaces?: boolean;
     supportsHyperlinkAttributeLabels?: boolean;
     supportsInlineMeasures?: boolean;
     supportsKpiWidget?: boolean;
+    supportsMetadataObjectLocking?: boolean;
     supportsObjectUris?: boolean;
     supportsOrganizationSettings?: boolean;
     supportsOwners?: boolean;
