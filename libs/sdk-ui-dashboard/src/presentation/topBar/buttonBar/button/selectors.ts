@@ -20,6 +20,7 @@ import {
     selectListedDashboardsMap,
     selectSupportsAccessControlCapability,
     selectSupportsHierarchicalWorkspacesCapability,
+    selectIsShareButtonHidden,
 } from "../../../../model";
 
 export const selectIsEditModeEnable = createSelector(
@@ -109,10 +110,20 @@ export const selectIsShareButtonVisible = createSelector(
     selectDashboardLockStatus,
     selectIsReadOnly,
     selectIsInEditMode,
-    (isAdmin, hasPermission, isCurrentDashboardVisibleInList, isLocked, isReadOnly, isInEditMode) =>
+    selectIsShareButtonHidden,
+    (
+        isAdmin,
+        hasPermission,
+        isCurrentDashboardVisibleInList,
+        isLocked,
+        isReadOnly,
+        isInEditMode,
+        isShareButtonHidden,
+    ) =>
         hasPermission &&
         isCurrentDashboardVisibleInList &&
         (!isLocked || isAdmin) &&
         !isReadOnly &&
-        !isInEditMode,
+        !isInEditMode &&
+        !isShareButtonHidden,
 );

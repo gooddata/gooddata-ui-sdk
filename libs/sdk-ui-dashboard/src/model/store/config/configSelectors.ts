@@ -418,3 +418,12 @@ export const selectIsAlternativeDisplayFormSelectionEnabled = createSelector(
     selectConfig,
     (state) => !!(state.settings?.enableAlternativeDisplayFormSelection || false),
 );
+
+/**
+ * Returns whether share button is hidden.
+ *
+ * @internal
+ */
+export const selectIsShareButtonHidden = createSelector(selectConfig, (state) => {
+    return state.hideShareButton ?? false;
+});

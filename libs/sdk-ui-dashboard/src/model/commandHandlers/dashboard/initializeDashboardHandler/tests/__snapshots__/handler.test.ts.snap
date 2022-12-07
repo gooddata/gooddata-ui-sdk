@@ -180,6 +180,7 @@ Object {
   "disableDefaultDrills": false,
   "enableFilterValuesResolutionInDrillEvents": false,
   "hideSaveAsNewButton": false,
+  "hideShareButton": false,
   "initialRenderMode": "view",
   "isEmbedded": false,
   "isExport": false,
