@@ -7,6 +7,7 @@ import { IRenderListItemProps } from "@gooddata/sdk-ui-kit";
  */
 export interface IInsightListProps {
     height?: number;
+    width?: number;
     searchAutofocus?: boolean;
     noDataButton?: INoDataButton;
     renderItem?: (props: IRenderListItemProps<IInsight>) => JSX.Element;

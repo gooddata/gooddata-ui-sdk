@@ -3677,6 +3677,8 @@ export interface IInsightListProps {
     searchAutofocus?: boolean;
     // (undocumented)
     selectedRef?: ObjRef;
+    // (undocumented)
+    width?: number;
 }
 
 // @alpha (undocumented)
