@@ -128,12 +128,17 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
 
     const handleDragEnd = useWidgetDragEndHandler();
 
+    // TODO: we should probably do something more meaningful when item has no widget; should that even
+    //  be allowed? undefined widget will make things explode down the line away so..
+    const widget = item.widget()!;
+    const isDraggableWidgetType = !(isPlaceholderWidget(widget) || isCustomWidget(widget));
+
     const [{ isDragging }, dragRef] = useDashboardDrag(
         {
             dragItem: () => {
                 return createDraggableItem(item, insights, settings);
             },
-            canDrag: isInEditMode && !isPlaceholderWidget(item.widget()),
+            canDrag: isInEditMode && isDraggableWidgetType,
             dragStart: (item) => {
                 dispatch(uiActions.setDraggingWidgetSource(item));
             },
@@ -143,9 +148,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
     );
 
     const { ErrorComponent, LoadingComponent } = useDashboardComponentsContext();
-    // TODO: we should probably do something more meaningful when item has no widget; should that even
-    //  be allowed? undefined widget will make things explode down the line away so..
-    const widget = item.widget()!;
+
     const currentSize = item.size()[screen]!;
     const minHeight = calculateWidgetMinHeight(widget, currentSize, insights, settings);
     const height =
