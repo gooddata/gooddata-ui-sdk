@@ -1095,6 +1095,8 @@ export interface DashboardConfig {
     // @internal
     hideSaveAsNewButton?: boolean;
     // @internal
+    hideShareButton?: boolean;
+    // @internal
     initialRenderMode?: RenderMode;
     isEmbedded?: boolean;
     isExport?: boolean;
@@ -6015,6 +6017,9 @@ export const selectIsScheduleEmailDialogOpen: OutputSelector<DashboardState, boo
 
 // @alpha (undocumented)
 export const selectIsScheduleEmailManagementDialogOpen: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
+
+// @internal
+export const selectIsShareButtonHidden: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
 // @alpha (undocumented)
 export const selectIsShareDialogOpen: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;

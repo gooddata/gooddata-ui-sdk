@@ -58,6 +58,7 @@ export {
     selectIsKPIDashboardDependentFiltersEnabled,
     selectIsAlternativeDisplayFormSelectionEnabled,
     selectEnableKPIDashboardDrillFromAttribute,
+    selectIsShareButtonHidden,
 } from "./config/configSelectors";
 export { PermissionsState } from "./permissions/permissionsState";
 export {
