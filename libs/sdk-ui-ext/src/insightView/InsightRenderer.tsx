@@ -13,6 +13,7 @@ import {
     IColorPalette,
     insightTitle,
     ITheme,
+    insightSetProperties,
 } from "@gooddata/sdk-model";
 
 import { IVisualization, IVisProps, FullVisualizationCatalog, IInsightViewProps } from "../internal";
@@ -226,8 +227,15 @@ class InsightRendererCore extends React.PureComponent<IInsightRendererProps & Wr
     }
 
     private componentDidUpdateInner = async (prevProps: IInsightRendererProps) => {
+        /**
+         * Ignore properties when comparing insights to determine if a new setup is needed: changes to properties
+         * only will be handled using the updateVisualization without unnecessary new setup just fine.
+         */
+        const prevInsightForCompare = insightSetProperties(prevProps.insight, {});
+        const newInsightForCompare = insightSetProperties(this.props.insight, {});
+
         const needsNewSetup =
-            !isEqual(this.props.insight, prevProps.insight) ||
+            !isEqual(newInsightForCompare, prevInsightForCompare) ||
             !isEqual(this.props.filters, prevProps.filters) ||
             !isEqual(this.props.settings, prevProps.settings) ||
             this.props.workspace !== prevProps.workspace;

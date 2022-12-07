@@ -42,6 +42,7 @@ import { CustomError } from "../CustomError/CustomError";
 import { DASHBOARD_LAYOUT_RESPONSIVE_SMALL_WIDTH } from "../../../../constants";
 import { IntlWrapper } from "../../../../localization";
 import { InsightBody } from "../../InsightBody";
+import { useHandlePropertiesPushData } from "./useHandlePropertiesPushData";
 
 const selectCommonDashboardInsightProps = createSelector(
     [selectLocale, selectSettings, selectColorPalette],
@@ -82,6 +83,8 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
         LoadingComponent: CustomLoadingComponent,
     } = props;
 
+    const ref = widgetRef(widget);
+
     // Custom components
     const { ErrorComponent, LoadingComponent } = useDashboardComponentsContext({
         ErrorComponent: CustomErrorComponent,
@@ -92,7 +95,7 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
     const effectiveBackend = useBackendStrict(backend);
     const effectiveWorkspace = useWorkspaceStrict(workspace);
 
-    const executionsHandler = useWidgetExecutionsHandler(widgetRef(widget));
+    const executionsHandler = useWidgetExecutionsHandler(ref);
 
     // State props
     const { locale, settings, colorPalette } = useDashboardSelector(selectCommonDashboardInsightProps);
@@ -105,9 +108,7 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
     const [isVisualizationLoading, setIsVisualizationLoading] = useState(false);
     const [visualizationError, setVisualizationError] = useState<GoodDataSdkError | undefined>();
 
-    const { onRequestAsyncRender, onResolveAsyncRender } = useDashboardAsyncRender(
-        objRefToString(widgetRef(widget)),
-    );
+    const { onRequestAsyncRender, onResolveAsyncRender } = useDashboardAsyncRender(objRefToString(ref));
     const handleLoadingChanged = useCallback<OnLoadingChanged>(
         ({ isLoading }) => {
             if (isLoading) {
@@ -155,12 +156,15 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
         onDrill: onDrillFn,
     });
 
+    const handlePropertiesPushData = useHandlePropertiesPushData(widget, insight);
+
     const handlePushData = useCallback(
         (data: IPushData): void => {
             onPushData(data);
             executionsHandler.onPushData(data);
+            handlePropertiesPushData(data);
         },
-        [onPushData, executionsHandler.onPushData],
+        [onPushData, executionsHandler.onPushData, handlePropertiesPushData],
     );
 
     const isPositionRelative =

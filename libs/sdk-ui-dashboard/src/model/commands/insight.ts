@@ -322,7 +322,6 @@ export interface ChangeInsightWidgetVisProperties extends IDashboardCommand {
 }
 
 /**
- *
  * Creates the ChangeInsightWidgetVisProperties command. Dispatching this command will result is modification
  * of the visualization properties that are effective for the particular insight widget.
  *
