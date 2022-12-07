@@ -80,6 +80,7 @@ const CAPABILITIES: IBackendCapabilities = {
     supportsMetadataObjectLocking: false,
     supportsGranularAccessControl: true,
     supportsEveryoneUserGroupForAccessControl: false,
+    supportsNonProductionDatasets: false,
 };
 
 /**

@@ -196,6 +196,11 @@ export interface IBackendCapabilities {
     supportsEveryoneUserGroupForAccessControl?: boolean;
 
     /**
+     * Indicates whether backend supports non production data sets.
+     */
+    supportsNonProductionDatasets?: boolean;
+
+    /**
      * Catchall for additional capabilities
      */
     [key: string]: undefined | boolean | number | string;
