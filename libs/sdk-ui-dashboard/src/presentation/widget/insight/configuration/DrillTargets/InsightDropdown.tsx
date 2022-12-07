@@ -67,6 +67,8 @@ export const InsightDropdown: React.FC<IInsightDropdownProps> = ({ insightConfig
                                 isDrillToInsightConfig(insightConfig) ? insightConfig.insightRef : undefined
                             }
                             height={300}
+                            width={275}
+                            searchAutofocus={true}
                             onSelect={(insight) => {
                                 onSelect(insight);
                                 closeDropdown();

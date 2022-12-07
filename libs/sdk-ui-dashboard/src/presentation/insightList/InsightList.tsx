@@ -53,6 +53,7 @@ const dropdownTabsTranslationIds = [messages.tabsMy, messages.tabsAll];
  */
 export const InsightList: React.FC<IInsightListProps> = ({
     height,
+    width = LIST_WIDTH,
     searchAutofocus,
     noDataButton,
     renderItem,
@@ -151,7 +152,7 @@ export const InsightList: React.FC<IInsightListProps> = ({
 
     return (
         <DropdownList
-            width={LIST_WIDTH}
+            width={width}
             height={dropdownListHeight}
             isMobile={false}
             isLoading={dropdownListLoading}

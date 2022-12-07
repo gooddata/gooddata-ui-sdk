@@ -6,10 +6,27 @@ import {
     DescriptionIcon,
     DescriptionPanelContent,
     Bubble,
-    DESCRIPTION_PANEL_ALIGN_POINTS,
     DESCRIPTION_PANEL_ARROW_OFFSETS,
 } from "@gooddata/sdk-ui-kit";
 import { IDescriptionClickTriggerProps } from "./types";
+
+const DESCRIPTION_PANEL_ALIGN_POINTS = [
+    { align: "tr tl" },
+    { align: "cr cl" },
+    { align: "br bl" },
+
+    { align: "tl tr" },
+    { align: "cl cr" },
+    { align: "bl br" },
+
+    { align: "bl tl" },
+    { align: "bc tc" },
+    { align: "br tr" },
+
+    { align: "tl bl" },
+    { align: "tc bc" },
+    { align: "tr br" },
+];
 
 export const DescriptionClickTrigger: React.FC<IDescriptionClickTriggerProps> = (props) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -39,7 +56,7 @@ export const DescriptionClickTrigger: React.FC<IDescriptionClickTriggerProps> = 
                     arrowStyle={{ display: "none" }}
                     onClose={switchIsOpen}
                     closeOnOutsideClick={true}
-                    closeOnParentScroll={true}
+                    closeOnParentScroll={false}
                     alignTo={`.${props.className}`}
                 >
                     <DescriptionPanelContent {...props} />
