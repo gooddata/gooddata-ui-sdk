@@ -9,10 +9,7 @@ import { defaultDateFilterConfig } from "../../../../_staging/dateFilterConfig/d
 import { getValidDateFilterConfig } from "../../../../_staging/dateFilterConfig/validation";
 import { stripUserAndWorkspaceProps } from "../../../../_staging/settings/conversion";
 import { InitializeDashboard } from "../../../commands";
-import { dateFilterValidationFailed } from "../../../events/dashboard";
-import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher";
 import { dateFilterConfigActions } from "../../../store/dateFilterConfig";
-import { DateFilterValidationResult } from "../../../../types";
 import {
     DashboardConfig,
     DashboardContext,
@@ -21,6 +18,7 @@ import {
 } from "../../../types/commonTypes";
 import { PromiseFnReturnType } from "../../../types/sagas";
 import { sanitizeUnfinishedFeatureSettings } from "./sanitizeUnfinishedFeatureSettings";
+import { onDateFilterConfigValidationError } from "./onDateFilterConfigValidationError";
 
 function loadDateFilterConfig(ctx: DashboardContext): Promise<IDateFilterConfigsQueryResult | undefined> {
     const { backend, workspace } = ctx;
@@ -51,15 +49,6 @@ function loadColorPalette(ctx: DashboardContext): Promise<IColorPalette> {
     const { backend, workspace } = ctx;
 
     return backend.workspace(workspace).styling().getColorPalette();
-}
-
-function* onDateFilterConfigValidationError(
-    ctx: DashboardContext,
-    validationResult: DateFilterValidationResult,
-    correlationId?: string,
-) {
-    yield dispatchDashboardEvent(dateFilterValidationFailed(ctx, validationResult, correlationId));
-    yield put(dateFilterConfigActions.addDateFilterConfigValidationWarning(validationResult));
 }
 
 function* resolveDateFilterConfig(ctx: DashboardContext, config: DashboardConfig, cmd: InitializeDashboard) {

@@ -1,13 +1,13 @@
 // (C) 2021-2022 GoodData Corporation
 import { SagaIterator } from "redux-saga";
+import { call } from "redux-saga/effects";
 import { IDateFilterConfig, IDashboardDateFilterConfig } from "@gooddata/sdk-model";
 
 import { mergeDateFilterConfigs } from "../../../../_staging/dateFilterConfig/merge";
 import { validateDateFilterConfig } from "../../../../_staging/dateFilterConfig/validation";
 import { InitializeDashboard } from "../../../commands/dashboard";
-import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher";
-import { dateFilterValidationFailed } from "../../../events/dashboard";
 import { DashboardContext } from "../../../types/commonTypes";
+import { onDateFilterConfigValidationError } from "./onDateFilterConfigValidationError";
 
 export interface DateFilterMergeResult {
     config: IDateFilterConfig;
@@ -38,9 +38,7 @@ export function* mergeDateFilterConfigWithOverrides(
     const mergedConfigValidation = validateDateFilterConfig(mergedConfig, false);
 
     if (mergedConfigValidation !== "Valid") {
-        yield dispatchDashboardEvent(
-            dateFilterValidationFailed(ctx, mergedConfigValidation, cmd.correlationId),
-        );
+        yield call(onDateFilterConfigValidationError, ctx, mergedConfigValidation, cmd.correlationId);
 
         return {
             config,

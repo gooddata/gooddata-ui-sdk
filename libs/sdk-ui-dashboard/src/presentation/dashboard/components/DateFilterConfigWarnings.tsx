@@ -1,12 +1,14 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
 import { defineMessage, FormattedMessage, MessageDescriptor } from "react-intl";
+import { createSelector } from "@reduxjs/toolkit";
 import { Message } from "@gooddata/sdk-ui-kit";
 
 import {
     selectDateFilterConfigValidationWarnings,
     selectEnableRenamingProjectToWorkspace,
     selectIsInEditMode,
+    selectIsNewDashboard,
     useDashboardSelector,
 } from "../../../model";
 import { DateFilterValidationResult } from "../../../types";
@@ -25,9 +27,26 @@ const projectValidationMessagesMapping: { [K in DateFilterValidationResult]?: Me
     TOO_MANY_CONFIGS: defineMessage({ id: "filters.config.warning.multipleProjectConfigs" }),
 };
 
+// Some warnings make sense only when creating a new dashboard, for existing dashboards they are irrelevant
+// because existing dashboard just has some option selected anyway.
+const validationsRelevantToNewDashboardOnly = new Set<DateFilterValidationResult>([
+    "NoVisibleOptions",
+    "SelectedOptionInvalid",
+]);
+
+const selectRelevantWarnings = createSelector(
+    selectDateFilterConfigValidationWarnings,
+    selectIsNewDashboard,
+    (warnings, isNew) => {
+        return isNew
+            ? warnings
+            : warnings.filter((warning) => !validationsRelevantToNewDashboardOnly.has(warning));
+    },
+);
+
 export const DateFilterConfigWarnings: React.FC = () => {
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
-    const warnings = useDashboardSelector(selectDateFilterConfigValidationWarnings);
+    const warnings = useDashboardSelector(selectRelevantWarnings);
     const enableRenamingProjectToWorkspace = useDashboardSelector(selectEnableRenamingProjectToWorkspace);
 
     const effectiveMapping = enableRenamingProjectToWorkspace
