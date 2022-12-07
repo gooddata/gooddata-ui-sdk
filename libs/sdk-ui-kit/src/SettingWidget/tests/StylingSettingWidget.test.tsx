@@ -62,14 +62,14 @@ describe("StylingPicker", () => {
         expect(screen.getByText("Second theme")).toBeInTheDocument();
     });
 
-    it("should render empty message and no footer buttons when no custom items are provided", () => {
+    it("should render empty message when no custom items are provided", () => {
         renderComponent({
             customItems: [],
         });
 
         expect(screen.getByLabelText("empty-message-test")).toBeInTheDocument();
-        expect(screen.queryByText("Cancel")).not.toBeInTheDocument();
-        expect(screen.queryByText("Apply")).not.toBeInTheDocument();
+        expect(screen.queryByText("Cancel")).toBeInTheDocument();
+        expect(screen.queryByText("Apply")).toBeInTheDocument();
     });
 
     it("should select provided selected item", () => {
@@ -77,14 +77,6 @@ describe("StylingPicker", () => {
         renderComponent({ selectedItemRef });
 
         expect(screen.getByLabelText("first_theme")).toBeChecked();
-    });
-
-    it("should render footer buttons when selected item is different from basic item", () => {
-        const selectedItemRef = customItemsMock[0].ref;
-        renderComponent({ selectedItemRef });
-
-        expect(screen.getByText("Cancel")).toBeInTheDocument();
-        expect(screen.getByText("Apply")).toBeInTheDocument();
     });
 
     it("should disable footer buttons when currently selected item is the same as provided selected item", () => {
