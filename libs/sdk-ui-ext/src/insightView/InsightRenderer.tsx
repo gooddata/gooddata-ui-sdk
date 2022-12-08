@@ -231,8 +231,8 @@ class InsightRendererCore extends React.PureComponent<IInsightRendererProps & Wr
          * Ignore properties when comparing insights to determine if a new setup is needed: changes to properties
          * only will be handled using the updateVisualization without unnecessary new setup just fine.
          */
-        const prevInsightForCompare = insightSetProperties(prevProps.insight, {});
-        const newInsightForCompare = insightSetProperties(this.props.insight, {});
+        const prevInsightForCompare = prevProps.insight && insightSetProperties(prevProps.insight, {});
+        const newInsightForCompare = this.props.insight && insightSetProperties(this.props.insight, {});
 
         const needsNewSetup =
             !isEqual(newInsightForCompare, prevInsightForCompare) ||
