@@ -954,6 +954,10 @@ export interface IBubbleTriggerProps {
     // (undocumented)
     eventsOnBubble?: boolean;
     // (undocumented)
+    onBubbleClose?: () => void;
+    // (undocumented)
+    onBubbleOpen?: () => void;
+    // (undocumented)
     tagName?: React_2.ElementType;
 }
 
@@ -1266,6 +1270,8 @@ export interface IDescriptionPanelProps {
     description?: string;
     // (undocumented)
     locale?: string;
+    // (undocumented)
+    onBubbleOpen?: () => void;
     // (undocumented)
     title?: string;
 }
@@ -2038,6 +2044,8 @@ export interface IInsightListItemProps {
     onClick?: () => void;
     // (undocumented)
     onDelete?: () => void;
+    // (undocumented)
+    onDescriptionPanelOpen?: () => void;
     // (undocumented)
     showDescriptionPanel?: boolean;
     // (undocumented)

@@ -44,6 +44,7 @@ export interface IInsightListItemProps {
 
     onClick?: () => void;
     onDelete?: () => void;
+    onDescriptionPanelOpen?: () => void;
 
     showDescriptionPanel?: boolean;
 }
@@ -63,6 +64,7 @@ export class InsightListItemCore extends Component<IInsightListItemProps & Wrapp
             isSelected,
             isLoading,
             onClick,
+            onDescriptionPanelOpen,
             showDescriptionPanel = false,
         } = this.props;
 
@@ -82,7 +84,11 @@ export class InsightListItemCore extends Component<IInsightListItemProps & Wrapp
                 {this.renderActions()}
                 {showDescriptionPanel ? (
                     <div className="gd-visualizations-list-item-description">
-                        <DescriptionPanel title={title} description={description} />
+                        <DescriptionPanel
+                            onBubbleOpen={onDescriptionPanelOpen}
+                            title={title}
+                            description={description}
+                        />
                     </div>
                 ) : null}
                 <div className="gd-visualizations-list-item-content">

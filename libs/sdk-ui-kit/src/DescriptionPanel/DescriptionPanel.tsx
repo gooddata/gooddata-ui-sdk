@@ -64,6 +64,7 @@ export interface IDescriptionPanelProps {
     description?: string;
     locale?: string;
     className?: string;
+    onBubbleOpen?: () => void;
 }
 
 /**
@@ -106,7 +107,7 @@ export const DescriptionIcon: React.FC<IDescriptionTriggerProps> = ({ className 
 
 const DescriptionPanelCore: React.FC<IDescriptionPanelProps> = (props) => {
     return (
-        <BubbleHoverTrigger showDelay={0} eventsOnBubble={true}>
+        <BubbleHoverTrigger onBubbleOpen={props.onBubbleOpen} showDelay={0} eventsOnBubble={true}>
             <DescriptionIcon className={props.className} />
             <Bubble
                 className="bubble-light gd-description-panel-bubble"
