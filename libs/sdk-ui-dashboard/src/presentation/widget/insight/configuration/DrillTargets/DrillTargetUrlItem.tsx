@@ -1,8 +1,9 @@
 // (C) 2020-2022 GoodData Corporation
 import React, { useState } from "react";
-import { IntlShape, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import { Button, Dropdown, IAlignPoint } from "@gooddata/sdk-ui-kit";
-import { IAttributeDescriptor, IAttributeDisplayFormMetadataObject, ObjRef } from "@gooddata/sdk-model";
+import { IAttributeDescriptor, ObjRef } from "@gooddata/sdk-model";
+import invariant from "ts-invariant";
 import {
     isDrillToAttributeUrlConfig,
     isDrillToCustomUrlConfig,
@@ -17,38 +18,33 @@ import {
     useDashboardSelector,
     selectBackendCapabilities,
     selectSettings,
+    selectAllCatalogAttributesMap,
 } from "../../../../../model";
-import { ObjRefMap } from "../../../../../_staging/metadata/objRefMap";
 
 import { useInvalidAttributeDisplayFormIdentifiers } from "./useInvalidAttributeDisplayFormIdentifier";
 import { useAttributesWithDisplayForms } from "./useAttributesWithDisplayForms";
 
-const getButtonValue = (
-    urlDrillTarget: UrlDrillTarget | undefined,
-    attributeDisplayForms: ObjRefMap<IAttributeDisplayFormMetadataObject>,
-    intl: IntlShape,
-) => {
+function useButtonValue(urlDrillTarget: UrlDrillTarget | undefined): string {
+    const intl = useIntl();
+
+    const displayForms = useDashboardSelector(selectAllCatalogDisplayFormsMap);
+    const attributes = useDashboardSelector(selectAllCatalogAttributesMap);
+
     if (isDrillToCustomUrlConfig(urlDrillTarget) && urlDrillTarget.customUrl) {
         return urlDrillTarget.customUrl;
     }
 
-    if (
-        isDrillToAttributeUrlConfig(urlDrillTarget) &&
-        urlDrillTarget.drillToAttributeDisplayForm &&
-        urlDrillTarget.insightAttributeDisplayForm
-    ) {
-        const drillToAttributeDisplayForm = attributeDisplayForms.get(
-            urlDrillTarget.drillToAttributeDisplayForm,
-        );
-        const insightAttributeDisplayForm = attributeDisplayForms.get(
-            urlDrillTarget.insightAttributeDisplayForm,
-        );
+    if (isDrillToAttributeUrlConfig(urlDrillTarget) && urlDrillTarget.drillToAttributeDisplayForm) {
+        const displayForm = displayForms.get(urlDrillTarget.drillToAttributeDisplayForm);
+        invariant(displayForm, "inconsistent state in drill to URL button");
+        const attribute = attributes.get(displayForm.attribute);
+        invariant(attribute, "inconsistent state in drill to URL button");
 
-        return `${insightAttributeDisplayForm?.title} (${drillToAttributeDisplayForm?.title})`;
+        return `${attribute.attribute.title} (${displayForm.title})`;
     }
 
     return intl.formatMessage({ id: "configurationPanel.drillIntoUrl.defaultButtonValue" });
-};
+}
 
 const dropdownAlignPoints: IAlignPoint[] = [{ align: "bl tl" }, { align: "tl bl" }];
 
@@ -69,8 +65,6 @@ export const DrillTargetUrlItem: React.FunctionComponent<DrillUrlItemProps> = (p
 
     const invalidAttributeDisplayFormIdentifiers = useInvalidAttributeDisplayFormIdentifiers(urlDrillTarget);
 
-    const intl = useIntl();
-
     const [showModal, setShowModal] = useState(false);
     const toggleModal = () => setShowModal(!showModal);
 
@@ -90,9 +84,8 @@ export const DrillTargetUrlItem: React.FunctionComponent<DrillUrlItemProps> = (p
     };
 
     const { client, dataProduct } = useClientWorkspaceIdentifiers();
-    const displayForms = useDashboardSelector(selectAllCatalogDisplayFormsMap);
 
-    const buttonValue = getButtonValue(urlDrillTarget, displayForms, intl);
+    const buttonValue = useButtonValue(urlDrillTarget);
 
     return (
         <>

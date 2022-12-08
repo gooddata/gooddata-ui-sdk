@@ -7,6 +7,7 @@ import {
 } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import intersectionWith from "lodash/intersectionWith";
+import uniqWith from "lodash/uniqWith";
 import { AttributeDisplayFormType } from "../../../../drill/types";
 import {
     selectAllCatalogAttributesMap,
@@ -24,6 +25,10 @@ interface IAttributeWithDisplayForm {
 interface IUseAttributesWithDisplayFormsResult {
     linkDisplayForms: IAttributeWithDisplayForm[];
     allDisplayForms: IAttributeWithDisplayForm[];
+}
+
+function areAttributesWithDisplayFormsEqual(a: IAttributeWithDisplayForm, b: IAttributeWithDisplayForm) {
+    return areObjRefsEqual(a.displayForm.ref, b.displayForm.ref);
 }
 
 export function useAttributesWithDisplayForms(
@@ -48,7 +53,7 @@ export function useAttributesWithDisplayForms(
         areObjRefsEqual,
     );
 
-    return candidateDisplayFormRefs.reduce(
+    const result = candidateDisplayFormRefs.reduce(
         (result: IUseAttributesWithDisplayFormsResult, ref) => {
             const displayForm = allDisplayForms.get(ref);
             if (!displayForm) {
@@ -84,4 +89,9 @@ export function useAttributesWithDisplayForms(
             allDisplayForms: [],
         },
     );
+
+    return {
+        allDisplayForms: uniqWith(result.allDisplayForms, areAttributesWithDisplayFormsEqual),
+        linkDisplayForms: uniqWith(result.linkDisplayForms, areAttributesWithDisplayFormsEqual),
+    };
 }
