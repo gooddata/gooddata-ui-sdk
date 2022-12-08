@@ -10,7 +10,7 @@ import {
     widgetRef,
 } from "@gooddata/sdk-model";
 import { SagaIterator } from "redux-saga";
-import { all, call, put, SagaReturnType, select } from "redux-saga/effects";
+import { all, call, put, SagaReturnType } from "redux-saga/effects";
 import { v4 as uuid } from "uuid";
 import flatMap from "lodash/flatMap";
 import { IDashboardCommand } from "../../commands";
@@ -24,7 +24,6 @@ import {
     validateDrillDefinition,
 } from "../widgets/validation/insightDrillDefinitionValidation";
 import { validateKpiDrill } from "../widgets/validation/kpiDrillValidation";
-import { selectAllAnalyticalWidgets } from "../../store/layout/layoutSelectors";
 import { uiActions } from "../../store/ui";
 
 interface IInvalidDrillInfo {
@@ -32,8 +31,11 @@ interface IInvalidDrillInfo {
     widget: IWidget;
 }
 
-export function* validateDrills(ctx: DashboardContext, cmd: IDashboardCommand) {
-    const widgets: ReturnType<typeof selectAllAnalyticalWidgets> = yield select(selectAllAnalyticalWidgets);
+export function* validateDrills(
+    ctx: DashboardContext,
+    cmd: IDashboardCommand,
+    widgets: (IKpiWidget | IInsightWidget)[],
+) {
     const widgetsWithDrills = widgets.filter((widget) => widget.drills.length > 0);
     if (!widgetsWithDrills.length) {
         return;
