@@ -339,5 +339,7 @@
     "stylingEditor.dialog.example.paste": "ペースト",
     "stylingPicker.item.edit": "編集",
     "stylingPicker.item.delete": "削除",
-    "stylingPicker.item.delete.tooltip": "該当のアイテムは削除できません。"
+    "stylingPicker.item.delete.tooltip": "該当のアイテムは削除できません。",
+    "descriptionPanel.button.more": "もっと表示",
+    "descriptionPanel.button.less": "簡易表示"
 }

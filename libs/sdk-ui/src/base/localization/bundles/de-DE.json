@@ -339,5 +339,7 @@
     "stylingEditor.dialog.example.paste": "Einfügen",
     "stylingPicker.item.edit": "Bearbeiten",
     "stylingPicker.item.delete": "Löschen",
-    "stylingPicker.item.delete.tooltip": "Das ausgewählte Element kann nicht gelöscht werden."
+    "stylingPicker.item.delete.tooltip": "Das ausgewählte Element kann nicht gelöscht werden.",
+    "descriptionPanel.button.more": "Mehr anzeigen",
+    "descriptionPanel.button.less": "Weniger anzeigen"
 }

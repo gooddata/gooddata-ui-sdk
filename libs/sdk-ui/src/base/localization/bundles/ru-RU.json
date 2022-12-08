@@ -339,5 +339,7 @@
     "stylingEditor.dialog.example.paste": "Вставить",
     "stylingPicker.item.edit": "Изменить",
     "stylingPicker.item.delete": "Удалить",
-    "stylingPicker.item.delete.tooltip": "Примененный элемент не может быть удален."
+    "stylingPicker.item.delete.tooltip": "Примененный элемент не может быть удален.",
+    "descriptionPanel.button.more": "Раскрыть",
+    "descriptionPanel.button.less": "Скрыть"
 }
