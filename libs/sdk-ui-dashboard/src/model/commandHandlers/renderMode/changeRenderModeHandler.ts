@@ -10,6 +10,7 @@ import { selectDashboardEditModeDevRollout } from "../../store/config/configSele
 import { resetDashboardHandler } from "../dashboard/resetDashboardHandler";
 import { validateDrills } from "../common/validateDrills";
 import { uiActions } from "../../store/ui";
+import { selectAllAnalyticalWidgets } from "../../store/layout/layoutSelectors";
 
 export function* changeRenderModeHandler(
     ctx: DashboardContext,
@@ -32,7 +33,10 @@ export function* changeRenderModeHandler(
         }
 
         if (renderMode === "edit") {
-            yield call(validateDrills, ctx, cmd);
+            const widgets: ReturnType<typeof selectAllAnalyticalWidgets> = yield select(
+                selectAllAnalyticalWidgets,
+            );
+            yield call(validateDrills, ctx, cmd, widgets);
         }
 
         return renderModeChanged(ctx, renderMode, correlationId);
