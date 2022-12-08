@@ -8,7 +8,9 @@ import { ActionType, ISettingItem } from "./typings";
 import { Button } from "../Button";
 import { Bubble, BubbleHoverTrigger } from "../Bubble";
 
-const RIGHT_TOOLTIP_BUBBLE_ALIGN_POINTS = [{ align: "cr cl" }];
+const DEFAULT_ALIGN_POINT_TITLE_TOOLTIP = [{ align: "cr cl" }, { align: "bl tl" }, { align: "bc tc" }];
+
+const DEFAULT_ALIGN_POINT_ACTION_TOOLTIP = [{ align: "cl cr" }, { align: "bc tc" }];
 
 const getActionElement = (
     actionType: ActionType,
@@ -78,7 +80,7 @@ export const SettingItem: React.FC<ISettingItem> = ({
                         <span className="icon-circle-question gd-icon-circle-question" />
                         <Bubble
                             className={cx(className, "bubble-primary")}
-                            alignPoints={alignPointTitleTooltip || RIGHT_TOOLTIP_BUBBLE_ALIGN_POINTS}
+                            alignPoints={alignPointTitleTooltip || DEFAULT_ALIGN_POINT_TITLE_TOOLTIP}
                         >
                             {titleTooltipText}
                         </Bubble>
@@ -97,7 +99,7 @@ export const SettingItem: React.FC<ISettingItem> = ({
                                     <Bubble
                                         className={cx(className, "bubble-primary")}
                                         alignPoints={
-                                            alignPointActionTooltip || RIGHT_TOOLTIP_BUBBLE_ALIGN_POINTS
+                                            alignPointActionTooltip || DEFAULT_ALIGN_POINT_ACTION_TOOLTIP
                                         }
                                     >
                                         {actionTooltipText}
