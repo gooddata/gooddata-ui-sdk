@@ -12,6 +12,8 @@ export interface IBubbleTriggerProps {
     children?: React.ReactNode;
     eventsOnBubble?: boolean;
     tagName?: React.ElementType;
+    onBubbleOpen?: () => void;
+    onBubbleClose?: () => void;
 }
 
 /**
@@ -50,6 +52,14 @@ export class BubbleTrigger<P extends IBubbleTriggerProps> extends React.PureComp
     }
 
     protected changeBubbleVisibility(active: boolean): void {
+        const { onBubbleOpen, onBubbleClose } = this.props;
+        const { isBubbleVisible } = this.state;
+        if (active && isBubbleVisible !== active && onBubbleOpen) {
+            onBubbleOpen();
+        }
+        if (!active && onBubbleClose) {
+            onBubbleClose();
+        }
         this.setState({ isBubbleVisible: active });
     }
 
