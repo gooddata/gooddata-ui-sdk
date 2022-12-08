@@ -2,6 +2,7 @@
 import React, { useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import { Dropdown, DropdownList } from "@gooddata/sdk-ui-kit";
+import sortBy from "lodash/sortBy";
 
 import { DashboardListItem } from "./DashboardListItem";
 import { DashboardListButton } from "./DashboardListButton";
@@ -35,7 +36,7 @@ export const DashboardList: React.FC<IDashboardListProps> = ({ selected, dashboa
 
     const items = useMemo(() => {
         let items = dashboards.filter(({ title }) =>
-            title?.toLowerCase().includes(searchString.toLowerCase()),
+            title.toLowerCase().includes(searchString.toLowerCase()),
         );
 
         if (selectedDashboard) {
@@ -44,7 +45,7 @@ export const DashboardList: React.FC<IDashboardListProps> = ({ selected, dashboa
             );
         }
 
-        return items;
+        return sortBy(items, (dashboard) => dashboard.title.toLowerCase());
     }, [dashboards, searchString, selectedDashboard]);
 
     const searchPlaceholder = intl.formatMessage({
