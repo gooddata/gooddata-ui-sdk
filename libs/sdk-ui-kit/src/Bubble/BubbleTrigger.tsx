@@ -53,7 +53,8 @@ export class BubbleTrigger<P extends IBubbleTriggerProps> extends React.PureComp
 
     protected changeBubbleVisibility(active: boolean): void {
         const { onBubbleOpen, onBubbleClose } = this.props;
-        if (active && onBubbleOpen) {
+        const { isBubbleVisible } = this.state;
+        if (active && isBubbleVisible !== active && onBubbleOpen) {
             onBubbleOpen();
         }
         if (!active && onBubbleClose) {
