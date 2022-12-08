@@ -190,8 +190,6 @@
     "dashboard.shareDialog.underLenientControl.label": "Outros usuários podem acessar o dashboard pelo detalhamento",
     "dashboard.shareDialog.lock.label": "Somente administradores podem editar o dashboard",
     "header.lockStatus.tooltip": "<b>Dashboard bloqueado.</b> Somente administradores podem editá-lo.",
-    "header.shareStatus.shared.text": "Compartilhado",
-    "header.shareStatus.shared.tooltip": "Dashboard compartilhado com outros usuários.",
     "header.shareStatus.private.text": "Privado",
     "header.shareStatus.private.strict.tooltip": "Somente você pode ver e editar o dashboard.",
     "header.shareStatus.private.not.strict.tooltip": "O criador não consegue editar este dashboard. Outros usuários com funções apropriadas poderão editá-lo no detalhamento.",

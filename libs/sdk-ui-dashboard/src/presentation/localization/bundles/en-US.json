@@ -1066,16 +1066,6 @@
         "comment": "Shown when hovering over lock indicator. Dont translate html tags <b>, </b>",
         "limit": 0
     },
-    "header.shareStatus.shared.text": {
-        "value": "Shared",
-        "comment": "Share indicator text when dashboard is shared with someone",
-        "limit": 0
-    },
-    "header.shareStatus.shared.tooltip": {
-        "value": "This dashboard is shared with other users.",
-        "comment": "Shown when hovering over share indicator of public dashboard.",
-        "limit": 0
-    },
     "header.shareStatus.private.text": {
         "value": "Private",
         "comment": "Share indicator text when dashboard is private",

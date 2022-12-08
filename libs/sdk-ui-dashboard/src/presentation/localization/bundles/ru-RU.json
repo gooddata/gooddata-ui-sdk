@@ -190,8 +190,6 @@
     "dashboard.shareDialog.underLenientControl.label": "Другие пользователи могут получить доступ к этому дашборду, если они перейдут к нему в ходе детализации.",
     "dashboard.shareDialog.lock.label": "Только администраторы могут редактировать этот дашборд",
     "header.lockStatus.tooltip": "<b>Этот дашборд заблокирован.</b> Только администраторы могут редактировать его.",
-    "header.shareStatus.shared.text": "В общем доступе",
-    "header.shareStatus.shared.tooltip": "Этот дашборд доступен другим пользователям.",
     "header.shareStatus.private.text": "Приватные",
     "header.shareStatus.private.strict.tooltip": "Только вы можете просматривать и редактировать этот дашборд.",
     "header.shareStatus.private.not.strict.tooltip": "Создатель может редактировать этот дашборд. Другие пользователи с соответствующими ролями могут редактировать этот дашборд при переходе к нему.",
