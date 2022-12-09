@@ -7,12 +7,14 @@ import {
     useMediaQuery,
     FullScreenOverlay,
     Overlay,
+    OverlayControllerProvider,
+    OverlayController,
 } from "@gooddata/sdk-ui-kit";
 import { ParametersPanel } from "./CustomUrlEditorParameters";
 import { isDrillToCustomUrlConfig, UrlDrillTarget } from "../../types";
 import { IAttributeWithDisplayForm } from "./types";
 import { selectIsWhiteLabeled, useDashboardSelector } from "../../../../model";
-
+import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants";
 export interface IUrlInputProps {
     currentUrlValue: string;
     onChange: (value: string) => void;
@@ -246,20 +248,24 @@ const CustomUrlEditorDialog: React.FunctionComponent<CustomUrlEditorProps> = (pr
     );
 };
 
+const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
+
 export const CustomUrlEditor: React.FC<CustomUrlEditorProps> = (props) => {
     const isMobileDevice = useMediaQuery("mobileDevice");
     const SelectedOverlay = isMobileDevice ? FullScreenOverlay : Overlay;
 
     return (
-        <SelectedOverlay
-            onClose={props.onClose}
-            isModal={true}
-            closeOnOutsideClick={false}
-            closeOnEscape={true}
-            positionType="fixed"
-            className="gd-modal-overlay"
-        >
-            <CustomUrlEditorDialog {...props} />
-        </SelectedOverlay>
+        <OverlayControllerProvider overlayController={overlayController}>
+            <SelectedOverlay
+                onClose={props.onClose}
+                isModal={true}
+                closeOnOutsideClick={false}
+                closeOnEscape={true}
+                positionType="fixed"
+                className="gd-modal-overlay"
+            >
+                <CustomUrlEditorDialog {...props} />
+            </SelectedOverlay>
+        </OverlayControllerProvider>
     );
 };
