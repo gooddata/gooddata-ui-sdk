@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 import { ObjRef } from "@gooddata/sdk-model";
 
-import { ILayoutCoordinates, IMenuButtonItemsVisibility, IToastMessage } from "../../../types";
+import { ILayoutCoordinates, IMenuButtonItemsVisibility } from "../../../types";
 import { DraggableLayoutItem } from "../../../presentation/dragAndDrop/types";
 import { IDashboardWidgetOverlay } from "../../types/commonTypes";
 
@@ -52,7 +52,10 @@ export interface UiState {
     filterAttributeSelectionOpen: boolean;
     selectedFilterIndex: number | undefined;
     activeSectionIndex: number | undefined;
-    toastMessages: IToastMessage[];
+    drillValidationMessages: {
+        invalidDrillWidgetRefs: ObjRef[];
+        invalidUrlDrillWidgetRefs: ObjRef[];
+    };
     draggingWidgetSource: DraggableLayoutItem | undefined;
     draggingWidgetTarget: ILayoutCoordinates | undefined;
     widgetsOverlay: Record<string, IDashboardWidgetOverlay>;
@@ -99,7 +102,10 @@ export const uiInitialState: UiState = {
     filterAttributeSelectionOpen: false,
     selectedFilterIndex: undefined,
     activeSectionIndex: undefined,
-    toastMessages: [],
+    drillValidationMessages: {
+        invalidDrillWidgetRefs: [],
+        invalidUrlDrillWidgetRefs: [],
+    },
     draggingWidgetSource: undefined,
     draggingWidgetTarget: undefined,
     widgetsOverlay: {},

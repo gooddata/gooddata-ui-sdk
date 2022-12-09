@@ -2,7 +2,7 @@
 import { Action, AnyAction, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import { areObjRefsEqual, ObjRef, objRefToString } from "@gooddata/sdk-model";
 import { UiState } from "./uiState";
-import { ILayoutCoordinates, IMenuButtonItemsVisibility, IToastMessage } from "../../../types";
+import { ILayoutCoordinates, IMenuButtonItemsVisibility } from "../../../types";
 import { DraggableLayoutItem } from "../../../presentation/dragAndDrop/types";
 import { IDashboardWidgetOverlay } from "../../types/commonTypes";
 
@@ -145,17 +145,14 @@ const clearActiveSectionIndex: UiReducer = (state) => {
     state.activeSectionIndex = undefined;
 };
 
-const addToastMessage: UiReducer<PayloadAction<IToastMessage>> = (state, action) => {
-    state.toastMessages.push(action.payload);
+const setInvalidDrillWidgetRefs: UiReducer<PayloadAction<ObjRef[]>> = (state, action) => {
+    state.drillValidationMessages.invalidDrillWidgetRefs = action.payload;
 };
 
-const removeToastMessage: UiReducer<PayloadAction<string>> = (state, action) => {
-    state.toastMessages = state.toastMessages.filter((m) => m.id !== action.payload);
+const setInvalidUrlDrillWidgetRefs: UiReducer<PayloadAction<ObjRef[]>> = (state, action) => {
+    state.drillValidationMessages.invalidUrlDrillWidgetRefs = action.payload;
 };
 
-const removeAllToastMessages: UiReducer = (state) => {
-    state.toastMessages = [];
-};
 const setDraggingWidgetSource: UiReducer<PayloadAction<DraggableLayoutItem>> = (state, action) => {
     state.draggingWidgetSource = action.payload;
 };
@@ -248,9 +245,8 @@ export const uiReducers = {
     clearActiveSectionIndex,
     openCancelEditModeDialog,
     closeCancelEditModeDialog,
-    addToastMessage,
-    removeToastMessage,
-    removeAllToastMessages,
+    setInvalidDrillWidgetRefs,
+    setInvalidUrlDrillWidgetRefs,
     setDraggingWidgetSource,
     clearDraggingWidgetSource,
     setDraggingWidgetTarget,

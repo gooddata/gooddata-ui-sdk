@@ -248,6 +248,8 @@ export {
     selectWidgetsOverlayState,
     selectWidgetsModification,
     selectSectionModification,
+    selectInvalidDrillWidgetRefs,
+    selectInvalidUrlDrillWidgetRefs,
 } from "./ui/uiSelectors";
 export { uiActions } from "./ui";
 export { RenderModeState } from "./renderMode/renderModeState";
