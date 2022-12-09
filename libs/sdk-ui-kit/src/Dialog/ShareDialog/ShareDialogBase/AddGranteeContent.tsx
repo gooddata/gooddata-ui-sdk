@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import React, { useCallback } from "react";
 import { areObjRefsEqual } from "@gooddata/sdk-model";
 import { GranteeList } from "./GranteeList";
@@ -9,7 +9,14 @@ import { AddGranteeSelect } from "./AddGranteeSelect";
  * @internal
  */
 export const AddGranteeContent: React.FC<IAddGranteeContentProps> = (props) => {
-    const { appliedGrantees, currentUserRef, addedGrantees, onDelete, onAddUserOrGroups } = props;
+    const {
+        appliedGrantees,
+        currentUserRef,
+        addedGrantees,
+        areGranularPermissionsSupported,
+        onDelete,
+        onAddUserOrGroups,
+    } = props;
 
     const onSelectGrantee = useCallback(
         (grantee: GranteeItem) => {
@@ -27,7 +34,12 @@ export const AddGranteeContent: React.FC<IAddGranteeContentProps> = (props) => {
                 appliedGrantees={appliedGrantees}
                 onSelectGrantee={onSelectGrantee}
             />
-            <GranteeList grantees={addedGrantees} mode={"AddGrantee"} onDelete={onDelete} />
+            <GranteeList
+                grantees={addedGrantees}
+                mode={"AddGrantee"}
+                areGranularPermissionsSupported={areGranularPermissionsSupported}
+                onDelete={onDelete}
+            />
         </>
     );
 };

@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import React, { useMemo } from "react";
 import { serializeObjRef } from "@gooddata/sdk-model";
 import { GranteeItemComponent } from "./GranteeItem";
@@ -11,7 +11,7 @@ import { sortGranteeList } from "./utils";
  * @internal
  */
 export const GranteeList: React.FC<IGranteesListProps> = (props) => {
-    const { grantees, mode, onDelete } = props;
+    const { grantees, mode, areGranularPermissionsSupported, onDelete, onChange } = props;
 
     const intl = useIntl();
 
@@ -31,7 +31,9 @@ export const GranteeList: React.FC<IGranteesListProps> = (props) => {
                         key={serializeObjRef(grantee.id)}
                         grantee={grantee}
                         mode={mode}
+                        areGranularPermissionsSupported={areGranularPermissionsSupported}
                         onDelete={onDelete}
+                        onChange={onChange}
                     />
                 );
             })}

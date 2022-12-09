@@ -34,6 +34,7 @@ export const AddGranteeBase: React.FC<IAddGranteeBaseProps> = (props) => {
         addedGrantees,
         currentUserRef,
         isDirty,
+        areGranularPermissionsSupported,
         onCancel,
         onSubmit,
         onBackClick,
@@ -64,6 +65,7 @@ export const AddGranteeBase: React.FC<IAddGranteeBaseProps> = (props) => {
                 currentUserRef={currentUserRef}
                 addedGrantees={addedGrantees}
                 appliedGrantees={appliedGrantees}
+                areGranularPermissionsSupported={areGranularPermissionsSupported}
                 onAddUserOrGroups={onAddUserOrGroups}
                 onDelete={onDelete}
             />

@@ -6,6 +6,8 @@ import {
     IGranteeGroupAll,
     IGranteeUser,
     IGranteeInactiveOwner,
+    IGranularGranteeUser,
+    IGranularGranteeGroup,
 } from "@gooddata/sdk-ui-kit";
 
 export const user: IGranteeUser = {
@@ -82,4 +84,26 @@ export const inactiveUser: IGranteeInactiveOwner = {
     id: uriRef("inactive_user"),
 };
 
+export const granularUser: IGranularGranteeUser = {
+    type: "user",
+    id: uriRef("userID1"),
+    name: "User Name",
+    email: "user.name@gooddata.com",
+    permissions: ["edit"],
+    isCurrentUser: false,
+    isOwner: true,
+    inheritedPermissions: ["view"],
+    status: "Active",
+};
+
+export const granularGroup: IGranularGranteeGroup = {
+    type: "group",
+    id: uriRef("userID1"),
+    name: "Group Name",
+    permissions: ["edit"],
+    inheritedPermissions: ["view"],
+};
+
 export const grantees: GranteeItem[] = [user, group];
+
+export const granularGrantees: GranteeItem[] = [granularUser];

@@ -291,3 +291,29 @@
         }
     }
 }
+
+.gd-granular-permissions-dropdown {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.gd-granular-permissions-remove {
+    border-top: 1px solid variables.$gd-border-color;
+}
+
+.gd-granular-permission-button {
+    font-family: variables.$gd-font-primary;
+    font-size: 12px;
+    line-height: 14px;
+}
+
+.gd-granular-permissions-overlay {
+    .gd-granular-permission-item {
+        min-width: 129px;
+
+        &.is-disabled {
+            cursor: default;
+        }
+    }
+}

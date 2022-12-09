@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import React from "react";
 
 import { Overlay } from "../../../Overlay";
@@ -16,6 +16,7 @@ const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
  */
 export const ShareDialogBase: React.FC<IShareDialogBaseProps> = (props) => {
     const { onCancel, sharedObject, currentUserRef } = props;
+    const { areGranularPermissionsSupported } = sharedObject;
 
     const {
         onAddedGranteeDelete,
@@ -36,6 +37,7 @@ export const ShareDialogBase: React.FC<IShareDialogBaseProps> = (props) => {
         isUnderLenientControlNow,
         onLockChange,
         onUnderLenientControlChange,
+        onGranularGranteeChange,
     } = useShareDialogBase(props);
 
     return (
@@ -61,6 +63,7 @@ export const ShareDialogBase: React.FC<IShareDialogBaseProps> = (props) => {
                         onGranteeDelete={onSharedGranteeDelete}
                         onLockChange={onLockChange}
                         onUnderLenientControlChange={onUnderLenientControlChange}
+                        onGranularGranteeChange={onGranularGranteeChange}
                     />
                 ) : (
                     <AddGranteeBase
@@ -68,6 +71,7 @@ export const ShareDialogBase: React.FC<IShareDialogBaseProps> = (props) => {
                         currentUserRef={currentUserRef}
                         appliedGrantees={appliedGranteesWithOwner}
                         addedGrantees={granteesToAdd}
+                        areGranularPermissionsSupported={areGranularPermissionsSupported}
                         onAddUserOrGroups={onGranteeAdd}
                         onDelete={onAddedGranteeDelete}
                         onCancel={onCancel}

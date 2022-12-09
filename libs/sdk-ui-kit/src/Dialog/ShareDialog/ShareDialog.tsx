@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
 import { ShareDialogBase } from "./ShareDialogBase/ShareDialogBase";
 import { GranteeItem, IAffectedSharedObject } from "./ShareDialogBase/types";
@@ -78,11 +78,13 @@ export const ShareDialog: React.FC<IShareDialogProps> = (props) => {
 
     const affectedSharedObject = useMemo<IAffectedSharedObject>(() => {
         const isLeniencyControlSupported = !effectiveBackend.capabilities.usesStrictAccessControl;
+        const areGranularPermissionsSupported = effectiveBackend.capabilities.supportsGranularAccessControl;
         return mapSharedObjectToAffectedSharedObject(
             sharedObject,
             owner,
             isLockingSupported,
             isLeniencyControlSupported,
+            areGranularPermissionsSupported,
         );
     }, [sharedObject, owner, isLockingSupported, effectiveBackend]);
 

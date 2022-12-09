@@ -160,6 +160,7 @@ export const mapSharedObjectToAffectedSharedObject = (
     owner: IGranteeUser | IGranteeInactiveOwner,
     isLockingSupported: boolean,
     isLeniencyControlSupported: boolean,
+    areGranularPermissionsSupported = false,
 ): IAffectedSharedObject => {
     const { ref, shareStatus, isLocked, isUnderStrictControl } = sharedObject;
     return {
@@ -170,5 +171,6 @@ export const mapSharedObjectToAffectedSharedObject = (
         isUnderLenientControl: !isUnderStrictControl,
         isLockingSupported,
         isLeniencyControlSupported,
+        areGranularPermissionsSupported,
     };
 };
