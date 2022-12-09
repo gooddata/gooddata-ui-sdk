@@ -11,6 +11,7 @@ import { DeleteDialog, useDeleteDialogProps } from "../../deleteDialog";
 import { KpiDeleteDialog, useKpiDeleteDialogProps } from "../../kpiDeleteDialog";
 import { CancelEditDialog, useCancelEditDialog } from "../../cancelEditDialog";
 import { ToastMessages } from "../components/ToastMessages";
+import { DrillValidationToastMessages } from "../components/DrillValidationToastMessages";
 
 // these wrapper components are here to prevent the whole DashboardHeader from re-rendering whenever some
 // of the sub-components' props change. by isolating the hooks more, we make sure only the really changed component re-renders.
@@ -50,6 +51,7 @@ export const DashboardHeader = (): JSX.Element => {
     return (
         <>
             <ToastMessages />
+            <DrillValidationToastMessages />
             <ExportDialogProvider />
             <ScheduledEmailDialogProvider />
             <ShareDialogDashboardHeader />

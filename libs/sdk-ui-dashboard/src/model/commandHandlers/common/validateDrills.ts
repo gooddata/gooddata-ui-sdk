@@ -11,7 +11,6 @@ import {
 } from "@gooddata/sdk-model";
 import { SagaIterator } from "redux-saga";
 import { all, call, put, SagaReturnType } from "redux-saga/effects";
-import { v4 as uuid } from "uuid";
 import flatMap from "lodash/flatMap";
 import { IDashboardCommand } from "../../commands";
 import { insightWidgetDrillsRemoved } from "../../events/insight";
@@ -48,6 +47,8 @@ export function* validateDrills(
     const invalidDrills = possibleInvalidDrills.filter(({ invalidDrills }) => invalidDrills.length > 0);
 
     if (invalidDrills.length === 0) {
+        yield put(uiActions.setInvalidDrillWidgetRefs([]));
+        yield put(uiActions.setInvalidUrlDrillWidgetRefs([]));
         return;
     }
 
@@ -59,17 +60,7 @@ export function* validateDrills(
         ),
     );
 
-    yield put(
-        uiActions.addToastMessage({
-            id: uuid(),
-            type: "warning",
-            titleId: "messages.dashboard.invalidDrills.title",
-            detailId: "messages.dashboard.invalidDrills.body",
-            detailValues: { listOfWidgetTitles: invalidDrills.map((d) => d.widget.title).join(", ") },
-            showMoreId: "messages.dashboard.expandable.showMore",
-            showLessId: "messages.dashboard.expandable.showLess",
-        }),
-    );
+    yield put(uiActions.setInvalidDrillWidgetRefs(invalidDrills.map((drill) => drill.widget.ref)));
 
     // custom URL drills have their own extra message
     const invalidCustomUrlDrills = invalidDrills.filter((drillInfo) =>
@@ -78,16 +69,10 @@ export function* validateDrills(
 
     if (invalidCustomUrlDrills.length > 0) {
         yield put(
-            uiActions.addToastMessage({
-                id: uuid(),
-                type: "warning",
-                titleId: "messages.dashboard.invalidCustomUrlDrills.title",
-                detailId: "messages.dashboard.invalidCustomUrlDrills.body",
-                detailValues: { listOfWidgetTitles: invalidDrills.map((d) => d.widget.title).join(", ") },
-                showMoreId: "messages.dashboard.expandable.showMore",
-                showLessId: "messages.dashboard.expandable.showLess",
-            }),
+            uiActions.setInvalidUrlDrillWidgetRefs(invalidCustomUrlDrills.map((drill) => drill.widget.ref)),
         );
+    } else {
+        yield put(uiActions.setInvalidUrlDrillWidgetRefs([]));
     }
 }
 

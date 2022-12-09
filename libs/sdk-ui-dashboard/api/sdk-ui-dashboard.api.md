@@ -5943,6 +5943,12 @@ sectionIndex: number;
 itemIndex: number;
 } | undefined>;
 
+// @internal (undocumented)
+export const selectInvalidDrillWidgetRefs: OutputSelector<DashboardState, ObjRef[], (res: UiState) => ObjRef[]>;
+
+// @internal (undocumented)
+export const selectInvalidUrlDrillWidgetRefs: OutputSelector<DashboardState, ObjRef[], (res: UiState) => ObjRef[]>;
+
 // @internal
 export const selectIsAlternativeDisplayFormSelectionEnabled: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
@@ -6404,6 +6410,14 @@ payload: string;
 type: string;
 }>;
 removeAllToastMessages: CaseReducer<UiState, AnyAction>;
+setInvalidDrillWidgetRefs: CaseReducer<UiState, {
+payload: ObjRef[];
+type: string;
+}>;
+setInvalidUrlDrillWidgetRefs: CaseReducer<UiState, {
+payload: ObjRef[];
+type: string;
+}>;
 setDraggingWidgetSource: CaseReducer<UiState, {
 payload: DraggableLayoutItem;
 type: string;
@@ -6452,6 +6466,11 @@ export interface UiState {
     draggingWidgetSource: DraggableLayoutItem | undefined;
     // (undocumented)
     draggingWidgetTarget: ILayoutCoordinates | undefined;
+    // (undocumented)
+    drillValidationMessages: {
+        invalidDrillWidgetRefs: ObjRef[];
+        invalidUrlDrillWidgetRefs: ObjRef[];
+    };
     // (undocumented)
     filterAttributeSelectionOpen: boolean;
     // (undocumented)

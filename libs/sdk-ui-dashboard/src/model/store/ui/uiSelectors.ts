@@ -231,6 +231,22 @@ export const selectToastMessages = createSelector(selectSelf, (state) => state.t
 /**
  * @internal
  */
+export const selectInvalidDrillWidgetRefs = createSelector(
+    selectSelf,
+    (state) => state.drillValidationMessages.invalidDrillWidgetRefs,
+);
+
+/**
+ * @internal
+ */
+export const selectInvalidUrlDrillWidgetRefs = createSelector(
+    selectSelf,
+    (state) => state.drillValidationMessages.invalidUrlDrillWidgetRefs,
+);
+
+/**
+ * @internal
+ */
 export const selectDraggingWidgetSource = createSelector(selectSelf, (state) => state.draggingWidgetSource);
 
 /**

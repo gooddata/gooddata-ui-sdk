@@ -156,6 +156,15 @@ const removeToastMessage: UiReducer<PayloadAction<string>> = (state, action) => 
 const removeAllToastMessages: UiReducer = (state) => {
     state.toastMessages = [];
 };
+
+const setInvalidDrillWidgetRefs: UiReducer<PayloadAction<ObjRef[]>> = (state, action) => {
+    state.drillValidationMessages.invalidDrillWidgetRefs = action.payload;
+};
+
+const setInvalidUrlDrillWidgetRefs: UiReducer<PayloadAction<ObjRef[]>> = (state, action) => {
+    state.drillValidationMessages.invalidUrlDrillWidgetRefs = action.payload;
+};
+
 const setDraggingWidgetSource: UiReducer<PayloadAction<DraggableLayoutItem>> = (state, action) => {
     state.draggingWidgetSource = action.payload;
 };
@@ -251,6 +260,8 @@ export const uiReducers = {
     addToastMessage,
     removeToastMessage,
     removeAllToastMessages,
+    setInvalidDrillWidgetRefs,
+    setInvalidUrlDrillWidgetRefs,
     setDraggingWidgetSource,
     clearDraggingWidgetSource,
     setDraggingWidgetTarget,

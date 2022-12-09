@@ -53,6 +53,10 @@ export interface UiState {
     selectedFilterIndex: number | undefined;
     activeSectionIndex: number | undefined;
     toastMessages: IToastMessage[];
+    drillValidationMessages: {
+        invalidDrillWidgetRefs: ObjRef[];
+        invalidUrlDrillWidgetRefs: ObjRef[];
+    };
     draggingWidgetSource: DraggableLayoutItem | undefined;
     draggingWidgetTarget: ILayoutCoordinates | undefined;
     widgetsOverlay: Record<string, IDashboardWidgetOverlay>;
@@ -100,6 +104,10 @@ export const uiInitialState: UiState = {
     selectedFilterIndex: undefined,
     activeSectionIndex: undefined,
     toastMessages: [],
+    drillValidationMessages: {
+        invalidDrillWidgetRefs: [],
+        invalidUrlDrillWidgetRefs: [],
+    },
     draggingWidgetSource: undefined,
     draggingWidgetTarget: undefined,
     widgetsOverlay: {},

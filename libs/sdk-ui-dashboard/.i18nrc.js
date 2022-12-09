@@ -11,11 +11,5 @@ module.exports = {
         {
             pattern: [/.+/],
         },
-        // some messages are used from redux and so the react intl cannot detect then
-        {
-            dir: /src\/presentation\/localization\/bundles/,
-            pattern: /^(messages\.dashboard\..+)$/,
-            ignore: true,
-        },
     ],
 };
