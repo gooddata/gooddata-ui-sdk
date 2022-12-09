@@ -713,6 +713,21 @@
         "comment": "",
         "limit": 0
     },
+    "gs.date.today": {
+        "value": "Today",
+        "comment": "",
+        "limit": 0
+    },
+    "gs.date.tomorrow": {
+        "value": "Tomorrow",
+        "comment": "",
+        "limit": 0
+    },
+    "gs.date.yesterday": {
+        "value": "Yesterday",
+        "comment": "",
+        "limit": 0
+    },
     "kpi.alertBox.title": {
         "value": "Set an alert on KPI change",
         "comment": "",

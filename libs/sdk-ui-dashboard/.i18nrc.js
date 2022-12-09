@@ -11,5 +11,11 @@ module.exports = {
         {
             pattern: [/.+/],
         },
+        // some messages are used from kit components so the validator does not "see" them
+        {
+            dir: /src\/presentation\/localization\/bundles/,
+            pattern: /^(gs\.date\.(today|tomorrow|yesterday))$/,
+            ignore: true,
+        },
     ],
 };
