@@ -6,6 +6,7 @@ import { stringUtils } from "@gooddata/util";
 import { DescriptionClickTrigger } from "./DescriptionClickTrigger";
 
 import { IInsightWidgetDescriptionTriggerProps } from "./types";
+import { useDashboardUserInteraction, DescriptionTooltipOpenedData } from "./../../../model";
 
 export const InsightWidgetDescriptionTrigger: React.FC<IInsightWidgetDescriptionTriggerProps> = (props) => {
     const { widget, insight } = props;
@@ -16,11 +17,20 @@ export const InsightWidgetDescriptionTrigger: React.FC<IInsightWidgetDescription
     const trimmedDescription = description?.trim();
     const widgetRefAsString = objRefToString(widgetRef(widget));
 
+    const userInteraction = useDashboardUserInteraction();
+
+    const eventPayload: DescriptionTooltipOpenedData = {
+        from: "widget",
+        type: widget.configuration?.description?.source === "insight" ? "inherit" : "custom",
+        description: trimmedDescription,
+    };
+
     if (visible && trimmedDescription && trimmedDescription !== "") {
         return (
             <DescriptionClickTrigger
                 className={`widget-description-${stringUtils.simplifyText(widgetRefAsString)}`}
                 description={trimmedDescription}
+                onOpen={() => userInteraction.descriptionTooltipOpened(eventPayload)}
             />
         );
     }

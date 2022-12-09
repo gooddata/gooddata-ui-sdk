@@ -285,7 +285,11 @@ export interface DashboardInsightWidgetVisConfigurationChangedPayload {
      * Will be undefined if there are no widget-level visualization config set for the particular
      * insight widget.
      */
-    readonly config: IInsightWidgetConfiguration | undefined;
+    readonly newConfig: IInsightWidgetConfiguration | undefined;
+    /**
+     * Previous visualization config to detect what has been changed if this info needed.
+     */
+    readonly oldConfig: IInsightWidgetConfiguration | undefined;
 }
 
 /**
@@ -303,7 +307,8 @@ export interface DashboardInsightWidgetVisConfigurationChanged extends IDashboar
 export function insightWidgetVisConfigurationChanged(
     ctx: DashboardContext,
     ref: ObjRef,
-    config: IInsightWidgetConfiguration | undefined,
+    newConfig: IInsightWidgetConfiguration | undefined,
+    oldConfig: IInsightWidgetConfiguration | undefined,
     correlationId?: string,
 ): DashboardInsightWidgetVisConfigurationChanged {
     return {
@@ -312,7 +317,8 @@ export function insightWidgetVisConfigurationChanged(
         correlationId,
         payload: {
             ref,
-            config,
+            newConfig,
+            oldConfig,
         },
     };
 }

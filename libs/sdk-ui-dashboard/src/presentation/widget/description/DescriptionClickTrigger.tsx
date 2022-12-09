@@ -29,11 +29,17 @@ const DESCRIPTION_PANEL_ALIGN_POINTS = [
 ];
 
 export const DescriptionClickTrigger: React.FC<IDescriptionClickTriggerProps> = (props) => {
+    const { onOpen } = props;
     const [isOpen, setIsOpen] = useState(false);
 
     const switchIsOpen = useCallback(() => {
-        setIsOpen((isOpen) => !isOpen);
-    }, [setIsOpen]);
+        setIsOpen((isOpen) => {
+            if (!isOpen && onOpen) {
+                onOpen();
+            }
+            return !isOpen;
+        });
+    }, [setIsOpen, onOpen]);
 
     const iconClassName = cx(
         "dash-item-action-description",

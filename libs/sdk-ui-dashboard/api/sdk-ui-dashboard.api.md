@@ -807,6 +807,7 @@ export type CustomDashboardInsightListItemComponentProps = {
     type?: string;
     className?: string;
     showDescriptionPanel?: boolean;
+    onDescriptionPanelOpen?: () => void;
 };
 
 // @alpha (undocumented)
@@ -1649,7 +1650,8 @@ export interface DashboardInsightWidgetVisConfigurationChanged extends IDashboar
 
 // @alpha
 export interface DashboardInsightWidgetVisConfigurationChangedPayload {
-    readonly config: IInsightWidgetConfiguration | undefined;
+    readonly newConfig: IInsightWidgetConfiguration | undefined;
+    readonly oldConfig: IInsightWidgetConfiguration | undefined;
     readonly ref: ObjRef;
 }
 
@@ -2430,6 +2432,22 @@ export interface DeleteDashboard extends IDashboardCommand {
 
 // @alpha
 export function deleteDashboard(correlationId?: string): DeleteDashboard;
+
+// @alpha (undocumented)
+export type DescriptionTooltipOpenedData = {
+    from: DescriptionTooltipOpenedFrom;
+    type: DescriptionTooltipOpenedType;
+    description?: string;
+};
+
+// @alpha (undocumented)
+export type DescriptionTooltipOpenedFrom = "kpi" | "widget" | "insight";
+
+// @alpha (undocumented)
+export type DescriptionTooltipOpenedPayload = UserInteractionPayloadWithDataBase<"descriptionTooltipOpened", DescriptionTooltipOpenedData>;
+
+// @alpha (undocumented)
+export type DescriptionTooltipOpenedType = "inherit" | "custom";
 
 // @alpha
 export function disableInsightWidgetDateFilter(ref: ObjRef, correlationId?: string): ChangeInsightWidgetFilterSettings;
@@ -6983,6 +7001,7 @@ export const useDashboardUserInteraction: () => {
     poweredByGDLogoClicked: () => void;
     kpiAlertDialogClosed: () => void;
     kpiAlertDialogOpened: (alreadyHasAlert: boolean) => void;
+    descriptionTooltipOpened: (eventData: DescriptionTooltipOpenedData) => void;
 };
 
 // @internal (undocumented)
@@ -7128,7 +7147,7 @@ export type UseParentFiltersResult = Pick<IAttributeFilterBaseProps, "parentFilt
 export type UserInteractionPayload = UserInteractionPayloadWithData | BareUserInteractionPayload;
 
 // @alpha (undocumented)
-export type UserInteractionPayloadWithData = KpiAlertDialogOpenedPayload;
+export type UserInteractionPayloadWithData = KpiAlertDialogOpenedPayload | DescriptionTooltipOpenedPayload;
 
 // @alpha (undocumented)
 export interface UserInteractionPayloadWithDataBase<TType extends string, TData extends object> {

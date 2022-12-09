@@ -12,9 +12,12 @@ import { InsightListItem } from "@gooddata/sdk-ui-kit";
 import { IInsightListProps, InsightList } from "../../../insightList";
 import { DraggableInsightListItemWrapper } from "./DraggableInsightListItemWrapper";
 import { VisType } from "@gooddata/sdk-ui";
+import { useDashboardUserInteraction, DescriptionTooltipOpenedData } from "./../../../../model";
 
 export const DraggableInsightListCore: React.FC<IInsightListProps> = (props) => {
     const { enableDescriptions, ...remainingProps } = props;
+    const userInteraction = useDashboardUserInteraction();
+
     return (
         <InsightList
             {...remainingProps}
@@ -31,10 +34,18 @@ export const DraggableInsightListCore: React.FC<IInsightListProps> = (props) => 
                     "is-last": isLast,
                 });
 
+                const description = insightSummary(insight)?.trim();
+
+                const eventPayload: DescriptionTooltipOpenedData = {
+                    from: "insight",
+                    type: "inherit",
+                    description,
+                };
+
                 return (
                     <DraggableInsightListItemWrapper
                         title={insightTitle(insight)}
-                        description={insightSummary(insight)?.trim()}
+                        description={description}
                         showDescriptionPanel={enableDescriptions}
                         type={visualizationType}
                         width={width}
@@ -42,6 +53,9 @@ export const DraggableInsightListCore: React.FC<IInsightListProps> = (props) => 
                         updated={insightUpdated(insight)}
                         isLocked={insightIsLocked(insight)}
                         insight={insight}
+                        onDescriptionPanelOpen={() => {
+                            userInteraction.descriptionTooltipOpened(eventPayload);
+                        }}
                     />
                 );
             }}
