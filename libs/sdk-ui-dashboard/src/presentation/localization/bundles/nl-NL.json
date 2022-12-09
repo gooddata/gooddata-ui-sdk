@@ -192,8 +192,6 @@
     "dashboard.shareDialog.underLenientControl.label": "Andere gebruikers hebben toegang tot dit dashboard als ze erop inzoomen",
     "dashboard.shareDialog.lock.label": "Alleen beheerders kunnen dit dashboard bewerken",
     "header.lockStatus.tooltip": "<b>Dit dashboard is vergrendeld.</b> Alleeb beheerders kunnen dit dashboard bewerken.",
-    "header.shareStatus.shared.text": "Gedeeld",
-    "header.shareStatus.shared.tooltip": "Dit dashboard is gedeeld met andere gebruikers.",
     "header.shareStatus.private.text": "Privé",
     "header.shareStatus.private.strict.tooltip": "Alleen u kunt dit dashboard bekijken en bewerken.",
     "header.shareStatus.private.not.strict.tooltip": "De maker kan dit dashboard bewerken. Andere gebruikers met geschikte gebruikersrollen kunnen dit dashboard bewerken als ze erop inzoomen.",

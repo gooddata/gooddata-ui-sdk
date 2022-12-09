@@ -192,8 +192,6 @@
     "dashboard.shareDialog.underLenientControl.label": "共有されていないユーザでも、ドリルによる遷移ではこのダッシュボードにアクセスできます",
     "dashboard.shareDialog.lock.label": "このダッシュボードを編集できるのは管理者のみです",
     "header.lockStatus.tooltip": "<b>このダッシュボードはロックされています。</b>このダッシュボードを編集できるのは管理者のみです。",
-    "header.shareStatus.shared.text": "共有済み",
-    "header.shareStatus.shared.tooltip": "このダッシュボードは他のユーザーと共有されています。",
     "header.shareStatus.private.text": "プライベート",
     "header.shareStatus.private.strict.tooltip": "このダッシュボードを表示および編集できるのは、あなたのみです。",
     "header.shareStatus.private.not.strict.tooltip": "作成者はこのダッシュボードを編集できます。適切なユーザーロールを持つ他のユーザーは、ドリルすることでダッシュボードを編集できます。",

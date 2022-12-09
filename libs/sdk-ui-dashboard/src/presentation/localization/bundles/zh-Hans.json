@@ -192,8 +192,6 @@
     "dashboard.shareDialog.underLenientControl.label": "如果其他用户要深入了解此控制面板，他们可以访问此控制面板",
     "dashboard.shareDialog.lock.label": "只有管理员才可以编辑此控制面板",
     "header.lockStatus.tooltip": "<b>此控制面板已锁定。</b>只有管理员才可以编辑此控制面板。",
-    "header.shareStatus.shared.text": "已共享",
-    "header.shareStatus.shared.tooltip": "此控制面板已共享给其他用户。",
     "header.shareStatus.private.text": "私密",
     "header.shareStatus.private.strict.tooltip": "只有您可以查看和编辑此控制面板。",
     "header.shareStatus.private.not.strict.tooltip": "创建者可以编辑此控制面板。具有适当用户角色的其他用户可在深入查看此控制面板时对其进行编辑。",

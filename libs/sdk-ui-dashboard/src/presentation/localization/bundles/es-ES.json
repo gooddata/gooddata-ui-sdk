@@ -192,8 +192,6 @@
     "dashboard.shareDialog.underLenientControl.label": "Otros usuarios pueden acceder a este panel si exploran hacia él",
     "dashboard.shareDialog.lock.label": "Solo los administradores pueden editar este panel",
     "header.lockStatus.tooltip": "<b>Este panel está bloqueado.</b> Solo los administradores pueden editar este panel.",
-    "header.shareStatus.shared.text": "Compartido",
-    "header.shareStatus.shared.tooltip": "Este panel se comparte con otros usuarios.",
     "header.shareStatus.private.text": "Privado",
     "header.shareStatus.private.strict.tooltip": "Solo usted puede visualizar y editar este panel.",
     "header.shareStatus.private.not.strict.tooltip": "El creador puede editar este panel. Otros usuarios con funciones de usuario apropiadas pueden editar este panel cuando exploren hacia él.",

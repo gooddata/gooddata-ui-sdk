@@ -7,15 +7,25 @@ import { IShareStatusProps } from "./types";
 /**
  * @alpha
  */
-export const ShareStatusIndicator = (props: IShareStatusProps): JSX.Element => {
-    const { icon, text, tooltip } = getShareStatusData(props);
+export const ShareStatusIndicator = (props: IShareStatusProps): JSX.Element | null => {
+    const { shareStatus, isUnderStrictControl } = props;
+
+    if (shareStatus !== "private") {
+        return null;
+    }
+
+    const tooltip = isUnderStrictControl ? (
+        <FormattedMessage id="header.shareStatus.private.strict.tooltip" />
+    ) : (
+        <FormattedMessage id="header.shareStatus.private.not.strict.tooltip" />
+    );
 
     return (
         <div className="s-share-status gd-share-status">
             <BubbleHoverTrigger>
                 <div className="gd-share-indicator">
-                    <i className={`gd-share-icon ${icon}`} />
-                    {text}
+                    <i className="gd-share-icon gd-icon-invisible" />
+                    <FormattedMessage id="header.shareStatus.private.text" />
                 </div>
                 <Bubble alignPoints={[{ align: "bc tl" }]} alignTo={`.gd-share-icon`}>
                     {tooltip}
@@ -24,29 +34,3 @@ export const ShareStatusIndicator = (props: IShareStatusProps): JSX.Element => {
         </div>
     );
 };
-
-function getShareStatusData(props: IShareStatusProps): {
-    icon: string;
-    text: React.ReactElement;
-    tooltip: React.ReactElement;
-} {
-    const { shareStatus, isUnderStrictControl } = props;
-
-    if (shareStatus !== "private") {
-        return {
-            icon: "gd-icon-users",
-            text: <FormattedMessage id="header.shareStatus.shared.text" />,
-            tooltip: <FormattedMessage id="header.shareStatus.shared.tooltip" />,
-        };
-    }
-
-    return {
-        icon: "gd-icon-invisible",
-        text: <FormattedMessage id="header.shareStatus.private.text" />,
-        tooltip: isUnderStrictControl ? (
-            <FormattedMessage id="header.shareStatus.private.strict.tooltip" />
-        ) : (
-            <FormattedMessage id="header.shareStatus.private.not.strict.tooltip" />
-        ),
-    };
-}

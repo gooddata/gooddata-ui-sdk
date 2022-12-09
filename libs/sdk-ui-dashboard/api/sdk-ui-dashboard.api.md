@@ -6242,7 +6242,7 @@ export const ShareButton: (props: IShareButtonProps) => JSX.Element;
 export const ShareDialog: (props: IShareDialogProps) => JSX.Element;
 
 // @alpha (undocumented)
-export const ShareStatusIndicator: (props: IShareStatusProps) => JSX.Element;
+export const ShareStatusIndicator: (props: IShareStatusProps) => JSX.Element | null;
 
 // @internal (undocumented)
 export const SidebarConfigurationPanel: React_2.FC<Omit<ISidebarProps, "DefaultSidebar">>;

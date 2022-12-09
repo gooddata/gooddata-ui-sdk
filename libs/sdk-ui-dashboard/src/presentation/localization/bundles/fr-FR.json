@@ -192,8 +192,6 @@
     "dashboard.shareDialog.underLenientControl.label": "D'autres utilisateurs peuvent accéder à ce tableau de bord s'ils l'explorent",
     "dashboard.shareDialog.lock.label": "Seuls les administrateurs peuvent modifier ce tableau de bord",
     "header.lockStatus.tooltip": "<b>Ce tableau de bord est verrouillé.</b> Seuls les administrateurs peuvent modifier ce tableau de bord.",
-    "header.shareStatus.shared.text": "Partagé",
-    "header.shareStatus.shared.tooltip": "Ce tableau de bord est partagé avec d'autres utilisateurs.",
     "header.shareStatus.private.text": "Privé",
     "header.shareStatus.private.strict.tooltip": "Vous seul pouvez visualiser et modifier ce tableau de bord.",
     "header.shareStatus.private.not.strict.tooltip": "Le créateur du tableau de bord peut modifier celui-ci. Les autres utilisateurs avec des rôles adéquats peuvent modifier le tableau de bord lorsqu'ils l'explorent.",

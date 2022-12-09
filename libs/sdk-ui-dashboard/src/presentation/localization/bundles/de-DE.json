@@ -192,8 +192,6 @@
     "dashboard.shareDialog.underLenientControl.label": "Andere Benutzer können auf dieses Dashboard zugreifen, wenn sie danach suchen",
     "dashboard.shareDialog.lock.label": "Nur Administratoren können dieses Dashboard bearbeiten",
     "header.lockStatus.tooltip": "<b>Dieses Dashboard ist gesperrt.</b> Nur Administratoren können dieses Dashboard bearbeiten.",
-    "header.shareStatus.shared.text": "Geteilt",
-    "header.shareStatus.shared.tooltip": "Dieses Dashboard wird mit anderen Benutzern geteilt.",
     "header.shareStatus.private.text": "Privat",
     "header.shareStatus.private.strict.tooltip": "Nur Sie können dieses Dashboard ansehen und bearbeiten.",
     "header.shareStatus.private.not.strict.tooltip": "Der Ersteller kann dieses Dashboard bearbeiten. Andere Benutzer mit entsprechenden Benutzerrollen können dieses Dashboard bearbeiten, wenn sie danach suchen.",
