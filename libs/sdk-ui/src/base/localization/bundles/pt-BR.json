@@ -339,5 +339,7 @@
     "stylingEditor.dialog.example.paste": "Colar",
     "stylingPicker.item.edit": "Editar",
     "stylingPicker.item.delete": "Excluir",
-    "stylingPicker.item.delete.tooltip": "Não é possível excluir o item aplicado."
+    "stylingPicker.item.delete.tooltip": "Não é possível excluir o item aplicado.",
+    "descriptionPanel.button.more": "Exibir mais",
+    "descriptionPanel.button.less": "Exibir menos"
 }

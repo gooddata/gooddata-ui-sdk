@@ -339,5 +339,7 @@
     "stylingEditor.dialog.example.paste": "Plakken",
     "stylingPicker.item.edit": "Bewerken",
     "stylingPicker.item.delete": "Verwijderen",
-    "stylingPicker.item.delete.tooltip": "Toegepast item kan niet worden verwijderd"
+    "stylingPicker.item.delete.tooltip": "Toegepast item kan niet worden verwijderd",
+    "descriptionPanel.button.more": "Meer weergeven",
+    "descriptionPanel.button.less": "Minder weergeven"
 }

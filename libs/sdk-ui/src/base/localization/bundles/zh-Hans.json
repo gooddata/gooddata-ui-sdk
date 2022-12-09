@@ -339,5 +339,7 @@
     "stylingEditor.dialog.example.paste": "粘贴",
     "stylingPicker.item.edit": "编辑",
     "stylingPicker.item.delete": "删除",
-    "stylingPicker.item.delete.tooltip": "无法删除已应用的项。"
+    "stylingPicker.item.delete.tooltip": "无法删除已应用的项。",
+    "descriptionPanel.button.more": "显示更多",
+    "descriptionPanel.button.less": "显示更少"
 }
