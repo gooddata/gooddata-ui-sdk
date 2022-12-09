@@ -6,13 +6,11 @@ import {
     IAttributeMetadataObject,
 } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
-import intersectionWith from "lodash/intersectionWith";
 import uniqWith from "lodash/uniqWith";
 import { AttributeDisplayFormType } from "../../../../drill/types";
 import {
     selectAllCatalogAttributesMap,
     selectAllCatalogDisplayFormsMap,
-    selectDrillTargetsByWidgetRef,
     selectSelectedWidgetRef,
     useDashboardSelector,
 } from "../../../../../model";
@@ -37,23 +35,12 @@ export function useAttributesWithDisplayForms(
     const widgetRef = useDashboardSelector(selectSelectedWidgetRef);
     invariant(widgetRef, "must have selected widget");
 
-    const drillTargets = useDashboardSelector(selectDrillTargetsByWidgetRef(widgetRef));
     const allAttributes = useDashboardSelector(selectAllCatalogAttributesMap);
     const allDisplayForms = useDashboardSelector(selectAllCatalogDisplayFormsMap);
 
-    // restrict the possible attributes be the available drill targets
-    const drillTargetDisplayFormRefs =
-        drillTargets?.availableDrillTargets?.attributes?.map((a) => a.attribute.attributeHeader.ref) ?? [];
-
     const incomingDisplayFormRefs = attributes.map((a) => a.attributeHeader.ref);
 
-    const candidateDisplayFormRefs = intersectionWith(
-        drillTargetDisplayFormRefs,
-        incomingDisplayFormRefs,
-        areObjRefsEqual,
-    );
-
-    const result = candidateDisplayFormRefs.reduce(
+    const result = incomingDisplayFormRefs.reduce(
         (result: IUseAttributesWithDisplayFormsResult, ref) => {
             const displayForm = allDisplayForms.get(ref);
             if (!displayForm) {
