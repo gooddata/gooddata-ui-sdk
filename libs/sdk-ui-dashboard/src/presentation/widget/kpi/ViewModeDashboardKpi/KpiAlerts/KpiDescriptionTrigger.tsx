@@ -4,7 +4,12 @@ import React from "react";
 import { ICatalogMeasure, ObjRef, areObjRefsEqual, objRefToString } from "@gooddata/sdk-model";
 import { stringUtils } from "@gooddata/util";
 import { IKpiDescriptionTriggerProps } from "./types";
-import { useDashboardSelector, selectCatalogMeasures } from "../../../../../model";
+import {
+    useDashboardSelector,
+    selectCatalogMeasures,
+    useDashboardUserInteraction,
+    DescriptionTooltipOpenedData,
+} from "../../../../../model";
 import { DescriptionClickTrigger } from "../../../description/DescriptionClickTrigger";
 
 const getKpiMetricDescription = (metrics: ICatalogMeasure[], ref: ObjRef): string | undefined => {
@@ -25,11 +30,20 @@ export const KpiDescriptionTrigger: React.FC<IKpiDescriptionTriggerProps> = (pro
 
     const kpiRefAsString = kpi.ref ? objRefToString(kpi.ref) : "";
 
+    const userInteraction = useDashboardUserInteraction();
+
+    const eventPayload: DescriptionTooltipOpenedData = {
+        from: "kpi",
+        type: kpi.configuration?.description?.source === "metric" ? "inherit" : "custom",
+        description: trimmedDescription,
+    };
+
     if (visible && trimmedDescription && trimmedDescription !== "") {
         return (
             <DescriptionClickTrigger
                 className={`kpi-description-${stringUtils.simplifyText(kpiRefAsString)}`}
                 description={trimmedDescription}
+                onOpen={() => userInteraction.descriptionTooltipOpened(eventPayload)}
             />
         );
     }

@@ -10,4 +10,5 @@ export interface IInsightWidgetDescriptionTriggerProps {
 export interface IDescriptionClickTriggerProps {
     className: string;
     description?: string;
+    onOpen?: () => void;
 }

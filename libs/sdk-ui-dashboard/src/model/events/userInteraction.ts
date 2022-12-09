@@ -24,6 +24,30 @@ export type KpiAlertDialogOpenedPayload = UserInteractionPayloadWithDataBase<
 /**
  * @alpha
  */
+export type DescriptionTooltipOpenedFrom = "kpi" | "widget" | "insight";
+/**
+ * @alpha
+ */
+export type DescriptionTooltipOpenedType = "inherit" | "custom";
+/**
+ * @alpha
+ */
+export type DescriptionTooltipOpenedData = {
+    from: DescriptionTooltipOpenedFrom;
+    type: DescriptionTooltipOpenedType;
+    description?: string;
+};
+/**
+ * @alpha
+ */
+export type DescriptionTooltipOpenedPayload = UserInteractionPayloadWithDataBase<
+    "descriptionTooltipOpened",
+    DescriptionTooltipOpenedData
+>;
+
+/**
+ * @alpha
+ */
 export interface BareUserInteractionPayload {
     interaction: "kpiAlertDialogClosed" | "poweredByGDLogoClicked";
 }
@@ -31,7 +55,7 @@ export interface BareUserInteractionPayload {
 /**
  * @alpha
  */
-export type UserInteractionPayloadWithData = KpiAlertDialogOpenedPayload;
+export type UserInteractionPayloadWithData = KpiAlertDialogOpenedPayload | DescriptionTooltipOpenedPayload;
 
 /**
  * @alpha

@@ -31,5 +31,11 @@ export function* changeInsightWidgetVisConfigurationHandler(
         }),
     );
 
-    return insightWidgetVisConfigurationChanged(ctx, insightWidget.ref, config, correlationId);
+    return insightWidgetVisConfigurationChanged(
+        ctx,
+        insightWidget.ref,
+        config,
+        insightWidget.configuration,
+        correlationId,
+    );
 }

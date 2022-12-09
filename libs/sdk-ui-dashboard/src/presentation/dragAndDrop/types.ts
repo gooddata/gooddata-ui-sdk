@@ -286,6 +286,7 @@ export type CustomDashboardInsightListItemComponentProps = {
     type?: string;
     className?: string;
     showDescriptionPanel?: boolean;
+    onDescriptionPanelOpen?: () => void;
 };
 
 /**
