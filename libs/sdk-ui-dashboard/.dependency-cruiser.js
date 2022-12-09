@@ -84,6 +84,7 @@ options = {
             "src/presentation/layout/constants.ts",
             "src/presentation/layout/DefaultDashboardLayoutRenderer/utils/sizing.ts",
             "src/presentation/widget/types.ts",
+            "src/presentation/constants/*",
             "src/widgets",
         ]),
         depCruiser.moduleWithDependencies("drill", "src/presentation/drill", [

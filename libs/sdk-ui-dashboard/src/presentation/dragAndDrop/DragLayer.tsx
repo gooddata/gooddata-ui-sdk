@@ -8,6 +8,7 @@ import { useScrollCorrection } from "./Resize/useScrollCorrection";
 import { DraggableInternalItemType, DraggableItemType, isDraggableInternalItemType } from "./types";
 import { emptyDOMRect } from "../layout/constants";
 import { useResizeHandlers } from "./LayoutResizeContext";
+import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../constants/";
 
 const previewComponentsMap: Record<DraggableInternalItemType, any> = {
     "internal-height-resizer": HeightResizerDragPreview,
@@ -47,7 +48,7 @@ export const DragLayerComponent: FC = () => {
         return {
             position,
             pointerEvents: "none",
-            zIndex: 5001,
+            zIndex: DASHBOARD_HEADER_OVERLAYS_Z_INDEX + 1,
             left: 0,
             top: 0,
             width: "100%",
