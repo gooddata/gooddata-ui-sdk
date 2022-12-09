@@ -260,6 +260,11 @@ export interface ISettings {
     enableDescriptions?: boolean;
 
     /**
+     * Enable editing of insight description in AD.
+     */
+    enableAdDescriptionEdit?: boolean;
+
+    /**
      * Locale code to use for date formatting.
      */
     formatLocale?: string;

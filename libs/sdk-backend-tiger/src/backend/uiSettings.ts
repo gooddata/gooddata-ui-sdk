@@ -81,6 +81,7 @@ export const DefaultUiSettings: ISettings = {
     enableSeparateTotalLabels: true,
     enableKPIDashboardExport: true,
     enableKDZooming: true,
+    enableAdDescriptionEdit: true,
     ["msf.enableTenantCustomModel"]: false,
     drillIntoUrlDocumentationLink:
         "https://www.gooddata.com/developers/cloud-native/doc/cloud/create-dashboards/drilling-in-dashboards/set-drill-into-hyperlink/",
