@@ -1,5 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 import React, { useCallback } from "react";
+import { useToastMessage } from "@gooddata/sdk-ui-kit";
 import { ISaveAsDialogProps } from "../types";
 import { useSaveAs } from "./useSaveAs";
 import { SaveAsDialogRenderer } from "./SaveAsDialogRenderer";
@@ -9,14 +10,13 @@ import {
     uiActions,
     useDashboardDispatch,
     useDashboardSelector,
-    useToastMessages,
 } from "../../../model";
 
 /**
  * @internal
  */
 export function useSaveAsDialogProps(): ISaveAsDialogProps {
-    const { addSuccess, addError } = useToastMessages();
+    const { addSuccess, addError } = useToastMessage();
 
     const dispatch = useDashboardDispatch();
     const closeSaveAsDialog = useCallback(() => dispatch(uiActions.closeSaveAsDialog()), [dispatch]);

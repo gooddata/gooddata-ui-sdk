@@ -1,6 +1,7 @@
 // (C) 2022 GoodData Corporation
 
 import { useCallback, useState } from "react";
+import { useToastMessage } from "@gooddata/sdk-ui-kit";
 import { IScheduledMail, IWorkspaceUser, ObjRef } from "@gooddata/sdk-model";
 
 import { useDashboardDispatch, useDashboardSelector } from "./DashboardStoreProvider";
@@ -18,7 +19,6 @@ import {
 } from "../store";
 
 import { messages } from "../../locales";
-import { useToastMessages } from "./useToastMessages";
 
 /**
  * Hook that handles schedule emailing dialogs.
@@ -26,7 +26,7 @@ import { useToastMessages } from "./useToastMessages";
  * @alpha
  */
 export const useDashboardScheduledEmails = () => {
-    const { addSuccess, addError } = useToastMessages();
+    const { addSuccess, addError } = useToastMessage();
     const isScheduleEmailingDialogOpen = useDashboardSelector(selectIsScheduleEmailDialogOpen);
     const isScheduleEmailingManagementDialogOpen = useDashboardSelector(
         selectIsScheduleEmailManagementDialogOpen,

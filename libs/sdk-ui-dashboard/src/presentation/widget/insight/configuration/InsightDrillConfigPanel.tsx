@@ -2,7 +2,7 @@
 import { InsightDrillDefinition, isInsightWidget, ObjRef } from "@gooddata/sdk-model";
 import React, { useState } from "react";
 import { defineMessages, FormattedMessage } from "react-intl";
-import { Typography } from "@gooddata/sdk-ui-kit";
+import { Typography, useToastMessage } from "@gooddata/sdk-ui-kit";
 import { InsightDrillConfigList } from "./InsightDrillConfigList";
 import {
     modifyDrillsForInsightWidget,
@@ -12,7 +12,6 @@ import {
     selectWidgetByRef,
     useDashboardDispatch,
     useDashboardSelector,
-    useToastMessages,
 } from "../../../../model";
 import { DrillOriginSelector } from "./DrillOriginSelector/DrillOriginSelector";
 import invariant from "ts-invariant";
@@ -152,7 +151,7 @@ export const InsightDrillConfigPanel: React.FunctionComponent<IDrillConfigPanelP
 
     const settings = useDashboardSelector(selectSettings);
 
-    const { addSuccess } = useToastMessages();
+    const { addSuccess } = useToastMessage();
 
     return (
         <>

@@ -226,11 +226,6 @@ export const selectActiveSectionIndex = createSelector(selectSelf, (state) => st
 /**
  * @internal
  */
-export const selectToastMessages = createSelector(selectSelf, (state) => state.toastMessages);
-
-/**
- * @internal
- */
 export const selectInvalidDrillWidgetRefs = createSelector(
     selectSelf,
     (state) => state.drillValidationMessages.invalidDrillWidgetRefs,

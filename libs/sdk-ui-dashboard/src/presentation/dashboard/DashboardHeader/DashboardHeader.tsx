@@ -1,5 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
-import React from "react";
+import React, { useEffect } from "react";
+import { ToastMessages, useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { ExportDialogProvider } from "../../dialogs";
 import { TopBar, useTopBarProps } from "../../topBar";
@@ -10,8 +11,8 @@ import { ScheduledEmailDialogProvider } from "./ScheduledEmailDialogProvider";
 import { DeleteDialog, useDeleteDialogProps } from "../../deleteDialog";
 import { KpiDeleteDialog, useKpiDeleteDialogProps } from "../../kpiDeleteDialog";
 import { CancelEditDialog, useCancelEditDialog } from "../../cancelEditDialog";
-import { ToastMessages } from "../components/ToastMessages";
 import { DrillValidationToastMessages } from "../components/DrillValidationToastMessages";
+import { selectRenderMode, useDashboardSelector } from "../../../model";
 
 // these wrapper components are here to prevent the whole DashboardHeader from re-rendering whenever some
 // of the sub-components' props change. by isolating the hooks more, we make sure only the really changed component re-renders.
@@ -48,6 +49,14 @@ const CancelEditDialogWrapper = () => {
 // split the header parts of the dashboard so that changes to their state
 // (e.g. opening email dialog) do not re-render the dashboard body
 export const DashboardHeader = (): JSX.Element => {
+    const { removeAllMessages } = useToastMessage();
+    const renderMode = useDashboardSelector(selectRenderMode);
+
+    // remove all messages whenever the render mode changes
+    useEffect(() => {
+        removeAllMessages();
+    }, [renderMode]);
+
     return (
         <>
             <ToastMessages />

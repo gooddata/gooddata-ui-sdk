@@ -9,7 +9,6 @@ import { renderModeActions } from "../../store/renderMode";
 import { selectDashboardEditModeDevRollout } from "../../store/config/configSelectors";
 import { resetDashboardHandler } from "../dashboard/resetDashboardHandler";
 import { validateDrills } from "../common/validateDrills";
-import { uiActions } from "../../store/ui";
 import { selectAllAnalyticalWidgets } from "../../store/layout/layoutSelectors";
 
 export function* changeRenderModeHandler(
@@ -22,8 +21,6 @@ export function* changeRenderModeHandler(
     } = cmd;
 
     const editModeEnabled = yield select(selectDashboardEditModeDevRollout);
-
-    yield put(uiActions.removeAllToastMessages());
 
     if (renderMode === "view" || editModeEnabled) {
         yield put(renderModeActions.setRenderMode(renderMode));
