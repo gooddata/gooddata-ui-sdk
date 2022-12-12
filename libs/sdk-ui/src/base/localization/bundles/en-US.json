@@ -1564,6 +1564,16 @@
         "comment": "",
         "limit": 0
     },
+    "shareDialog.share.granular.permissions.body.tooltip": {
+        "value": "You cannot remove or change permissions for users with higher permissions than you have.",
+        "comment": "",
+        "limit": 0
+    },
+    "shareDialog.share.granular.permissions.item.tooltip": {
+        "value": "You cannot set higher permissions for this user than you have.",
+        "comment": "",
+        "limit": 0
+    },
     "sorting.dropdown.header|insight": {
         "value": "Sort insight",
         "comment": "The title of sorting dropdown where you can choose which sort options you want to use. For example sort by attribute A1.",

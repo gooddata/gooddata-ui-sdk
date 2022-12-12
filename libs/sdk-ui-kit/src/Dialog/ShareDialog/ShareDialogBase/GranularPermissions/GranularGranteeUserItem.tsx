@@ -36,6 +36,8 @@ export const GranularGranteeUserItem: React.FC<IGranularGranteeUserItemProps> = 
                 value={intl.formatMessage({ id: "shareDialog.share.granular.grantee.permission.edit" })}
                 onChange={onChange}
                 onDelete={onDelete}
+                // TODO: Update with proper logic, comparing current user permissions with grantee permissions
+                // disabledDropdown
             />
             <div className="gd-grantee-content">
                 <div className="gd-grantee-content-label">{userName}</div>
