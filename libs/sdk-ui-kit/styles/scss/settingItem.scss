@@ -63,6 +63,7 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        color: #687581;
 
         @media only screen and (max-width: variables.$medium-breakpoint) {
             flex: 1;
@@ -72,5 +73,9 @@
     .gd-setting-item-action {
         flex: initial;
         margin-left: 20px;
+
+        .gd-button-link-dimmed.gd-button {
+            padding: 0;
+        }
     }
 }
