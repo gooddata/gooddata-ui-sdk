@@ -45,11 +45,30 @@ export const isUserGroupAccess = (obj: unknown): obj is IUserGroupAccess => {
 };
 
 /**
+ * User access specification with granular permissions.
+ *
+ * @alpha
+ */
+export type IUserAccessWithGranularPermissions = IUserAccess & IAccessGranteeWithGranularPermissions;
+
+/**
+ * User group access specification with granular permissions.
+ *
+ * @alpha
+ */
+export type IUserGroupAccessWithGranularPermissions = IUserGroupAccess &
+    IAccessGranteeWithGranularPermissions;
+
+/**
  * Entity having access to the object.
  *
  * @alpha
  */
-export type AccessGranteeDetail = IUserAccess | IUserGroupAccess;
+export type AccessGranteeDetail =
+    | IUserAccess
+    | IUserGroupAccess
+    | IUserAccessWithGranularPermissions
+    | IUserGroupAccessWithGranularPermissions;
 
 /**
  * User access grantee specification.
@@ -92,8 +111,113 @@ export const isUserGroupAccessGrantee = (obj: unknown): obj is IUserGroupAccessG
 };
 
 /**
+ * Type of granted granular access.
+ *
+ * @public
+ */
+export type IAccessGranularPermission = "view" | "edit" | "share";
+
+/**
+ * Access grantee specification with granular permissions.
+ *
+ * @public
+ */
+export interface IAccessGranteeWithGranularPermissions {
+    permissions: IAccessGranularPermission[];
+    inheritedPermissions: IAccessGranularPermission[];
+}
+
+/**
+ * User access grantee specification with granular permissions.
+ *
+ * @public
+ */
+export type IUserAccessGranteeWithGranularPermissions = IUserAccessGrantee &
+    IAccessGranteeWithGranularPermissions;
+
+/**
+ * User group access grantee specification with granular permissions.
+ *
+ * @public
+ */
+export type IUserGroupAccessGranteeWithGranularPermissions = IUserGroupAccessGrantee &
+    IAccessGranteeWithGranularPermissions;
+
+/**
+ * Tests whether the provided object is an instance of {@link IAccessGranteeWithGranularPermissions}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isAccessGranteeWithGranularPermissions = (
+    obj: unknown,
+): obj is IAccessGranteeWithGranularPermissions => {
+    return !isEmpty(obj) && (obj as IAccessGranteeWithGranularPermissions).permissions !== undefined;
+};
+
+/**
+ * Access grantee with granular permission.
+ *
+ * @public
+ */
+export type GranteeWithGranularPermissions =
+    | IUserAccessGranteeWithGranularPermissions
+    | IUserGroupAccessGranteeWithGranularPermissions;
+
+/**
  * Access grantee specification.
  *
  * @public
  */
-export type IAccessGrantee = IUserGroupAccessGrantee | IUserAccessGrantee;
+export type IAccessGrantee = IUserGroupAccessGrantee | IUserAccessGrantee | GranteeWithGranularPermissions;
+
+/**
+ * User grantee that is available as target for granting of a permission to shared object.
+ *
+ * @alpha
+ */
+export interface IAvailableUserAccessGrantee {
+    type: "user";
+    ref: ObjRef;
+    name: string;
+    email?: string;
+    status: "ENABLED" | "DISABLED";
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link IAvailableUserAccessGrantee}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isAvailableUserAccessGrantee = (obj: unknown): obj is IAvailableUserAccessGrantee => {
+    return !isEmpty(obj) && (obj as IAvailableUserAccessGrantee).type === "user";
+};
+
+/**
+ * User group grantee that is available as target for granting of a permission to shared object.
+ *
+ * @alpha
+ */
+export interface IAvailableUserGroupAccessGrantee {
+    type: "group";
+    ref: ObjRef;
+    name: string;
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link IAvailableUserGroupAccessGrantee}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isAvailableUserGroupAccessGrantee = (obj: unknown): obj is IAvailableUserGroupAccessGrantee => {
+    return !isEmpty(obj) && (obj as IAvailableUserGroupAccessGrantee).type === "group";
+};
+
+/**
+ * Grantee that is available as target for granting of a permission to shared object.
+ *
+ * @alpha
+ */
+export type IAvailableAccessGrantee = IAvailableUserAccessGrantee | IAvailableUserGroupAccessGrantee;

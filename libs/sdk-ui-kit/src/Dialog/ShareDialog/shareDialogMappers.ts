@@ -24,6 +24,8 @@ import {
     GranteeStatus,
     IAffectedSharedObject,
     isGranteeUser,
+    isGranularGranteeUser,
+    isGranularGrantee,
 } from "./ShareDialogBase/types";
 import { GranteeGroupAll, InactiveOwner, getAppliedGrantees, hasGroupAll } from "./ShareDialogBase/utils";
 import { ISharedObject } from "./types";
@@ -112,11 +114,36 @@ export const mapGranteesToAccessGrantees = (grantees: GranteeItem[]): IAccessGra
     return grantees
         .filter((g) => !guard(g))
         .map((g) => {
-            const type = isGranteeUser(g) ? "user" : "group";
-            return {
-                granteeRef: g.id,
-                type,
-            };
+            if (isGranularGrantee(g)) {
+                const granteeWithGranularPermissions = {
+                    granteeRef: g.id,
+                    permissions: g.permissions,
+                    inheritedPermissions: g.inheritedPermissions,
+                };
+                if (isGranularGranteeUser(g)) {
+                    return {
+                        type: "user",
+                        ...granteeWithGranularPermissions,
+                    };
+                } else {
+                    return {
+                        type: "group",
+                        ...granteeWithGranularPermissions,
+                    };
+                }
+            } else {
+                if (isGranteeUser(g)) {
+                    return {
+                        type: "user",
+                        granteeRef: g.id,
+                    };
+                } else {
+                    return {
+                        type: "group",
+                        granteeRef: g.id,
+                    };
+                }
+            }
         });
 };
 

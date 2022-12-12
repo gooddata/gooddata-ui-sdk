@@ -7,6 +7,7 @@
 import { AccessGranteeDetail as AccessGranteeDetail_2 } from '@gooddata/sdk-model';
 import { CatalogItem as CatalogItem_2 } from '@gooddata/sdk-model';
 import { CatalogItemType as CatalogItemType_2 } from '@gooddata/sdk-model';
+import { DashboardPermission } from '@gooddata/sdk-model';
 import { DataValue as DataValue_2 } from '@gooddata/sdk-model';
 import { DateFilterAbsoluteType } from '@gooddata/sdk-model';
 import { DateFilterOptionAbsoluteFormType } from '@gooddata/sdk-model';
@@ -18,12 +19,14 @@ import { DateFilterOptionType } from '@gooddata/sdk-model';
 import { DateFilterRelativeType } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
 import { FilterContextItem as FilterContextItem_2 } from '@gooddata/sdk-model';
+import { GranteeWithGranularPermissions } from '@gooddata/sdk-model';
 import { IAccessGrantee as IAccessGrantee_2 } from '@gooddata/sdk-model';
 import { IAttributeDisplayFormMetadataObject as IAttributeDisplayFormMetadataObject_2 } from '@gooddata/sdk-model';
 import { IAttributeElement as IAttributeElement_2 } from '@gooddata/sdk-model';
 import { IAttributeFilter } from '@gooddata/sdk-model';
 import { IAttributeMetadataObject as IAttributeMetadataObject_2 } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
+import { IAvailableAccessGrantee } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
 import { ICatalogAttribute as ICatalogAttribute_2 } from '@gooddata/sdk-model';
 import { ICatalogDateDataset as ICatalogDateDataset_2 } from '@gooddata/sdk-model';
@@ -1623,8 +1626,10 @@ export interface IWidgetWithLayoutPath<TWidget = IDashboardWidget_2> {
 
 // @alpha
 export interface IWorkspaceAccessControlService {
+    changeAccess(sharedObject: ObjRef, grantees: GranteeWithGranularPermissions[]): Promise<void>;
     // (undocumented)
     getAccessList(sharedObject: ObjRef): Promise<AccessGranteeDetail_2[]>;
+    getAvailableGrantees(sharedObject: ObjRef, search?: string): Promise<IAvailableAccessGrantee[]>;
     // (undocumented)
     grantAccess(sharedObject: ObjRef, grantees: IAccessGrantee_2[]): Promise<void>;
     // (undocumented)
@@ -1723,6 +1728,7 @@ export interface IWorkspaceDashboardsService {
     exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem_2[]): Promise<string>;
     getAllWidgetAlertsForCurrentUser(): Promise<IWidgetAlert_2[]>;
     getDashboard(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions): Promise<IDashboard_2>;
+    getDashboardPermissions(ref: ObjRef): Promise<DashboardPermission[]>;
     getDashboardPlugin(ref: ObjRef): Promise<IDashboardPlugin_2>;
     getDashboardPlugins(): Promise<IDashboardPlugin_2[]>;
     getDashboardReferencedObjects(dashboard: IDashboard_2, types?: SupportedDashboardReferenceTypes[]): Promise<IDashboardReferences>;

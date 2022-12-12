@@ -2,7 +2,13 @@
 import { IWorkspaceAccessControlService } from "@gooddata/sdk-backend-spi";
 import { objRefToUri } from "../../../utils/api";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
-import { ObjRef, AccessGranteeDetail, IAccessGrantee } from "@gooddata/sdk-model";
+import {
+    ObjRef,
+    AccessGranteeDetail,
+    IAccessGrantee,
+    IAvailableAccessGrantee,
+    GranteeWithGranularPermissions,
+} from "@gooddata/sdk-model";
 import { convertGranteeEntry } from "../../../convertors/fromBackend/GranteeEntryConverter";
 
 export class BearWorkspaceAccessControlService implements IWorkspaceAccessControlService {
@@ -31,5 +37,21 @@ export class BearWorkspaceAccessControlService implements IWorkspaceAccessContro
             grantees.map((grantee) => objRefToUri(grantee.granteeRef, this.workspace, this.authCall)),
         );
         return this.authCall((sdk) => sdk.project.removeGrantees(objectUri, granteeUris));
+    }
+
+    // TODO: TNT-1185 Implement method
+    public async changeAccess(
+        _sharedObject: ObjRef,
+        _grantees: GranteeWithGranularPermissions[],
+    ): Promise<void> {
+        return Promise.resolve();
+    }
+
+    // TODO: TNT-1185 Implement method
+    public async getAvailableGrantees(
+        _sharedObject: ObjRef,
+        _search?: string,
+    ): Promise<IAvailableAccessGrantee[]> {
+        return Promise.resolve([]);
     }
 }

@@ -45,6 +45,7 @@ import {
     IDashboardPlugin,
     IDashboardPluginDefinition,
     IDashboardPluginLink,
+    DashboardPermission,
 } from "@gooddata/sdk-model";
 import {
     GdcDashboard,
@@ -1010,6 +1011,11 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
         }).then((plugins) => {
             return plugins.map(toSdkModel.convertDashboardPlugin);
         });
+    };
+
+    // TODO: TNT-1185 Implement method
+    public getDashboardPermissions = async (_ref: ObjRef): Promise<DashboardPermission[]> => {
+        return Promise.resolve([]);
     };
 
     private ensureDashboardPluginLinksHaveUris = async (

@@ -8,7 +8,7 @@
 export function absoluteDateFilterValues(filter: IAbsoluteDateFilter): IAbsoluteDateFilterValues;
 
 // @alpha
-export type AccessGranteeDetail = IUserAccess | IUserGroupAccess;
+export type AccessGranteeDetail = IUserAccess | IUserGroupAccess | IUserAccessWithGranularPermissions | IUserGroupAccessWithGranularPermissions;
 
 // @public
 export type AllTimeGranularity = "ALL_TIME_GRANULARITY";
@@ -247,6 +247,9 @@ export type DashboardDateFilterConfigMode = "readonly" | "hidden" | "active";
 // @alpha
 export function dashboardFilterReferenceObjRef(ref: IDashboardFilterReference): ObjRef;
 
+// @alpha
+export type DashboardPermission = "canViewDashboard" | "canEditDashboard" | "canShareDashboard";
+
 // @public
 export type DataColumnType = "ATTRIBUTE" | "FACT" | "DATE";
 
@@ -400,6 +403,9 @@ export function filterObjRef(filter: IAbsoluteDateFilter | IRelativeDateFilter |
 export function filterObjRef(filter: IFilter): ObjRef | undefined;
 
 // @public
+export type GranteeWithGranularPermissions = IUserAccessGranteeWithGranularPermissions | IUserGroupAccessGranteeWithGranularPermissions;
+
+// @public
 export type GroupableCatalogItem = ICatalogAttribute | ICatalogMeasure | ICatalogFact;
 
 // @public (undocumented)
@@ -443,7 +449,18 @@ export interface IAccessControlAware {
 }
 
 // @public
-export type IAccessGrantee = IUserGroupAccessGrantee | IUserAccessGrantee;
+export type IAccessGrantee = IUserGroupAccessGrantee | IUserAccessGrantee | GranteeWithGranularPermissions;
+
+// @public
+export interface IAccessGranteeWithGranularPermissions {
+    // (undocumented)
+    inheritedPermissions: IAccessGranularPermission[];
+    // (undocumented)
+    permissions: IAccessGranularPermission[];
+}
+
+// @public
+export type IAccessGranularPermission = "view" | "edit" | "share";
 
 // @alpha
 export interface IAllTimeDateFilterOption extends IDateFilterOption {
@@ -597,6 +614,33 @@ export interface IAuditableDates {
 export interface IAuditableUsers {
     createdBy?: IUser;
     updatedBy?: IUser;
+}
+
+// @alpha
+export type IAvailableAccessGrantee = IAvailableUserAccessGrantee | IAvailableUserGroupAccessGrantee;
+
+// @alpha
+export interface IAvailableUserAccessGrantee {
+    // (undocumented)
+    email?: string;
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    ref: ObjRef;
+    // (undocumented)
+    status: "ENABLED" | "DISABLED";
+    // (undocumented)
+    type: "user";
+}
+
+// @alpha
+export interface IAvailableUserGroupAccessGrantee {
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    ref: ObjRef;
+    // (undocumented)
+    type: "group";
 }
 
 // @alpha
@@ -2653,6 +2697,12 @@ export interface IUserAccessGrantee {
     type: "user";
 }
 
+// @public
+export type IUserAccessGranteeWithGranularPermissions = IUserAccessGrantee & IAccessGranteeWithGranularPermissions;
+
+// @alpha
+export type IUserAccessWithGranularPermissions = IUserAccess & IAccessGranteeWithGranularPermissions;
+
 // @alpha
 export interface IUserGroupAccess {
     // (undocumented)
@@ -2668,6 +2718,12 @@ export interface IUserGroupAccessGrantee {
     // (undocumented)
     type: "group";
 }
+
+// @public
+export type IUserGroupAccessGranteeWithGranularPermissions = IUserGroupAccessGrantee & IAccessGranteeWithGranularPermissions;
+
+// @alpha
+export type IUserGroupAccessWithGranularPermissions = IUserGroupAccess & IAccessGranteeWithGranularPermissions;
 
 // @public
 export interface IVariableMetadataObject extends IMetadataObject {

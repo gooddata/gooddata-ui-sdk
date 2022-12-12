@@ -37,6 +37,8 @@ export function recordedAccessControlFactory(
         },
         grantAccess: () => Promise.resolve(),
         revokeAccess: () => Promise.resolve(),
+        changeAccess: () => Promise.resolve(),
+        getAvailableGrantees: () => Promise.resolve([]),
     };
 }
 

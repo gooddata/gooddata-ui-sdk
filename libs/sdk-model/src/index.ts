@@ -664,6 +664,7 @@ export {
     isDashboardDefinition,
     IAccessControlAware,
     ShareStatus,
+    DashboardPermission,
 } from "./dashboard/dashboard";
 
 export { ISeparators, ISettings, PlatformEdition, IWhiteLabeling } from "./settings";
@@ -753,6 +754,16 @@ export {
     isUserAccessGrantee,
     isUserGroupAccess,
     isUserGroupAccessGrantee,
+    GranteeWithGranularPermissions,
+    IAccessGranularPermission,
+    IAccessGranteeWithGranularPermissions,
+    IAvailableAccessGrantee,
+    IAvailableUserAccessGrantee,
+    IAvailableUserGroupAccessGrantee,
+    IUserAccessWithGranularPermissions,
+    IUserGroupAccessWithGranularPermissions,
+    IUserAccessGranteeWithGranularPermissions,
+    IUserGroupAccessGranteeWithGranularPermissions,
 } from "./accessControl";
 
 export { IOrganizationDescriptor } from "./organization";

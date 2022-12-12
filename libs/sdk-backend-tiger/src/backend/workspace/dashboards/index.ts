@@ -36,6 +36,7 @@ import {
     IListedDashboard,
     IDashboardPlugin,
     IDashboardPluginDefinition,
+    DashboardPermission,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual";
 import { v4 as uuidv4 } from "uuid";
@@ -473,6 +474,11 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         });
 
         return convertFilterContextFromBackend(result.data);
+    };
+
+    // TODO: TNT-1185 Implement method
+    public getDashboardPermissions = async (_ref: ObjRef): Promise<DashboardPermission[]> => {
+        return Promise.resolve([]);
     };
 
     private processFilterContextUpdate = async (
