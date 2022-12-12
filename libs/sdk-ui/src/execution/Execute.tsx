@@ -216,6 +216,7 @@ const WrappedExecute = withContexts(
                 "onLoadingChanged",
                 "onLoadingFinish",
                 "onLoadingStart",
+                "workspace",
             ];
 
             const relevantPropsDeepEqual: Array<keyof IExecuteProps> = [
