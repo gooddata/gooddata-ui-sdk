@@ -225,6 +225,7 @@ const WrappedExecute = withContexts(
                 "filters",
                 "sortBy",
                 "window",
+                "workspace",
             ];
 
             return (
