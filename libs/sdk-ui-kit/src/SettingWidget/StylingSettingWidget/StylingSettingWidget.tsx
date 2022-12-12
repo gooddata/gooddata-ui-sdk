@@ -99,8 +99,6 @@ const StylingSettingWidgetCore = <T extends StylingPickerItemContent>(
         [onItemSelect],
     );
 
-    const showFooterButtons = useMemo(() => customItems.length > 0, [customItems]);
-
     const isApplyButtonDisabled = useMemo(
         () => areObjRefsEqual(currentItemRef, selectedItemRef),
         [currentItemRef, selectedItemRef],
@@ -150,22 +148,20 @@ const StylingSettingWidgetCore = <T extends StylingPickerItemContent>(
                         onClick={onHelpClick}
                     />
                 ) : null}
-                {showFooterButtons ? (
-                    <FooterButtons>
-                        <Button
-                            className="gd-button-secondary"
-                            onClick={handleCancel}
-                            disabled={shouldDisableCancelButton ?? isApplyButtonDisabled}
-                            value={intl.formatMessage({ id: "cancel" })}
-                        />
-                        <Button
-                            className="gd-button-action"
-                            onClick={handleApply}
-                            disabled={shouldDisableApplyButton ?? isApplyButtonDisabled}
-                            value={intl.formatMessage({ id: "apply" })}
-                        />
-                    </FooterButtons>
-                ) : null}
+                <FooterButtons>
+                    <Button
+                        className="gd-button-secondary"
+                        onClick={handleCancel}
+                        disabled={shouldDisableCancelButton ?? isApplyButtonDisabled}
+                        value={intl.formatMessage({ id: "cancel" })}
+                    />
+                    <Button
+                        className="gd-button-action"
+                        onClick={handleApply}
+                        disabled={shouldDisableApplyButton ?? isApplyButtonDisabled}
+                        value={intl.formatMessage({ id: "apply" })}
+                    />
+                </FooterButtons>
             </Footer>
         </SettingWidget>
     );
