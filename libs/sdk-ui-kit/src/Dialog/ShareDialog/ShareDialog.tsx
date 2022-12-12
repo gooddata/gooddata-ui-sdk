@@ -79,12 +79,15 @@ export const ShareDialog: React.FC<IShareDialogProps> = (props) => {
     const affectedSharedObject = useMemo<IAffectedSharedObject>(() => {
         const isLeniencyControlSupported = !effectiveBackend.capabilities.usesStrictAccessControl;
         const areGranularPermissionsSupported = effectiveBackend.capabilities.supportsGranularAccessControl;
+        const canWorkspaceAdminSeeEveryDashboard =
+            effectiveBackend.capabilities.canWorkspaceAdminSeeEveryDashboard;
         return mapSharedObjectToAffectedSharedObject(
             sharedObject,
             owner,
             isLockingSupported,
             isLeniencyControlSupported,
             areGranularPermissionsSupported,
+            canWorkspaceAdminSeeEveryDashboard,
         );
     }, [sharedObject, owner, isLockingSupported, effectiveBackend]);
 

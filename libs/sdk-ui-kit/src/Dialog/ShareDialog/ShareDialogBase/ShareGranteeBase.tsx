@@ -1,12 +1,15 @@
 // (C) 2021-2022 GoodData Corporation
 import React, { useMemo } from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { ConfirmDialogBase } from "../../ConfirmDialogBase";
+import { Message } from "../../../Messages";
 
 import { ContentDivider } from "./ContentDivider";
 import { ShareGranteeContent } from "./ShareGranteeContent";
 import { IShareGranteeBaseProps } from "./types";
+import { useShareGranteeBaseState } from "./useShareGranteeBase";
+
 import { SharedObjectUnderLenientControl } from "./SharedObjectUnderLenientControl";
 import { SharedObjectLockControl } from "./SharedObjectLockControl";
 
@@ -29,8 +32,15 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
         onLockChange,
         onUnderLenientControlChange,
     } = props;
-    const { owner, isLeniencyControlSupported, isLockingSupported, areGranularPermissionsSupported } =
-        sharedObject;
+    const {
+        owner,
+        isLeniencyControlSupported,
+        isLockingSupported,
+        areGranularPermissionsSupported,
+        canWorkspaceAdminSeeEveryDashboard,
+    } = sharedObject;
+
+    const { messageVisibility, handleLocalStorageClose } = useShareGranteeBaseState(props);
 
     const intl = useIntl();
 
@@ -45,6 +55,8 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
             submitButtonText: intl.formatMessage({ id: "save" }),
         };
     }, []);
+
+    const shouldDisplayAdminMessage = canWorkspaceAdminSeeEveryDashboard && messageVisibility;
 
     return (
         <ConfirmDialogBase
@@ -67,6 +79,20 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
                 onChange={onGranularGranteeChange}
             />
             <ContentDivider />
+            {shouldDisplayAdminMessage && (
+                <Message
+                    type="progress"
+                    className="gd-granular-permissions-admin-information"
+                    onClose={handleLocalStorageClose}
+                >
+                    <span>
+                        <FormattedMessage
+                            id="shareDialog.share.granular.administrator.info"
+                            values={{ b: (chunks: string) => <strong>{chunks}</strong> }}
+                        />
+                    </span>
+                </Message>
+            )}
             <SharedObjectUnderLenientControl
                 isUnderLenientControl={isUnderLenientControlNow}
                 isLeniencyControlSupported={isLeniencyControlSupported}

@@ -177,6 +177,7 @@ export interface IAffectedSharedObject {
     isLockingSupported: boolean;
     isLeniencyControlSupported: boolean;
     areGranularPermissionsSupported?: boolean;
+    canWorkspaceAdminSeeEveryDashboard?: boolean;
 }
 
 /**

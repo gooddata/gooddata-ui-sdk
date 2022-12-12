@@ -53,6 +53,7 @@ const CAPABILITIES: IBackendCapabilities = {
     canExportXlsx: true,
     canSortData: true,
     canTransformExistingResult: false,
+    canWorkspaceAdminSeeEveryDashboard: false,
     maxDimensions: 2,
     supportsElementUris: true,
     supportsObjectUris: true,

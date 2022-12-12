@@ -201,6 +201,12 @@ export interface IBackendCapabilities {
     supportsNonProductionDatasets?: boolean;
 
     /**
+     * Indicates whether backends supports displaying message to inform administrators about having
+     * access to the dashboard.
+     */
+    canWorkspaceAdminSeeEveryDashboard?: boolean;
+
+    /**
      * Catchall for additional capabilities
      */
     [key: string]: undefined | boolean | number | string;

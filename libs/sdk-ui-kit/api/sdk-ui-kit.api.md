@@ -746,6 +746,8 @@ export interface IAffectedSharedObject {
     // (undocumented)
     areGranularPermissionsSupported?: boolean;
     // (undocumented)
+    canWorkspaceAdminSeeEveryDashboard?: boolean;
+    // (undocumented)
     isLeniencyControlSupported: boolean;
     // (undocumented)
     isLocked: boolean;

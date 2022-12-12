@@ -368,6 +368,7 @@ export interface IBackendCapabilities {
     canExportXlsx?: boolean;
     canSortData?: boolean;
     canTransformExistingResult?: boolean;
+    canWorkspaceAdminSeeEveryDashboard?: boolean;
     hasTypeScopedIdentifiers?: boolean;
     maxDimensions?: number;
     supportsAccessControl?: boolean;

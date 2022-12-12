@@ -161,6 +161,7 @@ export const mapSharedObjectToAffectedSharedObject = (
     isLockingSupported: boolean,
     isLeniencyControlSupported: boolean,
     areGranularPermissionsSupported = false,
+    canWorkspaceAdminSeeEveryDashboard = false,
 ): IAffectedSharedObject => {
     const { ref, shareStatus, isLocked, isUnderStrictControl } = sharedObject;
     return {
@@ -172,5 +173,6 @@ export const mapSharedObjectToAffectedSharedObject = (
         isLockingSupported,
         isLeniencyControlSupported,
         areGranularPermissionsSupported,
+        canWorkspaceAdminSeeEveryDashboard,
     };
 };

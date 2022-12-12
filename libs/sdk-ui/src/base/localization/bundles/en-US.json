@@ -1564,6 +1564,11 @@
         "comment": "",
         "limit": 0
     },
+    "shareDialog.share.granular.administrator.info": {
+        "value": "<b>Note.</b> All administrators have full access to all dashboards.",
+        "comment": "",
+        "limit": 0
+    },
     "sorting.dropdown.header|insight": {
         "value": "Sort insight",
         "comment": "The title of sorting dropdown where you can choose which sort options you want to use. For example sort by attribute A1.",
