@@ -17,6 +17,7 @@ import {
     IListedDashboard,
     IDashboardDefinition,
     IDashboardPluginDefinition,
+    DashboardPermission,
 } from "@gooddata/sdk-model";
 
 /**
@@ -403,4 +404,11 @@ export interface IWorkspaceDashboardsService {
      * @param ref - reference to plugin to
      */
     deleteDashboardPlugin(ref: ObjRef): Promise<void>;
+
+    /**
+     * Get current user's permissions to the dashboard.
+     *
+     * @param ref - dashboard reference
+     */
+    getDashboardPermissions(ref: ObjRef): Promise<DashboardPermission[]>;
 }

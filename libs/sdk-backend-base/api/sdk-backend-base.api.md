@@ -7,6 +7,7 @@
 import { AttributeModifications } from '@gooddata/sdk-model';
 import { CatalogItem } from '@gooddata/sdk-model';
 import { CatalogItemType } from '@gooddata/sdk-model';
+import { DashboardPermission } from '@gooddata/sdk-model';
 import { DateAttributeGranularity } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
 import { ErrorConverter } from '@gooddata/sdk-backend-spi';
@@ -507,6 +508,8 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
     getAllWidgetAlertsForCurrentUser(): Promise<IWidgetAlert[]>;
     // (undocumented)
     getDashboard(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions): Promise<IDashboard>;
+    // (undocumented)
+    getDashboardPermissions(ref: ObjRef): Promise<DashboardPermission[]>;
     // (undocumented)
     getDashboardPlugin(ref: ObjRef): Promise<IDashboardPlugin>;
     // (undocumented)

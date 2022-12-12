@@ -9,7 +9,6 @@ export { ShareDialog } from "./ShareDialog";
 export type {
     GranteeType,
     GranteeStatus,
-    AccessGranularPermission,
     GranteeItem,
     IGranteeBase,
     IGranteeUser,

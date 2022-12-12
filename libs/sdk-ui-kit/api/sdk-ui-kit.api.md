@@ -15,6 +15,7 @@ import { FC } from 'react';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
 import { IAccessControlAware } from '@gooddata/sdk-model';
 import { IAccessGrantee } from '@gooddata/sdk-model';
+import { IAccessGranularPermission } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAuditableUsers } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
@@ -38,9 +39,6 @@ import { ShareStatus } from '@gooddata/sdk-model';
 import { SortDirection } from '@gooddata/sdk-model';
 import { WithIntlProps } from 'react-intl';
 import { WrappedComponentProps } from 'react-intl';
-
-// @internal (undocumented)
-export type AccessGranularPermission = "view" | "edit" | "share";
 
 // @internal (undocumented)
 export type ActionType = "LinkButton" | "Button" | "Switcher";
@@ -1821,17 +1819,17 @@ export interface IGranteeUser extends IGranteeBase {
 // @internal (undocumented)
 export interface IGranularGranteeGroup extends IGranteeGroup {
     // (undocumented)
-    inheritedPermissions: AccessGranularPermission[];
+    inheritedPermissions: IAccessGranularPermission[];
     // (undocumented)
-    permissions: AccessGranularPermission[];
+    permissions: IAccessGranularPermission[];
 }
 
 // @internal (undocumented)
 export interface IGranularGranteeUser extends IGranteeUser {
     // (undocumented)
-    inheritedPermissions: AccessGranularPermission[];
+    inheritedPermissions: IAccessGranularPermission[];
     // (undocumented)
-    permissions: AccessGranularPermission[];
+    permissions: IAccessGranularPermission[];
 }
 
 // @internal (undocumented)

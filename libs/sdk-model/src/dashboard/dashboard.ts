@@ -339,3 +339,10 @@ export interface IListedDashboard
      */
     readonly availability: ListedDashboardAvailability;
 }
+
+/**
+ * Type of dashboard permission.
+ *
+ * @alpha
+ */
+export type DashboardPermission = "canViewDashboard" | "canEditDashboard" | "canShareDashboard";
