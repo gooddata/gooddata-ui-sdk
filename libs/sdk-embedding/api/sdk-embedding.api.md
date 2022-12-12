@@ -50,6 +50,7 @@ export namespace EmbeddedAnalyticalDesigner {
         RequestCancellation = "requestCancellation",
         Save = "saveInsight",
         SaveAs = "saveAsInsight",
+        SetApiToken = "setApiToken",
         SetFilterContext = "setFilterContext",
         Undo = "undo"
     }
@@ -64,6 +65,7 @@ export namespace EmbeddedAnalyticalDesigner {
         InsightOpened = "insightOpened",
         InsightRendered = "insightRendered",
         InsightSaved = "visualizationSaved",
+        ListeningForApiToken = "listeningForApiToken",
         ListeningForDrillableItems = "listeningForDrillableItems",
         NewInsightInitialized = "newInsightInitialized",
         RedoFinished = "redoFinished",
@@ -127,6 +129,9 @@ export namespace EmbeddedAnalyticalDesigner {
     export function isClearInsightCommandData(obj: unknown): obj is ClearInsightCommandData;
     export function isClearInsightFinishedData(obj: unknown): obj is ClearInsightFinishedData;
     export function isDrillableItemsCommandData(obj: unknown): obj is DrillableItemsCommandData;
+    export interface ISetApiTokenBody {
+        token: string;
+    }
     export function isExportFinishedData(obj: unknown): obj is ExportFinishedData;
     export function isExportInsightCommandData(obj: unknown): obj is ExportInsightCommandData;
     export function isInsightOpenedData(obj: unknown): obj is InsightOpenedData;
@@ -140,6 +145,7 @@ export namespace EmbeddedAnalyticalDesigner {
     export function isRequestCancellationCommandData(obj: unknown): obj is RequestCancellationCommandData;
     export function isSaveAsInsightCommandData(obj: unknown): obj is SaveAsInsightCommandData;
     export function isSaveInsightCommandData(obj: unknown): obj is SaveInsightCommandData;
+    export function isSetApiTokenCommandData(obj: unknown): obj is SetApiTokenCommandData;
     export function isSetFilterContextCommandData(obj: unknown): obj is SetFilterContextCommandData;
     export function isUndoCommandData(obj: unknown): obj is UndoCommandData;
     export function isUndoFinishedData(obj: unknown): obj is UndoFinishedData;
@@ -162,6 +168,8 @@ export namespace EmbeddedAnalyticalDesigner {
     export type SaveAsInsightCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.SaveAs, ISaveAsInsightCommandBody>;
     export type SaveInsightCommand = IGdcAdMessageEvent<GdcAdCommandType.Save, ISaveCommandBody>;
     export type SaveInsightCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.Save, ISaveCommandBody>;
+    export type SetApiTokenCommand = IGdcAdMessageEvent<GdcAdCommandType.SetApiToken, ISetApiTokenBody>;
+    export type SetApiTokenCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.SetApiToken, ISetApiTokenBody>;
     export type SetFilterContextCommand = IGdcAdMessageEvent<GdcAdCommandType.SetFilterContext, EmbeddedGdc.IFilterContextContent>;
     export type SetFilterContextCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.SetFilterContext, EmbeddedGdc.IFilterContextContent>;
     export type SetFilterContextFinishedData = IGdcAdMessageEnvelope<GdcAdEventType.SetFilterContextFinished, IAvailableCommands>;
