@@ -26,10 +26,12 @@ export function useFilterBarState() {
     const setFilterBarExpanded = (isExpanded: boolean) =>
         dispatch(uiActions.setFilterBarExpanded(isExpanded));
 
+    const innerHeight = isFilterBarExpanded ? expandedHeight : collapsedHeight;
+
     return {
         rows,
         scrollable,
-        height: isFilterBarExpanded ? expandedHeight + BorderWidth : collapsedHeight,
+        height: innerHeight + BorderWidth,
         isFilterBarExpanded,
         setCalculatedRows,
         setFilterBarExpanded,
