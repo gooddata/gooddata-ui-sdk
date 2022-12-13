@@ -81,13 +81,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableMSSQLDataSource,
-            "enableMSSQLDataSource",
-            "BOOLEAN",
-            FeatureFlagsValues.enableMSSQLDataSource,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableDescriptions,
             "enableDescriptions",
             "BOOLEAN",
