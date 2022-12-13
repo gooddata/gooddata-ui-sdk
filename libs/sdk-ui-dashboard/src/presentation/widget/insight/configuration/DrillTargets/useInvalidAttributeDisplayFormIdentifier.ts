@@ -1,5 +1,6 @@
 // (C) 2020-2022 GoodData Corporation
 
+import { idRef } from "@gooddata/sdk-model";
 import { UrlDrillTarget, isDrillToCustomUrlConfig } from "../../../../drill/types";
 import { useDashboardSelector, selectAllCatalogDisplayFormsMap } from "../../../../../model";
 import { useMemo } from "react";
@@ -11,7 +12,7 @@ export function useInvalidAttributeDisplayFormIdentifiers(urlDrillTarget: UrlDri
         if (isDrillToCustomUrlConfig(urlDrillTarget)) {
             const parameters = getAttributeIdentifiersPlaceholdersFromUrl(urlDrillTarget.customUrl);
             return parameters
-                .filter(({ identifier }) => !displayForms.get({ identifier }))
+                .filter(({ identifier }) => !displayForms.get(idRef(identifier, "displayForm")))
                 .map(({ identifier }) => identifier);
         }
         return [];
