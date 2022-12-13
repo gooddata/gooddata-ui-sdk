@@ -1941,6 +1941,9 @@ export const isAbsoluteDateFilterForm: (obj: unknown) => obj is IAbsoluteDateFil
 // @alpha
 export const isAbsoluteDateFilterPreset: (obj: unknown) => obj is IAbsoluteDateFilterPreset;
 
+// @alpha
+export const isAccessWithGranularPermissions: (obj: unknown) => obj is IUserAccessWithGranularPermissions | IUserGroupAccessWithGranularPermissions;
+
 // @public
 export function isAdhocMeasure(obj: unknown): obj is IMeasure<IMeasureDefinition>;
 

@@ -60,6 +60,22 @@ export type IUserGroupAccessWithGranularPermissions = IUserGroupAccess &
     IAccessGranteeWithGranularPermissions;
 
 /**
+ * Tests whether the provided object is an instance of {@link IUserAccessWithGranularPermissions} or {@link IUserGroupAccessWithGranularPermissions}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isAccessWithGranularPermissions = (
+    obj: unknown,
+): obj is IUserAccessWithGranularPermissions | IUserGroupAccessWithGranularPermissions => {
+    return (
+        !isEmpty(obj) &&
+        (obj as IUserAccessWithGranularPermissions | IUserGroupAccessWithGranularPermissions).permissions !==
+            undefined
+    );
+};
+
+/**
  * Entity having access to the object.
  *
  * @alpha

@@ -10,6 +10,11 @@ import {
     IAccessGrantee,
     isUserAccess,
     isUserGroupAccess,
+    IUserAccess,
+    IUserAccessWithGranularPermissions,
+    isAccessWithGranularPermissions,
+    IUserGroupAccess,
+    IUserGroupAccessWithGranularPermissions,
 } from "@gooddata/sdk-model";
 import { typesUtils } from "@gooddata/util";
 
@@ -26,6 +31,7 @@ import {
     isGranteeUser,
     isGranularGranteeUser,
     isGranularGrantee,
+    IGranularGranteeUser,
 } from "./ShareDialogBase/types";
 import { GranteeGroupAll, InactiveOwner, getAppliedGrantees, hasGroupAll } from "./ShareDialogBase/utils";
 import { ISharedObject } from "./types";
@@ -41,7 +47,10 @@ const mapUserStatusToGranteeStatus = (status: "ENABLED" | "DISABLED"): GranteeSt
 /**
  * @internal
  */
-export const mapWorkspaceUserToGrantee = (user: IWorkspaceUser, currentUserRef: ObjRef): IGranteeUser => {
+export const mapWorkspaceUserToGrantee = (
+    user: IWorkspaceUser,
+    currentUserRef: ObjRef,
+): IGranteeUser | IGranularGranteeUser => {
     return {
         type: "user",
         id: user.ref,
@@ -56,11 +65,60 @@ export const mapWorkspaceUserToGrantee = (user: IWorkspaceUser, currentUserRef: 
 /**
  * @internal
  */
+export const mapUserAccessToGrantee = (
+    userAccess: IUserAccess | IUserAccessWithGranularPermissions,
+    currentUserRef: ObjRef,
+): IGranteeUser | IGranularGranteeUser => {
+    const { user } = userAccess;
+    const permissionsObj = isAccessWithGranularPermissions(userAccess)
+        ? {
+              permissions: userAccess.permissions,
+              inheritedPermissions: userAccess.inheritedPermissions,
+          }
+        : {};
+
+    return {
+        type: "user",
+        id: user.ref,
+        name: mapUserFullName(user),
+        email: user.email,
+        isOwner: false,
+        isCurrentUser: areObjRefsEqual(user.ref, currentUserRef),
+        status: mapUserStatusToGranteeStatus(user.status),
+        ...permissionsObj,
+    };
+};
+
+/**
+ * @internal
+ */
 export const mapWorkspaceUserGroupToGrantee = (userGroup: IWorkspaceUserGroup): IGranteeGroup => {
     return {
         id: userGroup.ref,
         type: "group",
         name: userGroup.name,
+    };
+};
+
+/**
+ * @internal
+ */
+export const mapUserGroupAccessToGrantee = (
+    userGroupAccess: IUserGroupAccess | IUserGroupAccessWithGranularPermissions,
+): IGranteeGroup => {
+    const { userGroup } = userGroupAccess;
+    const permissionsObj = isAccessWithGranularPermissions(userGroupAccess)
+        ? {
+              permissions: userGroupAccess.permissions,
+              inheritedPermissions: userGroupAccess.inheritedPermissions,
+          }
+        : {};
+
+    return {
+        id: userGroup.ref,
+        type: "group",
+        name: userGroup.name,
+        ...permissionsObj,
     };
 };
 
@@ -152,9 +210,9 @@ export const mapAccessGranteeDetailToGrantee = (
     currentUserRef: ObjRef,
 ): GranteeItem => {
     if (isUserAccess(accessGranteeDetail)) {
-        return mapWorkspaceUserToGrantee(accessGranteeDetail.user, currentUserRef);
+        return mapUserAccessToGrantee(accessGranteeDetail, currentUserRef);
     } else if (isUserGroupAccess(accessGranteeDetail)) {
-        return mapWorkspaceUserGroupToGrantee(accessGranteeDetail.userGroup);
+        return mapUserGroupAccessToGrantee(accessGranteeDetail);
     }
 };
 

@@ -1,6 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 import React, { useMemo } from "react";
 import { useIntl } from "react-intl";
+import compact from "lodash/compact";
 
 import { ConfirmDialogBase } from "../../ConfirmDialogBase";
 
@@ -35,7 +36,7 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
     const intl = useIntl();
 
     const granteeList = useMemo(() => {
-        return [owner, ...grantees];
+        return compact([owner, ...grantees]);
     }, [grantees, owner, intl]);
 
     const dialogLabels = useMemo(() => {

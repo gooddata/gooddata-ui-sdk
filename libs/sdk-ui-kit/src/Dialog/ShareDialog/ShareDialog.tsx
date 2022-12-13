@@ -38,6 +38,8 @@ export const ShareDialog: React.FC<IShareDialogProps> = (props) => {
     } = props;
     const effectiveBackend = useBackendStrict(backend);
     const effectiveWorkspace = useWorkspaceStrict(workspace);
+    const areGranularPermissionsSupported = effectiveBackend.capabilities.supportsGranularAccessControl;
+    const isLeniencyControlSupported = !effectiveBackend.capabilities.usesStrictAccessControl;
 
     const onShareDialogBaseError = useCallback(
         (err: Error) => {
@@ -47,11 +49,14 @@ export const ShareDialog: React.FC<IShareDialogProps> = (props) => {
     );
 
     const owner = useMemo(() => {
+        if (areGranularPermissionsSupported) {
+            return undefined;
+        }
         if (sharedObject.createdBy) {
             return mapOwnerToGrantee(sharedObject.createdBy, currentUserRef);
         }
         return mapUserToInactiveOwner();
-    }, [sharedObject, currentUserRef]);
+    }, [sharedObject, currentUserRef, areGranularPermissionsSupported]);
 
     const onSubmit = useCallback(
         (
@@ -77,8 +82,6 @@ export const ShareDialog: React.FC<IShareDialogProps> = (props) => {
     );
 
     const affectedSharedObject = useMemo<IAffectedSharedObject>(() => {
-        const isLeniencyControlSupported = !effectiveBackend.capabilities.usesStrictAccessControl;
-        const areGranularPermissionsSupported = effectiveBackend.capabilities.supportsGranularAccessControl;
         return mapSharedObjectToAffectedSharedObject(
             sharedObject,
             owner,
@@ -86,7 +89,13 @@ export const ShareDialog: React.FC<IShareDialogProps> = (props) => {
             isLeniencyControlSupported,
             areGranularPermissionsSupported,
         );
-    }, [sharedObject, owner, isLockingSupported, effectiveBackend]);
+    }, [
+        sharedObject,
+        owner,
+        isLockingSupported,
+        isLeniencyControlSupported,
+        areGranularPermissionsSupported,
+    ]);
 
     return (
         <IntlWrapper locale={locale}>
