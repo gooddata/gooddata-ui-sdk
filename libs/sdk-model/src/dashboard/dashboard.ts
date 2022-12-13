@@ -346,3 +346,12 @@ export interface IListedDashboard
  * @alpha
  */
 export type DashboardPermission = "canViewDashboard" | "canEditDashboard" | "canShareDashboard";
+
+/**
+ * Dashboard permissions.
+ *
+ * @alpha
+ */
+export type IDashboardPermissions = {
+    [permission in DashboardPermission]: boolean;
+};

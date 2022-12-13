@@ -460,7 +460,7 @@ export interface IAccessGranteeWithGranularPermissions {
 }
 
 // @public
-export type IAccessGranularPermission = "view" | "edit" | "share";
+export type IAccessGranularPermission = "VIEW" | "EDIT" | "SHARE";
 
 // @alpha
 export interface IAllTimeDateFilterOption extends IDateFilterOption {
@@ -923,6 +923,11 @@ export interface IDashboardObjectIdentity {
     readonly ref: ObjRef;
     readonly uri: string;
 }
+
+// @alpha
+export type IDashboardPermissions = {
+    [permission in DashboardPermission]: boolean;
+};
 
 // @alpha (undocumented)
 export interface IDashboardPlugin extends IDashboardPluginBase, IDashboardObjectIdentity, IAuditableDates {

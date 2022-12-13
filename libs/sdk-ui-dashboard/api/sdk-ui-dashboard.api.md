@@ -15,6 +15,7 @@ import { Component } from 'react';
 import { ComponentPropsWithRef } from 'react';
 import { ComponentType } from 'react';
 import { DashboardDateFilterConfigMode } from '@gooddata/sdk-model';
+import { DashboardPermission } from '@gooddata/sdk-model';
 import { DataViewFacade } from '@gooddata/sdk-ui';
 import { DateFilterGranularity } from '@gooddata/sdk-model';
 import { DateFilterType } from '@gooddata/sdk-model';
@@ -2148,6 +2149,8 @@ export interface DashboardState {
     catalog: CatalogState;
     // (undocumented)
     config: ConfigState;
+    // (undocumented)
+    dashboardPermissions: DashboardPermissionsState;
     // (undocumented)
     dateFilterConfig: DateFilterConfigState;
     // (undocumented)

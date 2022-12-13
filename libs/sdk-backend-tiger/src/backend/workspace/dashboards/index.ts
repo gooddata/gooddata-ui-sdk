@@ -36,7 +36,8 @@ import {
     IListedDashboard,
     IDashboardPlugin,
     IDashboardPluginDefinition,
-    DashboardPermission,
+    IAccessGranularPermission,
+    IDashboardPermissions,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual";
 import { v4 as uuidv4 } from "uuid";
@@ -477,8 +478,22 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     };
 
     // TODO: TNT-1185 Implement method
-    public getDashboardPermissions = async (_ref: ObjRef): Promise<DashboardPermission[]> => {
-        return Promise.resolve([]);
+    public getDashboardPermissions = async (_ref: ObjRef): Promise<IDashboardPermissions> => {
+        // const objectId = await objRefToIdentifier(ref, this.authCall);
+        // const analyticalDashboard = await this.authCall((client) => {
+        //     return client.entities.getEntityAnalyticalDashboards({
+        //         workspaceId: this.workspace,
+        //         objectId,
+        //         // metaInclude: ["permissions"], // TODO: add this when client is regenerated
+        //     });
+        // });
+        // analyticalDashboard.data.analytics.analyticalDashboardExtensions.map(...);
+        const dummyPermission = "SHARE" as IAccessGranularPermission;
+
+        // when the call return 401 - return all permissions as false, because the user lost all
+        // permissions probably and the dashboard needs to be redirected
+
+        return buildDashboardPermissions(dummyPermission);
     };
 
     private processFilterContextUpdate = async (
@@ -549,3 +564,9 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         return convertFilterContextFromBackend(result.data);
     };
 }
+
+const buildDashboardPermissions = (permission: IAccessGranularPermission): IDashboardPermissions => ({
+    canEditDashboard: permission !== "EDIT" ? false : true,
+    canShareDashboard: permission !== "VIEW" ? true : false,
+    canViewDashboard: true,
+});

@@ -17,7 +17,7 @@ import {
     IListedDashboard,
     IDashboardDefinition,
     IDashboardPluginDefinition,
-    DashboardPermission,
+    IDashboardPermissions,
 } from "@gooddata/sdk-model";
 
 /**
@@ -410,5 +410,5 @@ export interface IWorkspaceDashboardsService {
      *
      * @param ref - dashboard reference
      */
-    getDashboardPermissions(ref: ObjRef): Promise<DashboardPermission[]>;
+    getDashboardPermissions(ref: ObjRef): Promise<IDashboardPermissions>;
 }

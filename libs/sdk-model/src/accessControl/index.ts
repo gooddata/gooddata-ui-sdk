@@ -131,7 +131,7 @@ export const isUserGroupAccessGrantee = (obj: unknown): obj is IUserGroupAccessG
  *
  * @public
  */
-export type IAccessGranularPermission = "view" | "edit" | "share";
+export type IAccessGranularPermission = "VIEW" | "EDIT" | "SHARE";
 
 /**
  * Access grantee specification with granular permissions.

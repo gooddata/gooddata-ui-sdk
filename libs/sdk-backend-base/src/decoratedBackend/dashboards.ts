@@ -25,7 +25,7 @@ import {
     IListedDashboard,
     IDashboardPlugin,
     IDashboardPluginDefinition,
-    DashboardPermission,
+    IDashboardPermissions,
 } from "@gooddata/sdk-model";
 
 /**
@@ -163,7 +163,7 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
         return this.decorated.deleteDashboardPlugin(ref);
     }
 
-    getDashboardPermissions(ref: ObjRef): Promise<DashboardPermission[]> {
+    getDashboardPermissions(ref: ObjRef): Promise<IDashboardPermissions> {
         return this.decorated.getDashboardPermissions(ref);
     }
 }

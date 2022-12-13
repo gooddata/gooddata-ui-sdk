@@ -45,7 +45,7 @@ import {
     IDashboardPlugin,
     IDashboardPluginDefinition,
     IDashboardPluginLink,
-    DashboardPermission,
+    IDashboardPermissions,
 } from "@gooddata/sdk-model";
 import {
     GdcDashboard,
@@ -87,6 +87,7 @@ import isVisualization = GdcVisualizationObject.isVisualization;
 import isDashboardPlugin = GdcDashboardPlugin.isDashboardPlugin;
 import remove from "lodash/remove";
 import { convertUser } from "../../../convertors/fromBackend/UsersConverter";
+import { BearWorkspacePermissionsFactory } from "../permissions/permissions";
 
 /**
  * Metadata object types closely related to the dashboard object.
@@ -106,9 +107,11 @@ const DashboardComponentTypes: RelatedObjectTypes[] = ["kpi", "visualizationWidg
 // TODO: refactor impl into bunch of smaller classes + delegates
 export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
     private insights: BearWorkspaceInsights;
+    private permissions: BearWorkspacePermissionsFactory;
 
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {
         this.insights = new BearWorkspaceInsights(this.authCall, this.workspace);
+        this.permissions = new BearWorkspacePermissionsFactory(this.authCall, this.workspace);
     }
 
     // Public methods
@@ -1013,9 +1016,21 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
         });
     };
 
-    // TODO: TNT-1185 Implement method
-    public getDashboardPermissions = async (_ref: ObjRef): Promise<DashboardPermission[]> => {
-        return Promise.resolve([]);
+    public getDashboardPermissions = async (ref: ObjRef): Promise<IDashboardPermissions> => {
+        const uri = await objRefToUri(ref, this.workspace, this.authCall);
+        // when user is able to fetch dashboard, he has the VIEW rights
+        const dashboard = await this.authCall((sdk) =>
+            sdk.md.getObjectDetails<GdcDashboard.IWrappedAnalyticalDashboard>(uri),
+        );
+        const workspacePermissions = await this.authCall(() =>
+            this.permissions.getPermissionsForCurrentUser(),
+        );
+
+        return {
+            canEditDashboard: workspacePermissions.canManageAnalyticalDashboard,
+            canShareDashboard: workspacePermissions.canManageAnalyticalDashboard,
+            canViewDashboard: !!dashboard,
+        };
     };
 
     private ensureDashboardPluginLinksHaveUris = async (

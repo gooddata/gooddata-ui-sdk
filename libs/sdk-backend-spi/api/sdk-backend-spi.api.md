@@ -7,7 +7,6 @@
 import { AccessGranteeDetail as AccessGranteeDetail_2 } from '@gooddata/sdk-model';
 import { CatalogItem as CatalogItem_2 } from '@gooddata/sdk-model';
 import { CatalogItemType as CatalogItemType_2 } from '@gooddata/sdk-model';
-import { DashboardPermission } from '@gooddata/sdk-model';
 import { DataValue as DataValue_2 } from '@gooddata/sdk-model';
 import { DateFilterAbsoluteType } from '@gooddata/sdk-model';
 import { DateFilterOptionAbsoluteFormType } from '@gooddata/sdk-model';
@@ -41,6 +40,7 @@ import { IDashboardDefinition as IDashboardDefinition_2 } from '@gooddata/sdk-mo
 import { IDashboardLayout as IDashboardLayout_2 } from '@gooddata/sdk-model';
 import { IDashboardLayoutItem as IDashboardLayoutItem_2 } from '@gooddata/sdk-model';
 import { IDashboardLayoutSection as IDashboardLayoutSection_2 } from '@gooddata/sdk-model';
+import { IDashboardPermissions } from '@gooddata/sdk-model';
 import { IDashboardPlugin as IDashboardPlugin_2 } from '@gooddata/sdk-model';
 import { IDashboardPluginDefinition as IDashboardPluginDefinition_2 } from '@gooddata/sdk-model';
 import { IDashboardWidget as IDashboardWidget_2 } from '@gooddata/sdk-model';
@@ -1728,7 +1728,7 @@ export interface IWorkspaceDashboardsService {
     exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem_2[]): Promise<string>;
     getAllWidgetAlertsForCurrentUser(): Promise<IWidgetAlert_2[]>;
     getDashboard(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions): Promise<IDashboard_2>;
-    getDashboardPermissions(ref: ObjRef): Promise<DashboardPermission[]>;
+    getDashboardPermissions(ref: ObjRef): Promise<IDashboardPermissions>;
     getDashboardPlugin(ref: ObjRef): Promise<IDashboardPlugin_2>;
     getDashboardPlugins(): Promise<IDashboardPlugin_2[]>;
     getDashboardReferencedObjects(dashboard: IDashboard_2, types?: SupportedDashboardReferenceTypes[]): Promise<IDashboardReferences>;
