@@ -63,7 +63,10 @@ export const DrillTargetUrlItem: React.FunctionComponent<DrillUrlItemProps> = (p
     const { allDisplayForms: targetAttributesFormsAll, linkDisplayForms: targetAttributesFormsWithLinks } =
         useAttributesWithDisplayForms(attributes);
 
-    const invalidAttributeDisplayFormIdentifiers = useInvalidAttributeDisplayFormIdentifiers(urlDrillTarget);
+    const invalidAttributeDisplayFormIdentifiers = useInvalidAttributeDisplayFormIdentifiers(
+        urlDrillTarget,
+        attributes,
+    );
 
     const [showModal, setShowModal] = useState(false);
     const toggleModal = () => setShowModal(!showModal);

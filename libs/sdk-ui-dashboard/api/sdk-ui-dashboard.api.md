@@ -6365,11 +6365,21 @@ type: string;
 clearActiveSectionIndex: CaseReducer<UiState, AnyAction>;
 openCancelEditModeDialog: CaseReducer<UiState, AnyAction>;
 closeCancelEditModeDialog: CaseReducer<UiState, AnyAction>;
-setInvalidDrillWidgetRefs: CaseReducer<UiState, {
+resetInvalidDrillWidgetRefs: CaseReducer<UiState, AnyAction>;
+resetInvalidUrlDrillWidgetRefs: CaseReducer<UiState, AnyAction>;
+addInvalidDrillWidgetRefs: CaseReducer<UiState, {
 payload: ObjRef[];
 type: string;
 }>;
-setInvalidUrlDrillWidgetRefs: CaseReducer<UiState, {
+addInvalidUrlDrillWidgetRefs: CaseReducer<UiState, {
+payload: ObjRef[];
+type: string;
+}>;
+removeInvalidDrillWidgetRefs: CaseReducer<UiState, {
+payload: ObjRef[];
+type: string;
+}>;
+removeInvalidUrlDrillWidgetRefs: CaseReducer<UiState, {
 payload: ObjRef[];
 type: string;
 }>;

@@ -145,12 +145,50 @@ const clearActiveSectionIndex: UiReducer = (state) => {
     state.activeSectionIndex = undefined;
 };
 
-const setInvalidDrillWidgetRefs: UiReducer<PayloadAction<ObjRef[]>> = (state, action) => {
-    state.drillValidationMessages.invalidDrillWidgetRefs = action.payload;
+const resetInvalidDrillWidgetRefs: UiReducer = (state) => {
+    state.drillValidationMessages.invalidDrillWidgetRefs = [];
 };
 
-const setInvalidUrlDrillWidgetRefs: UiReducer<PayloadAction<ObjRef[]>> = (state, action) => {
-    state.drillValidationMessages.invalidUrlDrillWidgetRefs = action.payload;
+const resetInvalidUrlDrillWidgetRefs: UiReducer = (state) => {
+    state.drillValidationMessages.invalidUrlDrillWidgetRefs = [];
+};
+
+const addInvalidDrillWidgetRefs: UiReducer<PayloadAction<ObjRef[]>> = (state, action) => {
+    action.payload.forEach((toAdd) => {
+        if (
+            !state.drillValidationMessages.invalidDrillWidgetRefs.some((existing) =>
+                areObjRefsEqual(existing, toAdd),
+            )
+        ) {
+            state.drillValidationMessages.invalidDrillWidgetRefs.push(toAdd);
+        }
+    });
+};
+
+const addInvalidUrlDrillWidgetRefs: UiReducer<PayloadAction<ObjRef[]>> = (state, action) => {
+    action.payload.forEach((toAdd) => {
+        if (
+            !state.drillValidationMessages.invalidUrlDrillWidgetRefs.some((existing) =>
+                areObjRefsEqual(existing, toAdd),
+            )
+        ) {
+            state.drillValidationMessages.invalidUrlDrillWidgetRefs.push(toAdd);
+        }
+    });
+};
+
+const removeInvalidDrillWidgetRefs: UiReducer<PayloadAction<ObjRef[]>> = (state, action) => {
+    state.drillValidationMessages.invalidDrillWidgetRefs =
+        state.drillValidationMessages.invalidDrillWidgetRefs.filter(
+            (existing) => !action.payload.some((toRemove) => areObjRefsEqual(toRemove, existing)),
+        );
+};
+
+const removeInvalidUrlDrillWidgetRefs: UiReducer<PayloadAction<ObjRef[]>> = (state, action) => {
+    state.drillValidationMessages.invalidUrlDrillWidgetRefs =
+        state.drillValidationMessages.invalidUrlDrillWidgetRefs.filter(
+            (existing) => !action.payload.some((toRemove) => areObjRefsEqual(toRemove, existing)),
+        );
 };
 
 const setDraggingWidgetSource: UiReducer<PayloadAction<DraggableLayoutItem>> = (state, action) => {
@@ -245,8 +283,12 @@ export const uiReducers = {
     clearActiveSectionIndex,
     openCancelEditModeDialog,
     closeCancelEditModeDialog,
-    setInvalidDrillWidgetRefs,
-    setInvalidUrlDrillWidgetRefs,
+    resetInvalidDrillWidgetRefs,
+    resetInvalidUrlDrillWidgetRefs,
+    addInvalidDrillWidgetRefs,
+    addInvalidUrlDrillWidgetRefs,
+    removeInvalidDrillWidgetRefs,
+    removeInvalidUrlDrillWidgetRefs,
     setDraggingWidgetSource,
     clearDraggingWidgetSource,
     setDraggingWidgetTarget,

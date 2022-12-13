@@ -13,11 +13,7 @@ import {
     isLocalIdRef,
     ObjRefInScope,
 } from "@gooddata/sdk-model";
-import {
-    IAvailableDrillTargetAttribute,
-    IAvailableDrillTargetMeasure,
-    IAvailableDrillTargets,
-} from "@gooddata/sdk-ui";
+import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import {
     DRILL_TARGET_TYPE,
     IDrillConfigItem,
@@ -38,36 +34,44 @@ const localIdOrDie = (ref: ObjRefInScope): string => {
     throw new Error("invalid invariant");
 };
 
-const getTitleFromDrillableItemPushData = (items: IAvailableDrillTargets, itemId: string): string => {
+function getTitleFromDrillableItemPushData(items: IAvailableDrillTargets, itemId: string): string {
     const measureItems = items.measures || [];
     const measureResult = measureItems.find(
-        (measureResult: IAvailableDrillTargetMeasure) =>
-            measureResult.measure.measureHeaderItem.localIdentifier === itemId,
+        (measureResult) => measureResult.measure.measureHeaderItem.localIdentifier === itemId,
     );
 
-    if (!measureResult) {
-        const attributeItems = items.attributes || [];
-        const attributeResult = attributeItems.find(
-            (attributeItem: IAvailableDrillTargetAttribute) =>
-                attributeItem.attribute.attributeHeader.localIdentifier === itemId,
-        );
-
-        return attributeResult ? attributeResult.attribute.attributeHeader.formOf.name : "";
+    if (measureResult) {
+        return measureResult.measure.measureHeaderItem.name;
     }
 
-    return measureResult.measure.measureHeaderItem.name;
-};
+    const attributeItems = items.attributes || [];
+    const attributeResult = attributeItems.find(
+        (attributeItem) => attributeItem.attribute.attributeHeader.localIdentifier === itemId,
+    );
 
-const getAttributes = (
+    return attributeResult ? attributeResult.attribute.attributeHeader.formOf.name : "";
+}
+
+function getAttributes(
     supportedItemsForWidget: IAvailableDrillTargets,
     localIdentifier: string,
-): IAttributeDescriptor[] => {
-    const measureItems: IAvailableDrillTargetMeasure[] = supportedItemsForWidget.measures || [];
-    const supportedItems = measureItems.find(
+): IAttributeDescriptor[] {
+    const measureItems = supportedItemsForWidget.measures ?? [];
+    const measureSupportedItems = measureItems.find(
         (item) => item.measure.measureHeaderItem.localIdentifier === localIdentifier,
     );
-    return supportedItems ? supportedItems.attributes : [];
-};
+
+    if (measureSupportedItems) {
+        return measureSupportedItems.attributes;
+    }
+
+    const attributeItems = supportedItemsForWidget.attributes ?? [];
+    const attributeSupportedItems = attributeItems.find(
+        (attrItem) => attrItem.attribute.attributeHeader.localIdentifier === localIdentifier,
+    );
+
+    return attributeSupportedItems?.intersectionAttributes ?? [];
+}
 
 const buildUrlDrillTarget = (drillData: IDrillToUrl): UrlDrillTarget => {
     if (isDrillToCustomUrl(drillData)) {

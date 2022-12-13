@@ -102,6 +102,11 @@ const sanitizeAvailableDrillTargets = (
     availableDrillTargets: IAvailableDrillTargets | undefined,
     isDrillFromAttributeEnabled: boolean,
 ) => {
+    // if no drill targets went in (likely the pushData was fired in a non-drill-related case)
+    // pass the undefined through, this avoids useless setting of the drill targets down the line
+    if (!availableDrillTargets) {
+        return availableDrillTargets;
+    }
     // base on ff we remove attributes targets if is not supported
     return isDrillFromAttributeEnabled
         ? availableDrillTargets
