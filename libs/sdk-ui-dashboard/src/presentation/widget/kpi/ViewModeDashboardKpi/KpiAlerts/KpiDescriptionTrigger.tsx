@@ -34,7 +34,7 @@ export const KpiDescriptionTrigger: React.FC<IKpiDescriptionTriggerProps> = (pro
 
     const eventPayload: DescriptionTooltipOpenedData = {
         from: "kpi",
-        type: kpi.configuration?.description?.source === "metric" ? "inherit" : "custom",
+        type: kpi.configuration?.description?.source === "kpi" ? "custom" : "inherit",
         description: trimmedDescription,
     };
 

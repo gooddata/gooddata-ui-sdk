@@ -21,7 +21,7 @@ export const InsightWidgetDescriptionTrigger: React.FC<IInsightWidgetDescription
 
     const eventPayload: DescriptionTooltipOpenedData = {
         from: "widget",
-        type: widget.configuration?.description?.source === "insight" ? "inherit" : "custom",
+        type: widget.configuration?.description?.source === "widget" ? "custom" : "inherit",
         description: trimmedDescription,
     };
 
