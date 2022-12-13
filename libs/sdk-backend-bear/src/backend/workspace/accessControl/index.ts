@@ -1,5 +1,9 @@
 // (C) 2021-2022 GoodData Corporation
-import { IWorkspaceAccessControlService } from "@gooddata/sdk-backend-spi";
+import {
+    IWorkspaceAccessControlService,
+    IWorkspaceUserGroupsQueryOptions,
+    IWorkspaceUsersQueryOptions,
+} from "@gooddata/sdk-backend-spi";
 import { objRefToUri } from "../../../utils/api";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import {
@@ -9,10 +13,22 @@ import {
     IAvailableAccessGrantee,
     GranteeWithGranularPermissions,
 } from "@gooddata/sdk-model";
-import { convertGranteeEntry } from "../../../convertors/fromBackend/GranteeEntryConverter";
+import {
+    convertGranteeEntry,
+    convertWorkspaceUserGroupToAvailableUserGroupAccessGrantee,
+    convertWorkspaceUserToAvailableUserAccessGrantee,
+} from "../../../convertors/fromBackend/AccessControlConverter";
+import { BearWorkspaceUsersQuery } from "../users";
+import { BearWorkspaceUserGroupsQuery } from "../userGroups";
 
 export class BearWorkspaceAccessControlService implements IWorkspaceAccessControlService {
-    constructor(private readonly authCall: BearAuthenticatedCallGuard, private readonly workspace: string) {}
+    private users: BearWorkspaceUsersQuery;
+    private userGroups: BearWorkspaceUserGroupsQuery;
+
+    constructor(private readonly authCall: BearAuthenticatedCallGuard, private readonly workspace: string) {
+        this.users = new BearWorkspaceUsersQuery(this.authCall, this.workspace);
+        this.userGroups = new BearWorkspaceUserGroupsQuery(this.authCall, this.workspace);
+    }
 
     public async getAccessList(sharedObject: ObjRef): Promise<AccessGranteeDetail[]> {
         const objectUri = await objRefToUri(sharedObject, this.workspace, this.authCall);
@@ -50,8 +66,24 @@ export class BearWorkspaceAccessControlService implements IWorkspaceAccessContro
     // TODO: TNT-1185 Implement method
     public async getAvailableGrantees(
         _sharedObject: ObjRef,
-        _search?: string,
+        search?: string,
     ): Promise<IAvailableAccessGrantee[]> {
-        return Promise.resolve([]);
+        let usersOption: IWorkspaceUsersQueryOptions = {};
+        let groupsOption: IWorkspaceUserGroupsQueryOptions = {};
+
+        if (search) {
+            usersOption = { ...usersOption, search: `%${search}` };
+            groupsOption = { ...groupsOption, search: `${search}` };
+        }
+
+        const workspaceUsersQuery = this.users.withOptions(usersOption).query();
+        const workspaceGroupsQuery = this.userGroups.query(groupsOption);
+
+        const [users, groups] = await Promise.all([workspaceUsersQuery, workspaceGroupsQuery]);
+
+        return [
+            ...users.items.map(convertWorkspaceUserToAvailableUserAccessGrantee),
+            ...groups.items.map(convertWorkspaceUserGroupToAvailableUserGroupAccessGrantee),
+        ];
     }
 }

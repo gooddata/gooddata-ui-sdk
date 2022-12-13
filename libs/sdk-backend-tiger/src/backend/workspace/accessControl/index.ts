@@ -8,9 +8,37 @@ import {
     GranteeWithGranularPermissions,
 } from "@gooddata/sdk-model";
 import {
+    convertAvailableUser,
+    convertAvailableUserGroup,
     convertUserGroupWithPermissions,
     convertUserWithPermissions,
 } from "../../../convertors/fromBackend/AccessControlConverter";
+
+const dummyAvailableAssignees = {
+    users: [
+        {
+            id: "adam-unreadableId",
+            name: "Adam Foobar",
+            email: "adam@company.com",
+        },
+        {
+            id: "martin-unreadableId",
+            name: "Martin NoEmail",
+        },
+        {
+            id: "james-noname",
+        },
+    ],
+    userGroups: [
+        {
+            id: "unused-group-unreadableId",
+            name: "group C",
+        },
+        {
+            id: "unused-group2-unreadableId",
+        },
+    ],
+};
 
 const dummyPermissions = {
     users: [
@@ -105,11 +133,16 @@ export class TigerWorkspaceAccessControlService implements IWorkspaceAccessContr
         return Promise.resolve();
     }
 
-    // TODO: TNT-1185 Implement method
+    // TODO: connect to api-client when regenerated
     public async getAvailableGrantees(
         _sharedObject: ObjRef,
         _search?: string,
     ): Promise<IAvailableAccessGrantee[]> {
-        return Promise.resolve([]);
+        // GET /api/v1/actions/workspaces/{workspaceId}/dashboards/{dashboardId}/availableAssignees
+        const dashboardAvailableAssignees = await Promise.resolve(dummyAvailableAssignees); // TODO: enable search here
+        return [
+            ...dashboardAvailableAssignees.users.map(convertAvailableUser),
+            ...dashboardAvailableAssignees.userGroups.map(convertAvailableUserGroup),
+        ];
     }
 }

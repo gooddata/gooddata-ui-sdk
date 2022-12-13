@@ -3,7 +3,13 @@ import { GdcAccessControl } from "@gooddata/api-model-bear";
 
 import { convertWorkspaceUserGroup } from "./UserGroupsConverter";
 import { convertUsersItem } from "./UsersConverter";
-import { AccessGranteeDetail } from "@gooddata/sdk-model";
+import {
+    AccessGranteeDetail,
+    IAvailableUserAccessGrantee,
+    IAvailableUserGroupAccessGrantee,
+    IWorkspaceUser,
+    IWorkspaceUserGroup,
+} from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 
 function isGranteeUserInfo(
@@ -25,3 +31,29 @@ export const convertGranteeEntry = (item: GdcAccessControl.IGranteeEntry): Acces
         };
     }
 };
+
+export const mapUserFullName = (user: IWorkspaceUser): string => {
+    if (user.fullName) {
+        return user.fullName;
+    }
+
+    return `${user.firstName} ${user.lastName}`;
+};
+
+export const convertWorkspaceUserToAvailableUserAccessGrantee = (
+    user: IWorkspaceUser,
+): IAvailableUserAccessGrantee => ({
+    type: "user",
+    ref: user.ref,
+    name: mapUserFullName(user),
+    email: user.email,
+    status: user.status ?? "DISABLED", // TODO: is this ok?
+});
+
+export const convertWorkspaceUserGroupToAvailableUserGroupAccessGrantee = (
+    group: IWorkspaceUserGroup,
+): IAvailableUserGroupAccessGrantee => ({
+    type: "group",
+    ref: group.ref,
+    name: group.name ?? "", // TODO: is this ok?
+});
