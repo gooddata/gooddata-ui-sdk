@@ -8,12 +8,7 @@ import path from "path";
 export function deleteRecordings(specFilter, backend, testTags) {
     process.stdout.write(`Deleting recordings ${specFilter}, tags: ${testTags}\n`);
     ensureRecordingsDirectory(backend);
-    deleteFilesInDir(
-        `./recordings/mappings/${backend}`,
-        specFilter,
-        "./cypress/integration/01-sdk-ui-dashboard",
-        testTags,
-    );
+    deleteFilesInDir(`./recordings/mappings/${backend}`, specFilter, "./cypress/integration/", testTags);
 }
 
 function deleteFilesInDir(directory, specFilter, testDir, testTags = []) {
