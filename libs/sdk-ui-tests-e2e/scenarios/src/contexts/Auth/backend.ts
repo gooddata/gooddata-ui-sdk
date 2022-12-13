@@ -20,7 +20,7 @@ export function createBackend(): IAnalyticalBackend {
         const backend = bearFactory();
 
         return backend.withAuthentication(
-            new FixedLoginAndPasswordAuthProvider(process.env.USERNAME!, process.env.PASSWORD!),
+            new FixedLoginAndPasswordAuthProvider(process.env.USER_NAME!, process.env.PASSWORD!),
         );
     } else {
         const sdkBackend: never = BACKEND_TYPE;
