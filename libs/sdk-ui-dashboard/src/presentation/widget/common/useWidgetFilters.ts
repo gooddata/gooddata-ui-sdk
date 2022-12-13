@@ -156,6 +156,7 @@ function useNonIgnoredFilters(widget: ExtendedDashboardWidget | undefined) {
         }
     }, [
         safeSerializeObjRef(widget?.ref),
+        stringify(widget?.ignoreDashboardFilters),
         filtersDigest(dashboardFilters, widgetIgnoresDateFilter, isInEditMode),
     ]);
 
