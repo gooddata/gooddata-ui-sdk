@@ -14,7 +14,7 @@ Cypress.on("uncaught:exception", (error) => {
 
 Cypress.Cookies.debug(true);
 
-describe("Drilling", () => {
+describe("Drilling", { tags: ["pre-merge_isolated_bear"] }, () => {
     describe("implicit drill to attribute url", () => {
         beforeEach(() => {
             cy.login();

@@ -5,8 +5,10 @@ import { attributeDisplayFormRef, IAttributeFilter, newPositiveAttributeFilter }
 
 import * as Md from "../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_bear";
 
+import { workspace } from "../../../constants.ts";
+
 const attributeFilter = newPositiveAttributeFilter(attributeDisplayFormRef(Md.Opportunity.Name), {
-    uris: ["/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1063/elements?id=108112"],
+    uris: [`/gdc/md/${workspace}/obj/1063/elements?id=108112`],
 });
 
 export const AttributeFilterButtonPreselectedScenario: React.FC = () => {

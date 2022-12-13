@@ -8,7 +8,7 @@ const INVALID_SEARCH_QUERY = "does not exist";
 
 const ATTRIBUTE_FILTER_BUTTON_SELECTOR = ".s-attribute-filter.s-opportunity";
 
-describe("AttributeFilterButton", () => {
+describe("AttributeFilterButton", { tags: ["pre-merge_isolated_bear"] }, () => {
     beforeEach(() => {
         cy.login();
 

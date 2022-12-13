@@ -1,7 +1,7 @@
 {
     "mappings": [
         {
-            "id": "f3ff3bff-0774-4522-96ff-ad88b050b630",
+            "id": "c821db8d-80fc-49ad-8ca4-aac2e2a637f0",
             "name": "gdc_account_login",
             "request": {
                 "url": "/gdc/account/login",
@@ -9,7 +9,7 @@
             },
             "response": {
                 "status": 200,
-                "body": "{\"userLogin\":{\"profile\":\"/gdc/account/profile/4d3da5c4452c6948e790c2a1e3772dc3\",\"state\":\"/gdc/account/login/4d3da5c4452c6948e790c2a1e3772dc3\"}}",
+                "body": "{\"userLogin\":{\"profile\":\"/gdc/account/profile/3ece989b2330f96ae7049a928bd1bc60\",\"state\":\"/gdc/account/login/3ece989b2330f96ae7049a928bd1bc60\"}}",
                 "headers": {
                     "expires": "Thu, 01 Jan 1970 00:00:00 GMT",
                     "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
@@ -20,10 +20,10 @@
                     "pragma": "no-cache"
                 }
             },
-            "uuid": "f3ff3bff-0774-4522-96ff-ad88b050b630"
+            "uuid": "c821db8d-80fc-49ad-8ca4-aac2e2a637f0"
         },
         {
-            "id": "5a535826-0791-46a3-8f2c-b1bb15ca29c3",
+            "id": "ee027238-6bc3-48dd-9ea5-30390e0e2a64",
             "name": "gdc_account_profile_current",
             "request": {
                 "url": "/gdc/account/profile/current",
@@ -35,17 +35,17 @@
                 "headers": {
                     "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
                     "vary": "origin,X-GDC-VERSION",
-                    "location": "/gdc/account/profile/4d3da5c4452c6948e790c2a1e3772dc3",
+                    "location": "/gdc/account/profile/3ece989b2330f96ae7049a928bd1bc60",
                     "cache-control": "no-cache, no-store, must-revalidate"
                 }
             },
-            "uuid": "5a535826-0791-46a3-8f2c-b1bb15ca29c3"
+            "uuid": "ee027238-6bc3-48dd-9ea5-30390e0e2a64"
         },
         {
-            "id": "3a320c22-f64f-4a97-8d08-c1a48651b788",
-            "name": "gdc_app_projects_frho3i7qc6epdek7mcgergm9vtm6o5ty_executeafm",
+            "id": "5c6283c0-d547-43c8-a74d-f92b7f22929d",
+            "name": "gdc_app_projects_c76e0537d0614abb0027f7c992656b964922506f_executeafm",
             "request": {
-                "url": "/gdc/app/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty/executeAfm",
+                "url": "/gdc/app/projects/c76e0537d0614abb0027f7c992656b964922506f/executeAfm",
                 "method": "POST",
                 "bodyPatterns": [
                     {
@@ -57,7 +57,7 @@
             },
             "response": {
                 "status": 201,
-                "body": "{\"executionResponse\":{\"dimensions\":[{\"headers\":[{\"measureGroupHeader\":{\"items\":[{\"measureHeaderItem\":{\"name\":\"Won\",\"format\":\"$#,##0.00\",\"localIdentifier\":\"m_acugFHNJgsBy\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1249\",\"identifier\":\"acugFHNJgsBy\"}}]}}]}],\"links\":{\"executionResult\":\"/gdc/app/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty/executionResults/4446549123822190080?c=fb38b6ae90f2bd566afb848d7556f9dd&q=eAEtTksOgkAMvUtxSRz8QeACxo0748K4wJkBQUqxFA0h3N0Zdff6%2Bn4ToBWudA%2FZZYJ%2BQMx5hAwg%0ABKmksQ6eqXXXT3YwjlCl0QqNKvhOmyp56th2xj4S1KXlEtOXYEw7GRXdarVab1NnL4gxF2deBGEQ%0ARMsogvkaAtPbN%2F%2FT90xDB47W1AzY%2Bo%2FX2I5Yjjn6Maf2O8vA%2FAE4lDzy%0A&offset=0%2C0&limit=1000%2C1000&dimensions=1&totals=0\"}}}",
+                "body": "{\"executionResponse\":{\"dimensions\":[{\"headers\":[{\"measureGroupHeader\":{\"items\":[{\"measureHeaderItem\":{\"name\":\"Won\",\"format\":\"$#,##0.00\",\"localIdentifier\":\"m_acugFHNJgsBy\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1226\",\"identifier\":\"acugFHNJgsBy\"}}]}}]}],\"links\":{\"executionResult\":\"/gdc/app/projects/c76e0537d0614abb0027f7c992656b964922506f/executionResults/6968441254584187904?c=214148abdf5bf43c127f753f252d9174&q=eAEtjk0OgjAQhe8yuCQWGzWGCxg37owLwwLbYqidDilFBMLdHdTl%2B8v3JgimoRDPJRrI4eJjHZ3R%0AkIIi16FvIb8VKaCJoVaLmKDtEMswcJtbv%2BCkWYmHVgK1GM1Wt055e%2FBDJaN82360pGTV7HqSr6eg%0AuxUbKfc8ryhgGXm8StIkydZZxub3AntX8jAzPFC%2FkP%2BsY6CugWL%2BANHLPRs%3D%0A&offset=0%2C0&limit=1000%2C1000&dimensions=1&totals=0\"}}}",
                 "headers": {
                     "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
                     "Cache-Control": "no-cache, no-store, must-revalidate",
@@ -65,18 +65,18 @@
                     "Content-Type": "application/json;charset=utf-8"
                 }
             },
-            "uuid": "3a320c22-f64f-4a97-8d08-c1a48651b788"
+            "uuid": "5c6283c0-d547-43c8-a74d-f92b7f22929d"
         },
         {
-            "id": "878691b3-03ac-4753-b0f9-3895ba20dc10",
-            "name": "gdc_account_profile_4d3da5c4452c6948e790c2a1e3772dc3",
+            "id": "82aeac7f-8e2e-4f89-9b64-4c436e5c20c0",
+            "name": "gdc_account_profile_3ece989b2330f96ae7049a928bd1bc60",
             "request": {
-                "url": "/gdc/account/profile/4d3da5c4452c6948e790c2a1e3772dc3",
+                "url": "/gdc/account/profile/3ece989b2330f96ae7049a928bd1bc60",
                 "method": "GET"
             },
             "response": {
                 "status": 200,
-                "body": "{\"accountSetting\":{\"ssoProvider\":null,\"updated\":\"2022-04-07 12:23:51\",\"timezone\":null,\"position\":null,\"phoneNumber\":\"000000000\",\"login\":\"first.last@gooddata.com\",\"lastName\":\"Last\",\"firstName\":\"First\",\"created\":\"2018-12-07 13:29:48\",\"country\":null,\"companyName\":\"GoodData\",\"email\":\"first.last@gooddata.com\",\"authenticationModes\":[],\"language\":\"en-US\",\"ipWhitelist\":null,\"effectiveIpWhitelist\":null,\"links\":{\"self\":\"/gdc/account/profile/4d3da5c4452c6948e790c2a1e3772dc3\",\"projects\":\"/gdc/account/profile/4d3da5c4452c6948e790c2a1e3772dc3/projects\",\"domain\":\"/gdc/domains/default\",\"auditEvents\":\"/gdc/account/profile/4d3da5c4452c6948e790c2a1e3772dc3/auditEvents\"}}}",
+                "body": "{\"accountSetting\":{\"ssoProvider\":null,\"updated\":\"2018-07-10 05:03:49\",\"timezone\":null,\"position\":null,\"phoneNumber\":null,\"login\":\"chhung@lhv.vn\",\"lastName\":\"Cao\",\"firstName\":\"Hung\",\"created\":\"2018-07-10 05:01:50\",\"country\":null,\"companyName\":null,\"email\":\"chhung@lhv.vn\",\"authenticationModes\":[],\"language\":\"en-US\",\"ipWhitelist\":null,\"effectiveIpWhitelist\":null,\"links\":{\"self\":\"/gdc/account/profile/3ece989b2330f96ae7049a928bd1bc60\",\"projects\":\"/gdc/account/profile/3ece989b2330f96ae7049a928bd1bc60/projects\",\"domain\":\"/gdc/domains/default\",\"auditEvents\":\"/gdc/account/profile/3ece989b2330f96ae7049a928bd1bc60/auditEvents\"}}}",
                 "headers": {
                     "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
                     "vary": "origin,X-GDC-VERSION",
@@ -84,18 +84,18 @@
                     "cache-control": "no-cache, no-store, must-revalidate"
                 }
             },
-            "uuid": "878691b3-03ac-4753-b0f9-3895ba20dc10"
+            "uuid": "82aeac7f-8e2e-4f89-9b64-4c436e5c20c0"
         },
         {
-            "id": "484d8155-612d-45c7-8e55-e2b7532e41cb",
+            "id": "469469cc-75fd-475d-a6b4-7d1d9367f71c",
             "name": "gdc_internal_projects",
             "request": {
-                "url": "/gdc/internal/projects/?limit=100&offset=0&userId=4d3da5c4452c6948e790c2a1e3772dc3&projectStates=ENABLED&userState=ENABLED",
+                "url": "/gdc/internal/projects/?limit=100&offset=0&userId=3ece989b2330f96ae7049a928bd1bc60&projectStates=ENABLED&userState=ENABLED",
                 "method": "GET"
             },
             "response": {
                 "status": 200,
-                "body": "{\"userProjects\":{\"paging\":{\"offset\":0,\"limit\":100,\"count\":19,\"totalCount\":19},\"items\":[{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"_Thao project\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/sc548ag7m31wfot3nn9a0o8dwzfddluo\",\"projectUser\":\"/gdc/projects/sc548ag7m31wfot3nn9a0o8dwzfddluo/users/4d3da5c4452c6948e790c2a1e3772dc3\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"Cloned project\",\"projectTitle\":\"# Theme M2\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/va3dmcilkb28iatz907z8m93ia2u1elq\",\"projectUser\":\"/gdc/projects/va3dmcilkb28iatz907z8m93ia2u1elq/users/4d3da5c4452c6948e790c2a1e3772dc3\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"1. NEW UI(stg3)_ DO NOT DELETE\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/g2zpqxe8zk32vmjrux9mb3zywxat1w70\",\"projectUser\":\"/gdc/projects/g2zpqxe8zk32vmjrux9mb3zywxat1w70/users/4d3da5c4452c6948e790c2a1e3772dc3\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"corona virus\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/wnn4h8tawjp0op597eyzxcun66fagh3d\",\"projectUser\":\"/gdc/projects/wnn4h8tawjp0op597eyzxcun66fagh3d/users/4d3da5c4452c6948e790c2a1e3772dc3\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"demo1 <b>a</b>\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8\",\"projectUser\":\"/gdc/projects/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/users/4d3da5c4452c6948e790c2a1e3772dc3\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"Extended date KD (Don't delete)\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/atwx5j4ya3bhswkerz66ipof4jun01ev\",\"projectUser\":\"/gdc/projects/atwx5j4ya3bhswkerz66ipof4jun01ev/users/4d3da5c4452c6948e790c2a1e3772dc3\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"Good Sales test project\",\"projectTitle\":\"Good Sales\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/s9bap4zkhpn1cmuoopgwurnolvj9hto8\",\"projectUser\":\"/gdc/projects/s9bap4zkhpn1cmuoopgwurnolvj9hto8/users/4d3da5c4452c6948e790c2a1e3772dc3\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"Huyen's project\",\"projectTitle\":\"GoodSaleDemo2 - DO NOT DELETE\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/ryfz7w64063fkotl5mr0yv5ikpijt8s4\",\"projectUser\":\"/gdc/projects/ryfz7w64063fkotl5mr0yv5ikpijt8s4/users/4d3da5c4452c6948e790c2a1e3772dc3\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"GS many reports + element masking - do not delete\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/w7b2nrw3om5q6w3ne2qrw5jwv51r97hx\",\"projectUser\":\"/gdc/projects/w7b2nrw3om5q6w3ne2qrw5jwv51r97hx/users/4d3da5c4452c6948e790c2a1e3772dc3\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"has preset\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/k1cnlpyqevyeegcubva5yjtqffg3lyyf\",\"projectUser\":\"/gdc/projects/k1cnlpyqevyeegcubva5yjtqffg3lyyf/users/4d3da5c4452c6948e790c2a1e3772dc3\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"MAP Test project\",\"projectTitle\":\"MAP GoodSales\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/ofyndwehwd0gwipdtdlcv4cpd81qpa5x\",\"projectUser\":\"/gdc/projects/ofyndwehwd0gwipdtdlcv4cpd81qpa5x/users/4d3da5c4452c6948e790c2a1e3772dc3\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"QA LIVE EXAMPLE - DO NOT DELETE\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/y2lwt04m1kb3r4mlclsu39tmvf935vy9\",\"projectUser\":\"/gdc/projects/y2lwt04m1kb3r4mlclsu39tmvf935vy9/users/4d3da5c4452c6948e790c2a1e3772dc3\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"RAIL E2E test do not delete\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty\",\"projectUser\":\"/gdc/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty/users/4d3da5c4452c6948e790c2a1e3772dc3\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"Cloned project\",\"projectTitle\":\"RAIL HACKATHON\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/dgikb1s6a7fureddo2qvdn55adx9py1h\",\"projectUser\":\"/gdc/projects/dgikb1s6a7fureddo2qvdn55adx9py1h/users/4d3da5c4452c6948e790c2a1e3772dc3\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"RAIL test-do not delete\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/mbuumy476p78ybcceiru61hcyr8i8lo8\",\"projectUser\":\"/gdc/projects/mbuumy476p78ybcceiru61hcyr8i8lo8/users/4d3da5c4452c6948e790c2a1e3772dc3\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"Cloned project\",\"projectTitle\":\"RAIL test-do not delete JLI CLONE\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/y6bk8h3oxc4b1cs14dn2hacun7s6iykd\",\"projectUser\":\"/gdc/projects/y6bk8h3oxc4b1cs14dn2hacun7s6iykd/users/4d3da5c4452c6948e790c2a1e3772dc3\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"SDK8 Experimental Workspace (used for test mocks recording)\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/d79dpgty2b4ydewi6kbzqm4fq1be2ltm\",\"projectUser\":\"/gdc/projects/d79dpgty2b4ydewi6kbzqm4fq1be2ltm/users/4d3da5c4452c6948e790c2a1e3772dc3\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"test\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/s4olt3n7v1d2e86iavfylx4s3qzwdzyz\",\"projectUser\":\"/gdc/projects/s4olt3n7v1d2e86iavfylx4s3qzwdzyz/users/4d3da5c4452c6948e790c2a1e3772dc3\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"Test  CloudConnection\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/guz9gskz26amk6vdzg9m70sacwd0bawh\",\"projectUser\":\"/gdc/projects/guz9gskz26amk6vdzg9m70sacwd0bawh/users/4d3da5c4452c6948e790c2a1e3772dc3\"}}}]}}",
+                "body": "{\"userProjects\":{\"paging\":{\"offset\":0,\"limit\":100,\"count\":4,\"totalCount\":4},\"items\":[{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"_project many users, user groups - DO NOT DELETE\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/su97m0sh11g2apwq8zgg3khpla6dkfy9\",\"projectUser\":\"/gdc/projects/su97m0sh11g2apwq8zgg3khpla6dkfy9/users/3ece989b2330f96ae7049a928bd1bc60\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"GS Multiple Filters - DO NOT DELETE\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/l6486kmy6wsy2t4yj9qh98tst4cfd7xw\",\"projectUser\":\"/gdc/projects/l6486kmy6wsy2t4yj9qh98tst4cfd7xw/users/3ece989b2330f96ae7049a928bd1bc60\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"Test reference workspace Dec 12, 2022, 06:27\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/c76e0537d0614abb0027f7c992656b964922506f\",\"projectUser\":\"/gdc/projects/c76e0537d0614abb0027f7c992656b964922506f/users/3ece989b2330f96ae7049a928bd1bc60\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"Test reference workspace Dec 12, 2022, 11:42\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/nvcoxu8llumsyasb35pvbw3o0oi3m2u1\",\"projectUser\":\"/gdc/projects/nvcoxu8llumsyasb35pvbw3o0oi3m2u1/users/3ece989b2330f96ae7049a928bd1bc60\"}}}]}}",
                 "headers": {
                     "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
                     "Cache-Control": "no-cache, no-store, must-revalidate",
@@ -103,13 +103,13 @@
                     "Content-Type": "application/json;charset=utf-8"
                 }
             },
-            "uuid": "484d8155-612d-45c7-8e55-e2b7532e41cb"
+            "uuid": "469469cc-75fd-475d-a6b4-7d1d9367f71c"
         },
         {
-            "id": "6d068bf1-6fbb-4269-a9f9-4cdcc2936e70",
-            "name": "gdc_app_projects_frho3i7qc6epdek7mcgergm9vtm6o5ty_executionresults_4446549123822190080",
+            "id": "4e62f38f-4ade-49b6-bf91-d31af0119f2f",
+            "name": "gdc_app_projects_c76e0537d0614abb0027f7c992656b964922506f_executionresults_6968441254584187904",
             "request": {
-                "url": "/gdc/app/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty/executionResults/4446549123822190080?c=fb38b6ae90f2bd566afb848d7556f9dd&q=eAEtTksOgkAMvUtxSRz8QeACxo0748K4wJkBQUqxFA0h3N0Zdff6%2Bn4ToBWudA%2FZZYJ%2BQMx5hAwg%0ABKmksQ6eqXXXT3YwjlCl0QqNKvhOmyp56th2xj4S1KXlEtOXYEw7GRXdarVab1NnL4gxF2deBGEQ%0ARMsogvkaAtPbN%2F%2FT90xDB47W1AzY%2Bo%2FX2I5Yjjn6Maf2O8vA%2FAE4lDzy%0A&offset=0&limit=1000&dimensions=1&totals=0",
+                "url": "/gdc/app/projects/c76e0537d0614abb0027f7c992656b964922506f/executionResults/6968441254584187904?c=214148abdf5bf43c127f753f252d9174&q=eAEtjk0OgjAQhe8yuCQWGzWGCxg37owLwwLbYqidDilFBMLdHdTl%2B8v3JgimoRDPJRrI4eJjHZ3R%0AkIIi16FvIb8VKaCJoVaLmKDtEMswcJtbv%2BCkWYmHVgK1GM1Wt055e%2FBDJaN82360pGTV7HqSr6eg%0AuxUbKfc8ryhgGXm8StIkydZZxub3AntX8jAzPFC%2FkP%2BsY6CugWL%2BANHLPRs%3D%0A&offset=0&limit=1000&dimensions=1&totals=0",
                 "method": "GET"
             },
             "response": {
@@ -122,7 +122,7 @@
                     "Content-Type": "application/json;charset=utf-8"
                 }
             },
-            "uuid": "6d068bf1-6fbb-4269-a9f9-4cdcc2936e70"
+            "uuid": "4e62f38f-4ade-49b6-bf91-d31af0119f2f"
         }
     ]
 }

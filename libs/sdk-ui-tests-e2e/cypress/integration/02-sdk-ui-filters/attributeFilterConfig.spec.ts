@@ -24,7 +24,7 @@ const ITEM_SALES_REP_SELECTOR = ".s-attribute-filter-dropdown-configuration-item
 const CONFIGURATION_SELECTOR = ".s-attribute-filter-dropdown-configuration";
 
 // eslint-disable-next-line jest/no-disabled-tests
-describe.skip("Attribute filter Configuration", () => {
+describe.skip("Attribute filter Configuration", { tags: ["pre-merge_isolated_bear"] }, () => {
     beforeEach(() => {
         cy.login();
 

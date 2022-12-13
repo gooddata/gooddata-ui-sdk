@@ -8,7 +8,7 @@ describe("Pivot Table Aggregations remove one totals", () => {
         Navigation.visit("visualizations/pivot-table/pivot-table-one-total-aggregations-menu");
     });
 
-    it("should remove totals for one measure (SEPARATE)", () => {
+    it("should remove totals for one measure (SEPARATE)", { tags: ["pre-merge_isolated_bear"] }, () => {
         const table = new Table(".s-pivot-table-aggregations-menu");
         table.waitLoaded();
 

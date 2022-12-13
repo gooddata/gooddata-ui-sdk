@@ -1,7 +1,7 @@
 {
     "mappings": [
         {
-            "id": "9b03c7f3-3e60-421b-9ab7-af43e1a4a595",
+            "id": "a79e45a7-3b99-4f67-b0d1-71422868513a",
             "name": "gdc_account_login",
             "request": {
                 "url": "/gdc/account/login",
@@ -9,7 +9,7 @@
             },
             "response": {
                 "status": 200,
-                "body": "{\"userLogin\":{\"profile\":\"/gdc/account/profile/4d3da5c4452c6948e790c2a1e3772dc3\",\"state\":\"/gdc/account/login/4d3da5c4452c6948e790c2a1e3772dc3\"}}",
+                "body": "{\"userLogin\":{\"profile\":\"/gdc/account/profile/3ece989b2330f96ae7049a928bd1bc60\",\"state\":\"/gdc/account/login/3ece989b2330f96ae7049a928bd1bc60\"}}",
                 "headers": {
                     "expires": "Thu, 01 Jan 1970 00:00:00 GMT",
                     "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
@@ -20,7 +20,7 @@
                     "pragma": "no-cache"
                 }
             },
-            "uuid": "9b03c7f3-3e60-421b-9ab7-af43e1a4a595"
+            "uuid": "a79e45a7-3b99-4f67-b0d1-71422868513a"
         }
     ]
 }

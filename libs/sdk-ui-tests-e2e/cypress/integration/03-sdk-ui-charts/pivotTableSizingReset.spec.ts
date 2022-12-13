@@ -103,7 +103,7 @@ const checkWidthWithTolerance = (width: Cypress.Chainable<JQuery<number>>, expec
 
 // first attribute column
 
-describe("Pivot Table Sizing and Reset by double click", () => {
+describe("Pivot Table Sizing and Reset by double click", { tags: ["pre-merge_isolated_bear"] }, () => {
     beforeEach(() => {
         cy.login();
         Navigation.visit("visualizations/pivot-table/sizing/pivot-table-complex-reset");
