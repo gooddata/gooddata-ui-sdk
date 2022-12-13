@@ -33,7 +33,6 @@ $gd-width-resizer-hotpost-height: 40px;
 .dash-height-resizer-hotspot,
 .height-resizer-drag-preview {
     position: absolute;
-    z-index: 101;
     display: flex;
     align-items: center;
     overflow: hidden;
@@ -110,13 +109,13 @@ $gd-width-resizer-hotpost-height: 40px;
 .sdk-edit-mode-on {
     .resizer-drag-preview,
     .dash-height-resizer-hotspot,
+    .dash-width-resizer-hotspot,
     .height-resizer-drag-preview {
-        z-index: 110;
+        z-index: 101;
     }
 
     .dash-width-resizer-hotspot {
         position: absolute;
-        z-index: 101;
         left: 10px;
         overflow: hidden;
         height: 100%;
