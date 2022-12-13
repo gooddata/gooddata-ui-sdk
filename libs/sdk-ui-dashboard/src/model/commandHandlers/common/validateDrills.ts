@@ -47,8 +47,8 @@ export function* validateDrills(
     const invalidDrills = possibleInvalidDrills.filter(({ invalidDrills }) => invalidDrills.length > 0);
 
     if (invalidDrills.length === 0) {
-        yield put(uiActions.setInvalidDrillWidgetRefs([]));
-        yield put(uiActions.setInvalidUrlDrillWidgetRefs([]));
+        yield put(uiActions.removeInvalidDrillWidgetRefs(widgetsWithDrills.map(widgetRef)));
+        yield put(uiActions.removeInvalidUrlDrillWidgetRefs(widgetsWithDrills.map(widgetRef)));
         return;
     }
 
@@ -60,7 +60,7 @@ export function* validateDrills(
         ),
     );
 
-    yield put(uiActions.setInvalidDrillWidgetRefs(invalidDrills.map((drill) => drill.widget.ref)));
+    yield put(uiActions.addInvalidDrillWidgetRefs(invalidDrills.map((drill) => drill.widget.ref)));
 
     // custom URL drills have their own extra message
     const invalidCustomUrlDrills = invalidDrills.filter((drillInfo) =>
@@ -69,10 +69,10 @@ export function* validateDrills(
 
     if (invalidCustomUrlDrills.length > 0) {
         yield put(
-            uiActions.setInvalidUrlDrillWidgetRefs(invalidCustomUrlDrills.map((drill) => drill.widget.ref)),
+            uiActions.addInvalidUrlDrillWidgetRefs(invalidCustomUrlDrills.map((drill) => drill.widget.ref)),
         );
     } else {
-        yield put(uiActions.setInvalidUrlDrillWidgetRefs([]));
+        yield put(uiActions.removeInvalidUrlDrillWidgetRefs(widgetsWithDrills.map(widgetRef)));
     }
 }
 

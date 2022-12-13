@@ -74,10 +74,10 @@ function useDrillValidationMessages(): { messages: IMessage[]; onMessageClose: (
     const onMessageClose = useCallback(
         (id: string) => {
             if (id === DRILL_MESSAGE_ID) {
-                dispatch(uiActions.setInvalidDrillWidgetRefs([]));
+                dispatch(uiActions.resetInvalidDrillWidgetRefs());
             }
             if (id === URL_DRILL_MESSAGE_ID) {
-                dispatch(uiActions.setInvalidUrlDrillWidgetRefs([]));
+                dispatch(uiActions.resetInvalidUrlDrillWidgetRefs());
             }
         },
         [dispatch],
