@@ -76,7 +76,7 @@ export function WidthResizerHotspot({
             },
         },
 
-        [widget, insightsMap],
+        [widget, insightsMap, sectionIndex, itemIndex, currentWidth, minLimit, maxLimit],
     );
 
     useEffect(() => {

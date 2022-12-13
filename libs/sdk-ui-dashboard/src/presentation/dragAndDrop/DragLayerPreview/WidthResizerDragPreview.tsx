@@ -50,7 +50,13 @@ export function WidthResizerDragPreview(props: WidthResizerDragPreviewProps) {
             currentIndex: sizeAndCoords.currentIndex,
             limitReached: sizeAndCoords.limitReached,
         });
-    }, [sizeAndCoords.initialIndex, sizeAndCoords.currentIndex, sizeAndCoords.isLimited, setWidthState]);
+    }, [
+        sizeAndCoords.initialIndex,
+        sizeAndCoords.currentIndex,
+        sizeAndCoords.isLimited,
+        sizeAndCoords.limitReached,
+        setWidthState,
+    ]);
 
     return (
         <div className="s-resizer-drag-preview resizer-drag-preview" style={style}>
