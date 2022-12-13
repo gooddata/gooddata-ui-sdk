@@ -55,15 +55,20 @@ export class BearWorkspaceAccessControlService implements IWorkspaceAccessContro
         return this.authCall((sdk) => sdk.project.removeGrantees(objectUri, granteeUris));
     }
 
-    // TODO: TNT-1185 Implement method
-    public async changeAccess(
-        _sharedObject: ObjRef,
-        _grantees: GranteeWithGranularPermissions[],
-    ): Promise<void> {
-        return Promise.resolve();
+    public async changeAccess(sharedObject: ObjRef, grantees: GranteeWithGranularPermissions[]) {
+        // change access for grantees with some permissions provided
+        const granteesToGrantAccess = grantees.filter((grantee) => {
+            grantee.permissions.length > 0;
+        });
+        // revoke access for grantees with no permissions provided
+        const granteesToRevokeAccess = grantees.filter((grantee) => {
+            grantee.permissions.length === 0;
+        });
+
+        await this.revokeAccess(sharedObject, granteesToRevokeAccess);
+        await this.grantAccess(sharedObject, granteesToGrantAccess);
     }
 
-    // TODO: TNT-1185 Implement method
     public async getAvailableGrantees(
         _sharedObject: ObjRef,
         search?: string,

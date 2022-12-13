@@ -105,6 +105,8 @@ export class TigerWorkspaceAccessControlService implements IWorkspaceAccessContr
     public async getAccessList(_sharedObject: ObjRef): Promise<AccessGranteeDetail[]> {
         // GET /api/v1/actions/workspaces/{workspaceId}/dashboards/{dashboardId}/permissions
         const dashboardPermissions = await Promise.resolve(dummyPermissions);
+        // eslint-disable-next-line no-console
+        console.log("getting access list", dashboardPermissions);
         return [
             ...dashboardPermissions.users.map(convertUserWithPermissions),
             ...dashboardPermissions.userGroups.map(convertUserGroupWithPermissions),
@@ -125,11 +127,14 @@ export class TigerWorkspaceAccessControlService implements IWorkspaceAccessContr
         return this.changeAccess(sharedObject, grantees);
     }
 
-    // TODO: TNT-1185 Implement method
+    // TODO: connect to api-client when regenerated
     public async changeAccess(
         _sharedObject: ObjRef,
-        _grantees: GranteeWithGranularPermissions[],
+        grantees: GranteeWithGranularPermissions[],
     ): Promise<void> {
+        // /api/v1/actions/workspaces/{workspaceId}/dashboards/{dashboardId}/managePermissions
+        // eslint-disable-next-line no-console
+        console.log("changing permissions", grantees);
         return Promise.resolve();
     }
 
@@ -139,10 +144,12 @@ export class TigerWorkspaceAccessControlService implements IWorkspaceAccessContr
         _search?: string,
     ): Promise<IAvailableAccessGrantee[]> {
         // GET /api/v1/actions/workspaces/{workspaceId}/dashboards/{dashboardId}/availableAssignees
-        const dashboardAvailableAssignees = await Promise.resolve(dummyAvailableAssignees); // TODO: enable search here
+        const dashboardAvailableGrantees = await Promise.resolve(dummyAvailableAssignees); // TODO: enable search here
+        // eslint-disable-next-line no-console
+        console.log("getting available grantees", dashboardAvailableGrantees);
         return [
-            ...dashboardAvailableAssignees.users.map(convertAvailableUser),
-            ...dashboardAvailableAssignees.userGroups.map(convertAvailableUserGroup),
+            ...dashboardAvailableGrantees.users.map(convertAvailableUser),
+            ...dashboardAvailableGrantees.userGroups.map(convertAvailableUserGroup),
         ];
     }
 }
