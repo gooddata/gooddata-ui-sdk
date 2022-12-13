@@ -22,8 +22,13 @@ $attribute-filter-drag-handle-left: 10px;
 }
 
 .gd-dash-header-wrapper {
-    z-index: 6000; // overlay in Dashboard component start at index 5000
+    z-index: 100; // we have to leave this style unchanged because old plugins
     transition: left variables.$sidebar-transition-length;
+
+    &.gd-dash-header-wrapper-sdk-8-12 {
+        // style is added because we should keep old styles unchanged to not brake plugins
+        z-index: 6000; // overlay in Dashboard component start at index 5000
+    }
 
     .is-dashboard-loading & {
         z-index: 0;

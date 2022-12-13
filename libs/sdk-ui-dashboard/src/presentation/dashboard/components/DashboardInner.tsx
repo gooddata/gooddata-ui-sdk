@@ -31,7 +31,8 @@ export const DashboardInner: React.FC<IDashboardProps> = () => {
                 >
                     <DashboardSidebar DefaultSidebar={RenderModeAwareDashboardSidebar} />
                     <div className="gd-dash-content">
-                        <div className="gd-dash-header-wrapper">
+                        {/* gd-dash-header-wrapper-sdk-8-12 style is added because we should keep old styles unchanged to not brake plugins */}
+                        <div className="gd-dash-header-wrapper gd-dash-header-wrapper-sdk-8-12">
                             {/* Header z-index start at  6000 so we need force all overlays z-indexes start at 6000 to be under header */}
                             <OverlayControllerProvider overlayController={overlayController}>
                                 <DashboardHeader />
