@@ -10,7 +10,9 @@ import {
     isDrillToInsight,
 } from "@gooddata/sdk-model";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
+import { defineMessage } from "react-intl";
 import {
+    getDrillOriginLocalIdentifier,
     getLocalIdentifierOrDie,
     getValidDrillOriginAttributes,
 } from "../../../../_staging/drills/drillingUtils";
@@ -103,13 +105,18 @@ const createDashboardConfig = (
     };
 };
 
+const invalidUrlMessage = defineMessage({
+    id: "configurationPanel.drillConfig.drillIntoUrl.invalidCustomUrl",
+});
+
 const createUrlConfig = (
     drillData: IDrillToUrl,
     supportedItemsForWidget: IAvailableDrillTargets,
+    invalidCustomUrlDrillLocalIds: string[],
 ): IDrillToUrlConfig => {
-    const localIdentifier = isDrillFromAttribute(drillData.origin)
-        ? getLocalIdentifierOrDie(drillData.origin?.attribute)
-        : getLocalIdentifierOrDie(drillData.origin?.measure);
+    const localIdentifier = getDrillOriginLocalIdentifier(drillData);
+
+    const hasWarning = invalidCustomUrlDrillLocalIds.includes(localIdentifier);
 
     return {
         type: isDrillFromAttribute(drillData.origin) ? "attribute" : "measure",
@@ -119,6 +126,7 @@ const createUrlConfig = (
         drillTargetType: DRILL_TARGET_TYPE.DRILL_TO_URL,
         urlDrillTarget: buildUrlDrillTarget(drillData),
         complete: true,
+        warning: hasWarning ? invalidUrlMessage.id : undefined,
     };
 };
 
@@ -126,7 +134,11 @@ const createImplicitConfig = (): IDrillConfigItemBase => {
     return null as unknown as IDrillConfigItemBase;
 };
 
-const createConfig = (drillData: InsightDrillDefinition, supportedItemsForWidget: IAvailableDrillTargets) => {
+const createConfig = (
+    drillData: InsightDrillDefinition,
+    supportedItemsForWidget: IAvailableDrillTargets,
+    invalidCustomUrlDrillLocalIds: string[],
+) => {
     if (isDrillToInsight(drillData)) {
         return createInsightConfig(drillData, supportedItemsForWidget);
     }
@@ -136,7 +148,7 @@ const createConfig = (drillData: InsightDrillDefinition, supportedItemsForWidget
     }
 
     if (isDrillToUrl(drillData)) {
-        return createUrlConfig(drillData, supportedItemsForWidget);
+        return createUrlConfig(drillData, supportedItemsForWidget, invalidCustomUrlDrillLocalIds);
     }
 
     return createImplicitConfig();
@@ -145,6 +157,9 @@ const createConfig = (drillData: InsightDrillDefinition, supportedItemsForWidget
 export const getMappedConfigForWidget = (
     configForWidget: InsightDrillDefinition[],
     supportedItemsForWidget: IAvailableDrillTargets,
+    invalidCustomUrlDrillLocalIds: string[],
 ): IDrillConfigItem[] => {
-    return configForWidget.map((item) => createConfig(item, supportedItemsForWidget));
+    return configForWidget.map((item) =>
+        createConfig(item, supportedItemsForWidget, invalidCustomUrlDrillLocalIds),
+    );
 };

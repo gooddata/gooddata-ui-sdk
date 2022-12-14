@@ -219,7 +219,7 @@ export {
     selectIsExecutionResultReadyForExportByRef,
 } from "./executionResults/executionResultsSelectors";
 export { IExecutionResultEnvelope } from "./executionResults/types";
-export { UiState } from "./ui/uiState";
+export { UiState, InvalidCustomUrlDrillParameterInfo } from "./ui/uiState";
 export {
     selectIsScheduleEmailDialogOpen,
     selectIsScheduleEmailManagementDialogOpen,
@@ -249,7 +249,8 @@ export {
     selectWidgetsModification,
     selectSectionModification,
     selectInvalidDrillWidgetRefs,
-    selectInvalidUrlDrillWidgetRefs,
+    selectInvalidUrlDrillParameterDrillLocalIdsByWidgetRef,
+    selectInvalidUrlDrillParameterWidgetRefs,
 } from "./ui/uiSelectors";
 export { uiActions } from "./ui";
 export { RenderModeState } from "./renderMode/renderModeState";

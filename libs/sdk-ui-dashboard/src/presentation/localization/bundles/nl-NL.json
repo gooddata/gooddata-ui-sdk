@@ -292,6 +292,7 @@
     "configurationPanel.drillConfig.drillIntoDashboard": "Drill in dashboard",
     "configurationPanel.drillConfig.drillIntoInsight": "Inzoomen op inzicht",
     "configurationPanel.drillConfig.drillIntoUrl": "Inzoomen op URL",
+    "configurationPanel.drillConfig.drillIntoUrl.invalidCustomUrl": "Ongeldige URL-parameters",
     "configurationPanel.drillConfig.select": "Actie kiezen…",
     "configurationPanel.drillConfig.drillIntoDashboard.dateFilterWarning": "De datum-attribuutwaarde van het inzicht wordt niet overgedragen om het doel-dashboard te filteren.",
     "configurationPanel.unlistedDashboardTab": "Niet-vermeld dashboard",

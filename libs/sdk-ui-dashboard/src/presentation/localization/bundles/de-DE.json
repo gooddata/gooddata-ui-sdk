@@ -292,6 +292,7 @@
     "configurationPanel.drillConfig.drillIntoDashboard": "Dashboard verfeinern",
     "configurationPanel.drillConfig.drillIntoInsight": "Betrachtung verfeinern",
     "configurationPanel.drillConfig.drillIntoUrl": "URL-Ansicht verfeinern",
+    "configurationPanel.drillConfig.drillIntoUrl.invalidCustomUrl": "Ungültige URL-Parameter",
     "configurationPanel.drillConfig.select": "Befehl auswählen…",
     "configurationPanel.drillConfig.drillIntoDashboard.dateFilterWarning": "Der Datumsattributwert aus der Betrachtung wird nicht übertragen, um das Ziel-Dashboard zu filtern.",
     "configurationPanel.unlistedDashboardTab": "Nicht aufgeführtes Dashboard",

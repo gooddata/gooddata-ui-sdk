@@ -3,13 +3,15 @@
 import { DashboardContext } from "../../types/commonTypes";
 import { RemoveDrillsForInsightWidget } from "../../commands";
 import { SagaIterator } from "redux-saga";
-import { put, select } from "redux-saga/effects";
+import { call, put, select } from "redux-saga/effects";
 import { DashboardInsightWidgetDrillsRemoved, insightWidgetDrillsRemoved } from "../../events/insight";
-import { selectWidgetsMap } from "../../store/layout/layoutSelectors";
+import { selectWidgetByRef, selectWidgetsMap } from "../../store/layout/layoutSelectors";
 import { validateExistingInsightWidget } from "./validation/widgetValidations";
 import { validateRemoveDrillsByOrigins } from "./validation/removeDrillsSelectorValidation";
 import { layoutActions } from "../../store/layout";
 import { existsDrillDefinitionInArray } from "./validation/insightDrillDefinitionUtils";
+import { validateDrillToCustomUrlParams } from "../common/validateDrillToCustomUrlParams";
+import { validateDrills } from "../common/validateDrills";
 
 export function* removeDrillsForInsightWidgetHandler(
     ctx: DashboardContext,
@@ -39,6 +41,11 @@ export function* removeDrillsForInsightWidgetHandler(
             },
         }),
     );
+
+    // need to select the update widget to validate it by its new value
+    const updatedWidget = yield select(selectWidgetByRef(widgetRef));
+    yield call(validateDrills, ctx, cmd, [updatedWidget]);
+    yield call(validateDrillToCustomUrlParams, [updatedWidget]);
 
     return insightWidgetDrillsRemoved(ctx, widgetRef, drillsToRemove, correlationId);
 }

@@ -292,6 +292,7 @@
     "configurationPanel.drillConfig.drillIntoDashboard": "ダッシュボードにドリル",
     "configurationPanel.drillConfig.drillIntoInsight": "インサイトにドリル",
     "configurationPanel.drillConfig.drillIntoUrl": "URL にドリル",
+    "configurationPanel.drillConfig.drillIntoUrl.invalidCustomUrl": "無効な URL パラメーター",
     "configurationPanel.drillConfig.select": "アクションを選択…",
     "configurationPanel.drillConfig.drillIntoDashboard.dateFilterWarning": "インサイトの日付アトリビュート値は、ターゲットダッシュボードをフィルタリングするために転送されません。",
     "configurationPanel.unlistedDashboardTab": "リストにないダッシュボード",

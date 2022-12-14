@@ -34,19 +34,14 @@ export function* validateDrills(
     cmd: IDashboardCommand,
     widgets: (IKpiWidget | IInsightWidget)[],
 ) {
-    const widgetsWithDrills = widgets.filter((widget) => widget.drills.length > 0);
-    if (!widgetsWithDrills.length) {
-        return;
-    }
-
     const possibleInvalidDrills: SagaReturnType<typeof validateWidgetDrills>[] = yield all(
-        widgetsWithDrills.map((widget) => call(validateWidgetDrills, ctx, cmd, widget)),
+        widgets.map((widget) => call(validateWidgetDrills, ctx, cmd, widget)),
     );
 
     const invalidDrills = possibleInvalidDrills.filter(({ invalidDrills }) => invalidDrills.length > 0);
 
     if (invalidDrills.length === 0) {
-        yield put(uiActions.removeInvalidDrillWidgetRefs(widgetsWithDrills.map(widgetRef)));
+        yield put(uiActions.removeInvalidDrillWidgetRefs(widgets.map(widgetRef)));
     } else {
         yield all(
             invalidDrills.map((drillInfo) =>

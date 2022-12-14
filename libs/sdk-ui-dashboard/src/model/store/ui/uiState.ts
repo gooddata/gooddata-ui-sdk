@@ -1,9 +1,19 @@
 // (C) 2021-2022 GoodData Corporation
-import { ObjRef } from "@gooddata/sdk-model";
+import { ObjRef, Identifier, Uri } from "@gooddata/sdk-model";
 
 import { ILayoutCoordinates, IMenuButtonItemsVisibility } from "../../../types";
 import { DraggableLayoutItem } from "../../../presentation/dragAndDrop/types";
 import { IDashboardWidgetOverlay } from "../../types/commonTypes";
+
+/**
+ * @alpha
+ */
+export interface InvalidCustomUrlDrillParameterInfo {
+    widgetId: Identifier;
+    widgetUri: Uri;
+    widgetRef: ObjRef;
+    drillsWithInvalidParametersLocalIds: string[];
+}
 
 /**
  * @alpha
@@ -54,7 +64,7 @@ export interface UiState {
     activeSectionIndex: number | undefined;
     drillValidationMessages: {
         invalidDrillWidgetRefs: ObjRef[];
-        invalidUrlDrillWidgetRefs: ObjRef[];
+        invalidCustomUrlDrillParameterWidgets: InvalidCustomUrlDrillParameterInfo[];
     };
     draggingWidgetSource: DraggableLayoutItem | undefined;
     draggingWidgetTarget: ILayoutCoordinates | undefined;
@@ -104,7 +114,7 @@ export const uiInitialState: UiState = {
     activeSectionIndex: undefined,
     drillValidationMessages: {
         invalidDrillWidgetRefs: [],
-        invalidUrlDrillWidgetRefs: [],
+        invalidCustomUrlDrillParameterWidgets: [],
     },
     draggingWidgetSource: undefined,
     draggingWidgetTarget: undefined,

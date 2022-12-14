@@ -97,7 +97,7 @@ const DrillConfigItem: React.FunctionComponent<IDrillConfigItemProps> = ({
                     <DrillTargets item={item} onSetup={onSetup} />
                     {!!item.warning && (
                         <div className="drill-config-target-warning s-drill-config-target-warning">
-                            <span className="icon-warning" />
+                            <span className="gd-icon-warning" />
                             <span>
                                 <FormattedMessage id={item.warning} />
                             </span>

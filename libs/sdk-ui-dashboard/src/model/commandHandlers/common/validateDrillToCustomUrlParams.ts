@@ -24,22 +24,16 @@ interface IInvalidParamsInfo {
 }
 
 export function* validateDrillToCustomUrlParams(widgets: IInsightWidget[]) {
-    const widgetsWithDrills = widgets.filter((widget) => widget.drills.length > 0);
-    if (!widgetsWithDrills.length) {
-        return;
-    }
-
     const possibleInvalidDrills: SagaReturnType<typeof validateWidgetDrillToCustomUrlParams>[] = yield all(
-        widgetsWithDrills.map((widget) => call(validateWidgetDrillToCustomUrlParams, widget)),
+        widgets.map((widget) => call(validateWidgetDrillToCustomUrlParams, widget)),
     );
 
     const invalidDrills = possibleInvalidDrills.filter(({ invalidDrills }) => invalidDrills.length > 0);
 
     if (invalidDrills.length === 0) {
-        yield put(uiActions.removeInvalidUrlDrillWidgetRefs(widgetsWithDrills.map(widgetRef)));
+        yield put(uiActions.resetInvalidCustomUrlDrillParameterWidget(widgets));
     } else {
-        // TODO be more specific about which drills have the problem, this is useful in the warning
-        yield put(uiActions.addInvalidUrlDrillWidgetRefs(invalidDrills.map((drill) => drill.widget.ref)));
+        yield put(uiActions.setInvalidCustomUrlDrillParameterWidgets(invalidDrills));
     }
 }
 
