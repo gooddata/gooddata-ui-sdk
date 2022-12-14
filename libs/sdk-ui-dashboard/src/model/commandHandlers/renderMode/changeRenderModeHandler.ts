@@ -10,6 +10,8 @@ import { selectDashboardEditModeDevRollout } from "../../store/config/configSele
 import { resetDashboardHandler } from "../dashboard/resetDashboardHandler";
 import { validateDrills } from "../common/validateDrills";
 import { selectAllAnalyticalWidgets } from "../../store/layout/layoutSelectors";
+import { validateDrillToCustomUrlParams } from "../common/validateDrillToCustomUrlParams";
+import { isInsightWidget } from "@gooddata/sdk-model";
 
 export function* changeRenderModeHandler(
     ctx: DashboardContext,
@@ -34,6 +36,7 @@ export function* changeRenderModeHandler(
                 selectAllAnalyticalWidgets,
             );
             yield call(validateDrills, ctx, cmd, widgets);
+            yield call(validateDrillToCustomUrlParams, widgets.filter(isInsightWidget));
         }
 
         return renderModeChanged(ctx, renderMode, correlationId);

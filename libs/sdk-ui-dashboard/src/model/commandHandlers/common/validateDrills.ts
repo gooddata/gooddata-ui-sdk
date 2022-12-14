@@ -4,7 +4,6 @@ import {
     IInsightWidget,
     IKpiWidget,
     InsightDrillDefinition,
-    isDrillToCustomUrl,
     isInsightWidget,
     IWidget,
     widgetRef,
@@ -48,31 +47,16 @@ export function* validateDrills(
 
     if (invalidDrills.length === 0) {
         yield put(uiActions.removeInvalidDrillWidgetRefs(widgetsWithDrills.map(widgetRef)));
-        yield put(uiActions.removeInvalidUrlDrillWidgetRefs(widgetsWithDrills.map(widgetRef)));
-        return;
-    }
-
-    yield all(
-        invalidDrills.map((drillInfo) =>
-            isInsightWidget(drillInfo.widget)
-                ? call(removeInsightWidgetDrills, ctx, cmd, drillInfo.widget, drillInfo.invalidDrills)
-                : call(removeKpiWidgetDrill, ctx, cmd, drillInfo.widget),
-        ),
-    );
-
-    yield put(uiActions.addInvalidDrillWidgetRefs(invalidDrills.map((drill) => drill.widget.ref)));
-
-    // custom URL drills have their own extra message
-    const invalidCustomUrlDrills = invalidDrills.filter((drillInfo) =>
-        drillInfo.invalidDrills.some((drill) => isDrillToCustomUrl(drill)),
-    );
-
-    if (invalidCustomUrlDrills.length > 0) {
-        yield put(
-            uiActions.addInvalidUrlDrillWidgetRefs(invalidCustomUrlDrills.map((drill) => drill.widget.ref)),
-        );
     } else {
-        yield put(uiActions.removeInvalidUrlDrillWidgetRefs(widgetsWithDrills.map(widgetRef)));
+        yield all(
+            invalidDrills.map((drillInfo) =>
+                isInsightWidget(drillInfo.widget)
+                    ? call(removeInsightWidgetDrills, ctx, cmd, drillInfo.widget, drillInfo.invalidDrills)
+                    : call(removeKpiWidgetDrill, ctx, cmd, drillInfo.widget),
+            ),
+        );
+
+        yield put(uiActions.addInvalidDrillWidgetRefs(invalidDrills.map((drill) => drill.widget.ref)));
     }
 }
 

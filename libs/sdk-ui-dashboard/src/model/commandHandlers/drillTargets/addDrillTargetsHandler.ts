@@ -11,6 +11,7 @@ import { selectEnableKPIDashboardDrillFromAttribute } from "../../store/config/c
 import { availableDrillTargetsValidation } from "./validation/availableDrillTargetsValidation";
 import { validateDrills } from "../common/validateDrills";
 import { selectIsInEditMode } from "../../store/renderMode/renderModeSelectors";
+import { validateDrillToCustomUrlParams } from "../common/validateDrillToCustomUrlParams";
 
 export function* addDrillTargetsHandler(
     ctx: DashboardContext,
@@ -38,17 +39,19 @@ export function* addDrillTargetsHandler(
 
     yield put(
         drillTargetsActions.addDrillTargets({
-            identifier: identifier,
-            uri: uri,
+            identifier,
+            uri,
             ref,
             availableDrillTargets: drillTarget,
         }),
     );
 
     // in edit mode, we need to remove invalid drills in case the insight in the widget changes its drill targets
+    // and also validate drill to custom URL parameters
     const isInEditMode: ReturnType<typeof selectIsInEditMode> = yield select(selectIsInEditMode);
     if (isInEditMode) {
         yield call(validateDrills, ctx, cmd, [insightWidget]);
+        yield call(validateDrillToCustomUrlParams, [insightWidget]);
     }
 
     return drillTargetsAdded(ctx, ref, availableDrillTargets, correlationId);
