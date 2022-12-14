@@ -6,6 +6,7 @@ import {
     IAccessControlAware,
     ShareStatus,
     IAccessGrantee,
+    IDashboardPermissions,
 } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
@@ -51,4 +52,5 @@ export interface IShareDialogProps {
     onError?: (error: GoodDataSdkError) => void;
     isLockingSupported: boolean;
     labels: IShareDialogLabels;
+    dashboardPermissions: IDashboardPermissions;
 }

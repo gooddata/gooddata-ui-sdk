@@ -22,6 +22,7 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
         grantees,
         sharedObject,
         isDirty,
+        dashboardPermissions,
         onCancel,
         onSubmit,
         onGranteeDelete,
@@ -60,6 +61,7 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
             onSubmit={onSubmit}
         >
             <ShareGranteeContent
+                dashboardPermissions={dashboardPermissions}
                 isLoading={isLoading}
                 grantees={granteeList}
                 areGranularPermissionsSupported={areGranularPermissionsSupported}

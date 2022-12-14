@@ -1,24 +1,26 @@
 // (C) 2022 GoodData Corporation
 
-import React from "react";
+import React, { useMemo } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
+import { IDashboardPermissions } from "@gooddata/sdk-model";
 
 import { GranteeUserIcon } from "../GranteeIcons";
 
 import { GranteeItem, IGranularGranteeUser } from "../types";
-import { getGranteeLabel } from "../utils";
+import { getGranteeLabel, getGranularGranteePermissionId } from "../utils";
 
 import { GranularPermissionsDropdownBody } from "./GranularPermissionsDropdownBody";
 
 interface IGranularGranteeUserItemProps {
     grantee: IGranularGranteeUser;
+    dashboardPermissions: IDashboardPermissions;
     onChange: (grantee: GranteeItem) => void;
     onDelete: (grantee: GranteeItem) => void;
 }
 
 export const GranularGranteeUserItem: React.FC<IGranularGranteeUserItemProps> = (props) => {
-    const { grantee, onChange, onDelete } = props;
+    const { grantee, dashboardPermissions, onChange, onDelete } = props;
     const intl = useIntl();
     const itemClassName = cx(
         { "s-share-dialog-current-user": grantee.isCurrentUser },
@@ -27,13 +29,17 @@ export const GranularGranteeUserItem: React.FC<IGranularGranteeUserItemProps> = 
     );
 
     const userName = getGranteeLabel(grantee, intl);
+    const permissionId = useMemo(
+        () => getGranularGranteePermissionId(grantee.permissions[0]),
+        [grantee, intl],
+    );
 
     return (
         <div className={itemClassName}>
             <GranularPermissionsDropdownBody
+                dashboardPermissions={dashboardPermissions}
                 grantee={grantee}
-                // TODO: Update with selected permission
-                value={intl.formatMessage({ id: "shareDialog.share.granular.grantee.permission.edit" })}
+                value={intl.formatMessage({ id: permissionId })}
                 onChange={onChange}
                 onDelete={onDelete}
             />

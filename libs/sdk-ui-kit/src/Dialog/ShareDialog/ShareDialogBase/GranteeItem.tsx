@@ -170,13 +170,28 @@ const GranteeGroupItem: React.FC<IGranteeGroupItemProps> = (props) => {
  * @internal
  */
 export const GranteeItemComponent: React.FC<IGranteeItemProps> = (props) => {
-    const { grantee, mode, areGranularPermissionsSupported, onDelete, onChange } = props;
+    const { grantee, mode, areGranularPermissionsSupported, dashboardPermissions, onDelete, onChange } =
+        props;
 
     if (areGranularPermissionsSupported) {
         if (isGranularGranteeUser(grantee)) {
-            return <GranularGranteeUserItem grantee={grantee} onChange={onChange} onDelete={onDelete} />;
+            return (
+                <GranularGranteeUserItem
+                    dashboardPermissions={dashboardPermissions}
+                    grantee={grantee}
+                    onChange={onChange}
+                    onDelete={onDelete}
+                />
+            );
         } else if (isGranularGranteeGroup(grantee)) {
-            return <GranularGranteeGroupItem grantee={grantee} onChange={onChange} onDelete={onDelete} />;
+            return (
+                <GranularGranteeGroupItem
+                    dashboardPermissions={dashboardPermissions}
+                    grantee={grantee}
+                    onChange={onChange}
+                    onDelete={onDelete}
+                />
+            );
         }
     } else {
         if (isGranteeUser(grantee)) {

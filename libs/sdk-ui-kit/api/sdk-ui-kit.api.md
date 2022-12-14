@@ -20,6 +20,7 @@ import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAuditableUsers } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IColorPaletteDefinition } from '@gooddata/sdk-model';
+import { IDashboardPermissions } from '@gooddata/sdk-model';
 import { IMeasureSortTarget } from '@gooddata/sdk-model';
 import { IMetadataObjectBase } from '@gooddata/sdk-model';
 import { IntlShape } from 'react-intl';
@@ -726,6 +727,8 @@ export interface IAddGranteeBaseProps {
     // (undocumented)
     currentUserRef: ObjRef;
     // (undocumented)
+    dashboardPermissions: IDashboardPermissions;
+    // (undocumented)
     isDirty: boolean;
     // (undocumented)
     onAddUserOrGroups?: (grantee: GranteeItem) => void;
@@ -737,6 +740,8 @@ export interface IAddGranteeBaseProps {
     onDelete: (grantee: GranteeItem) => void;
     // (undocumented)
     onSubmit: () => void;
+    // (undocumented)
+    sharedObjectRef: ObjRef;
 }
 
 // @internal (undocumented)
@@ -1793,6 +1798,8 @@ export interface IGranteeItemProps {
     // (undocumented)
     areGranularPermissionsSupported?: boolean;
     // (undocumented)
+    dashboardPermissions: IDashboardPermissions;
+    // (undocumented)
     grantee: GranteeItem;
     // (undocumented)
     mode: DialogModeType;
@@ -1821,17 +1828,17 @@ export interface IGranteeUser extends IGranteeBase {
 // @internal (undocumented)
 export interface IGranularGranteeGroup extends IGranteeGroup {
     // (undocumented)
-    inheritedPermissions: IAccessGranularPermission[];
+    inheritedPermissions?: IAccessGranularPermission[];
     // (undocumented)
-    permissions: IAccessGranularPermission[];
+    permissions?: IAccessGranularPermission[];
 }
 
 // @internal (undocumented)
 export interface IGranularGranteeUser extends IGranteeUser {
     // (undocumented)
-    inheritedPermissions: IAccessGranularPermission[];
+    inheritedPermissions?: IAccessGranularPermission[];
     // (undocumented)
-    permissions: IAccessGranularPermission[];
+    permissions?: IAccessGranularPermission[];
 }
 
 // @internal (undocumented)
@@ -3392,6 +3399,8 @@ export interface IShareDialogBaseProps {
     // (undocumented)
     currentUserRef: ObjRef;
     // (undocumented)
+    dashboardPermissions: IDashboardPermissions;
+    // (undocumented)
     onCancel: () => void;
     // (undocumented)
     onError: (err: Error) => void;
@@ -3420,6 +3429,8 @@ export interface IShareDialogProps {
     // (undocumented)
     currentUserRef: ObjRef;
     // (undocumented)
+    dashboardPermissions: IDashboardPermissions;
+    // (undocumented)
     isLockingSupported: boolean;
     // (undocumented)
     labels: IShareDialogLabels;
@@ -3447,6 +3458,8 @@ export interface ISharedObject extends IAccessControlAware, IAuditableUsers {
 export interface IShareGranteeBaseProps {
     // (undocumented)
     currentUserRef: ObjRef;
+    // (undocumented)
+    dashboardPermissions: IDashboardPermissions;
     // (undocumented)
     grantees: GranteeItem[];
     // (undocumented)
@@ -3479,6 +3492,8 @@ export interface IShareGranteeBaseProps {
 export interface IShareGranteeContentProps {
     // (undocumented)
     areGranularPermissionsSupported?: boolean;
+    // (undocumented)
+    dashboardPermissions: IDashboardPermissions;
     // (undocumented)
     grantees: GranteeItem[];
     // (undocumented)

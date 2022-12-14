@@ -35,6 +35,7 @@ export const ShareDialog: React.FC<IShareDialogProps> = (props) => {
         onError,
         isLockingSupported,
         labels,
+        dashboardPermissions,
     } = props;
     const effectiveBackend = useBackendStrict(backend);
     const effectiveWorkspace = useWorkspaceStrict(workspace);
@@ -105,6 +106,7 @@ export const ShareDialog: React.FC<IShareDialogProps> = (props) => {
                         <ShareDialogBase
                             currentUserRef={currentUserRef}
                             sharedObject={affectedSharedObject}
+                            dashboardPermissions={dashboardPermissions}
                             onCancel={onCancel}
                             onSubmit={onSubmit}
                             onError={onShareDialogBaseError}

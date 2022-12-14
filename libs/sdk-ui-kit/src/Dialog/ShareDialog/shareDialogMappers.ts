@@ -5,7 +5,6 @@ import {
     ObjRef,
     IWorkspaceUser,
     ShareStatus,
-    IWorkspaceUserGroup,
     AccessGranteeDetail,
     IAccessGrantee,
     isUserAccess,
@@ -15,6 +14,8 @@ import {
     isAccessWithGranularPermissions,
     IUserGroupAccess,
     IUserGroupAccessWithGranularPermissions,
+    IAvailableUserAccessGrantee,
+    IAvailableUserGroupAccessGrantee,
 } from "@gooddata/sdk-model";
 import { typesUtils } from "@gooddata/util";
 
@@ -48,13 +49,13 @@ const mapUserStatusToGranteeStatus = (status: "ENABLED" | "DISABLED"): GranteeSt
  * @internal
  */
 export const mapWorkspaceUserToGrantee = (
-    user: IWorkspaceUser,
+    user: IAvailableUserAccessGrantee,
     currentUserRef: ObjRef,
 ): IGranteeUser | IGranularGranteeUser => {
     return {
         type: "user",
         id: user.ref,
-        name: mapUserFullName(user),
+        name: user.name,
         email: user.email,
         isOwner: false,
         isCurrentUser: areObjRefsEqual(user.ref, currentUserRef),
@@ -92,7 +93,9 @@ export const mapUserAccessToGrantee = (
 /**
  * @internal
  */
-export const mapWorkspaceUserGroupToGrantee = (userGroup: IWorkspaceUserGroup): IGranteeGroup => {
+export const mapWorkspaceUserGroupToGrantee = (
+    userGroup: IAvailableUserGroupAccessGrantee,
+): IGranteeGroup => {
     return {
         id: userGroup.ref,
         type: "group",

@@ -2,30 +2,36 @@
 
 import React, { useMemo } from "react";
 import { useIntl } from "react-intl";
+import { IDashboardPermissions } from "@gooddata/sdk-model";
 
 import { GranteeGroupIcon } from "../GranteeIcons";
-import { GranteeItem, IGranularGranteeGroup } from "../types";
-import { getGranteeLabel } from "../utils";
+import { GranteeItem, IGranularGrantee } from "../types";
+import { getGranteeLabel, getGranularGranteePermissionId } from "../utils";
 
 import { GranularPermissionsDropdownBody } from "./GranularPermissionsDropdownBody";
 
 interface IGranularGranteeGroupItemProps {
-    grantee: IGranularGranteeGroup;
+    grantee: IGranularGrantee;
+    dashboardPermissions: IDashboardPermissions;
     onChange: (grantee: GranteeItem) => void;
     onDelete: (grantee: GranteeItem) => void;
 }
 
 export const GranularGranteeGroupItem: React.FC<IGranularGranteeGroupItemProps> = (props) => {
-    const { grantee, onChange, onDelete } = props;
+    const { grantee, dashboardPermissions, onChange, onDelete } = props;
     const intl = useIntl();
     const groupName = useMemo(() => getGranteeLabel(grantee, intl), [grantee, intl]);
+    const permissionId = useMemo(
+        () => getGranularGranteePermissionId(grantee.permissions[0]),
+        [grantee, intl],
+    );
 
     return (
         <div className="gd-share-dialog-grantee-item">
             <GranularPermissionsDropdownBody
+                dashboardPermissions={dashboardPermissions}
                 grantee={grantee}
-                // TODO: Update with selected permission
-                value={intl.formatMessage({ id: "shareDialog.share.granular.grantee.permission.edit" })}
+                value={intl.formatMessage({ id: permissionId })}
                 onChange={onChange}
                 onDelete={onDelete}
             />

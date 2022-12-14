@@ -35,6 +35,8 @@ export const AddGranteeBase: React.FC<IAddGranteeBaseProps> = (props) => {
         currentUserRef,
         isDirty,
         areGranularPermissionsSupported,
+        dashboardPermissions,
+        sharedObjectRef,
         onCancel,
         onSubmit,
         onBackClick,
@@ -62,10 +64,12 @@ export const AddGranteeBase: React.FC<IAddGranteeBaseProps> = (props) => {
             headerLeftButtonRenderer={backButtonRenderer}
         >
             <AddGranteeContent
+                dashboardPermissions={dashboardPermissions}
                 currentUserRef={currentUserRef}
                 addedGrantees={addedGrantees}
                 appliedGrantees={appliedGrantees}
                 areGranularPermissionsSupported={areGranularPermissionsSupported}
+                sharedObjectRef={sharedObjectRef}
                 onAddUserOrGroups={onAddUserOrGroups}
                 onDelete={onDelete}
             />

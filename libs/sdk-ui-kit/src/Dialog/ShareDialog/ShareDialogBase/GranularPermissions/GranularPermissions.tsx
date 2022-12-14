@@ -2,10 +2,11 @@
 
 import React from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
+import { IDashboardPermissions } from "@gooddata/sdk-model";
 
 import { GranularPermissionItem } from "./GranularPermissionItem";
 
-import { GranteeItem, IGranularPermissionTypeItem } from "../types";
+import { GranteeItem, IGranularGrantee, IGranularPermissionTypeItem } from "../types";
 
 import { ItemsWrapper, Separator } from "../../../../List";
 import { Overlay } from "../../../../Overlay";
@@ -13,7 +14,8 @@ import { IAlignPoint } from "../../../../typings/positioning";
 
 interface IGranularPermissionsProps {
     alignTo: string;
-    grantee: GranteeItem;
+    grantee: IGranularGrantee;
+    dashboardPermissions: IDashboardPermissions;
     isShowDropdown: boolean;
     toggleDropdown(): void;
     onChange: (grantee: GranteeItem) => void;
@@ -22,26 +24,31 @@ interface IGranularPermissionsProps {
 
 const overlayAlignPoints: IAlignPoint[] = [{ align: "br tr" }];
 
-const getPermissionTypeItems = (intl: IntlShape): IGranularPermissionTypeItem[] => {
+const getPermissionTypeItems = (
+    intl: IntlShape,
+    dashboardPermissions: IDashboardPermissions,
+): IGranularPermissionTypeItem[] => {
     const permissionTypeItems: IGranularPermissionTypeItem[] = [];
+
+    // EDIT - can change all
+    // SHARE - can only change <= SHARE
+    // VIEW - can only change <= VIEW
+
     permissionTypeItems.push(
         {
             id: "edit",
             title: intl.formatMessage({ id: "shareDialog.share.granular.grantee.permission.edit" }),
-            // TODO: update with proper logic
-            disabled: false,
+            disabled: dashboardPermissions.canEditDashboard ? false : true,
         },
         {
             id: "share",
             title: intl.formatMessage({ id: "shareDialog.share.granular.grantee.permission.share" }),
-            // TODO: update with proper logic
-            disabled: true,
+            disabled: dashboardPermissions.canShareDashboard ? false : true,
         },
         {
             id: "view",
             title: intl.formatMessage({ id: "shareDialog.share.granular.grantee.permission.view" }),
-            // TODO: update with proper logic
-            disabled: true,
+            disabled: dashboardPermissions.canViewDashboard ? false : true,
         },
     );
 
@@ -51,11 +58,12 @@ const getPermissionTypeItems = (intl: IntlShape): IGranularPermissionTypeItem[] 
 export const GranularPermissions: React.FC<IGranularPermissionsProps> = ({
     alignTo,
     isShowDropdown,
+    dashboardPermissions,
     toggleDropdown,
     onChange,
 }) => {
     const intl = useIntl();
-    const permissions = getPermissionTypeItems(intl);
+    const permissions = getPermissionTypeItems(intl, dashboardPermissions);
 
     if (!isShowDropdown) {
         return null;

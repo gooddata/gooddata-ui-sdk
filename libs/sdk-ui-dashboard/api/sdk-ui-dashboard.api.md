@@ -15,7 +15,6 @@ import { Component } from 'react';
 import { ComponentPropsWithRef } from 'react';
 import { ComponentType } from 'react';
 import { DashboardDateFilterConfigMode } from '@gooddata/sdk-model';
-import { DashboardPermission } from '@gooddata/sdk-model';
 import { DataViewFacade } from '@gooddata/sdk-ui';
 import { DateFilterGranularity } from '@gooddata/sdk-model';
 import { DateFilterType } from '@gooddata/sdk-model';
@@ -59,6 +58,7 @@ import { IDashboardLayoutSection } from '@gooddata/sdk-model';
 import { IDashboardLayoutSectionHeader } from '@gooddata/sdk-model';
 import { IDashboardLayoutSizeByScreenSize } from '@gooddata/sdk-model';
 import { IDashboardObjectIdentity } from '@gooddata/sdk-model';
+import { IDashboardPermissions } from '@gooddata/sdk-model';
 import { IDashboardWidget } from '@gooddata/sdk-model';
 import { IDataView } from '@gooddata/sdk-backend-spi';
 import { IDateFilter } from '@gooddata/sdk-model';
@@ -1959,6 +1959,12 @@ export interface DashboardMetaState {
 // @public (undocumented)
 export interface DashboardModelCustomizationFns {
     existingDashboardTransformFn?: DashboardTransformFn;
+}
+
+// @alpha (undocumented)
+export interface DashboardPermissionsState {
+    // (undocumented)
+    dashboardPermissions?: IDashboardPermissions;
 }
 
 // @public
@@ -4412,6 +4418,7 @@ export interface IShareButtonProps {
 export interface IShareDialogProps {
     backend: IAnalyticalBackend;
     currentUserRef: ObjRef;
+    dashboardPermissions: IDashboardPermissions;
     isLockingSupported: boolean;
     isVisible?: boolean;
     onApply: (payload: ISharingApplyPayload) => void;
@@ -5663,6 +5670,9 @@ export const selectCanCreateScheduledMail: OutputSelector<DashboardState, boolea
 export const selectCanCreateVisualization: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
 
 // @public
+export const selectCanEditDashboard: OutputSelector<DashboardState, boolean, (res: IDashboardPermissions) => boolean>;
+
+// @public
 export const selectCanExecuteRaw: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
 
 // @public
@@ -5760,6 +5770,9 @@ export const selectDashboardLoading: OutputSelector<DashboardState, LoadingState
 
 // @alpha
 export const selectDashboardLockStatus: OutputSelector<DashboardState, boolean, (res: DashboardDescriptor) => boolean>;
+
+// @public
+export const selectDashboardPermissions: OutputSelector<DashboardState, IDashboardPermissions, (res: DashboardPermissionsState) => IDashboardPermissions>;
 
 // @public
 export const selectDashboardRef: OutputSelector<DashboardState, UriRef | IdentifierRef | undefined, (res: IDashboard<IDashboardWidget> | undefined) => UriRef | IdentifierRef | undefined>;

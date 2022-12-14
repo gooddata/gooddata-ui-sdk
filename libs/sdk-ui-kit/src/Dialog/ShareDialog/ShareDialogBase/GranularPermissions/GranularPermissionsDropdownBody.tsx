@@ -1,23 +1,26 @@
 // (C) 2022 GoodData Corporation
 
 import React, { useCallback } from "react";
+import { IDashboardPermissions } from "@gooddata/sdk-model";
 
 import { GranularPermissions } from "./GranularPermissions";
 
-import { GranteeItem } from "../types";
+import { GranteeItem, IGranularGrantee } from "../types";
 import { getGranularGranteeClassNameId } from "../utils";
 
 import { DropdownButton } from "../../../../Dropdown";
 
 interface IGranularPermissionsDropdownBodyProps {
-    grantee: GranteeItem;
+    grantee: IGranularGrantee;
     value: string;
+    dashboardPermissions: IDashboardPermissions;
     onChange: (grantee: GranteeItem) => void;
     onDelete: (grantee: GranteeItem) => void;
 }
 
 export const GranularPermissionsDropdownBody: React.FC<IGranularPermissionsDropdownBodyProps> = ({
     grantee,
+    dashboardPermissions,
     value,
     onChange,
     onDelete,
@@ -38,6 +41,7 @@ export const GranularPermissionsDropdownBody: React.FC<IGranularPermissionsDropd
                 />
             </div>
             <GranularPermissions
+                dashboardPermissions={dashboardPermissions}
                 alignTo={granularGranteeClassName}
                 grantee={grantee}
                 toggleDropdown={toggleDropdown}

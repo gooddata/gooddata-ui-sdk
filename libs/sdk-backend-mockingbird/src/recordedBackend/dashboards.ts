@@ -38,7 +38,7 @@ import {
     IListedDashboard,
     IDashboardPlugin,
     IDashboardPluginDefinition,
-    DashboardPermission,
+    IDashboardPermissions,
 } from "@gooddata/sdk-model";
 import cloneDeep from "lodash/cloneDeep";
 import isEqual from "lodash/isEqual";
@@ -364,7 +364,7 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
         throw new NotSupported("recorded backend does not support this call");
     }
 
-    public getDashboardPermissions(): Promise<DashboardPermission[]> {
+    public getDashboardPermissions(): Promise<IDashboardPermissions> {
         throw new NotSupported("recorded backend does not support this call");
     }
 }

@@ -221,7 +221,7 @@ export const useShareDialogBase = (props: IShareDialogBaseProps): IUseShareDialo
 
     const appliedGranteesWithOwner = useMemo(() => {
         const appliedGrantees = getAppliedGrantees(grantees, granteesToAdd, granteesToDelete);
-        if (isGranteeUserInactive(owner)) {
+        if (isGranteeUserInactive(owner) || areGranularPermissionsSupported) {
             return appliedGrantees;
         }
         return [...appliedGrantees, owner];

@@ -11,7 +11,15 @@ import { IShareGranteeContentProps } from "./types";
  * @internal
  */
 export const ShareGranteeContent: React.FC<IShareGranteeContentProps> = (props) => {
-    const { isLoading, grantees, areGranularPermissionsSupported, onAddGrantee, onChange, onDelete } = props;
+    const {
+        isLoading,
+        grantees,
+        areGranularPermissionsSupported,
+        dashboardPermissions,
+        onAddGrantee,
+        onChange,
+        onDelete,
+    } = props;
 
     return (
         <>
@@ -25,6 +33,7 @@ export const ShareGranteeContent: React.FC<IShareGranteeContentProps> = (props) 
                 <GranteeListLoading />
             ) : (
                 <GranteeList
+                    dashboardPermissions={dashboardPermissions}
                     grantees={grantees}
                     mode="ShareGrantee"
                     areGranularPermissionsSupported={areGranularPermissionsSupported}

@@ -2004,6 +2004,12 @@ export function isAttributeSort(obj: unknown): obj is IAttributeSortItem;
 // @public
 export function isAttributeValueSort(obj: unknown): obj is IAttributeSortItem;
 
+// @alpha
+export const isAvailableUserAccessGrantee: (obj: unknown) => obj is IAvailableUserAccessGrantee;
+
+// @alpha
+export const isAvailableUserGroupAccessGrantee: (obj: unknown) => obj is IAvailableUserGroupAccessGrantee;
+
 // @public
 export function isBucket(obj: unknown): obj is IBucket;
 

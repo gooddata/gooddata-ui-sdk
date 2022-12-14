@@ -16,6 +16,7 @@ export const DefaultShareDialog = (props: IShareDialogProps): JSX.Element | null
         sharedObject,
         currentUserRef,
         isLockingSupported,
+        dashboardPermissions,
         onApply,
         onCancel,
         onError,
@@ -55,6 +56,7 @@ export const DefaultShareDialog = (props: IShareDialogProps): JSX.Element | null
             onError={onError}
             isLockingSupported={isLockingSupported}
             labels={labels}
+            dashboardPermissions={dashboardPermissions}
         />
     );
 };

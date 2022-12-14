@@ -766,6 +766,8 @@ export {
     IUserAccessGranteeWithGranularPermissions,
     IUserGroupAccessGranteeWithGranularPermissions,
     isAccessWithGranularPermissions,
+    isAvailableUserGroupAccessGrantee,
+    isAvailableUserAccessGrantee,
 } from "./accessControl";
 
 export { IOrganizationDescriptor } from "./organization";

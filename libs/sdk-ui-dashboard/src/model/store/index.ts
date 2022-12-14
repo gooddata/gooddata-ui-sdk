@@ -83,6 +83,10 @@ export {
     selectCanManageScheduledMail,
 } from "./permissions/permissionsSelectors";
 export { DashboardPermissionsState } from "./dashboardPermissions/dashboardPermissionsState";
+export {
+    selectDashboardPermissions,
+    selectCanEditDashboard,
+} from "./dashboardPermissions/dashboardPermissionsSelectors";
 export { FilterContextState } from "./filterContext/filterContextState";
 export {
     selectFilterContextDefinition,

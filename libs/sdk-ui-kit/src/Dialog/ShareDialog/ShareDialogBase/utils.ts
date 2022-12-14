@@ -1,6 +1,10 @@
 // (C) 2021-2022 GoodData Corporation
+
 import { IntlShape } from "react-intl";
-import { areObjRefsEqual, objRefToString, uriRef } from "@gooddata/sdk-model";
+import { areObjRefsEqual, objRefToString, uriRef, IAccessGranularPermission } from "@gooddata/sdk-model";
+import differenceWith from "lodash/differenceWith";
+import partition from "lodash/partition";
+
 import {
     GranteeItem,
     IGranteeGroupAll,
@@ -8,8 +12,8 @@ import {
     isGranteeGroup,
     isGranteeGroupAll,
 } from "./types";
-import differenceWith from "lodash/differenceWith";
-import partition from "lodash/partition";
+
+import { granularPermissionMessageLabels } from "../../../locales";
 
 /**
  * @internal
@@ -141,4 +145,11 @@ export const getGranteeItemTestId = (grantee: GranteeItem, prefix?: "option"): s
 export const getGranularGranteeClassNameId = (grantee: GranteeItem): string => {
     const id = objRefToString(grantee.id).split("/").pop();
     return `gd-granular-grantee-item-id-${id}`;
+};
+
+/**
+ * @internal
+ */
+export const getGranularGranteePermissionId = (permission: IAccessGranularPermission): string => {
+    return granularPermissionMessageLabels[permission].id;
 };

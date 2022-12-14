@@ -14,6 +14,8 @@ export const AddGranteeContent: React.FC<IAddGranteeContentProps> = (props) => {
         currentUserRef,
         addedGrantees,
         areGranularPermissionsSupported,
+        dashboardPermissions,
+        sharedObjectRef,
         onDelete,
         onAddUserOrGroups,
     } = props;
@@ -32,9 +34,11 @@ export const AddGranteeContent: React.FC<IAddGranteeContentProps> = (props) => {
             <AddGranteeSelect
                 currentUserRef={currentUserRef}
                 appliedGrantees={appliedGrantees}
+                sharedObjectRef={sharedObjectRef}
                 onSelectGrantee={onSelectGrantee}
             />
             <GranteeList
+                dashboardPermissions={dashboardPermissions}
                 grantees={addedGrantees}
                 mode={"AddGrantee"}
                 areGranularPermissionsSupported={areGranularPermissionsSupported}

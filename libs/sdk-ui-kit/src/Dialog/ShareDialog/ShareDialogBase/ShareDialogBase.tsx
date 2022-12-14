@@ -15,8 +15,8 @@ const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
  * @internal
  */
 export const ShareDialogBase: React.FC<IShareDialogBaseProps> = (props) => {
-    const { onCancel, sharedObject, currentUserRef } = props;
-    const { areGranularPermissionsSupported } = sharedObject;
+    const { onCancel, sharedObject, currentUserRef, dashboardPermissions } = props;
+    const { areGranularPermissionsSupported, ref } = sharedObject;
 
     const {
         onAddedGranteeDelete,
@@ -50,6 +50,7 @@ export const ShareDialogBase: React.FC<IShareDialogBaseProps> = (props) => {
             <div className="s-gd-share-dialog">
                 {dialogMode === "ShareGrantee" ? (
                     <ShareGranteeBase
+                        dashboardPermissions={dashboardPermissions}
                         currentUserRef={currentUserRef}
                         isLoading={isGranteesLoading}
                         isDirty={isShareDialogDirty}
@@ -67,11 +68,13 @@ export const ShareDialogBase: React.FC<IShareDialogBaseProps> = (props) => {
                     />
                 ) : (
                     <AddGranteeBase
+                        dashboardPermissions={dashboardPermissions}
                         isDirty={isAddDialogDirty}
                         currentUserRef={currentUserRef}
                         appliedGrantees={appliedGranteesWithOwner}
                         addedGrantees={granteesToAdd}
                         areGranularPermissionsSupported={areGranularPermissionsSupported}
+                        sharedObjectRef={ref}
                         onAddUserOrGroups={onGranteeAdd}
                         onDelete={onAddedGranteeDelete}
                         onCancel={onCancel}
