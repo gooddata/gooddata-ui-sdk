@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
 const { DefinePlugin, EnvironmentPlugin, ProvidePlugin } = require("webpack");
@@ -8,13 +8,13 @@ const Dotenv = require("dotenv-webpack");
 require("dotenv").config();
 
 const PORT = 3001;
-const BACKEND_URL = "https://live-examples-proxy.herokuapp.com";
+const BACKEND_URL = "https://public-examples.gooddata.com";
 
 module.exports = (_env, argv) => {
     const isProduction = argv.mode === "production";
     const protocol = new URL(BACKEND_URL).protocol;
     const proxy = {
-        "/gdc": {
+        "/api": {
             changeOrigin: true,
             cookieDomainRewrite: "localhost",
             secure: false,
@@ -129,7 +129,7 @@ module.exports = (_env, argv) => {
                     favicon: "./src/public/favicon.ico",
                 }),
             ],
-            // Some of the dependencies have invalid source maps, we do not care that much
+            // Some dependencies have invalid source maps, we do not care that much
             ignoreWarnings: [/Failed to parse source map/],
             devServer: {
                 static: {
