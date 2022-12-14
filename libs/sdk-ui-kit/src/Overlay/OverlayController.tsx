@@ -1,18 +1,18 @@
 // (C) 2022 GoodData Corporation
 
 /**
- * When stacking the overlays, next overlay is going to have an z-index higher by 10.
+ * When stacking the overlays, next overlay is going to have an z-index higher by 1.
  */
-const Z_INDEX_STEP = 10;
+const Z_INDEX_STEP = 1;
 
 const DEFAULT_INIT_Z_INDEX = 5001;
+
 /**
  * Overlay stacking controller.
  *
  * @internal
  */
 export class OverlayController {
-    private currentCount = 0;
     private initialZIndex: number = DEFAULT_INIT_Z_INDEX;
     private overlays: Map<string, number>;
 
@@ -31,20 +31,36 @@ export class OverlayController {
      * @param uuid - given overlay uuid.
      */
     public addOverlay(uuid: string): void {
-        this.overlays.set(uuid, ++this.currentCount);
+        const maxIndex = this.getMaxZIndex();
+
+        this.overlays.set(uuid, maxIndex + Z_INDEX_STEP);
+    }
+
+    /**
+     * Get maximum z-Index from current opened overlays
+     * @returns
+     */
+    private getMaxZIndex(): number {
+        let maxIndex = 0;
+
+        this.overlays.forEach((value) => {
+            maxIndex = Math.max(maxIndex, value);
+        });
+
+        return maxIndex || this.initialZIndex;
     }
 
     /**
      * Getter for z-index of the given overlay.
      *
      * @remarks
-     * If the entry in the overlays map is not available, the initial z-index of 5001 is used.
+     * If the entry in the overlays map is not available, the initial z-index is used.
      *
      * @param uuid - unique identifier of the overlay.
      * @returns
      */
     public getZIndex(uuid: string): number {
-        return this.initialZIndex + (this.overlays.get(uuid) || 0) * Z_INDEX_STEP;
+        return this.overlays.get(uuid) || this.initialZIndex;
     }
 
     /**
@@ -54,6 +70,5 @@ export class OverlayController {
      */
     public removeOverlay(uuid: string): void {
         this.overlays.delete(uuid);
-        this.currentCount--;
     }
 }
