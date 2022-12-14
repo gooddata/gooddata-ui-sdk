@@ -44,7 +44,7 @@ import {
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { objRefToUri, objRefToIdentifier } from "../../../utils/api";
 import { convertVisualizationObject } from "../../../convertors/fromBackend/visualizationObjects/VisualizationObjectConverter";
-import { convertAnalyticalDashboardWithLinks } from "../../../convertors/fromBackend/MetadataConverter";
+import { convertGraphEntityNodeToAnalyticalDashboard } from "../../../convertors/fromBackend/GraphConverter";
 import { convertInsight } from "../../../convertors/toBackend/InsightConverter";
 
 import { visualizationClasses as visualizationClassesMocks } from "./mocks/visualizationClasses";
@@ -240,21 +240,26 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
 
     public getInsightReferencingObjects = async (ref: ObjRef): Promise<IInsightReferencing> => {
         const id = await objRefToIdentifier(ref, this.authCall);
-
-        const dashboards = await this.authCall((client) =>
-            MetadataUtilities.getAllPagesOf(client, client.entities.getAllEntitiesAnalyticalDashboards, {
-                workspaceId: this.workspace,
-                include: ["visualizationObjects"], // we must include the visualizationObjects so that we can do predicates on them
-                // return only dashboards that have a link to the given id in their visualizationObjects
-                filter: `visualizationObjects.id==${id}`, // RSQL format of querying data
-            })
-                .then(MetadataUtilities.mergeEntitiesResults)
-                .then((result) => result.data ?? []),
+        const entitiesGraph = await this.authCall((client) =>
+            client.actions
+                .getDependentEntitiesGraphFromEntryPoints({
+                    workspaceId: this.workspace,
+                    dependentEntitiesRequest: {
+                        identifiers: [
+                            {
+                                id,
+                                type: "visualizationObject",
+                            },
+                        ],
+                    },
+                })
+                .then((res) => res?.data?.graph ?? {}),
         );
+        const analyticalDashboards = entitiesGraph.nodes
+            .filter(({ type }) => type === "analyticalDashboard")
+            .map((node) => convertGraphEntityNodeToAnalyticalDashboard(node, this.workspace));
 
-        return Promise.resolve({
-            analyticalDashboards: dashboards.map(convertAnalyticalDashboardWithLinks),
-        });
+        return { analyticalDashboards };
     };
 
     public getInsightWithAddedFilters = async <T extends IInsightDefinition>(
