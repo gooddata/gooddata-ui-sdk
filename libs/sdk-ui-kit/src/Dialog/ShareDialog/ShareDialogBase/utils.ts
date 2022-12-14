@@ -150,6 +150,12 @@ export const getGranularGranteeClassNameId = (grantee: GranteeItem): string => {
 /**
  * @internal
  */
-export const getGranularGranteePermissionId = (permission: IAccessGranularPermission): string => {
-    return granularPermissionMessageLabels[permission].id;
+export const getGranularGranteePermissionId = (
+    permission: IAccessGranularPermission[] | undefined,
+): string => {
+    if (permission) {
+        return granularPermissionMessageLabels[permission[0].toLowerCase()].id;
+    }
+
+    return granularPermissionMessageLabels["view"].id;
 };

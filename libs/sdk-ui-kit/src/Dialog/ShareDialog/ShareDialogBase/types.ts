@@ -66,11 +66,7 @@ export interface IGranularGranteeUser extends IGranteeUser {
  * @internal
  */
 export const isGranularGranteeUser = (obj: unknown): obj is IGranularGranteeUser => {
-    return (
-        !isEmpty(obj) &&
-        (obj as IGranularGranteeUser).type === "user" &&
-        (obj as IGranularGranteeUser).permissions !== undefined
-    );
+    return !isEmpty(obj) && (obj as IGranularGranteeUser).type === "user";
 };
 
 /**
@@ -266,6 +262,7 @@ export interface IAddGranteeBaseProps {
     onAddUserOrGroups?: (grantee: GranteeItem) => void; // rename
     onCancel: () => void;
     onSubmit: () => void;
+    onGranularGranteeChange?: (grantee: GranteeItem) => void;
 }
 
 /**
@@ -280,6 +277,7 @@ export interface IAddGranteeContentProps {
     sharedObjectRef: ObjRef;
     onDelete: (grantee: GranteeItem) => void;
     onAddUserOrGroups: (grantee: GranteeItem) => void;
+    onGranularGranteeChange?: (grantee: GranteeItem) => void;
 }
 
 /**
@@ -366,7 +364,7 @@ export interface ISharedObjectUnderLenientControlProps {
  * @internal
  */
 export interface IGranularPermissionTypeItem {
-    id: string;
+    id: IAccessGranularPermission;
     title: string;
     disabled?: boolean;
 }

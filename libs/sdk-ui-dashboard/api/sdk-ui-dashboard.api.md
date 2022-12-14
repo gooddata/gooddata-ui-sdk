@@ -4442,8 +4442,7 @@ export interface ISharingApplyPayload extends ISharingApplyPayload_2 {
 
 // @public
 export interface ISharingProperties {
-    granteesToAdd: IAccessGrantee[];
-    granteesToDelete: IAccessGrantee[];
+    grantees: IAccessGrantee[];
     isLocked: boolean;
     isUnderStrictControl: boolean;
     shareStatus: ShareStatus;

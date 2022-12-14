@@ -1,7 +1,7 @@
 // (C) 2022 GoodData Corporation
 
-import React from "react";
-import { FormattedMessage, IntlShape, useIntl } from "react-intl";
+import React, { useCallback } from "react";
+import { FormattedMessage } from "react-intl";
 import { IDashboardPermissions } from "@gooddata/sdk-model";
 
 import { GranularPermissionItem } from "./GranularPermissionItem";
@@ -20,34 +20,30 @@ interface IGranularPermissionsProps {
     toggleDropdown(): void;
     onChange: (grantee: GranteeItem) => void;
     onDelete: (grantee: GranteeItem) => void;
+    handleSetSelectedPermission: (permission: string) => void;
 }
 
-const overlayAlignPoints: IAlignPoint[] = [{ align: "br tr" }];
+const overlayAlignPoints: IAlignPoint[] = [{ align: "bl tl" }];
 
 const getPermissionTypeItems = (
-    intl: IntlShape,
     dashboardPermissions: IDashboardPermissions,
 ): IGranularPermissionTypeItem[] => {
     const permissionTypeItems: IGranularPermissionTypeItem[] = [];
 
-    // EDIT - can change all
-    // SHARE - can only change <= SHARE
-    // VIEW - can only change <= VIEW
-
     permissionTypeItems.push(
         {
-            id: "edit",
-            title: intl.formatMessage({ id: "shareDialog.share.granular.grantee.permission.edit" }),
+            id: "EDIT",
+            title: "shareDialog.share.granular.grantee.permission.edit",
             disabled: dashboardPermissions.canEditDashboard ? false : true,
         },
         {
-            id: "share",
-            title: intl.formatMessage({ id: "shareDialog.share.granular.grantee.permission.share" }),
+            id: "SHARE",
+            title: "shareDialog.share.granular.grantee.permission.share",
             disabled: dashboardPermissions.canShareDashboard ? false : true,
         },
         {
-            id: "view",
-            title: intl.formatMessage({ id: "shareDialog.share.granular.grantee.permission.view" }),
+            id: "VIEW",
+            title: "shareDialog.share.granular.grantee.permission.view",
             disabled: dashboardPermissions.canViewDashboard ? false : true,
         },
     );
@@ -56,24 +52,25 @@ const getPermissionTypeItems = (
 };
 
 export const GranularPermissions: React.FC<IGranularPermissionsProps> = ({
+    grantee,
     alignTo,
     isShowDropdown,
     dashboardPermissions,
     toggleDropdown,
     onChange,
+    onDelete,
+    handleSetSelectedPermission,
 }) => {
-    const intl = useIntl();
-    const permissions = getPermissionTypeItems(intl, dashboardPermissions);
+    const permissions = getPermissionTypeItems(dashboardPermissions);
 
     if (!isShowDropdown) {
         return null;
     }
 
-    const handleOnDelete = () => {
+    const handleOnDelete = useCallback(() => {
+        onDelete(grantee);
         toggleDropdown();
-        // Handle revoke access
-        // onDelete(grantee);
-    };
+    }, [grantee, onDelete, toggleDropdown]);
 
     return (
         <Overlay
@@ -90,10 +87,12 @@ export const GranularPermissions: React.FC<IGranularPermissionsProps> = ({
                 {permissions.map((permission) => {
                     return (
                         <GranularPermissionItem
+                            grantee={grantee}
                             key={permission.id}
                             permission={permission}
                             toggleDropdown={toggleDropdown}
                             onChange={onChange}
+                            handleSetSelectedPermission={handleSetSelectedPermission}
                         />
                     );
                 })}

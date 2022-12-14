@@ -5,10 +5,12 @@ import { convertWorkspaceUserGroup } from "./UserGroupsConverter";
 import { convertUsersItem } from "./UsersConverter";
 import {
     AccessGranteeDetail,
+    GranteeWithGranularPermissions,
     IAvailableUserAccessGrantee,
     IAvailableUserGroupAccessGrantee,
     IWorkspaceUser,
     IWorkspaceUserGroup,
+    IAccessGrantee,
 } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 
@@ -57,3 +59,9 @@ export const convertWorkspaceUserGroupToAvailableUserGroupAccessGrantee = (
     ref: group.ref,
     name: group.name ?? "", // TODO: is this ok?
 });
+
+export const removePermissionsFromGrantee = (grantee: GranteeWithGranularPermissions): IAccessGrantee => {
+    const { permissions, inheritedPermissions, ...rest } = grantee;
+
+    return { ...rest };
+};

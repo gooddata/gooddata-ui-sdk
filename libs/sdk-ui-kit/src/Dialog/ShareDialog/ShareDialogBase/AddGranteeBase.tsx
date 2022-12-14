@@ -42,6 +42,7 @@ export const AddGranteeBase: React.FC<IAddGranteeBaseProps> = (props) => {
         onBackClick,
         onAddUserOrGroups,
         onDelete,
+        onGranularGranteeChange,
     } = props;
     const intl = useIntl();
 
@@ -72,6 +73,7 @@ export const AddGranteeBase: React.FC<IAddGranteeBaseProps> = (props) => {
                 sharedObjectRef={sharedObjectRef}
                 onAddUserOrGroups={onAddUserOrGroups}
                 onDelete={onDelete}
+                onGranularGranteeChange={onGranularGranteeChange}
             />
             <ContentDivider />
         </ConfirmDialogBase>

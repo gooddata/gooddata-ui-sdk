@@ -1,5 +1,15 @@
 // (C) 2021-2022 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
+import {
+    BackendProvider,
+    IntlWrapper,
+    UnexpectedSdkError,
+    useBackendStrict,
+    useWorkspaceStrict,
+    WorkspaceProvider,
+} from "@gooddata/sdk-ui";
+import { GranteeWithGranularPermissions } from "@gooddata/sdk-model";
+
 import { ShareDialogBase } from "./ShareDialogBase/ShareDialogBase";
 import { GranteeItem, IAffectedSharedObject } from "./ShareDialogBase/types";
 import { IShareDialogProps } from "./types";
@@ -10,14 +20,6 @@ import {
     mapUserToInactiveOwner,
     mapSharedObjectToAffectedSharedObject,
 } from "./shareDialogMappers";
-import {
-    BackendProvider,
-    IntlWrapper,
-    UnexpectedSdkError,
-    useBackendStrict,
-    useWorkspaceStrict,
-    WorkspaceProvider,
-} from "@gooddata/sdk-ui";
 import { ComponentLabelsProvider } from "./ShareDialogBase/ComponentLabelsContext";
 
 /**
@@ -69,14 +71,21 @@ export const ShareDialog: React.FC<IShareDialogProps> = (props) => {
         ) => {
             const shareStatus = mapGranteesToShareStatus(grantees, granteesToAdd, granteesToDelete);
             const isUnderStrictControl = shareStatus !== "public" && !isUnderLenientControl;
-            const add = mapGranteesToAccessGrantees(granteesToAdd);
-            const del = mapGranteesToAccessGrantees(granteesToDelete);
+            // TODO: is there a better way?
+            let g: GranteeWithGranularPermissions[];
+            if (granteesToAdd.length > 0) {
+                g = mapGranteesToAccessGrantees(granteesToAdd, true);
+            } else if (granteesToDelete.length > 0) {
+                g = mapGranteesToAccessGrantees(granteesToDelete);
+            } else {
+                g = mapGranteesToAccessGrantees(grantees);
+            }
+
             onApply({
                 shareStatus,
                 isUnderStrictControl,
                 isLocked,
-                granteesToAdd: add,
-                granteesToDelete: del,
+                grantees: g,
             });
         },
         [onApply],

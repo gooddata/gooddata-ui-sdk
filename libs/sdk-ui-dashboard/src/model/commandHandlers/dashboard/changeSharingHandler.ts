@@ -67,20 +67,12 @@ function updateDashboard(
         .updateDashboard(saveSharingCtx.persistedDashboard, saveSharingCtx.dashboardToSave);
 }
 
-function addGrantees(ctx: DashboardContext, saveSharingCtx: DashboardSaveSharingContext): Promise<any> {
+function changeGrantees(ctx: DashboardContext, saveSharingCtx: DashboardSaveSharingContext): Promise<any> {
     const { cmd } = saveSharingCtx;
     return ctx.backend
         .workspace(ctx.workspace)
         .accessControl()
-        .grantAccess(ctx.dashboardRef!, cmd.payload.newSharingProperties.granteesToAdd);
-}
-
-function removeGrantees(ctx: DashboardContext, saveSharingCtx: DashboardSaveSharingContext): Promise<any> {
-    const { cmd } = saveSharingCtx;
-    return ctx.backend
-        .workspace(ctx.workspace)
-        .accessControl()
-        .revokeAccess(ctx.dashboardRef!, cmd.payload.newSharingProperties.granteesToDelete);
+        .changeAccess(ctx.dashboardRef!, cmd.payload.newSharingProperties.grantees);
 }
 
 type DashboardSaveSharingResult = {
@@ -98,14 +90,10 @@ function* saveSharing(
         saveSharingCtx,
     );
 
-    const { granteesToDelete, granteesToAdd } = saveSharingCtx.cmd.payload.newSharingProperties;
+    const { grantees } = saveSharingCtx.cmd.payload.newSharingProperties;
 
-    if (!isEmpty(granteesToDelete)) {
-        yield call(removeGrantees, ctx, saveSharingCtx);
-    }
-
-    if (!isEmpty(granteesToAdd)) {
-        yield call(addGrantees, ctx, saveSharingCtx);
+    if (!isEmpty(grantees)) {
+        yield call(changeGrantees, ctx, saveSharingCtx);
     }
 
     const batch = batchActions([metaActions.setMeta({ dashboard })], "@@GDC.DASH.SAVE_SHARING");

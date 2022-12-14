@@ -13,8 +13,6 @@ import {
     IGranteeInactiveOwner,
     isGranteeUser,
     isGranteeGroup,
-    isGranularGranteeUser,
-    isGranularGranteeGroup,
     isGranteeGroupAll,
 } from "./types";
 import { getGranteeLabel, getGranteeItemTestId } from "./utils";
@@ -174,7 +172,7 @@ export const GranteeItemComponent: React.FC<IGranteeItemProps> = (props) => {
         props;
 
     if (areGranularPermissionsSupported) {
-        if (isGranularGranteeUser(grantee)) {
+        if (isGranteeUser(grantee)) {
             return (
                 <GranularGranteeUserItem
                     dashboardPermissions={dashboardPermissions}
@@ -183,7 +181,7 @@ export const GranteeItemComponent: React.FC<IGranteeItemProps> = (props) => {
                     onDelete={onDelete}
                 />
             );
-        } else if (isGranularGranteeGroup(grantee)) {
+        } else if (isGranteeGroup(grantee)) {
             return (
                 <GranularGranteeGroupItem
                     dashboardPermissions={dashboardPermissions}

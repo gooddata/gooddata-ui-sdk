@@ -5,8 +5,8 @@ import {
     ObjRef,
     IAccessControlAware,
     ShareStatus,
-    IAccessGrantee,
     IDashboardPermissions,
+    GranteeWithGranularPermissions,
 } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
@@ -17,8 +17,7 @@ export interface ISharingApplyPayload {
     shareStatus: ShareStatus;
     isUnderStrictControl: boolean;
     isLocked: boolean;
-    granteesToAdd: IAccessGrantee[];
-    granteesToDelete: IAccessGrantee[];
+    grantees: GranteeWithGranularPermissions[];
 }
 
 /**

@@ -6,7 +6,7 @@ import {
     IWorkspaceUser,
     ShareStatus,
     AccessGranteeDetail,
-    IAccessGrantee,
+    // IAccessGrantee,
     isUserAccess,
     isUserGroupAccess,
     IUserAccess,
@@ -16,6 +16,7 @@ import {
     IUserGroupAccessWithGranularPermissions,
     IAvailableUserAccessGrantee,
     IAvailableUserGroupAccessGrantee,
+    GranteeWithGranularPermissions,
 } from "@gooddata/sdk-model";
 import { typesUtils } from "@gooddata/util";
 
@@ -170,7 +171,11 @@ export const mapShareStatusToGroupAll = (shareStatus: ShareStatus): IGranteeGrou
 /**
  * @internal
  */
-export const mapGranteesToAccessGrantees = (grantees: GranteeItem[]): IAccessGrantee[] => {
+// TODO: extend to check if grantee will be added or deleted to handle it on bear
+export const mapGranteesToAccessGrantees = (
+    grantees: GranteeItem[],
+    added?: boolean,
+): GranteeWithGranularPermissions[] => {
     const guard = typesUtils.combineGuards(isGranteeGroupAll, isGranteeUserInactive);
     return grantees
         .filter((g) => !guard(g))
@@ -197,11 +202,15 @@ export const mapGranteesToAccessGrantees = (grantees: GranteeItem[]): IAccessGra
                     return {
                         type: "user",
                         granteeRef: g.id,
+                        permissions: added ? ["VIEW"] : [],
+                        inheritedPermissions: [],
                     };
                 } else {
                     return {
                         type: "group",
                         granteeRef: g.id,
+                        permissions: added ? ["VIEW"] : [],
+                        inheritedPermissions: [],
                     };
                 }
             }

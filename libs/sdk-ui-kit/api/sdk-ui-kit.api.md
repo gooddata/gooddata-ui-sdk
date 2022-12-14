@@ -13,8 +13,8 @@ import { CSSProperties } from 'react';
 import { DebouncedFunc } from 'lodash';
 import { FC } from 'react';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
+import { GranteeWithGranularPermissions } from '@gooddata/sdk-model';
 import { IAccessControlAware } from '@gooddata/sdk-model';
-import { IAccessGrantee } from '@gooddata/sdk-model';
 import { IAccessGranularPermission } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAuditableUsers } from '@gooddata/sdk-model';
@@ -738,6 +738,8 @@ export interface IAddGranteeBaseProps {
     onCancel: () => void;
     // (undocumented)
     onDelete: (grantee: GranteeItem) => void;
+    // (undocumented)
+    onGranularGranteeChange?: (grantee: GranteeItem) => void;
     // (undocumented)
     onSubmit: () => void;
     // (undocumented)
@@ -3509,9 +3511,7 @@ export interface IShareGranteeContentProps {
 // @internal (undocumented)
 export interface ISharingApplyPayload {
     // (undocumented)
-    granteesToAdd: IAccessGrantee[];
-    // (undocumented)
-    granteesToDelete: IAccessGrantee[];
+    grantees: GranteeWithGranularPermissions[];
     // (undocumented)
     isLocked: boolean;
     // (undocumented)

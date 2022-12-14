@@ -80,6 +80,7 @@ export const ShareDialogBase: React.FC<IShareDialogBaseProps> = (props) => {
                         onCancel={onCancel}
                         onSubmit={onSubmitAddGrantee}
                         onBackClick={onAddGranteeBackClick}
+                        onGranularGranteeChange={onGranularGranteeChange}
                     />
                 )}
             </div>

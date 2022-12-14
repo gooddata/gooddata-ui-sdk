@@ -18,8 +18,10 @@ export const AddGranteeContent: React.FC<IAddGranteeContentProps> = (props) => {
         sharedObjectRef,
         onDelete,
         onAddUserOrGroups,
+        onGranularGranteeChange,
     } = props;
 
+    // TODO: how to deal with added granular grantee + permission changed
     const onSelectGrantee = useCallback(
         (grantee: GranteeItem) => {
             if (!appliedGrantees.some((g) => areObjRefsEqual(g.id, grantee.id))) {
@@ -43,6 +45,7 @@ export const AddGranteeContent: React.FC<IAddGranteeContentProps> = (props) => {
                 mode={"AddGrantee"}
                 areGranularPermissionsSupported={areGranularPermissionsSupported}
                 onDelete={onDelete}
+                onChange={onGranularGranteeChange}
             />
         </>
     );

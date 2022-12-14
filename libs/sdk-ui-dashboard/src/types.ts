@@ -157,11 +157,7 @@ export interface ISharingProperties {
     /**
      * Access grantees to grant access to the dashboard to.
      */
-    granteesToAdd: IAccessGrantee[];
-    /**
-     * Access grantees whose access to the dashboard to revoke.
-     */
-    granteesToDelete: IAccessGrantee[];
+    grantees: IAccessGrantee[];
 }
 
 /**

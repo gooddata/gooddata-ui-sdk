@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
 
-import React, { useMemo } from "react";
+import React from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
 import { IDashboardPermissions } from "@gooddata/sdk-model";
@@ -8,7 +8,7 @@ import { IDashboardPermissions } from "@gooddata/sdk-model";
 import { GranteeUserIcon } from "../GranteeIcons";
 
 import { GranteeItem, IGranularGranteeUser } from "../types";
-import { getGranteeLabel, getGranularGranteePermissionId } from "../utils";
+import { getGranteeLabel } from "../utils";
 
 import { GranularPermissionsDropdownBody } from "./GranularPermissionsDropdownBody";
 
@@ -29,17 +29,12 @@ export const GranularGranteeUserItem: React.FC<IGranularGranteeUserItemProps> = 
     );
 
     const userName = getGranteeLabel(grantee, intl);
-    const permissionId = useMemo(
-        () => getGranularGranteePermissionId(grantee.permissions[0]),
-        [grantee, intl],
-    );
 
     return (
         <div className={itemClassName}>
             <GranularPermissionsDropdownBody
                 dashboardPermissions={dashboardPermissions}
                 grantee={grantee}
-                value={intl.formatMessage({ id: permissionId })}
                 onChange={onChange}
                 onDelete={onDelete}
             />

@@ -6,7 +6,7 @@ import { IDashboardPermissions } from "@gooddata/sdk-model";
 
 import { GranteeGroupIcon } from "../GranteeIcons";
 import { GranteeItem, IGranularGrantee } from "../types";
-import { getGranteeLabel, getGranularGranteePermissionId } from "../utils";
+import { getGranteeLabel } from "../utils";
 
 import { GranularPermissionsDropdownBody } from "./GranularPermissionsDropdownBody";
 
@@ -21,17 +21,12 @@ export const GranularGranteeGroupItem: React.FC<IGranularGranteeGroupItemProps> 
     const { grantee, dashboardPermissions, onChange, onDelete } = props;
     const intl = useIntl();
     const groupName = useMemo(() => getGranteeLabel(grantee, intl), [grantee, intl]);
-    const permissionId = useMemo(
-        () => getGranularGranteePermissionId(grantee.permissions[0]),
-        [grantee, intl],
-    );
 
     return (
         <div className="gd-share-dialog-grantee-item">
             <GranularPermissionsDropdownBody
                 dashboardPermissions={dashboardPermissions}
                 grantee={grantee}
-                value={intl.formatMessage({ id: permissionId })}
                 onChange={onChange}
                 onDelete={onDelete}
             />
