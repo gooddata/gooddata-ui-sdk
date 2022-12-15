@@ -23,6 +23,15 @@
     flex-basis: 100%;
 }
 
+.gd-dash-bottom-position-pixel {
+    height: 1px;
+    width: 1px;
+    background: transparent;
+    position: sticky;
+    bottom: 0;
+    right: 0;
+}
+
 .dash-item {
     position: relative;
     box-sizing: border-box;

@@ -8,6 +8,7 @@ export * from "./DraggableCreatePanelItem";
 export * from "./types";
 export * from "./useDashboardDrop";
 export * from "./useDashboardDrag";
+export * from "./useDashboardDragScroll";
 export * from "./LayoutResizeContext";
 export * from "./Resize/HeightResizerHotspot";
 export * from "./Resize/WidthResizerHotspot";
