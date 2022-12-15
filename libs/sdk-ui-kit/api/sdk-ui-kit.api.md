@@ -1272,6 +1272,8 @@ export interface IDateTimeConfigOptions {
 // @internal (undocumented)
 export interface IDescriptionPanelProps {
     // (undocumented)
+    arrowOffsets?: ArrowOffsets;
+    // (undocumented)
     className?: string;
     // (undocumented)
     description?: string;

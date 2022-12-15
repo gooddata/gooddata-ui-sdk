@@ -3,7 +3,7 @@ import React from "react";
 import isEmpty from "lodash/isEmpty";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { EllipsisText } from "./EllipsisText";
-import { Bubble, BubbleHoverTrigger } from "../Bubble";
+import { ArrowOffsets, Bubble, BubbleHoverTrigger } from "../Bubble";
 import { useMediaQuery } from "../responsive";
 import cx from "classnames";
 
@@ -65,6 +65,7 @@ export interface IDescriptionPanelProps {
     locale?: string;
     className?: string;
     onBubbleOpen?: () => void;
+    arrowOffsets?: ArrowOffsets;
 }
 
 /**
@@ -106,13 +107,14 @@ export const DescriptionIcon: React.FC<IDescriptionTriggerProps> = ({ className 
 };
 
 const DescriptionPanelCore: React.FC<IDescriptionPanelProps> = (props) => {
+    const { arrowOffsets = DESCRIPTION_PANEL_ARROW_OFFSETS } = props;
     return (
         <BubbleHoverTrigger onBubbleOpen={props.onBubbleOpen} showDelay={0} eventsOnBubble={true}>
             <DescriptionIcon className={props.className} />
             <Bubble
                 className="bubble-light gd-description-panel-bubble"
                 alignPoints={DESCRIPTION_PANEL_ALIGN_POINTS}
-                arrowOffsets={DESCRIPTION_PANEL_ARROW_OFFSETS}
+                arrowOffsets={arrowOffsets}
                 arrowStyle={{ display: "none" }}
             >
                 <DescriptionPanelContentCore {...props} />

@@ -8,7 +8,7 @@ import { stringUtils } from "@gooddata/util";
 import { InsightListItemDate, getDateTimeConfig } from "./InsightListItemDate";
 import { Button } from "../Button";
 import { ShortenedText } from "../ShortenedText";
-import { DescriptionPanel } from "../DescriptionPanel";
+import { DescriptionPanel, DESCRIPTION_PANEL_ARROW_OFFSETS } from "../DescriptionPanel";
 
 const VISUALIZATION_TYPE_UNKNOWN = "unknown";
 const WIDGET_TYPE_KPI = "kpi";
@@ -27,6 +27,11 @@ const tooltipAlignPoints = [
         },
     },
 ];
+
+const modifiedArrowOffsets = {
+    ...DESCRIPTION_PANEL_ARROW_OFFSETS,
+    "cr cl": [30, 0],
+};
 
 /**
  * @internal
@@ -88,6 +93,7 @@ export class InsightListItemCore extends Component<IInsightListItemProps & Wrapp
                             onBubbleOpen={onDescriptionPanelOpen}
                             title={title}
                             description={description}
+                            arrowOffsets={this.shouldRenderActions() ? modifiedArrowOffsets : undefined}
                         />
                     </div>
                 ) : null}
@@ -151,11 +157,11 @@ export class InsightListItemCore extends Component<IInsightListItemProps & Wrapp
         return <InsightListItemDate config={getDateTimeConfig(date)} />;
     };
 
-    private renderActions = () => {
-        const { onDelete } = this.props;
+    private shouldRenderActions = () => !!this.props.onDelete;
 
+    private renderActions = () => {
         return (
-            onDelete && (
+            this.shouldRenderActions() && (
                 <div className="gd-visualizations-list-item-actions">
                     <Button
                         className="gd-button-link gd-button-icon-only gd-button-small
