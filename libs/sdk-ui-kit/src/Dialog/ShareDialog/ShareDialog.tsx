@@ -43,6 +43,7 @@ export const ShareDialog: React.FC<IShareDialogProps> = (props) => {
     const effectiveWorkspace = useWorkspaceStrict(workspace);
     const areGranularPermissionsSupported = effectiveBackend.capabilities.supportsGranularAccessControl;
     const isLeniencyControlSupported = !effectiveBackend.capabilities.usesStrictAccessControl;
+    const isMetadataObjectLockingSupported = effectiveBackend.capabilities.supportsMetadataObjectLocking;
 
     const onShareDialogBaseError = useCallback(
         (err: Error) => {
@@ -75,8 +76,6 @@ export const ShareDialog: React.FC<IShareDialogProps> = (props) => {
             let g: GranteeWithGranularPermissions[];
             if (granteesToAdd.length > 0) {
                 g = mapGranteesToAccessGrantees(granteesToAdd, true);
-            } else if (granteesToDelete.length > 0) {
-                g = mapGranteesToAccessGrantees(granteesToDelete);
             } else {
                 g = mapGranteesToAccessGrantees(grantees);
             }
@@ -98,6 +97,7 @@ export const ShareDialog: React.FC<IShareDialogProps> = (props) => {
             isLockingSupported,
             isLeniencyControlSupported,
             areGranularPermissionsSupported,
+            isMetadataObjectLockingSupported,
         );
     }, [
         sharedObject,

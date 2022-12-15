@@ -31,8 +31,13 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
         onLockChange,
         onUnderLenientControlChange,
     } = props;
-    const { owner, isLeniencyControlSupported, isLockingSupported, areGranularPermissionsSupported } =
-        sharedObject;
+    const {
+        owner,
+        isLeniencyControlSupported,
+        isLockingSupported,
+        areGranularPermissionsSupported,
+        isMetadataObjectLockingSupported,
+    } = sharedObject;
 
     const intl = useIntl();
 
@@ -75,11 +80,13 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
                 isLeniencyControlSupported={isLeniencyControlSupported}
                 onUnderLenientControlChange={onUnderLenientControlChange}
             />
-            <SharedObjectLockControl
-                isLocked={isLockedNow}
-                isLockingSupported={isLockingSupported}
-                onLockChange={onLockChange}
-            />
+            {isMetadataObjectLockingSupported && (
+                <SharedObjectLockControl
+                    isLocked={isLockedNow}
+                    isLockingSupported={isLockingSupported}
+                    onLockChange={onLockChange}
+                />
+            )}
         </ConfirmDialogBase>
     );
 };

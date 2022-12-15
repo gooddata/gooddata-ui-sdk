@@ -68,7 +68,12 @@ export const GranularPermissions: React.FC<IGranularPermissionsProps> = ({
     }
 
     const handleOnDelete = useCallback(() => {
-        onDelete(grantee);
+        const changedGrantee: GranteeItem = {
+            ...grantee,
+            permissions: [],
+            inheritedPermissions: [],
+        };
+        onDelete(changedGrantee);
         toggleDropdown();
     }, [grantee, onDelete, toggleDropdown]);
 

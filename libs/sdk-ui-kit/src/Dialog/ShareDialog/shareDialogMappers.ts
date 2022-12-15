@@ -258,6 +258,7 @@ export const mapSharedObjectToAffectedSharedObject = (
     isLockingSupported: boolean,
     isLeniencyControlSupported: boolean,
     areGranularPermissionsSupported = false,
+    isMetadataObjectLockingSupported = true,
 ): IAffectedSharedObject => {
     const { ref, shareStatus, isLocked, isUnderStrictControl } = sharedObject;
     return {
@@ -269,5 +270,6 @@ export const mapSharedObjectToAffectedSharedObject = (
         isLockingSupported,
         isLeniencyControlSupported,
         areGranularPermissionsSupported,
+        isMetadataObjectLockingSupported,
     };
 };

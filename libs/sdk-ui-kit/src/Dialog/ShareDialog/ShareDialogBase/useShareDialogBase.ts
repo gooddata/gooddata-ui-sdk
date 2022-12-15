@@ -32,7 +32,8 @@ interface IUseShareDialogStateReturnType {
     onAddGranteeBackClick: () => void;
     onUnderLenientControlChange: (isUnderLenientControl: boolean) => void;
     onLockChange: (isLocked: boolean) => void;
-    onGranularGranteeChange?: (grantee: GranteeItem) => void;
+    onGranularGranteeShareChange?: (grantee: GranteeItem) => void;
+    onGranularGranteeAddChange?: (grantee: GranteeItem) => void;
 }
 
 /**
@@ -49,21 +50,21 @@ const useShareDialogState = (
     const [granteesToDelete, setGranteesToDelete] = useState<GranteeItem[]>([]);
     const [isUnderLenientControlNow, setUnderLenientControlNow] = useState(isUnderLenientControl);
     const [isLockedNow, setLockedNow] = useState(isLocked);
-    const [hasGranularChanged, setGranularChanged] = useState<boolean>(false);
+    // TODO: handle save state properly with granularities
+    const [hasGranularChanged, sethasGranularChanged] = useState<boolean>(false);
 
-    const onGranularGranteeChange = useCallback((grantee: GranteeItem) => {
-        // TODO: is this proper way?
-        if (dialogMode === "ShareGrantee") {
-            setGrantees((state) => state.map((s) => (s.id === grantee.id ? grantee : s)));
-        } else {
-            setGranteesToAdd((state) => state.map((s) => (s.id === grantee.id ? grantee : s)));
-        }
+    const onGranularGranteeShareChange = useCallback((grantee: GranteeItem) => {
+        setGrantees((state) => state.map((s) => (s.id === grantee.id ? grantee : s)));
+        sethasGranularChanged(true);
+    }, []);
 
-        setGranularChanged(true);
+    const onGranularGranteeAddChange = useCallback((grantee: GranteeItem) => {
+        setGranteesToAdd((state) => state.map((s) => (s.id === grantee.id ? grantee : s)));
     }, []);
 
     const onSharedGranteeDelete = useCallback((grantee: GranteeItem) => {
         setGranteesToDelete((state) => [...state, grantee]);
+        setGrantees((state) => state.map((s) => (s.id === grantee.id ? grantee : s)));
     }, []);
 
     const onAddedGranteeDelete = useCallback((grantee: GranteeItem) => {
@@ -107,18 +108,19 @@ const useShareDialogState = (
         grantees,
         granteesToAdd,
         granteesToDelete,
+        isUnderLenientControlNow,
+        isLockedNow,
+        hasGranularChanged,
         onLoadGrantees,
         onSharedGranteeDelete,
         onAddedGranteeDelete,
         onGranteeAdd,
         onAddGranteeButtonClick,
         onAddGranteeBackClick,
-        isUnderLenientControlNow,
-        isLockedNow,
-        hasGranularChanged,
         onUnderLenientControlChange,
         onLockChange,
-        onGranularGranteeChange,
+        onGranularGranteeShareChange,
+        onGranularGranteeAddChange,
     };
 };
 
@@ -144,7 +146,8 @@ export interface IUseShareDialogBaseReturnType {
     isUnderLenientControlNow: boolean;
     onLockChange: (locked: boolean) => void;
     onUnderLenientControlChange: (isUnderLenientControl: boolean) => void;
-    onGranularGranteeChange?: (grantee: GranteeItem) => void;
+    onGranularGranteeShareChange?: (grantee: GranteeItem) => void;
+    onGranularGranteeAddChange?: (grantee: GranteeItem) => void;
 }
 
 /**
@@ -172,7 +175,8 @@ export const useShareDialogBase = (props: IShareDialogBaseProps): IUseShareDialo
         onAddGranteeBackClick,
         onLockChange,
         onUnderLenientControlChange,
-        onGranularGranteeChange,
+        onGranularGranteeAddChange,
+        onGranularGranteeShareChange,
     } = useShareDialogState(isUnderLenientControl, isLocked);
 
     const onLoadGranteesSuccess = useCallback(
@@ -273,7 +277,8 @@ export const useShareDialogBase = (props: IShareDialogBaseProps): IUseShareDialo
         appliedGranteesWithOwner,
         onLockChange,
         onUnderLenientControlChange,
-        onGranularGranteeChange,
+        onGranularGranteeShareChange,
+        onGranularGranteeAddChange,
         isUnderLenientControlNow,
         isLockedNow,
     };

@@ -37,7 +37,8 @@ export const ShareDialogBase: React.FC<IShareDialogBaseProps> = (props) => {
         isUnderLenientControlNow,
         onLockChange,
         onUnderLenientControlChange,
-        onGranularGranteeChange,
+        onGranularGranteeAddChange,
+        onGranularGranteeShareChange,
     } = useShareDialogBase(props);
 
     return (
@@ -64,7 +65,7 @@ export const ShareDialogBase: React.FC<IShareDialogBaseProps> = (props) => {
                         onGranteeDelete={onSharedGranteeDelete}
                         onLockChange={onLockChange}
                         onUnderLenientControlChange={onUnderLenientControlChange}
-                        onGranularGranteeChange={onGranularGranteeChange}
+                        onGranularGranteeChange={onGranularGranteeShareChange}
                     />
                 ) : (
                     <AddGranteeBase
@@ -80,7 +81,7 @@ export const ShareDialogBase: React.FC<IShareDialogBaseProps> = (props) => {
                         onCancel={onCancel}
                         onSubmit={onSubmitAddGrantee}
                         onBackClick={onAddGranteeBackClick}
-                        onGranularGranteeChange={onGranularGranteeChange}
+                        onGranularGranteeAddChange={onGranularGranteeAddChange}
                     />
                 )}
             </div>

@@ -180,6 +180,7 @@ export interface IAffectedSharedObject {
     isLockingSupported: boolean;
     isLeniencyControlSupported: boolean;
     areGranularPermissionsSupported?: boolean;
+    isMetadataObjectLockingSupported?: boolean;
 }
 
 /**
@@ -262,7 +263,7 @@ export interface IAddGranteeBaseProps {
     onAddUserOrGroups?: (grantee: GranteeItem) => void; // rename
     onCancel: () => void;
     onSubmit: () => void;
-    onGranularGranteeChange?: (grantee: GranteeItem) => void;
+    onGranularGranteeAddChange?: (grantee: GranteeItem) => void;
 }
 
 /**
@@ -277,7 +278,7 @@ export interface IAddGranteeContentProps {
     sharedObjectRef: ObjRef;
     onDelete: (grantee: GranteeItem) => void;
     onAddUserOrGroups: (grantee: GranteeItem) => void;
-    onGranularGranteeChange?: (grantee: GranteeItem) => void;
+    onGranularGranteeAddChange?: (grantee: GranteeItem) => void;
 }
 
 /**

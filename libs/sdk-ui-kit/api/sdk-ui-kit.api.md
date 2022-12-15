@@ -739,7 +739,7 @@ export interface IAddGranteeBaseProps {
     // (undocumented)
     onDelete: (grantee: GranteeItem) => void;
     // (undocumented)
-    onGranularGranteeChange?: (grantee: GranteeItem) => void;
+    onGranularGranteeAddChange?: (grantee: GranteeItem) => void;
     // (undocumented)
     onSubmit: () => void;
     // (undocumented)
@@ -756,6 +756,8 @@ export interface IAffectedSharedObject {
     isLocked: boolean;
     // (undocumented)
     isLockingSupported: boolean;
+    // (undocumented)
+    isMetadataObjectLockingSupported?: boolean;
     // (undocumented)
     isUnderLenientControl: boolean;
     // (undocumented)
