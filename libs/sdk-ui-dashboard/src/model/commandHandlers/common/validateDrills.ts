@@ -4,7 +4,6 @@ import {
     IInsightWidget,
     IKpiWidget,
     InsightDrillDefinition,
-    isDrillToCustomUrl,
     isInsightWidget,
     IWidget,
     widgetRef,
@@ -35,44 +34,24 @@ export function* validateDrills(
     cmd: IDashboardCommand,
     widgets: (IKpiWidget | IInsightWidget)[],
 ) {
-    const widgetsWithDrills = widgets.filter((widget) => widget.drills.length > 0);
-    if (!widgetsWithDrills.length) {
-        return;
-    }
-
     const possibleInvalidDrills: SagaReturnType<typeof validateWidgetDrills>[] = yield all(
-        widgetsWithDrills.map((widget) => call(validateWidgetDrills, ctx, cmd, widget)),
+        widgets.map((widget) => call(validateWidgetDrills, ctx, cmd, widget)),
     );
 
     const invalidDrills = possibleInvalidDrills.filter(({ invalidDrills }) => invalidDrills.length > 0);
 
     if (invalidDrills.length === 0) {
-        yield put(uiActions.removeInvalidDrillWidgetRefs(widgetsWithDrills.map(widgetRef)));
-        yield put(uiActions.removeInvalidUrlDrillWidgetRefs(widgetsWithDrills.map(widgetRef)));
-        return;
-    }
-
-    yield all(
-        invalidDrills.map((drillInfo) =>
-            isInsightWidget(drillInfo.widget)
-                ? call(removeInsightWidgetDrills, ctx, cmd, drillInfo.widget, drillInfo.invalidDrills)
-                : call(removeKpiWidgetDrill, ctx, cmd, drillInfo.widget),
-        ),
-    );
-
-    yield put(uiActions.addInvalidDrillWidgetRefs(invalidDrills.map((drill) => drill.widget.ref)));
-
-    // custom URL drills have their own extra message
-    const invalidCustomUrlDrills = invalidDrills.filter((drillInfo) =>
-        drillInfo.invalidDrills.some((drill) => isDrillToCustomUrl(drill)),
-    );
-
-    if (invalidCustomUrlDrills.length > 0) {
-        yield put(
-            uiActions.addInvalidUrlDrillWidgetRefs(invalidCustomUrlDrills.map((drill) => drill.widget.ref)),
-        );
+        yield put(uiActions.removeInvalidDrillWidgetRefs(widgets.map(widgetRef)));
     } else {
-        yield put(uiActions.removeInvalidUrlDrillWidgetRefs(widgetsWithDrills.map(widgetRef)));
+        yield all(
+            invalidDrills.map((drillInfo) =>
+                isInsightWidget(drillInfo.widget)
+                    ? call(removeInsightWidgetDrills, ctx, cmd, drillInfo.widget, drillInfo.invalidDrills)
+                    : call(removeKpiWidgetDrill, ctx, cmd, drillInfo.widget),
+            ),
+        );
+
+        yield put(uiActions.addInvalidDrillWidgetRefs(invalidDrills.map((drill) => drill.widget.ref)));
     }
 }
 

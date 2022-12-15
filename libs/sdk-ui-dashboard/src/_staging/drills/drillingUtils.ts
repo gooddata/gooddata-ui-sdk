@@ -16,6 +16,7 @@ import {
     ICatalogAttribute,
     ICatalogDateAttribute,
     isMeasureDescriptor,
+    IAttributeDescriptor,
 } from "@gooddata/sdk-model";
 import {
     HeaderPredicates,
@@ -23,6 +24,7 @@ import {
     IHeaderPredicate,
     getMappingHeaderLocalIdentifier,
     IDrillEvent,
+    IAvailableDrillTargets,
 } from "@gooddata/sdk-ui";
 import first from "lodash/first";
 import last from "lodash/last";
@@ -205,4 +207,25 @@ export function isDrillConfigured(
 
         return isEqual(drill, configDrill);
     });
+}
+
+export function getValidDrillOriginAttributes(
+    supportedItemsForWidget: IAvailableDrillTargets,
+    localIdentifier: string,
+): IAttributeDescriptor[] {
+    const measureItems = supportedItemsForWidget.measures ?? [];
+    const measureSupportedItems = measureItems.find(
+        (item) => item.measure.measureHeaderItem.localIdentifier === localIdentifier,
+    );
+
+    if (measureSupportedItems) {
+        return measureSupportedItems.attributes;
+    }
+
+    const attributeItems = supportedItemsForWidget.attributes ?? [];
+    const attributeSupportedItems = attributeItems.find(
+        (attrItem) => attrItem.attribute.attributeHeader.localIdentifier === localIdentifier,
+    );
+
+    return attributeSupportedItems?.intersectionAttributes ?? [];
 }

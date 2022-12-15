@@ -292,6 +292,7 @@
     "configurationPanel.drillConfig.drillIntoDashboard": "Explorar hasta el panel",
     "configurationPanel.drillConfig.drillIntoInsight": "Explorar hasta la perspectiva",
     "configurationPanel.drillConfig.drillIntoUrl": "Explorar hasta la URL",
+    "configurationPanel.drillConfig.drillIntoUrl.invalidCustomUrl": "Parámetros de URL no válidos",
     "configurationPanel.drillConfig.select": "Elija una acción…",
     "configurationPanel.drillConfig.drillIntoDashboard.dateFilterWarning": "El valor del atributo de fecha de la perspectiva no se transferirá para filtrar el panel de destino.",
     "configurationPanel.unlistedDashboardTab": "Panel no listado",

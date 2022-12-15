@@ -292,6 +292,7 @@
     "configurationPanel.drillConfig.drillIntoDashboard": "Exploração aprofundada do dashboard",
     "configurationPanel.drillConfig.drillIntoInsight": "Aprofundar insight",
     "configurationPanel.drillConfig.drillIntoUrl": "Aprofundar URL",
+    "configurationPanel.drillConfig.drillIntoUrl.invalidCustomUrl": "Parâmetros de URL inválidos",
     "configurationPanel.drillConfig.select": "Escolher ação…",
     "configurationPanel.drillConfig.drillIntoDashboard.dateFilterWarning": "O valor do atributo de data do insight não será transferido para filtrar o dashboard de destino.",
     "configurationPanel.unlistedDashboardTab": "Dashboard não listado",

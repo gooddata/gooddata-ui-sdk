@@ -1620,6 +1620,11 @@
         "comment": "Name of an option in dropdown that is used to select type of dashboard drill.",
         "limit": 0
     },
+    "configurationPanel.drillConfig.drillIntoUrl.invalidCustomUrl": {
+        "value": "Invalid URL parameters",
+        "comment": "Warning displayed in drill config when drill into URL has invalid parameters of custom URL.",
+        "limit": 0
+    },
     "configurationPanel.drillConfig.select": {
         "value": "Choose action…",
         "comment": "Hint guiding users that drill actions in select box has to be selected. Use '…' as one character, not 3 dots ('...').",

@@ -292,6 +292,7 @@
     "configurationPanel.drillConfig.drillIntoDashboard": "深入控制面板",
     "configurationPanel.drillConfig.drillIntoInsight": "深入了解",
     "configurationPanel.drillConfig.drillIntoUrl": "深入查看 URL",
+    "configurationPanel.drillConfig.drillIntoUrl.invalidCustomUrl": "URL 参数无效",
     "configurationPanel.drillConfig.select": "选择操作…",
     "configurationPanel.drillConfig.drillIntoDashboard.dateFilterWarning": "筛选目标控制面板时，洞察中的日期属性值不会被传输。",
     "configurationPanel.unlistedDashboardTab": "未列出的控制面板",

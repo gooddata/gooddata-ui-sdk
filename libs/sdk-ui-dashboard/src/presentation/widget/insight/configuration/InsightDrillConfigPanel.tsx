@@ -8,6 +8,7 @@ import {
     modifyDrillsForInsightWidget,
     removeDrillsForInsightWidget,
     selectDrillTargetsByWidgetRef,
+    selectInvalidUrlDrillParameterDrillLocalIdsByWidgetRef,
     selectSettings,
     selectWidgetByRef,
     useDashboardDispatch,
@@ -139,11 +140,18 @@ export const InsightDrillConfigPanel: React.FunctionComponent<IDrillConfigPanelP
 
     const configItems = useDashboardSelector(selectDrillTargetsByWidgetRef(widgetRef));
     const widget = useDashboardSelector(selectWidgetByRef(widgetRef));
-
     invariant(isInsightWidget(widget), "must be insight widget");
 
+    const invalidCustomUrlDrillLocalIds = useDashboardSelector(
+        selectInvalidUrlDrillParameterDrillLocalIdsByWidgetRef(widgetRef),
+    );
+
     const drillItems = configItems?.availableDrillTargets
-        ? getMappedConfigForWidget(widget.drills, configItems?.availableDrillTargets)
+        ? getMappedConfigForWidget(
+              widget.drills,
+              configItems?.availableDrillTargets,
+              invalidCustomUrlDrillLocalIds,
+          )
         : [];
 
     const dispatch = useDashboardDispatch();

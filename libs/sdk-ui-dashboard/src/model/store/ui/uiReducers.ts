@@ -1,10 +1,20 @@
 // (C) 2021-2022 GoodData Corporation
 import { Action, AnyAction, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
-import { areObjRefsEqual, ObjRef, objRefToString } from "@gooddata/sdk-model";
-import { UiState } from "./uiState";
+import {
+    areObjRefsEqual,
+    IDrillToCustomUrl,
+    ObjRef,
+    objRefToString,
+    IInsightWidget,
+    widgetId,
+    widgetRef,
+    widgetUri,
+} from "@gooddata/sdk-model";
+import { InvalidCustomUrlDrillParameterInfo, UiState } from "./uiState";
 import { ILayoutCoordinates, IMenuButtonItemsVisibility } from "../../../types";
 import { DraggableLayoutItem } from "../../../presentation/dragAndDrop/types";
 import { IDashboardWidgetOverlay } from "../../types/commonTypes";
+import { getDrillOriginLocalIdentifier } from "../../../_staging/drills/drillingUtils";
 
 type UiReducer<A extends Action = AnyAction> = CaseReducer<UiState, A>;
 
@@ -149,8 +159,8 @@ const resetInvalidDrillWidgetRefs: UiReducer = (state) => {
     state.drillValidationMessages.invalidDrillWidgetRefs = [];
 };
 
-const resetInvalidUrlDrillWidgetRefs: UiReducer = (state) => {
-    state.drillValidationMessages.invalidUrlDrillWidgetRefs = [];
+const resetAllInvalidCustomUrlDrillParameterWidgets: UiReducer = (state) => {
+    state.drillValidationMessages.invalidCustomUrlDrillParameterWidgets = [];
 };
 
 const addInvalidDrillWidgetRefs: UiReducer<PayloadAction<ObjRef[]>> = (state, action) => {
@@ -165,14 +175,39 @@ const addInvalidDrillWidgetRefs: UiReducer<PayloadAction<ObjRef[]>> = (state, ac
     });
 };
 
-const addInvalidUrlDrillWidgetRefs: UiReducer<PayloadAction<ObjRef[]>> = (state, action) => {
-    action.payload.forEach((toAdd) => {
-        if (
-            !state.drillValidationMessages.invalidUrlDrillWidgetRefs.some((existing) =>
-                areObjRefsEqual(existing, toAdd),
-            )
-        ) {
-            state.drillValidationMessages.invalidUrlDrillWidgetRefs.push(toAdd);
+const setInvalidCustomUrlDrillParameterWidgets: UiReducer<
+    PayloadAction<{ widget: IInsightWidget; invalidDrills: IDrillToCustomUrl[] }[]>
+> = (state, action) => {
+    action.payload.forEach((item) => {
+        const existingIndex = state.drillValidationMessages.invalidCustomUrlDrillParameterWidgets.findIndex(
+            (i) => i.widgetId === widgetId(item.widget),
+        );
+
+        const itemToStore: InvalidCustomUrlDrillParameterInfo = {
+            drillsWithInvalidParametersLocalIds: item.invalidDrills.map(getDrillOriginLocalIdentifier),
+            widgetId: widgetId(item.widget),
+            widgetRef: widgetRef(item.widget),
+            widgetUri: widgetUri(item.widget),
+        };
+
+        if (existingIndex >= 0) {
+            state.drillValidationMessages.invalidCustomUrlDrillParameterWidgets[existingIndex] = itemToStore;
+        } else {
+            state.drillValidationMessages.invalidCustomUrlDrillParameterWidgets.push(itemToStore);
+        }
+    });
+};
+
+const resetInvalidCustomUrlDrillParameterWidget: UiReducer<PayloadAction<IInsightWidget[]>> = (
+    state,
+    action,
+) => {
+    action.payload.forEach((widget) => {
+        const existingIndex = state.drillValidationMessages.invalidCustomUrlDrillParameterWidgets.findIndex(
+            (i) => i.widgetId === widgetId(widget),
+        );
+        if (existingIndex >= 0) {
+            state.drillValidationMessages.invalidCustomUrlDrillParameterWidgets.splice(existingIndex, 1);
         }
     });
 };
@@ -180,13 +215,6 @@ const addInvalidUrlDrillWidgetRefs: UiReducer<PayloadAction<ObjRef[]>> = (state,
 const removeInvalidDrillWidgetRefs: UiReducer<PayloadAction<ObjRef[]>> = (state, action) => {
     state.drillValidationMessages.invalidDrillWidgetRefs =
         state.drillValidationMessages.invalidDrillWidgetRefs.filter(
-            (existing) => !action.payload.some((toRemove) => areObjRefsEqual(toRemove, existing)),
-        );
-};
-
-const removeInvalidUrlDrillWidgetRefs: UiReducer<PayloadAction<ObjRef[]>> = (state, action) => {
-    state.drillValidationMessages.invalidUrlDrillWidgetRefs =
-        state.drillValidationMessages.invalidUrlDrillWidgetRefs.filter(
             (existing) => !action.payload.some((toRemove) => areObjRefsEqual(toRemove, existing)),
         );
 };
@@ -284,11 +312,11 @@ export const uiReducers = {
     openCancelEditModeDialog,
     closeCancelEditModeDialog,
     resetInvalidDrillWidgetRefs,
-    resetInvalidUrlDrillWidgetRefs,
+    resetAllInvalidCustomUrlDrillParameterWidgets,
     addInvalidDrillWidgetRefs,
-    addInvalidUrlDrillWidgetRefs,
+    setInvalidCustomUrlDrillParameterWidgets,
     removeInvalidDrillWidgetRefs,
-    removeInvalidUrlDrillWidgetRefs,
+    resetInvalidCustomUrlDrillParameterWidget,
     setDraggingWidgetSource,
     clearDraggingWidgetSource,
     setDraggingWidgetTarget,

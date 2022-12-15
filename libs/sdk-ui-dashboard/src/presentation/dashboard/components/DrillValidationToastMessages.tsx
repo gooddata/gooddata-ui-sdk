@@ -5,7 +5,7 @@ import { Messages, IMessage } from "@gooddata/sdk-ui-kit";
 import compact from "lodash/compact";
 import {
     selectInvalidDrillWidgetRefs,
-    selectInvalidUrlDrillWidgetRefs,
+    selectInvalidUrlDrillParameterWidgetRefs,
     selectIsInEditMode,
     selectWidgetsMap,
     uiActions,
@@ -37,7 +37,7 @@ function useDrillValidationMessages(): { messages: IMessage[]; onMessageClose: (
 
     const allWidgets = useDashboardSelector(selectWidgetsMap);
     const invalidDrillWidgetRefs = useDashboardSelector(selectInvalidDrillWidgetRefs);
-    const invalidUrlDrillWidgetRefs = useDashboardSelector(selectInvalidUrlDrillWidgetRefs);
+    const invalidUrlDrillWidgetRefs = useDashboardSelector(selectInvalidUrlDrillParameterWidgetRefs);
 
     const invalidDrillWidgets = compact(
         invalidDrillWidgetRefs.map((ref) => allWidgets.get(ref)).filter(isWidget),
@@ -77,7 +77,7 @@ function useDrillValidationMessages(): { messages: IMessage[]; onMessageClose: (
                 dispatch(uiActions.resetInvalidDrillWidgetRefs());
             }
             if (id === URL_DRILL_MESSAGE_ID) {
-                dispatch(uiActions.resetInvalidUrlDrillWidgetRefs());
+                dispatch(uiActions.resetAllInvalidCustomUrlDrillParameterWidgets());
             }
         },
         [dispatch],

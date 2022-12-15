@@ -292,6 +292,7 @@
     "configurationPanel.drillConfig.drillIntoDashboard": "Углубиться в дашборд",
     "configurationPanel.drillConfig.drillIntoInsight": "Углубиться в анализ",
     "configurationPanel.drillConfig.drillIntoUrl": "Углубиться в URL",
+    "configurationPanel.drillConfig.drillIntoUrl.invalidCustomUrl": "Неверные параметры URL",
     "configurationPanel.drillConfig.select": "Выбрать действие…",
     "configurationPanel.drillConfig.drillIntoDashboard.dateFilterWarning": "Значение атрибута даты из анализа не будет передано для фильтрации целевого дашборда.",
     "configurationPanel.unlistedDashboardTab": "Дашборд вне списка",

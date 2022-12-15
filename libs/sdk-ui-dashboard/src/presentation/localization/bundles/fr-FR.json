@@ -292,6 +292,7 @@
     "configurationPanel.drillConfig.drillIntoDashboard": "Explorer le tableau de bord",
     "configurationPanel.drillConfig.drillIntoInsight": "Explorer la perception",
     "configurationPanel.drillConfig.drillIntoUrl": "Explorer l'URL",
+    "configurationPanel.drillConfig.drillIntoUrl.invalidCustomUrl": "Paramètres URL non valides",
     "configurationPanel.drillConfig.select": "Choisir une action…",
     "configurationPanel.drillConfig.drillIntoDashboard.dateFilterWarning": "La valeur de l'attribut date de la perception ne sera pas transférée pour filtrer le tableau de bord cible.",
     "configurationPanel.unlistedDashboardTab": "Tableau de bord non répertorié",

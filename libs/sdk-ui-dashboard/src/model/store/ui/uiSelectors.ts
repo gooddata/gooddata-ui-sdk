@@ -8,6 +8,8 @@ import { selectWidgetsMap } from "../layout/layoutSelectors";
 import { DashboardState } from "../types";
 import { createMemoizedSelector } from "../_infra/selectors";
 import { IDashboardWidgetOverlay } from "../../types/commonTypes";
+import { ObjRefMap } from "../../../_staging/metadata/objRefMap";
+import { InvalidCustomUrlDrillParameterInfo } from "./uiState";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -231,12 +233,39 @@ export const selectInvalidDrillWidgetRefs = createSelector(
     (state) => state.drillValidationMessages.invalidDrillWidgetRefs,
 );
 
+const selectInvalidCustomUrlDrillParameterWidgets = createSelector(
+    selectSelf,
+    (state) => state.drillValidationMessages.invalidCustomUrlDrillParameterWidgets,
+);
+
 /**
  * @internal
  */
-export const selectInvalidUrlDrillWidgetRefs = createSelector(
-    selectSelf,
-    (state) => state.drillValidationMessages.invalidUrlDrillWidgetRefs,
+export const selectInvalidUrlDrillParameterWidgetRefs = createSelector(
+    selectInvalidCustomUrlDrillParameterWidgets,
+    (invalidCustomUrlDrillParameterWidgets) => invalidCustomUrlDrillParameterWidgets.map((i) => i.widgetRef),
+);
+
+const selectInvalidUrlDrillParameterWidgetsMap = createSelector(
+    selectInvalidCustomUrlDrillParameterWidgets,
+    (invalidCustomUrlDrillParameterWidgets) =>
+        new ObjRefMap<InvalidCustomUrlDrillParameterInfo>({
+            idExtract: (i) => i.widgetId,
+            refExtract: (i) => i.widgetRef,
+            uriExtract: (i) => i.widgetUri,
+            strictTypeCheck: false,
+        }).fromItems(invalidCustomUrlDrillParameterWidgets),
+);
+
+/**
+ * @internal
+ */
+export const selectInvalidUrlDrillParameterDrillLocalIdsByWidgetRef = createMemoizedSelector((ref: ObjRef) =>
+    createSelector(
+        selectInvalidUrlDrillParameterWidgetsMap,
+        (invalidParameterWidgetsMap) =>
+            invalidParameterWidgetsMap.get(ref)?.drillsWithInvalidParametersLocalIds ?? [],
+    ),
 );
 
 /**

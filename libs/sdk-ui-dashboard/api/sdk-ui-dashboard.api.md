@@ -148,6 +148,7 @@ import { ScreenSize } from '@gooddata/sdk-model';
 import { Selector } from '@reduxjs/toolkit';
 import { ShareStatus } from '@gooddata/sdk-model';
 import { TypedUseSelectorHook } from 'react-redux';
+import { Uri } from '@gooddata/sdk-model';
 import { UriRef } from '@gooddata/sdk-model';
 import { UseCancelablePromiseCallbacks } from '@gooddata/sdk-ui';
 import { UseCancelablePromiseState } from '@gooddata/sdk-ui';
@@ -3990,6 +3991,18 @@ export type InsightWidgetComponentSet = CustomComponentBase<IDashboardInsightPro
 // @internal (undocumented)
 export type InsightWidgetModifications = (builder: InsightWidgetBuilder) => InsightWidgetBuilder;
 
+// @alpha (undocumented)
+export interface InvalidCustomUrlDrillParameterInfo {
+    // (undocumented)
+    drillsWithInvalidParametersLocalIds: string[];
+    // (undocumented)
+    widgetId: Identifier;
+    // (undocumented)
+    widgetRef: ObjRef;
+    // (undocumented)
+    widgetUri: Uri;
+}
+
 // @internal (undocumented)
 export interface IParentWithConnectingAttributes {
     connectingAttributes: IConnectingAttribute[];
@@ -5914,7 +5927,10 @@ itemIndex: number;
 export const selectInvalidDrillWidgetRefs: OutputSelector<DashboardState, ObjRef[], (res: UiState) => ObjRef[]>;
 
 // @internal (undocumented)
-export const selectInvalidUrlDrillWidgetRefs: OutputSelector<DashboardState, ObjRef[], (res: UiState) => ObjRef[]>;
+export const selectInvalidUrlDrillParameterDrillLocalIdsByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, string[], (res: ObjRefMap<InvalidCustomUrlDrillParameterInfo>) => string[]>;
+
+// @internal (undocumented)
+export const selectInvalidUrlDrillParameterWidgetRefs: OutputSelector<DashboardState, ObjRef[], (res: InvalidCustomUrlDrillParameterInfo[]) => ObjRef[]>;
 
 // @internal
 export const selectIsAlternativeDisplayFormSelectionEnabled: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
@@ -6366,21 +6382,24 @@ clearActiveSectionIndex: CaseReducer<UiState, AnyAction>;
 openCancelEditModeDialog: CaseReducer<UiState, AnyAction>;
 closeCancelEditModeDialog: CaseReducer<UiState, AnyAction>;
 resetInvalidDrillWidgetRefs: CaseReducer<UiState, AnyAction>;
-resetInvalidUrlDrillWidgetRefs: CaseReducer<UiState, AnyAction>;
+resetAllInvalidCustomUrlDrillParameterWidgets: CaseReducer<UiState, AnyAction>;
 addInvalidDrillWidgetRefs: CaseReducer<UiState, {
 payload: ObjRef[];
 type: string;
 }>;
-addInvalidUrlDrillWidgetRefs: CaseReducer<UiState, {
-payload: ObjRef[];
+setInvalidCustomUrlDrillParameterWidgets: CaseReducer<UiState, {
+payload: {
+widget: IInsightWidget;
+invalidDrills: IDrillToCustomUrl[];
+}[];
 type: string;
 }>;
 removeInvalidDrillWidgetRefs: CaseReducer<UiState, {
 payload: ObjRef[];
 type: string;
 }>;
-removeInvalidUrlDrillWidgetRefs: CaseReducer<UiState, {
-payload: ObjRef[];
+resetInvalidCustomUrlDrillParameterWidget: CaseReducer<UiState, {
+payload: IInsightWidget[];
 type: string;
 }>;
 setDraggingWidgetSource: CaseReducer<UiState, {
@@ -6434,7 +6453,7 @@ export interface UiState {
     // (undocumented)
     drillValidationMessages: {
         invalidDrillWidgetRefs: ObjRef[];
-        invalidUrlDrillWidgetRefs: ObjRef[];
+        invalidCustomUrlDrillParameterWidgets: InvalidCustomUrlDrillParameterInfo[];
     };
     // (undocumented)
     filterAttributeSelectionOpen: boolean;
