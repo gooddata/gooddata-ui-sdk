@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-import React, { useEffect } from "react";
+import React, { forwardRef, RefObject, useEffect } from "react";
 import {
     useDispatchDashboardCommand,
     changeFilterContextSelection,
@@ -10,7 +10,7 @@ import { DashboardLayout } from "../../layout";
 import { IDashboardProps } from "../types";
 import { DateFilterConfigWarnings } from "./DateFilterConfigWarnings";
 
-export const DashboardMainContent: React.FC<IDashboardProps> = () => {
+export const DashboardMainContent = forwardRef(function DashboardMainContent(_: IDashboardProps, ref) {
     const onFiltersChange = useDispatchDashboardCommand(changeFilterContextSelection);
     const { deselectWidgets } = useWidgetSelection();
 
@@ -27,11 +27,14 @@ export const DashboardMainContent: React.FC<IDashboardProps> = () => {
     }, [handleDragHoverEnd, isOver]);
 
     return (
-        <div className="gd-flex-item-stretch dash-section dash-section-kpis" ref={dropRef}>
-            <div className="gd-flex-container root-flex-maincontent" onClick={deselectWidgets}>
+        <div
+            className="gd-flex-item-stretch dash-section dash-section-kpis"
+            ref={ref as RefObject<HTMLDivElement>}
+        >
+            <div className="gd-flex-container root-flex-maincontent" ref={dropRef} onClick={deselectWidgets}>
                 <DateFilterConfigWarnings />
                 <DashboardLayout onFiltersChange={onFiltersChange} />
             </div>
         </div>
     );
-};
+});
