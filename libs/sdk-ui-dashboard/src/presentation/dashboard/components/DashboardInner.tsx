@@ -22,13 +22,13 @@ export const DashboardInner: React.FC<IDashboardProps> = () => {
     return (
         <IntlWrapper locale={locale}>
             {/* we need wrapping element for drag layer and dashboard for proper rendering in flex layout */}
-            <div className="component-root">
+            <div
+                className={cx("component-root", {
+                    "sdk-edit-mode-on": isEditMode,
+                })}
+            >
                 <DragLayerComponent />
-                <div
-                    className={cx("gd-dashboards-root", "gd-flex-container", {
-                        "sdk-edit-mode-on": isEditMode,
-                    })}
-                >
+                <div className="gd-dashboards-root gd-flex-container">
                     <DashboardSidebar DefaultSidebar={RenderModeAwareDashboardSidebar} />
                     <div className="gd-dash-content">
                         {/* gd-dash-header-wrapper-sdk-8-12 style is added because we should keep old styles unchanged to not brake plugins */}

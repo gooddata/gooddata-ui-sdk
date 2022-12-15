@@ -89,7 +89,7 @@ export function WidthResizerHotspot({
 
     const isThisResizing = isWidthResizing && isActive;
 
-    const showHotspot = !isDragging || isWidthResizing;
+    const showHotspot = !isDragging || isWidthResizing || isResizerVisible;
     const showResizer = isResizerVisible || isThisResizing;
     const status = isDragging ? "muted" : "active";
 
