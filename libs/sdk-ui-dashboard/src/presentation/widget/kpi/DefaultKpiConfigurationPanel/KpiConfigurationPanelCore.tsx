@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import { IKpiWidget, IKpiWidgetDescriptionConfiguration, ObjRef, widgetRef } from "@gooddata/sdk-model";
-import { Typography } from "@gooddata/sdk-ui-kit";
+import { ScrollablePanel, Typography } from "@gooddata/sdk-ui-kit";
 
 import { AttributeFilterConfiguration } from "../../common";
 import { KpiComparison } from "./KpiComparison/KpiComparison";
@@ -72,7 +72,7 @@ export const KpiConfigurationPanelCore: React.FC<IKpiConfigurationPanelCoreProps
     return (
         <>
             <KpiConfigurationPanelHeader onCloseButtonClick={onClose} />
-            <div className="configuration-panel configuration-panel-kpi">
+            <ScrollablePanel className={"configuration-panel configuration-panel-kpi"}>
                 <div className={configurationCategoryClasses}>
                     <KpiConfigurationMessages numberOfAlerts={numberOfAlerts} />
 
@@ -123,7 +123,7 @@ export const KpiConfigurationPanelCore: React.FC<IKpiConfigurationPanelCoreProps
                     </Typography>
                     {!!widget && <KpiDrillConfiguration widget={widget} />}
                 </div>
-            </div>
+            </ScrollablePanel>
         </>
     );
 };

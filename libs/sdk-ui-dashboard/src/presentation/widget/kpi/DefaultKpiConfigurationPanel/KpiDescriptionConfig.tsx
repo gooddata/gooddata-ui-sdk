@@ -153,6 +153,7 @@ export function KpiDescriptionConfig(props: IKpiDescriptionConfigProps) {
                         <FormattedMessage id="configurationPanel.visualprops.sectionDescription" />
                     </Typography>
                     <Dropdown
+                        closeOnParentScroll
                         renderBody={({ closeDropdown }) => (
                             <DropdownList
                                 items={dropdownItems}
