@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
 
-import React from "react";
+import React, { useMemo } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
 import { IDashboardPermissions } from "@gooddata/sdk-model";
@@ -28,7 +28,9 @@ export const GranularGranteeUserItem: React.FC<IGranularGranteeUserItemProps> = 
         "gd-share-dialog-granular-grantee-item",
     );
 
-    const userName = getGranteeLabel(grantee, intl);
+    const userName = useMemo(() => {
+        return getGranteeLabel(grantee, intl);
+    }, [grantee, intl]);
 
     return (
         <div className={itemClassName}>

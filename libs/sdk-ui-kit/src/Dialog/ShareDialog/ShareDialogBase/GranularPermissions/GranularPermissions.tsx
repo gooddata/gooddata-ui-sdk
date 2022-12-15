@@ -63,10 +63,6 @@ export const GranularPermissions: React.FC<IGranularPermissionsProps> = ({
 }) => {
     const permissions = getPermissionTypeItems(dashboardPermissions);
 
-    if (!isShowDropdown) {
-        return null;
-    }
-
     const handleOnDelete = useCallback(() => {
         const changedGrantee: GranteeItem = {
             ...grantee,
@@ -76,6 +72,10 @@ export const GranularPermissions: React.FC<IGranularPermissionsProps> = ({
         onDelete(changedGrantee);
         toggleDropdown();
     }, [grantee, onDelete, toggleDropdown]);
+
+    if (!isShowDropdown) {
+        return null;
+    }
 
     return (
         <Overlay

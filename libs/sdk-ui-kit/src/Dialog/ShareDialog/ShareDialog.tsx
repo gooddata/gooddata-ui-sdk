@@ -73,18 +73,20 @@ export const ShareDialog: React.FC<IShareDialogProps> = (props) => {
             const shareStatus = mapGranteesToShareStatus(grantees, granteesToAdd, granteesToDelete);
             const isUnderStrictControl = shareStatus !== "public" && !isUnderLenientControl;
             // TODO: is there a better way?
-            let g: GranteeWithGranularPermissions[];
+            let changedGrantees: GranteeWithGranularPermissions[] = [];
             if (granteesToAdd.length > 0) {
-                g = mapGranteesToAccessGrantees(granteesToAdd, true);
+                changedGrantees = mapGranteesToAccessGrantees(granteesToAdd, true);
             } else {
-                g = mapGranteesToAccessGrantees(grantees);
+                const mappedGranteesToDelete = mapGranteesToAccessGrantees(granteesToDelete);
+                const mappedGrantees = mapGranteesToAccessGrantees(grantees);
+                changedGrantees = areGranularPermissionsSupported ? mappedGrantees : mappedGranteesToDelete;
             }
 
             onApply({
                 shareStatus,
                 isUnderStrictControl,
                 isLocked,
-                grantees: g,
+                grantees: changedGrantees,
             });
         },
         [onApply],

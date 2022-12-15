@@ -59,15 +59,11 @@ export class BearWorkspaceAccessControlService implements IWorkspaceAccessContro
     public async changeAccess(sharedObject: ObjRef, grantees: GranteeWithGranularPermissions[]) {
         // change access for grantees with some permissions provided
         const granteesToGrantAccess = grantees
-            .filter((grantee) => {
-                grantee.permissions.length > 0;
-            })
+            .filter((grantee) => grantee.permissions.length > 0)
             .map(removePermissionsFromGrantee);
         // revoke access for grantees with no permissions provided
         const granteesToRevokeAccess = grantees
-            .filter((grantee) => {
-                grantee.permissions.length === 0;
-            })
+            .filter((grantee) => grantee.permissions.length === 0)
             .map(removePermissionsFromGrantee);
 
         await this.revokeAccess(sharedObject, granteesToRevokeAccess);
