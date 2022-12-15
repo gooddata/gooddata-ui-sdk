@@ -172,6 +172,7 @@ export function InsightDescriptionConfig(props: IInsightDescriptionConfigProps) 
                         <FormattedMessage id="configurationPanel.visualprops.sectionDescription" />
                     </Typography>
                     <Dropdown
+                        closeOnParentScroll
                         renderBody={({ closeDropdown }) => (
                             <DropdownList
                                 items={dropdownItems}
