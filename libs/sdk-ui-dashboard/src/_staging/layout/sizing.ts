@@ -121,7 +121,7 @@ export function getDashboardLayoutWidgetMaxGridHeight(
 /**
  * @internal
  */
-export function getMinHeight(widgets: IWidget[], insightMap: ObjRefMap<IInsight>): number {
+export function getMinHeight(widgets: IWidget[], insightMap: ObjRefMap<IInsight>, defaultMin = 0): number {
     const mins: number[] = widgets
         .filter(isDashboardWidget)
         .map((widget) =>
@@ -131,7 +131,7 @@ export function getMinHeight(widgets: IWidget[], insightMap: ObjRefMap<IInsight>
                 isKpiWidget(widget) ? widget.kpi : insightMap.get(widget.insight),
             ),
         );
-    return Math.max(...mins);
+    return Math.max(defaultMin, ...mins);
 }
 
 /**
