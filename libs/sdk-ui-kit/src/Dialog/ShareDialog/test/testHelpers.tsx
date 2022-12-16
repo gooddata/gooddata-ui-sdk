@@ -7,11 +7,19 @@ import { noop } from "lodash";
 import { recordedBackend, RecordedBackendConfig } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { IShareDialogLabels, IShareDialogProps, ISharedObject } from "../types";
-import { uriRef, IWorkspaceUser, IWorkspaceUserGroup, AccessGranteeDetail } from "@gooddata/sdk-model";
+import {
+    uriRef,
+    IWorkspaceUser,
+    IWorkspaceUserGroup,
+    AccessGranteeDetail,
+    IAvailableUserAccessGrantee,
+    IDashboardPermissions,
+    IAvailableAccessGrantee,
+} from "@gooddata/sdk-model";
 import { ShareDialog } from "../ShareDialog";
 import { groupAll } from "../ShareDialogBase/test/GranteeMock";
 import { getGranteeItemTestId } from "../ShareDialogBase/utils";
-import { mapWorkspaceUserToGrantee } from "../shareDialogMappers";
+import { mapAvailableUserAccessToGrantee } from "../shareDialogMappers";
 
 export const labels: IShareDialogLabels = {
     accessTypeLabel: "lockControl label",
@@ -26,6 +34,12 @@ export const defaultSharedObject: ISharedObject = {
     createdBy: undefined,
 };
 
+const defaultPermissions: IDashboardPermissions = {
+    canEditDashboard: false,
+    canShareDashboard: true,
+    canViewDashboard: true,
+};
+
 export const defaultProps: IShareDialogProps = {
     backend: recordedBackend(ReferenceRecordings.Recordings),
     workspace: "foo",
@@ -37,6 +51,7 @@ export const defaultProps: IShareDialogProps = {
     onApply: noop,
     onCancel: noop,
     onError: noop,
+    dashboardPermissions: defaultPermissions,
 };
 
 export const createComponent = async (
@@ -44,6 +59,7 @@ export const createComponent = async (
     users: IWorkspaceUser[] = [],
     groups: IWorkspaceUserGroup[] = [],
     grantees: AccessGranteeDetail[] = [],
+    availableGrantees: IAvailableAccessGrantee[] = [],
 ): Promise<ReactWrapper> => {
     const config: RecordedBackendConfig = {
         userManagement: {
@@ -55,6 +71,7 @@ export const createComponent = async (
             },
             accessControl: {
                 accessList: grantees,
+                availableGrantees,
             },
         },
     };
@@ -97,8 +114,8 @@ export function isCurrentUserInGrantees(wrapper: ReactWrapper): boolean {
     return wrapper.find(".s-share-dialog-current-user").hostNodes().length === 1;
 }
 
-export function getGranteeSelector(user: IWorkspaceUser): string {
-    const grantee = mapWorkspaceUserToGrantee(user, uriRef(""));
+export function getGranteeSelector(user: IAvailableUserAccessGrantee): string {
+    const grantee = mapAvailableUserAccessToGrantee(user, uriRef(""));
     return `.${getGranteeItemTestId(grantee)}`;
 }
 
@@ -139,8 +156,8 @@ export function getGroupAllOptionSelector(): string {
     return `.${getGranteeItemTestId(groupAll, "option")}`;
 }
 
-export function getUserOptionSelector(user: IWorkspaceUser): string {
-    return `.${getGranteeItemTestId(mapWorkspaceUserToGrantee(user, uriRef("")), "option")}`;
+export function getUserOptionSelector(user: IAvailableUserAccessGrantee): string {
+    return `.${getGranteeItemTestId(mapAvailableUserAccessToGrantee(user, uriRef("")), "option")}`;
 }
 
 export function clickOnOption(wrapper: ReactWrapper, selector: string): void {

@@ -13,7 +13,7 @@ import { UiKit } from "../../../_infra/storyGroups";
 import { wrapWithTheme } from "../../themeWrapper";
 import { BackstopConfig } from "../../../_infra/backstopScenario";
 
-import { groupAll, owner } from "./GranteeMock";
+import { defaultDashboardPermissions, groupAll, owner } from "./GranteeMock";
 import { LabelsMock } from "./LabelsMock";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
@@ -66,6 +66,7 @@ const BasicExample: React.FC = () => {
                                 onCancel={onCancel}
                                 onSubmit={onSubmit}
                                 onError={onCancel}
+                                dashboardPermissions={defaultDashboardPermissions}
                             />
                         ) : null}
                     </div>

@@ -92,6 +92,7 @@ export const defaultRecordedBackendCapabilities: IBackendCapabilities = {
     supportsCustomColorPalettes: true,
     supportsElementsQueryParentFiltering: true,
     supportsElementUris: true,
+    supportsEveryoneUserGroupForAccessControl: true,
 };
 
 /**

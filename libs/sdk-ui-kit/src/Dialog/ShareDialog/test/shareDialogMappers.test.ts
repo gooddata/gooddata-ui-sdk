@@ -1,17 +1,23 @@
 // (C) 2021-2022 GoodData Corporation
 import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
-import { IUser, uriRef, IListedDashboard, ShareStatus } from "@gooddata/sdk-model";
+import {
+    IUser,
+    uriRef,
+    IListedDashboard,
+    ShareStatus,
+    GranteeWithGranularPermissions,
+} from "@gooddata/sdk-model";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 
 import {
+    availableUserAccessGrantee,
+    availableUserGroupAccessGrantee,
     grantees,
     groupAccessGrantee,
     groupAll,
     owner,
     user,
     userAccessGrantee,
-    workSpaceGroup,
-    workspaceUser,
 } from "../ShareDialogBase/test/GranteeMock";
 import { GranteeItem, IGranteeUser } from "../ShareDialogBase/types";
 import { GranteeGroupAll } from "../ShareDialogBase/utils";
@@ -21,8 +27,8 @@ import {
     mapOwnerToGrantee,
     mapShareStatusToGroupAll,
     mapUserFullName,
-    mapWorkspaceUserGroupToGrantee,
-    mapWorkspaceUserToGrantee,
+    mapAvailableUserGroupAccessToGrantee,
+    mapAvailableUserAccessToGrantee,
     mapAccessGranteeDetailToGrantee,
     mapSharedObjectToAffectedSharedObject,
 } from "../shareDialogMappers";
@@ -193,12 +199,14 @@ describe("shareDialogMappers", () => {
                 id: uriRef("john-id"),
                 isCurrentUser: false,
                 isOwner: false,
-                name: "John Doe ",
+                name: "John Doe",
                 status: "Active",
                 type: "user",
             };
 
-            expect(mapWorkspaceUserToGrantee(workspaceUser, uriRef(""))).toEqual(expectedGrantee);
+            expect(mapAvailableUserAccessToGrantee(availableUserAccessGrantee, uriRef(""))).toEqual(
+                expectedGrantee,
+            );
         });
 
         it("should return correctly mapped current workspace user to grantee", () => {
@@ -207,12 +215,14 @@ describe("shareDialogMappers", () => {
                 id: uriRef("john-id"),
                 isCurrentUser: true,
                 isOwner: false,
-                name: "John Doe ",
+                name: "John Doe",
                 status: "Active",
                 type: "user",
             };
 
-            expect(mapWorkspaceUserToGrantee(workspaceUser, uriRef("john-id"))).toEqual(expectedGrantee);
+            expect(mapAvailableUserAccessToGrantee(availableUserAccessGrantee, uriRef("john-id"))).toEqual(
+                expectedGrantee,
+            );
         });
     });
 
@@ -223,15 +233,17 @@ describe("shareDialogMappers", () => {
                 name: "Test group",
                 type: "group",
             };
-            expect(mapWorkspaceUserGroupToGrantee(workSpaceGroup)).toEqual(expectedGrantee);
+            expect(mapAvailableUserGroupAccessToGrantee(availableUserGroupAccessGrantee)).toEqual(
+                expectedGrantee,
+            );
         });
     });
 
     describe("mapGranteesToAccessGrantees", () => {
         it("should return correctly mapped grantees to access grantees", () => {
-            const accessGrantee = [
-                { granteeRef: uriRef("userID1"), type: "user" },
-                { granteeRef: uriRef("groupId"), type: "group" },
+            const accessGrantee: GranteeWithGranularPermissions[] = [
+                { granteeRef: uriRef("userID1"), type: "user", permissions: [], inheritedPermissions: [] },
+                { granteeRef: uriRef("groupId"), type: "group", permissions: [], inheritedPermissions: [] },
             ];
             expect(mapGranteesToAccessGrantees(grantees)).toEqual(accessGrantee);
         });
@@ -244,7 +256,7 @@ describe("shareDialogMappers", () => {
                 id: uriRef("john-id"),
                 isCurrentUser: false,
                 isOwner: false,
-                name: "John Doe ",
+                name: "John Doe",
                 status: "Active",
                 type: "user",
             };
@@ -257,7 +269,7 @@ describe("shareDialogMappers", () => {
                 id: uriRef("john-id"),
                 isCurrentUser: true,
                 isOwner: false,
-                name: "John Doe ",
+                name: "John Doe",
                 status: "Active",
                 type: "user",
             };

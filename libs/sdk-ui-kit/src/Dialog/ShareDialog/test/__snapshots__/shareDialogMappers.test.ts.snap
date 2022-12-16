@@ -6,6 +6,7 @@ Object {
   "isLeniencyControlSupported": false,
   "isLocked": true,
   "isLockingSupported": true,
+  "isMetadataObjectLockingSupported": true,
   "isUnderLenientControl": true,
   "owner": Object {
     "email": undefined,

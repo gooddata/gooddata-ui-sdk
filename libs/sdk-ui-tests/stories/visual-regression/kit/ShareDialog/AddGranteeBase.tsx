@@ -9,12 +9,14 @@ import { AddGranteeBase, ComponentLabelsProvider } from "@gooddata/sdk-ui-kit";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "../styles/goodstrap.scss";
-import { current, group, groupAll, user } from "./GranteeMock";
+import { current, defaultDashboardPermissions, group, groupAll, user } from "./GranteeMock";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { uriRef } from "@gooddata/sdk-model";
+import { idRef, uriRef } from "@gooddata/sdk-model";
 import { LabelsMock } from "./LabelsMock";
+
+const sharedObjectRef = idRef("object");
 
 const EmptySelectionExample = (): JSX.Element => {
     const workspace = "foo";
@@ -35,6 +37,8 @@ const EmptySelectionExample = (): JSX.Element => {
                             onCancel={action("onCancel")}
                             onSubmit={action("onSubmit")}
                             onBackClick={action("onBackClick")}
+                            dashboardPermissions={defaultDashboardPermissions}
+                            sharedObjectRef={sharedObjectRef}
                         />
                     </ComponentLabelsProvider>
                 </WorkspaceProvider>
@@ -62,6 +66,8 @@ const EmptyAvailableItemsExample = (): JSX.Element => {
                             onCancel={action("onCancel")}
                             onSubmit={action("onSubmit")}
                             onBackClick={action("onBackClick")}
+                            dashboardPermissions={defaultDashboardPermissions}
+                            sharedObjectRef={sharedObjectRef}
                         />
                     </ComponentLabelsProvider>
                 </WorkspaceProvider>
@@ -89,6 +95,8 @@ const SelectedItemsExample = (): JSX.Element => {
                             onCancel={action("onCancel")}
                             onSubmit={action("onSubmit")}
                             onBackClick={action("onBackClick")}
+                            dashboardPermissions={defaultDashboardPermissions}
+                            sharedObjectRef={sharedObjectRef}
                         />
                     </ComponentLabelsProvider>
                 </WorkspaceProvider>

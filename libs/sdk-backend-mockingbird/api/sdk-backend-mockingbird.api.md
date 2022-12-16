@@ -14,6 +14,7 @@ import { IAnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeElement } from '@gooddata/sdk-model';
 import { IAttributeFilter } from '@gooddata/sdk-model';
+import { IAvailableAccessGrantee } from '@gooddata/sdk-model';
 import { IBackendCapabilities } from '@gooddata/sdk-backend-spi';
 import { ICatalogAttribute } from '@gooddata/sdk-model';
 import { ICatalogDateDataset } from '@gooddata/sdk-model';
@@ -107,6 +108,7 @@ export type ExecutionRecording = {
 // @internal (undocumented)
 export type IAccessControl = {
     accessList?: AccessGranteeDetail[];
+    availableGrantees?: IAvailableAccessGrantee[];
 };
 
 // @internal (undocumented)

@@ -49,7 +49,7 @@ const mapUserStatusToGranteeStatus = (status: "ENABLED" | "DISABLED"): GranteeSt
 /**
  * @internal
  */
-export const mapWorkspaceUserToGrantee = (
+export const mapAvailableUserAccessToGrantee = (
     user: IAvailableUserAccessGrantee,
     currentUserRef: ObjRef,
 ): IGranteeUser | IGranularGranteeUser => {
@@ -94,7 +94,7 @@ export const mapUserAccessToGrantee = (
 /**
  * @internal
  */
-export const mapWorkspaceUserGroupToGrantee = (
+export const mapAvailableUserGroupAccessToGrantee = (
     userGroup: IAvailableUserGroupAccessGrantee,
 ): IGranteeGroup => {
     return {

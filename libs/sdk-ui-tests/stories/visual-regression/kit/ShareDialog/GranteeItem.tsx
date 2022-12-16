@@ -14,6 +14,7 @@ import { BackstopConfig } from "../../../_infra/backstopScenario";
 import {
     current,
     currentAndOwen,
+    defaultDashboardPermissions,
     group,
     groupNoCount,
     inactiveUser,
@@ -30,7 +31,12 @@ const UserItemBasicExample = (): JSX.Element => {
         <ComponentLabelsProvider labels={LabelsMock}>
             <span> Grantee user</span>
             <div id="Grantee-item-basic-example" style={border}>
-                <GranteeItemComponent mode={"ShareGrantee"} grantee={user} onDelete={action("onDelete")} />
+                <GranteeItemComponent
+                    mode={"ShareGrantee"}
+                    grantee={user}
+                    onDelete={action("onDelete")}
+                    dashboardPermissions={defaultDashboardPermissions}
+                />
             </div>
             <span> Grantee long name and email</span>
             <div id="Grantee-item-basic-example" style={border}>
@@ -42,11 +48,17 @@ const UserItemBasicExample = (): JSX.Element => {
                         email: "Very_very_very_very_very_very_very@long_email.com",
                     }}
                     onDelete={action("onDelete")}
+                    dashboardPermissions={defaultDashboardPermissions}
                 />
             </div>
             <span> Grantee current user</span>
             <div id="Grantee-item-basic-example" style={border}>
-                <GranteeItemComponent mode={"ShareGrantee"} grantee={current} onDelete={action("onDelete")} />
+                <GranteeItemComponent
+                    mode={"ShareGrantee"}
+                    grantee={current}
+                    onDelete={action("onDelete")}
+                    dashboardPermissions={defaultDashboardPermissions}
+                />
             </div>
             <span> Grantee inactive user</span>
             <div id="Grantee-item-basic-example" style={border}>
@@ -54,6 +66,7 @@ const UserItemBasicExample = (): JSX.Element => {
                     mode={"ShareGrantee"}
                     grantee={userInactive}
                     onDelete={action("onDelete")}
+                    dashboardPermissions={defaultDashboardPermissions}
                 />
             </div>
             <span> Grantee inactive user long name</span>
@@ -65,11 +78,17 @@ const UserItemBasicExample = (): JSX.Element => {
                         name: "Very very very very very very very long name of user",
                     }}
                     onDelete={action("onDelete")}
+                    dashboardPermissions={defaultDashboardPermissions}
                 />
             </div>
             <span> Grantee owner user</span>
             <div id="Grantee-item-basic-example" style={border}>
-                <GranteeItemComponent mode={"ShareGrantee"} grantee={owner} onDelete={action("onDelete")} />
+                <GranteeItemComponent
+                    mode={"ShareGrantee"}
+                    grantee={owner}
+                    onDelete={action("onDelete")}
+                    dashboardPermissions={defaultDashboardPermissions}
+                />
             </div>
             <span> Grantee owner and current user</span>
             <div id="Grantee-item-basic-example" style={border}>
@@ -77,6 +96,7 @@ const UserItemBasicExample = (): JSX.Element => {
                     mode={"ShareGrantee"}
                     grantee={currentAndOwen}
                     onDelete={action("onDelete")}
+                    dashboardPermissions={defaultDashboardPermissions}
                 />
             </div>
 
@@ -86,6 +106,7 @@ const UserItemBasicExample = (): JSX.Element => {
                     mode={"ShareGrantee"}
                     grantee={inactiveUser}
                     onDelete={action("onDelete")}
+                    dashboardPermissions={defaultDashboardPermissions}
                 />
             </div>
         </ComponentLabelsProvider>
@@ -99,7 +120,12 @@ const GroupItemBasicExample = (): JSX.Element => {
         <ComponentLabelsProvider labels={LabelsMock}>
             <span> Grantee group</span>
             <div id="Grantee-item-basic-example" style={border}>
-                <GranteeItemComponent mode={"ShareGrantee"} grantee={group} onDelete={action("onDelete")} />
+                <GranteeItemComponent
+                    mode={"ShareGrantee"}
+                    grantee={group}
+                    onDelete={action("onDelete")}
+                    dashboardPermissions={defaultDashboardPermissions}
+                />
             </div>
             <span> Grantee long name</span>
             <div id="Grantee-item-basic-example" style={border}>
@@ -107,6 +133,7 @@ const GroupItemBasicExample = (): JSX.Element => {
                     mode={"ShareGrantee"}
                     grantee={{ ...group, name: "Very very very very very very very long name of user" }}
                     onDelete={action("onDelete")}
+                    dashboardPermissions={defaultDashboardPermissions}
                 />
             </div>
             <span> Grantee no group count items</span>
@@ -115,6 +142,7 @@ const GroupItemBasicExample = (): JSX.Element => {
                     mode={"ShareGrantee"}
                     grantee={groupNoCount}
                     onDelete={action("onDelete")}
+                    dashboardPermissions={defaultDashboardPermissions}
                 />
             </div>
         </ComponentLabelsProvider>

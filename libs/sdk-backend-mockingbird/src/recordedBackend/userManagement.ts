@@ -6,6 +6,7 @@ import {
     IWorkspaceUsersQuery,
     IWorkspaceUsersQueryOptions,
     IWorkspaceUsersQueryResult,
+    UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
 import { RecordedBackendConfig } from "./types";
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";
@@ -38,7 +39,15 @@ export function recordedAccessControlFactory(
         grantAccess: () => Promise.resolve(),
         revokeAccess: () => Promise.resolve(),
         changeAccess: () => Promise.resolve(),
-        getAvailableGrantees: () => Promise.resolve([]),
+        getAvailableGrantees: () => {
+            const result = implConfig.userManagement?.accessControl?.availableGrantees;
+
+            if (!result) {
+                return Promise.reject(new UnexpectedError("Error"));
+            }
+
+            return Promise.resolve(result);
+        },
     };
 }
 

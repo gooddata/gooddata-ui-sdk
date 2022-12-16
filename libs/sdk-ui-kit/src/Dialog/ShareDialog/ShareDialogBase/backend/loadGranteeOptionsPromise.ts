@@ -5,7 +5,10 @@ import { IntlShape } from "react-intl";
 
 import { GranteeItem, IGroupedOption, ISelectErrorOption, ISelectOption } from "../types";
 import { getGranteeLabel, GranteeGroupAll, hasGroupAll, sortGranteesByName } from "../utils";
-import { mapWorkspaceUserGroupToGrantee, mapWorkspaceUserToGrantee } from "../../shareDialogMappers";
+import {
+    mapAvailableUserGroupAccessToGrantee,
+    mapAvailableUserAccessToGrantee,
+} from "../../shareDialogMappers";
 import {
     ObjRef,
     isAvailableUserGroupAccessGrantee,
@@ -50,7 +53,7 @@ export const loadGranteeOptionsPromise =
 
             const mappedUsers: ISelectOption[] = availableGrantees
                 .filter(isAvailableUserAccessGrantee)
-                .map((availableGrantee) => mapWorkspaceUserToGrantee(availableGrantee, currentUserRef))
+                .map((availableGrantee) => mapAvailableUserAccessToGrantee(availableGrantee, currentUserRef))
                 .sort(sortGranteesByName(intl))
                 .map((user) => {
                     return {
@@ -61,7 +64,7 @@ export const loadGranteeOptionsPromise =
 
             let mappedGroups: ISelectOption[] = availableGrantees
                 .filter(isAvailableUserGroupAccessGrantee)
-                .map((availableGrantee) => mapWorkspaceUserGroupToGrantee(availableGrantee))
+                .map((availableGrantee) => mapAvailableUserGroupAccessToGrantee(availableGrantee))
                 .sort(sortGranteesByName(intl))
                 .map((group) => {
                     return {
@@ -71,7 +74,6 @@ export const loadGranteeOptionsPromise =
                 });
 
             const allGroupLabel = getGranteeLabel(GranteeGroupAll, intl);
-
             const supportsEveryoneUserGroupForAccessControl =
                 backend.capabilities.supportsEveryoneUserGroupForAccessControl;
 

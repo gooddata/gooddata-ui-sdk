@@ -5,6 +5,8 @@ import {
     IWorkspaceUserGroup,
     IUserAccess,
     IUserGroupAccess,
+    IAvailableUserAccessGrantee,
+    IAvailableUserGroupAccessGrantee,
 } from "@gooddata/sdk-model";
 import { GranteeItem, IGranteeGroup, IGranteeGroupAll, IGranteeUser } from "../types";
 
@@ -69,18 +71,17 @@ export const groupAll: IGranteeGroupAll = {
 
 export const grantees: GranteeItem[] = [user, group];
 
-export const workspaceUser: IWorkspaceUser = {
+const userProps = {
     ref: uriRef("john-id"),
     uri: "uri",
-    login: "john.doe@d.com",
     email: "john.doe@d.com",
-    fullName: "John Doe ",
+    name: "John Doe",
 };
 
-export const workSpaceGroup: IWorkspaceUserGroup = {
-    ref: uriRef("test-group-id"),
-    id: "id",
-    name: "Test group",
+export const workspaceUser: IWorkspaceUser = {
+    ...userProps,
+    fullName: userProps.name,
+    login: userProps.email,
 };
 
 export const userAccessGrantee: IUserAccess = {
@@ -88,7 +89,28 @@ export const userAccessGrantee: IUserAccess = {
     user: workspaceUser,
 };
 
+export const availableUserAccessGrantee: IAvailableUserAccessGrantee = {
+    ...userProps,
+    type: "user",
+    status: "ENABLED",
+};
+
+const groupProps = {
+    ref: uriRef("test-group-id"),
+    id: "id",
+    name: "Test group",
+};
+
+export const workspaceGroup: IWorkspaceUserGroup = {
+    ...groupProps,
+};
+
 export const groupAccessGrantee: IUserGroupAccess = {
     type: "group",
-    userGroup: workSpaceGroup,
+    userGroup: workspaceGroup,
+};
+
+export const availableUserGroupAccessGrantee: IAvailableUserGroupAccessGrantee = {
+    ...groupProps,
+    type: "group",
 };

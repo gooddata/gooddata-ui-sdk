@@ -15,7 +15,7 @@ import {
 import { UiKit } from "../../../_infra/storyGroups";
 import { wrapWithTheme } from "../../themeWrapper";
 
-import { grantees, inactiveUser, owner } from "./GranteeMock";
+import { defaultDashboardPermissions, grantees, inactiveUser, owner } from "./GranteeMock";
 import { LabelsMock } from "./LabelsMock";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
@@ -64,6 +64,7 @@ const BasicExample: React.FC<BasicExampleProps> = ({
                     onSubmit={action("onSubmit")}
                     onUnderLenientControlChange={action("onUnderLenientControlChange")}
                     onLockChange={action("onLockChange")}
+                    dashboardPermissions={defaultDashboardPermissions}
                 />
             </div>
         </ComponentLabelsProvider>

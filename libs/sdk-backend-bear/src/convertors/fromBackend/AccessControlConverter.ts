@@ -61,7 +61,9 @@ export const convertWorkspaceUserGroupToAvailableUserGroupAccessGrantee = (
 });
 
 export const removePermissionsFromGrantee = (grantee: GranteeWithGranularPermissions): IAccessGrantee => {
+    // TODO: is there other way to do this? probably check if needed
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { permissions, inheritedPermissions, ...rest } = grantee;
 
-    return { ...rest };
+    return rest;
 };

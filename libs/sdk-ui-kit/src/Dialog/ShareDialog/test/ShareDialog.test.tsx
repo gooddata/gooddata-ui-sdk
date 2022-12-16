@@ -1,8 +1,12 @@
 // (C) 2019-2022 GoodData Corporation
 
 import { ISharedObject, ISharingApplyPayload } from "../types";
-import { IUser, ShareStatus, IUserAccessGrantee } from "@gooddata/sdk-model";
-import { userAccessGrantee, workspaceUser } from "../ShareDialogBase/test/GranteeMock";
+import { IUser, ShareStatus } from "@gooddata/sdk-model";
+import {
+    userAccessGrantee,
+    availableUserAccessGrantee,
+    workspaceUser,
+} from "../ShareDialogBase/test/GranteeMock";
 import {
     createComponent,
     isDialogVisible,
@@ -66,21 +70,28 @@ describe("ShareDialog", () => {
         });
 
         it("should mark by word YOU current logged user in grantees list when current logged user is owner", async () => {
-            const sharedObject: ISharedObject = { ...defaultSharedObject, createdBy: workspaceUser };
-            const wrapper = await createComponent({ sharedObject, currentUserRef: workspaceUser.ref });
+            const sharedObject: ISharedObject = {
+                ...defaultSharedObject,
+                createdBy: workspaceUser,
+            };
+            const wrapper = await createComponent({
+                sharedObject,
+                currentUserRef: availableUserAccessGrantee.ref,
+            });
             expect(isCurrentUserInGrantees(wrapper)).toBe(true);
         });
 
         it("should remove grantee from list and submit callback for empty grantees list and with object set as public", async () => {
-            const granteeSelector = getGranteeSelector(userAccessGrantee.user);
+            const granteeSelector = getGranteeSelector(availableUserAccessGrantee);
             const onApply = jest.fn();
             const expectedPayload: ISharingApplyPayload = {
-                granteesToAdd: [],
-                granteesToDelete: [
+                grantees: [
                     {
                         granteeRef: userAccessGrantee.user.ref,
                         type: "user",
-                    } as IUserAccessGrantee,
+                        permissions: [],
+                        inheritedPermissions: [],
+                    },
                 ],
                 isUnderStrictControl: false,
                 isLocked: false,
@@ -99,15 +110,16 @@ describe("ShareDialog", () => {
         });
 
         it("should remove grantee from list and submit callback when group all present and with object set as public", async () => {
-            const granteeSelector = getGranteeSelector(userAccessGrantee.user);
+            const granteeSelector = getGranteeSelector(availableUserAccessGrantee);
             const onApply = jest.fn();
             const expectedPayload: ISharingApplyPayload = {
-                granteesToAdd: [],
-                granteesToDelete: [
+                grantees: [
                     {
                         granteeRef: userAccessGrantee.user.ref,
                         type: "user",
-                    } as IUserAccessGrantee,
+                        permissions: [],
+                        inheritedPermissions: [],
+                    },
                 ],
                 isUnderStrictControl: false,
                 isLocked: false,
@@ -134,8 +146,7 @@ describe("ShareDialog", () => {
             const granteeSelector = getGroupAllSelector();
             const onApply = jest.fn();
             const expectedPayload: ISharingApplyPayload = {
-                granteesToAdd: [],
-                granteesToDelete: [],
+                grantees: [],
                 isUnderStrictControl: false,
                 shareStatus: "private",
                 isLocked: false,
@@ -155,8 +166,7 @@ describe("ShareDialog", () => {
         it("should uncheck under lenient control checkbox and submit callback where isUnderStrictControl is true", async () => {
             const onApply = jest.fn();
             const expectedPayload: ISharingApplyPayload = {
-                granteesToAdd: [],
-                granteesToDelete: [],
+                grantees: [],
                 isUnderStrictControl: true,
                 shareStatus: "private",
                 isLocked: false,
@@ -174,8 +184,7 @@ describe("ShareDialog", () => {
         it("should check under lenient control checkbox and submit callback where isUnderStrictControl is false", async () => {
             const onApply = jest.fn();
             const expectedPayload: ISharingApplyPayload = {
-                granteesToAdd: [],
-                granteesToDelete: [],
+                grantees: [],
                 isUnderStrictControl: false,
                 shareStatus: "private",
                 isLocked: false,
@@ -195,8 +204,7 @@ describe("ShareDialog", () => {
         it("should check shared object lock checkbox and submit callback where isLocked is true", async () => {
             const onApply = jest.fn();
             const expectedPayload: ISharingApplyPayload = {
-                granteesToAdd: [],
-                granteesToDelete: [],
+                grantees: [],
                 isUnderStrictControl: false,
                 shareStatus: "private",
                 isLocked: true,
@@ -230,22 +238,22 @@ describe("ShareDialog", () => {
         });
 
         it("should add user into grantees selection", async () => {
-            const wrapper = await createComponent({}, [workspaceUser], [], []);
+            const wrapper = await createComponent({}, [], [], [], [availableUserAccessGrantee]);
 
             clickAddGrantees(wrapper);
             await waitForComponentToPaint(wrapper);
-            clickOnOption(wrapper, getUserOptionSelector(workspaceUser));
+            clickOnOption(wrapper, getUserOptionSelector(availableUserAccessGrantee));
 
-            expect(isGranteeVisible(wrapper, getGranteeSelector(workspaceUser))).toBe(true);
+            expect(isGranteeVisible(wrapper, getGranteeSelector(availableUserAccessGrantee))).toBe(true);
         });
 
         it("should add user into grantees selection and then remove it", async () => {
-            const wrapper = await createComponent({}, [workspaceUser], [], []);
-            const granteeSelector = getGranteeSelector(workspaceUser);
+            const wrapper = await createComponent({}, [], [], [], [availableUserAccessGrantee]);
+            const granteeSelector = getGranteeSelector(availableUserAccessGrantee);
 
             clickAddGrantees(wrapper);
             await waitForComponentToPaint(wrapper);
-            clickOnOption(wrapper, getUserOptionSelector(workspaceUser));
+            clickOnOption(wrapper, getUserOptionSelector(availableUserAccessGrantee));
             expect(isGranteeVisible(wrapper, granteeSelector)).toBe(true);
 
             clickDeleteGranteeIcon(wrapper, granteeSelector);
@@ -253,12 +261,12 @@ describe("ShareDialog", () => {
         });
 
         it("should clear selection when Back button is clicked", async () => {
-            const wrapper = await createComponent({}, [workspaceUser], [], []);
-            const granteeSelector = getGranteeSelector(workspaceUser);
+            const wrapper = await createComponent({}, [], [], [], [availableUserAccessGrantee]);
+            const granteeSelector = getGranteeSelector(availableUserAccessGrantee);
 
             clickAddGrantees(wrapper);
             await waitForComponentToPaint(wrapper);
-            clickOnOption(wrapper, getUserOptionSelector(workspaceUser));
+            clickOnOption(wrapper, getUserOptionSelector(availableUserAccessGrantee));
             expect(isGranteeVisible(wrapper, granteeSelector)).toBe(true);
 
             clickBack(wrapper);
