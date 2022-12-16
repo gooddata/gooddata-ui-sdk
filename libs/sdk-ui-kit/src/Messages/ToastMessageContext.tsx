@@ -1,5 +1,5 @@
-// (C) 2021 GoodData Corporation
-import React, { createContext, useState } from "react";
+// (C) 2021-2022 GoodData Corporation
+import React, { createContext, useCallback, useState } from "react";
 import { IMessage, IMessageDefinition } from "./typings";
 
 /**
@@ -38,15 +38,15 @@ const DEFAULT_DURATION = 2500;
 export const ToastMessageContextProvider: React.FC = ({ children }) => {
     const [messages, setMessages] = useState<IMessage[]>([]);
 
-    const removeMessage = (id: string) => {
+    const removeMessage = useCallback((id: string) => {
         setMessages((prevMessages) => prevMessages.filter((message) => message.id !== id));
-    };
+    }, []);
 
-    const removeAllMessages = () => {
+    const removeAllMessages = useCallback(() => {
         setMessages([]);
-    };
+    }, []);
 
-    const addMessage = (message: IMessageDefinition) => {
+    const addMessage = useCallback((message: IMessageDefinition) => {
         const id = (++idCounter).toString(10);
         const newMessage = {
             ...message,
@@ -62,7 +62,7 @@ export const ToastMessageContextProvider: React.FC = ({ children }) => {
         }
 
         return id;
-    };
+    }, []);
 
     return (
         <ToastMessageContext.Provider value={{ messages, removeMessage, removeAllMessages, addMessage }}>
