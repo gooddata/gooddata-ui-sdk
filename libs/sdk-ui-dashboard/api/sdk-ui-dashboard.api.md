@@ -4469,6 +4469,9 @@ export function isLoadingPlaceholderWidget(obj: unknown): obj is PlaceholderWidg
 // @alpha
 export function isPlaceholderWidget(obj: unknown): obj is PlaceholderWidget;
 
+// @internal
+export function isTemporaryIdentity(obj: IDashboardObjectIdentity): boolean;
+
 // @alpha (undocumented)
 export interface ITitleProps {
     // (undocumented)
