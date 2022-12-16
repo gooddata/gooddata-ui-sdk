@@ -13,8 +13,6 @@ import {
     isGranteeGroupAll,
 } from "./types";
 
-import { granularPermissionMessageLabels } from "../../../locales";
-
 /**
  * @internal
  */
@@ -151,11 +149,11 @@ export const getGranularGranteeClassNameId = (grantee: GranteeItem): string => {
  * @internal
  */
 export const getGranularGranteePermissionId = (
-    permission: IAccessGranularPermission[] | undefined,
+    permissions: IAccessGranularPermission[] | undefined,
 ): string => {
-    if (permission) {
-        return granularPermissionMessageLabels[permission[0].toLowerCase()].id;
+    if (permissions) {
+        return permissions[0];
     }
 
-    return granularPermissionMessageLabels["view"].id;
+    return "VIEW";
 };

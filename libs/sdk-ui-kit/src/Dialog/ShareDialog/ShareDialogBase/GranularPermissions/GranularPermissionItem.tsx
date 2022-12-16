@@ -15,6 +15,7 @@ const alignPoints: IAlignPoint[] = [{ align: "cr cl" }];
 interface IGranularPermissionItemProps {
     grantee: IGranularGrantee;
     permission: IGranularPermissionTypeItem;
+    selectedPermissionId: string;
     toggleDropdown: () => void;
     onChange: (grantee: GranteeItem) => void;
     handleSetSelectedPermission: (permission: string) => void;
@@ -23,6 +24,7 @@ interface IGranularPermissionItemProps {
 const DropdownItem: React.FC<IGranularPermissionItemProps> = ({
     permission,
     grantee,
+    selectedPermissionId,
     toggleDropdown,
     handleSetSelectedPermission,
     onChange,
@@ -32,11 +34,13 @@ const DropdownItem: React.FC<IGranularPermissionItemProps> = ({
     const handleOnChange = useCallback(
         (permission: IGranularPermissionTypeItem) => {
             toggleDropdown();
-            handleSetSelectedPermission(permission.title);
+            handleSetSelectedPermission(permission.id);
             onChange({ ...grantee, permissions: [permission.id] });
         },
         [permission],
     );
+
+    const isSelected = permission.id === selectedPermissionId;
 
     return (
         <div
@@ -47,6 +51,7 @@ const DropdownItem: React.FC<IGranularPermissionItemProps> = ({
             }}
             className={cx("gd-list-item", "gd-menu-item", "gd-granular-permission-item", {
                 "is-disabled": permission.disabled,
+                "is-selected": isSelected,
             })}
         >
             <div>{intl.formatMessage({ id: permission.title })}</div>

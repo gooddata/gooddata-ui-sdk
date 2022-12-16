@@ -17,6 +17,7 @@ interface IGranularPermissionsProps {
     grantee: IGranularGrantee;
     dashboardPermissions: IDashboardPermissions;
     isShowDropdown: boolean;
+    selectedPermissionId: string;
     toggleDropdown(): void;
     onChange: (grantee: GranteeItem) => void;
     onDelete: (grantee: GranteeItem) => void;
@@ -56,6 +57,7 @@ export const GranularPermissions: React.FC<IGranularPermissionsProps> = ({
     alignTo,
     isShowDropdown,
     dashboardPermissions,
+    selectedPermissionId,
     toggleDropdown,
     onChange,
     onDelete,
@@ -95,6 +97,7 @@ export const GranularPermissions: React.FC<IGranularPermissionsProps> = ({
                             grantee={grantee}
                             key={permission.id}
                             permission={permission}
+                            selectedPermissionId={selectedPermissionId}
                             toggleDropdown={toggleDropdown}
                             onChange={onChange}
                             handleSetSelectedPermission={handleSetSelectedPermission}

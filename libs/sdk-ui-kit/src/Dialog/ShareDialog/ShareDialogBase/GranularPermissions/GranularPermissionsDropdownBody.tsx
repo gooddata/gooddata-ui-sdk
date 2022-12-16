@@ -3,15 +3,17 @@
 import React, { useCallback, useState } from "react";
 import { IDashboardPermissions } from "@gooddata/sdk-model";
 import { useIntl } from "react-intl";
+import cx from "classnames";
 
 import { GranularPermissions } from "./GranularPermissions";
 
 import { GranteeItem, IGranularGrantee } from "../types";
 import { getGranularGranteeClassNameId, getGranularGranteePermissionId } from "../utils";
 
-import { DropdownButton } from "../../../../Dropdown";
 import { Bubble, BubbleHoverTrigger } from "../../../../Bubble";
 import { IAlignPoint } from "../../../../typings/positioning";
+
+import { granularPermissionMessageLabels } from "../../../../locales";
 
 const alignPoints: IAlignPoint[] = [{ align: "cr cl" }];
 
@@ -26,6 +28,7 @@ interface IGranularPermissionsDropdownBodyProps {
 export const GranularPermissionsDropdownBody: React.FC<IGranularPermissionsDropdownBodyProps> = ({
     grantee,
     dashboardPermissions,
+    // TODO: update with proper logic
     disabledDropdown = false,
     onChange,
     onDelete,
@@ -34,26 +37,39 @@ export const GranularPermissionsDropdownBody: React.FC<IGranularPermissionsDropd
     const [isShowDropdown, toggleShowDropdown] = React.useState<boolean>(false);
     const toggleDropdown = useCallback(() => toggleShowDropdown(!isShowDropdown), [isShowDropdown]);
 
-    const [selectedPermission, setSelectedPermission] = useState<string>(
+    const [selectedPermissionId, setSelectedPermissionId] = useState<string>(
         getGranularGranteePermissionId(grantee.permissions),
     );
 
     const handleSetSelectedPermission = (permission: string) => {
-        setSelectedPermission(permission);
+        setSelectedPermissionId(permission);
     };
 
     const granularGranteeClassName = getGranularGranteeClassNameId(grantee);
-    const buttonValue = intl.formatMessage({ id: selectedPermission });
+    const buttonValue = intl.formatMessage({
+        id: granularPermissionMessageLabels[selectedPermissionId.toLowerCase()].id,
+    });
 
     return (
-        <div className="gd-granular-permissions-dropdown">
+        <>
             {disabledDropdown ? (
-                <BubbleHoverTrigger>
-                    <DropdownButton
-                        disabled
-                        className={`gd-granular-permissions-dropdown-button ${granularGranteeClassName}`}
-                        value={buttonValue}
-                    />
+                <BubbleHoverTrigger className="gd-grantee-granular-permission">
+                    {/* TODO: grantee item hover when dropdown is active */}
+                    <div
+                        className={cx(
+                            "s-granular-permission-button",
+                            "gd-granular-permission-button",
+                            "dropdown-button",
+                            granularGranteeClassName,
+                            "disabled",
+                        )}
+                    >
+                        <div className="gd-granular-permission-button-content">
+                            <div className="s-granular-permisison-button-title gd-granular-permission-button-title">
+                                {buttonValue}
+                            </div>
+                        </div>
+                    </div>
                     {/* TODO: Update text */}
                     <Bubble alignPoints={alignPoints}>
                         <div> disabled tooltip </div>
@@ -61,12 +77,29 @@ export const GranularPermissionsDropdownBody: React.FC<IGranularPermissionsDropd
                 </BubbleHoverTrigger>
             ) : (
                 <>
-                    <DropdownButton
-                        className={`gd-granular-permissions-dropdown-button ${granularGranteeClassName}`}
-                        onClick={toggleDropdown}
-                        isOpen={isShowDropdown}
-                        value={buttonValue}
-                    />
+                    <BubbleHoverTrigger className="gd-grantee-granular-permission">
+                        <div
+                            className={cx(
+                                "s-granular-permission-button",
+                                "gd-granular-permission-button",
+                                "dropdown-button",
+                                "gd-icon-right",
+                                granularGranteeClassName,
+                                {
+                                    "is-active": isShowDropdown,
+                                    "gd-icon-navigateup": isShowDropdown,
+                                    "gd-icon-navigatedown": !isShowDropdown,
+                                },
+                            )}
+                            onClick={toggleDropdown}
+                        >
+                            <div className="gd-granular-permission-button-content">
+                                <div className="s-granular-permisison-button-title gd-granular-permission-button-title">
+                                    {buttonValue}
+                                </div>
+                            </div>
+                        </div>
+                    </BubbleHoverTrigger>
                     <GranularPermissions
                         dashboardPermissions={dashboardPermissions}
                         alignTo={granularGranteeClassName}
@@ -75,10 +108,11 @@ export const GranularPermissionsDropdownBody: React.FC<IGranularPermissionsDropd
                         isShowDropdown={isShowDropdown}
                         onChange={onChange}
                         onDelete={onDelete}
+                        selectedPermissionId={selectedPermissionId}
                         handleSetSelectedPermission={handleSetSelectedPermission}
                     />
                 </>
             )}
-        </div>
+        </>
     );
 };
