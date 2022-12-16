@@ -103,3 +103,5 @@ export {
 } from "./eventHandlers/eventHandler";
 export { newDrillToSameDashboardHandler } from "./eventHandlers/drillToSameDashboardHandlerFactory";
 export * from "./headlessDashboard";
+
+export { isTemporaryIdentity } from "./utils/dashboardItemUtils";

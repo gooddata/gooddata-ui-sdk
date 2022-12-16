@@ -2,7 +2,12 @@
 import React from "react";
 import { useIntl } from "react-intl";
 import { ParameterDetail } from "./ParameterDetail";
-import { selectSelectedWidgetRef, selectWidgetByRef, useDashboardSelector } from "../../../../../model";
+import {
+    selectSelectedWidgetRef,
+    selectWidgetByRef,
+    useDashboardSelector,
+    isTemporaryIdentity,
+} from "../../../../../model";
 import { isInsightWidget } from "@gooddata/sdk-model";
 
 interface IdentifierDetailProps {
@@ -14,6 +19,11 @@ export const WidgetIdParameterDetail: React.FC<IdentifierDetailProps> = ({ title
     const widgetRef = useDashboardSelector(selectSelectedWidgetRef);
     const widget = useDashboardSelector(selectWidgetByRef(widgetRef));
 
+    let values: string[] = [];
+    if (isInsightWidget(widget) && !isTemporaryIdentity(widget)) {
+        values = [widget.identifier];
+    }
+
     return (
         <ParameterDetail
             title={title}
@@ -21,7 +31,7 @@ export const WidgetIdParameterDetail: React.FC<IdentifierDetailProps> = ({ title
                 id: "configurationPanel.drillIntoUrl.editor.identifierTypeLabel",
             })}
             useEllipsis={false}
-            values={isInsightWidget(widget) ? [widget.identifier] : []}
+            values={values}
         />
     );
 };
