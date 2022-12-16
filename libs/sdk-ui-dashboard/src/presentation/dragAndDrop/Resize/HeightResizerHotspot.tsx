@@ -1,12 +1,18 @@
 // (C) 2021-2022 GoodData Corporation
 import React, { useEffect, useMemo, useState } from "react";
 import { IWidget, ScreenSize } from "@gooddata/sdk-model";
-import { fluidLayoutDescriptor } from "@gooddata/sdk-ui-ext";
+import { fluidLayoutDescriptor, INSIGHT_WIDGET_SIZE_INFO_DEFAULT } from "@gooddata/sdk-ui-ext";
 import isEqual from "lodash/fp/isEqual";
 import isEmpty from "lodash/isEmpty";
 
 import { useDashboardDrag } from "../useDashboardDrag";
-import { resizeHeight, selectInsightsMap, useDashboardDispatch, useDashboardSelector } from "../../../model";
+import {
+    ExtendedDashboardWidget,
+    resizeHeight,
+    selectInsightsMap,
+    useDashboardDispatch,
+    useDashboardSelector,
+} from "../../../model";
 import { getMaxHeight, getMinHeight } from "../../../_staging/layout/sizing";
 import {
     IDashboardLayoutItemFacade,
@@ -38,12 +44,14 @@ export function HeightResizerHotspot({
     const widgets = useMemo(() => items.map((item) => item.widget() as IWidget), [items]);
     const widgetIdentifiers = widgets.map((widget) => widget.identifier);
 
+    const customWidgetsRestrictions = getCustomWidgetRestrictions(items);
+
     const [{ isDragging }, dragRef] = useDashboardDrag(
         {
             dragItem: () => {
                 const initialLayoutDimensions = getLayoutDimensions();
 
-                const minLimit = getMinHeight(widgets, insightsMap);
+                const minLimit = getMinHeight(widgets, insightsMap, customWidgetsRestrictions.heightLimit);
                 const maxLimit = getMaxHeight(widgets, insightsMap);
                 const heightsGR = getHeightsGR(items, screen, getContainerDimensions()?.height ?? 100);
 
@@ -61,7 +69,7 @@ export function HeightResizerHotspot({
                 const scrollCorrection = getScrollCorrection();
 
                 const { sectionIndex, itemIndexes, widgetHeights } = item;
-                const minLimit = getMinHeight(widgets, insightsMap);
+                const minLimit = getMinHeight(widgets, insightsMap, customWidgetsRestrictions.heightLimit);
                 const maxLimit = getMaxHeight(widgets, insightsMap);
                 const newHeightGR = getNewHeightGR(
                     widgetHeights,
@@ -76,7 +84,7 @@ export function HeightResizerHotspot({
             },
         },
 
-        [widgets, insightsMap],
+        [widgets, insightsMap, customWidgetsRestrictions.heightLimit],
     );
 
     useEffect(() => {
@@ -96,18 +104,21 @@ export function HeightResizerHotspot({
 
     const shouldRenderResizer =
         (areWidgetsResizing || isResizerVisible) && !isColumnResizing && !isOtherRowResizing;
+
     const status = isDragging ? "muted" : "active";
 
     return (
         <div className="dash-height-resizer-container s-dash-height-resizer-container">
-            <div
-                ref={dragRef}
-                className="s-dash-height-resizer-hotspot dash-height-resizer-hotspot"
-                onMouseEnter={onMouseEnter}
-                onMouseLeave={onMouseLeave}
-            >
-                {shouldRenderResizer ? <HeightResizer status={status} /> : null}
-            </div>
+            {customWidgetsRestrictions.allowHeightResize ? (
+                <div
+                    ref={dragRef}
+                    className="s-dash-height-resizer-hotspot dash-height-resizer-hotspot"
+                    onMouseEnter={onMouseEnter}
+                    onMouseLeave={onMouseLeave}
+                >
+                    {shouldRenderResizer ? <HeightResizer status={status} /> : null}
+                </div>
+            ) : null}
         </div>
     );
 }
@@ -135,4 +146,22 @@ export function getNewHeightGR(
     const deltaHeightGR = fluidLayoutDescriptor.toGridHeight(offsetYPX - scrollCorrectionY);
 
     return Math.min(maxLimit, Math.max(minLimit, currentWidth + deltaHeightGR));
+}
+function getCustomWidgetRestrictions(items: IDashboardLayoutItemFacade<unknown>[]) {
+    const customWidgetItems = items.filter(
+        (item) => (item.widget() as ExtendedDashboardWidget)?.type === "customWidget",
+    );
+
+    const heightLimit = customWidgetItems.reduce<number>((minCustomWidgetHeight, item) => {
+        const {
+            xl: { gridHeight = INSIGHT_WIDGET_SIZE_INFO_DEFAULT.height.default },
+        } = item.size() ?? { xl: {} };
+
+        return Math.max(minCustomWidgetHeight, gridHeight);
+    }, 0);
+
+    return {
+        allowHeightResize: customWidgetItems.length < items.length,
+        heightLimit: customWidgetItems.length > 0 ? heightLimit : 0,
+    };
 }
