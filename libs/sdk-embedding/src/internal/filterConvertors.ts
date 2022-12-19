@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import isNumber from "lodash/isNumber";
 import isString from "lodash/isString";
@@ -36,6 +36,7 @@ export interface ITransformedAttributeFilterItem {
 }
 
 const DATE_FORMAT_REGEX = /^\d{4}-\d{2}-\d{2}$/;
+const DATE_FORMAT_REGEX_TIME_SUPPORT = /^\d{4}-\d{2}-\d{2}( \d{2}:\d{2})?$/;
 export const ALL_TIME_GRANULARITY = "ALL_TIME_GRANULARITY";
 
 export type ITransformedFilterItem = ITransformedDateFilterItem | ITransformedAttributeFilterItem;
@@ -52,6 +53,7 @@ function validateDataSet(dataSet: EmbeddedGdc.ObjQualifier | undefined): boolean
 export function isValidDateFilterFormat(
     filterItem: EmbeddedGdc.DateFilterItem,
     shouldValidateDataSet: boolean = true,
+    isTimeSupported: boolean = false,
 ): boolean {
     if (EmbeddedGdc.isAbsoluteDateFilter(filterItem)) {
         const {
@@ -59,12 +61,13 @@ export function isValidDateFilterFormat(
         } = filterItem;
 
         const isValidDataSet = shouldValidateDataSet ? validateDataSet(dataSet) : true;
+        const valueFormatRegex = isTimeSupported ? DATE_FORMAT_REGEX_TIME_SUPPORT : DATE_FORMAT_REGEX;
         return (
             isValidDataSet &&
             isString(from) &&
             isString(to) &&
-            DATE_FORMAT_REGEX.test(from) &&
-            DATE_FORMAT_REGEX.test(to)
+            valueFormatRegex.test(from) &&
+            valueFormatRegex.test(to)
         );
     } else {
         const {
@@ -136,9 +139,13 @@ function isValidRankingFilterFormat(rankingFilterItem: EmbeddedGdc.IRankingFilte
 // `dataSet` is required in AD only.
 // In AD, we call this function with `shouldValidateDataSet = true`
 // In KD, we call this function with `shouldValidateDataSet = false`
-export function isValidFilterItemFormat(filterItem: unknown, shouldValidateDataSet: boolean = true): boolean {
+export function isValidFilterItemFormat(
+    filterItem: unknown,
+    shouldValidateDataSet: boolean = true,
+    isTimeSupported: boolean = false,
+): boolean {
     if (EmbeddedGdc.isDateFilter(filterItem)) {
-        return isValidDateFilterFormat(filterItem, shouldValidateDataSet);
+        return isValidDateFilterFormat(filterItem, shouldValidateDataSet, isTimeSupported);
     } else if (EmbeddedGdc.isAttributeFilter(filterItem)) {
         return isValidAttributeFilterFormat(filterItem);
     } else if (EmbeddedGdc.isRankingFilter(filterItem)) {
@@ -167,9 +174,14 @@ export function isValidRemoveFiltersFormat(filters: unknown[]): boolean {
     return !isEmpty(filters) && filters.every(isValidRemoveFilterItemFormat);
 }
 
-export function isValidFiltersFormat(filters: unknown[], shouldValidateDataSet: boolean = true): boolean {
+export function isValidFiltersFormat(
+    filters: unknown[],
+    shouldValidateDataSet: boolean = true,
+    isTimeSupported: boolean = false,
+): boolean {
     return (
-        !isEmpty(filters) && filters.every((filter) => isValidFilterItemFormat(filter, shouldValidateDataSet))
+        !isEmpty(filters) &&
+        filters.every((filter) => isValidFilterItemFormat(filter, shouldValidateDataSet, isTimeSupported))
     );
 }
 

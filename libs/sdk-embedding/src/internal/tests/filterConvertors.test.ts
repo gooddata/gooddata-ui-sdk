@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 
 import {
     transformFilterContext,
@@ -16,6 +16,15 @@ describe("filter convertors", () => {
         absoluteDateFilter: {
             from: "2020-01-01",
             to: "2020-02-01",
+            dataSet: {
+                uri: "uri",
+            },
+        },
+    };
+    const absoluteDateFilterWithTime: EmbeddedGdc.IAbsoluteDateFilter = {
+        absoluteDateFilter: {
+            from: "2020-01-01 00:01",
+            to: "2020-02-01 22:50",
             dataSet: {
                 uri: "uri",
             },
@@ -118,6 +127,14 @@ describe("filter convertors", () => {
 
     it("should check the date filter item format", () => {
         expect(isValidFiltersFormat([absoluteDateFilter, relativeDateFilter])).toBe(true);
+    });
+
+    it("should return true when date filter has time and the time is supported", () => {
+        expect(isValidFiltersFormat([absoluteDateFilterWithTime], true, true)).toBe(true);
+    });
+
+    it("should return false when date filter has time but time is not supported", () => {
+        expect(isValidFiltersFormat([absoluteDateFilterWithTime], true, false)).toBe(false);
     });
 
     it("should return false when date filter is missing dataSet", () => {
