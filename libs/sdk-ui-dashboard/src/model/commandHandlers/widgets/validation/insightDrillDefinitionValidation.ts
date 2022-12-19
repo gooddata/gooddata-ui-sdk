@@ -53,6 +53,7 @@ export function validateDrillDefinition(
         dashboardsMap: validationData.accessibleDashboardMap,
         insightsMap: validationData.resolvedInsights.resolved,
         displayFormsMap: validationData.resolvedDisplayForms.resolved,
+        availableDrillTargets: validationData.drillTargets.availableDrillTargets!,
     };
 
     try {

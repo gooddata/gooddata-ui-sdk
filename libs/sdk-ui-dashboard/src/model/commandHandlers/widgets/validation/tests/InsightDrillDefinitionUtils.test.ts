@@ -91,6 +91,7 @@ describe("validateInsightDrillDefinition", () => {
         dashboardsMap: newMapForObjectWithIdentity([SimpleDashboardListed, ComplexDashboardListed]),
         insightsMap: newInsightMap([SimpleSortedTableWidgetInsight]),
         displayFormsMap: newDisplayFormMap([]),
+        availableDrillTargets: {},
     };
 
     describe("validate IDrillToDashboard definition", () => {
