@@ -76,7 +76,6 @@ export const DefaultUiSettings: ISettings = {
     enableChartsSorting: true,
     enableAxisNameViewByTwoAttributes: true,
     enableAxisNameConfiguration: true,
-    enableDataSourceManagement: true,
     enableReversedStacking: true,
     enableSeparateTotalLabels: true,
     enableKPIDashboardExport: true,

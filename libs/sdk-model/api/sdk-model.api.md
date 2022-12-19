@@ -2101,7 +2101,6 @@ export interface ISettings {
     enableCompanyLogoInEmbeddedUI?: boolean;
     enableCustomColorPicker?: boolean;
     enableDataSampling?: boolean;
-    enableDataSourceManagement?: boolean;
     enableDateFormats?: boolean;
     enableDescriptions?: boolean;
     enableDrilledInsightExport?: boolean;
