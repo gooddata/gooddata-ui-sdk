@@ -1,3 +1,4 @@
+// (C) 2022 GoodData Corporation
 // Globals injected by webpack
 
 declare const BACKEND_URL: string;

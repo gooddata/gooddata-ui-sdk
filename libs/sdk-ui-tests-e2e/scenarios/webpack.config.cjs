@@ -18,6 +18,22 @@ module.exports = async (env, argv) => {
         process.env.TEST_WORKSPACE_ID,
         process.env.SDK_BACKEND,
     ];
+
+    if (!backendUrl) {
+        process.stderr.write("HOST needs to be provided in .env\n");
+        process.exit(1);
+    }
+
+    if (!workspace) {
+        process.stderr.write("TEST_WORKSPACE_ID needs to be provided in .env\n");
+        process.exit(1);
+    }
+
+    if (!backendType) {
+        process.stderr.write("SDK_BACKEND needs to be provided in .env\n");
+        process.exit(1);
+    }
+
     console.log(
         "Backend URI:",
         backendUrl,

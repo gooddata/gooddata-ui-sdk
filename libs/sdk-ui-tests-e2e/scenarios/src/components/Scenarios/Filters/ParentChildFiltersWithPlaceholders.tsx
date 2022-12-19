@@ -41,6 +41,7 @@ const InnerParentChildFiltersWithPlaceholders: React.FC = () => {
                 uris: [],
             }),
         );
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [parentFilter]);
 
     return (

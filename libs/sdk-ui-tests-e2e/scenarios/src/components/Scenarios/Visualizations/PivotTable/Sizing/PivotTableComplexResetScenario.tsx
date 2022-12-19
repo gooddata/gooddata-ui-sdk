@@ -100,11 +100,7 @@ const isSameWidthItem = (item: any, newItem: any) => {
         );
     }
 
-    if (isAllMeasureColumnWidthItem(item) && isAllMeasureColumnWidthItem(newItem)) {
-        return true;
-    }
-
-    return false;
+    return isAllMeasureColumnWidthItem(item) && isAllMeasureColumnWidthItem(newItem);
 };
 
 const EastCoastUri = `/gdc/md/${workspace}/obj/1083/elements?id=460488`;

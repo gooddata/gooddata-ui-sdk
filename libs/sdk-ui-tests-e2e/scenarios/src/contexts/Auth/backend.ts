@@ -27,11 +27,3 @@ export function createBackend(): IAnalyticalBackend {
         throw new Error(`unknown SDK backend: ${sdkBackend}`);
     }
 }
-
-export const backendWithCredentials = (
-    backend: IAnalyticalBackend,
-    _username: string,
-    _password: string,
-): IAnalyticalBackend => {
-    return backend;
-};

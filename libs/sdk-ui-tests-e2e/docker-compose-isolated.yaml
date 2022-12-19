@@ -4,8 +4,8 @@ services:
         image: cypress/included:10.10.0
         entrypoint: node ./scripts/run_isolated_compose.js --$MODE --filter=$FILTER
         volumes:
-            - ./:/sdk-ui-tests-e2e:rw
-        working_dir: /sdk-ui-tests-e2e
+            - ../../:/gooddata-ui-sdk-e2e:rw
+        working_dir: /gooddata-ui-sdk-e2e/libs/sdk-ui-tests-e2e
         user: "$USER_UID:$USER_GID"
         depends_on:
             - gooddata-ui-sdk-scenarios
@@ -26,9 +26,9 @@ services:
         image: wiremock/wiremock:2.34.0
         # Use "--print-all-network-traffic --verbose" for verbose logging
         # Note that we need --preserve-host-header for BEAR backend only and it must be missing for TIGER (see run_isolated.sh)
-        command: "${PRESERVE_HOST_HEADER_OPTION} --proxy-all=${HOST:-https://staging3.intgdc.com} --extensions org.gooddata.extensions.ResponseHeadersTransformer,org.gooddata.extensions.RequestHeadersTransformer"
+        command: "${PRESERVE_HOST_HEADER_OPTION} --proxy-all=https://${HOST:-staging3.intgdc.com} --extensions org.gooddata.extensions.ResponseHeadersTransformer,org.gooddata.extensions.RequestHeadersTransformer"
         user: "$USER_UID:$USER_GID"
         volumes:
             - ./recordings/wiremock_extension/jar/:/var/wiremock/extensions:ro
         environment:
-            - PROXY_HOST=${HOST:-https://staging3.intgdc.com}
+            - PROXY_HOST=https://${HOST:-staging3.intgdc.com}

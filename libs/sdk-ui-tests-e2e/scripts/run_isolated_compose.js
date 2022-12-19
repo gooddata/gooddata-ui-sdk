@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 // (C) 2021-2022 GoodData Corporation
+/* eslint-disable sonarjs/cognitive-complexity */
 
 /**
  * This file is supposed to run within the Cypress container.
  * It controls the execution of the isolated tests in docker-compose
  */
 import { execSync } from "child_process";
-import { getAllFiles } from "./getSpecFiles.js";
+import { getFilterSpecFiles } from "./lib/specFiles.js";
 import fs from "fs";
 import path from "path";
 
@@ -51,9 +52,7 @@ async function main() {
             ZUUL_PIPELINE,
             FILTER,
         } = process.env;
-        const specFilesFilter = FILTER
-            ? { specFilesFilter: FILTER.split(",").map((x) => (x.endsWith(".spec.ts") ? x : x + ".spec.ts")) }
-            : {};
+        const specFilesFilter = FILTER ? FILTER : "";
 
         if (!CYPRESS_TEST_TAGS) {
             process.stderr.write("Isolated tests need CYPRESS_TEST_TAGS\n");
@@ -77,9 +76,8 @@ async function main() {
                     },
                 };
             }
-        }
-
-        if (SDK_BACKEND === "TIGER") {
+            // eslint-disable-next-line  sonarjs/no-collapsible-if
+        } else if (SDK_BACKEND === "TIGER") {
             if (recording) {
                 if (!TIGER_API_TOKEN || !TEST_WORKSPACE_ID) {
                     process.stderr.write(
@@ -95,8 +93,7 @@ async function main() {
         }
 
         if (recording) {
-            // deleteRecordings(specFilesFilter, SDK_BACKEND, CYPRESS_TEST_TAGS.split(","));
-            // The whole recording dir will be purged anyway in scripts/run-cypress-recording-*.sh
+            deleteRecordings(specFilesFilter, SDK_BACKEND, CYPRESS_TEST_TAGS.split(","));
         } else if (!recordingsPresent(SDK_BACKEND)) {
             process.stderr.write("Recordings are missing. Run again with the --record parameter.\n");
             process.exit(0);
@@ -117,7 +114,7 @@ async function main() {
         }
 
         const TESTS_DIR = "./cypress/integration";
-        const files = getAllFiles(TESTS_DIR, specFilesFilter.specFilesFilter);
+        const files = getFilterSpecFiles(TESTS_DIR, specFilesFilter);
         execSync(`rm -rf ./cypress/results`);
 
         if (!fs.existsSync(`./recordings/mappings/${SDK_BACKEND}`)) {

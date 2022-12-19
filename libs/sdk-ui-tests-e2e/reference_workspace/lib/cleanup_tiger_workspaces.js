@@ -27,7 +27,7 @@ async function cleanupTigerWorkspace(kdTigerWorkspace) {
 async function main() {
     try {
         // eslint-disable-next-line no-console
-        console.log("Clean up Expired Tiger Workspaces");
+        log("Clean up Expired Tiger Workspaces");
         await cleanupTigerWorkspace(E2E_SDK_CHILD_WORKSPACE_PREFIX);
         await cleanupTigerWorkspace(E2E_SDK_WORKSPACE_PREFIX);
     } catch (e) {

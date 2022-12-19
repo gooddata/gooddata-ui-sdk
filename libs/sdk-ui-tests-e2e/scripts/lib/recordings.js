@@ -4,6 +4,7 @@
 import { execSync } from "child_process";
 import fs from "fs";
 import path from "path";
+import { findSpecFilePaths } from "./specFiles.js";
 
 export function deleteRecordings(specFilter, backend, testTags) {
     process.stdout.write(`Deleting recordings ${specFilter}, tags: ${testTags}\n`);
@@ -15,9 +16,12 @@ function deleteFilesInDir(directory, specFilter, testDir, testTags = []) {
     const filter = (specFilter || "").trim();
     const files = fs.readdirSync(directory);
     files.forEach((file) => {
-        if (file.includes(`mapping-${filter}`)) {
+        let trimFileName = file.replace("mapping-", "").replace(".json", "");
+        if (filter.includes(trimFileName)) {
             const fullPath = `${directory}/${file}`;
-            const testPath = `${testDir}/${file.replace("mapping-", "").replace(".json", "")}`;
+            //Get testPath of the first spec file which has the matching name
+            //It will not work if there multiple spec files which have the same name
+            const testPath = findSpecFilePaths(testDir, trimFileName)[0];
             const tagMatching = testTags.some((tag) => fileContainsString(testPath, tag));
             if (!testTags.length || tagMatching) {
                 process.stdout.write(`processing ${file}: removing\n`);
@@ -51,6 +55,7 @@ export function sanitizeCredentials(testRecordings) {
 
             if (json.mappings) {
                 json.mappings.forEach((mapping) => {
+                    // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
                     if (mapping && mapping.request && mapping.request.url === "/gdc/account/login") {
                         delete mapping.request.bodyPatterns;
                         delete mapping.response.headers["Set-Cookie"];

@@ -29,6 +29,7 @@ describe("Dashboard", { tags: ["pre-merge_isolated_tiger"] }, () => {
             dashboard.topBarExist();
         });
 
+        // eslint-disable-next-line jest/no-disabled-tests
         it.skip("should render title", () => {
             const topBar = new TopBar();
 
@@ -49,6 +50,7 @@ describe("Dashboard", { tags: ["pre-merge_isolated_tiger"] }, () => {
             topBar.menuButtonIsVisible();
         });
 
+        // eslint-disable-next-line jest/no-disabled-tests
         it.skip("should open menu button and contain items", () => {
             const topBar = new TopBar();
 
@@ -88,6 +90,7 @@ describe("Dashboard", { tags: ["pre-merge_isolated_tiger"] }, () => {
                 ]);
         });
 
+        // eslint-disable-next-line jest/no-disabled-tests
         it.skip("should change the filter", () => {
             const filterBar = new FilterBar();
 
@@ -108,6 +111,7 @@ describe("Dashboard", { tags: ["pre-merge_isolated_tiger"] }, () => {
             Navigation.visit("dashboard/dashboard");
         });
 
+        // eslint-disable-next-line jest/no-disabled-tests
         it.skip("should render single insight", () => {
             const dashboard = new Dashboard();
 
