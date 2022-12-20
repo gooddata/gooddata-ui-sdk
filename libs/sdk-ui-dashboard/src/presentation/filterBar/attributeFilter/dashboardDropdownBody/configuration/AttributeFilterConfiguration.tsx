@@ -87,7 +87,7 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
     }
 
     return (
-        <div className="s-attribute-filter-dropdown-configuration attribute-filter-dropdown-configuration">
+        <div className="s-attribute-filter-dropdown-configuration attribute-filter-dropdown-configuration sdk-edit-mode-on">
             <ConfigurationPanelHeader />
             {isDependentFiltersEnabled && parents.length > 0 ? (
                 <ConfigurationCategory categoryTitle={filterByText} />

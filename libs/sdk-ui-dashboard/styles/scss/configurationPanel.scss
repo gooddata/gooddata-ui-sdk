@@ -46,7 +46,7 @@
 // sdk-edit-mode-on is in selector to override same classes in KD.
 // Can be removed when old implementation in KD removed
 .gd-configuration-bubble-wrapper.overlay-wrapper.sdk-edit-mode-on {
-    $gd-configuration-bubble-arrow-offset: 9px;
+    $gd-configuration-bubble-arrow-offset: 35px;
     $gd-configuration-bubble-arrow-height: 14px;
 
     z-index: 1000;
@@ -138,9 +138,7 @@
             top: auto;
             bottom: $gd-configuration-bubble-arrow-offset;
         }
-    }
 
-    .gd-configuration-bubble.edit-insight-config {
         .arrow-position {
             top: $gd-configuration-bubble-arrow-offset;
         }
@@ -150,7 +148,7 @@
             justify-content: space-between;
             align-items: center;
             width: 100%;
-            padding: 8px 15px;
+            padding: 3px 10px 3px 15px;
             background: kit-variables.$is-focused-background;
         }
     }

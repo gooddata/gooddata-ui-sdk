@@ -41,7 +41,6 @@ $delete-hover-status-bg: var(--gd-palette-error-lightest, #fff2f1);
                 line-height: normal;
                 color: kit-variables.$gd-color-link;
                 font-size: 11px;
-                cursor: pointer;
             }
 
             .gd-icon-locked {
@@ -63,17 +62,6 @@ $delete-hover-status-bg: var(--gd-palette-error-lightest, #fff2f1);
 
         p.insight-title {
             width: fit-content;
-        }
-
-        p.insight-title:hover {
-            .original-insight-title {
-                padding-right: 5px;
-                text-decoration: underline;
-            }
-
-            .gd-icon-link {
-                opacity: 1;
-            }
         }
 
         .widget-title .insight-title {
