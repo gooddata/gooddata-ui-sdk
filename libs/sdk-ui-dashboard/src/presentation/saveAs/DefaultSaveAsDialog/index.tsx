@@ -6,8 +6,10 @@ import { useSaveAs } from "./useSaveAs";
 import { SaveAsDialogRenderer } from "./SaveAsDialogRenderer";
 import { messages } from "../../../locales";
 import {
+    changeRenderMode,
     selectIsSaveAsDialogOpen,
     uiActions,
+    useDashboardCommandProcessing,
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../model";
@@ -26,16 +28,26 @@ export function useSaveAsDialogProps(): ISaveAsDialogProps {
     const onSaveAsError = useCallback(() => {
         closeSaveAsDialog();
         addError(messages.messagesDashboardSaveFailed);
-    }, []);
+    }, [closeSaveAsDialog, addError]);
+
+    const { run: changeEditMode } = useDashboardCommandProcessing({
+        commandCreator: changeRenderMode,
+        errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
+        successEvent: "GDC.DASH/EVT.RENDER_MODE.CHANGED",
+        onSuccess: () => {
+            addSuccess(messages.messagesDashboardSaveSuccess);
+        },
+    });
 
     const onSaveAsSuccess = useCallback(() => {
         closeSaveAsDialog();
-        addSuccess(messages.messagesDashboardSaveSuccess);
-    }, []);
+        // need wait till change mode is finished
+        changeEditMode("view", { resetDashboard: false });
+    }, [closeSaveAsDialog, changeEditMode]);
 
     const onSaveAsCancel = useCallback(() => {
         closeSaveAsDialog();
-    }, []);
+    }, [closeSaveAsDialog]);
 
     return {
         isVisible: isSaveAsDialogOpen,

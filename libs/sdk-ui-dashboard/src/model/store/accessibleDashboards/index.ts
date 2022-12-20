@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { createSlice } from "@reduxjs/toolkit";
 import { accessibleDashboardsEntityAdapter } from "./accessibleDashboardsEntityAdapter";
@@ -8,6 +8,7 @@ const accessibleDashboardsSlice = createSlice({
     initialState: accessibleDashboardsEntityAdapter.getInitialState(),
     reducers: {
         setAccessibleDashboards: accessibleDashboardsEntityAdapter.setAll,
+        addAccessibleDashboard: accessibleDashboardsEntityAdapter.upsertOne,
     },
 });
 
