@@ -16,6 +16,12 @@
     flex-wrap: nowrap;
     background: variables.$gd-dashboards-content-backgroundColor;
     @include mixins.default-styles();
+
+    // needed so that font in textarea stays the same when editing
+    textarea {
+        color: inherit;
+        font: inherit;
+    }
 }
 
 .gd-dash-content {
