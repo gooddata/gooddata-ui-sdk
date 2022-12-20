@@ -132,7 +132,9 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
             {
                 type: "separator",
                 itemId: "save-as-separator",
-                visible: isSaveAsVisible,
+                // show the separator if at least one item of the two groups is visible as well
+                visible:
+                    isSaveAsVisible && (isPdfExportVisible || isScheduledEmailingVisible || isDeleteVisible),
             },
             {
                 type: "button",
