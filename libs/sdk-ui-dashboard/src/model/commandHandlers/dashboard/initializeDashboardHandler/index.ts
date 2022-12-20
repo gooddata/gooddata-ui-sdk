@@ -3,7 +3,6 @@ import { SagaIterator } from "redux-saga";
 import { all, call, put, SagaReturnType } from "redux-saga/effects";
 import { InitializeDashboard } from "../../../commands/dashboard";
 import { DashboardInitialized, dashboardInitialized } from "../../../events/dashboard";
-import { insightsActions } from "../../../store/insights";
 import { loadingActions } from "../../../store/loading";
 import { DashboardContext, PrivateDashboardContext } from "../../../types/commonTypes";
 import { IDashboardWithReferences, walkLayout } from "@gooddata/sdk-backend-spi";
@@ -201,7 +200,6 @@ function* loadExistingDashboard(
             }),
             ...initActions,
             alertsActions.setAlerts(alerts),
-            insightsActions.setInsights(insights),
             dateFilterConfigActions.setDateFilterConfig({
                 dateFilterConfig: dashboard.dateFilterConfig,
                 effectiveDateFilterConfig: effectiveDateFilterConfig.config,
