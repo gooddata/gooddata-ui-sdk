@@ -6020,7 +6020,7 @@ export const selectIsSaveAsDialogOpen: OutputSelector<DashboardState, boolean, (
 export const selectIsSaveAsNewButtonHidden: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
 // @internal (undocumented)
-export const selectIsSaveAsNewButtonVisible: OutputSelector<DashboardState, boolean, (res1: boolean, res2: boolean, res3: boolean, res4: boolean, res5: boolean, res6: boolean) => boolean>;
+export const selectIsSaveAsNewButtonVisible: OutputSelector<DashboardState, boolean, (res1: boolean, res2: boolean, res3: boolean, res4: boolean, res5: boolean, res6: boolean, res7: boolean) => boolean>;
 
 // @alpha (undocumented)
 export const selectIsScheduleEmailDialogOpen: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;

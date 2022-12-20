@@ -12,6 +12,7 @@ import {
     uiActions,
     useDashboardDispatch,
     useDashboardSelector,
+    selectIsReadOnly,
 } from "../../../../../model";
 import { ISaveAsNewButtonProps } from "./types";
 import { selectCanEnterEditModeAndIsLoaded } from "../selectors";
@@ -27,6 +28,7 @@ export const selectIsSaveAsNewButtonVisible = createSelector(
     selectCanEnterEditModeAndIsLoaded,
     selectCanCreateAnalyticalDashboard,
     selectIsExport,
+    selectIsReadOnly,
     (
         isEditModeDevRollout,
         isSaveAsNewEnabled,
@@ -34,6 +36,7 @@ export const selectIsSaveAsNewButtonVisible = createSelector(
         isDashboardEditable,
         canCreateDashboard,
         isExport,
+        isReadOnly,
     ) => {
         /*
          * The reasoning behind this condition is as follows. Do not show separate Save As button if:
@@ -46,6 +49,7 @@ export const selectIsSaveAsNewButtonVisible = createSelector(
          *     it is somewhat more hidden
          * 4.  dashboard is not in export mode
          * 5.  If the user cannot create dashboards - e.g. does not have permissions to do so (is viewer for example).
+         * 6.  If the dashboard is in read-only mode.
          */
         return (
             isEditModeDevRollout &&
@@ -53,7 +57,8 @@ export const selectIsSaveAsNewButtonVisible = createSelector(
             !isSaveAsButtonHidden &&
             !isDashboardEditable &&
             !isExport &&
-            canCreateDashboard
+            canCreateDashboard &&
+            !isReadOnly
         );
     },
 );
