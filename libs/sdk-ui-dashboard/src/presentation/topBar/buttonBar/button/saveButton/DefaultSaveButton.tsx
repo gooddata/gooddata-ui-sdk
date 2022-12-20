@@ -12,11 +12,11 @@ import {
     selectEnableAnalyticalDashboardPermissions,
     selectIsDashboardDirty,
     selectIsDashboardSaving,
-    selectIsLayoutEmpty,
     selectIsInEditMode,
     useDashboardDispatch,
     useDashboardSelector,
     selectDashboardTitle,
+    selectLayoutHasAnalyticalWidgets,
 } from "../../../../../model";
 import { messages } from "../../../../../locales";
 import { selectCanSaveDashboard, selectIsPrivateDashboard } from "../selectors";
@@ -48,7 +48,7 @@ export function useSaveButtonProps(): ISaveButtonProps {
     const isSaving = useDashboardSelector(selectIsDashboardSaving);
     const arePermissionsEnabled = useDashboardSelector(selectEnableAnalyticalDashboardPermissions);
     const isPrivateDashboard = useDashboardSelector(selectIsPrivateDashboard);
-    const isEmptyDashboard = useDashboardSelector(selectIsLayoutEmpty);
+    const isEmptyDashboard = !useDashboardSelector(selectLayoutHasAnalyticalWidgets); // we need at least one non-custom widget there
     const canSaveDashboard = useDashboardSelector(selectCanSaveDashboard);
     const isDashboardDirty = useDashboardSelector(selectIsDashboardDirty);
 

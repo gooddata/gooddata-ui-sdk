@@ -11,10 +11,10 @@ import {
     selectEnableKPIDashboardExportPDF,
     selectIsInEditMode,
     selectIsInViewMode,
-    selectIsLayoutEmpty,
     selectIsNewDashboard,
     selectIsReadOnly,
     selectIsSaveAsNewButtonHidden,
+    selectLayoutHasAnalyticalWidgets,
     selectMenuButtonItemsVisibility,
     uiActions,
     useDashboardCommandProcessing,
@@ -29,16 +29,16 @@ import { messages } from "../../../locales";
 /**
  * @internal
  */
-export const useDefaultMenuItems = function (): IMenuButtonItem[] {
+export function useDefaultMenuItems(): IMenuButtonItem[] {
     const intl = useIntl();
     const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
-    const isEmptyLayout = useDashboardSelector(selectIsLayoutEmpty);
+    const isEmptyLayout = !useDashboardSelector(selectLayoutHasAnalyticalWidgets); // we need at least one non-custom widget there
     const { addSuccess, addError, addProgress, removeMessage } = useToastMessage();
     const { isScheduledEmailingVisible, defaultOnScheduleEmailing } = useDashboardScheduledEmails();
 
     const dispatch = useDashboardDispatch();
-    const openSaveAsDialog = () => dispatch(uiActions.openSaveAsDialog());
-    const openDeleteDialog = () => dispatch(uiActions.openDeleteDialog());
+    const openSaveAsDialog = useCallback(() => dispatch(uiActions.openSaveAsDialog()), [dispatch]);
+    const openDeleteDialog = useCallback(() => dispatch(uiActions.openDeleteDialog()), [dispatch]);
 
     const lastExportMessageId = useRef("");
     const { run: exportDashboard } = useDashboardCommandProcessing({
@@ -78,7 +78,7 @@ export const useDefaultMenuItems = function (): IMenuButtonItem[] {
         }
 
         openSaveAsDialog();
-    }, [isNewDashboard]);
+    }, [isNewDashboard, openSaveAsDialog]);
 
     const defaultOnExportToPdf = useCallback(() => {
         if (isNewDashboard) {
@@ -158,14 +158,23 @@ export const useDefaultMenuItems = function (): IMenuButtonItem[] {
             },
         ];
     }, [
-        defaultOnScheduleEmailing,
+        canCreateDashboard,
+        canExport,
         defaultOnExportToPdf,
+        defaultOnSaveAs,
+        defaultOnScheduleEmailing,
+        intl,
         isEmptyLayout,
+        isInEditMode,
+        isInViewMode,
+        isKPIDashboardExportPDFEnabled,
         isNewDashboard,
         isReadOnly,
-        menuButtonItemsVisibility,
-        canExport,
-        isKPIDashboardExportPDFEnabled,
+        isSaveAsNewHidden,
         isScheduledEmailingVisible,
+        menuButtonItemsVisibility.deleteButton,
+        menuButtonItemsVisibility.pdfExportButton,
+        menuButtonItemsVisibility.saveAsNewButton,
+        openDeleteDialog,
     ]);
-};
+}

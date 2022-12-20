@@ -129,6 +129,7 @@ export {
     selectAllKpiWidgets,
     selectAllAnalyticalWidgets,
     selectIsLayoutEmpty,
+    selectLayoutHasAnalyticalWidgets,
     selectWidgetDrills,
     selectWidgetCoordinatesByRef,
     selectWidgetPlaceholder,
