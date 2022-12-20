@@ -28,6 +28,7 @@ import {
     getLocalIdentifierOrDie,
 } from "../../../../_staging/drills/drillingUtils";
 import { ObjRefMap } from "../../../../_staging/metadata/objRefMap";
+import { isDisplayFormRelevantToDrill } from "../../common/isDisplayFormRelevantToDrill";
 
 export function validateDrillDefinitionOrigin(
     drillDefinition: InsightDrillDefinition,
@@ -114,6 +115,7 @@ export interface InsightDrillDefinitionValidationData {
     dashboardsMap: ObjRefMap<IListedDashboard>;
     insightsMap: ObjRefMap<IInsight>;
     displayFormsMap: ObjRefMap<IAttributeDisplayFormMetadataObject>;
+    availableDrillTargets: IAvailableDrillTargets;
 }
 
 export const hyperlinkDisplayFormType = "GDC.link";
@@ -203,12 +205,12 @@ export function validateDrillToCustomURLDefinition(
 ): IDrillToCustomUrl {
     const ids = extractDisplayFormIdentifiers([drillDefinition]);
 
-    ids.forEach((identifer) => {
-        const displayForms = validationContext.displayFormsMap.get(identifer);
+    ids.forEach((identifier) => {
+        const displayForms = validationContext.displayFormsMap.get(identifier);
         if (!displayForms) {
             throw new Error(
                 `Cannot find AttributeDisplayForm definition specified by identifier: ${objRefToString(
-                    identifer,
+                    identifier,
                 )}`,
             );
         }
@@ -243,6 +245,20 @@ export function validateDrillToAttributeUrlDefinition(
 
     if (hyperlinkDisplayForm.displayFormType !== hyperlinkDisplayFormType) {
         throw new Error(`DisplayFormType of target hyperlinkDisplayForm type has to be GDC.link`);
+    }
+
+    if (
+        !isDisplayFormRelevantToDrill(
+            drillDefinition,
+            validationContext.availableDrillTargets,
+            hyperlinkDisplayForm,
+        )
+    ) {
+        throw new Error(
+            `The hyperlinkDisplayForm ${objRefToString(
+                hyperlinkDisplayForm.ref,
+            )} in not a valid drill target`,
+        );
     }
 
     return drillDefinition;

@@ -1,22 +1,12 @@
 // (C) 2022 GoodData Corporation
-import {
-    areObjRefsEqual,
-    IDrillToCustomUrl,
-    IInsightWidget,
-    isDrillFromAttribute,
-    isDrillToCustomUrl,
-    widgetRef,
-} from "@gooddata/sdk-model";
+import { IDrillToCustomUrl, IInsightWidget, isDrillToCustomUrl, widgetRef } from "@gooddata/sdk-model";
 import { SagaIterator } from "redux-saga";
 import { all, call, put, SagaReturnType, select } from "redux-saga/effects";
 import { extractDisplayFormIdentifiers } from "../widgets/validation/insightDrillDefinitionUtils";
 import { uiActions } from "../../store/ui";
-import {
-    getLocalIdentifierOrDie,
-    getValidDrillOriginAttributes,
-} from "../../../_staging/drills/drillingUtils";
 import { selectDrillTargetsByWidgetRef } from "../../store/drillTargets/drillTargetsSelectors";
 import { selectAllCatalogDisplayFormsMap } from "../../store/catalog/catalogSelectors";
+import { isDisplayFormRelevantToDrill } from "./isDisplayFormRelevantToDrill";
 
 interface IInvalidParamsInfo {
     widget: IInsightWidget;
@@ -64,22 +54,11 @@ function* validateWidgetDrillToCustomUrlParams(widget: IInsightWidget): SagaIter
                     return false;
                 }
 
-                const attributeRef = isDrillFromAttribute(drillDefinition.origin)
-                    ? drillDefinition.origin?.attribute
-                    : drillDefinition.origin?.measure;
-
-                const localId = getLocalIdentifierOrDie(attributeRef);
-
-                const relevantAttributes = getValidDrillOriginAttributes(
+                return !isDisplayFormRelevantToDrill(
+                    drillDefinition,
                     drillTargets.availableDrillTargets!,
-                    localId,
+                    displayForm,
                 );
-
-                const isValidDrillParameter = relevantAttributes.some((attribute) =>
-                    areObjRefsEqual(displayForm.attribute, attribute.attributeHeader.formOf),
-                );
-
-                return !isValidDrillParameter;
             });
 
             if (hasInvalidParam) {
