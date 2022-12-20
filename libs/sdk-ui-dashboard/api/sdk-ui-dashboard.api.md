@@ -6059,6 +6059,9 @@ itemIndex: number;
 export const selectLayout: OutputSelector<DashboardState, IDashboardLayout<ExtendedDashboardWidget>, (res: LayoutState) => IDashboardLayout<ExtendedDashboardWidget>>;
 
 // @alpha
+export const selectLayoutHasAnalyticalWidgets: OutputSelector<DashboardState, boolean, (res: IWidget[]) => boolean>;
+
+// @alpha
 export const selectLegacyDashboards: OutputSelector<DashboardState, ILegacyDashboard[], (res: LegacyDashboardsState) => ILegacyDashboard[]>;
 
 // @alpha
@@ -7009,7 +7012,7 @@ export const useDashboardUserInteraction: () => {
 };
 
 // @internal (undocumented)
-export const useDefaultMenuItems: () => IMenuButtonItem[];
+export function useDefaultMenuItems(): IMenuButtonItem[];
 
 // @public
 export const useDispatchDashboardCommand: <TCommand extends DashboardCommands, TArgs extends any[]>(commandCreator: (...args: TArgs) => TCommand) => (...args: TArgs) => void;

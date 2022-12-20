@@ -249,6 +249,18 @@ export const selectAllAnalyticalWidgets = createSelector(selectAllWidgets, (allW
     return allWidgets.filter((w): w is IKpiWidget | IInsightWidget => !isCustomWidget(w));
 });
 
+/**
+ * Selects a boolean indicating if the dashboard contains at least one non-custom widget.
+ *
+ * @alpha
+ */
+export const selectLayoutHasAnalyticalWidgets = createSelector(
+    selectAllAnalyticalWidgets,
+    (allAnalyticalWidgets) => {
+        return allAnalyticalWidgets.length > 0;
+    },
+);
+
 function getWidgetCoordinates(layout: IDashboardLayout<ExtendedDashboardWidget>, ref: ObjRef) {
     for (let sectionIndex = 0; sectionIndex < layout.sections.length; sectionIndex++) {
         const section = layout.sections[sectionIndex];
