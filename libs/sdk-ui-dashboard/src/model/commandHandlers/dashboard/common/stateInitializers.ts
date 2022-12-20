@@ -178,6 +178,7 @@ export function* actionsToInitializeExistingDashboard(
         metaActions.setMeta({
             dashboard: persistedDashboard ?? dashboard,
         }),
+        insightsActions.setInsights(insights),
         metaActions.setDashboardTitle(dashboard.title), // even when using persistedDashboard, use the working title of the dashboard
         uiActions.clearWidgetSelection(),
         uiActions.setWidgetsOverlay(modifiedWidgets),

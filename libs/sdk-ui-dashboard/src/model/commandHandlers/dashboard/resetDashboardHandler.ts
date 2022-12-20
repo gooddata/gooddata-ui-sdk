@@ -1,12 +1,11 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { DashboardContext } from "../../types/commonTypes";
 import { ResetDashboard } from "../../commands";
 import { SagaIterator } from "redux-saga";
 import { DashboardWasReset } from "../../events";
 import { selectPersistedDashboard } from "../../store/meta/metaSelectors";
-import { call, put, select } from "redux-saga/effects";
+import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import { dashboardWasReset } from "../../events/dashboard";
-import { selectInsights } from "../../store/insights/insightsSelectors";
 import { selectEffectiveDateFilterConfig } from "../../store/dateFilterConfig/dateFilterConfigSelectors";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { selectDateFilterConfig, selectSettings } from "../../store/config/configSelectors";
@@ -15,6 +14,10 @@ import {
     actionsToInitializeNewDashboard,
 } from "./common/stateInitializers";
 import { batchActions } from "redux-batched-actions";
+import uniqWith from "lodash/uniqWith";
+import { areObjRefsEqual, isInsightWidget, ObjRef } from "@gooddata/sdk-model";
+import { walkLayout } from "@gooddata/sdk-backend-spi";
+import { resolveInsights } from "../../utils/insightResolver";
 
 export function* resetDashboardHandler(
     ctx: DashboardContext,
@@ -28,8 +31,11 @@ export function* resetDashboardHandler(
     if (persistedDashboard) {
         /*
          * For dashboard that is already persisted the insights and effective date filter config can be used
-         * as is (insights are just accumulated - no problem if there are more insights than what is on the
-         * persisted dashboard, date filter config is read-only).
+         * as is (date filter config is read-only).
+         *
+         * The only exception is the insights: thanks to the Reload button in plugins, the dashboard could have been
+         * reloaded with a different set of insights, so when resetting, we need to make sure that we still have all
+         * the insights needed for the original dashboard shape.
          *
          * The call to create actions to initialize existing dashboard will use all this to set state
          * of filter context, layout and meta based on the contents of persisted dashboard; this is the
@@ -37,7 +43,26 @@ export function* resetDashboardHandler(
          *
          * Everything else can stay untouched.
          */
-        const insights: ReturnType<typeof selectInsights> = yield select(selectInsights);
+
+        const insightRefsFromWidgets: ObjRef[] = [];
+        if (persistedDashboard.layout) {
+            persistedDashboard.layout &&
+                walkLayout(persistedDashboard.layout, {
+                    widgetCallback: (widget) => {
+                        if (isInsightWidget(widget)) {
+                            insightRefsFromWidgets.push(widget.insight);
+                        }
+                    },
+                });
+        }
+
+        const uniqueInsightRefsFromWidgets = uniqWith(insightRefsFromWidgets, areObjRefsEqual);
+        const resolvedInsights: SagaReturnType<typeof resolveInsights> = yield call(
+            resolveInsights,
+            ctx,
+            uniqueInsightRefsFromWidgets,
+        );
+
         const settings: ReturnType<typeof selectSettings> = yield select(selectSettings);
         const effectiveConfig: ReturnType<typeof selectEffectiveDateFilterConfig> = yield select(
             selectEffectiveDateFilterConfig,
@@ -47,7 +72,7 @@ export function* resetDashboardHandler(
             actionsToInitializeExistingDashboard,
             ctx,
             persistedDashboard,
-            insights,
+            Array(...resolvedInsights.resolved.values()),
             settings,
             effectiveConfig,
         );
