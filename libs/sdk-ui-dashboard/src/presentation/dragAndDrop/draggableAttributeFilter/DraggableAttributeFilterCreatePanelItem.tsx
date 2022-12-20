@@ -1,7 +1,7 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
 
-import { DraggableItem } from "../types";
+import { IWrapCreatePanelItemWithDragComponent, DraggableItem } from "../types";
 import { DraggableCreatePanelItem } from "../DraggableCreatePanelItem";
 import { CustomCreatePanelItemComponent } from "../../componentDefinition";
 
@@ -10,6 +10,7 @@ import { CustomCreatePanelItemComponent } from "../../componentDefinition";
  */
 export interface IDraggableAttributeFilterCreatePanelItemProps {
     CreatePanelItemComponent: CustomCreatePanelItemComponent;
+    WrapCreatePanelItemWithDragComponent?: IWrapCreatePanelItemWithDragComponent;
     disabled?: boolean;
 }
 
@@ -22,10 +23,11 @@ const dragItem: DraggableItem = {
  */
 export const DraggableAttributeFilterCreatePanelItem: React.FC<
     IDraggableAttributeFilterCreatePanelItemProps
-> = ({ CreatePanelItemComponent, disabled }) => {
+> = ({ CreatePanelItemComponent, WrapCreatePanelItemWithDragComponent, disabled }) => {
     return (
         <DraggableCreatePanelItem
             Component={CreatePanelItemComponent}
+            WrapCreatePanelItemWithDragComponent={WrapCreatePanelItemWithDragComponent}
             dragItem={dragItem}
             disabled={disabled}
             hideDefaultPreview={false}

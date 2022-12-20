@@ -13,20 +13,35 @@ import {
     selectIsNewDashboard,
     selectSettings,
 } from "../../../model";
-import { useDashboardComponentsContext } from "../../dashboardContexts";
 import cx from "classnames";
+import {
+    IWrapCreatePanelItemWithDragComponent,
+    IWrapInsightListItemWithDragComponent,
+} from "../../dragAndDrop/types";
+import {
+    AttributeFilterComponentSet,
+    InsightWidgetComponentSet,
+    KpiWidgetComponentSet,
+} from "../../componentDefinition";
+
 interface ICreationPanelProps {
     className?: string;
+    WrapCreatePanelItemWithDragComponent?: IWrapCreatePanelItemWithDragComponent;
+    WrapInsightListItemWithDragComponent?: IWrapInsightListItemWithDragComponent;
+    KpiWidgetComponentSet?: KpiWidgetComponentSet;
+    AttributeFilterComponentSet?: AttributeFilterComponentSet;
+    InsightWidgetComponentSet?: InsightWidgetComponentSet;
 }
 
-export const CreationPanel: React.FC<ICreationPanelProps> = ({ className }) => {
+export const CreationPanel: React.FC<ICreationPanelProps> = (props) => {
+    const { className, WrapCreatePanelItemWithDragComponent, WrapInsightListItemWithDragComponent } = props;
     const supportsKpis = useDashboardSelector(selectSupportsKpiWidgetCapability);
     const isAnalyticalDesignerEnabled = useDashboardSelector(selectIsAnalyticalDesignerEnabled);
     const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
     const settings = useDashboardSelector(selectSettings);
-
-    const { KpiWidgetComponentSet, AttributeFilterComponentSet, InsightWidgetComponentSet } =
-        useDashboardComponentsContext();
+    const KpiWidgetComponentSet = props.KpiWidgetComponentSet!;
+    const AttributeFilterComponentSet = props.AttributeFilterComponentSet!;
+    const InsightWidgetComponentSet = props.InsightWidgetComponentSet!;
 
     const addItemPanelItems = useMemo(() => {
         const items = compact([
@@ -35,9 +50,14 @@ export const CreationPanel: React.FC<ICreationPanelProps> = ({ className }) => {
             InsightWidgetComponentSet.creating,
         ]);
 
-        return sortBy(items, (item) => item.priority ?? 0).map(({ CreatePanelListItemComponent, type }) => (
-            <CreatePanelListItemComponent key={type} />
-        ));
+        return sortBy(items, (item) => item.priority ?? 0).map(({ CreatePanelListItemComponent, type }) => {
+            return (
+                <CreatePanelListItemComponent
+                    key={type}
+                    WrapCreatePanelItemWithDragComponent={WrapCreatePanelItemWithDragComponent}
+                />
+            );
+        });
     }, [AttributeFilterComponentSet, KpiWidgetComponentSet, InsightWidgetComponentSet, supportsKpis]);
 
     return (
@@ -58,6 +78,7 @@ export const CreationPanel: React.FC<ICreationPanelProps> = ({ className }) => {
                             <FormattedMessage id="visualizationsList.savedVisualizations" />
                         </Typography>
                         <DraggableInsightList
+                            WrapInsightListItemWithDragComponent={WrapInsightListItemWithDragComponent}
                             recalculateSizeReference={className}
                             searchAutofocus={!isNewDashboard}
                             enableDescriptions={settings?.enableDescriptions}

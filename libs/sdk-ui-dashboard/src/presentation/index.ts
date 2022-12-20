@@ -8,8 +8,6 @@ export * from "./dragAndDrop/types";
 export {
     DraggableCreatePanelItem,
     IDraggableCreatePanelItemProps,
-    DraggableCreatePanelItemInnerProps,
-    useDraggableCreatePanelItemProps,
     useWidgetDragEndHandler,
 } from "./dragAndDrop";
 export * from "./drill";

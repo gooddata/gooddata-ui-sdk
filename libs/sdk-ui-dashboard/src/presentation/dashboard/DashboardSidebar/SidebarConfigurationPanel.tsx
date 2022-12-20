@@ -1,6 +1,5 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
-import { DeleteDropZone } from "../../dragAndDrop";
 import { useWidgetSelection } from "../../../model";
 import { CreationPanel } from "./CreationPanel";
 import { ISidebarProps } from "./types";
@@ -8,16 +7,33 @@ import { ISidebarProps } from "./types";
 /**
  * @internal
  */
-export const SidebarConfigurationPanel: React.FC<Omit<ISidebarProps, "DefaultSidebar">> = ({
-    configurationPanelClassName,
-}): JSX.Element => {
+export const SidebarConfigurationPanel: React.FC<Omit<ISidebarProps, "DefaultSidebar">> = (
+    props,
+): JSX.Element => {
+    const {
+        configurationPanelClassName,
+        WrapCreatePanelItemWithDragComponent,
+        WrapInsightListItemWithDragComponent,
+        KpiWidgetComponentSet,
+        AttributeFilterComponentSet,
+        InsightWidgetComponentSet,
+    } = props;
     const { deselectWidgets } = useWidgetSelection();
+    const DeleteDropZoneComponent = props.DeleteDropZoneComponent!;
+
     return (
         <div className="col gd-flex-item gd-sidebar-container" onClick={deselectWidgets}>
             <div className="flex-panel-full-height">
-                <CreationPanel className={configurationPanelClassName} />
+                <CreationPanel
+                    className={configurationPanelClassName}
+                    WrapCreatePanelItemWithDragComponent={WrapCreatePanelItemWithDragComponent}
+                    WrapInsightListItemWithDragComponent={WrapInsightListItemWithDragComponent}
+                    KpiWidgetComponentSet={KpiWidgetComponentSet}
+                    AttributeFilterComponentSet={AttributeFilterComponentSet}
+                    InsightWidgetComponentSet={InsightWidgetComponentSet}
+                />
             </div>
-            <DeleteDropZone />
+            <DeleteDropZoneComponent />
         </div>
     );
 };

@@ -716,7 +716,7 @@ export type ConfigurableWidget<TWidget> = {
 };
 
 // @internal (undocumented)
-export function CreatableAttributeFilter(): JSX.Element;
+export function CreatableAttributeFilter(props: ICreatePanelItemComponentProps): JSX.Element;
 
 // @internal
 export type CreatableByDragComponent = DraggableComponent & {
@@ -2471,17 +2471,6 @@ export type DraggableContentItemType = "attributeFilter" | "attributeFilter-plac
 export const DraggableCreatePanelItem: React_2.FC<IDraggableCreatePanelItemProps>;
 
 // @internal (undocumented)
-export type DraggableCreatePanelItemInnerProps = {
-    Component: CustomCreatePanelItemComponent;
-    dragItem: DraggableItem;
-    hideDefaultPreview?: boolean;
-    disabled?: boolean;
-    canDrag: boolean;
-    onDragStart?: (item: DraggableItem) => void;
-    onDragEnd?: (didDrop: boolean) => void;
-};
-
-// @internal (undocumented)
 export type DraggableInternalItem = HeightResizerDragItem | WidthResizerDragItem;
 
 // @internal (undocumented)
@@ -3031,6 +3020,8 @@ export interface IConnectingAttribute {
 export interface ICreatePanelItemComponentProps {
     // (undocumented)
     disabled?: boolean;
+    // (undocumented)
+    WrapCreatePanelItemWithDragComponent?: IWrapCreatePanelItemWithDragComponent;
 }
 
 // @alpha (undocumented)
@@ -3551,7 +3542,13 @@ export interface IDefaultDashboardToolbarGroupProps {
 }
 
 // @internal (undocumented)
-export type IDraggableCreatePanelItemProps = Pick<DraggableCreatePanelItemInnerProps, "Component" | "dragItem" | "disabled" | "hideDefaultPreview">;
+export type IDraggableCreatePanelItemProps = {
+    Component: CustomCreatePanelItemComponent;
+    WrapCreatePanelItemWithDragComponent?: IWrapCreatePanelItemWithDragComponent;
+    dragItem: DraggableItem;
+    hideDefaultPreview?: boolean;
+    disabled?: boolean;
+};
 
 // @alpha
 export interface IDrillDownContext {
@@ -3697,6 +3694,8 @@ export interface IInsightListProps {
     selectedRef?: ObjRef;
     // (undocumented)
     width?: number;
+    // (undocumented)
+    WrapInsightListItemWithDragComponent?: IWrapInsightListItemWithDragComponent;
 }
 
 // @alpha (undocumented)
@@ -4435,8 +4434,20 @@ export interface ISharingProperties {
 
 // @alpha (undocumented)
 export interface ISidebarProps {
+    // @internal
+    AttributeFilterComponentSet?: AttributeFilterComponentSet;
     configurationPanelClassName?: string;
     DefaultSidebar: ComponentType<ISidebarProps>;
+    // @internal
+    DeleteDropZoneComponent?: React.ComponentType;
+    // @internal
+    InsightWidgetComponentSet?: InsightWidgetComponentSet;
+    // @internal
+    KpiWidgetComponentSet?: KpiWidgetComponentSet;
+    // @internal
+    WrapCreatePanelItemWithDragComponent?: IWrapCreatePanelItemWithDragComponent;
+    // @internal
+    WrapInsightListItemWithDragComponent?: IWrapInsightListItemWithDragComponent;
 }
 
 // @internal
@@ -4525,6 +4536,39 @@ export interface IUseWidgetSelectionResult {
     isSelectable: boolean;
     isSelected: boolean;
     onSelected: (e?: MouseEvent_2) => void;
+}
+
+// @internal (undocumented)
+export type IWrapCreatePanelItemWithDragComponent = React.ComponentType<IWrapCreatePanelItemWithDragProps>;
+
+// @internal (undocumented)
+export type IWrapCreatePanelItemWithDragInnerProps = {
+    children: JSX.Element;
+    dragItem: DraggableItem;
+    hideDefaultPreview?: boolean;
+    disabled?: boolean;
+    canDrag: boolean;
+    onDragStart?: (item: DraggableItem) => void;
+    onDragEnd?: (didDrop: boolean) => void;
+};
+
+// @internal (undocumented)
+export type IWrapCreatePanelItemWithDragProps = {
+    children: JSX.Element;
+    dragItem: DraggableItem;
+    hideDefaultPreview?: boolean;
+    disabled?: boolean;
+};
+
+// @internal (undocumented)
+export type IWrapInsightListItemWithDragComponent = React.ComponentType<IWrapInsightListItemWithDragProps>;
+
+// @internal (undocumented)
+export interface IWrapInsightListItemWithDragProps {
+    // (undocumented)
+    children: JSX.Element;
+    // (undocumented)
+    insight: IInsight;
 }
 
 // @alpha (undocumented)
@@ -7016,9 +7060,6 @@ export function useDefaultMenuItems(): IMenuButtonItem[];
 
 // @public
 export const useDispatchDashboardCommand: <TCommand extends DashboardCommands, TArgs extends any[]>(commandCreator: (...args: TArgs) => TCommand) => (...args: TArgs) => void;
-
-// @internal (undocumented)
-export function useDraggableCreatePanelItemProps(props: IDraggableCreatePanelItemProps): DraggableCreatePanelItemInnerProps;
 
 // @internal (undocumented)
 export const useDrill: ({ onSuccess, onError, onBeforeRun }?: UseDrillProps) => {
