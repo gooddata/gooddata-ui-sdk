@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { createSlice } from "@reduxjs/toolkit";
 import { listedDashboardsEntityAdapter } from "./listedDashboardsEntityAdapter";
@@ -8,6 +8,7 @@ const listedDashboardsSlice = createSlice({
     initialState: listedDashboardsEntityAdapter.getInitialState(),
     reducers: {
         setListedDashboards: listedDashboardsEntityAdapter.setAll,
+        addListedDashboard: listedDashboardsEntityAdapter.upsertOne,
     },
 });
 

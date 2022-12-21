@@ -28,6 +28,10 @@ import { alertsActions } from "../../store/alerts";
 import { savingActions } from "../../store/saving";
 import { selectSettings } from "../../store/config/configSelectors";
 import { selectBackendCapabilities } from "../../store/backendCapabilities/backendCapabilitiesSelectors";
+import { listedDashboardsActions } from "../../store/listedDashboards";
+import { createListedDashboard } from "../../../_staging/listedDashboard/listedDashboardUtils";
+import { accessibleDashboardsActions } from "../../store/accessibleDashboards";
+import { selectCurrentUser } from "../../store/user/userSelectors";
 
 type DashboardSaveAsContext = {
     cmd: SaveDashboardAs;
@@ -148,23 +152,28 @@ function* saveAs(
         saveAsCtx,
     );
 
+    const user: ReturnType<typeof selectCurrentUser> = yield select(selectCurrentUser);
+    // we need to set createdBy manually, because conversion userRef -> IUser in createDashboard call needs UserMap for this,
+    // but to get a UserMap is expensive and we know who created the dashboard.
+    const dashboardWithUser = { ...dashboard, createdBy: user };
+
     if (!saveAsCtx.cmd.payload.switchToCopy) {
         return {
-            dashboard,
+            dashboard: dashboardWithUser,
         };
     }
 
     const identityMapping = dashboardLayoutWidgetIdentityMap(
         saveAsCtx.dashboardFromState.layout!,
-        dashboard.layout!,
+        dashboardWithUser.layout!,
     );
 
     const batch = batchActions(
         [
-            metaActions.setMeta({ dashboard }),
+            metaActions.setMeta({ dashboard: dashboardWithUser }),
             alertsActions.setAlerts([]),
             filterContextActions.updateFilterContextIdentity({
-                filterContextIdentity: dashboardFilterContextIdentity(dashboard),
+                filterContextIdentity: dashboardFilterContextIdentity(dashboardWithUser),
             }),
             layoutActions.updateWidgetIdentities(identityMapping),
             layoutActions.clearLayoutHistory(),
@@ -174,7 +183,7 @@ function* saveAs(
 
     return {
         batch,
-        dashboard,
+        dashboard: dashboardWithUser,
     };
 }
 
@@ -211,7 +220,11 @@ export function* saveAsDashboardHandler(
             });
         }
 
+        const listedDashboard = createListedDashboard(dashboard);
+        yield put(listedDashboardsActions.addListedDashboard(listedDashboard));
+        yield put(accessibleDashboardsActions.addAccessibleDashboard(listedDashboard));
         yield put(savingActions.setSavingSuccess());
+
         return dashboardCopySaved(context, dashboard, cmd.correlationId);
     } catch (e: any) {
         yield put(savingActions.setSavingError(e));
