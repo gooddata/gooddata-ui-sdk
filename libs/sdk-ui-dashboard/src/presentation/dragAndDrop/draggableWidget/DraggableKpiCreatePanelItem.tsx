@@ -4,10 +4,14 @@ import React from "react";
 import { KPI_WIDGET_SIZE_INFO_DEFAULT } from "@gooddata/sdk-ui-ext";
 import { CustomCreatePanelItemComponent } from "../../componentDefinition";
 import { DraggableCreatePanelItem } from "../DraggableCreatePanelItem";
-import { DraggableItem } from "../types";
+import { DraggableItem, IWrapCreatePanelItemWithDragComponent } from "../types";
 
+/**
+ * @internal
+ */
 interface IDraggableKpiCreatePanelItemProps {
     CreatePanelItemComponent: CustomCreatePanelItemComponent;
+    WrapCreatePanelItemWithDragComponent?: IWrapCreatePanelItemWithDragComponent;
     disabled?: boolean;
 }
 
@@ -19,13 +23,18 @@ const dragItem: DraggableItem = {
     },
 };
 
+/**
+ * @internal
+ */
 export const DraggableKpiCreatePanelItem: React.FC<IDraggableKpiCreatePanelItemProps> = ({
     CreatePanelItemComponent,
+    WrapCreatePanelItemWithDragComponent,
     disabled,
 }) => {
     return (
         <DraggableCreatePanelItem
             Component={CreatePanelItemComponent}
+            WrapCreatePanelItemWithDragComponent={WrapCreatePanelItemWithDragComponent}
             disabled={disabled}
             dragItem={dragItem}
             hideDefaultPreview={false}

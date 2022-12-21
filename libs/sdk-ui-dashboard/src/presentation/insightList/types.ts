@@ -1,11 +1,13 @@
 // (C) 2022 GoodData Corporation
 import { IInsight, ObjRef } from "@gooddata/sdk-model";
 import { IRenderListItemProps } from "@gooddata/sdk-ui-kit";
+import { IWrapInsightListItemWithDragComponent } from "../dragAndDrop/types";
 
 /**
  * @internal
  */
 export interface IInsightListProps {
+    WrapInsightListItemWithDragComponent?: IWrapInsightListItemWithDragComponent;
     height?: number;
     width?: number;
     searchAutofocus?: boolean;

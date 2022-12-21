@@ -4,13 +4,15 @@ import { Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage } from "react-intl";
 import { useDashboardSelector, selectHasCatalogMeasures, selectIsWhiteLabeled } from "../../../model";
 import { AddKpiWidgetButton, DraggableKpiCreatePanelItem } from "../../dragAndDrop";
+import { ICreatePanelItemComponentProps } from "../../componentDefinition";
 
 const bubbleAlignPoints: IAlignPoint[] = [{ align: "cr cl", offset: { x: -20, y: 0 } }];
 
 /**
  * @internal
  */
-export const CreatableKpi: React.FC = () => {
+export const CreatableKpi: React.FC<ICreatePanelItemComponentProps> = (props) => {
+    const { WrapCreatePanelItemWithDragComponent } = props;
     const hasMeasures = useDashboardSelector(selectHasCatalogMeasures);
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
 
@@ -34,7 +36,11 @@ export const CreatableKpi: React.FC = () => {
 
     return (
         <BubbleHoverTrigger eventsOnBubble={true} className="s-add-kpi-bubble-trigger">
-            <DraggableKpiCreatePanelItem CreatePanelItemComponent={AddKpiWidgetButton} disabled={disabled} />
+            <DraggableKpiCreatePanelItem
+                CreatePanelItemComponent={AddKpiWidgetButton}
+                WrapCreatePanelItemWithDragComponent={WrapCreatePanelItemWithDragComponent}
+                disabled={disabled}
+            />
             {tooltip ? <Bubble alignPoints={bubbleAlignPoints}>{tooltip}</Bubble> : null}
         </BubbleHoverTrigger>
     );

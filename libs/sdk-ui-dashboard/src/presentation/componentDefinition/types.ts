@@ -9,6 +9,7 @@ import {
     AttributeFilterDraggableItem,
     CustomDraggableItem,
     DraggableContentItemType,
+    IWrapCreatePanelItemWithDragComponent,
     InsightDraggableItem,
     KpiDraggableItem,
 } from "../dragAndDrop/types";
@@ -158,6 +159,8 @@ export type DropTarget = {
  * @internal
  */
 export interface ICreatePanelItemComponentProps {
+    WrapCreatePanelItemWithDragComponent?: IWrapCreatePanelItemWithDragComponent;
+
     disabled?: boolean;
 }
 

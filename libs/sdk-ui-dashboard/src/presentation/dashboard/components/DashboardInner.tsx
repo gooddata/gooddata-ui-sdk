@@ -8,7 +8,13 @@ import { IDashboardProps } from "../types";
 import { DashboardMainContent } from "./DashboardMainContent";
 import { DashboardSidebar } from "../DashboardSidebar/DashboardSidebar";
 import { RenderModeAwareDashboardSidebar } from "../DashboardSidebar/RenderModeAwareDashboardSidebar";
-import { DragLayerComponent, useDashboardDragScroll } from "../../dragAndDrop";
+import {
+    DragLayerComponent,
+    useDashboardDragScroll,
+    DeleteDropZone,
+    WrapCreatePanelItemWithDrag,
+    WrapInsightListItemWithDrag,
+} from "../../dragAndDrop";
 import { Toolbar } from "../../toolbar";
 import { OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../constants";
@@ -35,7 +41,12 @@ export const DashboardInner: React.FC<IDashboardProps> = () => {
             >
                 <DragLayerComponent />
                 <div className="gd-dashboards-root gd-flex-container">
-                    <DashboardSidebar DefaultSidebar={RenderModeAwareDashboardSidebar} />
+                    <DashboardSidebar
+                        DefaultSidebar={RenderModeAwareDashboardSidebar}
+                        DeleteDropZoneComponent={DeleteDropZone}
+                        WrapCreatePanelItemWithDragComponent={WrapCreatePanelItemWithDrag}
+                        WrapInsightListItemWithDragComponent={WrapInsightListItemWithDrag}
+                    />
                     <div className="gd-dash-content">
                         {/* gd-dash-header-wrapper-sdk-8-12 style is added because we should keep old styles unchanged to not brake plugins */}
                         <div

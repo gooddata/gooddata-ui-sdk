@@ -294,3 +294,44 @@ export type CustomDashboardInsightListItemComponentProps = {
  */
 export type CustomDashboardInsightListItemComponent =
     React.ComponentType<CustomDashboardInsightListItemComponentProps>;
+
+/**
+ * @internal
+ */
+export type IWrapCreatePanelItemWithDragProps = {
+    children: JSX.Element;
+    dragItem: DraggableItem;
+    hideDefaultPreview?: boolean;
+    disabled?: boolean;
+};
+
+/**
+ * @internal
+ */
+export type IWrapCreatePanelItemWithDragInnerProps = {
+    children: JSX.Element;
+    dragItem: DraggableItem;
+    hideDefaultPreview?: boolean;
+    disabled?: boolean;
+    canDrag: boolean;
+    onDragStart?: (item: DraggableItem) => void;
+    onDragEnd?: (didDrop: boolean) => void;
+};
+
+/**
+ * @internal
+ */
+export type IWrapCreatePanelItemWithDragComponent = React.ComponentType<IWrapCreatePanelItemWithDragProps>;
+
+/**
+ * @internal
+ */
+export interface IWrapInsightListItemWithDragProps {
+    children: JSX.Element;
+    insight: IInsight;
+}
+
+/**
+ * @internal
+ */
+export type IWrapInsightListItemWithDragComponent = React.ComponentType<IWrapInsightListItemWithDragProps>;

@@ -10,11 +10,13 @@ import {
     selectIsWhiteLabeled,
     selectCanAddMoreAttributeFilters,
 } from "../../../model";
+import { ICreatePanelItemComponentProps } from "../../componentDefinition";
 
 /**
  * @internal
  */
-export function CreatableAttributeFilter() {
+export function CreatableAttributeFilter(props: ICreatePanelItemComponentProps) {
+    const { WrapCreatePanelItemWithDragComponent } = props;
     const hasAttributes = useDashboardSelector(selectHasCatalogAttributes);
     const canAddMoreAttributeFilters = useDashboardSelector(selectCanAddMoreAttributeFilters);
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
@@ -43,6 +45,7 @@ export function CreatableAttributeFilter() {
         <BubbleHoverTrigger eventsOnBubble={true} className="s-add-attribute-filter-bubble-trigger">
             <DraggableAttributeFilterCreatePanelItem
                 CreatePanelItemComponent={AddAttributeFilterPlaceholder}
+                WrapCreatePanelItemWithDragComponent={WrapCreatePanelItemWithDragComponent}
                 disabled={disabled}
             />
 

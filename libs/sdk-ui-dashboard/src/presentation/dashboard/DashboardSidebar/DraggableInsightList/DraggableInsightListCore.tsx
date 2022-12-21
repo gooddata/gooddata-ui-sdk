@@ -15,7 +15,7 @@ import { VisType } from "@gooddata/sdk-ui";
 import { useDashboardUserInteraction, DescriptionTooltipOpenedData } from "./../../../../model";
 
 export const DraggableInsightListCore: React.FC<IInsightListProps> = (props) => {
-    const { enableDescriptions, ...remainingProps } = props;
+    const { enableDescriptions, WrapInsightListItemWithDragComponent, ...remainingProps } = props;
     const userInteraction = useDashboardUserInteraction();
 
     return (
@@ -44,6 +44,7 @@ export const DraggableInsightListCore: React.FC<IInsightListProps> = (props) => 
 
                 return (
                     <DraggableInsightListItemWrapper
+                        WrapInsightListItemWithDragComponent={WrapInsightListItemWithDragComponent}
                         title={insightTitle(insight)}
                         description={description}
                         showDescriptionPanel={enableDescriptions}

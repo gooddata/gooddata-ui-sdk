@@ -3,15 +3,22 @@ import React, { useEffect, useRef } from "react";
 import { FlexDimensions } from "@gooddata/sdk-ui-kit";
 
 import { DraggableInsightListCore } from "./DraggableInsightListCore";
+import { IWrapInsightListItemWithDragComponent } from "../../../dragAndDrop/types";
 
 interface IDraggableInsightListProps {
+    WrapInsightListItemWithDragComponent?: IWrapInsightListItemWithDragComponent;
     recalculateSizeReference?: string;
     searchAutofocus?: boolean;
     enableDescriptions?: boolean;
 }
 
 export const DraggableInsightList: React.FC<IDraggableInsightListProps> = (props) => {
-    const { recalculateSizeReference, searchAutofocus, enableDescriptions } = props;
+    const {
+        recalculateSizeReference,
+        searchAutofocus,
+        enableDescriptions,
+        WrapInsightListItemWithDragComponent,
+    } = props;
 
     const flexRef = useRef<FlexDimensions>(null);
 
@@ -28,6 +35,7 @@ export const DraggableInsightList: React.FC<IDraggableInsightListProps> = (props
                 className="visualizations-flex-dimensions"
             >
                 <DraggableInsightListCore
+                    WrapInsightListItemWithDragComponent={WrapInsightListItemWithDragComponent}
                     searchAutofocus={searchAutofocus}
                     enableDescriptions={enableDescriptions}
                 />

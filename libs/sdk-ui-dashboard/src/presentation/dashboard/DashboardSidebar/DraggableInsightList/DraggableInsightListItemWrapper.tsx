@@ -3,9 +3,13 @@ import React from "react";
 import { IInsightListItemProps, InsightListItem } from "@gooddata/sdk-ui-kit";
 import { IInsight } from "@gooddata/sdk-model";
 import { DraggableInsightListItem } from "../../../dragAndDrop/draggableWidget/DraggableInsightListItem";
-import { CustomDashboardInsightListItemComponent } from "../../../dragAndDrop/types";
+import {
+    CustomDashboardInsightListItemComponent,
+    IWrapInsightListItemWithDragComponent,
+} from "../../../dragAndDrop/types";
 
 interface IDraggableInsightListItemWrapperProps extends IInsightListItemProps {
+    WrapInsightListItemWithDragComponent?: IWrapInsightListItemWithDragComponent;
     className?: string;
     insight: IInsight;
 }
@@ -21,6 +25,7 @@ export const DraggableInsightListItemBody: CustomDashboardInsightListItemCompone
 
 export const DraggableInsightListItemWrapper: React.FC<IDraggableInsightListItemWrapperProps> = (props) => {
     const {
+        WrapInsightListItemWithDragComponent,
         className,
         isLocked,
         title,
@@ -33,6 +38,7 @@ export const DraggableInsightListItemWrapper: React.FC<IDraggableInsightListItem
     } = props;
     return (
         <DraggableInsightListItem
+            WrapInsightListItemWithDragComponent={WrapInsightListItemWithDragComponent}
             ListItemComponent={DraggableInsightListItemBody}
             listItemComponentProps={{
                 className,
