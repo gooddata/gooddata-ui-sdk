@@ -7,6 +7,8 @@ import { emptyItemFacadeWithFullSize } from "./utils/emptyFacade";
 import { SectionHotspot } from "../../dragAndDrop";
 import { isInitialPlaceholderWidget } from "../../../widgets";
 import { DashboardLayoutItemViewRenderer } from "./DashboardLayoutItemViewRenderer";
+import { getRefsForSection } from "../refs";
+import { selectSectionModification, useDashboardSelector } from "../../../model";
 
 export function DashboardLayoutEditSectionHeaderRenderer(
     props: IDashboardLayoutSectionHeaderRenderProps<any>,
@@ -16,6 +18,10 @@ export function DashboardLayoutEditSectionHeaderRenderer(
 
     const isInitialDropzone =
         section.index() === 0 && section.items().every((i) => isInitialPlaceholderWidget(i.widget()));
+
+    const refs = getRefsForSection(section);
+    const sectionPluginModifications = useDashboardSelector(selectSectionModification(refs));
+    const isEditingDisabled = sectionPluginModifications.length > 0;
 
     return (
         <DashboardLayoutItemViewRenderer
@@ -30,13 +36,13 @@ export function DashboardLayoutEditSectionHeaderRenderer(
                     !isInitialDropzone && <SectionHotspot index={section.index()} targetPosition="above" />
                 }
                 renderHeader={
-                    !isInitialDropzone && (
+                    !isInitialDropzone && !isEditingDisabled ? (
                         <SectionHeaderEditable
                             title={sectionHeader?.title || ""}
                             description={sectionHeader?.description || ""}
                             index={section.index()}
                         />
-                    )
+                    ) : undefined
                 }
             />
         </DashboardLayoutItemViewRenderer>
