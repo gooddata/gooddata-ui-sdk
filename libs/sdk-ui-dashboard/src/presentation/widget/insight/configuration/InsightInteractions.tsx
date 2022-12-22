@@ -5,7 +5,7 @@ import { ScrollablePanel } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 import cx from "classnames";
 
-import { InsightDrillConfigPanel } from "./InsightDrillConfigPanel";
+import { InsightDrillConfigPanel } from "./InsightDrillConfigPanel/InsightDrillConfigPanel";
 
 interface IInsightConfigurationProps {
     widget: IInsightWidget;

@@ -15,7 +15,7 @@ import {
     getDrillOriginLocalIdentifier,
     getLocalIdentifierOrDie,
     getValidDrillOriginAttributes,
-} from "../../../../_staging/drills/drillingUtils";
+} from "../../../../../_staging/drills/drillingUtils";
 import {
     DRILL_TARGET_TYPE,
     IDrillConfigItem,
@@ -26,7 +26,7 @@ import {
     IDrillToUrlConfig,
     isDrillToUrl,
     UrlDrillTarget,
-} from "../../../drill/types";
+} from "../../../../drill/types";
 
 function getTitleFromDrillableItemPushData(items: IAvailableDrillTargets, itemId: string): string {
     const measureItems = items.measures || [];
@@ -154,6 +154,9 @@ const createConfig = (
     return createImplicitConfig();
 };
 
+/**
+ * @internal
+ */
 export const getMappedConfigForWidget = (
     configForWidget: InsightDrillDefinition[],
     supportedItemsForWidget: IAvailableDrillTargets,

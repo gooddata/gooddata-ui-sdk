@@ -76,6 +76,17 @@ export function existsDrillDefinitionInArray(
     });
 }
 
+export function getDrillDefinitionFromArray(
+    drillDefinition: InsightDrillDefinition,
+    drillDefinitionArray: InsightDrillDefinition[] = [],
+): InsightDrillDefinition | undefined {
+    const drillId = getDrillOriginLocalIdentifier(drillDefinition);
+
+    return drillDefinitionArray.find((x) => {
+        return drillId === getDrillOriginLocalIdentifier(x);
+    });
+}
+
 export function validateDrillDefinitionByLocalIdentifier(
     ref: ObjRefInScope,
     drillDefinitionArray: InsightDrillDefinition[] = [],
