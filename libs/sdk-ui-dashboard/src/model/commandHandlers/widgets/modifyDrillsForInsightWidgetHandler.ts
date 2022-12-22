@@ -11,7 +11,10 @@ import { getValidationData, validateDrillDefinition } from "./validation/insight
 import { layoutActions } from "../../store/layout";
 import { batchActions } from "redux-batched-actions";
 import { insightsActions } from "../../store/insights";
-import { existsDrillDefinitionInArray } from "./validation/insightDrillDefinitionUtils";
+import {
+    existsDrillDefinitionInArray,
+    getDrillDefinitionFromArray,
+} from "./validation/insightDrillDefinitionUtils";
 import { validateDrillToCustomUrlParams } from "../common/validateDrillToCustomUrlParams";
 import { validateDrills } from "../common/validateDrills";
 
@@ -47,15 +50,17 @@ export function* modifyDrillsForInsightWidgetHandler(
     const updatedDrillDefinition = validatedDrillDefinition.filter((drillItem) =>
         existsDrillDefinitionInArray(drillItem, currentInsightDrills),
     );
-    const notModifiedDrillDefinition = currentInsightDrills.filter(
-        (drillItem) => !existsDrillDefinitionInArray(drillItem, drillsToModify),
-    );
+    // we need keep order of currentInsightDrills
+    const drills = currentInsightDrills.map((drillItem) => {
+        const updated = getDrillDefinitionFromArray(drillItem, updatedDrillDefinition);
+        if (updated) {
+            return updated;
+        }
 
-    const updatedInsightDrills = [
-        ...addedDrillDefinition,
-        ...updatedDrillDefinition,
-        ...notModifiedDrillDefinition,
-    ];
+        return drillItem;
+    });
+
+    const updatedInsightDrills = [...drills, ...addedDrillDefinition];
 
     yield put(
         batchActions([

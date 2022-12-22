@@ -128,23 +128,27 @@ export const DrillTargetUrlItem: React.FunctionComponent<DrillUrlItemProps> = (p
                             toggleModal={toggleModal}
                             closeDropdown={closeDropdown}
                         />
+                        {showModal ? (
+                            <CustomUrlEditor
+                                urlDrillTarget={urlDrillTarget}
+                                attributeDisplayForms={targetAttributesFormsAll}
+                                invalidAttributeDisplayFormIdentifiers={
+                                    invalidAttributeDisplayFormIdentifiers
+                                }
+                                documentationLink={String(settings.drillIntoUrlDocumentationLink || "")}
+                                enableClientIdParameter={!!client}
+                                enableDataProductIdParameter={!!dataProduct}
+                                enableWidgetIdParameter={!!capabilities.supportsWidgetEntity}
+                                onSelect={(customUrl: string) => {
+                                    onCustomUrlHandler(customUrl);
+                                    closeDropdown();
+                                }}
+                                onClose={toggleModal}
+                            />
+                        ) : null}
                     </div>
                 )}
             />
-
-            {showModal ? (
-                <CustomUrlEditor
-                    urlDrillTarget={urlDrillTarget}
-                    attributeDisplayForms={targetAttributesFormsAll}
-                    invalidAttributeDisplayFormIdentifiers={invalidAttributeDisplayFormIdentifiers}
-                    documentationLink={String(settings.drillIntoUrlDocumentationLink || "")}
-                    enableClientIdParameter={!!client}
-                    enableDataProductIdParameter={!!dataProduct}
-                    enableWidgetIdParameter={!!capabilities.supportsWidgetEntity}
-                    onSelect={onCustomUrlHandler}
-                    onClose={toggleModal}
-                />
-            ) : null}
         </>
     );
 };
