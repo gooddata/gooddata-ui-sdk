@@ -128,4 +128,9 @@ export class AttributeFilterButton {
         });
         return this;
     }
+
+    isActive(): this {
+        cy.get(`${this.attributeFilterUniqueSelector}`).should("have.class", "is-active");
+        return this;
+    }
 }

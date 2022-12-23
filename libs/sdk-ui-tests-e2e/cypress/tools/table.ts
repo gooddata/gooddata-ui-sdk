@@ -96,4 +96,15 @@ export class Table {
 
         cy.wait(1000);
     }
+
+    getColumnValues(columnIndex: number) {
+        this.waitLoaded();
+        const result = [] as string[];
+        this.getElement()
+            .find(`.gd-column-index-${columnIndex} .s-value`)
+            .each(($li) => {
+                return result.push($li.text());
+            });
+        return cy.wrap(result);
+    }
 }
