@@ -14,11 +14,21 @@ services:
             - CYPRESS_HOST=http://gooddata-ui-sdk-scenarios:9500
             - MODE
             - FILTER
+            - BUILD_URL
+            - HOST
+            - USER_NAME
+            - PASSWORD
+            - TEST_WORKSPACE_ID
+            - TIGER_API_TOKEN
+            - SDK_BACKEND
+            - CYPRESS_TEST_TAGS
 
     gooddata-ui-sdk-scenarios:
         image: $IMAGE_ID
         volumes:
             - ./nginx/proxy-isolated-tests.conf:/etc/nginx/extra-conf.d/proxy-isolated-tests.conf
+        ports:
+            - "9500:9500"
         depends_on:
             - backend-mock
 
@@ -26,9 +36,9 @@ services:
         image: wiremock/wiremock:2.34.0
         # Use "--print-all-network-traffic --verbose" for verbose logging
         # Note that we need --preserve-host-header for BEAR backend only and it must be missing for TIGER (see run_isolated.sh)
-        command: "${PRESERVE_HOST_HEADER_OPTION} --proxy-all=https://${HOST:-staging3.intgdc.com} --extensions org.gooddata.extensions.ResponseHeadersTransformer,org.gooddata.extensions.RequestHeadersTransformer"
+        command: "${PRESERVE_HOST_HEADER_OPTION} --proxy-all=${HOST:-https://staging3.intgdc.com} --extensions org.gooddata.extensions.ResponseHeadersTransformer,org.gooddata.extensions.RequestHeadersTransformer"
         user: "$USER_UID:$USER_GID"
         volumes:
             - ./recordings/wiremock_extension/jar/:/var/wiremock/extensions:ro
         environment:
-            - PROXY_HOST=https://${HOST:-staging3.intgdc.com}
+            - PROXY_HOST=${HOST:-https://staging3.intgdc.com}

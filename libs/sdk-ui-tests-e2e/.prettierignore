@@ -7,3 +7,4 @@ cypress/results
 cypress/screenshots
 cypress/videos
 **/build
+.rush
