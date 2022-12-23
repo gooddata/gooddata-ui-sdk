@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import React from "react";
 import { AttributeFilterButtonPreselectedScenario } from "../components/Scenarios/Filters/AttributeFilterButtonPreselectedScenario";
 import { AttributeFilterButtonScenario } from "../components/Scenarios/Filters/AttributeFilterButtonScenario";
@@ -20,6 +20,8 @@ import {
 } from "../components/Scenarios/Visualizations/PivotTable/PivotTableAggregationsMenuScenario";
 import { DashboardFilterConfigurationScenario } from "../components/Scenarios/Dashboard/DashboardFilterConfigurationScenario";
 import { DashboardScenarioTiger } from "../components/Scenarios/Dashboard/DashboardScenarioTiger";
+import { DashboardAttributeFilteringScenario } from "../components/Scenarios/Dashboard/DashboardAttributeFilteringScenario";
+import { DashboardStageNameScenario } from "../components/Scenarios/Dashboard/DashboardStageNameScenario";
 
 /**
  * Add key here for your new E2E test. Use the key in the map below with the scenario as well as in
@@ -28,7 +30,9 @@ import { DashboardScenarioTiger } from "../components/Scenarios/Dashboard/Dashbo
 export const SCENARIO_KEYS = {
     DASHBOARD: "dashboard/dashboard",
     DASHBOARD_TIGER: "dashboard/dashboard-tiger",
+    DASHBOARD_ATTRIBUTE_FILTERING: "dashboard/attribute-filtering",
     DASHBOARD_FILTERING: "dashboard/filtering",
+    DASHBOARD_STAGE_NAME: "dashboard/stage-name",
     IMPLICIT_DRILL_TO_ATTRIBUTE: "dashboard/implicit-drill-to-attribute-url",
     FILTERS_DATE_FILTER: "filters/date-filter",
     VIS_BAR_CHART_DRILL: "visualizations/barchart/bar-chart-drilling-scenario",
@@ -48,6 +52,8 @@ export const SCENARIO_KEYS = {
 const scenarios = new Map<string, React.ComponentType>([
     [SCENARIO_KEYS.DASHBOARD, DashboardScenario],
     [SCENARIO_KEYS.DASHBOARD_TIGER, DashboardScenarioTiger],
+    [SCENARIO_KEYS.DASHBOARD_ATTRIBUTE_FILTERING, DashboardAttributeFilteringScenario],
+    [SCENARIO_KEYS.DASHBOARD_STAGE_NAME, DashboardStageNameScenario],
     [SCENARIO_KEYS.IMPLICIT_DRILL_TO_ATTRIBUTE, ImplicitDrillToAttributeUrlScenario],
     [SCENARIO_KEYS.FILTERS_DATE_FILTER, DateFilterScenario],
     [SCENARIO_KEYS.FILTERS_ATTRIBUTE_FILTER_BUTTON, AttributeFilterButtonScenario],

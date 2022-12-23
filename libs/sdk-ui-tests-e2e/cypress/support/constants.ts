@@ -9,3 +9,5 @@ export const getUsername = (): string => Cypress.env("USER_NAME");
 export const getMockServer = (): string => Cypress.env("CYPRESS_MOCK_SERVER");
 
 export const getPassword = (): string => Cypress.env("PASSWORD");
+
+export const getBackend = (): string => Cypress.env("SDK_BACKEND");
