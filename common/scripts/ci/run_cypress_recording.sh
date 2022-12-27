@@ -11,7 +11,6 @@ _RUSHX="${DIR}/docker_rushx.sh"
 
 echo "⭐️ 1/8 Preparing .env for recording"
 if [[ ! "${TEST_BACKEND:?}" =~ 'https://' ]]; then
-    echo 'insert TEST_BACKEND'
     export TEST_BACKEND="https://${TEST_BACKEND}"
 fi
 
@@ -23,7 +22,7 @@ HOST=$TEST_BACKEND
 SDK_BACKEND=${SDK_BACKEND:-BEAR}
 CYPRESS_TEST_TAGS=pre-merge_isolated_${sdk_backend}
 FIXTURE_TYPE=goodsales
-FILTER=${FILTER:-}
+FILTER=${CYPRESS_RECORDED_TEST:-}
 EOF
 
 if [[ "$SDK_BACKEND" == 'BEAR' ]]; then
@@ -74,6 +73,8 @@ echo "⭐️ 5/8 build docker container from gooddata-ui-sdk-scenarios"
 export IMAGE_ID=${sdk_backend}-gooddata-ui-sdk-scenarios-${EXECUTOR_NUMBER}
 trap "docker rmi --force $IMAGE_ID || true" EXIT
 pushd $E2E_TEST_DIR
+rm -rf ./recordings/mappings
+mkdir -p ./recordings/mappings/$SDK_BACKEND
 docker build --file Dockerfile_local -t $IMAGE_ID . || exit 1
 
 echo "⭐️ 6/8 Run isolated recording against TEST_BACKEND=$TEST_BACKEND."
