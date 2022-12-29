@@ -225,11 +225,6 @@ export interface ISettings {
     enableAxisNameViewByTwoAttributes?: boolean;
 
     /**
-     * Enable Data Source Management page
-     */
-    enableDataSourceManagement?: boolean;
-
-    /**
      * Enable reverse the order of stacked items in bar chart.
      */
     enableReversedStacking?: boolean;
