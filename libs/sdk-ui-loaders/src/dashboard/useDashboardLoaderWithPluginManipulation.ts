@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import invariant from "ts-invariant";
 import compact from "lodash/compact";
@@ -79,7 +79,9 @@ export function useDashboardLoaderWithPluginManipulation(options: IDashboardLoad
         const select = dashboardSelect.current;
         const dashboardObject = select(selectDashboardWorkingDefinition);
         const renderMode = select(selectRenderMode);
-        setDashboard(dashboardObject as any);
+        // force new reference in case the current dashboard object is the same as the one with which the last reload occurred
+        // this makes sure the dashboard is fully reloaded each time
+        setDashboard({ ...dashboardObject } as any);
         setRenderMode(renderMode);
     }, []);
 
@@ -93,7 +95,9 @@ export function useDashboardLoaderWithPluginManipulation(options: IDashboardLoad
         const select = dashboardSelect.current;
         const dashboardObject = select(selectDashboardWorkingDefinition);
         const renderMode = select(selectRenderMode);
-        setDashboard(dashboardObject as any);
+        // force new reference in case the current dashboard object is the same as the one with which the last loading mode change occurred
+        // this makes sure the dashboard is fully reloaded each time
+        setDashboard({ ...dashboardObject } as any);
         setRenderMode(renderMode);
         setLoadingMode(newLoadingMode);
     }, []);
@@ -103,7 +107,9 @@ export function useDashboardLoaderWithPluginManipulation(options: IDashboardLoad
         const select = dashboardSelect.current;
         const dashboardObject = select(selectDashboardWorkingDefinition);
         const renderMode = select(selectRenderMode);
-        setDashboard(dashboardObject as any);
+        // force new reference in case the current dashboard object is the same as the one with which the last setting of extra plugins occurred
+        // this makes sure the dashboard is fully reloaded each time
+        setDashboard({ ...dashboardObject } as any);
         setRenderMode(renderMode);
         setCurrentExtraPlugins(isArray(extraPlugins) ? extraPlugins : [extraPlugins]);
     }, []);
