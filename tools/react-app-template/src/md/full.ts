@@ -1,7 +1,7 @@
-// (C) 2022 GoodData Corporation
+// (C) 2023 GoodData Corporation
 
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2022-12-14T16:46:30.608Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-01-02T09:42:15.483Z; */
 // @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
@@ -819,15 +819,15 @@ export const Insights = {
 export const Dashboards = {
     /**
      * Dashboard Title: 1. Overview
-     * Dashboard ID: 0d9af187-ac18-4b11-8f74-b5acec32aa85
+     * Dashboard ID: dashboard_overview
      */
-    _1Overview: "0d9af187-ac18-4b11-8f74-b5acec32aa85",
+    _1Overview: "dashboard_overview",
     /**
      * Dashboard Title: 2. Customers
-     * Dashboard ID: 0e436c43-e51b-4292-93ac-9261ef96dad3
-     */ _2Customers: "0e436c43-e51b-4292-93ac-9261ef96dad3",
+     * Dashboard ID: dashboard_customers
+     */ _2Customers: "dashboard_customers",
     /**
      * Dashboard Title: 3. Products
-     * Dashboard ID: 3428a1f1-617c-422c-8c35-831c49f3d70f
-     */ _3Products: "3428a1f1-617c-422c-8c35-831c49f3d70f",
+     * Dashboard ID: dashboard_products
+     */ _3Products: "dashboard_products",
 };

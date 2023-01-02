@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import React from "react";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { Dashboard } from "@gooddata/sdk-ui-dashboard";
@@ -59,7 +59,7 @@ const Content: React.FC = () => {
                 </div>
             </div>
             <div className="content">
-                <Dashboard dashboard={Md.Dashboards.DashboardEmbedding} />
+                <Dashboard dashboard={Md.Dashboards._1Overview} />
             </div>
             <div className="footer">
                 Powered by{" "}
