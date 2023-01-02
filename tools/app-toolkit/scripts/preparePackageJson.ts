@@ -3,7 +3,6 @@
 import * as process from "process";
 import fs from "fs";
 import * as path from "path";
-import { keys } from "lodash";
 
 /*
  * This script is used during build to clean up the contents of package.json that will be shipped with
@@ -20,14 +19,40 @@ import { keys } from "lodash";
  * processing to transfer & cleanup the dependencies from the main package.json.
  *
  * Alternative to the templates (and possibly some funky `jq` processing to handle the dependencies) is
- * this script to clean things up programatically.
+ * this script to clean things up programmatically.
  */
 
-const GdScriptsRemove = ["test-ci", "eslint-ci", "dep-cruiser", "dep-cruiser-ci", "validate", "validate-ci"];
+const GdScriptsReplace = {
+    clean: "rm -rf dist *.log",
+    test: null,
+    "test-once": null,
+    "test-ci": null,
+    eslint: null,
+    "eslint-ci": null,
+    "prettier-check": null,
+    "prettier-write": null,
+    "dep-cruiser": null,
+    "dep-cruiser-ci": null,
+    validate: null,
+    "validate-ci": null,
+};
 
-const UnnecessaryDevDependencies = ["@gooddata/eslint-config", "dependency-cruiser", "eslint-plugin-sonarjs"];
+const UnnecessaryDependencies = [
+    "@gooddata/eslint-config",
+    "@wojtekmaj/enzyme-adapter-react-17",
+    "dependency-cruiser",
+    "eslint-plugin-sonarjs",
+    "enzyme",
+    /^eslint/i,
+    /^jest/i,
+    "prettier",
+    "@types/enzyme",
+    "@types/jest",
+    /^@typescript-eslint\//,
+];
 
-const ExplicitTypeScriptDependencies = [
+const TypeScriptDependencies = [
+    /^@types\//,
     "@typescript-eslint/eslint-plugin",
     "@typescript-eslint/parser",
     "ts-jest",
@@ -36,32 +61,48 @@ const ExplicitTypeScriptDependencies = [
     "tslib",
 ];
 
+function removeItems(search: Array<string | RegExp>, targets: { [key: string]: string }) {
+    for (const target of Object.keys(targets)) {
+        for (const item of search) {
+            if (item === target || (item instanceof RegExp && item.test(target))) {
+                delete targets[target];
+            }
+        }
+    }
+}
+
+function replaceItems(search: { [key: string]: null | string }, targets: { [key: string]: string }) {
+    for (let [searchKey, searchValue] of Object.entries(search)) {
+        if (searchValue === null) {
+            delete targets[searchKey];
+        } else {
+            targets[searchKey] = searchValue;
+        }
+    }
+}
+
 function removeGdStuff(packageJson: Record<string, any>) {
     packageJson.name = "<app-name>";
     packageJson.author = "";
-    packageJson.description = "";
+    packageJson.description = "GoodData React SDK application";
 
-    const { scripts, devDependencies } = packageJson;
+    const { scripts, devDependencies, dependencies } = packageJson;
 
-    GdScriptsRemove.forEach((script) => {
-        delete scripts[script];
-    });
-
-    UnnecessaryDevDependencies.forEach((dep) => {
-        delete devDependencies[dep];
-    });
+    replaceItems(GdScriptsReplace, scripts);
+    removeItems(UnnecessaryDependencies, devDependencies);
+    removeItems(UnnecessaryDependencies, dependencies);
 
     delete packageJson.repository;
+    delete packageJson.sideEffects;
+    delete packageJson.files;
+    delete packageJson.license;
 }
 
 function removeTs(packageJson: Record<string, any>) {
     const { devDependencies, dependencies } = packageJson;
-    const typings = keys(devDependencies).filter((dep) => dep.startsWith("@types"));
 
-    [...ExplicitTypeScriptDependencies, ...typings].forEach((dep) => {
-        delete devDependencies[dep];
-        delete dependencies[dep];
-    });
+    removeItems(TypeScriptDependencies, devDependencies);
+    removeItems(TypeScriptDependencies, dependencies);
 
     delete packageJson.typings;
 }

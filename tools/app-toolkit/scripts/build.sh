@@ -10,10 +10,8 @@ TSNODE_BIN="${PACKAGE_DIR}/node_modules/.bin/ts-node"
 PREPARE_PACKAGE_JSON="${TSNODE_BIN} ${PACKAGE_DIR}/scripts/preparePackageJson.ts"
 
 REACT_APP_TEMPLATE_DIR="${PACKAGE_DIR}/../react-app-template"
-JS_CONFIG_TEMPLATES="${REACT_APP_TEMPLATE_DIR}/configTemplates/js/*"
-JS_CONFIG_TEMPLATES_DOT="${REACT_APP_TEMPLATE_DIR}/configTemplates/js/.[^.]*"
-TS_CONFIG_TEMPLATES="${REACT_APP_TEMPLATE_DIR}/configTemplates/ts/*"
-TS_CONFIG_TEMPLATES_DOT="${REACT_APP_TEMPLATE_DIR}/configTemplates/ts/.[^.]*"
+JS_CONFIG_TEMPLATES="${REACT_APP_TEMPLATE_DIR}/configTemplates/js"
+TS_CONFIG_TEMPLATES="${REACT_APP_TEMPLATE_DIR}/configTemplates/ts"
 BUILD_DIR="${PACKAGE_DIR}/build"
 JS_BUILD_DIR="${BUILD_DIR}/react-app-template.js"
 TS_BUILD_DIR="${BUILD_DIR}/react-app-template.ts"
@@ -47,9 +45,8 @@ $PREPARE_PACKAGE_JSON remove-gd-stuff "${TS_BUILD_DIR}"
 # 'fork-off' the JS template build dir at this point before adding TypeScript specific configs
 cp -R "${TS_BUILD_DIR}" "${JS_BUILD_DIR}"
 
-# copy over the eslint, prettier and jest config files for the TypeScript project
-cp ${TS_CONFIG_TEMPLATES} "${TS_BUILD_DIR}"
-cp ${TS_CONFIG_TEMPLATES_DOT} "${TS_BUILD_DIR}"
+# copy over the extra files for the TypeScript project
+[ -e "$TS_CONFIG_TEMPLATES" ] && find "$TS_CONFIG_TEMPLATES" -type file -name '*' -exec cp {} "${TS_BUILD_DIR}" ";"
 
 # create archive with TypeScript template
 tar -czf "${TS_TAR}" -C "${TS_BUILD_DIR}" .
@@ -60,9 +57,8 @@ tar -czf "${TS_TAR}" -C "${TS_BUILD_DIR}" .
 
 $PREPARE_PACKAGE_JSON remove-ts "${JS_BUILD_DIR}"
 
-# copy over the eslint, prettier and jest config files for the JavaScript project
-cp ${JS_CONFIG_TEMPLATES} "${JS_BUILD_DIR}"
-cp ${JS_CONFIG_TEMPLATES_DOT} "${JS_BUILD_DIR}"
+# copy over the extra files for the JavaScript project
+[ -e "$JS_CONFIG_TEMPLATES" ] && find "$JS_CONFIG_TEMPLATES" -type file -name '*' -exec cp {} "${JS_BUILD_DIR}" ";"
 
 # transpile TypeScript files to JavaScript
 $BABEL_BIN --no-babelrc \
@@ -83,4 +79,4 @@ $PRETTIER_BIN --write "${JS_BUILD_DIR}/**/*.{js,jsx}" \
   --trailing-comma all
 
 # build tar with JavaScript bootstrap files
-tar -czf ./dist/react-app-template.js.tgz -C "${JS_BUILD_DIR}" .
+tar -czf "${JS_TAR}" -C "${JS_BUILD_DIR}" .
