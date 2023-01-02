@@ -1,13 +1,13 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import { alertsAdapter } from "./alertsEntityAdapter";
 import { DashboardState } from "../types";
 import { newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap";
+import compact from "lodash/compact";
 import memoize from "lodash/memoize";
 import { Identifier, ObjRef, serializeObjRef, IWidgetAlert } from "@gooddata/sdk-model";
 
 import { selectWidgetsMap } from "../layout/layoutSelectors";
-import invariant from "ts-invariant";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -36,20 +36,28 @@ interface IWidgetAlertMapItem {
  * @internal
  */
 const selectAlertsMapByWidgetRefs = createSelector(selectAlerts, selectWidgetsMap, (alerts, widgetsMap) => {
-    const mappedItems = alerts.map((alert) => {
-        const widget = widgetsMap.get(alert.widget);
+    const mappedItems = compact(
+        alerts.map((alert) => {
+            const widget = widgetsMap.get(alert.widget);
+            if (!widget) {
+                /**
+                 * Ignore widgets that are no longer available, this can naturally happen in edit mode when
+                 * a KPI widget is deleted by the user: the alerts are not removed from redux in case the edit
+                 * mode is cancelled (to avoid having to load the dashboard again from the backend).
+                 */
+                return undefined;
+            }
 
-        invariant(widget, "Alert widget is missing in state widgets");
+            const result: IWidgetAlertMapItem = {
+                identifier: widget.identifier,
+                uri: widget.uri,
+                ref: widget.ref,
+                alert,
+            };
 
-        const result: IWidgetAlertMapItem = {
-            identifier: widget.identifier,
-            uri: widget.uri,
-            ref: widget.ref,
-            alert,
-        };
-
-        return result;
-    });
+            return result;
+        }),
+    );
 
     return newMapForObjectWithIdentity(mappedItems);
 });
