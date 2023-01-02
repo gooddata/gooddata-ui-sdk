@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import {
     modifyMeasure,
     newArithmeticMeasure,
@@ -8,6 +8,7 @@ import {
     modifySimpleMeasure,
     IAttribute,
     modifyAttribute,
+    idRef,
 } from "@gooddata/sdk-model";
 import * as ReferenceMd from "./full";
 
@@ -66,9 +67,7 @@ export const AmountWithRatio = modifySimpleMeasure(ReferenceMd.Amount, (m) =>
 /**
  * A reference to Stage History Attribute
  */
-export const StageHistoryAttributeRef: ObjRef = {
-    identifier: "attr.stagehistory.id",
-};
+export const StageHistoryAttributeRef: ObjRef = idRef("attr.stagehistory.id");
 /**
  * Copy of ClosedYear attribute
  */

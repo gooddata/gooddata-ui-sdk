@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 
 import {
     IDashboardFilterReference,
@@ -8,6 +8,7 @@ import {
     InsightDrillDefinition,
     insightRef,
     insightTitle,
+    uriRef,
     ObjRef,
     VisualizationProperties,
 } from "@gooddata/sdk-model";
@@ -45,7 +46,7 @@ export function newInsightWidget(insight: IInsight, modifications: InsightWidget
  */
 export class InsightWidgetBuilder {
     widget: { -readonly [K in keyof IInsightWidgetBase]: IInsightWidgetBase[K] } = {
-        insight: { uri: "" },
+        insight: uriRef(""),
         type: "insight",
         ignoreDashboardFilters: [],
         drills: [],

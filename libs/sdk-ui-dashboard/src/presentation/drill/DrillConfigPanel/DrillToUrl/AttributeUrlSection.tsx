@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import React, { useCallback } from "react";
 import { FormattedMessage } from "react-intl";
 import { areObjRefsEqual, ObjRef, objRefToString } from "@gooddata/sdk-model";
@@ -22,7 +22,7 @@ export const AttributeUrlSection: React.FC<AttributeUrlSectionProps> = (props) =
 
     const onClickHandler = useCallback(
         (event: React.SyntheticEvent, target: IAttributeWithDisplayForm) => {
-            onSelect(target.displayForm, target.displayForm);
+            onSelect(target.displayForm.ref, target.displayForm.ref);
             closeDropdown(event);
         },
         [onSelect, closeDropdown],

@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 
 import { GdcVisualizationWidget, GdcKpi } from "@gooddata/api-model-bear";
 import {
@@ -61,7 +61,7 @@ export const convertVisualizationWidgetDrill = (
         return {
             type: "drillToInsight",
             origin: convertDrillOrigin(from),
-            target: toVisualization,
+            target: uriRef(toVisualization.uri),
             transition: target,
         };
     } else if (GdcVisualizationWidget.isDrillToCustomUrl(drill)) {
@@ -84,8 +84,8 @@ export const convertVisualizationWidgetDrill = (
             type: "drillToAttributeUrl",
             origin: convertDrillOrigin(from),
             target: {
-                displayForm: insightAttributeDisplayForm,
-                hyperlinkDisplayForm: drillToAttributeDisplayForm,
+                displayForm: uriRef(insightAttributeDisplayForm.uri),
+                hyperlinkDisplayForm: uriRef(drillToAttributeDisplayForm.uri),
             },
             transition: target,
         };

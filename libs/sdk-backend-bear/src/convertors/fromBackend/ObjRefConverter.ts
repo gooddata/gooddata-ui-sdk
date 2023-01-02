@@ -1,6 +1,6 @@
-// (C) 2007-2021 GoodData Corporation
-
-import { isLocalIdRef, isUriRef, ObjectType, ObjRef, ObjRefInScope } from "@gooddata/sdk-model";
+// (C) 2007-2023 GoodData Corporation
+import { GdcVisualizationObject, GdcExecuteAFM } from "@gooddata/api-model-bear";
+import { ObjectType, ObjRef, ObjRefInScope, idRef, uriRef, localIdRef } from "@gooddata/sdk-model";
 
 /**
  * Converts reference into a format acceptable by the SPI. URI references are left as-is, while
@@ -10,12 +10,12 @@ import { isLocalIdRef, isUriRef, ObjectType, ObjRef, ObjRefInScope } from "@good
  * @param defaultType - type to use it the ref has none specified
  * @internal
  */
-export function fromBearRef(ref: ObjRef, defaultType?: ObjectType): ObjRef {
-    if (isUriRef(ref)) {
-        return ref;
+export function fromBearRef(ref: GdcVisualizationObject.ObjQualifier, defaultType: ObjectType): ObjRef {
+    if (GdcExecuteAFM.isObjectUriQualifier(ref)) {
+        return uriRef(ref.uri);
     }
 
-    return { identifier: ref.identifier, type: ref.type ?? defaultType };
+    return idRef(ref.identifier, defaultType);
 }
 
 /**
@@ -26,9 +26,9 @@ export function fromBearRef(ref: ObjRef, defaultType?: ObjectType): ObjRef {
  * @param defaultType - type to use it the ref has none specified
  * @internal
  */
-export function fromScopedBearRef(ref: ObjRefInScope, defaultType?: ObjectType): ObjRefInScope {
-    if (isLocalIdRef(ref)) {
-        return ref;
+export function fromScopedBearRef(ref: GdcExecuteAFM.Qualifier, defaultType: ObjectType): ObjRefInScope {
+    if (GdcExecuteAFM.isLocalIdentifierQualifier(ref)) {
+        return localIdRef(ref.localIdentifier);
     }
 
     return fromBearRef(ref, defaultType);
