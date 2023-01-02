@@ -34,8 +34,7 @@ module.exports = (_env, argv) => {
         {
             entry: "./src/index",
             mode: isProduction ? "production" : "development",
-            // Support IE11 only in production, in dev it is not necessary and it also would prevent hot reload
-            target: isProduction ? ["web", "es5"] : "web",
+            target: "web",
             devtool: isProduction ? false : "eval-cheap-module-source-map",
             output: {
                 publicPath: "auto",
@@ -137,7 +136,7 @@ module.exports = (_env, argv) => {
                 port: PORT,
                 host: "127.0.0.1",
                 proxy,
-                https: protocol === "https:",
+                server: protocol === "https:" ? "https" : "http",
                 open: true,
             },
         },
