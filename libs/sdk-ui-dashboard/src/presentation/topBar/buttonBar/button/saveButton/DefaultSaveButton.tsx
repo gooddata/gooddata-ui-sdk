@@ -1,6 +1,6 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Bubble, BubbleHoverTrigger, Button } from "@gooddata/sdk-ui-kit";
 import noop from "lodash/noop";
@@ -32,25 +32,37 @@ export function useSaveButtonProps(): ISaveButtonProps {
     const intl = useIntl();
     const emptyTitle = intl.formatMessage({ id: "untitled" });
 
-    const onSaveClick = useCallback(
-        () =>
-            dispatchAndWaitFor(
-                dispatch,
-                // the || is intentional, we want to replace empty string as well
-                saveDashboard(title || emptyTitle),
-            ).then(() => {
+    // In some cases, when you click the save button (for example immediately after you insert an insight)
+    // and the dashboard is still processing some related requests to this insight, it can take few seconds,
+    // before the CMD.SAVE starts to process (as dashboard can process only 1 command at a time).
+    // We want to show the loading indicator immediately and avoid any double-save race conditions,
+    // so add a local state for this case.
+    const [optimisticIsSaving, setOptimisticIsSaving] = useState(false);
+
+    const onSaveClick = useCallback(() => {
+        setOptimisticIsSaving(true);
+        dispatchAndWaitFor(
+            dispatch,
+            // the || is intentional, we want to replace empty string as well
+            saveDashboard(title || emptyTitle),
+        )
+            .then(() => {
+                setOptimisticIsSaving(false);
                 dispatch(cancelEditRenderMode());
-            }),
-        [dispatch, emptyTitle, title],
-    );
+            })
+            .catch(() => {
+                setOptimisticIsSaving(false);
+            });
+    }, [dispatch, emptyTitle, title]);
 
     const isEditing = useDashboardSelector(selectIsInEditMode);
-    const isSaving = useDashboardSelector(selectIsDashboardSaving);
+    const isSavingDashboard = useDashboardSelector(selectIsDashboardSaving);
     const arePermissionsEnabled = useDashboardSelector(selectEnableAnalyticalDashboardPermissions);
     const isPrivateDashboard = useDashboardSelector(selectIsPrivateDashboard);
     const isEmptyDashboard = !useDashboardSelector(selectLayoutHasAnalyticalWidgets); // we need at least one non-custom widget there
     const canSaveDashboard = useDashboardSelector(selectCanSaveDashboard);
     const isDashboardDirty = useDashboardSelector(selectIsDashboardDirty);
+    const isSaving = isSavingDashboard || optimisticIsSaving;
 
     const isVisible = isEditing;
     const isEnabled = isDashboardDirty && !isEmptyDashboard && canSaveDashboard;
