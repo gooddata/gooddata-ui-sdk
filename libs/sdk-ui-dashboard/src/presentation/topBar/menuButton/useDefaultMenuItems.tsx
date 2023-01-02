@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import { useCallback, useMemo, useRef } from "react";
 import { useIntl } from "react-intl";
 import { isProtectedDataError } from "@gooddata/sdk-backend-spi";
@@ -9,6 +9,7 @@ import {
     selectCanCreateAnalyticalDashboard,
     selectCanExportPdf,
     selectEnableKPIDashboardExportPDF,
+    selectEntitlementExportPdf,
     selectIsInEditMode,
     selectIsInViewMode,
     selectIsNewDashboard,
@@ -96,6 +97,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
 
     const canExport = useDashboardSelector(selectCanExportPdf);
     const isKPIDashboardExportPDFEnabled = !!useDashboardSelector(selectEnableKPIDashboardExportPDF);
+    const isExportPdfEntitlementPresent = !!useDashboardSelector(selectEntitlementExportPdf);
 
     const menuButtonItemsVisibility = useDashboardSelector(selectMenuButtonItemsVisibility);
 
@@ -113,6 +115,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
             isInViewMode &&
             canExport &&
             isKPIDashboardExportPDFEnabled &&
+            isExportPdfEntitlementPresent &&
             (menuButtonItemsVisibility.pdfExportButton ?? true);
 
         return [

@@ -1,27 +1,23 @@
 {
-    "id": "15b6572e-d490-4153-9dad-2a560f9f92d7",
-    "name": "api_v1_entities_workspaces_4dc4e033e611421791adea58d34d958c_metrics",
+    "id": "f0824cd4-d7db-4150-a465-3a33e0810ec3",
+    "name": "api_v1_actions_resolveentitlements",
     "request": {
-        "url": "/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics?size=250&page=0",
+        "url": "/api/v1/actions/resolveEntitlements",
         "method": "GET",
         "headers": {
             "Accept": {
-                "equalTo": "application/vnd.gooddata.api+json"
-            },
-            "Content-Type": {
-                "equalTo": "application/vnd.gooddata.api+json",
-                "caseInsensitive": true
+                "equalTo": "application/json, text/plain, */*"
             }
         }
     },
     "response": {
         "status": 200,
-        "bodyFileName": "api_v1_entities_workspaces_4dc4e033e611421791adea58d34d958c_metrics-15b6572e-d490-4153-9dad-2a560f9f92d7.json",
+        "body": "[{\"expiry\":\"2026-04-26\",\"name\":\"Contract\"},{\"name\":\"UnlimitedWorkspaces\"},{\"name\":\"UnlimitedUsers\"},{\"name\":\"CustomTheming\"},{\"name\":\"UiLocalization\"},{\"name\":\"WhiteLabeling\"},{\"name\":\"PdfExports\"}]",
         "headers": {
-            "Date": "Mon, 03 Oct 2022 14:20:47 GMT",
-            "Content-Type": "application/vnd.gooddata.api+json",
+            "Date": "Wed, 11 Jan 2023 07:56:51 GMT",
+            "Content-Type": "application/json",
             "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
-            "X-GDC-TRACE-ID": "95552eb1e8f76ff4",
+            "X-GDC-TRACE-ID": "7d2c18a38b4288a6",
             "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
             "Pragma": "no-cache",
             "Expires": "0",
@@ -33,7 +29,7 @@
             "Permission-Policy": "geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'none'; payment 'none';"
         }
     },
-    "uuid": "15b6572e-d490-4153-9dad-2a560f9f92d7",
+    "uuid": "f0824cd4-d7db-4150-a465-3a33e0810ec3",
     "persistent": true,
-    "insertionIndex": 6
+    "insertionIndex": 14
 }

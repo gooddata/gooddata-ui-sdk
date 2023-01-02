@@ -7,6 +7,7 @@ import {
     IDashboard,
     ISettings,
     ISeparators,
+    IEntitlementDescriptor,
 } from "@gooddata/sdk-model";
 import { ILocale } from "@gooddata/sdk-ui";
 import keys from "lodash/keys";
@@ -203,6 +204,12 @@ export interface DashboardConfig {
  * @public
  */
 export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken"> & DashboardConfig;
+
+/**
+ *
+ * @alpha
+ */
+export type ResolvedEntitlements = IEntitlementDescriptor[];
 
 type DashboardConfigKeys = keyof DashboardConfig;
 const RequiredConfigKeys: DashboardConfigKeys[] = [

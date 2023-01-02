@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import { IDataView } from "../workspace/execution";
 
@@ -18,6 +18,7 @@ export const AnalyticalBackendErrorTypes = {
     NOT_AUTHENTICATED: "NAuth",
     LIMIT_REACHED: "LR",
     CONTRACT_EXPIRED: "CE",
+    TIMEOUT_ERROR: "TE",
 };
 
 /**
@@ -61,6 +62,18 @@ export class NoDataError extends AnalyticalBackendError {
 export class DataTooLargeError extends AnalyticalBackendError {
     constructor(message: string, cause?: Error) {
         super(message, AnalyticalBackendErrorTypes.DATA_TOO_LARGE, cause);
+    }
+}
+
+/**
+ * This error means that during a repeated polling for some resource, we did not
+ * reach 200 response within the certain number of attempts/time.
+ *
+ * @public
+ */
+export class TimeoutError extends AnalyticalBackendError {
+    constructor(message: string, cause?: Error) {
+        super(message, AnalyticalBackendErrorTypes.TIMEOUT_ERROR, cause);
     }
 }
 

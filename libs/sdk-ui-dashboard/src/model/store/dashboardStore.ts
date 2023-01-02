@@ -13,6 +13,7 @@ import { DashboardEventHandler } from "../eventHandlers/eventHandler";
 import { rootCommandHandler } from "./_infra/rootCommandHandler";
 import { DashboardContext, PrivateDashboardContext } from "../types/commonTypes";
 import { configSliceReducer } from "./config";
+import { entitlementsSliceReducer } from "./entitlements";
 import { dateFilterConfigSliceReducer } from "./dateFilterConfig";
 import { permissionsSliceReducer } from "./permissions";
 import { alertsSliceReducer } from "./alerts";
@@ -284,6 +285,7 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
         saving: savingSliceReducer,
         backendCapabilities: backendCapabilitiesSliceReducer,
         config: configSliceReducer,
+        entitlements: entitlementsSliceReducer,
         permissions: permissionsSliceReducer,
         filterContext: filterContextSliceReducer,
         layout: layoutSliceReducer,

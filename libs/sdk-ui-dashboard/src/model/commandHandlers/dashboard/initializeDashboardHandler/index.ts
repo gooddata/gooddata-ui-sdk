@@ -8,6 +8,7 @@ import { DashboardContext, PrivateDashboardContext } from "../../../types/common
 import { IDashboardWithReferences, walkLayout } from "@gooddata/sdk-backend-spi";
 import { resolveDashboardConfig } from "./resolveDashboardConfig";
 import { configActions } from "../../../store/config";
+import { entitlementsActions } from "../../../store/entitlements";
 import { PromiseFnReturnType } from "../../../types/sagas";
 import { dateFilterConfigActions } from "../../../store/dateFilterConfig";
 import { DateFilterMergeResult, mergeDateFilterConfigWithOverrides } from "./mergeDateFilterConfigs";
@@ -48,6 +49,7 @@ import { legacyDashboardsActions } from "../../../store/legacyDashboards";
 import uniqBy from "lodash/uniqBy";
 import { loadDashboardPermissions } from "./loadDashboardPermissions";
 import { dashboardPermissionsActions } from "../../../store/dashboardPermissions";
+import { resolveEntitlements } from "./resolveEntitlements";
 
 async function loadDashboardFromBackend(
     ctx: DashboardContext,
@@ -136,6 +138,7 @@ function* loadExistingDashboard(
         dashboardWithReferences,
         config,
         permissions,
+        entitlements,
         catalog,
         alerts,
         user,
@@ -147,6 +150,7 @@ function* loadExistingDashboard(
         PromiseFnReturnType<typeof loadDashboardFromBackend>,
         SagaReturnType<typeof resolveDashboardConfig>,
         SagaReturnType<typeof resolvePermissions>,
+        PromiseFnReturnType<typeof resolveEntitlements>,
         PromiseFnReturnType<typeof loadCatalog>,
         PromiseFnReturnType<typeof loadDashboardAlerts>,
         PromiseFnReturnType<typeof loadUser>,
@@ -158,6 +162,7 @@ function* loadExistingDashboard(
         call(loadDashboardFromBackend, ctx, privateCtx, dashboardRef, !!cmd.payload.persistedDashboard),
         call(resolveDashboardConfig, ctx, cmd),
         call(resolvePermissions, ctx, cmd),
+        call(resolveEntitlements, ctx),
         call(loadCatalog, ctx),
         call(loadDashboardAlerts, ctx),
         call(loadUser, ctx),
@@ -195,6 +200,7 @@ function* loadExistingDashboard(
         [
             backendCapabilitiesActions.setBackendCapabilities(backend.capabilities),
             configActions.setConfig(config),
+            entitlementsActions.setEntitlements(entitlements),
             userActions.setUser(user),
             permissionsActions.setPermissions(permissions),
             catalogActions.setCatalogItems({

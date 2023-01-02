@@ -276,6 +276,7 @@ Object {
       },
       "currentUser": [Function],
       "deauthenticate": [Function],
+      "entitlements": [Function],
       "isAuthenticated": [Function],
       "onHostname": [Function],
       "organization": [Function],

@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 
 import {
     ITigerClient,
@@ -17,6 +17,7 @@ import {
     IPreparedExecution,
     NoDataError,
     UnexpectedError,
+    TimeoutError,
 } from "@gooddata/sdk-backend-spi";
 import { IExecutionDefinition, DataValue, IDimensionDescriptor, IResultHeader } from "@gooddata/sdk-model";
 import SparkMD5 from "spark-md5";
@@ -177,7 +178,7 @@ export class TigerExecutionResult implements IExecutionResult {
             await new Promise((resolve) => setTimeout(resolve, DEFAULT_POLL_DELAY));
         }
 
-        throw new Error(
+        throw new TimeoutError(
             `Export timeout for export id "${payload.exportId}" in workspace "${payload.workspaceId}"`,
         );
     }

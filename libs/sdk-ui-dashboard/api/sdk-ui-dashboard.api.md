@@ -72,6 +72,7 @@ import { IDrillToCustomUrl } from '@gooddata/sdk-model';
 import { IDrillToDashboard } from '@gooddata/sdk-model';
 import { IDrillToInsight } from '@gooddata/sdk-model';
 import { IDrillToLegacyDashboard } from '@gooddata/sdk-model';
+import { IEntitlementDescriptor } from '@gooddata/sdk-model';
 import { IErrorProps } from '@gooddata/sdk-ui';
 import { IExecutionConfiguration } from '@gooddata/sdk-ui';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
@@ -2163,6 +2164,8 @@ export interface DashboardState {
     drill: DrillState;
     // (undocumented)
     drillTargets: EntityState<IDrillTargets>;
+    // (undocumented)
+    entitlements: EntitlementsState;
     executionResults: EntityState<IExecutionResultEnvelope>;
     // (undocumented)
     filterContext: FilterContextState;
@@ -2723,6 +2726,12 @@ export function enableInsightWidgetDateFilter(ref: ObjRef, dateDataset: ObjRef |
 
 // @alpha
 export function enableKpiWidgetDateFilter(ref: ObjRef, dateDataset: ObjRef | "default", correlationId?: string): ChangeKpiWidgetFilterSettings;
+
+// @alpha (undocumented)
+export interface EntitlementsState {
+    // (undocumented)
+    entitlements?: ResolvedEntitlements;
+}
 
 // @alpha (undocumented)
 export interface ExportDashboardToPdf extends IDashboardCommand {
@@ -5505,6 +5514,9 @@ export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxTok
 // @alpha (undocumented)
 export type ResolvedDateFilterValues = IResolvedDateFilterValue[];
 
+// @alpha (undocumented)
+export type ResolvedEntitlements = IEntitlementDescriptor[];
+
 // @alpha
 export function resolveFilterValues(filters: ResolvableFilter[], backend?: IAnalyticalBackend, workspace?: string): Promise<IResolvedFilterValues>;
 
@@ -5913,6 +5925,9 @@ export const selectEnableRenamingProjectToWorkspace: OutputSelector<DashboardSta
 
 // @internal
 export const selectEnableWidgetCustomHeight: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
+
+// @alpha (undocumented)
+export const selectEntitlementExportPdf: OutputSelector<DashboardState, IEntitlementDescriptor | undefined, (res: ResolvedEntitlements) => IEntitlementDescriptor | undefined>;
 
 // @alpha (undocumented)
 export const selectExecutionResult: (state: DashboardState, id: string | number) => IExecutionResultEnvelope | undefined;

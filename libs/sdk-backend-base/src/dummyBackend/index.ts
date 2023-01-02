@@ -55,6 +55,7 @@ import {
     IElementsQueryOptions,
     IElementsQueryResult,
     IPagedResource,
+    IEntitlements,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -169,6 +170,9 @@ export function dummyBackend(config: DummyBackendConfig = defaultDummyBackendCon
         },
         workspace(id: string): IAnalyticalWorkspace {
             return dummyWorkspace(id, config);
+        },
+        entitlements(): IEntitlements {
+            throw new NotSupported("not supported");
         },
         workspaces(): IWorkspacesQueryFactory {
             throw new NotSupported("not supported");

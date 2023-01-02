@@ -6,6 +6,7 @@ import { SavingState } from "./saving/savingState";
 import { FilterContextState } from "./filterContext/filterContextState";
 import { LayoutState } from "./layout/layoutState";
 import { ConfigState } from "./config/configState";
+import { EntitlementsState } from "./entitlements/entitlementsState";
 import { DateFilterConfigState } from "./dateFilterConfig/dateFilterConfigState";
 import { PermissionsState } from "./permissions/permissionsState";
 import { CatalogState } from "./catalog/catalogState";
@@ -43,6 +44,7 @@ export interface DashboardState {
     saving: SavingState;
     backendCapabilities: BackendCapabilitiesState;
     config: ConfigState;
+    entitlements: EntitlementsState;
     permissions: PermissionsState;
     filterContext: FilterContextState;
     layout: LayoutState;
