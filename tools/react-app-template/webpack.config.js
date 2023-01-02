@@ -4,7 +4,6 @@ const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
 const { DefinePlugin, EnvironmentPlugin, ProvidePlugin } = require("webpack");
 const path = require("path");
 const { URL } = require("url");
-const Dotenv = require("dotenv-webpack");
 require("dotenv").config();
 
 const PORT = 3001;
