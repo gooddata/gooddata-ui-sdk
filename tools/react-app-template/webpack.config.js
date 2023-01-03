@@ -12,8 +12,9 @@ const BACKEND_URL = "https://public-examples.gooddata.com";
 module.exports = (_env, argv) => {
     const isProduction = argv.mode === "production";
     const protocol = new URL(BACKEND_URL).protocol;
-    const proxy = {
-        "/api": {
+    const proxy = [
+        {
+            context: ["/api", "/gdc"],
             changeOrigin: true,
             cookieDomainRewrite: "localhost",
             secure: false,
@@ -28,7 +29,7 @@ module.exports = (_env, argv) => {
                 proxyReq.setHeader("accept-encoding", "identity");
             },
         },
-    };
+    ];
 
     return [
         {
