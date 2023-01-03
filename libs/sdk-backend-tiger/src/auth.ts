@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import {
     AuthenticationFlow,
     IAnalyticalBackend,
@@ -6,8 +6,8 @@ import {
     IAuthenticationContext,
     IAuthenticationProvider,
     NotAuthenticated,
-    NotAuthenticatedHandler,
 } from "@gooddata/sdk-backend-spi";
+import { NotAuthenticatedHandler } from "@gooddata/sdk-backend-spi";
 import { ITigerClient, setAxiosAuthorizationToken, IUserProfile } from "@gooddata/api-client-tiger";
 
 import { convertApiError } from "./utils/errorHandling";
