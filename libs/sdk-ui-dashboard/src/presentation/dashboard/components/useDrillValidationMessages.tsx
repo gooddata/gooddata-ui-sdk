@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
 import { defineMessages, useIntl } from "react-intl";
 import { IMessage } from "@gooddata/sdk-ui-kit";
@@ -21,9 +21,9 @@ const commonReplacements = {
 
 const localizationMessages = defineMessages({
     invalidDrillTitle: { id: "messages.dashboard.invalidDrills.title" },
-    invalidDrillBody: { id: "messages.dashboard.invalidDrills.body" },
+    invalidDrillBody: { id: "messages.dashboard.invalidDrills.body.modern" },
     invalidUrlDrillTitle: { id: "messages.dashboard.invalidCustomUrlDrills.title" },
-    invalidUrlDrillBody: { id: "messages.dashboard.invalidCustomUrlDrills.body" },
+    invalidUrlDrillBody: { id: "messages.dashboard.invalidCustomUrlDrills.body.modern" },
     showMore: { id: "messages.dashboard.expandable.showMore" },
     showLess: { id: "messages.dashboard.expandable.showLess" },
 });
