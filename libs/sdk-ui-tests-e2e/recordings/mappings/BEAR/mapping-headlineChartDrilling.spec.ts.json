@@ -1,0 +1,128 @@
+{
+    "mappings": [
+        {
+            "id": "c821db8d-80fc-49ad-8ca4-aac2e2a637f0",
+            "name": "gdc_account_login",
+            "request": {
+                "url": "/gdc/account/login",
+                "method": "POST"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"userLogin\":{\"profile\":\"/gdc/account/profile/3ece989b2330f96ae7049a928bd1bc60\",\"state\":\"/gdc/account/login/3ece989b2330f96ae7049a928bd1bc60\"}}",
+                "headers": {
+                    "expires": "Thu, 01 Jan 1970 00:00:00 GMT",
+                    "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+                    "vary": "origin",
+                    "content-type": "application/json",
+                    "cache-control": "no-store, no-cache, must-revalidate, max-age=0",
+                    "p3p": "CP='IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT'",
+                    "pragma": "no-cache"
+                }
+            },
+            "uuid": "c821db8d-80fc-49ad-8ca4-aac2e2a637f0"
+        },
+        {
+            "id": "ee027238-6bc3-48dd-9ea5-30390e0e2a64",
+            "name": "gdc_account_profile_current",
+            "request": {
+                "url": "/gdc/account/profile/current",
+                "method": "GET"
+            },
+            "response": {
+                "status": 307,
+                "base64Body": "",
+                "headers": {
+                    "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+                    "vary": "origin,X-GDC-VERSION",
+                    "location": "/gdc/account/profile/3ece989b2330f96ae7049a928bd1bc60",
+                    "cache-control": "no-cache, no-store, must-revalidate"
+                }
+            },
+            "uuid": "ee027238-6bc3-48dd-9ea5-30390e0e2a64"
+        },
+        {
+            "id": "5c6283c0-d547-43c8-a74d-f92b7f22929d",
+            "name": "gdc_app_projects_c76e0537d0614abb0027f7c992656b964922506f_executeafm",
+            "request": {
+                "url": "/gdc/app/projects/c76e0537d0614abb0027f7c992656b964922506f/executeAfm",
+                "method": "POST",
+                "bodyPatterns": [
+                    {
+                        "equalToJson": "{\"execution\":{\"afm\":{\"measures\":[{\"localIdentifier\":\"m_acugFHNJgsBy\",\"definition\":{\"measure\":{\"item\":{\"identifier\":\"acugFHNJgsBy\"}}}}]},\"resultSpec\":{\"dimensions\":[{\"itemIdentifiers\":[\"measureGroup\"]}]}}}",
+                        "ignoreArrayOrder": false,
+                        "ignoreExtraElements": false
+                    }
+                ]
+            },
+            "response": {
+                "status": 201,
+                "body": "{\"executionResponse\":{\"dimensions\":[{\"headers\":[{\"measureGroupHeader\":{\"items\":[{\"measureHeaderItem\":{\"name\":\"Won\",\"format\":\"$#,##0.00\",\"localIdentifier\":\"m_acugFHNJgsBy\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1226\",\"identifier\":\"acugFHNJgsBy\"}}]}}]}],\"links\":{\"executionResult\":\"/gdc/app/projects/c76e0537d0614abb0027f7c992656b964922506f/executionResults/6968441254584187904?c=214148abdf5bf43c127f753f252d9174&q=eAEtjk0OgjAQhe8yuCQWGzWGCxg37owLwwLbYqidDilFBMLdHdTl%2B8v3JgimoRDPJRrI4eJjHZ3R%0AkIIi16FvIb8VKaCJoVaLmKDtEMswcJtbv%2BCkWYmHVgK1GM1Wt055e%2FBDJaN82360pGTV7HqSr6eg%0AuxUbKfc8ryhgGXm8StIkydZZxub3AntX8jAzPFC%2FkP%2BsY6CugWL%2BANHLPRs%3D%0A&offset=0%2C0&limit=1000%2C1000&dimensions=1&totals=0\"}}}",
+                "headers": {
+                    "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+                    "Cache-Control": "no-cache, no-store, must-revalidate",
+                    "vary": "origin,X-GDC-VERSION",
+                    "Content-Type": "application/json;charset=utf-8"
+                }
+            },
+            "uuid": "5c6283c0-d547-43c8-a74d-f92b7f22929d"
+        },
+        {
+            "id": "82aeac7f-8e2e-4f89-9b64-4c436e5c20c0",
+            "name": "gdc_account_profile_3ece989b2330f96ae7049a928bd1bc60",
+            "request": {
+                "url": "/gdc/account/profile/3ece989b2330f96ae7049a928bd1bc60",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"accountSetting\":{\"ssoProvider\":null,\"updated\":\"2018-07-10 05:03:49\",\"timezone\":null,\"position\":null,\"phoneNumber\":null,\"login\":\"chhung@lhv.vn\",\"lastName\":\"Cao\",\"firstName\":\"Hung\",\"created\":\"2018-07-10 05:01:50\",\"country\":null,\"companyName\":null,\"email\":\"chhung@lhv.vn\",\"authenticationModes\":[],\"language\":\"en-US\",\"ipWhitelist\":null,\"effectiveIpWhitelist\":null,\"links\":{\"self\":\"/gdc/account/profile/3ece989b2330f96ae7049a928bd1bc60\",\"projects\":\"/gdc/account/profile/3ece989b2330f96ae7049a928bd1bc60/projects\",\"domain\":\"/gdc/domains/default\",\"auditEvents\":\"/gdc/account/profile/3ece989b2330f96ae7049a928bd1bc60/auditEvents\"}}}",
+                "headers": {
+                    "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+                    "vary": "origin,X-GDC-VERSION",
+                    "content-type": "application/json;charset=utf-8",
+                    "cache-control": "no-cache, no-store, must-revalidate"
+                }
+            },
+            "uuid": "82aeac7f-8e2e-4f89-9b64-4c436e5c20c0"
+        },
+        {
+            "id": "469469cc-75fd-475d-a6b4-7d1d9367f71c",
+            "name": "gdc_internal_projects",
+            "request": {
+                "url": "/gdc/internal/projects/?limit=100&offset=0&userId=3ece989b2330f96ae7049a928bd1bc60&projectStates=ENABLED&userState=ENABLED",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"userProjects\":{\"paging\":{\"offset\":0,\"limit\":100,\"count\":4,\"totalCount\":4},\"items\":[{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"_project many users, user groups - DO NOT DELETE\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/su97m0sh11g2apwq8zgg3khpla6dkfy9\",\"projectUser\":\"/gdc/projects/su97m0sh11g2apwq8zgg3khpla6dkfy9/users/3ece989b2330f96ae7049a928bd1bc60\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"GS Multiple Filters - DO NOT DELETE\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/l6486kmy6wsy2t4yj9qh98tst4cfd7xw\",\"projectUser\":\"/gdc/projects/l6486kmy6wsy2t4yj9qh98tst4cfd7xw/users/3ece989b2330f96ae7049a928bd1bc60\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"Test reference workspace Dec 12, 2022, 06:27\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/c76e0537d0614abb0027f7c992656b964922506f\",\"projectUser\":\"/gdc/projects/c76e0537d0614abb0027f7c992656b964922506f/users/3ece989b2330f96ae7049a928bd1bc60\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"Test reference workspace Dec 12, 2022, 11:42\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/nvcoxu8llumsyasb35pvbw3o0oi3m2u1\",\"projectUser\":\"/gdc/projects/nvcoxu8llumsyasb35pvbw3o0oi3m2u1/users/3ece989b2330f96ae7049a928bd1bc60\"}}}]}}",
+                "headers": {
+                    "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+                    "Cache-Control": "no-cache, no-store, must-revalidate",
+                    "vary": "accept-encoding,origin,X-GDC-VERSION",
+                    "Content-Type": "application/json;charset=utf-8"
+                }
+            },
+            "uuid": "469469cc-75fd-475d-a6b4-7d1d9367f71c"
+        },
+        {
+            "id": "4e62f38f-4ade-49b6-bf91-d31af0119f2f",
+            "name": "gdc_app_projects_c76e0537d0614abb0027f7c992656b964922506f_executionresults_6968441254584187904",
+            "request": {
+                "url": "/gdc/app/projects/c76e0537d0614abb0027f7c992656b964922506f/executionResults/6968441254584187904?c=214148abdf5bf43c127f753f252d9174&q=eAEtjk0OgjAQhe8yuCQWGzWGCxg37owLwwLbYqidDilFBMLdHdTl%2B8v3JgimoRDPJRrI4eJjHZ3R%0AkIIi16FvIb8VKaCJoVaLmKDtEMswcJtbv%2BCkWYmHVgK1GM1Wt055e%2FBDJaN82360pGTV7HqSr6eg%0AuxUbKfc8ryhgGXm8StIkydZZxub3AntX8jAzPFC%2FkP%2BsY6CugWL%2BANHLPRs%3D%0A&offset=0&limit=1000&dimensions=1&totals=0",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"executionResult\":{\"data\":[\"38310753.45\"],\"paging\":{\"count\":[1],\"offset\":[0],\"total\":[1]},\"headerItems\":[[[{\"measureHeaderItem\":{\"name\":\"Won\",\"order\":0}}]]]}}",
+                "headers": {
+                    "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+                    "Cache-Control": "max-age=86400,private",
+                    "vary": "Accept,origin,X-GDC-VERSION",
+                    "Content-Type": "application/json;charset=utf-8"
+                }
+            },
+            "uuid": "4e62f38f-4ade-49b6-bf91-d31af0119f2f"
+        }
+    ]
+}

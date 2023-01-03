@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2022 GoodData Corporation
 
 import { useState } from "react";
 
@@ -49,6 +49,7 @@ export const useAuthState = (initialState: IAuthState) => {
             authStatus: AuthStatus.UNAUTHORIZED,
             authError: undefined,
         });
+    // eslint-disable-next-line sonarjs/no-identical-functions
     const onLogoutError = (err?: Error) =>
         setState({
             authStatus: AuthStatus.UNAUTHORIZED,

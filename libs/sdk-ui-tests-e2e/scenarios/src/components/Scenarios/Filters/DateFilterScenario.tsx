@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import { DateFilter, DateFilterOption } from "@gooddata/sdk-ui-filters";
 import { availableGranularities, defaultDateFilterOptions } from "../../constants/dateFilterConstants";
-import { props } from "lodash/fp";
 
 interface IDateFilterScenarioState {
     selectedFilterOption: DateFilterOption;

@@ -19,6 +19,7 @@ import {
     PivotTableAggregationsMenuOneTotalScenario,
 } from "../components/Scenarios/Visualizations/PivotTable/PivotTableAggregationsMenuScenario";
 import { DashboardFilterConfigurationScenario } from "../components/Scenarios/Dashboard/DashboardFilterConfigurationScenario";
+import { DashboardScenarioTiger } from "../components/Scenarios/Dashboard/DashboardScenarioTiger";
 
 /**
  * Add key here for your new E2E test. Use the key in the map below with the scenario as well as in
@@ -26,6 +27,7 @@ import { DashboardFilterConfigurationScenario } from "../components/Scenarios/Da
  */
 export const SCENARIO_KEYS = {
     DASHBOARD: "dashboard/dashboard",
+    DASHBOARD_TIGER: "dashboard/dashboard-tiger",
     DASHBOARD_FILTERING: "dashboard/filtering",
     IMPLICIT_DRILL_TO_ATTRIBUTE: "dashboard/implicit-drill-to-attribute-url",
     FILTERS_DATE_FILTER: "filters/date-filter",
@@ -45,6 +47,7 @@ export const SCENARIO_KEYS = {
 
 const scenarios = new Map<string, React.ComponentType>([
     [SCENARIO_KEYS.DASHBOARD, DashboardScenario],
+    [SCENARIO_KEYS.DASHBOARD_TIGER, DashboardScenarioTiger],
     [SCENARIO_KEYS.IMPLICIT_DRILL_TO_ATTRIBUTE, ImplicitDrillToAttributeUrlScenario],
     [SCENARIO_KEYS.FILTERS_DATE_FILTER, DateFilterScenario],
     [SCENARIO_KEYS.FILTERS_ATTRIBUTE_FILTER_BUTTON, AttributeFilterButtonScenario],

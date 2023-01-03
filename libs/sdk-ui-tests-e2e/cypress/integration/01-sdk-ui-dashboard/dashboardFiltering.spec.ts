@@ -18,7 +18,7 @@ const PARENT_FILTER_SELECTOR = ".s-attribute-filter.s-product";
 const CHILD_FILTER_SELECTOR = ".s-attribute-filter.s-department";
 
 // eslint-disable-next-line jest/no-disabled-tests
-describe.skip("Dashboard Filtering", () => {
+describe.skip("Dashboard Filtering", { tags: ["pre-merge_isolated_bear"] }, () => {
     beforeEach(() => {
         cy.login();
 

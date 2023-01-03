@@ -8,7 +8,7 @@ import {
     newNegativeAttributeFilter,
 } from "@gooddata/sdk-model";
 
-import * as Md from "../../../md/full";
+import * as Md from "../../../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_bear";
 import {
     newPlaceholder,
     PlaceholdersProvider,
@@ -41,6 +41,7 @@ const InnerParentChildFiltersWithPlaceholders: React.FC = () => {
                 uris: [],
             }),
         );
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [parentFilter]);
 
     return (

@@ -1,3 +1,5 @@
+// (C) 2022 GoodData Corporation
+
 import React, { createContext, useState, useContext, useEffect } from "react";
 import { WorkspaceProvider as DefaultWorkspaceProvider } from "@gooddata/sdk-ui";
 import identity from "lodash/identity";

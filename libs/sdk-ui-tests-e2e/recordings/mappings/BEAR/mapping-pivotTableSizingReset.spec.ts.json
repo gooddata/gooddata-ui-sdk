@@ -1,0 +1,470 @@
+{
+    "mappings": [
+        {
+            "id": "5accbc16-28d8-4b35-b115-2c55e11db245",
+            "name": "gdc_account_login",
+            "request": {
+                "url": "/gdc/account/login",
+                "method": "POST"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"userLogin\":{\"profile\":\"/gdc/account/profile/3ece989b2330f96ae7049a928bd1bc60\",\"state\":\"/gdc/account/login/3ece989b2330f96ae7049a928bd1bc60\"}}",
+                "headers": {
+                    "expires": "Thu, 01 Jan 1970 00:00:00 GMT",
+                    "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+                    "vary": "origin",
+                    "content-type": "application/json",
+                    "cache-control": "no-store, no-cache, must-revalidate, max-age=0",
+                    "p3p": "CP='IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT'",
+                    "pragma": "no-cache"
+                }
+            },
+            "uuid": "5accbc16-28d8-4b35-b115-2c55e11db245"
+        },
+        {
+            "id": "6880f8b4-d527-4484-922a-48e874630f0b",
+            "name": "gdc_account_profile_current",
+            "request": {
+                "url": "/gdc/account/profile/current",
+                "method": "GET"
+            },
+            "response": {
+                "status": 307,
+                "base64Body": "",
+                "headers": {
+                    "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+                    "vary": "origin,X-GDC-VERSION",
+                    "location": "/gdc/account/profile/3ece989b2330f96ae7049a928bd1bc60",
+                    "cache-control": "no-cache, no-store, must-revalidate"
+                }
+            },
+            "uuid": "6880f8b4-d527-4484-922a-48e874630f0b"
+        },
+        {
+            "id": "412ee446-09c9-48f6-addb-603e5ada4dad",
+            "name": "gdc_app_projects_c76e0537d0614abb0027f7c992656b964922506f_executeafm",
+            "request": {
+                "url": "/gdc/app/projects/c76e0537d0614abb0027f7c992656b964922506f/executeAfm",
+                "method": "POST",
+                "bodyPatterns": [
+                    {
+                        "equalToJson": "{\"execution\":{\"afm\":{\"measures\":[{\"localIdentifier\":\"m_aangOxLSeztu\",\"definition\":{\"measure\":{\"item\":{\"identifier\":\"aangOxLSeztu\"}}}}],\"attributes\":[{\"displayForm\":{\"identifier\":\"label.product.id.name\"},\"localIdentifier\":\"a_label.product.id.name\"},{\"displayForm\":{\"identifier\":\"label.owner.region\"},\"localIdentifier\":\"a_label.owner.region\"}]},\"resultSpec\":{\"dimensions\":[{\"itemIdentifiers\":[\"a_label.product.id.name\"]},{\"itemIdentifiers\":[\"a_label.owner.region\",\"measureGroup\"]}]}}}",
+                        "ignoreArrayOrder": false,
+                        "ignoreExtraElements": false
+                    }
+                ]
+            },
+            "response": {
+                "status": 201,
+                "body": "{\"executionResponse\":{\"dimensions\":[{\"headers\":[{\"attributeHeader\":{\"name\":\"Product Name\",\"localIdentifier\":\"a_label.product.id.name\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1052\",\"identifier\":\"label.product.id.name\",\"formOf\":{\"name\":\"Product\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051\",\"identifier\":\"attr.product.id\"}}}]},{\"headers\":[{\"attributeHeader\":{\"name\":\"Region\",\"localIdentifier\":\"a_label.owner.region\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1084\",\"identifier\":\"label.owner.region\",\"formOf\":{\"name\":\"Region\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083\",\"identifier\":\"attr.owner.region\"}}},{\"measureGroupHeader\":{\"items\":[{\"measureHeaderItem\":{\"name\":\"Amount\",\"format\":\"$#,##0.00\",\"localIdentifier\":\"m_aangOxLSeztu\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1225\",\"identifier\":\"aangOxLSeztu\"}}]}}]}],\"links\":{\"executionResult\":\"/gdc/app/projects/c76e0537d0614abb0027f7c992656b964922506f/executionResults/276086370687418336?c=23d53ab63d1fd42ee378e743d490a217&q=eAGlUstOwzAQ%2FJXK5ViRxG2kqhJCHAD1glBFT1UPju1UCX5E9prSVvl3tpggUnFKb7Z3PDs7OyfC%0ArQraeLLYnAhUoCRZkJXcVdaQCfFBa%2BYO%2BIQXBuCqIoB8u4SJyjeKHZ6s00uB4GQneKJFcpQz4RU3%0A9dwcSgr0s94fa8tp2eR7Sz%2FeE1vUSZbOZ8heMC8fldTSwHq1HEAyTWT87u8rcYeMYIGp82Cb7faP%0A%2BkEKp6SdEC3RAP7sbGgIMjq7%2F7Gt1%2BjaQfLscpBf44dIzzO04soF5fS%2F9b86KwIHLPVi0oWoK7dn%0Aq2RjHbwwfU7X2nxDBH6MjkYX43nAiJTmSFVi%2BBgg%2Fc14Mh6nt2naE%2FagbTAwik1GQnruqgZiyjvF%0AEUPabfsFghcNuA%3D%3D%0A&offset=0%2C0&limit=1000%2C1000&dimensions=2&totals=0%2C0\"}}}",
+                "headers": {
+                    "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+                    "Cache-Control": "no-cache, no-store, must-revalidate",
+                    "vary": "accept-encoding,origin,X-GDC-VERSION",
+                    "Content-Type": "application/json;charset=utf-8"
+                }
+            },
+            "uuid": "412ee446-09c9-48f6-addb-603e5ada4dad"
+        },
+        {
+            "id": "c6a9e7ca-5b65-4e7a-89b2-eddaa30c46e8",
+            "name": "gdc_account_profile_3ece989b2330f96ae7049a928bd1bc60",
+            "request": {
+                "url": "/gdc/account/profile/3ece989b2330f96ae7049a928bd1bc60",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"accountSetting\":{\"ssoProvider\":null,\"updated\":\"2018-07-10 05:03:49\",\"timezone\":null,\"position\":null,\"phoneNumber\":null,\"login\":\"chhung@lhv.vn\",\"lastName\":\"Cao\",\"firstName\":\"Hung\",\"created\":\"2018-07-10 05:01:50\",\"country\":null,\"companyName\":null,\"email\":\"chhung@lhv.vn\",\"authenticationModes\":[],\"language\":\"en-US\",\"ipWhitelist\":null,\"effectiveIpWhitelist\":null,\"links\":{\"self\":\"/gdc/account/profile/3ece989b2330f96ae7049a928bd1bc60\",\"projects\":\"/gdc/account/profile/3ece989b2330f96ae7049a928bd1bc60/projects\",\"domain\":\"/gdc/domains/default\",\"auditEvents\":\"/gdc/account/profile/3ece989b2330f96ae7049a928bd1bc60/auditEvents\"}}}",
+                "headers": {
+                    "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+                    "vary": "origin,X-GDC-VERSION",
+                    "content-type": "application/json;charset=utf-8",
+                    "cache-control": "no-cache, no-store, must-revalidate"
+                }
+            },
+            "uuid": "c6a9e7ca-5b65-4e7a-89b2-eddaa30c46e8"
+        },
+        {
+            "id": "7158d168-599c-4097-bc2d-beeaaf1f183f",
+            "name": "gdc_internal_projects",
+            "request": {
+                "url": "/gdc/internal/projects/?limit=100&offset=0&userId=3ece989b2330f96ae7049a928bd1bc60&projectStates=ENABLED&userState=ENABLED",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"userProjects\":{\"paging\":{\"offset\":0,\"limit\":100,\"count\":4,\"totalCount\":4},\"items\":[{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"_project many users, user groups - DO NOT DELETE\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/su97m0sh11g2apwq8zgg3khpla6dkfy9\",\"projectUser\":\"/gdc/projects/su97m0sh11g2apwq8zgg3khpla6dkfy9/users/3ece989b2330f96ae7049a928bd1bc60\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"GS Multiple Filters - DO NOT DELETE\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/l6486kmy6wsy2t4yj9qh98tst4cfd7xw\",\"projectUser\":\"/gdc/projects/l6486kmy6wsy2t4yj9qh98tst4cfd7xw/users/3ece989b2330f96ae7049a928bd1bc60\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"Test reference workspace Dec 12, 2022, 06:27\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/c76e0537d0614abb0027f7c992656b964922506f\",\"projectUser\":\"/gdc/projects/c76e0537d0614abb0027f7c992656b964922506f/users/3ece989b2330f96ae7049a928bd1bc60\"}}},{\"userProject\":{\"userState\":\"ENABLED\",\"projectDescription\":\"\",\"projectTitle\":\"Test reference workspace Dec 12, 2022, 11:42\",\"projectState\":\"ENABLED\",\"links\":{\"self\":\"/gdc/projects/nvcoxu8llumsyasb35pvbw3o0oi3m2u1\",\"projectUser\":\"/gdc/projects/nvcoxu8llumsyasb35pvbw3o0oi3m2u1/users/3ece989b2330f96ae7049a928bd1bc60\"}}}]}}",
+                "headers": {
+                    "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+                    "Cache-Control": "no-cache, no-store, must-revalidate",
+                    "vary": "accept-encoding,origin,X-GDC-VERSION",
+                    "Content-Type": "application/json;charset=utf-8"
+                }
+            },
+            "uuid": "7158d168-599c-4097-bc2d-beeaaf1f183f"
+        },
+        {
+            "id": "ec165245-1564-4738-9477-c1d175731a81",
+            "name": "gdc_app_projects_c76e0537d0614abb0027f7c992656b964922506f_executionresults_276086370687418336",
+            "request": {
+                "url": "/gdc/app/projects/c76e0537d0614abb0027f7c992656b964922506f/executionResults/276086370687418336?c=23d53ab63d1fd42ee378e743d490a217&q=eAGlUstOwzAQ%2FJXK5ViRxG2kqhJCHAD1glBFT1UPju1UCX5E9prSVvl3tpggUnFKb7Z3PDs7OyfC%0ArQraeLLYnAhUoCRZkJXcVdaQCfFBa%2BYO%2BIQXBuCqIoB8u4SJyjeKHZ6s00uB4GQneKJFcpQz4RU3%0A9dwcSgr0s94fa8tp2eR7Sz%2FeE1vUSZbOZ8heMC8fldTSwHq1HEAyTWT87u8rcYeMYIGp82Cb7faP%0A%2BkEKp6SdEC3RAP7sbGgIMjq7%2F7Gt1%2BjaQfLscpBf44dIzzO04soF5fS%2F9b86KwIHLPVi0oWoK7dn%0Aq2RjHbwwfU7X2nxDBH6MjkYX43nAiJTmSFVi%2BBgg%2Fc14Mh6nt2naE%2FagbTAwik1GQnruqgZiyjvF%0AEUPabfsFghcNuA%3D%3D%0A&offset=0%2C0&limit=100%2C1000&dimensions=2&totals=0%2C0",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"executionResult\":{\"data\":[[\"5099309.54\",\"22123590.1\"],[\"6614222.47\",\"16332673\"],[\"8269682.68\",\"30326512.18\"],[\"2761931.26\",\"5280100.66\"],[\"2664832.4\",\"6861025.51\"],[\"2607118.07\",\"7684458.67\"]],\"paging\":{\"count\":[6,2],\"offset\":[0,0],\"total\":[6,2]},\"headerItems\":[[[{\"attributeHeaderItem\":{\"name\":\"CompuSci\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165678\"}},{\"attributeHeaderItem\":{\"name\":\"Educationly\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165847\"}},{\"attributeHeaderItem\":{\"name\":\"Explorer\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=342345\"}},{\"attributeHeaderItem\":{\"name\":\"Grammar Plus\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=168737\"}},{\"attributeHeaderItem\":{\"name\":\"PhoenixSoft\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166339\"}},{\"attributeHeaderItem\":{\"name\":\"WonderKid\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166497\"}}]],[[{\"attributeHeaderItem\":{\"name\":\"East Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460488\"}},{\"attributeHeaderItem\":{\"name\":\"West Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460489\"}}],[{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}},{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}}]]]}}",
+                "headers": {
+                    "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+                    "Cache-Control": "max-age=86400,private",
+                    "vary": "accept,accept-encoding,origin,X-GDC-VERSION",
+                    "Content-Type": "application/json;charset=utf-8"
+                }
+            },
+            "uuid": "ec165245-1564-4738-9477-c1d175731a81"
+        },
+        {
+            "id": "cd45f056-9042-41ef-8e77-47bae035e2dc",
+            "name": "gdc_app_projects_c76e0537d0614abb0027f7c992656b964922506f_executionresults_276086370687418336",
+            "request": {
+                "url": "/gdc/app/projects/c76e0537d0614abb0027f7c992656b964922506f/executionResults/276086370687418336?c=22f46b06d6d81cba171da96e00ec489f&q=eAGlUktLwzAA%2Fisj9Vhsl61QBiIeVHYRGe40dkiTbKTmUfKwdqP%2F3WRxdiJeultIyPc%2BAq1aAxab%0AI0DWalY5S5cELEC2JzgTJDvQOTEcy7qU3Q5a%2BFm3h1phuGuKVsGP90xVdTbNiylIB4Q3Zjn1IK9a%0AEYetfyLMNBx1T0qLUfDQY1hlEQ9aN9ttCowTAunOs4SnP4QVMvSRU0GlXa%2BWYwxlNH4394zcgd5T%0ACuoTwjGteB7hBcLCC975IJD1sm6SNEny2zy%2FcPEglJMhtcFjvJpE1gmhBmvWWKbkSRhW3AkZhV2Z%0AdDkPQv5P%2Bmcl545XdB9kXLQ%2FIpS8nHmEazsrZ787G3bxLbI%2Fd%2FislWuAr1TTRmn7gkSY61qedkRA%0A%2FwUvBg24%0A&offset=0%2C0&limit=100%2C1000&dimensions=2&totals=0%2C0",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"executionResult\":{\"data\":[[\"5099309.54\",\"22123590.1\"],[\"6614222.47\",\"16332673\"],[\"8269682.68\",\"30326512.18\"],[\"2761931.26\",\"5280100.66\"],[\"2664832.4\",\"6861025.51\"],[\"2607118.07\",\"7684458.67\"]],\"paging\":{\"count\":[6,2],\"offset\":[0,0],\"total\":[6,2]},\"headerItems\":[[[{\"attributeHeaderItem\":{\"name\":\"CompuSci\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165678\"}},{\"attributeHeaderItem\":{\"name\":\"Educationly\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165847\"}},{\"attributeHeaderItem\":{\"name\":\"Explorer\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=342345\"}},{\"attributeHeaderItem\":{\"name\":\"Grammar Plus\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=168737\"}},{\"attributeHeaderItem\":{\"name\":\"PhoenixSoft\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166339\"}},{\"attributeHeaderItem\":{\"name\":\"WonderKid\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166497\"}}]],[[{\"attributeHeaderItem\":{\"name\":\"East Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460488\"}},{\"attributeHeaderItem\":{\"name\":\"West Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460489\"}}],[{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}},{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}}]]]}}",
+                "headers": {
+                    "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+                    "Cache-Control": "max-age=86400,private",
+                    "vary": "accept,accept-encoding,origin,X-GDC-VERSION",
+                    "Content-Type": "application/json;charset=utf-8"
+                }
+            },
+            "uuid": "cd45f056-9042-41ef-8e77-47bae035e2dc"
+        },
+        {
+            "id": "4219a3d0-6cd5-478e-b586-0f2380a714a2",
+            "name": "gdc_app_projects_c76e0537d0614abb0027f7c992656b964922506f_executionresults_276086370687418336",
+            "request": {
+                "url": "/gdc/app/projects/c76e0537d0614abb0027f7c992656b964922506f/executionResults/276086370687418336?c=83e88121ad2b4ff953be56a63d41c168&q=eAGlUs9PgzAU%2FleW4pEIdCMhS4zxoGYXYxZ3Wnbo2rKAtCXtQ2QL%2F7sPCWD05Li%2Bfu97349eiJWl%0AsfDClCRrstOQQSEF8YmSYDPuyHp%2FIamxigG%2B33i%2B54W3YYgAVynFbIPTB2UqDYt%2BYyGk4zYrITMa%0AUd98I2bk3QicBSfBAyWCs1wJV3CdJ7pJKdDPvD7nhtO0jGtDP94Dc8yDiNKYtAefcFNUSvfCGKDI%0AYwXyrZONlFt56u%2BKzJUFa55Q%2BRW3wmSFUkf2qxiWyHBkTj4WUkkNu%2B3m35bDZBnIft3dZ%2BKuy9MA%0AKzrz%2BwNmMaQ72p5KIe3Q4bM1VUkQbU3dx%2FYDNXG8WiMqDnN9x9EflXNTiKPfKYzNDL1P4mcWH1P8%0AZO0Xl60NuA%3D%3D%0A&offset=0%2C0&limit=100%2C1000&dimensions=2&totals=0%2C0",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"executionResult\":{\"data\":[[\"5099309.54\",\"22123590.1\"],[\"6614222.47\",\"16332673\"],[\"8269682.68\",\"30326512.18\"],[\"2761931.26\",\"5280100.66\"],[\"2664832.4\",\"6861025.51\"],[\"2607118.07\",\"7684458.67\"]],\"paging\":{\"count\":[6,2],\"offset\":[0,0],\"total\":[6,2]},\"headerItems\":[[[{\"attributeHeaderItem\":{\"name\":\"CompuSci\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165678\"}},{\"attributeHeaderItem\":{\"name\":\"Educationly\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165847\"}},{\"attributeHeaderItem\":{\"name\":\"Explorer\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=342345\"}},{\"attributeHeaderItem\":{\"name\":\"Grammar Plus\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=168737\"}},{\"attributeHeaderItem\":{\"name\":\"PhoenixSoft\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166339\"}},{\"attributeHeaderItem\":{\"name\":\"WonderKid\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166497\"}}]],[[{\"attributeHeaderItem\":{\"name\":\"East Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460488\"}},{\"attributeHeaderItem\":{\"name\":\"West Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460489\"}}],[{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}},{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}}]]]}}",
+                "headers": {
+                    "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+                    "Cache-Control": "max-age=86400,private",
+                    "vary": "accept,accept-encoding,origin,X-GDC-VERSION",
+                    "Content-Type": "application/json;charset=utf-8"
+                }
+            },
+            "uuid": "4219a3d0-6cd5-478e-b586-0f2380a714a2"
+        },
+        {
+            "id": "e3dc25af-9ae1-4626-9515-a2eb6f4d500a",
+            "name": "gdc_app_projects_c76e0537d0614abb0027f7c992656b964922506f_executionresults_276086370687418336",
+            "request": {
+                "url": "/gdc/app/projects/c76e0537d0614abb0027f7c992656b964922506f/executionResults/276086370687418336?c=d02cf24c79d3bfd6816d28d0cb321a3b&q=eAGtkl9LwzAUxb%2FKSH0sts1WKAMRH1T2IjLc0%2BhDlqSjNX9KcmPtRr%2B7qRnMoU%2Bdb0luzuHe87tH%0AZHRn0XJ7RKCBiPG4LcsYsdq2gvRP2sgVQ0uU7BlNJEsOfMGsoKopVF9hwJ9Nd2g0xVWbdxp%2FvCd6%0A1yRZmmMUI%2BukJKb3an8hAKbeOeCT7LKfDm81CO5dX41mjoIvwa%2BXHbH8UXDJFWzWqwkDZAkPcntf%0Aszs0%2BEyoFk6qkNa1%2FsX80v88w5rva638UFciKBZjMBdQ%2Fw9IMf8LyKn1IUaSe9r02WjXIp%2Bc4a02%0A8ELkiG2jvnEx7xC%2BhUQrv2oEfP0miqMovU3Tsf8T2AepnRpJB8WEHcI49%2FJzAsFxFvxmjFtq6hbG%0A5Idy%2BAJ7Jg24%0A&offset=0%2C0&limit=100%2C1000&dimensions=2&totals=0%2C0",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"executionResult\":{\"data\":[[\"5099309.54\",\"22123590.1\"],[\"6614222.47\",\"16332673\"],[\"8269682.68\",\"30326512.18\"],[\"2761931.26\",\"5280100.66\"],[\"2664832.4\",\"6861025.51\"],[\"2607118.07\",\"7684458.67\"]],\"paging\":{\"count\":[6,2],\"offset\":[0,0],\"total\":[6,2]},\"headerItems\":[[[{\"attributeHeaderItem\":{\"name\":\"CompuSci\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165678\"}},{\"attributeHeaderItem\":{\"name\":\"Educationly\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165847\"}},{\"attributeHeaderItem\":{\"name\":\"Explorer\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=342345\"}},{\"attributeHeaderItem\":{\"name\":\"Grammar Plus\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=168737\"}},{\"attributeHeaderItem\":{\"name\":\"PhoenixSoft\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166339\"}},{\"attributeHeaderItem\":{\"name\":\"WonderKid\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166497\"}}]],[[{\"attributeHeaderItem\":{\"name\":\"East Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460488\"}},{\"attributeHeaderItem\":{\"name\":\"West Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460489\"}}],[{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}},{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}}]]]}}",
+                "headers": {
+                    "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+                    "Cache-Control": "max-age=86400,private",
+                    "vary": "accept,accept-encoding,origin,X-GDC-VERSION",
+                    "Content-Type": "application/json;charset=utf-8"
+                }
+            },
+            "uuid": "e3dc25af-9ae1-4626-9515-a2eb6f4d500a"
+        },
+        {
+            "id": "9f06ddd0-daed-4037-ba85-612cb7418ed8",
+            "name": "gdc_app_projects_c76e0537d0614abb0027f7c992656b964922506f_executionresults_276086370687418336",
+            "request": {
+                "url": "/gdc/app/projects/c76e0537d0614abb0027f7c992656b964922506f/executionResults/276086370687418336?c=9b3e4e2c0f4c86f2650fa28aac5161f1&q=eAGlkstOwzAQRX%2BlclhGOHEbqaqEEAtA3SBU0VXVhWM7lYMfkR%2BEtMq%2F42BKW9ilW4%2Fnzp1z5wCI%0AFl4qCxabA8DOGV56x964EwwswIrtuFYgBZTbRuDuSRu5pKEAd5RASeGezagVRNVz1VXIoc%2B63dea%0AoKopWo0%2B3qEua5hn81nQKLFlj4JJptx6tRwhMoUsttt7Tu%2BCotMOi8H6ZrtNT%2B5HOZwOen%2FXtl5K%0AbLrgFfQpkCzgIc9G%2BwaEeUa3Edux7dVo6okLQmd9Z76OVE%2F%2FrsRaoDDrN7Qxaxf5P4zXxlTklzH1%0AAyrWaONesByOaq2%2BgdEwORKNFKtwW9iF%2Bk2SJkl2m2WDtZ9EHqT26pJsfJpEiQlllhjeuHiu8XEE%0AEIQK0G%2F7L462Dbg%3D%0A&offset=0%2C0&limit=100%2C1000&dimensions=2&totals=0%2C0",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"executionResult\":{\"data\":[[\"5099309.54\",\"22123590.1\"],[\"6614222.47\",\"16332673\"],[\"8269682.68\",\"30326512.18\"],[\"2761931.26\",\"5280100.66\"],[\"2664832.4\",\"6861025.51\"],[\"2607118.07\",\"7684458.67\"]],\"paging\":{\"count\":[6,2],\"offset\":[0,0],\"total\":[6,2]},\"headerItems\":[[[{\"attributeHeaderItem\":{\"name\":\"CompuSci\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165678\"}},{\"attributeHeaderItem\":{\"name\":\"Educationly\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165847\"}},{\"attributeHeaderItem\":{\"name\":\"Explorer\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=342345\"}},{\"attributeHeaderItem\":{\"name\":\"Grammar Plus\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=168737\"}},{\"attributeHeaderItem\":{\"name\":\"PhoenixSoft\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166339\"}},{\"attributeHeaderItem\":{\"name\":\"WonderKid\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166497\"}}]],[[{\"attributeHeaderItem\":{\"name\":\"East Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460488\"}},{\"attributeHeaderItem\":{\"name\":\"West Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460489\"}}],[{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}},{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}}]]]}}",
+                "headers": {
+                    "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+                    "Cache-Control": "max-age=86400,private",
+                    "vary": "accept,accept-encoding,origin,X-GDC-VERSION",
+                    "Content-Type": "application/json;charset=utf-8"
+                }
+            },
+            "uuid": "9f06ddd0-daed-4037-ba85-612cb7418ed8"
+        },
+        {
+            "id": "edd89ca9-3144-449c-8116-fffc4d2b981c",
+            "name": "gdc_app_projects_c76e0537d0614abb0027f7c992656b964922506f_executionresults_276086370687418336",
+            "request": {
+                "url": "/gdc/app/projects/c76e0537d0614abb0027f7c992656b964922506f/executionResults/276086370687418336?c=68dd632cc02ef334d7e16283a2145dac&q=eAGlUc9PgzAU%2FleW4pEIdCMhS4zxoGYXYxZ3WjiUtiwgbUn7ENnC%2F26RwTA7yY79Xt%2F3652Q4KAz%0AatB6f0KmEoLoBq3Rk1CVhEU%2FXDBuqM5KyJRELoIMCj7%2BsUCqtCBgkTvHdRz%2F3vct2K9umIW9A6Oe%0AYN6Rr5gpqMwj2aQY8HdeH3NFcVqGtcJfn55Kci%2FAOERt7CLNS6XhjYhOayd%2FVZklpqqohOwND1a2%0A%2FNB7S4jhzwUXXMJuu%2Fm3th8tPd6vm8eMPXRpFZCiU9vH1hTLTFmQ5sUmnhHNj1aW8dKyfRCw9ScV%0A8I9zq2OUcTJLaIna4QavWlUl6hpVdV%2FbrS2FwVVLZ%2FfvWrGKwjTYHPthMGUYqrmQ33iGEFv6v4ed%0AHKWN2x%2Fyug24%0A&offset=0%2C0&limit=100%2C1000&dimensions=2&totals=0%2C0",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"executionResult\":{\"data\":[[\"5099309.54\",\"22123590.1\"],[\"6614222.47\",\"16332673\"],[\"8269682.68\",\"30326512.18\"],[\"2761931.26\",\"5280100.66\"],[\"2664832.4\",\"6861025.51\"],[\"2607118.07\",\"7684458.67\"]],\"paging\":{\"count\":[6,2],\"offset\":[0,0],\"total\":[6,2]},\"headerItems\":[[[{\"attributeHeaderItem\":{\"name\":\"CompuSci\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165678\"}},{\"attributeHeaderItem\":{\"name\":\"Educationly\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165847\"}},{\"attributeHeaderItem\":{\"name\":\"Explorer\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=342345\"}},{\"attributeHeaderItem\":{\"name\":\"Grammar Plus\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=168737\"}},{\"attributeHeaderItem\":{\"name\":\"PhoenixSoft\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166339\"}},{\"attributeHeaderItem\":{\"name\":\"WonderKid\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166497\"}}]],[[{\"attributeHeaderItem\":{\"name\":\"East Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460488\"}},{\"attributeHeaderItem\":{\"name\":\"West Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460489\"}}],[{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}},{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}}]]]}}",
+                "headers": {
+                    "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+                    "Cache-Control": "max-age=86400,private",
+                    "vary": "accept,accept-encoding,origin,X-GDC-VERSION",
+                    "Content-Type": "application/json;charset=utf-8"
+                }
+            },
+            "uuid": "edd89ca9-3144-449c-8116-fffc4d2b981c"
+        },
+        {
+            "id": "8f866758-0636-4959-bd14-c8164d62d34d",
+            "name": "gdc_app_projects_c76e0537d0614abb0027f7c992656b964922506f_executionresults_276086370687418336",
+            "request": {
+                "url": "/gdc/app/projects/c76e0537d0614abb0027f7c992656b964922506f/executionResults/276086370687418336?c=bc44cfd8ff2b1e60ca04d15642461615&q=eAGtUk1LwzAY%2Fisj9VhMm61QBiIeVHYRGe40dkiTdKTmo%2BTD2o3%2Bd1PDZM5b3S0hed%2Fn8wiM7ixY%0Abo%2BActsK3D9pI1cULAHcUwIlhQe2oFYQ1ZSqr5FDn013aDRBdVt0Gn28Q101MM8KBFKAnTO88o69%0AcSdYWPJqNPXEhSenHRYj0na3S0GFLXsUTDLlNuvVBLQcsjhu7zm9O4eeRD4PG6yXEps%2BkBnpXggY%0AAmmihZcqunV6X7M91%2BrP9FXFlvOrii3n53adkvoR8s8elAswpECyUATybLRvQXAuXqNz8TwhJYSK%0As2AepPZqLFYdCotdSO0mSZMku82yX2nEf7OIOqPMEsNbN2Y2RmpYq417wXIs60Z9p0rB8AUqjw24%0A&offset=0%2C0&limit=100%2C1000&dimensions=2&totals=0%2C0",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"executionResult\":{\"data\":[[\"5099309.54\",\"22123590.1\"],[\"6614222.47\",\"16332673\"],[\"8269682.68\",\"30326512.18\"],[\"2761931.26\",\"5280100.66\"],[\"2664832.4\",\"6861025.51\"],[\"2607118.07\",\"7684458.67\"]],\"paging\":{\"count\":[6,2],\"offset\":[0,0],\"total\":[6,2]},\"headerItems\":[[[{\"attributeHeaderItem\":{\"name\":\"CompuSci\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165678\"}},{\"attributeHeaderItem\":{\"name\":\"Educationly\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165847\"}},{\"attributeHeaderItem\":{\"name\":\"Explorer\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=342345\"}},{\"attributeHeaderItem\":{\"name\":\"Grammar Plus\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=168737\"}},{\"attributeHeaderItem\":{\"name\":\"PhoenixSoft\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166339\"}},{\"attributeHeaderItem\":{\"name\":\"WonderKid\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166497\"}}]],[[{\"attributeHeaderItem\":{\"name\":\"East Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460488\"}},{\"attributeHeaderItem\":{\"name\":\"West Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460489\"}}],[{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}},{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}}]]]}}",
+                "headers": {
+                    "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+                    "Cache-Control": "max-age=86400,private",
+                    "vary": "accept,accept-encoding,origin,X-GDC-VERSION",
+                    "Content-Type": "application/json;charset=utf-8"
+                }
+            },
+            "uuid": "8f866758-0636-4959-bd14-c8164d62d34d"
+        },
+        {
+            "id": "29358cff-8b7d-422b-a0f9-88421ba14936",
+            "name": "gdc_app_projects_c76e0537d0614abb0027f7c992656b964922506f_executionresults_276086370687418336",
+            "request": {
+                "url": "/gdc/app/projects/c76e0537d0614abb0027f7c992656b964922506f/executionResults/276086370687418336?c=8c066e54526d785f1e3579f18c9e2a6a&q=eAGtkl9LwzAUxb%2FKSH0sps1WGAMRH1T2IjLc0%2BhDlqQjtUlK%2Fli70e9uYoTO%2Bdb5Fm645577u%2BcE%0AiGqckAasdidgnBBY92AFQAostw3zzw07cCV9AVur%2Bd5Z9nb5Q7lpG9w%2FKS3W1LfAAyVQUHhkC2oa%0AIuul7Ctk0WfdHWtFUNUWnUIf71Dta5hny8W5%2BiSFeTCsLG7CIruyTMEeG%2FbYMMGk3W7WE0zNIYvt%0A5p7TOzCkQDAPgDxr5VrgJ2jVRWx%2FwLxqRR2x3tOVZAp0LZki%2F3cyRf6bzBiVce%2BzJA0BFWuVti9Y%0AhEBt5Xe0qDcWiUaK8T3h%2BggVXqry4cPWy98kaZJkt1kWFv9J6oNQToZ7jL5iaRanzigzRPPWhqQP%0A5fAFrmsNuA%3D%3D%0A&offset=0%2C0&limit=100%2C1000&dimensions=2&totals=0%2C0",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"executionResult\":{\"data\":[[\"5099309.54\",\"22123590.1\"],[\"6614222.47\",\"16332673\"],[\"8269682.68\",\"30326512.18\"],[\"2761931.26\",\"5280100.66\"],[\"2664832.4\",\"6861025.51\"],[\"2607118.07\",\"7684458.67\"]],\"paging\":{\"count\":[6,2],\"offset\":[0,0],\"total\":[6,2]},\"headerItems\":[[[{\"attributeHeaderItem\":{\"name\":\"CompuSci\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165678\"}},{\"attributeHeaderItem\":{\"name\":\"Educationly\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165847\"}},{\"attributeHeaderItem\":{\"name\":\"Explorer\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=342345\"}},{\"attributeHeaderItem\":{\"name\":\"Grammar Plus\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=168737\"}},{\"attributeHeaderItem\":{\"name\":\"PhoenixSoft\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166339\"}},{\"attributeHeaderItem\":{\"name\":\"WonderKid\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166497\"}}]],[[{\"attributeHeaderItem\":{\"name\":\"East Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460488\"}},{\"attributeHeaderItem\":{\"name\":\"West Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460489\"}}],[{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}},{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}}]]]}}",
+                "headers": {
+                    "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+                    "Cache-Control": "max-age=86400,private",
+                    "vary": "accept,accept-encoding,origin,X-GDC-VERSION",
+                    "Content-Type": "application/json;charset=utf-8"
+                }
+            },
+            "uuid": "29358cff-8b7d-422b-a0f9-88421ba14936"
+        },
+        {
+            "id": "0d6910cf-f600-455d-90cd-d80b2eb8b1c6",
+            "name": "gdc_app_projects_c76e0537d0614abb0027f7c992656b964922506f_executionresults_276086370687418336",
+            "request": {
+                "url": "/gdc/app/projects/c76e0537d0614abb0027f7c992656b964922506f/executionResults/276086370687418336?c=9f60bcff423b3accad28565d46269a22&q=eAGlkV9PgzAUxb%2FKUnwkFrqRkCXG%2BKBmL8Ys7mnhobRlAWlL2ovIFr67RYaiDyay1%2FvnnHt%2B94Sk%0AAJMzi9b7E7K1lNS0aI3upK4VLIbmggvLTF5BrhXyUaaNpOCGrjzf84LrIHBFyKEUX4uuMKxuuKvh%0AA2dYcnwUK25LpopYtRkB8l40x0IzklVRo8nbK9ZpgUNCItQlPjKi0gaeqOxld%2BrTgDthpstaquHg%0A0XUrDsNtKbXivhRSKNhtN%2F%2F2DuIlFsO6vc35jbPjua1K2j640DPCBPGqh6OBlv3F%2B8QF%2B6bsWhQc%0A%2FrQGMUt8OVV4Ob%2FgDKMbf%2FBodF2hnqhufmJ7NprXDJzIpdyi8De3PzJfiDQi09RzuEXhVGHkNtLo%0Aku4DNVgNuA%3D%3D%0A&offset=0%2C0&limit=100%2C1000&dimensions=2&totals=0%2C0",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"executionResult\":{\"data\":[[\"5099309.54\",\"22123590.1\"],[\"6614222.47\",\"16332673\"],[\"8269682.68\",\"30326512.18\"],[\"2761931.26\",\"5280100.66\"],[\"2664832.4\",\"6861025.51\"],[\"2607118.07\",\"7684458.67\"]],\"paging\":{\"count\":[6,2],\"offset\":[0,0],\"total\":[6,2]},\"headerItems\":[[[{\"attributeHeaderItem\":{\"name\":\"CompuSci\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165678\"}},{\"attributeHeaderItem\":{\"name\":\"Educationly\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165847\"}},{\"attributeHeaderItem\":{\"name\":\"Explorer\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=342345\"}},{\"attributeHeaderItem\":{\"name\":\"Grammar Plus\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=168737\"}},{\"attributeHeaderItem\":{\"name\":\"PhoenixSoft\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166339\"}},{\"attributeHeaderItem\":{\"name\":\"WonderKid\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166497\"}}]],[[{\"attributeHeaderItem\":{\"name\":\"East Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460488\"}},{\"attributeHeaderItem\":{\"name\":\"West Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460489\"}}],[{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}},{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}}]]]}}",
+                "headers": {
+                    "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+                    "Cache-Control": "max-age=86400,private",
+                    "vary": "accept,accept-encoding,origin,X-GDC-VERSION",
+                    "Content-Type": "application/json;charset=utf-8"
+                }
+            },
+            "uuid": "0d6910cf-f600-455d-90cd-d80b2eb8b1c6"
+        },
+        {
+            "id": "993e062e-e671-4118-a958-cd793521d2f2",
+            "name": "gdc_app_projects_c76e0537d0614abb0027f7c992656b964922506f_executionresults_276086370687418336",
+            "request": {
+                "url": "/gdc/app/projects/c76e0537d0614abb0027f7c992656b964922506f/executionResults/276086370687418336?c=466982b35eed780a83554530d0b3ab3a&q=eAGtkstOwzAQRX%2BlclhGJHEbqaqEEAtA3SBU0VWVhWM7lYMfkR%2BEtMq%2FY2NKgRUK7EZjz%2BOeO0eA%0AFXdCGrDaHYFxQiA9gBUAKbDMcurDDd0zJX0CWatZ7Sx9%2BvlCmOk4Gu6UFmviS7I9wZkg2YEuiOFY%0Atks5NNDC17Y%2FtArDpit7BV%2BeM1W3WZEvF757jQy95VRQabeb9YQm84zGcnPNyFUQoCziQdiuqr5s%0AP2nDORhTIKgHgO%2B1ch3wHbXqI7YTqUetiMPWj%2F4G8pPblMll8Q9syuKXbE7OnpX80doSgjGgop3S%0A9gGJcFBb%2BQ6MeGGRaKQY4wmMICyD2x9HeSOUk8GDxl8jsn7eRZImSX6Z5z55Nib%2Bm8WpM0IN1qyz%0A4dLHanwD7UUNuA%3D%3D%0A&offset=0%2C0&limit=100%2C1000&dimensions=2&totals=0%2C0",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"executionResult\":{\"data\":[[\"5099309.54\",\"22123590.1\"],[\"6614222.47\",\"16332673\"],[\"8269682.68\",\"30326512.18\"],[\"2761931.26\",\"5280100.66\"],[\"2664832.4\",\"6861025.51\"],[\"2607118.07\",\"7684458.67\"]],\"paging\":{\"count\":[6,2],\"offset\":[0,0],\"total\":[6,2]},\"headerItems\":[[[{\"attributeHeaderItem\":{\"name\":\"CompuSci\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165678\"}},{\"attributeHeaderItem\":{\"name\":\"Educationly\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165847\"}},{\"attributeHeaderItem\":{\"name\":\"Explorer\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=342345\"}},{\"attributeHeaderItem\":{\"name\":\"Grammar Plus\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=168737\"}},{\"attributeHeaderItem\":{\"name\":\"PhoenixSoft\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166339\"}},{\"attributeHeaderItem\":{\"name\":\"WonderKid\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166497\"}}]],[[{\"attributeHeaderItem\":{\"name\":\"East Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460488\"}},{\"attributeHeaderItem\":{\"name\":\"West Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460489\"}}],[{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}},{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}}]]]}}",
+                "headers": {
+                    "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+                    "Cache-Control": "max-age=86400,private",
+                    "vary": "accept,accept-encoding,origin,X-GDC-VERSION",
+                    "Content-Type": "application/json;charset=utf-8"
+                }
+            },
+            "uuid": "993e062e-e671-4118-a958-cd793521d2f2"
+        },
+        {
+            "id": "e5859699-e954-4d31-bfa7-068a86b58bcd",
+            "name": "gdc_app_projects_c76e0537d0614abb0027f7c992656b964922506f_executionresults_276086370687418336",
+            "request": {
+                "url": "/gdc/app/projects/c76e0537d0614abb0027f7c992656b964922506f/executionResults/276086370687418336?c=b3432ccf812c90ae2bb40a9feaa828b8&q=eAGtksFPgzAUxv%2BVpXgkwrqRkCXGeFCzizGLOy0cSluWIm1J%2BxDZwv9uGRssxovo9fW9733v9%2FWI%0AJAcjqEWr3RGBgIKjFXqQulKAfJRpIwm4yo3ne154G4auaCspiWmGvlkvMWPcUiNKEFq5rr64Zq4t%0A2DMaSBYc%2BJLZgqo8Vk2GAX%2Fm9SHXFGdlVGv88R7oNA%2FmGEeoTXxkeKkNvBDZOdqqkzfmhI2ue7cE%0AnPO0Aj5hSRjNnRRoIEUntkvcwpRY%2FlhwyRVsN%2Btf%2B3aSAe%2FH7b1gd06fCVsWpHlyFCd5xE5juPLt%0AHM6r0ayiXTqXuMbKGM0JIdVFJVVP6%2BppnNzwfZ%2FW%2F5KIF99JDFdM4RAv%2Fs4yXv7E8nx%2Fe%2Fmuz0ZX%0AJUraL7rRDbg%3D%0A&offset=0%2C0&limit=100%2C1000&dimensions=2&totals=0%2C0",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"executionResult\":{\"data\":[[\"5099309.54\",\"22123590.1\"],[\"6614222.47\",\"16332673\"],[\"8269682.68\",\"30326512.18\"],[\"2761931.26\",\"5280100.66\"],[\"2664832.4\",\"6861025.51\"],[\"2607118.07\",\"7684458.67\"]],\"paging\":{\"count\":[6,2],\"offset\":[0,0],\"total\":[6,2]},\"headerItems\":[[[{\"attributeHeaderItem\":{\"name\":\"CompuSci\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165678\"}},{\"attributeHeaderItem\":{\"name\":\"Educationly\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165847\"}},{\"attributeHeaderItem\":{\"name\":\"Explorer\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=342345\"}},{\"attributeHeaderItem\":{\"name\":\"Grammar Plus\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=168737\"}},{\"attributeHeaderItem\":{\"name\":\"PhoenixSoft\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166339\"}},{\"attributeHeaderItem\":{\"name\":\"WonderKid\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166497\"}}]],[[{\"attributeHeaderItem\":{\"name\":\"East Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460488\"}},{\"attributeHeaderItem\":{\"name\":\"West Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460489\"}}],[{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}},{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}}]]]}}",
+                "headers": {
+                    "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+                    "Cache-Control": "max-age=86400,private",
+                    "vary": "accept,accept-encoding,origin,X-GDC-VERSION",
+                    "Content-Type": "application/json;charset=utf-8"
+                }
+            },
+            "uuid": "e5859699-e954-4d31-bfa7-068a86b58bcd"
+        },
+        {
+            "id": "83d16153-f67f-4b82-a788-2848a38c4073",
+            "name": "gdc_app_projects_c76e0537d0614abb0027f7c992656b964922506f_executionresults_276086370687418336",
+            "request": {
+                "url": "/gdc/app/projects/c76e0537d0614abb0027f7c992656b964922506f/executionResults/276086370687418336?c=b4e694819fb97000e239a1e9f577d00a&q=eAGlkl9PgzAUxb%2FKUnwkFupIliXG%2BKBmL8Ys7mnhobRlAfuHtBeRLXx3iwgaow%2By19ucc8%2F53Z6Q%0AEmAL5tB6f0K5sYoCWqOLIAyC6DKKUIigACn87FaZWoMfDIoN9zN84Awrjo9iyZ1kulzpNidA3srm%0AWBpG8ippDHl9wSYrcUxI4uWuVoradnJcDH4LLhyzRQWF0ahLQ2RFZSw8UtUv3%2BmPGNzrmZG10kPg%0AMdtWHHpZiDLqxJ0USmjYbTf%2FThitrrAY5O6m4NfekYLnk9UgZhT2dt8dnj9JTmnBAJV9k33qC3%2BB%0A8SJeuErS9t5fZNbiJerGSz1YU1eoJ2qaAdu5lJL4J6XxEE%2FW8Jr1v2TiNrb%2B5WlOsyQ%2Bn05CvMef%0A8Lu0ewdFCw24%0A&offset=0%2C0&limit=100%2C1000&dimensions=2&totals=0%2C0",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"executionResult\":{\"data\":[[\"5099309.54\",\"22123590.1\"],[\"6614222.47\",\"16332673\"],[\"8269682.68\",\"30326512.18\"],[\"2761931.26\",\"5280100.66\"],[\"2664832.4\",\"6861025.51\"],[\"2607118.07\",\"7684458.67\"]],\"paging\":{\"count\":[6,2],\"offset\":[0,0],\"total\":[6,2]},\"headerItems\":[[[{\"attributeHeaderItem\":{\"name\":\"CompuSci\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165678\"}},{\"attributeHeaderItem\":{\"name\":\"Educationly\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165847\"}},{\"attributeHeaderItem\":{\"name\":\"Explorer\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=342345\"}},{\"attributeHeaderItem\":{\"name\":\"Grammar Plus\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=168737\"}},{\"attributeHeaderItem\":{\"name\":\"PhoenixSoft\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166339\"}},{\"attributeHeaderItem\":{\"name\":\"WonderKid\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166497\"}}]],[[{\"attributeHeaderItem\":{\"name\":\"East Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460488\"}},{\"attributeHeaderItem\":{\"name\":\"West Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460489\"}}],[{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}},{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}}]]]}}",
+                "headers": {
+                    "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+                    "Cache-Control": "max-age=86400,private",
+                    "vary": "accept,accept-encoding,origin,X-GDC-VERSION",
+                    "Content-Type": "application/json;charset=utf-8"
+                }
+            },
+            "uuid": "83d16153-f67f-4b82-a788-2848a38c4073"
+        },
+        {
+            "id": "ee57c6f0-5191-44b8-b453-c817e3e47b3e",
+            "name": "gdc_app_projects_c76e0537d0614abb0027f7c992656b964922506f_executionresults_276086370687418336",
+            "request": {
+                "url": "/gdc/app/projects/c76e0537d0614abb0027f7c992656b964922506f/executionResults/276086370687418336?c=1548253d06a2c3a9193fa660845f5411&q=eAGlks1OwzAQhF%2BlcjlGOHEbKaqEEAdAvSBU0VPVg2u7VUJsR%2FaGkFZ5dza4%2FHNKjtZ6Zsef50Sc%0AbTxZbE4EcigVWZBHZ2UtgERkx726LZVWBtarJY7oQQqqJT2qufSlMEVm2j0D9lo0x8IKtq%2FSxrKX%0AZ2p3BU3iNKEqyP11Lq%2FQESzwsl%2B32W4jInNflby9s04v5QB7ho6%2B1pq7FtV44AAu39WgBtkl3x2e%0AftHoMK%2BwZa1NoDWWTTb7w%2Ba8caUOuTWYZSSebI4eP4H%2FD%2BvjqZ%2BLR2HMZqSLiFb4E%2BLe2boiSM6p%0Ayjp44Lov2Nq8V01ivHAtEN1jDTjg%2FGIaTafxZRz3%2Bc9QbrStTd%2FJoBjwv4ylKP8iEBwnwW8ilRcu%0Ar6An3227N5N0Dbg%3D%0A&offset=0%2C0&limit=100%2C1000&dimensions=2&totals=0%2C0",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"executionResult\":{\"data\":[[\"5099309.54\",\"22123590.1\"],[\"6614222.47\",\"16332673\"],[\"8269682.68\",\"30326512.18\"],[\"2761931.26\",\"5280100.66\"],[\"2664832.4\",\"6861025.51\"],[\"2607118.07\",\"7684458.67\"]],\"paging\":{\"count\":[6,2],\"offset\":[0,0],\"total\":[6,2]},\"headerItems\":[[[{\"attributeHeaderItem\":{\"name\":\"CompuSci\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165678\"}},{\"attributeHeaderItem\":{\"name\":\"Educationly\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165847\"}},{\"attributeHeaderItem\":{\"name\":\"Explorer\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=342345\"}},{\"attributeHeaderItem\":{\"name\":\"Grammar Plus\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=168737\"}},{\"attributeHeaderItem\":{\"name\":\"PhoenixSoft\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166339\"}},{\"attributeHeaderItem\":{\"name\":\"WonderKid\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166497\"}}]],[[{\"attributeHeaderItem\":{\"name\":\"East Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460488\"}},{\"attributeHeaderItem\":{\"name\":\"West Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460489\"}}],[{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}},{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}}]]]}}",
+                "headers": {
+                    "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+                    "Cache-Control": "max-age=86400,private",
+                    "vary": "accept,accept-encoding,origin,X-GDC-VERSION",
+                    "Content-Type": "application/json;charset=utf-8"
+                }
+            },
+            "uuid": "ee57c6f0-5191-44b8-b453-c817e3e47b3e"
+        },
+        {
+            "id": "e83b8add-4866-4b74-ba35-1a55633b5247",
+            "name": "gdc_app_projects_c76e0537d0614abb0027f7c992656b964922506f_executionresults_276086370687418336",
+            "request": {
+                "url": "/gdc/app/projects/c76e0537d0614abb0027f7c992656b964922506f/executionResults/276086370687418336?c=17ab6f51abc8dc5add35fe1b73f60793&q=eAG1UkFOwzAQ%2FErlcIxI6jZSVAkhDoB6QaiipyoHx3aqhNiO7A0hrfJ3NriAVDil4mZ5d2d2Z%2BZI%0ArOkcWe2OBEqoJVmRZ2tEy4GEJGdO3tdSSQ3bzRpL0V7wSInoIJfC1VxXqe4LCvS96g6V4bRoks7Q%0At9fI5FU0j5N5JP24uy3FDSIyAFvmLciXX2TfpbWYwoTgYIDV4y27LAuJa5VitkcsLInSNTXrH4xV%0Ak%2BApGRCSm7pV2qt10brp4i8tNnJfGv2vh6RLhL%2FU1nRxbutXdE4XDCFREo3mj9a0DUHlrGyMhSem%0AxoBt9We%2FwFV8m1fUvyfYQ2kyinZK1J0yrR7TW6DZDJDvKgiDIL6OY%2Fz8SYXvm3nWmZCO27KB0YAh%0AGz4AtM4NuA%3D%3D%0A&offset=0%2C0&limit=100%2C1000&dimensions=2&totals=0%2C0",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"executionResult\":{\"data\":[[\"5099309.54\",\"22123590.1\"],[\"6614222.47\",\"16332673\"],[\"8269682.68\",\"30326512.18\"],[\"2761931.26\",\"5280100.66\"],[\"2664832.4\",\"6861025.51\"],[\"2607118.07\",\"7684458.67\"]],\"paging\":{\"count\":[6,2],\"offset\":[0,0],\"total\":[6,2]},\"headerItems\":[[[{\"attributeHeaderItem\":{\"name\":\"CompuSci\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165678\"}},{\"attributeHeaderItem\":{\"name\":\"Educationly\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165847\"}},{\"attributeHeaderItem\":{\"name\":\"Explorer\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=342345\"}},{\"attributeHeaderItem\":{\"name\":\"Grammar Plus\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=168737\"}},{\"attributeHeaderItem\":{\"name\":\"PhoenixSoft\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166339\"}},{\"attributeHeaderItem\":{\"name\":\"WonderKid\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166497\"}}]],[[{\"attributeHeaderItem\":{\"name\":\"East Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460488\"}},{\"attributeHeaderItem\":{\"name\":\"West Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460489\"}}],[{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}},{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}}]]]}}",
+                "headers": {
+                    "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+                    "Cache-Control": "max-age=86400,private",
+                    "vary": "accept,accept-encoding,origin,X-GDC-VERSION",
+                    "Content-Type": "application/json;charset=utf-8"
+                }
+            },
+            "uuid": "e83b8add-4866-4b74-ba35-1a55633b5247"
+        },
+        {
+            "id": "081ecb50-b611-404d-a830-7ae43afceae6",
+            "name": "gdc_app_projects_c76e0537d0614abb0027f7c992656b964922506f_executionresults_276086370687418336",
+            "request": {
+                "url": "/gdc/app/projects/c76e0537d0614abb0027f7c992656b964922506f/executionResults/276086370687418336?c=9c66f79909334cd17cf0a932080a8006&q=eAGtkj9rwzAQxb9KkDua2lZjCIFSOrQlSymhmYIHWZKDXEsy%2BlPXCf7uPVeEeMnidNSh%2B7337u6E%0ADG%2B1ce9EcrRGO%2BWEazhDMaK68VJZtN6fUEksf2m45Mrtthv4lxwYTSRLjnzJbENVvVJ9hR3%2Bqbtj%0ArSmu2rzT%2BPsr0WWdZOnqIeGh3T4J9gj0PxkAbflBaAUF4pwRpXd8w%2Bbwp4TPMcKUbb2UxPRQGpW1%0AI80Ya18UMWLCtg3pX7WRs4SXaIiR5OCdvhntWwTM8AyTO%2Bd8ltorB%2FIVKBEHVu6iOIrS%2BzSFYuiY%0AYQDjHNov%2BYLMIvAWjFtqROvGCQ9gzOguuLo0%2FPdAcgzEm3aZZ1PCeZcfRjNPxwHeeot5du0WzxpD%0AMfwCMt0NuA%3D%3D%0A&offset=0%2C0&limit=100%2C1000&dimensions=2&totals=0%2C0",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"executionResult\":{\"data\":[[\"5099309.54\",\"22123590.1\"],[\"6614222.47\",\"16332673\"],[\"8269682.68\",\"30326512.18\"],[\"2761931.26\",\"5280100.66\"],[\"2664832.4\",\"6861025.51\"],[\"2607118.07\",\"7684458.67\"]],\"paging\":{\"count\":[6,2],\"offset\":[0,0],\"total\":[6,2]},\"headerItems\":[[[{\"attributeHeaderItem\":{\"name\":\"CompuSci\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165678\"}},{\"attributeHeaderItem\":{\"name\":\"Educationly\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165847\"}},{\"attributeHeaderItem\":{\"name\":\"Explorer\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=342345\"}},{\"attributeHeaderItem\":{\"name\":\"Grammar Plus\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=168737\"}},{\"attributeHeaderItem\":{\"name\":\"PhoenixSoft\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166339\"}},{\"attributeHeaderItem\":{\"name\":\"WonderKid\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166497\"}}]],[[{\"attributeHeaderItem\":{\"name\":\"East Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460488\"}},{\"attributeHeaderItem\":{\"name\":\"West Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460489\"}}],[{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}},{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}}]]]}}",
+                "headers": {
+                    "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+                    "Cache-Control": "max-age=86400,private",
+                    "vary": "accept,accept-encoding,origin,X-GDC-VERSION",
+                    "Content-Type": "application/json;charset=utf-8"
+                }
+            },
+            "uuid": "081ecb50-b611-404d-a830-7ae43afceae6"
+        },
+        {
+            "id": "a8938540-de66-4a78-b0e4-b4d9d82459f3",
+            "name": "gdc_app_projects_c76e0537d0614abb0027f7c992656b964922506f_executionresults_276086370687418336",
+            "request": {
+                "url": "/gdc/app/projects/c76e0537d0614abb0027f7c992656b964922506f/executionResults/276086370687418336?c=dc9af61be2ea080568e6549719eac6f7&q=eAGlkl1LwzAUhv%2FKSL0spstWKAMRL1R2IzLc1dhFlqQjNR8lH9Zu9L%2BbLgp2etXeJYc3b8553nMG%0ARjcWrHZnYL2U2LRgBUAKHHeCheOr0dQT11e0w6JX7vb7FBywZY%2BCSabcdrMOQnikBEoKT2xJrSCq%0AKlRbIoc%2Bq%2BZUaYLKOm80%2BniH%2BlDBeZbPIYvP7T2nd8EfO2f4wTu2pmPsfju8%2FWmeclsL3D5pI0fZ%0AI9CFoYkWXqpI6wfQhh25VuH3Ab6peIrFNZ4h%2FkmwikVodyKRYvkf8G8YXQokC2mSZ6N9DQK5eB2S%0Ae5Daq36zypAKdiH0myRNkuw2ywY4o24WLWaUWWJ47SL0WBwRKUL5JVLDam3cC5b9sm%2FVJVUKui%2Fu%0AZQ24%0A&offset=0%2C0&limit=100%2C1000&dimensions=2&totals=0%2C0",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"executionResult\":{\"data\":[[\"5099309.54\",\"22123590.1\"],[\"6614222.47\",\"16332673\"],[\"8269682.68\",\"30326512.18\"],[\"2761931.26\",\"5280100.66\"],[\"2664832.4\",\"6861025.51\"],[\"2607118.07\",\"7684458.67\"]],\"paging\":{\"count\":[6,2],\"offset\":[0,0],\"total\":[6,2]},\"headerItems\":[[[{\"attributeHeaderItem\":{\"name\":\"CompuSci\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165678\"}},{\"attributeHeaderItem\":{\"name\":\"Educationly\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165847\"}},{\"attributeHeaderItem\":{\"name\":\"Explorer\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=342345\"}},{\"attributeHeaderItem\":{\"name\":\"Grammar Plus\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=168737\"}},{\"attributeHeaderItem\":{\"name\":\"PhoenixSoft\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166339\"}},{\"attributeHeaderItem\":{\"name\":\"WonderKid\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166497\"}}]],[[{\"attributeHeaderItem\":{\"name\":\"East Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460488\"}},{\"attributeHeaderItem\":{\"name\":\"West Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460489\"}}],[{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}},{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}}]]]}}",
+                "headers": {
+                    "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+                    "Cache-Control": "max-age=86400,private",
+                    "vary": "accept,accept-encoding,origin,X-GDC-VERSION",
+                    "Content-Type": "application/json;charset=utf-8"
+                }
+            },
+            "uuid": "a8938540-de66-4a78-b0e4-b4d9d82459f3"
+        },
+        {
+            "id": "d46db132-10f8-44ca-ad96-18bcc3e82508",
+            "name": "gdc_app_projects_c76e0537d0614abb0027f7c992656b964922506f_executionresults_276086370687418336",
+            "request": {
+                "url": "/gdc/app/projects/c76e0537d0614abb0027f7c992656b964922506f/executionResults/276086370687418336?c=c0545eeaa35946e9b4e2cb13864d99a5&q=eAGlkkFPwzAMhf%2FKlHKsaJetUjUJIQ6AdkFoYqdphzTJppQmqRKX0k3973iEiQLi0h1ty89P3%2FOR%0AONt6stgcCSioJFmQZ2dFw4HEpGBe3ldSSwPr1RJHyV7wRIvkIOfCV9yUuel2FOh72R5Ky%2BmuzlpL%0A314TW5TJNM2miQzr%2FlaJG1RkAE4VDcilGCM3VHj5Y1coX1ese7BOj5KnKA8WWHXisdluY%2BIbrZnr%0A0CrpsXSytg6emD5hWptPYAKXuK0abX5SXMm9sgaHl0LMZ78h%2FusxJhciyOdDwmMg5rOhwjmjLxh9%0ATLTEB%2BCPzjY1QaKhDOS%2BYd9p2xiYhOFESM%2BdqiHgDM0R1ijN0NoOn4MBxncVxVGUXqcpNs%2BfH%2B5i%0A1P0HEd0NuA%3D%3D%0A&offset=0%2C0&limit=100%2C1000&dimensions=2&totals=0%2C0",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"executionResult\":{\"data\":[[\"5099309.54\",\"22123590.1\"],[\"6614222.47\",\"16332673\"],[\"8269682.68\",\"30326512.18\"],[\"2761931.26\",\"5280100.66\"],[\"2664832.4\",\"6861025.51\"],[\"2607118.07\",\"7684458.67\"]],\"paging\":{\"count\":[6,2],\"offset\":[0,0],\"total\":[6,2]},\"headerItems\":[[[{\"attributeHeaderItem\":{\"name\":\"CompuSci\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165678\"}},{\"attributeHeaderItem\":{\"name\":\"Educationly\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165847\"}},{\"attributeHeaderItem\":{\"name\":\"Explorer\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=342345\"}},{\"attributeHeaderItem\":{\"name\":\"Grammar Plus\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=168737\"}},{\"attributeHeaderItem\":{\"name\":\"PhoenixSoft\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166339\"}},{\"attributeHeaderItem\":{\"name\":\"WonderKid\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166497\"}}]],[[{\"attributeHeaderItem\":{\"name\":\"East Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460488\"}},{\"attributeHeaderItem\":{\"name\":\"West Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460489\"}}],[{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}},{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}}]]]}}",
+                "headers": {
+                    "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+                    "Cache-Control": "max-age=86400,private",
+                    "vary": "accept,accept-encoding,origin,X-GDC-VERSION",
+                    "Content-Type": "application/json;charset=utf-8"
+                }
+            },
+            "uuid": "d46db132-10f8-44ca-ad96-18bcc3e82508"
+        },
+        {
+            "id": "6194f09f-231a-434a-a6c3-7335a2ce2609",
+            "name": "gdc_app_projects_c76e0537d0614abb0027f7c992656b964922506f_executionresults_276086370687418336",
+            "request": {
+                "url": "/gdc/app/projects/c76e0537d0614abb0027f7c992656b964922506f/executionResults/276086370687418336?c=1f5e1d319a8b366d3797d4775478ef5a&q=eAGlksFrgzAUxv%2BVEneUqWmFUhhjh230MkZZT8VDTGKJM4kkzzlb%2FN8XF2S2u9lb8ki%2B773f986I%0A6qqRyqLN4YxAQMXRBu34UWiFQmQbKYnpXMldmLB1RboXbeSWuVJ0ZDSSLDrxFbMVVeVadQUG%2FF22%0Ap1JTXNRpq%2FHXZ6TzMkri9cppEAAj8gb4x7VVTix%2FrrjkCva77Qz5ZcT9d%2Fso2IPzAg2kGgY7ZNnE%0AeVbvS9SHSHLXPH01uqmRUzS69dguKI0M341mDYXpzHOc0%2BTfJLeSSpNrUjcmm%2BLplGOyI4B%2BQMVr%0AbeCNyGG79uqXEXOfPFFP0Z9nMMI4dVKFW0sCTv4uCIMgvo9jV%2FxL5knqRsHCmywYt9SIGvyWj5H5%0AN6jP%2Bh%2BtqQ24%0A&offset=0%2C0&limit=100%2C1000&dimensions=2&totals=0%2C0",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"executionResult\":{\"data\":[[\"5099309.54\",\"22123590.1\"],[\"6614222.47\",\"16332673\"],[\"8269682.68\",\"30326512.18\"],[\"2761931.26\",\"5280100.66\"],[\"2664832.4\",\"6861025.51\"],[\"2607118.07\",\"7684458.67\"]],\"paging\":{\"count\":[6,2],\"offset\":[0,0],\"total\":[6,2]},\"headerItems\":[[[{\"attributeHeaderItem\":{\"name\":\"CompuSci\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165678\"}},{\"attributeHeaderItem\":{\"name\":\"Educationly\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165847\"}},{\"attributeHeaderItem\":{\"name\":\"Explorer\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=342345\"}},{\"attributeHeaderItem\":{\"name\":\"Grammar Plus\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=168737\"}},{\"attributeHeaderItem\":{\"name\":\"PhoenixSoft\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166339\"}},{\"attributeHeaderItem\":{\"name\":\"WonderKid\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166497\"}}]],[[{\"attributeHeaderItem\":{\"name\":\"East Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460488\"}},{\"attributeHeaderItem\":{\"name\":\"West Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460489\"}}],[{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}},{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}}]]]}}",
+                "headers": {
+                    "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+                    "Cache-Control": "max-age=86400,private",
+                    "vary": "accept,accept-encoding,origin,X-GDC-VERSION",
+                    "Content-Type": "application/json;charset=utf-8"
+                }
+            },
+            "uuid": "6194f09f-231a-434a-a6c3-7335a2ce2609"
+        },
+        {
+            "id": "49434421-7836-432a-a60c-1fcdafe75061",
+            "name": "gdc_app_projects_c76e0537d0614abb0027f7c992656b964922506f_executionresults_276086370687418336",
+            "request": {
+                "url": "/gdc/app/projects/c76e0537d0614abb0027f7c992656b964922506f/executionResults/276086370687418336?c=c2c5f408266d7215f63465742e7f7b3a&q=eAGtUstqwzAQ%2FJUg92gqR4nBBErpoS25lBKaU8hBkeQgVw%2BjR10n%2BN8rVYGGkJPT22olzczOzhEY%0A3Vmw2ByB9VJi04MFADlw3AkWynejqScudLBzhu%2B8Y0sa%2BnBPCZQUHticWkFUU6m%2BRg59N92h0QTV%0Abdlp9PUJ9a6B06KcRkztsIhcm%2B02Bzts2bNgkim3Xi3HQEKWvttHTh8CPuW2Fbh%2F0UaO0ojOp%2Fy4%0AMGAIkokWXqrk1o1k1fwa2YrtuVbnN2MGqWYB4X%2FNrmaXZl9Ny0n%2FkAPJQlrIq9G%2BBcG5dEzOpXrE%0AYAiVcbDTYp6k9ioGsw77xi4E6C7Ls6y4L4rQ%2FJOX3k0S64QySwxvXbQ5rtSwVhv3hmUM%2B1r9glMw%0A%2FAATRA24%0A&offset=0%2C0&limit=100%2C1000&dimensions=2&totals=0%2C0",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"executionResult\":{\"data\":[[\"5099309.54\",\"22123590.1\"],[\"6614222.47\",\"16332673\"],[\"8269682.68\",\"30326512.18\"],[\"2761931.26\",\"5280100.66\"],[\"2664832.4\",\"6861025.51\"],[\"2607118.07\",\"7684458.67\"]],\"paging\":{\"count\":[6,2],\"offset\":[0,0],\"total\":[6,2]},\"headerItems\":[[[{\"attributeHeaderItem\":{\"name\":\"CompuSci\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165678\"}},{\"attributeHeaderItem\":{\"name\":\"Educationly\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=165847\"}},{\"attributeHeaderItem\":{\"name\":\"Explorer\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=342345\"}},{\"attributeHeaderItem\":{\"name\":\"Grammar Plus\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=168737\"}},{\"attributeHeaderItem\":{\"name\":\"PhoenixSoft\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166339\"}},{\"attributeHeaderItem\":{\"name\":\"WonderKid\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1051/elements?id=166497\"}}]],[[{\"attributeHeaderItem\":{\"name\":\"East Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460488\"}},{\"attributeHeaderItem\":{\"name\":\"West Coast\",\"uri\":\"/gdc/md/c76e0537d0614abb0027f7c992656b964922506f/obj/1083/elements?id=460489\"}}],[{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}},{\"measureHeaderItem\":{\"name\":\"Amount\",\"order\":0}}]]]}}",
+                "headers": {
+                    "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+                    "Cache-Control": "max-age=86400,private",
+                    "vary": "accept,accept-encoding,origin,X-GDC-VERSION",
+                    "Content-Type": "application/json;charset=utf-8"
+                }
+            },
+            "uuid": "49434421-7836-432a-a60c-1fcdafe75061"
+        }
+    ]
+}

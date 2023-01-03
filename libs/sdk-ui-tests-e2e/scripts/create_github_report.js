@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 // (C) 2021-2022 GoodData Corporation
-const fs = require("fs");
-const path = require("path");
-const util = require("util");
 
-const { getTestResults, RESULTS_DIR } = require("./test_results.js");
+import fs from "fs";
+import path from "path";
+import util from "util";
+
+import { getTestResults, RESULTS_DIR } from "./lib/test_results.js";
 
 const GITHUB_MESSAGE_FILE = path.resolve(RESULTS_DIR, "github_message.md");
 
@@ -42,7 +43,9 @@ function createSuitesMessage(testResults) {
 
         const shortFileName = file.split("/").slice(-1)[0];
 
-        const videoFile = BUILD_URL ? `${BUILD_URL}artifact/libs/sdk-ui-tests-e2e/cypress/videos/` : `#`;
+        const videoFile = BUILD_URL
+            ? `${BUILD_URL}/artifact/libs/sdk-ui-tests-e2e/cypress/videos/${shortFileName}.mp4`
+            : `#`;
 
         const formattedFile = isFailing ? `[🎥 ${shortFileName}](${videoFile})` : shortFileName;
 
