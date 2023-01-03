@@ -4,79 +4,45 @@ import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { Dashboard } from "@gooddata/sdk-ui-dashboard";
 
 import { backend } from "./backend";
-import { workspace } from "./constants";
 import logo from "./assets/gooddata-logo.svg";
-import * as Md from "./md/full";
-
-const Content: React.FC = () => {
-    return (
-        <div className="container">
-            <div className="header">
-                <div className="logo">
-                    <a
-                        className="logo-link"
-                        href="https://sdk.gooddata.com/gooddata-ui"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        <img className="logo-link-image" src={logo} />
-                        <h1 className="logo-link-title">GoodData.UI</h1>
-                    </a>
-                </div>
-                <div className="navigation">
-                    <a
-                        className="navigation-link"
-                        href="https://sdk.gooddata.com/gooddata-ui"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        📚 Official documentation
-                    </a>
-                    <a
-                        className="navigation-link"
-                        href="https://sdk.gooddata.com/gooddata-ui/docs/quickstart.html"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        🚀 Getting started
-                    </a>
-                    <a
-                        className="navigation-link"
-                        href="https://gdui-examples.herokuapp.com/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        📊 Examples Gallery
-                    </a>
-                    <a
-                        className="navigation-link"
-                        href="https://sdk.gooddata.com/gooddata-ui-apidocs/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        ⚙️ API reference
-                    </a>
-                </div>
-            </div>
-            <div className="content">
-                <Dashboard dashboard={Md.Dashboards._1Overview} />
-            </div>
-            <div className="footer">
-                Powered by{" "}
-                <a href="https://sdk.gooddata.com/gooddata-ui" target="_blank" rel="noopener noreferrer">
-                    GoodData.UI
-                </a>
-            </div>
-        </div>
-    );
-};
+import * as cat from "./catalog";
 
 export const App: React.FC = () => {
     return (
         <BackendProvider backend={backend}>
-            <WorkspaceProvider workspace={workspace}>
-                <Content />
+            <WorkspaceProvider workspace="demo">
+                <div className="container">
+                    <div className="header">
+                        <div className="logo">
+                            <Link className="logo-link" href="https://sdk.gooddata.com/gooddata-ui">
+                                <img alt="GoodData logo" className="logo-link-image" src={logo} />
+                                <h1 className="logo-link-title">GoodData.UI</h1>
+                            </Link>
+                        </div>
+                        <div className="navigation">
+                            <Link href="https://sdk.gooddata.com/gooddata-ui">📚 Official documentation</Link>
+                            <Link href="https://sdk.gooddata.com/gooddata-ui/docs/quickstart.html">
+                                🚀 Getting started
+                            </Link>
+                            <Link href="https://gdui-examples.herokuapp.com/">📊 Examples Gallery</Link>
+                            <Link href="https://sdk.gooddata.com/gooddata-ui-apidocs/">⚙️ API reference</Link>
+                        </div>
+                    </div>
+                    <div className="content">
+                        {/* Embed a GoodData dashboard into the application */}
+                        <Dashboard dashboard={cat.Dashboards._1Overview} />
+                    </div>
+                    <div className="footer">
+                        Powered by <Link href="https://sdk.gooddata.com/gooddata-ui">GoodData.UI</Link>
+                    </div>
+                </div>
             </WorkspaceProvider>
         </BackendProvider>
     );
 };
+
+const Link: React.FC<{ className?: string; href: string }> = ({ className, href, children }) => (
+    <a href={href} className={className ?? "navigation-link"} target="_blank" rel="noopener noreferrer">
+        {children}
+    </a>
+);
