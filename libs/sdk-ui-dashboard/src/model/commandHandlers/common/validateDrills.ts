@@ -1,11 +1,10 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import {
     DrillDefinition,
     IInsightWidget,
     IKpiWidget,
     InsightDrillDefinition,
     isInsightWidget,
-    IWidget,
     widgetRef,
 } from "@gooddata/sdk-model";
 import { SagaIterator } from "redux-saga";
@@ -13,7 +12,6 @@ import { all, call, put, SagaReturnType } from "redux-saga/effects";
 import flatMap from "lodash/flatMap";
 import { IDashboardCommand } from "../../commands";
 import { insightWidgetDrillsRemoved } from "../../events/insight";
-import { kpiWidgetDrillRemoved } from "../../events/kpi";
 import { layoutActions } from "../../store/layout";
 import { DashboardContext } from "../../types/commonTypes";
 import { existsDrillDefinitionInArray } from "../widgets/validation/insightDrillDefinitionUtils";
@@ -21,12 +19,11 @@ import {
     getValidationData,
     validateDrillDefinition,
 } from "../widgets/validation/insightDrillDefinitionValidation";
-import { validateKpiDrill } from "../widgets/validation/kpiDrillValidation";
 import { uiActions } from "../../store/ui";
 
 interface IInvalidDrillInfo {
     invalidDrills: DrillDefinition[];
-    widget: IWidget;
+    widget: IInsightWidget;
 }
 
 export function* validateDrills(
@@ -34,8 +31,10 @@ export function* validateDrills(
     cmd: IDashboardCommand,
     widgets: (IKpiWidget | IInsightWidget)[],
 ) {
-    const possibleInvalidDrills: SagaReturnType<typeof validateWidgetDrills>[] = yield all(
-        widgets.map((widget) => call(validateWidgetDrills, ctx, cmd, widget)),
+    const possibleInvalidDrills: SagaReturnType<typeof validateInsightDrillDefinitions>[] = yield all(
+        widgets
+            .filter(isInsightWidget) // KPI drills should not be validated like this and never removed
+            .map((widget) => call(validateInsightDrillDefinitions, ctx, cmd, widget)),
     );
 
     const invalidDrills = possibleInvalidDrills.filter(({ invalidDrills }) => invalidDrills.length > 0);
@@ -45,9 +44,7 @@ export function* validateDrills(
     } else {
         yield all(
             invalidDrills.map((drillInfo) =>
-                isInsightWidget(drillInfo.widget)
-                    ? call(removeInsightWidgetDrills, ctx, cmd, drillInfo.widget, drillInfo.invalidDrills)
-                    : call(removeKpiWidgetDrill, ctx, cmd, drillInfo.widget),
+                call(removeInsightWidgetDrills, ctx, cmd, drillInfo.widget, drillInfo.invalidDrills),
             ),
         );
 
@@ -75,41 +72,6 @@ function* removeInsightWidgetDrills(
     yield put(insightWidgetDrillsRemoved(ctx, widgetRef(widget), invalidDrills, cmd.correlationId));
 }
 
-function* removeKpiWidgetDrill(ctx: DashboardContext, cmd: IDashboardCommand, widget: IKpiWidget) {
-    yield put(
-        layoutActions.replaceKpiWidgetDrillWithoutUndo({
-            ref: widgetRef(widget),
-            drill: undefined,
-        }),
-    );
-
-    yield put(kpiWidgetDrillRemoved(ctx, widgetRef(widget), cmd.correlationId));
-}
-
-function* validateWidgetDrills(
-    ctx: DashboardContext,
-    cmd: IDashboardCommand,
-    widget: IWidget,
-): SagaIterator<IInvalidDrillInfo> {
-    if (isInsightWidget(widget)) {
-        const result: SagaReturnType<typeof validateInsightDrillDefinitions> = yield call(
-            validateInsightDrillDefinitions,
-            ctx,
-            cmd,
-            widget,
-        );
-        return result;
-    } else {
-        const result: SagaReturnType<typeof validateKpiDrillDefinitions> = yield call(
-            validateKpiDrillDefinitions,
-            ctx,
-            cmd,
-            widget,
-        );
-        return result;
-    }
-}
-
 function* validateInsightDrillDefinitions(
     ctx: DashboardContext,
     cmd: IDashboardCommand,
@@ -132,17 +94,4 @@ function* validateInsightDrillDefinitions(
     });
 
     return { invalidDrills, widget };
-}
-
-function* validateKpiDrillDefinitions(
-    ctx: DashboardContext,
-    cmd: IDashboardCommand,
-    widget: IKpiWidget,
-): SagaIterator<IInvalidDrillInfo> {
-    try {
-        yield call(validateKpiDrill, widget.drills[0], ctx, cmd);
-        return { widget, invalidDrills: [] };
-    } catch {
-        return { widget, invalidDrills: widget.drills };
-    }
 }
