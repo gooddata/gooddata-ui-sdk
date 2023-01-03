@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import React, { useCallback } from "react";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 import { ISaveAsDialogProps } from "../types";
@@ -6,14 +6,15 @@ import { useSaveAs } from "./useSaveAs";
 import { SaveAsDialogRenderer } from "./SaveAsDialogRenderer";
 import { messages } from "../../../locales";
 import {
-    changeRenderMode,
+    // changeRenderMode,
     selectIsSaveAsDialogOpen,
     uiActions,
-    useDashboardCommandProcessing,
+    // useDashboardCommandProcessing,
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../model";
 
+//TODO: RAIL-4750 fix redirect to view mode
 /**
  * @internal
  */
@@ -29,7 +30,7 @@ export function useSaveAsDialogProps(): ISaveAsDialogProps {
         closeSaveAsDialog();
         addError(messages.messagesDashboardSaveFailed);
     }, [closeSaveAsDialog, addError]);
-
+    /* TODO: RAIL-4750 fix redirect to view mode
     const { run: changeEditMode } = useDashboardCommandProcessing({
         commandCreator: changeRenderMode,
         errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
@@ -37,13 +38,16 @@ export function useSaveAsDialogProps(): ISaveAsDialogProps {
         onSuccess: () => {
             addSuccess(messages.messagesDashboardSaveSuccess);
         },
-    });
+    });*/
 
     const onSaveAsSuccess = useCallback(() => {
         closeSaveAsDialog();
+        // TODO: RAIL-4750 fix redirect to view mode
         // need wait till change mode is finished
-        changeEditMode("view", { resetDashboard: false });
-    }, [closeSaveAsDialog, changeEditMode]);
+        //changeEditMode("view", { resetDashboard: true });
+
+        addSuccess(messages.messagesDashboardSaveSuccess);
+    }, [closeSaveAsDialog, addSuccess]);
 
     const onSaveAsCancel = useCallback(() => {
         closeSaveAsDialog();
