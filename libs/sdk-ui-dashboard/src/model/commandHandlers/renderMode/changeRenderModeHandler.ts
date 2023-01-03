@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import { DashboardContext } from "../../types/commonTypes";
@@ -25,11 +25,14 @@ export function* changeRenderModeHandler(
     const editModeEnabled = yield select(selectDashboardEditModeDevRollout);
 
     if (renderMode === "view" || editModeEnabled) {
-        yield put(renderModeActions.setRenderMode(renderMode));
-
+        //we need reset dashboard and widgets first, change edit mode force visualizations to re-execute.
+        //To avoid sending DashboardWidgetExecutionSucceeded or DashboardWidgetExecutionFailed events
+        //for discarded widgets must be sanitization done before mode changed.
         if (renderModeChangeOptions.resetDashboard) {
             yield call(resetDashboardHandler, ctx, resetDashboardCommand(correlationId));
         }
+
+        yield put(renderModeActions.setRenderMode(renderMode));
 
         if (renderMode === "edit") {
             const widgets: ReturnType<typeof selectAllAnalyticalWidgets> = yield select(
