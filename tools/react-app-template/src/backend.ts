@@ -1,9 +1,9 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { withCaching, RecommendedCachingConfiguration } from "@gooddata/sdk-backend-base";
-import backendFactory, { AnonymousAuthProvider } from "@gooddata/sdk-backend-tiger";
+import backendFactory, { ContextDeferredAuthProvider } from "@gooddata/sdk-backend-tiger";
 
 export const backend: IAnalyticalBackend = withCaching(
-    backendFactory().withAuthentication(new AnonymousAuthProvider()),
+    backendFactory().withAuthentication(new ContextDeferredAuthProvider()),
     RecommendedCachingConfiguration,
 );
