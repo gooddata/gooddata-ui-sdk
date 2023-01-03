@@ -1,6 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 @use "@gooddata/sdk-ui-kit/styles/scss/Button/_variables" as button-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "zIndexes";
 
 $horizontal-space: 20px;
 $vertical-space: 10px;
@@ -549,12 +550,12 @@ $vertical-space: 10px;
 
 .gd-scheduled-email-delete-dialog-overlay {
     .modalityPlugin-mask {
-        z-index: 5001;
+        z-index: zIndexes.$scheduled-email-mask;
     }
 
     @media #{kit-variables.$small-only} {
         .modalityPlugin-mask {
-            z-index: 5002;
+            z-index: zIndexes.$scheduled-email-mask-small;
         }
     }
 }

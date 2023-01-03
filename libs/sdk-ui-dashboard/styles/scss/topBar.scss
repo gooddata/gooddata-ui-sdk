@@ -1,4 +1,5 @@
 @use "variables";
+@use "zIndexes";
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
@@ -131,7 +132,7 @@
 }
 
 .overlay-wrapper {
-    z-index: 5001;
+    z-index: zIndexes.$topbar-basic;
 }
 
 .gd-list-item.delete-button {
