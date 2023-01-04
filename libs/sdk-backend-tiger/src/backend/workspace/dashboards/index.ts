@@ -63,6 +63,8 @@ import { objRefsToIdentifiers, objRefToIdentifier } from "../../../utils/api";
 import { resolveWidgetFilters } from "./widgetFilters";
 import includes from "lodash/includes";
 import { buildDashboardPermissions, TigerDashboardPermissionType } from "./dashboardPermissions";
+import { convertExportMetadata as convertToBackendExportMetadata } from "../../../convertors/toBackend/ExportMetadataConverter";
+import { convertExportMetadata as convertFromBackendExportMetadata } from "../../../convertors/fromBackend/ExportMetadataConverter";
 
 const DEFAULT_POLL_DELAY = 5000;
 const MAX_POLL_ATTEMPTS = 50;
@@ -104,10 +106,6 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             );
         }
 
-        const filterContextByRef = filterContextRef
-            ? await this.getFilterContext(filterContextRef)
-            : undefined;
-
         const id = await objRefToIdentifier(ref, this.authCall);
         const result = await this.authCall((client) => {
             return client.entities.getEntityAnalyticalDashboards(
@@ -123,11 +121,11 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             );
         });
 
-        const included = result.data.included || [];
-        const filterContext = filterContextByRef
-            ? filterContextByRef
-            : getFilterContextFromIncluded(included);
-
+        const filterContext = await this.prepareFilterContext(
+            options?.exportId,
+            filterContextRef,
+            result?.data?.included,
+        );
         return convertDashboard(result.data, filterContext);
     };
 
@@ -143,19 +141,14 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             );
         }
 
-        const filterContextByRef = filterContextRef
-            ? await this.getFilterContext(filterContextRef)
-            : undefined;
-
         const dashboard = await this.getDashboardWithSideloads(ref, types);
         const included = dashboard.included || [];
         const insights = included.filter(isVisualizationObjectsItem).map(visualizationObjectsItemToInsight);
         const plugins = included
             .filter(isDashboardPluginsItem)
             .map(convertDashboardPluginWithLinksFromBackend);
-        const filterContext = filterContextByRef
-            ? filterContextByRef
-            : getFilterContextFromIncluded(included);
+
+        const filterContext = await this.prepareFilterContext(options?.exportId, filterContextRef, included);
 
         return {
             dashboard: convertDashboard(dashboard, filterContext),
@@ -180,6 +173,25 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                     .map(convertDashboardPluginWithLinksFromBackend),
             };
         });
+    };
+
+    private getFilterContextFromExportId = async (exportId: string): Promise<IFilterContext> => {
+        const md = await this.authCall((client) => {
+            return client.export.getMetadata({
+                workspaceId: this.workspace,
+                exportId,
+            });
+        }).then((result) => result.data);
+
+        const { filters } = convertFromBackendExportMetadata(md);
+        return {
+            filters,
+            title: `temp-filter-context-${exportId}`,
+            description: "temp-filter-context-description",
+            ref: { identifier: `identifier-${exportId}` },
+            uri: `uri-${exportId}`,
+            identifier: `identifier-${exportId}`,
+        };
     };
 
     private getDashboardWithSideloads = async (
@@ -336,7 +348,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             const pdfExportRequest = {
                 fileName: title,
                 dashboardId,
-                metadata: { filters: withoutAllTime },
+                metadata: convertToBackendExportMetadata({ filters: withoutAllTime }),
             };
             const pdfExport = await client.export.createPdfExport({
                 workspaceId: this.workspace,
@@ -642,5 +654,26 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         });
 
         return convertFilterContextFromBackend(result.data);
+    };
+
+    // prepare filter context with priority for given filtercontext options
+    private prepareFilterContext = async (
+        exportId: string | undefined,
+        filterContextRef: ObjRef | undefined,
+        includedFilterContext: JsonApiAnalyticalDashboardOutDocument["included"] = [],
+    ): Promise<IFilterContext | undefined> => {
+        const filterContextByRef = filterContextRef
+            ? await this.getFilterContext(filterContextRef)
+            : undefined;
+
+        const filterContextByExportId = exportId
+            ? await this.getFilterContextFromExportId(exportId)
+            : undefined;
+
+        return (
+            filterContextByExportId ||
+            filterContextByRef ||
+            getFilterContextFromIncluded(includedFilterContext)
+        );
     };
 }

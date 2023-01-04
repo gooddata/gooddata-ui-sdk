@@ -844,6 +844,7 @@ export interface IFilterElementsQuery {
 
 // @alpha
 export interface IGetDashboardOptions {
+    exportId?: string;
     includeAvailableViaLink?: boolean;
     loadUserData?: boolean;
 }

@@ -189,6 +189,23 @@ export interface DashboardConfig {
      * Provide widgets overlays for dashboard
      */
     widgetsOverlay?: Record<string, IDashboardWidgetOverlay>;
+
+    /**
+     * @internal
+     * Identifier of the export
+     *
+     * @remarks
+     * This identifier is utilized only by those backend implementations which suport storing
+     * export metadata with the export request and is typically used to store inlined filter context.
+     * In the future, there's a possibility to store some additional export-related temporary metadata there.
+     *
+     * As the backend does not expose the filter context publicly, this id is then used to access export metadata
+     * api, retrieve the metadata and extract filter context from there.
+     *
+     * Important: When exportId is given, the filter context stored with export metadata for this exportId has
+     * priority over other stored or supplied filter context.
+     */
+    exportId?: string;
 }
 
 /**
@@ -199,11 +216,13 @@ export interface DashboardConfig {
  * Note: the resolved config may still contain some undefined properties:
  *
  * -  `mapboxToken` - has to be provided by the context
+ * -  `exportId` - optional, used for fetching filters during export mode
  * -  `isReadOnly` - is purely choice of context in which the dashboard is used
  *
  * @public
  */
-export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken"> & DashboardConfig;
+export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "exportId"> &
+    DashboardConfig;
 
 /**
  *

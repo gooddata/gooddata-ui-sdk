@@ -1094,6 +1094,8 @@ export interface DashboardConfig {
     disableDefaultDrills?: boolean;
     enableFilterValuesResolutionInDrillEvents?: boolean;
     // @internal
+    exportId?: string;
+    // @internal
     hideSaveAsNewButton?: boolean;
     // @internal
     hideShareButton?: boolean;
@@ -5509,7 +5511,7 @@ export interface ResolveAsyncRenderPayload {
 }
 
 // @public
-export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken"> & DashboardConfig;
+export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "exportId"> & DashboardConfig;
 
 // @alpha (undocumented)
 export type ResolvedDateFilterValues = IResolvedDateFilterValue[];

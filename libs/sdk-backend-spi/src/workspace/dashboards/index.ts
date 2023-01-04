@@ -106,6 +106,14 @@ export interface IGetDashboardOptions {
      * Defaults to false.
      */
     includeAvailableViaLink?: boolean;
+
+    /**
+     * Specify id of the currently performed dashboard pdf export.
+     * This id is used to retrieve export-related metadata, such as currently active attribute filters.
+     *
+     * The id is missing when the dashboard is not loaded in the export mode
+     */
+    exportId?: string;
 }
 
 /**

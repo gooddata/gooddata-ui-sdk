@@ -273,17 +273,20 @@ export class DashboardLoader implements IDashboardLoader {
         // eslint-disable-next-line no-console
         console.debug("Loading the dashboard...");
 
+        const { config } = this.baseProps;
+        let dashboardConfig = config;
+
         const dashboardWithPlugins =
             dashboardRef &&
             (await backend
                 .workspace(workspace)
                 .dashboards()
-                .getDashboardWithReferences(dashboardRef, filterContextRef, { loadUserData: true }, [
-                    "dashboardPlugin",
-                ]));
-
-        const { config } = this.baseProps;
-        let dashboardConfig = config;
+                .getDashboardWithReferences(
+                    dashboardRef,
+                    filterContextRef,
+                    { loadUserData: true, exportId: config?.exportId },
+                    ["dashboardPlugin"],
+                ));
 
         const ctx: DashboardContext = {
             backend,
