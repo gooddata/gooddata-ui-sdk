@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { DashboardContext } from "../../types/commonTypes";
 import { ResetDashboard } from "../../commands";
 import { SagaIterator } from "redux-saga";
@@ -68,11 +68,13 @@ export function* resetDashboardHandler(
             selectEffectiveDateFilterConfig,
         );
 
+        const resolvedInsightsValues = Array(...resolvedInsights.resolved.values());
+
         batch = yield call(
             actionsToInitializeExistingDashboard,
             ctx,
             persistedDashboard,
-            Array(...resolvedInsights.resolved.values()),
+            resolvedInsightsValues,
             settings,
             effectiveConfig,
         );
