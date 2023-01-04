@@ -6,7 +6,6 @@ import { Bubble, BubbleHoverTrigger, Button } from "@gooddata/sdk-ui-kit";
 import noop from "lodash/noop";
 
 import {
-    cancelEditRenderMode,
     dispatchAndWaitFor,
     saveDashboard,
     selectEnableAnalyticalDashboardPermissions,
@@ -48,7 +47,6 @@ export function useSaveButtonProps(): ISaveButtonProps {
         )
             .then(() => {
                 setOptimisticIsSaving(false);
-                dispatch(cancelEditRenderMode());
             })
             .catch(() => {
                 setOptimisticIsSaving(false);
