@@ -1,0 +1,35 @@
+// (C) 2023 GoodData Corporation
+
+$configuration-panel: 1000;
+$configuration-panel-sticky: 10;
+$configuration-panel-bubble: 1000;
+$configuration-panel-bubble-sticky: 5;
+
+$drag-and-drop-basic: 1;
+$drag-and-drop-draggable-wrapper: 10;
+$drag-and-drop-drop-zone: 99;
+
+$drill-dialog-basic: 1;
+$drill-dialog-loading: 3;
+$drill-dialog-error: $drill-dialog-loading + 1;
+$drill-select: 5002;
+$drill-dialog-charts: 5011;
+
+$layout-fluidlayout-item-changed: $drag-and-drop-draggable-wrapper + 1;
+
+$topbar-basic: 5001;
+
+$filterbar-old: 100;
+$filterbar-sdk-8-12: 6000;
+
+$kpi-alert-dialog: 1000;
+
+$resize-basic: 101;
+$resize-basic-overlay: $resize-basic + 4;
+$resize-basic-overlay-text: $resize-basic-overlay + 1;
+
+$scheduled-email-mask: 5001;
+$scheduled-email-mask-small: $scheduled-email-mask + 1;
+
+//toolbar need to be on top of resize and draggable wrapper
+$toolbar-basic: $resize-basic + 1;

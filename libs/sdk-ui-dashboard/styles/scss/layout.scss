@@ -3,6 +3,7 @@
 @use "@gooddata/sdk-ui-kit/styles/scss/typo-mixins";
 @use "@gooddata/sdk-ui-kit/styles/scss/typo";
 @use "variables";
+@use "zIndexes";
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins";
 
 $gd-dashboards-section-title-color: var(--gd-dashboards-section-title-color, kit-variables.$gd-color-text);
@@ -283,8 +284,7 @@ $gd-dashboards-section-description-color: var(
 
 .gd-fluidlayout-item-changed {
     position: absolute;
-    //need z-index over draggable overlay also
-    z-index: 11;
+    z-index: zIndexes.$layout-fluidlayout-item-changed;
     top: 0;
     left: 0;
     right: 0;

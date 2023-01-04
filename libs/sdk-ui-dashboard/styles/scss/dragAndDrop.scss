@@ -1,6 +1,7 @@
 // (C) 2022 GoodData Corporation
 @use "sass:color";
 @use "variables";
+@use "zIndexes";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/Button/variables" as kit-button-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins" as kit-mixins;
@@ -45,7 +46,7 @@
     .drag-handle-icon {
         content: "";
         position: absolute;
-        z-index: 1;
+        z-index: zIndexes.$drag-and-drop-basic;
         top: 8px;
         left: -4px;
         width: 7px;
@@ -57,7 +58,7 @@
 
 .attr-filter-dropzone {
     position: absolute;
-    z-index: 99;
+    z-index: zIndexes.$drag-and-drop-drop-zone;
     top: 0;
     bottom: 0;
     width: 50%;
@@ -145,7 +146,7 @@
     }
 
     .gd-dropzone-message {
-        z-index: 1;
+        z-index: zIndexes.$drag-and-drop-basic;
         flex: 1 1 auto;
         margin: 0 23px;
         color: kit-variables.$gd-color-text;
@@ -189,7 +190,7 @@
 }
 
 .dropzone {
-    z-index: 99;
+    z-index: zIndexes.$drag-and-drop-drop-zone;
     &.next,
     &.prev {
         position: absolute;
@@ -288,13 +289,13 @@
 
 .row-hotspot-container {
     position: relative;
-    z-index: 99;
+    z-index: zIndexes.$drag-and-drop-drop-zone;
     width: 100%;
     height: 0;
 
     .row-hotspot {
         position: absolute;
-        z-index: 99;
+        z-index: zIndexes.$drag-and-drop-drop-zone;
         top: 0;
         right: 0;
         bottom: 0;
@@ -617,7 +618,7 @@
     width: 100%;
     height: 100%;
     position: relative;
-    z-index: 10;
+    z-index: zIndexes.$drag-and-drop-draggable-wrapper;
 }
 
 .current-dragging-item {

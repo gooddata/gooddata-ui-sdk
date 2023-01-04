@@ -1,6 +1,7 @@
 // (C) 2019-2021 GoodData Corporation
 @use "sass:color";
 @use "variables";
+@use "zIndexes";
 @use "@gooddata/sdk-ui-kit/styles/scss/Button/variables" as button-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
@@ -22,12 +23,12 @@ $attribute-filter-drag-handle-left: 10px;
 }
 
 .gd-dash-header-wrapper {
-    z-index: 100; // we have to leave this style unchanged because old plugins
+    z-index: zIndexes.$filterbar-old; // we have to leave this style unchanged because old plugins
     transition: left variables.$sidebar-transition-length;
 
     &.gd-dash-header-wrapper-sdk-8-12 {
         // style is added because we should keep old styles unchanged to not brake plugins
-        z-index: 6000; // overlay in Dashboard component start at index 5000
+        z-index: zIndexes.$filterbar-sdk-8-12; // overlay in Dashboard component start at index 5000
     }
 
     .is-dashboard-loading & {

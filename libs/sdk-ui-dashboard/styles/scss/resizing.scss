@@ -1,5 +1,6 @@
 // (C) 2019-2021 GoodData Corporation
 @use "variables";
+@use "zIndexes";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
 $gd-width-resizer-hotpost-width: 40px;
@@ -111,7 +112,7 @@ $gd-width-resizer-hotpost-height: 40px;
     .dash-height-resizer-hotspot,
     .dash-width-resizer-hotspot,
     .height-resizer-drag-preview {
-        z-index: 101;
+        z-index: zIndexes.$resize-basic;
     }
 
     .dash-width-resizer-hotspot {
@@ -132,7 +133,7 @@ $gd-width-resizer-hotpost-height: 40px;
     }
 
     .gd-resize-overlay {
-        z-index: 105;
+        z-index: zIndexes.$resize-basic-overlay;
         border-width: 0;
         border-radius: calc(#{variables.$gd-dashboards-content-widget-borderRadius} + 5px);
         background-color: var(--gd-palette-complementary-0-t50, rgba(255, 255, 255, 0.5));
@@ -147,7 +148,7 @@ $gd-width-resizer-hotpost-height: 40px;
     }
 
     .gd-resize-overlay-text {
-        z-index: 106;
+        z-index: zIndexes.$resize-basic-overlay-text;
         display: flex;
         justify-content: center;
         align-items: center;

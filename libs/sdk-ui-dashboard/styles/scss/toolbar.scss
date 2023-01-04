@@ -1,8 +1,10 @@
 // (C) 2022 GoodData Corporation
 @use "sass:map";
+@use "zIndexes";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
 .gd-dashboard-toolbar {
+    z-index: zIndexes.$toolbar-basic;
     position: fixed;
     right: 20px;
     bottom: 20px;

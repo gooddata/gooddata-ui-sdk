@@ -3,6 +3,7 @@
 @use "@gooddata/sdk-ui-kit/styles/scss/Button/_variables" as button-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/Bubble/_variables" as bubble-variables;
 @use "variables";
+@use "zIndexes";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
 $dialog-border: bubble-variables.$default-bubble-light-border-base;
@@ -27,7 +28,7 @@ $dialog-background: kit-variables.$is-focused-background;
 
 .kpi-alert-dialog {
     position: relative;
-    z-index: 1000;
+    z-index: zIndexes.$kpi-alert-dialog;
     min-height: 148px;
     border: 1px solid var(--gd-palette-complementary-3, color.adjust($dialog-border, $alpha: -0.5));
     border-radius: 5px;
