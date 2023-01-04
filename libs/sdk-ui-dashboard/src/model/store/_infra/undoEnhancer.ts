@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import produce, { applyPatches, enablePatches, original, Patch, produceWithPatches } from "immer";
 import { CaseReducer, Draft, PayloadAction } from "@reduxjs/toolkit";
 import { IDashboardCommand } from "../../commands";
@@ -83,6 +83,26 @@ export type UndoEnabledReducer<
     TCmd extends IDashboardCommand = IDashboardCommand,
 > = CaseReducer<TState, PayloadAction<UndoPayload<TCmd> & TPayload>>;
 
+function unwrapProxy<T>(value: T): T | undefined {
+    try {
+        return JSON.parse(JSON.stringify(value));
+    } catch {
+        return undefined;
+    }
+}
+
+function safeOriginal<TCmd extends IDashboardCommand, TState extends UndoEnhancedState<TCmd>>(
+    value: TState | Draft<TState>,
+): TState {
+    /*
+     * original() can return undefined in case the Proxy is corrupted (this happens with immer > 9.0.12 with react-scripts for some reason),
+     * so we fallback to "poor man's" getting rid of the Proxy to prevent null references down the line
+     */
+    const originalState = original(value) ?? unwrapProxy(value);
+    invariant(originalState, "Unexpected value received as state in undo enhancer (not a draft).");
+    return originalState as TState; // this cast is necessary because immer typings of original() are wrong (not unwrapping Draft<T> to T)
+}
+
 /**
  * Decorates a reducer with capability to construct undo and redo patches for the state modification done by the underlying reducer.
  *
@@ -97,10 +117,10 @@ export const withUndo = <
 >(
     originalReducer: CaseReducer<TState, PayloadAction<TPayload>>,
 ): UndoEnabledReducer<TState, UndoPayload<TCmd> & TPayload> => {
-    const undoable = (state: Draft<TState>, action: PayloadAction<UndoPayload<TCmd> & TPayload>) => {
+    return (state, action) => {
         const { undo } = action.payload;
 
-        const originalState = original(state) as TState;
+        const originalState = safeOriginal(state);
 
         const [nextState, redoPatches, undoPatches] = produceWithPatches(originalState, (draft) => {
             originalReducer(draft, action);
@@ -120,14 +140,6 @@ export const withUndo = <
             });
         });
     };
-
-    /*
-     * TODO: Getting this error, struggling to type things correctly so the shortcut.
-     *
-     * 'WritableDraft<UndoEnhancedState>' is assignable to the constraint of type 'TState', but 'TState' could be
-     * instantiated with a different subtype of constraint 'UndoEnhancedState'.
-     */
-    return undoable as any;
 };
 
 export type UndoActionPayload = {
