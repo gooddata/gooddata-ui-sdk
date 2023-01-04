@@ -6,15 +6,12 @@ import { useSaveAs } from "./useSaveAs";
 import { SaveAsDialogRenderer } from "./SaveAsDialogRenderer";
 import { messages } from "../../../locales";
 import {
-    // changeRenderMode,
     selectIsSaveAsDialogOpen,
     uiActions,
-    // useDashboardCommandProcessing,
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../model";
 
-//TODO: RAIL-4750 fix redirect to view mode
 /**
  * @internal
  */
@@ -30,22 +27,9 @@ export function useSaveAsDialogProps(): ISaveAsDialogProps {
         closeSaveAsDialog();
         addError(messages.messagesDashboardSaveFailed);
     }, [closeSaveAsDialog, addError]);
-    /* TODO: RAIL-4750 fix redirect to view mode
-    const { run: changeEditMode } = useDashboardCommandProcessing({
-        commandCreator: changeRenderMode,
-        errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
-        successEvent: "GDC.DASH/EVT.RENDER_MODE.CHANGED",
-        onSuccess: () => {
-            addSuccess(messages.messagesDashboardSaveSuccess);
-        },
-    });*/
 
     const onSaveAsSuccess = useCallback(() => {
         closeSaveAsDialog();
-        // TODO: RAIL-4750 fix redirect to view mode
-        // need wait till change mode is finished
-        //changeEditMode("view", { resetDashboard: true });
-
         addSuccess(messages.messagesDashboardSaveSuccess);
     }, [closeSaveAsDialog, addSuccess]);
 

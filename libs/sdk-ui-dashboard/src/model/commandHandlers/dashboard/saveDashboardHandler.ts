@@ -1,6 +1,6 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { DashboardContext } from "../../types/commonTypes";
-import { SaveDashboard } from "../../commands";
+import { changeRenderMode, SaveDashboard } from "../../commands";
 import { SagaIterator } from "redux-saga";
 import { selectBasicLayout } from "../../store/layout/layoutSelectors";
 import { call, put, SagaReturnType, select, setContext } from "redux-saga/effects";
@@ -32,6 +32,8 @@ import { layoutActions } from "../../store/layout";
 import { savingActions } from "../../store/saving";
 import { selectSettings } from "../../store/config/configSelectors";
 import { selectBackendCapabilities } from "../../store/backendCapabilities/backendCapabilitiesSelectors";
+import { changeRenderModeHandler } from "../renderMode/changeRenderModeHandler";
+import { selectIsInViewMode } from "../../store/renderMode/renderModeSelectors";
 
 type DashboardSaveContext = {
     cmd: SaveDashboard;
@@ -259,6 +261,11 @@ export function* saveDashboardHandler(
                     dashboardRef: dashboard.ref,
                 },
             });
+        }
+
+        const isInViewMode: ReturnType<typeof selectIsInViewMode> = yield select(selectIsInViewMode);
+        if (!isInViewMode) {
+            yield call(changeRenderModeHandler, ctx, changeRenderMode("view", undefined, cmd.correlationId));
         }
 
         yield put(savingActions.setSavingSuccess());

@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 
 import { IDashboard, IDashboardDefinition, IAccessControlAware } from "@gooddata/sdk-model";
 import { BatchAction, batchActions } from "redux-batched-actions";
@@ -32,6 +32,9 @@ import { listedDashboardsActions } from "../../store/listedDashboards";
 import { createListedDashboard } from "../../../_staging/listedDashboard/listedDashboardUtils";
 import { accessibleDashboardsActions } from "../../store/accessibleDashboards";
 import { selectCurrentUser } from "../../store/user/userSelectors";
+import { changeRenderModeHandler } from "../renderMode/changeRenderModeHandler";
+import { changeRenderMode } from "../../commands";
+import { selectIsInViewMode } from "../../store/renderMode/renderModeSelectors";
 
 type DashboardSaveAsContext = {
     cmd: SaveDashboardAs;
@@ -223,6 +226,12 @@ export function* saveAsDashboardHandler(
         const listedDashboard = createListedDashboard(dashboard);
         yield put(listedDashboardsActions.addListedDashboard(listedDashboard));
         yield put(accessibleDashboardsActions.addAccessibleDashboard(listedDashboard));
+
+        const isInViewMode: ReturnType<typeof selectIsInViewMode> = yield select(selectIsInViewMode);
+        if (!isInViewMode) {
+            yield call(changeRenderModeHandler, ctx, changeRenderMode("view", undefined, cmd.correlationId));
+        }
+
         yield put(savingActions.setSavingSuccess());
 
         return dashboardCopySaved(context, dashboard, cmd.correlationId);
