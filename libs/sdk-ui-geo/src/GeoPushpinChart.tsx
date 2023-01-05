@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import React from "react";
 import compact from "lodash/compact";
 import omit from "lodash/omit";
@@ -13,10 +13,10 @@ import {
     useResolveValuesWithPlaceholders,
 } from "@gooddata/sdk-ui";
 import {
+    GeoPushpinChartPropsUnion,
+    isGeoPushpinChartProps,
     IGeoPushpinChartProps,
-    isLocationGeoPushpinChartProps,
-    ILocationGeoPushpinChartProps,
-    ILongitudeLatitudeGeoPushpinChartProps,
+    IGeoPushpinChartLatitudeLongitudeProps,
 } from "./GeoChart";
 import {
     bucketsAttributes,
@@ -35,13 +35,13 @@ import {
 } from "@gooddata/sdk-model";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 
-const getBuckets = (props: IGeoPushpinChartProps): IBucket[] => {
+const getBuckets = (props: GeoPushpinChartPropsUnion): IBucket[] => {
     const { color, segmentBy, size, config } = props;
     const buckets: IBucket[] = [
         newBucket(BucketNames.SIZE, ...(size ? [disableComputeRatio(size as IAttributeOrMeasure)] : [])),
         newBucket(BucketNames.COLOR, ...(color ? [disableComputeRatio(color as IAttributeOrMeasure)] : [])),
     ];
-    if (isLocationGeoPushpinChartProps(props)) {
+    if (isGeoPushpinChartProps(props)) {
         const { location } = props;
         buckets.push(newBucket(BucketNames.LOCATION, ...(location ? [location as IAttribute] : [])));
     } else {
@@ -74,9 +74,9 @@ export function getGeoChartDimensions(def: IExecutionDefinition): IDimension[] {
  * down to core chart.
  */
 const getNonCoreProps = (
-    props: IGeoPushpinChartProps,
-): Array<keyof ILocationGeoPushpinChartProps | keyof ILongitudeLatitudeGeoPushpinChartProps> => {
-    const base: Array<keyof IGeoPushpinChartProps> = [
+    props: GeoPushpinChartPropsUnion,
+): Array<keyof IGeoPushpinChartProps | keyof IGeoPushpinChartLatitudeLongitudeProps> => {
+    const base: Array<keyof GeoPushpinChartPropsUnion> = [
         "backend",
         "workspace",
         "segmentBy",
@@ -86,13 +86,13 @@ const getNonCoreProps = (
         "size",
     ];
 
-    if (isLocationGeoPushpinChartProps(props)) {
+    if (isGeoPushpinChartProps(props)) {
         return [...base, "location"];
     }
     return [...base, "longitude", "latitude"];
 };
 
-function GeoPushpinChartInner(props: IGeoPushpinChartProps): JSX.Element {
+function GeoPushpinChartInner(props: GeoPushpinChartPropsUnion): JSX.Element {
     const { backend, workspace, sortBy, filters, exportTitle, execConfig = {} } = props;
 
     const buckets = getBuckets(props);
@@ -127,7 +127,7 @@ function GeoPushpinChartInner(props: IGeoPushpinChartProps): JSX.Element {
 
 const WrappedGeoPushpinChart = withTheme(withContexts(GeoPushpinChartInner));
 
-const LocationGeoPushpinChart = (props: ILocationGeoPushpinChartProps) => {
+const GeoPushpinChartLocation = (props: IGeoPushpinChartProps) => {
     const [location, size, color, segmentBy, filters, sortBy] = useResolveValuesWithPlaceholders(
         [props.location, props.size, props.color, props.segmentBy, props.filters, props.sortBy],
         props.placeholdersResolutionContext,
@@ -135,7 +135,7 @@ const LocationGeoPushpinChart = (props: ILocationGeoPushpinChartProps) => {
     return <WrappedGeoPushpinChart {...props} {...{ location, size, color, segmentBy, filters, sortBy }} />;
 };
 
-const LatitudeLongitudeGeoPushpinChart = (props: ILongitudeLatitudeGeoPushpinChartProps) => {
+const GeoPushpinChartLatitudeLongitude = (props: IGeoPushpinChartLatitudeLongitudeProps) => {
     const [longitude, latitude, size, color, segmentBy, filters, sortBy] = useResolveValuesWithPlaceholders(
         [
             props.longitude,
@@ -159,9 +159,9 @@ const LatitudeLongitudeGeoPushpinChart = (props: ILongitudeLatitudeGeoPushpinCha
 /**
  * @public
  */
-export const GeoPushpinChart = (props: IGeoPushpinChartProps) => {
-    if (isLocationGeoPushpinChartProps(props)) {
-        return <LocationGeoPushpinChart {...props} />;
+export const GeoPushpinChart = (props: IGeoPushpinChartProps | IGeoPushpinChartLatitudeLongitudeProps) => {
+    if (isGeoPushpinChartProps(props)) {
+        return <GeoPushpinChartLocation {...props} />;
     }
-    return <LatitudeLongitudeGeoPushpinChart {...props} />;
+    return <GeoPushpinChartLatitudeLongitude {...props} />;
 };

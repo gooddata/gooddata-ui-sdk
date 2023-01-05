@@ -49,7 +49,7 @@ export function enrichMapboxToken<T>(config?: T & {
 }) | undefined;
 
 // @public (undocumented)
-export const GeoPushpinChart: (props: IGeoPushpinChartProps) => JSX.Element;
+export const GeoPushpinChart: (props: IGeoPushpinChartProps | IGeoPushpinChartLatitudeLongitudeProps) => JSX.Element;
 
 export { getColorMappingPredicate }
 
@@ -288,7 +288,21 @@ export interface IGeoPushpinChartBaseProps extends IVisualizationProps, IVisuali
 }
 
 // @public (undocumented)
-export type IGeoPushpinChartProps = ILocationGeoPushpinChartProps | ILongitudeLatitudeGeoPushpinChartProps;
+export interface IGeoPushpinChartLatitudeLongitudeProps extends IGeoPushpinChartBaseProps {
+    // (undocumented)
+    latitude: AttributeOrPlaceholder;
+    // (undocumented)
+    longitude: AttributeOrPlaceholder;
+}
+
+// @public (undocumented)
+export interface IGeoPushpinChartProps extends IGeoPushpinChartBaseProps {
+    // (undocumented)
+    location: AttributeOrPlaceholder;
+}
+
+// @public (undocumented)
+export type IGeoPushpinChartUnifiedProps = IGeoPushpinChartProps | IGeoPushpinChartLatitudeLongitudeProps;
 
 // @public (undocumented)
 export interface IGeoSegmentItem extends IGeoAttributeItem {
@@ -297,24 +311,10 @@ export interface IGeoSegmentItem extends IGeoAttributeItem {
 }
 
 // @public (undocumented)
-export interface ILocationGeoPushpinChartProps extends IGeoPushpinChartBaseProps {
-    // (undocumented)
-    location: AttributeOrPlaceholder;
-}
+export function isGeoPushpinChartLatitudeLongitudeProps(props: IGeoPushpinChartUnifiedProps): props is IGeoPushpinChartLatitudeLongitudeProps;
 
 // @public (undocumented)
-export interface ILongitudeLatitudeGeoPushpinChartProps extends IGeoPushpinChartBaseProps {
-    // (undocumented)
-    latitude: AttributeOrPlaceholder;
-    // (undocumented)
-    longitude: AttributeOrPlaceholder;
-}
-
-// @public (undocumented)
-export function isLatitudeLongitudeGeoPushpinChartProps(props: IGeoPushpinChartProps): props is ILongitudeLatitudeGeoPushpinChartProps;
-
-// @public (undocumented)
-export function isLocationGeoPushpinChartProps(props: IGeoPushpinChartProps): props is ILocationGeoPushpinChartProps;
+export function isGeoPushpinChartProps(props: IGeoPushpinChartUnifiedProps): props is IGeoPushpinChartProps;
 
 // @alpha (undocumented)
 export const MapboxTokenProvider: React_2.FC<{

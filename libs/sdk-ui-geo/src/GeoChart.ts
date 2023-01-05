@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import { IAttribute, IColorPalette, IExecutionConfig } from "@gooddata/sdk-model";
 import {
     AttributeOrPlaceholder,
@@ -250,14 +250,14 @@ export interface IGeoPushpinChartBaseProps extends IVisualizationProps, IVisuali
 /**
  * @public
  */
-export interface ILocationGeoPushpinChartProps extends IGeoPushpinChartBaseProps {
+export interface IGeoPushpinChartProps extends IGeoPushpinChartBaseProps {
     location: AttributeOrPlaceholder;
 }
 
 /**
  * @public
  */
-export interface ILongitudeLatitudeGeoPushpinChartProps extends IGeoPushpinChartBaseProps {
+export interface IGeoPushpinChartLatitudeLongitudeProps extends IGeoPushpinChartBaseProps {
     latitude: AttributeOrPlaceholder;
     longitude: AttributeOrPlaceholder;
 }
@@ -265,24 +265,22 @@ export interface ILongitudeLatitudeGeoPushpinChartProps extends IGeoPushpinChart
 /**
  * @public
  */
-export type IGeoPushpinChartProps = ILocationGeoPushpinChartProps | ILongitudeLatitudeGeoPushpinChartProps;
+export type GeoPushpinChartPropsUnion = IGeoPushpinChartProps | IGeoPushpinChartLatitudeLongitudeProps;
 
 /**
  * @public
  */
-export function isLocationGeoPushpinChartProps(
-    props: IGeoPushpinChartProps,
-): props is ILocationGeoPushpinChartProps {
-    return (props as ILocationGeoPushpinChartProps).location !== undefined;
+export function isGeoPushpinChartProps(props: GeoPushpinChartPropsUnion): props is IGeoPushpinChartProps {
+    return (props as IGeoPushpinChartProps).location !== undefined;
 }
 
 /**
  * @public
  */
-export function isLatitudeLongitudeGeoPushpinChartProps(
-    props: IGeoPushpinChartProps,
-): props is ILongitudeLatitudeGeoPushpinChartProps {
-    const latitudeLongitudeProps = props as ILongitudeLatitudeGeoPushpinChartProps;
+export function isGeoPushpinChartLatitudeLongitudeProps(
+    props: GeoPushpinChartPropsUnion,
+): props is IGeoPushpinChartLatitudeLongitudeProps {
+    const latitudeLongitudeProps = props as IGeoPushpinChartLatitudeLongitudeProps;
     return latitudeLongitudeProps.latitude !== undefined && latitudeLongitudeProps.longitude !== undefined;
 }
 

@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 
 /**
  * This package provides the components that you can use to visualize location-based data.
@@ -14,9 +14,9 @@ export {
     IGeoConfig,
     IGeoLngLat,
     IGeoPushpinChartBaseProps,
+    GeoPushpinChartPropsUnion,
     IGeoPushpinChartProps,
-    ILocationGeoPushpinChartProps,
-    ILongitudeLatitudeGeoPushpinChartProps,
+    IGeoPushpinChartLatitudeLongitudeProps,
     IGeoConfigViewport,
     IGeoPointsConfig,
     IGeoConfigViewportArea,
@@ -30,8 +30,8 @@ export {
     IGeoSegmentItem,
     IGeoMeasureItem,
     IGeoDataItem,
-    isLocationGeoPushpinChartProps,
-    isLatitudeLongitudeGeoPushpinChartProps,
+    isGeoPushpinChartProps,
+    isGeoPushpinChartLatitudeLongitudeProps,
 } from "./GeoChart";
 export { GeoPushpinChart, getGeoChartDimensions } from "./GeoPushpinChart";
 
