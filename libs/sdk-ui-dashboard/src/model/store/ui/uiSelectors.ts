@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
 import { areObjRefsEqual, ObjRef, objRefToString } from "@gooddata/sdk-model";
@@ -327,4 +327,16 @@ export const selectSectionModification = createMemoizedSelector((refs: (ObjRef |
             ...(modified.length === refs.length ? ["modifiedByPlugin"] : []),
         ] as Required<IDashboardWidgetOverlay>["modification"][];
     }),
+);
+
+/**
+ * @internal
+ */
+export const selectIsSectionInsertedByPlugin = createMemoizedSelector((refs: (ObjRef | undefined)[]) =>
+    createSelector(
+        selectSectionModification(refs),
+        // When all the widgets in the section were inserted by the plugin,
+        // the section was added by the plugin as well (empty section(s) cannot be added)
+        (modifications) => modifications.length > 0 && modifications.every((m) => m === "insertedByPlugin"),
+    ),
 );
