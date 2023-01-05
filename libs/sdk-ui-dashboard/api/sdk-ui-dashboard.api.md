@@ -5962,13 +5962,7 @@ export const selectInsightsMap: OutputSelector<DashboardState, ObjRefMap<IInsigh
 export const selectInsightWidgetPlaceholder: OutputSelector<DashboardState, InsightPlaceholderWidget | undefined, (res: ICustomWidget[]) => InsightPlaceholderWidget | undefined>;
 
 // @internal (undocumented)
-export const selectInsightWidgetPlaceholderCoordinates: OutputSelector<DashboardState, {
-sectionIndex: number;
-itemIndex: number;
-} | undefined, (res1: InsightPlaceholderWidget | undefined, res2: IDashboardLayout<ExtendedDashboardWidget>) => {
-sectionIndex: number;
-itemIndex: number;
-} | undefined>;
+export const selectInsightWidgetPlaceholderCoordinates: OutputSelector<DashboardState, ILayoutCoordinates | undefined, (res1: InsightPlaceholderWidget | undefined, res2: IDashboardLayout<ExtendedDashboardWidget>) => ILayoutCoordinates | undefined>;
 
 // @internal (undocumented)
 export const selectInvalidDrillWidgetRefs: OutputSelector<DashboardState, ObjRef[], (res: UiState) => ObjRef[]>;
@@ -6091,13 +6085,7 @@ export const selectKpiDeleteDialogWidgetCoordinates: OutputSelector<DashboardSta
 export const selectKpiWidgetPlaceholder: OutputSelector<DashboardState, KpiPlaceholderWidget | undefined, (res: ICustomWidget[]) => KpiPlaceholderWidget | undefined>;
 
 // @internal (undocumented)
-export const selectKpiWidgetPlaceholderCoordinates: OutputSelector<DashboardState, {
-sectionIndex: number;
-itemIndex: number;
-} | undefined, (res1: KpiPlaceholderWidget | undefined, res2: IDashboardLayout<ExtendedDashboardWidget>) => {
-sectionIndex: number;
-itemIndex: number;
-} | undefined>;
+export const selectKpiWidgetPlaceholderCoordinates: OutputSelector<DashboardState, ILayoutCoordinates | undefined, (res1: KpiPlaceholderWidget | undefined, res2: IDashboardLayout<ExtendedDashboardWidget>) => ILayoutCoordinates | undefined>;
 
 // @alpha
 export const selectLayout: OutputSelector<DashboardState, IDashboardLayout<ExtendedDashboardWidget>, (res: LayoutState) => IDashboardLayout<ExtendedDashboardWidget>>;
@@ -6205,13 +6193,7 @@ export const selectWidgetDrills: (ref: ObjRef | undefined) => OutputSelector<Das
 export const selectWidgetPlaceholder: OutputSelector<DashboardState, PlaceholderWidget | undefined, (res: ICustomWidget[]) => PlaceholderWidget | undefined>;
 
 // @internal (undocumented)
-export const selectWidgetPlaceholderCoordinates: OutputSelector<DashboardState, {
-sectionIndex: number;
-itemIndex: number;
-} | undefined, (res1: PlaceholderWidget | undefined, res2: IDashboardLayout<ExtendedDashboardWidget>) => {
-sectionIndex: number;
-itemIndex: number;
-} | undefined>;
+export const selectWidgetPlaceholderCoordinates: OutputSelector<DashboardState, ILayoutCoordinates | undefined, (res1: PlaceholderWidget | undefined, res2: IDashboardLayout<ExtendedDashboardWidget>) => ILayoutCoordinates | undefined>;
 
 // @internal
 export const selectWidgets: OutputSelector<DashboardState, ExtendedDashboardWidget[], (res: IDashboardLayout<ExtendedDashboardWidget>) => ExtendedDashboardWidget[]>;

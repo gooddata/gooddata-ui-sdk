@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 
 import { DashboardContext } from "../../types/commonTypes";
 import { ChangeInsightWidgetInsight } from "../../commands";
@@ -16,6 +16,7 @@ import { invalidArgumentsProvided } from "../../events/general";
 import { insightsActions } from "../../store/insights";
 import { uiActions } from "../../store/ui";
 import { selectInsightByRef } from "../../store/insights/insightsSelectors";
+import { getSizeInfo } from "../../../_staging/layout/sizing";
 import { loadInsight } from "./common/loadInsight";
 
 export function* changeInsightWidgetInsightHandler(
@@ -53,6 +54,7 @@ export function* changeInsightWidgetInsightHandler(
     const isTitleDifferent = insightTitle(insight) !== originalInsightTitle;
 
     const shouldChangeTitle = !hasCustomName && isTitleDifferent;
+    const newSize = getSizeInfo({ enableKDWidgetCustomHeight: true }, "insight", insight);
 
     yield put(
         batchActions([
@@ -75,6 +77,7 @@ export function* changeInsightWidgetInsightHandler(
                           title: insightTitle(insight),
                       }
                     : undefined,
+                newSize,
                 undo: {
                     cmd,
                 },
