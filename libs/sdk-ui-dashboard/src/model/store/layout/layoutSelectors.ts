@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import {
     ObjRef,
@@ -7,23 +7,24 @@ import {
     isKpiWidget,
     isInsightWidget,
     IDashboardLayout,
-    IDashboardLayoutItem,
-    areObjRefsEqual,
     IInsightWidget,
     IKpiWidget,
 } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
+import isEmpty from "lodash/isEmpty";
+
 import { DashboardState } from "../types";
-import { LayoutState } from "./layoutState";
 import { ExtendedDashboardWidget, isCustomWidget } from "../../types/layoutTypes";
 import { createUndoableCommandsMapping } from "../_infra/undoEnhancer";
 import { newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap";
 import { selectFilterContextFilters } from "../filterContext/filterContextSelectors";
 import { filterContextItemsToDashboardFiltersByWidget } from "../../../converters";
 import { createMemoizedSelector } from "../_infra/selectors";
-import isEmpty from "lodash/isEmpty";
 import { ILayoutCoordinates } from "../../../types";
 import { isInsightPlaceholderWidget, isKpiPlaceholderWidget, isPlaceholderWidget } from "../../../widgets";
+
+import { LayoutState } from "./layoutState";
+import { isItemWithBaseWidget, getWidgetCoordinates } from "./layoutUtils";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -61,14 +62,6 @@ export const selectLayout = createSelector(selectSelf, (layoutState: LayoutState
 
     return layoutState.layout;
 });
-
-function isItemWithBaseWidget(
-    obj: IDashboardLayoutItem<ExtendedDashboardWidget>,
-): obj is IDashboardLayoutItem<IWidget> {
-    const widget = obj.widget;
-
-    return isInsightWidget(widget) || isKpiWidget(widget);
-}
 
 /**
  * This selector returns the basic dashboard layout that does not contain any client-side extensions.
@@ -260,25 +253,6 @@ export const selectLayoutHasAnalyticalWidgets = createSelector(
         return allAnalyticalWidgets.length > 0;
     },
 );
-
-function getWidgetCoordinates(layout: IDashboardLayout<ExtendedDashboardWidget>, ref: ObjRef) {
-    for (let sectionIndex = 0; sectionIndex < layout.sections.length; sectionIndex++) {
-        const section = layout.sections[sectionIndex];
-
-        for (let itemIndex = 0; itemIndex < section.items.length; itemIndex++) {
-            const item = section.items[itemIndex];
-
-            if (areObjRefsEqual(item.widget?.ref, ref)) {
-                return {
-                    sectionIndex,
-                    itemIndex,
-                };
-            }
-        }
-    }
-
-    return undefined;
-}
 
 /**
  * Selects layout coordinates for a given widget.

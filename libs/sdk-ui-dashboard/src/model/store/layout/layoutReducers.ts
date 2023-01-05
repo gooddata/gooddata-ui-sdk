@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import { LayoutState } from "./layoutState";
 import { invariant } from "ts-invariant";
@@ -34,6 +34,8 @@ import { Draft } from "immer";
 import { ObjRefMap } from "../../../_staging/metadata/objRefMap";
 import { IdentityMapping } from "../../../_staging/dashboard/dashboardLayout";
 import { setOrDelete } from "../../../_staging/objectUtils/setOrDelete";
+import { IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
+import { getWidgetCoordinatesAndItem, resizeInsightWidget } from "./layoutUtils";
 
 type LayoutReducer<A> = CaseReducer<LayoutState, PayloadAction<A>>;
 
@@ -463,13 +465,15 @@ type ReplaceWidgetInsight = {
     insightRef: ObjRef;
     properties: VisualizationProperties | undefined;
     header: WidgetHeader | undefined;
+    newSize?: IVisualizationSizeInfo;
 };
 
 const replaceInsightWidgetInsight: LayoutReducer<ReplaceWidgetInsight> = (state, action) => {
     invariant(state.layout);
 
-    const { insightRef, properties, ref, header } = action.payload;
+    const { insightRef, properties, ref, header, newSize } = action.payload;
     const widget = getWidgetByRef(state, ref);
+    const data = getWidgetCoordinatesAndItem(state.layout, ref);
 
     invariant(isInsightWidget(widget));
 
@@ -482,6 +486,10 @@ const replaceInsightWidgetInsight: LayoutReducer<ReplaceWidgetInsight> = (state,
     }
 
     widget.insight = insightRef;
+
+    if (newSize && data?.item) {
+        data.item.size.xl = resizeInsightWidget(data.item.size.xl, newSize);
+    }
 };
 
 //
