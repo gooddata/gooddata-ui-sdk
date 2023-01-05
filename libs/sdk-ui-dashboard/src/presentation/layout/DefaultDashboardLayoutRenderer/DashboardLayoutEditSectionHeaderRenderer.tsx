@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import * as React from "react";
 import { DashboardLayoutSectionHeader } from "./DashboardLayoutSectionHeader";
 import { IDashboardLayoutSectionHeaderRenderProps } from "./interfaces";
@@ -8,7 +8,7 @@ import { SectionHotspot } from "../../dragAndDrop";
 import { isInitialPlaceholderWidget } from "../../../widgets";
 import { DashboardLayoutItemViewRenderer } from "./DashboardLayoutItemViewRenderer";
 import { getRefsForSection } from "../refs";
-import { selectSectionModification, useDashboardSelector } from "../../../model";
+import { selectIsSectionInsertedByPlugin, useDashboardSelector } from "../../../model";
 
 export function DashboardLayoutEditSectionHeaderRenderer(
     props: IDashboardLayoutSectionHeaderRenderProps<any>,
@@ -20,8 +20,7 @@ export function DashboardLayoutEditSectionHeaderRenderer(
         section.index() === 0 && section.items().every((i) => isInitialPlaceholderWidget(i.widget()));
 
     const refs = getRefsForSection(section);
-    const sectionPluginModifications = useDashboardSelector(selectSectionModification(refs));
-    const isEditingDisabled = sectionPluginModifications.length > 0;
+    const isEditingDisabled = useDashboardSelector(selectIsSectionInsertedByPlugin(refs));
 
     return (
         <DashboardLayoutItemViewRenderer

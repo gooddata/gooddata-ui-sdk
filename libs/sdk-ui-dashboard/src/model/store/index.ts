@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 export { DashboardDispatch, DashboardState, DashboardSelector, DashboardSelectorEvaluator } from "./types";
 
 export { selectDashboardLoading, selectIsDashboardLoading } from "./loading/loadingSelectors";
@@ -249,6 +249,7 @@ export {
     selectWidgetsOverlayState,
     selectWidgetsModification,
     selectSectionModification,
+    selectIsSectionInsertedByPlugin,
     selectInvalidDrillWidgetRefs,
     selectInvalidUrlDrillParameterDrillLocalIdsByWidgetRef,
     selectInvalidUrlDrillParameterWidgetRefs,

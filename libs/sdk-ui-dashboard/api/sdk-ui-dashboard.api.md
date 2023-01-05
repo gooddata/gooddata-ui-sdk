@@ -6072,6 +6072,9 @@ export const selectIsScheduleEmailDialogOpen: OutputSelector<DashboardState, boo
 // @alpha (undocumented)
 export const selectIsScheduleEmailManagementDialogOpen: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
 
+// @internal (undocumented)
+export const selectIsSectionInsertedByPlugin: (refs: (ObjRef | undefined)[]) => OutputSelector<DashboardState, boolean, (res: ("insertedByPlugin" | "modifiedByPlugin")[]) => boolean>;
+
 // @internal
 export const selectIsShareButtonHidden: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
