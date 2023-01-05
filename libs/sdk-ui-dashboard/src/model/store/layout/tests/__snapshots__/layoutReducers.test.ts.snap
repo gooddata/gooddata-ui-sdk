@@ -412,6 +412,7 @@ Object {
               },
               "target": Object {
                 "identifier": "aeis6NlXcL7X",
+                "type": "analyticalDashboard",
               },
               "transition": "in-place",
               "type": "drillToDashboard",
@@ -445,6 +446,7 @@ Object {
               },
               "target": Object {
                 "identifier": "aeis6NlXcL7X",
+                "type": "analyticalDashboard",
               },
               "transition": "in-place",
               "type": "drillToDashboard",
