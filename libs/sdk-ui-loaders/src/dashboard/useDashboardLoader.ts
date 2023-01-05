@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { useEffect, useMemo, useState } from "react";
 import stringify from "json-stable-stringify";
 import { IDashboardBasePropsForLoader, IDashboardLoadOptions, IEmbeddedPlugin } from "./types";
@@ -132,6 +132,7 @@ export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoa
         permissions,
         clientWorkspace,
         extraPlugins,
+        loadingMode,
     ]);
 
     useCancelablePromise(
