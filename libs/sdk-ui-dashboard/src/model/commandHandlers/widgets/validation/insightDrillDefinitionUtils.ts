@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import flatMap from "lodash/flatMap";
 import {
     idRef,
@@ -114,6 +114,8 @@ export function extractDisplayFormIdentifiers(drillDefinitions: InsightDrillDefi
             .map((drillItem) => {
                 if (isDrillToCustomUrl(drillItem)) {
                     const params = getAttributeIdentifiersPlaceholdersFromUrl(drillItem.target.url);
+                    // normalize ref take the value from state ...
+                    // md object has to be identifier
                     return params.map((param) => idRef(param.identifier, "displayForm"));
                 } else {
                     return [drillItem.target.displayForm, drillItem.target.hyperlinkDisplayForm];
@@ -165,10 +167,10 @@ function validateDrillToDashboardDefinition(
 
         if (targetDashboard) {
             // normalize ref take the value from state ...
-            // md object has to be identifer
+            // md object has to be identifier
             result = {
                 ...drillDefinition,
-                target: idRef(targetDashboard.identifier),
+                target: idRef(targetDashboard.identifier, "analyticalDashboard"),
             };
         }
 
@@ -196,9 +198,7 @@ function validateDrillToInsightDefinition(
             // normalize ref take the value from state ...
             result = {
                 ...drillDefinition,
-                target: {
-                    ...targetInsights.insight.ref,
-                },
+                target: targetInsights.insight.ref,
             };
         }
     }

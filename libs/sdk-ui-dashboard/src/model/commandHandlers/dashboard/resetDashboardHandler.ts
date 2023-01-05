@@ -15,9 +15,9 @@ import {
 } from "./common/stateInitializers";
 import { batchActions } from "redux-batched-actions";
 import uniqWith from "lodash/uniqWith";
-import { areObjRefsEqual, isInsightWidget, ObjRef } from "@gooddata/sdk-model";
-import { walkLayout } from "@gooddata/sdk-backend-spi";
+import { areObjRefsEqual } from "@gooddata/sdk-model";
 import { resolveInsights } from "../../utils/insightResolver";
+import { insightReferences } from "./common/insightReferences";
 
 export function* resetDashboardHandler(
     ctx: DashboardContext,
@@ -44,18 +44,7 @@ export function* resetDashboardHandler(
          * Everything else can stay untouched.
          */
 
-        const insightRefsFromWidgets: ObjRef[] = [];
-        if (persistedDashboard.layout) {
-            persistedDashboard.layout &&
-                walkLayout(persistedDashboard.layout, {
-                    widgetCallback: (widget) => {
-                        if (isInsightWidget(widget)) {
-                            insightRefsFromWidgets.push(widget.insight);
-                        }
-                    },
-                });
-        }
-
+        const insightRefsFromWidgets = insightReferences(persistedDashboard.layout);
         const uniqueInsightRefsFromWidgets = uniqWith(insightRefsFromWidgets, areObjRefsEqual);
         const resolvedInsights: SagaReturnType<typeof resolveInsights> = yield call(
             resolveInsights,

@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import {
     IFilterContext,
@@ -250,6 +250,7 @@ export const DrillToDashboardFromWonMeasureDefinition: IDrillToDashboard = {
     },
     target: {
         identifier: ComplexDashboardIdentifier,
+        type: "analyticalDashboard",
     },
     transition: "in-place",
 };
@@ -264,6 +265,7 @@ export const DrillToDashboardFromProductAttributeDefinition: IDrillToDashboard =
     },
     target: {
         identifier: ComplexDashboardIdentifier,
+        type: "analyticalDashboard",
     },
     transition: "in-place",
 };
