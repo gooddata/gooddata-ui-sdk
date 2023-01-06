@@ -1,7 +1,7 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { IInsightDefinition, ISettings } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
-import { IGeoPushpinChartProps } from "@gooddata/sdk-ui-geo";
+import { GeoPushpinChartPropsUnion } from "@gooddata/sdk-ui-geo";
 
 import {
     IVisualizationDescriptor,
@@ -57,8 +57,10 @@ export class GeoPushpinChartDescriptor extends BaseChartDescriptor implements IV
             name: "GeoPushpinChart",
             package: "@gooddata/sdk-ui-geo",
         },
-        insightToProps: getInsightToPropsConverter<IGeoPushpinChartProps>({
+        insightToProps: getInsightToPropsConverter<GeoPushpinChartPropsUnion>({
             location: singleAttributeBucketConversion("location", BucketNames.LOCATION),
+            latitude: singleAttributeBucketConversion("latitude", BucketNames.LATITUDE),
+            longitude: singleAttributeBucketConversion("longitude", BucketNames.LONGITUDE),
             size: singleAttributeOrMeasureBucketConversion("size", BucketNames.SIZE),
             color: singleAttributeOrMeasureBucketConversion("color", BucketNames.COLOR),
             segmentBy: singleAttributeBucketConversion("segmentBy", BucketNames.SEGMENT),
