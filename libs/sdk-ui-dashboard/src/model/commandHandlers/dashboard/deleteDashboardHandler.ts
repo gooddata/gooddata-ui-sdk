@@ -1,10 +1,10 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 
 import { DashboardContext } from "../../types/commonTypes";
 import { DeleteDashboard } from "../../commands";
 import { SagaIterator } from "redux-saga";
 import { DashboardDeleted } from "../../events";
-import { call, put, SagaReturnType, select, setContext } from "redux-saga/effects";
+import { call, put, select } from "redux-saga/effects";
 import { invalidArgumentsProvided } from "../../events/general";
 import { areObjRefsEqual, idRef, ObjRef, uriRef } from "@gooddata/sdk-model";
 import { batchActions } from "redux-batched-actions";
@@ -27,7 +27,7 @@ function deleteDashboard(ctx: DashboardContext, dashboardRef: ObjRef): Promise<v
  *
  * Note: This will not clear any of the dashboard-agnostic global state such as config and settings.
  */
-function* resetToNewDashboard(ctx: DashboardContext): SagaIterator<DashboardContext> {
+function* resetToNewDashboard(ctx: DashboardContext): SagaIterator<void> {
     const dateFilterConfig: ReturnType<typeof selectDateFilterConfig> = yield select(selectDateFilterConfig);
 
     yield put(
@@ -40,16 +40,11 @@ function* resetToNewDashboard(ctx: DashboardContext): SagaIterator<DashboardCont
         ),
     );
 
-    const newContext: DashboardContext = {
-        ...ctx,
-        dashboardRef: undefined,
-    };
-
-    yield setContext({
-        dashboardContext: newContext,
-    });
-
-    return newContext;
+    /*
+     * We must do this by mutating the context object, the setContext effect changes the context only
+     * for the current saga and its children. See https://github.com/redux-saga/redux-saga/issues/1798#issuecomment-468054586
+     */
+    ctx.dashboardRef = undefined;
 }
 
 export function* deleteDashboardHandler(
@@ -77,7 +72,7 @@ export function* deleteDashboardHandler(
     // perform the actual delete
     yield call(deleteDashboard, ctx, persistedDashboard.ref);
 
-    const newContext: SagaReturnType<typeof resetToNewDashboard> = yield call(resetToNewDashboard, ctx);
+    yield call(resetToNewDashboard, ctx);
 
-    return dashboardDeleted(newContext, persistedDashboard, cmd.correlationId);
+    return dashboardDeleted(ctx, persistedDashboard, cmd.correlationId);
 }

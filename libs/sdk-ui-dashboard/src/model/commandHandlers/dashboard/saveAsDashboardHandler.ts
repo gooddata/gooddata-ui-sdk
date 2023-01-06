@@ -3,7 +3,7 @@
 import { IDashboard, IDashboardDefinition, IAccessControlAware } from "@gooddata/sdk-model";
 import { BatchAction, batchActions } from "redux-batched-actions";
 import { SagaIterator } from "redux-saga";
-import { call, put, SagaReturnType, select, setContext } from "redux-saga/effects";
+import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import { dashboardFilterContextIdentity } from "../../../_staging/dashboard/dashboardFilterContext";
 import {
     dashboardLayoutRemoveIdentity,
@@ -210,17 +210,12 @@ export function* saveAsDashboardHandler(
             yield put(batch);
         }
 
-        let context: DashboardContext = ctx;
-
         if (switchToCopy) {
-            context = {
-                ...ctx,
-                dashboardRef: dashboard.ref,
-            };
-
-            yield setContext({
-                dashboardContext: context,
-            });
+            /*
+             * We must do this by mutating the context object, the setContext effect changes the context only
+             * for the current saga and its children. See https://github.com/redux-saga/redux-saga/issues/1798#issuecomment-468054586
+             */
+            ctx.dashboardRef = dashboard.ref;
         }
 
         const listedDashboard = createListedDashboard(dashboard);
@@ -234,7 +229,7 @@ export function* saveAsDashboardHandler(
 
         yield put(savingActions.setSavingSuccess());
 
-        return dashboardCopySaved(context, dashboard, cmd.correlationId);
+        return dashboardCopySaved(ctx, dashboard, cmd.correlationId);
     } catch (e: any) {
         yield put(savingActions.setSavingError(e));
         throw e;

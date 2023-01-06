@@ -3,7 +3,7 @@ import { DashboardContext } from "../../types/commonTypes";
 import { changeRenderMode, SaveDashboard } from "../../commands";
 import { SagaIterator } from "redux-saga";
 import { selectBasicLayout } from "../../store/layout/layoutSelectors";
-import { call, put, SagaReturnType, select, setContext } from "redux-saga/effects";
+import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import {
     selectFilterContextDefinition,
     selectFilterContextIdentity,
@@ -255,12 +255,11 @@ export function* saveDashboardHandler(
         yield put(batch);
 
         if (isNewDashboard) {
-            yield setContext({
-                dashboardContext: {
-                    ...ctx,
-                    dashboardRef: dashboard.ref,
-                },
-            });
+            /*
+             * We must do this by mutating the context object, the setContext effect changes the context only
+             * for the current saga and its children. See https://github.com/redux-saga/redux-saga/issues/1798#issuecomment-468054586
+             */
+            ctx.dashboardRef = dashboard.ref;
         }
 
         const isInViewMode: ReturnType<typeof selectIsInViewMode> = yield select(selectIsInViewMode);
