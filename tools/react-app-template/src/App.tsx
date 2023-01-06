@@ -5,7 +5,7 @@ import { Dashboard } from "@gooddata/sdk-ui-dashboard";
 
 import { backend } from "./backend";
 import logo from "./assets/gooddata-logo.svg";
-import * as cat from "./catalog";
+import * as Md from "./catalog";
 
 export const App: React.FC = () => {
     return (
@@ -30,7 +30,7 @@ export const App: React.FC = () => {
                     </div>
                     <div className="content">
                         {/* Embed a GoodData dashboard into the application */}
-                        <Dashboard dashboard={cat.Dashboards._1Overview} />
+                        <Dashboard dashboard={Md.Dashboards._1Overview} />
                     </div>
                     <div className="footer">
                         Powered by <Link href="https://sdk.gooddata.com/gooddata-ui">GoodData.UI</Link>
