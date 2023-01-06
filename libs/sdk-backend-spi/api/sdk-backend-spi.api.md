@@ -1785,6 +1785,7 @@ export interface IWorkspacePermissionsService {
 
 // @public
 export interface IWorkspaceSettings extends ISettings_2 {
+    mapboxToken?: string;
     workspace: string;
 }
 
