@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
 import { addLayoutSection, saveDashboard, saveDashboardAs } from "../../../commands";
 import { TestInsightItem } from "../../../tests/fixtures/Layout.fixtures";
@@ -58,7 +58,7 @@ describe("save as dashboard handler", () => {
 
             expect(event.payload.dashboard.ref).not.toEqual(initialSaveEvent.payload.dashboard.ref);
             expect(event.payload.dashboard.title).toEqual(TestDashboardTitle);
-            expect(event.ctx.dashboardRef).not.toEqual(initialSaveEvent.ctx.dashboardRef);
+            expect(event.ctx.dashboardRef).toEqual(event.payload.dashboard.ref);
             const newState = Tester.state();
 
             const originalLayout = selectBasicLayout(originalState);
