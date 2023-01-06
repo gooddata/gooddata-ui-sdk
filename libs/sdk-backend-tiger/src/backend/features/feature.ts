@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 
 import { FeatureFlagsValues, ITigerFeatureFlags, TigerFeaturesNames } from "../uiFeatures";
 import { convertState } from "./state";
@@ -92,6 +92,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableAnalyticalDashboardPermissions",
             "BOOLEAN",
             FeatureFlagsValues.enableAnalyticalDashboardPermissions,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnablePushpinGeoChart,
+            "enablePushpinGeoChart",
+            "BOOLEAN",
+            FeatureFlagsValues.enablePushpinGeoChart,
         ),
     };
 }
