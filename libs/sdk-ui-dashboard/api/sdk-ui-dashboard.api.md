@@ -1108,12 +1108,16 @@ export interface DashboardConfig {
     objectAvailability?: ObjectAvailabilityConfig;
     separators?: ISeparators;
     settings?: ISettings;
+    // @internal
+    widgetsOverlay?: Record<string, IDashboardWidgetOverlay>;
 }
 
 // @public (undocumented)
 export interface DashboardContext {
     backend: IAnalyticalBackend;
     clientId?: string;
+    // @internal
+    config?: DashboardConfig;
     dashboardRef?: ObjRef;
     dataProductId?: string;
     filterContextRef?: ObjRef;
@@ -6206,6 +6210,9 @@ export const selectWidgetsMap: OutputSelector<DashboardState, ObjRefMap<Extended
 
 // @internal (undocumented)
 export const selectWidgetsModification: (refs: (ObjRef | undefined)[]) => OutputSelector<DashboardState, ("insertedByPlugin" | "modifiedByPlugin")[], (res: Record<string, IDashboardWidgetOverlay>) => ("insertedByPlugin" | "modifiedByPlugin")[]>;
+
+// @internal (undocumented)
+export const selectWidgetsOverlay: OutputSelector<DashboardState, Record<string, IDashboardWidgetOverlay>, (res: UiState) => Record<string, IDashboardWidgetOverlay>>;
 
 // @internal (undocumented)
 export const selectWidgetsOverlayState: (refs: (ObjRef | undefined)[]) => OutputSelector<DashboardState, boolean, (res: Record<string, IDashboardWidgetOverlay>) => boolean>;

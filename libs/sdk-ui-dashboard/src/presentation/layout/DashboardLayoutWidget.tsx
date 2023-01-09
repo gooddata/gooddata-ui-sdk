@@ -263,8 +263,8 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                 onHide={() =>
                     dispatch(
                         uiActions.toggleWidgetsOverlay({
-                            visible: false,
                             refs: [item.ref()],
+                            visible: false,
                         }),
                     )
                 }

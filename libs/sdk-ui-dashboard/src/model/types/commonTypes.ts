@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
     IColorPalette,
@@ -182,6 +182,12 @@ export interface DashboardConfig {
      * Hide "Share" button in TopBar
      */
     hideShareButton?: boolean;
+
+    /**
+     * @internal
+     * Provide widgets overlays for dashboard
+     */
+    widgetsOverlay?: Record<string, IDashboardWidgetOverlay>;
 }
 
 /**
@@ -235,6 +241,16 @@ export interface DashboardContext {
      * Analytical Backend where the dashboard exists.
      */
     workspace: string;
+
+    /**
+     * Dashboard config
+     * @internal
+     *
+     * @remarks
+     * Do not use this, can be changed in future or removed at all
+     *
+     */
+    config?: DashboardConfig;
 
     /**
      * Reference to dashboard that should be loaded into the store.

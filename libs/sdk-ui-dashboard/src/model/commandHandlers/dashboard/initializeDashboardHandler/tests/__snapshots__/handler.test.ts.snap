@@ -197,6 +197,7 @@ Object {
   "settings": Object {
     "enableKPIDashboardDrillFromAttribute": true,
   },
+  "widgetsOverlay": Object {},
 }
 `;
 

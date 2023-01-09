@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import React from "react";
 import {
     useDashboardSelector,
@@ -30,8 +30,8 @@ export const DashboardLayoutSectionOverlayController: React.FC<
             onHide={() =>
                 dispatch(
                     uiActions.toggleWidgetsOverlay({
-                        visible: false,
                         refs: section.items().map((item) => item.ref()),
+                        visible: false,
                     }),
                 )
             }
