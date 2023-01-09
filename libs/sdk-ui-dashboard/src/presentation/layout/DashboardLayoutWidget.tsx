@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import {
     AnalyticalWidgetType,
     IDashboardLayoutSize,
@@ -253,8 +253,8 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                 onHide={() =>
                     dispatch(
                         uiActions.toggleWidgetsOverlay({
-                            visible: false,
                             refs: [item.ref()],
+                            visible: false,
                         }),
                     )
                 }

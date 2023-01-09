@@ -246,6 +246,7 @@ export {
     selectIsCancelEditModeDialogOpen,
     selectDraggingWidgetSource,
     selectDraggingWidgetTarget,
+    selectWidgetsOverlay,
     selectWidgetsOverlayState,
     selectWidgetsModification,
     selectSectionModification,

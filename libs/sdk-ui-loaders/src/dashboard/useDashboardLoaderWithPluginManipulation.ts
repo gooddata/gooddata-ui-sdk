@@ -12,6 +12,7 @@ import {
     RenderMode,
     selectRenderMode,
     selectDashboardWorkingDefinition,
+    selectWidgetsOverlay,
     uiActions,
 } from "@gooddata/sdk-ui-dashboard";
 import { DashboardLoadingMode, IDashboardLoadOptions, IEmbeddedPlugin } from "./types";
@@ -40,14 +41,15 @@ export function useDashboardLoaderWithPluginManipulation(options: IDashboardLoad
 } {
     const [dashboard, setDashboard] = useState(() => sanitizedDashboardRef(options.dashboard));
     const [renderMode, setRenderMode] = useState<RenderMode>(options.dashboard ? "view" : "edit");
+    const [widgetsOverlay, setWidgetsOverlay] = useState(options.config?.widgetsOverlay);
     const [loadingMode, setLoadingMode] = useState<DashboardLoadingMode>(options.loadingMode ?? "adaptive");
     const [currentExtraPlugins, setCurrentExtraPlugins] = useState<IEmbeddedPlugin[]>(() =>
         isArray(options.extraPlugins) ? options.extraPlugins : compact([options.extraPlugins]),
     );
 
     const augmentedConfig = useMemo<DashboardConfig>(
-        () => ({ ...options.config, initialRenderMode: renderMode }),
-        [options.config, renderMode],
+        () => ({ ...options.config, initialRenderMode: renderMode, widgetsOverlay }),
+        [options.config, renderMode, widgetsOverlay],
     );
 
     useEffect(() => {
@@ -79,10 +81,12 @@ export function useDashboardLoaderWithPluginManipulation(options: IDashboardLoad
         const select = dashboardSelect.current;
         const dashboardObject = select(selectDashboardWorkingDefinition);
         const renderMode = select(selectRenderMode);
+        const widgetsOverlay = select(selectWidgetsOverlay);
         // force new reference in case the current dashboard object is the same as the one with which the last reload occurred
         // this makes sure the dashboard is fully reloaded each time
         setDashboard({ ...dashboardObject } as any);
         setRenderMode(renderMode);
+        setWidgetsOverlay(widgetsOverlay);
     }, []);
 
     const hidePluginOverlays = useCallback(() => {
@@ -95,11 +99,13 @@ export function useDashboardLoaderWithPluginManipulation(options: IDashboardLoad
         const select = dashboardSelect.current;
         const dashboardObject = select(selectDashboardWorkingDefinition);
         const renderMode = select(selectRenderMode);
+        const widgetsOverlay = select(selectWidgetsOverlay);
         // force new reference in case the current dashboard object is the same as the one with which the last loading mode change occurred
         // this makes sure the dashboard is fully reloaded each time
         setDashboard({ ...dashboardObject } as any);
         setRenderMode(renderMode);
         setLoadingMode(newLoadingMode);
+        setWidgetsOverlay(widgetsOverlay);
     }, []);
 
     const setExtraPlugins = useCallback((extraPlugins: IEmbeddedPlugin | IEmbeddedPlugin[]) => {
@@ -107,10 +113,12 @@ export function useDashboardLoaderWithPluginManipulation(options: IDashboardLoad
         const select = dashboardSelect.current;
         const dashboardObject = select(selectDashboardWorkingDefinition);
         const renderMode = select(selectRenderMode);
+        const widgetsOverlay = select(selectWidgetsOverlay);
         // force new reference in case the current dashboard object is the same as the one with which the last setting of extra plugins occurred
         // this makes sure the dashboard is fully reloaded each time
         setDashboard({ ...dashboardObject } as any);
         setRenderMode(renderMode);
+        setWidgetsOverlay(widgetsOverlay);
         setCurrentExtraPlugins(isArray(extraPlugins) ? extraPlugins : [extraPlugins]);
     }, []);
 

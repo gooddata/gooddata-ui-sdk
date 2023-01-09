@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 
 import { IDashboardCommand } from "./base";
 import { DashboardItemDefinition, RelativeIndex, StashedDashboardItemsId } from "../types/layoutTypes";
@@ -652,7 +652,6 @@ export interface MoveSectionItemToNewSection extends IDashboardCommand {
  * @param sectionIndex - source section index
  * @param itemIndex - index of item to move
  * @param toSectionIndex - target section index; you may specify -1 to move to last section
- * @param removeOriginalSectionIfEmpty - specify if original section will be removed if it stays empty after move
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
@@ -686,7 +685,6 @@ export function moveSectionItemToNewSection(
  * @param sectionIndex - source section index
  * @param itemIndex - index of item to move
  * @param toSectionIndex - target section index; you may specify -1 to move to last section
- * @param removeOriginalSectionIfEmpty - specify if original section will be removed if it stays empty after move
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *

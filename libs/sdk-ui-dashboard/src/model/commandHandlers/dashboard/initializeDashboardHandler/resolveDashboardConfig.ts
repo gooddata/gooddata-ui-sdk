@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { all, call, put } from "redux-saga/effects";
 import { IDateFilterConfigsQueryResult, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
@@ -186,5 +186,6 @@ function applyConfigDefaults<T extends DashboardConfig>(config: T) {
         initialRenderMode: config.initialRenderMode ?? "view",
         hideSaveAsNewButton: config.hideSaveAsNewButton ?? false,
         hideShareButton: config.hideShareButton ?? false,
+        widgetsOverlay: config.widgetsOverlay ?? {},
     };
 }

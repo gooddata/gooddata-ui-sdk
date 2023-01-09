@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 
 import { DashboardLoadResult, IDashboardLoader } from "./loader";
 import {
@@ -282,8 +282,12 @@ export class DashboardLoader implements IDashboardLoader {
                     "dashboardPlugin",
                 ]));
 
+        const { config } = this.baseProps;
+        let dashboardConfig = config;
+
         const ctx: DashboardContext = {
             backend,
+            config,
             workspace,
             dashboardRef,
             filterContextRef,
@@ -316,15 +320,18 @@ export class DashboardLoader implements IDashboardLoader {
             !pluginsAreValid ? StaticLoadStrategies : this.config,
             beforeExternalPluginLoaded,
         );
-        const extensionProps: IDashboardExtensionProps = engine.initializePlugins(ctx, plugins);
-        const { config } = this.baseProps;
-        let dashboardConfig = config;
+
         if (options?.allowUnfinishedFeatures === "staticOnly" && externalPluginLoaded) {
             dashboardConfig = {
                 ...config,
                 allowUnfinishedFeatures: false,
             };
         }
+
+        const extensionProps: IDashboardExtensionProps = engine.initializePlugins(
+            { ...ctx, config: dashboardConfig },
+            plugins,
+        );
         const props: IDashboardProps = {
             ...this.baseProps,
             config: dashboardConfig,

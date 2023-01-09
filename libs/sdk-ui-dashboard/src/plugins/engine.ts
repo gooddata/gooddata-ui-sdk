@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 
 import { IDashboardPluginContract_V1 } from "./plugin";
 import { Dashboard, IDashboardExtensionProps, IDashboardProps } from "../presentation";
@@ -71,6 +71,8 @@ export function newDashboardEngine(): IDashboardEngine {
                     .map(pluginDebugStr)
                     .join(", ")}`,
             );
+
+            customizationBuilder.setWidgetOverlays(ctx.config?.widgetsOverlay);
 
             for (const plugin of plugins) {
                 customizationBuilder.onBeforePluginRegister(plugin);

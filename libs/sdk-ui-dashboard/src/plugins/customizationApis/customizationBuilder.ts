@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 
 import {
     IDashboardLayout,
@@ -55,6 +55,7 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
         this.logger,
     );
     private readonly filtersCustomizer: DefaultFiltersCustomizer = new DefaultFiltersCustomizer(this.logger);
+    private widgetOverlays: Record<string, IDashboardWidgetOverlay> = {};
 
     private sealCustomizers = (): void => {
         this.insightCustomizer.sealCustomizer();
@@ -62,6 +63,10 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
         this.widgetCustomizer.sealCustomizer();
         this.filtersCustomizer.sealCustomizer();
         this.layoutCustomizer.sealCustomizer();
+    };
+
+    public setWidgetOverlays = (widgetOverlays?: Record<string, IDashboardWidgetOverlay>) => {
+        this.widgetOverlays = widgetOverlays || {};
     };
 
     public insightWidgets = (): IDashboardInsightCustomizer => {
@@ -136,9 +141,9 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
 
     private getWidgetsOverlayFn(): WidgetsOverlayFn {
         return (dashboard) => {
+            const overlays: Record<string, IDashboardWidgetOverlay> = { ...this.widgetOverlays };
             const { insight, kpi, layouts } = this.mutations;
             const { layout } = dashboard;
-            const overlays: Record<string, IDashboardWidgetOverlay> = {};
 
             walkLayout(layout as IDashboardLayout, {
                 itemCallback: (item) => {
@@ -147,31 +152,43 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
                         isObjRef(item.widget) &&
                         insight.length > 0
                     ) {
-                        overlays[objRefToString(item.widget)] = {
-                            showOverlay: true,
-                            modification: "modifiedByPlugin",
-                        };
+                        mergeOverlays(overlays, objRefToString(item.widget), true, "modifiedByPlugin");
                     }
                     if (
                         (isKpiWidget(item.widget) || isKpiWidgetDefinition(item.widget)) &&
                         isObjRef(item.widget) &&
                         kpi.length > 0
                     ) {
-                        overlays[objRefToString(item.widget)] = {
-                            showOverlay: true,
-                            modification: "modifiedByPlugin",
-                        };
+                        mergeOverlays(overlays, objRefToString(item.widget), true, "modifiedByPlugin");
                     }
                 },
             });
 
             Object.keys(layouts).forEach((ref) => {
                 if (layouts[ref] === "inserted") {
-                    overlays[ref] = { showOverlay: true, modification: "insertedByPlugin" };
+                    mergeOverlays(overlays, ref, true, "insertedByPlugin");
                 }
             });
 
             return overlays;
         };
     }
+}
+
+function mergeOverlays(
+    overlays: Record<string, IDashboardWidgetOverlay>,
+    ref: string,
+    showOverlay: boolean,
+    modification: IDashboardWidgetOverlay["modification"],
+) {
+    const current: IDashboardWidgetOverlay | undefined = overlays[ref];
+    const created: IDashboardWidgetOverlay = {
+        showOverlay,
+        modification,
+    };
+
+    overlays[ref] = {
+        ...created,
+        ...(current ? current : {}),
+    };
 }
