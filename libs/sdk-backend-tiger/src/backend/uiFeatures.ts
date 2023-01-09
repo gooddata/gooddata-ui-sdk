@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 
 /**
  * This is list of feature flags managed on Panther by FeatureHub
@@ -28,6 +28,8 @@ export enum TigerFeaturesNames {
     EnableDescriptions = "enableDescriptions",
     //boolean + possible values: enabled, disabled
     EnableAnalyticalDashboardPermissions = "enableAnalyticalDashboardPermissions",
+    //boolean + possible values: enabled, disabled
+    EnablePushpinGeoChart = "enablePushpinGeoChart",
 }
 
 export type ITigerFeatureFlags = {
@@ -42,6 +44,7 @@ export type ITigerFeatureFlags = {
     enableLongitudeAndLatitudeLabels: typeof FeatureFlagsValues["enableLongitudeAndLatitudeLabels"][number];
     enableDescriptions: typeof FeatureFlagsValues["enableDescriptions"][number];
     enableAnalyticalDashboardPermissions: typeof FeatureFlagsValues["enableAnalyticalDashboardPermissions"][number];
+    enablePushpinGeoChart: typeof FeatureFlagsValues["enablePushpinGeoChart"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -57,6 +60,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableLongitudeAndLatitudeLabels: false,
     enableDescriptions: false,
     enableAnalyticalDashboardPermissions: false,
+    enablePushpinGeoChart: false,
 };
 
 export const FeatureFlagsValues = {
@@ -75,4 +79,5 @@ export const FeatureFlagsValues = {
     enableLongitudeAndLatitudeLabels: [true, false] as const,
     enableDescriptions: [true, false] as const,
     enableAnalyticalDashboardPermissions: [true, false] as const,
+    enablePushpinGeoChart: [true, false] as const,
 };
