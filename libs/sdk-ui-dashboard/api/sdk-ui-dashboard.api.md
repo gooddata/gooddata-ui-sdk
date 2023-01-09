@@ -4122,7 +4122,10 @@ export function isCustomDashboardEvent(obj: unknown): obj is ICustomDashboardEve
 export function isCustomWidget(obj: unknown): obj is ICustomWidget;
 
 // @public
-export function isCustomWidgetDefinition(obj: unknown): obj is ICustomWidget;
+export function isCustomWidgetBase(obj: unknown): obj is ICustomWidgetBase;
+
+// @public
+export function isCustomWidgetDefinition(obj: unknown): obj is ICustomWidgetDefinition;
 
 // @alpha
 export const isDashboardAlertCreated: (obj: unknown) => obj is DashboardAlertCreated;

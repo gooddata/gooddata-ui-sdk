@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 
 /*
  * The public API of the Dashboard model is exported from here.
@@ -36,6 +36,7 @@ export {
     newDashboardItem,
     newDashboardSection,
     isCustomWidgetDefinition,
+    isCustomWidgetBase,
     isCustomWidget,
     ExtendedDashboardItem,
     extendedWidgetDebugStr,

@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import cx from "classnames";
 import React from "react";
 import { ILayoutCoordinates } from "../../../types";
@@ -7,6 +7,7 @@ import { RowEndHotspot, WidgetDropZoneColumn, useIsDraggingCurrentItem } from ".
 import { DashboardLayoutItemViewRenderer } from "./DashboardLayoutItemViewRenderer";
 import { IDashboardLayoutItemRenderer } from "./interfaces";
 import { renderModeAware } from "../../componentDefinition";
+import { isCustomWidgetBase } from "../../../model";
 
 function getLayoutCoordinates(item: IDashboardLayoutItemFacade<unknown>): ILayoutCoordinates {
     return {
@@ -22,9 +23,13 @@ const DashboardLayoutItemEditRenderer: IDashboardLayoutItemRenderer<unknown> = (
 
     const isDraggingCurrentItem = useIsDraggingCurrentItem(sectionIndex, itemIndex);
 
+    const isCustomWidget = isCustomWidgetBase(item.widget());
+
     return (
         <>
-            <WidgetDropZoneColumn screen={screen} sectionIndex={sectionIndex} itemIndex={itemIndex} />
+            {isCustomWidget ? null : (
+                <WidgetDropZoneColumn screen={screen} sectionIndex={sectionIndex} itemIndex={itemIndex} />
+            )}
             <DashboardLayoutItemViewRenderer
                 {...props}
                 className={cx({
@@ -33,7 +38,7 @@ const DashboardLayoutItemEditRenderer: IDashboardLayoutItemRenderer<unknown> = (
             >
                 {children}
             </DashboardLayoutItemViewRenderer>
-            <RowEndHotspot item={item} screen={screen} />
+            {isCustomWidget ? null : <RowEndHotspot item={item} screen={screen} />}
         </>
     );
 };

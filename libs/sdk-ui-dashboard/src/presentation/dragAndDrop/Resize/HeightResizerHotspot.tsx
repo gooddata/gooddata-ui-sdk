@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import React, { useEffect, useMemo, useState } from "react";
 import { IWidget, ScreenSize } from "@gooddata/sdk-model";
 import { fluidLayoutDescriptor, INSIGHT_WIDGET_SIZE_INFO_DEFAULT } from "@gooddata/sdk-ui-ext";
@@ -7,7 +7,7 @@ import isEmpty from "lodash/isEmpty";
 
 import { useDashboardDrag } from "../useDashboardDrag";
 import {
-    ExtendedDashboardWidget,
+    isCustomWidgetBase,
     resizeHeight,
     selectInsightsMap,
     useDashboardDispatch,
@@ -148,9 +148,7 @@ export function getNewHeightGR(
     return Math.min(maxLimit, Math.max(minLimit, currentWidth + deltaHeightGR));
 }
 function getCustomWidgetRestrictions(items: IDashboardLayoutItemFacade<unknown>[]) {
-    const customWidgetItems = items.filter(
-        (item) => (item.widget() as ExtendedDashboardWidget)?.type === "customWidget",
-    );
+    const customWidgetItems = items.filter((item) => isCustomWidgetBase(item.widget()));
 
     const heightLimit = customWidgetItems.reduce<number>((minCustomWidgetHeight, item) => {
         const {
