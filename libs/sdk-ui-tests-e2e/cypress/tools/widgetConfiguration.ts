@@ -96,6 +96,14 @@ export class WidgetConfiguration {
         return cy.wrap(result);
     }
 
+    isFilterItemVisible(attributeName: string, expected = true) {
+        this.getElement()
+            .find(".s-viz-filters-panel .s-attribute-filter-by-item")
+            .contains(attributeName)
+            .should(expected ? "exist" : "not.exist");
+        return this;
+    }
+
     toggleAttributeFilter(attributeName: string) {
         this.getElement()
             .find(".s-viz-filters-panel .s-attribute-filter-by-item")

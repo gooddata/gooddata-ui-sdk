@@ -45,6 +45,11 @@ export class KpiConfiguration {
         return this;
     }
 
+    selectedDataset(dataset: string) {
+        cy.get(`.s-date-dataset-button.s-${dataset}`).should("exist");
+        return this;
+    }
+
     isErrorVisible(expect = true) {
         this.getElement()
             .find(".s-no-related-date")
@@ -55,6 +60,24 @@ export class KpiConfiguration {
     close() {
         this.getElement().find(".s-configuration-panel-header-close-button").click();
         this.getElement().should("not.exist");
+        return this;
+    }
+
+    openDateDataset() {
+        this.getElement().find(".s-date-dataset-button").click();
+        return this;
+    }
+
+    getDateDatasets() {
+        const result = [] as string[];
+        cy.get(".dataSets-list .gd-list-item-shortened").each(($li) => {
+            return result.push($li.text());
+        });
+        return cy.wrap(result);
+    }
+
+    selectDateDataset(dataset: string) {
+        cy.get(`.dataSets-list .s-${dataset}`).click();
         return this;
     }
 
