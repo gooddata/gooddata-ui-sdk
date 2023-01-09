@@ -1,6 +1,5 @@
-// (C) 2022 GoodData Corporation
-
-import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
+// (C) 2022-2023 GoodData Corporation
+import { areObjRefsEqual, idRef, ObjRef, uriRef } from "@gooddata/sdk-model";
 import { DashboardContext } from "../../../../types/commonTypes";
 
 export type AttributeFilterDisplayFormValidationResult =
@@ -25,7 +24,14 @@ export async function validateFilterDisplayForm(
     ).displayForms;
 
     // validate if the display form is between attributes available display forms.
-    if (attributeDisplayForms.some((df) => areObjRefsEqual(df.ref, displayForm))) {
+    // try matching both uri and id in case the type of ref is different from what is in the ref field
+    if (
+        attributeDisplayForms.some(
+            (df) =>
+                areObjRefsEqual(idRef(df.id, "displayForm"), displayForm) ||
+                areObjRefsEqual(uriRef(df.uri), displayForm),
+        )
+    ) {
         return "VALID";
     }
 

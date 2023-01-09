@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import { DashboardState } from "../types";
 import invariant from "ts-invariant";
@@ -10,6 +10,8 @@ import {
     IDashboardDateFilter,
     isDashboardAttributeFilter,
     isDashboardDateFilter,
+    uriRef,
+    idRef,
 } from "@gooddata/sdk-model";
 import { newDisplayFormMap } from "../../../_staging/metadata/objRefMap";
 import { createMemoizedSelector } from "../_infra/selectors";
@@ -201,8 +203,14 @@ export const selectFilterContextAttributeFilterByDisplayForm = createMemoizedSel
         selectFilterContextAttributeFilters,
         (attributeDisplayFormsMap, attributeFilters) => {
             const df = attributeDisplayFormsMap.get(displayForm);
-            return attributeFilters.find((filter) =>
-                areObjRefsEqual(filter.attributeFilter.displayForm, df?.ref),
+            if (!df) {
+                return undefined;
+            }
+            // try matching both uri and id in case the type of ref is different from what is in the ref field
+            return attributeFilters.find(
+                (filter) =>
+                    areObjRefsEqual(filter.attributeFilter.displayForm, idRef(df.id, "displayForm")) ||
+                    areObjRefsEqual(filter.attributeFilter.displayForm, uriRef(df.uri)),
             );
         },
     ),
