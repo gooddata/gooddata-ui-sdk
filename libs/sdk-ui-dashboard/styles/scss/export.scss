@@ -27,4 +27,15 @@
     .gd-row-header-view .description .more-link.active {
         display: none;
     }
+
+    // For some reason, custom widgets in export mode are rendered with wrong height,
+    // or with height 0. height: 100% does not solve it, but we can rely on fact, that
+    // gd-fluild-layout-column has position: relative, so we can stretch the container to a full size.
+    .gd-custom-widget-export {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
 }

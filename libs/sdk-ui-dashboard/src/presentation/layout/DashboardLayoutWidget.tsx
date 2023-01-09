@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import {
     AnalyticalWidgetType,
     IDashboardLayoutSize,
@@ -13,6 +13,7 @@ import {
 } from "@gooddata/sdk-model";
 import { IVisualizationSizeInfo, WIDGET_DROPZONE_SIZE_INFO_DEFAULT } from "@gooddata/sdk-ui-ext";
 import React, { useRef } from "react";
+import cx from "classnames";
 import {
     ExtendedDashboardWidget,
     isCustomWidget,
@@ -26,6 +27,7 @@ import {
     selectWidgetsOverlayState,
     selectWidgetsModification,
     selectSectionModification,
+    selectIsExport,
 } from "../../model";
 import { isAnyPlaceholderWidget, isPlaceholderWidget } from "../../widgets";
 import { getDashboardLayoutWidgetDefaultHeight, getSizeInfo } from "../../_staging/layout/sizing";
@@ -124,6 +126,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
     const insights = useDashboardSelector(selectInsightsMap);
     const settings = useDashboardSelector(selectSettings);
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
+    const isExport = useDashboardSelector(selectIsExport);
     const enableWidgetCustomHeight = useDashboardSelector(selectEnableWidgetCustomHeight);
 
     const handleDragEnd = useWidgetDragEndHandler();
@@ -131,7 +134,8 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
     // TODO: we should probably do something more meaningful when item has no widget; should that even
     //  be allowed? undefined widget will make things explode down the line away so..
     const widget = item.widget()!;
-    const isDraggableWidgetType = !(isPlaceholderWidget(widget) || isCustomWidget(widget));
+    const isCustom = isCustomWidget(widget);
+    const isDraggableWidgetType = !(isPlaceholderWidget(widget) || isCustom);
 
     const [{ isDragging }, dragRef] = useDashboardDrag(
         {
@@ -204,7 +208,13 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
             contentRef={contentRef}
             getLayoutDimensions={getLayoutDimensions}
         >
-            <div ref={dragRef} className="dashboard-widget-draggable-wrapper">
+            <div
+                ref={dragRef}
+                className={cx([
+                    "dashboard-widget-draggable-wrapper",
+                    { "gd-custom-widget-export": isCustom && isExport },
+                ])}
+            >
                 <DashboardWidget
                     // @ts-expect-error Don't expose index prop on public interface (we need it only for css class for KD tests)
                     index={index}

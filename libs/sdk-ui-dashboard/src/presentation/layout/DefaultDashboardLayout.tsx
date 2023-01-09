@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
 import {
     ObjRef,
@@ -9,6 +9,7 @@ import {
     IDashboardLayoutItem,
 } from "@gooddata/sdk-model";
 import { LRUCache } from "@gooddata/util";
+import max from "lodash/max";
 
 import {
     useDashboardSelector,
@@ -58,12 +59,21 @@ function getDashboardLayoutForExport(
     dashLayout.removeSections();
     screenSplitSections.forEach((wrappedSection) => {
         wrappedSection.items.forEach((rowSection, index) => {
+            // Also ensure that all items in a section have equal grid height - the max one.
+            // This simulates non-export mode, where the flex-box stretches
+            // all the items in a row to the equal height.
+            // This is necessary as we have no control over the custom widgets heights.
+            const sectionItemsGridHeights = rowSection.map((item) => item.size().xl.gridHeight);
+            const maxGridHeight = max(sectionItemsGridHeights);
+
             dashLayout.createSection((section) => {
                 rowSection.forEach((item) => {
                     if (index === 0) {
                         section.header(wrappedSection.header);
                     }
-                    section.createItem(item.size().xl, (i) => i.widget(item.widget()));
+                    section.createItem({ ...item.size().xl, gridHeight: maxGridHeight }, (i) =>
+                        i.widget(item.widget()),
+                    );
                 });
                 return section;
             });
