@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 /**
  * This package provides domain models for GoodData.UI.
  *
@@ -26,6 +26,7 @@ export {
     attributeUri,
     attributeIdentifier,
     attributeAlias,
+    attributeShowAllValues,
     attributeDisplayFormRef,
 } from "./execution/attribute";
 

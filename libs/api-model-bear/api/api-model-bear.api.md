@@ -2992,6 +2992,8 @@ export namespace GdcVisualizationObject {
         displayForm: ObjQualifier;
         // (undocumented)
         localIdentifier: Identifier;
+        // (undocumented)
+        showAllValues?: boolean;
     }
     // (undocumented)
     export interface IVisualizationObject {
