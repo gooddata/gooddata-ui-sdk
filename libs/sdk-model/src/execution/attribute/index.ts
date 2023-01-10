@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import { Identifier, isUriRef, ObjRef, isIdentifierRef } from "../../objRef";
 import isEmpty from "lodash/isEmpty";
 import invariant from "ts-invariant";
@@ -45,6 +45,12 @@ export interface IAttributeBody {
      * metadata about execution results, it WILL include this user-assigned alias in the metadata.
      */
     alias?: string;
+
+    /**
+     * Indicates whether to show all values of given attribute even if the data bound to those values
+     * are not available
+     */
+    showAllValues?: boolean;
 }
 
 /**
@@ -152,6 +158,19 @@ export function attributeAlias(attribute: IAttribute): string | undefined {
     invariant(attribute, "attribute must be specified");
 
     return attribute.attribute.alias;
+}
+
+/**
+ * Gets an attribute show all values property.
+ *
+ * @param attribute - attribute to work with
+ * @returns value of attribute show all values property
+ * @public
+ */
+export function attributeShowAllValues(attribute: IAttribute): boolean | undefined {
+    invariant(attribute, "attribute must be specified");
+
+    return attribute.attribute.showAllValues;
 }
 
 /**

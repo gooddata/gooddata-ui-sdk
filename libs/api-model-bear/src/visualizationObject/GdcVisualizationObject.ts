@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import { GdcMetadata } from "../meta/GdcMetadata";
 import isEmpty from "lodash/isEmpty";
 
@@ -183,6 +183,7 @@ export namespace GdcVisualizationObject {
         localIdentifier: Identifier;
         displayForm: ObjQualifier;
         alias?: string;
+        showAllValues?: boolean;
     }
 
     export interface IMeasureDefinition {

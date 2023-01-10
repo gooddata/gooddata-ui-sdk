@@ -100,6 +100,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enablePushpinGeoChart,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableAttributeAllValues,
+            "enableAttributeAllValues",
+            "BOOLEAN",
+            FeatureFlagsValues.enableAttributeAllValues,
+        ),
     };
 }
 

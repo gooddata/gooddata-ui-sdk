@@ -13,6 +13,19 @@ Object {
 }
 `;
 
+exports[`attribute converter should return attribute with show all values 1`] = `
+Object {
+  "label": Object {
+    "identifier": Object {
+      "id": "label.account.id.name",
+      "type": "label",
+    },
+  },
+  "localIdentifier": "a_label.account.id.name",
+  "showAllValues": true,
+}
+`;
+
 exports[`attribute converter should return attribute with empty localId 1`] = `
 Object {
   "label": Object {

@@ -65,6 +65,7 @@ export class AttributeBuilder {
     displayForm: (ref: ObjRef) => this;
     localId: (localId?: Identifier | undefined) => this;
     noAlias: () => this;
+    showAllValues: (showAllValues?: boolean | undefined) => this;
 }
 
 // @public
@@ -121,6 +122,9 @@ export type AttributePredicate = (attribute: IAttribute) => boolean;
 
 // @public
 export function attributesFind(attributes: IAttribute[], idOrFun?: string | AttributePredicate): IAttribute | undefined;
+
+// @public
+export function attributeShowAllValues(attribute: IAttribute): boolean | undefined;
 
 // @public
 export function attributeUri(attribute: IAttribute): string | undefined;
@@ -472,6 +476,7 @@ export interface IAttributeBody {
     alias?: string;
     displayForm: ObjRef;
     localIdentifier: Identifier;
+    showAllValues?: boolean;
 }
 
 // @public

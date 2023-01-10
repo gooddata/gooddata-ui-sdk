@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 
 import { IAttribute } from "@gooddata/sdk-model";
 import { AttributeItem } from "@gooddata/api-client-tiger";
@@ -6,13 +6,14 @@ import { AttributeItem } from "@gooddata/api-client-tiger";
 import { toLabelQualifier } from "../ObjRefConverter";
 
 export function convertAttribute(attribute: IAttribute, idx: number): AttributeItem {
-    const alias = attribute.attribute.alias;
+    const { displayForm, alias, showAllValues } = attribute.attribute;
     const aliasProp = alias ? { alias } : {};
-    const labelRef = attribute.attribute.displayForm;
+    const showAllValuesProp = showAllValues ? { showAllValues } : {};
 
     return {
-        label: toLabelQualifier(labelRef),
+        label: toLabelQualifier(displayForm),
         localIdentifier: attribute.attribute.localIdentifier || `a${idx + 1}`,
         ...aliasProp,
+        ...showAllValuesProp,
     };
 }

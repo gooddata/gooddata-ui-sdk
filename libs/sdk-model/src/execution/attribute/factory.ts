@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import identity from "lodash/identity";
 import cloneDeep from "lodash/cloneDeep";
 import isEmpty from "lodash/isEmpty";
@@ -69,6 +69,26 @@ export class AttributeBuilder {
      */
     public noAlias = (): this => {
         delete this.attribute.alias;
+
+        return this;
+    };
+
+    /**
+     * Sets show all values property.
+     *
+     * @remarks
+     * The flag showAllValues translates to a property of the same name on the attribute in execution definition.
+     * If truthy, the backend will return all values of the particular attribute in the execution response
+     * even if there are no data available for it.
+     *
+     * @param showAllValues - flag defining whether to return all attribute values for given attribute; undefined to use backend default behavior(false)
+     */
+    public showAllValues = (showAllValues?: boolean | undefined): this => {
+        if (showAllValues === undefined) {
+            delete this.attribute.showAllValues;
+        } else {
+            this.attribute.showAllValues = showAllValues;
+        }
 
         return this;
     };
