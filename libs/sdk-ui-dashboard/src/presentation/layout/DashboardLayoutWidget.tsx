@@ -228,7 +228,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                 />
             </div>
 
-            {canShowHotspot && !isAnyPlaceholderWidget(widget) && !isCustomWidget(widget) ? (
+            {canShowHotspot && !isAnyPlaceholderWidget(widget) ? (
                 <>
                     <ResizeOverlay
                         isActive={isActive}
@@ -236,25 +236,29 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                         reachedWidthLimit={widthLimitReached}
                         reachedHeightLimit={heightLimitReached}
                     />
-                    <Hotspot
-                        dropZoneType="prev"
-                        itemIndex={item.index()}
-                        sectionIndex={item.section().index()}
-                        isLastInSection={false}
-                    />
-                    <Hotspot
-                        dropZoneType="next"
-                        itemIndex={item.index()}
-                        sectionIndex={item.section().index()}
-                        isLastInSection={item.isLast()}
-                    />
-                    <WidthResizerHotspot
-                        item={item}
-                        screen={screen}
-                        getGridColumnHeightInPx={getHeightInPx}
-                        getGridColumnWidth={getGridColumnWidth}
-                        getLayoutDimensions={getLayoutDimensions}
-                    />
+                    {!isCustomWidget(widget) ? (
+                        <>
+                            <Hotspot
+                                dropZoneType="prev"
+                                itemIndex={item.index()}
+                                sectionIndex={item.section().index()}
+                                isLastInSection={false}
+                            />
+                            <Hotspot
+                                dropZoneType="next"
+                                itemIndex={item.index()}
+                                sectionIndex={item.section().index()}
+                                isLastInSection={item.isLast()}
+                            />
+                            <WidthResizerHotspot
+                                item={item}
+                                screen={screen}
+                                getGridColumnHeightInPx={getHeightInPx}
+                                getGridColumnWidth={getGridColumnWidth}
+                                getLayoutDimensions={getLayoutDimensions}
+                            />
+                        </>
+                    ) : null}
                 </>
             ) : null}
 
