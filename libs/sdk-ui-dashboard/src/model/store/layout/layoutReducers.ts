@@ -9,6 +9,7 @@ import {
     ExtendedDashboardWidget,
     RelativeIndex,
     StashedDashboardItemsId,
+    isCustomWidget,
 } from "../../types/layoutTypes";
 import { addArrayElements, moveArrayElement, removeArrayElement } from "../../utils/arrayOps";
 import {
@@ -154,6 +155,9 @@ const changeItemsHeight: LayoutReducer<changeItemsHeightActionPayload> = (state,
     const section = state.layout.sections[sectionIndex];
     itemIndexes.forEach((itemIndex) => {
         const item = section.items[itemIndex];
+        if (isCustomWidget(item.widget)) {
+            return;
+        }
 
         const newSize = {
             ...item.size,
