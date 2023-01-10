@@ -99,13 +99,13 @@ export function useDashboardLoaderWithPluginManipulation(options: IDashboardLoad
         const select = dashboardSelect.current;
         const dashboardObject = select(selectDashboardWorkingDefinition);
         const renderMode = select(selectRenderMode);
-        const widgetsOverlay = select(selectWidgetsOverlay);
         // force new reference in case the current dashboard object is the same as the one with which the last loading mode change occurred
         // this makes sure the dashboard is fully reloaded each time
         setDashboard({ ...dashboardObject } as any);
         setRenderMode(renderMode);
         setLoadingMode(newLoadingMode);
-        setWidgetsOverlay(widgetsOverlay);
+        // force reset overlays to not keep between modes
+        setWidgetsOverlay({});
     }, []);
 
     const setExtraPlugins = useCallback((extraPlugins: IEmbeddedPlugin | IEmbeddedPlugin[]) => {
