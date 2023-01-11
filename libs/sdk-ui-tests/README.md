@@ -139,6 +139,8 @@ project.
 
 After this, you can navigate to the **reference-workspace** project and execute: `npm run refresh-recordings`
 
+NOTE: If `refresh-recordings` causes duplicated keys in **tools/XXX-workspace/src/recordings/index.ts** then you need to manually remove old execution definitions before generating new ones by `populate-ref` command. Related to https://gooddata.atlassian.net/browse/RAIL-4781
+
 ### TL;DR
 
 When creating new test scenarios, proceed as follows:
