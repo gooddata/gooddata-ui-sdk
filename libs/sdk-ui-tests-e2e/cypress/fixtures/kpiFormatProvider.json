@@ -1,0 +1,26 @@
+[
+    {
+        "metricName": "Metric format bars",
+        "value": "██████████"
+    },
+    {
+        "metricName": "Metric format color",
+        "value": "$154,271"
+    },
+    {
+        "metricName": "Metric format truncate",
+        "value": "$154.3 K"
+    },
+    {
+        "metricName": "Metric format UTF-8",
+        "value": "154'271.00 kiểm tra nghiêm khắc"
+    },
+    {
+        "metricName": "<button> % of Goal </button>",
+        "value": "<button>1.00</button>"
+    },
+    {
+        "metricName": "No data metric",
+        "value": "–"
+    }
+]

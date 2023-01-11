@@ -24,8 +24,11 @@ import { DashboardAttributeFilteringScenario } from "../components/Scenarios/Das
 import { DashboardStageNameScenario } from "../components/Scenarios/Dashboard/DashboardStageNameScenario";
 import { DashboardDateFilteringScenario } from "../components/Scenarios/Dashboard/DashboardDateFilteringScenario";
 import { DashboardKPIsScenario } from "../components/Scenarios/Dashboard/DashboardKPIsScenario";
-import { DashboardMultipleFiltersScenario } from "../components/Scenarios/Dashboard/DashboardMultipleFiltersScenario";
 import { DashboardMultipleInsightsScenario } from "../components/Scenarios/Dashboard/DashboardMultipleInsightsScenario";
+import { DashboardDependentFilter } from "../components/Scenarios/Dashboard/DashboardDependentFilterScenario";
+import { DashboardMultipleFiltersScenario } from "../components/Scenarios/Dashboard/DashboardMultipleFiltersScenario";
+import { DashboardDrillToInsightScenario } from "../components/Scenarios/Dashboard/DashboardDrilToInsightScenario";
+import { DashboardTargetDashboardScenario } from "../components/Scenarios/Dashboard/DashboardTargetDashboardScenario";
 
 /**
  * Add key here for your new E2E test. Use the key in the map below with the scenario as well as in
@@ -41,6 +44,9 @@ export const SCENARIO_KEYS = {
     DASHBOARD_KPIs: "dashboard/kpis",
     DASHBOARD_MULTIPLE_FILTERS: "dashboard/multiple-filters",
     DASHBOARD_MULTIPLE_INSIGHTS: "dashboard/multiple-insights",
+    DASHBOARD_DEPENDENT_FILTER: "dashboard/dependent-filter",
+    DASHBOARD_DRILL_TO_INSIGHT: "dashboard/drill-to-insight",
+    DASHBOARD_TARGET: "dashboard/dashboard-target",
     IMPLICIT_DRILL_TO_ATTRIBUTE: "dashboard/implicit-drill-to-attribute-url",
     FILTERS_DATE_FILTER: "filters/date-filter",
     VIS_BAR_CHART_DRILL: "visualizations/barchart/bar-chart-drilling-scenario",
@@ -66,6 +72,9 @@ const scenarios = new Map<string, React.ComponentType>([
     [SCENARIO_KEYS.DASHBOARD_KPIs, DashboardKPIsScenario],
     [SCENARIO_KEYS.DASHBOARD_MULTIPLE_FILTERS, DashboardMultipleFiltersScenario],
     [SCENARIO_KEYS.DASHBOARD_MULTIPLE_INSIGHTS, DashboardMultipleInsightsScenario],
+    [SCENARIO_KEYS.DASHBOARD_DEPENDENT_FILTER, DashboardDependentFilter],
+    [SCENARIO_KEYS.DASHBOARD_DRILL_TO_INSIGHT, DashboardDrillToInsightScenario],
+    [SCENARIO_KEYS.DASHBOARD_TARGET, DashboardTargetDashboardScenario],
     [SCENARIO_KEYS.IMPLICIT_DRILL_TO_ATTRIBUTE, ImplicitDrillToAttributeUrlScenario],
     [SCENARIO_KEYS.FILTERS_DATE_FILTER, DateFilterScenario],
     [SCENARIO_KEYS.FILTERS_ATTRIBUTE_FILTER_BUTTON, AttributeFilterButtonScenario],

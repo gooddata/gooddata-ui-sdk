@@ -66,6 +66,14 @@ export class AttributeFilter {
         return this;
     }
 
+    getValueList() {
+        const result = [] as string[];
+        cy.get(`.s-attribute-filter-list-item .input-label-text`).each(($li) => {
+            return result.push($li.text());
+        });
+        return cy.wrap(result);
+    }
+
     apply() {
         this.getDropdownElement().find(".s-apply").click({ scrollBehavior: false });
         return this;
@@ -150,28 +158,26 @@ export class AttributeFilter {
         return this;
     }
 
-    // TODO: this needs to be split to multiple functions
-    configureDependency() {
+    configureDependency(filteredItem: string) {
+        const testClass = getTestClassByTitle(filteredItem);
         this.selectConfiguration();
         this.getDropdownElement()
-            .find(".s-attribute-filter-dropdown-configuration-item")
+            .find(`.s-attribute-filter-dropdown-configuration-item${testClass}`)
             .click({ scrollBehavior: false });
-        this.getDropdownElement()
-            .find(".s-attribute-filter-dropdown-configuration-save-button.s-save")
-            .click({ scrollBehavior: false });
+
+        this.getDropdownElement().find(".s-apply").click({ scrollBehavior: false });
         return this;
     }
 
-    isAttributeItemFiltered() {
-        this.getDropdownElement().get(".s-attribute-filter-dropdown-items-filtered").should("exist");
+    isAttributeItemFiltered(expected: boolean) {
+        this.getDropdownElement()
+            .get(".s-attribute-filter-dropdown-items-filtered")
+            .should(expected ? "exist" : "not.exist");
         return this;
     }
 
     selectConfiguration() {
-        this.getDropdownElement()
-            .find(".s-attribute-filter-dropdown-configuration-button")
-            .click({ scrollBehavior: false })
-            .wait(100);
+        this.getDropdownElement().find(".s-configuration-button").click({ scrollBehavior: false }).wait(100);
     }
 
     changeAttributeLabel(label: string) {
@@ -201,6 +207,12 @@ export class AttributeFilter {
 
     isLoaded(expect = true) {
         this.getElement().should(expect ? "have.class" : "not.have.class", "gd-is-loaded");
+        return this;
+    }
+
+    waitFilteringFinished(): this {
+        this.getElement().should("have.class", "gd-is-filtering");
+        this.getElement().should("not.have.class", "gd-is-filtering");
         return this;
     }
 }
