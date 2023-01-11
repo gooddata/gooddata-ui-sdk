@@ -3,6 +3,30 @@
         {
             "headers": [
                 {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,##0.00",
+                                    "localIdentifier": "m_fact.uscities.population_sum",
+                                    "name": "m_fact.uscities.population_sum"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,##0.00",
+                                    "localIdentifier": "m_fact.uscities.density_sum",
+                                    "name": "m_fact.uscities.density_sum"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "headers": [
+                {
                     "attributeHeader": {
                         "formOf": {
                             "identifier": "attr.uscities.city",

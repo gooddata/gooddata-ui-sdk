@@ -2,7 +2,8 @@
     {
         "n2oMap": {
             "a_label.uscities.city": "tooltipText_df",
-            "a_label.uscities.city.location": "a_label.uscities.city.location"
+            "a_label.uscities.city.location": "a_label.uscities.city.location",
+            "a_label.uscities.city.location_1": "longitude_df"
         },
         "originalExecution": {
             "attributes": [
@@ -13,6 +14,15 @@
                             "type": "displayForm"
                         },
                         "localIdentifier": "a_label.uscities.city.location"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "label.uscities.city.location",
+                            "type": "displayForm"
+                        },
+                        "localIdentifier": "longitude_df"
                     }
                 },
                 {
@@ -37,7 +47,21 @@
                             }
                         }
                     ],
-                    "localIdentifier": "location"
+                    "localIdentifier": "latitude"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "label.uscities.city.location",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "longitude_df"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "longitude"
                 },
                 { "items": [], "localIdentifier": "segment" },
                 {
@@ -52,14 +76,16 @@
                     "localIdentifier": "tooltipText"
                 }
             ],
-            "dimensions": [{ "itemIdentifiers": ["a_label.uscities.city.location", "tooltipText_df"] }],
+            "dimensions": [
+                { "itemIdentifiers": ["a_label.uscities.city.location", "longitude_df", "tooltipText_df"] }
+            ],
             "filters": [],
             "measures": [],
             "postProcessing": {},
             "sortBy": [],
             "workspace": "live-examples-workspace"
         },
-        "scenario": "location only with tooltip",
+        "scenario": "latitude and longitude only with tooltip",
         "vis": "GeoPushpinChart"
     }
 ]

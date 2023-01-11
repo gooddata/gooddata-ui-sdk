@@ -59,6 +59,7 @@
             ],
             "filters": [],
             "measures": [],
+            "postProcessing": {},
             "sortBy": [],
             "workspace": "live-examples-workspace"
         },

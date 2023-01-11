@@ -58,4 +58,9 @@ describe("geoChartData", () => {
         const { geoData } = RecShortcuts.LocationSizeAndColor_Small;
         expect(geoData).toMatchSnapshot();
     });
+
+    it("should return geoData with latitude, longitude and tooltipText", () => {
+        const { geoData } = RecShortcuts.LatitudeAndLongitudeOnlyWithTooltip;
+        expect(geoData).toMatchSnapshot();
+    });
 });

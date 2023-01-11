@@ -23,6 +23,7 @@ Array [
         "ref": Object {
           "uri": "/gdc/md/liveexamplesworkspace/obj/9459",
         },
+        "type": "GDC.geo.pin",
         "uri": "/gdc/md/liveexamplesworkspace/obj/9459",
       },
     },
@@ -53,6 +54,7 @@ Array [
         "ref": Object {
           "uri": "/gdc/md/liveexamplesworkspace/obj/9459",
         },
+        "type": "GDC.geo.pin",
         "uri": "/gdc/md/liveexamplesworkspace/obj/9459",
       },
     },

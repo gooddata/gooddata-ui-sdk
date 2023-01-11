@@ -1,11 +1,11 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import {
     calculateAverage,
     getFormatFromExecutionResponse,
     isClusteringAllowed,
     isColorAssignmentItemChanged,
     isDataOfReasonableSize,
-    isLocationMissing,
+    isLocationSet,
     isPointsConfigChanged,
 } from "../../geoChart/common";
 import { ColorBucket, LocationBucket, SegmentBucket, SizeBucket, TooltipBucket } from "./fixtures";
@@ -25,8 +25,8 @@ describe("common", () => {
         });
     });
 
-    describe("isLocationMissing", () => {
-        it("should return false if location is in buckets", () => {
+    describe("isLocationSet", () => {
+        it("should return true if location is in buckets", () => {
             const buckets: IBucket[] = [
                 LocationBucket,
                 SegmentBucket,
@@ -34,12 +34,12 @@ describe("common", () => {
                 SizeBucket,
                 ColorBucket,
             ];
-            expect(isLocationMissing(buckets)).toBe(false);
+            expect(isLocationSet(buckets)).toBe(true);
         });
 
-        it("should return true if location is not in buckets", () => {
+        it("should return false if location is not in buckets", () => {
             const buckets: IBucket[] = [SizeBucket];
-            expect(isLocationMissing(buckets)).toBe(true);
+            expect(isLocationSet(buckets)).toBe(false);
         });
     });
 

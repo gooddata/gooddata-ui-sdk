@@ -1,0 +1,44 @@
+{
+    "insight": {
+        "buckets": [
+            { "items": [], "localIdentifier": "size" },
+            { "items": [], "localIdentifier": "color" },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.uscities.city.location",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.uscities.city.location"
+                        }
+                    }
+                ],
+                "localIdentifier": "latitude"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.uscities.city.location",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "longitude_df"
+                        }
+                    }
+                ],
+                "localIdentifier": "longitude"
+            },
+            { "items": [], "localIdentifier": "segment" }
+        ],
+        "filters": [],
+        "identifier": "GeoPushpinChart.5ce9a911b5ab6f33fbb181f32a255022",
+        "properties": { "controls": { "showLabels": false, "tooltipText": "label.uscities.city" } },
+        "sorts": [],
+        "title": "GeoPushpinChart - latitude and longitude only with tooltip",
+        "uri": "GeoPushpinChart.5ce9a911b5ab6f33fbb181f32a255022",
+        "visualizationUrl": "local:pushpin"
+    }
+}

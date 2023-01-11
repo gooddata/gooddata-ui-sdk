@@ -3,6 +3,23 @@
         {
             "headers": [
                 {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,##0.00",
+                                    "localIdentifier": "m_fact.uscities.density_sum",
+                                    "name": "m_fact.uscities.density_sum"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "headers": [
+                {
                     "attributeHeader": {
                         "formOf": {
                             "identifier": "attr.uscities.city",
@@ -14,6 +31,19 @@
                         "name": "location",
                         "type": "GDC.geo.pin",
                         "uri": "/gdc/md/liveexamplesworkspace/obj/9459"
+                    }
+                },
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "attr.uscities.state_name",
+                            "name": "State Name",
+                            "uri": "/gdc/md/liveexamplesworkspace/obj/9461"
+                        },
+                        "identifier": "label.uscities.state_name",
+                        "localIdentifier": "a_label.uscities.state_name",
+                        "name": "state_name",
+                        "uri": "/gdc/md/liveexamplesworkspace/obj/9462"
                     }
                 },
                 {

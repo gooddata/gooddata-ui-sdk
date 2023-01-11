@@ -44,6 +44,7 @@ Object {
             "ref": Object {
               "uri": "/gdc/md/liveexamplesworkspace/obj/9459",
             },
+            "type": "GDC.geo.pin",
             "uri": "/gdc/md/liveexamplesworkspace/obj/9459",
           },
         },
@@ -71,6 +72,7 @@ Object {
             "ref": Object {
               "uri": "/gdc/md/liveexamplesworkspace/obj/9459",
             },
+            "type": "GDC.geo.pin",
             "uri": "/gdc/md/liveexamplesworkspace/obj/9459",
           },
         },
