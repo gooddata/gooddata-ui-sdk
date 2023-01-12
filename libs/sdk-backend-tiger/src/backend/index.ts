@@ -82,6 +82,7 @@ const CAPABILITIES: IBackendCapabilities = {
     supportsEveryoneUserGroupForAccessControl: false,
     supportsNonProductionDatasets: false,
     supportsShowAllAttributeValues: true,
+    supportsSeparateLatitudeLongitudeLabels: true,
 };
 
 /**

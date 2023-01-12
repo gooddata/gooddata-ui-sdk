@@ -55,6 +55,7 @@
             "dimensions": [{ "itemIdentifiers": ["a_label.uscities.city.location", "tooltipText_df"] }],
             "filters": [],
             "measures": [],
+            "postProcessing": {},
             "sortBy": [],
             "workspace": "live-examples-workspace"
         },

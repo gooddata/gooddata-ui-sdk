@@ -35,6 +35,7 @@
             "dimensions": [{ "itemIdentifiers": ["a_label.uscities.city.location"] }],
             "filters": [],
             "measures": [],
+            "postProcessing": {},
             "sortBy": [],
             "workspace": "live-examples-workspace"
         },

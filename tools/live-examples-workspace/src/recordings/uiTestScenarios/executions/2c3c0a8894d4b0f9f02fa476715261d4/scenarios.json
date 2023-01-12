@@ -1,0 +1,91 @@
+[
+    {
+        "n2oMap": {
+            "a_label.uscities.city": "tooltipText_df",
+            "a_label.uscities.city.location": "a_label.uscities.city.location",
+            "a_label.uscities.city.location_1": "longitude_df"
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "label.uscities.city.location",
+                            "type": "displayForm"
+                        },
+                        "localIdentifier": "a_label.uscities.city.location"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "label.uscities.city.location",
+                            "type": "displayForm"
+                        },
+                        "localIdentifier": "longitude_df"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "label.uscities.city", "type": "displayForm" },
+                        "localIdentifier": "tooltipText_df"
+                    }
+                }
+            ],
+            "buckets": [
+                { "items": [], "localIdentifier": "size" },
+                { "items": [], "localIdentifier": "color" },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "label.uscities.city.location",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_label.uscities.city.location"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "latitude"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "label.uscities.city.location",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "longitude_df"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "longitude"
+                },
+                { "items": [], "localIdentifier": "segment" },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "label.uscities.city", "type": "displayForm" },
+                                "localIdentifier": "tooltipText_df"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "tooltipText"
+                }
+            ],
+            "dimensions": [
+                { "itemIdentifiers": ["a_label.uscities.city.location", "longitude_df", "tooltipText_df"] }
+            ],
+            "filters": [],
+            "measures": [],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "live-examples-workspace"
+        },
+        "scenario": "latitude and longitude only with tooltip",
+        "vis": "GeoPushpinChart"
+    }
+]

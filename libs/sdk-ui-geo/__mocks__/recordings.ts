@@ -99,4 +99,7 @@ export const RecShortcuts = {
     AllAndSmall: createShortcut(
         ExamplesRecordings.Scenarios.GeoPushpinChart.LocationSegmentSizeAndColorWithTooltipAndFilter,
     ),
+    LatitudeAndLongitudeOnlyWithTooltip: createShortcut(
+        ExamplesRecordings.Scenarios.GeoPushpinChart.LatitudeAndLongitudeOnlyWithTooltip,
+    ),
 };

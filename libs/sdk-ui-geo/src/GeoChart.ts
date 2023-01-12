@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import { IAttribute, IColorPalette, IExecutionConfig } from "@gooddata/sdk-model";
 import {
     AttributeOrPlaceholder,
@@ -198,7 +198,7 @@ export type ZoomChangedCallback = (zoom: number) => void;
 /**
  * @public
  */
-export interface IGeoPushpinChartProps extends IVisualizationProps, IVisualizationCallbacks {
+export interface IGeoPushpinChartBaseProps extends IVisualizationProps, IVisualizationCallbacks {
     /**
      * Analytical backend, from which the chart will obtain data to visualize
      *
@@ -217,7 +217,6 @@ export interface IGeoPushpinChartProps extends IVisualizationProps, IVisualizati
      */
     workspace?: string;
 
-    location: AttributeOrPlaceholder;
     size?: AttributeMeasureOrPlaceholder;
     color?: AttributeMeasureOrPlaceholder;
     segmentBy?: AttributeOrPlaceholder;
@@ -246,6 +245,55 @@ export interface IGeoPushpinChartProps extends IVisualizationProps, IVisualizati
      * Specify function to call back when map zoom changes.
      */
     onZoomChanged?: ZoomChangedCallback;
+}
+
+/**
+ * @public
+ */
+export interface IGeoPushpinChartProps extends IGeoPushpinChartBaseProps {
+    /**
+     * The attribute definition or placeholder that determines the longitude and latitude of the pins.
+     * Values expected in format lat;long.
+     */
+    location: AttributeOrPlaceholder;
+}
+
+/**
+ * @public
+ */
+export interface IGeoPushpinChartLatitudeLongitudeProps extends IGeoPushpinChartBaseProps {
+    /**
+     * The attribute definition or placeholder that determines the latitude of the pins.
+     * Values expected in string format representing coordinate.
+     */
+    latitude: AttributeOrPlaceholder;
+    /**
+     * The attribute definition or placeholder that determines the longitude of the pins.
+     * Values expected in string format representing coordinate.
+     */
+    longitude: AttributeOrPlaceholder;
+}
+
+/**
+ * @internal
+ */
+export type GeoPushpinChartPropsUnion = IGeoPushpinChartProps | IGeoPushpinChartLatitudeLongitudeProps;
+
+/**
+ * @internal
+ */
+export function isGeoPushpinChartProps(props: GeoPushpinChartPropsUnion): props is IGeoPushpinChartProps {
+    return (props as IGeoPushpinChartProps).location !== undefined;
+}
+
+/**
+ * @internal
+ */
+export function isGeoPushpinChartLatitudeLongitudeProps(
+    props: GeoPushpinChartPropsUnion,
+): props is IGeoPushpinChartLatitudeLongitudeProps {
+    const latitudeLongitudeProps = props as IGeoPushpinChartLatitudeLongitudeProps;
+    return latitudeLongitudeProps.latitude !== undefined && latitudeLongitudeProps.longitude !== undefined;
 }
 
 /**

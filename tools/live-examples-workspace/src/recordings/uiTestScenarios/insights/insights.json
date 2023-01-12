@@ -27,6 +27,11 @@
         "scenarioName": "location, segment, size with tooltip",
         "visName": "GeoPushpinChart"
     },
+    "GeoPushpinChart.5ce9a911b5ab6f33fbb181f32a255022": {
+        "comment": "Auto-generated insight for test scenario GeoPushpinChart - latitude and longitude only with tooltip.",
+        "scenarioName": "latitude and longitude only with tooltip",
+        "visName": "GeoPushpinChart"
+    },
     "GeoPushpinChart.5d8117bcf1f01b69048af8e16a0b7bba": {
         "comment": "Auto-generated insight for test scenario GeoPushpinChart - location, segment and color.",
         "scenarioName": "location, segment and color",

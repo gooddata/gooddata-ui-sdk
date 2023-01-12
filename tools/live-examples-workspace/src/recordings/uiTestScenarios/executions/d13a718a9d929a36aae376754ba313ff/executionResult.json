@@ -1,0 +1,52 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,##0.00",
+                                    "localIdentifier": "m_fact.uscities.density_sum",
+                                    "name": "m_fact.uscities.density_sum"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "attr.uscities.city",
+                            "name": "City",
+                            "uri": "/gdc/md/liveexamplesworkspace/obj/9458"
+                        },
+                        "identifier": "label.uscities.city.location",
+                        "localIdentifier": "a_label.uscities.city.location",
+                        "name": "location",
+                        "type": "GDC.geo.pin",
+                        "uri": "/gdc/md/liveexamplesworkspace/obj/9459"
+                    }
+                },
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "attr.uscities.city",
+                            "name": "City",
+                            "uri": "/gdc/md/liveexamplesworkspace/obj/9458"
+                        },
+                        "identifier": "label.uscities.city",
+                        "localIdentifier": "a_label.uscities.city",
+                        "name": "city",
+                        "uri": "/gdc/md/liveexamplesworkspace/obj/9460"
+                    }
+                }
+            ]
+        }
+    ]
+}

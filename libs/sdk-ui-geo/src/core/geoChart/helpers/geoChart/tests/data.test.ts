@@ -1,5 +1,5 @@
-// (C) 2020-2022 GoodData Corporation
-import { getGeoData, getLocation } from "../../geoChart/data";
+// (C) 2020-2023 GoodData Corporation
+import { getGeoData, getLocation, parseCoordinate } from "../../geoChart/data";
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import { emptyDef } from "@gooddata/sdk-model";
 import { DataViewFacade } from "@gooddata/sdk-ui";
@@ -16,6 +16,21 @@ describe("getLocation", () => {
 
     it.each(["", "123"])("should return null when input is '%s'", (input: string) => {
         const location = getLocation(input);
+        expect(location).toEqual(null);
+    });
+});
+
+describe("parseCoordinate", () => {
+    it.each([
+        ["44.500000", 44.5],
+        ["-89.500000", -89.5],
+    ])("should return number from coordinate string '%s'", (input: string, result: number) => {
+        const location = parseCoordinate(input);
+        expect(location).toEqual(result);
+    });
+
+    it.each(["abc", null])("should return null for invalid input '%s'", (input: string | null) => {
+        const location = parseCoordinate(input);
         expect(location).toEqual(null);
     });
 });
@@ -41,6 +56,11 @@ describe("geoChartData", () => {
 
     it("should return geoData with location, color, size", () => {
         const { geoData } = RecShortcuts.LocationSizeAndColor_Small;
+        expect(geoData).toMatchSnapshot();
+    });
+
+    it("should return geoData with latitude, longitude and tooltipText", () => {
+        const { geoData } = RecShortcuts.LatitudeAndLongitudeOnlyWithTooltip;
         expect(geoData).toMatchSnapshot();
     });
 });

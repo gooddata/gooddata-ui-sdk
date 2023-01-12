@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import identity from "lodash/identity";
 import isEmpty from "lodash/isEmpty";
 import React from "react";
@@ -8,10 +8,15 @@ import { IBucketChartProps } from "@gooddata/sdk-ui-charts";
 import { IPivotTableProps } from "@gooddata/sdk-ui-pivot";
 import { IInsight, ISettings } from "@gooddata/sdk-model";
 import { IExecuteProps } from "@gooddata/sdk-ui";
-import { IGeoPushpinChartProps } from "@gooddata/sdk-ui-geo";
+import { IGeoPushpinChartProps, IGeoPushpinChartLatitudeLongitudeProps } from "@gooddata/sdk-ui-geo";
 import { DataViewRequests } from "@gooddata/mock-handling";
 
-export type VisProps = IPivotTableProps | IBucketChartProps | IExecuteProps | IGeoPushpinChartProps;
+export type VisProps =
+    | IPivotTableProps
+    | IBucketChartProps
+    | IExecuteProps
+    | IGeoPushpinChartProps
+    | IGeoPushpinChartLatitudeLongitudeProps;
 export type UnboundVisProps<T extends VisProps> = Omit<T, "backend" | "workspace">;
 export type PropsFactory<T extends VisProps> = (backend: IAnalyticalBackend, workspace: string) => T;
 export type InsightConverter = (defaultInsight: IInsight) => IInsight;
