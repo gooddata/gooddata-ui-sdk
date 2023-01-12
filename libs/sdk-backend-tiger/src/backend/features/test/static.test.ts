@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 
 import { IStaticFeatures } from "@gooddata/api-client-tiger";
 import { TigerFeaturesNames } from "../../uiFeatures";
@@ -22,7 +22,6 @@ describe("static features", () => {
                 [TigerFeaturesNames.EnableMultipleDates]: "ENABLED",
                 [TigerFeaturesNames.EnableKPIDashboardDeleteFilterButton]: "ENABLED",
                 [TigerFeaturesNames.DashboardEditModeDevRollout]: "ENABLED",
-                [TigerFeaturesNames.EnableTheming]: "ENABLED",
                 [TigerFeaturesNames.EnableMetricSqlAndDataExplain]: "ENABLED",
                 [TigerFeaturesNames.EnableDateFormats]: "ENABLED",
                 [TigerFeaturesNames.EnableLongitudeAndLatitudeLabels]: "ENABLED",
@@ -34,7 +33,6 @@ describe("static features", () => {
             enableKPIDashboardDeleteFilterButton: true,
             enableMultipleDates: true,
             enableSortingByTotalGroup: true,
-            enableTheming: true,
             enableMetricSqlAndDataExplain: true,
             enableDateFormats: true,
             enableLongitudeAndLatitudeLabels: true,
@@ -50,7 +48,6 @@ describe("static features", () => {
                     [TigerFeaturesNames.EnableMultipleDates]: "ENABLED",
                     [TigerFeaturesNames.EnableKPIDashboardDeleteFilterButton]: "ENABLED",
                     [TigerFeaturesNames.DashboardEditModeDevRollout]: "ENABLED",
-                    [TigerFeaturesNames.EnableTheming]: "ENABLED",
                     [TigerFeaturesNames.EnableMetricSqlAndDataExplain]: "ENABLED",
                     [TigerFeaturesNames.EnableDateFormats]: "ENABLED",
                     [TigerFeaturesNames.EnableLongitudeAndLatitudeLabels]: "ENABLED",
@@ -64,7 +61,6 @@ describe("static features", () => {
             enableKPIDashboardDeleteFilterButton: true,
             enableMultipleDates: true,
             enableSortingByTotalGroup: true,
-            enableTheming: true,
             enableMetricSqlAndDataExplain: true,
             enableDateFormats: true,
             enableLongitudeAndLatitudeLabels: true,

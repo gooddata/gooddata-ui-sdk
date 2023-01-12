@@ -2133,7 +2133,6 @@ export interface ISettings {
     enableTableColumnsAutoResizing?: boolean;
     enableTableColumnsGrowToFit?: boolean;
     enableTableColumnsManualResizing?: boolean;
-    enableTheming?: boolean;
     enableWeekFilters?: boolean;
     formatLocale?: string;
     hideKpiDrillInEmbedded?: boolean;

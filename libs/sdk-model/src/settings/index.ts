@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 
 /**
  * Settings are obtained from backend and are effectively a collection of feature flags or settings with
@@ -233,11 +233,6 @@ export interface ISettings {
      * Enable visibility control for total labels
      */
     enableSeparateTotalLabels?: boolean;
-
-    /**
-     * Enable theming on Panther
-     */
-    enableTheming?: boolean;
 
     /**
      * Represents whiteLabeling configuration
