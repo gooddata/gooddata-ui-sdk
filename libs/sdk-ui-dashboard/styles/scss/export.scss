@@ -39,3 +39,14 @@
         bottom: 0;
     }
 }
+
+// Display 'block' behaves weird in exports in case of small KPI in their default height. Overriding block
+// by flex seems to solve the issue. The new class is added for backwards compatibility with plugins.
+// When no new issues arise, we may delete this class and remove the 'display: block !important;'
+// from the original '.export-mode' class. Then the export mode would inherit the 'display: flex;'.
+.export-mode-flex {
+    div.gd-fluidlayout-row {
+        display: flex !important; /* stylelint-disable-line declaration-no-important */
+        flex-direction: column;
+    }
+}
