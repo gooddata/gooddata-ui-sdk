@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import { factory as createSdk, SDK } from "@gooddata/api-client-bear";
 import {
     IAnalyticalBackendConfig,
@@ -80,6 +80,7 @@ const CAPABILITIES: IBackendCapabilities = {
     supportsGranularAccessControl: false,
     supportsEveryoneUserGroupForAccessControl: true,
     supportsNonProductionDatasets: true,
+    supportsShowAllAttributeValues: false,
 };
 
 /**

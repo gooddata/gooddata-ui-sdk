@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 
 /**
  * Analytical Backend communicates its capabilities via objects of this type. In return, the capabilities
@@ -199,6 +199,11 @@ export interface IBackendCapabilities {
      * Indicates whether backend supports non production data sets.
      */
     supportsNonProductionDatasets?: boolean;
+
+    /**
+     * Indicates whether backend supports executions listing all attribute values
+     */
+    supportsShowAllAttributeValues?: boolean;
 
     /**
      * Catchall for additional capabilities

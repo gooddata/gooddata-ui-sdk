@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import { AxiosInstance, AxiosResponse } from "axios";
 import invariant from "ts-invariant";
 import {
@@ -81,6 +81,7 @@ const CAPABILITIES: IBackendCapabilities = {
     supportsGranularAccessControl: true,
     supportsEveryoneUserGroupForAccessControl: false,
     supportsNonProductionDatasets: false,
+    supportsShowAllAttributeValues: true,
 };
 
 /**
