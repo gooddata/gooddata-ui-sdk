@@ -53,13 +53,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableTheming,
-            "enableTheming",
-            "BOOLEAN",
-            FeatureFlagsValues.enableTheming,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableMetricSqlAndDataExplain,
             "enableMetricSqlAndDataExplain",
             "BOOLEAN",

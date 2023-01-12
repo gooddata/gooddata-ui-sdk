@@ -17,8 +17,6 @@ export enum TigerFeaturesNames {
     //boolean + possible values: enabled, disabled
     DashboardEditModeDevRollout = "dashboardEditModeDevRollout",
     //boolean + possible values: enabled, disabled
-    EnableTheming = "enableTheming",
-    //boolean + possible values: enabled, disabled
     EnableMetricSqlAndDataExplain = "enableMetricSqlAndDataExplain",
     //boolean + possible values: enabled, disabled
     EnableDateFormats = "enableDateFormats",
@@ -40,7 +38,6 @@ export type ITigerFeatureFlags = {
     enableMultipleDates: typeof FeatureFlagsValues["enableMultipleDates"][number];
     enableKPIDashboardDeleteFilterButton: typeof FeatureFlagsValues["enableKPIDashboardDeleteFilterButton"][number];
     dashboardEditModeDevRollout: typeof FeatureFlagsValues["dashboardEditModeDevRollout"][number];
-    enableTheming: typeof FeatureFlagsValues["enableTheming"][number];
     enableMetricSqlAndDataExplain: typeof FeatureFlagsValues["enableMetricSqlAndDataExplain"][number];
     enableDateFormats: typeof FeatureFlagsValues["enableDateFormats"][number];
     enableLongitudeAndLatitudeLabels: typeof FeatureFlagsValues["enableLongitudeAndLatitudeLabels"][number];
@@ -57,7 +54,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableKPIDashboardDeleteFilterButton: false,
     // disable edit mode in gdc-dashboards during development
     dashboardEditModeDevRollout: false,
-    enableTheming: true,
     enableMetricSqlAndDataExplain: false,
     enableDateFormats: true,
     enableLongitudeAndLatitudeLabels: false,
@@ -77,7 +73,6 @@ export const FeatureFlagsValues = {
     enableMultipleDates: [true, false] as const,
     enableKPIDashboardDeleteFilterButton: [true, false] as const,
     dashboardEditModeDevRollout: [true, false] as const,
-    enableTheming: [true, false] as const,
     enableMetricSqlAndDataExplain: [true, false] as const,
     enableDateFormats: [true, false] as const,
     enableLongitudeAndLatitudeLabels: [true, false] as const,

@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import { IWorkspaceStylingService } from "@gooddata/sdk-backend-spi";
 import { ApiEntitlementNameEnum } from "@gooddata/api-client-tiger";
 import {
@@ -20,12 +20,11 @@ export class TigerWorkspaceStyling implements IWorkspaceStylingService {
     /**
      * Checks if Theming needs to be loaded.
      * Theming needs to be enabled by license entitlement
-     * by FF
      * and activeTheme needs to be defined
      *
      * @returns boolean
      */
-    private async isStylizable(activeStyleId: string, enableTheming: boolean): Promise<boolean> {
+    private async isStylizable(activeStyleId: string): Promise<boolean> {
         const isCustomThemingIncludedInEntitlements = await this.authCall(async (client) =>
             client.actions
                 .resolveRequestedEntitlements({
@@ -34,16 +33,15 @@ export class TigerWorkspaceStyling implements IWorkspaceStylingService {
                 .then((res) => res?.data?.length === 1),
         );
 
-        return isCustomThemingIncludedInEntitlements && enableTheming && activeStyleId !== "";
+        return isCustomThemingIncludedInEntitlements && activeStyleId !== "";
     }
 
     public getColorPalette = async (): Promise<IColorPaletteItem[]> => {
         const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
         const activeColorPaletteId =
             (userSettings.activeColorPalette as IColorPaletteMetadataObject)?.id ?? "";
-        const enableTheming = userSettings.enableTheming ?? false;
 
-        return (await this.isStylizable(activeColorPaletteId, enableTheming))
+        return (await this.isStylizable(activeColorPaletteId))
             ? this.authCall(async (client) =>
                   client.entities
                       .getAllEntitiesColorPalettes({
@@ -66,9 +64,8 @@ export class TigerWorkspaceStyling implements IWorkspaceStylingService {
     public getTheme = async (): Promise<ITheme> => {
         const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
         const activeThemeId = (userSettings.activeTheme as IThemeMetadataObject)?.id ?? "";
-        const enableTheming = userSettings.enableTheming ?? false;
 
-        return (await this.isStylizable(activeThemeId, enableTheming))
+        return (await this.isStylizable(activeThemeId))
             ? this.authCall(async (client) =>
                   client.entities
                       .getAllEntitiesThemes({
