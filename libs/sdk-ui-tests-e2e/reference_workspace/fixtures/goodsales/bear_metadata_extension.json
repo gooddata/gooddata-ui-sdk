@@ -2657,6 +2657,51 @@
         },
         {
             "content": {
+                "visualizationObject": {
+                    "content": {
+                        "buckets": [
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "{{{activity_date_mmddyyyy}}}"
+                                            },
+                                            "localIdentifier": "782c7033ff9b43b09af8cc4b12aaf1ae"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "attribute"
+                            }
+                        ],
+                        "filters": [
+                            {
+                                "absoluteDateFilter": {
+                                    "dataSet": {
+                                        "uri": "{{{activity_dataset_dt}}}"
+                                    },
+                                    "from": "2012-12-24",
+                                    "to": "2012-12-29"
+                                }
+                            }
+                        ],
+                        "properties": "{\"sortItems\":[{\"attributeSortItem\":{\"attributeIdentifier\":\"782c7033ff9b43b09af8cc4b12aaf1ae\",\"direction\":\"asc\"}}]}",
+                        "visualizationClass": {
+                            "uri": "{{{gdc_visualization_table}}}"
+                        }
+                    },
+                    "meta": {
+                        "identifier": "aaGz4eso8OXV",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Table days with date filter"
+                    }
+                }
+            },
+            "name": "visualizationObject_Table_days_with_date_filter_aaGz4eso8OXV"
+        },
+        {
+            "content": {
                 "kpi": {
                     "content": {
                         "comparisonDirection": "growIsGood",
@@ -8337,6 +8382,418 @@
                 }
             },
             "name": "analyticalDashboard_Widget_tooltips_aau4cNWWv9FB"
+        },
+        {
+            "content": {
+                "filterContext": {
+                    "content": {
+                        "filters": [
+                            {
+                                "dateFilter": {
+                                    "from": "2011-12-24",
+                                    "granularity": "GDC.time.date",
+                                    "to": "2011-12-26",
+                                    "type": "absolute"
+                                }
+                            }
+                        ]
+                    },
+                    "meta": {
+                        "identifier": "aafz6Ia685Bq",
+                        "summary": "",
+                        "tags": "",
+                        "title": "filterContext"
+                    }
+                }
+            },
+            "name": "filterContext_filterContext_aafz6Ia685Bq"
+        },
+        {
+            "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_Table_days_aasS8rSHdVC6}}}"
+                    },
+                    "meta": {
+                        "identifier": "aacz7XFM9i3G",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Table days with unrelated date"
+                    }
+                }
+            },
+            "name": "visualizationWidget_Table_days_with_unrelated_date_aacz7XFM9i3G"
+        },
+        {
+            "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_Table_days_aasS8rSHdVC6}}}"
+                    },
+                    "meta": {
+                        "identifier": "aadz7Xsv9jsc",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Table days with disable date dataset"
+                    }
+                }
+            },
+            "name": "visualizationWidget_Table_days_with_disable_date_dataset_aadz7Xsv9jsc"
+        },
+        {
+            "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "dateDataSet": "{{{activity_dataset_dt}}}",
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_Table_days_with_date_filter_aaGz4eso8OXV}}}"
+                    },
+                    "meta": {
+                        "identifier": "aacz9L3TGQTA",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Table days with same date dataset"
+                    }
+                }
+            },
+            "name": "visualizationWidget_Table_days_with_same_date_dataset_aacz9L3TGQTA"
+        },
+        {
+            "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "dateDataSet": "{{{created_dataset_dt}}}",
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_Table_days_with_date_filter_aaGz4eso8OXV}}}"
+                    },
+                    "meta": {
+                        "identifier": "aafz7XFYGQU5",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Table days with different date dataset"
+                    }
+                }
+            },
+            "name": "visualizationWidget_Table_days_with_different_date_dataset_aafz7XFYGQU5"
+        },
+        {
+            "content": {
+                "analyticalDashboard": {
+                    "content": {
+                        "dateFilterConfig": {
+                            "addPresets": {
+                                "absolutePresets": [
+                                    {
+                                        "from": "2011-12-24",
+                                        "localIdentifier": "christmas-2011",
+                                        "name": "Christmas 2011",
+                                        "to": "2011-12-26",
+                                        "visible": true
+                                    },
+                                    {
+                                        "from": "2011-12-24",
+                                        "localIdentifier": "hidden-absolute-preset",
+                                        "name": "Hidden absolute preset",
+                                        "to": "2011-12-26",
+                                        "visible": false
+                                    }
+                                ],
+                                "relativePresets": [
+                                    {
+                                        "from": -4,
+                                        "granularity": "GDC.time.date",
+                                        "localIdentifier": "relative-last-5-days",
+                                        "name": "Last 5 days",
+                                        "to": 0,
+                                        "visible": true
+                                    },
+                                    {
+                                        "from": -666,
+                                        "granularity": "GDC.time.date",
+                                        "localIdentifier": "hidden-relative-preset",
+                                        "name": "Hidden relative preset",
+                                        "to": 0,
+                                        "visible": false
+                                    }
+                                ]
+                            },
+                            "filterName": "my filter",
+                            "mode": "active"
+                        },
+                        "filterContext": "{{{filterContext_filterContext_aafz6Ia685Bq}}}",
+                        "layout": {
+                            "fluidLayout": {
+                                "rows": [
+                                    {
+                                        "columns": [
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_Table_days_with_unrelated_date_aacz7XFM9i3G}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 22,
+                                                        "width": 12
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "columns": [
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_Table_days_with_disable_date_dataset_aadz7Xsv9jsc}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 22,
+                                                        "width": 12
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "columns": [
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_Table_days_with_same_date_dataset_aacz9L3TGQTA}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 22,
+                                                        "width": 12
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "columns": [
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_Table_days_with_different_date_dataset_aafz7XFYGQU5}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 22,
+                                                        "width": 12
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        "widgets": [
+                            "{{{visualizationWidget_Table_days_with_unrelated_date_aacz7XFM9i3G}}}",
+                            "{{{visualizationWidget_Table_days_with_disable_date_dataset_aadz7Xsv9jsc}}}",
+                            "{{{visualizationWidget_Table_days_with_same_date_dataset_aacz9L3TGQTA}}}",
+                            "{{{visualizationWidget_Table_days_with_different_date_dataset_aafz7XFYGQU5}}}"
+                        ]
+                    },
+                    "meta": {
+                        "identifier": "aapz6JNxGF42",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Date filter 2"
+                    }
+                }
+            },
+            "name": "analyticalDashboard_Date_filter_2_aapz6JNxGF42"
+        },
+        {
+            "content": {
+                "filterContext": {
+                    "content": {
+                        "filters": []
+                    },
+                    "meta": {
+                        "identifier": "aabBfd2tsKTQ",
+                        "summary": "",
+                        "tags": "",
+                        "title": "filterContext"
+                    }
+                }
+            },
+            "name": "filterContext_filterContext_aabBfd2tsKTQ"
+        },
+        {
+            "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "dateDataSet": "{{{closed_dataset_dt}}}",
+                        "drills": [
+                            {
+                                "drillToVisualization": {
+                                    "from": {
+                                        "drillFromMeasure": {
+                                            "localIdentifier": "5539cc7f18eb4b94b2e8d2af0758d905"
+                                        }
+                                    },
+                                    "target": "pop-up",
+                                    "toVisualization": {
+                                        "uri": "{{{visualizationObject_Bar_chart_with_date_attribute_aadMv283MZta}}}"
+                                    }
+                                }
+                            }
+                        ],
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_Bar_chart_with_drilled_insight_export_aabIxJpPGpkn}}}"
+                    },
+                    "meta": {
+                        "identifier": "aabBfd2wsT8q",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Widget 1"
+                    }
+                }
+            },
+            "name": "visualizationWidget_Widget_1_aabBfd2wsT8q"
+        },
+        {
+            "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "dateDataSet": "{{{closed_dataset_dt}}}",
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_Export_too_many_data_points_aab4JlpOivP0}}}"
+                    },
+                    "meta": {
+                        "identifier": "aabBfd2B0zlW",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Widget 2"
+                    }
+                }
+            },
+            "name": "visualizationWidget_Widget_2_aabBfd2B0zlW"
+        },
+        {
+            "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "dateDataSet": "{{{closed_dataset_dt}}}",
+                        "drills": [
+                            {
+                                "drillToVisualization": {
+                                    "from": {
+                                        "drillFromMeasure": {
+                                            "localIdentifier": "9909225c030a4319a7557c066ac3da50"
+                                        }
+                                    },
+                                    "target": "pop-up",
+                                    "toVisualization": {
+                                        "uri": "{{{visualizationObject_Headline_aaft2o3VarXu}}}"
+                                    }
+                                }
+                            }
+                        ],
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_Unsupported_drilled_insight_export_aabINLhKfFPZ}}}"
+                    },
+                    "meta": {
+                        "identifier": "aabBfd2B0zvM",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Widget 3"
+                    }
+                }
+            },
+            "name": "visualizationWidget_Widget_3_aabBfd2B0zvM"
+        },
+        {
+            "content": {
+                "analyticalDashboard": {
+                    "content": {
+                        "filterContext": "{{{filterContext_filterContext_aabBfd2tsKTQ}}}",
+                        "layout": {
+                            "fluidLayout": {
+                                "rows": [
+                                    {
+                                        "columns": [
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_Widget_1_aabBfd2wsT8q}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "width": 4
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_Widget_3_aabBfd2B0zvM}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "width": 4
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_Widget_2_aabBfd2B0zlW}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "width": 4
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        "widgets": [
+                            "{{{visualizationWidget_Widget_1_aabBfd2wsT8q}}}",
+                            "{{{visualizationWidget_Widget_3_aabBfd2B0zvM}}}",
+                            "{{{visualizationWidget_Widget_2_aabBfd2B0zlW}}}"
+                        ]
+                    },
+                    "meta": {
+                        "identifier": "aacBfd2B0zlW",
+                        "summary": "",
+                        "tags": "",
+                        "title": "DnD board"
+                    }
+                }
+            },
+            "name": "analyticalDashboard_DnD_board_aacBfd2B0zlW"
         },
         {
             "content": {

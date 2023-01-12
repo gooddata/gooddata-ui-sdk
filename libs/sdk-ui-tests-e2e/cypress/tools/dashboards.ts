@@ -1,5 +1,7 @@
 // (C) 2021 GoodData Corporation
 
+import { WidgetDropZone } from "./enum/DropZone";
+
 export class Dashboard {
     getElement(element: string): Cypress.Chainable {
         return cy.get(element);
@@ -30,6 +32,35 @@ export class Dashboard {
     dashboardBodyExist(exist = true): this {
         this.getDashboardBodyElement().should(exist ? "exist" : "not.exist");
         return this;
+    }
+
+    moveWidget(fromIndex: number, toIndex: number, dropzone: WidgetDropZone) {
+        const dataTransfer = new DataTransfer();
+        cy.get(".dash-item-content").eq(fromIndex).trigger("dragstart", {
+            dataTransfer,
+        });
+
+        cy.get(".s-dash-item").eq(toIndex).trigger("dragover", "center", {
+            dataTransfer,
+            force: true,
+        });
+
+        cy.get(".s-dash-item")
+            .eq(toIndex)
+            .parents(".gd-fluidlayout-column-container")
+            .find(dropzone)
+            .trigger("drop", {
+                dataTransfer,
+            });
+        return this;
+    }
+
+    getWidgetList() {
+        const result = [] as string[];
+        cy.get(".visualization .item-headline").each(($li) => {
+            return result.push($li.text());
+        });
+        return cy.wrap(result);
     }
 }
 

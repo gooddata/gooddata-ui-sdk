@@ -107,4 +107,13 @@ export class Table {
             });
         return cy.wrap(result);
     }
+
+    getCellValue(row: number, column: number) {
+        return this.getElement().find(`.s-cell-${row}-${column} .s-value`);
+    }
+
+    hasCellValue(row: number, column: number, value: string) {
+        this.getCellValue(row, column).should("have.text", value);
+        return this;
+    }
 }

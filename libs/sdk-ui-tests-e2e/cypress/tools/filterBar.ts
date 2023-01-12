@@ -109,6 +109,18 @@ export class AttributeFilter {
         return this;
     }
 
+    addAttribute(name: string): AttributeFilter {
+        const dataTransfer = new DataTransfer();
+        cy.get(NEW_ATTRIBUTE_FILTER_SELECTOR).trigger("dragstart", {
+            dataTransfer,
+        });
+
+        cy.get(ATTRIBUTE_DROPZONE_SELECTOR).trigger("drop", {
+            dataTransfer,
+        });
+        return new AttributeFilter(name).search(name).select();
+    }
+
     removeFilter() {
         const dataTransfer = new DataTransfer();
         this.getElement().trigger("dragstart", {
@@ -118,6 +130,23 @@ export class AttributeFilter {
         cy.get(".gd-dropzone-delete").trigger("drop", {
             dataTransfer,
         });
+        return this;
+    }
+
+    dragFilter() {
+        const dataTransfer = new DataTransfer();
+        this.getElement().trigger("dragstart", {
+            dataTransfer,
+        });
+
+        cy.get(".gd-dash-content").trigger("dragOver", {
+            dataTransfer,
+        });
+        return this;
+    }
+
+    hasDeleteDropzone() {
+        cy.get(".gd-dropzone-delete").should("exist");
         return this;
     }
 

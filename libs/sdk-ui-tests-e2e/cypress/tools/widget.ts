@@ -37,6 +37,13 @@ export class Widget {
         return this;
     }
 
+    isLoading(expected = true) {
+        this.getElement()
+            .find(".s-loading-done, .content-loaded.widget-loaded, .visualization-value-loading")
+            .should(expected ? "exist" : "not.exist");
+        return this;
+    }
+
     setTitle(title: string) {
         this.getElement().find(".s-headline").click().type(`${title}{enter}`);
         return this;

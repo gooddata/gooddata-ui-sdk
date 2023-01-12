@@ -1,5 +1,5 @@
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2022-11-29T13:33:08.333Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-01-09T07:21:51.491Z; */
 // @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
@@ -3401,6 +3401,10 @@ export const Insights = {
      * Insight Title: With own description
      * Insight ID: aa84cd0bv9i0
      */ WithOwnDescription: "aa84cd0bv9i0",
+    /**
+     * Insight Title: Table days with date filter
+     * Insight ID: aaGz4eso8OXV
+     */ TableDaysWithDateFilter: "aaGz4eso8OXV",
 };
 export const Dashboards = {
     /**
@@ -3552,4 +3556,12 @@ export const Dashboards = {
      * Dashboard Title: Widget tooltips
      * Dashboard ID: aau4cNWWv9FB
      */ WidgetTooltips: "aau4cNWWv9FB",
+    /**
+     * Dashboard Title: Date filter 2
+     * Dashboard ID: aapz6JNxGF42
+     */ DateFilter2: "aapz6JNxGF42",
+    /**
+     * Dashboard Title: DnD board
+     * Dashboard ID: aacBfd2B0zlW
+     */ DnDBoard: "aacBfd2B0zlW",
 };
