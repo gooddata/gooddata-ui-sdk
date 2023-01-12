@@ -1,5 +1,11 @@
-// (C) 2022 GoodData Corporation
-import { areObjRefsEqual, IAttributeDisplayFormMetadataObject, ObjRef } from "@gooddata/sdk-model";
+// (C) 2022-2023 GoodData Corporation
+import {
+    areObjRefsEqual,
+    IAttributeDisplayFormMetadataObject,
+    idRef,
+    ObjRef,
+    uriRef,
+} from "@gooddata/sdk-model";
 import { Dropdown, DropdownList, IAlignPoint } from "@gooddata/sdk-ui-kit";
 import React from "react";
 import { AttributeDisplayFormDropdownButton } from "./AttributeDisplayFormDropdownButton";
@@ -29,8 +35,11 @@ export const AttributeDisplayFormsDropdown: React.FC<IAttributeFilterDisplayForm
     selectedDisplayForm,
     onChange,
 }) => {
-    const selectedDisplayFormTitle = displayForms.find((df) =>
-        areObjRefsEqual(df.ref, selectedDisplayForm),
+    // try matching both uri and id in case the type of ref is different from what is in the ref field
+    const selectedDisplayFormTitle = displayForms.find(
+        (df) =>
+            areObjRefsEqual(idRef(df.id, "displayForm"), selectedDisplayForm) ||
+            areObjRefsEqual(uriRef(df.uri), selectedDisplayForm),
     )!.title;
 
     return (
