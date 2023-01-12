@@ -1,14 +1,9 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import React from "react";
 import classNames from "classnames";
 import { stringUtils } from "@gooddata/util";
-import { IAttributeDisplayFormMetadataObject, ObjRef } from "@gooddata/sdk-model";
+import { IAttributeDisplayFormMetadataObject, ObjRef, AttributeDisplayFormType } from "@gooddata/sdk-model";
 import { ShortenedText } from "@gooddata/sdk-ui-kit";
-
-enum AttributeDisplayFormType {
-    HYPERLINK = "GDC.link",
-    GEO_PUSHPIN = "GDC.geo.pin",
-}
 
 const getDisplayFormIcon = (type: string) => {
     switch (type) {

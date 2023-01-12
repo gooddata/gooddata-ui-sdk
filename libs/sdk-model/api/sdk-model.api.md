@@ -89,6 +89,14 @@ export function attributeDisplayFormMetadataObjectTitle(displayForm: IAttributeD
 // @public
 export function attributeDisplayFormRef(attribute: IAttribute): ObjRef;
 
+// @public
+export enum AttributeDisplayFormType {
+    GEO_PUSHPIN = "GDC.geo.pin",
+    GEO_PUSHPIN_LATITUDE = "GDC.geo.pin_latitude",
+    GEO_PUSHPIN_LONGITUDE = "GDC.geo.pin_longitude",
+    HYPERLINK = "GDC.link"
+}
+
 // @internal
 export function attributeElementsCount(attributeElements: IAttributeElements): number;
 
@@ -505,7 +513,7 @@ export interface IAttributeDescriptorBody {
 // @public
 export interface IAttributeDisplayFormMetadataObject extends IMetadataObject {
     attribute: ObjRef;
-    displayFormType?: string;
+    displayFormType?: AttributeDisplayFormType | string;
     isDefault?: boolean;
     // (undocumented)
     type: "displayForm";

@@ -1,17 +1,15 @@
-// (C) 2022 GoodData Corporation
-import { IAttributeDisplayFormMetadataObject, ObjRef } from "@gooddata/sdk-model";
+// (C) 2022-2023 GoodData Corporation
+import { IAttributeDisplayFormMetadataObject, ObjRef, AttributeDisplayFormType } from "@gooddata/sdk-model";
 import React from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
 import { ShortenedText } from "@gooddata/sdk-ui-kit";
 
-type AttributeDisplayFormType = "GDC.link" | "GDC.geo.pin";
-
 const getDisplayFormIcon = (type?: AttributeDisplayFormType) => {
     switch (type) {
-        case "GDC.link":
+        case AttributeDisplayFormType.HYPERLINK:
             return "gd-icon-hyperlink-warning";
-        case "GDC.geo.pin":
+        case AttributeDisplayFormType.GEO_PUSHPIN:
             return "gd-icon-earth";
         default:
             return "gd-icon-label-warning";

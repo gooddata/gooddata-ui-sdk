@@ -561,6 +561,7 @@ export {
 export {
     IAttributeDisplayFormMetadataObject,
     isAttributeDisplayFormMetadataObject,
+    AttributeDisplayFormType,
     IAttributeMetadataObject,
     isAttributeMetadataObject,
     IDataSetMetadataObject,

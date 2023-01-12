@@ -1,6 +1,7 @@
 // (C) 2022-2023 GoodData Corporation
 
 import { JsonApiLabelOutAttributesValueTypeEnum } from "@gooddata/api-client-tiger";
+import { AttributeDisplayFormType } from "@gooddata/sdk-model";
 
 /**
  * convert tiger label type values to common text representation
@@ -12,16 +13,16 @@ export function convertLabelType(type?: JsonApiLabelOutAttributesValueTypeEnum):
 
     switch (type) {
         case JsonApiLabelOutAttributesValueTypeEnum.HYPERLINK:
-            return "GDC.link";
+            return AttributeDisplayFormType.HYPERLINK;
 
         case JsonApiLabelOutAttributesValueTypeEnum.GEO:
-            return "GDC.geo.pin";
+            return AttributeDisplayFormType.GEO_PUSHPIN;
 
         case JsonApiLabelOutAttributesValueTypeEnum.GEO_LATITUDE:
-            return "GDC.geo.pin_latitude";
+            return AttributeDisplayFormType.GEO_PUSHPIN_LATITUDE;
 
         case JsonApiLabelOutAttributesValueTypeEnum.GEO_LONGITUDE:
-            return "GDC.geo.pin_longitude";
+            return AttributeDisplayFormType.GEO_PUSHPIN_LONGITUDE;
 
         default:
             return undefined;

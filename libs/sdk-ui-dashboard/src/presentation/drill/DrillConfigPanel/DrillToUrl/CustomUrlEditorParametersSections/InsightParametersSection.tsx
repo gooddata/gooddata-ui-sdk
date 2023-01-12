@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { DropdownSectionHeader } from "../DropdownSectionHeader";
@@ -6,8 +6,7 @@ import { AttributeDisplayFormParameterDetail } from "../ParameterDetails/Attribu
 import { Parameter } from "./Parameter";
 import { useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { IAttributeWithDisplayForm, IParametersPanelSectionsCommonProps } from "../types";
-import { IAttributeDisplayFormMetadataObject } from "@gooddata/sdk-model";
-import { AttributeDisplayFormType } from "../../../types";
+import { AttributeDisplayFormType, IAttributeDisplayFormMetadataObject } from "@gooddata/sdk-model";
 import { selectAllCatalogAttributesMap, useDashboardSelector } from "../../../../../model";
 
 interface XProps {

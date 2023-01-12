@@ -19,6 +19,7 @@ import {
     isDrillToInsight,
     IAttributeDisplayFormMetadataObject,
     IListedDashboard,
+    AttributeDisplayFormType,
 } from "@gooddata/sdk-model";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import { typesUtils } from "@gooddata/util";
@@ -131,7 +132,7 @@ export interface InsightDrillDefinitionValidationData {
     availableDrillTargets: IAvailableDrillTargets;
 }
 
-export const hyperlinkDisplayFormType = "GDC.link";
+export const hyperlinkDisplayFormType = AttributeDisplayFormType.HYPERLINK;
 
 export function validateInsightDrillDefinition(
     drillDefinition: InsightDrillDefinition,

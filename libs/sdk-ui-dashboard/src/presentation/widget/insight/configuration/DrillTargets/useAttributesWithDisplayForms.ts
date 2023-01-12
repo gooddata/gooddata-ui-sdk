@@ -1,13 +1,13 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import {
     areObjRefsEqual,
     IAttributeDescriptor,
     IAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,
+    AttributeDisplayFormType,
 } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import uniqWith from "lodash/uniqWith";
-import { AttributeDisplayFormType } from "../../../../drill/types";
 import {
     selectAllCatalogAttributesMap,
     selectAllCatalogDisplayFormsMap,
