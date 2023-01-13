@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import React from "react";
 import { WrappedComponentProps } from "react-intl";
 
@@ -36,6 +36,7 @@ import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import {
     attributeAlias,
     attributeDisplayFormRef,
+    AttributeDisplayFormType,
     bucketAttribute,
     idRef,
     IInsightDefinition,
@@ -51,7 +52,7 @@ import {
     ObjRef,
     uriRef,
 } from "@gooddata/sdk-model";
-import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
+import { IExecutionFactory, IBackendCapabilities } from "@gooddata/sdk-backend-spi";
 import { CoreGeoChart, getGeoChartDimensions, IGeoConfig, ICoreGeoChartProps } from "@gooddata/sdk-ui-geo";
 import set from "lodash/set";
 import isEmpty from "lodash/isEmpty";
@@ -67,13 +68,18 @@ const NUMBER_MEASURES_IN_BUCKETS_LIMIT = 2;
  *
  * ## Buckets
  *
- * | Name        | Id          | Accepts                                                   |
- * |-------------|-------------|-----------------------------------------------------------|
- * | Location    | location    | geo attributes only                                       |
- * | Size        | size        | measures only                                             |
- * | Color       | color       | measures only                                             |
- * | Segment     | segment     | attributes only                                           |
- * | TooltipText | tooltipText | attributes only, added internally, not accessible from UI |
+ * | Name        | Id          | Accepts                                                       |
+ * |-------------|-------------|---------------------------------------------------------------|
+ * | Location    | location    | geo attributes only                                           |
+ * | Latitude    | latitude    | geo attributes only, added internally, not accessible from UI |
+ * | Longitude   | longitude   | geo attributes only, added internally, not accessible from UI |
+ * | Size        | size        | measures only                                                 |
+ * | Color       | color       | measures only                                                 |
+ * | Segment     | segment     | attributes only                                               |
+ * | TooltipText | tooltipText | attributes only, added internally, not accessible from UI     |
+ *
+ * Internal buckets are used only for execution, they never exist in reference point.
+ * In ref. point they are represented by items in properties
  *
  * ### Bucket axioms
  *
@@ -84,10 +90,15 @@ const NUMBER_MEASURES_IN_BUCKETS_LIMIT = 2;
  *
  * ## Dimensions
  *
- * The PluggableGeoPushpinChart creates either one- or two dimensional execution.
+ * The PluggableGeoPushpinChart creates either one- or two-dimensional execution.
  *
+ * In the case when latitude and longitude is in the one string label, delimited by ";":
  * - |Size| + |Color| ≥ 1 ⇒ [[MeasureGroupIdentifier], [Location, Segment, TooltipText]]
  * - |Size| + |Color| = 0 ⇒ [[Location, Segment, TooltipText]]
+ *
+ * In the case when latitude and longitude is in two numerical separate labels:
+ * - |Size| + |Color| ≥ 1 ⇒ [[MeasureGroupIdentifier], [Latitude, Longitude, Segment, TooltipText]]
+ * - |Size| + |Color| = 0 ⇒ [[Latitude, Longitude, Segment, TooltipText]]
  *
  * ## Sorts
  *
@@ -96,11 +107,14 @@ const NUMBER_MEASURES_IN_BUCKETS_LIMIT = 2;
  * - |Segment| ≥ 1 ⇒ [attributeSort(Segment[0])]
  */
 export class PluggableGeoPushpinChart extends PluggableBaseChart {
+    private backendCapabilities: IBackendCapabilities;
+
     constructor(props: IVisConstruct) {
         super(props);
 
         this.type = VisualizationTypes.PUSHPIN;
         this.initializeProperties(props.visualizationProperties);
+        this.backendCapabilities = props.backend.capabilities;
     }
 
     protected checkBeforeRender(insight: IInsightDefinition): boolean {
@@ -383,7 +397,6 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
             return referencePoint;
         }
         const referencePointConfigured = cloneDeep(referencePoint);
-        const { dfRef } = locationItem;
         const visualizationProperties = this.visualizationProperties || {};
         const { controls = {} } = visualizationProperties;
         const hasSizeMeasure = getItemsCount(buckets, BucketNames.SIZE) > 0;
@@ -392,11 +405,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         const hasSegmentAttribute = getItemsCount(buckets, BucketNames.SEGMENT) > 0;
         const groupNearbyPoints =
             hasLocationAttribute && !hasColorMeasure && !hasSizeMeasure && !hasSegmentAttribute;
-
-        // for tooltip, prefer standard text display form (whose type is `undefined`) over geo or hyperlink display forms
-        const tooltipDfRef =
-            locationItem.displayForms?.find((displayForm) => !displayForm.type)?.ref || dfRef;
-        const tooltipText = isUriRef(tooltipDfRef) ? tooltipDfRef.uri : tooltipDfRef.identifier;
+        const locationProperties = this.getLocationProperties(locationItem);
 
         set(referencePointConfigured, "properties", {
             controls: {
@@ -404,7 +413,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
                     groupNearbyPoints,
                 },
                 ...controls,
-                tooltipText,
+                ...locationProperties,
             },
         });
 
@@ -414,6 +423,34 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         return referencePointConfigured;
     }
 
+    private getLocationProperties(locationItem: IBucketItem) {
+        const { dfRef } = locationItem;
+        // for tooltip, prefer standard text display form (whose type is `undefined`) over geo or hyperlink display forms
+        const textDfs = locationItem.displayForms?.filter((displayForm) => !displayForm.type) ?? [];
+        const defaultOrFirstTextDf = textDfs.find((displayForm) => !!displayForm.isDefault) || textDfs[0];
+        const tooltipDfRef = defaultOrFirstTextDf?.ref || dfRef;
+        const tooltipText = isUriRef(tooltipDfRef) ? tooltipDfRef.uri : tooltipDfRef.identifier;
+
+        if (this.backendCapabilities.supportsSeparateLatitudeLongitudeLabels) {
+            const latitudeDfRef = locationItem.displayForms?.find(
+                (displayForm) => displayForm.type === AttributeDisplayFormType.GEO_PUSHPIN_LATITUDE,
+            )?.ref;
+            const longitudeDfRef = locationItem.displayForms?.find(
+                (displayForm) => displayForm.type === AttributeDisplayFormType.GEO_PUSHPIN_LONGITUDE,
+            )?.ref;
+            const latitude = isUriRef(latitudeDfRef) ? latitudeDfRef?.uri : latitudeDfRef?.identifier;
+            const longitude = isUriRef(longitudeDfRef) ? longitudeDfRef?.uri : longitudeDfRef?.identifier;
+            return {
+                tooltipText,
+                latitude,
+                longitude,
+            };
+        }
+        return {
+            tooltipText,
+        };
+    }
+
     private prepareBuckets(insight: IInsightDefinition) {
         const supportedControls: IVisualizationProperties = this.visualizationProperties?.controls || {};
 
@@ -421,7 +458,6 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         const buckets = [...insightBuckets(insight)];
 
         if (supportedControls?.tooltipText) {
-            const tooltipText: string = supportedControls?.tooltipText;
             /*
              * The display form to use for tooltip text is provided in properties :( This is unfortunate; the chart
              * props could very well contain an extra prop for the tooltip bucket.
@@ -438,33 +474,86 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
              * 2.  The executeVisualization endpoint is useless for GeoChart; cannot be used to render geo chart because
              *     the buckets stored in vis object are not complete. execVisualization takes buckets as is.
              */
-
-            const locationBucket = insightBucket(insight, BucketNames.LOCATION);
-            let ref: ObjRef = idRef(tooltipText, "displayForm");
-            let alias = "";
-
-            if (locationBucket) {
-                const attribute = bucketAttribute(locationBucket);
-                if (attribute) {
-                    alias = attributeAlias(attribute);
-
-                    if (isUriRef(attributeDisplayFormRef(attribute))) {
-                        ref = uriRef(tooltipText);
-                    }
-                }
+            const tooltipText: string = supportedControls?.tooltipText;
+            const bucket = this.createVirtualBucketFromLocationAttribute(
+                BucketNames.TOOLTIP_TEXT,
+                tooltipText,
+                "tooltipText_df",
+                insight,
+            );
+            if (bucket) {
+                buckets.push(bucket);
             }
+        }
+        if (!this.backendCapabilities.supportsSeparateLatitudeLongitudeLabels) {
+            return buckets;
+        }
 
-            const existingTooltipTextBucket = insightBucket(insight, BucketNames.TOOLTIP_TEXT);
-            if (!existingTooltipTextBucket) {
-                buckets.push(
-                    newBucket(
-                        BucketNames.TOOLTIP_TEXT,
-                        newAttribute(ref, (m) => m.localId("tooltipText_df").alias(alias)),
-                    ),
-                );
+        if (supportedControls?.latitude) {
+            const latitude: string = supportedControls?.latitude;
+            const bucket = this.createVirtualBucketFromLocationAttribute(
+                BucketNames.LATITUDE,
+                latitude,
+                "latitude_df",
+                insight,
+            );
+            if (bucket) {
+                buckets.push(bucket);
             }
         }
 
-        return buckets;
+        if (supportedControls?.longitude) {
+            const longitude: string = supportedControls?.longitude;
+            const bucket = this.createVirtualBucketFromLocationAttribute(
+                BucketNames.LONGITUDE,
+                longitude,
+                "longitude_df",
+                insight,
+            );
+            if (bucket) {
+                buckets.push(bucket);
+            }
+        }
+        // do not include original LOCATION bucket (latitude would be duplicated and two executions
+        // would be made because of how local IDs of attributes are normalized)
+        return buckets.filter((bucket) => bucket.localIdentifier !== BucketNames.LOCATION);
+    }
+
+    /**
+     * Creates new virtual bucket from existing LOCATION bucket
+     * @param bucketName - new bucket name
+     * @param attributeId - id of bucket item
+     * @param attributeLocalIdentifier - local identifier of bucket item
+     * @param insight - current insight
+     */
+    private createVirtualBucketFromLocationAttribute(
+        bucketName: string,
+        attributeId: string,
+        attributeLocalIdentifier: string,
+        insight: IInsightDefinition,
+    ) {
+        const locationBucket = insightBucket(insight, BucketNames.LOCATION);
+        let ref: ObjRef = idRef(attributeId, "displayForm");
+        let alias = "";
+
+        if (locationBucket) {
+            const attribute = bucketAttribute(locationBucket);
+            if (attribute) {
+                alias = attributeAlias(attribute);
+
+                if (isUriRef(attributeDisplayFormRef(attribute))) {
+                    ref = uriRef(attributeId);
+                }
+            }
+        }
+
+        const existingVirtualBucket = insightBucket(insight, bucketName);
+        if (!existingVirtualBucket) {
+            return newBucket(
+                bucketName,
+                newAttribute(ref, (m) => m.localId(attributeLocalIdentifier).alias(alias)),
+            );
+        }
+        return undefined;
     }
 }

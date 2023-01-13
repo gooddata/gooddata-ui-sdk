@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import { AXIS } from "./axis";
 
 const BASE_PROPERTIES = [
@@ -243,6 +243,8 @@ export const BULLET_CHART_SUPPORTED_PROPERTIES = [
 
 export const GEOPUSHPIN_SUPPORTED_PROPERTIES = [
     "tooltipText",
+    "latitude",
+    "longitude",
     "legend",
     "points.groupNearbyPoints",
     "points.minSize",

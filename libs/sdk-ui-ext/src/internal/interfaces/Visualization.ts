@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import { ISeparators } from "@gooddata/numberjs";
 import isEmpty from "lodash/isEmpty";
 import { IAnalyticalBackend, IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
@@ -180,6 +180,7 @@ export interface IDisplayForm {
     ref: ObjRef;
     type: string;
     title: string;
+    isDefault?: boolean;
 }
 
 export interface IBucketItem {
