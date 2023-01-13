@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import { InsightDrillDefinition, isInsightWidget, ObjRef } from "@gooddata/sdk-model";
 import { useCallback, useMemo } from "react";
 import { defineMessages } from "react-intl";
@@ -102,7 +102,7 @@ export const useInsightDrillConfigPanel = (props: IUseDrillConfigPanelProps) => 
     const settings = useDashboardSelector(selectSettings);
 
     const { enableKDZooming } = settings;
-    const { availableDrillTargets } = configItems!;
+    const availableDrillTargets = configItems?.availableDrillTargets;
 
     const drillItems = useMemo(() => {
         return availableDrillTargets
@@ -150,6 +150,7 @@ export const useInsightDrillConfigPanel = (props: IUseDrillConfigPanelProps) => 
         drillConfigItems: mergedItems,
         originSelectorItems,
         isOriginSelectorVisible: !!configItems?.availableDrillTargets,
+        isLoaded: !!configItems,
         onChangeItem,
         onOriginSelect,
         onSetupItem,
