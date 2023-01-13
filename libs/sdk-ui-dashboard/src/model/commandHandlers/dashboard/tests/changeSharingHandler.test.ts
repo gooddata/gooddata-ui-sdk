@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { uriRef } from "@gooddata/sdk-model";
 
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
@@ -24,8 +24,7 @@ describe("change dashboard sharing handler", () => {
                         shareStatus: "public",
                         isUnderStrictControl: false,
                         isLocked: true,
-                        granteesToAdd: [],
-                        granteesToDelete: [],
+                        grantees: [],
                     },
                     TestCorrelation,
                 ),
@@ -38,8 +37,7 @@ describe("change dashboard sharing handler", () => {
                     shareStatus: "public",
                     isUnderStrictControl: false,
                     isLocked: true,
-                    granteesToAdd: [],
-                    granteesToDelete: [],
+                    grantees: [],
                 },
             });
             const newState = Tester.state();
@@ -53,8 +51,7 @@ describe("change dashboard sharing handler", () => {
                         shareStatus: "public",
                         isUnderStrictControl: false,
                         isLocked: true,
-                        granteesToAdd: [],
-                        granteesToDelete: [],
+                        grantees: [],
                     },
                     TestCorrelation,
                 ),
@@ -79,8 +76,7 @@ describe("change dashboard sharing handler", () => {
                         shareStatus: "public",
                         isUnderStrictControl: false,
                         isLocked: true,
-                        granteesToAdd: [],
-                        granteesToDelete: [],
+                        grantees: [],
                     },
                     TestCorrelation,
                 ),

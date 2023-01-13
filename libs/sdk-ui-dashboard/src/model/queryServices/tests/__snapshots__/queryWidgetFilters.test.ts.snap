@@ -232,6 +232,7 @@ Object {
         "supportsCustomColorPalettes": true,
         "supportsElementUris": true,
         "supportsElementsQueryParentFiltering": true,
+        "supportsEveryoneUserGroupForAccessControl": true,
         "supportsHierarchicalWorkspaces": false,
         "supportsKpiWidget": true,
         "supportsOwners": true,
