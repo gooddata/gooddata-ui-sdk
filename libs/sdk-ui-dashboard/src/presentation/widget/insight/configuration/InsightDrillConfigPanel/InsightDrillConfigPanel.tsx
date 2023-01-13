@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { ObjRef } from "@gooddata/sdk-model";
@@ -25,6 +25,7 @@ export const InsightDrillConfigPanel: React.FunctionComponent<IDrillConfigPanelP
         drillConfigItems,
         originSelectorItems,
         isOriginSelectorVisible,
+        isLoaded,
         onChangeItem,
         onOriginSelect,
         onSetupItem,
@@ -46,9 +47,11 @@ export const InsightDrillConfigPanel: React.FunctionComponent<IDrillConfigPanelP
                     onSetup={onSetupItem}
                     onIncompleteChange={onChangeItem}
                 />
-                {!!isOriginSelectorVisible && (
+                {isOriginSelectorVisible ? (
                     <DrillOriginSelector items={originSelectorItems} onSelect={onOriginSelect} />
-                )}
+                ) : !isLoaded ? (
+                    <div className="gd-spinner small" />
+                ) : null}
             </div>
         </>
     );
