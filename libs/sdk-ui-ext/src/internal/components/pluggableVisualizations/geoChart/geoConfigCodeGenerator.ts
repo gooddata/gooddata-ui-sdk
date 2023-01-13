@@ -1,5 +1,15 @@
-// (C) 2022 GoodData Corporation
-import { IInsightDefinition, insightProperties, insightVisualizationUrl } from "@gooddata/sdk-model";
+// (C) 2022-2023 GoodData Corporation
+import {
+    bucketAttribute,
+    IAttribute,
+    idRef,
+    IInsightDefinition,
+    insightBucket,
+    insightProperties,
+    insightVisualizationUrl,
+    newAttribute,
+} from "@gooddata/sdk-model";
+import { BucketNames } from "@gooddata/sdk-ui";
 import { IGeoConfig } from "@gooddata/sdk-ui-geo";
 import filter from "lodash/fp/filter";
 import flow from "lodash/fp/flow";
@@ -7,7 +17,11 @@ import fromPairs from "lodash/fromPairs";
 import isNil from "lodash/isNil";
 import toPairs from "lodash/toPairs";
 import { IEmbeddingCodeContext } from "../../../interfaces/VisualizationDescriptor";
-import { PropWithMeta } from "../../../utils/embeddingCodeGenerator";
+import {
+    IInsightToPropConversion,
+    sdkModelPropMetas,
+    PropWithMeta,
+} from "../../../utils/embeddingCodeGenerator";
 
 const supportedGeoConfigProperties = new Set<keyof IGeoConfig>([
     "center",
@@ -20,6 +34,8 @@ const supportedGeoConfigProperties = new Set<keyof IGeoConfig>([
     "viewport",
     "points",
     "showLabels",
+    "showLabels",
+    "tooltipText",
 ]);
 
 export function geoConfigFromInsight(insight: IInsightDefinition, ctx?: IEmbeddingCodeContext): IGeoConfig {
@@ -40,6 +56,42 @@ export function geoConfigFromInsight(insight: IInsightDefinition, ctx?: IEmbeddi
         ...configFromProperties,
         ...mapBoxTokenPlaceholder(),
     };
+}
+
+export function geoInsightConversion<TProps extends object, TPropKey extends keyof TProps>(
+    propName: TPropKey,
+    bucketName: string,
+): IInsightToPropConversion<TProps, TPropKey, IAttribute> {
+    return {
+        propName,
+        propType: sdkModelPropMetas.Attribute.Single,
+        itemAccessor(insight, ctx) {
+            return getLocationAttributeFromInsight(insight, ctx, bucketName);
+        },
+    };
+}
+
+function getLocationAttributeFromInsight(
+    insight: IInsightDefinition,
+    ctx: IEmbeddingCodeContext,
+    bucketName: string,
+): IAttribute {
+    if (
+        bucketName === BucketNames.LOCATION &&
+        !ctx.backend?.capabilities.supportsSeparateLatitudeLongitudeLabels
+    ) {
+        const bucket = insightBucket(insight, bucketName);
+        return bucket && bucketAttribute(bucket);
+    } else if (
+        // dont rely on Latitude being already in bucket, take both lat and long from properties
+        (bucketName === BucketNames.LATITUDE || bucketName === BucketNames.LONGITUDE) &&
+        ctx.backend?.capabilities.supportsSeparateLatitudeLongitudeLabels
+    ) {
+        const properties = insightProperties(insight);
+        const controls = properties?.controls ?? {};
+        const identifier = controls[bucketName];
+        return newAttribute(idRef(identifier, "displayForm"), (a) => a.localId(`a_${identifier}`));
+    }
 }
 
 export function mapBoxTokenPlaceholder(): IGeoConfig {

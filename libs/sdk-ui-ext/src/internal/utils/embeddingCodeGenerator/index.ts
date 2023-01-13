@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 export { getReactEmbeddingCodeGenerator } from "./getReactEmbeddingCodeGenerator";
 export {
     bucketConversion,
@@ -16,5 +16,6 @@ export {
     IInsightToPropConversion,
     localeInsightConversion,
     executionConfigInsightConversion,
+    sdkModelPropMetas,
 } from "./insightToPropsConverter";
 export * from "./types";
