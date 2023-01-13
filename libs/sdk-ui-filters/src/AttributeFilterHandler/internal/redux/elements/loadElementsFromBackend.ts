@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import {
     IAnalyticalBackend,
@@ -6,6 +6,7 @@ import {
     IElementsQueryOptions,
     IElementsQueryOptionsElementsByValue,
     IElementsQueryResult,
+    CancelableOptions,
     isElementsQueryOptionsElementsByValue,
     isValueBasedElementsQueryOptionsElements,
 } from "@gooddata/sdk-backend-spi";
@@ -69,7 +70,7 @@ async function loadElementsAsExecution(
  */
 export async function loadElementsFromBackend(
     context: AttributeFilterHandlerStoreContext,
-    options: ILoadElementsOptions & { displayFormRef: ObjRef },
+    options: ILoadElementsOptions & CancelableOptions & { displayFormRef: ObjRef },
     hiddenElementsInfo: IHiddenElementsInfo,
 ): Promise<IElementsQueryResult> {
     const { backend, workspace } = context;
@@ -85,6 +86,7 @@ export async function loadElementsFromBackend(
         order,
         includeTotalCountWithoutFilters,
         excludePrimaryLabel = true,
+        signal,
     } = options;
 
     const isInitialSelectionRequest =
@@ -166,6 +168,10 @@ export async function loadElementsFromBackend(
 
     if (limitingMeasures?.length) {
         loader = loader.withMeasures(limitingMeasures);
+    }
+
+    if (signal) {
+        loader.withSignal(signal);
     }
 
     return loader.query().catch((error) => {

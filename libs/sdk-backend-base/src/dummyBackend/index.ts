@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import {
     IAnalyticalBackendConfig,
     IAuthenticatedPrincipal,
@@ -782,6 +782,9 @@ class DummyElementsQuery implements IElementsQuery {
         return new DummyElementsQueryResult([], this.limit, this.offset, 0);
     };
     withDateFilters(_filters: IRelativeDateFilter[]): IElementsQuery {
+        throw new NotSupported("not supported");
+    }
+    withSignal(_: AbortSignal): IElementsQuery {
         throw new NotSupported("not supported");
     }
 }

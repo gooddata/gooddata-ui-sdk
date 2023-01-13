@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import {
     SortDirection,
     ObjRef,
@@ -8,6 +8,7 @@ import {
     IAttributeElement,
 } from "@gooddata/sdk-model";
 import { IPagedResource } from "../../../common/paging";
+import { ICancelable } from "../../../cancelation";
 
 /**
  * Specification of particular elements to load in {@link IElementsQueryOptions} using their values.
@@ -225,7 +226,7 @@ export interface IElementsQueryFactory {
  *
  * @public
  */
-export interface IElementsQuery {
+export interface IElementsQuery extends ICancelable<IElementsQuery> {
     /**
      * Sets number of valid elements to return per page.
      * Default limit is specific per backend

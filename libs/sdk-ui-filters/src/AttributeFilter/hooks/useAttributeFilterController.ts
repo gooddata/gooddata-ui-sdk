@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import { useCallback, useEffect } from "react";
 import isEqual from "lodash/isEqual";
 import debounce from "lodash/debounce";
@@ -216,9 +216,8 @@ function useCallbacks(
         debounce((search: string) => {
             if (handler.getSearch() !== search) {
                 handler.setSearch(search);
+                handler.loadInitialElementsPage(SEARCH_CORRELATION);
             }
-
-            handler.loadInitialElementsPage(SEARCH_CORRELATION);
         }, 200),
         [handler],
     );

@@ -1,5 +1,5 @@
-// (C) 2022 GoodData Corporation
-import { IElementsQueryResult } from "@gooddata/sdk-backend-spi";
+// (C) 2022-2023 GoodData Corporation
+import { IElementsQueryResult, CancelableOptions } from "@gooddata/sdk-backend-spi";
 import { IAttributeElement, ObjRef } from "@gooddata/sdk-model";
 
 import { ILoadElementsOptions } from "../../../types";
@@ -13,7 +13,7 @@ import { loadElementsFromBackend } from "./loadElementsFromBackend";
  */
 export async function loadElements(
     context: AttributeFilterHandlerStoreContext,
-    options: ILoadElementsOptions & { displayFormRef: ObjRef },
+    options: ILoadElementsOptions & CancelableOptions & { displayFormRef: ObjRef },
     hiddenElementsInfo: IHiddenElementsInfo,
     staticElements: IAttributeElement[] | undefined,
 ): Promise<IElementsQueryResult> {

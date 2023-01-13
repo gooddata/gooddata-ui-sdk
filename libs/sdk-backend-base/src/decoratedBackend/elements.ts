@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 
 import {
     IElementsQuery,
@@ -90,6 +90,10 @@ export abstract class DecoratedElementsQuery implements IElementsQuery {
             ...this.settings,
             dateFilters,
         });
+    }
+
+    public withSignal(signal: AbortSignal): IElementsQuery {
+        return this.decorated.withSignal(signal);
     }
 
     protected abstract createNew(
