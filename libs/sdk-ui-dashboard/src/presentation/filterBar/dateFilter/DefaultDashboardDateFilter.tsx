@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import React, { useCallback, useMemo, useState } from "react";
 import { DateFilter, getLocalizedIcuDateFormatPattern, IDateFilterProps } from "@gooddata/sdk-ui-filters";
 
@@ -44,10 +44,9 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
         },
         [onFilterChanged],
     );
-    const dateFormat =
-        settings.enableDateFormats && settings.formatLocale
-            ? getLocalizedIcuDateFormatPattern(settings.formatLocale)
-            : settings.responsiveUiDateFormat;
+    const dateFormat = settings.formatLocale
+        ? getLocalizedIcuDateFormatPattern(settings.formatLocale)
+        : settings.responsiveUiDateFormat;
 
     return (
         <DateFilter
