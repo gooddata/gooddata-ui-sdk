@@ -154,6 +154,11 @@ export type AuthenticationFlow = {
 // @alpha @deprecated
 export const BuiltInWidgetTypes: string[];
 
+// @beta
+export type CancelableOptions = {
+    signal?: AbortSignal;
+};
+
 // @public @deprecated
 export type CatalogItem = m.CatalogItem;
 
@@ -406,6 +411,12 @@ export interface IBaseWidget extends m.IBaseWidget {
 export interface IBracketExpressionToken {
     type: "bracket";
     value: string;
+}
+
+// @beta
+export interface ICancelable<T> {
+    // (undocumented)
+    withSignal(signal: AbortSignal): T;
 }
 
 // @public @deprecated
@@ -678,7 +689,7 @@ export interface IDrillToLegacyDashboard extends m.IDrillToLegacyDashboard {
 }
 
 // @public
-export interface IElementsQuery {
+export interface IElementsQuery extends ICancelable<IElementsQuery> {
     query(): Promise<IElementsQueryResult>;
     withAttributeFilters(filters: IElementsQueryAttributeFilter[]): IElementsQuery;
     withDateFilters(filters: IRelativeDateFilter[]): IElementsQuery;

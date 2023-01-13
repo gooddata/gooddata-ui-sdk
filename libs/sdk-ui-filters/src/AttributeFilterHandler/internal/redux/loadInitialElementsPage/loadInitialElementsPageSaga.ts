@@ -1,6 +1,10 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { put, call, takeLatest, select, cancelled, SagaReturnType } from "redux-saga/effects";
+import { CancelableOptions } from "@gooddata/sdk-backend-spi";
+// eslint-disable-next-line import/no-unassigned-import
+import "abortcontroller-polyfill/dist/abortcontroller-polyfill-only";
+
 import { getAttributeFilterContext } from "../common/sagas";
 import { selectElementsForm } from "../common/selectors";
 
@@ -8,6 +12,7 @@ import { elementsSaga } from "../elements/elementsSaga";
 import { selectLoadElementsOptions } from "../elements/elementsSelectors";
 import { actions } from "../store/slice";
 import { loadLimitingAttributeFiltersAttributes } from "./loadLimitingAttributeFiltersAttributes";
+import { ILoadElementsOptions } from "../../../types";
 
 /**
  * @internal
@@ -28,17 +33,18 @@ export function* loadInitialElementsPageSaga(
         | ReturnType<typeof actions.loadInitialElementsPageCancelRequest>,
 ): SagaIterator<void> {
     const context: SagaReturnType<typeof getAttributeFilterContext> = yield call(getAttributeFilterContext);
-
-    if (actions.loadInitialElementsPageCancelRequest.match(action)) {
-        // Saga was triggered by cancel request - do nothing, just jump to finally statement
-        return;
-    }
+    const abortController = new AbortController();
 
     const {
         payload: { correlation },
     } = action;
 
     try {
+        if (actions.loadInitialElementsPageCancelRequest.match(action)) {
+            // Saga was triggered by cancel request - do nothing, just jump to finally statement
+            return;
+        }
+
         yield put(actions.loadInitialElementsPageStart({ correlation }));
 
         const loadOptions: ReturnType<typeof selectLoadElementsOptions> = yield select(
@@ -47,8 +53,9 @@ export function* loadInitialElementsPageSaga(
 
         const elementsForm: ReturnType<typeof selectElementsForm> = yield select(selectElementsForm);
 
-        const loadOptionsWithExcludePrimaryLabel = {
+        const loadOptionsWithExcludePrimaryLabel: ILoadElementsOptions & CancelableOptions = {
             ...loadOptions,
+            signal: abortController.signal,
             excludePrimaryLabel:
                 !context.backend.capabilities.supportsElementUris && elementsForm === "values",
         };
@@ -76,6 +83,7 @@ export function* loadInitialElementsPageSaga(
         );
     } finally {
         if (yield cancelled()) {
+            abortController.abort();
             yield put(actions.loadInitialElementsPageCancel({ correlation }));
         }
     }

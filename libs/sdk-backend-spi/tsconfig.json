@@ -3,7 +3,7 @@
         "esModuleInterop": true,
         "target": "es5",
         "module": "commonjs",
-        "lib": ["es6"],
+        "lib": ["es6", "webworker"],
         "moduleResolution": "node",
         "importHelpers": true,
         "sourceMap": true,

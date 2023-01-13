@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import {
     IElementsQueryFactory,
     IElementsQuery,
@@ -100,6 +100,11 @@ class BearWorkspaceElementsQuery implements IElementsQuery {
 
     public withOptions(options: IElementsQueryOptions): IElementsQuery {
         this.options = options;
+        return this;
+    }
+
+    public withSignal(_: AbortSignal): IElementsQuery {
+        console.warn("Cancelling requests is not supported on bear backend.");
         return this;
     }
 

@@ -1,6 +1,8 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import { SagaIterator } from "redux-saga";
+import omit from "lodash/omit";
 import { call, select, SagaReturnType } from "redux-saga/effects";
+import { CancelableOptions } from "@gooddata/sdk-backend-spi";
 
 import { ILoadElementsResult, ILoadElementsOptions } from "../../../types";
 import {
@@ -15,7 +17,9 @@ import { loadElements } from "./loadElements";
 /**
  * @internal
  */
-export function* elementsSaga(options: ILoadElementsOptions): SagaIterator<ILoadElementsResult> {
+export function* elementsSaga(
+    options: ILoadElementsOptions & CancelableOptions,
+): SagaIterator<ILoadElementsResult> {
     const context: SagaReturnType<typeof getAttributeFilterContext> = yield call(getAttributeFilterContext);
 
     const hiddenElements: ReturnType<typeof selectHiddenElementsAsAttributeElements> = yield select(
@@ -46,6 +50,6 @@ export function* elementsSaga(options: ILoadElementsOptions): SagaIterator<ILoad
     return {
         elements: elementsQueryResult.items,
         totalCount: elementsQueryResult.totalCount,
-        options,
+        options: omit(options, "signal"),
     };
 }

@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import {
     ElementsRequest,
     FilterByLabelTypeEnum,
@@ -35,6 +35,7 @@ import { toSdkGranularity } from "../../../../convertors/fromBackend/dateGranula
 import { createDateValueFormatter } from "../../../../convertors/fromBackend/dateFormatting/dateValueFormatter";
 import { DateFormatter } from "../../../../convertors/fromBackend/dateFormatting/types";
 import { FormattingLocale } from "../../../../convertors/fromBackend/dateFormatting/defaultDateFormatter";
+import { TigerCancellationConverter } from "../../../../cancelation";
 
 export class TigerWorkspaceElements implements IElementsQueryFactory {
     constructor(
@@ -55,6 +56,7 @@ export class TigerWorkspaceElements implements IElementsQueryFactory {
 class TigerWorkspaceElementsQuery implements IElementsQuery {
     private limit: number = 100;
     private offset: number = 0;
+    private signal: AbortSignal | null = null;
     private options: IElementsQueryOptions | undefined;
 
     constructor(
@@ -63,6 +65,11 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
         private readonly workspace: string,
         private readonly dateFormatter: DateFormatter,
     ) {}
+
+    public withSignal(signal: AbortSignal): IElementsQuery {
+        this.signal = signal;
+        return this;
+    }
 
     public withLimit(limit: number): IElementsQuery {
         invariant(limit > 0, `limit must be a positive number, got: ${limit}`);
@@ -173,7 +180,9 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
                         workspaceId: this.workspace,
                     };
 
-                    return client.labelElements.computeLabelElementsPost(elementsRequestWrapped);
+                    return client.labelElements.computeLabelElementsPost(elementsRequestWrapped, {
+                        ...new TigerCancellationConverter(this.signal).forAxios(),
+                    });
                 });
 
                 const { paging, elements, format, granularity } = response.data;

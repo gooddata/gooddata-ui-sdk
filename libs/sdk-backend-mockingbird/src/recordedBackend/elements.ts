@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 
 import {
     IElementsQuery,
@@ -124,6 +124,10 @@ class RecordedElements implements IElementsQuery {
 
     public withMeasures(measures: IMeasure[]): this {
         this.measures = measures ?? [];
+        return this;
+    }
+
+    public withSignal(_: AbortSignal): this {
         return this;
     }
 }

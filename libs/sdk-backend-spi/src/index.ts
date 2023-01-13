@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 /**
  * This package provides definitions of the Service Provider Interface (SPI) for the Analytical Backend.
  *
@@ -39,6 +39,8 @@ export {
 } from "./workspace/execution";
 
 export { IWorkspaceSettingsService } from "./workspace/settings";
+
+export { CancelableOptions, ICancelable } from "./cancelation";
 
 export {
     IGetInsightOptions,
