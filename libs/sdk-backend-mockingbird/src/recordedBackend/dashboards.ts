@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 
 import {
     IDashboardReferences,
@@ -365,7 +365,7 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
     }
 
     public getDashboardPermissions(): Promise<IDashboardPermissions> {
-        throw new NotSupported("recorded backend does not support this call");
+        return Promise.resolve({ canEditDashboard: true, canShareDashboard: true, canViewDashboard: true });
     }
 }
 
