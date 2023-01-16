@@ -1,9 +1,9 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 
 import {
     JsonApiMetricOutDocument,
     JsonApiMetricOutWithLinks,
-    JsonApiMetricOutAttributes,
+    JsonApiMetricInAttributes,
 } from "@gooddata/api-client-tiger";
 import { newMeasureMetadataObject } from "@gooddata/sdk-backend-base";
 import { idRef, IMeasureMetadataObject } from "@gooddata/sdk-model";
@@ -20,7 +20,7 @@ export function convertMetricFromBackend(
     data: JsonApiMetricOutDocument | JsonApiMetricOutWithLinks,
 ): IMeasureMetadataObject {
     let id: string;
-    let attributes: JsonApiMetricOutAttributes;
+    let attributes: JsonApiMetricInAttributes;
     if (isJsonApiMetricOutDocument(data)) {
         id = data.data.id;
         attributes = data.data.attributes;

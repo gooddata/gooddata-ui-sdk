@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 
 import {
     idRef,
@@ -9,33 +9,31 @@ import {
     IUserGroupAccessWithGranularPermissions,
 } from "@gooddata/sdk-model";
 
-interface IPermission {
+interface IGrantedPermission {
     level: string;
     source: string;
 }
 
-interface IUserWithPermissions {
+interface IUserPermission {
     id: string;
     name?: string;
     email?: string;
-    permissions: IPermission[];
+    permissions?: IGrantedPermission[];
 }
 
-interface IUserGroupWithPermissions {
+interface IUserGroupPermission {
     id: string;
     name?: string;
-    permissions: IPermission[];
+    permissions?: IGrantedPermission[];
 }
 
-const getPermissionLevels = (permissions: IPermission[], source: "direct" | "indirect") => {
+const getPermissionLevels = (permissions: IGrantedPermission[] = [], source: "direct" | "indirect") => {
     return permissions
         .filter((permission) => permission.source === source)
         .map((permission) => permission.level as IAccessGranularPermission);
 };
 
-export const convertUserWithPermissions = (
-    user: IUserWithPermissions,
-): IUserAccessWithGranularPermissions => ({
+export const convertUserWithPermissions = (user: IUserPermission): IUserAccessWithGranularPermissions => ({
     type: "user",
     user: {
         ref: idRef(user.id),
@@ -49,7 +47,7 @@ export const convertUserWithPermissions = (
 });
 
 export const convertUserGroupWithPermissions = (
-    group: IUserGroupWithPermissions,
+    group: IUserGroupPermission,
 ): IUserGroupAccessWithGranularPermissions => ({
     type: "group",
     userGroup: { ref: idRef(group.id), name: group.name ?? group.id },

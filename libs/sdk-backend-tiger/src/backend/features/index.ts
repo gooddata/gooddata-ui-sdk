@@ -1,10 +1,10 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import {
     IStaticFeatures,
     IUserProfile,
     ILiveFeatures,
     FeatureContext,
-    JsonApiWorkspaceInAttributes,
+    JsonApiWorkspaceOutAttributes,
 } from "@gooddata/api-client-tiger";
 import { TigerAuthenticatedCallGuard } from "../../types";
 import { ITigerFeatureFlags, DefaultFeatureFlags } from "../uiFeatures";
@@ -55,7 +55,7 @@ function featuresAreStatic(item: any): item is IStaticFeatures {
     return Boolean(item?.static);
 }
 
-export function pickContext(attributes: JsonApiWorkspaceInAttributes | undefined): Partial<FeatureContext> {
+export function pickContext(attributes: JsonApiWorkspaceOutAttributes | undefined): Partial<FeatureContext> {
     const context: Partial<FeatureContext> = {};
 
     if (attributes?.["earlyAccess"] !== undefined) {

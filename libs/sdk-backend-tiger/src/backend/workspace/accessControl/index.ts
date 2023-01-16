@@ -1,11 +1,12 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import { IWorkspaceAccessControlService } from "@gooddata/sdk-backend-spi";
+import { AssigneeIdentifierTypeEnum, AvailableAssignees } from "@gooddata/api-client-tiger";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import {
     ObjRef,
     AccessGranteeDetail,
-    IAvailableAccessGrantee,
     GranteeWithGranularPermissions,
+    IAvailableAccessGrantee,
 } from "@gooddata/sdk-model";
 import {
     convertAvailableUser,
@@ -13,103 +14,22 @@ import {
     convertUserGroupWithPermissions,
     convertUserWithPermissions,
 } from "../../../convertors/fromBackend/AccessControlConverter";
-
-const dummyAvailableAssignees = {
-    users: [
-        {
-            id: "adam-unreadableId",
-            name: "Adam Foobar",
-            email: "adam@company.com",
-        },
-        {
-            id: "martin-unreadableId",
-            name: "Martin NoEmail",
-        },
-        {
-            id: "james-noname",
-        },
-    ],
-    userGroups: [
-        {
-            id: "unused-group-unreadableId",
-            name: "group C",
-        },
-        {
-            id: "unused-group2-unreadableId",
-        },
-    ],
-};
-
-const dummyPermissions = {
-    users: [
-        {
-            id: "john-unreadableId",
-            name: "John Doe",
-            email: "john@company.com",
-            permissions: [
-                {
-                    level: "VIEW",
-                    source: "indirect",
-                },
-                {
-                    level: "SHARE",
-                    source: "direct",
-                },
-            ],
-        },
-        {
-            id: "mary-unreadableId",
-            name: "Mary Sue",
-            email: "mary@company.com",
-            permissions: [
-                {
-                    level: "EDIT",
-                    source: "indirect",
-                },
-                {
-                    level: "EDIT",
-                    source: "direct",
-                },
-            ],
-        },
-    ],
-    userGroups: [
-        {
-            id: "parent-group-unreadableId",
-            name: "group A",
-            permissions: [
-                {
-                    level: "VIEW",
-                    source: "direct",
-                },
-            ],
-        },
-        {
-            id: "child-group-unreadableId",
-            name: "group B",
-            permissions: [
-                {
-                    level: "EDIT",
-                    source: "direct",
-                },
-            ],
-        },
-    ],
-};
+import { objRefToIdentifier } from "../../../utils/api";
 
 export class TigerWorkspaceAccessControlService implements IWorkspaceAccessControlService {
-    // @ts-expect-error TODO: TNT-1185 Remove this line when properties are used
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, private readonly workspace: string) {}
 
-    // TODO: TNT-1185 Implement method
-    public async getAccessList(_sharedObject: ObjRef): Promise<AccessGranteeDetail[]> {
-        // GET /api/v1/actions/workspaces/{workspaceId}/dashboards/{dashboardId}/permissions
-        const dashboardPermissions = await Promise.resolve(dummyPermissions);
-        // eslint-disable-next-line no-console
-        console.log("getting access list", dashboardPermissions);
+    public async getAccessList(sharedObject: ObjRef): Promise<AccessGranteeDetail[]> {
+        const objectId = await objRefToIdentifier(sharedObject, this.authCall);
+        const permissions = await this.authCall((client) => {
+            return client.actions
+                .permissions({ workspaceId: this.workspace, dashboardId: objectId })
+                .then((result) => result.data);
+        });
+
         return [
-            ...dashboardPermissions.users.map(convertUserWithPermissions),
-            ...dashboardPermissions.userGroups.map(convertUserGroupWithPermissions),
+            ...permissions.users.map(convertUserWithPermissions),
+            ...permissions.userGroups.map(convertUserGroupWithPermissions),
         ];
     }
 
@@ -127,29 +47,73 @@ export class TigerWorkspaceAccessControlService implements IWorkspaceAccessContr
         return this.changeAccess(sharedObject, grantees);
     }
 
-    // TODO: connect to api-client when regenerated
     public async changeAccess(
-        _sharedObject: ObjRef,
+        sharedObject: ObjRef,
         grantees: GranteeWithGranularPermissions[],
     ): Promise<void> {
-        // /api/v1/actions/workspaces/{workspaceId}/dashboards/{dashboardId}/managePermissions
-        // eslint-disable-next-line no-console
-        console.log("changing permissions", grantees);
-        return Promise.resolve();
+        const objectId = await objRefToIdentifier(sharedObject, this.authCall);
+        const permissionsForAssignees = await Promise.all(
+            grantees.map(async (grantee) => ({
+                assigneeIdentifier: {
+                    id: await objRefToIdentifier(grantee.granteeRef, this.authCall),
+                    type:
+                        grantee.type === "group"
+                            ? AssigneeIdentifierTypeEnum.USER_GROUP
+                            : AssigneeIdentifierTypeEnum.USER,
+                },
+                permissions: grantee.permissions,
+            })),
+        );
+
+        await this.authCall((client) => {
+            return client.actions
+                .managePermissions({
+                    workspaceId: this.workspace,
+                    dashboardId: objectId,
+                    manageDashboardPermissionsRequest: { permissions: permissionsForAssignees },
+                })
+                .then((result) => result.data);
+        });
     }
 
-    // TODO: connect to api-client when regenerated
     public async getAvailableGrantees(
-        _sharedObject: ObjRef,
-        _search?: string,
+        sharedObject: ObjRef,
+        search?: string,
     ): Promise<IAvailableAccessGrantee[]> {
-        // GET /api/v1/actions/workspaces/{workspaceId}/dashboards/{dashboardId}/availableAssignees
-        const dashboardAvailableGrantees = await Promise.resolve(dummyAvailableAssignees); // TODO: enable search here
-        // eslint-disable-next-line no-console
-        console.log("getting available grantees", dashboardAvailableGrantees);
+        const objectId = await objRefToIdentifier(sharedObject, this.authCall);
+        const availableGrantees = await this.authCall((client) => {
+            return client.actions
+                .availableAssignes({
+                    workspaceId: this.workspace,
+                    dashboardId: objectId,
+                })
+                .then((result) => result.data)
+                .then((assignees) => (search ? filterAssignees(assignees, search) : assignees));
+        });
+
         return [
-            ...dashboardAvailableGrantees.users.map(convertAvailableUser),
-            ...dashboardAvailableGrantees.userGroups.map(convertAvailableUserGroup),
+            ...availableGrantees.users.map(convertAvailableUser),
+            ...availableGrantees.userGroups.map(convertAvailableUserGroup),
         ];
     }
 }
+
+const isNameMatchingSearchString = (title: string, searchString: string) =>
+    title?.toLowerCase().indexOf(searchString) > -1;
+
+const filterAssignees = (grantees: AvailableAssignees, search: string) => {
+    const lowercaseSearch = search.toLocaleLowerCase();
+    const { users, userGroups } = grantees;
+
+    const filteredUsers = users.filter(({ name, id }) =>
+        isNameMatchingSearchString(name ?? id, lowercaseSearch),
+    );
+    const filteredUserGroups = userGroups.filter(({ name, id }) =>
+        isNameMatchingSearchString(name ?? id, lowercaseSearch),
+    );
+
+    return {
+        users: filteredUsers,
+        userGroups: filteredUserGroups,
+    };
+};

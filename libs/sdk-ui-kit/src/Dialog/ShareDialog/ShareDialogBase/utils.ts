@@ -151,7 +151,7 @@ export const getGranularGranteeClassNameId = (grantee: GranteeItem): string => {
 export const getGranularGranteePermissionId = (
     permissions: IAccessGranularPermission[] | undefined,
 ): string => {
-    if (permissions && permissions.length) {
+    if (permissions?.length) {
         return permissions[0];
     }
 

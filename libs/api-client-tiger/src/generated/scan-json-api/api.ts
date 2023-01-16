@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2023 GoodData Corporation
 
 /* eslint-disable */
 /**
@@ -327,6 +327,7 @@ export const TestDefinitionRequestTypeEnum = {
     GREENPLUM: "GREENPLUM",
     AZURESQL: "AZURESQL",
     SYNAPSESQL: "SYNAPSESQL",
+    DATABRICKS: "DATABRICKS",
 } as const;
 
 export type TestDefinitionRequestTypeEnum =
