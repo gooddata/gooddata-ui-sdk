@@ -60,13 +60,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableDateFormats,
-            "enableDateFormats",
-            "BOOLEAN",
-            FeatureFlagsValues.enableDateFormats,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableLongitudeAndLatitudeLabels,
             "enableLongitudeAndLatitudeLabels",
             "BOOLEAN",
