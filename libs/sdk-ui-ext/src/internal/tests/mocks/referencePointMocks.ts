@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import {
     IReferencePoint,
     IBucketItem,
@@ -3678,6 +3678,34 @@ export const simpleGeoPushpinReferencePoint: IReferencePoint = {
         {
             localIdentifier: "location",
             items: geoAttributeItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "size",
+            items: masterMeasureItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "color",
+            items: masterMeasureItems.slice(1, 2),
+        },
+        {
+            localIdentifier: "segment",
+            items: geoAttributeItems.slice(1, 2),
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: geoAttributeFilters.slice(0, 1),
+    },
+    properties: {
+        sortItems: [defaultSortItem],
+    },
+};
+
+export const latitudeLongitudeGeoPushpinReferencePoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "location",
+            items: geoAttributeItems.slice(2, 3),
         },
         {
             localIdentifier: "size",
