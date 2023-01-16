@@ -379,13 +379,14 @@ export interface ChangeAttributeFilterSelection extends IDashboardCommand {
 }
 
 // @public
-export function changeAttributeFilterSelection(filterLocalId: string, elements: IAttributeElements, selectionType: AttributeFilterSelectionType, correlationId?: string): ChangeAttributeFilterSelection;
+export function changeAttributeFilterSelection(filterLocalId: string, elements: IAttributeElements, selectionType: AttributeFilterSelectionType, title?: string, correlationId?: string): ChangeAttributeFilterSelection;
 
 // @public
 export interface ChangeAttributeFilterSelectionPayload {
     readonly elements: IAttributeElements;
     readonly filterLocalId: string;
     readonly selectionType: AttributeFilterSelectionType;
+    readonly title?: string;
 }
 
 // @public

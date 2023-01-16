@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import React, { useCallback, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import {
@@ -146,6 +146,7 @@ export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilter
                 <>
                     {isConfigurationOpen ? (
                         <AttributeFilterConfiguration
+                            title={filter.attributeFilter.title}
                             closeHandler={closeHandler}
                             filterRef={filterRef}
                             filterByText={filterByText}
@@ -162,12 +163,15 @@ export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilter
     return (
         <AttributeFilterParentFilteringProvider filter={filter}>
             <AttributeFilterButton
+                // NESTOR - pass custom title here?
+                title={filter.attributeFilter.title}
                 filter={attributeFilter}
                 onApply={(newFilter) => {
                     onFilterChanged(
                         attributeFilterToDashboardAttributeFilter(
                             newFilter,
                             filter.attributeFilter.localIdentifier,
+                            filter.attributeFilter.title,
                         ),
                     );
                 }}

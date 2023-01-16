@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import isNil from "lodash/isNil";
 import { DateFilterGranularity, DateString } from "../dateFilterConfig";
@@ -71,6 +71,11 @@ export interface IDashboardAttributeFilter {
          * Parent filters that are limiting elements available in this filter
          */
         filterElementsBy?: IDashboardAttributeFilterParent[];
+
+        /**
+         * Custom title of the filter.
+         */
+        title?: string;
     };
 }
 

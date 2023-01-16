@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 
 import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
@@ -406,6 +406,37 @@ const changeAttributeDisplayForm: FilterContextReducer<PayloadAction<IChangeAttr
     ).attributeFilter.displayForm = { ...displayForm };
 };
 
+//
+//
+//
+
+export interface IChangeAttributeTitlePayload {
+    readonly filterLocalId: string;
+    readonly title: string;
+}
+
+/**
+ * Changes the title for the filter given by its local identifier.
+ */
+const changeAttributeTitle: FilterContextReducer<PayloadAction<IChangeAttributeTitlePayload>> = (
+    state,
+    action,
+) => {
+    invariant(state.filterContextDefinition, "Attempt to edit uninitialized filter context");
+
+    const { filterLocalId, title } = action.payload;
+
+    const currentFilterIndex = state.filterContextDefinition.filters.findIndex(
+        (item) => isDashboardAttributeFilter(item) && item.attributeFilter.localIdentifier === filterLocalId,
+    );
+
+    invariant(currentFilterIndex >= 0, "Attempt to set parent of a non-existing filter");
+
+    (
+        state.filterContextDefinition.filters[currentFilterIndex] as IDashboardAttributeFilter
+    ).attributeFilter.title = title;
+};
+
 export interface IUpdateConnectingAttributesOnFilterAddedPayload {
     addedFilterLocalId: string;
     connectingAttributes: IParentWithConnectingAttributes[];
@@ -428,4 +459,5 @@ export const filterContextReducers = {
     clearAttributeFiltersSelection,
     upsertDateFilter,
     changeAttributeDisplayForm,
+    changeAttributeTitle,
 };

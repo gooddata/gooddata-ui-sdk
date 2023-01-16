@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import {
     absoluteDateFilterValues,
     filterAttributeElements,
@@ -189,6 +189,49 @@ export function clearDateFilterSelection(correlationId?: string): ChangeDateFilt
         payload: {
             type: "relative",
             granularity: "GDC.time.date",
+        },
+    };
+}
+
+//
+//
+//
+
+/**
+ * @internal
+ */
+export interface SetAttributeFilterTitlePayload {
+    filterLocalId: string;
+    title: string;
+}
+
+/**
+ * @internal
+ */
+export interface SetAttributeFilterTitle extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_TITLE";
+    readonly payload: SetAttributeFilterTitlePayload;
+}
+
+/**
+ * Creates the {@link SetAttributeFilterTitle} command.
+ *
+ * @remarks
+ * Dispatching the commands will result into setting provided display form as a selected
+ * display form for the attribute filter.
+ *
+ *
+ * @internal
+ * @param filterLocalId - local identifier of the filter the display form is changed for
+ * @param displayForm - newly selected display form
+ * @returns change filter display form command
+ */
+export function setAttributeFilterTitle(filterLocalId: string, title: string): SetAttributeFilterTitle {
+    return {
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_TITLE",
+        payload: {
+            filterLocalId,
+            title,
         },
     };
 }
@@ -421,6 +464,11 @@ export interface ChangeAttributeFilterSelectionPayload {
      * Selection type. Either 'IN' for positive selection or 'NOT_IN' for negative selection (All except selected items).
      */
     readonly selectionType: AttributeFilterSelectionType;
+
+    /**
+     * Custom attribute title.
+     */
+    readonly title?: string;
 }
 
 /**
@@ -472,6 +520,7 @@ export function changeAttributeFilterSelection(
     filterLocalId: string,
     elements: IAttributeElements,
     selectionType: AttributeFilterSelectionType,
+    title?: string,
     correlationId?: string,
 ): ChangeAttributeFilterSelection {
     return {
@@ -481,6 +530,7 @@ export function changeAttributeFilterSelection(
             filterLocalId,
             elements,
             selectionType,
+            title,
         },
     };
 }

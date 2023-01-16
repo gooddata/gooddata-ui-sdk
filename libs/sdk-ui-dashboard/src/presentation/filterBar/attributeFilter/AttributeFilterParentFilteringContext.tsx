@@ -1,10 +1,11 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import React, { useContext, useMemo, useCallback } from "react";
 import { filterObjRef, IDashboardAttributeFilter } from "@gooddata/sdk-model";
 import { selectOtherContextAttributeFilters, useDashboardSelector } from "../../../model";
 import { dashboardAttributeFilterToAttributeFilter } from "../../../_staging/dashboard/dashboardFilterConverter";
 import { useParentsConfiguration } from "./dashboardDropdownBody/configuration/hooks/useParentsConfiguration";
 import { useDisplayFormConfiguration } from "./dashboardDropdownBody/configuration/hooks/useDisplayFormConfiguration";
+import { useTitleConfiguration } from "./dashboardDropdownBody/configuration/hooks/useTitleConfiguration";
 
 /**
  * @internal
@@ -72,6 +73,8 @@ export const AttributeFilterParentFilteringProvider: React.FC<
         onConfigurationClose: onDisplayFormClose,
         displayFormChangeStatus,
     } = useDisplayFormConfiguration(currentFilter);
+
+    const {} = useTitleConfiguration(currentFilter);
 
     const onConfigurationSave = useCallback(() => {
         onParentFiltersChange();

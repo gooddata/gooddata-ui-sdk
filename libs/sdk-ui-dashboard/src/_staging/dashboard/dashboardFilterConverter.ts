@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 
 import {
     absoluteDateFilterValues,
@@ -46,6 +46,7 @@ export function dashboardAttributeFilterToAttributeFilter(
 export function attributeFilterToDashboardAttributeFilter(
     filter: IAttributeFilter,
     localIdentifier: string | undefined,
+    title: string | undefined,
 ): IDashboardAttributeFilter {
     const attributeElements = filterAttributeElements(filter);
     const displayForm = filterObjRef(filter);
@@ -56,6 +57,7 @@ export function attributeFilterToDashboardAttributeFilter(
             negativeSelection: isNegativeAttributeFilter(filter),
             localIdentifier,
             // TODO filterElementsBy?
+            title,
         },
     };
 }

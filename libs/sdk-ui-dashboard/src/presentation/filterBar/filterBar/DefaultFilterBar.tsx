@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import React, { useCallback } from "react";
 import classNames from "classnames";
 import invariant from "ts-invariant";
@@ -57,13 +57,16 @@ export const useFilterBarProps = (): IFilterBarProps => {
             const convertedFilter = supportElementUris
                 ? filter
                 : convertDashboardAttributeFilterElementsValuesToUris(filter);
-            const { attributeElements, negativeSelection, localIdentifier } = convertedFilter.attributeFilter;
+            // How to get title here?
+            const { attributeElements, negativeSelection, localIdentifier, title } =
+                convertedFilter.attributeFilter;
 
             dispatch(
                 changeAttributeFilterSelection(
                     localIdentifier!,
                     attributeElements,
                     negativeSelection ? "NOT_IN" : "IN",
+                    title,
                 ),
             );
         },

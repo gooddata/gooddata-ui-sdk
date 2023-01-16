@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import { GdcExtendedDateFilters } from "../extendedDateFilters/GdcExtendedDateFilters";
 import { GdcMetadata } from "../meta/GdcMetadata";
@@ -41,6 +41,7 @@ export namespace GdcFilterContext {
             displayForm: string;
             negativeSelection: boolean;
             attributeElements: string[];
+            title?: string;
             localIdentifier?: string;
             filterElementsBy?: Array<{
                 filterLocalIdentifier: string;

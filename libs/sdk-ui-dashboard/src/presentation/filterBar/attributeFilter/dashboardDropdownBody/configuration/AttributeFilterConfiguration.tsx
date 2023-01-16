@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import React, { useEffect, useMemo } from "react";
 import { ConfigurationCategory } from "./ConfigurationCategory";
 import { ConfigurationPanelHeader } from "./ConfigurationPanelHeader";
@@ -25,6 +25,7 @@ interface IAttributeFilterConfigurationProps {
     filterRef?: ObjRef;
     filterByText: string;
     displayValuesAsText: string;
+    title?: string;
 }
 
 export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfigurationProps> = (props) => {
@@ -102,6 +103,8 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
             />
             {showDisplayFormPicker ? (
                 <div className="s-display-form-configuration">
+                    <ConfigurationCategory categoryTitle="Title" />
+                    {/* Extend with custom title */}
                     <ConfigurationCategory categoryTitle={displayValuesAsText} />
                     <div className="configuration-panel-body">
                         <AttributeDisplayFormsDropdown

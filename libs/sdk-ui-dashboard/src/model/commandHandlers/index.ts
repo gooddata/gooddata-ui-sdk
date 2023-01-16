@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { DashboardCommands, IDashboardCommand } from "../commands";
 import { SagaIterator } from "redux-saga";
 import { initializeDashboardHandler } from "./dashboard/initializeDashboardHandler";
@@ -59,6 +59,7 @@ import { dispatchDashboardEvent } from "../store/_infra/eventDispatcher";
 import { commandRejected } from "../events/general";
 import { changeRenderModeHandler } from "./renderMode/changeRenderModeHandler";
 import { changeAttributeDisplayFormHandler } from "./filterContext/attributeFilter/changeAttributeDisplayFormHandler";
+import { changeAttributeTitleHandler } from "./filterContext/attributeFilter/changeAttributeTitleHandler";
 import { removeDrillForKpiWidgetHandler } from "./widgets/removeDrillForKpiWidgetHandler";
 import { setDrillForKpiWidgetHandler } from "./widgets/setDrillForKpiWidgetHandler";
 import { resizeHeightHandler } from "./layout/resizeHeightHandler";
@@ -97,6 +98,7 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.CHANGE_SELECTION": changeAttributeFilterSelectionHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_PARENTS": setAttributeFilterParentsHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_DISPLAY_FORM": changeAttributeDisplayFormHandler,
+    "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_TITLE": changeAttributeTitleHandler,
     "GDC.DASH/CMD.FLUID_LAYOUT.ADD_SECTION": addLayoutSectionHandler,
     "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_SECTION": moveLayoutSectionHandler,
     "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_SECTION": removeLayoutSectionHandler,

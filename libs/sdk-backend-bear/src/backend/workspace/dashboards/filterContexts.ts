@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import compact from "lodash/compact";
 import flatMap from "lodash/flatMap";
 import zip from "lodash/zip";
@@ -83,6 +83,7 @@ export async function sanitizeFilterContext<T extends IFilterContextDefinition>(
                     ...filter.attributeFilter,
                     displayForm: sanitizedRef,
                     filterElementsBy: sanitizedFilterElementsBy,
+                    // title
                 },
             };
         } else {

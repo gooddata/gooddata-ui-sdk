@@ -1155,6 +1155,7 @@ export namespace GdcFilterContext {
             displayForm: string;
             negativeSelection: boolean;
             attributeElements: string[];
+            title?: string;
             localIdentifier?: string;
             filterElementsBy?: Array<{
                 filterLocalIdentifier: string;
