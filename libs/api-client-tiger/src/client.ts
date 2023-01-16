@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import { tigerExecutionClientFactory } from "./execution";
 import { tigerExecutionResultClientFactory } from "./executionResult";
 import {
@@ -37,7 +37,6 @@ import {
     ExportActionsApiInterface,
     ActionsApiCreateTabularExportRequest,
     TabularExportRequest,
-    TabularExportResult,
     ActionsApiGetTabularExportRequest,
 } from "./export";
 import {
@@ -82,7 +81,6 @@ export {
     ScanModelActionsApiInterface,
     ExportActionsApiInterface,
     ActionsApiCreateTabularExportRequest,
-    TabularExportResult,
     TabularExportRequest,
     ActionsApiGetTabularExportRequest,
 };

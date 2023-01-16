@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 /**
  * This package provides low-level functions for communication with GoodData Cloud and GoodData.CN.
  *
@@ -176,11 +176,16 @@ export {
 export { Configuration, ConfigurationParameters } from "./generated/auth-json-api/configuration";
 export * from "./generated/metadata-json-api/api";
 export {
+    ActionsApiCreatePdfExportRequest,
+    ActionsApiGetExportedFileRequest,
+    ActionsApiGetMetadataRequest,
+    ExportResponse,
     TabularExportRequestFormatEnum,
     Settings,
     CustomOverride,
     CustomLabel,
     CustomMetric,
+    PdfExportRequest,
 } from "./generated/export-json-api/api";
 
 export {

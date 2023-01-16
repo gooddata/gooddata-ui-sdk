@@ -1,12 +1,35 @@
-// (C) 2021-2022 GoodData Corporation
-import { IWorkspaceAccessControlService } from "@gooddata/sdk-backend-spi";
+// (C) 2021-2023 GoodData Corporation
+import {
+    IWorkspaceAccessControlService,
+    IWorkspaceUserGroupsQueryOptions,
+    IWorkspaceUsersQueryOptions,
+} from "@gooddata/sdk-backend-spi";
 import { objRefToUri } from "../../../utils/api";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
-import { ObjRef, AccessGranteeDetail, IAccessGrantee } from "@gooddata/sdk-model";
-import { convertGranteeEntry } from "../../../convertors/fromBackend/GranteeEntryConverter";
+import {
+    ObjRef,
+    AccessGranteeDetail,
+    IAccessGrantee,
+    IAvailableAccessGrantee,
+    GranularGrantee,
+} from "@gooddata/sdk-model";
+import {
+    convertGranteeEntry,
+    convertWorkspaceUserGroupToAvailableUserGroupAccessGrantee,
+    convertWorkspaceUserToAvailableUserAccessGrantee,
+    removePermissionsFromGrantee,
+} from "../../../convertors/fromBackend/AccessControlConverter";
+import { BearWorkspaceUsersQuery } from "../users";
+import { BearWorkspaceUserGroupsQuery } from "../userGroups";
 
 export class BearWorkspaceAccessControlService implements IWorkspaceAccessControlService {
-    constructor(private readonly authCall: BearAuthenticatedCallGuard, private readonly workspace: string) {}
+    private users: BearWorkspaceUsersQuery;
+    private userGroups: BearWorkspaceUserGroupsQuery;
+
+    constructor(private readonly authCall: BearAuthenticatedCallGuard, private readonly workspace: string) {
+        this.users = new BearWorkspaceUsersQuery(this.authCall, this.workspace);
+        this.userGroups = new BearWorkspaceUserGroupsQuery(this.authCall, this.workspace);
+    }
 
     public async getAccessList(sharedObject: ObjRef): Promise<AccessGranteeDetail[]> {
         const objectUri = await objRefToUri(sharedObject, this.workspace, this.authCall);
@@ -31,5 +54,46 @@ export class BearWorkspaceAccessControlService implements IWorkspaceAccessContro
             grantees.map((grantee) => objRefToUri(grantee.granteeRef, this.workspace, this.authCall)),
         );
         return this.authCall((sdk) => sdk.project.removeGrantees(objectUri, granteeUris));
+    }
+
+    /**
+     * Bear has no granular permissions, which means that the user or group either have permissions
+     * or they don't. An empty array of grantee permissions will result in revoking the access
+     * for the grantee. An array of grantee permissions with some content will result in granting
+     * access for the grantee.
+     */
+    public async changeAccess(sharedObject: ObjRef, grantees: GranularGrantee[]): Promise<void> {
+        const granteesToGrantAccess = grantees
+            .filter((grantee) => grantee.permissions.length > 0)
+            .map(removePermissionsFromGrantee);
+        const granteesToRevokeAccess = grantees
+            .filter((grantee) => grantee.permissions.length === 0)
+            .map(removePermissionsFromGrantee);
+
+        await this.revokeAccess(sharedObject, granteesToRevokeAccess);
+        await this.grantAccess(sharedObject, granteesToGrantAccess);
+    }
+
+    public async getAvailableGrantees(
+        _sharedObject: ObjRef,
+        search?: string,
+    ): Promise<IAvailableAccessGrantee[]> {
+        let usersOption: IWorkspaceUsersQueryOptions = {};
+        let groupsOption: IWorkspaceUserGroupsQueryOptions = {};
+
+        if (search) {
+            usersOption = { ...usersOption, search: `%${search}` };
+            groupsOption = { ...groupsOption, search: `${search}` };
+        }
+
+        const workspaceUsersQuery = this.users.withOptions(usersOption).query();
+        const workspaceGroupsQuery = this.userGroups.query(groupsOption);
+
+        const [users, groups] = await Promise.all([workspaceUsersQuery, workspaceGroupsQuery]);
+
+        return [
+            ...users.items.map(convertWorkspaceUserToAvailableUserAccessGrantee),
+            ...groups.items.map(convertWorkspaceUserGroupToAvailableUserGroupAccessGrantee),
+        ];
     }
 }

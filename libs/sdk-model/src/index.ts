@@ -754,6 +754,20 @@ export {
     isUserAccessGrantee,
     isUserGroupAccess,
     isUserGroupAccessGrantee,
+    GranularGrantee,
+    AccessGranularPermission,
+    IGranularAccessGrantee,
+    IAvailableAccessGrantee,
+    IAvailableUserAccessGrantee,
+    IAvailableUserGroupAccessGrantee,
+    IGranularUserAccess,
+    IGranularUserGroupAccess,
+    IGranularUserAccessGrantee,
+    IGranularUserGroupAccessGrantee,
+    isGranularAccess,
+    isAvailableUserGroupAccessGrantee,
+    isAvailableUserAccessGrantee,
+    isGranularGrantee,
 } from "./accessControl";
 
 export { IOrganizationDescriptor } from "./organization";

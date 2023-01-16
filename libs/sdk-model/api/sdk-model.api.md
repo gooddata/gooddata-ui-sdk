@@ -8,7 +8,10 @@
 export function absoluteDateFilterValues(filter: IAbsoluteDateFilter): IAbsoluteDateFilterValues;
 
 // @alpha
-export type AccessGranteeDetail = IUserAccess | IUserGroupAccess;
+export type AccessGranteeDetail = IUserAccess | IUserGroupAccess | IGranularUserAccess | IGranularUserGroupAccess;
+
+// @public
+export type AccessGranularPermission = "VIEW" | "EDIT" | "SHARE";
 
 // @public
 export type AllTimeGranularity = "ALL_TIME_GRANULARITY";
@@ -420,6 +423,9 @@ export function filterObjRef(filter: IAbsoluteDateFilter | IRelativeDateFilter |
 export function filterObjRef(filter: IFilter): ObjRef | undefined;
 
 // @public
+export type GranularGrantee = IGranularUserAccessGrantee | IGranularUserGroupAccessGrantee;
+
+// @public
 export type GroupableCatalogItem = ICatalogAttribute | ICatalogMeasure | ICatalogFact;
 
 // @public (undocumented)
@@ -463,7 +469,7 @@ export interface IAccessControlAware {
 }
 
 // @public
-export type IAccessGrantee = IUserGroupAccessGrantee | IUserAccessGrantee;
+export type IAccessGrantee = IUserGroupAccessGrantee | IUserAccessGrantee | GranularGrantee;
 
 // @alpha
 export interface IAllTimeDateFilterOption extends IDateFilterOption {
@@ -617,6 +623,33 @@ export interface IAuditableDates {
 export interface IAuditableUsers {
     createdBy?: IUser;
     updatedBy?: IUser;
+}
+
+// @alpha
+export type IAvailableAccessGrantee = IAvailableUserAccessGrantee | IAvailableUserGroupAccessGrantee;
+
+// @alpha
+export interface IAvailableUserAccessGrantee {
+    // (undocumented)
+    email?: string;
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    ref: ObjRef;
+    // (undocumented)
+    status: "ENABLED" | "DISABLED";
+    // (undocumented)
+    type: "user";
+}
+
+// @alpha
+export interface IAvailableUserGroupAccessGrantee {
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    ref: ObjRef;
+    // (undocumented)
+    type: "group";
 }
 
 // @alpha
@@ -1197,6 +1230,26 @@ export interface IFilterContextBase {
 // @alpha
 export interface IFilterContextDefinition extends IFilterContextBase, Partial<IDashboardObjectIdentity> {
 }
+
+// @public
+export interface IGranularAccessGrantee {
+    // (undocumented)
+    inheritedPermissions: AccessGranularPermission[];
+    // (undocumented)
+    permissions: AccessGranularPermission[];
+}
+
+// @alpha
+export type IGranularUserAccess = IUserAccess & IGranularAccessGrantee;
+
+// @public
+export type IGranularUserAccessGrantee = IUserAccessGrantee & IGranularAccessGrantee;
+
+// @alpha
+export type IGranularUserGroupAccess = IUserGroupAccess & IGranularAccessGrantee;
+
+// @public
+export type IGranularUserGroupAccessGrantee = IUserGroupAccessGrantee & IGranularAccessGrantee;
 
 // @public
 export interface IGroupableCatalogItemBase extends ICatalogItemBase {
@@ -1972,6 +2025,12 @@ export function isAttributeSort(obj: unknown): obj is IAttributeSortItem;
 // @public
 export function isAttributeValueSort(obj: unknown): obj is IAttributeSortItem;
 
+// @alpha
+export const isAvailableUserAccessGrantee: (obj: unknown) => obj is IAvailableUserAccessGrantee;
+
+// @alpha
+export const isAvailableUserGroupAccessGrantee: (obj: unknown) => obj is IAvailableUserGroupAccessGrantee;
+
 // @public
 export function isBucket(obj: unknown): obj is IBucket;
 
@@ -2171,6 +2230,12 @@ export function isFilterContext(obj: unknown): obj is IFilterContext;
 
 // @alpha
 export function isFilterContextDefinition(obj: unknown): obj is IFilterContextDefinition;
+
+// @alpha
+export const isGranularAccess: (obj: unknown) => obj is IGranularUserAccess | IGranularUserGroupAccess;
+
+// @alpha
+export const isGranularGrantee: (obj: unknown) => obj is GranularGrantee;
 
 // @public
 export function isIdentifierRef(obj: unknown): obj is IdentifierRef;

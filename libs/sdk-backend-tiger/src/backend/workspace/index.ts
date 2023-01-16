@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 
 import {
     IAnalyticalWorkspace,
@@ -35,6 +35,7 @@ import { workspaceConverter } from "../../convertors/fromBackend/WorkspaceConver
 import { TigerWorkspaceMeasures } from "./measures";
 import { TigerWorkspaceFacts } from "./facts";
 import { TigerWorkspaceDateFilterConfigsQuery } from "./dateFilterConfigs";
+import { TigerWorkspaceAccessControlService } from "./accessControl";
 
 export class TigerWorkspace implements IAnalyticalWorkspace {
     constructor(
@@ -115,12 +116,15 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
     public users(): IWorkspaceUsersQuery {
         throw new NotSupported("Not supported");
     }
+
     public userGroups(): IWorkspaceUserGroupsQuery {
         throw new NotSupported("Not supported");
     }
+
     public accessControl(): IWorkspaceAccessControlService {
-        throw new NotSupported("Not supported");
+        return new TigerWorkspaceAccessControlService(this.authCall, this.workspace);
     }
+
     public dateFilterConfigs(): IDateFilterConfigsQuery {
         return new TigerWorkspaceDateFilterConfigsQuery();
     }
