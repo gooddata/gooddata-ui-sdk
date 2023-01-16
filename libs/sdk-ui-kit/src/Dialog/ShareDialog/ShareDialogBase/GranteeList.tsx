@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import React, { useMemo } from "react";
 import { serializeObjRef } from "@gooddata/sdk-model";
 import { GranteeItemComponent } from "./GranteeItem";
@@ -26,11 +26,11 @@ export const GranteeList: React.FC<IGranteesListProps> = (props) => {
 
     return (
         <div className="gd-share-dialog-grantee-list">
-            {sortedGrantees.map((grantee) => {
+            {sortedGrantees.map((grantee, i) => {
                 return (
                     <GranteeItemComponent
                         dashboardPermissions={dashboardPermissions}
-                        key={serializeObjRef(grantee.id)}
+                        key={serializeObjRef(grantee.id) + i} // TODO: remove index when mock data is removed from BE
                         grantee={grantee}
                         mode={mode}
                         areGranularPermissionsSupported={areGranularPermissionsSupported}

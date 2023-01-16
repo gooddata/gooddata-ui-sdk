@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 
 import { IntlShape } from "react-intl";
 import { areObjRefsEqual, objRefToString, uriRef, IAccessGranularPermission } from "@gooddata/sdk-model";
@@ -151,9 +151,10 @@ export const getGranularGranteeClassNameId = (grantee: GranteeItem): string => {
 export const getGranularGranteePermissionId = (
     permissions: IAccessGranularPermission[] | undefined,
 ): string => {
-    if (permissions) {
+    if (permissions && permissions.length) {
         return permissions[0];
     }
 
+    // TODO: TNT-1185 Is this correct? When no permissions are specified, VIEW is the default?
     return "VIEW";
 };
