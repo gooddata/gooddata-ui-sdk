@@ -6,23 +6,25 @@ import { AttributeDisplayFormType } from "@gooddata/sdk-model";
 /**
  * convert tiger label type values to common text representation
  */
-export function convertLabelType(type?: JsonApiLabelOutAttributesValueTypeEnum): string | undefined {
+export function convertLabelType(
+    type?: JsonApiLabelOutAttributesValueTypeEnum,
+): AttributeDisplayFormType | undefined {
     if (!type) {
         return undefined;
     }
 
     switch (type) {
         case JsonApiLabelOutAttributesValueTypeEnum.HYPERLINK:
-            return AttributeDisplayFormType.HYPERLINK;
+            return "GDC.link";
 
         case JsonApiLabelOutAttributesValueTypeEnum.GEO:
-            return AttributeDisplayFormType.GEO_PUSHPIN;
+            return "GDC.geo.pin";
 
         case JsonApiLabelOutAttributesValueTypeEnum.GEO_LATITUDE:
-            return AttributeDisplayFormType.GEO_PUSHPIN_LATITUDE;
+            return "GDC.geo.pin_latitude";
 
         case JsonApiLabelOutAttributesValueTypeEnum.GEO_LONGITUDE:
-            return AttributeDisplayFormType.GEO_PUSHPIN_LONGITUDE;
+            return "GDC.geo.pin_longitude";
 
         default:
             return undefined;

@@ -36,8 +36,8 @@ import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import {
     attributeAlias,
     attributeDisplayFormRef,
-    AttributeDisplayFormType,
     bucketAttribute,
+    AttributeDisplayFormType,
     idRef,
     IInsightDefinition,
     insightBucket,
@@ -433,10 +433,10 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
 
         if (this.backendCapabilities.supportsSeparateLatitudeLongitudeLabels) {
             const latitudeDfRef = locationItem.displayForms?.find(
-                (displayForm) => displayForm.type === AttributeDisplayFormType.GEO_PUSHPIN_LATITUDE,
+                (displayForm) => (displayForm.type as AttributeDisplayFormType) === "GDC.geo.pin_latitude",
             )?.ref;
             const longitudeDfRef = locationItem.displayForms?.find(
-                (displayForm) => displayForm.type === AttributeDisplayFormType.GEO_PUSHPIN_LONGITUDE,
+                (displayForm) => (displayForm.type as AttributeDisplayFormType) === "GDC.geo.pin_longitude",
             )?.ref;
             const latitude = isUriRef(latitudeDfRef) ? latitudeDfRef?.uri : latitudeDfRef?.identifier;
             const longitude = isUriRef(longitudeDfRef) ? longitudeDfRef?.uri : longitudeDfRef?.identifier;

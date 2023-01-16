@@ -8,9 +8,9 @@ import { ShortenedText } from "@gooddata/sdk-ui-kit";
 
 const getDisplayFormIcon = (type?: AttributeDisplayFormType) => {
     switch (type) {
-        case AttributeDisplayFormType.HYPERLINK:
+        case "GDC.link":
             return "gd-icon-hyperlink-warning";
-        case AttributeDisplayFormType.GEO_PUSHPIN:
+        case "GDC.geo.pin":
             return "gd-icon-earth";
         default:
             return "gd-icon-label-warning";

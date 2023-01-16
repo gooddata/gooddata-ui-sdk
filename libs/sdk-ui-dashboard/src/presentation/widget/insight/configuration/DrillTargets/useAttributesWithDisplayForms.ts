@@ -52,7 +52,7 @@ export function useAttributesWithDisplayForms(
             }
 
             const linkDisplayForms = attribute.attribute.displayForms.filter(
-                (df) => df.displayFormType === AttributeDisplayFormType.HYPERLINK,
+                (df) => (df.displayFormType as AttributeDisplayFormType) === "GDC.link",
             );
 
             result.linkDisplayForms.push(

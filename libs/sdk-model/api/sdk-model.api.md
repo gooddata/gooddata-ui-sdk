@@ -90,12 +90,24 @@ export function attributeDisplayFormMetadataObjectTitle(displayForm: IAttributeD
 export function attributeDisplayFormRef(attribute: IAttribute): ObjRef;
 
 // @public
-export enum AttributeDisplayFormType {
-    GEO_PUSHPIN = "GDC.geo.pin",
-    GEO_PUSHPIN_LATITUDE = "GDC.geo.pin_latitude",
-    GEO_PUSHPIN_LONGITUDE = "GDC.geo.pin_longitude",
-    HYPERLINK = "GDC.link"
-}
+export type AttributeDisplayFormType =
+/**
+* Display form representing hyperlink
+*/
+"GDC.link"
+/**
+* Display form representing geo pin location.
+* Both latitude and longitude in single value (lat;long).
+*/
+| "GDC.geo.pin"
+/**
+* Display form representing geo pin latitude.
+*/
+| "GDC.geo.pin_latitude"
+/**
+* Display form representing geo pin longitude.
+*/
+| "GDC.geo.pin_longitude";
 
 // @internal
 export function attributeElementsCount(attributeElements: IAttributeElements): number;

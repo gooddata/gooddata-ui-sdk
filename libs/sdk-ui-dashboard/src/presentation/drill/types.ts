@@ -10,7 +10,6 @@ import {
     isDrillToAttributeUrl,
     isDrillToCustomUrl,
     IListedDashboard,
-    AttributeDisplayFormType as AttributeDisplayFormTypeModel,
 } from "@gooddata/sdk-model";
 import { DashboardDrillContext, IDashboardDrillEvent, IDrillDownDefinition } from "../../types";
 import {
@@ -200,7 +199,13 @@ export function isDrillToUrlConfig(item: unknown): item is IDrillToUrlConfig {
     return !isEmpty(item) && (item as IDrillToUrlConfig).urlDrillTarget !== undefined;
 }
 
-export type AttributeDisplayFormType = AttributeDisplayFormTypeModel;
+// check type AttributeDisplayFormType from @gooddata/sdk-model
+export enum AttributeDisplayFormType {
+    HYPERLINK = "GDC.link",
+    GEO_PUSHPIN = "GDC.geo.pin",
+    GEO_PUSHPIN_LATITUDE = "GDC.geo.pin_latitude",
+    GEO_PUSHPIN_LONGITUDE = "GDC.geo.pin_longitude",
+}
 
 export interface IAttributeDisplayForm {
     formOf: ObjRef;

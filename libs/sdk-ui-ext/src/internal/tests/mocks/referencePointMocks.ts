@@ -374,6 +374,37 @@ export const geoAttributeItems: IBucketItem[] = [
         aggregation: null,
         attribute: "attr.owner.city",
     },
+    {
+        localIdentifier: "a3",
+        type: "attribute",
+        aggregation: null,
+        attribute: "attr.owner.country",
+        locationDisplayFormRef: uriRef("/geo/attribute/displayform/uri/1"),
+        dfRef: { uri: "/geo/attribute/displayform/uri/2" },
+        displayForms: [
+            {
+                id: "attr.owner.country_name",
+                ref: { uri: "/geo/attribute/displayform/uri/2" },
+                type: undefined,
+                title: "Country name",
+                isDefault: true,
+            },
+            {
+                id: "attr.owner.country_latitude",
+                ref: { uri: "/geo/attribute/displayform/uri/3" },
+                type: "GDC.geo.pin_latitude",
+                title: "Country latitude",
+                isDefault: false,
+            },
+            {
+                id: "attr.owner.country_longitude",
+                ref: { uri: "/geo/attribute/displayform/uri/4" },
+                type: "GDC.geo.pin_longitude",
+                title: "Country longitude",
+                isDefault: false,
+            },
+        ],
+    },
 ];
 
 export const geoAttributeFilters: IFiltersBucketItem[] = [

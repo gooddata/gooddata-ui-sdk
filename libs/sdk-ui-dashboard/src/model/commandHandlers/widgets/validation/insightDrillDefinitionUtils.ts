@@ -19,7 +19,6 @@ import {
     isDrillToInsight,
     IAttributeDisplayFormMetadataObject,
     IListedDashboard,
-    AttributeDisplayFormType,
 } from "@gooddata/sdk-model";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import { typesUtils } from "@gooddata/util";
@@ -131,8 +130,6 @@ export interface InsightDrillDefinitionValidationData {
     displayFormsMap: ObjRefMap<IAttributeDisplayFormMetadataObject>;
     availableDrillTargets: IAvailableDrillTargets;
 }
-
-export const hyperlinkDisplayFormType = AttributeDisplayFormType.HYPERLINK;
 
 export function validateInsightDrillDefinition(
     drillDefinition: InsightDrillDefinition,
@@ -255,7 +252,7 @@ export function validateDrillToAttributeUrlDefinition(
         );
     }
 
-    if (hyperlinkDisplayForm.displayFormType !== hyperlinkDisplayFormType) {
+    if (hyperlinkDisplayForm.displayFormType !== "GDC.link") {
         throw new Error(`DisplayFormType of target hyperlinkDisplayForm type has to be GDC.link`);
     }
 
