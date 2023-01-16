@@ -52,6 +52,7 @@ function isGeoLabel(label: JsonApiLabelOutWithLinks): boolean {
     const type = label.attributes?.valueType;
 
     return (
+        type === JsonApiLabelOutAttributesValueTypeEnum.GEO ||
         type === JsonApiLabelOutAttributesValueTypeEnum.GEO_LATITUDE ||
         type === JsonApiLabelOutAttributesValueTypeEnum.GEO_LONGITUDE
     );
