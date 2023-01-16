@@ -73,7 +73,8 @@ export interface IDashboardAttributeFilter {
         filterElementsBy?: IDashboardAttributeFilterParent[];
 
         /**
-         * Custom title of the filter.
+         * Custom title of the filter
+         * TODO: extend with more specific information
          */
         title?: string;
     };

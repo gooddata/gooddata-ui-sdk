@@ -412,7 +412,7 @@ const changeAttributeDisplayForm: FilterContextReducer<PayloadAction<IChangeAttr
 
 export interface IChangeAttributeTitlePayload {
     readonly filterLocalId: string;
-    readonly title: string;
+    readonly title?: string;
 }
 
 /**

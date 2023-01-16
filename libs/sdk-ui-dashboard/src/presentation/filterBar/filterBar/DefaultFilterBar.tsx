@@ -57,16 +57,13 @@ export const useFilterBarProps = (): IFilterBarProps => {
             const convertedFilter = supportElementUris
                 ? filter
                 : convertDashboardAttributeFilterElementsValuesToUris(filter);
-            // How to get title here?
-            const { attributeElements, negativeSelection, localIdentifier, title } =
-                convertedFilter.attributeFilter;
+            const { attributeElements, negativeSelection, localIdentifier } = convertedFilter.attributeFilter;
 
             dispatch(
                 changeAttributeFilterSelection(
                     localIdentifier!,
                     attributeElements,
                     negativeSelection ? "NOT_IN" : "IN",
-                    title,
                 ),
             );
         },

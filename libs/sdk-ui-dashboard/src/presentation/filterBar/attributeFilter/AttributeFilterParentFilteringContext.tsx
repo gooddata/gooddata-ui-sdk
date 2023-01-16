@@ -11,7 +11,8 @@ import { useTitleConfiguration } from "./dashboardDropdownBody/configuration/hoo
  * @internal
  */
 export type IAttributeFilterParentFiltering = ReturnType<typeof useParentsConfiguration> &
-    ReturnType<typeof useDisplayFormConfiguration> & {
+    ReturnType<typeof useDisplayFormConfiguration> &
+    ReturnType<typeof useTitleConfiguration> & {
         onConfigurationSave: () => void;
         showDisplayFormPicker: boolean;
     };
@@ -74,16 +75,26 @@ export const AttributeFilterParentFilteringProvider: React.FC<
         displayFormChangeStatus,
     } = useDisplayFormConfiguration(currentFilter);
 
-    const {} = useTitleConfiguration(currentFilter);
+    const {
+        title,
+        titleChanged,
+        titleChangeStatus,
+        onTitleUpdate,
+        onTitleReset,
+        onTitleChange,
+        onConfigurationClose: onTitleClose,
+    } = useTitleConfiguration(currentFilter);
 
     const onConfigurationSave = useCallback(() => {
         onParentFiltersChange();
         onDisplayFormChange();
+        onTitleChange();
     }, [onParentFiltersChange, onDisplayFormChange]);
 
     const onConfigurationClose = useCallback(() => {
         onParentFiltersClose();
         onDisplayFormClose();
+        onTitleClose();
     }, [onParentFiltersClose, onDisplayFormClose]);
 
     const showDisplayFormPicker = filterDisplayForms.availableDisplayForms.length > 1;
@@ -104,6 +115,12 @@ export const AttributeFilterParentFilteringProvider: React.FC<
                 showDisplayFormPicker,
                 configurationChanged,
                 displayFormChangeStatus,
+                title,
+                titleChanged,
+                titleChangeStatus,
+                onTitleChange,
+                onTitleUpdate,
+                onTitleReset,
             }}
         >
             {children}

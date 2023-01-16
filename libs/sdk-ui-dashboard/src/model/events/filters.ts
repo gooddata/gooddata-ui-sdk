@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import {
     IDashboardAttributeFilter,
     IDashboardDateFilter,
@@ -390,6 +390,35 @@ export function attributeDisplayFormChanged(
 ): DashboardAttributeDisplayFormChanged {
     return {
         type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.DISPLAY_FORM_CHANGED",
+        ctx,
+        correlationId,
+        payload: {
+            filter,
+        },
+    };
+}
+
+export interface DashboardAttributeTitleChangedPayload {
+    /**
+     * The updated definition of the dashboard attribute filter.
+     *
+     * The definition of parents represents the new state.
+     */
+    readonly filter: IDashboardAttributeFilter;
+}
+
+export interface DashboardAttributeTitleChanged extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.TITLE_CHANGED";
+    readonly payload: DashboardAttributeTitleChangedPayload;
+}
+
+export function attributeDisplayTitleChanged(
+    ctx: DashboardContext,
+    filter: IDashboardAttributeFilter,
+    correlationId?: string,
+): DashboardAttributeTitleChanged {
+    return {
+        type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.TITLE_CHANGED",
         ctx,
         correlationId,
         payload: {

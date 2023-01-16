@@ -202,7 +202,7 @@ export function clearDateFilterSelection(correlationId?: string): ChangeDateFilt
  */
 export interface SetAttributeFilterTitlePayload {
     filterLocalId: string;
-    title: string;
+    title?: string;
 }
 
 /**
@@ -226,7 +226,7 @@ export interface SetAttributeFilterTitle extends IDashboardCommand {
  * @param displayForm - newly selected display form
  * @returns change filter display form command
  */
-export function setAttributeFilterTitle(filterLocalId: string, title: string): SetAttributeFilterTitle {
+export function setAttributeFilterTitle(filterLocalId: string, title?: string): SetAttributeFilterTitle {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_TITLE",
         payload: {
@@ -464,11 +464,6 @@ export interface ChangeAttributeFilterSelectionPayload {
      * Selection type. Either 'IN' for positive selection or 'NOT_IN' for negative selection (All except selected items).
      */
     readonly selectionType: AttributeFilterSelectionType;
-
-    /**
-     * Custom attribute title.
-     */
-    readonly title?: string;
 }
 
 /**
@@ -520,7 +515,6 @@ export function changeAttributeFilterSelection(
     filterLocalId: string,
     elements: IAttributeElements,
     selectionType: AttributeFilterSelectionType,
-    title?: string,
     correlationId?: string,
 ): ChangeAttributeFilterSelection {
     return {
@@ -530,7 +524,6 @@ export function changeAttributeFilterSelection(
             filterLocalId,
             elements,
             selectionType,
-            title,
         },
     };
 }

@@ -85,14 +85,19 @@ export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilter
 
     const CustomDropdownActions = useMemo(() => {
         return function DropdownActions(props: IAttributeFilterDropdownActionsProps) {
-            const { onConfigurationSave, configurationChanged, displayFormChanged, onConfigurationClose } =
-                useAttributeFilterParentFiltering();
+            const {
+                onConfigurationSave,
+                configurationChanged,
+                displayFormChanged,
+                titleChanged,
+                onConfigurationClose,
+            } = useAttributeFilterParentFiltering();
 
             return (
                 <>
                     {isConfigurationOpen ? (
                         <CustomConfigureAttributeFilterDropdownActions
-                            isSaveDisabled={!(configurationChanged || displayFormChanged)}
+                            isSaveDisabled={!(configurationChanged || displayFormChanged || titleChanged)}
                             onSaveButtonClick={() => {
                                 onConfigurationSave();
                                 setIsConfigurationOpen(false);

@@ -63,6 +63,9 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
         showDisplayFormPicker,
         filterDisplayForms,
         onDisplayFormSelect,
+        title,
+        onTitleUpdate,
+        onTitleReset,
     } = useAttributeFilterParentFiltering();
 
     const { connectingAttributesLoading, connectingAttributes } = useConnectingAttributes(
@@ -104,7 +107,15 @@ export const AttributeFilterConfiguration: React.FC<IAttributeFilterConfiguratio
             {showDisplayFormPicker ? (
                 <div className="s-display-form-configuration">
                     <ConfigurationCategory categoryTitle="Title" />
-                    {/* Extend with custom title */}
+                    {/* TODO: Update with correct component + logic */}
+                    <input
+                        className="gd-input-field"
+                        style={{ width: "100%" }}
+                        onChange={onTitleUpdate}
+                        value={title}
+                    />
+                    <button onClick={onTitleReset}>Reset</button>
+
                     <ConfigurationCategory categoryTitle={displayValuesAsText} />
                     <div className="configuration-panel-body">
                         <AttributeDisplayFormsDropdown
