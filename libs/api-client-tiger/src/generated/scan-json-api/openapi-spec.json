@@ -576,7 +576,8 @@
                             "DRILL",
                             "GREENPLUM",
                             "AZURESQL",
-                            "SYNAPSESQL"
+                            "SYNAPSESQL",
+                            "DATABRICKS"
                         ]
                     },
                     "url": {

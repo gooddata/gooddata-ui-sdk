@@ -1,8 +1,10 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
-import { ObjRef, ShareStatus } from "@gooddata/sdk-model";
+import { AccessGranularPermission, ObjRef, ShareStatus } from "@gooddata/sdk-model";
 
 import { IShareDialogLabels } from "../types";
+import has from "lodash/has";
+import isArray from "lodash/isArray";
 
 // Grantee types
 
@@ -38,11 +40,6 @@ export type GranteeStatus = "Inactive" | "Active";
 /**
  * @internal
  */
-export type AccessGranularPermission = "view" | "edit" | "share";
-
-/**
- * @internal
- */
 export interface IGranteeUser extends IGranteeBase {
     type: "user";
     name: string;
@@ -72,9 +69,7 @@ export interface IGranularGranteeUser extends IGranteeUser {
  */
 export const isGranularGranteeUser = (obj: unknown): obj is IGranularGranteeUser => {
     return (
-        !isEmpty(obj) &&
-        (obj as IGranularGranteeUser).type === "user" &&
-        (obj as IGranularGranteeUser).permissions !== undefined
+        isGranteeUser(obj) && has(obj, "permissions") && isArray((obj as IGranularGranteeUser).permissions)
     );
 };
 
@@ -120,10 +115,20 @@ export interface IGranularGranteeGroup extends IGranteeGroup {
  */
 export const isGranularGranteeGroup = (obj: unknown): obj is IGranularGranteeGroup => {
     return (
-        !isEmpty(obj) &&
-        (obj as IGranularGranteeGroup).type === "group" &&
-        (obj as IGranularGranteeGroup).permissions !== undefined
+        isGranteeGroup(obj) && has(obj, "permissions") && isArray((obj as IGranularGranteeGroup).permissions)
     );
+};
+
+/**
+ * @internal
+ */
+export type IGranularGrantee = IGranularGranteeUser | IGranularGranteeGroup;
+
+/**
+ * @internal
+ */
+export const isGranularGrantee = (obj: unknown): obj is IGranularGrantee => {
+    return isGranularGranteeUser(obj) || isGranularGranteeGroup(obj);
 };
 
 /**
@@ -137,7 +142,7 @@ export interface IGranteeGroupAll extends IGranteeBase {
 /**
  * @internal
  */
-export const isGranteeGroupAll = (obj: unknown): obj is IGranteeGroup => {
+export const isGranteeGroupAll = (obj: unknown): obj is IGranteeGroupAll => {
     return !isEmpty(obj) && (obj as IGranteeGroupAll).type === "groupAll";
 };
 

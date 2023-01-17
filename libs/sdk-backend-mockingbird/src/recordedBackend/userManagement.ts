@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import {
     IWorkspaceAccessControlService,
     IWorkspaceUserGroupsQuery,
@@ -37,6 +37,8 @@ export function recordedAccessControlFactory(
         },
         grantAccess: () => Promise.resolve(),
         revokeAccess: () => Promise.resolve(),
+        changeAccess: () => Promise.resolve(),
+        getAvailableGrantees: () => Promise.resolve([]),
     };
 }
 

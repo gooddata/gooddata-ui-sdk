@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import {
     areObjRefsEqual,
     IUser,
@@ -10,6 +10,9 @@ import {
     IAccessGrantee,
     isUserAccess,
     isUserGroupAccess,
+    IUserGroupAccessGrantee,
+    IUserAccessGrantee,
+    GranularGrantee,
 } from "@gooddata/sdk-model";
 import { typesUtils } from "@gooddata/util";
 
@@ -24,6 +27,7 @@ import {
     GranteeStatus,
     IAffectedSharedObject,
     isGranteeUser,
+    isGranularGrantee,
 } from "./ShareDialogBase/types";
 import { GranteeGroupAll, InactiveOwner, getAppliedGrantees, hasGroupAll } from "./ShareDialogBase/utils";
 import { ISharedObject } from "./types";
@@ -113,10 +117,21 @@ export const mapGranteesToAccessGrantees = (grantees: GranteeItem[]): IAccessGra
         .filter((g) => !guard(g))
         .map((g) => {
             const type = isGranteeUser(g) ? "user" : "group";
-            return {
-                granteeRef: g.id,
-                type,
-            };
+            if (isGranularGrantee(g)) {
+                const grantee: GranularGrantee = {
+                    type,
+                    granteeRef: g.id,
+                    permissions: g.permissions,
+                    inheritedPermissions: g.inheritedPermissions,
+                };
+                return grantee;
+            } else {
+                const grantee: IUserGroupAccessGrantee | IUserAccessGrantee = {
+                    type,
+                    granteeRef: g.id,
+                };
+                return grantee;
+            }
         });
 };
 

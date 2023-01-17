@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import {
     IAnalyticalBackendConfig,
     IDashboardWithReferences,
@@ -31,6 +31,7 @@ import {
     IDateFilter,
     IMeasure,
     Identifier,
+    IAvailableAccessGrantee,
 } from "@gooddata/sdk-model";
 
 /**
@@ -164,6 +165,7 @@ export type IUserManagement = {
  */
 export type IAccessControl = {
     accessList?: AccessGranteeDetail[];
+    availableGrantees?: IAvailableAccessGrantee[];
 };
 
 /**

@@ -7,6 +7,7 @@
 /// <reference types="lodash" />
 /// <reference types="react" />
 
+import { AccessGranularPermission } from '@gooddata/sdk-model';
 import { ColorFormats } from 'tinycolor2';
 import { Component } from 'react';
 import { CSSProperties } from 'react';
@@ -38,9 +39,6 @@ import { ShareStatus } from '@gooddata/sdk-model';
 import { SortDirection } from '@gooddata/sdk-model';
 import { WithIntlProps } from 'react-intl';
 import { WrappedComponentProps } from 'react-intl';
-
-// @internal (undocumented)
-export type AccessGranularPermission = "view" | "edit" | "share";
 
 // @internal (undocumented)
 export type ActionType = "LinkButton" | "Button" | "Switcher";

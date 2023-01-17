@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2023 GoodData Corporation
 
 /* eslint-disable */
 /**
@@ -76,6 +76,44 @@ export interface CustomOverride {
     metrics?: { [key: string]: CustomMetric };
 }
 /**
+ *
+ * @export
+ * @interface ExportResponse
+ */
+export interface ExportResponse {
+    /**
+     *
+     * @type {string}
+     * @memberof ExportResponse
+     */
+    exportResult: string;
+}
+/**
+ *
+ * @export
+ * @interface PdfExportRequest
+ */
+export interface PdfExportRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof PdfExportRequest
+     */
+    fileName: string;
+    /**
+     *
+     * @type {string}
+     * @memberof PdfExportRequest
+     */
+    dashboardId: string;
+    /**
+     *
+     * @type {object}
+     * @memberof PdfExportRequest
+     */
+    metadata?: object;
+}
+/**
  * XLSX specific settings.
  * @export
  * @interface Settings
@@ -141,25 +179,63 @@ export type TabularExportRequestFormatEnum =
     typeof TabularExportRequestFormatEnum[keyof typeof TabularExportRequestFormatEnum];
 
 /**
- *
- * @export
- * @interface TabularExportResult
- */
-export interface TabularExportResult {
-    /**
-     *
-     * @type {string}
-     * @memberof TabularExportResult
-     */
-    exportResult: string;
-}
-
-/**
  * ActionsApi - axios parameter creator
  * @export
  */
 export const ActionsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * An visual export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+         * @summary Create visual - pdf export request
+         * @param {string} workspaceId
+         * @param {PdfExportRequest} pdfExportRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createPdfExport: async (
+            workspaceId: string,
+            pdfExportRequest: PdfExportRequest,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("createPdfExport", "workspaceId", workspaceId);
+            // verify required parameter 'pdfExportRequest' is not null or undefined
+            assertParamExists("createPdfExport", "pdfExportRequest", pdfExportRequest);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/export/visual`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof pdfExportRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(pdfExportRequest !== undefined ? pdfExportRequest : {})
+                : pdfExportRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * An tabular export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
          * @summary Create tabular export request
@@ -206,6 +282,92 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             localVarRequestOptions.data = needsSerialization
                 ? JSON.stringify(tabularExportRequest !== undefined ? tabularExportRequest : {})
                 : tabularExportRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns 202 until original POST export request is not processed.Returns 200 with exported data once the export is done.
+         * @summary Retrieve exported files
+         * @param {string} workspaceId
+         * @param {string} exportId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getExportedFile: async (
+            workspaceId: string,
+            exportId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("getExportedFile", "workspaceId", workspaceId);
+            // verify required parameter 'exportId' is not null or undefined
+            assertParamExists("getExportedFile", "exportId", exportId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/export/visual/{exportId}`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"exportId"}}`, encodeURIComponent(String(exportId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/visual endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.
+         * @summary Retrieve metadata context
+         * @param {string} workspaceId
+         * @param {string} exportId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMetadata: async (
+            workspaceId: string,
+            exportId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("getMetadata", "workspaceId", workspaceId);
+            // verify required parameter 'exportId' is not null or undefined
+            assertParamExists("getMetadata", "exportId", exportId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/export/visual/{exportId}/metadata`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"exportId"}}`, encodeURIComponent(String(exportId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -266,6 +428,26 @@ export const ActionsApiFp = function (configuration?: Configuration) {
     const localVarAxiosParamCreator = ActionsApiAxiosParamCreator(configuration);
     return {
         /**
+         * An visual export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+         * @summary Create visual - pdf export request
+         * @param {string} workspaceId
+         * @param {PdfExportRequest} pdfExportRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createPdfExport(
+            workspaceId: string,
+            pdfExportRequest: PdfExportRequest,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExportResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createPdfExport(
+                workspaceId,
+                pdfExportRequest,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * An tabular export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
          * @summary Create tabular export request
          * @param {string} workspaceId
@@ -277,10 +459,50 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             workspaceId: string,
             tabularExportRequest: TabularExportRequest,
             options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TabularExportResult>> {
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExportResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createTabularExport(
                 workspaceId,
                 tabularExportRequest,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Returns 202 until original POST export request is not processed.Returns 200 with exported data once the export is done.
+         * @summary Retrieve exported files
+         * @param {string} workspaceId
+         * @param {string} exportId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getExportedFile(
+            workspaceId: string,
+            exportId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getExportedFile(
+                workspaceId,
+                exportId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/visual endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.
+         * @summary Retrieve metadata context
+         * @param {string} workspaceId
+         * @param {string} exportId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMetadata(
+            workspaceId: string,
+            exportId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMetadata(
+                workspaceId,
+                exportId,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -320,6 +542,21 @@ export const ActionsApiFactory = function (
     const localVarFp = ActionsApiFp(configuration);
     return {
         /**
+         * An visual export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+         * @summary Create visual - pdf export request
+         * @param {ActionsApiCreatePdfExportRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createPdfExport(
+            requestParameters: ActionsApiCreatePdfExportRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ExportResponse> {
+            return localVarFp
+                .createPdfExport(requestParameters.workspaceId, requestParameters.pdfExportRequest, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * An tabular export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
          * @summary Create tabular export request
          * @param {ActionsApiCreateTabularExportRequest} requestParameters Request parameters.
@@ -329,13 +566,43 @@ export const ActionsApiFactory = function (
         createTabularExport(
             requestParameters: ActionsApiCreateTabularExportRequest,
             options?: AxiosRequestConfig,
-        ): AxiosPromise<TabularExportResult> {
+        ): AxiosPromise<ExportResponse> {
             return localVarFp
                 .createTabularExport(
                     requestParameters.workspaceId,
                     requestParameters.tabularExportRequest,
                     options,
                 )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns 202 until original POST export request is not processed.Returns 200 with exported data once the export is done.
+         * @summary Retrieve exported files
+         * @param {ActionsApiGetExportedFileRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getExportedFile(
+            requestParameters: ActionsApiGetExportedFileRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .getExportedFile(requestParameters.workspaceId, requestParameters.exportId, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/visual endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.
+         * @summary Retrieve metadata context
+         * @param {ActionsApiGetMetadataRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMetadata(
+            requestParameters: ActionsApiGetMetadataRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .getMetadata(requestParameters.workspaceId, requestParameters.exportId, options)
                 .then((request) => request(axios, basePath));
         },
         /**
@@ -363,6 +630,19 @@ export const ActionsApiFactory = function (
  */
 export interface ActionsApiInterface {
     /**
+     * An visual export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+     * @summary Create visual - pdf export request
+     * @param {ActionsApiCreatePdfExportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    createPdfExport(
+        requestParameters: ActionsApiCreatePdfExportRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ExportResponse>;
+
+    /**
      * An tabular export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
      * @summary Create tabular export request
      * @param {ActionsApiCreateTabularExportRequest} requestParameters Request parameters.
@@ -373,7 +653,33 @@ export interface ActionsApiInterface {
     createTabularExport(
         requestParameters: ActionsApiCreateTabularExportRequest,
         options?: AxiosRequestConfig,
-    ): AxiosPromise<TabularExportResult>;
+    ): AxiosPromise<ExportResponse>;
+
+    /**
+     * Returns 202 until original POST export request is not processed.Returns 200 with exported data once the export is done.
+     * @summary Retrieve exported files
+     * @param {ActionsApiGetExportedFileRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    getExportedFile(
+        requestParameters: ActionsApiGetExportedFileRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
+
+    /**
+     * This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/visual endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.
+     * @summary Retrieve metadata context
+     * @param {ActionsApiGetMetadataRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    getMetadata(
+        requestParameters: ActionsApiGetMetadataRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
 
     /**
      * After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
@@ -387,6 +693,27 @@ export interface ActionsApiInterface {
         requestParameters: ActionsApiGetTabularExportRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
+}
+
+/**
+ * Request parameters for createPdfExport operation in ActionsApi.
+ * @export
+ * @interface ActionsApiCreatePdfExportRequest
+ */
+export interface ActionsApiCreatePdfExportRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiCreatePdfExport
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {PdfExportRequest}
+     * @memberof ActionsApiCreatePdfExport
+     */
+    readonly pdfExportRequest: PdfExportRequest;
 }
 
 /**
@@ -408,6 +735,48 @@ export interface ActionsApiCreateTabularExportRequest {
      * @memberof ActionsApiCreateTabularExport
      */
     readonly tabularExportRequest: TabularExportRequest;
+}
+
+/**
+ * Request parameters for getExportedFile operation in ActionsApi.
+ * @export
+ * @interface ActionsApiGetExportedFileRequest
+ */
+export interface ActionsApiGetExportedFileRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiGetExportedFile
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiGetExportedFile
+     */
+    readonly exportId: string;
+}
+
+/**
+ * Request parameters for getMetadata operation in ActionsApi.
+ * @export
+ * @interface ActionsApiGetMetadataRequest
+ */
+export interface ActionsApiGetMetadataRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiGetMetadata
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiGetMetadata
+     */
+    readonly exportId: string;
 }
 
 /**
@@ -439,6 +808,23 @@ export interface ActionsApiGetTabularExportRequest {
  */
 export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     /**
+     * An visual export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+     * @summary Create visual - pdf export request
+     * @param {ActionsApiCreatePdfExportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public createPdfExport(
+        requestParameters: ActionsApiCreatePdfExportRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .createPdfExport(requestParameters.workspaceId, requestParameters.pdfExportRequest, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * An tabular export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
      * @summary Create tabular export request
      * @param {ActionsApiCreateTabularExportRequest} requestParameters Request parameters.
@@ -456,6 +842,37 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
                 requestParameters.tabularExportRequest,
                 options,
             )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns 202 until original POST export request is not processed.Returns 200 with exported data once the export is done.
+     * @summary Retrieve exported files
+     * @param {ActionsApiGetExportedFileRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public getExportedFile(
+        requestParameters: ActionsApiGetExportedFileRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .getExportedFile(requestParameters.workspaceId, requestParameters.exportId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/visual endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.
+     * @summary Retrieve metadata context
+     * @param {ActionsApiGetMetadataRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public getMetadata(requestParameters: ActionsApiGetMetadataRequest, options?: AxiosRequestConfig) {
+        return ActionsApiFp(this.configuration)
+            .getMetadata(requestParameters.workspaceId, requestParameters.exportId, options)
             .then((request) => request(this.axios, this.basePath));
     }
 
