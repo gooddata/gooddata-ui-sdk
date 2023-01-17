@@ -635,7 +635,7 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
 
     &.is-open {
         position: fixed;
-        z-index: 5005;
+        z-index: 6005;
         top: 0;
         right: 0;
         margin: 0;
