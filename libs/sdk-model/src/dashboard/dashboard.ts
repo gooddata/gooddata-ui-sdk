@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import { IAuditableDates, IAuditableUsers } from "../base/metadata";
 import {
@@ -339,3 +339,12 @@ export interface IListedDashboard
      */
     readonly availability: ListedDashboardAvailability;
 }
+
+/**
+ * Dashboard permissions.
+ *
+ * @alpha
+ */
+export type IDashboardPermissions = {
+    [permission in "canViewDashboard" | "canEditDashboard" | "canShareDashboard"]: boolean;
+};

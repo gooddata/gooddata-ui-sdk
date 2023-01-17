@@ -1,10 +1,8 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 
 import {
     DashboardState,
-    selectCanManageACL,
-    selectCanManageAnalyticalDashboard,
     selectCanManageWorkspace,
     selectDashboardEditModeDevRollout,
     selectDashboardLockStatus,
@@ -21,6 +19,8 @@ import {
     selectSupportsAccessControlCapability,
     selectSupportsHierarchicalWorkspacesCapability,
     selectIsShareButtonHidden,
+    selectCanEditDashboardPermission,
+    selectCanShareDashboardPermission,
 } from "../../../../model";
 
 export const selectIsEditModeEnable = createSelector(
@@ -45,7 +45,7 @@ export const selectCanEditLockedDashboard = createSelector(
  */
 export const selectCanEnterEditMode = createSelector(
     selectIsEditModeEnable,
-    selectCanManageAnalyticalDashboard,
+    selectCanEditDashboardPermission,
     selectDashboardLockStatus,
     selectCanEditLockedDashboard,
     (isEditModeEnable, canManageAnalyticalDashboard, isLocked, canEditLockedDashboard) =>
@@ -85,9 +85,9 @@ export function selectCanSaveDashboard(state: DashboardState) {
 export const selectHasPermissionsForShare = createSelector(
     selectEnableAnalyticalDashboardPermissions,
     selectSupportsAccessControlCapability,
-    selectCanManageACL,
-    (arePermissionsEnabled, supportsAccessControl, canManageACL) =>
-        arePermissionsEnabled && supportsAccessControl && canManageACL,
+    selectCanShareDashboardPermission,
+    (arePermissionsEnabled, supportsAccessControl, canShareDashboard) =>
+        arePermissionsEnabled && supportsAccessControl && canShareDashboard,
 );
 
 /**

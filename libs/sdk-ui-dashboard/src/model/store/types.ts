@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { AnyAction, Dispatch, EntityState } from "@reduxjs/toolkit";
 import { IInsight, IWidgetAlert, IListedDashboard } from "@gooddata/sdk-model";
 import { LoadingState } from "./loading/loadingState";
@@ -18,6 +18,7 @@ import { IExecutionResultEnvelope } from "./executionResults/types";
 import { UiState } from "./ui/uiState";
 import { LegacyDashboardsState } from "./legacyDashboards/legacyDashboardsState";
 import { RenderModeState } from "./renderMode/renderModeState";
+import { DashboardPermissionsState } from "./dashboardPermissions/dashboardPermissionsState";
 
 /*
  * This explicit typing is unfortunate but cannot find better way. Normally the typings get inferred from store,
@@ -57,6 +58,7 @@ export interface DashboardState {
     drillTargets: EntityState<IDrillTargets>;
     listedDashboards: EntityState<IListedDashboard>;
     accessibleDashboards: EntityState<IListedDashboard>;
+    dashboardPermissions: DashboardPermissionsState;
 
     /**
      * State controlling how exactly the dashboard is rendered.

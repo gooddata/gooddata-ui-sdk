@@ -58,6 +58,7 @@ import { IDashboardLayoutSection } from '@gooddata/sdk-model';
 import { IDashboardLayoutSectionHeader } from '@gooddata/sdk-model';
 import { IDashboardLayoutSizeByScreenSize } from '@gooddata/sdk-model';
 import { IDashboardObjectIdentity } from '@gooddata/sdk-model';
+import { IDashboardPermissions } from '@gooddata/sdk-model';
 import { IDashboardWidget } from '@gooddata/sdk-model';
 import { IDataView } from '@gooddata/sdk-backend-spi';
 import { IDateFilter } from '@gooddata/sdk-model';
@@ -1960,6 +1961,12 @@ export interface DashboardModelCustomizationFns {
     existingDashboardTransformFn?: DashboardTransformFn;
 }
 
+// @alpha (undocumented)
+export interface DashboardPermissionsState {
+    // (undocumented)
+    dashboardPermissions?: IDashboardPermissions;
+}
+
 // @public
 export interface DashboardPluginDescriptor {
     readonly author: string;
@@ -2148,6 +2155,8 @@ export interface DashboardState {
     catalog: CatalogState;
     // (undocumented)
     config: ConfigState;
+    // (undocumented)
+    dashboardPermissions: DashboardPermissionsState;
     // (undocumented)
     dateFilterConfig: DateFilterConfigState;
     // (undocumented)
@@ -5660,6 +5669,9 @@ export const selectCanCreateScheduledMail: OutputSelector<DashboardState, boolea
 export const selectCanCreateVisualization: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
 
 // @public
+export const selectCanEditDashboardPermission: OutputSelector<DashboardState, boolean, (res: IDashboardPermissions) => boolean>;
+
+// @public
 export const selectCanExecuteRaw: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
 
 // @public
@@ -5702,7 +5714,13 @@ export const selectCanManageWorkspace: OutputSelector<DashboardState, boolean, (
 export const selectCanRefreshData: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
 
 // @public
+export const selectCanShareDashboardPermission: OutputSelector<DashboardState, boolean, (res: IDashboardPermissions) => boolean>;
+
+// @public
 export const selectCanUploadNonProductionCSV: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
+
+// @public
+export const selectCanViewDashboardPermission: OutputSelector<DashboardState, boolean, (res: IDashboardPermissions) => boolean>;
 
 // @public (undocumented)
 export const selectCatalogAttributeDisplayForms: OutputSelector<DashboardState, IAttributeDisplayFormMetadataObject[], (res: ICatalogAttribute[]) => IAttributeDisplayFormMetadataObject[]>;

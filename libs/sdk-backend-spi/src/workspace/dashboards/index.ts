@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import {
     IFilter,
     ObjRef,
@@ -17,6 +17,7 @@ import {
     IListedDashboard,
     IDashboardDefinition,
     IDashboardPluginDefinition,
+    IDashboardPermissions,
 } from "@gooddata/sdk-model";
 
 /**
@@ -403,4 +404,11 @@ export interface IWorkspaceDashboardsService {
      * @param ref - reference to plugin to
      */
     deleteDashboardPlugin(ref: ObjRef): Promise<void>;
+
+    /**
+     * Get current user's permissions to the dashboard.
+     *
+     * @param ref - dashboard reference
+     */
+    getDashboardPermissions(ref: ObjRef): Promise<IDashboardPermissions>;
 }

@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import noop from "lodash/noop";
 import { IWorkspaceInsightsService, IWorkspaceDashboardsService } from "@gooddata/sdk-backend-spi";
 
@@ -42,5 +42,6 @@ export const noopWorkspaceDashboardsService: IWorkspaceDashboardsService = {
     deleteDashboardPlugin: noop as any,
     getDashboardPlugin: noop as any,
     getDashboardPlugins: noop as any,
+    getDashboardPermissions: noop as any,
     workspace: "workspace",
 };

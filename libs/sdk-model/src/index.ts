@@ -665,6 +665,7 @@ export {
     isDashboardDefinition,
     IAccessControlAware,
     ShareStatus,
+    IDashboardPermissions,
 } from "./dashboard/dashboard";
 
 export { ISeparators, ISettings, PlatformEdition, IWhiteLabeling } from "./settings";

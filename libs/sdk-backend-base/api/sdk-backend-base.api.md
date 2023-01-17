@@ -33,6 +33,7 @@ import { IDashboard } from '@gooddata/sdk-model';
 import { IDashboardDefinition } from '@gooddata/sdk-model';
 import { IDashboardFilterReference } from '@gooddata/sdk-model';
 import { IDashboardMetadataObject } from '@gooddata/sdk-model';
+import { IDashboardPermissions } from '@gooddata/sdk-model';
 import { IDashboardPlugin } from '@gooddata/sdk-model';
 import { IDashboardPluginDefinition } from '@gooddata/sdk-model';
 import { IDashboardReferences } from '@gooddata/sdk-backend-spi';
@@ -507,6 +508,8 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
     getAllWidgetAlertsForCurrentUser(): Promise<IWidgetAlert[]>;
     // (undocumented)
     getDashboard(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions): Promise<IDashboard>;
+    // (undocumented)
+    getDashboardPermissions(ref: ObjRef): Promise<IDashboardPermissions>;
     // (undocumented)
     getDashboardPlugin(ref: ObjRef): Promise<IDashboardPlugin>;
     // (undocumented)

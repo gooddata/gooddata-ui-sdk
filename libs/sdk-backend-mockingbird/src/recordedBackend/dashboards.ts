@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 
 import {
     IDashboardReferences,
@@ -38,6 +38,7 @@ import {
     IListedDashboard,
     IDashboardPlugin,
     IDashboardPluginDefinition,
+    IDashboardPermissions,
 } from "@gooddata/sdk-model";
 import cloneDeep from "lodash/cloneDeep";
 import isEqual from "lodash/isEqual";
@@ -361,6 +362,10 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
 
     public getDashboardPlugins(): Promise<IDashboardPlugin[]> {
         throw new NotSupported("recorded backend does not support this call");
+    }
+
+    public getDashboardPermissions(): Promise<IDashboardPermissions> {
+        return Promise.resolve({ canEditDashboard: true, canShareDashboard: true, canViewDashboard: true });
     }
 }
 
