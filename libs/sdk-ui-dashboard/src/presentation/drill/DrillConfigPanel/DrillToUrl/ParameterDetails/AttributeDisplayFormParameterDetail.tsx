@@ -1,10 +1,9 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import React, { useState, useEffect } from "react";
 import { defineMessages, IntlShape, useIntl } from "react-intl";
 import { LRUCache } from "@gooddata/util";
-import { IAttributeElement, ObjRef, objRefToString } from "@gooddata/sdk-model";
+import { AttributeDisplayFormType, IAttributeElement, ObjRef, objRefToString } from "@gooddata/sdk-model";
 import { ParameterDetail } from "./ParameterDetail";
-import { AttributeDisplayFormType } from "../../../types";
 import { emptyHeaderTitleFromIntl, useBackendStrict } from "@gooddata/sdk-ui";
 import { IAnalyticalBackend, IElementsQueryResult } from "@gooddata/sdk-backend-spi";
 
@@ -14,7 +13,7 @@ const DISPLAY_FORM_ELEMENTS_LIMIT = 3;
 
 const requestCache = new LRUCache<IElementsQueryResult>({ maxSize: MAX_CACHED_REQUESTS });
 
-const getDisplayFormLabel = (type: string | undefined) => {
+const getDisplayFormLabel = (type: AttributeDisplayFormType | undefined) => {
     const messages = defineMessages({
         hyperlink: { id: "configurationPanel.drillIntoUrl.editor.urlDisplayFormTypeLabel" },
         pushpin: { id: "configurationPanel.drillIntoUrl.editor.geoDisplayFormTypeLabel" },
@@ -22,9 +21,9 @@ const getDisplayFormLabel = (type: string | undefined) => {
     });
 
     switch (type) {
-        case AttributeDisplayFormType.HYPERLINK:
+        case "GDC.link":
             return messages.hyperlink;
-        case AttributeDisplayFormType.GEO_PUSHPIN:
+        case "GDC.geo.pin":
             return messages.pushpin;
         default:
             return messages.default;
@@ -34,7 +33,7 @@ const getDisplayFormLabel = (type: string | undefined) => {
 interface IAttributeDisplayFormParameterDetailProps {
     title: string;
     label: string;
-    type: string | undefined;
+    type: AttributeDisplayFormType | undefined;
     projectId: string;
     displayFormRef: ObjRef;
     showValues: boolean;
@@ -43,8 +42,8 @@ interface IAttributeDisplayFormParameterDetailProps {
 const handleEmptyValues = (values: string[], intl: IntlShape) =>
     values.map((value: string) => (value.length === 0 ? emptyHeaderTitleFromIntl(intl) : value));
 
-const prepareValues = (elements: IAttributeElement[], type?: string) => {
-    if (type !== AttributeDisplayFormType.HYPERLINK) {
+const prepareValues = (elements: IAttributeElement[], type?: AttributeDisplayFormType) => {
+    if (type !== "GDC.link") {
         return elements.map(({ title }) => title);
     }
     return elements.map(({ title }) =>
@@ -119,7 +118,7 @@ export const AttributeDisplayFormParameterDetail: React.FC<IAttributeDisplayForm
             label={label}
             typeName={intl.formatMessage(getDisplayFormLabel(type))}
             isLoading={isLoading}
-            useEllipsis={type !== AttributeDisplayFormType.HYPERLINK}
+            useEllipsis={type !== "GDC.link"}
             values={values ? values : []}
             additionalValues={additionalValues}
         />

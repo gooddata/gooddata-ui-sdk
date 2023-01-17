@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import noop from "lodash/noop";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
 import { PluggableGeoPushpinChart } from "../PluggableGeoPushpinChart";
@@ -6,6 +6,7 @@ import { IExtendedReferencePoint, IVisConstruct } from "../../../../interfaces/V
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { getLastRenderEl } from "../../tests/testHelpers";
 import * as testMocks from "../../../../tests/mocks/testMocks";
+import { IInsightDefinition, newBucket, newInsightDefinition, newAttribute } from "@gooddata/sdk-model";
 
 describe("PluggableGeoPushpinChart", () => {
     const mockElement = document.createElement("div");
@@ -356,6 +357,20 @@ describe("PluggableGeoPushpinChart", () => {
                 },
             ]);
         });
+
+        it("should generate latitude/longitude and tooltipText to properties", async () => {
+            const withLatitudeLongitudeSupported = dummyBackend();
+            withLatitudeLongitudeSupported.capabilities.supportsSeparateLatitudeLongitudeLabels = true;
+            const geoPushpinChart = createComponent({
+                ...defaultProps,
+                backend: withLatitudeLongitudeSupported,
+            });
+            const extendedReferencePoint = await geoPushpinChart.getExtendedReferencePoint(
+                referencePointMocks.latitudeLongitudeGeoPushpinReferencePoint,
+            );
+
+            expect(extendedReferencePoint.properties).toMatchSnapshot();
+        });
     });
 
     describe("`renderVisualization` and `renderConfigurationPanel`", () => {
@@ -369,6 +384,39 @@ describe("PluggableGeoPushpinChart", () => {
             expect(mockRenderFun).toHaveBeenCalledTimes(2);
             expect(getLastRenderEl(mockRenderFun, mockElement)).toBeDefined();
             expect(getLastRenderEl(mockRenderFun, mockConfigElement)).toBeDefined();
+        });
+    });
+
+    describe("getExecution", () => {
+        it("should generate virtual buckets for latitude and longitude from location", () => {
+            const withLatitudeLongitudeSupported = dummyBackend();
+            withLatitudeLongitudeSupported.capabilities.supportsSeparateLatitudeLongitudeLabels = true;
+            const executionFactory = withLatitudeLongitudeSupported.workspace("test").execution();
+
+            const visualization = createComponent({
+                ...defaultProps,
+                backend: withLatitudeLongitudeSupported,
+            });
+            const visualizationProperties = {
+                controls: {
+                    latitude: "latitude_df_identifier",
+                    longitude: "longitude_df_identifier",
+                },
+            };
+            const insight: IInsightDefinition = newInsightDefinition("visualizationClass-url", (b) => {
+                return b
+                    .title("sourceInsight")
+                    .buckets([newBucket("location", newAttribute("geo_attribute"))])
+                    .properties(visualizationProperties);
+            });
+
+            // without this update this.visualizationProperties is not defined on visualization
+            visualization.update({}, insight, {}, executionFactory);
+
+            const generatedBuckets = visualization.getExecution({}, insight, executionFactory).definition
+                .buckets;
+            expect(generatedBuckets.find((b) => b.localIdentifier === "latitude")).toMatchSnapshot();
+            expect(generatedBuckets.find((b) => b.localIdentifier === "longitude")).toMatchSnapshot();
         });
     });
 });

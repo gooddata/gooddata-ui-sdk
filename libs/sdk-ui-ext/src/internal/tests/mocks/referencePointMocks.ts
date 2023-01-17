@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import {
     IReferencePoint,
     IBucketItem,
@@ -373,6 +373,37 @@ export const geoAttributeItems: IBucketItem[] = [
         type: "attribute",
         aggregation: null,
         attribute: "attr.owner.city",
+    },
+    {
+        localIdentifier: "a3",
+        type: "attribute",
+        aggregation: null,
+        attribute: "attr.owner.country",
+        locationDisplayFormRef: uriRef("/geo/attribute/displayform/uri/1"),
+        dfRef: { uri: "/geo/attribute/displayform/uri/2" },
+        displayForms: [
+            {
+                id: "attr.owner.country_name",
+                ref: { uri: "/geo/attribute/displayform/uri/2" },
+                type: undefined,
+                title: "Country name",
+                isDefault: true,
+            },
+            {
+                id: "attr.owner.country_latitude",
+                ref: { uri: "/geo/attribute/displayform/uri/3" },
+                type: "GDC.geo.pin_latitude",
+                title: "Country latitude",
+                isDefault: false,
+            },
+            {
+                id: "attr.owner.country_longitude",
+                ref: { uri: "/geo/attribute/displayform/uri/4" },
+                type: "GDC.geo.pin_longitude",
+                title: "Country longitude",
+                isDefault: false,
+            },
+        ],
     },
 ];
 
@@ -3647,6 +3678,34 @@ export const simpleGeoPushpinReferencePoint: IReferencePoint = {
         {
             localIdentifier: "location",
             items: geoAttributeItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "size",
+            items: masterMeasureItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "color",
+            items: masterMeasureItems.slice(1, 2),
+        },
+        {
+            localIdentifier: "segment",
+            items: geoAttributeItems.slice(1, 2),
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: geoAttributeFilters.slice(0, 1),
+    },
+    properties: {
+        sortItems: [defaultSortItem],
+    },
+};
+
+export const latitudeLongitudeGeoPushpinReferencePoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "location",
+            items: geoAttributeItems.slice(2, 3),
         },
         {
             localIdentifier: "size",

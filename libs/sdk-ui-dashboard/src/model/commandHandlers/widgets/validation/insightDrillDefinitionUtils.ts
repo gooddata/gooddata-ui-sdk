@@ -131,8 +131,6 @@ export interface InsightDrillDefinitionValidationData {
     availableDrillTargets: IAvailableDrillTargets;
 }
 
-export const hyperlinkDisplayFormType = "GDC.link";
-
 export function validateInsightDrillDefinition(
     drillDefinition: InsightDrillDefinition,
     validationContext: InsightDrillDefinitionValidationData,
@@ -254,7 +252,7 @@ export function validateDrillToAttributeUrlDefinition(
         );
     }
 
-    if (hyperlinkDisplayForm.displayFormType !== hyperlinkDisplayFormType) {
+    if (hyperlinkDisplayForm.displayFormType !== "GDC.link") {
         throw new Error(`DisplayFormType of target hyperlinkDisplayForm type has to be GDC.link`);
     }
 

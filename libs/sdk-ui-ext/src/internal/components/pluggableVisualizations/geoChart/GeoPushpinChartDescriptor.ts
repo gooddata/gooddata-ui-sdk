@@ -1,7 +1,7 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { IInsightDefinition, ISettings } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
-import { IGeoPushpinChartProps } from "@gooddata/sdk-ui-geo";
+import { IGeoPushpinChartLatitudeLongitudeProps, IGeoPushpinChartProps } from "@gooddata/sdk-ui-geo";
 
 import {
     IVisualizationDescriptor,
@@ -24,7 +24,7 @@ import {
     singleAttributeOrMeasureBucketConversion,
     sortsInsightConversion,
 } from "../../../utils/embeddingCodeGenerator";
-import { geoConfigFromInsight } from "./geoConfigCodeGenerator";
+import { geoConfigFromInsight, geoInsightConversion } from "./geoConfigCodeGenerator";
 import { chartAdditionalFactories } from "../chartCodeGenUtils";
 
 export class GeoPushpinChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
@@ -57,8 +57,12 @@ export class GeoPushpinChartDescriptor extends BaseChartDescriptor implements IV
             name: "GeoPushpinChart",
             package: "@gooddata/sdk-ui-geo",
         },
-        insightToProps: getInsightToPropsConverter<IGeoPushpinChartProps>({
-            location: singleAttributeBucketConversion("location", BucketNames.LOCATION),
+        insightToProps: getInsightToPropsConverter<
+            IGeoPushpinChartProps | IGeoPushpinChartLatitudeLongitudeProps
+        >({
+            location: geoInsightConversion("location", BucketNames.LOCATION),
+            latitude: geoInsightConversion("latitude", BucketNames.LATITUDE),
+            longitude: geoInsightConversion("longitude", BucketNames.LONGITUDE),
             size: singleAttributeOrMeasureBucketConversion("size", BucketNames.SIZE),
             color: singleAttributeOrMeasureBucketConversion("color", BucketNames.COLOR),
             segmentBy: singleAttributeBucketConversion("segmentBy", BucketNames.SEGMENT),

@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import {
     bucketAttribute,
     bucketAttributes,
@@ -47,7 +47,7 @@ function namedSdkModelPropGroupMetaFor(name: string): { Single: PropMeta; Multip
     };
 }
 
-const sdkModelPropMetas = {
+export const sdkModelPropMetas = {
     Measure: namedSdkModelPropGroupMetaFor("IMeasure"),
     Attribute: namedSdkModelPropGroupMetaFor("IAttribute"),
     AttributeOrMeasure: namedSdkModelPropGroupMetaFor("IAttributeOrMeasure"),

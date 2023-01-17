@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 
 import {
     EntitiesApiGetAllEntitiesAttributesRequest,
@@ -9,6 +9,7 @@ import {
     JsonApiLabelLinkage,
     JsonApiLabelOutWithLinks,
     MetadataUtilities,
+    JsonApiLabelOutAttributesValueTypeEnum,
 } from "@gooddata/api-client-tiger";
 import { CatalogItem, ICatalogAttribute, ICatalogDateDataset } from "@gooddata/sdk-model";
 import values from "lodash/values";
@@ -48,12 +49,13 @@ function getAttributeLabels(
 }
 
 function isGeoLabel(label: JsonApiLabelOutWithLinks): boolean {
-    /*
-     * TODO: TIGER-HACK this is temporary way to identify labels with geo pushpin; normally this should be done
-     *  using some indicator on the metadata object. for sakes of speed & after agreement with tiger team
-     *  falling back to use of id convention.
-     */
-    return label.id.search(/^.*\.geo__/) > -1;
+    const type = label.attributes?.valueType;
+
+    return (
+        type === JsonApiLabelOutAttributesValueTypeEnum.GEO ||
+        type === JsonApiLabelOutAttributesValueTypeEnum.GEO_LATITUDE ||
+        type === JsonApiLabelOutAttributesValueTypeEnum.GEO_LONGITUDE
+    );
 }
 
 function createNonDateAttributes(attributes: JsonApiAttributeOutList): ICatalogAttribute[] {

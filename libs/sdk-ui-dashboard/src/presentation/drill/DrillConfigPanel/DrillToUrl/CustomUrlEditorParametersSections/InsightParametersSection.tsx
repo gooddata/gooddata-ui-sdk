@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { DropdownSectionHeader } from "../DropdownSectionHeader";
@@ -6,8 +6,7 @@ import { AttributeDisplayFormParameterDetail } from "../ParameterDetails/Attribu
 import { Parameter } from "./Parameter";
 import { useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { IAttributeWithDisplayForm, IParametersPanelSectionsCommonProps } from "../types";
-import { IAttributeDisplayFormMetadataObject } from "@gooddata/sdk-model";
-import { AttributeDisplayFormType } from "../../../types";
+import { AttributeDisplayFormType, IAttributeDisplayFormMetadataObject } from "@gooddata/sdk-model";
 import { selectAllCatalogAttributesMap, useDashboardSelector } from "../../../../../model";
 
 interface XProps {
@@ -30,24 +29,24 @@ const ParameterX: React.FC<XProps> = ({ item, onAdd }) => {
                 <AttributeDisplayFormParameterDetail
                     title={y?.attribute.title || ""}
                     label={item.title}
-                    type={item.displayFormType}
+                    type={item.displayFormType as AttributeDisplayFormType}
                     projectId={projectId}
                     displayFormRef={item.ref}
                     showValues={true} // TODO
                 />
             }
-            iconClassName={getDisplayFormIcon(item.displayFormType)}
+            iconClassName={getDisplayFormIcon(item.displayFormType as AttributeDisplayFormType)}
             onAdd={() => onAdd(`{attribute_title(${item.id})}`)}
             intl={intl}
         />
     );
 };
 
-const getDisplayFormIcon = (type: string | undefined) => {
+const getDisplayFormIcon = (type: AttributeDisplayFormType | undefined) => {
     switch (type) {
-        case AttributeDisplayFormType.HYPERLINK:
+        case "GDC.link":
             return "gd-icon-hyperlink-warning";
-        case AttributeDisplayFormType.GEO_PUSHPIN:
+        case "GDC.geo.pin":
             return "gd-icon-earth";
         default:
             return "gd-icon-label-warning";

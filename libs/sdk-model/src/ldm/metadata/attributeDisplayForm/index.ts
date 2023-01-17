@@ -1,7 +1,31 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import invariant from "ts-invariant";
 import { ObjRef } from "../../../objRef";
 import { IMetadataObject, isMetadataObject } from "../types";
+
+/**
+ * Attribute display form type
+ *
+ * @public
+ */
+export type AttributeDisplayFormType =
+    /**
+     * Display form representing hyperlink
+     */
+    | "GDC.link"
+    /**
+     * Display form representing geo pin location.
+     * Both latitude and longitude in single value (lat;long).
+     */
+    | "GDC.geo.pin"
+    /**
+     * Display form representing geo pin latitude.
+     */
+    | "GDC.geo.pin_latitude"
+    /**
+     * Display form representing geo pin longitude.
+     */
+    | "GDC.geo.pin_longitude";
 
 /**
  * Attribute display form metadata object
@@ -17,9 +41,10 @@ export interface IAttributeDisplayFormMetadataObject extends IMetadataObject {
     attribute: ObjRef;
 
     /**
-     * Subtype of the display form (e.g. GDC.geo.pin, or GDC.link)
+     * Subtype of the display form
+     * (e.g. GDC.geo.pin, or GDC.link, see constants above).
      */
-    displayFormType?: string;
+    displayFormType?: AttributeDisplayFormType | string;
 
     /**
      * Default display form of attribute.

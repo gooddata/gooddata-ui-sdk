@@ -89,6 +89,26 @@ export function attributeDisplayFormMetadataObjectTitle(displayForm: IAttributeD
 // @public
 export function attributeDisplayFormRef(attribute: IAttribute): ObjRef;
 
+// @public
+export type AttributeDisplayFormType =
+/**
+* Display form representing hyperlink
+*/
+"GDC.link"
+/**
+* Display form representing geo pin location.
+* Both latitude and longitude in single value (lat;long).
+*/
+| "GDC.geo.pin"
+/**
+* Display form representing geo pin latitude.
+*/
+| "GDC.geo.pin_latitude"
+/**
+* Display form representing geo pin longitude.
+*/
+| "GDC.geo.pin_longitude";
+
 // @internal
 export function attributeElementsCount(attributeElements: IAttributeElements): number;
 
@@ -505,7 +525,7 @@ export interface IAttributeDescriptorBody {
 // @public
 export interface IAttributeDisplayFormMetadataObject extends IMetadataObject {
     attribute: ObjRef;
-    displayFormType?: string;
+    displayFormType?: AttributeDisplayFormType | string;
     isDefault?: boolean;
     // (undocumented)
     type: "displayForm";

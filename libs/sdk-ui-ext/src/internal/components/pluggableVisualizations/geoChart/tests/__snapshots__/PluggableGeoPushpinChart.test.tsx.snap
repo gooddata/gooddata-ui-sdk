@@ -1,5 +1,52 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`PluggableGeoPushpinChart getExecution should generate virtual buckets for latitude and longitude from location 1`] = `
+Object {
+  "items": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "latitude_df_identifier",
+          "type": "displayForm",
+        },
+        "localIdentifier": "latitude_df",
+      },
+    },
+  ],
+  "localIdentifier": "latitude",
+}
+`;
+
+exports[`PluggableGeoPushpinChart getExecution should generate virtual buckets for latitude and longitude from location 2`] = `
+Object {
+  "items": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "longitude_df_identifier",
+          "type": "displayForm",
+        },
+        "localIdentifier": "longitude_df",
+      },
+    },
+  ],
+  "localIdentifier": "longitude",
+}
+`;
+
+exports[`PluggableGeoPushpinChart getExtendedReferencePoint should generate latitude/longitude and tooltipText to properties 1`] = `
+Object {
+  "controls": Object {
+    "latitude": "/geo/attribute/displayform/uri/3",
+    "longitude": "/geo/attribute/displayform/uri/4",
+    "points": Object {
+      "groupNearbyPoints": false,
+    },
+    "tooltipText": "/geo/attribute/displayform/uri/2",
+  },
+}
+`;
+
 exports[`PluggableGeoPushpinChart getExtendedReferencePoint should return a new reference point with geoPushpin UI config 1`] = `
 Object {
   "buckets": Object {

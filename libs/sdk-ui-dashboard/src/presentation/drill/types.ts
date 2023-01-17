@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import { IAvailableDrillTargetMeasure, IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import isEmpty from "lodash/isEmpty";
 import {
@@ -199,9 +199,12 @@ export function isDrillToUrlConfig(item: unknown): item is IDrillToUrlConfig {
     return !isEmpty(item) && (item as IDrillToUrlConfig).urlDrillTarget !== undefined;
 }
 
+// check type AttributeDisplayFormType from @gooddata/sdk-model
 export enum AttributeDisplayFormType {
     HYPERLINK = "GDC.link",
     GEO_PUSHPIN = "GDC.geo.pin",
+    GEO_PUSHPIN_LATITUDE = "GDC.geo.pin_latitude",
+    GEO_PUSHPIN_LONGITUDE = "GDC.geo.pin_longitude",
 }
 
 export interface IAttributeDisplayForm {

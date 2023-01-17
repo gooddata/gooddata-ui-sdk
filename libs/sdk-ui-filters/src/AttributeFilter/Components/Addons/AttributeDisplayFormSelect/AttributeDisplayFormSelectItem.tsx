@@ -1,20 +1,15 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import React from "react";
 import classNames from "classnames";
 import { stringUtils } from "@gooddata/util";
-import { IAttributeDisplayFormMetadataObject, ObjRef } from "@gooddata/sdk-model";
+import { IAttributeDisplayFormMetadataObject, ObjRef, AttributeDisplayFormType } from "@gooddata/sdk-model";
 import { ShortenedText } from "@gooddata/sdk-ui-kit";
 
-enum AttributeDisplayFormType {
-    HYPERLINK = "GDC.link",
-    GEO_PUSHPIN = "GDC.geo.pin",
-}
-
-const getDisplayFormIcon = (type: string) => {
+const getDisplayFormIcon = (type: AttributeDisplayFormType) => {
     switch (type) {
-        case AttributeDisplayFormType.HYPERLINK:
+        case "GDC.link":
             return "gd-icon-hyperlink-warning";
-        case AttributeDisplayFormType.GEO_PUSHPIN:
+        case "GDC.geo.pin":
             return "gd-icon-earth";
         default:
             return "gd-icon-label-warning";
@@ -40,14 +35,14 @@ export interface IAttributeDisplayFormSelectItemProps {
  */
 export const AttributeDisplayFormSelectItem: React.FC<IAttributeDisplayFormSelectItemProps> = (props) => {
     const { displayForm, selected } = props;
-    const { title } = displayForm;
+    const { title, type } = displayForm;
 
     const className = classNames(
         "gd-list-item",
         "gd-attribute-display-form",
         "s-attribute-display-form-name",
         `s-attribute-display-form-name-${stringUtils.simplifyText(title)}`,
-        getDisplayFormIcon(displayForm.type),
+        getDisplayFormIcon(type as AttributeDisplayFormType),
         {
             "is-selected": selected,
         },

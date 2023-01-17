@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import { IAttributeMetadataObject, isAttributeMetadataObject } from "./attribute";
 import {
     IAttributeDisplayFormMetadataObject,
@@ -6,6 +6,7 @@ import {
     attributeDisplayFormMetadataObjectAttributeRef,
     attributeDisplayFormMetadataObjectRef,
     attributeDisplayFormMetadataObjectTitle,
+    AttributeDisplayFormType,
 } from "./attributeDisplayForm";
 import { IDashboardMetadataObject, isDashboardMetadataObject } from "./dashboard";
 import { IDataSetMetadataObject, isDataSetMetadataObject } from "./dataSet";
@@ -30,6 +31,7 @@ export {
     isAttributeMetadataObject,
     IAttributeDisplayFormMetadataObject,
     isAttributeDisplayFormMetadataObject,
+    AttributeDisplayFormType,
     IFactMetadataObject,
     isFactMetadataObject,
     IMeasureMetadataObject,
