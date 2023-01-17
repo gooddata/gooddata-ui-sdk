@@ -10,6 +10,8 @@ const getDisplayFormIcon = (type: AttributeDisplayFormType) => {
         case "GDC.link":
             return "gd-icon-hyperlink-warning";
         case "GDC.geo.pin":
+        case "GDC.geo.pin_latitude":
+        case "GDC.geo.pin_longitude":
             return "gd-icon-earth";
         default:
             return "gd-icon-label-warning";

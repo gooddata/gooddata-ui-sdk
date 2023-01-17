@@ -24,6 +24,8 @@ const getDisplayFormLabel = (type: AttributeDisplayFormType | undefined) => {
         case "GDC.link":
             return messages.hyperlink;
         case "GDC.geo.pin":
+        case "GDC.geo.pin_latitude":
+        case "GDC.geo.pin_longitude":
             return messages.pushpin;
         default:
             return messages.default;
