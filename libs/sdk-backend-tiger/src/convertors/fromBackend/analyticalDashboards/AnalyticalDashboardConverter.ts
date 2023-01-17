@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import invariant from "ts-invariant";
 import {
     AnalyticalDashboardModelV1,
@@ -35,11 +35,14 @@ import {
     IDashboardPlugin,
 } from "@gooddata/sdk-model";
 import { isInheritedObject } from "../ObjectInheritance";
+import { getShareStatus } from "../utils";
 
 export const convertAnalyticalDashboard = (
     analyticalDashboard: JsonApiAnalyticalDashboardOutWithLinks,
 ): IListedDashboard => {
     const attributes = analyticalDashboard.attributes;
+    const isPrivate = analyticalDashboard.meta?.accessInfo?.private ?? false;
+
     return {
         ref: idRef(analyticalDashboard.id, "analyticalDashboard"),
         uri: analyticalDashboard.links!.self,
@@ -50,7 +53,7 @@ export const convertAnalyticalDashboard = (
         updated: "",
         tags: attributes?.tags ?? [],
         isLocked: isInheritedObject(analyticalDashboard),
-        shareStatus: "public",
+        shareStatus: getShareStatus(isPrivate),
         isUnderStrictControl: true,
         availability: "full",
     };
