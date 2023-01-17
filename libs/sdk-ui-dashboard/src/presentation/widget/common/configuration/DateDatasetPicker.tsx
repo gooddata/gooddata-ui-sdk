@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
 import { ICatalogDateDataset, isInsightWidget, IWidget } from "@gooddata/sdk-model";
 import { FormattedMessage } from "react-intl";
@@ -17,7 +17,6 @@ export interface IDateDatasetPickerProps {
     dateFromVisualization?: ICatalogDateDataset;
     onDateDatasetChange: (id: string) => void;
     className?: string;
-    width: number;
     isLoading?: boolean;
 }
 
@@ -30,7 +29,7 @@ export const DateDatasetPicker: React.FC<IDateDatasetPickerProps> = (props) => {
         dateFromVisualization,
         autoOpen,
         isLoading,
-        width,
+
         onDateDatasetChange,
     } = props;
 
@@ -64,15 +63,9 @@ export const DateDatasetPicker: React.FC<IDateDatasetPickerProps> = (props) => {
                 >
                     <FormattedMessage id="configurationPanel.dateAs" />
                 </label>
-                {width ? (
-                    getDateFilter(undefined, width)
-                ) : (
-                    <Measure>
-                        {({ measureRef, contentRect }) =>
-                            getDateFilter(measureRef, contentRect.entry.width || 0)
-                        }
-                    </Measure>
-                )}
+                <Measure>
+                    {({ measureRef, contentRect }) => getDateFilter(measureRef, contentRect.entry.width || 0)}
+                </Measure>
             </div>
             {!!(unrelatedDateDataset && !isLoading) && (
                 <div className="gd-message error s-unrelated-date">

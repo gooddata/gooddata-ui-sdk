@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import React, { useCallback, useState } from "react";
 import { ICatalogDateDataset, IWidget } from "@gooddata/sdk-model";
 
@@ -8,8 +8,6 @@ import { DateDatasetPicker } from "./DateDatasetPicker";
 import { getUnrelatedDateDataset } from "./utils";
 import { useDateFilterConfigurationHandling } from "./useDateFilterConfigurationHandling";
 import { useIsSelectedDatasetHidden } from "./useIsSelectedDatasetHidden";
-
-const CONFIG_PANEL_DATE_FILTER_WIDTH = 159;
 
 interface IDateDatasetFilterProps {
     widget: IWidget;
@@ -95,7 +93,6 @@ export const DateDatasetFilter: React.FC<IDateDatasetFilterProps> = (props) => {
                     relatedDateDatasets={relatedDateDatasets}
                     dateFromVisualization={dateFromVisualization}
                     widget={widget}
-                    width={CONFIG_PANEL_DATE_FILTER_WIDTH}
                     selectedDateDataset={selectedDateDataset}
                     selectedDateDatasetHidden={selectedDateDatasetHiddenByObjectAvailability}
                     unrelatedDateDataset={unrelatedDateDataset}
