@@ -34,7 +34,7 @@ import {
     IListedDashboard,
     IDashboardPlugin,
 } from "@gooddata/sdk-model";
-import { isInheritedObject } from "../utils";
+import { isInheritedObject } from "../ObjectInheritance";
 
 export const convertAnalyticalDashboard = (
     analyticalDashboard: JsonApiAnalyticalDashboardOutWithLinks,
@@ -49,7 +49,7 @@ export const convertAnalyticalDashboard = (
         created: "",
         updated: "",
         tags: attributes?.tags ?? [],
-        isLocked: isInheritedObject(analyticalDashboard.id),
+        isLocked: isInheritedObject(analyticalDashboard),
         shareStatus: "public",
         isUnderStrictControl: true,
         availability: "full",

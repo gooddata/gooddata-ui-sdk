@@ -24,7 +24,7 @@ import {
 } from "@gooddata/sdk-model";
 import updateWith from "lodash/updateWith";
 import { cloneWithSanitizedIds } from "../../IdSanitization";
-import { isInheritedObject } from "../../utils";
+import { isInheritedObject } from "../../ObjectInheritance";
 import { fixWidgetLegacyElementUris } from "../../fixLegacyElementUris";
 import { convertDrillToCustomUrlInLayoutFromBackend } from "../DrillToCustomUrlConverter";
 
@@ -103,7 +103,7 @@ export function convertDashboard(
         created: "",
         updated: "",
         // TODO: TIGER-HACK: inherited objects must be locked; they are read-only for all
-        isLocked: isInheritedObject(id),
+        isLocked: isInheritedObject(analyticalDashboard.data),
         shareStatus: "public",
         isUnderStrictControl: true,
         tags: attributes.tags ?? [],

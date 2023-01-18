@@ -26,6 +26,7 @@ import { IAuthenticationContext } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationProvider } from '@gooddata/sdk-backend-spi';
 import { ITigerClient } from '@gooddata/api-client-tiger';
 import { IUser } from '@gooddata/sdk-model';
+import { JsonApiAnalyticalDashboardOutMetaOrigin } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInAttributesTypeEnum } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInDocument } from '@gooddata/api-client-tiger';
 import { JsonApiOrganizationOutMetaPermissionsEnum } from '@gooddata/api-client-tiger';
@@ -88,6 +89,9 @@ export { GenerateLdmRequest }
 
 // @internal (undocumented)
 export type GenerateLogicalModelRequest = GenerateLdmRequest;
+
+// @internal
+export function getIdOrigin(id: string): OriginInfoWithId;
 
 // @internal (undocumented)
 export interface IApiToken {
@@ -253,6 +257,11 @@ export interface IInvitationUserResponse {
 
 // @internal (undocumented)
 export type OrganizationPermission = JsonApiOrganizationOutMetaPermissionsEnum;
+
+// @internal (undocumented)
+export type OriginInfoWithId = JsonApiAnalyticalDashboardOutMetaOrigin & {
+    id: string;
+};
 
 // @internal (undocumented)
 export type PhysicalDataModel = DeclarativePdm;

@@ -49,6 +49,7 @@ import { convertInsight } from "../../../convertors/toBackend/InsightConverter";
 
 import { visualizationClasses as visualizationClassesMocks } from "./mocks/visualizationClasses";
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";
+import { isInheritedObject } from "../../../convertors/fromBackend/ObjectInheritance";
 
 export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -149,6 +150,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
             visualizationObject.id,
             links!.self,
             visualizationObject.attributes!.tags,
+            isInheritedObject(visualizationObject),
         );
 
         if (!insight) {
@@ -187,6 +189,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
             insightData.data.id,
             insightData.links!.self,
             insightData.data.attributes?.tags,
+            isInheritedObject(insightData.data),
         );
     };
 
