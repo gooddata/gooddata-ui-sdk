@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import {
     AnalyticalDashboardModelV2,
     JsonApiAnalyticalDashboardOutDocument,
@@ -27,6 +27,7 @@ import { cloneWithSanitizedIds } from "../../IdSanitization";
 import { isInheritedObject } from "../../ObjectInheritance";
 import { fixWidgetLegacyElementUris } from "../../fixLegacyElementUris";
 import { convertDrillToCustomUrlInLayoutFromBackend } from "../DrillToCustomUrlConverter";
+import { getShareStatus } from "../../utils";
 
 function setWidgetRefsInLayout(layout: IDashboardLayout<IDashboardWidget> | undefined) {
     if (!layout) {
@@ -86,8 +87,9 @@ export function convertDashboard(
     analyticalDashboard: JsonApiAnalyticalDashboardOutDocument,
     filterContext?: IFilterContext,
 ): IDashboard {
-    const { id, attributes = {} } = analyticalDashboard.data;
+    const { id, attributes = {}, meta = {} } = analyticalDashboard.data;
     const { title = "", description = "", content } = attributes;
+    const isPrivate = meta.accessInfo?.private ?? false;
 
     const { dateFilterConfig, layout, plugins } = getConvertedAnalyticalDashboardContent(
         content as AnalyticalDashboardModelV2.IAnalyticalDashboard,
@@ -104,7 +106,7 @@ export function convertDashboard(
         updated: "",
         // TODO: TIGER-HACK: inherited objects must be locked; they are read-only for all
         isLocked: isInheritedObject(analyticalDashboard.data),
-        shareStatus: "public",
+        shareStatus: getShareStatus(isPrivate),
         isUnderStrictControl: true,
         tags: attributes.tags ?? [],
         filterContext,

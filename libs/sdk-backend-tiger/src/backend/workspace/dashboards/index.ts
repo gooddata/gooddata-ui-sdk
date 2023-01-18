@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import {
     EntitiesApiGetEntityAnalyticalDashboardsRequest,
     isDashboardPluginsItem,
@@ -73,7 +73,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             return MetadataUtilities.getAllPagesOf(
                 client,
                 client.entities.getAllEntitiesAnalyticalDashboards,
-                { workspaceId: this.workspace },
+                { workspaceId: this.workspace, metaInclude: ["accessInfo"] },
                 // TODO we need to show dashboards with invalid references now, later this should be rework or removed completely (related to NAS-140)
                 // { headers: ValidateRelationsHeader },
             )
@@ -106,6 +106,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                     workspaceId: this.workspace,
                     objectId: id,
                     include: ["filterContexts"],
+                    metaInclude: ["accessInfo"],
                 },
                 {
                     headers: jsonApiHeaders,
@@ -194,6 +195,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                     workspaceId: this.workspace,
                     objectId: id,
                     include,
+                    metaInclude: ["accessInfo"],
                 },
                 {
                     headers: jsonApiHeaders,
