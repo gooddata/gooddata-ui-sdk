@@ -203,7 +203,14 @@
     }
 }
 
+.gd-attribute-filter-details {
+    width: 220px;
+    word-wrap: break-word;
+}
+
 .gd-attribute-filter-dropdown-button-title__next {
+    display: flex;
+    justify-content: space-between;
     overflow: hidden;
     color: variables.$gd-color-link;
 

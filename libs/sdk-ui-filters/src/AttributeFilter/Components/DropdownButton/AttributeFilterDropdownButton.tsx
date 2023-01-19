@@ -1,9 +1,9 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import React, { ReactNode, useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import { stringUtils } from "@gooddata/util";
 import cx from "classnames";
-import { ShortenedText } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, ShortenedText } from "@gooddata/sdk-ui-kit";
 
 export const ALIGN_POINT = [
     { align: "tc bc", offset: { x: 0, y: -2 } },
@@ -11,6 +11,7 @@ export const ALIGN_POINT = [
     { align: "bl tr", offset: { x: -2, y: -8 } },
 ];
 
+const bubbleAlignPoints = [{ align: "cr cl" }];
 /**
  * The interface of the AttributeFilter dropdown button.
  *
@@ -89,6 +90,13 @@ export interface IAttributeFilterDropdownButtonProps {
     icon?: ReactNode;
 
     /**
+     * If true, the button supports attribute filter renaming.
+     *
+     * @beta
+     */
+    isEditMode?: ReactNode;
+
+    /**
      * Callback to open or close AttributeFilter dropdown.
      *
      * @beta
@@ -119,6 +127,7 @@ export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownBu
         isLoaded,
         isDraggable,
         icon,
+        isEditMode,
         onClick,
     } = props;
 
@@ -148,6 +157,8 @@ export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownBu
         buttonSubtitle = intl.formatMessage({ id: "filtering" });
     }
 
+    const shouldDisplayEdit = isEditMode && isOpen;
+
     return (
         <div
             className={cx(
@@ -172,6 +183,20 @@ export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownBu
                     >
                         {`${buttonTitle}${!isLoading && !isFiltering ? ":" : ""}`}
                     </ShortenedText>
+                    {shouldDisplayEdit && (
+                        <span className="gd-list-item-tooltip">
+                            <BubbleHoverTrigger>
+                                <span className="gd-icon-circle-question gd-list-item-tooltip-icon" />
+                                <Bubble
+                                    className="bubble-light gd-attribute-filter-details"
+                                    alignPoints={bubbleAlignPoints}
+                                    arrowStyle={{ display: "none" }}
+                                >
+                                    <div className="gd-attribute-filter-tooltip-header">Title</div>
+                                </Bubble>
+                            </BubbleHoverTrigger>
+                        </span>
+                    )}
                 </div>
                 <div className="gd-attribute-filter-dropdown-button-subtitle__next">
                     <span

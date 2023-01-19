@@ -547,6 +547,7 @@ export interface IAttributeFilterDropdownBodyProps {
 export interface IAttributeFilterDropdownButtonProps {
     icon?: ReactNode;
     isDraggable?: boolean;
+    isEditMode?: ReactNode;
     isFiltering?: boolean;
     isLoaded?: boolean;
     isLoading?: boolean;

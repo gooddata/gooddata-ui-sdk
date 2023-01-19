@@ -30,6 +30,7 @@ import {
     useDashboardDispatch,
     selectLocale,
     useDashboardSelector,
+    selectIsInEditMode,
 } from "../../../model";
 import {
     AttributeFilterParentFilteringProvider,
@@ -50,6 +51,7 @@ export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilter
     const locale = useDashboardSelector(selectLocale);
     const attributeFilter = useMemo(() => dashboardAttributeFilterToAttributeFilter(filter), [filter]);
     const [isConfigurationOpen, setIsConfigurationOpen] = useState(false);
+    const isEditMode = useDashboardSelector(selectIsInEditMode);
 
     const filterRef = useMemo(() => {
         return filterObjRef(attributeFilter);
@@ -79,7 +81,15 @@ export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilter
         return function DropdownButton(props: IAttributeFilterDropdownButtonProps) {
             useAutoOpenAttributeFilterDropdownButton(props, !!autoOpen);
             useOnCloseAttributeFilterDropdownButton(props, onCloseFilter);
-            return <AttributeFilterDropdownButton {...props} isDraggable={isDraggable} />;
+            return (
+                <>
+                    <AttributeFilterDropdownButton
+                        {...props}
+                        isDraggable={isDraggable}
+                        isEditMode={isEditMode}
+                    />
+                </>
+            );
         };
     }, [isDraggable, autoOpen, onCloseFilter]);
 
