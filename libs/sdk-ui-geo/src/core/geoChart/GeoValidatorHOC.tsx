@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import React from "react";
 import isEqual from "lodash/isEqual";
 import { injectIntl } from "react-intl";
@@ -13,6 +13,7 @@ import {
     GeoTokenMissingSdkError,
     IErrorDescriptors,
     IntlWrapper,
+    isGeoTokenMissing,
     newErrorMapping,
 } from "@gooddata/sdk-ui";
 import { IColor } from "@gooddata/sdk-model";
@@ -21,8 +22,12 @@ import { IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
 type IGeoValidatorProps = IGeoChartInnerProps;
 
+interface IGeoValidatorState {
+    isMapboxTokenInvalid: boolean;
+}
+
 export function geoValidatorHOC<T>(InnerComponent: React.ComponentClass<T>): React.ComponentClass<T> {
-    class ValidatorHOCWrapped extends React.Component<T & IGeoValidatorProps> {
+    class ValidatorHOCWrapped extends React.Component<T & IGeoValidatorProps, IGeoValidatorState> {
         private readonly errorMap: IErrorDescriptors;
 
         private isLocationMissing: boolean = false;
@@ -31,12 +36,15 @@ export function geoValidatorHOC<T>(InnerComponent: React.ComponentClass<T>): Rea
         constructor(props: T & IGeoValidatorProps) {
             super(props);
             this.errorMap = newErrorMapping(props.intl);
+            this.state = {
+                isMapboxTokenInvalid: false,
+            };
         }
 
         public render() {
             this.initError();
 
-            if (this.isMapboxTokenMissing) {
+            if (this.state.isMapboxTokenInvalid || this.isMapboxTokenMissing) {
                 return this.renderErrorComponent(ErrorCodes.GEO_MAPBOX_TOKEN_MISSING);
             }
 
@@ -44,10 +52,10 @@ export function geoValidatorHOC<T>(InnerComponent: React.ComponentClass<T>): Rea
                 return this.renderErrorComponent(ErrorCodes.GEO_LOCATION_MISSING);
             }
 
-            return <InnerComponent {...this.props} />;
+            return <InnerComponent {...this.props} onError={this.onError} />;
         }
 
-        public shouldComponentUpdate(nextProps: IGeoValidatorProps): boolean {
+        public shouldComponentUpdate(nextProps: IGeoValidatorProps, nextState: IGeoValidatorState): boolean {
             const { config, execution, drillableItems } = this.props;
             const {
                 config: nextConfig,
@@ -60,11 +68,22 @@ export function geoValidatorHOC<T>(InnerComponent: React.ComponentClass<T>): Rea
             const isSameDataSource = this.isSameData(execution, nextExecution);
             const isSameDrillableItems = isEqual(drillableItems, nextDrillableItems);
 
-            return !isSameConfig || !isSameDataSource || !isSameDrillableItems;
+            return (
+                !isSameConfig ||
+                !isSameDataSource ||
+                !isSameDrillableItems ||
+                this.state.isMapboxTokenInvalid !== nextState.isMapboxTokenInvalid
+            );
         }
 
-        public componentDidUpdate(): void {
-            this.handleError();
+        public componentDidUpdate(prevProps: IGeoValidatorProps): void {
+            if (prevProps.config?.mapboxToken !== this.props.config?.mapboxToken) {
+                this.setState({
+                    isMapboxTokenInvalid: false,
+                });
+            } else {
+                this.handleError();
+            }
         }
 
         public componentDidMount(): void {
@@ -84,10 +103,22 @@ export function geoValidatorHOC<T>(InnerComponent: React.ComponentClass<T>): Rea
             if (this.isLocationMissing) {
                 onError?.(new GeoLocationMissingSdkError());
             }
-            if (this.isMapboxTokenMissing) {
+            if (this.state.isMapboxTokenInvalid || this.isMapboxTokenMissing) {
                 onError?.(new GeoTokenMissingSdkError());
             }
         }
+
+        private handleInvalidMapboxToken() {
+            this.setState({
+                isMapboxTokenInvalid: true,
+            });
+        }
+
+        onError = (e: any) => {
+            if (isGeoTokenMissing(e)) {
+                this.handleInvalidMapboxToken();
+            }
+        };
 
         private renderErrorComponent(errorState: string) {
             const ErrorComponent = this.props.ErrorComponent ?? DefaultErrorComponent;

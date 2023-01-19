@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import isEqual from "lodash/isEqual";
@@ -33,7 +33,13 @@ import {
     isPointsConfigChanged,
     isColorAssignmentItemChanged,
 } from "./helpers/geoChart/common";
-import { IDrillConfig, IHeaderPredicate, DataViewFacade } from "@gooddata/sdk-ui";
+import {
+    IDrillConfig,
+    IHeaderPredicate,
+    DataViewFacade,
+    OnError,
+    GeoTokenMissingSdkError,
+} from "@gooddata/sdk-ui";
 import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import { handleGeoPushpinDrillEvent } from "./helpers/geoChart/drilling";
@@ -53,6 +59,7 @@ export interface IGeoChartRendererProps extends WrappedComponentProps {
     afterRender(): void;
     onCenterPositionChanged(center: IGeoLngLat): void;
     onZoomChanged(zoom: number): void;
+    onError?: OnError;
 }
 
 class GeoChartRenderer extends React.Component<IGeoChartRendererProps> {
@@ -94,6 +101,12 @@ class GeoChartRenderer extends React.Component<IGeoChartRendererProps> {
             return;
         }
 
+        if (prevConfig.mapboxToken !== this.props.config.mapboxToken) {
+            this.removeMap();
+            mapboxgl.accessToken = this.props.config.mapboxToken;
+            this.fullMapInit();
+        }
+
         // resize map when component is updated
         // for example: toggle legend, change position of legend
         this.chart.resize();
@@ -118,10 +131,7 @@ class GeoChartRenderer extends React.Component<IGeoChartRendererProps> {
     }
 
     public componentDidMount(): void {
-        this.createTooltip();
-        this.createMap();
-        this.createMapControls();
-        this.handleMapEvent();
+        this.fullMapInit();
     }
 
     public componentWillUnmount(): void {
@@ -131,6 +141,13 @@ class GeoChartRenderer extends React.Component<IGeoChartRendererProps> {
     public setChartRef = (ref: HTMLElement | null): void => {
         this.chartRef = ref;
     };
+
+    private fullMapInit(): void {
+        this.createTooltip();
+        this.createMap();
+        this.createMapControls();
+        this.handleMapEvent();
+    }
 
     private generateLocale() {
         const { intl } = this.props;
@@ -313,6 +330,7 @@ class GeoChartRenderer extends React.Component<IGeoChartRendererProps> {
         chart.on("mouseleave", DEFAULT_LAYER_NAME, this.handlePushpinMouseLeave);
         chart.on("moveend", this.handlePushpinMoveEnd);
         chart.on("zoomend", this.handlePushpinZoomEnd);
+        chart.on("error", this.handleMapboxError);
     };
 
     /*
@@ -464,6 +482,13 @@ class GeoChartRenderer extends React.Component<IGeoChartRendererProps> {
         const zoom: number = target.getZoom();
 
         onZoomChanged(zoom);
+    };
+
+    private handleMapboxError = (): void => {
+        // Every Mapbox error is considered as invalid token error.
+        // If we want to distinguish error types put some filtering here.
+        const { onError } = this.props;
+        onError?.(new GeoTokenMissingSdkError());
     };
 
     private handleMapClick = (e: mapboxgl.EventData): void => {
