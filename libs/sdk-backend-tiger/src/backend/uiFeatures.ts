@@ -28,6 +28,8 @@ export enum TigerFeaturesNames {
     EnablePushpinGeoChart = "enablePushpinGeoChart",
     //boolean + possible values: enabled, disabled
     EnableAttributeAllValues = "enableAttributeAllValues",
+    //boolean + possible values: enabled, disabled
+    EnableKPIAttributeFilterRenaming = "enableKPIAttributeFilterRenaming",
 }
 
 export type ITigerFeatureFlags = {
@@ -42,6 +44,7 @@ export type ITigerFeatureFlags = {
     enableAnalyticalDashboardPermissions: typeof FeatureFlagsValues["enableAnalyticalDashboardPermissions"][number];
     enablePushpinGeoChart: typeof FeatureFlagsValues["enablePushpinGeoChart"][number];
     enableAttributeAllValues: typeof FeatureFlagsValues["enableAttributeAllValues"][number];
+    enableKPIAttributeFilterRenaming: typeof FeatureFlagsValues["enableKPIAttributeFilterRenaming"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -57,6 +60,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAnalyticalDashboardPermissions: false,
     enablePushpinGeoChart: false,
     enableAttributeAllValues: false,
+    enableKPIAttributeFilterRenaming: false,
 };
 
 export const FeatureFlagsValues = {
@@ -75,4 +79,5 @@ export const FeatureFlagsValues = {
     enableAnalyticalDashboardPermissions: [true, false] as const,
     enablePushpinGeoChart: [true, false] as const,
     enableAttributeAllValues: [true, false] as const,
+    enableKPIAttributeFilterRenaming: [true, false] as const,
 };

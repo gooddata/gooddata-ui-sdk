@@ -259,6 +259,11 @@ export interface ISettings {
      */
     formatLocale?: string;
 
+    /**
+     * Enable attribute filter title renaming in KPI Dashboards.
+     */
+    enableKPIAttributeFilterRenaming?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 
