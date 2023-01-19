@@ -199,7 +199,7 @@ export function isDrillToUrlConfig(item: unknown): item is IDrillToUrlConfig {
     return !isEmpty(item) && (item as IDrillToUrlConfig).urlDrillTarget !== undefined;
 }
 
-// check type AttributeDisplayFormType from @gooddata/sdk-model
+// check type AttributeDisplayFormType from @gooddata/sdk-model to keep it in sync
 export enum AttributeDisplayFormType {
     HYPERLINK = "GDC.link",
     GEO_PUSHPIN = "GDC.geo.pin",
