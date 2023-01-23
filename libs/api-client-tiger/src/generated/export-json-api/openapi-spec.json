@@ -272,22 +272,29 @@
     "components": {
         "schemas": {
             "JsonNode": {
-                "type": "object"
+                "type": "object",
+                "description": "Metadata definition in open form JSON format.",
+                "example": "\"metadata\":{}"
             },
             "PdfExportRequest": {
                 "required": ["dashboardId", "fileName"],
                 "type": "object",
                 "properties": {
                     "fileName": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "File name to be used for retrieving the pdf document.",
+                        "example": "filename"
                     },
                     "dashboardId": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Dashboard identifier",
+                        "example": "761cd28b-3f57-4ac9-bbdc-1c552cc0d1d0"
                     },
                     "metadata": {
                         "$ref": "#/components/schemas/JsonNode"
                     }
-                }
+                },
+                "description": "Export request object describing the export properties and metadata for pdf exports."
             },
             "ExportResponse": {
                 "required": ["exportResult"],

@@ -122,7 +122,7 @@ export interface ActionsApiCreateTabularExportRequest {
 // @public
 export interface ActionsApiExplainAFMRequest {
     readonly afmExecution: AfmExecution;
-    readonly explainType?: "MAQL" | "GRPC_MODEL" | "WDF" | "QT" | "QT_SVG" | "OPT_QT" | "OPT_QT_SVG" | "SQL";
+    readonly explainType?: "MAQL" | "GRPC_MODEL" | "WDF" | "QT" | "QT_SVG" | "OPT_QT" | "OPT_QT_SVG" | "SQL" | "SETTINGS";
     readonly workspaceId: string;
 }
 
@@ -346,7 +346,7 @@ export const AfmActionsApiAxiosParamCreator: (configuration?: LabelElementsConfi
     computeLabelElementsPost: (workspaceId: string, elementsRequest: ElementsRequest, offset?: number | undefined, limit?: number | undefined, skipCache?: boolean | undefined, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     computeReport: (workspaceId: string, afmExecution: AfmExecution, skipCache?: boolean | undefined, timestamp?: string | undefined, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     computeValidObjects: (workspaceId: string, afmValidObjectsQuery: AfmValidObjectsQuery, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
-    explainAFM: (workspaceId: string, afmExecution: AfmExecution, explainType?: "MAQL" | "GRPC_MODEL" | "WDF" | "QT" | "QT_SVG" | "OPT_QT" | "OPT_QT_SVG" | "SQL" | undefined, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
+    explainAFM: (workspaceId: string, afmExecution: AfmExecution, explainType?: "MAQL" | "GRPC_MODEL" | "WDF" | "QT" | "QT_SVG" | "OPT_QT" | "OPT_QT_SVG" | "SQL" | "SETTINGS" | undefined, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     retrieveExecutionMetadata: (workspaceId: string, resultId: string, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     retrieveResult: (workspaceId: string, resultId: string, offset?: number[] | undefined, limit?: number[] | undefined, excludedTotalDimensions?: string[] | undefined, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
 };
@@ -366,7 +366,7 @@ export const AfmActionsApiFp: (configuration?: LabelElementsConfiguration | unde
     computeLabelElementsPost(workspaceId: string, elementsRequest: ElementsRequest, offset?: number | undefined, limit?: number | undefined, skipCache?: boolean | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<ElementsResponse>>;
     computeReport(workspaceId: string, afmExecution: AfmExecution, skipCache?: boolean | undefined, timestamp?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AfmExecutionResponse>>;
     computeValidObjects(workspaceId: string, afmValidObjectsQuery: AfmValidObjectsQuery, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AfmValidObjectsResponse>>;
-    explainAFM(workspaceId: string, afmExecution: AfmExecution, explainType?: "MAQL" | "GRPC_MODEL" | "WDF" | "QT" | "QT_SVG" | "OPT_QT" | "OPT_QT_SVG" | "SQL" | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<any>>;
+    explainAFM(workspaceId: string, afmExecution: AfmExecution, explainType?: "MAQL" | "GRPC_MODEL" | "WDF" | "QT" | "QT_SVG" | "OPT_QT" | "OPT_QT_SVG" | "SQL" | "SETTINGS" | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<any>>;
     retrieveExecutionMetadata(workspaceId: string, resultId: string, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<ResultCacheMetadata>>;
     retrieveResult(workspaceId: string, resultId: string, offset?: number[] | undefined, limit?: number[] | undefined, excludedTotalDimensions?: string[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<ExecutionResult>>;
 };
@@ -1267,6 +1267,7 @@ export interface DeclarativeUser {
     firstname?: string;
     id: string;
     lastname?: string;
+    permissions?: Array<DeclarativeUserPermission>;
     settings?: Array<DeclarativeSetting>;
     userGroups?: Array<UserGroupIdentifier>;
 }
@@ -1276,12 +1277,41 @@ export interface DeclarativeUserGroup {
     id: string;
     name?: string;
     parents?: Array<UserGroupIdentifier>;
+    permissions?: Array<DeclarativeUserGroupPermission>;
 }
+
+// @public
+export interface DeclarativeUserGroupPermission {
+    assignee: AssigneeIdentifier;
+    name: DeclarativeUserGroupPermissionNameEnum;
+}
+
+// @public (undocumented)
+export const DeclarativeUserGroupPermissionNameEnum: {
+    readonly SEE: "SEE";
+};
+
+// @public (undocumented)
+export type DeclarativeUserGroupPermissionNameEnum = typeof DeclarativeUserGroupPermissionNameEnum[keyof typeof DeclarativeUserGroupPermissionNameEnum];
 
 // @public
 export interface DeclarativeUserGroups {
     userGroups: Array<DeclarativeUserGroup>;
 }
+
+// @public
+export interface DeclarativeUserPermission {
+    assignee: AssigneeIdentifier;
+    name: DeclarativeUserPermissionNameEnum;
+}
+
+// @public (undocumented)
+export const DeclarativeUserPermissionNameEnum: {
+    readonly SEE: "SEE";
+};
+
+// @public (undocumented)
+export type DeclarativeUserPermissionNameEnum = typeof DeclarativeUserPermissionNameEnum[keyof typeof DeclarativeUserPermissionNameEnum];
 
 // @public
 export interface DeclarativeUsers {
@@ -1776,7 +1806,7 @@ export const EntitiesApiAxiosParamCreator: (configuration?: MetadataConfiguratio
     deleteEntityWorkspaceDataFilters: (workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     deleteEntityWorkspaceSettings: (workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     deleteEntityWorkspaces: (id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
-    getAllEntitiesAnalyticalDashboards: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts" | "dashboardPlugins" | "ALL")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL" | "accessInfo")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesAnalyticalDashboards: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts" | "dashboardPlugins" | "ALL")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL" | "permissions" | "accessInfo")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesApiTokens: (userId: string, filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesAttributes: (workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("dataset" | "labels" | "datasets" | "ALL" | "defaultView")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesColorPalettes: (filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -1804,7 +1834,7 @@ export const EntitiesApiAxiosParamCreator: (configuration?: MetadataConfiguratio
     getAllEntitiesWorkspaces: (filter?: string | undefined, include?: ("ALL" | "workspaces" | "parent")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, metaInclude?: ("all" | "ALL" | "permissions" | "config")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllOptions: (options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getDataSourceDrivers: (options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
-    getEntityAnalyticalDashboards: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts" | "dashboardPlugins" | "ALL")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL" | "accessInfo")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityAnalyticalDashboards: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts" | "dashboardPlugins" | "ALL")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL" | "permissions" | "accessInfo")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityApiTokens: (userId: string, id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityAttributes: (workspaceId: string, objectId: string, filter?: string | undefined, include?: ("dataset" | "labels" | "datasets" | "ALL" | "defaultView")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityColorPalettes: (id: string, filter?: string | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -2272,7 +2302,7 @@ export const EntitiesApiFp: (configuration?: MetadataConfiguration | undefined) 
     deleteEntityWorkspaceDataFilters(workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
     deleteEntityWorkspaceSettings(workspaceId: string, objectId: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
     deleteEntityWorkspaces(id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
-    getAllEntitiesAnalyticalDashboards(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts" | "dashboardPlugins" | "ALL")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL" | "accessInfo")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiAnalyticalDashboardOutList>>;
+    getAllEntitiesAnalyticalDashboards(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts" | "dashboardPlugins" | "ALL")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL" | "permissions" | "accessInfo")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiAnalyticalDashboardOutList>>;
     getAllEntitiesApiTokens(userId: string, filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiApiTokenOutList>>;
     getAllEntitiesAttributes(workspaceId: string, origin?: "NATIVE" | "ALL" | "PARENTS" | undefined, filter?: string | undefined, include?: ("dataset" | "labels" | "datasets" | "ALL" | "defaultView")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiAttributeOutList>>;
     getAllEntitiesColorPalettes(filter?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiColorPaletteOutList>>;
@@ -2300,7 +2330,7 @@ export const EntitiesApiFp: (configuration?: MetadataConfiguration | undefined) 
     getAllEntitiesWorkspaces(filter?: string | undefined, include?: ("ALL" | "workspaces" | "parent")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, metaInclude?: ("all" | "ALL" | "permissions" | "config")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceOutList>>;
     getAllOptions(options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<object>>;
     getDataSourceDrivers(options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<object>>;
-    getEntityAnalyticalDashboards(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts" | "dashboardPlugins" | "ALL")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL" | "accessInfo")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiAnalyticalDashboardOutDocument>>;
+    getEntityAnalyticalDashboards(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts" | "dashboardPlugins" | "ALL")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL" | "permissions" | "accessInfo")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiAnalyticalDashboardOutDocument>>;
     getEntityApiTokens(userId: string, id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiApiTokenOutDocument>>;
     getEntityAttributes(workspaceId: string, objectId: string, filter?: string | undefined, include?: ("dataset" | "labels" | "datasets" | "ALL" | "defaultView")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, metaInclude?: ("all" | "origin" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiAttributeOutDocument>>;
     getEntityColorPalettes(id: string, filter?: string | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiColorPaletteOutDocument>>;
@@ -2373,7 +2403,7 @@ export const EntitiesApiFp: (configuration?: MetadataConfiguration | undefined) 
 export interface EntitiesApiGetAllEntitiesAnalyticalDashboardsRequest {
     readonly filter?: string;
     readonly include?: Array<"visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts" | "dashboardPlugins" | "ALL">;
-    readonly metaInclude?: Array<"origin" | "accessInfo" | "all" | "ALL">;
+    readonly metaInclude?: Array<"permissions" | "origin" | "accessInfo" | "all" | "ALL">;
     readonly origin?: "ALL" | "PARENTS" | "NATIVE";
     readonly page?: number;
     readonly size?: number;
@@ -2650,7 +2680,7 @@ export interface EntitiesApiGetAllEntitiesWorkspacesRequest {
 export interface EntitiesApiGetEntityAnalyticalDashboardsRequest {
     readonly filter?: string;
     readonly include?: Array<"visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts" | "dashboardPlugins" | "ALL">;
-    readonly metaInclude?: Array<"origin" | "accessInfo" | "all" | "ALL">;
+    readonly metaInclude?: Array<"permissions" | "origin" | "accessInfo" | "all" | "ALL">;
     readonly objectId: string;
     readonly workspaceId: string;
     readonly xGDCVALIDATERELATIONS?: boolean;
@@ -3825,6 +3855,7 @@ export interface JsonApiAnalyticalDashboardOutList {
 export interface JsonApiAnalyticalDashboardOutMeta {
     accessInfo?: JsonApiAnalyticalDashboardOutMetaAccessInfo;
     origin?: JsonApiAnalyticalDashboardOutMetaOrigin;
+    permissions?: Array<JsonApiAnalyticalDashboardOutMetaPermissionsEnum>;
 }
 
 // @public
@@ -3846,6 +3877,16 @@ export const JsonApiAnalyticalDashboardOutMetaOriginOriginTypeEnum: {
 
 // @public (undocumented)
 export type JsonApiAnalyticalDashboardOutMetaOriginOriginTypeEnum = typeof JsonApiAnalyticalDashboardOutMetaOriginOriginTypeEnum[keyof typeof JsonApiAnalyticalDashboardOutMetaOriginOriginTypeEnum];
+
+// @public (undocumented)
+export const JsonApiAnalyticalDashboardOutMetaPermissionsEnum: {
+    readonly EDIT: "EDIT";
+    readonly SHARE: "SHARE";
+    readonly VIEW: "VIEW";
+};
+
+// @public (undocumented)
+export type JsonApiAnalyticalDashboardOutMetaPermissionsEnum = typeof JsonApiAnalyticalDashboardOutMetaPermissionsEnum[keyof typeof JsonApiAnalyticalDashboardOutMetaPermissionsEnum];
 
 // @public
 export interface JsonApiAnalyticalDashboardOutRelationships {
@@ -4137,9 +4178,15 @@ export type JsonApiAttributeToOneLinkage = JsonApiAttributeLinkage;
 
 // @public
 export interface JsonApiColorPaletteIn {
-    attributes: JsonApiColorPaletteOutAttributes;
+    attributes: JsonApiColorPaletteInAttributes;
     id: string;
     type: JsonApiColorPaletteInTypeEnum;
+}
+
+// @public
+export interface JsonApiColorPaletteInAttributes {
+    content: object;
+    name: string;
 }
 
 // @public
@@ -4157,15 +4204,9 @@ export type JsonApiColorPaletteInTypeEnum = typeof JsonApiColorPaletteInTypeEnum
 
 // @public
 export interface JsonApiColorPaletteOut {
-    attributes: JsonApiColorPaletteOutAttributes;
+    attributes: JsonApiColorPaletteInAttributes;
     id: string;
     type: JsonApiColorPaletteOutTypeEnum;
-}
-
-// @public
-export interface JsonApiColorPaletteOutAttributes {
-    content: object;
-    name: string;
 }
 
 // @public
@@ -4190,7 +4231,7 @@ export type JsonApiColorPaletteOutTypeEnum = typeof JsonApiColorPaletteOutTypeEn
 
 // @public
 export interface JsonApiColorPaletteOutWithLinks {
-    attributes: JsonApiColorPaletteOutAttributes;
+    attributes: JsonApiColorPaletteInAttributes;
     id: string;
     links?: ObjectLinks;
     type: JsonApiColorPaletteOutWithLinksTypeEnum;
@@ -4232,15 +4273,9 @@ export type JsonApiColorPalettePatchTypeEnum = typeof JsonApiColorPalettePatchTy
 
 // @public
 export interface JsonApiCookieSecurityConfigurationIn {
-    attributes?: JsonApiCookieSecurityConfigurationInAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationOutAttributes;
     id: string;
     type: JsonApiCookieSecurityConfigurationInTypeEnum;
-}
-
-// @public
-export interface JsonApiCookieSecurityConfigurationInAttributes {
-    lastRotation?: string;
-    rotationInterval?: string;
 }
 
 // @public
@@ -4258,9 +4293,15 @@ export type JsonApiCookieSecurityConfigurationInTypeEnum = typeof JsonApiCookieS
 
 // @public
 export interface JsonApiCookieSecurityConfigurationOut {
-    attributes?: JsonApiCookieSecurityConfigurationInAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationOutAttributes;
     id: string;
     type: JsonApiCookieSecurityConfigurationOutTypeEnum;
+}
+
+// @public
+export interface JsonApiCookieSecurityConfigurationOutAttributes {
+    lastRotation?: string;
+    rotationInterval?: string;
 }
 
 // @public
@@ -4279,7 +4320,7 @@ export type JsonApiCookieSecurityConfigurationOutTypeEnum = typeof JsonApiCookie
 
 // @public
 export interface JsonApiCookieSecurityConfigurationPatch {
-    attributes?: JsonApiCookieSecurityConfigurationInAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationOutAttributes;
     id: string;
     type: JsonApiCookieSecurityConfigurationPatchTypeEnum;
 }
@@ -4299,9 +4340,14 @@ export type JsonApiCookieSecurityConfigurationPatchTypeEnum = typeof JsonApiCook
 
 // @public
 export interface JsonApiCspDirectiveIn {
-    attributes: JsonApiCspDirectiveOutAttributes;
+    attributes: JsonApiCspDirectiveInAttributes;
     id: string;
     type: JsonApiCspDirectiveInTypeEnum;
+}
+
+// @public
+export interface JsonApiCspDirectiveInAttributes {
+    sources: Array<string>;
 }
 
 // @public
@@ -4319,14 +4365,9 @@ export type JsonApiCspDirectiveInTypeEnum = typeof JsonApiCspDirectiveInTypeEnum
 
 // @public
 export interface JsonApiCspDirectiveOut {
-    attributes: JsonApiCspDirectiveOutAttributes;
+    attributes: JsonApiCspDirectiveInAttributes;
     id: string;
     type: JsonApiCspDirectiveOutTypeEnum;
-}
-
-// @public
-export interface JsonApiCspDirectiveOutAttributes {
-    sources: Array<string>;
 }
 
 // @public
@@ -4351,7 +4392,7 @@ export type JsonApiCspDirectiveOutTypeEnum = typeof JsonApiCspDirectiveOutTypeEn
 
 // @public
 export interface JsonApiCspDirectiveOutWithLinks {
-    attributes: JsonApiCspDirectiveOutAttributes;
+    attributes: JsonApiCspDirectiveInAttributes;
     id: string;
     links?: ObjectLinks;
     type: JsonApiCspDirectiveOutWithLinksTypeEnum;
@@ -4723,7 +4764,7 @@ export type JsonApiDatasetToOneLinkage = JsonApiDatasetLinkage;
 export interface JsonApiDataSourceIdentifierOut {
     attributes: JsonApiDataSourceIdentifierOutAttributes;
     id: string;
-    meta?: JsonApiDataSourceIdentifierOutMeta;
+    meta?: JsonApiDataSourceOutMeta;
     type: JsonApiDataSourceIdentifierOutTypeEnum;
 }
 
@@ -4767,20 +4808,6 @@ export interface JsonApiDataSourceIdentifierOutList {
     links?: ListLinks;
 }
 
-// @public
-export interface JsonApiDataSourceIdentifierOutMeta {
-    permissions?: Array<JsonApiDataSourceIdentifierOutMetaPermissionsEnum>;
-}
-
-// @public (undocumented)
-export const JsonApiDataSourceIdentifierOutMetaPermissionsEnum: {
-    readonly MANAGE: "MANAGE";
-    readonly USE: "USE";
-};
-
-// @public (undocumented)
-export type JsonApiDataSourceIdentifierOutMetaPermissionsEnum = typeof JsonApiDataSourceIdentifierOutMetaPermissionsEnum[keyof typeof JsonApiDataSourceIdentifierOutMetaPermissionsEnum];
-
 // @public (undocumented)
 export const JsonApiDataSourceIdentifierOutTypeEnum: {
     readonly DATA_SOURCE_IDENTIFIER: "dataSourceIdentifier";
@@ -4794,7 +4821,7 @@ export interface JsonApiDataSourceIdentifierOutWithLinks {
     attributes: JsonApiDataSourceIdentifierOutAttributes;
     id: string;
     links?: ObjectLinks;
-    meta?: JsonApiDataSourceIdentifierOutMeta;
+    meta?: JsonApiDataSourceOutMeta;
     type: JsonApiDataSourceIdentifierOutWithLinksTypeEnum;
 }
 
@@ -4818,13 +4845,19 @@ export interface JsonApiDataSourceInAttributes {
     cachePath?: Array<string>;
     enableCaching?: boolean;
     name: string;
-    parameters?: Array<JsonApiDataSourceOutAttributesParameters>;
+    parameters?: Array<JsonApiDataSourceInAttributesParameters>;
     password?: string;
     schema: string;
     token?: string;
     type: JsonApiDataSourceInAttributesTypeEnum;
     url?: string;
     username?: string;
+}
+
+// @public
+export interface JsonApiDataSourceInAttributesParameters {
+    name: string;
+    value: string;
 }
 
 // @public (undocumented)
@@ -4865,27 +4898,21 @@ export type JsonApiDataSourceInTypeEnum = typeof JsonApiDataSourceInTypeEnum[key
 export interface JsonApiDataSourceOut {
     attributes: JsonApiDataSourceOutAttributes;
     id: string;
-    meta?: JsonApiDataSourceIdentifierOutMeta;
+    meta?: JsonApiDataSourceOutMeta;
     type: JsonApiDataSourceOutTypeEnum;
 }
 
 // @public
 export interface JsonApiDataSourceOutAttributes {
     cachePath?: Array<string>;
-    decodedParameters?: Array<JsonApiDataSourceOutAttributesParameters>;
+    decodedParameters?: Array<JsonApiDataSourceInAttributesParameters>;
     enableCaching?: boolean;
     name: string;
-    parameters?: Array<JsonApiDataSourceOutAttributesParameters>;
+    parameters?: Array<JsonApiDataSourceInAttributesParameters>;
     schema: string;
     type: JsonApiDataSourceOutAttributesTypeEnum;
     url?: string;
     username?: string;
-}
-
-// @public
-export interface JsonApiDataSourceOutAttributesParameters {
-    name: string;
-    value: string;
 }
 
 // @public (undocumented)
@@ -4921,6 +4948,20 @@ export interface JsonApiDataSourceOutList {
     links?: ListLinks;
 }
 
+// @public
+export interface JsonApiDataSourceOutMeta {
+    permissions?: Array<JsonApiDataSourceOutMetaPermissionsEnum>;
+}
+
+// @public (undocumented)
+export const JsonApiDataSourceOutMetaPermissionsEnum: {
+    readonly MANAGE: "MANAGE";
+    readonly USE: "USE";
+};
+
+// @public (undocumented)
+export type JsonApiDataSourceOutMetaPermissionsEnum = typeof JsonApiDataSourceOutMetaPermissionsEnum[keyof typeof JsonApiDataSourceOutMetaPermissionsEnum];
+
 // @public (undocumented)
 export const JsonApiDataSourceOutTypeEnum: {
     readonly DATA_SOURCE: "dataSource";
@@ -4934,7 +4975,7 @@ export interface JsonApiDataSourceOutWithLinks {
     attributes: JsonApiDataSourceOutAttributes;
     id: string;
     links?: ObjectLinks;
-    meta?: JsonApiDataSourceIdentifierOutMeta;
+    meta?: JsonApiDataSourceOutMeta;
     type: JsonApiDataSourceOutWithLinksTypeEnum;
 }
 
@@ -4958,7 +4999,7 @@ export interface JsonApiDataSourcePatchAttributes {
     cachePath?: Array<string>;
     enableCaching?: boolean;
     name?: string;
-    parameters?: Array<JsonApiDataSourceOutAttributesParameters>;
+    parameters?: Array<JsonApiDataSourceInAttributesParameters>;
     password?: string;
     schema?: string;
     token?: string;
@@ -5579,21 +5620,9 @@ export type JsonApiMetricPatchTypeEnum = typeof JsonApiMetricPatchTypeEnum[keyof
 
 // @public
 export interface JsonApiOrganizationIn {
-    attributes?: JsonApiOrganizationInAttributes;
+    attributes?: JsonApiOrganizationPatchAttributes;
     id: string;
     type: JsonApiOrganizationInTypeEnum;
-}
-
-// @public
-export interface JsonApiOrganizationInAttributes {
-    allowedOrigins?: Array<string>;
-    earlyAccess?: string;
-    hostname?: string;
-    name?: string;
-    oauthClientId?: string;
-    oauthClientSecret?: string;
-    oauthIssuerId?: string;
-    oauthIssuerLocation?: string;
 }
 
 // @public
@@ -5678,9 +5707,21 @@ export type JsonApiOrganizationOutTypeEnum = typeof JsonApiOrganizationOutTypeEn
 
 // @public
 export interface JsonApiOrganizationPatch {
-    attributes?: JsonApiOrganizationInAttributes;
+    attributes?: JsonApiOrganizationPatchAttributes;
     id: string;
     type: JsonApiOrganizationPatchTypeEnum;
+}
+
+// @public
+export interface JsonApiOrganizationPatchAttributes {
+    allowedOrigins?: Array<string>;
+    earlyAccess?: string;
+    hostname?: string;
+    name?: string;
+    oauthClientId?: string;
+    oauthClientSecret?: string;
+    oauthIssuerId?: string;
+    oauthIssuerLocation?: string;
 }
 
 // @public
@@ -5698,7 +5739,7 @@ export type JsonApiOrganizationPatchTypeEnum = typeof JsonApiOrganizationPatchTy
 
 // @public
 export interface JsonApiOrganizationSettingIn {
-    attributes?: JsonApiOrganizationSettingOutAttributes;
+    attributes?: JsonApiUserSettingOutAttributes;
     id: string;
     type: JsonApiOrganizationSettingInTypeEnum;
 }
@@ -5718,14 +5759,9 @@ export type JsonApiOrganizationSettingInTypeEnum = typeof JsonApiOrganizationSet
 
 // @public
 export interface JsonApiOrganizationSettingOut {
-    attributes?: JsonApiOrganizationSettingOutAttributes;
+    attributes?: JsonApiUserSettingOutAttributes;
     id: string;
     type: JsonApiOrganizationSettingOutTypeEnum;
-}
-
-// @public
-export interface JsonApiOrganizationSettingOutAttributes {
-    content?: object;
 }
 
 // @public
@@ -5750,7 +5786,7 @@ export type JsonApiOrganizationSettingOutTypeEnum = typeof JsonApiOrganizationSe
 
 // @public
 export interface JsonApiOrganizationSettingOutWithLinks {
-    attributes?: JsonApiOrganizationSettingOutAttributes;
+    attributes?: JsonApiUserSettingOutAttributes;
     id: string;
     links?: ObjectLinks;
     type: JsonApiOrganizationSettingOutWithLinksTypeEnum;
@@ -5766,7 +5802,7 @@ export type JsonApiOrganizationSettingOutWithLinksTypeEnum = typeof JsonApiOrgan
 
 // @public
 export interface JsonApiOrganizationSettingPatch {
-    attributes?: JsonApiOrganizationSettingOutAttributes;
+    attributes?: JsonApiUserSettingOutAttributes;
     id: string;
     type: JsonApiOrganizationSettingPatchTypeEnum;
 }
@@ -5786,7 +5822,7 @@ export type JsonApiOrganizationSettingPatchTypeEnum = typeof JsonApiOrganization
 
 // @public
 export interface JsonApiThemeIn {
-    attributes: JsonApiColorPaletteOutAttributes;
+    attributes: JsonApiColorPaletteInAttributes;
     id: string;
     type: JsonApiThemeInTypeEnum;
 }
@@ -5806,7 +5842,7 @@ export type JsonApiThemeInTypeEnum = typeof JsonApiThemeInTypeEnum[keyof typeof 
 
 // @public
 export interface JsonApiThemeOut {
-    attributes: JsonApiColorPaletteOutAttributes;
+    attributes: JsonApiColorPaletteInAttributes;
     id: string;
     type: JsonApiThemeOutTypeEnum;
 }
@@ -5833,7 +5869,7 @@ export type JsonApiThemeOutTypeEnum = typeof JsonApiThemeOutTypeEnum[keyof typeo
 
 // @public
 export interface JsonApiThemeOutWithLinks {
-    attributes: JsonApiColorPaletteOutAttributes;
+    attributes: JsonApiColorPaletteInAttributes;
     id: string;
     links?: ObjectLinks;
     type: JsonApiThemeOutWithLinksTypeEnum;
@@ -5869,15 +5905,30 @@ export type JsonApiThemePatchTypeEnum = typeof JsonApiThemePatchTypeEnum[keyof t
 
 // @public
 export interface JsonApiUserGroupIn {
-    attributes?: JsonApiUserGroupOutAttributes;
+    attributes?: JsonApiUserGroupInAttributes;
     id: string;
-    relationships?: JsonApiUserGroupOutRelationships;
+    relationships?: JsonApiUserGroupInRelationships;
     type: JsonApiUserGroupInTypeEnum;
+}
+
+// @public
+export interface JsonApiUserGroupInAttributes {
+    name?: string;
 }
 
 // @public
 export interface JsonApiUserGroupInDocument {
     data: JsonApiUserGroupIn;
+}
+
+// @public
+export interface JsonApiUserGroupInRelationships {
+    parents?: JsonApiUserGroupInRelationshipsParents;
+}
+
+// @public
+export interface JsonApiUserGroupInRelationshipsParents {
+    data: Array<JsonApiUserGroupLinkage>;
 }
 
 // @public (undocumented)
@@ -5904,15 +5955,10 @@ export type JsonApiUserGroupLinkageTypeEnum = typeof JsonApiUserGroupLinkageType
 
 // @public
 export interface JsonApiUserGroupOut {
-    attributes?: JsonApiUserGroupOutAttributes;
+    attributes?: JsonApiUserGroupInAttributes;
     id: string;
-    relationships?: JsonApiUserGroupOutRelationships;
+    relationships?: JsonApiUserGroupInRelationships;
     type: JsonApiUserGroupOutTypeEnum;
-}
-
-// @public
-export interface JsonApiUserGroupOutAttributes {
-    name?: string;
 }
 
 // @public
@@ -5929,16 +5975,6 @@ export interface JsonApiUserGroupOutList {
     links?: ListLinks;
 }
 
-// @public
-export interface JsonApiUserGroupOutRelationships {
-    parents?: JsonApiUserGroupOutRelationshipsParents;
-}
-
-// @public
-export interface JsonApiUserGroupOutRelationshipsParents {
-    data: Array<JsonApiUserGroupLinkage>;
-}
-
 // @public (undocumented)
 export const JsonApiUserGroupOutTypeEnum: {
     readonly USER_GROUP: "userGroup";
@@ -5949,10 +5985,10 @@ export type JsonApiUserGroupOutTypeEnum = typeof JsonApiUserGroupOutTypeEnum[key
 
 // @public
 export interface JsonApiUserGroupOutWithLinks {
-    attributes?: JsonApiUserGroupOutAttributes;
+    attributes?: JsonApiUserGroupInAttributes;
     id: string;
     links?: ObjectLinks;
-    relationships?: JsonApiUserGroupOutRelationships;
+    relationships?: JsonApiUserGroupInRelationships;
     type: JsonApiUserGroupOutWithLinksTypeEnum;
 }
 
@@ -5966,9 +6002,9 @@ export type JsonApiUserGroupOutWithLinksTypeEnum = typeof JsonApiUserGroupOutWit
 
 // @public
 export interface JsonApiUserGroupPatch {
-    attributes?: JsonApiUserGroupOutAttributes;
+    attributes?: JsonApiUserGroupInAttributes;
     id: string;
-    relationships?: JsonApiUserGroupOutRelationships;
+    relationships?: JsonApiUserGroupInRelationships;
     type: JsonApiUserGroupPatchTypeEnum;
 }
 
@@ -5990,15 +6026,28 @@ export type JsonApiUserGroupToOneLinkage = JsonApiUserGroupLinkage;
 
 // @public
 export interface JsonApiUserIn {
-    attributes?: JsonApiUserOutAttributes;
+    attributes?: JsonApiUserInAttributes;
     id: string;
-    relationships?: JsonApiUserOutRelationships;
+    relationships?: JsonApiUserInRelationships;
     type: JsonApiUserInTypeEnum;
+}
+
+// @public
+export interface JsonApiUserInAttributes {
+    authenticationId?: string;
+    email?: string;
+    firstname?: string;
+    lastname?: string;
 }
 
 // @public
 export interface JsonApiUserInDocument {
     data: JsonApiUserIn;
+}
+
+// @public
+export interface JsonApiUserInRelationships {
+    userGroups?: JsonApiUserGroupInRelationshipsParents;
 }
 
 // @public (undocumented)
@@ -6025,18 +6074,10 @@ export type JsonApiUserLinkageTypeEnum = typeof JsonApiUserLinkageTypeEnum[keyof
 
 // @public
 export interface JsonApiUserOut {
-    attributes?: JsonApiUserOutAttributes;
+    attributes?: JsonApiUserInAttributes;
     id: string;
-    relationships?: JsonApiUserOutRelationships;
+    relationships?: JsonApiUserInRelationships;
     type: JsonApiUserOutTypeEnum;
-}
-
-// @public
-export interface JsonApiUserOutAttributes {
-    authenticationId?: string;
-    email?: string;
-    firstname?: string;
-    lastname?: string;
 }
 
 // @public
@@ -6053,11 +6094,6 @@ export interface JsonApiUserOutList {
     links?: ListLinks;
 }
 
-// @public
-export interface JsonApiUserOutRelationships {
-    userGroups?: JsonApiUserGroupOutRelationshipsParents;
-}
-
 // @public (undocumented)
 export const JsonApiUserOutTypeEnum: {
     readonly USER: "user";
@@ -6068,10 +6104,10 @@ export type JsonApiUserOutTypeEnum = typeof JsonApiUserOutTypeEnum[keyof typeof 
 
 // @public
 export interface JsonApiUserOutWithLinks {
-    attributes?: JsonApiUserOutAttributes;
+    attributes?: JsonApiUserInAttributes;
     id: string;
     links?: ObjectLinks;
-    relationships?: JsonApiUserOutRelationships;
+    relationships?: JsonApiUserInRelationships;
     type: JsonApiUserOutWithLinksTypeEnum;
 }
 
@@ -6085,9 +6121,9 @@ export type JsonApiUserOutWithLinksTypeEnum = typeof JsonApiUserOutWithLinksType
 
 // @public
 export interface JsonApiUserPatch {
-    attributes?: JsonApiUserOutAttributes;
+    attributes?: JsonApiUserInAttributes;
     id: string;
-    relationships?: JsonApiUserOutRelationships;
+    relationships?: JsonApiUserInRelationships;
     type: JsonApiUserPatchTypeEnum;
 }
 
@@ -6106,7 +6142,7 @@ export type JsonApiUserPatchTypeEnum = typeof JsonApiUserPatchTypeEnum[keyof typ
 
 // @public
 export interface JsonApiUserSettingIn {
-    attributes?: JsonApiOrganizationSettingOutAttributes;
+    attributes?: JsonApiUserSettingOutAttributes;
     id: string;
     type: JsonApiUserSettingInTypeEnum;
 }
@@ -6126,9 +6162,14 @@ export type JsonApiUserSettingInTypeEnum = typeof JsonApiUserSettingInTypeEnum[k
 
 // @public
 export interface JsonApiUserSettingOut {
-    attributes?: JsonApiOrganizationSettingOutAttributes;
+    attributes?: JsonApiUserSettingOutAttributes;
     id: string;
     type: JsonApiUserSettingOutTypeEnum;
+}
+
+// @public
+export interface JsonApiUserSettingOutAttributes {
+    content?: object;
 }
 
 // @public
@@ -6153,7 +6194,7 @@ export type JsonApiUserSettingOutTypeEnum = typeof JsonApiUserSettingOutTypeEnum
 
 // @public
 export interface JsonApiUserSettingOutWithLinks {
-    attributes?: JsonApiOrganizationSettingOutAttributes;
+    attributes?: JsonApiUserSettingOutAttributes;
     id: string;
     links?: ObjectLinks;
     type: JsonApiUserSettingOutWithLinksTypeEnum;
@@ -6476,15 +6517,32 @@ export type JsonApiWorkspaceDataFilterToOneLinkage = JsonApiWorkspaceDataFilterL
 
 // @public
 export interface JsonApiWorkspaceIn {
-    attributes?: JsonApiWorkspaceOutAttributes;
+    attributes?: JsonApiWorkspaceInAttributes;
     id: string;
-    relationships?: JsonApiWorkspaceOutRelationships;
+    relationships?: JsonApiWorkspaceInRelationships;
     type: JsonApiWorkspaceInTypeEnum;
+}
+
+// @public
+export interface JsonApiWorkspaceInAttributes {
+    description?: string;
+    earlyAccess?: string;
+    name?: string;
 }
 
 // @public
 export interface JsonApiWorkspaceInDocument {
     data: JsonApiWorkspaceIn;
+}
+
+// @public
+export interface JsonApiWorkspaceInRelationships {
+    parent?: JsonApiWorkspaceInRelationshipsParent;
+}
+
+// @public
+export interface JsonApiWorkspaceInRelationshipsParent {
+    data: JsonApiWorkspaceToOneLinkage | null;
 }
 
 // @public (undocumented)
@@ -6511,18 +6569,11 @@ export type JsonApiWorkspaceLinkageTypeEnum = typeof JsonApiWorkspaceLinkageType
 
 // @public
 export interface JsonApiWorkspaceOut {
-    attributes?: JsonApiWorkspaceOutAttributes;
+    attributes?: JsonApiWorkspaceInAttributes;
     id: string;
     meta?: JsonApiWorkspaceOutMeta;
-    relationships?: JsonApiWorkspaceOutRelationships;
+    relationships?: JsonApiWorkspaceInRelationships;
     type: JsonApiWorkspaceOutTypeEnum;
-}
-
-// @public
-export interface JsonApiWorkspaceOutAttributes {
-    description?: string;
-    earlyAccess?: string;
-    name?: string;
 }
 
 // @public
@@ -6565,16 +6616,6 @@ export const JsonApiWorkspaceOutMetaPermissionsEnum: {
 // @public (undocumented)
 export type JsonApiWorkspaceOutMetaPermissionsEnum = typeof JsonApiWorkspaceOutMetaPermissionsEnum[keyof typeof JsonApiWorkspaceOutMetaPermissionsEnum];
 
-// @public
-export interface JsonApiWorkspaceOutRelationships {
-    parent?: JsonApiWorkspaceOutRelationshipsParent;
-}
-
-// @public
-export interface JsonApiWorkspaceOutRelationshipsParent {
-    data: JsonApiWorkspaceToOneLinkage | null;
-}
-
 // @public (undocumented)
 export const JsonApiWorkspaceOutTypeEnum: {
     readonly WORKSPACE: "workspace";
@@ -6585,11 +6626,11 @@ export type JsonApiWorkspaceOutTypeEnum = typeof JsonApiWorkspaceOutTypeEnum[key
 
 // @public
 export interface JsonApiWorkspaceOutWithLinks {
-    attributes?: JsonApiWorkspaceOutAttributes;
+    attributes?: JsonApiWorkspaceInAttributes;
     id: string;
     links?: ObjectLinks;
     meta?: JsonApiWorkspaceOutMeta;
-    relationships?: JsonApiWorkspaceOutRelationships;
+    relationships?: JsonApiWorkspaceInRelationships;
     type: JsonApiWorkspaceOutWithLinksTypeEnum;
 }
 
@@ -6603,9 +6644,9 @@ export type JsonApiWorkspaceOutWithLinksTypeEnum = typeof JsonApiWorkspaceOutWit
 
 // @public
 export interface JsonApiWorkspacePatch {
-    attributes?: JsonApiWorkspaceOutAttributes;
+    attributes?: JsonApiWorkspaceInAttributes;
     id: string;
-    relationships?: JsonApiWorkspaceOutRelationships;
+    relationships?: JsonApiWorkspaceInRelationships;
     type: JsonApiWorkspacePatchTypeEnum;
 }
 
@@ -6624,7 +6665,7 @@ export type JsonApiWorkspacePatchTypeEnum = typeof JsonApiWorkspacePatchTypeEnum
 
 // @public
 export interface JsonApiWorkspaceSettingIn {
-    attributes?: JsonApiOrganizationSettingOutAttributes;
+    attributes?: JsonApiUserSettingOutAttributes;
     id: string;
     type: JsonApiWorkspaceSettingInTypeEnum;
 }
@@ -6644,7 +6685,7 @@ export type JsonApiWorkspaceSettingInTypeEnum = typeof JsonApiWorkspaceSettingIn
 
 // @public
 export interface JsonApiWorkspaceSettingOut {
-    attributes?: JsonApiOrganizationSettingOutAttributes;
+    attributes?: JsonApiUserSettingOutAttributes;
     id: string;
     meta?: JsonApiCustomApplicationSettingOutMeta;
     type: JsonApiWorkspaceSettingOutTypeEnum;
@@ -6672,7 +6713,7 @@ export type JsonApiWorkspaceSettingOutTypeEnum = typeof JsonApiWorkspaceSettingO
 
 // @public
 export interface JsonApiWorkspaceSettingOutWithLinks {
-    attributes?: JsonApiOrganizationSettingOutAttributes;
+    attributes?: JsonApiUserSettingOutAttributes;
     id: string;
     links?: ObjectLinks;
     meta?: JsonApiCustomApplicationSettingOutMeta;
@@ -6689,7 +6730,7 @@ export type JsonApiWorkspaceSettingOutWithLinksTypeEnum = typeof JsonApiWorkspac
 
 // @public
 export interface JsonApiWorkspaceSettingPatch {
-    attributes?: JsonApiOrganizationSettingOutAttributes;
+    attributes?: JsonApiUserSettingOutAttributes;
     id: string;
     type: JsonApiWorkspaceSettingPatchTypeEnum;
 }
