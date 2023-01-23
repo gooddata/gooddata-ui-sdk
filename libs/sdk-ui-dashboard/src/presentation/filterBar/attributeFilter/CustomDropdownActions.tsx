@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import React from "react";
 import { Button } from "@gooddata/sdk-ui-kit";
 import { AttributeFilterConfigurationButton, AttributeFilterDeleteButton } from "@gooddata/sdk-ui-filters";
@@ -12,6 +12,7 @@ import {
     selectIsDeleteFilterButtonEnabled,
     selectIsInEditMode,
     selectIsKPIDashboardDependentFiltersEnabled,
+    selectSettings,
     useDashboardSelector,
 } from "../../../model";
 
@@ -36,7 +37,14 @@ function useIsConfigButtonVisible(filterDisplayFormRef: ObjRef) {
     const canConfigureDisplayForm =
         isDisplayFormSelectionEnabled && filterAttribute.attribute.displayForms.length > 1;
 
-    return isEditMode && (canConfigureDependentFilters || canConfigureDisplayForm);
+    const settings = useDashboardSelector(selectSettings);
+
+    return (
+        isEditMode &&
+        (canConfigureDependentFilters ||
+            canConfigureDisplayForm ||
+            settings?.enableKPIAttributeFilterRenaming)
+    );
 }
 
 /**

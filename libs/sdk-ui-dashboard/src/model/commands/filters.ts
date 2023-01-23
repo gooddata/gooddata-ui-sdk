@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import {
     absoluteDateFilterValues,
     filterAttributeElements,
@@ -16,7 +16,9 @@ import {
     FilterContextItem,
     IDashboardAttributeFilterParent,
 } from "@gooddata/sdk-model";
+
 import { IDashboardCommand } from "./base";
+
 import { IDashboardFilter } from "../../types";
 
 /**
@@ -704,6 +706,45 @@ export function setAttributeFilterDisplayForm(
         payload: {
             filterLocalId,
             displayForm,
+        },
+    };
+}
+
+/**
+ * @alpha
+ */
+export interface SetAttributeFilterTitlePayload {
+    filterLocalId: string;
+    title?: string;
+}
+
+/**
+ * @alpha
+ */
+export interface SetAttributeFilterTitle extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_TITLE";
+    readonly payload: SetAttributeFilterTitlePayload;
+}
+
+/**
+ * Creates the {@link SetAttributeFilterTitle} command.
+ *
+ * @remarks
+ * Dispatching the commands will result into setting provided title as a selected
+ * title for the attribute filter.
+ *
+ *
+ * @alpha
+ * @param filterLocalId - local identifier of the filter the display form is changed for
+ * @param title - newly added title
+ * @returns change filter title command
+ */
+export function setAttributeFilterTitle(filterLocalId: string, title?: string): SetAttributeFilterTitle {
+    return {
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_TITLE",
+        payload: {
+            filterLocalId,
+            title,
         },
     };
 }

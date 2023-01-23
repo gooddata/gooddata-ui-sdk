@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 
 import {
     InitializeDashboard,
@@ -21,6 +21,7 @@ import {
     SetAttributeFilterParents,
     ChangeFilterContextSelection,
     SetAttributeFilterDisplayForm,
+    SetAttributeFilterTitle,
 } from "./filters";
 import {
     ChangeInsightWidgetFilterSettings,
@@ -136,6 +137,9 @@ export {
     SetAttributeFilterDisplayForm,
     SetAttributeFilterDisplayFormPayload,
     setAttributeFilterDisplayForm,
+    SetAttributeFilterTitle,
+    SetAttributeFilterTitlePayload,
+    setAttributeFilterTitle,
 } from "./filters";
 
 export {
@@ -415,4 +419,5 @@ export type DashboardCommands =
     | AddDrillTargets
     | ChangeSharing
     | ChangeRenderMode
-    | SetAttributeFilterDisplayForm;
+    | SetAttributeFilterDisplayForm
+    | SetAttributeFilterTitle;

@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { DashboardCommands, IDashboardCommand } from "../commands";
 import { SagaIterator } from "redux-saga";
 import { initializeDashboardHandler } from "./dashboard/initializeDashboardHandler";
@@ -18,6 +18,8 @@ import { removeAttributeFiltersHandler } from "./filterContext/attributeFilter/r
 import { moveAttributeFilterHandler } from "./filterContext/attributeFilter/moveAttributeFilterHandler";
 import { changeAttributeFilterSelectionHandler } from "./filterContext/attributeFilter/changeAttributeFilterSelectionHandler";
 import { setAttributeFilterParentsHandler } from "./filterContext/attributeFilter/setAttributeFilterParentHandler";
+import { changeAttributeDisplayFormHandler } from "./filterContext/attributeFilter/changeAttributeDisplayFormHandler";
+import { changeAttributeTitleHandler } from "./filterContext/attributeFilter/changeAttributeTitleHandler";
 import { addLayoutSectionHandler } from "./layout/addLayoutSectionHandler";
 import { moveLayoutSectionHandler } from "./layout/moveLayoutSectionHandler";
 import { removeLayoutSectionHandler } from "./layout/removeLayoutSectionHandler";
@@ -27,6 +29,10 @@ import { moveSectionItemHandler } from "./layout/moveSectionItemHandler";
 import { removeSectionItemHandler } from "./layout/removeSectionItemHandler";
 import { replaceSectionItemHandler } from "./layout/replaceSectionItemHandler";
 import { undoLayoutChangesHandler } from "./layout/undoLayoutChangesHandler";
+import { resizeHeightHandler } from "./layout/resizeHeightHandler";
+import { resizeWidthHandler } from "./layout/resizeWidthHandler";
+import { removeSectionItemByWidgetRefHandler } from "./layout/removeSectionItemByWidgetRefHandler";
+import { moveSectionItemToNewSectionHandler } from "./layout/moveSectionItemToNewSectionHandler";
 import { changeKpiWidgetHeaderHandler } from "./widgets/changeKpiWidgetHeaderHandler";
 import { changeKpiWidgetMeasureHandler } from "./widgets/changeKpiWidgetMeasureHandler";
 import { changeKpiWidgetFilterSettingsHandler } from "./widgets/changeKpiWidgetFilterSettingsHandler";
@@ -38,6 +44,13 @@ import { changeInsightWidgetVisPropertiesHandler } from "./widgets/changeInsight
 import { modifyDrillsForInsightWidgetHandler } from "./widgets/modifyDrillsForInsightWidgetHandler";
 import { removeDrillsForInsightWidgetHandler } from "./widgets/removeDrillsForInsightWidgetHandler";
 import { exportInsightWidgetHandler } from "./widgets/exportInsightWidgetHandler";
+import { removeDrillForKpiWidgetHandler } from "./widgets/removeDrillForKpiWidgetHandler";
+import { setDrillForKpiWidgetHandler } from "./widgets/setDrillForKpiWidgetHandler";
+import { changeKpiWidgetDescriptionHandler } from "./widgets/changeKpiWidgetDescriptionHandler";
+import { changeKpiWidgetConfigurationHandler } from "./widgets/changeKpiWidgetConfigurationHandler";
+import { changeInsightWidgetInsightHandler } from "./widgets/changeInsightWidgetInsightHandler";
+import { changeInsightWidgetVisConfigurationHandler } from "./widgets/changeInsightWidgetVisConfigurationHandler";
+import { refreshInsightWidgetHandler } from "./widgets/refreshInsightWidgetHandler";
 import { createAlertHandler } from "./alerts/createAlertHandler";
 import { updateAlertHandler } from "./alerts/updateAlertHandler";
 import { removeAlertsHandler } from "./alerts/removeAlertsHandler";
@@ -54,22 +67,11 @@ import { changeDrillableItemsHandler } from "./drill/changeDrillableItemsHandler
 import { addDrillTargetsHandler } from "./drillTargets/addDrillTargetsHandler";
 import { requestAsyncRenderHandler } from "./render/requestAsyncRenderHandler";
 import { resolveAsyncRenderHandler } from "./render/resolveAsyncRenderHandler";
+import { changeRenderModeHandler } from "./renderMode/changeRenderModeHandler";
+
 import { DashboardContext } from "../types/commonTypes";
 import { dispatchDashboardEvent } from "../store/_infra/eventDispatcher";
 import { commandRejected } from "../events/general";
-import { changeRenderModeHandler } from "./renderMode/changeRenderModeHandler";
-import { changeAttributeDisplayFormHandler } from "./filterContext/attributeFilter/changeAttributeDisplayFormHandler";
-import { removeDrillForKpiWidgetHandler } from "./widgets/removeDrillForKpiWidgetHandler";
-import { setDrillForKpiWidgetHandler } from "./widgets/setDrillForKpiWidgetHandler";
-import { resizeHeightHandler } from "./layout/resizeHeightHandler";
-import { resizeWidthHandler } from "./layout/resizeWidthHandler";
-import { refreshInsightWidgetHandler } from "./widgets/refreshInsightWidgetHandler";
-import { removeSectionItemByWidgetRefHandler } from "./layout/removeSectionItemByWidgetRefHandler";
-import { changeInsightWidgetVisConfigurationHandler } from "./widgets/changeInsightWidgetVisConfigurationHandler";
-import { moveSectionItemToNewSectionHandler } from "./layout/moveSectionItemToNewSectionHandler";
-import { changeKpiWidgetDescriptionHandler } from "./widgets/changeKpiWidgetDescriptionHandler";
-import { changeKpiWidgetConfigurationHandler } from "./widgets/changeKpiWidgetConfigurationHandler";
-import { changeInsightWidgetInsightHandler } from "./widgets/changeInsightWidgetInsightHandler";
 
 function* notImplementedCommand(ctx: DashboardContext, cmd: IDashboardCommand): SagaIterator<void> {
     yield dispatchDashboardEvent(commandRejected(ctx, cmd.correlationId));
@@ -97,6 +99,7 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.CHANGE_SELECTION": changeAttributeFilterSelectionHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_PARENTS": setAttributeFilterParentsHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_DISPLAY_FORM": changeAttributeDisplayFormHandler,
+    "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_TITLE": changeAttributeTitleHandler,
     "GDC.DASH/CMD.FLUID_LAYOUT.ADD_SECTION": addLayoutSectionHandler,
     "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_SECTION": moveLayoutSectionHandler,
     "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_SECTION": removeLayoutSectionHandler,

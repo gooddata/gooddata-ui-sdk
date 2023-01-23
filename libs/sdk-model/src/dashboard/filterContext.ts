@@ -1,10 +1,12 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import isNil from "lodash/isNil";
+
+import { IDashboardObjectIdentity } from "./common";
+
 import { DateFilterGranularity, DateString } from "../dateFilterConfig";
 import { IAttributeElements } from "../execution/filter";
 import { isObjRef, ObjRef } from "../objRef";
-import { IDashboardObjectIdentity } from "./common";
 
 /**
  * Date filter type - relative
@@ -71,6 +73,11 @@ export interface IDashboardAttributeFilter {
          * Parent filters that are limiting elements available in this filter
          */
         filterElementsBy?: IDashboardAttributeFilterParent[];
+
+        /**
+         * Custom title of the attribute filter. If specified has priority over the attribute filter.
+         */
+        title?: string;
     };
 }
 

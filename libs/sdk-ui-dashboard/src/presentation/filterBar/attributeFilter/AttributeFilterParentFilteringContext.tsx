@@ -1,18 +1,41 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import React, { useContext, useMemo, useCallback } from "react";
-import { filterObjRef, IDashboardAttributeFilter } from "@gooddata/sdk-model";
-import { selectOtherContextAttributeFilters, useDashboardSelector } from "../../../model";
+import {
+    filterObjRef,
+    IDashboardAttributeFilter,
+    IAttributeDisplayFormMetadataObject,
+    ObjRef,
+    areObjRefsEqual,
+    idRef,
+    uriRef,
+} from "@gooddata/sdk-model";
+import {
+    selectCatalogAttributes,
+    selectOtherContextAttributeFilters,
+    useDashboardSelector,
+} from "../../../model";
 import { dashboardAttributeFilterToAttributeFilter } from "../../../_staging/dashboard/dashboardFilterConverter";
 import { useParentsConfiguration } from "./dashboardDropdownBody/configuration/hooks/useParentsConfiguration";
 import { useDisplayFormConfiguration } from "./dashboardDropdownBody/configuration/hooks/useDisplayFormConfiguration";
+import { useTitleConfiguration } from "./dashboardDropdownBody/configuration/hooks/useTitleConfiguration";
+
+function isDisplayFormEqual(displayForm: IAttributeDisplayFormMetadataObject, identifierOrUriRef: ObjRef) {
+    return (
+        areObjRefsEqual(idRef(displayForm.id, displayForm.type), identifierOrUriRef) ||
+        areObjRefsEqual(uriRef(displayForm.uri), identifierOrUriRef)
+    );
+}
 
 /**
  * @internal
  */
 export type IAttributeFilterParentFiltering = ReturnType<typeof useParentsConfiguration> &
-    ReturnType<typeof useDisplayFormConfiguration> & {
+    ReturnType<typeof useDisplayFormConfiguration> &
+    ReturnType<typeof useTitleConfiguration> & {
         onConfigurationSave: () => void;
         showDisplayFormPicker: boolean;
+        showResetTitle: boolean;
+        defaultAttributeFilterTitle?: string;
     };
 
 export const AttributeFilterParentFiltering = React.createContext<IAttributeFilterParentFiltering>(
@@ -55,6 +78,14 @@ export const AttributeFilterParentFilteringProvider: React.FC<
         selectOtherContextAttributeFilters(filterRef),
     );
 
+    const catalogAttributes = useDashboardSelector(selectCatalogAttributes);
+    const currentCatalogAttribute = catalogAttributes.find((catalogAttribute) =>
+        catalogAttribute.displayForms.some((df) =>
+            isDisplayFormEqual(df, currentFilter.attributeFilter.displayForm),
+        ),
+    );
+    const defaultAttributeFilterTitle = currentCatalogAttribute?.attribute.title;
+
     const {
         parents,
         configurationChanged,
@@ -73,17 +104,31 @@ export const AttributeFilterParentFilteringProvider: React.FC<
         displayFormChangeStatus,
     } = useDisplayFormConfiguration(currentFilter);
 
+    const {
+        title,
+        titleChanged,
+        titleChangeStatus,
+        onTitleUpdate,
+        onTitleReset,
+        onTitleChange,
+        onConfigurationClose: onTitleClose,
+    } = useTitleConfiguration(currentFilter, defaultAttributeFilterTitle);
+
     const onConfigurationSave = useCallback(() => {
         onParentFiltersChange();
         onDisplayFormChange();
-    }, [onParentFiltersChange, onDisplayFormChange]);
+        onTitleChange();
+    }, [onParentFiltersChange, onDisplayFormChange, onTitleChange]);
 
     const onConfigurationClose = useCallback(() => {
         onParentFiltersClose();
         onDisplayFormClose();
-    }, [onParentFiltersClose, onDisplayFormClose]);
+        onTitleClose();
+    }, [onParentFiltersClose, onDisplayFormClose, onTitleClose]);
 
     const showDisplayFormPicker = filterDisplayForms.availableDisplayForms.length > 1;
+
+    const showResetTitle = title !== undefined && title !== defaultAttributeFilterTitle;
 
     return (
         <AttributeFilterParentFiltering.Provider
@@ -101,6 +146,14 @@ export const AttributeFilterParentFilteringProvider: React.FC<
                 showDisplayFormPicker,
                 configurationChanged,
                 displayFormChangeStatus,
+                title,
+                defaultAttributeFilterTitle,
+                showResetTitle,
+                titleChanged,
+                titleChangeStatus,
+                onTitleChange,
+                onTitleUpdate,
+                onTitleReset,
             }}
         >
             {children}

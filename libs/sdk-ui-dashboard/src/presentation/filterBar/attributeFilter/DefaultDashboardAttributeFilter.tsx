@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import React, { useCallback, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import {
@@ -11,20 +11,21 @@ import {
     useAutoOpenAttributeFilterDropdownButton,
     useOnCloseAttributeFilterDropdownButton,
 } from "@gooddata/sdk-ui-filters";
+import { LoadingMask, LOADING_HEIGHT } from "@gooddata/sdk-ui-kit";
+import { filterObjRef } from "@gooddata/sdk-model";
 
 import {
-    attributeFilterToDashboardAttributeFilter,
-    dashboardAttributeFilterToAttributeFilter,
-} from "../../../_staging/dashboard/dashboardFilterConverter";
-
+    AttributeFilterParentFilteringProvider,
+    useAttributeFilterParentFiltering,
+} from "./AttributeFilterParentFilteringContext";
 import { IDashboardAttributeFilterProps } from "./types";
 import { useParentFilters } from "./useParentFilters";
-import { filterObjRef } from "@gooddata/sdk-model";
 import { AttributeFilterConfiguration } from "./dashboardDropdownBody/configuration/AttributeFilterConfiguration";
 import {
     CustomAttributeFilterDropdownActions,
     CustomConfigureAttributeFilterDropdownActions,
 } from "./CustomDropdownActions";
+
 import {
     removeAttributeFilter,
     useDashboardDispatch,
@@ -32,10 +33,9 @@ import {
     useDashboardSelector,
 } from "../../../model";
 import {
-    AttributeFilterParentFilteringProvider,
-    useAttributeFilterParentFiltering,
-} from "./AttributeFilterParentFilteringContext";
-import { LoadingMask, LOADING_HEIGHT } from "@gooddata/sdk-ui-kit";
+    attributeFilterToDashboardAttributeFilter,
+    dashboardAttributeFilterToAttributeFilter,
+} from "../../../_staging/dashboard/dashboardFilterConverter";
 
 /**
  * Default implementation of the attribute filter to use on the dashboard's filter bar.
@@ -67,7 +67,9 @@ export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilter
     const saveText = intl.formatMessage({ id: "attributesDropdown.save" });
     const applyText = intl.formatMessage({ id: "gs.list.apply" });
     const displayValuesAsText = intl.formatMessage({ id: "attributesDropdown.displayValuesAs" });
+    const titleText = intl.formatMessage({ id: "attributesDropdown.title" });
     const filterByText = intl.formatMessage({ id: "attributesDropdown.filterBy" });
+    const resetTitleText = intl.formatMessage({ id: "attributesDropdown.title.reset" });
 
     const onCloseFilter = useCallback(() => {
         if (onClose) {
@@ -85,14 +87,26 @@ export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilter
 
     const CustomDropdownActions = useMemo(() => {
         return function DropdownActions(props: IAttributeFilterDropdownActionsProps) {
-            const { onConfigurationSave, configurationChanged, displayFormChanged, onConfigurationClose } =
-                useAttributeFilterParentFiltering();
+            const {
+                title,
+                configurationChanged,
+                displayFormChanged,
+                titleChanged,
+                onConfigurationSave,
+                onConfigurationClose,
+            } = useAttributeFilterParentFiltering();
+
+            const isTitleDefined = !!title && title.length > 0;
 
             return (
                 <>
                     {isConfigurationOpen ? (
                         <CustomConfigureAttributeFilterDropdownActions
-                            isSaveDisabled={!(configurationChanged || displayFormChanged)}
+                            isSaveDisabled={
+                                isTitleDefined
+                                    ? !(configurationChanged || displayFormChanged || titleChanged)
+                                    : true
+                            }
                             onSaveButtonClick={() => {
                                 onConfigurationSave();
                                 setIsConfigurationOpen(false);
@@ -150,6 +164,8 @@ export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilter
                             filterRef={filterRef}
                             filterByText={filterByText}
                             displayValuesAsText={displayValuesAsText}
+                            titleText={titleText}
+                            resetTitleText={resetTitleText}
                         />
                     ) : (
                         <AttributeFilterElementsSelect {...props} />
@@ -157,17 +173,19 @@ export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilter
                 </>
             );
         };
-    }, [isConfigurationOpen, filterRef, filterByText, displayValuesAsText]);
+    }, [isConfigurationOpen, filterRef, filterByText, displayValuesAsText, titleText]);
 
     return (
         <AttributeFilterParentFilteringProvider filter={filter}>
             <AttributeFilterButton
+                title={filter.attributeFilter.title}
                 filter={attributeFilter}
                 onApply={(newFilter) => {
                     onFilterChanged(
                         attributeFilterToDashboardAttributeFilter(
                             newFilter,
                             filter.attributeFilter.localIdentifier,
+                            filter.attributeFilter.title,
                         ),
                     );
                 }}

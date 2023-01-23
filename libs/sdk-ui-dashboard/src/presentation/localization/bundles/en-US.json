@@ -1146,6 +1146,16 @@
         "comment": "Filter section label in attribute filter dropdown configuration. Displayed before dropdown button that changes form of the attribute used in insight. For example 'Display as: Shortened name'.",
         "limit": 0
     },
+    "attributesDropdown.title": {
+        "value": "Title",
+        "comment": "",
+        "limit": 0
+    },
+    "attributesDropdown.title.reset": {
+        "value": "Reset",
+        "comment": "",
+        "limit": 0
+    },
     "attributesDropdown.noConnectionMessage": {
         "value": "<strong>{childTitle}</strong> cannot be filtered by <strong>{parentTitle}</strong>. There is no connection between the filter attributes in the data model.",
         "comment": "Do not translate HTML markup enclosed in <> and placeholders enclosed in {}.",
