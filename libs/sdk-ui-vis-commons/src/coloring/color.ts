@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import {
     IColor,
     IColorPalette,
@@ -206,7 +206,10 @@ export function getColorMappingPredicate(testValue: string): IHeaderPredicate {
         }
 
         if (isAttributeDescriptor(header)) {
-            return testValue ? testValue === header.attributeHeader.uri : false;
+            // check both to support ref by uri and ref by identifier
+            return testValue
+                ? testValue === header.attributeHeader.uri || testValue === header.attributeHeader.identifier
+                : false;
         }
 
         const headerLocalIdentifier = getMappingHeaderLocalIdentifier(header);

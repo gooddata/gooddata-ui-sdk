@@ -1,8 +1,8 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import { DefaultColorPalette, IMappingHeader } from "@gooddata/sdk-ui";
 import { IColorConfiguration, IColoredItem } from "../../interfaces/Colors";
 import { getColoredInputItems, getProperties, getSearchedItems, getValidProperties } from "../colors";
-import { GuidType, IColor, uriRef } from "@gooddata/sdk-model";
+import { GuidType, IColor, idRef, uriRef } from "@gooddata/sdk-model";
 
 describe("color utils", () => {
     const color1: IColor = {
@@ -44,6 +44,27 @@ describe("color utils", () => {
                     localIdentifier: "a1",
                     name: "attribute header",
                     ref: uriRef("a1"),
+                    formOf: {
+                        uri: "a1",
+                        identifier: "label.a1",
+                        name: "attribute header",
+                        ref: uriRef("a1"),
+                    },
+                },
+            },
+            color: color1,
+        },
+    ];
+
+    const tigerAttributeHeaderColorAssignments = [
+        {
+            headerItem: {
+                attributeHeader: {
+                    uri: "",
+                    identifier: "label.a1",
+                    localIdentifier: "a1",
+                    name: "attribute header",
+                    ref: idRef("label.a1"),
                     formOf: {
                         uri: "a1",
                         identifier: "label.a1",
@@ -133,6 +154,28 @@ describe("color utils", () => {
             const result = getValidProperties(properties, attributeHeaderColorAssignments);
             expect(result.controls.colorMapping).toEqual(colorMapping);
         });
+
+        it("should keep attribute header color mapping defined by identifier (Tiger) for items which are in color assignment", () => {
+            const colorMapping = [
+                {
+                    id: "label.a1",
+                    color: color1,
+                },
+            ];
+
+            const richColorMapping = [
+                ...colorMapping,
+                {
+                    id: "label.a2",
+                    color: color1,
+                },
+            ];
+
+            const properties = getProperties(richColorMapping);
+
+            const result = getValidProperties(properties, tigerAttributeHeaderColorAssignments);
+            expect(result.controls.colorMapping).toEqual(colorMapping);
+        });
     });
 
     describe("getProperties", () => {
@@ -157,6 +200,38 @@ describe("color utils", () => {
             attributeHeaderItem: {
                 uri: "/a1",
                 name: "",
+            },
+        };
+
+        const attributeHeader: IMappingHeader = {
+            attributeHeader: {
+                uri: "/a1",
+                identifier: "label.a1",
+                localIdentifier: "a1",
+                name: "attribute header",
+                ref: uriRef("/a1"),
+                formOf: {
+                    uri: "a1",
+                    identifier: "label.a1",
+                    name: "attribute header",
+                    ref: uriRef("a1"),
+                },
+            },
+        };
+
+        const tigerAttributeHeader = {
+            attributeHeader: {
+                uri: "",
+                identifier: "label.a1",
+                localIdentifier: "a1",
+                name: "attribute header",
+                ref: idRef("label.a1"),
+                formOf: {
+                    uri: "a1",
+                    identifier: "label.a1",
+                    name: "attribute header",
+                    ref: uriRef("a1"),
+                },
             },
         };
 
@@ -203,6 +278,44 @@ describe("color utils", () => {
                 controls: {
                     colorMapping: [
                         createIdColorMappingItemByGuid("/a1", guid),
+                        createIdColorMappingItemByGuid("m1", "guid1"),
+                    ],
+                },
+            });
+        });
+
+        it("should assign attribute by uri to properties", () => {
+            const properties = {
+                controls: {
+                    colorMapping: [createIdColorMappingItemByGuid("m1", "guid1")],
+                },
+            };
+
+            const result = getProperties(properties, attributeHeader, guidColor);
+
+            expect(result).toEqual({
+                controls: {
+                    colorMapping: [
+                        createIdColorMappingItemByGuid("/a1", guid),
+                        createIdColorMappingItemByGuid("m1", "guid1"),
+                    ],
+                },
+            });
+        });
+
+        it("should assign attribute by identifier to properties", () => {
+            const properties = {
+                controls: {
+                    colorMapping: [createIdColorMappingItemByGuid("m1", "guid1")],
+                },
+            };
+
+            const result = getProperties(properties, tigerAttributeHeader, guidColor);
+
+            expect(result).toEqual({
+                controls: {
+                    colorMapping: [
+                        createIdColorMappingItemByGuid("label.a1", guid),
                         createIdColorMappingItemByGuid("m1", "guid1"),
                     ],
                 },
