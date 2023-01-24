@@ -89,25 +89,25 @@ export interface ExportResponse {
     exportResult: string;
 }
 /**
- *
+ * Export request object describing the export properties and metadata for pdf exports.
  * @export
  * @interface PdfExportRequest
  */
 export interface PdfExportRequest {
     /**
-     *
+     * File name to be used for retrieving the pdf document.
      * @type {string}
      * @memberof PdfExportRequest
      */
     fileName: string;
     /**
-     *
+     * Dashboard identifier
      * @type {string}
      * @memberof PdfExportRequest
      */
     dashboardId: string;
     /**
-     *
+     * Metadata definition in open form JSON format.
      * @type {object}
      * @memberof PdfExportRequest
      */

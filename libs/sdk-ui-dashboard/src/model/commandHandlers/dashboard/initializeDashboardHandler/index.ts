@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { all, call, put, SagaReturnType } from "redux-saga/effects";
 import { InitializeDashboard } from "../../../commands/dashboard";
@@ -46,6 +46,8 @@ import { loadAccessibleDashboardList } from "./loadAccessibleDashboardList";
 import { loadLegacyDashboards } from "./loadLegacyDashboards";
 import { legacyDashboardsActions } from "../../../store/legacyDashboards";
 import uniqBy from "lodash/uniqBy";
+import { loadDashboardPermissions } from "./loadDashboardPermissions";
+import { dashboardPermissionsActions } from "../../../store/dashboardPermissions";
 
 async function loadDashboardFromBackend(
     ctx: DashboardContext,
@@ -140,6 +142,7 @@ function* loadExistingDashboard(
         listedDashboards,
         accessibleDashboards,
         legacyDashboards,
+        dashboardPermissions,
     ]: [
         PromiseFnReturnType<typeof loadDashboardFromBackend>,
         SagaReturnType<typeof resolveDashboardConfig>,
@@ -150,6 +153,7 @@ function* loadExistingDashboard(
         PromiseFnReturnType<typeof loadDashboardList>,
         PromiseFnReturnType<typeof loadAccessibleDashboardList>,
         PromiseFnReturnType<typeof loadLegacyDashboards>,
+        PromiseFnReturnType<typeof loadDashboardPermissions>,
     ] = yield all([
         call(loadDashboardFromBackend, ctx, privateCtx, dashboardRef, !!cmd.payload.persistedDashboard),
         call(resolveDashboardConfig, ctx, cmd),
@@ -160,6 +164,7 @@ function* loadExistingDashboard(
         call(loadDashboardList, ctx),
         call(loadAccessibleDashboardList, ctx),
         call(loadLegacyDashboards, ctx),
+        call(loadDashboardPermissions, ctx),
     ]);
 
     const {
@@ -210,6 +215,7 @@ function* loadExistingDashboard(
             legacyDashboardsActions.setLegacyDashboards(legacyDashboards),
             uiActions.setMenuButtonItemsVisibility(config.menuButtonItemsVisibility),
             renderModeActions.setRenderMode(config.initialRenderMode),
+            dashboardPermissionsActions.setDashboardPermissions(dashboardPermissions),
         ],
         "@@GDC.DASH/BATCH.INIT.EXISTING",
     );
@@ -269,6 +275,11 @@ function* initializeNewDashboard(
             }),
             uiActions.setMenuButtonItemsVisibility(config.menuButtonItemsVisibility),
             renderModeActions.setRenderMode(config.initialRenderMode),
+            dashboardPermissionsActions.setDashboardPermissions({
+                canViewDashboard: true,
+                canShareDashboard: true,
+                canEditDashboard: true,
+            }),
         ],
         "@@GDC.DASH/BATCH.INIT.NEW",
     );

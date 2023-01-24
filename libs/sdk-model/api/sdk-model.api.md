@@ -933,6 +933,11 @@ export interface IDashboardObjectIdentity {
     readonly uri: string;
 }
 
+// @alpha
+export type IDashboardPermissions = {
+    [permission in "canViewDashboard" | "canEditDashboard" | "canShareDashboard"]: boolean;
+};
+
 // @alpha (undocumented)
 export interface IDashboardPlugin extends IDashboardPluginBase, IDashboardObjectIdentity, IAuditableDates {
 }

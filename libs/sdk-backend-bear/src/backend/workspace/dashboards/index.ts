@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import {
     IWorkspaceDashboardsService,
     layoutWidgetsWithPaths,
@@ -45,6 +45,7 @@ import {
     IDashboardPlugin,
     IDashboardPluginDefinition,
     IDashboardPluginLink,
+    IDashboardPermissions,
 } from "@gooddata/sdk-model";
 import {
     GdcDashboard,
@@ -86,6 +87,7 @@ import isVisualization = GdcVisualizationObject.isVisualization;
 import isDashboardPlugin = GdcDashboardPlugin.isDashboardPlugin;
 import remove from "lodash/remove";
 import { convertUser } from "../../../convertors/fromBackend/UsersConverter";
+import { BearWorkspacePermissionsFactory } from "../permissions/permissions";
 
 /**
  * Metadata object types closely related to the dashboard object.
@@ -105,9 +107,11 @@ const DashboardComponentTypes: RelatedObjectTypes[] = ["kpi", "visualizationWidg
 // TODO: refactor impl into bunch of smaller classes + delegates
 export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
     private insights: BearWorkspaceInsights;
+    private permissions: BearWorkspacePermissionsFactory;
 
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {
         this.insights = new BearWorkspaceInsights(this.authCall, this.workspace);
+        this.permissions = new BearWorkspacePermissionsFactory(this.authCall, this.workspace);
     }
 
     // Public methods
@@ -1010,6 +1014,39 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
         }).then((plugins) => {
             return plugins.map(toSdkModel.convertDashboardPlugin);
         });
+    };
+
+    /**
+     * Get user's dashboard-level permissions
+     *
+     * @remarks
+     * On bear the dashboard permissions are derived from dashboard accessibility
+     * and user's workspace-level permissions
+     *
+     * @param ref - dashboard reference
+     */
+    public getDashboardPermissions = async (ref: ObjRef): Promise<IDashboardPermissions> => {
+        try {
+            const uri = await objRefToUri(ref, this.workspace, this.authCall);
+            await this.authCall((sdk) =>
+                sdk.md.getObjectDetails<GdcDashboard.IWrappedAnalyticalDashboard>(uri),
+            );
+
+            const workspacePermissions = await this.authCall(() =>
+                this.permissions.getPermissionsForCurrentUser(),
+            );
+            return {
+                canEditDashboard: workspacePermissions.canManageAnalyticalDashboard,
+                canShareDashboard: workspacePermissions.canManageACL,
+                canViewDashboard: true,
+            };
+        } catch (_e) {
+            return {
+                canEditDashboard: false,
+                canShareDashboard: false,
+                canViewDashboard: false,
+            };
+        }
     };
 
     private ensureDashboardPluginLinksHaveUris = async (

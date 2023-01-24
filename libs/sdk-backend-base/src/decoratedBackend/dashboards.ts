@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import {
     IWorkspaceDashboardsService,
     IGetDashboardOptions,
@@ -25,6 +25,7 @@ import {
     IListedDashboard,
     IDashboardPlugin,
     IDashboardPluginDefinition,
+    IDashboardPermissions,
 } from "@gooddata/sdk-model";
 
 /**
@@ -160,5 +161,9 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
 
     deleteDashboardPlugin(ref: ObjRef): Promise<void> {
         return this.decorated.deleteDashboardPlugin(ref);
+    }
+
+    getDashboardPermissions(ref: ObjRef): Promise<IDashboardPermissions> {
+        return this.decorated.getDashboardPermissions(ref);
     }
 }

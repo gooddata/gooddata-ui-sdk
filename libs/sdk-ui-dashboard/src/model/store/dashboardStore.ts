@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { combineReducers, configureStore, EnhancedStore, Middleware } from "@reduxjs/toolkit";
 import createSagaMiddleware, { Saga, SagaIterator, Task } from "redux-saga";
 import { enableBatching } from "redux-batched-actions";
@@ -40,6 +40,7 @@ import { getDashboardContext } from "./_infra/contexts";
 import { RenderMode } from "../../types";
 import { legacyDashboardsSliceReducer } from "./legacyDashboards";
 import { renderModeSliceReducer } from "./renderMode";
+import { dashboardPermissionsSliceReducer } from "./dashboardPermissions";
 
 const nonSerializableEventsAndCommands: (DashboardEventType | DashboardCommandType | string)[] = [
     "GDC.DASH/EVT.COMMAND.STARTED",
@@ -300,6 +301,7 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
         executionResults: executionResultsSliceReducer,
         renderMode: renderModeSliceReducer,
         ui: uiSliceReducer,
+        dashboardPermissions: dashboardPermissionsSliceReducer,
         _queryCache: queryProcessing.queryCacheReducer,
     });
 

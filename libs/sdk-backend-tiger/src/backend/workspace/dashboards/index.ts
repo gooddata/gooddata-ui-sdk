@@ -36,6 +36,7 @@ import {
     IListedDashboard,
     IDashboardPlugin,
     IDashboardPluginDefinition,
+    IDashboardPermissions,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual";
 import { v4 as uuidv4 } from "uuid";
@@ -57,6 +58,7 @@ import { TigerAuthenticatedCallGuard } from "../../../types";
 import { objRefsToIdentifiers, objRefToIdentifier } from "../../../utils/api";
 import { resolveWidgetFilters } from "./widgetFilters";
 import includes from "lodash/includes";
+import { buildDashboardPermissions, TigerDashboardPermissionType } from "./dashboardPermissions";
 
 export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -475,6 +477,40 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         });
 
         return convertFilterContextFromBackend(result.data);
+    };
+
+    public getDashboardPermissions = async (ref: ObjRef): Promise<IDashboardPermissions> => {
+        try {
+            const workspaceWithPermissionsResponse = await this.authCall((client) => {
+                return client.entities.getEntityWorkspaces({
+                    id: this.workspace,
+                    metaInclude: ["permissions"],
+                });
+            });
+
+            // check if the user is admin who has all the permissions
+            const workspacePermissions =
+                workspaceWithPermissionsResponse.data.data.meta!.permissions ?? ([] as Array<string>);
+            if (workspacePermissions.indexOf("MANAGE") >= 0) {
+                return buildDashboardPermissions(["EDIT"]);
+            }
+
+            const dashboardObjectId = await objRefToIdentifier(ref, this.authCall);
+            const dashboardWithPermissionsResponse = await this.authCall((client) => {
+                return client.entities.getEntityAnalyticalDashboards({
+                    workspaceId: this.workspace,
+                    objectId: dashboardObjectId,
+                    metaInclude: ["permissions"],
+                });
+            });
+            const dashboardPermissions =
+                dashboardWithPermissionsResponse.data.data.meta!.permissions ??
+                ([] as Array<TigerDashboardPermissionType>);
+
+            return buildDashboardPermissions(dashboardPermissions);
+        } catch (_e) {
+            return buildDashboardPermissions([]);
+        }
     };
 
     private processFilterContextUpdate = async (
