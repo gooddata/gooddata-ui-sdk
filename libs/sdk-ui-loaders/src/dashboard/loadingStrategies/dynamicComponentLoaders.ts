@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import { DashboardContext, IDashboardEngine, IDashboardPluginContract_V1 } from "@gooddata/sdk-ui-dashboard";
 import { areObjRefsEqual, objRefToString } from "@gooddata/sdk-model";
@@ -192,6 +192,13 @@ function loadEngine(moduleName: string, moduleFederationIntegration: ModuleFeder
         const entry = await loadEntry(moduleName, moduleFederationIntegration)();
         const factory = await window[moduleName].get(entry.engineKey);
 
-        return factory();
+        try {
+            return factory();
+        } catch (ex) {
+            console.error(
+                `Initialization of ${moduleName} failed. This can happen if you deploy the same plugin multiple times each with the different GoodData.UI version or ${moduleName} is not unique in workspace`,
+            );
+            throw ex;
+        }
     };
 }
