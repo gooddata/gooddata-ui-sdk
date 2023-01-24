@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import set from "lodash/set";
 import isEqual from "lodash/isEqual";
 import uniqBy from "lodash/uniqBy";
@@ -17,6 +17,7 @@ import {
     isAttributeDescriptor,
     isMeasureDescriptor,
     isResultAttributeHeader,
+    isUriRef,
 } from "@gooddata/sdk-model";
 import { getMappingHeaderName, IColorAssignment, IMappingHeader } from "@gooddata/sdk-ui";
 import { ColorUtils } from "@gooddata/sdk-ui-charts";
@@ -91,7 +92,10 @@ export function getProperties(
     } else if (isResultAttributeHeader(item)) {
         return mergeColorMappingToProperties(properties, item.attributeHeaderItem.uri, color);
     } else if (isAttributeDescriptor(item)) {
-        return mergeColorMappingToProperties(properties, item.attributeHeader.uri, color);
+        const id = isUriRef(item.attributeHeader.ref)
+            ? item.attributeHeader.uri
+            : item.attributeHeader.identifier;
+        return mergeColorMappingToProperties(properties, id, color);
     }
 
     return {};
@@ -118,7 +122,9 @@ export function getValidProperties(
             } else if (isResultAttributeHeader(colorAssignment.headerItem)) {
                 return colorAssignment.headerItem.attributeHeaderItem.uri === id;
             } else if (isAttributeDescriptor(colorAssignment.headerItem)) {
-                return colorAssignment.headerItem.attributeHeader.uri === id;
+                return isUriRef(colorAssignment.headerItem.attributeHeader.ref)
+                    ? colorAssignment.headerItem.attributeHeader.uri === id
+                    : colorAssignment.headerItem.attributeHeader.identifier === id;
             }
 
             return false;
