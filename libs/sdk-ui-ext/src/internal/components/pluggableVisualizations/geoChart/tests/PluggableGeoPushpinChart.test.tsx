@@ -371,6 +371,20 @@ describe("PluggableGeoPushpinChart", () => {
 
             expect(extendedReferencePoint.properties).toMatchSnapshot();
         });
+
+        it("should not generate latitude/longitude and tooltipText to properties when location item missing", async () => {
+            const withLatitudeLongitudeSupported = dummyBackend();
+            withLatitudeLongitudeSupported.capabilities.supportsSeparateLatitudeLongitudeLabels = true;
+            const geoPushpinChart = createComponent({
+                ...defaultProps,
+                backend: withLatitudeLongitudeSupported,
+            });
+            const extendedReferencePoint = await geoPushpinChart.getExtendedReferencePoint(
+                referencePointMocks.noLocationGeoPushpinReferencePoint,
+            );
+
+            expect(extendedReferencePoint.properties).toMatchSnapshot();
+        });
     });
 
     describe("`renderVisualization` and `renderConfigurationPanel`", () => {
@@ -417,6 +431,36 @@ describe("PluggableGeoPushpinChart", () => {
                 .buckets;
             expect(generatedBuckets.find((b) => b.localIdentifier === "latitude")).toMatchSnapshot();
             expect(generatedBuckets.find((b) => b.localIdentifier === "longitude")).toMatchSnapshot();
+        });
+
+        it("should not generate virtual buckets if location is empty", () => {
+            const withLatitudeLongitudeSupported = dummyBackend();
+            withLatitudeLongitudeSupported.capabilities.supportsSeparateLatitudeLongitudeLabels = true;
+            const executionFactory = withLatitudeLongitudeSupported.workspace("test").execution();
+
+            const visualization = createComponent({
+                ...defaultProps,
+                backend: withLatitudeLongitudeSupported,
+            });
+            const visualizationProperties = {
+                controls: {
+                    latitude: "latitude_df_identifier",
+                    longitude: "longitude_df_identifier",
+                },
+            };
+            const insight: IInsightDefinition = newInsightDefinition("visualizationClass-url", (b) => {
+                return b
+                    .title("sourceInsight")
+                    .buckets([newBucket("location")])
+                    .properties(visualizationProperties);
+            });
+
+            // without this update this.visualizationProperties is not defined on visualization
+            visualization.update({}, insight, {}, executionFactory);
+
+            const generatedBuckets = visualization.getExecution({}, insight, executionFactory).definition
+                .buckets;
+            expect(generatedBuckets.length).toBe(0);
         });
     });
 });

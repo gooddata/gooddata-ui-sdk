@@ -533,27 +533,26 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         insight: IInsightDefinition,
     ) {
         const locationBucket = insightBucket(insight, BucketNames.LOCATION);
-        let ref: ObjRef = idRef(attributeId, "displayForm");
-        let alias = "";
 
         if (locationBucket) {
             const attribute = bucketAttribute(locationBucket);
             if (attribute) {
-                alias = attributeAlias(attribute);
+                let ref: ObjRef = idRef(attributeId, "displayForm");
+                const alias = attributeAlias(attribute);
 
                 if (isUriRef(attributeDisplayFormRef(attribute))) {
                     ref = uriRef(attributeId);
                 }
+                const existingVirtualBucket = insightBucket(insight, bucketName);
+                if (!existingVirtualBucket) {
+                    return newBucket(
+                        bucketName,
+                        newAttribute(ref, (m) => m.localId(attributeLocalIdentifier).alias(alias)),
+                    );
+                }
             }
         }
 
-        const existingVirtualBucket = insightBucket(insight, bucketName);
-        if (!existingVirtualBucket) {
-            return newBucket(
-                bucketName,
-                newAttribute(ref, (m) => m.localId(attributeLocalIdentifier).alias(alias)),
-            );
-        }
         return undefined;
     }
 }

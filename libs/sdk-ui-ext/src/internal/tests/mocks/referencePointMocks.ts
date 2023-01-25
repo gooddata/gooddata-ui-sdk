@@ -3729,6 +3729,34 @@ export const latitudeLongitudeGeoPushpinReferencePoint: IReferencePoint = {
     },
 };
 
+export const noLocationGeoPushpinReferencePoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "location",
+            items: [],
+        },
+        {
+            localIdentifier: "size",
+            items: [],
+        },
+        {
+            localIdentifier: "color",
+            items: [],
+        },
+        {
+            localIdentifier: "segment",
+            items: geoAttributeItems.slice(1, 2),
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: geoAttributeFilters.slice(0, 1),
+    },
+    properties: {
+        sortItems: [defaultSortItem],
+    },
+};
+
 export const twoMeasuresWithShowInPercentOnSecondaryAxisReferencePoint: IReferencePoint = {
     buckets: [
         {

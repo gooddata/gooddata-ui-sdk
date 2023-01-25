@@ -47,6 +47,8 @@ Object {
 }
 `;
 
+exports[`PluggableGeoPushpinChart getExtendedReferencePoint should not generate latitude/longitude and tooltipText to properties when location item missing 1`] = `Object {}`;
+
 exports[`PluggableGeoPushpinChart getExtendedReferencePoint should return a new reference point with geoPushpin UI config 1`] = `
 Object {
   "buckets": Object {
