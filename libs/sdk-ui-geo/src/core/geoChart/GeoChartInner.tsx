@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import throttle from "lodash/throttle";
@@ -379,7 +379,7 @@ export class GeoChartInner extends React.PureComponent<IGeoChartInnerProps, IGeo
             intl,
         };
 
-        if (segmentIndex) {
+        if (segmentIndex !== undefined) {
             const selectedSegmentItems = categoryItems
                 .filter((item) => item.isVisible)
                 .map((item) => item.uri);
