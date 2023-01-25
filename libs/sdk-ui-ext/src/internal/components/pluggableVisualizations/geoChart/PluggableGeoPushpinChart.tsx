@@ -51,6 +51,7 @@ import {
     newBucket,
     ObjRef,
     uriRef,
+    attributeLocalId,
 } from "@gooddata/sdk-model";
 import { IExecutionFactory, IBackendCapabilities } from "@gooddata/sdk-backend-spi";
 import { CoreGeoChart, getGeoChartDimensions, IGeoConfig, ICoreGeoChartProps } from "@gooddata/sdk-ui-geo";
@@ -476,10 +477,10 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
              */
             const tooltipText: string = supportedControls?.tooltipText;
             const bucket = this.createVirtualBucketFromLocationAttribute(
+                insight,
                 BucketNames.TOOLTIP_TEXT,
                 tooltipText,
                 "tooltipText_df",
-                insight,
             );
             if (bucket) {
                 buckets.push(bucket);
@@ -492,10 +493,10 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         if (supportedControls?.latitude) {
             const latitude: string = supportedControls?.latitude;
             const bucket = this.createVirtualBucketFromLocationAttribute(
+                insight,
                 BucketNames.LATITUDE,
                 latitude,
-                "latitude_df",
-                insight,
+                // reuse local identifier of original item to keep references working, eg. ranking filter
             );
             if (bucket) {
                 buckets.push(bucket);
@@ -505,10 +506,10 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         if (supportedControls?.longitude) {
             const longitude: string = supportedControls?.longitude;
             const bucket = this.createVirtualBucketFromLocationAttribute(
+                insight,
                 BucketNames.LONGITUDE,
                 longitude,
                 "longitude_df",
-                insight,
             );
             if (bucket) {
                 buckets.push(bucket);
@@ -521,16 +522,16 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
 
     /**
      * Creates new virtual bucket from existing LOCATION bucket
+     * @param insight - current insight
      * @param bucketName - new bucket name
      * @param attributeId - id of bucket item
-     * @param attributeLocalIdentifier - local identifier of bucket item
-     * @param insight - current insight
+     * @param attributeLocalIdentifier - local identifier of bucket item, Location item one will be used if not defined
      */
     private createVirtualBucketFromLocationAttribute(
+        insight: IInsightDefinition,
         bucketName: string,
         attributeId: string,
-        attributeLocalIdentifier: string,
-        insight: IInsightDefinition,
+        attributeLocalIdentifier?: string,
     ) {
         const locationBucket = insightBucket(insight, BucketNames.LOCATION);
 
@@ -539,6 +540,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
             if (attribute) {
                 let ref: ObjRef = idRef(attributeId, "displayForm");
                 const alias = attributeAlias(attribute);
+                const localIdentifier = attributeLocalId(attribute);
 
                 if (isUriRef(attributeDisplayFormRef(attribute))) {
                     ref = uriRef(attributeId);
@@ -547,7 +549,9 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
                 if (!existingVirtualBucket) {
                     return newBucket(
                         bucketName,
-                        newAttribute(ref, (m) => m.localId(attributeLocalIdentifier).alias(alias)),
+                        newAttribute(ref, (m) =>
+                            m.localId(attributeLocalIdentifier ?? localIdentifier).alias(alias),
+                        ),
                     );
                 }
             }

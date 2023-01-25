@@ -9,7 +9,7 @@ Object {
           "identifier": "latitude_df_identifier",
           "type": "displayForm",
         },
-        "localIdentifier": "latitude_df",
+        "localIdentifier": "a_geo_attribute",
       },
     },
   ],
