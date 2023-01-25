@@ -1,9 +1,45 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import React, { useCallback } from "react";
-import { areObjRefsEqual } from "@gooddata/sdk-model";
+import { areObjRefsEqual, IGranteeGranularity } from "@gooddata/sdk-model";
 import { GranteeList } from "./GranteeList";
-import { GranteeItem, IAddGranteeContentProps } from "./types";
+import {
+    GranteeItem,
+    IAddGranteeContentProps,
+    IGranularGranteeUser,
+    IGranularGranteeGroup,
+    isGranteeGroup,
+    isGranteeUser,
+    IGranteeUser,
+    IGranteeGroup,
+} from "./types";
 import { AddGranteeSelect } from "./AddGranteeSelect";
+import { Permission } from "./GranularPermissions/GranularPermissionsDropdownBody";
+
+/**
+ * In case of user and group, we need to make sure, that the added grantee has some default granular permission.
+ */
+const enrichGranteeWithDefaultPermission = (
+    grantee: IGranteeUser | IGranteeGroup,
+): IGranularGranteeUser | IGranularGranteeGroup => {
+    const defaultPermissions: IGranteeGranularity = {
+        permissions: [Permission.VIEW],
+        inheritedPermissions: [],
+    };
+
+    if (isGranteeUser(grantee)) {
+        return {
+            ...grantee,
+            ...defaultPermissions,
+            type: "granularUser",
+        };
+    } else {
+        return {
+            ...grantee,
+            ...defaultPermissions,
+            type: "granularGroup",
+        };
+    }
+};
 
 /**
  * @internal
@@ -14,14 +50,21 @@ export const AddGranteeContent: React.FC<IAddGranteeContentProps> = (props) => {
         currentUserRef,
         addedGrantees,
         areGranularPermissionsSupported,
+        currentUserPermissions,
+        sharedObjectRef,
         onDelete,
         onAddUserOrGroups,
+        onGranularGranteeChange,
     } = props;
 
     const onSelectGrantee = useCallback(
         (grantee: GranteeItem) => {
             if (!appliedGrantees.some((g) => areObjRefsEqual(g.id, grantee.id))) {
-                onAddUserOrGroups(grantee);
+                if (areGranularPermissionsSupported && (isGranteeUser(grantee) || isGranteeGroup(grantee))) {
+                    onAddUserOrGroups(enrichGranteeWithDefaultPermission(grantee));
+                } else {
+                    onAddUserOrGroups(grantee);
+                }
             }
         },
         [appliedGrantees, onAddUserOrGroups],
@@ -32,13 +75,16 @@ export const AddGranteeContent: React.FC<IAddGranteeContentProps> = (props) => {
             <AddGranteeSelect
                 currentUserRef={currentUserRef}
                 appliedGrantees={appliedGrantees}
+                sharedObjectRef={sharedObjectRef}
                 onSelectGrantee={onSelectGrantee}
             />
             <GranteeList
+                currentUserPermissions={currentUserPermissions}
                 grantees={addedGrantees}
                 mode={"AddGrantee"}
                 areGranularPermissionsSupported={areGranularPermissionsSupported}
                 onDelete={onDelete}
+                onChange={onGranularGranteeChange}
             />
         </>
     );

@@ -23,7 +23,7 @@ const getPermissionLevels = (permissions: GrantedPermission[] = [], source: "dir
 };
 
 export const convertUserPermission = (user: UserPermission): IGranularUserAccess => ({
-    type: "user",
+    type: "granularUser",
     user: {
         ref: idRef(user.id),
         uri: user.id,
@@ -36,7 +36,7 @@ export const convertUserPermission = (user: UserPermission): IGranularUserAccess
 });
 
 export const convertUserGroupPermission = (group: UserGroupPermission): IGranularUserGroupAccess => ({
-    type: "group",
+    type: "granularGroup",
     userGroup: { ref: idRef(group.id), name: group.name ?? group.id },
     permissions: getPermissionLevels(group.permissions, "direct"),
     inheritedPermissions: getPermissionLevels(group.permissions, "indirect"),

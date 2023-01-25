@@ -14,6 +14,7 @@ import { CaseReducerActions } from '@reduxjs/toolkit';
 import { Component } from 'react';
 import { ComponentPropsWithRef } from 'react';
 import { ComponentType } from 'react';
+import { CurrentUserPermissions } from '@gooddata/sdk-ui-kit';
 import { DashboardDateFilterConfigMode } from '@gooddata/sdk-model';
 import { DataViewFacade } from '@gooddata/sdk-ui';
 import { DateFilterGranularity } from '@gooddata/sdk-model';
@@ -4417,6 +4418,7 @@ export interface IShareButtonProps {
 // @alpha (undocumented)
 export interface IShareDialogProps {
     backend: IAnalyticalBackend;
+    currentUserPermissions: CurrentUserPermissions;
     currentUserRef: ObjRef;
     isLockingSupported: boolean;
     isVisible?: boolean;
@@ -5775,6 +5777,9 @@ export const selectDashboardLoading: OutputSelector<DashboardState, LoadingState
 
 // @alpha
 export const selectDashboardLockStatus: OutputSelector<DashboardState, boolean, (res: DashboardDescriptor) => boolean>;
+
+// @public
+export const selectDashboardPermissions: OutputSelector<DashboardState, IDashboardPermissions, (res: DashboardPermissionsState) => IDashboardPermissions>;
 
 // @public
 export const selectDashboardRef: OutputSelector<DashboardState, UriRef | IdentifierRef | undefined, (res: IDashboard<IDashboardWidget> | undefined) => UriRef | IdentifierRef | undefined>;

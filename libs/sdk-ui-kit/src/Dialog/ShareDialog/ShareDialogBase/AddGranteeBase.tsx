@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
 import { Button } from "../../../Button";
@@ -35,11 +35,14 @@ export const AddGranteeBase: React.FC<IAddGranteeBaseProps> = (props) => {
         currentUserRef,
         isDirty,
         areGranularPermissionsSupported,
+        currentUserPermissions,
+        sharedObjectRef,
         onCancel,
         onSubmit,
         onBackClick,
         onAddUserOrGroups,
         onDelete,
+        onGranularGranteeChange,
     } = props;
     const intl = useIntl();
 
@@ -62,12 +65,15 @@ export const AddGranteeBase: React.FC<IAddGranteeBaseProps> = (props) => {
             headerLeftButtonRenderer={backButtonRenderer}
         >
             <AddGranteeContent
+                currentUserPermissions={currentUserPermissions}
                 currentUserRef={currentUserRef}
                 addedGrantees={addedGrantees}
                 appliedGrantees={appliedGrantees}
                 areGranularPermissionsSupported={areGranularPermissionsSupported}
+                sharedObjectRef={sharedObjectRef}
                 onAddUserOrGroups={onAddUserOrGroups}
                 onDelete={onDelete}
+                onGranularGranteeChange={onGranularGranteeChange}
             />
             <ContentDivider />
         </ConfirmDialogBase>

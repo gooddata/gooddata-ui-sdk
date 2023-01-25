@@ -1,12 +1,23 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import {
     uriRef,
     IWorkspaceUser,
     IWorkspaceUserGroup,
     IUserAccess,
     IUserGroupAccess,
+    IAvailableUserAccessGrantee,
+    IAvailableUserGroupAccessGrantee,
+    IGranularUserAccess,
+    IGranularUserGroupAccess,
 } from "@gooddata/sdk-model";
-import { GranteeItem, IGranteeGroup, IGranteeGroupAll, IGranteeUser } from "../types";
+import {
+    GranteeItem,
+    IGranteeGroup,
+    IGranteeGroupAll,
+    IGranteeUser,
+    IGranularGranteeGroup,
+    IGranularGranteeUser,
+} from "../types";
 
 export const user: IGranteeUser = {
     type: "user",
@@ -69,18 +80,17 @@ export const groupAll: IGranteeGroupAll = {
 
 export const grantees: GranteeItem[] = [user, group];
 
-export const workspaceUser: IWorkspaceUser = {
+const userProps = {
     ref: uriRef("john-id"),
     uri: "uri",
-    login: "john.doe@d.com",
     email: "john.doe@d.com",
-    fullName: "John Doe ",
+    name: "John Doe",
 };
 
-export const workSpaceGroup: IWorkspaceUserGroup = {
-    ref: uriRef("test-group-id"),
-    id: "id",
-    name: "Test group",
+export const workspaceUser: IWorkspaceUser = {
+    ...userProps,
+    fullName: userProps.name,
+    login: userProps.email,
 };
 
 export const userAccessGrantee: IUserAccess = {
@@ -88,7 +98,58 @@ export const userAccessGrantee: IUserAccess = {
     user: workspaceUser,
 };
 
+export const availableUserAccessGrantee: IAvailableUserAccessGrantee = {
+    ...userProps,
+    type: "user",
+    status: "ENABLED",
+};
+
+const groupProps = {
+    ref: uriRef("test-group-id"),
+    id: "id",
+    name: "Test group",
+};
+
+export const workspaceGroup: IWorkspaceUserGroup = {
+    ...groupProps,
+};
+
 export const groupAccessGrantee: IUserGroupAccess = {
     type: "group",
-    userGroup: workSpaceGroup,
+    userGroup: workspaceGroup,
+};
+
+export const availableUserGroupAccessGrantee: IAvailableUserGroupAccessGrantee = {
+    ...groupProps,
+    type: "group",
+};
+
+export const granularUser: IGranularGranteeUser = {
+    ...user,
+    type: "granularUser",
+    permissions: ["VIEW"],
+    inheritedPermissions: ["SHARE"],
+};
+
+export const granularGroup: IGranularGranteeGroup = {
+    ...group,
+    type: "granularGroup",
+    permissions: ["EDIT"],
+    inheritedPermissions: [],
+};
+
+export const granularGrantees: GranteeItem[] = [granularUser, granularGroup];
+
+export const granularUserAccess: IGranularUserAccess = {
+    ...userAccessGrantee,
+    type: "granularUser",
+    permissions: ["VIEW"],
+    inheritedPermissions: ["SHARE"],
+};
+
+export const granularUserGroupAccess: IGranularUserGroupAccess = {
+    ...groupAccessGrantee,
+    type: "granularGroup",
+    permissions: ["EDIT"],
+    inheritedPermissions: [],
 };

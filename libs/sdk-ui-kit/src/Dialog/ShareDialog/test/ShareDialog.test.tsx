@@ -1,8 +1,13 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 
 import { ISharedObject, ISharingApplyPayload } from "../types";
-import { IUser, ShareStatus, IUserAccessGrantee } from "@gooddata/sdk-model";
-import { userAccessGrantee, workspaceUser } from "../ShareDialogBase/test/GranteeMock";
+import { IUser, ShareStatus } from "@gooddata/sdk-model";
+import {
+    availableUserAccessGrantee,
+    granularUserAccess,
+    userAccessGrantee,
+    workspaceUser,
+} from "../ShareDialogBase/test/GranteeMock";
 import {
     createComponent,
     isDialogVisible,
@@ -26,6 +31,7 @@ import {
     isDialogOnShareGranteesPage,
     checkLockCheckbox,
     setUnderLenientControlCheckbox,
+    isGranularPermissionsDropdownButtonVisible,
 } from "./testHelpers";
 
 describe("ShareDialog", () => {
@@ -72,15 +78,17 @@ describe("ShareDialog", () => {
         });
 
         it("should remove grantee from list and submit callback for empty grantees list and with object set as public", async () => {
-            const granteeSelector = getGranteeSelector(userAccessGrantee.user);
+            const granteeSelector = getGranteeSelector(availableUserAccessGrantee);
             const onApply = jest.fn();
             const expectedPayload: ISharingApplyPayload = {
                 granteesToAdd: [],
                 granteesToDelete: [
                     {
                         granteeRef: userAccessGrantee.user.ref,
-                        type: "user",
-                    } as IUserAccessGrantee,
+                        type: "granularUser",
+                        permissions: [],
+                        inheritedPermissions: [],
+                    },
                 ],
                 isUnderStrictControl: false,
                 isLocked: false,
@@ -99,15 +107,17 @@ describe("ShareDialog", () => {
         });
 
         it("should remove grantee from list and submit callback when group all present and with object set as public", async () => {
-            const granteeSelector = getGranteeSelector(userAccessGrantee.user);
+            const granteeSelector = getGranteeSelector(availableUserAccessGrantee);
             const onApply = jest.fn();
             const expectedPayload: ISharingApplyPayload = {
                 granteesToAdd: [],
                 granteesToDelete: [
                     {
                         granteeRef: userAccessGrantee.user.ref,
-                        type: "user",
-                    } as IUserAccessGrantee,
+                        type: "granularUser",
+                        permissions: [],
+                        inheritedPermissions: [],
+                    },
                 ],
                 isUnderStrictControl: false,
                 isLocked: false,
@@ -218,6 +228,14 @@ describe("ShareDialog", () => {
             shareDialogCancel(wrapper);
             expect(onCancel).toHaveBeenCalledTimes(1);
         });
+
+        it("should render granular permissions dropdown button when granular permissions are supported and user access is granular", async () => {
+            const wrapper = await createComponent({}, [], [], [granularUserAccess], [], {
+                supportsGranularAccessControl: true,
+            });
+            await waitForComponentToPaint(wrapper);
+            expect(isGranularPermissionsDropdownButtonVisible(wrapper)).toBe(true);
+        });
     });
 
     describe("Add users and groups page", () => {
@@ -230,22 +248,22 @@ describe("ShareDialog", () => {
         });
 
         it("should add user into grantees selection", async () => {
-            const wrapper = await createComponent({}, [workspaceUser], [], []);
+            const wrapper = await createComponent({}, [], [], [], [availableUserAccessGrantee]);
 
             clickAddGrantees(wrapper);
             await waitForComponentToPaint(wrapper);
-            clickOnOption(wrapper, getUserOptionSelector(workspaceUser));
+            clickOnOption(wrapper, getUserOptionSelector(availableUserAccessGrantee));
 
-            expect(isGranteeVisible(wrapper, getGranteeSelector(workspaceUser))).toBe(true);
+            expect(isGranteeVisible(wrapper, getGranteeSelector(availableUserAccessGrantee))).toBe(true);
         });
 
         it("should add user into grantees selection and then remove it", async () => {
-            const wrapper = await createComponent({}, [workspaceUser], [], []);
-            const granteeSelector = getGranteeSelector(workspaceUser);
+            const wrapper = await createComponent({}, [], [], [], [availableUserAccessGrantee]);
+            const granteeSelector = getGranteeSelector(availableUserAccessGrantee);
 
             clickAddGrantees(wrapper);
             await waitForComponentToPaint(wrapper);
-            clickOnOption(wrapper, getUserOptionSelector(workspaceUser));
+            clickOnOption(wrapper, getUserOptionSelector(availableUserAccessGrantee));
             expect(isGranteeVisible(wrapper, granteeSelector)).toBe(true);
 
             clickDeleteGranteeIcon(wrapper, granteeSelector);
@@ -253,12 +271,12 @@ describe("ShareDialog", () => {
         });
 
         it("should clear selection when Back button is clicked", async () => {
-            const wrapper = await createComponent({}, [workspaceUser], [], []);
-            const granteeSelector = getGranteeSelector(workspaceUser);
+            const wrapper = await createComponent({}, [], [], [], [availableUserAccessGrantee]);
+            const granteeSelector = getGranteeSelector(availableUserAccessGrantee);
 
             clickAddGrantees(wrapper);
             await waitForComponentToPaint(wrapper);
-            clickOnOption(wrapper, getUserOptionSelector(workspaceUser));
+            clickOnOption(wrapper, getUserOptionSelector(availableUserAccessGrantee));
             expect(isGranteeVisible(wrapper, granteeSelector)).toBe(true);
 
             clickBack(wrapper);
@@ -275,6 +293,19 @@ describe("ShareDialog", () => {
             await waitForComponentToPaint(wrapper);
             shareDialogCancel(wrapper);
             expect(isDialogOnShareGranteesPage(wrapper)).toBe(true);
+        });
+
+        it("should render granular permissions dropdown button when granular permissions are supported and user access is granular", async () => {
+            const wrapper = await createComponent({}, [], [], [], [availableUserAccessGrantee], {
+                supportsGranularAccessControl: true,
+            });
+            const granteeSelector = getGranteeSelector(availableUserAccessGrantee);
+
+            clickAddGrantees(wrapper);
+            await waitForComponentToPaint(wrapper);
+            clickOnOption(wrapper, getUserOptionSelector(availableUserAccessGrantee));
+            expect(isGranteeVisible(wrapper, granteeSelector)).toBe(true);
+            expect(isGranularPermissionsDropdownButtonVisible(wrapper)).toBe(true);
         });
     });
 });

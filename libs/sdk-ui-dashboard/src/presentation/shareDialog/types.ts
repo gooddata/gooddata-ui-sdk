@@ -1,8 +1,12 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import { ComponentType } from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
-import { ISharedObject, ISharingApplyPayload as ISharingDialogApplyPayload } from "@gooddata/sdk-ui-kit";
+import {
+    ISharedObject,
+    ISharingApplyPayload as ISharingDialogApplyPayload,
+    CurrentUserPermissions,
+} from "@gooddata/sdk-ui-kit";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 /**
@@ -44,6 +48,11 @@ export interface IShareDialogProps {
      * Is locking of the dashboard supported by the currently logged user and backend?
      */
     isLockingSupported: boolean;
+
+    /**
+     * Dashboard permissions for current user.
+     */
+    currentUserPermissions: CurrentUserPermissions;
 
     /**
      * Callback to be called when user apply share dialog

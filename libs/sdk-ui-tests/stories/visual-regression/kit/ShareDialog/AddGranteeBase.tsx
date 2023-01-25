@@ -9,12 +9,14 @@ import { AddGranteeBase, ComponentLabelsProvider } from "@gooddata/sdk-ui-kit";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "../styles/goodstrap.scss";
-import { current, group, groupAll, user } from "./GranteeMock";
+import { current, defaultUserPermissions, granularGrantees, group, groupAll, user } from "./GranteeMock";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { uriRef } from "@gooddata/sdk-model";
+import { idRef, uriRef } from "@gooddata/sdk-model";
 import { LabelsMock } from "./LabelsMock";
+
+const sharedObjectRef = idRef("object");
 
 const EmptySelectionExample = (): JSX.Element => {
     const workspace = "foo";
@@ -35,6 +37,8 @@ const EmptySelectionExample = (): JSX.Element => {
                             onCancel={action("onCancel")}
                             onSubmit={action("onSubmit")}
                             onBackClick={action("onBackClick")}
+                            currentUserPermissions={defaultUserPermissions}
+                            sharedObjectRef={sharedObjectRef}
                         />
                     </ComponentLabelsProvider>
                 </WorkspaceProvider>
@@ -62,6 +66,38 @@ const EmptyAvailableItemsExample = (): JSX.Element => {
                             onCancel={action("onCancel")}
                             onSubmit={action("onSubmit")}
                             onBackClick={action("onBackClick")}
+                            currentUserPermissions={defaultUserPermissions}
+                            sharedObjectRef={sharedObjectRef}
+                        />
+                    </ComponentLabelsProvider>
+                </WorkspaceProvider>
+            </BackendProvider>
+        </div>
+    );
+};
+
+const GranularItemsExample = (): JSX.Element => {
+    const workspace = "foo";
+    const backend = recordedBackend(ReferenceRecordings.Recordings);
+
+    return (
+        <div id="Share-Grantee-base-basic-example">
+            <BackendProvider backend={backend}>
+                <WorkspaceProvider workspace={workspace}>
+                    <ComponentLabelsProvider labels={LabelsMock}>
+                        <AddGranteeBase
+                            isDirty={false}
+                            addedGrantees={granularGrantees}
+                            appliedGrantees={[]}
+                            currentUserRef={uriRef("")}
+                            onAddUserOrGroups={action("onAddUserOrGroups")}
+                            onDelete={action("onDelete")}
+                            onCancel={action("onCancel")}
+                            onSubmit={action("onSubmit")}
+                            onBackClick={action("onBackClick")}
+                            currentUserPermissions={defaultUserPermissions}
+                            sharedObjectRef={sharedObjectRef}
+                            areGranularPermissionsSupported={true}
                         />
                     </ComponentLabelsProvider>
                 </WorkspaceProvider>
@@ -89,6 +125,8 @@ const SelectedItemsExample = (): JSX.Element => {
                             onCancel={action("onCancel")}
                             onSubmit={action("onSubmit")}
                             onBackClick={action("onBackClick")}
+                            currentUserPermissions={defaultUserPermissions}
+                            sharedObjectRef={sharedObjectRef}
                         />
                     </ComponentLabelsProvider>
                 </WorkspaceProvider>
@@ -106,6 +144,10 @@ export const AddGranteeExamples = (): JSX.Element => {
             <div className="library-component screenshot-target">
                 <h4>AddGranteeBase example</h4>
                 <SelectedItemsExample />
+            </div>
+            <div className="library-component screenshot-target">
+                <h4>AddGranteeBase granular permissions example</h4>
+                <GranularItemsExample />
             </div>
             <div className="library-component screenshot-target">
                 <h4>AddGranteeBase empty selection example</h4>

@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { Typography } from "../../../Typography";
@@ -11,7 +11,15 @@ import { IShareGranteeContentProps } from "./types";
  * @internal
  */
 export const ShareGranteeContent: React.FC<IShareGranteeContentProps> = (props) => {
-    const { isLoading, grantees, areGranularPermissionsSupported, onAddGrantee, onChange, onDelete } = props;
+    const {
+        isLoading,
+        grantees,
+        areGranularPermissionsSupported,
+        currentUserPermissions,
+        onAddGrantee,
+        onChange,
+        onDelete,
+    } = props;
 
     return (
         <>
@@ -25,6 +33,7 @@ export const ShareGranteeContent: React.FC<IShareGranteeContentProps> = (props) 
                 <GranteeListLoading />
             ) : (
                 <GranteeList
+                    currentUserPermissions={currentUserPermissions}
                     grantees={grantees}
                     mode="ShareGrantee"
                     areGranularPermissionsSupported={areGranularPermissionsSupported}

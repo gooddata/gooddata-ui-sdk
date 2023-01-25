@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 
 import {
     IAuthenticatedPrincipal,
@@ -92,6 +92,7 @@ export const defaultRecordedBackendCapabilities: IBackendCapabilities = {
     supportsCustomColorPalettes: true,
     supportsElementsQueryParentFiltering: true,
     supportsElementUris: true,
+    supportsEveryoneUserGroupForAccessControl: true,
 };
 
 /**

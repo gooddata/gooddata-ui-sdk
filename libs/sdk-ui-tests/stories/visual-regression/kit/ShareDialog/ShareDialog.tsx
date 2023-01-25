@@ -13,7 +13,7 @@ import { UiKit } from "../../../_infra/storyGroups";
 import { wrapWithTheme } from "../../themeWrapper";
 import { BackstopConfig } from "../../../_infra/backstopScenario";
 
-import { groupAll, owner } from "./GranteeMock";
+import { defaultUserPermissions, groupAll, owner } from "./GranteeMock";
 import { LabelsMock } from "./LabelsMock";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
@@ -62,10 +62,12 @@ const BasicExample: React.FC = () => {
                                     isUnderLenientControl: false,
                                     isLockingSupported: true,
                                     isLeniencyControlSupported: true,
+                                    isMetadataObjectLockingSupported: true,
                                 }}
                                 onCancel={onCancel}
                                 onSubmit={onSubmit}
                                 onError={onCancel}
+                                currentUserPermissions={defaultUserPermissions}
                             />
                         ) : null}
                     </div>

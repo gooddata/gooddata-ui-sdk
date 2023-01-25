@@ -38,7 +38,11 @@ export function recordedAccessControlFactory(
         grantAccess: () => Promise.resolve(),
         revokeAccess: () => Promise.resolve(),
         changeAccess: () => Promise.resolve(),
-        getAvailableGrantees: () => Promise.resolve([]),
+        getAvailableGrantees: () => {
+            const result = implConfig.userManagement?.accessControl?.availableGrantees ?? [];
+
+            return Promise.resolve(result);
+        },
     };
 }
 

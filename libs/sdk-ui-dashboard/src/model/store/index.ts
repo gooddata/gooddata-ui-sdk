@@ -87,6 +87,7 @@ export {
     selectCanViewDashboardPermission,
     selectCanShareDashboardPermission,
     selectCanEditDashboardPermission,
+    selectDashboardPermissions,
 } from "./dashboardPermissions/dashboardPermissionsSelectors";
 export { FilterContextState } from "./filterContext/filterContextState";
 export {

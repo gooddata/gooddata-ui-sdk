@@ -1,31 +1,46 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 
 import React, { useMemo } from "react";
 import { useIntl } from "react-intl";
+import cx from "classnames";
 
 import { GranteeGroupIcon } from "../GranteeIcons";
-import { GranteeItem, IGranularGranteeGroup } from "../types";
-import { getGranteeLabel } from "../utils";
+import { GranteeItem, IGranularGrantee } from "../types";
+import { getGranteeItemTestId, getGranteeLabel } from "../utils";
+import { CurrentUserPermissions } from "../../types";
 
-import { GranularPermissionsDropdownBody } from "./GranularPermissionsDropdownBody";
+import { GranularPermissionsDropdown } from "./GranularPermissionsDropdown";
+import { usePermissionsDropdown } from "./usePermissionsDropdown";
 
 interface IGranularGranteeGroupItemProps {
-    grantee: IGranularGranteeGroup;
+    grantee: IGranularGrantee;
+    currentUserPermissions: CurrentUserPermissions;
     onChange: (grantee: GranteeItem) => void;
     onDelete: (grantee: GranteeItem) => void;
 }
 
 export const GranularGranteeGroupItem: React.FC<IGranularGranteeGroupItemProps> = (props) => {
-    const { grantee, onChange, onDelete } = props;
+    const { grantee, currentUserPermissions, onChange, onDelete } = props;
+    const { isDropdownOpen, toggleDropdown } = usePermissionsDropdown();
+
     const intl = useIntl();
     const groupName = useMemo(() => getGranteeLabel(grantee, intl), [grantee, intl]);
+    const itemClassName = cx(
+        "s-share-dialog-grantee-item",
+        "gd-share-dialog-grantee-item",
+        getGranteeItemTestId(grantee),
+        {
+            "is-active": isDropdownOpen,
+        },
+    );
 
     return (
-        <div className="gd-share-dialog-grantee-item">
-            <GranularPermissionsDropdownBody
+        <div className={itemClassName}>
+            <GranularPermissionsDropdown
+                currentUserPermissions={currentUserPermissions}
                 grantee={grantee}
-                // TODO: Update with selected permission
-                value={intl.formatMessage({ id: "shareDialog.share.granular.grantee.permission.edit" })}
+                isDropdownOpen={isDropdownOpen}
+                toggleDropdown={toggleDropdown}
                 onChange={onChange}
                 onDelete={onDelete}
             />

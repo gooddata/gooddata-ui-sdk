@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import React from "react";
 
 import { Overlay } from "../../../Overlay";
@@ -15,8 +15,8 @@ const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
  * @internal
  */
 export const ShareDialogBase: React.FC<IShareDialogBaseProps> = (props) => {
-    const { onCancel, sharedObject, currentUserRef } = props;
-    const { areGranularPermissionsSupported } = sharedObject;
+    const { onCancel, sharedObject, currentUserRef, currentUserPermissions } = props;
+    const { areGranularPermissionsSupported, ref } = sharedObject;
 
     const {
         onAddedGranteeDelete,
@@ -37,7 +37,8 @@ export const ShareDialogBase: React.FC<IShareDialogBaseProps> = (props) => {
         isUnderLenientControlNow,
         onLockChange,
         onUnderLenientControlChange,
-        onGranularGranteeChange,
+        onGranularGranteeAddChange,
+        onGranularGranteeShareChange,
     } = useShareDialogBase(props);
 
     return (
@@ -50,6 +51,7 @@ export const ShareDialogBase: React.FC<IShareDialogBaseProps> = (props) => {
             <div className="s-gd-share-dialog">
                 {dialogMode === "ShareGrantee" ? (
                     <ShareGranteeBase
+                        currentUserPermissions={currentUserPermissions}
                         currentUserRef={currentUserRef}
                         isLoading={isGranteesLoading}
                         isDirty={isShareDialogDirty}
@@ -63,20 +65,23 @@ export const ShareDialogBase: React.FC<IShareDialogBaseProps> = (props) => {
                         onGranteeDelete={onSharedGranteeDelete}
                         onLockChange={onLockChange}
                         onUnderLenientControlChange={onUnderLenientControlChange}
-                        onGranularGranteeChange={onGranularGranteeChange}
+                        onGranularGranteeChange={onGranularGranteeShareChange}
                     />
                 ) : (
                     <AddGranteeBase
+                        currentUserPermissions={currentUserPermissions}
                         isDirty={isAddDialogDirty}
                         currentUserRef={currentUserRef}
                         appliedGrantees={appliedGranteesWithOwner}
                         addedGrantees={granteesToAdd}
                         areGranularPermissionsSupported={areGranularPermissionsSupported}
+                        sharedObjectRef={ref}
                         onAddUserOrGroups={onGranteeAdd}
                         onDelete={onAddedGranteeDelete}
                         onCancel={onCancel}
                         onSubmit={onSubmitAddGrantee}
                         onBackClick={onAddGranteeBackClick}
+                        onGranularGranteeChange={onGranularGranteeAddChange}
                     />
                 )}
             </div>

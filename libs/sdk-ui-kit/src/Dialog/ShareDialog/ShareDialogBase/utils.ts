@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { IntlShape } from "react-intl";
 import { areObjRefsEqual, objRefToString, uriRef } from "@gooddata/sdk-model";
 import {
@@ -48,7 +48,7 @@ const exhaustiveCheck = (_param: never): never => {
  * @internal
  */
 export const getGranteeLabel = (grantee: GranteeItem, intl: IntlShape): string => {
-    if (grantee.type === "user") {
+    if (grantee.type === "user" || grantee.type === "granularUser") {
         if (grantee.isCurrentUser) {
             return intl.formatMessage(
                 { id: "shareDialog.share.grantee.item.you" },
@@ -56,7 +56,7 @@ export const getGranteeLabel = (grantee: GranteeItem, intl: IntlShape): string =
             );
         }
         return grantee.name;
-    } else if (grantee.type === "group") {
+    } else if (grantee.type === "group" || grantee.type === "granularGroup") {
         return grantee.name;
     } else if (grantee.type === "groupAll") {
         return intl.formatMessage({ id: "shareDialog.share.grantee.item.user.all" });

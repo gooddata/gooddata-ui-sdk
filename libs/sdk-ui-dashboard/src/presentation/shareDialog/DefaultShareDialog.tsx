@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import React, { useMemo } from "react";
 import { ShareDialog, IShareDialogLabels } from "@gooddata/sdk-ui-kit";
 import { IShareDialogProps } from "./types";
@@ -16,6 +16,7 @@ export const DefaultShareDialog = (props: IShareDialogProps): JSX.Element | null
         sharedObject,
         currentUserRef,
         isLockingSupported,
+        currentUserPermissions,
         onApply,
         onCancel,
         onError,
@@ -55,6 +56,7 @@ export const DefaultShareDialog = (props: IShareDialogProps): JSX.Element | null
             onError={onError}
             isLockingSupported={isLockingSupported}
             labels={labels}
+            currentUserPermissions={currentUserPermissions}
         />
     );
 };
