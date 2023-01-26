@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 
 import {
     IAuthenticatedPrincipal,
@@ -14,6 +14,7 @@ import {
     NotSupported,
     IOrganization,
     IOrganizations,
+    IEntitlements,
 } from "@gooddata/sdk-backend-spi";
 import { TelemetryData } from "../toolkit/backend";
 import {
@@ -115,6 +116,10 @@ export class CustomBackend implements IAnalyticalBackend {
 
     public organizations = (): IOrganizations => {
         throw new NotSupported("organizations is not supported");
+    };
+
+    public entitlements = (): IEntitlements => {
+        throw new NotSupported("entitlements are not supported");
     };
 
     private getAuthenticationContext = (useClient?: any): IAuthenticationContext => {

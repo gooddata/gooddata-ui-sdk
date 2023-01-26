@@ -47,6 +47,7 @@ import { IDataset as IDataset_2 } from '@gooddata/sdk-model';
 import { IDateFilterConfig as IDateFilterConfig_2 } from '@gooddata/sdk-model';
 import { IDimension } from '@gooddata/sdk-model';
 import { IDimensionDescriptor as IDimensionDescriptor_2 } from '@gooddata/sdk-model';
+import { IEntitlementDescriptor } from '@gooddata/sdk-model';
 import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
@@ -134,6 +135,7 @@ export const AnalyticalBackendErrorTypes: {
     NOT_AUTHENTICATED: string;
     LIMIT_REACHED: string;
     CONTRACT_EXPIRED: string;
+    TIMEOUT_ERROR: string;
 };
 
 // @public
@@ -269,6 +271,7 @@ export interface IAnalyticalBackend {
     readonly config: IAnalyticalBackendConfig;
     currentUser(): IUserService;
     deauthenticate(): Promise<void>;
+    entitlements(): IEntitlements;
     isAuthenticated(): Promise<IAuthenticatedPrincipal | null>;
     onHostname(hostname: string): IAnalyticalBackend;
     organization(organizationId: string): IOrganization;
@@ -749,6 +752,11 @@ export interface IElementsQueryOptionsElementsByValue {
 export type IElementsQueryResult = IPagedResource<IAttributeElement_2>;
 
 // @public
+export interface IEntitlements {
+    resolveEntitlements(): Promise<IEntitlementDescriptor[]>;
+}
+
+// @public
 export interface IExecutionFactory {
     forBuckets(buckets: IBucket[], filters?: INullableFilter[]): IPreparedExecution;
     forDefinition(def: IExecutionDefinition): IPreparedExecution;
@@ -836,6 +844,7 @@ export interface IFilterElementsQuery {
 
 // @alpha
 export interface IGetDashboardOptions {
+    exportId?: string;
     includeAvailableViaLink?: boolean;
     loadUserData?: boolean;
 }
@@ -1996,6 +2005,11 @@ export type ThemeColor = m.ThemeColor;
 
 // @beta @deprecated
 export type ThemeFontUri = m.ThemeFontUri;
+
+// @public
+export class TimeoutError extends AnalyticalBackendError {
+    constructor(message: string, cause?: Error);
+}
 
 // @public
 export class UnexpectedError extends AnalyticalBackendError {

@@ -35,6 +35,7 @@ import {
     IWorkspaceAccessControlService,
     IOrganizationStylingService,
     IOrganizationSettingsService,
+    IEntitlements,
 } from "@gooddata/sdk-backend-spi";
 import {
     IColorPalette,
@@ -151,6 +152,9 @@ export function recordedBackend(
         isAuthenticated(): Promise<IAuthenticatedPrincipal | null> {
             return Promise.resolve({ userId: USER_ID });
         },
+        entitlements(): IEntitlements {
+            return recordedEntitlements();
+        },
     };
 
     return backend;
@@ -241,6 +245,14 @@ function recordedWorkspace(
         },
         accessControl(): IWorkspaceAccessControlService {
             return recordedAccessControlFactory(implConfig);
+        },
+    };
+}
+
+function recordedEntitlements(): IEntitlements {
+    return {
+        resolveEntitlements: () => {
+            return Promise.resolve([]);
         },
     };
 }

@@ -16,6 +16,7 @@ import {
     isNotAuthenticated,
     IOrganization,
     IOrganizations,
+    IEntitlements,
     isContractExpired,
 } from "@gooddata/sdk-backend-spi";
 import { newAxios, tigerClientFactory, ITigerClient } from "@gooddata/api-client-tiger";
@@ -44,6 +45,7 @@ import { defaultDateFormatter } from "../convertors/fromBackend/dateFormatting/d
 import { TigerOrganization, TigerOrganizations } from "./organization";
 import packageJson from "../../package.json";
 import { TigerSpecificFunctions, buildTigerSpecificFunctions } from "./tigerSpecificFunctions";
+import { TigerEntitlements } from "./entitlements";
 
 const CAPABILITIES: IBackendCapabilities = {
     hasTypeScopedIdentifiers: true,
@@ -186,6 +188,10 @@ export class TigerBackend implements IAnalyticalBackend {
 
     public organizations(): IOrganizations {
         return new TigerOrganizations(this.authApiCall);
+    }
+
+    public entitlements(): IEntitlements {
+        return new TigerEntitlements(this.authApiCall);
     }
 
     public currentUser(): IUserService {

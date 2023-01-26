@@ -18,6 +18,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
     return {
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableKPIDashboardExportPDF,
+            "enableKPIDashboardExportPDF",
+            "BOOLEAN",
+            FeatureFlagsValues.enableKPIDashboardExportPDF,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableSortingByTotalGroup,
             "enableSortingByTotalGroup",
             "BOOLEAN",

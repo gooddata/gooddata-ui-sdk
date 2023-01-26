@@ -15,6 +15,7 @@ import {
     isNotAuthenticated,
     IOrganization,
     IOrganizations,
+    IEntitlements,
 } from "@gooddata/sdk-backend-spi";
 import { IInsight } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
@@ -43,6 +44,7 @@ import {
 import { IDrillableItemsCommandBody } from "@gooddata/sdk-embedding";
 import { BearOrganization, BearOrganizations } from "./organization";
 import packageJson from "../../package.json";
+import { BearEntitlements } from "./entitlements";
 
 const CAPABILITIES: IBackendCapabilities = {
     canCalculateGrandTotals: true,
@@ -352,6 +354,10 @@ export class BearBackend implements IAnalyticalBackend {
 
     public organizations(): IOrganizations {
         return new BearOrganizations(this.authApiCall);
+    }
+
+    public entitlements(): IEntitlements {
+        return new BearEntitlements();
     }
 
     public currentUser(): IUserService {

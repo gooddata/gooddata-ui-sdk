@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 
 import { IExecutionDefinition } from "@gooddata/sdk-model";
 import { IPreparedExecution } from "../workspace/execution";
@@ -7,6 +7,7 @@ import { IUserService } from "../user";
 import { NotAuthenticated } from "../errors";
 import { IBackendCapabilities } from "./capabilities";
 import { IOrganization, IOrganizations } from "../organization";
+import { IEntitlements } from "../entitlements";
 
 /**
  * Specifies platform agnostic configuration of an analytical backend.
@@ -163,6 +164,11 @@ export interface IAnalyticalBackend {
      * Returns service that can be used to obtain available workspaces.
      */
     workspaces(): IWorkspacesQueryFactory;
+
+    /**
+     * Returns service that can be used to obtain license entitlements.
+     */
+    entitlements(): IEntitlements;
 }
 
 /**

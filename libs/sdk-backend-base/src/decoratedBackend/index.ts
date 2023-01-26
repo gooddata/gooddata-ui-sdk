@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 
 import {
     IAnalyticalBackendConfig,
@@ -30,6 +30,7 @@ import {
     IWorkspaceAccessControlService,
     IOrganizationStylingService,
     IOrganizationSettingsService,
+    IEntitlements,
 } from "@gooddata/sdk-backend-spi";
 import { IOrganizationDescriptor } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
@@ -88,6 +89,10 @@ class BackendWithDecoratedServices implements IAnalyticalBackend {
 
     public workspace(id: string): IAnalyticalWorkspace {
         return new AnalyticalWorkspaceDecorator(this.decorated.workspace(id), this.factories);
+    }
+
+    public entitlements(): IEntitlements {
+        return this.decorated.entitlements();
     }
 
     public workspaces(): IWorkspacesQueryFactory {

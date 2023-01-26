@@ -776,3 +776,4 @@ export {
 } from "./accessControl";
 
 export { IOrganizationDescriptor } from "./organization";
+export { IEntitlementsName, IEntitlementDescriptor } from "./entitlements";

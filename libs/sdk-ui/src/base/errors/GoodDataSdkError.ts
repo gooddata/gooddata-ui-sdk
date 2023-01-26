@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 
 import isEmpty from "lodash/isEmpty";
 import { AuthenticationFlow } from "@gooddata/sdk-backend-spi";
@@ -22,6 +22,7 @@ export const ErrorCodes = {
     UNKNOWN_ERROR: "UNKNOWN_ERROR",
     CANCELLED: "CANCELLED",
     DYNAMIC_SCRIPT_LOAD_ERROR: "DYNAMIC_SCRIPT_LOAD_ERROR",
+    TIMEOUT_ERROR: "TIMEOUT_ERROR",
 };
 
 /**

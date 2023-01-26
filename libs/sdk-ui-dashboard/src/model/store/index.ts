@@ -60,6 +60,9 @@ export {
     selectEnableKPIDashboardDrillFromAttribute,
     selectIsShareButtonHidden,
 } from "./config/configSelectors";
+export { EntitlementsState } from "./entitlements/entitlementsState";
+export { selectEntitlementExportPdf } from "./entitlements/entitlementsSelectors";
+
 export { PermissionsState } from "./permissions/permissionsState";
 export {
     selectPermissions,

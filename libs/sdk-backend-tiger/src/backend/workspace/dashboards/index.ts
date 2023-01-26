@@ -10,6 +10,7 @@ import {
     jsonApiHeaders,
     MetadataUtilities,
     ValidateRelationsHeader,
+    ITigerClient,
 } from "@gooddata/api-client-tiger";
 import {
     IDashboardReferences,
@@ -19,6 +20,7 @@ import {
     NotSupported,
     SupportedDashboardReferenceTypes,
     UnexpectedError,
+    TimeoutError,
 } from "@gooddata/sdk-backend-spi";
 import {
     areObjRefsEqual,
@@ -37,6 +39,8 @@ import {
     IDashboardPlugin,
     IDashboardPluginDefinition,
     IDashboardPermissions,
+    FilterContextItem,
+    isAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual";
 import { v4 as uuidv4 } from "uuid";
@@ -59,6 +63,11 @@ import { objRefsToIdentifiers, objRefToIdentifier } from "../../../utils/api";
 import { resolveWidgetFilters } from "./widgetFilters";
 import includes from "lodash/includes";
 import { buildDashboardPermissions, TigerDashboardPermissionType } from "./dashboardPermissions";
+import { convertExportMetadata as convertToBackendExportMetadata } from "../../../convertors/toBackend/ExportMetadataConverter";
+import { convertExportMetadata as convertFromBackendExportMetadata } from "../../../convertors/fromBackend/ExportMetadataConverter";
+
+const DEFAULT_POLL_DELAY = 5000;
+const MAX_POLL_ATTEMPTS = 50;
 
 export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -97,10 +106,6 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             );
         }
 
-        const filterContextByRef = filterContextRef
-            ? await this.getFilterContext(filterContextRef)
-            : undefined;
-
         const id = await objRefToIdentifier(ref, this.authCall);
         const result = await this.authCall((client) => {
             return client.entities.getEntityAnalyticalDashboards(
@@ -116,11 +121,11 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             );
         });
 
-        const included = result.data.included || [];
-        const filterContext = filterContextByRef
-            ? filterContextByRef
-            : getFilterContextFromIncluded(included);
-
+        const filterContext = await this.prepareFilterContext(
+            options?.exportId,
+            filterContextRef,
+            result?.data?.included,
+        );
         return convertDashboard(result.data, filterContext);
     };
 
@@ -136,19 +141,14 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             );
         }
 
-        const filterContextByRef = filterContextRef
-            ? await this.getFilterContext(filterContextRef)
-            : undefined;
-
         const dashboard = await this.getDashboardWithSideloads(ref, types);
         const included = dashboard.included || [];
         const insights = included.filter(isVisualizationObjectsItem).map(visualizationObjectsItemToInsight);
         const plugins = included
             .filter(isDashboardPluginsItem)
             .map(convertDashboardPluginWithLinksFromBackend);
-        const filterContext = filterContextByRef
-            ? filterContextByRef
-            : getFilterContextFromIncluded(included);
+
+        const filterContext = await this.prepareFilterContext(options?.exportId, filterContextRef, included);
 
         return {
             dashboard: convertDashboard(dashboard, filterContext),
@@ -173,6 +173,25 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                     .map(convertDashboardPluginWithLinksFromBackend),
             };
         });
+    };
+
+    private getFilterContextFromExportId = async (exportId: string): Promise<IFilterContext> => {
+        const md = await this.authCall((client) => {
+            return client.export.getMetadata({
+                workspaceId: this.workspace,
+                exportId,
+            });
+        }).then((result) => result.data);
+
+        const { filters } = convertFromBackendExportMetadata(md);
+        return {
+            filters,
+            title: `temp-filter-context-${exportId}`,
+            description: "temp-filter-context-description",
+            ref: { identifier: `identifier-${exportId}` },
+            uri: `uri-${exportId}`,
+            identifier: `identifier-${exportId}`,
+        };
     };
 
     private getDashboardWithSideloads = async (
@@ -304,9 +323,65 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         );
     };
 
-    public exportDashboardToPdf = async () => {
-        throw new NotSupported("Tiger backend does not support export to PDF.");
+    public exportDashboardToPdf = async (
+        dashboardRef: ObjRef,
+        filters?: FilterContextItem[],
+    ): Promise<string> => {
+        const dashboardId = await objRefToIdentifier(dashboardRef, this.authCall);
+
+        // skip all time date filter from stored filters, when missing, it's correctly
+        // restored to All time during the load later
+        const withoutAllTime = (filters || []).filter((f) => !isAllTimeDashboardDateFilter(f));
+
+        return this.authCall(async (client) => {
+            const dashboardResponse = await client.entities.getEntityAnalyticalDashboards(
+                {
+                    workspaceId: this.workspace,
+                    objectId: dashboardId,
+                },
+                {
+                    headers: jsonApiHeaders,
+                },
+            );
+
+            const { title } = convertDashboard(dashboardResponse.data);
+            const pdfExportRequest = {
+                fileName: title,
+                dashboardId,
+                metadata: convertToBackendExportMetadata({ filters: withoutAllTime }),
+            };
+            const pdfExport = await client.export.createPdfExport({
+                workspaceId: this.workspace,
+                pdfExportRequest,
+            });
+
+            return await this.handleExportResultPolling(client, {
+                workspaceId: this.workspace,
+                exportId: pdfExport?.data?.exportResult,
+            });
+        });
     };
+
+    private async handleExportResultPolling(
+        client: ITigerClient,
+        payload: { exportId: string; workspaceId: string },
+    ): Promise<string> {
+        for (let i = 0; i < MAX_POLL_ATTEMPTS; i++) {
+            const result = await client.export.getExportedFile(payload, {
+                transformResponse: (x) => x,
+            });
+
+            if (result?.status === 200) {
+                return result?.config?.url || "";
+            }
+
+            await new Promise((resolve) => setTimeout(resolve, DEFAULT_POLL_DELAY));
+        }
+
+        throw new TimeoutError(
+            `Export timeout for export id "${payload.exportId}" in workspace "${payload.workspaceId}"`,
+        );
+    }
 
     public createScheduledMail = async () => {
         throw new NotSupported("Tiger backend does not support scheduled emails.");
@@ -579,5 +654,26 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         });
 
         return convertFilterContextFromBackend(result.data);
+    };
+
+    // prepare filter context with priority for given filtercontext options
+    private prepareFilterContext = async (
+        exportId: string | undefined,
+        filterContextRef: ObjRef | undefined,
+        includedFilterContext: JsonApiAnalyticalDashboardOutDocument["included"] = [],
+    ): Promise<IFilterContext | undefined> => {
+        const filterContextByRef = filterContextRef
+            ? await this.getFilterContext(filterContextRef)
+            : undefined;
+
+        const filterContextByExportId = exportId
+            ? await this.getFilterContextFromExportId(exportId)
+            : undefined;
+
+        return (
+            filterContextByExportId ||
+            filterContextByRef ||
+            getFilterContextFromIncluded(includedFilterContext)
+        );
     };
 }

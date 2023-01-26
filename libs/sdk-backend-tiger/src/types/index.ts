@@ -1,6 +1,7 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import { ITigerClient } from "@gooddata/api-client-tiger";
 import { AuthenticatedCallGuard } from "@gooddata/sdk-backend-base";
+import { FilterContextItem } from "@gooddata/sdk-model";
 
 /**
  * Tiger authenticated call guard
@@ -33,3 +34,13 @@ export type TigerMetadataType =
  * @public
  */
 export type TigerObjectType = TigerAfmType | TigerMetadataType;
+
+/**
+ * Export metadata contents is under our control, accepts arbitrary json, currently described by IExportMetadata interface
+ * - what we store there during exportDashboardToPdf stays there for us to read in the exporter when loading dashboard
+ *   with ?exportId=... argument when calling getDashboard[WithReferences]
+ * - see appropriate converters for type check and metadata contents
+ */
+export interface IExportMetadata {
+    filters: FilterContextItem[];
+}

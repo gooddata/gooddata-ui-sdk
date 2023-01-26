@@ -79,6 +79,7 @@ export {
     AnalyticalBackendError,
     NoDataError,
     DataTooLargeError,
+    TimeoutError,
     ProtectedDataError,
     UnexpectedResponseError,
     UnexpectedError,
@@ -172,6 +173,7 @@ export {
 } from "./workspace/measures/measure";
 
 export { IOrganization, IOrganizations } from "./organization";
+export { IEntitlements } from "./entitlements";
 export { ISecuritySettingsService, ValidationContext } from "./organization/securitySettings";
 export { IOrganizationStylingService } from "./organization/styling";
 export { IOrganizationSettingsService } from "./organization/settings";

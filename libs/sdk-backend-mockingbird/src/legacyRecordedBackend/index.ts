@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import { GdcExecution } from "@gooddata/api-model-bear";
 import {
     IAnalyticalBackendConfig,
@@ -34,6 +34,7 @@ import {
     IWorkspaceAccessControlService,
     ExplainType,
     IExplainProvider,
+    IEntitlements,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -142,6 +143,9 @@ export function legacyRecordedBackend(
         },
         isAuthenticated(): Promise<IAuthenticatedPrincipal | null> {
             return Promise.resolve({ userId: "recordedUser" });
+        },
+        entitlements(): IEntitlements {
+            throw new NotSupported("not yet supported");
         },
     };
 

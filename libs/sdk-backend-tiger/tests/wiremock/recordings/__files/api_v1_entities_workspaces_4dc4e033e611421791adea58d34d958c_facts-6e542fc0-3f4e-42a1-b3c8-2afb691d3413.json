@@ -11,7 +11,8 @@
             },
             "links": {
                 "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts/fact.f_activity.activitydate"
-            }
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "4dc4e033e611421791adea58d34d958c" } }
         },
         {
             "id": "fact.f_opportunity.oppcreateddate",
@@ -24,7 +25,8 @@
             },
             "links": {
                 "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts/fact.f_opportunity.oppcreateddate"
-            }
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "4dc4e033e611421791adea58d34d958c" } }
         },
         {
             "id": "f_opportunitysnapshot.f_amount",
@@ -37,7 +39,8 @@
             },
             "links": {
                 "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts/f_opportunitysnapshot.f_amount"
-            }
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "4dc4e033e611421791adea58d34d958c" } }
         },
         {
             "id": "f_opportunitysnapshot.f_daystoclose",
@@ -50,7 +53,8 @@
             },
             "links": {
                 "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts/f_opportunitysnapshot.f_daystoclose"
-            }
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "4dc4e033e611421791adea58d34d958c" } }
         },
         {
             "id": "f_opportunitysnapshot.f_probability",
@@ -63,7 +67,8 @@
             },
             "links": {
                 "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts/f_opportunitysnapshot.f_probability"
-            }
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "4dc4e033e611421791adea58d34d958c" } }
         },
         {
             "id": "fact.f_opportunitysnapshot.oppclosedate",
@@ -76,7 +81,8 @@
             },
             "links": {
                 "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts/fact.f_opportunitysnapshot.oppclosedate"
-            }
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "4dc4e033e611421791adea58d34d958c" } }
         },
         {
             "id": "fact.f_opportunitysnapshot.oppsnapshotdate",
@@ -89,7 +95,8 @@
             },
             "links": {
                 "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts/fact.f_opportunitysnapshot.oppsnapshotdate"
-            }
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "4dc4e033e611421791adea58d34d958c" } }
         },
         {
             "id": "f_stagehistory.f_duration",
@@ -102,7 +109,8 @@
             },
             "links": {
                 "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts/f_stagehistory.f_duration"
-            }
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "4dc4e033e611421791adea58d34d958c" } }
         },
         {
             "id": "f_stagehistory.f_velocity",
@@ -115,7 +123,8 @@
             },
             "links": {
                 "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts/f_stagehistory.f_velocity"
-            }
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "4dc4e033e611421791adea58d34d958c" } }
         },
         {
             "id": "fact.f_timeline.timelinedate",
@@ -128,7 +137,8 @@
             },
             "links": {
                 "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts/fact.f_timeline.timelinedate"
-            }
+            },
+            "meta": { "origin": { "originType": "NATIVE", "originId": "4dc4e033e611421791adea58d34d958c" } }
         }
     ],
     "links": {

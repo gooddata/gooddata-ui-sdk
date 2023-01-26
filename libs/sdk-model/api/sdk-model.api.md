@@ -1170,6 +1170,16 @@ export interface IDrillToLegacyDashboard extends IDrill {
 }
 
 // @public
+export interface IEntitlementDescriptor {
+    expiry?: string;
+    name: IEntitlementsName;
+    value?: string;
+}
+
+// @public
+export type IEntitlementsName = "Contract" | "CustomTheming" | "ManagedOIDC" | "UiLocalization" | "Tier" | "UserCount" | "PdfExports" | "UnlimitedUsers" | "UnlimitedWorkspaces" | "WhiteLabeling" | "WorkspaceCount";
+
+// @public
 export interface IExecutionConfig {
     dataSamplingPercentage?: number;
 }

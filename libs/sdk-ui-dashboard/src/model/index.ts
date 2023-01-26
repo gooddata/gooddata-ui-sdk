@@ -20,6 +20,7 @@ export {
     DashboardTransformFn,
     FiltersInfo,
     ResolvedDashboardConfig,
+    ResolvedEntitlements,
     ResolvableFilter,
     ResolvedDateFilterValues,
     IResolvedAttributeFilterValues,
