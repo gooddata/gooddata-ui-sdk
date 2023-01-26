@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import React from "react";
 import { mount, ReactWrapper } from "enzyme";
 import { AddGranteeSelect } from "../AddGranteeSelect";
@@ -7,30 +7,33 @@ import { noop } from "lodash";
 import { BackendProvider, withIntl, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { recordedBackend, RecordedBackendConfig } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { groupAll, workSpaceGroup, workspaceUser } from "./GranteeMock";
-import { mapWorkspaceUserGroupToGrantee, mapWorkspaceUserToGrantee } from "../../shareDialogMappers";
+import { availableUserAccessGrantee, availableUserGroupAccessGrantee, groupAll } from "./GranteeMock";
+import { mapWorkspaceUserToGrantee, mapWorkspaceUserGroupToGrantee } from "../../shareDialogMappers";
 import { getGranteeItemTestId } from "../utils";
-import { uriRef, IWorkspaceUser, IWorkspaceUserGroup } from "@gooddata/sdk-model";
+import {
+    uriRef,
+    IAvailableUserAccessGrantee,
+    IAvailableUserGroupAccessGrantee,
+    IAvailableAccessGrantee,
+} from "@gooddata/sdk-model";
+import { act } from "react-dom/test-utils";
 
 const defaultProps: IAddGranteeSelectProps = {
     onSelectGrantee: noop,
     appliedGrantees: [],
     currentUserRef: uriRef("user-uri"),
+    sharedObjectRef: uriRef("shared-object"),
 };
 
 const createComponent = (
     customProps: Partial<IAddGranteeSelectProps> = {},
-    users: IWorkspaceUser[] = [],
-    groups: IWorkspaceUserGroup[] = [],
+    availableGrantees: IAvailableAccessGrantee[] = [],
 ): ReactWrapper => {
     const props: IAddGranteeSelectProps = { ...defaultProps, ...customProps };
     const config: RecordedBackendConfig = {
         userManagement: {
-            users: {
-                users: users,
-            },
-            userGroup: {
-                userGroups: groups,
+            accessControl: {
+                availableGrantees,
             },
         },
     };
@@ -63,11 +66,11 @@ function isErrorMessageVisible(wrapper: ReactWrapper) {
     return wrapper.find(".s-gd-share-dialog-option-error").hostNodes().length === 1;
 }
 
-function getUserOptionSelector(user: IWorkspaceUser): string {
+function getUserOptionSelector(user: IAvailableUserAccessGrantee): string {
     return `.${getGranteeItemTestId(mapWorkspaceUserToGrantee(user, uriRef("")), "option")}`;
 }
 
-function getGroupOptionSelector(group: IWorkspaceUserGroup): string {
+function getGroupOptionSelector(group: IAvailableUserGroupAccessGrantee): string {
     return `.${getGranteeItemTestId(mapWorkspaceUserGroupToGrantee(group), "option")}`;
 }
 
@@ -79,21 +82,21 @@ function clickOnOption(wrapper: ReactWrapper, selector: string) {
     wrapper.find(selector).simulate("click");
 }
 
-const flushPromises = () =>
-    new Promise((resolve) => {
-        // setImmediate is
-        setTimeout(() => {
-            resolve();
-        }, 10);
-    });
+const flushPromises = async () =>
+    act(
+        () =>
+            new Promise((resolve) => {
+                // setImmediate is
+                setTimeout(() => {
+                    resolve();
+                }, 10);
+            }),
+    );
 
 describe("AddGranteeSelect", () => {
-    it("should render without crash", () => {
-        createComponent();
-    });
-
-    it("it should render open menu and close outside click", () => {
+    it("it should render open menu and close outside click", async () => {
         const wrapper = createComponent();
+        await flushPromises();
         expect(isMenuIsVisible(wrapper)).toBe(true);
     });
 
@@ -119,9 +122,9 @@ describe("AddGranteeSelect", () => {
     });
 
     it("it should render error message when backend return error or invalid data", async () => {
-        //error is simulated by mocking not valid IWorkspaceUser (null)
+        //error is simulated by mocking not valid IWorkspaceUser ({})
         //and it filed and component should show error message
-        const wrapper = createComponent({ appliedGrantees: [groupAll] }, [null]);
+        const wrapper = createComponent({ appliedGrantees: [groupAll] }, {} as IAvailableAccessGrantee[]);
         await flushPromises();
         wrapper.update();
 
@@ -129,26 +132,28 @@ describe("AddGranteeSelect", () => {
     });
 
     it("it should render one user and group as option", async () => {
-        const wrapper = createComponent({ appliedGrantees: [groupAll] }, [workspaceUser], [workSpaceGroup]);
+        const wrapper = createComponent({ appliedGrantees: [groupAll] }, [
+            availableUserAccessGrantee,
+            availableUserGroupAccessGrantee,
+        ]);
         await flushPromises();
         wrapper.update();
-        expect(isOptionVisible(wrapper, getUserOptionSelector(workspaceUser))).toBe(true);
-        expect(isOptionVisible(wrapper, getGroupOptionSelector(workSpaceGroup))).toBe(true);
+        expect(isOptionVisible(wrapper, getUserOptionSelector(availableUserAccessGrantee))).toBe(true);
+        expect(isOptionVisible(wrapper, getGroupOptionSelector(availableUserGroupAccessGrantee))).toBe(true);
     });
 
     it("it should close options and call onSelectGrantee when option is selected", async () => {
         const onSelectGrantee = jest.fn();
 
-        const wrapper = createComponent(
-            { appliedGrantees: [groupAll], onSelectGrantee },
-            [workspaceUser],
-            [workSpaceGroup],
-        );
+        const wrapper = createComponent({ appliedGrantees: [groupAll], onSelectGrantee }, [
+            availableUserAccessGrantee,
+            availableUserGroupAccessGrantee,
+        ]);
         await flushPromises();
         wrapper.update();
 
-        const userSelector = getUserOptionSelector(workspaceUser);
-        const expectedPayload = mapWorkspaceUserToGrantee(workspaceUser, uriRef(""));
+        const userSelector = getUserOptionSelector(availableUserAccessGrantee);
+        const expectedPayload = mapWorkspaceUserToGrantee(availableUserAccessGrantee, uriRef(""));
 
         clickOnOption(wrapper, userSelector);
         wrapper.update();

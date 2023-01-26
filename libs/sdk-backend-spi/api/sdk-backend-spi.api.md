@@ -18,7 +18,6 @@ import { DateFilterOptionType } from '@gooddata/sdk-model';
 import { DateFilterRelativeType } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
 import { FilterContextItem as FilterContextItem_2 } from '@gooddata/sdk-model';
-import { GranularGrantee } from '@gooddata/sdk-model';
 import { IAccessGrantee as IAccessGrantee_2 } from '@gooddata/sdk-model';
 import { IAttributeDisplayFormMetadataObject as IAttributeDisplayFormMetadataObject_2 } from '@gooddata/sdk-model';
 import { IAttributeElement as IAttributeElement_2 } from '@gooddata/sdk-model';
@@ -52,6 +51,7 @@ import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { IFilterContextDefinition as IFilterContextDefinition_2 } from '@gooddata/sdk-model';
+import { IGranularAccessGrantee } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import { IKpi } from '@gooddata/sdk-model';
@@ -1626,7 +1626,7 @@ export interface IWidgetWithLayoutPath<TWidget = IDashboardWidget_2> {
 
 // @alpha
 export interface IWorkspaceAccessControlService {
-    changeAccess(sharedObject: ObjRef, grantees: GranularGrantee[]): Promise<void>;
+    changeAccess(sharedObject: ObjRef, grantees: IGranularAccessGrantee[]): Promise<void>;
     // (undocumented)
     getAccessList(sharedObject: ObjRef): Promise<AccessGranteeDetail_2[]>;
     getAvailableGrantees(sharedObject: ObjRef, search?: string): Promise<IAvailableAccessGrantee[]>;

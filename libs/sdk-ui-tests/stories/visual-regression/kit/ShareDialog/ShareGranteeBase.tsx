@@ -15,7 +15,7 @@ import {
 import { UiKit } from "../../../_infra/storyGroups";
 import { wrapWithTheme } from "../../themeWrapper";
 
-import { grantees, inactiveUser, owner } from "./GranteeMock";
+import { defaultUserPermissions, grantees, inactiveUser, owner } from "./GranteeMock";
 import { LabelsMock } from "./LabelsMock";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
@@ -28,6 +28,8 @@ interface BasicExampleProps {
     isUnderLenientControl?: boolean;
     isLockingSupported?: boolean;
     isLeniencyControlSupported?: boolean;
+    areGranularPermissionsSupported?: boolean;
+    isMetadataObjectLockingSupported?: boolean;
 }
 
 const BasicExample: React.FC<BasicExampleProps> = ({
@@ -38,6 +40,7 @@ const BasicExample: React.FC<BasicExampleProps> = ({
     isUnderLenientControl = false,
     isLockingSupported = true,
     isLeniencyControlSupported = true,
+    isMetadataObjectLockingSupported = true,
 }) => {
     return (
         <ComponentLabelsProvider labels={LabelsMock}>
@@ -54,6 +57,7 @@ const BasicExample: React.FC<BasicExampleProps> = ({
                         isLocked,
                         isUnderLenientControl,
                         isLeniencyControlSupported,
+                        isMetadataObjectLockingSupported,
                     }}
                     isLockedNow={isLocked}
                     isUnderLenientControlNow={isUnderLenientControl}
@@ -64,6 +68,7 @@ const BasicExample: React.FC<BasicExampleProps> = ({
                     onSubmit={action("onSubmit")}
                     onUnderLenientControlChange={action("onUnderLenientControlChange")}
                     onLockChange={action("onLockChange")}
+                    currentUserPermissions={defaultUserPermissions}
                 />
             </div>
         </ComponentLabelsProvider>

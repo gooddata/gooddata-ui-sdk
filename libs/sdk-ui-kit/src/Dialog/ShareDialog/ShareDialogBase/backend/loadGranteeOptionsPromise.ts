@@ -1,15 +1,17 @@
-// (C) 2021-2022 GoodData Corporation
-import {
-    IAnalyticalBackend,
-    IWorkspaceUserGroupsQueryOptions,
-    IWorkspaceUsersQueryOptions,
-} from "@gooddata/sdk-backend-spi";
+// (C) 2021-2023 GoodData Corporation
+
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IntlShape } from "react-intl";
 
 import { GranteeItem, IGroupedOption, ISelectErrorOption, ISelectOption } from "../types";
 import { getGranteeLabel, GranteeGroupAll, hasGroupAll, sortGranteesByName } from "../utils";
 import { mapWorkspaceUserGroupToGrantee, mapWorkspaceUserToGrantee } from "../../shareDialogMappers";
-import { ObjRef } from "@gooddata/sdk-model";
+import {
+    ObjRef,
+    isAvailableUserGroupAccessGrantee,
+    isAvailableUserAccessGrantee,
+    IAvailableAccessGrantee,
+} from "@gooddata/sdk-model";
 
 const createErrorOption = (intl: IntlShape): ISelectErrorOption[] => {
     return [
@@ -33,31 +35,22 @@ const matchAllGroupQueryString = (query: string, allGroupLabel: string): boolean
 export const loadGranteeOptionsPromise =
     (
         currentUserRef: ObjRef,
+        sharedObjectRef: ObjRef,
         appliedGrantees: GranteeItem[],
         backend: IAnalyticalBackend,
         workspace: string,
         intl: IntlShape,
     ) =>
     async (inputValue: string): Promise<IGroupedOption[] | ISelectErrorOption[]> => {
-        let usersOption: IWorkspaceUsersQueryOptions = {};
-        let groupsOption: IWorkspaceUserGroupsQueryOptions = {};
-
-        if (inputValue) {
-            usersOption = { ...usersOption, search: `%${inputValue}` };
-            groupsOption = { ...groupsOption, search: `${inputValue}` };
-        }
-
         try {
-            const workspaceUsersQuery = backend.workspace(workspace).users().withOptions(usersOption).query();
-            const workspaceGroupsQuery = backend.workspace(workspace).userGroups().query(groupsOption);
+            const availableGrantees: IAvailableAccessGrantee[] = await backend
+                .workspace(workspace)
+                .accessControl()
+                .getAvailableGrantees(sharedObjectRef, inputValue);
 
-            const [workspaceUsers, workspaceGroups] = await Promise.all([
-                workspaceUsersQuery,
-                workspaceGroupsQuery,
-            ]);
-
-            const mappedUsers: ISelectOption[] = workspaceUsers.items
-                .map((item) => mapWorkspaceUserToGrantee(item, currentUserRef))
+            const mappedUsers: ISelectOption[] = availableGrantees
+                .filter(isAvailableUserAccessGrantee)
+                .map((availableGrantee) => mapWorkspaceUserToGrantee(availableGrantee, currentUserRef))
                 .sort(sortGranteesByName(intl))
                 .map((user) => {
                     return {
@@ -66,8 +59,9 @@ export const loadGranteeOptionsPromise =
                     };
                 });
 
-            let mappedGroups: ISelectOption[] = workspaceGroups.items
-                .map(mapWorkspaceUserGroupToGrantee)
+            let mappedGroups: ISelectOption[] = availableGrantees
+                .filter(isAvailableUserGroupAccessGrantee)
+                .map((availableGrantee) => mapWorkspaceUserGroupToGrantee(availableGrantee))
                 .sort(sortGranteesByName(intl))
                 .map((group) => {
                     return {
@@ -77,8 +71,14 @@ export const loadGranteeOptionsPromise =
                 });
 
             const allGroupLabel = getGranteeLabel(GranteeGroupAll, intl);
+            const supportsEveryoneUserGroupForAccessControl =
+                backend.capabilities.supportsEveryoneUserGroupForAccessControl;
 
-            if (!hasGroupAll(appliedGrantees) && matchAllGroupQueryString(inputValue, allGroupLabel)) {
+            if (
+                !hasGroupAll(appliedGrantees) &&
+                matchAllGroupQueryString(inputValue, allGroupLabel) &&
+                supportsEveryoneUserGroupForAccessControl
+            ) {
                 const groupAllOption: ISelectOption = {
                     label: allGroupLabel,
                     value: GranteeGroupAll,

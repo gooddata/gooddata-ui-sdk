@@ -11,13 +11,13 @@ import {
     AccessGranteeDetail,
     IAccessGrantee,
     IAvailableAccessGrantee,
-    GranularGrantee,
+    IGranularAccessGrantee,
 } from "@gooddata/sdk-model";
 import {
     convertGranteeEntry,
     convertWorkspaceUserGroupToAvailableUserGroupAccessGrantee,
     convertWorkspaceUserToAvailableUserAccessGrantee,
-    removePermissionsFromGrantee,
+    convertGranularAccessGranteeToAcessGrantee,
 } from "../../../convertors/fromBackend/AccessControlConverter";
 import { BearWorkspaceUsersQuery } from "../users";
 import { BearWorkspaceUserGroupsQuery } from "../userGroups";
@@ -62,16 +62,20 @@ export class BearWorkspaceAccessControlService implements IWorkspaceAccessContro
      * for the grantee. An array of grantee permissions with some content will result in granting
      * access for the grantee.
      */
-    public async changeAccess(sharedObject: ObjRef, grantees: GranularGrantee[]): Promise<void> {
+    public async changeAccess(sharedObject: ObjRef, grantees: IGranularAccessGrantee[]): Promise<void> {
         const granteesToGrantAccess = grantees
             .filter((grantee) => grantee.permissions.length > 0)
-            .map(removePermissionsFromGrantee);
+            .map(convertGranularAccessGranteeToAcessGrantee);
         const granteesToRevokeAccess = grantees
             .filter((grantee) => grantee.permissions.length === 0)
-            .map(removePermissionsFromGrantee);
+            .map(convertGranularAccessGranteeToAcessGrantee);
 
-        await this.revokeAccess(sharedObject, granteesToRevokeAccess);
-        await this.grantAccess(sharedObject, granteesToGrantAccess);
+        if (granteesToGrantAccess.length) {
+            await this.grantAccess(sharedObject, granteesToGrantAccess);
+        }
+        if (granteesToRevokeAccess.length) {
+            await this.revokeAccess(sharedObject, granteesToRevokeAccess);
+        }
     }
 
     public async getAvailableGrantees(

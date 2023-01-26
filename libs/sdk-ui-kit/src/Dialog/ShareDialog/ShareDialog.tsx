@@ -1,15 +1,5 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
-import { ShareDialogBase } from "./ShareDialogBase/ShareDialogBase";
-import { GranteeItem, IAffectedSharedObject } from "./ShareDialogBase/types";
-import { IShareDialogProps } from "./types";
-import {
-    mapGranteesToAccessGrantees,
-    mapGranteesToShareStatus,
-    mapOwnerToGrantee,
-    mapUserToInactiveOwner,
-    mapSharedObjectToAffectedSharedObject,
-} from "./shareDialogMappers";
 import {
     BackendProvider,
     IntlWrapper,
@@ -18,6 +8,17 @@ import {
     useWorkspaceStrict,
     WorkspaceProvider,
 } from "@gooddata/sdk-ui";
+
+import { ShareDialogBase } from "./ShareDialogBase/ShareDialogBase";
+import { GranteeItem, IAffectedSharedObject } from "./ShareDialogBase/types";
+import { IShareDialogProps } from "./types";
+import {
+    mapGranteesToGranularAccessGrantees,
+    mapGranteesToShareStatus,
+    mapOwnerToGrantee,
+    mapUserToInactiveOwner,
+    mapSharedObjectToAffectedSharedObject,
+} from "./shareDialogMappers";
 import { ComponentLabelsProvider } from "./ShareDialogBase/ComponentLabelsContext";
 
 /**
@@ -35,9 +36,14 @@ export const ShareDialog: React.FC<IShareDialogProps> = (props) => {
         onError,
         isLockingSupported,
         labels,
+        currentUserPermissions,
     } = props;
     const effectiveBackend = useBackendStrict(backend);
     const effectiveWorkspace = useWorkspaceStrict(workspace);
+    const areGranularPermissionsSupported = effectiveBackend.capabilities.supportsGranularAccessControl;
+    const isLeniencyControlSupported = !effectiveBackend.capabilities.usesStrictAccessControl;
+    const isMetadataObjectLockingSupported = effectiveBackend.capabilities.supportsMetadataObjectLocking;
+    const { createdBy } = sharedObject;
 
     const onShareDialogBaseError = useCallback(
         (err: Error) => {
@@ -47,11 +53,14 @@ export const ShareDialog: React.FC<IShareDialogProps> = (props) => {
     );
 
     const owner = useMemo(() => {
-        if (sharedObject.createdBy) {
-            return mapOwnerToGrantee(sharedObject.createdBy, currentUserRef);
+        if (areGranularPermissionsSupported) {
+            return undefined;
+        }
+        if (createdBy) {
+            return mapOwnerToGrantee(createdBy, currentUserRef);
         }
         return mapUserToInactiveOwner();
-    }, [sharedObject, currentUserRef]);
+    }, [createdBy, currentUserRef, areGranularPermissionsSupported]);
 
     const onSubmit = useCallback(
         (
@@ -63,30 +72,38 @@ export const ShareDialog: React.FC<IShareDialogProps> = (props) => {
         ) => {
             const shareStatus = mapGranteesToShareStatus(grantees, granteesToAdd, granteesToDelete);
             const isUnderStrictControl = shareStatus !== "public" && !isUnderLenientControl;
-            const add = mapGranteesToAccessGrantees(granteesToAdd);
-            const del = mapGranteesToAccessGrantees(granteesToDelete);
+
+            const addAccess = mapGranteesToGranularAccessGrantees(granteesToAdd, true);
+            const revokeAccess = mapGranteesToGranularAccessGrantees(granteesToDelete);
+
             onApply({
                 shareStatus,
                 isUnderStrictControl,
                 isLocked,
-                granteesToAdd: add,
-                granteesToDelete: del,
+                granteesToAdd: addAccess,
+                granteesToDelete: revokeAccess,
             });
         },
         [onApply],
     );
 
     const affectedSharedObject = useMemo<IAffectedSharedObject>(() => {
-        const isLeniencyControlSupported = !effectiveBackend.capabilities.usesStrictAccessControl;
-        const areGranularPermissionsSupported = effectiveBackend.capabilities.supportsGranularAccessControl;
         return mapSharedObjectToAffectedSharedObject(
             sharedObject,
             owner,
             isLockingSupported,
             isLeniencyControlSupported,
             areGranularPermissionsSupported,
+            isMetadataObjectLockingSupported,
         );
-    }, [sharedObject, owner, isLockingSupported, effectiveBackend]);
+    }, [
+        sharedObject,
+        owner,
+        isLockingSupported,
+        isLeniencyControlSupported,
+        areGranularPermissionsSupported,
+        isMetadataObjectLockingSupported,
+    ]);
 
     return (
         <IntlWrapper locale={locale}>
@@ -96,6 +113,7 @@ export const ShareDialog: React.FC<IShareDialogProps> = (props) => {
                         <ShareDialogBase
                             currentUserRef={currentUserRef}
                             sharedObject={affectedSharedObject}
+                            currentUserPermissions={currentUserPermissions}
                             onCancel={onCancel}
                             onSubmit={onSubmit}
                             onError={onShareDialogBaseError}

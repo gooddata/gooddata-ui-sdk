@@ -20,6 +20,7 @@ import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAuditableUsers } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IColorPaletteDefinition } from '@gooddata/sdk-model';
+import { IDashboardPermissions } from '@gooddata/sdk-model';
 import { IMeasureSortTarget } from '@gooddata/sdk-model';
 import { IMetadataObjectBase } from '@gooddata/sdk-model';
 import { IntlShape } from 'react-intl';
@@ -314,6 +315,9 @@ export const ContentDivider: React_2.VFC;
 
 // @internal (undocumented)
 export type CopyCodeOriginType = "keyboard" | "button";
+
+// @internal (undocumented)
+export type CurrentUserPermissions = IDashboardPermissions;
 
 // @internal (undocumented)
 export const CustomizableCheckmark: React_2.FC<ICustomizableCheckmarkProps>;
@@ -652,7 +656,7 @@ export const GranteeItemComponent: React_2.FC<IGranteeItemProps>;
 export type GranteeStatus = "Inactive" | "Active";
 
 // @internal (undocumented)
-export type GranteeType = "user" | "inactive_owner" | "group" | "groupAll";
+export type GranteeType = "user" | "inactive_owner" | "group" | "groupAll" | "granularUser" | "granularGroup";
 
 // @internal
 export function guidFor(obj: any): string;
@@ -724,6 +728,8 @@ export interface IAddGranteeBaseProps {
     // (undocumented)
     areGranularPermissionsSupported?: boolean;
     // (undocumented)
+    currentUserPermissions: CurrentUserPermissions;
+    // (undocumented)
     currentUserRef: ObjRef;
     // (undocumented)
     isDirty: boolean;
@@ -736,7 +742,11 @@ export interface IAddGranteeBaseProps {
     // (undocumented)
     onDelete: (grantee: GranteeItem) => void;
     // (undocumented)
+    onGranularGranteeChange?: (grantee: GranteeItem) => void;
+    // (undocumented)
     onSubmit: () => void;
+    // (undocumented)
+    sharedObjectRef: ObjRef;
 }
 
 // @internal (undocumented)
@@ -749,6 +759,8 @@ export interface IAffectedSharedObject {
     isLocked: boolean;
     // (undocumented)
     isLockingSupported: boolean;
+    // (undocumented)
+    isMetadataObjectLockingSupported: boolean;
     // (undocumented)
     isUnderLenientControl: boolean;
     // (undocumented)
@@ -1793,6 +1805,8 @@ export interface IGranteeItemProps {
     // (undocumented)
     areGranularPermissionsSupported?: boolean;
     // (undocumented)
+    currentUserPermissions: CurrentUserPermissions;
+    // (undocumented)
     grantee: GranteeItem;
     // (undocumented)
     mode: DialogModeType;
@@ -1819,19 +1833,35 @@ export interface IGranteeUser extends IGranteeBase {
 }
 
 // @internal (undocumented)
-export interface IGranularGranteeGroup extends IGranteeGroup {
+export interface IGranularGranteeGroup extends IGranteeBase {
     // (undocumented)
     inheritedPermissions: AccessGranularPermission[];
     // (undocumented)
+    name: string;
+    // (undocumented)
     permissions: AccessGranularPermission[];
+    // (undocumented)
+    type: "granularGroup";
 }
 
 // @internal (undocumented)
-export interface IGranularGranteeUser extends IGranteeUser {
+export interface IGranularGranteeUser extends IGranteeBase {
+    // (undocumented)
+    email?: string;
     // (undocumented)
     inheritedPermissions: AccessGranularPermission[];
     // (undocumented)
+    isCurrentUser: boolean;
+    // (undocumented)
+    isOwner: boolean;
+    // (undocumented)
+    name: string;
+    // (undocumented)
     permissions: AccessGranularPermission[];
+    // (undocumented)
+    status: GranteeStatus;
+    // (undocumented)
+    type: "granularUser";
 }
 
 // @internal (undocumented)
@@ -3390,6 +3420,8 @@ export const isGranularGranteeUser: (obj: unknown) => obj is IGranularGranteeUse
 // @internal (undocumented)
 export interface IShareDialogBaseProps {
     // (undocumented)
+    currentUserPermissions: CurrentUserPermissions;
+    // (undocumented)
     currentUserRef: ObjRef;
     // (undocumented)
     onCancel: () => void;
@@ -3418,6 +3450,8 @@ export interface IShareDialogProps {
     // (undocumented)
     backend: IAnalyticalBackend;
     // (undocumented)
+    currentUserPermissions: CurrentUserPermissions;
+    // (undocumented)
     currentUserRef: ObjRef;
     // (undocumented)
     isLockingSupported: boolean;
@@ -3445,6 +3479,8 @@ export interface ISharedObject extends IAccessControlAware, IAuditableUsers {
 
 // @internal (undocumented)
 export interface IShareGranteeBaseProps {
+    // (undocumented)
+    currentUserPermissions: CurrentUserPermissions;
     // (undocumented)
     currentUserRef: ObjRef;
     // (undocumented)
@@ -3479,6 +3515,8 @@ export interface IShareGranteeBaseProps {
 export interface IShareGranteeContentProps {
     // (undocumented)
     areGranularPermissionsSupported?: boolean;
+    // (undocumented)
+    currentUserPermissions: CurrentUserPermissions;
     // (undocumented)
     grantees: GranteeItem[];
     // (undocumented)

@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import React, { useCallback } from "react";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 import {
@@ -11,6 +11,7 @@ import {
     useDashboardCommandProcessing,
     changeSharing,
     selectCanManageWorkspace,
+    selectDashboardPermissions,
 } from "../../../model";
 import { ShareDialog, ISharingApplyPayload } from "../../shareDialog";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
@@ -23,6 +24,7 @@ const useShareDialogDashboardHeader = () => {
     const persistedDashboard = useDashboardSelector(selectPersistedDashboard);
     const currentUserRef = useDashboardSelector(selectCurrentUserRef);
     const isLockingSupported = useDashboardSelector(selectCanManageWorkspace);
+    const dashboardPermissions = useDashboardSelector(selectDashboardPermissions);
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
 
@@ -67,6 +69,7 @@ const useShareDialogDashboardHeader = () => {
         onApplyShareDialog,
         onErrorShareDialog,
         isLockingSupported,
+        currentUserPermissions: dashboardPermissions,
     };
 };
 
@@ -84,6 +87,7 @@ export const ShareDialogDashboardHeader = (): JSX.Element | null => {
         onApplyShareDialog,
         onErrorShareDialog,
         isLockingSupported,
+        currentUserPermissions,
     } = useShareDialogDashboardHeader();
 
     if (!isShareDialogOpen) {
@@ -101,6 +105,7 @@ export const ShareDialogDashboardHeader = (): JSX.Element | null => {
             onApply={onApplyShareDialog}
             onError={onErrorShareDialog}
             isLockingSupported={isLockingSupported}
+            currentUserPermissions={currentUserPermissions}
         />
     );
 };

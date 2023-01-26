@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import React, { KeyboardEventHandler, useCallback, useEffect, useMemo, useRef } from "react";
 import debounce from "debounce-promise";
 import { useIntl } from "react-intl";
@@ -27,7 +27,7 @@ const SEARCH_INTERVAL = 400;
  * @internal
  */
 export const AddGranteeSelect: React.FC<IAddGranteeSelectProps> = (props) => {
-    const { appliedGrantees, currentUserRef, onSelectGrantee } = props;
+    const { appliedGrantees, currentUserRef, sharedObjectRef, onSelectGrantee } = props;
     const backend: IAnalyticalBackend = useBackendStrict();
     const workspace: string = useWorkspaceStrict();
 
@@ -61,7 +61,14 @@ export const AddGranteeSelect: React.FC<IAddGranteeSelectProps> = (props) => {
     const loadOptions = useMemo(
         () =>
             debounce(
-                loadGranteeOptionsPromise(currentUserRef, appliedGrantees, backend, workspace, intl),
+                loadGranteeOptionsPromise(
+                    currentUserRef,
+                    sharedObjectRef,
+                    appliedGrantees,
+                    backend,
+                    workspace,
+                    intl,
+                ),
                 SEARCH_INTERVAL,
                 {
                     leading: true,

@@ -1,7 +1,12 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
-import { isFilterContext, IDashboard, IDashboardDefinition } from "@gooddata/sdk-model";
+import {
+    isFilterContext,
+    IDashboard,
+    IDashboardDefinition,
+    isGranularAccessGrantee,
+} from "@gooddata/sdk-model";
 
 import { DashboardContext } from "../../types/commonTypes";
 import { ChangeSharing } from "../../commands";
@@ -67,20 +72,11 @@ function updateDashboard(
         .updateDashboard(saveSharingCtx.persistedDashboard, saveSharingCtx.dashboardToSave);
 }
 
-function addGrantees(ctx: DashboardContext, saveSharingCtx: DashboardSaveSharingContext): Promise<any> {
-    const { cmd } = saveSharingCtx;
-    return ctx.backend
-        .workspace(ctx.workspace)
-        .accessControl()
-        .grantAccess(ctx.dashboardRef!, cmd.payload.newSharingProperties.granteesToAdd);
-}
+function changeGrantees(ctx: DashboardContext, saveSharingCtx: DashboardSaveSharingContext): Promise<any> {
+    const { granteesToAdd, granteesToDelete } = saveSharingCtx.cmd.payload.newSharingProperties;
+    const grantees = [...granteesToAdd, ...granteesToDelete].filter(isGranularAccessGrantee);
 
-function removeGrantees(ctx: DashboardContext, saveSharingCtx: DashboardSaveSharingContext): Promise<any> {
-    const { cmd } = saveSharingCtx;
-    return ctx.backend
-        .workspace(ctx.workspace)
-        .accessControl()
-        .revokeAccess(ctx.dashboardRef!, cmd.payload.newSharingProperties.granteesToDelete);
+    return ctx.backend.workspace(ctx.workspace).accessControl().changeAccess(ctx.dashboardRef!, grantees);
 }
 
 type DashboardSaveSharingResult = {
@@ -98,14 +94,11 @@ function* saveSharing(
         saveSharingCtx,
     );
 
-    const { granteesToDelete, granteesToAdd } = saveSharingCtx.cmd.payload.newSharingProperties;
+    const { granteesToAdd, granteesToDelete } = saveSharingCtx.cmd.payload.newSharingProperties;
+    const grantees = [...granteesToAdd, ...granteesToDelete].filter(isGranularAccessGrantee);
 
-    if (!isEmpty(granteesToDelete)) {
-        yield call(removeGrantees, ctx, saveSharingCtx);
-    }
-
-    if (!isEmpty(granteesToAdd)) {
-        yield call(addGrantees, ctx, saveSharingCtx);
+    if (!isEmpty(grantees)) {
+        yield call(changeGrantees, ctx, saveSharingCtx);
     }
 
     const batch = batchActions([metaActions.setMeta({ dashboard })], "@@GDC.DASH.SAVE_SHARING");

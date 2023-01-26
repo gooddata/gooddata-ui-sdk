@@ -2,7 +2,13 @@
 import { IWorkspaceAccessControlService } from "@gooddata/sdk-backend-spi";
 import { AssigneeIdentifierTypeEnum, AvailableAssignees } from "@gooddata/api-client-tiger";
 import { TigerAuthenticatedCallGuard } from "../../../types";
-import { ObjRef, AccessGranteeDetail, GranularGrantee, IAvailableAccessGrantee } from "@gooddata/sdk-model";
+import {
+    ObjRef,
+    AccessGranteeDetail,
+    IGranularAccessGrantee,
+    IAvailableAccessGrantee,
+    isGranularUserAccessGrantee,
+} from "@gooddata/sdk-model";
 import {
     convertUserAssignee,
     convertUserGroupAssignee,
@@ -28,11 +34,11 @@ export class TigerWorkspaceAccessControlService implements IWorkspaceAccessContr
         ];
     }
 
-    public async grantAccess(sharedObject: ObjRef, grantees: GranularGrantee[]): Promise<void> {
+    public async grantAccess(sharedObject: ObjRef, grantees: IGranularAccessGrantee[]): Promise<void> {
         return this.changeAccess(sharedObject, grantees);
     }
 
-    public async revokeAccess(sharedObject: ObjRef, grantees: GranularGrantee[]): Promise<void> {
+    public async revokeAccess(sharedObject: ObjRef, grantees: IGranularAccessGrantee[]): Promise<void> {
         const granteesToRevokeAccess = grantees.map((grantee) => ({
             ...grantee,
             permissions: [],
@@ -41,16 +47,15 @@ export class TigerWorkspaceAccessControlService implements IWorkspaceAccessContr
         return this.changeAccess(sharedObject, granteesToRevokeAccess);
     }
 
-    public async changeAccess(sharedObject: ObjRef, grantees: GranularGrantee[]): Promise<void> {
+    public async changeAccess(sharedObject: ObjRef, grantees: IGranularAccessGrantee[]): Promise<void> {
         const objectId = await objRefToIdentifier(sharedObject, this.authCall);
         const permissionsForAssignees = await Promise.all(
             grantees.map(async (grantee) => ({
                 assigneeIdentifier: {
                     id: await objRefToIdentifier(grantee.granteeRef, this.authCall),
-                    type:
-                        grantee.type === "group"
-                            ? AssigneeIdentifierTypeEnum.USER_GROUP
-                            : AssigneeIdentifierTypeEnum.USER,
+                    type: isGranularUserAccessGrantee(grantee)
+                        ? AssigneeIdentifierTypeEnum.USER
+                        : AssigneeIdentifierTypeEnum.USER_GROUP,
                 },
                 permissions: grantee.permissions,
             })),

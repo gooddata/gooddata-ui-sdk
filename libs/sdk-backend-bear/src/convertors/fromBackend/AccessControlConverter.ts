@@ -5,12 +5,13 @@ import { convertWorkspaceUserGroup } from "./UserGroupsConverter";
 import { convertUsersItem } from "./UsersConverter";
 import {
     AccessGranteeDetail,
-    GranularGrantee,
+    IGranularAccessGrantee,
     IAvailableUserAccessGrantee,
     IAvailableUserGroupAccessGrantee,
     IWorkspaceUser,
     IWorkspaceUserGroup,
     IAccessGrantee,
+    isGranularUserAccessGrantee,
 } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 
@@ -60,9 +61,12 @@ export const convertWorkspaceUserGroupToAvailableUserGroupAccessGrantee = (
     name: group.name ?? "",
 });
 
-export const removePermissionsFromGrantee = (grantee: GranularGrantee): IAccessGrantee => {
+export const convertGranularAccessGranteeToAcessGrantee = (
+    grantee: IGranularAccessGrantee,
+): IAccessGrantee => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { permissions, inheritedPermissions, ...rest } = grantee;
+    const type = isGranularUserAccessGrantee(grantee) ? "user" : "group";
 
-    return rest;
+    return { ...rest, type };
 };

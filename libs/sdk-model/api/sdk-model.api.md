@@ -423,9 +423,6 @@ export function filterObjRef(filter: IAbsoluteDateFilter | IRelativeDateFilter |
 export function filterObjRef(filter: IFilter): ObjRef | undefined;
 
 // @public
-export type GranularGrantee = IGranularUserAccessGrantee | IGranularUserGroupAccessGrantee;
-
-// @public
 export type GroupableCatalogItem = ICatalogAttribute | ICatalogMeasure | ICatalogFact;
 
 // @public (undocumented)
@@ -469,7 +466,7 @@ export interface IAccessControlAware {
 }
 
 // @public
-export type IAccessGrantee = IUserGroupAccessGrantee | IUserAccessGrantee | GranularGrantee;
+export type IAccessGrantee = IUserGroupAccessGrantee | IUserAccessGrantee | IGranularAccessGrantee;
 
 // @alpha
 export interface IAllTimeDateFilterOption extends IDateFilterOption {
@@ -630,25 +627,17 @@ export type IAvailableAccessGrantee = IAvailableUserAccessGrantee | IAvailableUs
 
 // @alpha
 export interface IAvailableUserAccessGrantee {
-    // (undocumented)
     email?: string;
-    // (undocumented)
     name: string;
-    // (undocumented)
     ref: ObjRef;
-    // (undocumented)
     status: "ENABLED" | "DISABLED";
-    // (undocumented)
     type: "user";
 }
 
 // @alpha
 export interface IAvailableUserGroupAccessGrantee {
-    // (undocumented)
     name: string;
-    // (undocumented)
     ref: ObjRef;
-    // (undocumented)
     type: "group";
 }
 
@@ -1237,24 +1226,37 @@ export interface IFilterContextDefinition extends IFilterContextBase, Partial<ID
 }
 
 // @public
-export interface IGranularAccessGrantee {
-    // (undocumented)
+export interface IGranteeGranularity {
     inheritedPermissions: AccessGranularPermission[];
-    // (undocumented)
     permissions: AccessGranularPermission[];
 }
 
-// @alpha
-export type IGranularUserAccess = IUserAccess & IGranularAccessGrantee;
-
 // @public
-export type IGranularUserAccessGrantee = IUserAccessGrantee & IGranularAccessGrantee;
+export type IGranularAccessGrantee = IGranularUserAccessGrantee | IGranularUserGroupAccessGrantee;
 
 // @alpha
-export type IGranularUserGroupAccess = IUserGroupAccess & IGranularAccessGrantee;
+export interface IGranularUserAccess extends IGranteeGranularity {
+    type: "granularUser";
+    user: IWorkspaceUser;
+}
 
 // @public
-export type IGranularUserGroupAccessGrantee = IUserGroupAccessGrantee & IGranularAccessGrantee;
+export interface IGranularUserAccessGrantee extends IGranteeGranularity {
+    granteeRef: ObjRef;
+    type: "granularUser";
+}
+
+// @alpha
+export interface IGranularUserGroupAccess extends IGranteeGranularity {
+    type: "granularGroup";
+    userGroup: IWorkspaceUserGroup;
+}
+
+// @public
+export interface IGranularUserGroupAccessGrantee extends IGranteeGranularity {
+    granteeRef: ObjRef;
+    type: "granularGroup";
+}
 
 // @public
 export interface IGroupableCatalogItemBase extends ICatalogItemBase {
@@ -2241,7 +2243,19 @@ export function isFilterContextDefinition(obj: unknown): obj is IFilterContextDe
 export const isGranularAccess: (obj: unknown) => obj is IGranularUserAccess | IGranularUserGroupAccess;
 
 // @alpha
-export const isGranularGrantee: (obj: unknown) => obj is GranularGrantee;
+export const isGranularAccessGrantee: (obj: unknown) => obj is IGranularAccessGrantee;
+
+// @alpha
+export const isGranularUserAccess: (obj: unknown) => obj is IGranularUserAccess;
+
+// @alpha
+export const isGranularUserAccessGrantee: (obj: unknown) => obj is IGranularUserAccessGrantee;
+
+// @alpha
+export const isGranularUserGroupAccess: (obj: unknown) => obj is IGranularUserGroupAccess;
+
+// @alpha
+export const isGranularUserGroupAccessGrantee: (obj: unknown) => obj is IGranularUserGroupAccessGrantee;
 
 // @public
 export function isIdentifierRef(obj: unknown): obj is IdentifierRef;
@@ -2730,33 +2744,25 @@ export interface IUser {
 
 // @alpha
 export interface IUserAccess {
-    // (undocumented)
     type: "user";
-    // (undocumented)
     user: IWorkspaceUser;
 }
 
 // @public
 export interface IUserAccessGrantee {
-    // (undocumented)
     granteeRef: ObjRef;
-    // (undocumented)
     type: "user";
 }
 
 // @alpha
 export interface IUserGroupAccess {
-    // (undocumented)
     type: "group";
-    // (undocumented)
     userGroup: IWorkspaceUserGroup;
 }
 
 // @public
 export interface IUserGroupAccessGrantee {
-    // (undocumented)
     granteeRef: ObjRef;
-    // (undocumented)
     type: "group";
 }
 

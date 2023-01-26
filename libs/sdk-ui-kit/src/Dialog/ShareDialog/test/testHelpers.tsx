@@ -1,17 +1,29 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 
 import React from "react";
 import { mount, ReactWrapper } from "enzyme";
 import { act } from "react-dom/test-utils";
 import { noop } from "lodash";
-import { recordedBackend, RecordedBackendConfig } from "@gooddata/sdk-backend-mockingbird";
+import {
+    defaultRecordedBackendCapabilities,
+    recordedBackend,
+    RecordedBackendConfig,
+} from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { IShareDialogLabels, IShareDialogProps, ISharedObject } from "../types";
-import { uriRef, IWorkspaceUser, IWorkspaceUserGroup, AccessGranteeDetail } from "@gooddata/sdk-model";
+import { CurrentUserPermissions, IShareDialogLabels, IShareDialogProps, ISharedObject } from "../types";
+import {
+    uriRef,
+    IWorkspaceUser,
+    IWorkspaceUserGroup,
+    AccessGranteeDetail,
+    IAvailableAccessGrantee,
+    IAvailableUserAccessGrantee,
+} from "@gooddata/sdk-model";
 import { ShareDialog } from "../ShareDialog";
 import { groupAll } from "../ShareDialogBase/test/GranteeMock";
 import { getGranteeItemTestId } from "../ShareDialogBase/utils";
 import { mapWorkspaceUserToGrantee } from "../shareDialogMappers";
+import { IBackendCapabilities } from "@gooddata/sdk-backend-spi/src";
 
 export const labels: IShareDialogLabels = {
     accessTypeLabel: "lockControl label",
@@ -26,6 +38,12 @@ export const defaultSharedObject: ISharedObject = {
     createdBy: undefined,
 };
 
+const defaultUserPermissions: CurrentUserPermissions = {
+    canEditDashboard: false,
+    canShareDashboard: true,
+    canViewDashboard: true,
+};
+
 export const defaultProps: IShareDialogProps = {
     backend: recordedBackend(ReferenceRecordings.Recordings),
     workspace: "foo",
@@ -37,6 +55,7 @@ export const defaultProps: IShareDialogProps = {
     onApply: noop,
     onCancel: noop,
     onError: noop,
+    currentUserPermissions: defaultUserPermissions,
 };
 
 export const createComponent = async (
@@ -44,6 +63,8 @@ export const createComponent = async (
     users: IWorkspaceUser[] = [],
     groups: IWorkspaceUserGroup[] = [],
     grantees: AccessGranteeDetail[] = [],
+    availableGrantees: IAvailableAccessGrantee[] = [],
+    capabilities: IBackendCapabilities = defaultRecordedBackendCapabilities,
 ): Promise<ReactWrapper> => {
     const config: RecordedBackendConfig = {
         userManagement: {
@@ -55,11 +76,12 @@ export const createComponent = async (
             },
             accessControl: {
                 accessList: grantees,
+                availableGrantees,
             },
         },
     };
 
-    const backend = recordedBackend(ReferenceRecordings.Recordings, config);
+    const backend = recordedBackend(ReferenceRecordings.Recordings, config, capabilities);
 
     const props: IShareDialogProps = { ...defaultProps, ...customProps, backend };
 
@@ -97,7 +119,11 @@ export function isCurrentUserInGrantees(wrapper: ReactWrapper): boolean {
     return wrapper.find(".s-share-dialog-current-user").hostNodes().length === 1;
 }
 
-export function getGranteeSelector(user: IWorkspaceUser): string {
+export function isGranularPermissionsDropdownButtonVisible(wrapper: ReactWrapper): boolean {
+    return wrapper.find(".s-granular-permission-button").hostNodes().length > 0;
+}
+
+export function getGranteeSelector(user: IAvailableUserAccessGrantee): string {
     const grantee = mapWorkspaceUserToGrantee(user, uriRef(""));
     return `.${getGranteeItemTestId(grantee)}`;
 }
@@ -139,7 +165,7 @@ export function getGroupAllOptionSelector(): string {
     return `.${getGranteeItemTestId(groupAll, "option")}`;
 }
 
-export function getUserOptionSelector(user: IWorkspaceUser): string {
+export function getUserOptionSelector(user: IAvailableUserAccessGrantee): string {
     return `.${getGranteeItemTestId(mapWorkspaceUserToGrantee(user, uriRef("")), "option")}`;
 }
 

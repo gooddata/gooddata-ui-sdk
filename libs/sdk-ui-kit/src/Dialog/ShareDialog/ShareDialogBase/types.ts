@@ -1,10 +1,8 @@
 // (C) 2021-2023 GoodData Corporation
-import isEmpty from "lodash/isEmpty";
 import { AccessGranularPermission, ObjRef, ShareStatus } from "@gooddata/sdk-model";
+import isEmpty from "lodash/isEmpty";
 
-import { IShareDialogLabels } from "../types";
-import has from "lodash/has";
-import isArray from "lodash/isArray";
+import { CurrentUserPermissions, IShareDialogLabels } from "../types";
 
 // Grantee types
 
@@ -22,7 +20,7 @@ export type GranteeItem =
 /**
  * @internal
  */
-export type GranteeType = "user" | "inactive_owner" | "group" | "groupAll";
+export type GranteeType = "user" | "inactive_owner" | "group" | "groupAll" | "granularUser" | "granularGroup";
 
 /**
  * @internal
@@ -59,7 +57,13 @@ export const isGranteeUser = (obj: unknown): obj is IGranteeUser => {
 /**
  * @internal
  */
-export interface IGranularGranteeUser extends IGranteeUser {
+export interface IGranularGranteeUser extends IGranteeBase {
+    type: "granularUser";
+    name: string;
+    isOwner: boolean;
+    isCurrentUser: boolean;
+    status: GranteeStatus;
+    email?: string;
     permissions: AccessGranularPermission[];
     inheritedPermissions: AccessGranularPermission[];
 }
@@ -68,9 +72,7 @@ export interface IGranularGranteeUser extends IGranteeUser {
  * @internal
  */
 export const isGranularGranteeUser = (obj: unknown): obj is IGranularGranteeUser => {
-    return (
-        isGranteeUser(obj) && has(obj, "permissions") && isArray((obj as IGranularGranteeUser).permissions)
-    );
+    return !isEmpty(obj) && (obj as IGranularGranteeUser).type === "granularUser";
 };
 
 /**
@@ -105,7 +107,9 @@ export const isGranteeGroup = (obj: unknown): obj is IGranteeGroup => {
 /**
  * @internal
  */
-export interface IGranularGranteeGroup extends IGranteeGroup {
+export interface IGranularGranteeGroup extends IGranteeBase {
+    type: "granularGroup";
+    name: string;
     permissions: AccessGranularPermission[];
     inheritedPermissions: AccessGranularPermission[];
 }
@@ -114,9 +118,7 @@ export interface IGranularGranteeGroup extends IGranteeGroup {
  * @internal
  */
 export const isGranularGranteeGroup = (obj: unknown): obj is IGranularGranteeGroup => {
-    return (
-        isGranteeGroup(obj) && has(obj, "permissions") && isArray((obj as IGranularGranteeGroup).permissions)
-    );
+    return !isEmpty(obj) && (obj as IGranularGranteeGroup).type === "granularGroup";
 };
 
 /**
@@ -181,6 +183,7 @@ export interface IAffectedSharedObject {
     isUnderLenientControl: boolean;
     isLockingSupported: boolean;
     isLeniencyControlSupported: boolean;
+    isMetadataObjectLockingSupported: boolean;
     areGranularPermissionsSupported?: boolean;
 }
 
@@ -190,6 +193,7 @@ export interface IAffectedSharedObject {
 export interface IShareDialogBaseProps {
     sharedObject: IAffectedSharedObject;
     currentUserRef: ObjRef;
+    currentUserPermissions: CurrentUserPermissions;
     onCancel: () => void;
     onSubmit: (
         grantees: GranteeItem[],
@@ -207,6 +211,7 @@ export interface IShareDialogBaseProps {
 export interface IGranteeItemProps {
     mode: DialogModeType;
     grantee: GranteeItem;
+    currentUserPermissions: CurrentUserPermissions;
     areGranularPermissionsSupported?: boolean;
     onDelete: (grantee: GranteeItem) => void;
     onChange?: (grantee: GranteeItem) => void;
@@ -223,6 +228,7 @@ export interface IShareGranteeBaseProps {
     isUnderLenientControlNow: boolean;
     sharedObject: IAffectedSharedObject;
     grantees: GranteeItem[];
+    currentUserPermissions: CurrentUserPermissions;
     onAddGranteeButtonClick: () => void;
     onGranteeDelete: (grantee: GranteeItem) => void;
     onCancel: () => void;
@@ -238,6 +244,7 @@ export interface IShareGranteeBaseProps {
 export interface IShareGranteeContentProps {
     isLoading: boolean;
     grantees: GranteeItem[];
+    currentUserPermissions: CurrentUserPermissions;
     areGranularPermissionsSupported?: boolean;
     onAddGrantee: () => void;
     onDelete: (grantee: GranteeItem) => void;
@@ -252,12 +259,15 @@ export interface IAddGranteeBaseProps {
     currentUserRef: ObjRef;
     addedGrantees: GranteeItem[];
     appliedGrantees: GranteeItem[];
+    currentUserPermissions: CurrentUserPermissions;
+    sharedObjectRef: ObjRef;
     areGranularPermissionsSupported?: boolean;
     onBackClick?: () => void;
     onDelete: (grantee: GranteeItem) => void;
     onAddUserOrGroups?: (grantee: GranteeItem) => void; // rename
     onCancel: () => void;
     onSubmit: () => void;
+    onGranularGranteeChange?: (grantee: GranteeItem) => void;
 }
 
 /**
@@ -267,9 +277,12 @@ export interface IAddGranteeContentProps {
     currentUserRef: ObjRef;
     addedGrantees: GranteeItem[];
     appliedGrantees: GranteeItem[];
+    currentUserPermissions: CurrentUserPermissions;
+    sharedObjectRef: ObjRef;
     areGranularPermissionsSupported?: boolean;
     onDelete: (grantee: GranteeItem) => void;
     onAddUserOrGroups: (grantee: GranteeItem) => void;
+    onGranularGranteeChange?: (grantee: GranteeItem) => void;
 }
 
 /**
@@ -278,6 +291,7 @@ export interface IAddGranteeContentProps {
 export interface IGranteesListProps {
     mode: DialogModeType;
     grantees: GranteeItem[];
+    currentUserPermissions: CurrentUserPermissions;
     areGranularPermissionsSupported?: boolean;
     onDelete: (grantee: GranteeItem) => void;
     onChange?: (grantee: GranteeItem) => void;
@@ -330,6 +344,7 @@ export interface IAddGranteeSelectProps {
     onSelectGrantee: (grantee: GranteeItem) => void;
     currentUserRef: ObjRef;
     appliedGrantees: GranteeItem[];
+    sharedObjectRef: ObjRef;
 }
 
 /**
@@ -354,7 +369,7 @@ export interface ISharedObjectUnderLenientControlProps {
  * @internal
  */
 export interface IGranularPermissionTypeItem {
-    id: string;
+    id: AccessGranularPermission;
     title: string;
     disabled?: boolean;
 }

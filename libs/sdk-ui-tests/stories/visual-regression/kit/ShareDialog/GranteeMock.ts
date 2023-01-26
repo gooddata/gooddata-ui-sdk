@@ -8,7 +8,14 @@ import {
     IGranteeInactiveOwner,
     IGranularGranteeUser,
     IGranularGranteeGroup,
+    CurrentUserPermissions,
 } from "@gooddata/sdk-ui-kit";
+
+export const defaultUserPermissions: CurrentUserPermissions = {
+    canEditDashboard: true,
+    canShareDashboard: true,
+    canViewDashboard: true,
+};
 
 export const user: IGranteeUser = {
     type: "user",
@@ -85,25 +92,25 @@ export const inactiveUser: IGranteeInactiveOwner = {
 };
 
 export const granularUser: IGranularGranteeUser = {
-    type: "user",
+    type: "granularUser",
     id: uriRef("userID1"),
     name: "User Name",
     email: "user.name@gooddata.com",
-    permissions: ["EDIT"],
+    permissions: ["VIEW"],
     isCurrentUser: false,
     isOwner: true,
-    inheritedPermissions: ["VIEW"],
+    inheritedPermissions: ["SHARE"],
     status: "Active",
 };
 
 export const granularGroup: IGranularGranteeGroup = {
-    type: "group",
+    type: "granularGroup",
     id: uriRef("userID1"),
     name: "Group Name",
     permissions: ["EDIT"],
-    inheritedPermissions: ["VIEW"],
+    inheritedPermissions: [],
 };
 
 export const grantees: GranteeItem[] = [user, group];
 
-export const granularGrantees: GranteeItem[] = [granularUser];
+export const granularGrantees: GranteeItem[] = [granularUser, granularGroup];

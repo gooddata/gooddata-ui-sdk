@@ -5,7 +5,7 @@ import {
     AccessGranteeDetail,
     IAccessGrantee,
     IAvailableAccessGrantee,
-    GranularGrantee,
+    IGranularAccessGrantee,
 } from "@gooddata/sdk-model";
 
 /**
@@ -31,7 +31,7 @@ export interface IWorkspaceAccessControlService {
      * @param sharedObject - the ref of object that will have access changed
      * @param grantees - list of grantees that will have access changed for the shared object
      */
-    changeAccess(sharedObject: ObjRef, grantees: GranularGrantee[]): Promise<void>;
+    changeAccess(sharedObject: ObjRef, grantees: IGranularAccessGrantee[]): Promise<void>;
 
     /**
      * Get list of available grantees for the shared object.

@@ -1,22 +1,25 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
-import { IUser, uriRef, IListedDashboard, ShareStatus } from "@gooddata/sdk-model";
+import { IUser, uriRef, IListedDashboard, ShareStatus, IGranularAccessGrantee } from "@gooddata/sdk-model";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 
 import {
+    availableUserAccessGrantee,
+    availableUserGroupAccessGrantee,
     grantees,
+    granularGrantees,
+    granularUserAccess,
+    granularUserGroupAccess,
     groupAccessGrantee,
     groupAll,
     owner,
     user,
     userAccessGrantee,
-    workSpaceGroup,
-    workspaceUser,
 } from "../ShareDialogBase/test/GranteeMock";
 import { GranteeItem, IGranteeUser } from "../ShareDialogBase/types";
 import { GranteeGroupAll } from "../ShareDialogBase/utils";
 import {
-    mapGranteesToAccessGrantees,
+    mapGranteesToGranularAccessGrantees,
     mapGranteesToShareStatus,
     mapOwnerToGrantee,
     mapShareStatusToGroupAll,
@@ -193,12 +196,14 @@ describe("shareDialogMappers", () => {
                 id: uriRef("john-id"),
                 isCurrentUser: false,
                 isOwner: false,
-                name: "John Doe ",
+                name: "John Doe",
                 status: "Active",
                 type: "user",
             };
 
-            expect(mapWorkspaceUserToGrantee(workspaceUser, uriRef(""))).toEqual(expectedGrantee);
+            expect(mapWorkspaceUserToGrantee(availableUserAccessGrantee, uriRef(""))).toEqual(
+                expectedGrantee,
+            );
         });
 
         it("should return correctly mapped current workspace user to grantee", () => {
@@ -207,12 +212,14 @@ describe("shareDialogMappers", () => {
                 id: uriRef("john-id"),
                 isCurrentUser: true,
                 isOwner: false,
-                name: "John Doe ",
+                name: "John Doe",
                 status: "Active",
                 type: "user",
             };
 
-            expect(mapWorkspaceUserToGrantee(workspaceUser, uriRef("john-id"))).toEqual(expectedGrantee);
+            expect(mapWorkspaceUserToGrantee(availableUserAccessGrantee, uriRef("john-id"))).toEqual(
+                expectedGrantee,
+            );
         });
     });
 
@@ -223,17 +230,63 @@ describe("shareDialogMappers", () => {
                 name: "Test group",
                 type: "group",
             };
-            expect(mapWorkspaceUserGroupToGrantee(workSpaceGroup)).toEqual(expectedGrantee);
+            expect(mapWorkspaceUserGroupToGrantee(availableUserGroupAccessGrantee)).toEqual(expectedGrantee);
         });
     });
 
-    describe("mapGranteesToAccessGrantees", () => {
-        it("should return correctly mapped grantees to access grantees", () => {
-            const accessGrantee = [
-                { granteeRef: uriRef("userID1"), type: "user" },
-                { granteeRef: uriRef("groupId"), type: "group" },
+    describe("mapGranteesToGranularAccessGrantees", () => {
+        it("should return correctly mapped grantees to granular access grantees", () => {
+            const accessGrantees: IGranularAccessGrantee[] = [
+                {
+                    granteeRef: uriRef("userID1"),
+                    type: "granularUser",
+                    inheritedPermissions: [],
+                    permissions: [],
+                },
+                {
+                    granteeRef: uriRef("groupId"),
+                    type: "granularGroup",
+                    inheritedPermissions: [],
+                    permissions: [],
+                },
             ];
-            expect(mapGranteesToAccessGrantees(grantees)).toEqual(accessGrantee);
+            expect(mapGranteesToGranularAccessGrantees(grantees)).toEqual(accessGrantees);
+        });
+
+        it("should return correctly mapped grantees to granular access grantees when adding new grantees", () => {
+            const accessGrantees: IGranularAccessGrantee[] = [
+                {
+                    granteeRef: uriRef("userID1"),
+                    type: "granularUser",
+                    permissions: ["VIEW"],
+                    inheritedPermissions: [],
+                },
+                {
+                    granteeRef: uriRef("groupId"),
+                    type: "granularGroup",
+                    permissions: ["VIEW"],
+                    inheritedPermissions: [],
+                },
+            ];
+            expect(mapGranteesToGranularAccessGrantees(grantees, true)).toEqual(accessGrantees);
+        });
+
+        it("should return correctly mapped granular grantees to granular access grantees", () => {
+            const accessGrantees: IGranularAccessGrantee[] = [
+                {
+                    granteeRef: uriRef("userID1"),
+                    type: "granularUser",
+                    permissions: ["VIEW"],
+                    inheritedPermissions: ["SHARE"],
+                },
+                {
+                    granteeRef: uriRef("groupId"),
+                    type: "granularGroup",
+                    permissions: ["EDIT"],
+                    inheritedPermissions: [],
+                },
+            ];
+            expect(mapGranteesToGranularAccessGrantees(granularGrantees)).toEqual(accessGrantees);
         });
     });
 
@@ -244,7 +297,7 @@ describe("shareDialogMappers", () => {
                 id: uriRef("john-id"),
                 isCurrentUser: false,
                 isOwner: false,
-                name: "John Doe ",
+                name: "John Doe",
                 status: "Active",
                 type: "user",
             };
@@ -257,7 +310,7 @@ describe("shareDialogMappers", () => {
                 id: uriRef("john-id"),
                 isCurrentUser: true,
                 isOwner: false,
-                name: "John Doe ",
+                name: "John Doe",
                 status: "Active",
                 type: "user",
             };
@@ -274,6 +327,35 @@ describe("shareDialogMappers", () => {
             };
 
             expect(mapAccessGranteeDetailToGrantee(groupAccessGrantee, uriRef(""))).toEqual(expected);
+        });
+
+        it("should return correctly mapped IGranularUserAccess to grantee", () => {
+            const expectedGrantee: GranteeItem = {
+                email: "john.doe@d.com",
+                id: uriRef("john-id"),
+                isCurrentUser: true,
+                isOwner: false,
+                name: "John Doe",
+                status: "Active",
+                type: "granularUser",
+                permissions: ["VIEW"],
+                inheritedPermissions: ["SHARE"],
+            };
+            expect(mapAccessGranteeDetailToGrantee(granularUserAccess, uriRef("john-id"))).toEqual(
+                expectedGrantee,
+            );
+        });
+
+        it("should return correctly mapped current IGranularUserGroupAccess to grantee", () => {
+            const expected: GranteeItem = {
+                id: uriRef("test-group-id"),
+                name: "Test group",
+                type: "granularGroup",
+                permissions: ["EDIT"],
+                inheritedPermissions: [],
+            };
+
+            expect(mapAccessGranteeDetailToGrantee(granularUserGroupAccess, uriRef(""))).toEqual(expected);
         });
     });
 

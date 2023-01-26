@@ -1,6 +1,7 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import React, { useMemo } from "react";
 import { useIntl } from "react-intl";
+import compact from "lodash/compact";
 
 import { ConfirmDialogBase } from "../../ConfirmDialogBase";
 
@@ -21,6 +22,7 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
         grantees,
         sharedObject,
         isDirty,
+        currentUserPermissions,
         onCancel,
         onSubmit,
         onGranteeDelete,
@@ -29,13 +31,18 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
         onLockChange,
         onUnderLenientControlChange,
     } = props;
-    const { owner, isLeniencyControlSupported, isLockingSupported, areGranularPermissionsSupported } =
-        sharedObject;
+    const {
+        owner,
+        isLeniencyControlSupported,
+        isLockingSupported,
+        areGranularPermissionsSupported,
+        isMetadataObjectLockingSupported,
+    } = sharedObject;
 
     const intl = useIntl();
 
     const granteeList = useMemo(() => {
-        return [owner, ...grantees];
+        return compact([owner, ...grantees]);
     }, [grantees, owner, intl]);
 
     const dialogLabels = useMemo(() => {
@@ -59,6 +66,7 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
             onSubmit={onSubmit}
         >
             <ShareGranteeContent
+                currentUserPermissions={currentUserPermissions}
                 isLoading={isLoading}
                 grantees={granteeList}
                 areGranularPermissionsSupported={areGranularPermissionsSupported}
@@ -72,11 +80,13 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
                 isLeniencyControlSupported={isLeniencyControlSupported}
                 onUnderLenientControlChange={onUnderLenientControlChange}
             />
-            <SharedObjectLockControl
-                isLocked={isLockedNow}
-                isLockingSupported={isLockingSupported}
-                onLockChange={onLockChange}
-            />
+            {isMetadataObjectLockingSupported && (
+                <SharedObjectLockControl
+                    isLocked={isLockedNow}
+                    isLockingSupported={isLockingSupported}
+                    onLockChange={onLockChange}
+                />
+            )}
         </ConfirmDialogBase>
     );
 };

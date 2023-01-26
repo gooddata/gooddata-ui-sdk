@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 
 import React, { useCallback, useMemo } from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
@@ -13,9 +13,9 @@ import {
     IGranteeInactiveOwner,
     isGranteeUser,
     isGranteeGroup,
+    isGranteeGroupAll,
     isGranularGranteeUser,
     isGranularGranteeGroup,
-    isGranteeGroupAll,
 } from "./types";
 import { getGranteeLabel, getGranteeItemTestId } from "./utils";
 import {
@@ -28,6 +28,7 @@ import {
 import { Button } from "../../../Button";
 import { GranularGranteeUserItem } from "./GranularPermissions/GranularGranteeUserItem";
 import { GranularGranteeGroupItem } from "./GranularPermissions/GranularGranteeGroupItem";
+import invariant from "ts-invariant";
 
 interface IGranteeUserItemProps {
     grantee: IGranteeUser;
@@ -170,21 +171,33 @@ const GranteeGroupItem: React.FC<IGranteeGroupItemProps> = (props) => {
  * @internal
  */
 export const GranteeItemComponent: React.FC<IGranteeItemProps> = (props) => {
-    const { grantee, mode, areGranularPermissionsSupported, onDelete, onChange } = props;
+    const { grantee, mode, currentUserPermissions, onDelete, onChange } = props;
 
-    if (areGranularPermissionsSupported) {
-        if (isGranularGranteeUser(grantee)) {
-            return <GranularGranteeUserItem grantee={grantee} onChange={onChange} onDelete={onDelete} />;
-        } else if (isGranularGranteeGroup(grantee)) {
-            return <GranularGranteeGroupItem grantee={grantee} onChange={onChange} onDelete={onDelete} />;
-        }
+    if (isGranularGranteeUser(grantee)) {
+        return (
+            <GranularGranteeUserItem
+                currentUserPermissions={currentUserPermissions}
+                grantee={grantee}
+                onChange={onChange}
+                onDelete={onDelete}
+            />
+        );
+    } else if (isGranularGranteeGroup(grantee)) {
+        return (
+            <GranularGranteeGroupItem
+                currentUserPermissions={currentUserPermissions}
+                grantee={grantee}
+                onChange={onChange}
+                onDelete={onDelete}
+            />
+        );
+    } else if (isGranteeUser(grantee)) {
+        return <GranteeUserItem grantee={grantee} mode={mode} onDelete={onDelete} />;
+    } else if (grantee.type === "inactive_owner") {
+        return <GranteeUserInactiveItem grantee={grantee} />;
+    } else if (isGranteeGroup(grantee) || isGranteeGroupAll(grantee)) {
+        return <GranteeGroupItem grantee={grantee} mode={mode} onDelete={onDelete} />;
     } else {
-        if (isGranteeUser(grantee)) {
-            return <GranteeUserItem grantee={grantee} mode={mode} onDelete={onDelete} />;
-        } else if (grantee.type === "inactive_owner") {
-            return <GranteeUserInactiveItem grantee={grantee} />;
-        } else if (isGranteeGroup(grantee) || isGranteeGroupAll(grantee)) {
-            return <GranteeGroupItem grantee={grantee} mode={mode} onDelete={onDelete} />;
-        }
+        invariant(grantee, "Illegal grantee used.");
     }
 };
