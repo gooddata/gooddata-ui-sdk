@@ -18,7 +18,7 @@ const selectSelf = createSelector(
  * @alpha
  */
 export const selectEntitlements = createSelector(selectSelf, (state) => {
-    invariant(state.entitlements, "attempting to access uninitialized state state");
+    invariant(state.entitlements, "attempting to access uninitialized entitlements state");
 
     return state.entitlements;
 });

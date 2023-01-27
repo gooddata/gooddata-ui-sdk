@@ -239,9 +239,19 @@ function* initializeNewDashboard(
 ): SagaIterator<DashboardLoadResult> {
     const { backend } = ctx;
 
-    const [config, permissions, catalog, user, listedDashboards, accessibleDashboards, legacyDashboards]: [
+    const [
+        config,
+        permissions,
+        entitlements,
+        catalog,
+        user,
+        listedDashboards,
+        accessibleDashboards,
+        legacyDashboards,
+    ]: [
         SagaReturnType<typeof resolveDashboardConfig>,
         SagaReturnType<typeof resolvePermissions>,
+        PromiseFnReturnType<typeof resolveEntitlements>,
         PromiseFnReturnType<typeof loadCatalog>,
         PromiseFnReturnType<typeof loadUser>,
         PromiseFnReturnType<typeof loadDashboardList>,
@@ -250,6 +260,7 @@ function* initializeNewDashboard(
     ] = yield all([
         call(resolveDashboardConfig, ctx, cmd),
         call(resolvePermissions, ctx, cmd),
+        call(resolveEntitlements, ctx),
         call(loadCatalog, ctx),
         call(loadUser, ctx),
         call(loadDashboardList, ctx),
@@ -261,6 +272,7 @@ function* initializeNewDashboard(
         [
             backendCapabilitiesActions.setBackendCapabilities(backend.capabilities),
             configActions.setConfig(config),
+            entitlementsActions.setEntitlements(entitlements),
             userActions.setUser(user),
             permissionsActions.setPermissions(permissions),
             catalogActions.setCatalogItems({
