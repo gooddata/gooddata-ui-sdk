@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import React from "react";
 import { IntlShape } from "react-intl";
 import compact from "lodash/compact";
@@ -17,6 +17,7 @@ import { IInsightWidget } from "@gooddata/sdk-model";
 export type MenuItemDependencies = {
     intl: IntlShape;
     dispatch: ReturnType<typeof useDashboardDispatch>;
+    includeInteractions?: boolean;
 };
 
 /**
@@ -24,7 +25,7 @@ export type MenuItemDependencies = {
  */
 export function getDefaultInsightEditMenuItems(
     widget: IInsightWidget,
-    { intl, dispatch }: MenuItemDependencies,
+    { intl, dispatch, includeInteractions = true }: MenuItemDependencies,
 ): IInsightMenuItem[] {
     return compact([
         {
@@ -37,7 +38,7 @@ export function getDefaultInsightEditMenuItems(
             className: "s-configuration-panel-submenu",
             SubmenuComponent: InsightConfiguration,
         },
-        {
+        includeInteractions && {
             type: "submenu",
             itemId: "InteractionPanelSubmenu",
             tooltip: "",
