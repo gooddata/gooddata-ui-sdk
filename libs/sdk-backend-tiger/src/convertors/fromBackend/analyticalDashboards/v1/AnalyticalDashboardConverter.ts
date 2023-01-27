@@ -21,7 +21,7 @@ import updateWith from "lodash/updateWith";
 import { fixWidgetLegacyElementUris } from "../../fixLegacyElementUris";
 import { cloneWithSanitizedIds } from "../../IdSanitization";
 import { isInheritedObject } from "../../ObjectInheritance";
-import { getShareStatus } from "../../utils";
+import { getShareStatus, stripQueryParams } from "../../utils";
 import { convertDrillToCustomUrlInLayoutFromBackend } from "../DrillToCustomUrlConverter";
 
 function setWidgetRefsInLayout(layout: IDashboardLayout<IDashboardWidget> | undefined) {
@@ -82,7 +82,7 @@ export function convertDashboard(
         type: "IDashboard",
         ref: idRef(id, "analyticalDashboard"),
         identifier: id,
-        uri: analyticalDashboard.links!.self,
+        uri: stripQueryParams(analyticalDashboard.links!.self),
         title,
         description,
         created: "",

@@ -27,7 +27,7 @@ import { cloneWithSanitizedIds } from "../../IdSanitization";
 import { isInheritedObject } from "../../ObjectInheritance";
 import { fixWidgetLegacyElementUris } from "../../fixLegacyElementUris";
 import { convertDrillToCustomUrlInLayoutFromBackend } from "../DrillToCustomUrlConverter";
-import { getShareStatus } from "../../utils";
+import { getShareStatus, stripQueryParams } from "../../utils";
 
 function setWidgetRefsInLayout(layout: IDashboardLayout<IDashboardWidget> | undefined) {
     if (!layout) {
@@ -99,7 +99,7 @@ export function convertDashboard(
         type: "IDashboard",
         ref: idRef(id, "analyticalDashboard"),
         identifier: id,
-        uri: analyticalDashboard.links!.self,
+        uri: stripQueryParams(analyticalDashboard.links!.self),
         title,
         description,
         created: "",

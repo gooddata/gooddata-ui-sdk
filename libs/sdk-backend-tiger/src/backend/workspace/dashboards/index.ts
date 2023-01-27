@@ -26,6 +26,7 @@ import {
     areObjRefsEqual,
     IFilter,
     ObjRef,
+    idRef,
     IFilterContext,
     IFilterContextDefinition,
     ITempFilterContext,
@@ -256,7 +257,9 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             );
         });
 
-        return convertDashboard(result.data, filterContext);
+        // TODO: TNT-1310 Revert back to `return convertDashboard(result.data, filterContext)`
+        const { id, type } = result.data.data;
+        return this.getDashboard(idRef(id, type));
     };
 
     public updateDashboard = async (
@@ -304,7 +307,9 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             );
         });
 
-        return convertDashboard(result.data, filterContext);
+        // TODO: TNT-1310 Revert back to `return convertDashboard(result.data, filterContext)`
+        const { id, type } = result.data.data;
+        return this.getDashboard(idRef(id, type));
     };
 
     public deleteDashboard = async (ref: ObjRef): Promise<void> => {

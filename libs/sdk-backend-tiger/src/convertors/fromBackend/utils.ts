@@ -12,3 +12,12 @@ import { ShareStatus } from "@gooddata/sdk-model";
 export function getShareStatus(isObjectPrivate: boolean): ShareStatus {
     return isObjectPrivate ? "private" : "shared";
 }
+
+/**
+ * Remove the question mark and following characters from a string
+ *
+ * @param uri - a URI with or without query params
+ */
+export function stripQueryParams(uri: string) {
+    return uri.split("?")[0];
+}
