@@ -357,6 +357,7 @@ export class GeoChartInner extends React.PureComponent<IGeoChartInnerProps, IGeo
             onDrill = noop,
             onZoomChanged = noop,
             intl,
+            onError,
         } = this.props;
 
         invariant(dataView, "invalid state - trying to render geo chart but there is no data to visualize");
@@ -377,6 +378,7 @@ export class GeoChartInner extends React.PureComponent<IGeoChartInnerProps, IGeo
             onCenterPositionChanged,
             onZoomChanged,
             intl,
+            ...(onError ? { onError } : {}),
         };
 
         if (segmentIndex !== undefined) {

@@ -30,6 +30,7 @@ import { ITheme } from '@gooddata/sdk-model';
 import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { IVisualizationProps } from '@gooddata/sdk-ui';
 import { NullableFiltersOrPlaceholders } from '@gooddata/sdk-ui';
+import { OnError } from '@gooddata/sdk-ui';
 import { PositionType } from '@gooddata/sdk-ui-vis-commons';
 import { default as React_2 } from 'react';
 import { SortsOrPlaceholders } from '@gooddata/sdk-ui';
@@ -153,6 +154,8 @@ export interface IGeoChartRendererProps extends WrappedComponentProps {
     geoData: IGeoData;
     // (undocumented)
     onCenterPositionChanged(center: IGeoLngLat): void;
+    // (undocumented)
+    onError?: OnError;
     // (undocumented)
     onZoomChanged(zoom: number): void;
 }
