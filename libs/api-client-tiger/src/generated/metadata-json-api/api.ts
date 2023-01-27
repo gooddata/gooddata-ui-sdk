@@ -228,7 +228,42 @@ export interface DeclarativeAnalyticalDashboard {
      * @memberof DeclarativeAnalyticalDashboard
      */
     tags?: Array<string>;
+    /**
+     * A list of permissions.
+     * @type {Array<DeclarativeAnalyticalDashboardPermission>}
+     * @memberof DeclarativeAnalyticalDashboard
+     */
+    permissions?: Array<DeclarativeAnalyticalDashboardPermission>;
 }
+/**
+ * Analytical dashboard permission.
+ * @export
+ * @interface DeclarativeAnalyticalDashboardPermission
+ */
+export interface DeclarativeAnalyticalDashboardPermission {
+    /**
+     * Permission name.
+     * @type {string}
+     * @memberof DeclarativeAnalyticalDashboardPermission
+     */
+    name: DeclarativeAnalyticalDashboardPermissionNameEnum;
+    /**
+     *
+     * @type {AssigneeIdentifier}
+     * @memberof DeclarativeAnalyticalDashboardPermission
+     */
+    assignee: AssigneeIdentifier;
+}
+
+export const DeclarativeAnalyticalDashboardPermissionNameEnum = {
+    EDIT: "EDIT",
+    SHARE: "SHARE",
+    VIEW: "VIEW",
+} as const;
+
+export type DeclarativeAnalyticalDashboardPermissionNameEnum =
+    typeof DeclarativeAnalyticalDashboardPermissionNameEnum[keyof typeof DeclarativeAnalyticalDashboardPermissionNameEnum];
+
 /**
  * Entities describing users\' view on data.
  * @export
@@ -2046,6 +2081,44 @@ export interface GranularitiesFormatting {
     titlePattern: string;
 }
 /**
+ * Represents objects with given ID and type in workspace hierarchy (more than one can exists in different workspaces).
+ * @export
+ * @interface HierarchyObjectIdentification
+ */
+export interface HierarchyObjectIdentification {
+    /**
+     *
+     * @type {string}
+     * @memberof HierarchyObjectIdentification
+     */
+    id: string;
+    /**
+     *
+     * @type {string}
+     * @memberof HierarchyObjectIdentification
+     */
+    type: HierarchyObjectIdentificationTypeEnum;
+}
+
+export const HierarchyObjectIdentificationTypeEnum = {
+    ANALYTICAL_DASHBOARD: "analyticalDashboard",
+    ATTRIBUTE: "attribute",
+    DASHBOARD_PLUGIN: "dashboardPlugin",
+    DATASET: "dataset",
+    FACT: "fact",
+    LABEL: "label",
+    METRIC: "metric",
+    PROMPT: "prompt",
+    VISUALIZATION_OBJECT: "visualizationObject",
+    FILTER_CONTEXT: "filterContext",
+    WORKSPACE_DATA_FILTER: "workspaceDataFilter",
+    WORKSPACE_DATA_FILTER_SETTINGS: "workspaceDataFilterSettings",
+} as const;
+
+export type HierarchyObjectIdentificationTypeEnum =
+    typeof HierarchyObjectIdentificationTypeEnum[keyof typeof HierarchyObjectIdentificationTypeEnum];
+
+/**
  * Contains information about conflicting IDs in workspace hierarchy
  * @export
  * @interface IdentifierDuplications
@@ -2072,20 +2145,18 @@ export interface IdentifierDuplications {
 }
 
 export const IdentifierDuplicationsTypeEnum = {
-    ANALYTICAL_DASHBOARD: "ANALYTICAL_DASHBOARD",
-    ATTRIBUTE: "ATTRIBUTE",
-    DASHBOARD_PLUGIN: "DASHBOARD_PLUGIN",
-    DATASET: "DATASET",
-    FACT: "FACT",
-    LABEL: "LABEL",
-    METRIC: "METRIC",
-    PROMPT: "PROMPT",
-    VISUALISATION: "VISUALISATION",
-    FILTER_CONTEXT: "FILTER_CONTEXT",
-    WORKSPACE_SETTING: "WORKSPACE_SETTING",
-    CUSTOM_APPLICATION_SETTING: "CUSTOM_APPLICATION_SETTING",
-    WORKSPACE_DATA_FILTER: "WORKSPACE_DATA_FILTER",
-    WORKSPACE_DATA_FILTER_SETTING: "WORKSPACE_DATA_FILTER_SETTING",
+    ANALYTICAL_DASHBOARD: "analyticalDashboard",
+    ATTRIBUTE: "attribute",
+    DASHBOARD_PLUGIN: "dashboardPlugin",
+    DATASET: "dataset",
+    FACT: "fact",
+    LABEL: "label",
+    METRIC: "metric",
+    PROMPT: "prompt",
+    VISUALIZATION_OBJECT: "visualizationObject",
+    FILTER_CONTEXT: "filterContext",
+    WORKSPACE_DATA_FILTER: "workspaceDataFilter",
+    WORKSPACE_DATA_FILTER_SETTINGS: "workspaceDataFilterSettings",
 } as const;
 
 export type IdentifierDuplicationsTypeEnum =
@@ -7197,10 +7268,10 @@ export interface JsonApiOrganizationSettingIn {
     id: string;
     /**
      *
-     * @type {JsonApiUserSettingOutAttributes}
+     * @type {JsonApiUserSettingInAttributes}
      * @memberof JsonApiOrganizationSettingIn
      */
-    attributes?: JsonApiUserSettingOutAttributes;
+    attributes?: JsonApiUserSettingInAttributes;
 }
 
 export const JsonApiOrganizationSettingInTypeEnum = {
@@ -7243,10 +7314,10 @@ export interface JsonApiOrganizationSettingOut {
     id: string;
     /**
      *
-     * @type {JsonApiUserSettingOutAttributes}
+     * @type {JsonApiUserSettingInAttributes}
      * @memberof JsonApiOrganizationSettingOut
      */
-    attributes?: JsonApiUserSettingOutAttributes;
+    attributes?: JsonApiUserSettingInAttributes;
 }
 
 export const JsonApiOrganizationSettingOutTypeEnum = {
@@ -7314,10 +7385,10 @@ export interface JsonApiOrganizationSettingOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiUserSettingOutAttributes}
+     * @type {JsonApiUserSettingInAttributes}
      * @memberof JsonApiOrganizationSettingOutWithLinks
      */
-    attributes?: JsonApiUserSettingOutAttributes;
+    attributes?: JsonApiUserSettingInAttributes;
     /**
      *
      * @type {ObjectLinks}
@@ -7353,10 +7424,10 @@ export interface JsonApiOrganizationSettingPatch {
     id: string;
     /**
      *
-     * @type {JsonApiUserSettingOutAttributes}
+     * @type {JsonApiUserSettingInAttributes}
      * @memberof JsonApiOrganizationSettingPatch
      */
-    attributes?: JsonApiUserSettingOutAttributes;
+    attributes?: JsonApiUserSettingInAttributes;
 }
 
 export const JsonApiOrganizationSettingPatchTypeEnum = {
@@ -8216,10 +8287,10 @@ export interface JsonApiUserSettingIn {
     id: string;
     /**
      *
-     * @type {JsonApiUserSettingOutAttributes}
+     * @type {JsonApiUserSettingInAttributes}
      * @memberof JsonApiUserSettingIn
      */
-    attributes?: JsonApiUserSettingOutAttributes;
+    attributes?: JsonApiUserSettingInAttributes;
 }
 
 export const JsonApiUserSettingInTypeEnum = {
@@ -8229,6 +8300,19 @@ export const JsonApiUserSettingInTypeEnum = {
 export type JsonApiUserSettingInTypeEnum =
     typeof JsonApiUserSettingInTypeEnum[keyof typeof JsonApiUserSettingInTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiUserSettingInAttributes
+ */
+export interface JsonApiUserSettingInAttributes {
+    /**
+     *
+     * @type {object}
+     * @memberof JsonApiUserSettingInAttributes
+     */
+    content?: object;
+}
 /**
  *
  * @export
@@ -8262,10 +8346,10 @@ export interface JsonApiUserSettingOut {
     id: string;
     /**
      *
-     * @type {JsonApiUserSettingOutAttributes}
+     * @type {JsonApiUserSettingInAttributes}
      * @memberof JsonApiUserSettingOut
      */
-    attributes?: JsonApiUserSettingOutAttributes;
+    attributes?: JsonApiUserSettingInAttributes;
 }
 
 export const JsonApiUserSettingOutTypeEnum = {
@@ -8275,19 +8359,6 @@ export const JsonApiUserSettingOutTypeEnum = {
 export type JsonApiUserSettingOutTypeEnum =
     typeof JsonApiUserSettingOutTypeEnum[keyof typeof JsonApiUserSettingOutTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiUserSettingOutAttributes
- */
-export interface JsonApiUserSettingOutAttributes {
-    /**
-     *
-     * @type {object}
-     * @memberof JsonApiUserSettingOutAttributes
-     */
-    content?: object;
-}
 /**
  *
  * @export
@@ -8346,10 +8417,10 @@ export interface JsonApiUserSettingOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiUserSettingOutAttributes}
+     * @type {JsonApiUserSettingInAttributes}
      * @memberof JsonApiUserSettingOutWithLinks
      */
-    attributes?: JsonApiUserSettingOutAttributes;
+    attributes?: JsonApiUserSettingInAttributes;
     /**
      *
      * @type {ObjectLinks}
@@ -9577,10 +9648,10 @@ export interface JsonApiWorkspaceSettingIn {
     id: string;
     /**
      *
-     * @type {JsonApiUserSettingOutAttributes}
+     * @type {JsonApiUserSettingInAttributes}
      * @memberof JsonApiWorkspaceSettingIn
      */
-    attributes?: JsonApiUserSettingOutAttributes;
+    attributes?: JsonApiUserSettingInAttributes;
 }
 
 export const JsonApiWorkspaceSettingInTypeEnum = {
@@ -9629,10 +9700,10 @@ export interface JsonApiWorkspaceSettingOut {
     meta?: JsonApiCustomApplicationSettingOutMeta;
     /**
      *
-     * @type {JsonApiUserSettingOutAttributes}
+     * @type {JsonApiUserSettingInAttributes}
      * @memberof JsonApiWorkspaceSettingOut
      */
-    attributes?: JsonApiUserSettingOutAttributes;
+    attributes?: JsonApiUserSettingInAttributes;
 }
 
 export const JsonApiWorkspaceSettingOutTypeEnum = {
@@ -9706,10 +9777,10 @@ export interface JsonApiWorkspaceSettingOutWithLinks {
     meta?: JsonApiCustomApplicationSettingOutMeta;
     /**
      *
-     * @type {JsonApiUserSettingOutAttributes}
+     * @type {JsonApiUserSettingInAttributes}
      * @memberof JsonApiWorkspaceSettingOutWithLinks
      */
-    attributes?: JsonApiUserSettingOutAttributes;
+    attributes?: JsonApiUserSettingInAttributes;
     /**
      *
      * @type {ObjectLinks}
@@ -9745,10 +9816,10 @@ export interface JsonApiWorkspaceSettingPatch {
     id: string;
     /**
      *
-     * @type {JsonApiUserSettingOutAttributes}
+     * @type {JsonApiUserSettingInAttributes}
      * @memberof JsonApiWorkspaceSettingPatch
      */
-    attributes?: JsonApiUserSettingOutAttributes;
+    attributes?: JsonApiUserSettingInAttributes;
 }
 
 export const JsonApiWorkspaceSettingPatchTypeEnum = {
@@ -9835,19 +9906,6 @@ export interface ListLinksAllOf {
      * @memberof ListLinksAllOf
      */
     next?: string;
-}
-/**
- * A request for modifying dashboard-level permissions.
- * @export
- * @interface ManageDashboardPermissionsRequest
- */
-export interface ManageDashboardPermissionsRequest {
-    /**
-     *
-     * @type {Array<PermissionsForAssignee>}
-     * @memberof ManageDashboardPermissionsRequest
-     */
-    permissions: Array<PermissionsForAssignee>;
 }
 /**
  *
@@ -10247,6 +10305,64 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Finds entities with given ID in hierarchy (e.g. to check possible future conflicts).
+         * @summary Finds entities with given ID in hierarchy.
+         * @param {string} workspaceId
+         * @param {Array<HierarchyObjectIdentification>} hierarchyObjectIdentification
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        checkEntityOverrides: async (
+            workspaceId: string,
+            hierarchyObjectIdentification: Array<HierarchyObjectIdentification>,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("checkEntityOverrides", "workspaceId", workspaceId);
+            // verify required parameter 'hierarchyObjectIdentification' is not null or undefined
+            assertParamExists(
+                "checkEntityOverrides",
+                "hierarchyObjectIdentification",
+                hierarchyObjectIdentification,
+            );
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/checkEntityOverrides`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof hierarchyObjectIdentification !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      hierarchyObjectIdentification !== undefined ? hierarchyObjectIdentification : {},
+                  )
+                : hierarchyObjectIdentification || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Generate logical data model (LDM) from physical data model (PDM) stored in data source.
          * @summary Generate logical data model (LDM) from physical data model (PDM)
          * @param {string} dataSourceId
@@ -10438,26 +10554,22 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
          *
          * @param {string} workspaceId
          * @param {string} dashboardId
-         * @param {ManageDashboardPermissionsRequest} manageDashboardPermissionsRequest
+         * @param {Array<PermissionsForAssignee>} permissionsForAssignee
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         managePermissions: async (
             workspaceId: string,
             dashboardId: string,
-            manageDashboardPermissionsRequest: ManageDashboardPermissionsRequest,
+            permissionsForAssignee: Array<PermissionsForAssignee>,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
             assertParamExists("managePermissions", "workspaceId", workspaceId);
             // verify required parameter 'dashboardId' is not null or undefined
             assertParamExists("managePermissions", "dashboardId", dashboardId);
-            // verify required parameter 'manageDashboardPermissionsRequest' is not null or undefined
-            assertParamExists(
-                "managePermissions",
-                "manageDashboardPermissionsRequest",
-                manageDashboardPermissionsRequest,
-            );
+            // verify required parameter 'permissionsForAssignee' is not null or undefined
+            assertParamExists("managePermissions", "permissionsForAssignee", permissionsForAssignee);
             const localVarPath =
                 `/api/v1/actions/workspaces/{workspaceId}/dashboards/{dashboardId}/managePermissions`
                     .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
@@ -10482,15 +10594,11 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
                 ...options.headers,
             };
             const needsSerialization =
-                typeof manageDashboardPermissionsRequest !== "string" ||
+                typeof permissionsForAssignee !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
             localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      manageDashboardPermissionsRequest !== undefined
-                          ? manageDashboardPermissionsRequest
-                          : {},
-                  )
-                : manageDashboardPermissionsRequest || "";
+                ? JSON.stringify(permissionsForAssignee !== undefined ? permissionsForAssignee : {})
+                : permissionsForAssignee || "";
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -10957,6 +11065,28 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Finds entities with given ID in hierarchy (e.g. to check possible future conflicts).
+         * @summary Finds entities with given ID in hierarchy.
+         * @param {string} workspaceId
+         * @param {Array<HierarchyObjectIdentification>} hierarchyObjectIdentification
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async checkEntityOverrides(
+            workspaceId: string,
+            hierarchyObjectIdentification: Array<HierarchyObjectIdentification>,
+            options?: AxiosRequestConfig,
+        ): Promise<
+            (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<IdentifierDuplications>>
+        > {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.checkEntityOverrides(
+                workspaceId,
+                hierarchyObjectIdentification,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Generate logical data model (LDM) from physical data model (PDM) stored in data source.
          * @summary Generate logical data model (LDM) from physical data model (PDM)
          * @param {string} dataSourceId
@@ -11037,20 +11167,20 @@ export const ActionsApiFp = function (configuration?: Configuration) {
          *
          * @param {string} workspaceId
          * @param {string} dashboardId
-         * @param {ManageDashboardPermissionsRequest} manageDashboardPermissionsRequest
+         * @param {Array<PermissionsForAssignee>} permissionsForAssignee
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async managePermissions(
             workspaceId: string,
             dashboardId: string,
-            manageDashboardPermissionsRequest: ManageDashboardPermissionsRequest,
+            permissionsForAssignee: Array<PermissionsForAssignee>,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.managePermissions(
                 workspaceId,
                 dashboardId,
-                manageDashboardPermissionsRequest,
+                permissionsForAssignee,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -11262,6 +11392,25 @@ export const ActionsApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
+         * Finds entities with given ID in hierarchy (e.g. to check possible future conflicts).
+         * @summary Finds entities with given ID in hierarchy.
+         * @param {ActionsApiCheckEntityOverridesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        checkEntityOverrides(
+            requestParameters: ActionsApiCheckEntityOverridesRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<Array<IdentifierDuplications>> {
+            return localVarFp
+                .checkEntityOverrides(
+                    requestParameters.workspaceId,
+                    requestParameters.hierarchyObjectIdentification,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * Generate logical data model (LDM) from physical data model (PDM) stored in data source.
          * @summary Generate logical data model (LDM) from physical data model (PDM)
          * @param {ActionsApiGenerateLogicalModelRequest} requestParameters Request parameters.
@@ -11343,7 +11492,7 @@ export const ActionsApiFactory = function (
                 .managePermissions(
                     requestParameters.workspaceId,
                     requestParameters.dashboardId,
-                    requestParameters.manageDashboardPermissionsRequest,
+                    requestParameters.permissionsForAssignee,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -11522,6 +11671,19 @@ export interface ActionsApiInterface {
         requestParameters: ActionsApiAvailableAssignesRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<AvailableAssignees>;
+
+    /**
+     * Finds entities with given ID in hierarchy (e.g. to check possible future conflicts).
+     * @summary Finds entities with given ID in hierarchy.
+     * @param {ActionsApiCheckEntityOverridesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    checkEntityOverrides(
+        requestParameters: ActionsApiCheckEntityOverridesRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<Array<IdentifierDuplications>>;
 
     /**
      * Generate logical data model (LDM) from physical data model (PDM) stored in data source.
@@ -11731,6 +11893,27 @@ export interface ActionsApiAvailableAssignesRequest {
 }
 
 /**
+ * Request parameters for checkEntityOverrides operation in ActionsApi.
+ * @export
+ * @interface ActionsApiCheckEntityOverridesRequest
+ */
+export interface ActionsApiCheckEntityOverridesRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiCheckEntityOverrides
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {Array<HierarchyObjectIdentification>}
+     * @memberof ActionsApiCheckEntityOverrides
+     */
+    readonly hierarchyObjectIdentification: Array<HierarchyObjectIdentification>;
+}
+
+/**
  * Request parameters for generateLogicalModel operation in ActionsApi.
  * @export
  * @interface ActionsApiGenerateLogicalModelRequest
@@ -11822,10 +12005,10 @@ export interface ActionsApiManagePermissionsRequest {
 
     /**
      *
-     * @type {ManageDashboardPermissionsRequest}
+     * @type {Array<PermissionsForAssignee>}
      * @memberof ActionsApiManagePermissions
      */
-    readonly manageDashboardPermissionsRequest: ManageDashboardPermissionsRequest;
+    readonly permissionsForAssignee: Array<PermissionsForAssignee>;
 }
 
 /**
@@ -11991,6 +12174,27 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
+     * Finds entities with given ID in hierarchy (e.g. to check possible future conflicts).
+     * @summary Finds entities with given ID in hierarchy.
+     * @param {ActionsApiCheckEntityOverridesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public checkEntityOverrides(
+        requestParameters: ActionsApiCheckEntityOverridesRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .checkEntityOverrides(
+                requestParameters.workspaceId,
+                requestParameters.hierarchyObjectIdentification,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Generate logical data model (LDM) from physical data model (PDM) stored in data source.
      * @summary Generate logical data model (LDM) from physical data model (PDM)
      * @param {ActionsApiGenerateLogicalModelRequest} requestParameters Request parameters.
@@ -12081,7 +12285,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
             .managePermissions(
                 requestParameters.workspaceId,
                 requestParameters.dashboardId,
-                requestParameters.manageDashboardPermissionsRequest,
+                requestParameters.permissionsForAssignee,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
