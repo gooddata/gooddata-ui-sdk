@@ -88,18 +88,18 @@ function* saveSharing(
     ctx: DashboardContext,
     saveSharingCtx: DashboardSaveSharingContext,
 ): SagaIterator<DashboardSaveSharingResult> {
-    const dashboard: PromiseFnReturnType<typeof updateDashboard> = yield call(
-        updateDashboard,
-        ctx,
-        saveSharingCtx,
-    );
-
     const { granteesToAdd, granteesToDelete } = saveSharingCtx.cmd.payload.newSharingProperties;
     const grantees = [...granteesToAdd, ...granteesToDelete].filter(isGranularAccessGrantee);
 
     if (!isEmpty(grantees)) {
         yield call(changeGrantees, ctx, saveSharingCtx);
     }
+
+    const dashboard: PromiseFnReturnType<typeof updateDashboard> = yield call(
+        updateDashboard,
+        ctx,
+        saveSharingCtx,
+    );
 
     const batch = batchActions([metaActions.setMeta({ dashboard })], "@@GDC.DASH.SAVE_SHARING");
 
@@ -128,11 +128,20 @@ export function* changeSharingHandler(
     );
 
     const result: SagaReturnType<typeof saveSharing> = yield call(saveSharing, ctx, saveSharingCtx);
-    const { batch } = result;
+    const { batch, dashboard } = result;
 
     if (batch) {
         yield put(batch);
     }
 
-    return dashboardSharingChanged(ctx, dashboardRef, cmd.payload.newSharingProperties, cmd.correlationId);
+    /**
+     * BE might evaluate that share status has changed for the dashboard. When this happens, we want to use the new share status
+     * for further operations to avoid UI inconsistensies.
+     */
+    const updatedDashboardProperties = {
+        ...cmd.payload.newSharingProperties,
+        shareStatus: dashboard.shareStatus,
+    };
+
+    return dashboardSharingChanged(ctx, dashboardRef, updatedDashboardProperties, cmd.correlationId);
 }
