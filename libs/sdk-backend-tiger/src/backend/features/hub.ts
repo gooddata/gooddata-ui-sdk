@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import { ILiveFeatures, FeatureContext } from "@gooddata/api-client-tiger";
 import axios, { AxiosResponse } from "axios";
 
@@ -14,6 +14,7 @@ type HubServiceState = Record<
 >;
 
 const state: HubServiceState = {};
+const FH_TIMEOUT = 30000; //wait max 30s to FeatureHub
 
 export async function getFeatureHubFeatures(
     features: ILiveFeatures["live"],
@@ -93,6 +94,7 @@ async function getFeatureHubData(
         params: {
             sdkUrl: key,
         },
+        timeout: FH_TIMEOUT,
         headers: {
             "Content-type": "application/json",
             "X-FeatureHub": Object.keys(context)

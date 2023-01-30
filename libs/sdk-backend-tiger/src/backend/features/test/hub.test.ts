@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 
 import axios, { AxiosResponse } from "axios";
 import { ILiveFeatures } from "@gooddata/api-client-tiger";
@@ -51,6 +51,7 @@ describe("live features", () => {
             method: "GET",
             params: { sdkUrl: "" },
             validateStatus: expect.anything(),
+            timeout: 30000,
         });
     });
 
@@ -68,6 +69,7 @@ describe("live features", () => {
             method: "GET",
             params: { sdkUrl: "" },
             validateStatus: expect.anything(),
+            timeout: 30000,
         });
     });
 
@@ -85,6 +87,7 @@ describe("live features", () => {
             method: "GET",
             params: { sdkUrl: "" },
             validateStatus: expect.anything(),
+            timeout: 30000,
         });
     });
 
@@ -102,6 +105,7 @@ describe("live features", () => {
             method: "GET",
             params: { sdkUrl: "" },
             validateStatus: expect.anything(),
+            timeout: 30000,
         });
     });
 
