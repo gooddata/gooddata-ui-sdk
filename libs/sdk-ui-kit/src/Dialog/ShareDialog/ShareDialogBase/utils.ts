@@ -8,6 +8,7 @@ import {
     IGranteeInactiveOwner,
     isGranteeGroup,
     isGranteeGroupAll,
+    isGranularGranteeGroup,
 } from "./types";
 import differenceWith from "lodash/differenceWith";
 import partition from "lodash/partition";
@@ -87,10 +88,10 @@ export const sortGranteeList = (grantees: GranteeItem[], intl: IntlShape): Grant
 
     const granteesWithNoAllGroup: GranteeItem[] = grantees.filter((g) => !isGranteeGroupAll(g));
 
-    const [groups, users] = partition(granteesWithNoAllGroup, isGranteeGroup) as [
-        GranteeItem[],
-        GranteeItem[],
-    ];
+    const [groups, users] = partition(
+        granteesWithNoAllGroup,
+        (grantee) => isGranteeGroup(grantee) || isGranularGranteeGroup(grantee),
+    );
 
     const sorted = [...groups.sort(granteeSort), ...users.sort(granteeSort)];
 
