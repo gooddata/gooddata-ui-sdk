@@ -176,15 +176,23 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         });
     };
 
-    private getFilterContextFromExportId = async (exportId: string): Promise<IFilterContext> => {
-        const md = await this.authCall((client) => {
+    private getFilterContextFromExportId = async (exportId: string): Promise<IFilterContext | null> => {
+        const metadata = await this.authCall((client) => {
             return client.export.getMetadata({
                 workspaceId: this.workspace,
                 exportId,
             });
-        }).then((result) => result.data);
+        })
+            .then((result) => result.data)
+            .catch(() => null);
 
-        const { filters } = convertFromBackendExportMetadata(md);
+        if (!metadata) {
+            // Error during fetching of export metadata: return null and
+            // fallback to default filters later.
+            return null;
+        }
+
+        const { filters = [] } = convertFromBackendExportMetadata(metadata);
         return {
             filters,
             title: `temp-filter-context-${exportId}`,
