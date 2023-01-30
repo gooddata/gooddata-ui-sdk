@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import { IDashboardLayout, IDashboardWidget, ScreenSize } from "@gooddata/sdk-model";
 import { RenderMode } from "../../../types";
 import {
@@ -402,11 +402,6 @@ export interface IDashboardLayoutRenderProps<TWidget = IDashboardWidget> {
      * Dashboard render mode
      */
     renderMode?: RenderMode;
-
-    /**
-     * Indicate if dragging is in progress
-     */
-    isDraggingWidget?: boolean;
 }
 
 /**

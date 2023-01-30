@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import { ScreenSize } from "@gooddata/sdk-model";
 import React, { useRef, useCallback } from "react";
 import { Row } from "react-grid-system";
@@ -29,7 +29,6 @@ export interface DashboardLayoutGridRowProps<TWidget> {
     getLayoutDimensions: () => DOMRect;
     items: IDashboardLayoutItemFacade<TWidget>[];
     renderMode: RenderMode;
-    isDraggingWidget?: boolean;
 }
 
 const defaultItemKeyGetter: IDashboardLayoutItemKeyGetter<unknown> = ({ item }) => item.index().toString();
@@ -46,7 +45,6 @@ export function DashboardLayoutGridRow<TWidget>(props: DashboardLayoutGridRowPro
         screen,
         items,
         renderMode,
-        isDraggingWidget,
     } = props;
 
     const rowItems = items.map((item) => (
@@ -79,7 +77,7 @@ export function DashboardLayoutGridRow<TWidget>(props: DashboardLayoutGridRowPro
                           renderMode,
                       })
                     : rowItems}
-                {renderMode === "edit" && !isDraggingWidget ? (
+                {renderMode === "edit" ? (
                     <HeightResizerHotspot
                         section={section}
                         items={items}
