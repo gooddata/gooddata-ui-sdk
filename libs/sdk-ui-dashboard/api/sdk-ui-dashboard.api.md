@@ -2869,7 +2869,7 @@ export type FiltersInfo = {
 export type FluidLayoutCustomizationFn = (layout: IDashboardLayout<ExtendedDashboardWidget>, customizer: IFluidLayoutCustomizer) => void;
 
 // @internal (undocumented)
-export function getDefaultInsightEditMenuItems(widget: IInsightWidget, { intl, dispatch }: MenuItemDependencies): IInsightMenuItem[];
+export function getDefaultInsightEditMenuItems(widget: IInsightWidget, { intl, dispatch, includeInteractions }: MenuItemDependencies): IInsightMenuItem[];
 
 // @internal (undocumented)
 export function getDefaultInsightMenuItems(intl: IntlShape, config: {
@@ -4705,6 +4705,7 @@ export const MenuButton: (props: IMenuButtonProps) => JSX.Element;
 export type MenuItemDependencies = {
     intl: IntlShape;
     dispatch: ReturnType<typeof useDashboardDispatch>;
+    includeInteractions?: boolean;
 };
 
 // @alpha (undocumented)

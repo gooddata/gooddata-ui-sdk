@@ -1,11 +1,17 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { useMemo } from "react";
 import { useIntl } from "react-intl";
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 
 import { useDashboardCustomizationsContext } from "../../../dashboardContexts";
 import { getDefaultInsightEditMenuItems, IInsightMenuItem } from "../../insightMenu";
-import { useDashboardDispatch } from "../../../../model";
+import {
+    selectDrillTargetsByWidgetRef,
+    selectSettings,
+    useDashboardDispatch,
+    useDashboardSelector,
+} from "../../../../model";
+import { getInsightVisualizationMeta } from "@gooddata/sdk-ui-ext";
 
 type UseEditableInsightMenuConfig = {
     insight: IInsight;
@@ -21,10 +27,32 @@ export const useEditableInsightMenu = (
     const intl = useIntl();
     const dispatch = useDashboardDispatch();
 
+    const settings = useDashboardSelector(selectSettings);
+    const {
+        enableKPIDashboardDrillToURL,
+        enableKPIDashboardDrillToDashboard,
+        enableKPIDashboardDrillToInsight,
+        enableKDZooming,
+    } = settings;
+
+    const configItems = useDashboardSelector(selectDrillTargetsByWidgetRef(widget.ref));
+    const someDrillingEnabled =
+        enableKPIDashboardDrillToURL ||
+        enableKPIDashboardDrillToDashboard ||
+        enableKPIDashboardDrillToInsight;
+    const availableDrillTargets = configItems?.availableDrillTargets;
+    const someAvailableDrillTargetsExist =
+        !!availableDrillTargets?.attributes?.length || !!availableDrillTargets?.measures?.length;
+
+    const visualizationMeta = getInsightVisualizationMeta(insight);
+    const isZoomable = enableKDZooming && visualizationMeta.supportsZooming;
+
+    const includeInteractions = (someDrillingEnabled && someAvailableDrillTargetsExist) || isZoomable;
+
     const { insightMenuItemsProvider } = useDashboardCustomizationsContext();
     const defaultMenuItems = useMemo<IInsightMenuItem[]>(() => {
-        return getDefaultInsightEditMenuItems(widget, { intl, dispatch });
-    }, [dispatch, intl, widget]);
+        return getDefaultInsightEditMenuItems(widget, { intl, dispatch, includeInteractions });
+    }, [dispatch, intl, widget, includeInteractions]);
 
     const menuItems = useMemo<IInsightMenuItem[]>(() => {
         return insightMenuItemsProvider
