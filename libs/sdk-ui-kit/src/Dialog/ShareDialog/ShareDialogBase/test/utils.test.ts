@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { createIntlMock } from "@gooddata/sdk-ui";
 import { getGranteeItemTestId, getGranteeLabel, notInArrayFilter, sortGranteesByName } from "../utils";
 import { current, groupAll, owner, user } from "./GranteeMock";
@@ -6,11 +6,11 @@ import { current, groupAll, owner, user } from "./GranteeMock";
 describe("utils", () => {
     describe("getGranteeItemTestId", () => {
         it("should return default test id ", () => {
-            expect(getGranteeItemTestId(user)).toEqual("s-gd-grantee-item-id-userID1");
+            expect(getGranteeItemTestId(user)).toEqual("s-gd-grantee-item-id-userid1");
         });
 
         it("should return default test id for option", () => {
-            expect(getGranteeItemTestId(user, "option")).toEqual("s-gd-grantee-item-id-option-userID1");
+            expect(getGranteeItemTestId(user, "option")).toEqual("s-gd-grantee-item-id-option-userid1");
         });
     });
 

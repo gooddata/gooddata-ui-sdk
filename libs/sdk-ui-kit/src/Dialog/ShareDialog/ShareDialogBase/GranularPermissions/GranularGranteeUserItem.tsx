@@ -21,6 +21,7 @@ interface IGranularGranteeUserItemProps {
 
 export const GranularGranteeUserItem: React.FC<IGranularGranteeUserItemProps> = (props) => {
     const { grantee, currentUserPermissions, onChange, onDelete } = props;
+    const { email } = grantee;
     const { isDropdownOpen, toggleDropdown } = usePermissionsDropdown();
     const intl = useIntl();
     const itemClassName = cx(
@@ -35,6 +36,8 @@ export const GranularGranteeUserItem: React.FC<IGranularGranteeUserItemProps> = 
         return getGranteeLabel(grantee, intl);
     }, [grantee, intl]);
 
+    const renderSubtitle = useMemo(() => email && email !== userName, [email, userName]);
+
     return (
         <div className={itemClassName}>
             <GranularPermissionsDropdown
@@ -47,7 +50,9 @@ export const GranularGranteeUserItem: React.FC<IGranularGranteeUserItemProps> = 
             />
             <div className="gd-grantee-content">
                 <div className="gd-grantee-content-label">{userName}</div>
-                <div className="gd-grantee-content-label gd-grantee-content-email">{grantee.email}</div>
+                {renderSubtitle && (
+                    <div className="gd-grantee-content-label gd-grantee-content-email">{email}</div>
+                )}
             </div>
             <GranteeUserIcon />
         </div>
