@@ -3789,6 +3789,8 @@ export interface ITigerClient {
     // (undocumented)
     axios: AxiosInstance;
     // (undocumented)
+    config: ITigerClientConfig;
+    // (undocumented)
     declarativeLayout: ReturnType<typeof tigerLayoutClientFactory>;
     // (undocumented)
     entities: ReturnType<typeof tigerEntitiesObjectsClientFactory>;
@@ -3809,6 +3811,12 @@ export interface ITigerClient {
     setApiToken: (token: string | undefined) => void;
     // (undocumented)
     validObjects: ReturnType<typeof tigerValidObjectsClientFactory>;
+}
+
+// @public (undocumented)
+export interface ITigerClientConfig {
+    // (undocumented)
+    hostname?: string;
 }
 
 // @public (undocumented)
@@ -7857,7 +7865,7 @@ export const tigerAfmExplainClientFactory: (axios: AxiosInstance) => Pick<AfmAct
 export const tigerAuthActionsClientFactory: (axios: AxiosInstance) => AuthActionsApiInterface;
 
 // @public
-export const tigerClientFactory: (axios: AxiosInstance) => ITigerClient;
+export const tigerClientFactory: (axios: AxiosInstance, config?: ITigerClientConfig) => ITigerClient;
 
 // @public (undocumented)
 export const tigerEntitiesObjectsClientFactory: (axios: AxiosInstance) => EntitiesApiInterface;

@@ -146,7 +146,7 @@ export class TigerBackend implements IAnalyticalBackend {
         const axios = createAxios(this.config, this.implConfig, this.telemetry);
         interceptBackendErrorsToConsole(axios);
 
-        this.client = tigerClientFactory(axios);
+        this.client = tigerClientFactory(axios, this.config);
 
         this.authProvider.initializeClient?.(this.client);
 

@@ -170,8 +170,10 @@ export class TigerExecutionResult implements IExecutionResult {
             });
 
             if (result?.status === 200) {
+                const hostname = client?.config?.hostname ?? "";
+                const url = result?.config?.url ?? "";
                 return {
-                    uri: result?.config?.url || "",
+                    uri: `${hostname}${url}`,
                 };
             }
 

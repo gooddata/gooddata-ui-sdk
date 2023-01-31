@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import isPlainObject from "lodash/isPlainObject";
 import isFunction from "lodash/isFunction";
 import set from "lodash/set";
@@ -246,6 +246,10 @@ export class XhrModule {
 
         // throws on 400, 500, etc.
         throw new ApiResponseError(response.statusText, response, responseBody);
+    }
+
+    public getHostname() {
+        return this.configStorage?.hostname;
     }
 
     /**
