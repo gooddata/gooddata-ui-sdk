@@ -117,6 +117,8 @@ export function geoValidatorHOC<T>(InnerComponent: React.ComponentClass<T>): Rea
         onError = (e: any) => {
             if (isGeoTokenMissing(e)) {
                 this.handleInvalidMapboxToken();
+            } else {
+                this.props.onError?.(e);
             }
         };
 
