@@ -43,7 +43,7 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
 
     const granteeList = useMemo(() => {
         return compact([owner, ...grantees]);
-    }, [grantees, owner, intl]);
+    }, [grantees, owner]);
 
     const dialogLabels = useMemo(() => {
         return {
@@ -51,7 +51,7 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
             cancelButtonText: intl.formatMessage({ id: "cancel" }),
             submitButtonText: intl.formatMessage({ id: "save" }),
         };
-    }, []);
+    }, [intl]);
 
     return (
         <ConfirmDialogBase

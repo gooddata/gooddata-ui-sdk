@@ -55,7 +55,7 @@ export const AddGranteeSelect: React.FC<IAddGranteeSelectProps> = (props) => {
                 id: "shareDialog.share.grantee.add.search.no.matching.items",
             });
         },
-        [],
+        [intl],
     );
 
     const loadOptions = useMemo(
@@ -74,7 +74,7 @@ export const AddGranteeSelect: React.FC<IAddGranteeSelectProps> = (props) => {
                     leading: true,
                 },
             ),
-        [backend, workspace, intl, appliedGrantees],
+        [backend, workspace, intl, appliedGrantees, currentUserRef, sharedObjectRef],
     );
 
     const onKeyDownCallback: KeyboardEventHandler<HTMLInputElement> = useCallback((e) => {

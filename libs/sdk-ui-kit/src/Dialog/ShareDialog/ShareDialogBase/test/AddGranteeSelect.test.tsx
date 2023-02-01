@@ -55,7 +55,7 @@ function isMenuIsVisible(wrapper: ReactWrapper) {
 }
 
 function isGroupAllOptionVisible(wrapper: ReactWrapper) {
-    return wrapper.find(".s-gd-grantee-item-id-option-groupAll").hostNodes().length === 1;
+    return wrapper.find(".s-gd-grantee-item-id-option-groupall").hostNodes().length === 1;
 }
 
 function isNoMatchingMessageVisible(wrapper: ReactWrapper) {

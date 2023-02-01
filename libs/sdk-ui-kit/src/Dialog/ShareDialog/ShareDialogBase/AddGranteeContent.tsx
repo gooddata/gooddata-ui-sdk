@@ -67,7 +67,7 @@ export const AddGranteeContent: React.FC<IAddGranteeContentProps> = (props) => {
                 }
             }
         },
-        [appliedGrantees, onAddUserOrGroups],
+        [appliedGrantees, onAddUserOrGroups, areGranularPermissionsSupported],
     );
 
     return (

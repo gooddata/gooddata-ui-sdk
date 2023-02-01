@@ -134,7 +134,7 @@ export const getAppliedGrantees = (
 export const getGranteeItemTestId = (grantee: GranteeItem, prefix?: "option"): string => {
     const prefixValue = prefix ? `${prefix}-` : "";
     const id = objRefToString(grantee.id).split("/").pop();
-    return `s-gd-grantee-item-id-${prefixValue}${id}`;
+    return `s-gd-grantee-item-id-${prefixValue}${stringUtils.simplifyText(id)}`;
 };
 
 /**
