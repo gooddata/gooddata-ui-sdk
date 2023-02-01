@@ -8,6 +8,11 @@ export class DateFilterRelativeForm {
         return this;
     }
 
+    selectTab(granularity: Granularity) {
+        this.getElement(`.s-granularity-${granularity}`).click({ force: true });
+        return this;
+    }
+
     openFromRangePicker(): this {
         this.getElement(".s-relative-range-picker-from").click();
         return this;
@@ -44,6 +49,11 @@ export class DateFilterRelativeForm {
 
     typeIntoFromInput(value: string): this {
         this.getElement(".s-relative-range-picker-from").find(".s-relative-range-input").clear().type(value);
+        return this;
+    }
+
+    typeIntoToInput(value: string): this {
+        this.getElement(".s-relative-range-picker-to").find(".s-relative-range-input").clear().type(value);
         return this;
     }
 

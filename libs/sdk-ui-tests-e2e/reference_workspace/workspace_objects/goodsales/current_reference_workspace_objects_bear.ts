@@ -1,5 +1,5 @@
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-01-09T07:21:51.491Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-01-31T15:12:11.901Z; */
 // @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
@@ -62,14 +62,14 @@ export const ForecastCategory: IAttribute = newAttribute("label.opportunitysnaps
 export const IsActive: IAttribute = newAttribute("label.stage.isactive");
 /**
  * Attribute Title: Is Closed?
- * Attribute ID: attr.activity.isclosed
- */
-export const IsClosed: IAttribute = newAttribute("label.activity.isclosed");
-/**
- * Attribute Title: Is Closed?
  * Attribute ID: attr.stage.isclosed
  */
-export const IsClosed_1: IAttribute = newAttribute("label.stage.isclosed");
+export const IsClosed: IAttribute = newAttribute("label.stage.isclosed");
+/**
+ * Attribute Title: Is Closed?
+ * Attribute ID: attr.activity.isclosed
+ */
+export const IsClosed_1: IAttribute = newAttribute("label.activity.isclosed");
 /**
  * Attribute Title: Is Task?
  * Attribute ID: attr.activity.istask
@@ -201,11 +201,51 @@ export const NrOfOpportunitiesWon: IMeasure<IMeasureDefinition> = newMeasure(
     idRef("aa4gLlQhcmLO", "measure"),
 );
 /**
+ * Metric Title: <button> % of Goal </button>
+ * Metric ID: aazBmbZTcq5Z
+ * Metric Type: MAQL Metric
+ */
+export const ButtonPercentOfGoalButton: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("aazBmbZTcq5Z", "measure"),
+);
+/**
  * Metric Title: Amount
  * Metric ID: aangOxLSeztu
  * Metric Type: MAQL Metric
  */
 export const Amount: IMeasure<IMeasureDefinition> = newMeasure(idRef("aangOxLSeztu", "measure"));
+/**
+ * Metric Title: Metric format bars
+ * Metric ID: aaFBmFlmWC5C
+ * Metric Type: MAQL Metric
+ */
+export const MetricFormatBars: IMeasure<IMeasureDefinition> = newMeasure(idRef("aaFBmFlmWC5C", "measure"));
+/**
+ * Metric Title: Metric format color
+ * Metric ID: aabBtMlTdjyI
+ * Metric Type: MAQL Metric
+ */
+export const MetricFormatColor: IMeasure<IMeasureDefinition> = newMeasure(idRef("aabBtMlTdjyI", "measure"));
+/**
+ * Metric Title: Metric format truncate
+ * Metric ID: aapBpaAUcPum
+ * Metric Type: MAQL Metric
+ */
+export const MetricFormatTruncate: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("aapBpaAUcPum", "measure"),
+);
+/**
+ * Metric Title: Metric format UTF-8
+ * Metric ID: aacBsHcOc5rY
+ * Metric Type: MAQL Metric
+ */
+export const MetricFormatUTF8: IMeasure<IMeasureDefinition> = newMeasure(idRef("aacBsHcOc5rY", "measure"));
+/**
+ * Metric Title: No data metric
+ * Metric ID: aaBBmFlmWC5C
+ * Metric Type: MAQL Metric
+ */
+export const NoDataMetric: IMeasure<IMeasureDefinition> = newMeasure(idRef("aaBBmFlmWC5C", "measure"));
 /**
  * Metric Title: Probability
  * Metric ID: abEgMnq5hyJQ
@@ -3405,6 +3445,18 @@ export const Insights = {
      * Insight Title: Table days with date filter
      * Insight ID: aaGz4eso8OXV
      */ TableDaysWithDateFilter: "aaGz4eso8OXV",
+    /**
+     * Insight Title: Chart Activity by Department
+     * Insight ID: aacGsw4BGk84
+     */ ChartActivityByDepartment: "aacGsw4BGk84",
+    /**
+     * Insight Title: Bubble chart by year
+     * Insight ID: aabGHLfRKB2M
+     */ BubbleChartByYear: "aabGHLfRKB2M",
+    /**
+     * Insight Title: Table by year and 3 metrics
+     * Insight ID: aacGIfHZWIEa
+     */ TableByYearAnd3Metrics: "aacGIfHZWIEa",
 };
 export const Dashboards = {
     /**
@@ -3564,4 +3616,12 @@ export const Dashboards = {
      * Dashboard Title: DnD board
      * Dashboard ID: aacBfd2B0zlW
      */ DnDBoard: "aacBfd2B0zlW",
+    /**
+     * Dashboard Title: Dependent filter
+     * Dashboard ID: aafBVudg753N
+     */ DependentFilter: "aafBVudg753N",
+    /**
+     * Dashboard Title: Target board
+     * Dashboard ID: aacFiou2qR4g
+     */ TargetBoard: "aacFiou2qR4g",
 };

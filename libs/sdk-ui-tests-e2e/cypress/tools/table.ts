@@ -24,7 +24,7 @@ export class Table {
         return this;
     }
 
-    click(rowIndex: number, columnIndex: number): void {
+    click(rowIndex: number, columnIndex: number) {
         this.waitLoaded();
 
         this.getElement()
@@ -36,10 +36,16 @@ export class Table {
             .find(`.gd-cell-drillable.s-cell-${rowIndex}-${columnIndex} .s-value`)
             .first()
             .click();
+        return this;
     }
 
     getCell(rowIndex: number, columnIndex: number) {
         return this.getElement().find(".ag-body-viewport").find(`.s-cell-${rowIndex}-${columnIndex}`);
+    }
+
+    scrollIntoView() {
+        this.getElement().scrollIntoView();
+        return this;
     }
 
     hasCellWidth(rowIndex: number, columnIndex: number, expectedWidth: number, withTolerance = false) {

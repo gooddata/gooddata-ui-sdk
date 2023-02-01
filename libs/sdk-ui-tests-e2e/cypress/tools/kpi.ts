@@ -16,6 +16,18 @@ export class Kpi {
         return this;
     }
 
+    hasPOPSection(expected = true) {
+        this.getContentElement()
+            .find(".headline-compare-section")
+            .should(expected ? "exist" : "not.exist");
+        return this;
+    }
+
+    hasCompareTitle(title: string) {
+        this.getContentElement().find(".headline-title-wrapper").should("have.text", title);
+        return this;
+    }
+
     clickValue() {
         this.getValueElement().click();
         return this;

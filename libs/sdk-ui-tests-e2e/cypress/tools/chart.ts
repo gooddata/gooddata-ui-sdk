@@ -16,6 +16,11 @@ export class Chart {
         return cy.get(this.getElementSelector());
     }
 
+    scrollIntoView() {
+        this.getElement().scrollIntoView();
+        return this;
+    }
+
     waitLoaded() {
         this.getElement().find(".s-loading").should("not.exist");
         return this;

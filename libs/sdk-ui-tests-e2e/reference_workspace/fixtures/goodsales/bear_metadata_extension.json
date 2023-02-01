@@ -57,9 +57,119 @@
         "attr.activity.status",
         "attr.stage.iswon",
         "attr.activity.activitytype",
-        "label.opportunity.id.url"
+        "label.opportunity.id.url",
+        "attr.stagehistory.id"
     ],
     "objects": [
+        {
+            "content": {
+                "metric": {
+                    "content": {
+                        "expression": "SELECT 1 where 2 = 3",
+                        "folders": [],
+                        "format": "#,##0.00"
+                    },
+                    "meta": {
+                        "identifier": "aaBBmFlmWC5C",
+                        "summary": "",
+                        "tags": "",
+                        "title": "No data metric"
+                    }
+                }
+            },
+            "name": "metric_No_data_metric_aaBBmFlmWC5C"
+        },
+        {
+            "content": {
+                "metric": {
+                    "content": {
+                        "expression": "SELECT 1",
+                        "folders": [],
+                        "format": "<button>#,##0.00</button>"
+                    },
+                    "meta": {
+                        "identifier": "aazBmbZTcq5Z",
+                        "summary": "",
+                        "tags": "",
+                        "title": "<button> % of Goal </button>"
+                    }
+                }
+            },
+            "name": "metric__button____of_Goal___button__aazBmbZTcq5Z"
+        },
+        {
+            "content": {
+                "metric": {
+                    "content": {
+                        "expression": "SELECT 154271",
+                        "folders": [],
+                        "format": "[>=9][color=2190c0]██████████;[>=8][color=2190c0]█████████░;[>=7][color=2190c0]████████░░;[>=6][color=2190c0]███████░░░;[>=5][color=2190c0]██████░░░░;[>=4][color=2190c0]█████░░░░░;[>=3][color=2190c0]████░░░░░░;[>=2][color=2190c0]███░░░░░░░;[>=1][color=2190c0]██░░░░░░░░;[color=2190c0]█░░░░░░░░░"
+                    },
+                    "meta": {
+                        "identifier": "aaFBmFlmWC5C",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Metric format bars"
+                    }
+                }
+            },
+            "name": "metric_Metric_format_bars_aaFBmFlmWC5C"
+        },
+        {
+            "content": {
+                "metric": {
+                    "content": {
+                        "expression": "SELECT 154271",
+                        "folders": [],
+                        "format": "[>=1000000000]$#,,,.0 B;[>=1000000]$#,,.0 M;[>=1000]$#,.0 K;[>=0]$#,##0;[<=-1000000000]-$#,,,.0 B;[<=-1000000]-$#,,.0 M;[<=-1000]-$#,.0 K;[<0]-$#,##0"
+                    },
+                    "meta": {
+                        "identifier": "aapBpaAUcPum",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Metric format truncate"
+                    }
+                }
+            },
+            "name": "metric_Metric_format_truncate_aapBpaAUcPum"
+        },
+        {
+            "content": {
+                "metric": {
+                    "content": {
+                        "expression": "SELECT 154271",
+                        "folders": [],
+                        "format": "[<0][red]$#,#.##;[<1000][blue]$#,#.##;[>=1000][green]$#,#.##"
+                    },
+                    "meta": {
+                        "identifier": "aabBtMlTdjyI",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Metric format color"
+                    }
+                }
+            },
+            "name": "metric_Metric_format_color_aabBtMlTdjyI"
+        },
+        {
+            "content": {
+                "metric": {
+                    "content": {
+                        "expression": "SELECT 154271",
+                        "folders": [],
+                        "format": "#'##0.00 kiểm tra nghiêm khắc"
+                    },
+                    "meta": {
+                        "identifier": "aacBsHcOc5rY",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Metric format UTF-8",
+                        "unlisted": 1
+                    }
+                }
+            },
+            "name": "metric_Metric_format_UTF_8_aacBsHcOc5rY"
+        },
         {
             "content": {
                 "visualizationObject": {
@@ -2702,6 +2812,228 @@
         },
         {
             "content": {
+                "visualizationObject": {
+                    "content": {
+                        "buckets": [
+                            {
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "aggregation": "sum",
+                                                    "item": {
+                                                        "uri": "{{{dt_activity_activity}}}"
+                                                    }
+                                                }
+                                            },
+                                            "format": "#,##0.00",
+                                            "localIdentifier": "3633df482c4e48adbfa1264882dc3f94",
+                                            "title": "Sum of Activity (Date)"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "measures"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "{{{label_owner_department}}}"
+                                            },
+                                            "localIdentifier": "18d475c47d7246f4a84c89236e32e942"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "view"
+                            }
+                        ],
+                        "visualizationClass": {
+                            "uri": "{{{gdc_visualization_column}}}"
+                        }
+                    },
+                    "meta": {
+                        "identifier": "aacGsw4BGk84",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Chart Activity by Department"
+                    }
+                }
+            },
+            "name": "visualizationObject_Chart_Activity_by_Department_aacGsw4BGk84"
+        },
+        {
+            "content": {
+                "visualizationObject": {
+                    "content": {
+                        "buckets": [
+                            {
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "aggregation": "avg",
+                                                    "item": {
+                                                        "uri": "{{{fact_opportunitysnapshot_amount}}}"
+                                                    }
+                                                }
+                                            },
+                                            "format": "#,##0.00",
+                                            "localIdentifier": "6dd861ea82dc4a6f80c0a766a310c98c",
+                                            "title": "Avg Amount"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "measures"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "{{{win_rate}}}"
+                                                    }
+                                                }
+                                            },
+                                            "localIdentifier": "dcef7de7a73148bcbcb023c477bf7268",
+                                            "title": "Win Rate"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "secondary_measures"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "{{{amount}}}"
+                                                    }
+                                                }
+                                            },
+                                            "localIdentifier": "ffe8575f9a704d80b65aa39bcb24484d",
+                                            "title": "Amount"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "tertiary_measures"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "{{{closed_aag81lMifn6q}}}"
+                                            },
+                                            "localIdentifier": "813e1c6e36b248f4b5b1060b4f2dae15"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "view"
+                            }
+                        ],
+                        "visualizationClass": {
+                            "uri": "{{{gdc_visualization_bubble}}}"
+                        }
+                    },
+                    "meta": {
+                        "identifier": "aabGHLfRKB2M",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Bubble chart by year"
+                    }
+                }
+            },
+            "name": "visualizationObject_Bubble_chart_by_year_aabGHLfRKB2M"
+        },
+        {
+            "content": {
+                "visualizationObject": {
+                    "content": {
+                        "buckets": [
+                            {
+                                "items": [
+                                    {
+                                        "measure": {
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "aggregation": "avg",
+                                                    "item": {
+                                                        "uri": "{{{fact_opportunitysnapshot_amount}}}"
+                                                    }
+                                                }
+                                            },
+                                            "format": "#,##0.00",
+                                            "localIdentifier": "6dd861ea82dc4a6f80c0a766a310c98c",
+                                            "title": "Avg Amount"
+                                        }
+                                    },
+                                    {
+                                        "measure": {
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "{{{win_rate}}}"
+                                                    }
+                                                }
+                                            },
+                                            "localIdentifier": "dcef7de7a73148bcbcb023c477bf7268",
+                                            "title": "Win Rate"
+                                        }
+                                    },
+                                    {
+                                        "measure": {
+                                            "definition": {
+                                                "measureDefinition": {
+                                                    "item": {
+                                                        "uri": "{{{amount}}}"
+                                                    }
+                                                }
+                                            },
+                                            "localIdentifier": "ffe8575f9a704d80b65aa39bcb24484d",
+                                            "title": "Amount"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "measures"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "visualizationAttribute": {
+                                            "displayForm": {
+                                                "uri": "{{{closed_aag81lMifn6q}}}"
+                                            },
+                                            "localIdentifier": "813e1c6e36b248f4b5b1060b4f2dae15"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "attribute"
+                            }
+                        ],
+                        "properties": "{\"sortItems\":[{\"attributeSortItem\":{\"attributeIdentifier\":\"813e1c6e36b248f4b5b1060b4f2dae15\",\"direction\":\"asc\"}}]}",
+                        "visualizationClass": {
+                            "uri": "{{{gdc_visualization_table}}}"
+                        }
+                    },
+                    "meta": {
+                        "identifier": "aacGIfHZWIEa",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Table by year and 3 metrics"
+                    }
+                }
+            },
+            "name": "visualizationObject_Table_by_year_and_3_metrics_aacGIfHZWIEa"
+        },
+        {
+            "content": {
                 "kpi": {
                     "content": {
                         "comparisonDirection": "growIsGood",
@@ -4265,6 +4597,25 @@
         },
         {
             "content": {
+                "kpi": {
+                    "content": {
+                        "comparisonType": "none",
+                        "dateDataSet": "{{{closed_dataset_dt}}}",
+                        "ignoreDashboardFilters": [],
+                        "metric": "{{{amount}}}"
+                    },
+                    "meta": {
+                        "identifier": "aazAO9IFGSi3",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Amount"
+                    }
+                }
+            },
+            "name": "kpi_Amount_aazAO9IFGSi3"
+        },
+        {
+            "content": {
                 "analyticalDashboard": {
                     "content": {
                         "filterContext": "{{{filterContext_filterContext_aablg1hXf4vb}}}",
@@ -4328,6 +4679,21 @@
                                                         "width": 2
                                                     }
                                                 }
+                                            },
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{kpi_Amount_aazAO9IFGSi3}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 11,
+                                                        "width": 2
+                                                    }
+                                                }
                                             }
                                         ],
                                         "header": {
@@ -4341,7 +4707,8 @@
                             "{{{kpi_Win_Rate_filtered_filtered_by_date_aadlbMH2fdR0}}}",
                             "{{{kpi_Win_Rate_total_aablg1ijggcR}}}",
                             "{{{kpi_Win_Rate_filtered_by_Sales_Rep_aaelgaQfgOuZ}}}",
-                            "{{{kpi_Drill_to_old_dashboard_aaemohLwcd44}}}"
+                            "{{{kpi_Drill_to_old_dashboard_aaemohLwcd44}}}",
+                            "{{{kpi_Amount_aazAO9IFGSi3}}}"
                         ]
                     },
                     "meta": {
@@ -4577,6 +4944,72 @@
         },
         {
             "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "dateDataSet": "{{{closed_dataset_dt}}}",
+                        "drills": [
+                            {
+                                "drillToVisualization": {
+                                    "from": {
+                                        "drillFromAttribute": {
+                                            "localIdentifier": "763e4983f6e246dcaf42df97a9aa1654"
+                                        }
+                                    },
+                                    "target": "pop-up",
+                                    "toVisualization": {
+                                        "uri": "{{{visualizationObject_Bar_chart_with_measures_and_attribute_aablz4Ypdqzj}}}"
+                                    }
+                                }
+                            }
+                        ],
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_Table_with_stage_name_and_atribute_filter_aauDDoj1dayS}}}"
+                    },
+                    "meta": {
+                        "identifier": "aabFgYsbqKKf",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Table with stage name and atribute filter"
+                    }
+                }
+            },
+            "name": "visualizationWidget_Table_with_stage_name_and_atribute_filter_aabFgYsbqKKf"
+        },
+        {
+            "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "dateDataSet": "{{{closed_dataset_dt}}}",
+                        "drills": [
+                            {
+                                "drillToVisualization": {
+                                    "from": {
+                                        "drillFromAttribute": {
+                                            "localIdentifier": "03204f33a90d46e093717ec9979b2aa8"
+                                        }
+                                    },
+                                    "target": "pop-up",
+                                    "toVisualization": {
+                                        "uri": "{{{visualizationObject_Table_Activity_by_Year_and_Department_aastYYHna5kR}}}"
+                                    }
+                                }
+                            }
+                        ],
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_Column_chart_aabtCY6Binfm}}}"
+                    },
+                    "meta": {
+                        "identifier": "aalFgE8HeZ7n",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Column chart"
+                    }
+                }
+            },
+            "name": "visualizationWidget_Column_chart_aalFgE8HeZ7n"
+        },
+        {
+            "content": {
                 "analyticalDashboard": {
                     "content": {
                         "filterContext": "{{{filterContext_filterContext_aadbXs8Ld8uN}}}",
@@ -4614,13 +5047,53 @@
                                                 }
                                             }
                                         ]
+                                    },
+                                    {
+                                        "columns": [
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_Table_with_stage_name_and_atribute_filter_aabFgYsbqKKf}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 22,
+                                                        "width": 12
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "columns": [
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_Column_chart_aalFgE8HeZ7n}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 22,
+                                                        "width": 12
+                                                    }
+                                                }
+                                            }
+                                        ]
                                     }
                                 ]
                             }
                         },
                         "widgets": [
                             "{{{visualizationWidget_Combo_chart_aagbVc2feNWB}}}",
-                            "{{{visualizationWidget_Column_chart_aagtx67VhGWT}}}"
+                            "{{{visualizationWidget_Column_chart_aagtx67VhGWT}}}",
+                            "{{{visualizationWidget_Table_with_stage_name_and_atribute_filter_aabFgYsbqKKf}}}",
+                            "{{{visualizationWidget_Column_chart_aalFgE8HeZ7n}}}"
                         ]
                     },
                     "meta": {
@@ -5677,6 +6150,7 @@
             "content": {
                 "visualizationWidget": {
                     "content": {
+                        "dateDataSet": "{{{closed_dataset_dt}}}",
                         "drills": [
                             {
                                 "drillToDashboard": {
@@ -5690,24 +6164,18 @@
                                 }
                             }
                         ],
-                        "ignoreDashboardFilters": [
-                            {
-                                "attributeFilterReference": {
-                                    "displayForm": "{{{label_activity_status}}}"
-                                }
-                            }
-                        ],
+                        "ignoreDashboardFilters": [],
                         "visualization": "{{{visualizationObject_Column_chart_aabtCY6Binfm}}}"
                     },
                     "meta": {
-                        "identifier": "aaeuYDSybsGD",
+                        "identifier": "aabGETywWbzk",
                         "summary": "",
                         "tags": "",
                         "title": "Column chart"
                     }
                 }
             },
-            "name": "visualizationWidget_Column_chart_aaeuYDSybsGD"
+            "name": "visualizationWidget_Column_chart_aabGETywWbzk"
         },
         {
             "content": {
@@ -5737,12 +6205,13 @@
                                                 "content": {
                                                     "widget": {
                                                         "qualifier": {
-                                                            "uri": "{{{visualizationWidget_Column_chart_aaeuYDSybsGD}}}"
+                                                            "uri": "{{{visualizationWidget_Column_chart_aabGETywWbzk}}}"
                                                         }
                                                     }
                                                 },
                                                 "size": {
                                                     "xl": {
+                                                        "height": 22,
                                                         "width": 6
                                                     }
                                                 }
@@ -5754,7 +6223,7 @@
                         },
                         "widgets": [
                             "{{{visualizationWidget_Combo_chart_aaxtumiyeaDg}}}",
-                            "{{{visualizationWidget_Column_chart_aaeuYDSybsGD}}}"
+                            "{{{visualizationWidget_Column_chart_aabGETywWbzk}}}"
                         ]
                     },
                     "meta": {
@@ -8794,6 +9263,301 @@
                 }
             },
             "name": "analyticalDashboard_DnD_board_aacBfd2B0zlW"
+        },
+        {
+            "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "dateDataSet": "{{{closed_dataset_dt}}}",
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_Table_with_stage_name_and_atribute_filter_aauDDoj1dayS}}}"
+                    },
+                    "meta": {
+                        "identifier": "aaeB40kVJwni",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Table with stage name and atribute filter"
+                    }
+                }
+            },
+            "name": "visualizationWidget_Table_with_stage_name_and_atribute_filter_aaeB40kVJwni"
+        },
+        {
+            "content": {
+                "filterContext": {
+                    "content": {
+                        "filters": [
+                            {
+                                "attributeFilter": {
+                                    "attributeElements": [],
+                                    "displayForm": "{{{label_account_id_name}}}",
+                                    "filterElementsBy": [],
+                                    "localIdentifier": "e3f1e5ccfc18473aa0bfac975e3227a3",
+                                    "negativeSelection": true
+                                }
+                            },
+                            {
+                                "attributeFilter": {
+                                    "attributeElements": [],
+                                    "displayForm": "{{{label_stage_name_stagename}}}",
+                                    "filterElementsBy": [
+                                        {
+                                            "filterLocalIdentifier": "e3f1e5ccfc18473aa0bfac975e3227a3",
+                                            "over": {
+                                                "attributes": ["{{{attr_stagehistory_id}}}"]
+                                            }
+                                        },
+                                        {
+                                            "filterLocalIdentifier": "2fbc21d799be40418cd0b512373d570f",
+                                            "over": {
+                                                "attributes": ["{{{attr_stage_name}}}"]
+                                            }
+                                        }
+                                    ],
+                                    "localIdentifier": "2926df535d4b4679b7f7181015ec21c5",
+                                    "negativeSelection": true
+                                }
+                            },
+                            {
+                                "attributeFilter": {
+                                    "attributeElements": [],
+                                    "displayForm": "{{{label_stage_iswon}}}",
+                                    "filterElementsBy": [
+                                        {
+                                            "filterLocalIdentifier": "e3f1e5ccfc18473aa0bfac975e3227a3",
+                                            "over": {
+                                                "attributes": ["{{{attr_stagehistory_id}}}"]
+                                            }
+                                        }
+                                    ],
+                                    "localIdentifier": "2fbc21d799be40418cd0b512373d570f",
+                                    "negativeSelection": true
+                                }
+                            }
+                        ]
+                    },
+                    "meta": {
+                        "identifier": "aadB42eyheas",
+                        "summary": "",
+                        "tags": "",
+                        "title": "filterContext"
+                    }
+                }
+            },
+            "name": "filterContext_filterContext_aadB42eyheas"
+        },
+        {
+            "content": {
+                "analyticalDashboard": {
+                    "content": {
+                        "filterContext": "{{{filterContext_filterContext_aadB42eyheas}}}",
+                        "layout": {
+                            "fluidLayout": {
+                                "rows": [
+                                    {
+                                        "columns": [
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_Table_with_stage_name_and_atribute_filter_aaeB40kVJwni}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 22,
+                                                        "width": 12
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        "widgets": [
+                            "{{{visualizationWidget_Table_with_stage_name_and_atribute_filter_aaeB40kVJwni}}}"
+                        ]
+                    },
+                    "meta": {
+                        "identifier": "aafBVudg753N",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Dependent filter"
+                    }
+                }
+            },
+            "name": "analyticalDashboard_Dependent_filter_aafBVudg753N"
+        },
+        {
+            "content": {
+                "filterContext": {
+                    "content": {
+                        "filters": []
+                    },
+                    "meta": {
+                        "identifier": "aacFiPr5q0xN",
+                        "summary": "",
+                        "tags": "",
+                        "title": "filterContext"
+                    }
+                }
+            },
+            "name": "filterContext_filterContext_aacFiPr5q0xN"
+        },
+        {
+            "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "dateDataSet": "{{{activity_dataset_dt}}}",
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_Table_Activity_by_Year_and_Department_aastYYHna5kR}}}"
+                    },
+                    "meta": {
+                        "identifier": "aacFiz6Omwhz",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Table Activity by Year and Department"
+                    }
+                }
+            },
+            "name": "visualizationWidget_Table_Activity_by_Year_and_Department_aacFiz6Omwhz"
+        },
+        {
+            "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "dateDataSet": "{{{activity_dataset_dt}}}",
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_Chart_Activity_by_Department_aacGsw4BGk84}}}"
+                    },
+                    "meta": {
+                        "identifier": "aabGvFMgGD3e",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Chart Activity by Department"
+                    }
+                }
+            },
+            "name": "visualizationWidget_Chart_Activity_by_Department_aabGvFMgGD3e"
+        },
+        {
+            "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "dateDataSet": "{{{closed_dataset_dt}}}",
+                        "drills": [
+                            {
+                                "drillToVisualization": {
+                                    "from": {
+                                        "drillFromAttribute": {
+                                            "localIdentifier": "813e1c6e36b248f4b5b1060b4f2dae15"
+                                        }
+                                    },
+                                    "target": "pop-up",
+                                    "toVisualization": {
+                                        "uri": "{{{visualizationObject_Table_by_year_and_3_metrics_aacGIfHZWIEa}}}"
+                                    }
+                                }
+                            }
+                        ],
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_Bubble_chart_by_year_aabGHLfRKB2M}}}"
+                    },
+                    "meta": {
+                        "identifier": "aabGJaXbWMTi",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Bubble chart by year"
+                    }
+                }
+            },
+            "name": "visualizationWidget_Bubble_chart_by_year_aabGJaXbWMTi"
+        },
+        {
+            "content": {
+                "analyticalDashboard": {
+                    "content": {
+                        "filterContext": "{{{filterContext_filterContext_aacFiPr5q0xN}}}",
+                        "layout": {
+                            "fluidLayout": {
+                                "rows": [
+                                    {
+                                        "columns": [
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_Table_Activity_by_Year_and_Department_aacFiz6Omwhz}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 22,
+                                                        "width": 12
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "columns": [
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_Chart_Activity_by_Department_aabGvFMgGD3e}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 22,
+                                                        "width": 12
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "columns": [
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_Bubble_chart_by_year_aabGJaXbWMTi}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 22,
+                                                        "width": 6
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        "widgets": [
+                            "{{{visualizationWidget_Table_Activity_by_Year_and_Department_aacFiz6Omwhz}}}",
+                            "{{{visualizationWidget_Chart_Activity_by_Department_aabGvFMgGD3e}}}",
+                            "{{{visualizationWidget_Bubble_chart_by_year_aabGJaXbWMTi}}}"
+                        ]
+                    },
+                    "meta": {
+                        "identifier": "aacFiou2qR4g",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Target board"
+                    }
+                }
+            },
+            "name": "analyticalDashboard_Target_board_aacFiou2qR4g"
         },
         {
             "content": {

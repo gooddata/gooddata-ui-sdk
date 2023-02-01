@@ -2,17 +2,27 @@
 
 type ButtonType = "apply" | "cancel";
 
-type RelativePreset =
+export type RelativePreset =
     | "relative-last-month"
+    | "relative-this-month"
+    | "relative-last-12-months"
+    | "relative-last-year"
     | "relative-this-year"
+    | "relative-this-quarter"
+    | "relative-last-quarter"
+    | "relative-last-4-quarters"
     | "relative-last-7-days"
     | "relative-last-6-days"
     | "relative-last-5-days"
+    | "relative-last-30-days"
+    | "relative-last-90-days"
     | "hidden-relative-preset"
     | "hidden-relative-preset-2"
-    | "relative-this-week";
+    | "relative-this-week"
+    | "relative-last-week"
+    | "relative-this-2-weeks";
 
-type AbsolutePreset =
+export type AbsolutePreset =
     | "christmas-2011"
     | "christmas-2012"
     | "hidden-absolute-preset"

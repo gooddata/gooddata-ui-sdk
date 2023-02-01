@@ -20,10 +20,11 @@ export class KpiConfiguration {
         return this;
     }
 
-    openMeasureDropdown() {
+    toggleMeasureDropdown() {
         this.getElement().find(".s-metric_select .gd-button").click();
         return this;
     }
+
     measureDropdownIsOpen() {
         this.getElement().find(".s-metric_select .gd-button").should("have.class", "is-active");
         return this;
@@ -31,6 +32,20 @@ export class KpiConfiguration {
 
     chooseMeasure(measureName: string) {
         new KPIMeasureDropdown().find(measureName).clickItem(measureName);
+        return this;
+    }
+
+    openComparisonDropdown() {
+        this.getElement().then((body) => {
+            if (body.find(".comparison-list").length < 1) {
+                this.getElement().find(".s-compare_with_select .gd-button").click();
+            }
+        });
+        return this;
+    }
+
+    chooseComparison(comparisonType: string) {
+        new KPIComparisonDropdown().clickItem(comparisonType);
         return this;
     }
 
@@ -114,6 +129,17 @@ export class KpiConfiguration {
     }
 }
 
+export class KPIComparisonDropdown {
+    getElement() {
+        return cy.get(".comparison-list");
+    }
+
+    clickItem(comparisonType: string) {
+        this.getElement().settled(".gd-list-item").contains(comparisonType).click();
+        return this;
+    }
+}
+
 export class KPIMeasureDropdown {
     getElement() {
         return cy.get(".s-metrics-list");
@@ -126,6 +152,16 @@ export class KPIMeasureDropdown {
 
     clickItem(measureName: string) {
         this.getElement().settled(".gd-list-item").contains(measureName).click();
+        return this;
+    }
+
+    searchBoxIsEmpty() {
+        this.getElement().find(".gd-input-field").should("be.empty");
+        return this;
+    }
+
+    noMatchingData() {
+        this.getElement().find(".gd-no-matching-data").should("exist");
         return this;
     }
 }
