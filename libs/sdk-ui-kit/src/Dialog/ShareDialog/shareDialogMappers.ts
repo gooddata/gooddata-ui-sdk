@@ -19,7 +19,6 @@ import {
     isGranularUserGroupAccess,
 } from "@gooddata/sdk-model";
 import { typesUtils } from "@gooddata/util";
-import { Permission } from "./ShareDialogBase/GranularPermissions/GranularPermissionsDropdownBody";
 
 import {
     GranteeItem,
@@ -144,7 +143,7 @@ export const mapGranteesToGranularAccessGrantees = (
                     type,
                     granteeRef: g.id,
                     // When grantee is not granular, we need to insert some dummy permission when adding access.
-                    permissions: added ? [Permission.VIEW] : [],
+                    permissions: added ? ["VIEW"] : [],
                     inheritedPermissions: [],
                 };
             }

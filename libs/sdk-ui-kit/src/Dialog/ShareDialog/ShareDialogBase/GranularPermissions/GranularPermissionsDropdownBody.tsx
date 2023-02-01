@@ -2,6 +2,7 @@
 
 import React, { useCallback, useMemo } from "react";
 import { FormattedMessage } from "react-intl";
+import { AccessGranularPermission } from "@gooddata/sdk-model";
 
 import { GranularPermissionItem } from "./GranularPermissionItem";
 
@@ -21,34 +22,28 @@ interface IGranularPermissionsDropdownBodyProps {
     toggleDropdown(): void;
     onChange: (grantee: GranteeItem) => void;
     onDelete: (grantee: GranteeItem) => void;
-    handleSetSelectedPermission: (permission: string) => void;
+    handleSetSelectedPermission: (permission: AccessGranularPermission) => void;
 }
 
 const overlayAlignPoints: IAlignPoint[] = [{ align: "bl tl" }];
-
-export const enum Permission {
-    EDIT = "EDIT",
-    SHARE = "SHARE",
-    VIEW = "VIEW",
-}
 
 const getPermissionTypeItems = (
     currentUserPermissions: CurrentUserPermissions,
 ): IGranularPermissionTypeItem[] => {
     return [
         {
-            id: Permission.EDIT,
-            title: granularPermissionMessageLabels[Permission.EDIT].id,
+            id: "EDIT",
+            title: granularPermissionMessageLabels.EDIT.id,
             disabled: currentUserPermissions.canEditDashboard ? false : true,
         },
         {
-            id: Permission.SHARE,
-            title: granularPermissionMessageLabels[Permission.SHARE].id,
+            id: "SHARE",
+            title: granularPermissionMessageLabels.SHARE.id,
             disabled: currentUserPermissions.canShareDashboard ? false : true,
         },
         {
-            id: Permission.VIEW,
-            title: granularPermissionMessageLabels[Permission.VIEW].id,
+            id: "VIEW",
+            title: granularPermissionMessageLabels.VIEW.id,
             disabled: currentUserPermissions.canViewDashboard ? false : true,
         },
     ];

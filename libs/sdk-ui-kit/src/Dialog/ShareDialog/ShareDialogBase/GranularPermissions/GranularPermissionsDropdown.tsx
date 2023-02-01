@@ -12,24 +12,10 @@ import { IAlignPoint } from "../../../../typings/positioning";
 import { CurrentUserPermissions } from "../../types";
 import { granularPermissionMessageLabels } from "../../../../locales";
 
-import { GranularPermissionsDropdownBody, Permission } from "./GranularPermissionsDropdownBody";
+import { GranularPermissionsDropdownBody } from "./GranularPermissionsDropdownBody";
+import { getEffectivePermission } from "./permissionsLogic";
 
 const alignPoints: IAlignPoint[] = [{ align: "cr cl" }];
-
-const getPermissionValue = (
-    permissions: AccessGranularPermission[],
-    inheritedPermissions: AccessGranularPermission[],
-) => {
-    const allPermissions = [...permissions, ...inheritedPermissions];
-
-    if (allPermissions.includes(Permission.EDIT)) {
-        return Permission.EDIT;
-    } else if (allPermissions.includes(Permission.SHARE)) {
-        return Permission.SHARE;
-    } else if (allPermissions.includes(Permission.VIEW)) {
-        return Permission.VIEW;
-    }
-};
 
 interface IGranularPermissionsDropdownProps {
     grantee: IGranularGrantee;
@@ -52,10 +38,10 @@ export const GranularPermissionsDropdown: React.FC<IGranularPermissionsDropdownP
 }) => {
     const intl = useIntl();
 
-    const [selectedPermission, setSelectedPermission] = useState<string>(
-        getPermissionValue(grantee.permissions, grantee.inheritedPermissions),
+    const [selectedPermission, setSelectedPermission] = useState<AccessGranularPermission>(
+        getEffectivePermission(grantee.permissions, grantee.inheritedPermissions),
     );
-    const handleSetSelectedPermission = (permission: string) => {
+    const handleSetSelectedPermission = (permission: AccessGranularPermission) => {
         setSelectedPermission(permission);
     };
 
@@ -75,7 +61,7 @@ export const GranularPermissionsDropdown: React.FC<IGranularPermissionsDropdownP
                             "disabled",
                         )}
                     >
-                        <div className="s-granular-permisison-button-title gd-granular-permission-button-title">
+                        <div className="s-granular-permission-button-title gd-granular-permission-button-title">
                             {buttonValue}
                         </div>
                     </div>
@@ -102,7 +88,7 @@ export const GranularPermissionsDropdown: React.FC<IGranularPermissionsDropdownP
                             )}
                             onClick={toggleDropdown}
                         >
-                            <div className="s-granular-permisison-button-title gd-granular-permission-button-title">
+                            <div className="s-granular-permission-button-title gd-granular-permission-button-title">
                                 {buttonValue}
                             </div>
                         </div>

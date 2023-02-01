@@ -13,7 +13,6 @@ import {
     IGranteeGroup,
 } from "./types";
 import { AddGranteeSelect } from "./AddGranteeSelect";
-import { Permission } from "./GranularPermissions/GranularPermissionsDropdownBody";
 
 /**
  * In case of user and group, we need to make sure, that the added grantee has some default granular permission.
@@ -22,7 +21,7 @@ const enrichGranteeWithDefaultPermission = (
     grantee: IGranteeUser | IGranteeGroup,
 ): IGranularGranteeUser | IGranularGranteeGroup => {
     const defaultPermissions: IGranteeGranularity = {
-        permissions: [Permission.VIEW],
+        permissions: ["VIEW"],
         inheritedPermissions: [],
     };
 

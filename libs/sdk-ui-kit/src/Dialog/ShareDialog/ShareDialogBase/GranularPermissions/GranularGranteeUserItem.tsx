@@ -10,7 +10,7 @@ import { getGranteeItemTestId, getGranteeLabel } from "../utils";
 import { CurrentUserPermissions } from "../../types";
 
 import { GranularPermissionsDropdown } from "./GranularPermissionsDropdown";
-import { usePermissionsDropdown } from "./usePermissionsDropdown";
+import { usePermissionsDropdownState } from "./usePermissionsDropdownState";
 
 interface IGranularGranteeUserItemProps {
     grantee: IGranularGranteeUser;
@@ -22,7 +22,7 @@ interface IGranularGranteeUserItemProps {
 export const GranularGranteeUserItem: React.FC<IGranularGranteeUserItemProps> = (props) => {
     const { grantee, currentUserPermissions, onChange, onDelete } = props;
     const { email } = grantee;
-    const { isDropdownOpen, toggleDropdown } = usePermissionsDropdown();
+    const { isDropdownOpen, toggleDropdown } = usePermissionsDropdownState();
     const intl = useIntl();
     const itemClassName = cx(
         { "s-share-dialog-current-user": grantee.isCurrentUser },
@@ -32,11 +32,11 @@ export const GranularGranteeUserItem: React.FC<IGranularGranteeUserItemProps> = 
         { "is-active": isDropdownOpen },
     );
 
-    const userName = useMemo(() => {
+    const label = useMemo(() => {
         return getGranteeLabel(grantee, intl);
     }, [grantee, intl]);
 
-    const renderSubtitle = useMemo(() => email && email !== userName, [email, userName]);
+    const renderSubtitle = useMemo(() => email && email !== label, [email, label]);
 
     return (
         <div className={itemClassName}>
@@ -49,7 +49,7 @@ export const GranularGranteeUserItem: React.FC<IGranularGranteeUserItemProps> = 
                 onDelete={onDelete}
             />
             <div className="gd-grantee-content">
-                <div className="gd-grantee-content-label">{userName}</div>
+                <div className="gd-grantee-content-label">{label}</div>
                 {renderSubtitle && (
                     <div className="gd-grantee-content-label gd-grantee-content-email">{email}</div>
                 )}

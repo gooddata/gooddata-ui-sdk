@@ -3,6 +3,7 @@
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
+import { AccessGranularPermission } from "@gooddata/sdk-model";
 
 import { GranteeItem, IGranularGrantee, IGranularPermissionTypeItem } from "../types";
 import { Bubble, BubbleHoverTrigger } from "../../../../Bubble";
@@ -16,7 +17,7 @@ interface IGranularPermissionItemProps {
     selectedPermission: string;
     toggleDropdown: () => void;
     onChange: (grantee: GranteeItem) => void;
-    handleSetSelectedPermission: (permission: string) => void;
+    handleSetSelectedPermission: (permission: AccessGranularPermission) => void;
 }
 
 const GranularPermissionSelectItem: React.FC<IGranularPermissionItemProps> = ({
