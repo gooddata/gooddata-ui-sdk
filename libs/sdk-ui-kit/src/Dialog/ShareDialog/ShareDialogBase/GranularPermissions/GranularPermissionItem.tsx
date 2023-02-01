@@ -8,6 +8,7 @@ import { AccessGranularPermission } from "@gooddata/sdk-model";
 import { GranteeItem, IGranularGrantee, IGranularPermissionTypeItem } from "../types";
 import { Bubble, BubbleHoverTrigger } from "../../../../Bubble";
 import { IAlignPoint } from "../../../../typings/positioning";
+import { granularPermissionMessageLabels } from "../../../../locales";
 
 const alignPoints: IAlignPoint[] = [{ align: "cr cl" }];
 
@@ -53,7 +54,7 @@ const GranularPermissionSelectItem: React.FC<IGranularPermissionItemProps> = ({
                 "is-selected": isSelected,
             })}
         >
-            <div>{intl.formatMessage({ id: permission.title })}</div>
+            <div>{intl.formatMessage({ id: granularPermissionMessageLabels[permission.id].id })}</div>
         </div>
     );
 };

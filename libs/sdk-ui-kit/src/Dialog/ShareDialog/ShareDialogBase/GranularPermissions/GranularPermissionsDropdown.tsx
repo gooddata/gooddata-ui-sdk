@@ -20,6 +20,7 @@ const alignPoints: IAlignPoint[] = [{ align: "cr cl" }];
 interface IGranularPermissionsDropdownProps {
     grantee: IGranularGrantee;
     currentUserPermissions: CurrentUserPermissions;
+    isDashboardLocked: boolean;
     disabledDropdown?: boolean;
     isDropdownOpen: boolean;
     toggleDropdown: () => void;
@@ -30,6 +31,7 @@ interface IGranularPermissionsDropdownProps {
 export const GranularPermissionsDropdown: React.FC<IGranularPermissionsDropdownProps> = ({
     grantee,
     currentUserPermissions,
+    isDashboardLocked,
     disabledDropdown,
     isDropdownOpen,
     toggleDropdown,
@@ -39,7 +41,7 @@ export const GranularPermissionsDropdown: React.FC<IGranularPermissionsDropdownP
     const intl = useIntl();
 
     const [selectedPermission, setSelectedPermission] = useState<AccessGranularPermission>(
-        getEffectivePermission(grantee.permissions, grantee.inheritedPermissions),
+        getEffectivePermission(grantee.permissions, grantee.inheritedPermissions, isDashboardLocked),
     );
     const handleSetSelectedPermission = (permission: AccessGranularPermission) => {
         setSelectedPermission(permission);
@@ -95,6 +97,7 @@ export const GranularPermissionsDropdown: React.FC<IGranularPermissionsDropdownP
                     </BubbleHoverTrigger>
                     <GranularPermissionsDropdownBody
                         currentUserPermissions={currentUserPermissions}
+                        isDashboardLocked={isDashboardLocked}
                         alignTo={granularGranteeClassName}
                         grantee={grantee}
                         toggleDropdown={toggleDropdown}

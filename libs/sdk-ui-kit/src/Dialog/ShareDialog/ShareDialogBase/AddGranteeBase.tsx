@@ -34,9 +34,8 @@ export const AddGranteeBase: React.FC<IAddGranteeBaseProps> = (props) => {
         addedGrantees,
         currentUserRef,
         isDirty,
-        areGranularPermissionsSupported,
         currentUserPermissions,
-        sharedObjectRef,
+        sharedObject,
         onCancel,
         onSubmit,
         onBackClick,
@@ -45,6 +44,11 @@ export const AddGranteeBase: React.FC<IAddGranteeBaseProps> = (props) => {
         onGranularGranteeChange,
     } = props;
     const intl = useIntl();
+    const {
+        isLocked: isDashboardLocked,
+        ref: sharedObjectRef,
+        areGranularPermissionsSupported,
+    } = sharedObject;
 
     const backButtonRenderer = useCallback(() => {
         return <BackButton onClick={onBackClick} />;
@@ -66,6 +70,7 @@ export const AddGranteeBase: React.FC<IAddGranteeBaseProps> = (props) => {
         >
             <AddGranteeContent
                 currentUserPermissions={currentUserPermissions}
+                isDashboardLocked={isDashboardLocked}
                 currentUserRef={currentUserRef}
                 addedGrantees={addedGrantees}
                 appliedGrantees={appliedGrantees}

@@ -15,12 +15,13 @@ import { usePermissionsDropdownState } from "./usePermissionsDropdownState";
 interface IGranularGranteeUserItemProps {
     grantee: IGranularGranteeUser;
     currentUserPermissions: CurrentUserPermissions;
+    isDashboardLocked: boolean;
     onChange: (grantee: GranteeItem) => void;
     onDelete: (grantee: GranteeItem) => void;
 }
 
 export const GranularGranteeUserItem: React.FC<IGranularGranteeUserItemProps> = (props) => {
-    const { grantee, currentUserPermissions, onChange, onDelete } = props;
+    const { grantee, currentUserPermissions, isDashboardLocked, onChange, onDelete } = props;
     const { email } = grantee;
     const { isDropdownOpen, toggleDropdown } = usePermissionsDropdownState();
     const intl = useIntl();
@@ -42,6 +43,7 @@ export const GranularGranteeUserItem: React.FC<IGranularGranteeUserItemProps> = 
         <div className={itemClassName}>
             <GranularPermissionsDropdown
                 currentUserPermissions={currentUserPermissions}
+                isDashboardLocked={isDashboardLocked}
                 grantee={grantee}
                 isDropdownOpen={isDropdownOpen}
                 toggleDropdown={toggleDropdown}

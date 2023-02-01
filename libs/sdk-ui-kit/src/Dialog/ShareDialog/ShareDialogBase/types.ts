@@ -212,6 +212,7 @@ export interface IGranteeItemProps {
     mode: DialogModeType;
     grantee: GranteeItem;
     currentUserPermissions: CurrentUserPermissions;
+    isDashboardLocked: boolean;
     areGranularPermissionsSupported?: boolean;
     onDelete: (grantee: GranteeItem) => void;
     onChange?: (grantee: GranteeItem) => void;
@@ -245,6 +246,7 @@ export interface IShareGranteeContentProps {
     isLoading: boolean;
     grantees: GranteeItem[];
     currentUserPermissions: CurrentUserPermissions;
+    isDashboardLocked: boolean;
     areGranularPermissionsSupported?: boolean;
     onAddGrantee: () => void;
     onDelete: (grantee: GranteeItem) => void;
@@ -260,8 +262,7 @@ export interface IAddGranteeBaseProps {
     addedGrantees: GranteeItem[];
     appliedGrantees: GranteeItem[];
     currentUserPermissions: CurrentUserPermissions;
-    sharedObjectRef: ObjRef;
-    areGranularPermissionsSupported?: boolean;
+    sharedObject: IAffectedSharedObject;
     onBackClick?: () => void;
     onDelete: (grantee: GranteeItem) => void;
     onAddUserOrGroups?: (grantee: GranteeItem) => void; // rename
@@ -278,6 +279,7 @@ export interface IAddGranteeContentProps {
     addedGrantees: GranteeItem[];
     appliedGrantees: GranteeItem[];
     currentUserPermissions: CurrentUserPermissions;
+    isDashboardLocked: boolean;
     sharedObjectRef: ObjRef;
     areGranularPermissionsSupported?: boolean;
     onDelete: (grantee: GranteeItem) => void;
@@ -292,6 +294,7 @@ export interface IGranteesListProps {
     mode: DialogModeType;
     grantees: GranteeItem[];
     currentUserPermissions: CurrentUserPermissions;
+    isDashboardLocked: boolean;
     areGranularPermissionsSupported?: boolean;
     onDelete: (grantee: GranteeItem) => void;
     onChange?: (grantee: GranteeItem) => void;
@@ -370,6 +373,6 @@ export interface ISharedObjectUnderLenientControlProps {
  */
 export interface IGranularPermissionTypeItem {
     id: AccessGranularPermission;
-    title: string;
-    disabled?: boolean;
+    disabled: boolean;
+    hidden: boolean;
 }

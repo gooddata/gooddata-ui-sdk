@@ -37,6 +37,7 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
         isLockingSupported,
         areGranularPermissionsSupported,
         isMetadataObjectLockingSupported,
+        isLocked,
     } = sharedObject;
 
     const intl = useIntl();
@@ -67,6 +68,7 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
         >
             <ShareGranteeContent
                 currentUserPermissions={currentUserPermissions}
+                isDashboardLocked={isLocked}
                 isLoading={isLoading}
                 grantees={granteeList}
                 areGranularPermissionsSupported={areGranularPermissionsSupported}

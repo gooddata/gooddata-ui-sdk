@@ -6,17 +6,18 @@ import { AccessGranularPermission } from "@gooddata/sdk-model";
 
 import { GranularPermissionItem } from "./GranularPermissionItem";
 
-import { GranteeItem, IGranularGrantee, IGranularPermissionTypeItem } from "../types";
+import { GranteeItem, IGranularGrantee } from "../types";
 import { ItemsWrapper, Separator } from "../../../../List";
 import { Overlay } from "../../../../Overlay";
 import { IAlignPoint } from "../../../../typings/positioning";
 import { CurrentUserPermissions } from "../../types";
-import { granularPermissionMessageLabels } from "../../../../locales";
+import { getPermissionTypeItems } from "./permissionsLogic";
 
 interface IGranularPermissionsDropdownBodyProps {
     alignTo: string;
     grantee: IGranularGrantee;
     currentUserPermissions: CurrentUserPermissions;
+    isDashboardLocked: boolean;
     isShowDropdown: boolean;
     selectedPermission: string;
     toggleDropdown(): void;
@@ -27,41 +28,20 @@ interface IGranularPermissionsDropdownBodyProps {
 
 const overlayAlignPoints: IAlignPoint[] = [{ align: "bl tl" }];
 
-const getPermissionTypeItems = (
-    currentUserPermissions: CurrentUserPermissions,
-): IGranularPermissionTypeItem[] => {
-    return [
-        {
-            id: "EDIT",
-            title: granularPermissionMessageLabels.EDIT.id,
-            disabled: currentUserPermissions.canEditDashboard ? false : true,
-        },
-        {
-            id: "SHARE",
-            title: granularPermissionMessageLabels.SHARE.id,
-            disabled: currentUserPermissions.canShareDashboard ? false : true,
-        },
-        {
-            id: "VIEW",
-            title: granularPermissionMessageLabels.VIEW.id,
-            disabled: currentUserPermissions.canViewDashboard ? false : true,
-        },
-    ];
-};
-
 export const GranularPermissionsDropdownBody: React.FC<IGranularPermissionsDropdownBodyProps> = ({
     grantee,
     alignTo,
     isShowDropdown,
     currentUserPermissions,
+    isDashboardLocked,
     selectedPermission,
     toggleDropdown,
     onChange,
     onDelete,
     handleSetSelectedPermission,
 }) => {
-    const permissions = useMemo(
-        () => getPermissionTypeItems(currentUserPermissions),
+    const permissionsItems = useMemo(
+        () => getPermissionTypeItems(currentUserPermissions, isDashboardLocked),
         [currentUserPermissions],
     );
 
@@ -91,17 +71,19 @@ export const GranularPermissionsDropdownBody: React.FC<IGranularPermissionsDropd
             onClose={toggleDropdown}
         >
             <ItemsWrapper smallItemsSpacing={true}>
-                {permissions.map((permission) => {
+                {permissionsItems.map((permissionItem) => {
                     return (
-                        <GranularPermissionItem
-                            grantee={grantee}
-                            key={permission.id}
-                            permission={permission}
-                            selectedPermission={selectedPermission}
-                            toggleDropdown={toggleDropdown}
-                            onChange={onChange}
-                            handleSetSelectedPermission={handleSetSelectedPermission}
-                        />
+                        !permissionItem.hidden && (
+                            <GranularPermissionItem
+                                grantee={grantee}
+                                key={permissionItem.id}
+                                permission={permissionItem}
+                                selectedPermission={selectedPermission}
+                                toggleDropdown={toggleDropdown}
+                                onChange={onChange}
+                                handleSetSelectedPermission={handleSetSelectedPermission}
+                            />
+                        )
                     );
                 })}
                 <Separator />
