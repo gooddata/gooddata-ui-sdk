@@ -8854,6 +8854,483 @@
         },
         {
             "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "dateDataSet": "{{{closed_dataset_dt}}}",
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_Column_chart_with_years_aacmbZuYTQWJ}}}"
+                    },
+                    "meta": {
+                        "identifier": "aabGJqI6Dnej",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Column chart with years"
+                    }
+                }
+            },
+            "name": "visualizationWidget_Column_chart_with_years_aabGJqI6Dnej"
+        },
+        {
+            "content": {
+                "filterContext": {
+                    "content": {
+                        "filters": [
+                            {
+                                "dateFilter": {
+                                    "from": "0",
+                                    "granularity": "GDC.time.month",
+                                    "to": "0",
+                                    "type": "relative"
+                                }
+                            }
+                        ]
+                    },
+                    "meta": {
+                        "identifier": "aacGI4Q73uzj",
+                        "summary": "",
+                        "tags": "",
+                        "title": "filterContext"
+                    }
+                }
+            },
+            "name": "filterContext_filterContext_aacGI4Q73uzj"
+        },
+        {
+            "content": {
+                "analyticalDashboard": {
+                    "content": {
+                        "filterContext": "{{{filterContext_filterContext_aacGI4Q73uzj}}}",
+                        "layout": {
+                            "fluidLayout": {
+                                "rows": [
+                                    {
+                                        "columns": [
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_Column_chart_with_years_aabGJqI6Dnej}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 22,
+                                                        "width": 6
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        "widgets": ["{{{visualizationWidget_Column_chart_with_years_aabGJqI6Dnej}}}"]
+                    },
+                    "meta": {
+                        "identifier": "aacGJitR3ziX",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Insight on dashboard"
+                    }
+                }
+            },
+            "name": "analyticalDashboard_Insight_on_dashboard_aacGJitR3ziX"
+        },
+        {
+            "content": {
+                "filterContext": {
+                    "content": {
+                        "filters": [
+                            {
+                                "dateFilter": {
+                                    "from": "0",
+                                    "granularity": "GDC.time.month",
+                                    "to": "0",
+                                    "type": "relative"
+                                }
+                            }
+                        ]
+                    },
+                    "meta": {
+                        "identifier": "aadGJOKVDoK8",
+                        "summary": "",
+                        "tags": "",
+                        "title": "filterContext"
+                    }
+                }
+            },
+            "name": "filterContext_filterContext_aadGJOKVDoK8"
+        },
+        {
+            "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "dateDataSet": "{{{closed_dataset_dt}}}",
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_Metric_with_date_filter_aaduHBnWe2cz}}}"
+                    },
+                    "meta": {
+                        "identifier": "aadGI4Q73uzj",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Metric with date filter"
+                    }
+                }
+            },
+            "name": "visualizationWidget_Metric_with_date_filter_aadGI4Q73uzj"
+        },
+        {
+            "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "dateDataSet": "{{{closed_dataset_dt}}}",
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_Metric_with_date_filter_aaduHBnWe2cz}}}"
+                    },
+                    "meta": {
+                        "identifier": "aacGJsem3uEw",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Metric with date filter"
+                    }
+                }
+            },
+            "name": "visualizationWidget_Metric_with_date_filter_aacGJsem3uEw"
+        },
+        {
+            "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "dateDataSet": "{{{closed_dataset_dt}}}",
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_Headline_aaft2o3VarXu}}}"
+                    },
+                    "meta": {
+                        "identifier": "aabGJYea3DRk",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Headline"
+                    }
+                }
+            },
+            "name": "visualizationWidget_Headline_aabGJYea3DRk"
+        },
+        {
+            "content": {
+                "analyticalDashboard": {
+                    "content": {
+                        "filterContext": "{{{filterContext_filterContext_aadGJOKVDoK8}}}",
+                        "layout": {
+                            "fluidLayout": {
+                                "rows": [
+                                    {
+                                        "columns": [
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_Metric_with_date_filter_aacGJsem3uEw}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 8,
+                                                        "width": 2
+                                                    }
+                                                }
+                                            }
+                                        ],
+                                        "header": {
+                                            "description": "section 1",
+                                            "title": "section 1"
+                                        }
+                                    },
+                                    {
+                                        "columns": [
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_Headline_aabGJYea3DRk}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 11,
+                                                        "width": 2
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "columns": [
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_Metric_with_date_filter_aadGI4Q73uzj}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "height": 8,
+                                                        "width": 2
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        "widgets": [
+                            "{{{visualizationWidget_Metric_with_date_filter_aacGJsem3uEw}}}",
+                            "{{{visualizationWidget_Headline_aabGJYea3DRk}}}",
+                            "{{{visualizationWidget_Metric_with_date_filter_aadGI4Q73uzj}}}"
+                        ]
+                    },
+                    "meta": {
+                        "identifier": "aafGHSoODa6M",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Header Tests"
+                    }
+                }
+            },
+            "name": "analyticalDashboard_Header_Tests_aafGHSoODa6M"
+        },
+        {
+            "content": {
+                "kpi": {
+                    "content": {
+                        "comparisonDirection": "growIsGood",
+                        "comparisonType": "previousPeriod",
+                        "dateDataSet": "{{{activity_dataset_dt}}}",
+                        "ignoreDashboardFilters": [],
+                        "metric": "{{{snapshot_eop}}}"
+                    },
+                    "meta": {
+                        "identifier": "aadGJqI6Dnej",
+                        "summary": "",
+                        "tags": "",
+                        "title": "_Snapshot [EOP]"
+                    }
+                }
+            },
+            "name": "kpi__Snapshot__EOP__aadGJqI6Dnej"
+        },
+        {
+            "content": {
+                "visualizationWidget": {
+                    "content": {
+                        "dateDataSet": "{{{closed_dataset_dt}}}",
+                        "ignoreDashboardFilters": [],
+                        "visualization": "{{{visualizationObject_Bubble_chart_aact2pgJbVWT}}}"
+                    },
+                    "meta": {
+                        "identifier": "aagGHSoODa6M",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Bubble chart"
+                    }
+                }
+            },
+            "name": "visualizationWidget_Bubble_chart_aagGHSoODa6M"
+        },
+        {
+            "content": {
+                "kpi": {
+                    "content": {
+                        "comparisonDirection": "growIsGood",
+                        "comparisonType": "previousPeriod",
+                        "ignoreDashboardFilters": [],
+                        "metric": "{{{amount}}}"
+                    },
+                    "meta": {
+                        "identifier": "aabGKAPW3DHH",
+                        "summary": "",
+                        "tags": "",
+                        "title": "First KPI"
+                    }
+                }
+            },
+            "name": "kpi_First_KPI_aabGKAPW3DHH"
+        },
+        {
+            "content": {
+                "filterContext": {
+                    "content": {
+                        "filters": []
+                    },
+                    "meta": {
+                        "identifier": "aabGKAPY3Ebg",
+                        "summary": "",
+                        "tags": "",
+                        "title": "filterContext"
+                    }
+                }
+            },
+            "name": "filterContext_filterContext_aabGKAPY3Ebg"
+        },
+        {
+            "content": {
+                "kpi": {
+                    "content": {
+                        "comparisonDirection": "growIsGood",
+                        "comparisonType": "previousPeriod",
+                        "ignoreDashboardFilters": [],
+                        "metric": "{{{amount}}}"
+                    },
+                    "meta": {
+                        "identifier": "aakGHMJXC8BK",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Second KPI"
+                    }
+                }
+            },
+            "name": "kpi_Second_KPI_aakGHMJXC8BK"
+        },
+        {
+            "content": {
+                "kpi": {
+                    "content": {
+                        "comparisonDirection": "growIsGood",
+                        "comparisonType": "previousPeriod",
+                        "ignoreDashboardFilters": [],
+                        "metric": "{{{amount}}}"
+                    },
+                    "meta": {
+                        "identifier": "aadGJsem3uEw",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Third KPI"
+                    }
+                }
+            },
+            "name": "kpi_Third_KPI_aadGJsem3uEw"
+        },
+        {
+            "content": {
+                "analyticalDashboard": {
+                    "content": {
+                        "filterContext": "{{{filterContext_filterContext_aabGKAPY3Ebg}}}",
+                        "layout": {
+                            "fluidLayout": {
+                                "rows": [
+                                    {
+                                        "columns": [
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{kpi_First_KPI_aabGKAPW3DHH}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "width": 4
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{kpi_Second_KPI_aakGHMJXC8BK}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "width": 4
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{kpi_Third_KPI_aadGJsem3uEw}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "width": 4
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "columns": [
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{visualizationWidget_Bubble_chart_aagGHSoODa6M}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "width": 12
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "columns": [
+                                            {
+                                                "content": {
+                                                    "widget": {
+                                                        "qualifier": {
+                                                            "uri": "{{{kpi__Snapshot__EOP__aadGJqI6Dnej}}}"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "xl": {
+                                                        "width": 2
+                                                    }
+                                                }
+                                            }
+                                        ],
+                                        "header": {
+                                            "title": "Last row"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "widgets": [
+                            "{{{kpi_First_KPI_aabGKAPW3DHH}}}",
+                            "{{{kpi_Second_KPI_aakGHMJXC8BK}}}",
+                            "{{{kpi_Third_KPI_aadGJsem3uEw}}}",
+                            "{{{visualizationWidget_Bubble_chart_aagGHSoODa6M}}}",
+                            "{{{kpi__Snapshot__EOP__aadGJqI6Dnej}}}"
+                        ]
+                    },
+                    "meta": {
+                        "identifier": "aacGKAPY3Ebg",
+                        "summary": "",
+                        "tags": "",
+                        "title": "Drag drop and Move"
+                    }
+                }
+            },
+            "name": "analyticalDashboard_Drag_drop_and_Move_aacGKAPY3Ebg"
+        },
+        {
+            "content": {
                 "filterContext": {
                     "content": {
                         "filters": [

@@ -1,4 +1,6 @@
 // (C) 2021 GoodData Corporation
+import { LayoutRow } from "./layoutRow";
+import { Widget } from "./widget";
 
 import { WidgetDropZone } from "./enum/DropZone";
 
@@ -61,6 +63,24 @@ export class Dashboard {
             return result.push($li.text());
         });
         return cy.wrap(result);
+    }
+
+    getRow(rowIndex: number): LayoutRow {
+        return new LayoutRow(rowIndex);
+    }
+
+    hasRowsCount(count: number) {
+        cy.get(".s-fluid-layout-row").should("have.length", count);
+        return this;
+    }
+
+    getWidget(itemIndex: number): Widget {
+        return new Widget(itemIndex);
+    }
+
+    hasPlaceholderText(text: string) {
+        cy.get(".drag-info-placeholder-inner.can-drop").contains(text);
+        return this;
     }
 }
 

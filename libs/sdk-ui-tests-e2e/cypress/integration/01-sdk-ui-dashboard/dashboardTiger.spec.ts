@@ -36,12 +36,12 @@ describe("Dashboard", { tags: ["pre-merge_isolated_tiger"] }, () => {
             topBar.dashboardTitleExist().dashboardTitleHasValue("Test dashboard");
         });
 
-        it("should not render edit button", () => {
+        it("should render edit button", () => {
             const topBar = new TopBar();
             const dashboard = new Dashboard();
 
             dashboard.topBarExist();
-            topBar.editButtonIsVisible(false);
+            topBar.editButtonIsVisible(true);
         });
 
         it("should menu button render", () => {

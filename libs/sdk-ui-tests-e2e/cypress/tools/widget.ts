@@ -3,6 +3,7 @@
 import { Chart } from "./chart";
 import { Table } from "./table";
 import { Kpi } from "./kpi";
+import { InsightsCatalog, InsightTitle } from "./insightsCatalog";
 
 const MAXIMUM_TIMEOUT = Cypress.env("timeForInsightLoading");
 
@@ -143,5 +144,46 @@ export class Widget {
     isSelected() {
         this.getElement().should("have.class", "is-selected");
         return this;
+    }
+
+    dragBefore(name: InsightTitle) {
+        return this.drag(name, "prev");
+    }
+
+    dragAfter(name: InsightTitle) {
+        return this.drag(name, "next");
+    }
+
+    drag(name: InsightTitle, offset: "next" | "prev") {
+        const catalog = new InsightsCatalog();
+        catalog.searchExistingInsight(name);
+        cy.get(catalog.getInsightSelector(name)).parent().trigger("dragstart", { force: true });
+        cy.get(`.dropzone.${offset}`).eq(this.index).trigger("dragenter");
+        return this;
+    }
+
+    add(name: InsightTitle, offset: "next" | "prev") {
+        const catalog = new InsightsCatalog();
+        catalog.searchExistingInsight(name);
+        cy.get(catalog.getInsightSelector(name)).parent().trigger("dragstart", { force: true });
+        cy.get(`.dropzone.${offset}`).eq(this.index).trigger("drop", { force: true });
+        return this;
+    }
+
+    hasPlaceholderTitle(placeholderTitle: string) {
+        this.getElement()
+            .find(".s-headline")
+            .click()
+            .find("textarea")
+            .should("have.prop", "placeholder", placeholderTitle);
+        return this;
+    }
+
+    getTitle() {
+        return this.getElement().find(".s-headline");
+    }
+
+    addBefore(name: InsightTitle) {
+        return this.add(name, "prev");
     }
 }

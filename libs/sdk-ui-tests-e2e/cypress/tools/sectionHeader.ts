@@ -1,12 +1,13 @@
 // (C) 2021 GoodData Corporation
-
-import { LayoutRow } from "./layoutRow";
-
 export class SectionHeader {
     constructor(private rowIndex: number) {}
 
+    getSelector() {
+        return `.s-fluid-layout-row:nth-child(${this.rowIndex + 1})`;
+    }
+
     getElement() {
-        return new LayoutRow(this.rowIndex).getElement();
+        return cy.get(this.getSelector());
     }
 
     getTitleElement() {
@@ -52,6 +53,34 @@ export class SectionHeader {
 
     setDescription(text: string) {
         this.getDescriptionInputWrapper().click().find("textarea").type(`${text}{enter}`, { delay: 50 });
+        return this;
+    }
+
+    hasPlaceholderTitle(text: string) {
+        this.getTitleInputWrapper().should("have.text", text);
+        return this;
+    }
+
+    hasPlaceholderDescription(text: string) {
+        this.getDescriptionInputWrapper().should("have.text", text);
+        return this;
+    }
+
+    selectTitleInput() {
+        this.getTitleInputWrapper().click();
+        return this;
+    }
+
+    selectDescriptionInput() {
+        this.getDescriptionInputWrapper().click();
+        return this;
+    }
+
+    hasLimitMessage(message: string) {
+        cy.get(".bubble:not(.s-gd-configuration-bubble) .bubble-content .content").should(
+            "have.text",
+            message,
+        );
         return this;
     }
 }

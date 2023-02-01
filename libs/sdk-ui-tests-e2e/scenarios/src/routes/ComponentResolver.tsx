@@ -29,6 +29,10 @@ import { DashboardDependentFilter } from "../components/Scenarios/Dashboard/Dash
 import { DashboardMultipleFiltersScenario } from "../components/Scenarios/Dashboard/DashboardMultipleFiltersScenario";
 import { DashboardDrillToInsightScenario } from "../components/Scenarios/Dashboard/DashboardDrilToInsightScenario";
 import { DashboardTargetDashboardScenario } from "../components/Scenarios/Dashboard/DashboardTargetDashboardScenario";
+import { InsightOnDashboardScenario } from "../components/Scenarios/Dashboard/InsightOnDashboardScenario";
+import { HeaderSectionScenario } from "../components/Scenarios/Dashboard/HeaderSectionScenario";
+import { HeaderLocalizationScenario } from "../components/Scenarios/Dashboard/HeaderSectionLocalizationScenario";
+import { DragDropWidgetScenario } from "../components/Scenarios/Dashboard/DragAndDropWidgetScenario";
 
 /**
  * Add key here for your new E2E test. Use the key in the map below with the scenario as well as in
@@ -61,6 +65,10 @@ export const SCENARIO_KEYS = {
     FILTERS_ATTRIBUTE_FILTER_BUTTON_PARENT_CHILD: "filters/attribute-filter-button-parent-child",
     FILTERS_PARENT_CHILD_FILTERS_WITH_PLACEHOLDERS: "filters/parent-child-filters-with-placeholder",
     FILTERS_ATTRIBUTE_FILTER_CONFIG: "filters/attribute-filter-config",
+    INSIGHT_ON_DASHBOARD: "dashboard/insight",
+    HEADER_SECTION: "dashboard/header",
+    HEADER_LOCALIZATION: "dashboard/header-localization",
+    DRAG_DROP_MOVE_WIDGET: "dashboard/drag-drop-widgets",
 };
 
 const scenarios = new Map<string, React.ComponentType>([
@@ -90,6 +98,10 @@ const scenarios = new Map<string, React.ComponentType>([
     [SCENARIO_KEYS.VIS_PIVOT_TABLE_SIZING_RESET, PivotTableComplexResetScenario],
     [SCENARIO_KEYS.VIS_PIVOT_TABLE_SIZING, PivotTableSizingScenario],
     [SCENARIO_KEYS.FILTERS_ATTRIBUTE_FILTER_CONFIG, DashboardFilterConfigurationScenario],
+    [SCENARIO_KEYS.INSIGHT_ON_DASHBOARD, InsightOnDashboardScenario],
+    [SCENARIO_KEYS.HEADER_SECTION, HeaderSectionScenario],
+    [SCENARIO_KEYS.HEADER_LOCALIZATION, HeaderLocalizationScenario],
+    [SCENARIO_KEYS.DRAG_DROP_MOVE_WIDGET, DragDropWidgetScenario],
 ]);
 
 const ComponentResolver: React.FC = () => {

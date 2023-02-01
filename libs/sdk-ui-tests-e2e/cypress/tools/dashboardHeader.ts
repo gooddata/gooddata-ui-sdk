@@ -52,7 +52,7 @@ export class DashboardHeader {
     saveAsNew(dashboardName: string) {
         cy.get(SAVE_AS_NEW_SELECTOR).should("be.visible").click();
         cy.get(SAVE_AS_NEW_DIALOG).should("exist");
-        cy.get(INPUT_DASHBOARD_TITLE).type(dashboardName);
+        cy.get(INPUT_DASHBOARD_TITLE).type(dashboardName, { delay: 50 });
         cy.get(CONFIRM_BUTTON).click();
         return this;
     }

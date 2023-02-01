@@ -103,6 +103,10 @@ export class DateFilter {
         return this;
     }
 
+    private getOption(selector: string) {
+        return this.getDropdownElement().find(selector);
+    }
+
     apply() {
         this.getDropdownElement().find(".s-date-filter-apply").click({ scrollBehavior: false });
         return this;
@@ -118,9 +122,5 @@ export class DateFilter {
     cancel() {
         this.getDropdownElement().find(".s-date-filter-cancel").click({ scrollBehavior: false });
         return this;
-    }
-
-    private getOption(selector: string) {
-        return this.getDropdownElement().find(selector);
     }
 }
