@@ -6,9 +6,9 @@ import cx from "classnames";
 import { AccessGranularPermission } from "@gooddata/sdk-model";
 
 import { GranteeItem, IGranularGrantee, IGranularPermissionTypeItem } from "../types";
-import { Bubble, BubbleHoverTrigger } from "../../../../Bubble";
 import { IAlignPoint } from "../../../../typings/positioning";
 import { granularPermissionMessageLabels } from "../../../../locales";
+import { withBubble } from "../../../../Bubble";
 
 const alignPoints: IAlignPoint[] = [{ align: "cr cl" }];
 
@@ -59,6 +59,8 @@ const GranularPermissionSelectItem: React.FC<IGranularPermissionItemProps> = ({
     );
 };
 
+const GranularPermissionSelectItemWithBubble = withBubble(GranularPermissionSelectItem);
+
 export const GranularPermissionItem: React.FC<IGranularPermissionItemProps> = (props) => {
     const {
         permission: { disabled },
@@ -69,12 +71,6 @@ export const GranularPermissionItem: React.FC<IGranularPermissionItemProps> = (p
     }
 
     return (
-        <BubbleHoverTrigger>
-            <GranularPermissionSelectItem {...props} />
-            <Bubble alignPoints={alignPoints}>
-                {/* TODO: TNT-1284 Add tooltips logic */}
-                <div>Disabled</div>
-            </Bubble>
-        </BubbleHoverTrigger>
+        <GranularPermissionSelectItemWithBubble {...props} alignPoints={alignPoints} bubbleText={"test"} />
     );
 };
