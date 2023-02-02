@@ -9,6 +9,7 @@ import {
     IAvailableUserGroupAccessGrantee,
     IGranularUserAccess,
     IGranularUserGroupAccess,
+    AccessGranteeDetail,
 } from "@gooddata/sdk-model";
 import {
     GranteeItem,
@@ -49,26 +50,10 @@ export const current: IGranteeUser = {
     status: "Active",
 };
 
-export const currentAndOwen: IGranteeUser = {
-    type: "user",
-    id: uriRef("userID4"),
-    name: "Owner Current Name",
-    email: "owner.current.name@gooddata.com",
-    isOwner: true,
-    isCurrentUser: true,
-    status: "Active",
-};
-
 export const group: IGranteeGroup = {
     type: "group",
     id: uriRef("groupId"),
     memberCount: 11,
-    name: "TNT team",
-};
-
-export const groupNoCount: IGranteeGroup = {
-    type: "group",
-    id: uriRef("groupId"),
     name: "TNT team",
 };
 
@@ -140,6 +125,40 @@ export const granularGroup: IGranularGranteeGroup = {
 
 export const granularGrantees: GranteeItem[] = [granularUser, granularGroup];
 
+export const granularGranteeUser: IGranularGranteeUser = {
+    id: userProps.ref,
+    email: userProps.email,
+    name: userProps.name,
+    type: "granularUser",
+    isOwner: false,
+    isCurrentUser: false,
+    status: "Active",
+    permissions: ["VIEW"],
+    inheritedPermissions: ["SHARE"],
+};
+
+export const granularGranteeUser2: IGranularGranteeUser = {
+    id: uriRef("john-id"),
+    email: "john.doe2@d.com",
+    name: "John Doe2",
+    type: "granularUser",
+    isOwner: false,
+    isCurrentUser: false,
+    status: "Active",
+    permissions: ["VIEW"],
+    inheritedPermissions: [],
+};
+
+export const granularGranteeGroup: IGranularGranteeGroup = {
+    id: groupProps.ref,
+    name: groupProps.name,
+    type: "granularGroup",
+    permissions: ["EDIT"],
+    inheritedPermissions: [],
+};
+
+export const granularGranteeItems = [granularGranteeUser, granularGranteeGroup];
+
 export const granularUserAccess: IGranularUserAccess = {
     ...userAccessGrantee,
     type: "granularUser",
@@ -153,3 +172,5 @@ export const granularUserGroupAccess: IGranularUserGroupAccess = {
     permissions: ["EDIT"],
     inheritedPermissions: [],
 };
+
+export const granularGranteesAccess: AccessGranteeDetail[] = [granularUserAccess, granularUserGroupAccess];
