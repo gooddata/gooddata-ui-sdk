@@ -1,7 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`sizing getDashboardLayoutGridItemHeight should calculate widget height for selected gridHeight when FF enableKDWidgetCustomHeight is true 1`] = `220`;
-
 exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for lg screen with ratio 50 1`] = `0`;
 
 exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for lg screen with ratio 50 2`] = `55.083333333333336`;

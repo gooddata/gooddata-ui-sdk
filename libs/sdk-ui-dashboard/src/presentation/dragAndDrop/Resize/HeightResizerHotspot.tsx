@@ -1,6 +1,6 @@
 // (C) 2021-2023 GoodData Corporation
 import React, { useEffect, useMemo, useState } from "react";
-import { IWidget, ScreenSize } from "@gooddata/sdk-model";
+import { ISettings, IWidget, ScreenSize, IInsight } from "@gooddata/sdk-model";
 import { fluidLayoutDescriptor, INSIGHT_WIDGET_SIZE_INFO_DEFAULT } from "@gooddata/sdk-ui-ext";
 import isEqual from "lodash/fp/isEqual";
 import isEmpty from "lodash/isEmpty";
@@ -10,10 +10,11 @@ import {
     isCustomWidgetBase,
     resizeHeight,
     selectInsightsMap,
+    selectSettings,
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../model";
-import { getMaxHeight, getMinHeight } from "../../../_staging/layout/sizing";
+import { calculateWidgetMinHeight, getMaxHeight, getMinHeight } from "../../../_staging/layout/sizing";
 import {
     IDashboardLayoutItemFacade,
     IDashboardLayoutSectionFacade,
@@ -21,12 +22,14 @@ import {
 import { HeightResizer } from "./HeightResizer";
 
 import { useResizeContext } from "../LayoutResizeContext";
+import { DEFAULT_WIDTH_RESIZER_HEIGHT } from "../../layout/constants";
+import { ExtendedDashboardWidget } from "../../../model/types/layoutTypes";
+import { ObjRefMap } from "../../../_staging/metadata/objRefMap";
 
 export type HeightResizerHotspotProps = {
     section: IDashboardLayoutSectionFacade<unknown>;
     items: IDashboardLayoutItemFacade<unknown>[];
     screen: ScreenSize;
-    getContainerDimensions: () => DOMRect | undefined;
     getLayoutDimensions: () => DOMRect;
 };
 
@@ -34,17 +37,17 @@ export function HeightResizerHotspot({
     section,
     items,
     screen,
-    getContainerDimensions,
     getLayoutDimensions,
 }: HeightResizerHotspotProps) {
     const dispatch = useDashboardDispatch();
     const insightsMap = useDashboardSelector(selectInsightsMap);
+    const settings = useDashboardSelector(selectSettings);
+
     const { resizeDirection, resizeItemIdentifiers, resizeStart, resizeEnd, getScrollCorrection } =
         useResizeContext();
     const widgets = useMemo(() => items.map((item) => item.widget() as IWidget), [items]);
-    const widgetIdentifiers = widgets.map((widget) => widget.identifier);
-
-    const customWidgetsRestrictions = getCustomWidgetRestrictions(items);
+    const widgetIdentifiers = useMemo(() => widgets.map((widget) => widget.identifier), [widgets]);
+    const customWidgetsRestrictions = useMemo(() => getCustomWidgetRestrictions(items), [items]);
 
     const [{ isDragging }, dragRef] = useDashboardDrag(
         {
@@ -53,7 +56,7 @@ export function HeightResizerHotspot({
 
                 const minLimit = getMinHeight(widgets, insightsMap, customWidgetsRestrictions.heightLimit);
                 const maxLimit = getMaxHeight(widgets, insightsMap);
-                const heightsGR = getHeightsGR(items, screen, getContainerDimensions()?.height ?? 100);
+                const heightsGR = getHeightsGR(items, insightsMap, screen, settings);
 
                 return {
                     type: "internal-height-resizer",
@@ -91,6 +94,7 @@ export function HeightResizerHotspot({
         if (isDragging) {
             resizeStart("height", widgetIdentifiers);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps -- we want to run this only when isDragging changes
     }, [isDragging]);
 
     const areWidgetsResizing = resizeDirection !== "none";
@@ -124,13 +128,22 @@ export function HeightResizerHotspot({
 }
 
 export function getHeightsGR(
-    widgets: IDashboardLayoutItemFacade<unknown>[],
+    items: IDashboardLayoutItemFacade<unknown>[],
+    insightMap: ObjRefMap<IInsight>,
     screen: ScreenSize,
-    widgetHeightPX: number,
+    settings: ISettings,
 ) {
-    return widgets.reduce((acc, widget) => {
-        const curHeightGR = fluidLayoutDescriptor.toGridHeight(widgetHeightPX);
-        const gridHeight = widget.sizeForScreen(screen)?.gridHeight ?? curHeightGR;
+    return items.reduce((acc, item) => {
+        const currentSize = item.sizeForScreen(screen);
+        const widgetMinHeightPX =
+            calculateWidgetMinHeight(
+                item.widget() as ExtendedDashboardWidget,
+                currentSize,
+                insightMap,
+                settings,
+            ) ?? DEFAULT_WIDTH_RESIZER_HEIGHT;
+        const curHeightGR = fluidLayoutDescriptor.toGridHeight(widgetMinHeightPX);
+        const gridHeight = item.sizeForScreen(screen)?.gridHeight ?? curHeightGR;
         return [...acc, gridHeight];
     }, [] as number[]);
 }

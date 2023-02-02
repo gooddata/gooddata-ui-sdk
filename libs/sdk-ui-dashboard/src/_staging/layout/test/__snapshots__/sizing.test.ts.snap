@@ -1,5 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`sizing getDashboardLayoutGridItemHeight should calculate widget height for selected gridHeight when FF enableKDWidgetCustomHeight is true 1`] = `220`;
+
 exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight false should get default height for insight widget area 1`] = `450`;
 
 exports[`sizing getDashboardLayoutWidgetDefaultHeight with customHeight false should get default height for insight widget bar 1`] = `450`;

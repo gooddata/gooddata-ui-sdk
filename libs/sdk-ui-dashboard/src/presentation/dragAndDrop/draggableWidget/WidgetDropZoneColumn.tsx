@@ -1,16 +1,16 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import { ScreenSize } from "@gooddata/sdk-model";
 import cx from "classnames";
 import React, { useMemo } from "react";
 import { Col } from "react-grid-system";
 import { selectDraggingWidgetTarget, useDashboardDispatch, useDashboardSelector } from "../../../model";
-import { getDashboardLayoutItemHeightForGrid } from "../../layout/DefaultDashboardLayoutRenderer/utils/sizing";
 import { WidgetDropZone } from "./WidgetDropZone";
 import { useDashboardDrop } from "../useDashboardDrop";
 import { useInsightListItemDropHandler } from "./useInsightListItemDropHandler";
 import { useInsightPlaceholderDropHandler } from "./useInsightPlaceholderDropHandler";
 import { useKpiPlaceholderDropHandler } from "./useKpiPlaceholderDropHandler";
 import { useMoveWidgetDropHandler } from "./useMoveWidgetHandler";
+import { getDashboardLayoutItemHeightForGrid } from "../../../_staging/layout/sizing";
 import {
     BaseDraggableLayoutItem,
     isInsightDraggableItem,

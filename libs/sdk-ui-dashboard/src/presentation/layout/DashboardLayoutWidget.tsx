@@ -1,15 +1,10 @@
 // (C) 2020-2023 GoodData Corporation
 import {
-    AnalyticalWidgetType,
-    IDashboardLayoutSize,
     IDashboardLayoutSizeByScreenSize,
     IInsight,
-    IKpi,
     ISettings,
     isInsightWidget,
     isKpiWidget,
-    isWidget,
-    widgetType as getWidgetType,
 } from "@gooddata/sdk-model";
 import { IVisualizationSizeInfo, WIDGET_DROPZONE_SIZE_INFO_DEFAULT } from "@gooddata/sdk-ui-ext";
 import React, { useRef } from "react";
@@ -30,7 +25,7 @@ import {
     selectIsExport,
 } from "../../model";
 import { isAnyPlaceholderWidget, isPlaceholderWidget } from "../../widgets";
-import { getDashboardLayoutWidgetDefaultHeight, getSizeInfo } from "../../_staging/layout/sizing";
+import { getSizeInfo, calculateWidgetMinHeight } from "../../_staging/layout/sizing";
 import { getLayoutCoordinates } from "../../_staging/layout/coordinates";
 import { ObjRefMap } from "../../_staging/metadata/objRefMap";
 import { useDashboardComponentsContext } from "../dashboardContexts";
@@ -47,42 +42,12 @@ import {
 import { DashboardWidget, IDashboardWidgetProps } from "../widget";
 import { DEFAULT_COLUMN_CLIENT_WIDTH, DEFAULT_WIDTH_RESIZER_HEIGHT } from "./constants";
 import {
-    getDashboardLayoutItemHeight,
     getDashboardLayoutItemHeightForRatioAndScreen,
     IDashboardLayoutItemFacade,
     IDashboardLayoutWidgetRenderer,
 } from "./DefaultDashboardLayoutRenderer";
 import { DashboardItemOverlay } from "./DashboardItemOverlay/DashboardItemOverlay";
 import { getRefsForSection, getRefsForItem } from "./refs";
-
-function calculateWidgetMinHeight(
-    widget: ExtendedDashboardWidget,
-    currentSize: IDashboardLayoutSize,
-    insights: ObjRefMap<IInsight>,
-    settings: ISettings,
-): number | undefined {
-    let widgetType: AnalyticalWidgetType;
-    let insight: IInsight;
-    let content: IInsight | IKpi;
-
-    if (isWidget(widget)) {
-        widgetType = getWidgetType(widget);
-    }
-    if (isInsightWidget(widget)) {
-        insight = insights.get(widget.insight)!;
-        content = insight;
-    }
-    if (isKpiWidget(widget)) {
-        content = widget.kpi;
-    }
-
-    return (
-        getDashboardLayoutItemHeight(currentSize) ||
-        (!currentSize.heightAsRatio
-            ? getDashboardLayoutWidgetDefaultHeight(settings, widgetType!, content!)
-            : undefined)
-    );
-}
 
 /**
  * Tests in KD require widget index for css selectors.

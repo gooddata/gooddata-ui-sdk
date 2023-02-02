@@ -1,5 +1,7 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import { IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
+
+export const GRID_ROW_HEIGHT_IN_PX = 20;
 
 export const KPI_WITHOUT_COMPARISON_SIZE_INFO: IVisualizationSizeInfo = {
     width: {

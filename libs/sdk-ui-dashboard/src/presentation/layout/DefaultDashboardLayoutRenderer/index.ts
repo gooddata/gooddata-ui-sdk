@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 export {
     IDashboardLayoutItemKeyGetter,
     IDashboardLayoutItemKeyGetterProps,
@@ -32,8 +32,6 @@ export {
     getDashboardLayoutItemHeightForRatioAndScreen,
     getDashboardLayoutItemMaxGridWidth,
     getDashboardLayoutWidgetDefaultGridWidth,
-    getDashboardLayoutItemHeightForGrid,
-    getDashboardLayoutItemHeight,
     validateDashboardLayoutWidgetSize,
 } from "./utils/sizing";
 export { DashboardLayoutBuilder } from "../../../_staging/dashboard/fluidLayout/builder/layout";

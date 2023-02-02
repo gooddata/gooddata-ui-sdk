@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { Configuration } from "react-grid-system";
 import { ScreenSize } from "@gooddata/sdk-model";
 
@@ -49,4 +49,3 @@ export const DASHBOARD_LAYOUT_CONTAINER_WIDTHS = {
 export const DASHBOARD_LAYOUT_RESPONSIVE_SMALL_WIDTH = 180;
 
 export const DASHBOARD_LAYOUT_MAX_HEIGHT_AS_RATIO_XS = 150;
-export const GRID_ROW_HEIGHT_IN_PX = 20;

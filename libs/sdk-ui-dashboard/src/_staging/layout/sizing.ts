@@ -1,18 +1,21 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 
 import {
     AnalyticalWidgetType,
+    IDashboardLayoutSize,
     IInsight,
     IInsightDefinition,
     IKpi,
     isDashboardWidget,
     ISettings,
     isInsight,
+    isInsightWidget,
     isKpi,
     isKpiWidget,
     isKpiWithoutComparison,
+    isWidget,
     IWidget,
-    widgetType,
+    widgetType as getWidgetType,
 } from "@gooddata/sdk-model";
 import {
     fluidLayoutDescriptor,
@@ -25,7 +28,12 @@ import {
 } from "@gooddata/sdk-ui-ext";
 
 import { ObjRefMap } from "../metadata/objRefMap";
-import { KPI_WITHOUT_COMPARISON_SIZE_INFO, KPI_WITH_COMPARISON_SIZE_INFO } from "./constants";
+import {
+    KPI_WITHOUT_COMPARISON_SIZE_INFO,
+    KPI_WITH_COMPARISON_SIZE_INFO,
+    GRID_ROW_HEIGHT_IN_PX,
+} from "./constants";
+import { ExtendedDashboardWidget } from "../../model/types/layoutTypes";
 
 /**
  * @internal
@@ -127,7 +135,7 @@ export function getMinHeight(widgets: IWidget[], insightMap: ObjRefMap<IInsight>
         .map((widget) =>
             getDashboardLayoutWidgetMinGridHeight(
                 { enableKDWidgetCustomHeight: true },
-                widgetType(widget),
+                getWidgetType(widget),
                 isKpiWidget(widget) ? widget.kpi : insightMap.get(widget.insight),
             ),
         );
@@ -143,7 +151,7 @@ export function getMaxHeight(widgets: IWidget[], insightMap: ObjRefMap<IInsight>
         .map((widget) =>
             getDashboardLayoutWidgetMaxGridHeight(
                 { enableKDWidgetCustomHeight: true },
-                widgetType(widget),
+                getWidgetType(widget),
                 isKpiWidget(widget) ? widget.kpi : insightMap.get(widget.insight),
             ),
         );
@@ -168,7 +176,51 @@ export function getDashboardLayoutWidgetMinGridWidth(
 export function getMinWidth(widget: IWidget, insightMap: ObjRefMap<IInsight>): number {
     return getDashboardLayoutWidgetMinGridWidth(
         { enableKDWidgetCustomHeight: true },
-        widgetType(widget),
+        getWidgetType(widget),
         isKpiWidget(widget) ? widget.kpi : insightMap.get(widget.insight),
     );
 }
+
+/**
+ * @internal
+ */
+export function calculateWidgetMinHeight(
+    widget: ExtendedDashboardWidget,
+    currentSize: IDashboardLayoutSize | undefined,
+    insightMap: ObjRefMap<IInsight>,
+    settings: ISettings,
+): number | undefined {
+    let widgetType: AnalyticalWidgetType;
+    let insight: IInsight;
+    let content: IInsight | IKpi;
+
+    if (isWidget(widget)) {
+        widgetType = getWidgetType(widget);
+    }
+    if (isInsightWidget(widget)) {
+        insight = insightMap.get(widget.insight)!;
+        content = insight;
+    }
+    if (isKpiWidget(widget)) {
+        content = widget.kpi;
+    }
+
+    return currentSize
+        ? getDashboardLayoutItemHeight(currentSize) ||
+              (!currentSize.heightAsRatio
+                  ? getDashboardLayoutWidgetDefaultHeight(settings, widgetType!, content!)
+                  : undefined)
+        : undefined;
+}
+
+export const getDashboardLayoutItemHeight = (size: IDashboardLayoutSize): number | undefined => {
+    const { gridHeight } = size;
+    if (gridHeight) {
+        return getDashboardLayoutItemHeightForGrid(gridHeight);
+    }
+
+    return undefined;
+};
+
+export const getDashboardLayoutItemHeightForGrid = (gridHeight: number): number =>
+    gridHeight * GRID_ROW_HEIGHT_IN_PX;

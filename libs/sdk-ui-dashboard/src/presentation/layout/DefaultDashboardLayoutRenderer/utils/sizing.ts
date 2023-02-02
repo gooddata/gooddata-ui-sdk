@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import {
     AnalyticalWidgetType,
     IDashboardLayout,
@@ -25,17 +25,17 @@ import { DashboardLayoutBuilder } from "../../../../_staging/dashboard/fluidLayo
 import { IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/fluidLayout/facade/interfaces";
 import { DashboardLayoutFacade } from "../../../../_staging/dashboard/fluidLayout/facade/layout";
 import {
-    getDashboardLayoutWidgetMaxGridHeight,
-    getDashboardLayoutWidgetMinGridHeight,
-    getDashboardLayoutWidgetMinGridWidth,
-    getSizeInfo,
+    getDashboardLayoutItemHeightForGrid,
     MeasurableWidgetContent,
+    getSizeInfo,
+    getDashboardLayoutWidgetMinGridWidth,
+    getDashboardLayoutWidgetMinGridHeight,
+    getDashboardLayoutWidgetMaxGridHeight,
 } from "../../../../_staging/layout/sizing";
 import {
     ALL_SCREENS,
     DASHBOARD_LAYOUT_CONTAINER_WIDTHS,
     DASHBOARD_LAYOUT_MAX_HEIGHT_AS_RATIO_XS,
-    GRID_ROW_HEIGHT_IN_PX,
 } from "../../../constants";
 
 /**
@@ -387,15 +387,6 @@ export const getResizedItemPositions = <TWidget>(
         }, positions);
 };
 
-export const getDashboardLayoutItemHeight = (size: IDashboardLayoutSize): number | undefined => {
-    const { gridHeight } = size;
-    if (gridHeight) {
-        return getDashboardLayoutItemHeightForGrid(gridHeight);
-    }
-
-    return undefined;
-};
-
 export const getDashboardLayoutItemHeightForRatioAndScreen = (
     size: IDashboardLayoutSize,
     screen: ScreenSize,
@@ -407,9 +398,6 @@ export const getDashboardLayoutItemHeightForRatioAndScreen = (
     const actualColumnUnitWidth = actualWidth / DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT;
     return actualColumnUnitWidth * gridWidth * (heightAsRatio / 100);
 };
-
-export const getDashboardLayoutItemHeightForGrid = (gridHeight: number): number =>
-    gridHeight * GRID_ROW_HEIGHT_IN_PX;
 
 export function getDashboardLayoutItemMaxGridWidth(
     item: IDashboardLayoutItemFacade<any>,

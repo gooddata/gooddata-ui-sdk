@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 
 import { ConnectDragSource, DragSourceMonitor, useDrag } from "react-dnd";
 import { useCallback, useEffect, useRef } from "react";
@@ -36,7 +36,11 @@ export function useDashboardDrag<DragObject extends DraggableItem>(
     },
     deps: unknown[] = [],
 ) {
-    const [collectedProps, dragRef, dragPreviewRef] = useDrag<DragObject, void, CollectedProps<DragObject>>(
+    const [collectedProps, dragRef, dragPreviewRef] = useDrag<
+        DragObject,
+        void,
+        CollectedProps<DragObject | undefined>
+    >(
         () => {
             const item = isFunction(dragItem) ? dragItem() : dragItem;
             return {
