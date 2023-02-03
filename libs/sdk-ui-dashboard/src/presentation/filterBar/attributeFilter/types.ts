@@ -1,9 +1,9 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { ComponentType } from "react";
 import { IDashboardAttributeFilter, ObjRef } from "@gooddata/sdk-model";
 
 /**
- * @alpha
+ * @public
  */
 export interface IDashboardAttributeFilterProps {
     /**
@@ -36,7 +36,7 @@ export interface IDashboardAttributeFilterProps {
 }
 
 /**
- * @alpha
+ * @public
  */
 export type CustomDashboardAttributeFilterComponent = ComponentType<IDashboardAttributeFilterProps>;
 

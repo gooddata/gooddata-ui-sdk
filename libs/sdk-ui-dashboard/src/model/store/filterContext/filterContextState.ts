@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 
 import {
     IDashboardObjectIdentity,
@@ -7,16 +7,18 @@ import {
 } from "@gooddata/sdk-model";
 
 /**
- * @alpha
+ * @public
  */
 export interface FilterContextState {
     /**
      * Filter context definition contains the actual filters to use. Filter context definition is present
+     * @beta
      */
     filterContextDefinition?: IFilterContextDefinition;
 
     /**
      * Filter context definition contains the original dashboard filters stored on the backend.
+     * @beta
      */
     originalFilterContextDefinition?: IFilterContextDefinition;
 
@@ -33,11 +35,14 @@ export interface FilterContextState {
      *    filter context that represents values of filters at the time the export was initiated - which may
      *    be different from what is saved in the filter context itself. that temporary context is not
      *    persistent and lives only for that particular export operation.
+     *
+     * @beta
      */
     filterContextIdentity?: IDashboardObjectIdentity;
 
     /**
      * Display form metadata objects for all attribute filters in the `filterContextDefinition`
+     * @beta
      */
     attributeFilterDisplayForms?: IAttributeDisplayFormMetadataObject[];
 }

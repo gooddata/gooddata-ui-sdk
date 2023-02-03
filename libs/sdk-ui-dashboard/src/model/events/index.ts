@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import {
     DashboardInitialized,
     DashboardDeinitialized,
@@ -409,9 +409,19 @@ export {
  * @public
  */
 export type DashboardEvents =
+    //public
     | DashboardInitialized
     | DashboardDeinitialized
     | DateFilterValidationFailed
+    | DashboardSaved
+    | DashboardCopySaved
+    | DashboardRenderRequested
+    | DashboardAsyncRenderRequested
+    | DashboardAsyncRenderResolved
+    | DashboardRenderResolved
+    | DashboardSharingChanged
+    //beta
+    | DashboardRenderModeChanged
     | DashboardCommandStarted<any>
     | DashboardCommandFailed<any>
     | DashboardCommandRejected
@@ -419,17 +429,10 @@ export type DashboardEvents =
     | DashboardQueryRejected
     | DashboardQueryStarted
     | DashboardQueryCompleted<any, any>
-    | DashboardSaved
-    | DashboardCopySaved
     | DashboardRenamed
     | DashboardWasReset
-    | DashboardRenderModeChanged
     | DashboardExportToPdfRequested
     | DashboardExportToPdfResolved
-    | DashboardRenderRequested
-    | DashboardAsyncRenderRequested
-    | DashboardAsyncRenderResolved
-    | DashboardRenderResolved
     | DashboardUserInteractionTriggered
     | DashboardDateFilterSelectionChanged
     | DashboardAttributeFilterAdded
@@ -476,6 +479,7 @@ export type DashboardEvents =
     | DashboardAlertUpdated
     | DashboardScheduledEmailCreated
     | DashboardScheduledEmailSaved
+    //alpha
     | DashboardDrillDownResolved
     | DashboardDrillToAttributeUrlResolved
     | DashboardDrillToCustomUrlResolved
@@ -490,8 +494,7 @@ export type DashboardEvents =
     | DashboardDrillToInsightRequested
     | DashboardDrillToLegacyDashboardRequested
     | DashboardDrillRequested
-    | DashboardDrillableItemsChanged
-    | DashboardSharingChanged;
+    | DashboardDrillableItemsChanged;
 
 /**
  * Creates DashboardEvent predicate that test whether the provided event matches it.

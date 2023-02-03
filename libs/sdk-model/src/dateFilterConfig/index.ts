@@ -1,10 +1,10 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import { Identifier, ObjRef } from "../objRef";
 
 /**
  * Date string - ISO-8601 calendar date string, eg.: '2018-12-30'
- * @alpha
+ * @beta
  */
 export type DateString = string;
 
@@ -58,7 +58,7 @@ export type RelativeDateFilterGranularityOffset = number;
 
 /**
  * Supported date filter granularity for the relative date filter
- * @alpha
+ * @beta
  */
 export type DateFilterGranularity =
     | "GDC.time.minute"

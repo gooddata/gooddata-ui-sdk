@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import isNil from "lodash/isNil";
 import { DateFilterGranularity, DateString } from "../dateFilterConfig";
@@ -8,25 +8,25 @@ import { IDashboardObjectIdentity } from "./common";
 
 /**
  * Date filter type - relative
- * @alpha
+ * @beta
  */
 export type DateFilterRelativeType = "relative";
 
 /**
  * Date filter type - absolute
- * @alpha
+ * @beta
  */
 export type DateFilterAbsoluteType = "absolute";
 
 /**
  * Date filter type - relative or absolute
- * @alpha
+ * @beta
  */
 export type DateFilterType = DateFilterRelativeType | DateFilterAbsoluteType;
 
 /**
  * Parent filter of an attribute filter of the filter context
- * @alpha
+ * @beta
  */
 export interface IDashboardAttributeFilterParent {
     /**
@@ -43,7 +43,7 @@ export interface IDashboardAttributeFilterParent {
 
 /**
  * Attribute filter of the filter context
- * @alpha
+ * @public
  */
 export interface IDashboardAttributeFilter {
     attributeFilter: {
@@ -59,6 +59,7 @@ export interface IDashboardAttributeFilter {
 
         /**
          * Selected attribute elements
+         * @beta
          */
         attributeElements: IAttributeElements;
 
@@ -69,6 +70,7 @@ export interface IDashboardAttributeFilter {
 
         /**
          * Parent filters that are limiting elements available in this filter
+         * @beta
          */
         filterElementsBy?: IDashboardAttributeFilterParent[];
     };
@@ -84,27 +86,31 @@ export function isDashboardAttributeFilter(obj: unknown): obj is IDashboardAttri
 
 /**
  * Date filter of the filter context
- * @alpha
+ * @public
  */
 export interface IDashboardDateFilter {
     dateFilter: {
         /**
          * Date filter type - relative or absolute
+         * @beta
          */
         type: DateFilterType;
 
         /**
          * Date filter granularity
+         * @beta
          */
         granularity: DateFilterGranularity;
 
         /**
          * Filter - from
+         * @beta
          */
         from?: DateString | number;
 
         /**
          * Filter - to
+         * @beta
          */
         to?: DateString | number;
 

@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import { ComponentType, MouseEvent } from "react";
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 import { RenderMode } from "../../../types";
@@ -8,7 +8,7 @@ import { RenderMode } from "../../../types";
 ///
 
 /**
- * @alpha
+ * @beta
  */
 export interface IInsightMenuItemButton {
     type: "button";
@@ -27,7 +27,7 @@ export interface IInsightMenuItemButton {
     className?: string;
 }
 /**
- * @alpha
+ * @beta
  */
 export interface IInsightMenuItemSeparator {
     type: "separator";
@@ -35,12 +35,13 @@ export interface IInsightMenuItemSeparator {
 }
 
 /**
- * @alpha
+ * @beta
  */
 export interface IInsightMenuSubmenu {
     type: "submenu";
     itemId: string;
     itemName: string;
+    /** @alpha */
     SubmenuComponent: ComponentType<{ widget: IInsightWidget }>;
     /**
      * If specified, the value is shown on hover of the item as a tooltip.
@@ -55,7 +56,7 @@ export interface IInsightMenuSubmenu {
 }
 
 /**
- * @alpha
+ * @beta
  */
 export type IInsightMenuItem = IInsightMenuItemButton | IInsightMenuItemSeparator | IInsightMenuSubmenu;
 

@@ -1,10 +1,10 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 
 import { ObjRef } from "@gooddata/sdk-model";
 import { IDashboardQuery } from "./base";
 
 /**
- * @internal
+ * @alpha
  */
 export interface QueryAttributeByDisplayForm extends IDashboardQuery {
     type: "GDC.DASH/QUERY.DISPLAY.FORM.ATTRIBUTE";
@@ -21,7 +21,7 @@ export interface QueryAttributeByDisplayForm extends IDashboardQuery {
  *  events that will be emitted during the command processing
  * @returns attribute metadata for given display forms
  *
- * @internal
+ * @alpha
  */
 export function queryAttributeByDisplayForm(
     displayForms: ObjRef[],

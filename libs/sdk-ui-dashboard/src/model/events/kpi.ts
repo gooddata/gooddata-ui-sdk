@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 
 import {
     ObjRef,
@@ -19,7 +19,7 @@ import { eventGuard } from "./util";
 
 /**
  * Payload of the {@link DashboardKpiWidgetHeaderChanged} event.
- * @alpha
+ * @beta
  */
 export interface DashboardKpiWidgetHeaderChangedPayload {
     /**
@@ -36,7 +36,7 @@ export interface DashboardKpiWidgetHeaderChangedPayload {
 /**
  * This event is emitted when the dashboard's KPI Widget header is modified.
  *
- * @alpha
+ * @beta
  */
 export interface DashboardKpiWidgetHeaderChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.KPI_WIDGET.HEADER_CHANGED";
@@ -64,7 +64,7 @@ export function kpiWidgetHeaderChanged(
  * Tests whether the provided object is an instance of {@link DashboardKpiWidgetHeaderChanged}.
  *
  * @param obj - object to test
- * @alpha
+ * @beta
  */
 export const isDashboardKpiWidgetHeaderChanged = eventGuard<DashboardKpiWidgetHeaderChanged>(
     "GDC.DASH/EVT.KPI_WIDGET.HEADER_CHANGED",
@@ -76,7 +76,7 @@ export const isDashboardKpiWidgetHeaderChanged = eventGuard<DashboardKpiWidgetHe
 
 /**
  * Payload of the {@link DashboardKpiWidgetDescriptionChanged} event.
- * @alpha
+ * @beta
  */
 export interface DashboardKpiWidgetDescriptionChangedPayload {
     /**
@@ -93,7 +93,7 @@ export interface DashboardKpiWidgetDescriptionChangedPayload {
 /**
  * This event is emitted when the dashboard's KPI Widget description is modified.
  *
- * @alpha
+ * @beta
  */
 export interface DashboardKpiWidgetDescriptionChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.KPI_WIDGET.DESCRIPTION_CHANGED";
@@ -121,7 +121,7 @@ export function kpiWidgetDescriptionChanged(
  * Tests whether the provided object is an instance of {@link DashboardKpiWidgetDescriptionChanged}.
  *
  * @param obj - object to test
- * @alpha
+ * @beta
  */
 export const isDashboardKpiWidgetDescriptionChanged = eventGuard<DashboardKpiWidgetDescriptionChanged>(
     "GDC.DASH/EVT.KPI_WIDGET.DESCRIPTION_CHANGED",
@@ -133,7 +133,7 @@ export const isDashboardKpiWidgetDescriptionChanged = eventGuard<DashboardKpiWid
 
 /**
  * Payload of the {@link DashboardKpiWidgetConfigurationChanged} event.
- * @alpha
+ * @beta
  */
 export interface DashboardKpiWidgetConfigurationChangedPayload {
     /**
@@ -150,7 +150,7 @@ export interface DashboardKpiWidgetConfigurationChangedPayload {
 /**
  * This event is emitted when the dashboard's KPI Widget configuration is modified.
  *
- * @alpha
+ * @beta
  */
 export interface DashboardKpiWidgetConfigurationChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.KPI_WIDGET.CONFIGURATION_CHANGED";
@@ -178,7 +178,7 @@ export function kpiWidgetConfigurationChanged(
  * Tests whether the provided object is an instance of {@link DashboardKpiWidgetConfigurationChanged}.
  *
  * @param obj - object to test
- * @alpha
+ * @beta
  */
 export const isDashboardKpiWidgetConfigurationChanged = eventGuard<DashboardKpiWidgetConfigurationChanged>(
     "GDC.DASH/EVT.KPI_WIDGET.CONFIGURATION_CHANGED",
@@ -190,7 +190,7 @@ export const isDashboardKpiWidgetConfigurationChanged = eventGuard<DashboardKpiW
 
 /**
  * Payload of the {@link DashboardKpiWidgetMeasureChanged} event.
- * @alpha
+ * @beta
  */
 export interface DashboardKpiWidgetMeasureChangedPayload {
     /**
@@ -222,7 +222,7 @@ export interface DashboardKpiWidgetMeasureChangedPayload {
  * different measure. The change of measure to use may be accompanied with a change of the KPI header (change of
  * title). In that case new value of header is also included in the event.
  *
- * @alpha
+ * @beta
  */
 export interface DashboardKpiWidgetMeasureChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.KPI_WIDGET.MEASURE_CHANGED";
@@ -254,7 +254,7 @@ export function kpiWidgetMeasureChanged(
  * Tests whether the provided object is an instance of {@link DashboardKpiWidgetMeasureChanged}.
  *
  * @param obj - object to test
- * @alpha
+ * @beta
  */
 export const isDashboardKpiWidgetMeasureChanged = eventGuard<DashboardKpiWidgetMeasureChanged>(
     "GDC.DASH/EVT.KPI_WIDGET.MEASURE_CHANGED",
@@ -266,7 +266,7 @@ export const isDashboardKpiWidgetMeasureChanged = eventGuard<DashboardKpiWidgetM
 
 /**
  * Payload of the {@link DashboardKpiWidgetFilterSettingsChanged} event.
- * @alpha
+ * @beta
  */
 export interface DashboardKpiWidgetFilterSettingsChangedPayload {
     /**
@@ -292,7 +292,7 @@ export interface DashboardKpiWidgetFilterSettingsChangedPayload {
 /**
  * This event is emitted when dashboard's KPI Widget filter settings are modified.
  *
- * @alpha
+ * @beta
  */
 export interface DashboardKpiWidgetFilterSettingsChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.KPI_WIDGET.FILTER_SETTINGS_CHANGED";
@@ -322,7 +322,7 @@ export function kpiWidgetFilterSettingsChanged(
  * Tests whether the provided object is an instance of {@link DashboardKpiWidgetFilterSettingsChanged}.
  *
  * @param obj - object to test
- * @alpha
+ * @beta
  */
 export const isDashboardKpiWidgetFilterSettingsChanged = eventGuard<DashboardKpiWidgetFilterSettingsChanged>(
     "GDC.DASH/EVT.KPI_WIDGET.FILTER_SETTINGS_CHANGED",
@@ -334,7 +334,7 @@ export const isDashboardKpiWidgetFilterSettingsChanged = eventGuard<DashboardKpi
 
 /**
  * Payload of the {@link DashboardKpiWidgetComparisonChanged} event.
- * @alpha
+ * @beta
  */
 export interface DashboardKpiWidgetComparisonChangedPayload {
     /**
@@ -356,7 +356,7 @@ export interface DashboardKpiWidgetComparisonChangedPayload {
  * the new definition of the KPI that has uses same measure as before however has new setup of the over-time
  * comparison.
  *
- * @alpha
+ * @beta
  */
 export interface DashboardKpiWidgetComparisonChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.KPI_WIDGET.COMPARISON_CHANGED";
@@ -384,7 +384,7 @@ export function kpiWidgetComparisonChanged(
  * Tests whether the provided object is an instance of {@link DashboardKpiWidgetComparisonChanged}.
  *
  * @param obj - object to test
- * @alpha
+ * @beta
  */
 export const isDashboardKpiWidgetComparisonChanged = eventGuard<DashboardKpiWidgetComparisonChanged>(
     "GDC.DASH/EVT.KPI_WIDGET.COMPARISON_CHANGED",
@@ -396,7 +396,7 @@ export const isDashboardKpiWidgetComparisonChanged = eventGuard<DashboardKpiWidg
 
 /**
  * Payload of the {@link DashboardKpiWidgetDrillRemoved} event.
- * @alpha
+ * @beta
  */
 export interface DashboardKpiWidgetDrillRemovedPayload {
     /**
@@ -408,7 +408,7 @@ export interface DashboardKpiWidgetDrillRemovedPayload {
 /**
  * This event is emitted when dashboard's KPI Widget has its drills removed.
  *
- * @alpha
+ * @beta
  */
 export interface DashboardKpiWidgetDrillRemoved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.KPI_WIDGET.DRILL_REMOVED";
@@ -434,7 +434,7 @@ export function kpiWidgetDrillRemoved(
  * Tests whether the provided object is an instance of {@link DashboardKpiWidgetDrillRemoved}.
  *
  * @param obj - object to test
- * @alpha
+ * @beta
  */
 export const isDashboardKpiWidgetDrillRemoved = eventGuard<DashboardKpiWidgetDrillRemoved>(
     "GDC.DASH/EVT.KPI_WIDGET.DRILL_REMOVED",
@@ -446,7 +446,7 @@ export const isDashboardKpiWidgetDrillRemoved = eventGuard<DashboardKpiWidgetDri
 
 /**
  * Payload of the {@link DashboardKpiWidgetDrillSet} event.
- * @alpha
+ * @beta
  */
 export interface DashboardKpiWidgetDrillSetPayload {
     /**
@@ -463,7 +463,7 @@ export interface DashboardKpiWidgetDrillSetPayload {
 /**
  * This event is emitted when dashboard's KPI Widget has its drill set.
  *
- * @alpha
+ * @beta
  */
 export interface DashboardKpiWidgetDrillSet extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.KPI_WIDGET.DRILL_SET";
@@ -491,7 +491,7 @@ export function kpiWidgetDrillSet(
  * Tests whether the provided object is an instance of {@link DashboardKpiWidgetDrillSet}.
  *
  * @param obj - object to test
- * @alpha
+ * @beta
  */
 export const isDashboardKpiWidgetDrillSet = eventGuard<DashboardKpiWidgetDrillSet>(
     "GDC.DASH/EVT.KPI_WIDGET.DRILL_SET",
@@ -503,7 +503,7 @@ export const isDashboardKpiWidgetDrillSet = eventGuard<DashboardKpiWidgetDrillSe
 
 /**
  * Payload of the {@link DashboardKpiWidgetChanged} event.
- * @alpha
+ * @beta
  */
 export interface DashboardKpiWidgetChangedPayload {
     /**
@@ -516,7 +516,7 @@ export interface DashboardKpiWidgetChangedPayload {
  * This event is emitted after any change to KPI Widget configuration. It contains the entire new state of the
  * KPI Widget.
  *
- * @alpha
+ * @beta
  */
 export interface DashboardKpiWidgetChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.KPI_WIDGET.WIDGET_CHANGED";
@@ -542,7 +542,7 @@ export function kpiWidgetChanged(
  * Tests whether the provided object is an instance of {@link DashboardKpiWidgetChanged}.
  *
  * @param obj - object to test
- * @alpha
+ * @beta
  */
 export const isDashboardKpiWidgetChanged = eventGuard<DashboardKpiWidgetChanged>(
     "GDC.DASH/EVT.KPI_WIDGET.WIDGET_CHANGED",

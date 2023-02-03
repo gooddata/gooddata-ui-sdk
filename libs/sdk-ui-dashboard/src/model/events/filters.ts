@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import {
     IDashboardAttributeFilter,
     IDashboardDateFilter,
@@ -79,7 +79,7 @@ export const isDashboardDateFilterSelectionChanged = eventGuard<DashboardDateFil
 
 /**
  * Payload of the {@link DashboardAttributeFilterAdded} event.
- * @alpha
+ * @beta
  */
 export interface DashboardAttributeFilterAddedPayload {
     /**
@@ -98,7 +98,7 @@ export interface DashboardAttributeFilterAddedPayload {
  * This event is emitted after a new dashboard attribute filter is successfully added into dashboard's
  * filters.
  *
- * @alpha
+ * @beta
  */
 export interface DashboardAttributeFilterAdded extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADDED";
@@ -126,7 +126,7 @@ export function attributeFilterAdded(
  * Tests whether the provided object is an instance of {@link DashboardAttributeFilterAdded}.
  *
  * @param obj - object to test
- * @alpha
+ * @beta
  */
 export const isDashboardAttributeFilterAdded = eventGuard<DashboardAttributeFilterAdded>(
     "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADDED",
@@ -138,7 +138,7 @@ export const isDashboardAttributeFilterAdded = eventGuard<DashboardAttributeFilt
 
 /**
  * Payload of the {@link DashboardAttributeFilterRemoved} event.
- * @alpha
+ * @beta
  */
 export interface DashboardAttributeFilterRemovedPayload {
     /**
@@ -162,7 +162,7 @@ export interface DashboardAttributeFilterRemovedPayload {
  * If the removed filter figured as a parent to one or more child filters, then the removal
  * also cleaned up the parent relationship.
  *
- * @alpha
+ * @beta
  */
 export interface DashboardAttributeFilterRemoved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVED";
@@ -190,7 +190,7 @@ export function attributeFilterRemoved(
  * Tests whether the provided object is an instance of {@link DashboardAttributeFilterRemoved}.
  *
  * @param obj - object to test
- * @alpha
+ * @beta
  */
 export const isDashboardAttributeFilterRemoved = eventGuard<DashboardAttributeFilterRemoved>(
     "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVED",
@@ -202,7 +202,7 @@ export const isDashboardAttributeFilterRemoved = eventGuard<DashboardAttributeFi
 
 /**
  * Payload of the {@link DashboardAttributeFilterMoved} event.
- * @alpha
+ * @beta
  */
 export interface DashboardAttributeFilterMovedPayload {
     /**
@@ -225,7 +225,7 @@ export interface DashboardAttributeFilterMovedPayload {
  * This event is emitted after a dashboard attribute filter is moved from one position in the filter bar
  * to a new position
  *
- * @alpha
+ * @beta
  */
 export interface DashboardAttributeFilterMoved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVED";
@@ -255,7 +255,7 @@ export function attributeFilterMoved(
  * Tests whether the provided object is an instance of {@link DashboardAttributeFilterMoved}.
  *
  * @param obj - object to test
- * @alpha
+ * @beta
  */
 export const isDashboardAttributeFilterMoved = eventGuard<DashboardAttributeFilterMoved>(
     "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVED",
@@ -333,7 +333,7 @@ export const isDashboardAttributeFilterSelectionChanged =
 
 /**
  * Payload of the {@link DashboardAttributeFilterParentChanged} event.
- * @alpha
+ * @beta
  */
 export interface DashboardAttributeFilterParentChangedPayload {
     /**
@@ -347,7 +347,7 @@ export interface DashboardAttributeFilterParentChangedPayload {
 /**
  * This event is emitted after the parent relationships of a filter change.
  *
- * @alpha
+ * @beta
  */
 export interface DashboardAttributeFilterParentChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.PARENT_CHANGED";
@@ -402,7 +402,7 @@ export function attributeDisplayFormChanged(
  * Tests whether the provided object is an instance of {@link DashboardAttributeFilterParentChanged}.
  *
  * @param obj - object to test
- * @alpha
+ * @beta
  */
 export const isDashboardAttributeFilterParentChanged = eventGuard<DashboardAttributeFilterParentChanged>(
     "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.PARENT_CHANGED",

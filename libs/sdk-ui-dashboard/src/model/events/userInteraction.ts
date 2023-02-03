@@ -1,10 +1,10 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import isString from "lodash/isString";
 import { DashboardEventBody, IDashboardEvent } from "./base";
 import { eventGuard } from "./util";
 
 /**
- * @alpha
+ * @beta
  */
 export interface UserInteractionPayloadWithDataBase<TType extends string, TData extends object> {
     interaction: TType;
@@ -12,7 +12,7 @@ export interface UserInteractionPayloadWithDataBase<TType extends string, TData 
 }
 
 /**
- * @alpha
+ * @beta
  */
 export type KpiAlertDialogOpenedPayload = UserInteractionPayloadWithDataBase<
     "kpiAlertDialogOpened",
@@ -22,15 +22,15 @@ export type KpiAlertDialogOpenedPayload = UserInteractionPayloadWithDataBase<
 >;
 
 /**
- * @alpha
+ * @beta
  */
 export type DescriptionTooltipOpenedFrom = "kpi" | "widget" | "insight";
 /**
- * @alpha
+ * @beta
  */
 export type DescriptionTooltipOpenedType = "inherit" | "custom";
 /**
- * @alpha
+ * @beta
  */
 export type DescriptionTooltipOpenedData = {
     from: DescriptionTooltipOpenedFrom;
@@ -38,7 +38,7 @@ export type DescriptionTooltipOpenedData = {
     description?: string;
 };
 /**
- * @alpha
+ * @beta
  */
 export type DescriptionTooltipOpenedPayload = UserInteractionPayloadWithDataBase<
     "descriptionTooltipOpened",
@@ -46,29 +46,29 @@ export type DescriptionTooltipOpenedPayload = UserInteractionPayloadWithDataBase
 >;
 
 /**
- * @alpha
+ * @beta
  */
 export interface BareUserInteractionPayload {
     interaction: "kpiAlertDialogClosed" | "poweredByGDLogoClicked";
 }
 
 /**
- * @alpha
+ * @beta
  */
 export type UserInteractionPayloadWithData = KpiAlertDialogOpenedPayload | DescriptionTooltipOpenedPayload;
 
 /**
- * @alpha
+ * @beta
  */
 export type UserInteractionPayload = UserInteractionPayloadWithData | BareUserInteractionPayload;
 
 /**
- * @alpha
+ * @beta
  */
 export type UserInteractionType = UserInteractionPayload["interaction"];
 
 /**
- * @alpha
+ * @beta
  */
 export type BareUserInteractionType = BareUserInteractionPayload["interaction"];
 
@@ -76,7 +76,7 @@ export type BareUserInteractionType = BareUserInteractionPayload["interaction"];
  * This event is emitted after the user interaction that cannot be tracked by other existing events
  * is triggered.
  *
- * @alpha
+ * @beta
  */
 export interface DashboardUserInteractionTriggered extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.USER_INTERACTION.TRIGGERED";
@@ -88,7 +88,7 @@ export interface DashboardUserInteractionTriggered extends IDashboardEvent {
  *
  * @param interactionPayloadOrType - interaction payload or a type of a user interaction without extra data (for convenience)
  * @param correlationId - specify correlation id to use for this event. this can be used to correlate this event to a command that caused it.
- * @alpha
+ * @beta
  */
 export function userInteractionTriggered(
     interactionPayloadOrType: UserInteractionPayload | BareUserInteractionType,
@@ -109,7 +109,7 @@ export function userInteractionTriggered(
  * Tests whether the provided object is an instance of {@link DashboardUserInteractionTriggered}.
  *
  * @param obj - object to test
- * @alpha
+ * @beta
  */
 export const isDashboardUserInteractionTriggered = eventGuard<DashboardUserInteractionTriggered>(
     "GDC.DASH/EVT.USER_INTERACTION.TRIGGERED",

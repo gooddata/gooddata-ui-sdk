@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import {
     absoluteDateFilterValues,
     filterAttributeElements,
@@ -199,7 +199,7 @@ export function clearDateFilterSelection(correlationId?: string): ChangeDateFilt
 
 /**
  * Payload of the {@link AddAttributeFilter} command.
- * @alpha
+ * @beta
  */
 export interface AddAttributeFilterPayload {
     readonly displayForm: ObjRef;
@@ -235,7 +235,7 @@ export interface AddAttributeFilterPayload {
 }
 
 /**
- * @alpha
+ * @beta
  */
 export interface AddAttributeFilter extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADD";
@@ -255,7 +255,7 @@ export interface AddAttributeFilter extends IDashboardCommand {
  *  The index starts at zero and there is convenience that index of -1 would add the filter at the end.
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
- * @alpha
+ * @beta
  */
 export function addAttributeFilter(
     displayForm: ObjRef,
@@ -278,7 +278,7 @@ export function addAttributeFilter(
 
 /**
  * Payload of the {@link RemoveAttributeFilters} command.
- * @alpha
+ * @beta
  */
 export interface RemoveAttributeFiltersPayload {
     /**
@@ -289,7 +289,7 @@ export interface RemoveAttributeFiltersPayload {
 }
 
 /**
- * @alpha
+ * @beta
  */
 export interface RemoveAttributeFilters extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVE";
@@ -303,7 +303,7 @@ export interface RemoveAttributeFilters extends IDashboardCommand {
  * @param filterLocalId - dashboard attribute filter's local identifier
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
- * @alpha
+ * @beta
  */
 export function removeAttributeFilter(filterLocalId: string, correlationId?: string): RemoveAttributeFilters {
     return {
@@ -322,7 +322,7 @@ export function removeAttributeFilter(filterLocalId: string, correlationId?: str
  * @param filterLocalIds - an array of dashboard attribute filter's local identifiers
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
- * @alpha
+ * @beta
  */
 export function removeAttributeFilters(
     filterLocalIds: string[],
@@ -343,7 +343,7 @@ export function removeAttributeFilters(
 
 /**
  * Payload of the {@link MoveAttributeFilter} command.
- * @alpha
+ * @beta
  */
 export interface MoveAttributeFilterPayload {
     /**
@@ -357,7 +357,7 @@ export interface MoveAttributeFilterPayload {
 }
 
 /**
- * @alpha
+ * @beta
  */
 export interface MoveAttributeFilter extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVE";
@@ -375,7 +375,7 @@ export interface MoveAttributeFilter extends IDashboardCommand {
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @alpha
+ * @beta
  */
 export function moveAttributeFilter(
     filterLocalId: string,
@@ -552,7 +552,7 @@ export function resetAttributeFilterSelection(
 
 /**
  * Payload of the {@link SetAttributeFilterParents} command.
- * @alpha
+ * @beta
  */
 export interface SetAttributeFilterParentsPayload {
     readonly filterLocalId: string;
@@ -560,7 +560,7 @@ export interface SetAttributeFilterParentsPayload {
 }
 
 /**
- * @alpha
+ * @beta
  */
 export interface SetAttributeFilterParents extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_PARENTS";
@@ -586,7 +586,7 @@ export interface SetAttributeFilterParents extends IDashboardCommand {
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @alpha
+ * @beta
  */
 export function setAttributeFilterParents(
     filterLocalId: string,
@@ -667,7 +667,7 @@ export function changeFilterContextSelection(
 }
 
 /**
- * @internal
+ * @beta
  */
 export interface SetAttributeFilterDisplayFormPayload {
     filterLocalId: string;
@@ -675,7 +675,7 @@ export interface SetAttributeFilterDisplayFormPayload {
 }
 
 /**
- * @internal
+ * @beta
  */
 export interface SetAttributeFilterDisplayForm extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_DISPLAY_FORM";
@@ -690,7 +690,7 @@ export interface SetAttributeFilterDisplayForm extends IDashboardCommand {
  * display form for the attribute filter.
  *
  *
- * @internal
+ * @beta
  * @param filterLocalId - local identifier of the filter the display form is changed for
  * @param displayForm - newly selected display form
  * @returns change filter display form command

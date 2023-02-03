@@ -1,8 +1,8 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { ComponentType } from "react";
 
 /**
- * @alpha
+ * @beta
  */
 export interface IShareButtonProps {
     isVisible: boolean;

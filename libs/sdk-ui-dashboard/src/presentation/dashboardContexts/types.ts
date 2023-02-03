@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import {
     CustomDashboardInsightComponent,
     CustomDashboardInsightMenuButtonComponent,
@@ -107,7 +107,7 @@ export type InsightMenuTitleComponentProvider = (
 export type OptionalInsightMenuTitleComponentProvider = OptionalProvider<InsightMenuTitleComponentProvider>;
 
 /**
- * @alpha
+ * @beta
  */
 export type InsightMenuItemsProvider = (
     insight: IInsight,
@@ -128,25 +128,25 @@ export type KpiComponentProvider = (kpi: IKpi, widget: IKpiWidget) => CustomDash
 export type OptionalKpiComponentProvider = OptionalProvider<KpiComponentProvider>;
 
 /**
- * @alpha
+ * @public
  */
 export type DateFilterComponentProvider = (
     filter: IDashboardDateFilter,
 ) => CustomDashboardDateFilterComponent;
 
 /**
- * @alpha
+ * @public
  */
 export type OptionalDateFilterComponentProvider = OptionalProvider<DateFilterComponentProvider>;
 
 /**
- * @alpha
+ * @public
  */
 export type AttributeFilterComponentProvider = (
     filter: IDashboardAttributeFilter,
 ) => CustomDashboardAttributeFilterComponent;
 
 /**
- * @alpha
+ * @public
  */
 export type OptionalAttributeFilterComponentProvider = OptionalProvider<AttributeFilterComponentProvider>;

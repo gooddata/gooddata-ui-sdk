@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import { useCallback, useEffect, useRef, useState } from "react";
 import { v4 as uuid } from "uuid";
 import { GoodDataSdkError, UnexpectedSdkError } from "@gooddata/sdk-ui";
@@ -14,7 +14,7 @@ import {
 } from "../events";
 
 /**
- * @internal
+ * @public
  */
 export interface QueryProcessingPendingState {
     status: "pending";
@@ -23,7 +23,7 @@ export interface QueryProcessingPendingState {
 }
 
 /**
- * @internal
+ * @public
  */
 export interface QueryProcessingRunningState {
     status: "running";
@@ -32,7 +32,7 @@ export interface QueryProcessingRunningState {
 }
 
 /**
- * @internal
+ * @public
  */
 export interface QueryProcessingErrorState {
     status: "error";
@@ -41,7 +41,7 @@ export interface QueryProcessingErrorState {
 }
 
 /**
- * @internal
+ * @public
  */
 export interface QueryProcessingRejectedState {
     status: "rejected";
@@ -50,7 +50,7 @@ export interface QueryProcessingRejectedState {
 }
 
 /**
- * @internal
+ * @public
  */
 export interface QueryProcessingSuccessState<TResult> {
     status: "success";
@@ -59,7 +59,7 @@ export interface QueryProcessingSuccessState<TResult> {
 }
 
 /**
- * @internal
+ * @public
  */
 export type QueryProcessingState<TResult> =
     | QueryProcessingPendingState

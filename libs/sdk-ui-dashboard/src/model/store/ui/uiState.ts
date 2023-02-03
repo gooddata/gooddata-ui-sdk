@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { ObjRef, Identifier, Uri } from "@gooddata/sdk-model";
 
 import { ILayoutCoordinates, IMenuButtonItemsVisibility } from "../../../types";
@@ -16,7 +16,7 @@ export interface InvalidCustomUrlDrillParameterInfo {
 }
 
 /**
- * @alpha
+ * @beta
  */
 export interface UiState {
     scheduleEmailManagementDialog: {
@@ -62,10 +62,12 @@ export interface UiState {
     filterAttributeSelectionOpen: boolean;
     selectedFilterIndex: number | undefined;
     activeSectionIndex: number | undefined;
+    /** @alpha */
     drillValidationMessages: {
         invalidDrillWidgetRefs: ObjRef[];
         invalidCustomUrlDrillParameterWidgets: InvalidCustomUrlDrillParameterInfo[];
     };
+    /** @internal */
     draggingWidgetSource: DraggableLayoutItem | undefined;
     draggingWidgetTarget: ILayoutCoordinates | undefined;
     widgetsOverlay: Record<string, IDashboardWidgetOverlay>;

@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 
 import { IDashboardLayout } from "@gooddata/sdk-model";
 import { InitialUndoState, UndoEnhancedState } from "../_infra/undoEnhancer";
@@ -6,7 +6,7 @@ import { ExtendedDashboardItem, ExtendedDashboardWidget } from "../../types/layo
 import { DashboardLayoutCommands } from "../../commands";
 
 /**
- * @alpha
+ * @beta
  */
 export type LayoutStash = Record<string, ExtendedDashboardItem[]>;
 

@@ -282,10 +282,10 @@ export type DataValue = null | string | number;
 // @public
 export type DateAttributeGranularity = "GDC.time.year" | "GDC.time.week_us" | "GDC.time.week_in_year" | "GDC.time.week_in_quarter" | "GDC.time.week" | "GDC.time.euweek_in_year" | "GDC.time.euweek_in_quarter" | "GDC.time.quarter" | "GDC.time.quarter_in_year" | "GDC.time.month" | "GDC.time.month_in_quarter" | "GDC.time.month_in_year" | "GDC.time.day_in_year" | "GDC.time.day_in_quarter" | "GDC.time.day_in_month" | "GDC.time.day_in_week" | "GDC.time.day_in_euweek" | "GDC.time.date" | "GDC.time.hour" | "GDC.time.hour_in_day" | "GDC.time.minute" | "GDC.time.minute_in_hour";
 
-// @alpha
+// @beta
 export type DateFilterAbsoluteType = "absolute";
 
-// @alpha
+// @beta
 export type DateFilterGranularity = "GDC.time.minute" | "GDC.time.hour" | "GDC.time.date" | "GDC.time.week_us" | "GDC.time.month" | "GDC.time.quarter" | "GDC.time.year";
 
 // @alpha
@@ -306,10 +306,10 @@ export type DateFilterOptionRelativePresetType = "relativePreset";
 // @alpha
 export type DateFilterOptionType = DateFilterOptionAllTimeType | DateFilterOptionAbsoluteFormType | DateFilterOptionRelativeFormType | DateFilterOptionAbsolutePresetType | DateFilterOptionRelativePresetType;
 
-// @alpha
+// @beta
 export type DateFilterRelativeType = "relative";
 
-// @alpha
+// @beta
 export type DateFilterType = DateFilterRelativeType | DateFilterAbsoluteType;
 
 // @public
@@ -317,7 +317,7 @@ export const DateGranularity: {
     [short: string]: DateAttributeGranularity;
 };
 
-// @alpha
+// @beta
 export type DateString = string;
 
 // @public
@@ -786,7 +786,7 @@ export interface IDashboardAttachment {
     format: "pdf";
 }
 
-// @alpha
+// @public
 export interface IDashboardAttributeFilter {
     // (undocumented)
     attributeFilter: {
@@ -798,7 +798,7 @@ export interface IDashboardAttributeFilter {
     };
 }
 
-// @alpha
+// @beta
 export interface IDashboardAttributeFilterParent {
     filterLocalIdentifier: string;
     over: {
@@ -819,7 +819,7 @@ export interface IDashboardBase {
     readonly title: string;
 }
 
-// @alpha
+// @public
 export interface IDashboardDateFilter {
     // (undocumented)
     dateFilter: {

@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { IScheduledMail } from "@gooddata/sdk-model";
 import { DashboardContext } from "../types/commonTypes";
 import { IDashboardEvent } from "./base";
@@ -6,7 +6,7 @@ import { eventGuard } from "./util";
 
 /**
  * Payload of the {@link DashboardScheduledEmailCreated} event.
- * @alpha
+ * @beta
  */
 export interface DashboardScheduledEmailCreatedPayload {
     /**
@@ -18,7 +18,7 @@ export interface DashboardScheduledEmailCreatedPayload {
 /**
  * This event is emitted after the scheduled email is successfully created.
  *
- * @alpha
+ * @beta
  */
 export interface DashboardScheduledEmailCreated extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.SCHEDULED_EMAIL.CREATED";
@@ -44,7 +44,7 @@ export function scheduledEmailCreated(
  * Tests whether the provided object is an instance of {@link DashboardScheduledEmailCreated}.
  *
  * @param obj - object to test
- * @alpha
+ * @beta
  */
 export const isDashboardScheduledEmailCreated = eventGuard<DashboardScheduledEmailCreated>(
     "GDC.DASH/EVT.SCHEDULED_EMAIL.CREATED",
@@ -53,7 +53,7 @@ export const isDashboardScheduledEmailCreated = eventGuard<DashboardScheduledEma
 /**
  * This event is emitted after the scheduled email is successfully saved.
  *
- * @alpha
+ * @beta
  */
 export interface DashboardScheduledEmailSaved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.SCHEDULED_EMAIL.SAVED";
@@ -74,7 +74,7 @@ export function scheduledEmailSaved(
  * Tests whether the provided object is an instance of {@link DashboardScheduledEmailSaved}.
  *
  * @param obj - object to test
- * @alpha
+ * @beta
  */
 export const isDashboardScheduledEmailSaved = eventGuard<DashboardScheduledEmailSaved>(
     "GDC.DASH/EVT.SCHEDULED_EMAIL.SAVED",

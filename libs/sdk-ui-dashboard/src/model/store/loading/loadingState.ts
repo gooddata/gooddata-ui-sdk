@@ -1,7 +1,7 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 
 /**
- * @alpha
+ * @beta
  */
 export interface LoadingState {
     loading: boolean;

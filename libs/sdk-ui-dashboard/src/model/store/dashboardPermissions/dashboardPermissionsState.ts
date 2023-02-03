@@ -3,9 +3,10 @@
 import { IDashboardPermissions } from "@gooddata/sdk-model";
 
 /**
- * @alpha
+ * @public
  */
 export interface DashboardPermissionsState {
+    /** @beta */
     dashboardPermissions?: IDashboardPermissions;
 }
 

@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 
 import {
     InitializeDashboard,
@@ -349,23 +349,26 @@ export { AddDrillTargets, AddDrillTargetsPayload, addDrillTargets } from "./dril
  * @public
  */
 export type DashboardCommands =
+    //public
     | InitializeDashboard
-    | SaveDashboard
     | SaveDashboardAs
+    | RequestAsyncRender
+    | ResolveAsyncRender
+    | ChangeFilterContextSelection
+    | ChangeDateFilterSelection
+    | ChangeAttributeFilterSelection
+    //beta
+    | ChangeRenderMode
+    | SaveDashboard
     | RenameDashboard
     | ResetDashboard
     | ExportDashboardToPdf
     | DeleteDashboard
     | TriggerEvent
     | UpsertExecutionResult
-    | RequestAsyncRender
-    | ResolveAsyncRender
-    | ChangeFilterContextSelection
-    | ChangeDateFilterSelection
     | AddAttributeFilter
     | RemoveAttributeFilters
     | MoveAttributeFilter
-    | ChangeAttributeFilterSelection
     | SetAttributeFilterParents
     | AddLayoutSection
     | MoveLayoutSection
@@ -404,6 +407,9 @@ export type DashboardCommands =
     | RemoveAlerts
     | CreateScheduledEmail
     | SaveScheduledEmail
+    | ChangeSharing
+    | SetAttributeFilterDisplayForm
+    //alpha
     | Drill
     | DrillDown
     | DrillToAttributeUrl
@@ -412,7 +418,4 @@ export type DashboardCommands =
     | DrillToInsight
     | DrillToLegacyDashboard
     | ChangeDrillableItems
-    | AddDrillTargets
-    | ChangeSharing
-    | ChangeRenderMode
-    | SetAttributeFilterDisplayForm;
+    | AddDrillTargets;

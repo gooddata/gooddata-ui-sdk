@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 
 import { IDashboardEvent } from "./base";
 import { eventGuard } from "./util";
@@ -7,7 +7,7 @@ import { DashboardContext } from "../types/commonTypes";
 
 /**
  * Payload of the {@link DashboardRenderModeChanged} event.
- * @internal
+ * @beta
  */
 export interface DashboardRenderModeChangedPayload {
     /**
@@ -19,7 +19,7 @@ export interface DashboardRenderModeChangedPayload {
 /**
  * This event is emitted after render mode change.
  *
- * @internal
+ * @beta
  */
 export interface DashboardRenderModeChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.RENDER_MODE.CHANGED";
@@ -27,7 +27,7 @@ export interface DashboardRenderModeChanged extends IDashboardEvent {
 }
 
 /**
- * @internal
+ * @beta
  */
 export function renderModeChanged(
     ctx: DashboardContext,
@@ -48,7 +48,7 @@ export function renderModeChanged(
  * Tests whether the provided object is an instance of {@link DashboardRenderModeChanged}.
  *
  * @param obj - object to test
- * @internal
+ * @beta
  */
 export const isDashboardRenderModeChanged = eventGuard<DashboardRenderModeChanged>(
     "GDC.DASH/EVT.RENDER_MODE.CHANGED",

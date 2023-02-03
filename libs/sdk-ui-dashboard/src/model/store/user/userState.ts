@@ -1,11 +1,12 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 
 import { IUser } from "@gooddata/sdk-model";
 
 /**
- * @alpha
+ * @public
  */
 export interface UserState {
+    /** @beta */
     user?: IUser;
 }
 

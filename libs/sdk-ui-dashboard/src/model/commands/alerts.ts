@@ -1,11 +1,11 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 
 import { ObjRef, IWidgetAlert, IWidgetAlertDefinition } from "@gooddata/sdk-model";
 import { IDashboardCommand } from "./base";
 
 /**
  * Payload of the {@link CreateAlert} command.
- * @alpha
+ * @beta
  */
 export interface CreateAlertPayload {
     /**
@@ -17,7 +17,7 @@ export interface CreateAlertPayload {
 /**
  * Creates Kpi alert.
  *
- * @alpha
+ * @beta
  */
 export interface CreateAlert extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.ALERT.CREATE";
@@ -30,7 +30,7 @@ export interface CreateAlert extends IDashboardCommand {
  * @param alert - specify alert to create.
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
- * @alpha
+ * @beta
  */
 export function createAlert(alert: IWidgetAlertDefinition, correlationId?: string): CreateAlert {
     return {
@@ -48,7 +48,7 @@ export function createAlert(alert: IWidgetAlertDefinition, correlationId?: strin
 
 /**
  * Payload of the {@link UpdateAlert} command.
- * @alpha
+ * @beta
  */
 export interface UpdateAlertPayload {
     /**
@@ -60,7 +60,7 @@ export interface UpdateAlertPayload {
 /**
  * Updates Kpi alert.
  *
- * @alpha
+ * @beta
  */
 export interface UpdateAlert extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.ALERT.UPDATE";
@@ -74,7 +74,7 @@ export interface UpdateAlert extends IDashboardCommand {
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
 
- * @alpha
+ * @beta
  */
 export function updateAlert(alert: IWidgetAlert, correlationId?: string): UpdateAlert {
     return {
@@ -92,7 +92,7 @@ export function updateAlert(alert: IWidgetAlert, correlationId?: string): Update
 
 /**
  * Payload of the {@link RemoveAlerts} command.
- * @alpha
+ * @beta
  */
 export interface RemoveAlertsPayload {
     /**
@@ -104,7 +104,7 @@ export interface RemoveAlertsPayload {
 /**
  * Removes Kpi alerts.
  *
- * @alpha
+ * @beta
  */
 export interface RemoveAlerts extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.ALERTS.REMOVE";
@@ -118,7 +118,7 @@ export interface RemoveAlerts extends IDashboardCommand {
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
 
- * @alpha
+ * @beta
  */
 export function removeAlerts(refs: ObjRef[], correlationId?: string): RemoveAlerts {
     return {

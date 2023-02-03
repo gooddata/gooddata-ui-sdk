@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 
 import { DashboardConfig } from "../types/commonTypes";
 import { IDashboard, IWorkspacePermissions } from "@gooddata/sdk-model";
@@ -8,7 +8,7 @@ import { ISharingApplyPayload } from "@gooddata/sdk-ui-kit";
 /**
  * The initial load of the dashboard will use this correlation id.
  *
- * @public
+ * @beta
  */
 export const InitialLoadCorrelationId = "initialLoad";
 
@@ -133,7 +133,7 @@ export function initializeDashboardWithPersistedDashboard(
 
 /**
  * Payload of the {@link SaveDashboard} command.
- * @alpha
+ * @beta
  */
 export interface SaveDashboardPayload {
     /**
@@ -144,7 +144,7 @@ export interface SaveDashboardPayload {
 }
 
 /**
- * @alpha
+ * @beta
  */
 export interface SaveDashboard extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.SAVE";
@@ -161,7 +161,7 @@ export interface SaveDashboard extends IDashboardCommand {
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @alpha
+ * @beta
  */
 export function saveDashboard(title?: string, correlationId?: string): SaveDashboard {
     return {
@@ -251,7 +251,7 @@ export function saveDashboardAs(
 
 /**
  * Payload of the {@link RenameDashboard} command.
- * @alpha
+ * @beta
  */
 export interface RenameDashboardPayload {
     /**
@@ -261,7 +261,7 @@ export interface RenameDashboardPayload {
 }
 
 /**
- * @alpha
+ * @beta
  */
 export interface RenameDashboard extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.RENAME";
@@ -275,7 +275,7 @@ export interface RenameDashboard extends IDashboardCommand {
  * @param newTitle - new dashboard title
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
- * @alpha
+ * @beta
  */
 export function renameDashboard(newTitle: string, correlationId?: string): RenameDashboard {
     return {
@@ -293,7 +293,7 @@ export function renameDashboard(newTitle: string, correlationId?: string): Renam
 
 /**
  * Payload of the {@link ChangeSharing} command.
- * @alpha
+ * @beta
  */
 export interface ChangeSharingPayload {
     /**
@@ -303,7 +303,7 @@ export interface ChangeSharingPayload {
 }
 
 /**
- * @alpha
+ * @beta
  */
 export interface ChangeSharing extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.SHARING.CHANGE";
@@ -317,7 +317,7 @@ export interface ChangeSharing extends IDashboardCommand {
  * @param newSharingProperties - new dashboard sharing properties
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
- * @alpha
+ * @beta
  */
 export function changeSharing(
     newSharingProperties: ISharingApplyPayload,
@@ -337,7 +337,7 @@ export function changeSharing(
 //
 
 /**
- * @alpha
+ * @beta
  */
 export interface ResetDashboard extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.RESET";
@@ -356,7 +356,7 @@ export interface ResetDashboard extends IDashboardCommand {
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @alpha
+ * @beta
  */
 export function resetDashboard(correlationId?: string): ResetDashboard {
     return {
@@ -370,7 +370,7 @@ export function resetDashboard(correlationId?: string): ResetDashboard {
 //
 
 /**
- * @alpha
+ * @beta
  */
 export interface DeleteDashboard extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.DELETE";
@@ -384,7 +384,7 @@ export interface DeleteDashboard extends IDashboardCommand {
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @alpha
+ * @beta
  */
 export function deleteDashboard(correlationId?: string): DeleteDashboard {
     return {
@@ -398,7 +398,7 @@ export function deleteDashboard(correlationId?: string): DeleteDashboard {
 //
 
 /**
- * @alpha
+ * @beta
  */
 export interface ExportDashboardToPdf extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.EXPORT.PDF";
@@ -412,7 +412,7 @@ export interface ExportDashboardToPdf extends IDashboardCommand {
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @alpha
+ * @beta
  */
 export function exportDashboardToPdf(correlationId?: string): ExportDashboardToPdf {
     return {

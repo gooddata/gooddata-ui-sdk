@@ -1,9 +1,9 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 
 import { ComponentType } from "react";
 
 /**
- * @internal
+ * @beta
  */
 export interface ICancelButtonProps {
     isVisible: boolean;
@@ -11,6 +11,6 @@ export interface ICancelButtonProps {
 }
 
 /**
- * @internal
+ * @beta
  */
 export type CustomCancelButtonComponent = ComponentType<ICancelButtonProps>;

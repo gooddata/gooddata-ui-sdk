@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 
 import { IDashboardCommand } from "./base";
 import {
@@ -17,7 +17,7 @@ import {
 
 /**
  * Payload of the {@link ChangeKpiWidgetHeader} command.
- * @alpha
+ * @beta
  */
 export interface ChangeKpiWidgetHeaderPayload {
     /**
@@ -33,7 +33,7 @@ export interface ChangeKpiWidgetHeaderPayload {
 }
 
 /**
- * @alpha
+ * @beta
  */
 export interface ChangeKpiWidgetHeader extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_HEADER";
@@ -49,7 +49,7 @@ export interface ChangeKpiWidgetHeader extends IDashboardCommand {
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @alpha
+ * @beta
  */
 export function changeKpiWidgetHeader(
     ref: ObjRef,
@@ -72,7 +72,7 @@ export function changeKpiWidgetHeader(
 
 /**
  * Payload of the {@link ChangeKpiWidgetDescription} command.
- * @alpha
+ * @beta
  */
 export interface ChangeKpiWidgetDescriptionPayload {
     /**
@@ -88,7 +88,7 @@ export interface ChangeKpiWidgetDescriptionPayload {
 }
 
 /**
- * @alpha
+ * @beta
  */
 export interface ChangeKpiWidgetDescription extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_DESCRIPTION";
@@ -104,7 +104,7 @@ export interface ChangeKpiWidgetDescription extends IDashboardCommand {
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @alpha
+ * @beta
  */
 export function changeKpiWidgetDescription(
     ref: ObjRef,
@@ -127,7 +127,7 @@ export function changeKpiWidgetDescription(
 
 /**
  * Payload of the {@link ChangeKpiWidgetConfiguration} command.
- * @alpha
+ * @beta
  */
 export interface ChangeKpiWidgetConfigurationPayload {
     /**
@@ -145,7 +145,7 @@ export interface ChangeKpiWidgetConfigurationPayload {
 }
 
 /**
- * @alpha
+ * @beta
  */
 export interface ChangeKpiWidgetConfiguration extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_CONFIGURATION";
@@ -166,7 +166,7 @@ export interface ChangeKpiWidgetConfiguration extends IDashboardCommand {
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @alpha
+ * @beta
  */
 export function changeKpiWidgetConfiguration(
     ref: ObjRef,
@@ -189,7 +189,7 @@ export function changeKpiWidgetConfiguration(
 
 /**
  * Payload of the {@link ChangeKpiWidgetMeasure} command.
- * @alpha
+ * @beta
  */
 export interface ChangeKpiWidgetMeasurePayload {
     /**
@@ -214,7 +214,7 @@ export interface ChangeKpiWidgetMeasurePayload {
 }
 
 /**
- * @alpha
+ * @beta
  */
 export interface ChangeKpiWidgetMeasure extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_MEASURE";
@@ -231,7 +231,7 @@ export interface ChangeKpiWidgetMeasure extends IDashboardCommand {
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @alpha
+ * @beta
  */
 export function changeKpiWidgetMeasure(
     ref: ObjRef,
@@ -256,7 +256,7 @@ export function changeKpiWidgetMeasure(
 
 /**
  * Payload of the {@link ChangeKpiWidgetFilterSettings} command.
- * @alpha
+ * @beta
  */
 export interface ChangeKpiWidgetFilterSettingsPayload {
     /**
@@ -272,7 +272,7 @@ export interface ChangeKpiWidgetFilterSettingsPayload {
 }
 
 /**
- * @alpha
+ * @beta
  */
 export interface ChangeKpiWidgetFilterSettings extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_FILTER_SETTINGS";
@@ -289,7 +289,7 @@ export interface ChangeKpiWidgetFilterSettings extends IDashboardCommand {
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @alpha
+ * @beta
  */
 export function replaceKpiWidgetFilterSettings(
     ref: ObjRef,
@@ -320,7 +320,7 @@ export function replaceKpiWidgetFilterSettings(
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @alpha
+ * @beta
  */
 export function enableKpiWidgetDateFilter(
     ref: ObjRef,
@@ -350,7 +350,7 @@ export function enableKpiWidgetDateFilter(
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @alpha
+ * @beta
  */
 export function disableKpiWidgetDateFilter(
     ref: ObjRef,
@@ -379,7 +379,7 @@ export function disableKpiWidgetDateFilter(
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @alpha
+ * @beta
  */
 export function replaceKpiWidgetIgnoredFilters(
     ref: ObjRef,
@@ -415,7 +415,7 @@ export function replaceKpiWidgetIgnoredFilters(
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @alpha
+ * @beta
  */
 export function ignoreFilterOnKpiWidget(
     ref: ObjRef,
@@ -450,7 +450,7 @@ export function ignoreFilterOnKpiWidget(
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @alpha
+ * @beta
  */
 export function unignoreFilterOnKpiWidget(
     ref: ObjRef,
@@ -477,7 +477,7 @@ export function unignoreFilterOnKpiWidget(
 //
 
 /**
- * @alpha
+ * @beta
  */
 export interface KpiWidgetComparison {
     /**
@@ -499,7 +499,7 @@ export interface KpiWidgetComparison {
 
 /**
  * Payload of the {@link ChangeKpiWidgetComparison} command.
- * @alpha
+ * @beta
  */
 export interface ChangeKpiWidgetComparisonPayload {
     /**
@@ -516,7 +516,7 @@ export interface ChangeKpiWidgetComparisonPayload {
 }
 
 /**
- * @alpha
+ * @beta
  */
 export interface ChangeKpiWidgetComparison extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_COMPARISON";
@@ -534,7 +534,7 @@ export interface ChangeKpiWidgetComparison extends IDashboardCommand {
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @alpha
+ * @beta
  */
 export function changeKpiWidgetComparison(
     ref: ObjRef,
@@ -557,7 +557,7 @@ export function changeKpiWidgetComparison(
 
 /**
  * Payload of the {@link RefreshKpiWidget} command.
- * @alpha
+ * @beta
  */
 export interface RefreshKpiWidgetPayload {
     /**
@@ -567,7 +567,7 @@ export interface RefreshKpiWidgetPayload {
 }
 
 /**
- * @alpha
+ * @beta
  */
 export interface RefreshKpiWidget extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.KPI_WIDGET.REFRESH";
@@ -581,7 +581,7 @@ export interface RefreshKpiWidget extends IDashboardCommand {
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @alpha
+ * @beta
  */
 export function refreshKpiWidget(ref: ObjRef, correlationId?: string): RefreshKpiWidget {
     return {
@@ -599,7 +599,7 @@ export function refreshKpiWidget(ref: ObjRef, correlationId?: string): RefreshKp
 
 /**
  * Payload of the {@link SetDrillForKpiWidget} command.
- * @alpha
+ * @beta
  */
 export interface SetDrillForKpiWidgetPayload {
     /**
@@ -611,7 +611,7 @@ export interface SetDrillForKpiWidgetPayload {
 }
 
 /**
- * @alpha
+ * @beta
  */
 export interface SetDrillForKpiWidget extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.KPI_WIDGET.SET_DRILL";
@@ -627,7 +627,7 @@ export interface SetDrillForKpiWidget extends IDashboardCommand {
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @alpha
+ * @beta
  */
 export function setDrillForKpiWidget(
     ref: ObjRef,
@@ -652,7 +652,7 @@ export function setDrillForKpiWidget(
 
 /**
  * Payload of the {@link RemoveDrillForKpiWidget} command.
- * @alpha
+ * @beta
  */
 export interface RemoveDrillForKpiWidgetPayload {
     /**
@@ -662,7 +662,7 @@ export interface RemoveDrillForKpiWidgetPayload {
 }
 
 /**
- * @alpha
+ * @beta
  */
 export interface RemoveDrillForKpiWidget extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.KPI_WIDGET.REMOVE_DRILL";
@@ -676,7 +676,7 @@ export interface RemoveDrillForKpiWidget extends IDashboardCommand {
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @alpha
+ * @beta
  */
 export function removeDrillForKpiWidget(ref: ObjRef, correlationId?: string): RemoveDrillForKpiWidget {
     return {

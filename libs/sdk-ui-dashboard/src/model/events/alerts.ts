@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { IWidgetAlert } from "@gooddata/sdk-model";
 
 import { DashboardContext } from "../types/commonTypes";
@@ -7,7 +7,7 @@ import { eventGuard } from "./util";
 
 /**
  * Payload of the {@link DashboardAlertCreated} event.
- * @alpha
+ * @beta
  */
 export interface DashboardAlertCreatedPayload {
     /**
@@ -19,7 +19,7 @@ export interface DashboardAlertCreatedPayload {
 /**
  * This event is emitted after the Kpi alert is successfully saved.
  *
- * @alpha
+ * @beta
  */
 export interface DashboardAlertCreated extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.ALERT.CREATED";
@@ -45,13 +45,13 @@ export function alertCreated(
  * Tests whether the provided object is an instance of {@link DashboardAlertCreated}.
  *
  * @param obj - object to test
- * @alpha
+ * @beta
  */
 export const isDashboardAlertCreated = eventGuard<DashboardAlertCreated>("GDC.DASH/EVT.ALERT.CREATED");
 
 /**
  * Payload of the {@link DashboardAlertsRemoved} event.
- * @alpha
+ * @beta
  */
 export interface DashboardAlertsRemovedPayload {
     /**
@@ -63,7 +63,7 @@ export interface DashboardAlertsRemovedPayload {
 /**
  * This event is emitted after the Kpi alerts are successfully removed.
  *
- * @alpha
+ * @beta
  */
 export interface DashboardAlertsRemoved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.ALERTS.REMOVED";
@@ -89,13 +89,13 @@ export function alertsRemoved(
  * Tests whether the provided object is an instance of {@link DashboardAlertsRemoved}.
  *
  * @param obj - object to test
- * @alpha
+ * @beta
  */
 export const isDashboardAlertsRemoved = eventGuard<DashboardAlertsRemoved>("GDC.DASH/EVT.ALERTS.REMOVED");
 
 /**
  * Payload of the {@link DashboardAlertUpdated} event.
- * @alpha
+ * @beta
  */
 export interface DashboardAlertUpdatedPayload {
     /**
@@ -107,7 +107,7 @@ export interface DashboardAlertUpdatedPayload {
 /**
  * This event is emitted after the Kpi alert is updated.
  *
- * @alpha
+ * @beta
  */
 export interface DashboardAlertUpdated extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.ALERT.UPDATED";
@@ -133,6 +133,6 @@ export function alertUpdated(
  * Tests whether the provided object is an instance of {@link DashboardAlertUpdated}.
  *
  * @param obj - object to test
- * @alpha
+ * @beta
  */
 export const isDashboardAlertUpdated = eventGuard<DashboardAlertUpdated>("GDC.DASH/EVT.ALERT.UPDATED");

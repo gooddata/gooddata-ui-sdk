@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { IDashboardLayout, IDashboardLayoutSectionHeader } from "@gooddata/sdk-model";
 
 import {
@@ -13,7 +13,7 @@ import { eventGuard } from "./util";
 
 /**
  * Payload of the {@link DashboardLayoutSectionAdded} event.
- * @alpha
+ * @beta
  */
 export interface DashboardLayoutSectionAddedPayload {
     /**
@@ -32,7 +32,7 @@ export interface DashboardLayoutSectionAddedPayload {
 /**
  * This event is emitted when a new dashboard layout section is added.
  *
- * @alpha
+ * @beta
  */
 export interface DashboardLayoutSectionAdded extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED";
@@ -60,7 +60,7 @@ export function layoutSectionAdded(
  * Tests whether the provided object is an instance of {@link DashboardLayoutSectionAdded}.
  *
  * @param obj - object to test
- * @alpha
+ * @beta
  */
 export const isDashboardLayoutSectionAdded = eventGuard<DashboardLayoutSectionAdded>(
     "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
@@ -72,7 +72,7 @@ export const isDashboardLayoutSectionAdded = eventGuard<DashboardLayoutSectionAd
 
 /**
  * Payload of the {@link DashboardLayoutSectionMoved} event.
- * @alpha
+ * @beta
  */
 export interface DashboardLayoutSectionMovedPayload {
     /**
@@ -92,7 +92,7 @@ export interface DashboardLayoutSectionMovedPayload {
 /**
  * This event is emitted when a dashboard layout section is moved from one place to another.
  *
- * @alpha
+ * @beta
  */
 export interface DashboardLayoutSectionMoved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_MOVED";
@@ -122,7 +122,7 @@ export function layoutSectionMoved(
  * Tests whether the provided object is an instance of {@link DashboardLayoutSectionMoved}.
  *
  * @param obj - object to test
- * @alpha
+ * @beta
  */
 export const isDashboardLayoutSectionMoved = eventGuard<DashboardLayoutSectionMoved>(
     "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_MOVED",
@@ -134,7 +134,7 @@ export const isDashboardLayoutSectionMoved = eventGuard<DashboardLayoutSectionMo
 
 /**
  * Payload of the {@link DashboardLayoutSectionRemoved} event.
- * @alpha
+ * @beta
  */
 export interface DashboardLayoutSectionRemovedPayload {
     /**
@@ -168,7 +168,7 @@ export interface DashboardLayoutSectionRemovedPayload {
  * its items. E.g. item is removed, it is last item in the section, and the whole section is removed
  * as well.
  *
- * @alpha
+ * @beta
  */
 export interface DashboardLayoutSectionRemoved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_REMOVED";
@@ -200,7 +200,7 @@ export function layoutSectionRemoved(
  * Tests whether the provided object is an instance of {@link DashboardLayoutSectionRemoved}.
  *
  * @param obj - object to test
- * @alpha
+ * @beta
  */
 export const isDashboardLayoutSectionRemoved = eventGuard<DashboardLayoutSectionRemoved>(
     "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_REMOVED",
@@ -212,7 +212,7 @@ export const isDashboardLayoutSectionRemoved = eventGuard<DashboardLayoutSection
 
 /**
  * Payload of the {@link DashboardLayoutSectionHeaderChanged} event.
- * @alpha
+ * @beta
  */
 export interface DashboardLayoutSectionHeaderChangedPayload {
     /**
@@ -229,7 +229,7 @@ export interface DashboardLayoutSectionHeaderChangedPayload {
 /**
  * This event is emitted when dashboard layout section changes.
  *
- * @alpha
+ * @beta
  */
 export interface DashboardLayoutSectionHeaderChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_HEADER_CHANGED";
@@ -255,7 +255,7 @@ export function layoutSectionHeaderChanged(
 
 /**
  * Payload of the {@link DashboardLayoutSectionItemsHeightResized} event.
- * @alpha
+ * @beta
  */
 export interface DashboardLayoutSectionItemsHeightResizedPayload {
     /**
@@ -277,7 +277,7 @@ export interface DashboardLayoutSectionItemsHeightResizedPayload {
 /**
  * This event is emitted when dashboard layout items height changes.
  *
- * @alpha
+ * @beta
  */
 export interface DashboardLayoutSectionItemsHeightResized extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ITEMS_HEIGHT_RESIZED";
@@ -305,7 +305,7 @@ export function layoutSectionItemsHeightResized(
 
 /**
  * Payload of the {@link DashboardLayoutSectionItemWidthResized} event.
- * @alpha
+ * @beta
  */
 export interface DashboardLayoutSectionItemWidthResizedPayload {
     /**
@@ -327,7 +327,7 @@ export interface DashboardLayoutSectionItemWidthResizedPayload {
 /**
  * This event is emitted when dashboard layout items height changes.
  *
- * @alpha
+ * @beta
  */
 export interface DashboardLayoutSectionItemWidthResized extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ITEM_WIDTH_RESIZED";
@@ -357,7 +357,7 @@ export function layoutSectionItemWidthResized(
  * Tests whether the provided object is an instance of {@link DashboardLayoutSectionHeaderChanged}.
  *
  * @param obj - object to test
- * @alpha
+ * @beta
  */
 export const isDashboardLayoutSectionHeaderChanged = eventGuard<DashboardLayoutSectionHeaderChanged>(
     "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_HEADER_CHANGED",
@@ -369,7 +369,7 @@ export const isDashboardLayoutSectionHeaderChanged = eventGuard<DashboardLayoutS
 
 /**
  * Payload of the {@link DashboardLayoutSectionItemsAdded} event.
- * @alpha
+ * @beta
  */
 export interface DashboardLayoutSectionItemsAddedPayload {
     /**
@@ -397,7 +397,7 @@ export interface DashboardLayoutSectionItemsAddedPayload {
 /**
  * This event is emitted when items are added to a dashboard section.
  *
- * @alpha
+ * @beta
  */
 export interface DashboardLayoutSectionItemsAdded extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED";
@@ -429,7 +429,7 @@ export function layoutSectionItemsAdded(
  * Tests whether the provided object is an instance of {@link DashboardLayoutSectionItemsAdded}.
  *
  * @param obj - object to test
- * @alpha
+ * @beta
  */
 export const isDashboardLayoutSectionItemsAdded = eventGuard<DashboardLayoutSectionItemsAdded>(
     "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED",
@@ -441,7 +441,7 @@ export const isDashboardLayoutSectionItemsAdded = eventGuard<DashboardLayoutSect
 
 /**
  * Payload of the {@link DashboardLayoutSectionItemReplaced} event.
- * @alpha
+ * @beta
  */
 export interface DashboardLayoutSectionItemReplacedPayload {
     /**
@@ -473,7 +473,7 @@ export interface DashboardLayoutSectionItemReplacedPayload {
 
 /**
  * This event is emitted when an item in a dashboard section is replaced.
- * @alpha
+ * @beta
  */
 export interface DashboardLayoutSectionItemReplaced extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED";
@@ -507,7 +507,7 @@ export function layoutSectionItemReplaced(
  * Tests whether the provided object is an instance of {@link DashboardLayoutSectionItemReplaced}.
  *
  * @param obj - object to test
- * @alpha
+ * @beta
  */
 export const isDashboardLayoutSectionItemReplaced = eventGuard<DashboardLayoutSectionItemReplaced>(
     "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED",
@@ -519,7 +519,7 @@ export const isDashboardLayoutSectionItemReplaced = eventGuard<DashboardLayoutSe
 
 /**
  * Payload of the {@link DashboardLayoutSectionItemMoved} event.
- * @alpha
+ * @beta
  */
 export interface DashboardLayoutSectionItemMovedPayload {
     /**
@@ -558,7 +558,7 @@ export interface DashboardLayoutSectionItemMovedPayload {
 /**
  * This event is emitted when a dashboard item is moved between sections or within a section.
  *
- * @alpha
+ * @beta
  */
 export interface DashboardLayoutSectionItemMoved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED";
@@ -594,7 +594,7 @@ export function layoutSectionItemMoved(
  * Tests whether the provided object is an instance of {@link DashboardLayoutSectionItemMoved}.
  *
  * @param obj - object to test
- * @alpha
+ * @beta
  */
 export const isDashboardLayoutSectionItemMoved = eventGuard<DashboardLayoutSectionItemMoved>(
     "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED",
@@ -606,7 +606,7 @@ export const isDashboardLayoutSectionItemMoved = eventGuard<DashboardLayoutSecti
 
 /**
  * Payload of the {@link DashboardLayoutSectionItemMovedToNewSection} event.
- * @alpha
+ * @beta
  */
 export interface DashboardLayoutSectionItemMovedToNewSectionPayload {
     /**
@@ -645,7 +645,7 @@ export interface DashboardLayoutSectionItemMovedToNewSectionPayload {
 /**
  * This event is emitted when a dashboard item is moved to new section.
  *
- * @alpha
+ * @beta
  */
 export interface DashboardLayoutSectionItemMovedToNewSection extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED_TO_NEW_SECTION";
@@ -681,7 +681,7 @@ export function layoutSectionItemMovedToNewSection(
  * Tests whether the provided object is an instance of {@link DashboardLayoutSectionItemMovedToNewSection}.
  *
  * @param obj - object to test
- * @alpha
+ * @beta
  */
 export const isDashboardLayoutSectionItemMovedToNewSection =
     eventGuard<DashboardLayoutSectionItemMovedToNewSection>(
@@ -694,7 +694,7 @@ export const isDashboardLayoutSectionItemMovedToNewSection =
 
 /**
  * Payload of the {@link DashboardLayoutSectionItemRemoved} event.
- * @alpha
+ * @beta
  */
 export interface DashboardLayoutSectionItemRemovedPayload {
     /**
@@ -723,7 +723,7 @@ export interface DashboardLayoutSectionItemRemovedPayload {
 /**
  * This event is emitted when an item is removed from dashboard layout section.
  *
- * @alpha
+ * @beta
  */
 export interface DashboardLayoutSectionItemRemoved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REMOVED";
@@ -755,7 +755,7 @@ export function layoutSectionItemRemoved(
  * Tests whether the provided object is an instance of {@link DashboardLayoutSectionItemRemoved}.
  *
  * @param obj - object to test
- * @alpha
+ * @beta
  */
 export const isDashboardLayoutSectionItemRemoved = eventGuard<DashboardLayoutSectionItemRemoved>(
     "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REMOVED",
@@ -767,7 +767,7 @@ export const isDashboardLayoutSectionItemRemoved = eventGuard<DashboardLayoutSec
 
 /**
  * Payload of the {@link DashboardLayoutChanged} event.
- * @alpha
+ * @beta
  */
 export interface DashboardLayoutChangedPayload {
     /**
@@ -779,7 +779,7 @@ export interface DashboardLayoutChangedPayload {
 /**
  * This event is emitted after any change to the dashboard layout and will include the entire new layout.
  *
- * @alpha
+ * @beta
  */
 export interface DashboardLayoutChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED";
@@ -805,7 +805,7 @@ export function layoutChanged(
  * Tests whether the provided object is an instance of {@link DashboardLayoutChanged}.
  *
  * @param obj - object to test
- * @alpha
+ * @beta
  */
 export const isDashboardLayoutChanged = eventGuard<DashboardLayoutChanged>(
     "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED",

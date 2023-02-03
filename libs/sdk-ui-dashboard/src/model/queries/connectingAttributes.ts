@@ -1,10 +1,10 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 
 import { ObjRef } from "@gooddata/sdk-model";
 import { IDashboardQuery } from "./base";
 
 /**
- * @internal
+ * @alpha
  */
 export interface QueryConnectingAttributes extends IDashboardQuery {
     type: "GDC.DASH/QUERY.CONNECTING.ATTRIBUTES";
@@ -22,7 +22,7 @@ export interface QueryConnectingAttributes extends IDashboardQuery {
  *  events that will be emitted during the command processing
  * @returns connecting attributes for given array of references
  *
- * @internal
+ * @alpha
  */
 export function queryConnectingAttributes(
     refs: [ObjRef, ObjRef][],

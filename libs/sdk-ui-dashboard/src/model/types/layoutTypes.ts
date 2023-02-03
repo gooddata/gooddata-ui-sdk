@@ -227,7 +227,7 @@ export function newDashboardSection<T extends ReadonlyArray<ExtendedDashboardIte
  * under some identifier. This stashed items can then be used in subsequent command that places items on the layout by
  * providing the stash identifier.
  *
- * @alpha
+ * @beta
  */
 export type StashedDashboardItemsId = string;
 
@@ -245,14 +245,14 @@ export function isStashedDashboardItemsId(obj: unknown): obj is StashedDashboard
  * This is a mark-up type that is used for properties and arguments that can contain relative index: a zero-based index
  * with added convenience of referencing last spot using index of `-1`.
  *
- * @alpha
+ * @beta
  */
 export type RelativeIndex = number;
 
 /**
  * Definition of items that may be placed into the dashboard sections.
  *
- * @alpha
+ * @beta
  */
 export type DashboardItemDefinition =
     | ExtendedDashboardItem<ExtendedDashboardWidget | IWidgetDefinition | ICustomWidgetDefinition>

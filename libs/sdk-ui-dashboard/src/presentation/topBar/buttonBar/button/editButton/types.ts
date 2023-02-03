@@ -1,9 +1,9 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 
 import { ComponentType } from "react";
 
 /**
- * @internal
+ * @beta
  */
 export interface IEditButtonProps {
     isVisible: boolean;
@@ -12,6 +12,6 @@ export interface IEditButtonProps {
 }
 
 /**
- * @internal
+ * @beta
  */
 export type CustomEditModeButtonComponent = ComponentType<IEditButtonProps>;
