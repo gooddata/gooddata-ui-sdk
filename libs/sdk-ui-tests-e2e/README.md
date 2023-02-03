@@ -42,3 +42,19 @@ Currently, our ECR images do not support ARM64 tags, so to run Docker things in 
 `020413372491.dkr.ecr.us-east-1.amazonaws.com/3rdparty/` in this folder and remove it.
 This will make your docker use upstream images that do support ARM64 and thus your Mac will run them natively.
 Do not commit this change!
+
+### Run tests against wiremock backend with live Cypress controls (tests are importing their recorded mapping files)
+
+Good for debugging the tooling when tests are passing with live backend but fail on CI.
+Runs Cypress, Scenarios, and Wiremock separately in Docker.
+Make sure you have set correct SDK_BACKEND environment variable (.env)
+
+-   Start recorded backend `npm run local-dev-wiremock` (add `--verbose` param for debugging)
+-   Start Scenarios `npm run run-scenarios-local`
+-   Add FILTER env variable with test file name to run and CYPRESS_TEST_TAGS env var to specify a comma-separated list of tags to run
+-   Run Cypress `npm run local-dev-test-visual-recordings`
+
+_Note:_ this approach allows running only a single test at a time.
+Mappings are imported to wiremock for this particular test only and only this test is visible in cypress live controls.
+
+See `run_local_dev_isolated.js` for configuration options.
