@@ -1,0 +1,9 @@
+# (C) 2023 GoodData Corporation
+
+access_log off;
+
+location ^~ /api {
+    proxy_ssl_server_name on;
+    proxy_pass $TEST_BACKEND;
+    proxy_set_header Origin $TEST_BACKEND;
+}

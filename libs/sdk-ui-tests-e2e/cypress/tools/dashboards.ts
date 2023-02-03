@@ -93,6 +93,10 @@ export class TopBar {
         return this.getElement(".s-edit_button");
     }
 
+    getShareButtonElement(): Cypress.Chainable {
+        return cy.get(".s-header-share-button");
+    }
+
     getMenuButtonElement(): Cypress.Chainable {
         return this.getElement(".s-header-options-button");
     }
@@ -103,6 +107,16 @@ export class TopBar {
 
     dashboardTitleExist(exist = true): this {
         this.getElement(".s-gd-dashboard-title").should(exist ? "exist" : "not.exist");
+        return this;
+    }
+
+    shareButtonExists(exist = true): this {
+        this.getShareButtonElement().should(exist ? "exist" : "not.exist");
+        return this;
+    }
+
+    clickShareButton(): this {
+        this.getShareButtonElement().click();
         return this;
     }
 

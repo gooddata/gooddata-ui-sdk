@@ -49,6 +49,7 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check",
         "docker-build": "docker build --file Dockerfile -t gooddata-ui-sdk .",
         "docker-build-local": "docker build --file Dockerfile_local -t gooddata-ui-sdk .",
+        "run-integrated": "node ./scripts/run_integrated.js",
         "run-isolated": "docker-compose -f docker-compose-isolated.yaml up --abort-on-container-exit --exit-code-from isolated-tests --force-recreate --always-recreate-deps --renew-anon-volumes",
         "run-isolated-record": "MODE=record npm run run-isolated-local",
         "run-isolated-local": "npm run docker-build-local && IMAGE_ID=gooddata-ui-sdk npm run run-isolated",

@@ -22,7 +22,7 @@ Cypress.on("uncaught:exception", (error) => {
 Cypress.Cookies.debug(true);
 
 describe("Insights on dashboard", () => {
-    before(() => {
+    beforeEach(() => {
         cy.login();
 
         Navigation.visit("dashboard/insight");
