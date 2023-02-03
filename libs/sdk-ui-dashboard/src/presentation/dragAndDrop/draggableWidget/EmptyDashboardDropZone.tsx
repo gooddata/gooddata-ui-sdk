@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
@@ -18,7 +18,7 @@ import { useDashboardComponentsContext } from "../../dashboardContexts";
 import { useNewSectionInsightListItemDropHandler } from "./useNewSectionInsightListItemDropHandler";
 import { useNewSectionKpiPlaceholderDropHandler } from "./useNewSectionKpiPlaceholderDropHandler";
 import { useNewSectionInsightPlaceholderDropHandler } from "./useNewSectionInsightPlaceholderDropHandler";
-import { getDashboardLayoutItemHeightForGrid } from "../../layout/DefaultDashboardLayoutRenderer/utils/sizing";
+import { getDashboardLayoutItemHeightForGrid } from "../../../_staging/layout/sizing";
 
 const widgetCategoryMapping: Partial<{ [D in DraggableItemType]: string }> = {
     "insight-placeholder": "insight",

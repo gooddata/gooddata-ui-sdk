@@ -1,13 +1,12 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import { ScreenSize } from "@gooddata/sdk-model";
-import React, { useRef, useCallback } from "react";
+import React from "react";
 import { Row } from "react-grid-system";
 import { RenderMode } from "../../../types";
 import {
     IDashboardLayoutItemFacade,
     IDashboardLayoutSectionFacade,
 } from "../../../_staging/dashboard/fluidLayout/facade/interfaces";
-import { HeightResizerHotspot } from "../../dragAndDrop";
 import { DashboardLayoutItem } from "./DashboardLayoutItem";
 import {
     IDashboardLayoutGridRowRenderer,
@@ -29,24 +28,20 @@ export interface DashboardLayoutGridRowProps<TWidget> {
     getLayoutDimensions: () => DOMRect;
     items: IDashboardLayoutItemFacade<TWidget>[];
     renderMode: RenderMode;
-    isDraggingWidget?: boolean;
 }
 
 const defaultItemKeyGetter: IDashboardLayoutItemKeyGetter<unknown> = ({ item }) => item.index().toString();
 
 export function DashboardLayoutGridRow<TWidget>(props: DashboardLayoutGridRowProps<TWidget>): JSX.Element {
-    const rowRef = useRef<HTMLDivElement>(null);
     const {
         section,
         itemKeyGetter = defaultItemKeyGetter,
         gridRowRenderer,
         itemRenderer,
         widgetRenderer,
-        getLayoutDimensions,
         screen,
         items,
         renderMode,
-        isDraggingWidget,
     } = props;
 
     const rowItems = items.map((item) => (
@@ -59,36 +54,17 @@ export function DashboardLayoutGridRow<TWidget>(props: DashboardLayoutGridRowPro
         />
     ));
 
-    const getContainerDimensions = useCallback(() => {
-        if (!rowRef.current) {
-            return undefined;
-        }
-
-        return rowRef.current.getBoundingClientRect();
-    }, []);
-
     return (
-        <div ref={rowRef}>
-            <Row className="gd-fluidlayout-row s-gd-fluid-layout-row">
-                {gridRowRenderer
-                    ? gridRowRenderer({
-                          children: rowItems,
-                          screen,
-                          section,
-                          items,
-                          renderMode,
-                      })
-                    : rowItems}
-                {renderMode === "edit" && !isDraggingWidget ? (
-                    <HeightResizerHotspot
-                        section={section}
-                        items={items}
-                        screen={screen}
-                        getContainerDimensions={getContainerDimensions}
-                        getLayoutDimensions={getLayoutDimensions}
-                    />
-                ) : null}
-            </Row>
-        </div>
+        <Row className="gd-fluidlayout-row s-gd-fluid-layout-row">
+            {gridRowRenderer
+                ? gridRowRenderer({
+                      children: rowItems,
+                      screen,
+                      section,
+                      items,
+                      renderMode,
+                  })
+                : rowItems}
+        </Row>
     );
 }

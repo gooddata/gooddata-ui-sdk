@@ -1,9 +1,12 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import { ScreenSize } from "@gooddata/sdk-model";
 import flatMap from "lodash/flatMap";
-import React from "react";
+import React, { useMemo } from "react";
 import { RenderMode } from "../../../types";
-import { IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/fluidLayout/facade/interfaces";
+import {
+    IDashboardLayoutItemFacade,
+    IDashboardLayoutSectionFacade,
+} from "../../../_staging/dashboard/fluidLayout/facade/interfaces";
 import { DashboardLayoutGridRow } from "./DashboardLayoutGridRow";
 import { DashboardLayoutSectionHeaderRenderer } from "./DashboardLayoutSectionHeaderRenderer";
 import { DashboardLayoutSectionRenderer } from "./DashboardLayoutSectionRenderer";
@@ -17,6 +20,8 @@ import {
     IDashboardLayoutWidgetRenderer,
 } from "./interfaces";
 import { DashboardLayoutSectionOverlayController } from "../DashboardItemOverlay/DashboardItemOverlayController";
+import last from "lodash/last";
+import { DashboardLayoutGridRowEdit } from "./DashboardLayoutGridRowEdit";
 
 /**
  * @alpha
@@ -58,27 +63,66 @@ export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionPr
         getLayoutDimensions,
         screen,
         renderMode,
-        isDraggingWidget,
     } = props;
     const renderProps = { section, screen, renderMode };
 
-    const items = flatMap(section.items().asGridRows(screen), (itemsInRow, index) => {
-        return (
-            <DashboardLayoutGridRow
-                key={index.toString()}
-                screen={screen}
-                section={section}
-                items={itemsInRow}
-                gridRowRenderer={gridRowRenderer}
-                itemKeyGetter={itemKeyGetter}
-                itemRenderer={itemRenderer}
-                widgetRenderer={widgetRenderer}
-                renderMode={renderMode}
-                isDraggingWidget={isDraggingWidget}
-                getLayoutDimensions={getLayoutDimensions}
-            />
-        );
-    });
+    const items = useMemo(() => {
+        if (renderMode === "edit") {
+            const itemsInRowsByIndex = section
+                .items()
+                .asGridRows(screen)
+                .map(
+                    (itemsInRow) =>
+                        [last(itemsInRow)!.index(), itemsInRow] as [
+                            number,
+                            IDashboardLayoutItemFacade<TWidget>[],
+                        ],
+                );
+
+            const itemsInRow = section.items().all();
+
+            return (
+                <DashboardLayoutGridRowEdit
+                    screen={screen}
+                    itemsInRowsByIndex={itemsInRowsByIndex}
+                    section={section}
+                    items={itemsInRow}
+                    gridRowRenderer={gridRowRenderer}
+                    itemKeyGetter={itemKeyGetter}
+                    itemRenderer={itemRenderer}
+                    widgetRenderer={widgetRenderer}
+                    renderMode={renderMode}
+                    getLayoutDimensions={getLayoutDimensions}
+                />
+            );
+        }
+
+        return flatMap(section.items().asGridRows(screen), (itemsInRow, index) => {
+            return (
+                <DashboardLayoutGridRow
+                    key={index.toString()}
+                    screen={screen}
+                    section={section}
+                    items={itemsInRow}
+                    gridRowRenderer={gridRowRenderer}
+                    itemKeyGetter={itemKeyGetter}
+                    itemRenderer={itemRenderer}
+                    widgetRenderer={widgetRenderer}
+                    renderMode={renderMode}
+                    getLayoutDimensions={getLayoutDimensions}
+                />
+            );
+        });
+    }, [
+        getLayoutDimensions,
+        gridRowRenderer,
+        itemKeyGetter,
+        itemRenderer,
+        renderMode,
+        screen,
+        section,
+        widgetRenderer,
+    ]);
 
     return sectionRenderer({
         ...renderProps,

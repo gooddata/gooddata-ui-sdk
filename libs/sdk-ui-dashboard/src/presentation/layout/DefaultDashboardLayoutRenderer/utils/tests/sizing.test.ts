@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import chunk from "lodash/chunk";
 import flatMap from "lodash/flatMap";
 import { newKpiWidget } from "@gooddata/sdk-backend-base";
@@ -6,8 +6,6 @@ import {
     getDashboardLayoutItemHeightForRatioAndScreen,
     unifyDashboardLayoutItemHeights,
     getDashboardLayoutItemMaxGridWidth,
-    getDashboardLayoutItemHeightForGrid,
-    getDashboardLayoutItemHeight,
     getLayoutWithoutGridHeights,
     validateDashboardLayoutWidgetSize,
     getDashboardLayoutWidgetDefaultGridWidth,
@@ -102,27 +100,6 @@ describe("sizing", () => {
             expect(
                 getDashboardLayoutItemHeightForRatioAndScreen({ gridWidth: 0, heightAsRatio: 0 }, "xl"),
             ).toMatchSnapshot();
-        });
-    });
-
-    describe("getDashboardLayoutItemHeight", () => {
-        it("should calculate widget height when custom heigh is specified", () => {
-            expect(getDashboardLayoutItemHeight({ gridWidth: 1, gridHeight: 30 })).toBe(600);
-        });
-
-        it("should return undefined for widget height when custom height is not specified", () => {
-            expect(getDashboardLayoutItemHeight({ gridWidth: 1 })).toBe(undefined);
-        });
-
-        it("should return undefined for widget height when heightAsRatio is specified", () => {
-            expect(getDashboardLayoutItemHeight({ gridWidth: 1, heightAsRatio: 120 })).toBe(undefined);
-        });
-    });
-
-    describe("getDashboardLayoutGridItemHeight", () => {
-        it("should calculate widget height for selected gridHeight when FF enableKDWidgetCustomHeight is true", () => {
-            const gridHeight = 11;
-            expect(getDashboardLayoutItemHeightForGrid(gridHeight)).toMatchSnapshot();
         });
     });
 

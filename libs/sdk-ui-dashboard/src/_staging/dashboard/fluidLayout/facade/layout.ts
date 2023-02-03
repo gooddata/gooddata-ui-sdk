@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import { IDashboardLayout, IDashboardLayoutSize, isDashboardLayout } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import {
@@ -6,13 +6,13 @@ import {
     IDashboardLayoutSectionFacade,
     IDashboardLayoutSectionsFacade,
 } from "./interfaces";
-import { DashboardLayoutSectionFacade } from "./section";
 import { DashboardLayoutSectionsFacade } from "./sections";
 
 /**
  * @alpha
  */
 export class DashboardLayoutFacade<TWidget> implements IDashboardLayoutFacade<TWidget> {
+    private sectionsCache: IDashboardLayoutSectionsFacade<TWidget> | undefined;
     protected constructor(protected layout: IDashboardLayout<TWidget>) {}
 
     /**
@@ -25,15 +25,14 @@ export class DashboardLayoutFacade<TWidget> implements IDashboardLayoutFacade<TW
     }
 
     public sections(): IDashboardLayoutSectionsFacade<TWidget> {
-        return DashboardLayoutSectionsFacade.for(this, this.layout.sections);
+        if (this.sectionsCache === undefined) {
+            this.sectionsCache = DashboardLayoutSectionsFacade.for(this, this.layout.sections);
+        }
+        return this.sectionsCache;
     }
 
     public section(rowIndex: number): IDashboardLayoutSectionFacade<TWidget> | undefined {
-        const row = this.layout.sections[rowIndex];
-        if (!row) {
-            return undefined;
-        }
-        return DashboardLayoutSectionFacade.for(this, row, rowIndex);
+        return this.sections().section(rowIndex);
     }
 
     public size(): IDashboardLayoutSize | undefined {

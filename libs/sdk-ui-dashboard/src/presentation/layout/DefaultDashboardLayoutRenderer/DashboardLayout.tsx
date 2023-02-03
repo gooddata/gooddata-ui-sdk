@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import { IDashboardLayout, ScreenSize } from "@gooddata/sdk-model";
 import cx from "classnames";
 import isEqual from "lodash/isEqual";
@@ -59,7 +59,6 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
         onMouseLeave,
         enableCustomHeight,
         renderMode = "view",
-        isDraggingWidget = false,
     } = props;
 
     const layoutRef = React.useRef<HTMLDivElement>(null);
@@ -138,7 +137,6 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
                                             widgetRenderer={widgetRendererWrapped}
                                             screen={screen}
                                             renderMode={renderMode}
-                                            isDraggingWidget={isDraggingWidget}
                                             getLayoutDimensions={getLayoutDimensions}
                                         />
                                     );

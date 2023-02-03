@@ -1,10 +1,12 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import { newKpiWidget } from "@gooddata/sdk-backend-base";
 import {
     getDashboardLayoutWidgetDefaultHeight,
     getDashboardLayoutWidgetMinGridHeight,
     getDashboardLayoutWidgetMaxGridHeight,
     getDashboardLayoutWidgetMinGridWidth,
+    getDashboardLayoutItemHeight,
+    getDashboardLayoutItemHeightForGrid,
 } from "../sizing";
 import { VisType } from "@gooddata/sdk-ui";
 import { AnalyticalWidgetType, idRef, newInsightDefinition } from "@gooddata/sdk-model";
@@ -172,6 +174,27 @@ describe("sizing", () => {
                     ).toBe(width);
                 },
             );
+        });
+    });
+
+    describe("getDashboardLayoutItemHeight", () => {
+        it("should calculate widget height when custom heigh is specified", () => {
+            expect(getDashboardLayoutItemHeight({ gridWidth: 1, gridHeight: 30 })).toBe(600);
+        });
+
+        it("should return undefined for widget height when custom height is not specified", () => {
+            expect(getDashboardLayoutItemHeight({ gridWidth: 1 })).toBe(undefined);
+        });
+
+        it("should return undefined for widget height when heightAsRatio is specified", () => {
+            expect(getDashboardLayoutItemHeight({ gridWidth: 1, heightAsRatio: 120 })).toBe(undefined);
+        });
+    });
+
+    describe("getDashboardLayoutGridItemHeight", () => {
+        it("should calculate widget height for selected gridHeight when FF enableKDWidgetCustomHeight is true", () => {
+            const gridHeight = 11;
+            expect(getDashboardLayoutItemHeightForGrid(gridHeight)).toMatchSnapshot();
         });
     });
 });

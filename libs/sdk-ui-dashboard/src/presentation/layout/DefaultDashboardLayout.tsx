@@ -33,7 +33,7 @@ import {
 import { renderModeAwareDashboardLayoutSectionRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionRenderer";
 import { renderModeAwareDashboardLayoutSectionHeaderRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionHeaderRenderer";
 import { getMemoizedWidgetSanitizer } from "./DefaultDashboardLayoutUtils";
-import { SectionHotspot, useIsDraggingWidget } from "../dragAndDrop";
+import { SectionHotspot } from "../dragAndDrop";
 import { isInitialPlaceholderWidget } from "../../widgets";
 import { EmptyDashboardLayout } from "./EmptyDashboardLayout";
 
@@ -104,8 +104,6 @@ export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Elemen
     const isExport = useDashboardSelector(selectIsExport);
     const renderMode = useDashboardSelector(selectRenderMode);
 
-    const isDraggingWidget = useIsDraggingWidget();
-
     const getInsightByRef = useCallback(
         (insightRef: ObjRef): IInsight | undefined => {
             return insights.get(insightRef);
@@ -165,7 +163,6 @@ export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Elemen
                 sectionRenderer={renderModeAwareDashboardLayoutSectionRenderer}
                 sectionHeaderRenderer={renderModeAwareDashboardLayoutSectionHeaderRenderer}
                 renderMode={renderMode}
-                isDraggingWidget={isDraggingWidget}
             />
             {!!shouldRenderSectionHotspot && (
                 <SectionHotspot index={transformedLayout.sections.length} targetPosition="below" />
