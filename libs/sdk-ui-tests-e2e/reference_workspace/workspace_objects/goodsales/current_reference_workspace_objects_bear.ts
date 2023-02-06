@@ -1,5 +1,5 @@
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-01-31T15:12:11.901Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2023-01-10T08:51:37.648Z; */
 // @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
@@ -3624,4 +3624,16 @@ export const Dashboards = {
      * Dashboard Title: Target board
      * Dashboard ID: aacFiou2qR4g
      */ TargetBoard: "aacFiou2qR4g",
+    /**
+     * Dashboard Title: Insight on dashboard
+     * Dashboard ID: aacGJitR3ziX
+     */ InsightOnDashboard: "aacGJitR3ziX",
+    /**
+     * Dashboard Title: Header Tests
+     * Dashboard ID: aafGHSoODa6M
+     */ HeaderTests: "aafGHSoODa6M",
+    /**
+     * Dashboard Title: Drag drop and Move
+     * Dashboard ID: aacGKAPY3Ebg
+     */ DragDropAndMove: "aacGKAPY3Ebg",
 };

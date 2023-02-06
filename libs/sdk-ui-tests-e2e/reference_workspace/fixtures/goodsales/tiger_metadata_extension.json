@@ -5,58 +5,6 @@
                 "content": {
                     "filterContextRef": {
                         "identifier": {
-                            "id": "b2c3b1d2-b990-44a2-bf02-a857747a02b7",
-                            "type": "filterContext"
-                        }
-                    },
-                    "layout": {
-                        "type": "IDashboardLayout",
-                        "sections": [
-                            {
-                                "type": "IDashboardLayoutSection",
-                                "items": [
-                                    {
-                                        "type": "IDashboardLayoutItem",
-                                        "size": {
-                                            "xl": {
-                                                "gridWidth": 12
-                                            }
-                                        },
-                                        "widget": {
-                                            "type": "insight",
-                                            "title": "Table with stage name and atribute filter",
-                                            "description": "",
-                                            "ignoreDashboardFilters": [],
-                                            "dateDataSet": {
-                                                "identifier": {
-                                                    "id": "dt_closedate_timestamp",
-                                                    "type": "dataset"
-                                                }
-                                            },
-                                            "insight": {
-                                                "identifier": {
-                                                    "id": "fbcca86f-c473-446b-b316-eb4f4e5de909",
-                                                    "type": "visualizationObject"
-                                                }
-                                            },
-                                            "drills": [],
-                                            "properties": {}
-                                        }
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    "version": "2"
-                },
-                "description": "KD with stage name",
-                "id": "0e0cb428-c0db-45dc-946e-65b47287a94f",
-                "title": "KD with stage name"
-            },
-            {
-                "content": {
-                    "filterContextRef": {
-                        "identifier": {
                             "id": "be26570e-a52c-4b54-b2d2-4f54e063b096",
                             "type": "filterContext"
                         }
@@ -176,6 +124,234 @@
                 "description": "",
                 "id": "04a8f9c7-cce9-4511-be2b-ea52ea80773f",
                 "title": "Drill to insight"
+            },
+            {
+                "content": {
+                    "filterContextRef": {
+                        "identifier": {
+                            "id": "b2c3b1d2-b990-44a2-bf02-a857747a02b7",
+                            "type": "filterContext"
+                        }
+                    },
+                    "layout": {
+                        "sections": [
+                            {
+                                "items": [
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridWidth": 12
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "fbcca86f-c473-446b-b316-eb4f4e5de909",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "properties": {},
+                                            "title": "Table with stage name and atribute filter",
+                                            "type": "insight"
+                                        }
+                                    }
+                                ],
+                                "type": "IDashboardLayoutSection"
+                            }
+                        ],
+                        "type": "IDashboardLayout"
+                    },
+                    "version": "2"
+                },
+                "description": "KD with stage name",
+                "id": "0e0cb428-c0db-45dc-946e-65b47287a94f",
+                "title": "KD with stage name"
+            },
+            {
+                "content": {
+                    "filterContextRef": {
+                        "identifier": {
+                            "id": "c4d17586-73c4-440a-9977-f25baed90d88",
+                            "type": "filterContext"
+                        }
+                    },
+                    "layout": {
+                        "sections": [
+                            {
+                                "header": {
+                                    "description": "section 1",
+                                    "title": "section 1"
+                                },
+                                "items": [
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridWidth": 2
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "6010ceaf-b8e9-4cd7-aea8-05da1f68f112",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "properties": {},
+                                            "title": "Headline",
+                                            "type": "insight"
+                                        }
+                                    }
+                                ],
+                                "type": "IDashboardLayoutSection"
+                            },
+                            {
+                                "header": {},
+                                "items": [
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridWidth": 2
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "87e5c951-0ae6-4a71-a38d-843457bdfc0b",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "properties": {},
+                                            "title": "Amount",
+                                            "type": "insight"
+                                        }
+                                    }
+                                ],
+                                "type": "IDashboardLayoutSection"
+                            },
+                            {
+                                "header": {},
+                                "items": [
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridWidth": 2
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "cc722659-8411-4813-be8f-4d7fed0fe6a6",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "properties": {},
+                                            "title": "Win Rate",
+                                            "type": "insight"
+                                        }
+                                    }
+                                ],
+                                "type": "IDashboardLayoutSection"
+                            }
+                        ],
+                        "type": "IDashboardLayout"
+                    },
+                    "version": "2"
+                },
+                "description": "",
+                "id": "2dcc56ff-5ae6-49f1-ba97-9b76000ca4a1",
+                "title": "Header Tests"
+            },
+            {
+                "content": {
+                    "filterContextRef": {
+                        "identifier": {
+                            "id": "882c3455-5c89-4577-a9c2-aa60ca875d19",
+                            "type": "filterContext"
+                        }
+                    },
+                    "layout": {
+                        "sections": [
+                            {
+                                "items": [
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridWidth": 6
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "a40866ab-5272-4f2c-9b5a-dd255b1e5d42",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "properties": {},
+                                            "title": "Column chart",
+                                            "type": "insight"
+                                        }
+                                    }
+                                ],
+                                "type": "IDashboardLayoutSection"
+                            }
+                        ],
+                        "type": "IDashboardLayout"
+                    },
+                    "version": "2"
+                },
+                "description": "",
+                "id": "46dbb7b3-468c-436f-a2ff-85fbf4e8d5ad",
+                "title": "Insight on dashboard"
             },
             {
                 "content": {
@@ -553,6 +729,183 @@
                 "content": {
                     "filterContextRef": {
                         "identifier": {
+                            "id": "9498390c-ffde-4ae9-9a15-12cf4237a623",
+                            "type": "filterContext"
+                        }
+                    },
+                    "layout": {
+                        "sections": [
+                            {
+                                "items": [
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridWidth": 4
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "6010ceaf-b8e9-4cd7-aea8-05da1f68f112",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "properties": {},
+                                            "title": "Headline",
+                                            "type": "insight"
+                                        }
+                                    },
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridWidth": 4
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "6010ceaf-b8e9-4cd7-aea8-05da1f68f112",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "properties": {},
+                                            "title": "Headline",
+                                            "type": "insight"
+                                        }
+                                    },
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridWidth": 4
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "6010ceaf-b8e9-4cd7-aea8-05da1f68f112",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "properties": {},
+                                            "title": "Headline",
+                                            "type": "insight"
+                                        }
+                                    }
+                                ],
+                                "type": "IDashboardLayoutSection"
+                            },
+                            {
+                                "items": [
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridWidth": 12
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_oppcreated_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "3c05e649-7897-4a95-9c75-c043f0c39e14",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "properties": {},
+                                            "title": "Combo chart",
+                                            "type": "insight"
+                                        }
+                                    }
+                                ],
+                                "type": "IDashboardLayoutSection"
+                            },
+                            {
+                                "header": {
+                                    "title": "Last row"
+                                },
+                                "items": [
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridWidth": 2
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "6010ceaf-b8e9-4cd7-aea8-05da1f68f112",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "properties": {},
+                                            "title": "Headline",
+                                            "type": "insight"
+                                        }
+                                    }
+                                ],
+                                "type": "IDashboardLayoutSection"
+                            }
+                        ],
+                        "type": "IDashboardLayout"
+                    },
+                    "version": "2"
+                },
+                "description": "",
+                "id": "b74d3889-655f-4a0d-bc94-15b39d5e1046",
+                "title": "Drag drop and Move"
+            },
+            {
+                "content": {
+                    "filterContextRef": {
+                        "identifier": {
                             "id": "57a1189b-fd26-4648-ad65-969519012d18",
                             "type": "filterContext"
                         }
@@ -811,32 +1164,6 @@
                     "filters": [
                         {
                             "attributeFilter": {
-                                "displayForm": {
-                                    "identifier": {
-                                        "id": "attr.f_stage.stagename",
-                                        "type": "label"
-                                    }
-                                },
-                                "negativeSelection": true,
-                                "attributeElements": {
-                                    "uris": []
-                                },
-                                "localIdentifier": "7506090cc92c423c8a36b9311a1e3d24",
-                                "filterElementsBy": []
-                            }
-                        }
-                    ],
-                    "version": "2"
-                },
-                "description": "",
-                "id": "b2c3b1d2-b990-44a2-bf02-a857747a02b7",
-                "title": "filterContext"
-            },
-            {
-                "content": {
-                    "filters": [
-                        {
-                            "attributeFilter": {
                                 "attributeElements": {
                                     "uris": ["102"]
                                 },
@@ -856,6 +1183,33 @@
                 },
                 "description": "",
                 "id": "041248a2-3393-4dce-ad04-15243d28fcde",
+                "title": "filterContext"
+            },
+            {
+                "content": {
+                    "filters": [],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "04508112-caaf-49d8-9129-a2e30522a2e6",
+                "title": "filterContext"
+            },
+            {
+                "content": {
+                    "filters": [
+                        {
+                            "dateFilter": {
+                                "from": "0",
+                                "granularity": "GDC.time.month",
+                                "to": "0",
+                                "type": "relative"
+                            }
+                        }
+                    ],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "05be0f39-6e7b-4f54-9a05-9c97285fec0a",
                 "title": "filterContext"
             },
             {
@@ -934,6 +1288,15 @@
                 },
                 "description": "",
                 "id": "16145829-9c6a-4350-aa65-a8dee47c4d11",
+                "title": "filterContext"
+            },
+            {
+                "content": {
+                    "filters": [],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "20af3137-bee2-4229-ba30-ed3176d48ace",
                 "title": "filterContext"
             },
             {
@@ -1225,7 +1588,7 @@
                         {
                             "attributeFilter": {
                                 "attributeElements": {
-                                    "uris": ["Exclude"]
+                                    "uris": []
                                 },
                                 "displayForm": {
                                     "identifier": {
@@ -1233,12 +1596,9 @@
                                         "type": "label"
                                     }
                                 },
-                                "negativeSelection": true,
-                                "attributeElements": {
-                                    "uris": []
-                                },
+                                "filterElementsBy": [],
                                 "localIdentifier": "e2ce5bb42c0a4d41ad5cbd3f63a66bad",
-                                "filterElementsBy": []
+                                "negativeSelection": true
                             }
                         }
                     ],
@@ -1298,6 +1658,15 @@
                 },
                 "description": "",
                 "id": "5a8b120d-d482-4884-b3d9-7c96c0ff6510",
+                "title": "filterContext"
+            },
+            {
+                "content": {
+                    "filters": [],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "5ce41625-b97b-4ba6-ab94-2f875b9084e9",
                 "title": "filterContext"
             },
             {
@@ -1432,6 +1801,15 @@
             },
             {
                 "content": {
+                    "filters": [],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "6e83cf53-c8ae-49bc-90ce-3d503a28ade8",
+                "title": "filterContext"
+            },
+            {
+                "content": {
                     "filters": [
                         {
                             "attributeFilter": {
@@ -1463,6 +1841,15 @@
                 },
                 "description": "",
                 "id": "78ebb9a8-63c6-4f86-98f1-958924715d87",
+                "title": "filterContext"
+            },
+            {
+                "content": {
+                    "filters": [],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "7c53a229-bf42-4934-a0bf-34f30163d0c4",
                 "title": "filterContext"
             },
             {
@@ -1539,6 +1926,24 @@
                 "content": {
                     "filters": [
                         {
+                            "dateFilter": {
+                                "from": 0,
+                                "granularity": "GDC.time.month",
+                                "to": 0,
+                                "type": "relative"
+                            }
+                        }
+                    ],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "882c3455-5c89-4577-a9c2-aa60ca875d19",
+                "title": "filterContext"
+            },
+            {
+                "content": {
+                    "filters": [
+                        {
                             "attributeFilter": {
                                 "attributeElements": {
                                     "uris": ["Exclude"]
@@ -1559,6 +1964,15 @@
                 },
                 "description": "",
                 "id": "891bc05a-bcdd-425f-aebe-24da689dfd82",
+                "title": "filterContext"
+            },
+            {
+                "content": {
+                    "filters": [],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "896745fd-d49f-48b3-a80a-f6b9c61388d0",
                 "title": "filterContext"
             },
             {
@@ -1649,6 +2063,15 @@
             },
             {
                 "content": {
+                    "filters": [],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "8d7e0c88-59e1-4298-8d0e-a8e2db8f9c75",
+                "title": "filterContext"
+            },
+            {
+                "content": {
                     "filters": [
                         {
                             "attributeFilter": {
@@ -1727,6 +2150,24 @@
             },
             {
                 "content": {
+                    "filters": [
+                        {
+                            "dateFilter": {
+                                "from": 0,
+                                "granularity": "GDC.time.month",
+                                "to": 0,
+                                "type": "relative"
+                            }
+                        }
+                    ],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "9498390c-ffde-4ae9-9a15-12cf4237a623",
+                "title": "filterContext"
+            },
+            {
+                "content": {
                     "filters": [],
                     "version": "2"
                 },
@@ -1758,6 +2199,33 @@
                 },
                 "description": "",
                 "id": "9b1c3891-21c7-426b-93fe-117658a7ce68",
+                "title": "filterContext"
+            },
+            {
+                "content": {
+                    "filters": [],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "9c82f71b-cb01-4618-a24d-2890d35e76f6",
+                "title": "filterContext"
+            },
+            {
+                "content": {
+                    "filters": [
+                        {
+                            "dateFilter": {
+                                "from": "0",
+                                "granularity": "GDC.time.month",
+                                "to": "0",
+                                "type": "relative"
+                            }
+                        }
+                    ],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "9df611af-1dcc-4bfa-a9cc-441f59011cd3",
                 "title": "filterContext"
             },
             {
@@ -1935,6 +2403,32 @@
             },
             {
                 "content": {
+                    "filters": [
+                        {
+                            "attributeFilter": {
+                                "attributeElements": {
+                                    "uris": []
+                                },
+                                "displayForm": {
+                                    "identifier": {
+                                        "id": "attr.f_stage.stagename",
+                                        "type": "label"
+                                    }
+                                },
+                                "filterElementsBy": [],
+                                "localIdentifier": "7506090cc92c423c8a36b9311a1e3d24",
+                                "negativeSelection": true
+                            }
+                        }
+                    ],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "b2c3b1d2-b990-44a2-bf02-a857747a02b7",
+                "title": "filterContext"
+            },
+            {
+                "content": {
                     "filters": [],
                     "version": "2"
                 },
@@ -1988,6 +2482,15 @@
             },
             {
                 "content": {
+                    "filters": [],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "b9af8514-10e7-492d-9ec6-dbbc5ff8f3f2",
+                "title": "filterContext"
+            },
+            {
+                "content": {
                     "filters": [
                         {
                             "attributeFilter": {
@@ -2036,6 +2539,24 @@
                 },
                 "description": "",
                 "id": "c0bb3cb8-73de-4008-a2e6-c6e4e0c9423f",
+                "title": "filterContext"
+            },
+            {
+                "content": {
+                    "filters": [
+                        {
+                            "dateFilter": {
+                                "from": "0",
+                                "granularity": "GDC.time.month",
+                                "to": "0",
+                                "type": "relative"
+                            }
+                        }
+                    ],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "c4d17586-73c4-440a-9977-f25baed90d88",
                 "title": "filterContext"
             },
             {
@@ -2157,18 +2678,18 @@
                     "filters": [
                         {
                             "attributeFilter": {
+                                "attributeElements": {
+                                    "uris": []
+                                },
                                 "displayForm": {
                                     "identifier": {
                                         "id": "label.f_stage.stagename.order",
                                         "type": "label"
                                     }
                                 },
-                                "negativeSelection": true,
-                                "attributeElements": {
-                                    "uris": []
-                                },
+                                "filterElementsBy": [],
                                 "localIdentifier": "e2ce5bb42c0a4d41ad5cbd3f63a66bad",
-                                "filterElementsBy": []
+                                "negativeSelection": true
                             }
                         }
                     ],
@@ -2294,6 +2815,15 @@
                 },
                 "description": "",
                 "id": "f150b255-10a7-4d31-9a66-3e6e811709f9",
+                "title": "filterContext"
+            },
+            {
+                "content": {
+                    "filters": [],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "f1a89086-83ee-438a-999c-f3fce412ac75",
                 "title": "filterContext"
             },
             {
@@ -2507,6 +3037,64 @@
                 "description": "Combo chart",
                 "id": "3c05e649-7897-4a95-9c75-c043f0c39e14",
                 "title": "Combo chart"
+            },
+            {
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "best_case",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "2081f308ca234c069224ed6e06de9f17",
+                                        "title": "Best Case"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "e519fa2a-86c3-4e32-8313-0c03062348j3",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "827809c282fc429ca02794a68c43d544",
+                                        "title": "Won"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "secondary_measures"
+                        }
+                    ],
+                    "filters": [],
+                    "properties": {},
+                    "sorts": [],
+                    "version": "2",
+                    "visualizationUrl": "local:headline"
+                },
+                "description": "",
+                "id": "6010ceaf-b8e9-4cd7-aea8-05da1f68f112",
+                "title": "Headline"
             },
             {
                 "content": {
@@ -3228,21 +3816,21 @@
                             "items": [
                                 {
                                     "measure": {
-                                        "localIdentifier": "2af0d07e528e48e6851fac4bc4a53f5a",
                                         "definition": {
                                             "measureDefinition": {
+                                                "aggregation": "sum",
+                                                "filters": [],
                                                 "item": {
                                                     "identifier": {
                                                         "id": "f_opportunitysnapshot.f_amount",
                                                         "type": "fact"
                                                     }
-                                                },
-                                                "aggregation": "sum",
-                                                "filters": []
+                                                }
                                             }
                                         },
-                                        "title": "Sum of Amount",
-                                        "format": "#,##0.00"
+                                        "format": "#,##0.00",
+                                        "localIdentifier": "2af0d07e528e48e6851fac4bc4a53f5a",
+                                        "title": "Sum of Amount"
                                     }
                                 }
                             ],
@@ -3252,13 +3840,13 @@
                             "items": [
                                 {
                                     "attribute": {
-                                        "localIdentifier": "412214f4a680443d87cb0e1bacfebc16",
                                         "displayForm": {
                                             "identifier": {
                                                 "id": "attr.f_stage.stagename",
                                                 "type": "label"
                                             }
-                                        }
+                                        },
+                                        "localIdentifier": "412214f4a680443d87cb0e1bacfebc16"
                                     }
                                 }
                             ],
@@ -3280,6 +3868,7 @@
                             }
                         }
                     ],
+                    "properties": {},
                     "sorts": [
                         {
                             "attributeSortItem": {
@@ -3288,9 +3877,8 @@
                             }
                         }
                     ],
-                    "properties": {},
-                    "visualizationUrl": "local:table",
-                    "version": "2"
+                    "version": "2",
+                    "visualizationUrl": "local:table"
                 },
                 "description": "Table with stage name and atribute filter",
                 "id": "fbcca86f-c473-446b-b316-eb4f4e5de909",

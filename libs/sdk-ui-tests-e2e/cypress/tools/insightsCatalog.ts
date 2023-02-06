@@ -36,7 +36,7 @@ export class InsightsCatalog {
     searchText(text: string) {
         this.clearSearch();
         cy.get(this.getElementSelector(".gd-input-field")).should("exist");
-        cy.get(this.getElementSelector(".gd-input-field")).type(text, { delay: 20 });
+        cy.get(this.getElementSelector(".gd-input-field")).type(text, { delay: 50 });
         this.waitForCatalogReload();
         return this;
     }
@@ -82,5 +82,12 @@ export class InsightsCatalog {
         cy.get(this.getElementSelector(".s-visualization-list-no-data-message")).should(
             expect ? "be.visible" : "not.exist",
         );
+    }
+
+    hasNoDataMessage() {
+        cy.get(this.getElementSelector(".s-visualization-list-no-data-message"))
+            .contains("No insight matched.")
+            .should("exist");
+        return this;
     }
 }

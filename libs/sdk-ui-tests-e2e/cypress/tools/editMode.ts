@@ -65,4 +65,9 @@ export class EditMode {
         cy.get(".s-discard_changes").click();
         return this;
     }
+
+    closeDiscardChange() {
+        cy.get(".s-dialog-close-button").click();
+        return this;
+    }
 }
