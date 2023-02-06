@@ -1,12 +1,12 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import {
     IWorkspaceSettings,
     IWorkspaceSettingsService,
     IUserWorkspaceSettings,
-    isUnexpectedError,
 } from "@gooddata/sdk-backend-spi";
+import { v4 as uuidv4 } from "uuid";
 import { ISettings } from "@gooddata/sdk-model";
-import { TigerAuthenticatedCallGuard } from "../../../types";
+import { TigerAuthenticatedCallGuard, TigerSettingsType } from "../../../types";
 import { TigerFeaturesService, pickContext } from "../../features";
 import { DefaultUiSettings, DefaultUserSettings } from "../../uiSettings";
 import { convertApiError } from "../../../utils/errorHandling";
@@ -39,36 +39,37 @@ export class TigerWorkspaceSettings implements IWorkspaceSettingsService {
     }
 
     public async setLocale(locale: string): Promise<void> {
-        return this.setSetting("locale", { value: locale });
+        return this.setSetting("LOCALE", { value: locale });
     }
 
-    private async setSetting(id: string, content: any): Promise<void> {
-        // Currently it is necessary to check existence of required setting
-        // since PUT does not support creation of non-existing setting.
-        // It can be simplified to Update method once NAS-4291 is implemented
+    private async setSetting(type: TigerSettingsType, content: any): Promise<void> {
         try {
-            await this.getSetting(id);
-            await this.updateSetting(id, content);
-        } catch (error: any) {
-            if (isUnexpectedError(error)) {
-                // if such settings is not defined
-                await this.createSetting(id, content);
-                return;
+            const { data } = await this.getSettingByType(type);
+            const settings = data.data;
+
+            if (settings.length === 0) {
+                const id = uuidv4();
+                await this.createSetting(type, id, content);
+            } else {
+                const record = settings[0];
+                await this.updateSetting(record.attributes?.type ?? type, record.id, content);
             }
+        } catch (error: any) {
             throw convertApiError(error);
         }
     }
 
-    private async getSetting(id: string): Promise<any> {
+    private async getSettingByType(type: TigerSettingsType) {
         return this.authCall((client) =>
-            client.entities.getEntityWorkspaceSettings({
+            client.entities.getAllEntitiesWorkspaceSettings({
                 workspaceId: this.workspace,
-                objectId: id,
+                origin: "NATIVE",
+                filter: `type==${type}`,
             }),
         );
     }
 
-    private async updateSetting(id: string, content: any): Promise<any> {
+    private async updateSetting(type: TigerSettingsType, id: string, content: any): Promise<any> {
         return this.authCall(async (client) =>
             client.entities.updateEntityWorkspaceSettings({
                 workspaceId: this.workspace,
@@ -79,6 +80,7 @@ export class TigerWorkspaceSettings implements IWorkspaceSettingsService {
                         id,
                         attributes: {
                             content,
+                            type,
                         },
                     },
                 },
@@ -86,7 +88,7 @@ export class TigerWorkspaceSettings implements IWorkspaceSettingsService {
         );
     }
 
-    private async createSetting(id: string, content: any): Promise<any> {
+    private async createSetting(type: TigerSettingsType, id: string, content: any): Promise<any> {
         return this.authCall(async (client) =>
             client.entities.createEntityWorkspaceSettings({
                 workspaceId: this.workspace,
@@ -96,6 +98,7 @@ export class TigerWorkspaceSettings implements IWorkspaceSettingsService {
                         id,
                         attributes: {
                             content,
+                            type,
                         },
                     },
                 },
