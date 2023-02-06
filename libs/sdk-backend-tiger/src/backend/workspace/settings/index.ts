@@ -4,16 +4,21 @@ import {
     IWorkspaceSettingsService,
     IUserWorkspaceSettings,
 } from "@gooddata/sdk-backend-spi";
-import { v4 as uuidv4 } from "uuid";
 import { ISettings } from "@gooddata/sdk-model";
+
 import { TigerAuthenticatedCallGuard, TigerSettingsType } from "../../../types";
 import { TigerFeaturesService, pickContext } from "../../features";
 import { DefaultUiSettings, DefaultUserSettings } from "../../uiSettings";
-import { convertApiError } from "../../../utils/errorHandling";
 import { unwrapSettingContent } from "../../../convertors/fromBackend/SettingsConverter";
+import { TigerSettingsService } from "../../settings";
 
-export class TigerWorkspaceSettings implements IWorkspaceSettingsService {
-    constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
+export class TigerWorkspaceSettings
+    extends TigerSettingsService<IWorkspaceSettings>
+    implements IWorkspaceSettingsService
+{
+    constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {
+        super();
+    }
 
     public getSettings(): Promise<IWorkspaceSettings> {
         return this.authCall(async (client) => {
@@ -38,28 +43,7 @@ export class TigerWorkspaceSettings implements IWorkspaceSettingsService {
         return getSettingsForCurrentUser(this.authCall, this.workspace);
     }
 
-    public async setLocale(locale: string): Promise<void> {
-        return this.setSetting("LOCALE", { value: locale });
-    }
-
-    private async setSetting(type: TigerSettingsType, content: any): Promise<void> {
-        try {
-            const { data } = await this.getSettingByType(type);
-            const settings = data.data;
-
-            if (settings.length === 0) {
-                const id = uuidv4();
-                await this.createSetting(type, id, content);
-            } else {
-                const record = settings[0];
-                await this.updateSetting(record.attributes?.type ?? type, record.id, content);
-            }
-        } catch (error: any) {
-            throw convertApiError(error);
-        }
-    }
-
-    private async getSettingByType(type: TigerSettingsType) {
+    protected async getSettingByType(type: TigerSettingsType) {
         return this.authCall((client) =>
             client.entities.getAllEntitiesWorkspaceSettings({
                 workspaceId: this.workspace,
@@ -69,7 +53,7 @@ export class TigerWorkspaceSettings implements IWorkspaceSettingsService {
         );
     }
 
-    private async updateSetting(type: TigerSettingsType, id: string, content: any): Promise<any> {
+    protected async updateSetting(type: TigerSettingsType, id: string, content: any): Promise<any> {
         return this.authCall(async (client) =>
             client.entities.updateEntityWorkspaceSettings({
                 workspaceId: this.workspace,
@@ -88,7 +72,7 @@ export class TigerWorkspaceSettings implements IWorkspaceSettingsService {
         );
     }
 
-    private async createSetting(type: TigerSettingsType, id: string, content: any): Promise<any> {
+    protected async createSetting(type: TigerSettingsType, id: string, content: any): Promise<any> {
         return this.authCall(async (client) =>
             client.entities.createEntityWorkspaceSettings({
                 workspaceId: this.workspace,

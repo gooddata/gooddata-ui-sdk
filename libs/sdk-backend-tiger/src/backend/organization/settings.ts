@@ -1,19 +1,21 @@
-// (C) 2022 GoodData Corporation
-import { IOrganizationSettingsService, isUnexpectedError } from "@gooddata/sdk-backend-spi";
+// (C) 2022-2023 GoodData Corporation
+import { IOrganizationSettingsService } from "@gooddata/sdk-backend-spi";
 import { ISettings, IWhiteLabeling } from "@gooddata/sdk-model";
-import { convertApiError } from "../../utils/errorHandling";
-import { TigerAuthenticatedCallGuard } from "../../types";
+
+import { TigerAuthenticatedCallGuard, TigerSettingsType } from "../../types";
 import { unwrapSettingContent } from "../../convertors/fromBackend/SettingsConverter";
+import { TigerSettingsService } from "../settings";
 
-export class OrganizationSettingsService implements IOrganizationSettingsService {
-    constructor(public readonly authCall: TigerAuthenticatedCallGuard) {}
-
-    public async setWhiteLabeling(whiteLabeling: IWhiteLabeling): Promise<void> {
-        return this.setSetting("whiteLabeling", whiteLabeling);
+export class OrganizationSettingsService
+    extends TigerSettingsService<ISettings>
+    implements IOrganizationSettingsService
+{
+    constructor(public readonly authCall: TigerAuthenticatedCallGuard) {
+        super();
     }
 
-    public async setLocale(locale: string): Promise<void> {
-        return this.setSetting("locale", { value: locale });
+    public async setWhiteLabeling(whiteLabeling: IWhiteLabeling): Promise<void> {
+        return this.setSetting("WHITE_LABELING", whiteLabeling);
     }
 
     public async getSettings(): Promise<ISettings> {
@@ -29,32 +31,15 @@ export class OrganizationSettingsService implements IOrganizationSettingsService
         }, {});
     }
 
-    private async setSetting(id: string, content: any): Promise<any> {
-        // Currently it is necessary to check existence of required setting
-        // since PUT does not support creation of non-existing setting.
-        // It can be simplified to Update method once NAS-4291 is implemented
-        try {
-            await this.getSetting(id);
-            await this.updateSetting(id, content);
-        } catch (error: any) {
-            if (isUnexpectedError(error)) {
-                // if such settings is not defined
-                await this.createSetting(id, content);
-                return;
-            }
-            throw convertApiError(error);
-        }
-    }
-
-    private async getSetting(id: string): Promise<any> {
+    protected async getSettingByType(type: TigerSettingsType) {
         return this.authCall((client) =>
-            client.entities.getEntityOrganizationSettings({
-                id,
+            client.entities.getAllEntitiesOrganizationSettings({
+                filter: `type==${type}`,
             }),
         );
     }
 
-    private async updateSetting(id: string, content: any): Promise<any> {
+    protected async updateSetting(type: TigerSettingsType, id: string, content: any): Promise<any> {
         return this.authCall((client) =>
             client.entities.updateEntityOrganizationSettings({
                 id,
@@ -64,6 +49,7 @@ export class OrganizationSettingsService implements IOrganizationSettingsService
                         id,
                         attributes: {
                             content,
+                            type,
                         },
                     },
                 },
@@ -71,7 +57,7 @@ export class OrganizationSettingsService implements IOrganizationSettingsService
         );
     }
 
-    private async createSetting(id: string, content: any): Promise<any> {
+    protected async createSetting(type: TigerSettingsType, id: string, content: any): Promise<any> {
         return this.authCall((client) =>
             client.entities.createEntityOrganizationSettings({
                 jsonApiOrganizationSettingInDocument: {
@@ -80,6 +66,7 @@ export class OrganizationSettingsService implements IOrganizationSettingsService
                         id,
                         attributes: {
                             content,
+                            type,
                         },
                     },
                 },
