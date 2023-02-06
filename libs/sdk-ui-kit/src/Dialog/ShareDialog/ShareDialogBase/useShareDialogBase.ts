@@ -6,8 +6,7 @@ import {
     DialogModeType,
     GranteeItem,
     IGranteeGroupAll,
-    IGranularGranteeGroup,
-    IGranularGranteeUser,
+    IGranularGrantee,
     isGranteeUserInactive,
     isGranularGrantee,
     IShareDialogBaseProps,
@@ -25,6 +24,7 @@ interface IUseShareDialogStateReturnType {
     grantees: GranteeItem[];
     granteesToAdd: GranteeItem[];
     granteesToDelete: GranteeItem[];
+    granteesToUpdate: GranteeItem[];
     isUnderLenientControlNow: boolean;
     isLockedNow: boolean;
     onLoadGrantees: (grantees: GranteeItem[], groupAll: IGranteeGroupAll | undefined) => void;
@@ -51,11 +51,10 @@ const useShareDialogState = (
     const [grantees, setGrantees] = useState<GranteeItem[]>([]);
     const [granteesToAdd, setGranteesToAdd] = useState<GranteeItem[]>([]);
     const [granteesToDelete, setGranteesToDelete] = useState<GranteeItem[]>([]);
+    const [granteesToUpdate, setGranteesToUpdate] = useState<GranteeItem[]>([]);
     const [isUnderLenientControlNow, setUnderLenientControlNow] = useState(isUnderLenientControl);
     const [isLockedNow, setLockedNow] = useState(isLocked);
-    const [originalGranularGrantees, setOriginalGranularGrantees] = useState<
-        (IGranularGranteeUser | IGranularGranteeGroup)[]
-    >([]);
+    const [originalGranularGrantees, setOriginalGranularGrantees] = useState<IGranularGrantee[]>([]);
 
     const onGranularGranteeAddChange = useCallback((grantee: GranteeItem) => {
         setGranteesToAdd((state) => state.map((s) => (areObjRefsEqual(s.id, grantee.id) ? grantee : s)));
@@ -63,7 +62,7 @@ const useShareDialogState = (
 
     const onSharedGranteeDelete = useCallback((grantee: GranteeItem) => {
         setGranteesToDelete((state) => [...state, grantee]);
-        setGrantees((state) => state.map((s) => (areObjRefsEqual(s.id, grantee.id) ? grantee : s)));
+        setGranteesToUpdate((state) => state.filter((s) => !areObjRefsEqual(s.id, grantee.id)));
     }, []);
 
     const onAddedGranteeDelete = useCallback((grantee: GranteeItem) => {
@@ -75,18 +74,19 @@ const useShareDialogState = (
     }, []);
 
     const onGranularGranteeShareChange = useCallback(
-        (grantee: IGranularGranteeUser | IGranularGranteeGroup) => {
+        (grantee: IGranularGrantee) => {
             const originalGrantee = originalGranularGrantees.find((g) => areObjRefsEqual(g.id, grantee.id));
-            const hasChangedPermissions = !isEqual(originalGrantee.permissions, grantee.permissions);
+            const hasChangedPermissions = !isEqual(originalGrantee?.permissions, grantee.permissions);
 
-            setGranteesToAdd((state) => {
-                const filteredGranteesToAdd = state.filter((s) => !areObjRefsEqual(s.id, grantee.id));
+            setGranteesToUpdate((state) => {
+                const filteredUpdatedGrantees = state.filter((s) => !areObjRefsEqual(s.id, grantee.id));
+                const isAlreadyUpdated = filteredUpdatedGrantees.length !== state.length;
 
-                if (hasChangedPermissions) {
-                    return [...filteredGranteesToAdd, grantee];
+                if (isAlreadyUpdated && !hasChangedPermissions) {
+                    return filteredUpdatedGrantees;
                 }
 
-                return filteredGranteesToAdd;
+                return [...filteredUpdatedGrantees, grantee];
             });
             setGrantees((state) => state.map((s) => (areObjRefsEqual(s.id, grantee.id) ? grantee : s)));
         },
@@ -129,6 +129,7 @@ const useShareDialogState = (
         grantees,
         granteesToAdd,
         granteesToDelete,
+        granteesToUpdate,
         onLoadGrantees,
         onSharedGranteeDelete,
         onAddedGranteeDelete,
@@ -186,6 +187,7 @@ export const useShareDialogBase = (props: IShareDialogBaseProps): IUseShareDialo
         grantees,
         granteesToAdd,
         granteesToDelete,
+        granteesToUpdate,
         onLoadGrantees,
         onSharedGranteeDelete,
         onAddedGranteeDelete,
@@ -214,7 +216,7 @@ export const useShareDialogBase = (props: IShareDialogBaseProps): IUseShareDialo
 
     const isShareDialogDirty = useMemo(() => {
         if (areGranularPermissionsSupported) {
-            return granteesToAdd.length !== 0 || granteesToDelete.length !== 0;
+            return granteesToUpdate.length !== 0 || granteesToDelete.length !== 0;
         } else {
             return (
                 granteesToDelete.length !== 0 ||
@@ -223,7 +225,7 @@ export const useShareDialogBase = (props: IShareDialogBaseProps): IUseShareDialo
             );
         }
     }, [
-        granteesToAdd,
+        granteesToUpdate,
         granteesToDelete,
         isLocked,
         isLockedNow,
@@ -240,9 +242,11 @@ export const useShareDialogBase = (props: IShareDialogBaseProps): IUseShareDialo
         if (!isShareDialogDirty) {
             return;
         }
-        onSubmit(grantees, granteesToAdd, granteesToDelete, isUnderLenientControlNow, isLockedNow);
+        const allGranteesToAdd = [...granteesToAdd, ...granteesToUpdate];
+        onSubmit(grantees, allGranteesToAdd, granteesToDelete, isUnderLenientControlNow, isLockedNow);
     }, [
         grantees,
+        granteesToUpdate,
         granteesToAdd,
         granteesToDelete,
         isShareDialogDirty,
@@ -255,9 +259,11 @@ export const useShareDialogBase = (props: IShareDialogBaseProps): IUseShareDialo
         if (!isAddDialogDirty) {
             return;
         }
-        onSubmit(grantees, granteesToAdd, granteesToDelete, isUnderLenientControlNow, isLockedNow);
+        const allGranteesToAdd = [...granteesToAdd, ...granteesToUpdate];
+        onSubmit(grantees, allGranteesToAdd, granteesToDelete, isUnderLenientControlNow, isLockedNow);
     }, [
         grantees,
+        granteesToUpdate,
         granteesToAdd,
         granteesToDelete,
         isAddDialogDirty,
