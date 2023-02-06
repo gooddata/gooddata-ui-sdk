@@ -366,7 +366,13 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
     }
 
     public getDashboardPermissions(): Promise<IDashboardPermissions> {
-        return Promise.resolve({ canEditDashboard: true, canShareDashboard: true, canViewDashboard: true });
+        return Promise.resolve({
+            canEditDashboard: true,
+            canEditLockedDashboard: true,
+            canShareDashboard: true,
+            canShareLockedDashboard: true,
+            canViewDashboard: true,
+        });
     }
 
     public validateDashboardsExistence(_dashboardRefs: ObjRef[]): Promise<IExistingDashboard[]> {

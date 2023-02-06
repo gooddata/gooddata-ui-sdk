@@ -371,8 +371,27 @@ export interface ISharedObjectUnderLenientControlProps {
 /**
  * @internal
  */
-export interface IGranularPermissionTypeItem {
+export interface IGranteePermissionsPossibility {
+    enabled: boolean;
+    tooltip?: string;
+}
+
+/**
+ * @internal
+ */
+export interface IGranularPermissionTypeItem extends IGranteePermissionsPossibility {
     id: AccessGranularPermission;
-    disabled: boolean;
     hidden: boolean;
+}
+
+/**
+ * @internal
+ */
+export interface IGranteePermissionsPossibilities {
+    remove: IGranteePermissionsPossibility;
+    assign: {
+        items: IGranularPermissionTypeItem[];
+        effective: AccessGranularPermission;
+    };
+    change: IGranteePermissionsPossibility;
 }

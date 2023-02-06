@@ -9,8 +9,9 @@ import { GranteeItem, IGranularGranteeUser } from "../types";
 import { getGranteeItemTestId, getGranteeLabel } from "../utils";
 import { CurrentUserPermissions } from "../../types";
 
-import { GranularPermissionsDropdown } from "./GranularPermissionsDropdown";
+import { GranularPermissionsDropdownWithBubble } from "./GranularPermissionsDropdown";
 import { usePermissionsDropdownState } from "./usePermissionsDropdownState";
+import { getGranteePossibilities } from "./permissionsLogic";
 
 interface IGranularGranteeUserItemProps {
     grantee: IGranularGranteeUser;
@@ -39,16 +40,24 @@ export const GranularGranteeUserItem: React.FC<IGranularGranteeUserItemProps> = 
 
     const renderSubtitle = useMemo(() => email && email !== label, [email, label]);
 
+    const granteePossibilities = useMemo(
+        () => getGranteePossibilities(grantee, currentUserPermissions, isDashboardLocked),
+        [grantee, currentUserPermissions, isDashboardLocked],
+    );
+
     return (
         <div className={itemClassName}>
-            <GranularPermissionsDropdown
-                currentUserPermissions={currentUserPermissions}
-                isDashboardLocked={isDashboardLocked}
+            <GranularPermissionsDropdownWithBubble
                 grantee={grantee}
+                granteePossibilities={granteePossibilities}
                 isDropdownOpen={isDropdownOpen}
                 toggleDropdown={toggleDropdown}
                 onChange={onChange}
                 onDelete={onDelete}
+                isDropdownDisabled={!granteePossibilities.change.enabled}
+                bubbleTextId={granteePossibilities.change.tooltip}
+                className="gd-grantee-granular-permission"
+                triggerClassName="gd-grantee-granular-permission-bubble-trigger"
             />
             <div className="gd-grantee-content">
                 <div className="gd-grantee-content-label">{label}</div>

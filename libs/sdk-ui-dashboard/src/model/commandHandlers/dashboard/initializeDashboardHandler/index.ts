@@ -296,7 +296,9 @@ function* initializeNewDashboard(
             dashboardPermissionsActions.setDashboardPermissions({
                 canViewDashboard: true,
                 canShareDashboard: true,
+                canShareLockedDashboard: true,
                 canEditDashboard: true,
+                canEditLockedDashboard: true,
             }),
         ],
         "@@GDC.DASH/BATCH.INIT.NEW",

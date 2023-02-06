@@ -13,7 +13,9 @@ import {
 
 export const defaultUserPermissions: CurrentUserPermissions = {
     canEditDashboard: true,
+    canEditLockedDashboard: true,
     canShareDashboard: true,
+    canShareLockedDashboard: true,
     canViewDashboard: true,
 };
 

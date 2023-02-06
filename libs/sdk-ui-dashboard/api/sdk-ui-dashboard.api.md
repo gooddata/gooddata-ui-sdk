@@ -5701,6 +5701,9 @@ export const selectCanCreateVisualization: OutputSelector<DashboardState, boolea
 export const selectCanEditDashboardPermission: OutputSelector<DashboardState, boolean, (res: IDashboardPermissions) => boolean>;
 
 // @public
+export const selectCanEditLockedDashboardPermission: OutputSelector<DashboardState, boolean, (res: IDashboardPermissions) => boolean>;
+
+// @public
 export const selectCanExecuteRaw: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
 
 // @public
@@ -5744,6 +5747,9 @@ export const selectCanRefreshData: OutputSelector<DashboardState, boolean, (res:
 
 // @public
 export const selectCanShareDashboardPermission: OutputSelector<DashboardState, boolean, (res: IDashboardPermissions) => boolean>;
+
+// @public
+export const selectCanShareLockedDashboardPermission: OutputSelector<DashboardState, boolean, (res: IDashboardPermissions) => boolean>;
 
 // @public
 export const selectCanUploadNonProductionCSV: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;

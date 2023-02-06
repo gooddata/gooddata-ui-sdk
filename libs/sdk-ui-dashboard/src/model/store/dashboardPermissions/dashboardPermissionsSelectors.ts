@@ -46,10 +46,28 @@ export const selectCanShareDashboardPermission = createSelector(selectDashboardP
 });
 
 /**
+ * Returns whether the current user has permissions to share a locked dashboard.
+ *
+ * @public
+ */
+export const selectCanShareLockedDashboardPermission = createSelector(selectDashboardPermissions, (state) => {
+    return state?.canShareLockedDashboard ?? false;
+});
+
+/**
  * Returns whether the current user has permissions to edit dashboard.
  *
  * @public
  */
 export const selectCanEditDashboardPermission = createSelector(selectDashboardPermissions, (state) => {
     return state?.canEditDashboard ?? false;
+});
+
+/**
+ * Returns whether the current user has permissions to edit locked dashboard.
+ *
+ * @public
+ */
+export const selectCanEditLockedDashboardPermission = createSelector(selectDashboardPermissions, (state) => {
+    return state?.canEditLockedDashboard ?? false;
 });

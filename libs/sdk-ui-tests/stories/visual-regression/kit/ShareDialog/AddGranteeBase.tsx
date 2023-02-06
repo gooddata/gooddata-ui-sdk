@@ -5,7 +5,7 @@ import { action } from "@storybook/addon-actions";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
 import { UiKit } from "../../../_infra/storyGroups";
 import { wrapWithTheme } from "../../themeWrapper";
-import { AddGranteeBase, ComponentLabelsProvider } from "@gooddata/sdk-ui-kit";
+import { AddGranteeBase, ComponentLabelsProvider, IAffectedSharedObject } from "@gooddata/sdk-ui-kit";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "../styles/goodstrap.scss";
@@ -16,7 +16,24 @@ import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { idRef, uriRef } from "@gooddata/sdk-model";
 import { LabelsMock } from "./LabelsMock";
 
-const sharedObjectRef = idRef("object");
+const sharedObject: IAffectedSharedObject = {
+    ref: idRef("object"),
+    shareStatus: "shared",
+    owner: {
+        id: idRef("owner"),
+        type: "user",
+        name: "owner",
+        isOwner: true,
+        isCurrentUser: true,
+        status: "Active",
+    },
+    isLocked: false,
+    isUnderLenientControl: false,
+    isLockingSupported: true,
+    isLeniencyControlSupported: true,
+    isMetadataObjectLockingSupported: true,
+    areGranularPermissionsSupported: false,
+};
 
 const EmptySelectionExample = (): JSX.Element => {
     const workspace = "foo";
@@ -38,7 +55,7 @@ const EmptySelectionExample = (): JSX.Element => {
                             onSubmit={action("onSubmit")}
                             onBackClick={action("onBackClick")}
                             currentUserPermissions={defaultUserPermissions}
-                            sharedObjectRef={sharedObjectRef}
+                            sharedObject={sharedObject}
                         />
                     </ComponentLabelsProvider>
                 </WorkspaceProvider>
@@ -67,7 +84,7 @@ const EmptyAvailableItemsExample = (): JSX.Element => {
                             onSubmit={action("onSubmit")}
                             onBackClick={action("onBackClick")}
                             currentUserPermissions={defaultUserPermissions}
-                            sharedObjectRef={sharedObjectRef}
+                            sharedObject={sharedObject}
                         />
                     </ComponentLabelsProvider>
                 </WorkspaceProvider>
@@ -96,8 +113,10 @@ const GranularItemsExample = (): JSX.Element => {
                             onSubmit={action("onSubmit")}
                             onBackClick={action("onBackClick")}
                             currentUserPermissions={defaultUserPermissions}
-                            sharedObjectRef={sharedObjectRef}
-                            areGranularPermissionsSupported={true}
+                            sharedObject={{
+                                ...sharedObject,
+                                areGranularPermissionsSupported: true,
+                            }}
                         />
                     </ComponentLabelsProvider>
                 </WorkspaceProvider>
@@ -126,7 +145,7 @@ const SelectedItemsExample = (): JSX.Element => {
                             onSubmit={action("onSubmit")}
                             onBackClick={action("onBackClick")}
                             currentUserPermissions={defaultUserPermissions}
-                            sharedObjectRef={sharedObjectRef}
+                            sharedObject={sharedObject}
                         />
                     </ComponentLabelsProvider>
                 </WorkspaceProvider>

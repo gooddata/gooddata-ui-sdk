@@ -619,7 +619,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 ([] as Array<TigerDashboardPermissionType>);
 
             return buildDashboardPermissions(dashboardPermissions);
-        } catch (_e) {
+        } catch {
             return buildDashboardPermissions([]);
         }
     };
