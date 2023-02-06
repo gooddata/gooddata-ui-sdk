@@ -236,6 +236,25 @@ export interface DeclarativeAnalyticalDashboard {
     permissions?: Array<DeclarativeAnalyticalDashboardPermission>;
 }
 /**
+ *
+ * @export
+ * @interface DeclarativeAnalyticalDashboardExtension
+ */
+export interface DeclarativeAnalyticalDashboardExtension {
+    /**
+     * Analytical dashboard ID.
+     * @type {string}
+     * @memberof DeclarativeAnalyticalDashboardExtension
+     */
+    id: string;
+    /**
+     * A list of permissions.
+     * @type {Array<DeclarativeAnalyticalDashboardPermission>}
+     * @memberof DeclarativeAnalyticalDashboardExtension
+     */
+    permissions: Array<DeclarativeAnalyticalDashboardPermission>;
+}
+/**
  * Analytical dashboard permission.
  * @export
  * @interface DeclarativeAnalyticalDashboardPermission
@@ -313,6 +332,12 @@ export interface DeclarativeAnalyticsLayer {
      * @memberof DeclarativeAnalyticsLayer
      */
     dashboardPlugins?: Array<DeclarativeDashboardPlugin>;
+    /**
+     * A list of dashboard permissions assigned to a related dashboard.
+     * @type {Array<DeclarativeAnalyticalDashboardExtension>}
+     * @memberof DeclarativeAnalyticsLayer
+     */
+    analyticalDashboardExtensions?: Array<DeclarativeAnalyticalDashboardExtension>;
 }
 /**
  * A dataset attribute.
@@ -1229,7 +1254,27 @@ export interface DeclarativeSetting {
      * @memberof DeclarativeSetting
      */
     content?: object;
+    /**
+     * Type of the setting.
+     * @type {string}
+     * @memberof DeclarativeSetting
+     */
+    type?: DeclarativeSettingTypeEnum;
 }
+
+export const DeclarativeSettingTypeEnum = {
+    TIMEZONE: "TIMEZONE",
+    ACTIVE_THEME: "ACTIVE_THEME",
+    ACTIVE_COLOR_PALETTE: "ACTIVE_COLOR_PALETTE",
+    WHITE_LABELING: "WHITE_LABELING",
+    LOCALE: "LOCALE",
+    FORMAT_LOCALE: "FORMAT_LOCALE",
+    MAPBOX_TOKEN: "MAPBOX_TOKEN",
+} as const;
+
+export type DeclarativeSettingTypeEnum =
+    typeof DeclarativeSettingTypeEnum[keyof typeof DeclarativeSettingTypeEnum];
+
 /**
  *
  * @export
@@ -1451,6 +1496,19 @@ export type DeclarativeUserGroupPermissionNameEnum =
     typeof DeclarativeUserGroupPermissionNameEnum[keyof typeof DeclarativeUserGroupPermissionNameEnum];
 
 /**
+ * Definition of permissions associated with a user-group.
+ * @export
+ * @interface DeclarativeUserGroupPermissions
+ */
+export interface DeclarativeUserGroupPermissions {
+    /**
+     *
+     * @type {Array<DeclarativeUserGroupPermission>}
+     * @memberof DeclarativeUserGroupPermissions
+     */
+    permissions?: Array<DeclarativeUserGroupPermission>;
+}
+/**
  * Declarative form of userGroups and its properties.
  * @export
  * @interface DeclarativeUserGroups
@@ -1490,6 +1548,19 @@ export const DeclarativeUserPermissionNameEnum = {
 export type DeclarativeUserPermissionNameEnum =
     typeof DeclarativeUserPermissionNameEnum[keyof typeof DeclarativeUserPermissionNameEnum];
 
+/**
+ * Definition of permissions associated with a user.
+ * @export
+ * @interface DeclarativeUserPermissions
+ */
+export interface DeclarativeUserPermissions {
+    /**
+     *
+     * @type {Array<DeclarativeUserPermission>}
+     * @memberof DeclarativeUserPermissions
+     */
+    permissions?: Array<DeclarativeUserPermission>;
+}
 /**
  * Declarative form of users and its properties.
  * @export
@@ -3197,10 +3268,10 @@ export interface JsonApiColorPaletteIn {
     id: string;
     /**
      *
-     * @type {JsonApiColorPaletteInAttributes}
+     * @type {JsonApiColorPaletteOutAttributes}
      * @memberof JsonApiColorPaletteIn
      */
-    attributes: JsonApiColorPaletteInAttributes;
+    attributes: JsonApiColorPaletteOutAttributes;
 }
 
 export const JsonApiColorPaletteInTypeEnum = {
@@ -3210,25 +3281,6 @@ export const JsonApiColorPaletteInTypeEnum = {
 export type JsonApiColorPaletteInTypeEnum =
     typeof JsonApiColorPaletteInTypeEnum[keyof typeof JsonApiColorPaletteInTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiColorPaletteInAttributes
- */
-export interface JsonApiColorPaletteInAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiColorPaletteInAttributes
-     */
-    name: string;
-    /**
-     *
-     * @type {object}
-     * @memberof JsonApiColorPaletteInAttributes
-     */
-    content: object;
-}
 /**
  *
  * @export
@@ -3262,10 +3314,10 @@ export interface JsonApiColorPaletteOut {
     id: string;
     /**
      *
-     * @type {JsonApiColorPaletteInAttributes}
+     * @type {JsonApiColorPaletteOutAttributes}
      * @memberof JsonApiColorPaletteOut
      */
-    attributes: JsonApiColorPaletteInAttributes;
+    attributes: JsonApiColorPaletteOutAttributes;
 }
 
 export const JsonApiColorPaletteOutTypeEnum = {
@@ -3275,6 +3327,25 @@ export const JsonApiColorPaletteOutTypeEnum = {
 export type JsonApiColorPaletteOutTypeEnum =
     typeof JsonApiColorPaletteOutTypeEnum[keyof typeof JsonApiColorPaletteOutTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiColorPaletteOutAttributes
+ */
+export interface JsonApiColorPaletteOutAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiColorPaletteOutAttributes
+     */
+    name: string;
+    /**
+     *
+     * @type {object}
+     * @memberof JsonApiColorPaletteOutAttributes
+     */
+    content: object;
+}
 /**
  *
  * @export
@@ -3333,10 +3404,10 @@ export interface JsonApiColorPaletteOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiColorPaletteInAttributes}
+     * @type {JsonApiColorPaletteOutAttributes}
      * @memberof JsonApiColorPaletteOutWithLinks
      */
-    attributes: JsonApiColorPaletteInAttributes;
+    attributes: JsonApiColorPaletteOutAttributes;
     /**
      *
      * @type {ObjectLinks}
@@ -3437,10 +3508,10 @@ export interface JsonApiCookieSecurityConfigurationIn {
     id: string;
     /**
      *
-     * @type {JsonApiCookieSecurityConfigurationOutAttributes}
+     * @type {JsonApiCookieSecurityConfigurationPatchAttributes}
      * @memberof JsonApiCookieSecurityConfigurationIn
      */
-    attributes?: JsonApiCookieSecurityConfigurationOutAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationPatchAttributes;
 }
 
 export const JsonApiCookieSecurityConfigurationInTypeEnum = {
@@ -3483,10 +3554,10 @@ export interface JsonApiCookieSecurityConfigurationOut {
     id: string;
     /**
      *
-     * @type {JsonApiCookieSecurityConfigurationOutAttributes}
+     * @type {JsonApiCookieSecurityConfigurationPatchAttributes}
      * @memberof JsonApiCookieSecurityConfigurationOut
      */
-    attributes?: JsonApiCookieSecurityConfigurationOutAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationPatchAttributes;
 }
 
 export const JsonApiCookieSecurityConfigurationOutTypeEnum = {
@@ -3496,25 +3567,6 @@ export const JsonApiCookieSecurityConfigurationOutTypeEnum = {
 export type JsonApiCookieSecurityConfigurationOutTypeEnum =
     typeof JsonApiCookieSecurityConfigurationOutTypeEnum[keyof typeof JsonApiCookieSecurityConfigurationOutTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiCookieSecurityConfigurationOutAttributes
- */
-export interface JsonApiCookieSecurityConfigurationOutAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiCookieSecurityConfigurationOutAttributes
-     */
-    lastRotation?: string;
-    /**
-     * Length of interval between automatic rotations expressed in format of ISO 8601 duration
-     * @type {string}
-     * @memberof JsonApiCookieSecurityConfigurationOutAttributes
-     */
-    rotationInterval?: string;
-}
 /**
  *
  * @export
@@ -3554,10 +3606,10 @@ export interface JsonApiCookieSecurityConfigurationPatch {
     id: string;
     /**
      *
-     * @type {JsonApiCookieSecurityConfigurationOutAttributes}
+     * @type {JsonApiCookieSecurityConfigurationPatchAttributes}
      * @memberof JsonApiCookieSecurityConfigurationPatch
      */
-    attributes?: JsonApiCookieSecurityConfigurationOutAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationPatchAttributes;
 }
 
 export const JsonApiCookieSecurityConfigurationPatchTypeEnum = {
@@ -3567,6 +3619,25 @@ export const JsonApiCookieSecurityConfigurationPatchTypeEnum = {
 export type JsonApiCookieSecurityConfigurationPatchTypeEnum =
     typeof JsonApiCookieSecurityConfigurationPatchTypeEnum[keyof typeof JsonApiCookieSecurityConfigurationPatchTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiCookieSecurityConfigurationPatchAttributes
+ */
+export interface JsonApiCookieSecurityConfigurationPatchAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiCookieSecurityConfigurationPatchAttributes
+     */
+    lastRotation?: string;
+    /**
+     * Length of interval between automatic rotations expressed in format of ISO 8601 duration
+     * @type {string}
+     * @memberof JsonApiCookieSecurityConfigurationPatchAttributes
+     */
+    rotationInterval?: string;
+}
 /**
  *
  * @export
@@ -3600,10 +3671,10 @@ export interface JsonApiCspDirectiveIn {
     id: string;
     /**
      *
-     * @type {JsonApiCspDirectiveInAttributes}
+     * @type {JsonApiCspDirectiveOutAttributes}
      * @memberof JsonApiCspDirectiveIn
      */
-    attributes: JsonApiCspDirectiveInAttributes;
+    attributes: JsonApiCspDirectiveOutAttributes;
 }
 
 export const JsonApiCspDirectiveInTypeEnum = {
@@ -3613,19 +3684,6 @@ export const JsonApiCspDirectiveInTypeEnum = {
 export type JsonApiCspDirectiveInTypeEnum =
     typeof JsonApiCspDirectiveInTypeEnum[keyof typeof JsonApiCspDirectiveInTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiCspDirectiveInAttributes
- */
-export interface JsonApiCspDirectiveInAttributes {
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof JsonApiCspDirectiveInAttributes
-     */
-    sources: Array<string>;
-}
 /**
  *
  * @export
@@ -3659,10 +3717,10 @@ export interface JsonApiCspDirectiveOut {
     id: string;
     /**
      *
-     * @type {JsonApiCspDirectiveInAttributes}
+     * @type {JsonApiCspDirectiveOutAttributes}
      * @memberof JsonApiCspDirectiveOut
      */
-    attributes: JsonApiCspDirectiveInAttributes;
+    attributes: JsonApiCspDirectiveOutAttributes;
 }
 
 export const JsonApiCspDirectiveOutTypeEnum = {
@@ -3672,6 +3730,19 @@ export const JsonApiCspDirectiveOutTypeEnum = {
 export type JsonApiCspDirectiveOutTypeEnum =
     typeof JsonApiCspDirectiveOutTypeEnum[keyof typeof JsonApiCspDirectiveOutTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiCspDirectiveOutAttributes
+ */
+export interface JsonApiCspDirectiveOutAttributes {
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof JsonApiCspDirectiveOutAttributes
+     */
+    sources: Array<string>;
+}
 /**
  *
  * @export
@@ -3730,10 +3801,10 @@ export interface JsonApiCspDirectiveOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiCspDirectiveInAttributes}
+     * @type {JsonApiCspDirectiveOutAttributes}
      * @memberof JsonApiCspDirectiveOutWithLinks
      */
-    attributes: JsonApiCspDirectiveInAttributes;
+    attributes: JsonApiCspDirectiveOutAttributes;
     /**
      *
      * @type {ObjectLinks}
@@ -4371,10 +4442,10 @@ export interface JsonApiDataSourceIdentifierOut {
     id: string;
     /**
      *
-     * @type {JsonApiDataSourceOutMeta}
+     * @type {JsonApiDataSourceIdentifierOutMeta}
      * @memberof JsonApiDataSourceIdentifierOut
      */
-    meta?: JsonApiDataSourceOutMeta;
+    meta?: JsonApiDataSourceIdentifierOutMeta;
     /**
      *
      * @type {JsonApiDataSourceIdentifierOutAttributes}
@@ -4477,6 +4548,28 @@ export interface JsonApiDataSourceIdentifierOutList {
 /**
  *
  * @export
+ * @interface JsonApiDataSourceIdentifierOutMeta
+ */
+export interface JsonApiDataSourceIdentifierOutMeta {
+    /**
+     * List of valid permissions for a logged-in user.
+     * @type {Array<string>}
+     * @memberof JsonApiDataSourceIdentifierOutMeta
+     */
+    permissions?: Array<JsonApiDataSourceIdentifierOutMetaPermissionsEnum>;
+}
+
+export const JsonApiDataSourceIdentifierOutMetaPermissionsEnum = {
+    MANAGE: "MANAGE",
+    USE: "USE",
+} as const;
+
+export type JsonApiDataSourceIdentifierOutMetaPermissionsEnum =
+    typeof JsonApiDataSourceIdentifierOutMetaPermissionsEnum[keyof typeof JsonApiDataSourceIdentifierOutMetaPermissionsEnum];
+
+/**
+ *
+ * @export
  * @interface JsonApiDataSourceIdentifierOutWithLinks
  */
 export interface JsonApiDataSourceIdentifierOutWithLinks {
@@ -4494,10 +4587,10 @@ export interface JsonApiDataSourceIdentifierOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiDataSourceOutMeta}
+     * @type {JsonApiDataSourceIdentifierOutMeta}
      * @memberof JsonApiDataSourceIdentifierOutWithLinks
      */
-    meta?: JsonApiDataSourceOutMeta;
+    meta?: JsonApiDataSourceIdentifierOutMeta;
     /**
      *
      * @type {JsonApiDataSourceIdentifierOutAttributes}
@@ -4614,10 +4707,10 @@ export interface JsonApiDataSourceInAttributes {
     cachePath?: Array<string>;
     /**
      *
-     * @type {Array<JsonApiDataSourceInAttributesParameters>}
+     * @type {Array<JsonApiDataSourceOutAttributesParameters>}
      * @memberof JsonApiDataSourceInAttributes
      */
-    parameters?: Array<JsonApiDataSourceInAttributesParameters>;
+    parameters?: Array<JsonApiDataSourceOutAttributesParameters>;
 }
 
 export const JsonApiDataSourceInAttributesTypeEnum = {
@@ -4640,25 +4733,6 @@ export const JsonApiDataSourceInAttributesTypeEnum = {
 export type JsonApiDataSourceInAttributesTypeEnum =
     typeof JsonApiDataSourceInAttributesTypeEnum[keyof typeof JsonApiDataSourceInAttributesTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiDataSourceInAttributesParameters
- */
-export interface JsonApiDataSourceInAttributesParameters {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiDataSourceInAttributesParameters
-     */
-    name: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiDataSourceInAttributesParameters
-     */
-    value: string;
-}
 /**
  *
  * @export
@@ -4692,10 +4766,10 @@ export interface JsonApiDataSourceOut {
     id: string;
     /**
      *
-     * @type {JsonApiDataSourceOutMeta}
+     * @type {JsonApiDataSourceIdentifierOutMeta}
      * @memberof JsonApiDataSourceOut
      */
-    meta?: JsonApiDataSourceOutMeta;
+    meta?: JsonApiDataSourceIdentifierOutMeta;
     /**
      *
      * @type {JsonApiDataSourceOutAttributes}
@@ -4761,16 +4835,16 @@ export interface JsonApiDataSourceOutAttributes {
     cachePath?: Array<string>;
     /**
      *
-     * @type {Array<JsonApiDataSourceInAttributesParameters>}
+     * @type {Array<JsonApiDataSourceOutAttributesParameters>}
      * @memberof JsonApiDataSourceOutAttributes
      */
-    parameters?: Array<JsonApiDataSourceInAttributesParameters>;
+    parameters?: Array<JsonApiDataSourceOutAttributesParameters>;
     /**
      *
-     * @type {Array<JsonApiDataSourceInAttributesParameters>}
+     * @type {Array<JsonApiDataSourceOutAttributesParameters>}
      * @memberof JsonApiDataSourceOutAttributes
      */
-    decodedParameters?: Array<JsonApiDataSourceInAttributesParameters>;
+    decodedParameters?: Array<JsonApiDataSourceOutAttributesParameters>;
 }
 
 export const JsonApiDataSourceOutAttributesTypeEnum = {
@@ -4793,6 +4867,25 @@ export const JsonApiDataSourceOutAttributesTypeEnum = {
 export type JsonApiDataSourceOutAttributesTypeEnum =
     typeof JsonApiDataSourceOutAttributesTypeEnum[keyof typeof JsonApiDataSourceOutAttributesTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiDataSourceOutAttributesParameters
+ */
+export interface JsonApiDataSourceOutAttributesParameters {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiDataSourceOutAttributesParameters
+     */
+    name: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiDataSourceOutAttributesParameters
+     */
+    value: string;
+}
 /**
  *
  * @export
@@ -4834,28 +4927,6 @@ export interface JsonApiDataSourceOutList {
 /**
  *
  * @export
- * @interface JsonApiDataSourceOutMeta
- */
-export interface JsonApiDataSourceOutMeta {
-    /**
-     * List of valid permissions for a logged-in user.
-     * @type {Array<string>}
-     * @memberof JsonApiDataSourceOutMeta
-     */
-    permissions?: Array<JsonApiDataSourceOutMetaPermissionsEnum>;
-}
-
-export const JsonApiDataSourceOutMetaPermissionsEnum = {
-    MANAGE: "MANAGE",
-    USE: "USE",
-} as const;
-
-export type JsonApiDataSourceOutMetaPermissionsEnum =
-    typeof JsonApiDataSourceOutMetaPermissionsEnum[keyof typeof JsonApiDataSourceOutMetaPermissionsEnum];
-
-/**
- *
- * @export
  * @interface JsonApiDataSourceOutWithLinks
  */
 export interface JsonApiDataSourceOutWithLinks {
@@ -4873,10 +4944,10 @@ export interface JsonApiDataSourceOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiDataSourceOutMeta}
+     * @type {JsonApiDataSourceIdentifierOutMeta}
      * @memberof JsonApiDataSourceOutWithLinks
      */
-    meta?: JsonApiDataSourceOutMeta;
+    meta?: JsonApiDataSourceIdentifierOutMeta;
     /**
      *
      * @type {JsonApiDataSourceOutAttributes}
@@ -4993,10 +5064,10 @@ export interface JsonApiDataSourcePatchAttributes {
     cachePath?: Array<string>;
     /**
      *
-     * @type {Array<JsonApiDataSourceInAttributesParameters>}
+     * @type {Array<JsonApiDataSourceOutAttributesParameters>}
      * @memberof JsonApiDataSourcePatchAttributes
      */
-    parameters?: Array<JsonApiDataSourceInAttributesParameters>;
+    parameters?: Array<JsonApiDataSourceOutAttributesParameters>;
 }
 
 export const JsonApiDataSourcePatchAttributesTypeEnum = {
@@ -7268,10 +7339,10 @@ export interface JsonApiOrganizationSettingIn {
     id: string;
     /**
      *
-     * @type {JsonApiUserSettingInAttributes}
+     * @type {JsonApiWorkspaceSettingInAttributes}
      * @memberof JsonApiOrganizationSettingIn
      */
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiWorkspaceSettingInAttributes;
 }
 
 export const JsonApiOrganizationSettingInTypeEnum = {
@@ -7314,10 +7385,10 @@ export interface JsonApiOrganizationSettingOut {
     id: string;
     /**
      *
-     * @type {JsonApiUserSettingInAttributes}
+     * @type {JsonApiWorkspaceSettingInAttributes}
      * @memberof JsonApiOrganizationSettingOut
      */
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiWorkspaceSettingInAttributes;
 }
 
 export const JsonApiOrganizationSettingOutTypeEnum = {
@@ -7385,10 +7456,10 @@ export interface JsonApiOrganizationSettingOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiUserSettingInAttributes}
+     * @type {JsonApiWorkspaceSettingInAttributes}
      * @memberof JsonApiOrganizationSettingOutWithLinks
      */
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiWorkspaceSettingInAttributes;
     /**
      *
      * @type {ObjectLinks}
@@ -7424,10 +7495,10 @@ export interface JsonApiOrganizationSettingPatch {
     id: string;
     /**
      *
-     * @type {JsonApiUserSettingInAttributes}
+     * @type {JsonApiWorkspaceSettingInAttributes}
      * @memberof JsonApiOrganizationSettingPatch
      */
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiWorkspaceSettingInAttributes;
 }
 
 export const JsonApiOrganizationSettingPatchTypeEnum = {
@@ -7470,10 +7541,10 @@ export interface JsonApiThemeIn {
     id: string;
     /**
      *
-     * @type {JsonApiColorPaletteInAttributes}
+     * @type {JsonApiColorPaletteOutAttributes}
      * @memberof JsonApiThemeIn
      */
-    attributes: JsonApiColorPaletteInAttributes;
+    attributes: JsonApiColorPaletteOutAttributes;
 }
 
 export const JsonApiThemeInTypeEnum = {
@@ -7515,10 +7586,10 @@ export interface JsonApiThemeOut {
     id: string;
     /**
      *
-     * @type {JsonApiColorPaletteInAttributes}
+     * @type {JsonApiColorPaletteOutAttributes}
      * @memberof JsonApiThemeOut
      */
-    attributes: JsonApiColorPaletteInAttributes;
+    attributes: JsonApiColorPaletteOutAttributes;
 }
 
 export const JsonApiThemeOutTypeEnum = {
@@ -7585,10 +7656,10 @@ export interface JsonApiThemeOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiColorPaletteInAttributes}
+     * @type {JsonApiColorPaletteOutAttributes}
      * @memberof JsonApiThemeOutWithLinks
      */
-    attributes: JsonApiColorPaletteInAttributes;
+    attributes: JsonApiColorPaletteOutAttributes;
     /**
      *
      * @type {ObjectLinks}
@@ -7670,16 +7741,16 @@ export interface JsonApiUserGroupIn {
     id: string;
     /**
      *
-     * @type {JsonApiUserGroupInAttributes}
+     * @type {JsonApiUserGroupOutAttributes}
      * @memberof JsonApiUserGroupIn
      */
-    attributes?: JsonApiUserGroupInAttributes;
+    attributes?: JsonApiUserGroupOutAttributes;
     /**
      *
-     * @type {JsonApiUserGroupInRelationships}
+     * @type {JsonApiUserGroupOutRelationships}
      * @memberof JsonApiUserGroupIn
      */
-    relationships?: JsonApiUserGroupInRelationships;
+    relationships?: JsonApiUserGroupOutRelationships;
 }
 
 export const JsonApiUserGroupInTypeEnum = {
@@ -7692,19 +7763,6 @@ export type JsonApiUserGroupInTypeEnum =
 /**
  *
  * @export
- * @interface JsonApiUserGroupInAttributes
- */
-export interface JsonApiUserGroupInAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiUserGroupInAttributes
-     */
-    name?: string;
-}
-/**
- *
- * @export
  * @interface JsonApiUserGroupInDocument
  */
 export interface JsonApiUserGroupInDocument {
@@ -7714,32 +7772,6 @@ export interface JsonApiUserGroupInDocument {
      * @memberof JsonApiUserGroupInDocument
      */
     data: JsonApiUserGroupIn;
-}
-/**
- *
- * @export
- * @interface JsonApiUserGroupInRelationships
- */
-export interface JsonApiUserGroupInRelationships {
-    /**
-     *
-     * @type {JsonApiUserGroupInRelationshipsParents}
-     * @memberof JsonApiUserGroupInRelationships
-     */
-    parents?: JsonApiUserGroupInRelationshipsParents;
-}
-/**
- *
- * @export
- * @interface JsonApiUserGroupInRelationshipsParents
- */
-export interface JsonApiUserGroupInRelationshipsParents {
-    /**
-     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
-     * @type {Array<JsonApiUserGroupLinkage>}
-     * @memberof JsonApiUserGroupInRelationshipsParents
-     */
-    data: Array<JsonApiUserGroupLinkage>;
 }
 /**
  * The \\\"type\\\" and \\\"id\\\" to non-empty members.
@@ -7788,16 +7820,16 @@ export interface JsonApiUserGroupOut {
     id: string;
     /**
      *
-     * @type {JsonApiUserGroupInAttributes}
+     * @type {JsonApiUserGroupOutAttributes}
      * @memberof JsonApiUserGroupOut
      */
-    attributes?: JsonApiUserGroupInAttributes;
+    attributes?: JsonApiUserGroupOutAttributes;
     /**
      *
-     * @type {JsonApiUserGroupInRelationships}
+     * @type {JsonApiUserGroupOutRelationships}
      * @memberof JsonApiUserGroupOut
      */
-    relationships?: JsonApiUserGroupInRelationships;
+    relationships?: JsonApiUserGroupOutRelationships;
 }
 
 export const JsonApiUserGroupOutTypeEnum = {
@@ -7807,6 +7839,19 @@ export const JsonApiUserGroupOutTypeEnum = {
 export type JsonApiUserGroupOutTypeEnum =
     typeof JsonApiUserGroupOutTypeEnum[keyof typeof JsonApiUserGroupOutTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiUserGroupOutAttributes
+ */
+export interface JsonApiUserGroupOutAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiUserGroupOutAttributes
+     */
+    name?: string;
+}
 /**
  *
  * @export
@@ -7860,6 +7905,32 @@ export interface JsonApiUserGroupOutList {
 /**
  *
  * @export
+ * @interface JsonApiUserGroupOutRelationships
+ */
+export interface JsonApiUserGroupOutRelationships {
+    /**
+     *
+     * @type {JsonApiUserGroupOutRelationshipsParents}
+     * @memberof JsonApiUserGroupOutRelationships
+     */
+    parents?: JsonApiUserGroupOutRelationshipsParents;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiUserGroupOutRelationshipsParents
+ */
+export interface JsonApiUserGroupOutRelationshipsParents {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     * @type {Array<JsonApiUserGroupLinkage>}
+     * @memberof JsonApiUserGroupOutRelationshipsParents
+     */
+    data: Array<JsonApiUserGroupLinkage>;
+}
+/**
+ *
+ * @export
  * @interface JsonApiUserGroupOutWithLinks
  */
 export interface JsonApiUserGroupOutWithLinks {
@@ -7877,16 +7948,16 @@ export interface JsonApiUserGroupOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiUserGroupInAttributes}
+     * @type {JsonApiUserGroupOutAttributes}
      * @memberof JsonApiUserGroupOutWithLinks
      */
-    attributes?: JsonApiUserGroupInAttributes;
+    attributes?: JsonApiUserGroupOutAttributes;
     /**
      *
-     * @type {JsonApiUserGroupInRelationships}
+     * @type {JsonApiUserGroupOutRelationships}
      * @memberof JsonApiUserGroupOutWithLinks
      */
-    relationships?: JsonApiUserGroupInRelationships;
+    relationships?: JsonApiUserGroupOutRelationships;
     /**
      *
      * @type {ObjectLinks}
@@ -7922,16 +7993,16 @@ export interface JsonApiUserGroupPatch {
     id: string;
     /**
      *
-     * @type {JsonApiUserGroupInAttributes}
+     * @type {JsonApiUserGroupOutAttributes}
      * @memberof JsonApiUserGroupPatch
      */
-    attributes?: JsonApiUserGroupInAttributes;
+    attributes?: JsonApiUserGroupOutAttributes;
     /**
      *
-     * @type {JsonApiUserGroupInRelationships}
+     * @type {JsonApiUserGroupOutRelationships}
      * @memberof JsonApiUserGroupPatch
      */
-    relationships?: JsonApiUserGroupInRelationships;
+    relationships?: JsonApiUserGroupOutRelationships;
 }
 
 export const JsonApiUserGroupPatchTypeEnum = {
@@ -7981,16 +8052,16 @@ export interface JsonApiUserIn {
     id: string;
     /**
      *
-     * @type {JsonApiUserInAttributes}
+     * @type {JsonApiUserOutAttributes}
      * @memberof JsonApiUserIn
      */
-    attributes?: JsonApiUserInAttributes;
+    attributes?: JsonApiUserOutAttributes;
     /**
      *
-     * @type {JsonApiUserInRelationships}
+     * @type {JsonApiUserOutRelationships}
      * @memberof JsonApiUserIn
      */
-    relationships?: JsonApiUserInRelationships;
+    relationships?: JsonApiUserOutRelationships;
 }
 
 export const JsonApiUserInTypeEnum = {
@@ -7999,37 +8070,6 @@ export const JsonApiUserInTypeEnum = {
 
 export type JsonApiUserInTypeEnum = typeof JsonApiUserInTypeEnum[keyof typeof JsonApiUserInTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiUserInAttributes
- */
-export interface JsonApiUserInAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiUserInAttributes
-     */
-    authenticationId?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiUserInAttributes
-     */
-    firstname?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiUserInAttributes
-     */
-    lastname?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiUserInAttributes
-     */
-    email?: string;
-}
 /**
  *
  * @export
@@ -8042,19 +8082,6 @@ export interface JsonApiUserInDocument {
      * @memberof JsonApiUserInDocument
      */
     data: JsonApiUserIn;
-}
-/**
- *
- * @export
- * @interface JsonApiUserInRelationships
- */
-export interface JsonApiUserInRelationships {
-    /**
-     *
-     * @type {JsonApiUserGroupInRelationshipsParents}
-     * @memberof JsonApiUserInRelationships
-     */
-    userGroups?: JsonApiUserGroupInRelationshipsParents;
 }
 /**
  * The \\\"type\\\" and \\\"id\\\" to non-empty members.
@@ -8103,16 +8130,16 @@ export interface JsonApiUserOut {
     id: string;
     /**
      *
-     * @type {JsonApiUserInAttributes}
+     * @type {JsonApiUserOutAttributes}
      * @memberof JsonApiUserOut
      */
-    attributes?: JsonApiUserInAttributes;
+    attributes?: JsonApiUserOutAttributes;
     /**
      *
-     * @type {JsonApiUserInRelationships}
+     * @type {JsonApiUserOutRelationships}
      * @memberof JsonApiUserOut
      */
-    relationships?: JsonApiUserInRelationships;
+    relationships?: JsonApiUserOutRelationships;
 }
 
 export const JsonApiUserOutTypeEnum = {
@@ -8121,6 +8148,37 @@ export const JsonApiUserOutTypeEnum = {
 
 export type JsonApiUserOutTypeEnum = typeof JsonApiUserOutTypeEnum[keyof typeof JsonApiUserOutTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiUserOutAttributes
+ */
+export interface JsonApiUserOutAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiUserOutAttributes
+     */
+    authenticationId?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiUserOutAttributes
+     */
+    firstname?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiUserOutAttributes
+     */
+    lastname?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiUserOutAttributes
+     */
+    email?: string;
+}
 /**
  *
  * @export
@@ -8174,6 +8232,19 @@ export interface JsonApiUserOutList {
 /**
  *
  * @export
+ * @interface JsonApiUserOutRelationships
+ */
+export interface JsonApiUserOutRelationships {
+    /**
+     *
+     * @type {JsonApiUserGroupOutRelationshipsParents}
+     * @memberof JsonApiUserOutRelationships
+     */
+    userGroups?: JsonApiUserGroupOutRelationshipsParents;
+}
+/**
+ *
+ * @export
  * @interface JsonApiUserOutWithLinks
  */
 export interface JsonApiUserOutWithLinks {
@@ -8191,16 +8262,16 @@ export interface JsonApiUserOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiUserInAttributes}
+     * @type {JsonApiUserOutAttributes}
      * @memberof JsonApiUserOutWithLinks
      */
-    attributes?: JsonApiUserInAttributes;
+    attributes?: JsonApiUserOutAttributes;
     /**
      *
-     * @type {JsonApiUserInRelationships}
+     * @type {JsonApiUserOutRelationships}
      * @memberof JsonApiUserOutWithLinks
      */
-    relationships?: JsonApiUserInRelationships;
+    relationships?: JsonApiUserOutRelationships;
     /**
      *
      * @type {ObjectLinks}
@@ -8236,16 +8307,16 @@ export interface JsonApiUserPatch {
     id: string;
     /**
      *
-     * @type {JsonApiUserInAttributes}
+     * @type {JsonApiUserOutAttributes}
      * @memberof JsonApiUserPatch
      */
-    attributes?: JsonApiUserInAttributes;
+    attributes?: JsonApiUserOutAttributes;
     /**
      *
-     * @type {JsonApiUserInRelationships}
+     * @type {JsonApiUserOutRelationships}
      * @memberof JsonApiUserPatch
      */
-    relationships?: JsonApiUserInRelationships;
+    relationships?: JsonApiUserOutRelationships;
 }
 
 export const JsonApiUserPatchTypeEnum = {
@@ -8287,10 +8358,10 @@ export interface JsonApiUserSettingIn {
     id: string;
     /**
      *
-     * @type {JsonApiUserSettingInAttributes}
+     * @type {JsonApiWorkspaceSettingInAttributes}
      * @memberof JsonApiUserSettingIn
      */
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiWorkspaceSettingInAttributes;
 }
 
 export const JsonApiUserSettingInTypeEnum = {
@@ -8300,19 +8371,6 @@ export const JsonApiUserSettingInTypeEnum = {
 export type JsonApiUserSettingInTypeEnum =
     typeof JsonApiUserSettingInTypeEnum[keyof typeof JsonApiUserSettingInTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiUserSettingInAttributes
- */
-export interface JsonApiUserSettingInAttributes {
-    /**
-     *
-     * @type {object}
-     * @memberof JsonApiUserSettingInAttributes
-     */
-    content?: object;
-}
 /**
  *
  * @export
@@ -8346,10 +8404,10 @@ export interface JsonApiUserSettingOut {
     id: string;
     /**
      *
-     * @type {JsonApiUserSettingInAttributes}
+     * @type {JsonApiWorkspaceSettingInAttributes}
      * @memberof JsonApiUserSettingOut
      */
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiWorkspaceSettingInAttributes;
 }
 
 export const JsonApiUserSettingOutTypeEnum = {
@@ -8417,10 +8475,10 @@ export interface JsonApiUserSettingOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiUserSettingInAttributes}
+     * @type {JsonApiWorkspaceSettingInAttributes}
      * @memberof JsonApiUserSettingOutWithLinks
      */
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiWorkspaceSettingInAttributes;
     /**
      *
      * @type {ObjectLinks}
@@ -9263,16 +9321,16 @@ export interface JsonApiWorkspaceIn {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceInAttributes}
+     * @type {JsonApiWorkspaceOutAttributes}
      * @memberof JsonApiWorkspaceIn
      */
-    attributes?: JsonApiWorkspaceInAttributes;
+    attributes?: JsonApiWorkspaceOutAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceInRelationships}
+     * @type {JsonApiWorkspaceOutRelationships}
      * @memberof JsonApiWorkspaceIn
      */
-    relationships?: JsonApiWorkspaceInRelationships;
+    relationships?: JsonApiWorkspaceOutRelationships;
 }
 
 export const JsonApiWorkspaceInTypeEnum = {
@@ -9285,31 +9343,6 @@ export type JsonApiWorkspaceInTypeEnum =
 /**
  *
  * @export
- * @interface JsonApiWorkspaceInAttributes
- */
-export interface JsonApiWorkspaceInAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspaceInAttributes
-     */
-    name?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspaceInAttributes
-     */
-    earlyAccess?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspaceInAttributes
-     */
-    description?: string;
-}
-/**
- *
- * @export
  * @interface JsonApiWorkspaceInDocument
  */
 export interface JsonApiWorkspaceInDocument {
@@ -9319,32 +9352,6 @@ export interface JsonApiWorkspaceInDocument {
      * @memberof JsonApiWorkspaceInDocument
      */
     data: JsonApiWorkspaceIn;
-}
-/**
- *
- * @export
- * @interface JsonApiWorkspaceInRelationships
- */
-export interface JsonApiWorkspaceInRelationships {
-    /**
-     *
-     * @type {JsonApiWorkspaceInRelationshipsParent}
-     * @memberof JsonApiWorkspaceInRelationships
-     */
-    parent?: JsonApiWorkspaceInRelationshipsParent;
-}
-/**
- *
- * @export
- * @interface JsonApiWorkspaceInRelationshipsParent
- */
-export interface JsonApiWorkspaceInRelationshipsParent {
-    /**
-     *
-     * @type {JsonApiWorkspaceToOneLinkage}
-     * @memberof JsonApiWorkspaceInRelationshipsParent
-     */
-    data: JsonApiWorkspaceToOneLinkage | null;
 }
 /**
  * The \\\"type\\\" and \\\"id\\\" to non-empty members.
@@ -9399,16 +9406,16 @@ export interface JsonApiWorkspaceOut {
     meta?: JsonApiWorkspaceOutMeta;
     /**
      *
-     * @type {JsonApiWorkspaceInAttributes}
+     * @type {JsonApiWorkspaceOutAttributes}
      * @memberof JsonApiWorkspaceOut
      */
-    attributes?: JsonApiWorkspaceInAttributes;
+    attributes?: JsonApiWorkspaceOutAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceInRelationships}
+     * @type {JsonApiWorkspaceOutRelationships}
      * @memberof JsonApiWorkspaceOut
      */
-    relationships?: JsonApiWorkspaceInRelationships;
+    relationships?: JsonApiWorkspaceOutRelationships;
 }
 
 export const JsonApiWorkspaceOutTypeEnum = {
@@ -9418,6 +9425,31 @@ export const JsonApiWorkspaceOutTypeEnum = {
 export type JsonApiWorkspaceOutTypeEnum =
     typeof JsonApiWorkspaceOutTypeEnum[keyof typeof JsonApiWorkspaceOutTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiWorkspaceOutAttributes
+ */
+export interface JsonApiWorkspaceOutAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspaceOutAttributes
+     */
+    name?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspaceOutAttributes
+     */
+    earlyAccess?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspaceOutAttributes
+     */
+    description?: string;
+}
 /**
  *
  * @export
@@ -9528,6 +9560,32 @@ export interface JsonApiWorkspaceOutMetaConfig {
 /**
  *
  * @export
+ * @interface JsonApiWorkspaceOutRelationships
+ */
+export interface JsonApiWorkspaceOutRelationships {
+    /**
+     *
+     * @type {JsonApiWorkspaceOutRelationshipsParent}
+     * @memberof JsonApiWorkspaceOutRelationships
+     */
+    parent?: JsonApiWorkspaceOutRelationshipsParent;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiWorkspaceOutRelationshipsParent
+ */
+export interface JsonApiWorkspaceOutRelationshipsParent {
+    /**
+     *
+     * @type {JsonApiWorkspaceToOneLinkage}
+     * @memberof JsonApiWorkspaceOutRelationshipsParent
+     */
+    data: JsonApiWorkspaceToOneLinkage | null;
+}
+/**
+ *
+ * @export
  * @interface JsonApiWorkspaceOutWithLinks
  */
 export interface JsonApiWorkspaceOutWithLinks {
@@ -9551,16 +9609,16 @@ export interface JsonApiWorkspaceOutWithLinks {
     meta?: JsonApiWorkspaceOutMeta;
     /**
      *
-     * @type {JsonApiWorkspaceInAttributes}
+     * @type {JsonApiWorkspaceOutAttributes}
      * @memberof JsonApiWorkspaceOutWithLinks
      */
-    attributes?: JsonApiWorkspaceInAttributes;
+    attributes?: JsonApiWorkspaceOutAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceInRelationships}
+     * @type {JsonApiWorkspaceOutRelationships}
      * @memberof JsonApiWorkspaceOutWithLinks
      */
-    relationships?: JsonApiWorkspaceInRelationships;
+    relationships?: JsonApiWorkspaceOutRelationships;
     /**
      *
      * @type {ObjectLinks}
@@ -9596,16 +9654,16 @@ export interface JsonApiWorkspacePatch {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceInAttributes}
+     * @type {JsonApiWorkspaceOutAttributes}
      * @memberof JsonApiWorkspacePatch
      */
-    attributes?: JsonApiWorkspaceInAttributes;
+    attributes?: JsonApiWorkspaceOutAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceInRelationships}
+     * @type {JsonApiWorkspaceOutRelationships}
      * @memberof JsonApiWorkspacePatch
      */
-    relationships?: JsonApiWorkspaceInRelationships;
+    relationships?: JsonApiWorkspaceOutRelationships;
 }
 
 export const JsonApiWorkspacePatchTypeEnum = {
@@ -9648,10 +9706,10 @@ export interface JsonApiWorkspaceSettingIn {
     id: string;
     /**
      *
-     * @type {JsonApiUserSettingInAttributes}
+     * @type {JsonApiWorkspaceSettingInAttributes}
      * @memberof JsonApiWorkspaceSettingIn
      */
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiWorkspaceSettingInAttributes;
 }
 
 export const JsonApiWorkspaceSettingInTypeEnum = {
@@ -9660,6 +9718,39 @@ export const JsonApiWorkspaceSettingInTypeEnum = {
 
 export type JsonApiWorkspaceSettingInTypeEnum =
     typeof JsonApiWorkspaceSettingInTypeEnum[keyof typeof JsonApiWorkspaceSettingInTypeEnum];
+
+/**
+ *
+ * @export
+ * @interface JsonApiWorkspaceSettingInAttributes
+ */
+export interface JsonApiWorkspaceSettingInAttributes {
+    /**
+     *
+     * @type {object}
+     * @memberof JsonApiWorkspaceSettingInAttributes
+     */
+    content?: object;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspaceSettingInAttributes
+     */
+    type?: JsonApiWorkspaceSettingInAttributesTypeEnum;
+}
+
+export const JsonApiWorkspaceSettingInAttributesTypeEnum = {
+    TIMEZONE: "TIMEZONE",
+    ACTIVE_THEME: "ACTIVE_THEME",
+    ACTIVE_COLOR_PALETTE: "ACTIVE_COLOR_PALETTE",
+    WHITE_LABELING: "WHITE_LABELING",
+    LOCALE: "LOCALE",
+    FORMAT_LOCALE: "FORMAT_LOCALE",
+    MAPBOX_TOKEN: "MAPBOX_TOKEN",
+} as const;
+
+export type JsonApiWorkspaceSettingInAttributesTypeEnum =
+    typeof JsonApiWorkspaceSettingInAttributesTypeEnum[keyof typeof JsonApiWorkspaceSettingInAttributesTypeEnum];
 
 /**
  *
@@ -9700,10 +9791,10 @@ export interface JsonApiWorkspaceSettingOut {
     meta?: JsonApiCustomApplicationSettingOutMeta;
     /**
      *
-     * @type {JsonApiUserSettingInAttributes}
+     * @type {JsonApiWorkspaceSettingInAttributes}
      * @memberof JsonApiWorkspaceSettingOut
      */
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiWorkspaceSettingInAttributes;
 }
 
 export const JsonApiWorkspaceSettingOutTypeEnum = {
@@ -9777,10 +9868,10 @@ export interface JsonApiWorkspaceSettingOutWithLinks {
     meta?: JsonApiCustomApplicationSettingOutMeta;
     /**
      *
-     * @type {JsonApiUserSettingInAttributes}
+     * @type {JsonApiWorkspaceSettingInAttributes}
      * @memberof JsonApiWorkspaceSettingOutWithLinks
      */
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiWorkspaceSettingInAttributes;
     /**
      *
      * @type {ObjectLinks}
@@ -9816,10 +9907,10 @@ export interface JsonApiWorkspaceSettingPatch {
     id: string;
     /**
      *
-     * @type {JsonApiUserSettingInAttributes}
+     * @type {JsonApiWorkspaceSettingInAttributes}
      * @memberof JsonApiWorkspaceSettingPatch
      */
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiWorkspaceSettingInAttributes;
 }
 
 export const JsonApiWorkspaceSettingPatchTypeEnum = {
@@ -10070,6 +10161,45 @@ export interface ResolveSettingsRequest {
      */
     settings: Array<string>;
 }
+/**
+ * Setting and its value.
+ * @export
+ * @interface ResolvedSetting
+ */
+export interface ResolvedSetting {
+    /**
+     * Setting ID. Formerly used to identify a type of a particular setting, going to be removed in a favor of setting\'s type.
+     * @type {string}
+     * @memberof ResolvedSetting
+     * @deprecated
+     */
+    id: string;
+    /**
+     * Custom setting content in JSON format.
+     * @type {object}
+     * @memberof ResolvedSetting
+     */
+    content?: object;
+    /**
+     * Type of the setting.
+     * @type {string}
+     * @memberof ResolvedSetting
+     */
+    type?: ResolvedSettingTypeEnum;
+}
+
+export const ResolvedSettingTypeEnum = {
+    TIMEZONE: "TIMEZONE",
+    ACTIVE_THEME: "ACTIVE_THEME",
+    ACTIVE_COLOR_PALETTE: "ACTIVE_COLOR_PALETTE",
+    WHITE_LABELING: "WHITE_LABELING",
+    LOCALE: "LOCALE",
+    FORMAT_LOCALE: "FORMAT_LOCALE",
+    MAPBOX_TOKEN: "MAPBOX_TOKEN",
+} as const;
+
+export type ResolvedSettingTypeEnum = typeof ResolvedSettingTypeEnum[keyof typeof ResolvedSettingTypeEnum];
+
 /**
  * List of users
  * @export
@@ -11277,7 +11407,7 @@ export const ActionsApiFp = function (configuration?: Configuration) {
          */
         async resolveAllSettingsWithoutWorkspace(
             options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DeclarativeSetting>>> {
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ResolvedSetting>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.resolveAllSettingsWithoutWorkspace(
                 options,
             );
@@ -11310,7 +11440,7 @@ export const ActionsApiFp = function (configuration?: Configuration) {
         async resolveSettingsWithoutWorkspace(
             resolveSettingsRequest: ResolveSettingsRequest,
             options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DeclarativeSetting>>> {
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ResolvedSetting>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.resolveSettingsWithoutWorkspace(
                 resolveSettingsRequest,
                 options,
@@ -11327,7 +11457,7 @@ export const ActionsApiFp = function (configuration?: Configuration) {
         async workspaceResolveAllSettings(
             workspaceId: string,
             options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DeclarativeSetting>>> {
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ResolvedSetting>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.workspaceResolveAllSettings(
                 workspaceId,
                 options,
@@ -11346,7 +11476,7 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             workspaceId: string,
             resolveSettingsRequest: ResolveSettingsRequest,
             options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DeclarativeSetting>>> {
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ResolvedSetting>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.workspaceResolveSettings(
                 workspaceId,
                 resolveSettingsRequest,
@@ -11573,7 +11703,7 @@ export const ActionsApiFactory = function (
          */
         resolveAllSettingsWithoutWorkspace(
             options?: AxiosRequestConfig,
-        ): AxiosPromise<Array<DeclarativeSetting>> {
+        ): AxiosPromise<Array<ResolvedSetting>> {
             return localVarFp
                 .resolveAllSettingsWithoutWorkspace(options)
                 .then((request) => request(axios, basePath));
@@ -11603,7 +11733,7 @@ export const ActionsApiFactory = function (
         resolveSettingsWithoutWorkspace(
             requestParameters: ActionsApiResolveSettingsWithoutWorkspaceRequest,
             options?: AxiosRequestConfig,
-        ): AxiosPromise<Array<DeclarativeSetting>> {
+        ): AxiosPromise<Array<ResolvedSetting>> {
             return localVarFp
                 .resolveSettingsWithoutWorkspace(requestParameters.resolveSettingsRequest, options)
                 .then((request) => request(axios, basePath));
@@ -11618,7 +11748,7 @@ export const ActionsApiFactory = function (
         workspaceResolveAllSettings(
             requestParameters: ActionsApiWorkspaceResolveAllSettingsRequest,
             options?: AxiosRequestConfig,
-        ): AxiosPromise<Array<DeclarativeSetting>> {
+        ): AxiosPromise<Array<ResolvedSetting>> {
             return localVarFp
                 .workspaceResolveAllSettings(requestParameters.workspaceId, options)
                 .then((request) => request(axios, basePath));
@@ -11633,7 +11763,7 @@ export const ActionsApiFactory = function (
         workspaceResolveSettings(
             requestParameters: ActionsApiWorkspaceResolveSettingsRequest,
             options?: AxiosRequestConfig,
-        ): AxiosPromise<Array<DeclarativeSetting>> {
+        ): AxiosPromise<Array<ResolvedSetting>> {
             return localVarFp
                 .workspaceResolveSettings(
                     requestParameters.workspaceId,
@@ -11816,7 +11946,7 @@ export interface ActionsApiInterface {
      * @throws {RequiredError}
      * @memberof ActionsApiInterface
      */
-    resolveAllSettingsWithoutWorkspace(options?: AxiosRequestConfig): AxiosPromise<Array<DeclarativeSetting>>;
+    resolveAllSettingsWithoutWorkspace(options?: AxiosRequestConfig): AxiosPromise<Array<ResolvedSetting>>;
 
     /**
      * Resolves values for requested entitlements in the organization.
@@ -11842,7 +11972,7 @@ export interface ActionsApiInterface {
     resolveSettingsWithoutWorkspace(
         requestParameters: ActionsApiResolveSettingsWithoutWorkspaceRequest,
         options?: AxiosRequestConfig,
-    ): AxiosPromise<Array<DeclarativeSetting>>;
+    ): AxiosPromise<Array<ResolvedSetting>>;
 
     /**
      * Resolves values for all settings in a workspace by current user, workspace, organization, or default settings.
@@ -11855,7 +11985,7 @@ export interface ActionsApiInterface {
     workspaceResolveAllSettings(
         requestParameters: ActionsApiWorkspaceResolveAllSettingsRequest,
         options?: AxiosRequestConfig,
-    ): AxiosPromise<Array<DeclarativeSetting>>;
+    ): AxiosPromise<Array<ResolvedSetting>>;
 
     /**
      * Resolves value for selected settings in a workspace by current user, workspace, organization, or default settings.
@@ -11868,7 +11998,7 @@ export interface ActionsApiInterface {
     workspaceResolveSettings(
         requestParameters: ActionsApiWorkspaceResolveSettingsRequest,
         options?: AxiosRequestConfig,
-    ): AxiosPromise<Array<DeclarativeSetting>>;
+    ): AxiosPromise<Array<ResolvedSetting>>;
 }
 
 /**
@@ -35670,6 +35800,46 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
+         * Retrieve current set of permissions of the user-group in a declarative form.
+         * @summary Get permissions for the user-group
+         * @param {string} userGroupId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserGroupPermissions: async (
+            userGroupId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'userGroupId' is not null or undefined
+            assertParamExists("getUserGroupPermissions", "userGroupId", userGroupId);
+            const localVarPath = `/api/v1/layout/userGroups/{userGroupId}/permissions`.replace(
+                `{${"userGroupId"}}`,
+                encodeURIComponent(String(userGroupId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Retrieve all user-groups eventually with parent group.
          * @summary Get all user groups
          * @param {*} [options] Override http request option.
@@ -35677,6 +35847,46 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
          */
         getUserGroupsLayout: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/v1/layout/userGroups`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Retrieve current set of permissions of the user in a declarative form.
+         * @summary Get permissions for the user
+         * @param {string} userId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserPermissions: async (
+            userId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists("getUserPermissions", "userId", userId);
+            const localVarPath = `/api/v1/layout/users/{userId}/permissions`.replace(
+                `{${"userId"}}`,
+                encodeURIComponent(String(userId)),
+            );
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -36342,6 +36552,116 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
+         * Set effective permissions for the user-group
+         * @summary Set permissions for the user-group
+         * @param {string} userGroupId
+         * @param {DeclarativeUserGroupPermissions} declarativeUserGroupPermissions
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        setUserGroupPermissions: async (
+            userGroupId: string,
+            declarativeUserGroupPermissions: DeclarativeUserGroupPermissions,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'userGroupId' is not null or undefined
+            assertParamExists("setUserGroupPermissions", "userGroupId", userGroupId);
+            // verify required parameter 'declarativeUserGroupPermissions' is not null or undefined
+            assertParamExists(
+                "setUserGroupPermissions",
+                "declarativeUserGroupPermissions",
+                declarativeUserGroupPermissions,
+            );
+            const localVarPath = `/api/v1/layout/userGroups/{userGroupId}/permissions`.replace(
+                `{${"userGroupId"}}`,
+                encodeURIComponent(String(userGroupId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "PUT", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof declarativeUserGroupPermissions !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      declarativeUserGroupPermissions !== undefined ? declarativeUserGroupPermissions : {},
+                  )
+                : declarativeUserGroupPermissions || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Set effective permissions for the user
+         * @summary Set permissions for the user
+         * @param {string} userId
+         * @param {DeclarativeUserPermissions} declarativeUserPermissions
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        setUserPermissions: async (
+            userId: string,
+            declarativeUserPermissions: DeclarativeUserPermissions,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists("setUserPermissions", "userId", userId);
+            // verify required parameter 'declarativeUserPermissions' is not null or undefined
+            assertParamExists("setUserPermissions", "declarativeUserPermissions", declarativeUserPermissions);
+            const localVarPath = `/api/v1/layout/users/{userId}/permissions`.replace(
+                `{${"userId"}}`,
+                encodeURIComponent(String(userId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "PUT", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof declarativeUserPermissions !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(declarativeUserPermissions !== undefined ? declarativeUserPermissions : {})
+                : declarativeUserPermissions || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Sets workspace data filters in all workspaces in entire organization.
          * @summary Set all workspace data filters
          * @param {DeclarativeWorkspaceDataFilters} declarativeWorkspaceDataFilters
@@ -36578,6 +36898,25 @@ export const LayoutApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Retrieve current set of permissions of the user-group in a declarative form.
+         * @summary Get permissions for the user-group
+         * @param {string} userGroupId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getUserGroupPermissions(
+            userGroupId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<
+            (axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeclarativeUserGroupPermissions>
+        > {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getUserGroupPermissions(
+                userGroupId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Retrieve all user-groups eventually with parent group.
          * @summary Get all user groups
          * @param {*} [options] Override http request option.
@@ -36587,6 +36926,20 @@ export const LayoutApiFp = function (configuration?: Configuration) {
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeclarativeUserGroups>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getUserGroupsLayout(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Retrieve current set of permissions of the user in a declarative form.
+         * @summary Get permissions for the user
+         * @param {string} userId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getUserPermissions(
+            userId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeclarativeUserPermissions>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getUserPermissions(userId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -36841,6 +37194,46 @@ export const LayoutApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Set effective permissions for the user-group
+         * @summary Set permissions for the user-group
+         * @param {string} userGroupId
+         * @param {DeclarativeUserGroupPermissions} declarativeUserGroupPermissions
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async setUserGroupPermissions(
+            userGroupId: string,
+            declarativeUserGroupPermissions: DeclarativeUserGroupPermissions,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.setUserGroupPermissions(
+                userGroupId,
+                declarativeUserGroupPermissions,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Set effective permissions for the user
+         * @summary Set permissions for the user
+         * @param {string} userId
+         * @param {DeclarativeUserPermissions} declarativeUserPermissions
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async setUserPermissions(
+            userId: string,
+            declarativeUserPermissions: DeclarativeUserPermissions,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.setUserPermissions(
+                userId,
+                declarativeUserPermissions,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Sets workspace data filters in all workspaces in entire organization.
          * @summary Set all workspace data filters
          * @param {DeclarativeWorkspaceDataFilters} declarativeWorkspaceDataFilters
@@ -36972,6 +37365,21 @@ export const LayoutApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
+         * Retrieve current set of permissions of the user-group in a declarative form.
+         * @summary Get permissions for the user-group
+         * @param {LayoutApiGetUserGroupPermissionsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserGroupPermissions(
+            requestParameters: LayoutApiGetUserGroupPermissionsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<DeclarativeUserGroupPermissions> {
+            return localVarFp
+                .getUserGroupPermissions(requestParameters.userGroupId, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * Retrieve all user-groups eventually with parent group.
          * @summary Get all user groups
          * @param {*} [options] Override http request option.
@@ -36979,6 +37387,21 @@ export const LayoutApiFactory = function (
          */
         getUserGroupsLayout(options?: AxiosRequestConfig): AxiosPromise<DeclarativeUserGroups> {
             return localVarFp.getUserGroupsLayout(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Retrieve current set of permissions of the user in a declarative form.
+         * @summary Get permissions for the user
+         * @param {LayoutApiGetUserPermissionsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserPermissions(
+            requestParameters: LayoutApiGetUserPermissionsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<DeclarativeUserPermissions> {
+            return localVarFp
+                .getUserPermissions(requestParameters.userId, options)
+                .then((request) => request(axios, basePath));
         },
         /**
          * Retrieve all users including authentication properties.
@@ -37194,6 +37617,44 @@ export const LayoutApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
+         * Set effective permissions for the user-group
+         * @summary Set permissions for the user-group
+         * @param {LayoutApiSetUserGroupPermissionsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        setUserGroupPermissions(
+            requestParameters: LayoutApiSetUserGroupPermissionsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .setUserGroupPermissions(
+                    requestParameters.userGroupId,
+                    requestParameters.declarativeUserGroupPermissions,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * Set effective permissions for the user
+         * @summary Set permissions for the user
+         * @param {LayoutApiSetUserPermissionsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        setUserPermissions(
+            requestParameters: LayoutApiSetUserPermissionsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .setUserPermissions(
+                    requestParameters.userId,
+                    requestParameters.declarativeUserPermissions,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * Sets workspace data filters in all workspaces in entire organization.
          * @summary Set all workspace data filters
          * @param {LayoutApiSetWorkspaceDataFiltersLayoutRequest} requestParameters Request parameters.
@@ -37309,6 +37770,19 @@ export interface LayoutApiInterface {
     ): AxiosPromise<DeclarativePdm>;
 
     /**
+     * Retrieve current set of permissions of the user-group in a declarative form.
+     * @summary Get permissions for the user-group
+     * @param {LayoutApiGetUserGroupPermissionsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LayoutApiInterface
+     */
+    getUserGroupPermissions(
+        requestParameters: LayoutApiGetUserGroupPermissionsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<DeclarativeUserGroupPermissions>;
+
+    /**
      * Retrieve all user-groups eventually with parent group.
      * @summary Get all user groups
      * @param {*} [options] Override http request option.
@@ -37316,6 +37790,19 @@ export interface LayoutApiInterface {
      * @memberof LayoutApiInterface
      */
     getUserGroupsLayout(options?: AxiosRequestConfig): AxiosPromise<DeclarativeUserGroups>;
+
+    /**
+     * Retrieve current set of permissions of the user in a declarative form.
+     * @summary Get permissions for the user
+     * @param {LayoutApiGetUserPermissionsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LayoutApiInterface
+     */
+    getUserPermissions(
+        requestParameters: LayoutApiGetUserPermissionsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<DeclarativeUserPermissions>;
 
     /**
      * Retrieve all users including authentication properties.
@@ -37499,6 +37986,32 @@ export interface LayoutApiInterface {
     ): AxiosPromise<void>;
 
     /**
+     * Set effective permissions for the user-group
+     * @summary Set permissions for the user-group
+     * @param {LayoutApiSetUserGroupPermissionsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LayoutApiInterface
+     */
+    setUserGroupPermissions(
+        requestParameters: LayoutApiSetUserGroupPermissionsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
+
+    /**
+     * Set effective permissions for the user
+     * @summary Set permissions for the user
+     * @param {LayoutApiSetUserPermissionsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LayoutApiInterface
+     */
+    setUserPermissions(
+        requestParameters: LayoutApiSetUserPermissionsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
+
+    /**
      * Sets workspace data filters in all workspaces in entire organization.
      * @summary Set all workspace data filters
      * @param {LayoutApiSetWorkspaceDataFiltersLayoutRequest} requestParameters Request parameters.
@@ -37585,6 +38098,34 @@ export interface LayoutApiGetPdmLayoutRequest {
      * @memberof LayoutApiGetPdmLayout
      */
     readonly dataSourceId: string;
+}
+
+/**
+ * Request parameters for getUserGroupPermissions operation in LayoutApi.
+ * @export
+ * @interface LayoutApiGetUserGroupPermissionsRequest
+ */
+export interface LayoutApiGetUserGroupPermissionsRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof LayoutApiGetUserGroupPermissions
+     */
+    readonly userGroupId: string;
+}
+
+/**
+ * Request parameters for getUserPermissions operation in LayoutApi.
+ * @export
+ * @interface LayoutApiGetUserPermissionsRequest
+ */
+export interface LayoutApiGetUserPermissionsRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof LayoutApiGetUserPermissions
+     */
+    readonly userId: string;
 }
 
 /**
@@ -37770,6 +38311,48 @@ export interface LayoutApiSetPdmLayoutRequest {
 }
 
 /**
+ * Request parameters for setUserGroupPermissions operation in LayoutApi.
+ * @export
+ * @interface LayoutApiSetUserGroupPermissionsRequest
+ */
+export interface LayoutApiSetUserGroupPermissionsRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof LayoutApiSetUserGroupPermissions
+     */
+    readonly userGroupId: string;
+
+    /**
+     *
+     * @type {DeclarativeUserGroupPermissions}
+     * @memberof LayoutApiSetUserGroupPermissions
+     */
+    readonly declarativeUserGroupPermissions: DeclarativeUserGroupPermissions;
+}
+
+/**
+ * Request parameters for setUserPermissions operation in LayoutApi.
+ * @export
+ * @interface LayoutApiSetUserPermissionsRequest
+ */
+export interface LayoutApiSetUserPermissionsRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof LayoutApiSetUserPermissions
+     */
+    readonly userId: string;
+
+    /**
+     *
+     * @type {DeclarativeUserPermissions}
+     * @memberof LayoutApiSetUserPermissions
+     */
+    readonly declarativeUserPermissions: DeclarativeUserPermissions;
+}
+
+/**
  * Request parameters for setWorkspaceDataFiltersLayout operation in LayoutApi.
  * @export
  * @interface LayoutApiSetWorkspaceDataFiltersLayoutRequest
@@ -37897,6 +38480,23 @@ export class LayoutApi extends BaseAPI implements LayoutApiInterface {
     }
 
     /**
+     * Retrieve current set of permissions of the user-group in a declarative form.
+     * @summary Get permissions for the user-group
+     * @param {LayoutApiGetUserGroupPermissionsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LayoutApi
+     */
+    public getUserGroupPermissions(
+        requestParameters: LayoutApiGetUserGroupPermissionsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return LayoutApiFp(this.configuration)
+            .getUserGroupPermissions(requestParameters.userGroupId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Retrieve all user-groups eventually with parent group.
      * @summary Get all user groups
      * @param {*} [options] Override http request option.
@@ -37906,6 +38506,23 @@ export class LayoutApi extends BaseAPI implements LayoutApiInterface {
     public getUserGroupsLayout(options?: AxiosRequestConfig) {
         return LayoutApiFp(this.configuration)
             .getUserGroupsLayout(options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Retrieve current set of permissions of the user in a declarative form.
+     * @summary Get permissions for the user
+     * @param {LayoutApiGetUserPermissionsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LayoutApi
+     */
+    public getUserPermissions(
+        requestParameters: LayoutApiGetUserPermissionsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return LayoutApiFp(this.configuration)
+            .getUserPermissions(requestParameters.userId, options)
             .then((request) => request(this.axios, this.basePath));
     }
 
@@ -38140,6 +38757,48 @@ export class LayoutApi extends BaseAPI implements LayoutApiInterface {
     public setPdmLayout(requestParameters: LayoutApiSetPdmLayoutRequest, options?: AxiosRequestConfig) {
         return LayoutApiFp(this.configuration)
             .setPdmLayout(requestParameters.dataSourceId, requestParameters.declarativePdm, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Set effective permissions for the user-group
+     * @summary Set permissions for the user-group
+     * @param {LayoutApiSetUserGroupPermissionsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LayoutApi
+     */
+    public setUserGroupPermissions(
+        requestParameters: LayoutApiSetUserGroupPermissionsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return LayoutApiFp(this.configuration)
+            .setUserGroupPermissions(
+                requestParameters.userGroupId,
+                requestParameters.declarativeUserGroupPermissions,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Set effective permissions for the user
+     * @summary Set permissions for the user
+     * @param {LayoutApiSetUserPermissionsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LayoutApi
+     */
+    public setUserPermissions(
+        requestParameters: LayoutApiSetUserPermissionsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return LayoutApiFp(this.configuration)
+            .setUserPermissions(
+                requestParameters.userId,
+                requestParameters.declarativeUserPermissions,
+                options,
+            )
             .then((request) => request(this.axios, this.basePath));
     }
 
