@@ -1,14 +1,20 @@
-// (C) 2020-2022 GoodData Corporation
-import { IUserSettingsService, IUserSettings, isUnexpectedError } from "@gooddata/sdk-backend-spi";
-import { convertApiError } from "../../utils/errorHandling";
-import { TigerAuthenticatedCallGuard } from "../../types";
+// (C) 2020-2023 GoodData Corporation
+import { IUserSettingsService, IUserSettings } from "@gooddata/sdk-backend-spi";
+import { ISettings } from "@gooddata/sdk-model";
+
+import { TigerAuthenticatedCallGuard, TigerSettingsType } from "../../types";
 import { TigerFeaturesService } from "../features";
 import { DefaultUserSettings } from "../uiSettings";
-import { ISettings } from "@gooddata/sdk-model";
+import { TigerSettingsService } from "../settings";
 import { unwrapSettingContent } from "../../convertors/fromBackend/SettingsConverter";
 
-export class TigerUserSettingsService implements IUserSettingsService {
-    constructor(private readonly authCall: TigerAuthenticatedCallGuard) {}
+export class TigerUserSettingsService
+    extends TigerSettingsService<IUserSettings>
+    implements IUserSettingsService
+{
+    constructor(private readonly authCall: TigerAuthenticatedCallGuard) {
+        super();
+    }
 
     public async getSettings(): Promise<IUserSettings> {
         return this.authCall(async (client) => {
@@ -32,38 +38,17 @@ export class TigerUserSettingsService implements IUserSettingsService {
         });
     }
 
-    public async setLocale(locale: string): Promise<void> {
-        return this.setSetting("locale", { value: locale });
-    }
-
-    private async setSetting(id: string, content: any): Promise<void> {
-        // Currently it is necessary to check existence of required setting
-        // since PUT does not support creation of non-existing setting.
-        // It can be simplified to Update method once NAS-4291 is implemented
-        try {
-            await this.getSetting(id);
-            await this.updateSetting(id, content);
-        } catch (error: any) {
-            if (isUnexpectedError(error)) {
-                // if such settings is not defined
-                await this.createSetting(id, content);
-                return;
-            }
-            throw convertApiError(error);
-        }
-    }
-
-    private async getSetting(id: string): Promise<any> {
+    protected async getSettingByType(type: TigerSettingsType) {
         return this.authCall(async (client) => {
             const profile = await client.profile.getCurrent();
-            return client.entities.getEntityUserSettings({
+            return client.entities.getAllEntitiesUserSettings({
                 userId: profile.userId,
-                id,
+                filter: `type==${type}`,
             });
         });
     }
 
-    private async updateSetting(id: string, content: any): Promise<any> {
+    protected async updateSetting(type: TigerSettingsType, id: string, content: any): Promise<any> {
         return this.authCall(async (client) => {
             const profile = await client.profile.getCurrent();
             return client.entities.updateEntityUserSettings({
@@ -75,6 +60,7 @@ export class TigerUserSettingsService implements IUserSettingsService {
                         id,
                         attributes: {
                             content,
+                            type,
                         },
                     },
                 },
@@ -82,7 +68,7 @@ export class TigerUserSettingsService implements IUserSettingsService {
         });
     }
 
-    private async createSetting(id: string, content: any): Promise<any> {
+    protected async createSetting(type: TigerSettingsType, id: string, content: any): Promise<any> {
         return this.authCall(async (client) => {
             const profile = await client.profile.getCurrent();
             return client.entities.createEntityUserSettings({
@@ -93,6 +79,7 @@ export class TigerUserSettingsService implements IUserSettingsService {
                         id,
                         attributes: {
                             content,
+                            type,
                         },
                     },
                 },
