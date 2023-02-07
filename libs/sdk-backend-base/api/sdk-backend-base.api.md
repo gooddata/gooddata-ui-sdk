@@ -46,6 +46,7 @@ import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IExecutionFactory } from '@gooddata/sdk-backend-spi';
 import { IExecutionResult } from '@gooddata/sdk-backend-spi';
+import { IExistingDashboard } from '@gooddata/sdk-model';
 import { IExplainProvider } from '@gooddata/sdk-backend-spi';
 import { IExportConfig } from '@gooddata/sdk-backend-spi';
 import { IExportResult } from '@gooddata/sdk-backend-spi';
@@ -538,6 +539,8 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
     updateScheduledMail(ref: ObjRef, scheduledMailDefinition: IScheduledMailDefinition, filterContextRef?: ObjRef): Promise<void>;
     // (undocumented)
     updateWidgetAlert(alert: IWidgetAlert | IWidgetAlertDefinition): Promise<IWidgetAlert>;
+    // (undocumented)
+    validateDashboardsExistence(dashboardRefs: ObjRef[]): Promise<IExistingDashboard[]>;
     // (undocumented)
     workspace: string;
 }

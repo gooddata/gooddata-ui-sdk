@@ -18,6 +18,7 @@ import {
     IDashboardDefinition,
     IDashboardPluginDefinition,
     IDashboardPermissions,
+    IExistingDashboard,
 } from "@gooddata/sdk-model";
 
 /**
@@ -419,4 +420,12 @@ export interface IWorkspaceDashboardsService {
      * @param ref - dashboard reference
      */
     getDashboardPermissions(ref: ObjRef): Promise<IDashboardPermissions>;
+
+    /**
+     * Checks whether dashboards exist for current user. Returns sanitized array of existing dashboards according to user's
+     * permissions to access or drill to them.
+     *
+     * @param dashboardRefs - dashboard references to validate
+     */
+    validateDashboardsExistence(dashboardRefs: ObjRef[]): Promise<IExistingDashboard[]>;
 }

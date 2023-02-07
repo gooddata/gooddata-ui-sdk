@@ -1198,6 +1198,13 @@ export interface IExecutionDefinition {
 }
 
 // @alpha
+export interface IExistingDashboard {
+    id: string;
+    ref: ObjRef;
+    title?: string;
+}
+
+// @alpha
 export interface IExportOptions {
     // (undocumented)
     includeFilters?: boolean;

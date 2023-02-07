@@ -1066,6 +1066,39 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
             };
         });
     };
+
+    public validateDashboardsExistence = async (dashboardRefs: ObjRef[]) => {
+        const validDashboards = await Promise.all(
+            dashboardRefs.map(async (ref) => {
+                try {
+                    const { title, identifier, isUnderStrictControl } = await this.getDashboard(ref);
+                    // Dashboard is not shared with current user (but does not have strict mode enabled).
+
+                    // For admin, backend returns object without 403 even if it is under strict control, therefore we
+                    // need to remove title of the dashboard to simulate forbidden dashboard without title to have
+                    // consistent behavior for both editor and admin.
+                    return {
+                        ref,
+                        title: isUnderStrictControl ? undefined : title,
+                        id: identifier,
+                    };
+                } catch (error) {
+                    if (error.httpStatus === 403) {
+                        // forbidden
+                        return {
+                            ref,
+                            id: objRefToString(ref), // target ref contains required dashboard ID,
+                        };
+                    } else {
+                        // non-existent
+                        return undefined;
+                    }
+                }
+            }),
+        );
+
+        return compact(validDashboards);
+    };
 }
 
 function mapDashboardReferenceTypes(type: SupportedDashboardReferenceTypes): RelatedObjectTypes | undefined {

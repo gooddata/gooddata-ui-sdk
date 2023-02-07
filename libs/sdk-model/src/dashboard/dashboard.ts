@@ -348,3 +348,23 @@ export interface IListedDashboard
 export type IDashboardPermissions = {
     [permission in "canViewDashboard" | "canEditDashboard" | "canShareDashboard"]: boolean;
 };
+
+/**
+ * Object describing minimal properties of existing dashboard.
+ *
+ * @alpha
+ */
+export interface IExistingDashboard {
+    /**
+     * Dashboard ref
+     */
+    ref: ObjRef;
+    /**
+     * Dashboard id
+     */
+    id: string;
+    /**
+     * Dashboard title
+     */
+    title?: string;
+}
