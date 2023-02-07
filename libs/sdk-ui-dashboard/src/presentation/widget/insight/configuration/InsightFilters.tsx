@@ -1,9 +1,9 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { Typography } from "@gooddata/sdk-ui-kit";
 import InsightDateDataSetFilter from "./InsightDateDataSetFilter";
-import { IInsightWidget } from "@gooddata/sdk-model";
+import { IInsightWidget, isInsightWidget } from "@gooddata/sdk-model";
 import { AttributeFilterConfiguration } from "../../common/configuration/AttributeFilterConfiguration";
 
 interface IInsightFiltersProps {
@@ -16,7 +16,7 @@ export default function InsightFilters({ widget }: IInsightFiltersProps) {
             <Typography tagName="h3" className="s-viz-filters-headline">
                 <FormattedMessage id="configurationPanel.filterBy" />
             </Typography>
-            <InsightDateDataSetFilter widget={widget} />
+            {isInsightWidget(widget) ? <InsightDateDataSetFilter widget={widget} /> : null}
             <AttributeFilterConfiguration widget={widget} />
         </div>
     );
