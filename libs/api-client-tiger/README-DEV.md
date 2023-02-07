@@ -7,6 +7,7 @@ Client is generated with [openapi-generator](https://github.com/OpenAPITools/ope
 `BASE_URL=http://your-tiger-host/ npm run generate-client`
 
 Or you can create a `.env` file with the following format
+test
 
 ```
 BASE_URL=http://your-tiger-host/
