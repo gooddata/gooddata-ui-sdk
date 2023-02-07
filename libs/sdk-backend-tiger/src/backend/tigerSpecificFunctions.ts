@@ -369,6 +369,7 @@ export type TigerSpecificFunctions = {
     createCSPDirective?: (requestData: ICSPDirective) => Promise<ICSPDirective>;
     updateCSPDirective?: (directiveId: string, requestData: ICSPDirective) => Promise<ICSPDirective>;
     deleteCSPDirective?: (directiveId: string) => Promise<void>;
+    registerUploadNotification?: (dataSourceId: string) => Promise<void>;
 
     /**
      * Return all custom setting of a workspace.
@@ -1303,5 +1304,13 @@ export const buildTigerSpecificFunctions = (
         } catch (error: any) {
             throw convertApiError(error);
         }
+    },
+
+    registerUploadNotification: async (dataSourceId: string) => {
+        return await authApiCall(async (sdk) => {
+            await sdk.actions.registerUploadNotification({
+                dataSourceId,
+            });
+        });
     },
 });
