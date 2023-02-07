@@ -1,7 +1,15 @@
-// (C) 2007-2022 GoodData Corporation
-import React, { useEffect } from "react";
+// (C) 2007-2023 GoodData Corporation
+import React, { useEffect, useMemo } from "react";
 import { DateDatasetFilter } from "../../common";
-import { IInsightWidget, isInsightWidget, widgetRef } from "@gooddata/sdk-model";
+import {
+    IInsightWidget,
+    IMeasure,
+    insightMeasures,
+    isDateFilter,
+    isSimpleMeasure,
+    measureFilters,
+    widgetRef,
+} from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import {
     MeasureDateDatasets,
@@ -13,6 +21,7 @@ import {
     useDashboardSelector,
 } from "../../../../model";
 import { useDateDatasetFilter } from "../../common/configuration/useDateDatasetFilter";
+import isEmpty from "lodash/isEmpty";
 
 export interface IConfigurationPanelProps {
     widget: IInsightWidget;
@@ -47,19 +56,28 @@ export default function InsightDateDataSetFilter({ widget }: IConfigurationPanel
         result?.dateDatasets,
     );
 
-    if (isInsightWidget(widget)) {
-        return (
-            <DateDatasetFilter
-                widget={widget}
-                dateFilterCheckboxDisabled={false}
-                isDatasetsLoading={status === "running" || status === "pending" || isLoadingAdditionalData}
-                relatedDateDatasets={result?.dateDatasetsOrdered}
-                isLoadingAdditionalData={isLoadingAdditionalData}
-                shouldOpenDateDatasetPicker={shouldOpenDateDatasetPicker}
-                onDateDatasetChanged={handleDateDatasetChanged}
-            />
-        );
-    }
+    const dateOptionsDisabled = useMemo(() => {
+        const measures = insightMeasures(insight);
+        return isEmpty(measures) ? false : measures.every(isDateFiltered);
+    }, [insight]);
 
-    return null;
+    return (
+        <DateDatasetFilter
+            widget={widget}
+            dateFilterCheckboxDisabled={dateOptionsDisabled}
+            isDatasetsLoading={status === "running" || status === "pending" || isLoadingAdditionalData}
+            relatedDateDatasets={result?.dateDatasetsOrdered}
+            isLoadingAdditionalData={isLoadingAdditionalData}
+            shouldOpenDateDatasetPicker={shouldOpenDateDatasetPicker}
+            onDateDatasetChanged={handleDateDatasetChanged}
+        />
+    );
+}
+
+function isDateFiltered(measure: IMeasure) {
+    if (isSimpleMeasure(measure)) {
+        const filters = measureFilters(measure) ?? [];
+        return filters.some(isDateFilter);
+    }
+    return true;
 }
