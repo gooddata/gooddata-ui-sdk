@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 
 import { IExecutionResult } from "@gooddata/sdk-backend-spi";
 import { IResultWarning, ObjRef, serializeObjRef } from "@gooddata/sdk-model";
@@ -10,7 +10,7 @@ import { IDashboardCommand } from "./base";
 /**
  * Triggers an event.
  *
- * @alpha
+ * @beta
  */
 export interface UpsertExecutionResult extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.EXECUTION_RESULT.UPSERT";
@@ -35,7 +35,7 @@ function upsertExecutionResult(
 /**
  * Creates an {@link UpsertExecutionResult} command that makes the relevant execution result indicate it is loading.
  *
- * @alpha
+ * @beta
  */
 export function setExecutionResultLoading(
     id: ObjRef | string,
@@ -56,7 +56,7 @@ export function setExecutionResultLoading(
 /**
  * Creates an {@link UpsertExecutionResult} command that makes the relevant execution result indicate an error and stop loading.
  *
- * @alpha
+ * @beta
  */
 export function setExecutionResultError(
     id: ObjRef | string,
@@ -78,7 +78,7 @@ export function setExecutionResultError(
 /**
  * Creates an {@link UpsertExecutionResult} command that makes the relevant execution result set new result data and stop loading.
  *
- * @alpha
+ * @beta
  */
 export function setExecutionResultData(
     id: ObjRef | string,

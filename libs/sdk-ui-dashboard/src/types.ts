@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import {
     IAbsoluteDateFilter,
@@ -21,7 +21,7 @@ import { DateFilterConfigValidationResult } from "./_staging/dateFilterConfig/va
 // TODO consider adding FilterContextItem to this union so that user can use either sdk-model or FilterContextItem variants of the filters
 /**
  * Supported dashboard filter type.
- * @beta
+ * @public
  */
 export type IDashboardFilter =
     | IAbsoluteDateFilter
@@ -165,7 +165,7 @@ export interface ISharingProperties {
 }
 
 /**
- * @alpha
+ * @beta
  */
 export interface IMenuButtonItemsVisibility {
     /**
@@ -187,7 +187,7 @@ export interface IMenuButtonItemsVisibility {
 }
 
 /**
- * @internal
+ * @beta
  */
 export type RenderMode = "view" | "edit";
 
@@ -244,7 +244,7 @@ export interface ILegacyDashboard {
 
 /**
  * Coordinates of an item in a layout.
- * @alpha
+ * @beta
  */
 export interface ILayoutCoordinates {
     /**

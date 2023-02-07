@@ -37,43 +37,57 @@ import { DashboardPermissionsState } from "./dashboardPermissions/dashboardPermi
  * Accessing state props directly is dangerous practice. We reserve the rights to refactor and otherwise break
  * the shape of the state at any time while keeping the Selectors and Command APIs stable.
  *
- * @alpha
+ * @public
  */
 export interface DashboardState {
+    /** @beta */
     loading: LoadingState;
     saving: SavingState;
     backendCapabilities: BackendCapabilitiesState;
     config: ConfigState;
+    /** @beta */
     entitlements: EntitlementsState;
     permissions: PermissionsState;
     filterContext: FilterContextState;
+    /** @alpha */
     layout: LayoutState;
+    /** @beta */
     dateFilterConfig: DateFilterConfigState;
     catalog: CatalogState;
     user: UserState;
+    /** @beta */
     meta: DashboardMetaState;
+    /** @beta */
     drill: DrillState;
     legacyDashboards: LegacyDashboardsState;
     // Entities
+    /** @beta */
     insights: EntityState<IInsight>;
+    /** @beta */
     alerts: EntityState<IWidgetAlert>;
+    /** @alpha */
     drillTargets: EntityState<IDrillTargets>;
+    /** @beta */
     listedDashboards: EntityState<IListedDashboard>;
+    /** @beta */
     accessibleDashboards: EntityState<IListedDashboard>;
     dashboardPermissions: DashboardPermissionsState;
 
     /**
      * State controlling how exactly the dashboard is rendered.
+     * @beta
      */
     renderMode: RenderModeState;
 
     /**
      * Ui state controllable from the outside.
+     * @beta
      */
     ui: UiState;
 
     /**
      * Part of state where execution results of the individual widgets are stored.
+     * @beta
      */
     executionResults: EntityState<IExecutionResultEnvelope>;
 

@@ -197,23 +197,26 @@ export const selectFilterContextDateFilter = createSelector(
  *
  * @public
  */
-export const selectFilterContextAttributeFilterByDisplayForm = createMemoizedSelector((displayForm: ObjRef) =>
-    createSelector(
-        selectAttributeFilterDisplayFormsMap,
-        selectFilterContextAttributeFilters,
-        (attributeDisplayFormsMap, attributeFilters) => {
-            const df = attributeDisplayFormsMap.get(displayForm);
-            if (!df) {
-                return undefined;
-            }
-            // try matching both uri and id in case the type of ref is different from what is in the ref field
-            return attributeFilters.find(
-                (filter) =>
-                    areObjRefsEqual(filter.attributeFilter.displayForm, idRef(df.id, "displayForm")) ||
-                    areObjRefsEqual(filter.attributeFilter.displayForm, uriRef(df.uri)),
-            );
-        },
-    ),
+export const selectFilterContextAttributeFilterByDisplayForm: (
+    displayForm: ObjRef,
+) => (state: DashboardState) => IDashboardAttributeFilter | undefined = createMemoizedSelector(
+    (displayForm: ObjRef) =>
+        createSelector(
+            selectAttributeFilterDisplayFormsMap,
+            selectFilterContextAttributeFilters,
+            (attributeDisplayFormsMap, attributeFilters) => {
+                const df = attributeDisplayFormsMap.get(displayForm);
+                if (!df) {
+                    return undefined;
+                }
+                // try matching both uri and id in case the type of ref is different from what is in the ref field
+                return attributeFilters.find(
+                    (filter) =>
+                        areObjRefsEqual(filter.attributeFilter.displayForm, idRef(df.id, "displayForm")) ||
+                        areObjRefsEqual(filter.attributeFilter.displayForm, uriRef(df.uri)),
+                );
+            },
+        ),
 );
 
 /**

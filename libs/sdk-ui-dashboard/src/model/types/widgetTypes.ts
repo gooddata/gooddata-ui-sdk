@@ -1,10 +1,10 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 
 import { ObjRef } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 
 /**
- * @alpha
+ * @beta
  */
 export interface WidgetHeader {
     /**
@@ -14,7 +14,7 @@ export interface WidgetHeader {
 }
 
 /**
- * @alpha
+ * @beta
  */
 export interface WidgetDescription {
     /**
@@ -31,7 +31,7 @@ export function isWidgetHeader(obj: unknown): obj is WidgetHeader {
 }
 
 /**
- * @alpha
+ * @beta
  */
 export type FilterOperations =
     | "enableDateFilter"
@@ -42,7 +42,7 @@ export type FilterOperations =
     | "replace";
 
 /**
- * @alpha
+ * @beta
  */
 export interface FilterOp {
     readonly type: FilterOperations;
@@ -54,7 +54,7 @@ export interface FilterOp {
  * A ref to date data set must be specified as it is passed down to widget content. Insights or KPIs can be typically
  * date-filtered using different date data sets and so this selection is essential.
  *
- * @alpha
+ * @beta
  */
 export interface FilterOpEnableDateFilter extends FilterOp {
     type: "enableDateFilter";
@@ -69,7 +69,7 @@ export interface FilterOpEnableDateFilter extends FilterOp {
 /**
  * This filter operation disabled date filtering for the widget.
  *
- * @alpha
+ * @beta
  */
 export interface FilterOpDisableDateFilter extends FilterOp {
     type: "disableDateFilter";
@@ -79,7 +79,7 @@ export interface FilterOpDisableDateFilter extends FilterOp {
  * This filter operation replaces the setting which determines which of the dashboard's attribute filters
  * should be ignored for the widget.
  *
- * @alpha
+ * @beta
  */
 export interface FilterOpReplaceAttributeIgnores extends FilterOp {
     type: "replaceAttributeIgnores";
@@ -96,7 +96,7 @@ export interface FilterOpReplaceAttributeIgnores extends FilterOp {
 /**
  * This filter operation appends one or more attribute filters into the widget's filter ignore-list.
  *
- * @alpha
+ * @beta
  */
 export interface FilterOpIgnoreAttributeFilter extends FilterOp {
     type: "ignoreAttributeFilter";
@@ -114,7 +114,7 @@ export interface FilterOpIgnoreAttributeFilter extends FilterOp {
 /**
  * This filter operation removes one or more attribute filters from the widget's filter ignore-list.
  *
- * @alpha
+ * @beta
  */
 export interface FilterOpUnignoreAttributeFilter extends FilterOp {
     type: "unignoreAttributeFilter";
@@ -134,7 +134,7 @@ export interface FilterOpUnignoreAttributeFilter extends FilterOp {
  * This filter operation completely replaces widget's filter settings. Both date data set (and thus date filter) setting
  * and the attribute filter ignore list will be replaced using the parameters in the operation body.
  *
- * @alpha
+ * @beta
  */
 export interface FilterOpReplaceAll extends FilterOp {
     type: "replace";
@@ -158,7 +158,7 @@ export interface FilterOpReplaceAll extends FilterOp {
  * Widget's filter settings can be manipulated using multiple different granular operations. This is the union
  * type containing all the available operations.
  *
- * @alpha
+ * @beta
  */
 export type WidgetFilterOperation =
     | FilterOpEnableDateFilter

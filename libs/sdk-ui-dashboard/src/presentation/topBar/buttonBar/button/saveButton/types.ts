@@ -1,10 +1,10 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 
 import { ComponentType } from "react";
 import { MessageDescriptor } from "react-intl";
 
 /**
- * @internal
+ * @beta
  */
 export interface ISaveButtonProps {
     isVisible: boolean;
@@ -16,6 +16,6 @@ export interface ISaveButtonProps {
 }
 
 /**
- * @internal
+ * @beta
  */
 export type CustomSaveButtonComponent = ComponentType<ISaveButtonProps>;

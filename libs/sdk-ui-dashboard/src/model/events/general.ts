@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 
 import { IDashboardEvent } from "./base";
 import { DashboardContext } from "../types/commonTypes";
@@ -8,7 +8,7 @@ import { eventGuard } from "./util";
 
 /**
  * Payload of the {@link DashboardCommandStarted} event.
- * @alpha
+ * @beta
  */
 export interface DashboardCommandStartedPayload<TCommand extends IDashboardCommand> {
     /**
@@ -20,13 +20,12 @@ export interface DashboardCommandStartedPayload<TCommand extends IDashboardComma
 /**
  * This event is emitted when a particular command processing starts.
  *
- * @alpha
+ * @beta
  */
 export interface DashboardCommandStarted<TCommand extends IDashboardCommand> extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.COMMAND.STARTED";
     readonly payload: DashboardCommandStartedPayload<TCommand>;
 }
-
 export function dashboardCommandStarted<TCommand extends IDashboardCommand>(
     ctx: DashboardContext,
     command: TCommand,
@@ -45,20 +44,20 @@ export function dashboardCommandStarted<TCommand extends IDashboardCommand>(
  * Tests whether the provided object is an instance of {@link DashboardCommandStarted}.
  *
  * @param obj - object to test
- * @alpha
+ * @beta
  */
 export const isDashboardCommandStarted = eventGuard<DashboardCommandStarted<any>>(
     "GDC.DASH/EVT.COMMAND.STARTED",
 );
 
 /**
- * @alpha
+ * @beta
  */
 export type ActionFailedErrorReason = "USER_ERROR" | "INTERNAL_ERROR";
 
 /**
  * Payload of the {@link DashboardCommandFailed} event.
- * @alpha
+ * @beta
  */
 export interface DashboardCommandFailedPayload<TCommand extends IDashboardCommand> {
     /**
@@ -90,7 +89,7 @@ export interface DashboardCommandFailedPayload<TCommand extends IDashboardComman
  *
  * -  An internal error has occurred in the dashboard component - highly likely due to a bug.
  *
- * @alpha
+ * @beta
  */
 export interface DashboardCommandFailed<TCommand extends IDashboardCommand = IDashboardCommand>
     extends IDashboardEvent {
@@ -138,7 +137,7 @@ export function invalidArgumentsProvided<TCommand extends IDashboardCommand>(
  * Tests whether the provided object is an instance of {@link DashboardCommandFailed}.
  *
  * @param obj - object to test
- * @alpha
+ * @beta
  */
 export const isDashboardCommandFailed = eventGuard<DashboardCommandFailed<any>>(
     "GDC.DASH/EVT.COMMAND.FAILED",
@@ -154,7 +153,7 @@ export const isDashboardCommandFailed = eventGuard<DashboardCommandFailed<any>>(
  *
  * This typically indicates user error, perhaps a typo in the command type name.
  *
- * @alpha
+ * @beta
  */
 export interface DashboardCommandRejected extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.COMMAND.REJECTED";
@@ -172,7 +171,7 @@ export function commandRejected(ctx: DashboardContext, correlationId?: string): 
  * Tests whether the provided object is an instance of {@link DashboardCommandRejected}.
  *
  * @param obj - object to test
- * @alpha
+ * @beta
  */
 export const isDashboardCommandRejected = eventGuard<DashboardCommandRejected>(
     "GDC.DASH/EVT.COMMAND.REJECTED",
@@ -186,7 +185,7 @@ export const isDashboardCommandRejected = eventGuard<DashboardCommandRejected>(
  * This event is emitted when the submitted query has been rejected by the dashboard component because it does
  * not know how to handle the query.
  *
- * @alpha
+ * @beta
  */
 export interface DashboardQueryRejected extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.QUERY.REJECTED";
@@ -204,7 +203,7 @@ export function queryRejected(ctx: DashboardContext, correlationId?: string): Da
  * Tests whether the provided object is an instance of {@link DashboardQueryRejected}.
  *
  * @param obj - object to test
- * @alpha
+ * @beta
  */
 export const isDashboardQueryRejected = eventGuard<DashboardQueryRejected>("GDC.DASH/EVT.QUERY.REJECTED");
 
@@ -214,7 +213,7 @@ export const isDashboardQueryRejected = eventGuard<DashboardQueryRejected>("GDC.
 
 /**
  * Payload of the {@link DashboardQueryFailed} event.
- * @alpha
+ * @beta
  */
 export interface DashboardQueryFailedPayload {
     /**
@@ -241,7 +240,7 @@ export interface DashboardQueryFailedPayload {
  *
  * -  An internal error has occurred in the dashboard component - highly likely due to a bug.
  *
- * @alpha
+ * @beta
  */
 export interface DashboardQueryFailed extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.QUERY.FAILED";
@@ -286,7 +285,7 @@ export function invalidQueryArguments(
  * Tests whether the provided object is an instance of {@link DashboardCommandFailed}.
  *
  * @param obj - object to test
- * @alpha
+ * @beta
  */
 export const isDashboardQueryFailed = eventGuard<DashboardQueryFailed>("GDC.DASH/EVT.QUERY.FAILED");
 
@@ -296,7 +295,7 @@ export const isDashboardQueryFailed = eventGuard<DashboardQueryFailed>("GDC.DASH
 
 /**
  * Payload of the {@link DashboardQueryStarted} event.
- * @alpha
+ * @beta
  */
 export interface DashboardQueryStartedPayload {
     /**
@@ -308,7 +307,7 @@ export interface DashboardQueryStartedPayload {
 /**
  * This event is emitted when query processing starts.
  *
- * @alpha
+ * @beta
  */
 export interface DashboardQueryStarted extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.QUERY.STARTED";
@@ -334,7 +333,7 @@ export function queryStarted(
  * Tests whether the provided object is an instance of {@link DashboardQueryStarted}.
  *
  * @param obj - object to test
- * @alpha
+ * @beta
  */
 export const isDashboardQueryStarted = eventGuard<DashboardQueryStarted>("GDC.DASH/EVT.QUERY.STARTED");
 
@@ -344,7 +343,7 @@ export const isDashboardQueryStarted = eventGuard<DashboardQueryStarted>("GDC.DA
 
 /**
  * Payload of the {@link DashboardQueryCompleted} event.
- * @alpha
+ * @beta
  */
 export interface DashboardQueryCompletedPayload<TQuery extends IDashboardQuery, TResult> {
     /**
@@ -361,7 +360,7 @@ export interface DashboardQueryCompletedPayload<TQuery extends IDashboardQuery, 
  * This event is emitted when query processing completes with success. Both the query payload and the result are
  * included.
  *
- * @alpha
+ * @beta
  */
 export interface DashboardQueryCompleted<TQuery extends IDashboardQuery, TResult> extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.QUERY.COMPLETED";
@@ -389,7 +388,7 @@ export function queryCompleted<TQuery extends IDashboardQuery, TResult>(
  * Tests whether the provided object is an instance of {@link DashboardQueryCompleted}.
  *
  * @param obj - object to test
- * @alpha
+ * @beta
  */
 export const isDashboardQueryCompleted = eventGuard<DashboardQueryCompleted<any, any>>(
     "GDC.DASH/EVT.QUERY.COMPLETED",

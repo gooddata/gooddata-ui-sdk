@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { ComponentType } from "react";
 import { DateFilterGranularity, IDashboardDateFilter } from "@gooddata/sdk-model";
 import { IDateFilterOptionsByType } from "@gooddata/sdk-ui-filters";
@@ -6,16 +6,18 @@ import { IDateFilterOptionsByType } from "@gooddata/sdk-ui-filters";
 /**
  * Defines the configuration of the DateFilter component.
  *
- * @alpha
+ * @public
  */
 export interface IDashboardDateFilterConfig {
     /**
      * Granularities available in the Floating range form.
+     * @alpha
      */
     availableGranularities: DateFilterGranularity[];
 
     /**
      * A {@link @gooddata/sdk-ui-filters#IDateFilterOptionsByType} configuration of the Date Filter.
+     * @alpha
      */
     dateFilterOptions: IDateFilterOptionsByType;
 
@@ -26,7 +28,7 @@ export interface IDashboardDateFilterConfig {
 }
 
 /**
- * @alpha
+ * @public
  */
 export interface IDashboardDateFilterProps {
     /**
@@ -55,6 +57,6 @@ export interface IDashboardDateFilterProps {
 }
 
 /**
- * @alpha
+ * @public
  */
 export type CustomDashboardDateFilterComponent = ComponentType<IDashboardDateFilterProps>;

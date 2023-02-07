@@ -3,7 +3,7 @@
 import { ResolvedEntitlements } from "../../types/commonTypes";
 
 /**
- * @alpha
+ * @beta
  */
 export interface EntitlementsState {
     entitlements?: ResolvedEntitlements;

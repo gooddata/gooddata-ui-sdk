@@ -1,11 +1,11 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 
 import { IFilterContextDefinition, IScheduledMailDefinition, ObjRef } from "@gooddata/sdk-model";
 import { IDashboardCommand } from "./base";
 
 /**
  * Payload of the {@link CreateScheduledEmail} command.
- * @alpha
+ * @beta
  */
 export interface CreateScheduledEmailPayload {
     /**
@@ -21,7 +21,7 @@ export interface CreateScheduledEmailPayload {
 /**
  * Creates scheduled email.
  *
- * @alpha
+ * @beta
  */
 export interface CreateScheduledEmail extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.SCHEDULED_EMAIL.CREATE";
@@ -38,7 +38,7 @@ export interface CreateScheduledEmail extends IDashboardCommand {
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
 
- * @alpha
+ * @beta
  */
 export function createScheduledEmail(
     scheduledEmail: IScheduledMailDefinition,
@@ -58,7 +58,7 @@ export function createScheduledEmail(
 /**
  * Saves scheduled email.
  *
- * @alpha
+ * @beta
  */
 export interface SaveScheduledEmail extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.SCHEDULED_EMAIL.SAVE";
@@ -67,7 +67,7 @@ export interface SaveScheduledEmail extends IDashboardCommand {
 
 /**
  * Payload of the {@link SaveScheduledEmail} command.
- * @alpha
+ * @beta
  */
 export interface SaveScheduledEmailPayload {
     /**
@@ -88,7 +88,7 @@ export interface SaveScheduledEmailPayload {
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
 
- * @alpha
+ * @beta
  */
 export function saveScheduledEmail(
     scheduledEmail: IScheduledMailDefinition,

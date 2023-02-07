@@ -1,8 +1,8 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { ExplicitDrill } from "@gooddata/sdk-ui";
 
 /**
- * @alpha
+ * @beta
  */
 export interface DrillState {
     drillableItems: ExplicitDrill[];

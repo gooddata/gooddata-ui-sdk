@@ -152,6 +152,7 @@ export interface DashboardConfig {
 
     /**
      * Configure which of the default menu button buttons are visible.
+     * @beta
      */
     menuButtonItemsVisibility?: IMenuButtonItemsVisibility;
 
@@ -226,7 +227,7 @@ export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxTok
 
 /**
  *
- * @alpha
+ * @beta
  */
 export type ResolvedEntitlements = IEntitlementDescriptor[];
 
@@ -360,7 +361,7 @@ export type WidgetsOverlayFn = (
 ) => Record<string, IDashboardWidgetOverlay>;
 
 /**
- * @alpha
+ * @beta
  */
 export interface IDashboardWidgetOverlay {
     /**

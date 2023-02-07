@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 
 import { IExecutionDefinition, ObjRef } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
@@ -9,7 +9,7 @@ import { eventGuard } from "./util";
 
 /**
  * Payload of the {@link DashboardWidgetExecutionStarted} event.
- * @alpha
+ * @beta
  */
 export interface DashboardWidgetExecutionStartedPayload {
     /**
@@ -25,7 +25,7 @@ export interface DashboardWidgetExecutionStartedPayload {
 /**
  * This event is emitted after execution of an insight widget starts.
  *
- * @alpha
+ * @beta
  */
 export interface DashboardWidgetExecutionStarted extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.WIDGET.EXECUTION_STARTED";
@@ -33,7 +33,7 @@ export interface DashboardWidgetExecutionStarted extends IDashboardEvent {
 }
 
 /**
- * @alpha
+ * @beta
  */
 export function widgetExecutionStarted(
     widgetRef: ObjRef,
@@ -54,7 +54,7 @@ export function widgetExecutionStarted(
  * Tests whether the provided object is an instance of {@link DashboardWidgetExecutionStarted}.
  *
  * @param obj - object to test
- * @alpha
+ * @beta
  */
 export const isDashboardWidgetExecutionStarted = eventGuard<DashboardWidgetExecutionStarted>(
     "GDC.DASH/EVT.WIDGET.EXECUTION_STARTED",
@@ -66,7 +66,7 @@ export const isDashboardWidgetExecutionStarted = eventGuard<DashboardWidgetExecu
 
 /**
  * Payload of the {@link DashboardWidgetExecutionFailed} event.
- * @alpha
+ * @beta
  */
 export interface DashboardWidgetExecutionFailedPayload {
     /**
@@ -82,7 +82,7 @@ export interface DashboardWidgetExecutionFailedPayload {
 /**
  * This event is emitted after execution of an insight widget fails.
  *
- * @alpha
+ * @beta
  */
 export interface DashboardWidgetExecutionFailed extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.WIDGET.EXECUTION_FAILED";
@@ -90,7 +90,7 @@ export interface DashboardWidgetExecutionFailed extends IDashboardEvent {
 }
 
 /**
- * @alpha
+ * @beta
  */
 export function widgetExecutionFailed(
     widgetRef: ObjRef,
@@ -111,7 +111,7 @@ export function widgetExecutionFailed(
  * Tests whether the provided object is an instance of {@link DashboardWidgetExecutionFailed}.
  *
  * @param obj - object to test
- * @alpha
+ * @beta
  */
 export const isDashboardWidgetExecutionFailed = eventGuard<DashboardWidgetExecutionFailed>(
     "GDC.DASH/EVT.WIDGET.EXECUTION_FAILED",
@@ -123,7 +123,7 @@ export const isDashboardWidgetExecutionFailed = eventGuard<DashboardWidgetExecut
 
 /**
  * Payload of the {@link DashboardWidgetExecutionSucceeded} event.
- * @alpha
+ * @beta
  */
 export interface DashboardWidgetExecutionSucceededPayload {
     /**
@@ -139,7 +139,7 @@ export interface DashboardWidgetExecutionSucceededPayload {
 /**
  * This event is emitted after execution of an insight widget succeeds.
  *
- * @alpha
+ * @beta
  */
 export interface DashboardWidgetExecutionSucceeded extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.WIDGET.EXECUTION_SUCCEEDED";
@@ -147,7 +147,7 @@ export interface DashboardWidgetExecutionSucceeded extends IDashboardEvent {
 }
 
 /**
- * @alpha
+ * @beta
  */
 export function widgetExecutionSucceeded(
     widgetRef: ObjRef,
@@ -168,7 +168,7 @@ export function widgetExecutionSucceeded(
  * Tests whether the provided object is an instance of {@link DashboardWidgetExecutionSucceeded}.
  *
  * @param obj - object to test
- * @alpha
+ * @beta
  */
 export const isDashboardWidgetExecutionSucceeded = eventGuard<DashboardWidgetExecutionSucceeded>(
     "GDC.DASH/EVT.WIDGET.EXECUTION_SUCCEEDED",

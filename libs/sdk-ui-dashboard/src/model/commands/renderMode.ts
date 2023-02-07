@@ -1,10 +1,10 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 
 import { IDashboardCommand } from "./base";
 import { RenderMode } from "../../types";
 
 /**
- * @internal
+ * @beta
  */
 export interface RenderModeChangeOptions {
     readonly resetDashboard: boolean;
@@ -12,7 +12,7 @@ export interface RenderModeChangeOptions {
 
 /**
  * Payload of the {@link ChangeRenderMode} command.
- * @internal
+ * @beta
  */
 export interface ChangeRenderModePayload {
     readonly renderMode: RenderMode;
@@ -20,7 +20,7 @@ export interface ChangeRenderModePayload {
 }
 
 /**
- * @internal
+ * @beta
  */
 export interface ChangeRenderMode extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.CHANGE_RENDER_MODE";
@@ -35,7 +35,7 @@ export interface ChangeRenderMode extends IDashboardCommand {
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @internal
+ * @beta
  */
 export function changeRenderMode(
     renderMode: RenderMode,
@@ -58,7 +58,7 @@ export function changeRenderMode(
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @internal
+ * @beta
  */
 export function switchToEditRenderMode(correlationId?: string): ChangeRenderMode {
     return changeRenderMode("edit", { resetDashboard: true }, correlationId);
@@ -70,7 +70,7 @@ export function switchToEditRenderMode(correlationId?: string): ChangeRenderMode
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @internal
+ * @beta
  */
 export function cancelEditRenderMode(correlationId?: string): ChangeRenderMode {
     return changeRenderMode("view", { resetDashboard: true }, correlationId);
