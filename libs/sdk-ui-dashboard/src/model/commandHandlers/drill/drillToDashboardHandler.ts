@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import compact from "lodash/compact";
@@ -166,7 +166,7 @@ function filterIntersection(
     return ref ? !dateDataSetsAttributesRefs.some((ddsRef) => areObjRefsEqual(ddsRef, ref)) : false;
 }
 
-export function convertIntersectionToAttributeFilters(
+function convertIntersectionToAttributeFilters(
     intersection: IDrillEventIntersectionElement[],
     dateDataSetsAttributesRefs: ObjRef[],
     backendSupportsElementUris: boolean,
@@ -182,7 +182,7 @@ export function convertIntersectionToAttributeFilters(
                 });
             } else {
                 return newPositiveAttributeFilter(h.attributeHeader.ref, {
-                    values: [h.attributeHeaderItem.name],
+                    uris: [h.attributeHeaderItem.name],
                 });
             }
         });
