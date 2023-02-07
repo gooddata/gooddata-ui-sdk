@@ -42,6 +42,7 @@ import {
     IDashboardPermissions,
     FilterContextItem,
     isAllTimeDashboardDateFilter,
+    objRefToString,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual";
 import { v4 as uuidv4 } from "uuid";
@@ -531,6 +532,28 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         });
 
         return result.data.map(convertDashboardPluginWithLinksFromBackend);
+    };
+
+    public validateDashboardsExistence = async (dashboardRefs: ObjRef[]) => {
+        const entitiesGraph = await this.authCall((client) =>
+            client.actions
+                .getDependentEntitiesGraph({
+                    workspaceId: this.workspace,
+                })
+                .then((res) => res.data.graph),
+        );
+        const analyticalDashboards = entitiesGraph.nodes.filter(({ type }) => type === "analyticalDashboard");
+
+        // Refs which are not listed in entities graph are non-existent
+        const validDashboardRefs = dashboardRefs.filter((ref) => {
+            const dashboardId = objRefToString(ref);
+            return analyticalDashboards.some(({ id }) => id === dashboardId);
+        });
+
+        return validDashboardRefs.map((ref) => ({
+            ref,
+            id: objRefToString(ref),
+        }));
     };
 
     //

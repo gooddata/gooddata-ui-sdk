@@ -26,6 +26,7 @@ import {
     IDashboardPlugin,
     IDashboardPluginDefinition,
     IDashboardPermissions,
+    IExistingDashboard,
 } from "@gooddata/sdk-model";
 
 /**
@@ -165,5 +166,9 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
 
     getDashboardPermissions(ref: ObjRef): Promise<IDashboardPermissions> {
         return this.decorated.getDashboardPermissions(ref);
+    }
+
+    validateDashboardsExistence(dashboardRefs: ObjRef[]): Promise<IExistingDashboard[]> {
+        return this.decorated.validateDashboardsExistence(dashboardRefs);
     }
 }

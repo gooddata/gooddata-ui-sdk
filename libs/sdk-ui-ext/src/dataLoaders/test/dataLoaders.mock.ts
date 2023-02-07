@@ -43,5 +43,6 @@ export const noopWorkspaceDashboardsService: IWorkspaceDashboardsService = {
     getDashboardPlugin: noop as any,
     getDashboardPlugins: noop as any,
     getDashboardPermissions: noop as any,
+    validateDashboardsExistence: noop as any,
     workspace: "workspace",
 };

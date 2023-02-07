@@ -50,6 +50,7 @@ import { IDimensionDescriptor as IDimensionDescriptor_2 } from '@gooddata/sdk-mo
 import { IEntitlementDescriptor } from '@gooddata/sdk-model';
 import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
+import { IExistingDashboard } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { IFilterContextDefinition as IFilterContextDefinition_2 } from '@gooddata/sdk-model';
 import { IGranularAccessGrantee } from '@gooddata/sdk-model';
@@ -1752,6 +1753,7 @@ export interface IWorkspaceDashboardsService {
     updateDashboard(dashboard: IDashboard_2, updatedDashboard: IDashboardDefinition_2): Promise<IDashboard_2>;
     updateScheduledMail(ref: ObjRef, scheduledMail: IScheduledMailDefinition_2, filterContextRef?: ObjRef): Promise<void>;
     updateWidgetAlert(alert: IWidgetAlert_2 | IWidgetAlertDefinition_2): Promise<IWidgetAlert_2>;
+    validateDashboardsExistence(dashboardRefs: ObjRef[]): Promise<IExistingDashboard[]>;
     // (undocumented)
     readonly workspace: string;
 }

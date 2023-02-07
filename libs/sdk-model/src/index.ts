@@ -666,6 +666,7 @@ export {
     IAccessControlAware,
     ShareStatus,
     IDashboardPermissions,
+    IExistingDashboard,
 } from "./dashboard/dashboard";
 
 export { ISeparators, ISettings, PlatformEdition, IWhiteLabeling } from "./settings";
