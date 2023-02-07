@@ -370,6 +370,7 @@ export type TigerSpecificFunctions = {
     createCSPDirective?: (requestData: ICSPDirective) => Promise<ICSPDirective>;
     updateCSPDirective?: (directiveId: string, requestData: ICSPDirective) => Promise<ICSPDirective>;
     deleteCSPDirective?: (directiveId: string) => Promise<void>;
+    registerUploadNotification?: (dataSourceId: string) => Promise<void>;
     getWorkspaceCustomAppSettings?: (workspaceId: string, applicationName?: string) => Promise<ICustomApplicationSetting[]>;
     createWorkspaceCustomAppSetting?: (workspaceId: string, id: string, applicationName: string, content: object) => Promise<ICustomApplicationSetting>;
     deleteWorkspaceCustomAppSetting?: (workspaceId: string, settingId: string) => Promise<void>;
