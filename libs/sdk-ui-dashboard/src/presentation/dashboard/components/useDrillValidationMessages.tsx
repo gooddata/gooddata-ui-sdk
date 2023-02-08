@@ -5,7 +5,7 @@ import { IMessage } from "@gooddata/sdk-ui-kit";
 import compact from "lodash/compact";
 import {
     selectInvalidDrillWidgetRefs,
-    selectInvalidUrlDrillParameterWidgetRefs,
+    selectInvalidUrlDrillParameterWidgetWarnings,
     selectIsInEditMode,
     selectWidgetsMap,
     uiActions,
@@ -37,7 +37,7 @@ export function useDrillValidationMessages() {
 
     const allWidgets = useDashboardSelector(selectWidgetsMap);
     const invalidDrillWidgetRefs = useDashboardSelector(selectInvalidDrillWidgetRefs);
-    const invalidUrlDrillWidgetRefs = useDashboardSelector(selectInvalidUrlDrillParameterWidgetRefs);
+    const invalidUrlDrillWidgetRefs = useDashboardSelector(selectInvalidUrlDrillParameterWidgetWarnings);
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
 
     const messages = useMemo(() => {
@@ -84,7 +84,7 @@ export function useDrillValidationMessages() {
                 dispatch(uiActions.resetInvalidDrillWidgetRefs());
             }
             if (id === URL_DRILL_MESSAGE_ID) {
-                dispatch(uiActions.resetAllInvalidCustomUrlDrillParameterWidgets());
+                dispatch(uiActions.resetAllInvalidCustomUrlDrillParameterWidgetsWarnings());
             }
         },
         [dispatch],
@@ -92,7 +92,7 @@ export function useDrillValidationMessages() {
 
     const removeAllMessages = useCallback(() => {
         dispatch(uiActions.resetInvalidDrillWidgetRefs());
-        dispatch(uiActions.resetAllInvalidCustomUrlDrillParameterWidgets());
+        dispatch(uiActions.resetAllInvalidCustomUrlDrillParameterWidgetsWarnings());
     }, [dispatch]);
 
     return {

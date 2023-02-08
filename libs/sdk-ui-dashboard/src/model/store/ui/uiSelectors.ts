@@ -246,6 +246,15 @@ export const selectInvalidUrlDrillParameterWidgetRefs = createSelector(
     (invalidCustomUrlDrillParameterWidgets) => invalidCustomUrlDrillParameterWidgets.map((i) => i.widgetRef),
 );
 
+/**
+ * @internal
+ */
+export const selectInvalidUrlDrillParameterWidgetWarnings = createSelector(
+    selectInvalidCustomUrlDrillParameterWidgets,
+    (invalidCustomUrlDrillParameterWidgets) =>
+        invalidCustomUrlDrillParameterWidgets.filter((item) => item.showMessage).map((i) => i.widgetRef),
+);
+
 const selectInvalidUrlDrillParameterWidgetsMap = createSelector(
     selectInvalidCustomUrlDrillParameterWidgets,
     (invalidCustomUrlDrillParameterWidgets) =>

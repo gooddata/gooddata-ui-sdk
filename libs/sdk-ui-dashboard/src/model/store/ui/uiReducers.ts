@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { Action, AnyAction, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import {
     areObjRefsEqual,
@@ -163,6 +163,13 @@ const resetAllInvalidCustomUrlDrillParameterWidgets: UiReducer = (state) => {
     state.drillValidationMessages.invalidCustomUrlDrillParameterWidgets = [];
 };
 
+const resetAllInvalidCustomUrlDrillParameterWidgetsWarnings: UiReducer = (state) => {
+    state.drillValidationMessages.invalidCustomUrlDrillParameterWidgets =
+        state.drillValidationMessages.invalidCustomUrlDrillParameterWidgets.map((item) => {
+            return { ...item, showMessage: false };
+        });
+};
+
 const addInvalidDrillWidgetRefs: UiReducer<PayloadAction<ObjRef[]>> = (state, action) => {
     action.payload.forEach((toAdd) => {
         if (
@@ -188,6 +195,7 @@ const setInvalidCustomUrlDrillParameterWidgets: UiReducer<
             widgetId: widgetId(item.widget),
             widgetRef: widgetRef(item.widget),
             widgetUri: widgetUri(item.widget),
+            showMessage: true,
         };
 
         if (existingIndex >= 0) {
@@ -313,6 +321,7 @@ export const uiReducers = {
     closeCancelEditModeDialog,
     resetInvalidDrillWidgetRefs,
     resetAllInvalidCustomUrlDrillParameterWidgets,
+    resetAllInvalidCustomUrlDrillParameterWidgetsWarnings,
     addInvalidDrillWidgetRefs,
     setInvalidCustomUrlDrillParameterWidgets,
     removeInvalidDrillWidgetRefs,
