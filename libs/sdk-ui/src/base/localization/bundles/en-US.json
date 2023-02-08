@@ -1564,6 +1564,36 @@
         "comment": "",
         "limit": 0
     },
+    "shareDialog.share.granular.grantee.tooltip.cannotChangeHigher": {
+        "value": "You cannot remove or change permissions for users with higher permissions than you have.",
+        "comment": "",
+        "limit": 0
+    },
+    "shareDialog.share.granular.grantee.tooltip.cannotGrantHigher": {
+        "value": "You cannot set higher permissions than you have.",
+        "comment": "",
+        "limit": 0
+    },
+    "shareDialog.share.granular.grantee.tooltip.cannotGrantLowerForUser": {
+        "value": "You cannot set lower permissions than are the permissions from user groups with this user.",
+        "comment": "",
+        "limit": 0
+    },
+    "shareDialog.share.granular.grantee.tooltip.cannotGrantLowerForGroup": {
+        "value": "You cannot set lower permissions than are the permissions from user groups that include this group.",
+        "comment": "",
+        "limit": 0
+    },
+    "shareDialog.share.granular.grantee.tooltip.cannotRemoveFromParent": {
+        "value": "You cannot remove permissions for this user in this workspace. To remove the permissions, do so from the parent workspace.",
+        "comment": "",
+        "limit": 0
+    },
+    "shareDialog.share.granular.grantee.tooltip.noChangeAvailable": {
+        "value": "You cannot remove or change permissions for this user in this workspace. To edit the permissions, do so from the parent workspace.",
+        "comment": "",
+        "limit": 0
+    },
     "sorting.dropdown.header|insight": {
         "value": "Sort insight",
         "comment": "The title of sorting dropdown where you can choose which sort options you want to use. For example sort by attribute A1.",

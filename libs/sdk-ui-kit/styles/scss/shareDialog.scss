@@ -300,6 +300,10 @@ $permissions-dialog-width: 140px;
         margin-right: 10px;
     }
 
+    .gd-grantee-granular-permission-bubble-trigger {
+        display: flex;
+    }
+
     .gd-granular-permission-button {
         display: flex;
         justify-content: flex-end;
@@ -337,7 +341,6 @@ $permissions-dialog-width: 140px;
             font-size: 14px;
             font-weight: normal;
             line-height: 20px;
-            color: var(--gd-palette-complementary-6, #687581);
         }
 
         &::after {

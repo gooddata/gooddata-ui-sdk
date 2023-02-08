@@ -3,7 +3,6 @@ import { createSelector } from "@reduxjs/toolkit";
 
 import {
     DashboardState,
-    selectCanManageWorkspace,
     selectDashboardEditModeDevRollout,
     selectDashboardLockStatus,
     selectDashboardRef,
@@ -16,40 +15,23 @@ import {
     selectIsNewDashboard,
     selectIsReadOnly,
     selectListedDashboardsMap,
-    selectSupportsAccessControlCapability,
-    selectSupportsHierarchicalWorkspacesCapability,
     selectIsShareButtonHidden,
     selectCanEditDashboardPermission,
+    selectCanEditLockedDashboardPermission,
     selectCanShareDashboardPermission,
+    selectCanShareLockedDashboardPermission,
 } from "../../../../model";
-
-export const selectIsEditModeEnable = createSelector(
-    selectDashboardEditModeDevRollout,
-    selectIsReadOnly,
-    (isDevRollout, isReadOnly) => isDevRollout && !isReadOnly,
-);
-
-/**
- * @internal
- */
-export const selectCanEditLockedDashboard = createSelector(
-    selectDashboardLockStatus,
-    selectSupportsHierarchicalWorkspacesCapability,
-    selectCanManageWorkspace,
-    (isLocked, supportsHierarchicalWorkspaces, canManageWorkspace) =>
-        isLocked && !supportsHierarchicalWorkspaces && canManageWorkspace,
-);
 
 /**
  * @internal
  */
 export const selectCanEnterEditMode = createSelector(
-    selectIsEditModeEnable,
+    selectDashboardEditModeDevRollout,
     selectCanEditDashboardPermission,
+    selectCanEditLockedDashboardPermission,
     selectDashboardLockStatus,
-    selectCanEditLockedDashboard,
-    (isEditModeEnable, canManageAnalyticalDashboard, isLocked, canEditLockedDashboard) =>
-        isEditModeEnable && canManageAnalyticalDashboard && (!isLocked || canEditLockedDashboard),
+    (isEditModeEnabled, canEditDashboardPermission, canEditLockedDashboardPermission, isLocked) =>
+        isEditModeEnabled && canEditDashboardPermission && (!isLocked || canEditLockedDashboardPermission),
 );
 
 /**
@@ -82,17 +64,6 @@ export function selectCanSaveDashboard(state: DashboardState) {
 /**
  * @internal
  */
-export const selectHasPermissionsForShare = createSelector(
-    selectEnableAnalyticalDashboardPermissions,
-    selectSupportsAccessControlCapability,
-    selectCanShareDashboardPermission,
-    (arePermissionsEnabled, supportsAccessControl, canShareDashboard) =>
-        arePermissionsEnabled && supportsAccessControl && canShareDashboard,
-);
-
-/**
- * @internal
- */
 export const selectIsCurrentDashboardVisibleInList = createSelector(
     selectDashboardRef,
     selectListedDashboardsMap,
@@ -104,25 +75,28 @@ export const selectIsCurrentDashboardVisibleInList = createSelector(
  * @internal
  */
 export const selectIsShareButtonVisible = createSelector(
-    selectCanManageWorkspace,
-    selectHasPermissionsForShare,
-    selectIsCurrentDashboardVisibleInList,
+    selectEnableAnalyticalDashboardPermissions,
+    selectCanShareDashboardPermission,
+    selectCanShareLockedDashboardPermission,
     selectDashboardLockStatus,
+    selectIsCurrentDashboardVisibleInList,
     selectIsReadOnly,
     selectIsInEditMode,
     selectIsShareButtonHidden,
     (
-        isAdmin,
-        hasPermission,
-        isCurrentDashboardVisibleInList,
+        dashboardPermissionsEnabled,
+        canShareDashboardPermission,
+        canShareLockedDashboardPermission,
         isLocked,
+        isCurrentDashboardVisibleInList,
         isReadOnly,
         isInEditMode,
         isShareButtonHidden,
     ) =>
-        hasPermission &&
+        dashboardPermissionsEnabled &&
+        canShareDashboardPermission &&
+        (!isLocked || canShareLockedDashboardPermission) &&
         isCurrentDashboardVisibleInList &&
-        (!isLocked || isAdmin) &&
         !isReadOnly &&
         !isInEditMode &&
         !isShareButtonHidden,

@@ -1035,15 +1035,23 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
             const workspacePermissions = await this.authCall(() =>
                 this.permissions.getPermissionsForCurrentUser(),
             );
+
+            const canEditDashboard = workspacePermissions.canManageAnalyticalDashboard;
+            const canShareDashboard = workspacePermissions.canManageACL;
+            const canManageLockedDashboard = canEditDashboard && workspacePermissions.canManageProject;
             return {
-                canEditDashboard: workspacePermissions.canManageAnalyticalDashboard,
-                canShareDashboard: workspacePermissions.canManageACL,
+                canEditDashboard,
+                canEditLockedDashboard: canManageLockedDashboard,
+                canShareDashboard,
+                canShareLockedDashboard: canManageLockedDashboard,
                 canViewDashboard: true,
             };
         } catch (_e) {
             return {
                 canEditDashboard: false,
+                canEditLockedDashboard: false,
                 canShareDashboard: false,
+                canShareLockedDashboard: false,
                 canViewDashboard: false,
             };
         }

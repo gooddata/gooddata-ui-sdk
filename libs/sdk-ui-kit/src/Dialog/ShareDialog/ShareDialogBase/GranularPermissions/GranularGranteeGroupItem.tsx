@@ -5,26 +5,27 @@ import { useIntl } from "react-intl";
 import cx from "classnames";
 
 import { GranteeGroupIcon } from "../GranteeIcons";
-import { GranteeItem, IGranularGrantee } from "../types";
+import { GranteeItem, IGranularGranteeGroup } from "../types";
 import { getGranteeItemTestId, getGranteeLabel } from "../utils";
 import { CurrentUserPermissions } from "../../types";
 
-import { GranularPermissionsDropdown } from "./GranularPermissionsDropdown";
-import { usePermissionsDropdown } from "./usePermissionsDropdown";
+import { GranularPermissionsDropdownWithBubble } from "./GranularPermissionsDropdown";
+import { usePermissionsDropdownState } from "./usePermissionsDropdownState";
+import { getGranteePossibilities } from "./permissionsLogic";
 
 interface IGranularGranteeGroupItemProps {
-    grantee: IGranularGrantee;
+    grantee: IGranularGranteeGroup;
     currentUserPermissions: CurrentUserPermissions;
+    isDashboardLocked: boolean;
     onChange: (grantee: GranteeItem) => void;
     onDelete: (grantee: GranteeItem) => void;
 }
 
 export const GranularGranteeGroupItem: React.FC<IGranularGranteeGroupItemProps> = (props) => {
-    const { grantee, currentUserPermissions, onChange, onDelete } = props;
-    const { isDropdownOpen, toggleDropdown } = usePermissionsDropdown();
-
+    const { grantee, currentUserPermissions, isDashboardLocked, onChange, onDelete } = props;
+    const { isDropdownOpen, toggleDropdown } = usePermissionsDropdownState();
     const intl = useIntl();
-    const groupName = useMemo(() => getGranteeLabel(grantee, intl), [grantee, intl]);
+
     const itemClassName = cx(
         "s-share-dialog-grantee-item",
         "gd-share-dialog-grantee-item",
@@ -34,18 +35,27 @@ export const GranularGranteeGroupItem: React.FC<IGranularGranteeGroupItemProps> 
         },
     );
 
+    const label = useMemo(() => getGranteeLabel(grantee, intl), [grantee, intl]);
+    const granteePossibilities = useMemo(
+        () => getGranteePossibilities(grantee, currentUserPermissions, isDashboardLocked),
+        [grantee, currentUserPermissions, isDashboardLocked],
+    );
     return (
         <div className={itemClassName}>
-            <GranularPermissionsDropdown
-                currentUserPermissions={currentUserPermissions}
+            <GranularPermissionsDropdownWithBubble
                 grantee={grantee}
+                granteePossibilities={granteePossibilities}
                 isDropdownOpen={isDropdownOpen}
                 toggleDropdown={toggleDropdown}
                 onChange={onChange}
                 onDelete={onDelete}
+                isDropdownDisabled={!granteePossibilities.change.enabled}
+                bubbleTextId={granteePossibilities.change.tooltip}
+                className="gd-grantee-granular-permission"
+                triggerClassName="gd-grantee-granular-permission-bubble-trigger"
             />
             <div className="gd-grantee-content">
-                <div className="gd-grantee-content-label">{groupName}</div>
+                <div className="gd-grantee-content-label">{label}</div>
             </div>
             <GranteeGroupIcon />
         </div>

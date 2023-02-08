@@ -346,7 +346,12 @@ export interface IListedDashboard
  * @alpha
  */
 export type IDashboardPermissions = {
-    [permission in "canViewDashboard" | "canEditDashboard" | "canShareDashboard"]: boolean;
+    [permission in
+        | "canEditDashboard"
+        | "canEditLockedDashboard"
+        | "canShareLockedDashboard"
+        | "canShareDashboard"
+        | "canViewDashboard"]: boolean;
 };
 
 /**

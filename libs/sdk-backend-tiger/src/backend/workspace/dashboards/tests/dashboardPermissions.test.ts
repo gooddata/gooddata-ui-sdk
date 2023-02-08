@@ -10,7 +10,9 @@ describe("Dashboard permissions helpers", () => {
         expect(result).toEqual<IDashboardPermissions>({
             canViewDashboard: true,
             canShareDashboard: false,
+            canShareLockedDashboard: false,
             canEditDashboard: false,
+            canEditLockedDashboard: false,
         });
     });
 
@@ -20,7 +22,9 @@ describe("Dashboard permissions helpers", () => {
         expect(result).toEqual<IDashboardPermissions>({
             canViewDashboard: true,
             canShareDashboard: true,
+            canShareLockedDashboard: true,
             canEditDashboard: false,
+            canEditLockedDashboard: false,
         });
     });
 
@@ -30,7 +34,9 @@ describe("Dashboard permissions helpers", () => {
         expect(result).toEqual<IDashboardPermissions>({
             canViewDashboard: true,
             canShareDashboard: true,
+            canShareLockedDashboard: true,
             canEditDashboard: true,
+            canEditLockedDashboard: false,
         });
     });
 
@@ -40,7 +46,9 @@ describe("Dashboard permissions helpers", () => {
         expect(result).toEqual<IDashboardPermissions>({
             canViewDashboard: true,
             canShareDashboard: true,
+            canShareLockedDashboard: true,
             canEditDashboard: false,
+            canEditLockedDashboard: false,
         });
     });
 
@@ -50,7 +58,9 @@ describe("Dashboard permissions helpers", () => {
         expect(result).toEqual<IDashboardPermissions>({
             canViewDashboard: false,
             canShareDashboard: false,
+            canShareLockedDashboard: false,
             canEditDashboard: false,
+            canEditLockedDashboard: false,
         });
     });
 });

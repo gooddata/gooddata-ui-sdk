@@ -9,7 +9,12 @@ import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "../styles/goodstrap.scss";
 
 import { action } from "@storybook/addon-actions";
-import { ComponentLabelsProvider, getGranteeItemTestId, GranteeItemComponent } from "@gooddata/sdk-ui-kit";
+import {
+    ComponentLabelsProvider,
+    DialogModeType,
+    getGranteeItemTestId,
+    GranteeItemComponent,
+} from "@gooddata/sdk-ui-kit";
 import { BackstopConfig } from "../../../_infra/backstopScenario";
 import {
     current,
@@ -26,6 +31,13 @@ import {
 } from "./GranteeMock";
 import { LabelsMock } from "./LabelsMock";
 
+const defaultGranteeItemComponentProps = {
+    mode: "ShareGrantee" as DialogModeType,
+    onDelete: action("onDelete"),
+    currentUserPermissions: defaultUserPermissions,
+    isDashboardLocked: false,
+};
+
 const UserItemBasicExample = (): JSX.Element => {
     const border = { border: "1px solid black", width: 300 };
 
@@ -33,83 +45,49 @@ const UserItemBasicExample = (): JSX.Element => {
         <ComponentLabelsProvider labels={LabelsMock}>
             <span> Grantee user</span>
             <div id="Grantee-item-basic-example" style={border}>
-                <GranteeItemComponent
-                    mode={"ShareGrantee"}
-                    grantee={user}
-                    onDelete={action("onDelete")}
-                    currentUserPermissions={defaultUserPermissions}
-                />
+                <GranteeItemComponent grantee={user} {...defaultGranteeItemComponentProps} />
             </div>
             <span> Grantee long name and email</span>
             <div id="Grantee-item-basic-example" style={border}>
                 <GranteeItemComponent
-                    mode={"ShareGrantee"}
                     grantee={{
                         ...user,
                         name: "Very very very very very very very long name of user",
                         email: "Very_very_very_very_very_very_very@long_email.com",
                     }}
-                    onDelete={action("onDelete")}
-                    currentUserPermissions={defaultUserPermissions}
+                    {...defaultGranteeItemComponentProps}
                 />
             </div>
             <span> Grantee current user</span>
             <div id="Grantee-item-basic-example" style={border}>
-                <GranteeItemComponent
-                    mode={"ShareGrantee"}
-                    grantee={current}
-                    onDelete={action("onDelete")}
-                    currentUserPermissions={defaultUserPermissions}
-                />
+                <GranteeItemComponent grantee={current} {...defaultGranteeItemComponentProps} />
             </div>
             <span> Grantee inactive user</span>
             <div id="Grantee-item-basic-example" style={border}>
-                <GranteeItemComponent
-                    mode={"ShareGrantee"}
-                    grantee={userInactive}
-                    onDelete={action("onDelete")}
-                    currentUserPermissions={defaultUserPermissions}
-                />
+                <GranteeItemComponent grantee={userInactive} {...defaultGranteeItemComponentProps} />
             </div>
             <span> Grantee inactive user long name</span>
             <div id="Grantee-item-basic-example" style={border}>
                 <GranteeItemComponent
-                    mode={"ShareGrantee"}
                     grantee={{
                         ...userInactive,
                         name: "Very very very very very very very long name of user",
                     }}
-                    onDelete={action("onDelete")}
-                    currentUserPermissions={defaultUserPermissions}
+                    {...defaultGranteeItemComponentProps}
                 />
             </div>
             <span> Grantee owner user</span>
             <div id="Grantee-item-basic-example" style={border}>
-                <GranteeItemComponent
-                    mode={"ShareGrantee"}
-                    grantee={owner}
-                    onDelete={action("onDelete")}
-                    currentUserPermissions={defaultUserPermissions}
-                />
+                <GranteeItemComponent grantee={owner} {...defaultGranteeItemComponentProps} />
             </div>
             <span> Grantee owner and current user</span>
             <div id="Grantee-item-basic-example" style={border}>
-                <GranteeItemComponent
-                    mode={"ShareGrantee"}
-                    grantee={currentAndOwen}
-                    onDelete={action("onDelete")}
-                    currentUserPermissions={defaultUserPermissions}
-                />
+                <GranteeItemComponent grantee={currentAndOwen} {...defaultGranteeItemComponentProps} />
             </div>
 
             <span> Grantee owner inactive</span>
             <div id="Grantee-item-basic-example" style={border}>
-                <GranteeItemComponent
-                    mode={"ShareGrantee"}
-                    grantee={inactiveUser}
-                    onDelete={action("onDelete")}
-                    currentUserPermissions={defaultUserPermissions}
-                />
+                <GranteeItemComponent grantee={inactiveUser} {...defaultGranteeItemComponentProps} />
             </div>
         </ComponentLabelsProvider>
     );
@@ -122,30 +100,18 @@ const GroupItemBasicExample = (): JSX.Element => {
         <ComponentLabelsProvider labels={LabelsMock}>
             <span> Grantee group</span>
             <div id="Grantee-item-basic-example" style={border}>
-                <GranteeItemComponent
-                    mode={"ShareGrantee"}
-                    grantee={group}
-                    onDelete={action("onDelete")}
-                    currentUserPermissions={defaultUserPermissions}
-                />
+                <GranteeItemComponent grantee={group} {...defaultGranteeItemComponentProps} />
             </div>
             <span> Grantee long name</span>
             <div id="Grantee-item-basic-example" style={border}>
                 <GranteeItemComponent
-                    mode={"ShareGrantee"}
                     grantee={{ ...group, name: "Very very very very very very very long name of user" }}
-                    onDelete={action("onDelete")}
-                    currentUserPermissions={defaultUserPermissions}
+                    {...defaultGranteeItemComponentProps}
                 />
             </div>
             <span> Grantee no group count items</span>
             <div id="Grantee-item-basic-example" style={border}>
-                <GranteeItemComponent
-                    mode={"ShareGrantee"}
-                    grantee={groupNoCount}
-                    onDelete={action("onDelete")}
-                    currentUserPermissions={defaultUserPermissions}
-                />
+                <GranteeItemComponent grantee={groupNoCount} {...defaultGranteeItemComponentProps} />
             </div>
         </ComponentLabelsProvider>
     );
@@ -159,21 +125,17 @@ const GranularGranteeBasicExample = (): JSX.Element => {
             <span> Grantee user</span>
             <div id="Grantee-item-basic-example" style={border}>
                 <GranteeItemComponent
-                    mode={"ShareGrantee"}
                     grantee={granularUser}
-                    onDelete={action("onDelete")}
-                    currentUserPermissions={defaultUserPermissions}
                     areGranularPermissionsSupported={true}
+                    {...defaultGranteeItemComponentProps}
                 />
             </div>
             <span> Grantee group</span>
             <div id="Grantee-item-basic-example" style={border}>
                 <GranteeItemComponent
-                    mode={"ShareGrantee"}
                     grantee={granularGroup}
-                    onDelete={action("onDelete")}
-                    currentUserPermissions={defaultUserPermissions}
                     areGranularPermissionsSupported={true}
+                    {...defaultGranteeItemComponentProps}
                 />
             </div>
         </ComponentLabelsProvider>

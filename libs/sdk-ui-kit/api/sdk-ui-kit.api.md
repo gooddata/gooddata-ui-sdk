@@ -726,8 +726,6 @@ export interface IAddGranteeBaseProps {
     // (undocumented)
     appliedGrantees: GranteeItem[];
     // (undocumented)
-    areGranularPermissionsSupported?: boolean;
-    // (undocumented)
     currentUserPermissions: CurrentUserPermissions;
     // (undocumented)
     currentUserRef: ObjRef;
@@ -746,7 +744,7 @@ export interface IAddGranteeBaseProps {
     // (undocumented)
     onSubmit: () => void;
     // (undocumented)
-    sharedObjectRef: ObjRef;
+    sharedObject: IAffectedSharedObject;
 }
 
 // @internal (undocumented)
@@ -1808,6 +1806,8 @@ export interface IGranteeItemProps {
     currentUserPermissions: CurrentUserPermissions;
     // (undocumented)
     grantee: GranteeItem;
+    // (undocumented)
+    isDashboardLocked: boolean;
     // (undocumented)
     mode: DialogModeType;
     // (undocumented)
@@ -3520,6 +3520,8 @@ export interface IShareGranteeContentProps {
     // (undocumented)
     grantees: GranteeItem[];
     // (undocumented)
+    isDashboardLocked: boolean;
+    // (undocumented)
     isLoading: boolean;
     // (undocumented)
     onAddGrantee: () => void;
@@ -3898,6 +3900,18 @@ export interface ITypographyProps {
 export interface IUiSettings {
     // (undocumented)
     displayAccountPage: boolean;
+}
+
+// @internal (undocumented)
+export interface IWithBubbleProps {
+    // (undocumented)
+    alignPoints?: IAlignPoint[];
+    // (undocumented)
+    bubbleTextId?: string;
+    // (undocumented)
+    showBubble?: boolean;
+    // (undocumented)
+    triggerClassName?: string;
 }
 
 // @internal (undocumented)
@@ -4496,6 +4510,9 @@ export interface UseToastMessageType {
     // (undocumented)
     removeMessage: (id: string) => void;
 }
+
+// @internal (undocumented)
+export function withBubble<T>(WrappedComponent: React_2.ComponentType<T>): React_2.FC<T & IWithBubbleProps>;
 
 // @internal (undocumented)
 export const WorkspacePickerHomeFooter: React_2.ComponentType<Pick<IWorkspacePickerHomeFooterProps, "className" | "onClick" | "href">>;

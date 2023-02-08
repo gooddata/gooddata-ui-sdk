@@ -40,7 +40,9 @@ export const defaultSharedObject: ISharedObject = {
 
 const defaultUserPermissions: CurrentUserPermissions = {
     canEditDashboard: false,
+    canEditLockedDashboard: false,
     canShareDashboard: true,
+    canShareLockedDashboard: true,
     canViewDashboard: true,
 };
 

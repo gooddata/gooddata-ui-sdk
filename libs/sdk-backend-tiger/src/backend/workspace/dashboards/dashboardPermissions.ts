@@ -12,9 +12,11 @@ export function buildDashboardPermissions(
     const canViewDashboard = canShareDashboard || hasPermission(permissions, "VIEW");
 
     return {
-        canViewDashboard,
-        canShareDashboard,
         canEditDashboard,
+        canEditLockedDashboard: false,
+        canShareDashboard,
+        canShareLockedDashboard: canShareDashboard,
+        canViewDashboard,
     };
 }
 

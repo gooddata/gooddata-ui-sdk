@@ -3,20 +3,19 @@
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
+import { AccessGranularPermission } from "@gooddata/sdk-model";
 
 import { GranteeItem, IGranularGrantee, IGranularPermissionTypeItem } from "../types";
-import { Bubble, BubbleHoverTrigger } from "../../../../Bubble";
-import { IAlignPoint } from "../../../../typings/positioning";
-
-const alignPoints: IAlignPoint[] = [{ align: "cr cl" }];
+import { withBubble } from "../../../../Bubble";
+import { granularPermissionMessageLabels } from "../../../../locales";
 
 interface IGranularPermissionItemProps {
     grantee: IGranularGrantee;
     permission: IGranularPermissionTypeItem;
-    selectedPermission: string;
+    selectedPermission: AccessGranularPermission;
     toggleDropdown: () => void;
     onChange: (grantee: GranteeItem) => void;
-    handleSetSelectedPermission: (permission: string) => void;
+    handleSetSelectedPermission: (permission: AccessGranularPermission) => void;
 }
 
 const GranularPermissionSelectItem: React.FC<IGranularPermissionItemProps> = ({
@@ -32,10 +31,12 @@ const GranularPermissionSelectItem: React.FC<IGranularPermissionItemProps> = ({
     const handleOnChange = useCallback(
         (permission: IGranularPermissionTypeItem) => {
             toggleDropdown();
-            handleSetSelectedPermission(permission.id);
-            onChange({ ...grantee, permissions: [permission.id] });
+            if (permission.id !== selectedPermission) {
+                handleSetSelectedPermission(permission.id);
+                onChange({ ...grantee, permissions: [permission.id] });
+            }
         },
-        [grantee, toggleDropdown, handleSetSelectedPermission, onChange],
+        [grantee, toggleDropdown, handleSetSelectedPermission, onChange, selectedPermission],
     );
 
     const isSelected = useMemo(() => permission.id === selectedPermission, [permission, selectedPermission]);
@@ -43,36 +44,18 @@ const GranularPermissionSelectItem: React.FC<IGranularPermissionItemProps> = ({
     return (
         <div
             onClick={() => {
-                if (!permission.disabled) {
+                if (permission.enabled) {
                     handleOnChange(permission);
                 }
             }}
             className={cx("gd-list-item", "gd-menu-item", "gd-granular-permission-select-item", {
-                "is-disabled": permission.disabled,
+                "is-disabled": !permission.enabled,
                 "is-selected": isSelected,
             })}
         >
-            <div>{intl.formatMessage({ id: permission.title })}</div>
+            <div>{intl.formatMessage(granularPermissionMessageLabels[permission.id])}</div>
         </div>
     );
 };
 
-export const GranularPermissionItem: React.FC<IGranularPermissionItemProps> = (props) => {
-    const {
-        permission: { disabled },
-    } = props;
-
-    if (!disabled) {
-        return <GranularPermissionSelectItem {...props} />;
-    }
-
-    return (
-        <BubbleHoverTrigger>
-            <GranularPermissionSelectItem {...props} />
-            <Bubble alignPoints={alignPoints}>
-                {/* TODO: TNT-1284 Add tooltips logic */}
-                <div>Disabled</div>
-            </Bubble>
-        </BubbleHoverTrigger>
-    );
-};
+export const GranularPermissionSelectItemWithBubble = withBubble(GranularPermissionSelectItem);

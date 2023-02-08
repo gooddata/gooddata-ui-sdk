@@ -52,7 +52,9 @@ function* createDashboardSaveSharingContext(cmd: ChangeSharing): SagaIterator<Da
     };
     const dashboardToSave: IDashboardDefinition = {
         ...dashboardFromState,
-        ...newSharingProperties,
+        shareStatus: newSharingProperties.shareStatus,
+        isLocked: newSharingProperties.isLocked,
+        isUnderStrictControl: newSharingProperties.isUnderStrictControl,
     };
 
     return {

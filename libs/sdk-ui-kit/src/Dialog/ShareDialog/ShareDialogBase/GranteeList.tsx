@@ -11,8 +11,15 @@ import { sortGranteeList } from "./utils";
  * @internal
  */
 export const GranteeList: React.FC<IGranteesListProps> = (props) => {
-    const { grantees, mode, areGranularPermissionsSupported, currentUserPermissions, onDelete, onChange } =
-        props;
+    const {
+        grantees,
+        mode,
+        areGranularPermissionsSupported,
+        currentUserPermissions,
+        isDashboardLocked,
+        onDelete,
+        onChange,
+    } = props;
 
     const intl = useIntl();
 
@@ -30,6 +37,7 @@ export const GranteeList: React.FC<IGranteesListProps> = (props) => {
                 return (
                     <GranteeItemComponent
                         currentUserPermissions={currentUserPermissions}
+                        isDashboardLocked={isDashboardLocked}
                         key={serializeObjRef(grantee.id)}
                         grantee={grantee}
                         mode={mode}
