@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import { useEffect, useMemo, useState } from "react";
 import {
     areObjRefsEqual,
@@ -94,16 +94,21 @@ export function useWidgetFilters(
     });
 
     // only run the "full" filters query if any of the non-ignored filters has changed
-    useEffect(() => {
-        if (widget?.ref && nonIgnoredFiltersStatus === "success") {
-            runFiltersQuery(widget.ref, insight);
-        }
-    }, [
-        safeSerializeObjRef(widget?.ref),
-        fullFiltersDigest(nonIgnoredFilters),
-        insight,
-        nonIgnoredFiltersStatus,
-    ]);
+    useEffect(
+        () => {
+            if (widget?.ref && nonIgnoredFiltersStatus === "success") {
+                runFiltersQuery(widget.ref, insight);
+            }
+        },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [
+            safeSerializeObjRef(widget?.ref),
+            fullFiltersDigest(nonIgnoredFilters),
+            insight,
+            nonIgnoredFiltersStatus,
+            widget?.dateDataSet,
+        ],
+    );
 
     return {
         result: effectiveFiltersState.filters,
