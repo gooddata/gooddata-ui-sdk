@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import React, { useEffect } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
@@ -19,6 +19,8 @@ import {
     QueryWidgetAlertCount,
     queryWidgetAlertCount,
     selectCatalogMeasures,
+    selectHideKpiDrillInEmbedded,
+    selectIsEmbedded,
     selectSettings,
     useDashboardDispatch,
     useDashboardQueryProcessing,
@@ -67,6 +69,8 @@ export const KpiConfigurationPanelCore: React.FC<IKpiConfigurationPanelCoreProps
 
     const settings = useDashboardSelector(selectSettings);
     const measures = useDashboardSelector(selectCatalogMeasures);
+    const isEmbedded = useDashboardSelector(selectIsEmbedded);
+    const hideKpiDrillInEmbedded = useDashboardSelector(selectHideKpiDrillInEmbedded);
     const dispatch = useDashboardDispatch();
 
     return (
@@ -118,10 +122,14 @@ export const KpiConfigurationPanelCore: React.FC<IKpiConfigurationPanelCoreProps
                     </Typography>
                     {!!widget && <KpiComparison widget={widget} />}
 
-                    <Typography tagName="h3" className={sectionHeaderClasses}>
-                        <FormattedMessage id="configurationPanel.drillIntoDashboard" />
-                    </Typography>
-                    {!!widget && <KpiDrillConfiguration widget={widget} />}
+                    {isEmbedded && hideKpiDrillInEmbedded ? null : (
+                        <>
+                            <Typography tagName="h3" className={sectionHeaderClasses}>
+                                <FormattedMessage id="configurationPanel.drillIntoDashboard" />
+                            </Typography>
+                            {!!widget && <KpiDrillConfiguration widget={widget} />}
+                        </>
+                    )}
                 </div>
             </ScrollablePanel>
         </>
