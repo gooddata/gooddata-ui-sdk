@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { uriRef } from "@gooddata/sdk-model";
 
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
@@ -6,7 +6,8 @@ import { changeSharing, ChangeSharing } from "../../../commands";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures";
 import { DashboardCommandFailed, DashboardSharingChanged } from "../../../events";
-import { selectDashboardShareStatus } from "../../../store/meta/metaSelectors";
+import { selectDashboardPermissions, selectDashboardShareStatus } from "../../../store";
+import { dashboardPermissionsActions } from "../../../store/dashboardPermissions";
 
 describe("change dashboard sharing handler", () => {
     describe("for a existing dashboard", () => {
@@ -17,7 +18,16 @@ describe("change dashboard sharing handler", () => {
             }, SimpleDashboardIdentifier),
         );
 
-        it("should save new dashboard share status", async () => {
+        it("should save new dashboard share status and updated permission", async () => {
+            Tester.dispatch(
+                dashboardPermissionsActions.setDashboardPermissions({
+                    canEditDashboard: false,
+                    canEditLockedDashboard: false,
+                    canShareDashboard: false,
+                    canShareLockedDashboard: false,
+                    canViewDashboard: false,
+                }),
+            );
             const event: DashboardSharingChanged = await Tester.dispatchAndWaitFor(
                 changeSharing(
                     {
@@ -44,6 +54,13 @@ describe("change dashboard sharing handler", () => {
             });
             const newState = Tester.state();
             expect(selectDashboardShareStatus(newState)).toEqual("public");
+            expect(selectDashboardPermissions(newState)).toEqual({
+                canEditDashboard: true,
+                canEditLockedDashboard: true,
+                canShareDashboard: true,
+                canShareLockedDashboard: true,
+                canViewDashboard: true,
+            });
         });
 
         it("should emit correct events", async () => {

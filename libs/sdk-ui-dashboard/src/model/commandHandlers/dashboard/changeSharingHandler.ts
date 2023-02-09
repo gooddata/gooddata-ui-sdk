@@ -18,6 +18,8 @@ import { BatchAction, batchActions } from "redux-batched-actions";
 import { PromiseFnReturnType } from "../../types/sagas";
 import invariant from "ts-invariant";
 import isEmpty from "lodash/isEmpty";
+import { loadDashboardPermissions } from "./initializeDashboardHandler/loadDashboardPermissions";
+import { dashboardPermissionsActions } from "../../store/dashboardPermissions";
 
 type DashboardSaveSharingContext = {
     cmd: ChangeSharing;
@@ -96,14 +98,22 @@ function* saveSharing(
     if (!isEmpty(grantees)) {
         yield call(changeGrantees, ctx, saveSharingCtx);
     }
+    // get up-to-date permissions from backend
+    const updatedDashboardPermissions = yield call(loadDashboardPermissions, ctx);
+    const setDashboardPermissionsAction =
+        dashboardPermissionsActions.setDashboardPermissions(updatedDashboardPermissions);
 
     const dashboard: PromiseFnReturnType<typeof updateDashboard> = yield call(
         updateDashboard,
         ctx,
         saveSharingCtx,
     );
+    const setDashboardMetaAction = metaActions.setMeta({ dashboard });
 
-    const batch = batchActions([metaActions.setMeta({ dashboard })], "@@GDC.DASH.SAVE_SHARING");
+    const batch = batchActions(
+        [setDashboardMetaAction, setDashboardPermissionsAction],
+        "@@GDC.DASH.SAVE_SHARING",
+    );
 
     return {
         batch,
