@@ -1,12 +1,12 @@
-// (C) 2020-2022 GoodData Corporation
-import React from "react";
+// (C) 2020-2023 GoodData Corporation
+import React, { useCallback } from "react";
 import cx from "classnames";
 import { IAttributeWithDisplayForm } from "./types";
 
 export interface IAttributeUrlSectionItemProps {
     item: IAttributeWithDisplayForm;
     isSelected: boolean;
-    onClickHandler?: (e: React.SyntheticEvent) => void;
+    onClickHandler?: (item: IAttributeWithDisplayForm) => void;
 }
 
 export const AttributeUrlSectionItem: React.FC<IAttributeUrlSectionItemProps> = ({
@@ -21,8 +21,16 @@ export const AttributeUrlSectionItem: React.FC<IAttributeUrlSectionItemProps> = 
         },
     );
 
+    const onClick = useCallback(() => {
+        if (!onClickHandler) {
+            return;
+        }
+
+        onClickHandler(item);
+    }, [item, onClickHandler]);
+
     return (
-        <div className={className} onClick={onClickHandler}>
+        <div className={className} onClick={onClick}>
             <span className="gd-parameter-title">{item.attribute.title}</span>
             <span className="addon">({item.displayForm.title})</span>
         </div>

@@ -10,7 +10,6 @@ import { IAttributeWithDisplayForm } from "./types";
 interface IAttributeUrlSectionOwnProps {
     attributeDisplayForms: IAttributeWithDisplayForm[];
     onSelect: (insightAttributeDisplayForm: ObjRef, drillToAttributeDisplayForm: ObjRef) => void;
-    closeDropdown: (e: React.SyntheticEvent) => void;
     selected: ObjRef | false;
     loading?: boolean;
 }
@@ -18,14 +17,13 @@ interface IAttributeUrlSectionOwnProps {
 type AttributeUrlSectionProps = IAttributeUrlSectionOwnProps;
 
 export const AttributeUrlSection: React.FC<AttributeUrlSectionProps> = (props) => {
-    const { attributeDisplayForms, loading = false, selected, closeDropdown, onSelect } = props;
+    const { attributeDisplayForms, loading = false, selected, onSelect } = props;
 
     const onClickHandler = useCallback(
-        (event: React.SyntheticEvent, target: IAttributeWithDisplayForm) => {
-            onSelect(target.displayForm.ref, target.displayForm.ref);
-            closeDropdown(event);
+        (target: IAttributeWithDisplayForm) => {
+            onSelect(target.attributeDisplayFormRef, target.displayForm.ref);
         },
-        [onSelect, closeDropdown],
+        [onSelect],
     );
 
     if (!loading && attributeDisplayForms.length === 0) {
@@ -48,7 +46,7 @@ export const AttributeUrlSection: React.FC<AttributeUrlSectionProps> = (props) =
                             key={objRefToString(item.displayForm.ref)}
                             item={item}
                             isSelected={areObjRefsEqual(item.displayForm.ref, selected || undefined)}
-                            onClickHandler={(e) => onClickHandler(e, item)}
+                            onClickHandler={onClickHandler}
                         />
                     ))}
                 </div>

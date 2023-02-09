@@ -1,26 +1,16 @@
 // (C) 2020-2023 GoodData Corporation
-import {
-    areObjRefsEqual,
-    IAttributeDescriptor,
-    IAttributeDisplayFormMetadataObject,
-    IAttributeMetadataObject,
-    AttributeDisplayFormType,
-} from "@gooddata/sdk-model";
-import invariant from "ts-invariant";
+import { areObjRefsEqual, AttributeDisplayFormType, IAttributeDescriptor } from "@gooddata/sdk-model";
 import uniqWith from "lodash/uniqWith";
+import invariant from "ts-invariant";
 import {
     selectAllCatalogAttributesMap,
     selectAllCatalogDisplayFormsMap,
     selectSelectedWidgetRef,
     useDashboardSelector,
 } from "../../../../../model";
+import { IAttributeWithDisplayForm } from "../../../../drill/DrillConfigPanel/DrillToUrl/types";
 
-interface IAttributeWithDisplayForm {
-    attribute: IAttributeMetadataObject;
-    displayForm: IAttributeDisplayFormMetadataObject;
-}
-
-interface IUseAttributesWithDisplayFormsResult {
+export interface IUseAttributesWithDisplayFormsResult {
     linkDisplayForms: IAttributeWithDisplayForm[];
     allDisplayForms: IAttributeWithDisplayForm[];
 }
@@ -58,6 +48,7 @@ export function useAttributesWithDisplayForms(
             result.linkDisplayForms.push(
                 ...linkDisplayForms.map((df) => ({
                     attribute: attribute.attribute,
+                    attributeDisplayFormRef: ref,
                     displayForm: df,
                 })),
             );
@@ -65,6 +56,7 @@ export function useAttributesWithDisplayForms(
             result.allDisplayForms.push(
                 ...attribute.attribute.displayForms.map((df) => ({
                     attribute: attribute.attribute,
+                    attributeDisplayFormRef: ref,
                     displayForm: df,
                 })),
             );

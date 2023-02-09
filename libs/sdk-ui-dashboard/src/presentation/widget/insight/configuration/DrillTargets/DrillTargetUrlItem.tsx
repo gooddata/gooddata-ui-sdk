@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 import { Button, Dropdown, IAlignPoint } from "@gooddata/sdk-ui-kit";
@@ -119,7 +119,6 @@ export const DrillTargetUrlItem: React.FunctionComponent<DrillUrlItemProps> = (p
                                     isDrillToAttributeUrlConfig(urlDrillTarget) &&
                                     urlDrillTarget.drillToAttributeDisplayForm
                                 }
-                                closeDropdown={closeDropdown}
                             />
                         ) : null}
                         <CustomUrlSection
