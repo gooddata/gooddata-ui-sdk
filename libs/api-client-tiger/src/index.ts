@@ -208,6 +208,11 @@ export {
     ColumnWarning,
     DataSourceParameter,
     TestRequest,
+    ScanSqlResponse,
+    ActionsApiScanSqlRequest,
+    SqlColumn,
+    ScanSqlRequest,
+    SqlColumnDataTypeEnum,
 } from "./generated/scan-json-api/api";
 
 export * from "./client";

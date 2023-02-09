@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 /**
  * This package provides the Analytical Backend implementation for GoodData Cloud and GoodData.CN.
  *
@@ -99,6 +99,7 @@ export {
     WorkspaceDataFiltersLayout,
     ICSPDirective,
     ICustomApplicationSetting,
+    ScanSqlResult,
 } from "./backend/tigerSpecificFunctions";
 
 export { getIdOrigin, OriginInfoWithId } from "./convertors/fromBackend/ObjectInheritance";

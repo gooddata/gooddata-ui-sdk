@@ -83,6 +83,78 @@
                 }
             }
         },
+        "/api/v1/actions/dataSources/{dataSourceId}/scanSql": {
+            "post": {
+                "tags": ["actions"],
+                "summary": "Collect metadata about SQL query",
+                "description": "It executes SQL query against specified data source and extracts metadata. Metadata consist of column names and column data types. It can optionally provide also preview of data returned by SQL query",
+                "operationId": "scanSql",
+                "parameters": [
+                    {
+                        "name": "dataSourceId",
+                        "in": "path",
+                        "description": "Data source id",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        },
+                        "example": "myPostgres"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ScanSqlRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "The result of the scan.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScanSqlResponse"
+                                },
+                                "examples": {
+                                    "An example of a successful scan": {
+                                        "description": "An example of a successful scan",
+                                        "value": {
+                                            "columns": [
+                                                {
+                                                    "name": "budget",
+                                                    "dataType": "NUMERIC"
+                                                },
+                                                {
+                                                    "name": "category",
+                                                    "dataType": "STRING"
+                                                },
+                                                {
+                                                    "name": "spend",
+                                                    "dataType": "NUMERIC"
+                                                }
+                                            ],
+                                            "dataPreview": [
+                                                ["1000", "campaign1", "458.8"],
+                                                ["1800", "campaign2", "144"]
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["MANAGE"],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        },
         "/api/v1/actions/dataSources/{dataSourceId}/scan": {
             "post": {
                 "tags": ["actions"],
@@ -365,6 +437,60 @@
                     }
                 },
                 "description": "A request containing all information for testing existing data source."
+            },
+            "ScanSqlResponse": {
+                "required": ["columns"],
+                "type": "object",
+                "properties": {
+                    "columns": {
+                        "type": "array",
+                        "description": "Array of columns with types.",
+                        "items": {
+                            "$ref": "#/components/schemas/SqlColumn"
+                        }
+                    },
+                    "dataPreview": {
+                        "type": "array",
+                        "description": "Array of rows where each row is another array of string values.",
+                        "items": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "description": "Result of scanSql. Consists of array of query columns including type. Sql query result data preview can be attached optionally"
+            },
+            "SqlColumn": {
+                "required": ["dataType", "name"],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Column name",
+                        "example": "customer_id"
+                    },
+                    "dataType": {
+                        "type": "string",
+                        "description": "Column type",
+                        "example": "INT",
+                        "enum": ["INT", "STRING", "DATE", "NUMERIC", "TIMESTAMP", "TIMESTAMP_TZ", "BOOLEAN"]
+                    }
+                },
+                "description": "A SQL query result column."
+            },
+            "ScanSqlRequest": {
+                "required": ["sql"],
+                "type": "object",
+                "properties": {
+                    "sql": {
+                        "type": "string",
+                        "description": "SQL query to be analyzed.",
+                        "example": "SELECT a.special_value as result FROM tableA a"
+                    }
+                },
+                "description": "A request with SQL query to by analyzed."
             },
             "ColumnWarning": {
                 "required": ["message", "name"],

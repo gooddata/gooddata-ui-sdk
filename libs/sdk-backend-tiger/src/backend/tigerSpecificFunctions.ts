@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 
 import {
     JsonApiOrganizationOutMetaPermissionsEnum,
@@ -37,6 +37,7 @@ import {
     JsonApiCspDirectiveInDocument,
     JsonApiCustomApplicationSettingOutWithLinks,
     JsonApiCustomApplicationSettingOutTypeEnum,
+    ScanSqlResponse,
 } from "@gooddata/api-client-tiger";
 import { convertApiError } from "../utils/errorHandling";
 import uniq from "lodash/uniq";
@@ -299,6 +300,11 @@ export type DependentEntitiesGraphResponse = DependentEntitiesResponse;
 export type WorkspaceDataFiltersLayout = DeclarativeWorkspaceDataFilters;
 
 /**
+ * @internal
+ */
+export type ScanSqlResult = ScanSqlResponse;
+
+/**
  * TigerBackend-specific functions.
  * If possible, avoid these functions, they are here for specific use cases.
  *
@@ -418,6 +424,16 @@ export type TigerSpecificFunctions = {
      *
      */
     getEntityUser?: (id: string) => Promise<IUser>;
+
+    /**
+     * Get metadata about SQL query
+     *
+     * @param dataSourceId - id of the datasource
+     * @param sql - SQL query to be analyzed
+     * @returns ScanSqlResult -
+     *
+     */
+    scanSql?: (dataSourceId: string, sql: string) => Promise<ScanSqlResult>;
 };
 
 const getDataSourceErrorMessage = (error: unknown) => {
@@ -1312,5 +1328,17 @@ export const buildTigerSpecificFunctions = (
                 dataSourceId,
             });
         });
+    },
+
+    scanSql: async (dataSourceId: string, sql: string) => {
+        try {
+            return await authApiCall(async (sdk) => {
+                return sdk.scanModel.scanSql({ dataSourceId, scanSqlRequest: { sql } }).then((response) => {
+                    return response.data as ScanSqlResult;
+                });
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
     },
 });
