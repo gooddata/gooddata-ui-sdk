@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import { IColor, IColorPalette } from "@gooddata/sdk-model";
@@ -6,6 +6,7 @@ import ColoredItemContent from "./ColoredItemContent";
 import ColorDropdown from "../colorDropdown/ColorDropdown";
 import { IColoredItem } from "../../../../interfaces/Colors";
 import { getMappingHeaderFormattedName, IMappingHeader } from "@gooddata/sdk-ui";
+import { getTranslation } from "../../../../utils/translations";
 
 export interface IColoredItemProps {
     colorPalette: IColorPalette;
@@ -24,21 +25,24 @@ class ColoredItem extends React.PureComponent<IColoredItemProps & WrappedCompone
     };
 
     public render() {
-        const coloredItem: IColoredItem = this.props.item ? this.props.item : null;
+        const { item, intl, colorPalette, showCustomPicker } = this.props;
+        const coloredItem: IColoredItem = item ? item : null;
 
         if (!coloredItem) {
             return this.renderLoadingItem();
         }
 
         const headerItem: IMappingHeader = coloredItem.mappingHeader;
-        const text = this.getText(headerItem);
+        const headerText = this.getText(headerItem);
+        const emptyText = `(${getTranslation("empty_value", intl)})`;
+        const text = headerText === null || headerText === "" ? emptyText : headerText;
 
         return (
             <ColorDropdown
                 selectedColorItem={coloredItem.colorItem}
-                colorPalette={this.props.colorPalette}
+                colorPalette={colorPalette}
                 onColorSelected={this.onColorSelected}
-                showCustomPicker={this.props.showCustomPicker}
+                showCustomPicker={showCustomPicker}
             >
                 <ColoredItemContent text={text} color={coloredItem.color} />
             </ColorDropdown>
