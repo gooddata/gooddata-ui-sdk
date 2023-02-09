@@ -202,7 +202,9 @@ export function parseRGBString(color: string): IRgbColorValue | null {
 export function getColorMappingPredicate(testValue: string): IHeaderPredicate {
     return (header) => {
         if (isResultAttributeHeader(header)) {
-            return testValue ? testValue === header.attributeHeaderItem.uri : false;
+            return testValue || testValue === null || testValue === ""
+                ? testValue === header.attributeHeaderItem.uri
+                : false;
         }
 
         if (isAttributeDescriptor(header)) {

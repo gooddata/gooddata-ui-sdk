@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2023 GoodData Corporation
 import { DefaultColorPalette, DataViewFacade } from "@gooddata/sdk-ui";
 import {
     getColorMappingPredicate,
@@ -121,6 +121,13 @@ describe("getColorMappingPredicate", () => {
         },
     };
 
+    const falsyAttributeHeaderItem = (value: any) => ({
+        attributeHeaderItem: {
+            uri: value,
+            name: value,
+        },
+    });
+
     const context = { dv: DataViewFacade.for(dummyDataView(emptyDef("testWorkspace"))) };
 
     describe("no references provided", () => {
@@ -146,6 +153,24 @@ describe("getColorMappingPredicate", () => {
             const predicate = getColorMappingPredicate("/attributeItemUri");
 
             expect(predicate(attributeHeaderItem, {} as any)).toEqual(true);
+        });
+
+        it("should match predicate when referenced null uri matches", () => {
+            const predicate = getColorMappingPredicate(null);
+
+            expect(predicate(falsyAttributeHeaderItem(null), {} as any)).toEqual(true);
+        });
+
+        it("should match predicate when referenced empty string uri matches", () => {
+            const predicate = getColorMappingPredicate("");
+
+            expect(predicate(falsyAttributeHeaderItem(""), {} as any)).toEqual(true);
+        });
+
+        it("should not match predicate when referenced undefined uri matches", () => {
+            const predicate = getColorMappingPredicate(undefined);
+
+            expect(predicate(falsyAttributeHeaderItem(undefined), {} as any)).toEqual(false);
         });
     });
 });

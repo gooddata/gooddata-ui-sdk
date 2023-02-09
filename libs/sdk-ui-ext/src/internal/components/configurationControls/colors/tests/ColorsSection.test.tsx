@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2023 GoodData Corporation
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -46,6 +46,23 @@ const defaultProps: IColorsSectionProps = {
     colors,
     isLoading: false,
 };
+
+const propsWithFalsyColor = (value: any): IColorsSectionProps => ({
+    ...defaultProps,
+    colors: {
+        colorPalette: DefaultColorPalette,
+        colorAssignments: [
+            ...colors.colorAssignments,
+            {
+                headerItem: { attributeHeaderItem: { uri: value, name: value } },
+                color: {
+                    type: "guid",
+                    value: "6",
+                },
+            },
+        ],
+    },
+});
 
 function createComponent(customProps: Partial<IColorsSectionProps> = {}) {
     const props: IColorsSectionProps = { ...cloneDeep(defaultProps), ...customProps };
@@ -133,5 +150,17 @@ describe("ColorsSection", () => {
             isLoading: true,
         });
         expect(screen.getByLabelText("loading")).toBeInTheDocument();
+    });
+
+    it("should render ColoredItem for null text value", () => {
+        createComponent(propsWithFalsyColor(null));
+
+        expect(screen.getByText("(empty value)")).toBeInTheDocument();
+    });
+
+    it("should render ColoredItem for empty string text value", () => {
+        createComponent(propsWithFalsyColor(""));
+
+        expect(screen.getByText("(empty value)")).toBeInTheDocument();
     });
 });
