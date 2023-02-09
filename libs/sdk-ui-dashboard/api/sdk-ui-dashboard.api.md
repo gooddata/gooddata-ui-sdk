@@ -4032,6 +4032,8 @@ export interface InvalidCustomUrlDrillParameterInfo {
     // (undocumented)
     drillsWithInvalidParametersLocalIds: string[];
     // (undocumented)
+    showMessage: boolean;
+    // (undocumented)
     widgetId: Identifier;
     // (undocumented)
     widgetRef: ObjRef;
@@ -6039,6 +6041,9 @@ export const selectInvalidUrlDrillParameterDrillLocalIdsByWidgetRef: (ref: ObjRe
 // @internal (undocumented)
 export const selectInvalidUrlDrillParameterWidgetRefs: OutputSelector<DashboardState, ObjRef[], (res: InvalidCustomUrlDrillParameterInfo[]) => ObjRef[]>;
 
+// @internal (undocumented)
+export const selectInvalidUrlDrillParameterWidgetWarnings: OutputSelector<DashboardState, ObjRef[], (res: InvalidCustomUrlDrillParameterInfo[]) => ObjRef[]>;
+
 // @internal
 export const selectIsAlternativeDisplayFormSelectionEnabled: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
@@ -6487,6 +6492,7 @@ openCancelEditModeDialog: CaseReducer<UiState, AnyAction>;
 closeCancelEditModeDialog: CaseReducer<UiState, AnyAction>;
 resetInvalidDrillWidgetRefs: CaseReducer<UiState, AnyAction>;
 resetAllInvalidCustomUrlDrillParameterWidgets: CaseReducer<UiState, AnyAction>;
+resetAllInvalidCustomUrlDrillParameterWidgetsWarnings: CaseReducer<UiState, AnyAction>;
 addInvalidDrillWidgetRefs: CaseReducer<UiState, {
 payload: ObjRef[];
 type: string;

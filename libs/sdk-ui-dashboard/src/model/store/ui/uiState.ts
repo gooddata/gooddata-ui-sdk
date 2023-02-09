@@ -13,6 +13,7 @@ export interface InvalidCustomUrlDrillParameterInfo {
     widgetUri: Uri;
     widgetRef: ObjRef;
     drillsWithInvalidParametersLocalIds: string[];
+    showMessage: boolean;
 }
 
 /**
