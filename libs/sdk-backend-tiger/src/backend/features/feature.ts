@@ -95,13 +95,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableAttributeAllValues,
-            "enableAttributeAllValues",
-            "BOOLEAN",
-            FeatureFlagsValues.enableAttributeAllValues,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableKPIAttributeFilterRenaming,
             "enableKPIAttributeFilterRenaming",
             "BOOLEAN",
