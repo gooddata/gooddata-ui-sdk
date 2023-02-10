@@ -84,6 +84,13 @@ function* validateInsightDrillDefinitions(
         ctx,
     );
 
+    if (!validationData.drillTargets) {
+        return {
+            invalidDrills: [],
+            widget,
+        };
+    }
+
     const invalidDrills = flatMap(widget.drills, (drillItem) => {
         try {
             validateDrillDefinition(drillItem, validationData, ctx, cmd);
