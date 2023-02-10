@@ -239,27 +239,31 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
     };
 
     public getInsightReferencingObjects = async (ref: ObjRef): Promise<IInsightReferencing> => {
-        const id = await objRefToIdentifier(ref, this.authCall);
-        const entitiesGraph = await this.authCall((client) =>
-            client.actions
-                .getDependentEntitiesGraphFromEntryPoints({
-                    workspaceId: this.workspace,
-                    dependentEntitiesRequest: {
-                        identifiers: [
-                            {
-                                id,
-                                type: "visualizationObject",
-                            },
-                        ],
-                    },
-                })
-                .then((res) => res.data.graph),
-        );
-        const analyticalDashboards = entitiesGraph.nodes
-            .filter(({ type }) => type === "analyticalDashboard")
-            .map(convertGraphEntityNodeToAnalyticalDashboard);
+        try {
+            const id = await objRefToIdentifier(ref, this.authCall);
+            const entitiesGraph = await this.authCall((client) =>
+                client.actions
+                    .getDependentEntitiesGraphFromEntryPoints({
+                        workspaceId: this.workspace,
+                        dependentEntitiesRequest: {
+                            identifiers: [
+                                {
+                                    id,
+                                    type: "visualizationObject",
+                                },
+                            ],
+                        },
+                    })
+                    .then((res) => res.data.graph),
+            );
+            const analyticalDashboards = entitiesGraph.nodes
+                .filter(({ type }) => type === "analyticalDashboard")
+                .map(convertGraphEntityNodeToAnalyticalDashboard);
 
-        return { analyticalDashboards };
+            return { analyticalDashboards };
+        } catch {
+            return {};
+        }
     };
 
     public getInsightWithAddedFilters = async <T extends IInsightDefinition>(
