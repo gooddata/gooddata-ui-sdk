@@ -1,5 +1,5 @@
 // (C) 2019-2023 GoodData Corporation
-import { ITigerClient, JsonApiWorkspaceSettingInAttributesTypeEnum } from "@gooddata/api-client-tiger";
+import { ITigerClient, JsonApiOrganizationSettingInAttributesTypeEnum } from "@gooddata/api-client-tiger";
 import { AuthenticatedCallGuard } from "@gooddata/sdk-backend-base";
 import { FilterContextItem } from "@gooddata/sdk-model";
 
@@ -45,4 +45,4 @@ export interface IExportMetadata {
     filters: FilterContextItem[];
 }
 
-export type TigerSettingsType = JsonApiWorkspaceSettingInAttributesTypeEnum;
+export type TigerSettingsType = JsonApiOrganizationSettingInAttributesTypeEnum;

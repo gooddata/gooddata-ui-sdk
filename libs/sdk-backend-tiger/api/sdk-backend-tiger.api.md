@@ -36,6 +36,7 @@ import { LayoutApiSetPdmLayoutRequest } from '@gooddata/api-client-tiger';
 import { NotAuthenticated } from '@gooddata/sdk-backend-spi';
 import { NotAuthenticatedHandler } from '@gooddata/sdk-backend-spi';
 import { PlatformUsage } from '@gooddata/api-client-tiger';
+import { ScanSqlResponse } from '@gooddata/api-client-tiger';
 import { TestDefinitionRequestTypeEnum } from '@gooddata/api-client-tiger';
 
 export { AnonymousAuthProvider }
@@ -301,6 +302,9 @@ export interface ScanResult {
 }
 
 // @internal (undocumented)
+export type ScanSqlResult = ScanSqlResponse;
+
+// @internal (undocumented)
 export type SetPdmLayoutRequest = LayoutApiSetPdmLayoutRequest;
 
 // @public
@@ -375,6 +379,7 @@ export type TigerSpecificFunctions = {
     createWorkspaceCustomAppSetting?: (workspaceId: string, id: string, applicationName: string, content: object) => Promise<ICustomApplicationSetting>;
     deleteWorkspaceCustomAppSetting?: (workspaceId: string, settingId: string) => Promise<void>;
     getEntityUser?: (id: string) => Promise<IUser>;
+    scanSql?: (dataSourceId: string, sql: string) => Promise<ScanSqlResult>;
 };
 
 // @public

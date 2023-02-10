@@ -239,6 +239,70 @@ export interface ScanResultPdm {
     warnings: Array<TableWarning>;
 }
 /**
+ * A request with SQL query to by analyzed.
+ * @export
+ * @interface ScanSqlRequest
+ */
+export interface ScanSqlRequest {
+    /**
+     * SQL query to be analyzed.
+     * @type {string}
+     * @memberof ScanSqlRequest
+     */
+    sql: string;
+}
+/**
+ * Result of scanSql. Consists of array of query columns including type. Sql query result data preview can be attached optionally
+ * @export
+ * @interface ScanSqlResponse
+ */
+export interface ScanSqlResponse {
+    /**
+     * Array of columns with types.
+     * @type {Array<SqlColumn>}
+     * @memberof ScanSqlResponse
+     */
+    columns: Array<SqlColumn>;
+    /**
+     * Array of rows where each row is another array of string values.
+     * @type {Array<Array<string>>}
+     * @memberof ScanSqlResponse
+     */
+    dataPreview?: Array<Array<string>>;
+}
+/**
+ * A SQL query result column.
+ * @export
+ * @interface SqlColumn
+ */
+export interface SqlColumn {
+    /**
+     * Column name
+     * @type {string}
+     * @memberof SqlColumn
+     */
+    name: string;
+    /**
+     * Column type
+     * @type {string}
+     * @memberof SqlColumn
+     */
+    dataType: SqlColumnDataTypeEnum;
+}
+
+export const SqlColumnDataTypeEnum = {
+    INT: "INT",
+    STRING: "STRING",
+    DATE: "DATE",
+    NUMERIC: "NUMERIC",
+    TIMESTAMP: "TIMESTAMP",
+    TIMESTAMP_TZ: "TIMESTAMP_TZ",
+    BOOLEAN: "BOOLEAN",
+} as const;
+
+export type SqlColumnDataTypeEnum = typeof SqlColumnDataTypeEnum[keyof typeof SqlColumnDataTypeEnum];
+
+/**
  * Warnings related to single table.
  * @export
  * @interface TableWarning
@@ -532,6 +596,58 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * It executes SQL query against specified data source and extracts metadata. Metadata consist of column names and column data types. It can optionally provide also preview of data returned by SQL query
+         * @summary Collect metadata about SQL query
+         * @param {string} dataSourceId Data source id
+         * @param {ScanSqlRequest} scanSqlRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        scanSql: async (
+            dataSourceId: string,
+            scanSqlRequest: ScanSqlRequest,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'dataSourceId' is not null or undefined
+            assertParamExists("scanSql", "dataSourceId", dataSourceId);
+            // verify required parameter 'scanSqlRequest' is not null or undefined
+            assertParamExists("scanSql", "scanSqlRequest", scanSqlRequest);
+            const localVarPath = `/api/v1/actions/dataSources/{dataSourceId}/scanSql`.replace(
+                `{${"dataSourceId"}}`,
+                encodeURIComponent(String(dataSourceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof scanSqlRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(scanSqlRequest !== undefined ? scanSqlRequest : {})
+                : scanSqlRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Test if it is possible to connect to a database using an existing data source definition.
          * @summary Test data source connection by data source id
          * @param {string} dataSourceId Data source id
@@ -676,6 +792,26 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * It executes SQL query against specified data source and extracts metadata. Metadata consist of column names and column data types. It can optionally provide also preview of data returned by SQL query
+         * @summary Collect metadata about SQL query
+         * @param {string} dataSourceId Data source id
+         * @param {ScanSqlRequest} scanSqlRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async scanSql(
+            dataSourceId: string,
+            scanSqlRequest: ScanSqlRequest,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ScanSqlResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.scanSql(
+                dataSourceId,
+                scanSqlRequest,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Test if it is possible to connect to a database using an existing data source definition.
          * @summary Test data source connection by data source id
          * @param {string} dataSourceId Data source id
@@ -757,6 +893,21 @@ export const ActionsApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
+         * It executes SQL query against specified data source and extracts metadata. Metadata consist of column names and column data types. It can optionally provide also preview of data returned by SQL query
+         * @summary Collect metadata about SQL query
+         * @param {ActionsApiScanSqlRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        scanSql(
+            requestParameters: ActionsApiScanSqlRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ScanSqlResponse> {
+            return localVarFp
+                .scanSql(requestParameters.dataSourceId, requestParameters.scanSqlRequest, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * Test if it is possible to connect to a database using an existing data source definition.
          * @summary Test data source connection by data source id
          * @param {ActionsApiTestDataSourceRequest} requestParameters Request parameters.
@@ -822,6 +973,19 @@ export interface ActionsApiInterface {
     ): AxiosPromise<ScanResultPdm>;
 
     /**
+     * It executes SQL query against specified data source and extracts metadata. Metadata consist of column names and column data types. It can optionally provide also preview of data returned by SQL query
+     * @summary Collect metadata about SQL query
+     * @param {ActionsApiScanSqlRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    scanSql(
+        requestParameters: ActionsApiScanSqlRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ScanSqlResponse>;
+
+    /**
      * Test if it is possible to connect to a database using an existing data source definition.
      * @summary Test data source connection by data source id
      * @param {ActionsApiTestDataSourceRequest} requestParameters Request parameters.
@@ -881,6 +1045,27 @@ export interface ActionsApiScanDataSourceRequest {
      * @memberof ActionsApiScanDataSource
      */
     readonly scanRequest: ScanRequest;
+}
+
+/**
+ * Request parameters for scanSql operation in ActionsApi.
+ * @export
+ * @interface ActionsApiScanSqlRequest
+ */
+export interface ActionsApiScanSqlRequest {
+    /**
+     * Data source id
+     * @type {string}
+     * @memberof ActionsApiScanSql
+     */
+    readonly dataSourceId: string;
+
+    /**
+     *
+     * @type {ScanSqlRequest}
+     * @memberof ActionsApiScanSql
+     */
+    readonly scanSqlRequest: ScanSqlRequest;
 }
 
 /**
@@ -953,6 +1138,20 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     public scanDataSource(requestParameters: ActionsApiScanDataSourceRequest, options?: AxiosRequestConfig) {
         return ActionsApiFp(this.configuration)
             .scanDataSource(requestParameters.dataSourceId, requestParameters.scanRequest, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * It executes SQL query against specified data source and extracts metadata. Metadata consist of column names and column data types. It can optionally provide also preview of data returned by SQL query
+     * @summary Collect metadata about SQL query
+     * @param {ActionsApiScanSqlRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public scanSql(requestParameters: ActionsApiScanSqlRequest, options?: AxiosRequestConfig) {
+        return ActionsApiFp(this.configuration)
+            .scanSql(requestParameters.dataSourceId, requestParameters.scanSqlRequest, options)
             .then((request) => request(this.axios, this.basePath));
     }
 
