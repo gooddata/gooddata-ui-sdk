@@ -155,7 +155,7 @@ export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Elemen
     return (
         <>
             <DashboardLayout
-                className={isExport ? "export-mode export-mode-flex" : ""}
+                className={isExport ? "export-mode" : ""}
                 layout={transformedLayout}
                 itemKeyGetter={itemKeyGetter}
                 widgetRenderer={widgetRenderer}
