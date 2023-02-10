@@ -27,8 +27,6 @@ export enum TigerFeaturesNames {
     //boolean + possible values: enabled, disabled
     EnablePushpinGeoChart = "enablePushpinGeoChart",
     //boolean + possible values: enabled, disabled
-    EnableAttributeAllValues = "enableAttributeAllValues",
-    //boolean + possible values: enabled, disabled
     EnableKPIAttributeFilterRenaming = "enableKPIAttributeFilterRenaming",
     //boolean + possible values: enabled, disabled
     EnableKPIDashboardExportPDF = "enableKPIDashboardExportPDF",
@@ -45,7 +43,6 @@ export type ITigerFeatureFlags = {
     enableDescriptions: typeof FeatureFlagsValues["enableDescriptions"][number];
     enableAnalyticalDashboardPermissions: typeof FeatureFlagsValues["enableAnalyticalDashboardPermissions"][number];
     enablePushpinGeoChart: typeof FeatureFlagsValues["enablePushpinGeoChart"][number];
-    enableAttributeAllValues: typeof FeatureFlagsValues["enableAttributeAllValues"][number];
     enableKPIAttributeFilterRenaming: typeof FeatureFlagsValues["enableKPIAttributeFilterRenaming"][number];
     enableKPIDashboardExportPDF: typeof FeatureFlagsValues["enableKPIDashboardExportPDF"][number];
 };
@@ -62,7 +59,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDescriptions: false,
     enableAnalyticalDashboardPermissions: false,
     enablePushpinGeoChart: false,
-    enableAttributeAllValues: false,
     enableKPIAttributeFilterRenaming: false,
     enableKPIDashboardExportPDF: false, // TODO: TNT-1307 can be set to true after sdk v8.12 codedrop and backends fully support that
 };
@@ -82,7 +78,6 @@ export const FeatureFlagsValues = {
     enableDescriptions: [true, false] as const,
     enableAnalyticalDashboardPermissions: [true, false] as const,
     enablePushpinGeoChart: [true, false] as const,
-    enableAttributeAllValues: [true, false] as const,
     enableKPIAttributeFilterRenaming: [true, false] as const,
     enableKPIDashboardExportPDF: [true, false] as const,
 };
