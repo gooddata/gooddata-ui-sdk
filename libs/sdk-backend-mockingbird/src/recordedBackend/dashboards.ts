@@ -376,7 +376,7 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
     }
 
     public validateDashboardsExistence(_dashboardRefs: ObjRef[]): Promise<IExistingDashboard[]> {
-        throw new NotSupported("recorded backend does not support this call");
+        return Promise.resolve([]);
     }
 }
 

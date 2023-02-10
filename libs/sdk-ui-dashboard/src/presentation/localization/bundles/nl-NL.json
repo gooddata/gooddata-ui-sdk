@@ -242,6 +242,7 @@
     "visualizationsList.savedVisualizations": "Opgeslagen inzichten",
     "configurationPanel.drillConfig.selectDashboard": "Dashboard kiezen…",
     "configurationPanel.drillConfig.drillIntoDashboard.searchPlaceholder": "Zoeken in alle dashboards…",
+    "configurationPanel.drillConfig.forbiddenDashboard": "(Niet gedeeld met u)",
     "configurationPanel.drillConfig.forbiddenDashboard.tooltip": "Dashboard is niet gedeeld met u, maar andere gebruikers hebben toegang tot dit dashboard.",
     "configurationPanel.drillConfig.notSharedDashboard.tooltip": "Dashboard is niet gedeeld met u, maar andere gebruikers hebben er toegang tot als zij inzoomen.",
     "configurationPanel.remove.form.dashboard": "Verwijderen van dashboard",

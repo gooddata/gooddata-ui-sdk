@@ -1198,9 +1198,7 @@ export interface IExecutionDefinition {
 }
 
 // @alpha
-export interface IExistingDashboard {
-    id: string;
-    ref: ObjRef;
+export interface IExistingDashboard extends IDashboardObjectIdentity {
     title?: string;
 }
 

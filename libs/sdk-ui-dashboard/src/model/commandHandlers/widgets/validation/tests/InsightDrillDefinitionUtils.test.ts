@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { idRef, uriRef, DrillOrigin } from "@gooddata/sdk-model";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import cloneDeep from "lodash/cloneDeep";
@@ -6,6 +6,7 @@ import {
     DrillToDashboardFromProductAttributeDefinition,
     DrillToDashboardFromWonMeasureDefinition,
     DrillToToInsightFromWonMeasureDefinition,
+    InaccessibleDashboard,
     SimpleDashboardListed,
     SimpleDashboardSimpleSortedTableWidgetDrillTargets,
     SimpleSortedTableWidgetInsight,
@@ -92,6 +93,7 @@ describe("validateInsightDrillDefinition", () => {
         insightsMap: newInsightMap([SimpleSortedTableWidgetInsight]),
         displayFormsMap: newDisplayFormMap([]),
         availableDrillTargets: {},
+        inaccessibleDashboardsMap: newMapForObjectWithIdentity([InaccessibleDashboard]),
     };
 
     describe("validate IDrillToDashboard definition", () => {
@@ -133,6 +135,14 @@ describe("validateInsightDrillDefinition", () => {
             expect(() => {
                 validateInsightDrillDefinition(invalidTarget, validationContext);
             }).toThrowErrorMatchingSnapshot();
+        });
+
+        it("should not throw error for unknown ref target IDrillToDashboard definition which is inaccessible", () => {
+            const forbiddenTarget = cloneDeep(DrillToDashboardFromWonMeasureDefinition);
+            forbiddenTarget.target = idRef(InaccessibleDashboard.identifier, "analyticalDashboard");
+            const result = validateInsightDrillDefinition(forbiddenTarget, validationContext);
+
+            expect(result).toEqual(forbiddenTarget);
         });
     });
 

@@ -242,6 +242,7 @@
     "visualizationsList.savedVisualizations": "Сохраненные анализы",
     "configurationPanel.drillConfig.selectDashboard": "Выберите дашборд…",
     "configurationPanel.drillConfig.drillIntoDashboard.searchPlaceholder": "Поиск по всем дашбордам…",
+    "configurationPanel.drillConfig.forbiddenDashboard": "(Не предоставлена вам)",
     "configurationPanel.drillConfig.forbiddenDashboard.tooltip": "Дашборд не предоставлен вам, но другие пользователи имеют доступ к нему.",
     "configurationPanel.drillConfig.notSharedDashboard.tooltip": "Дашборд не предоставлен вам, но все пользователи могут получить к нему доступ, если они перейдут к нему в ходе детализации.",
     "configurationPanel.remove.form.dashboard": "Удалить с дашборда",

@@ -29,6 +29,7 @@ import {
 } from "../../../../_staging/drills/drillingUtils";
 import { ObjRefMap } from "../../../../_staging/metadata/objRefMap";
 import { isDisplayFormRelevantToDrill } from "../../common/isDisplayFormRelevantToDrill";
+import { IInaccessibleDashboard } from "../../../types/inaccessibleDashboardTypes";
 
 export function validateDrillDefinitionOrigin(
     drillDefinition: InsightDrillDefinition,
@@ -129,6 +130,7 @@ export interface InsightDrillDefinitionValidationData {
     insightsMap: ObjRefMap<IInsight>;
     displayFormsMap: ObjRefMap<IAttributeDisplayFormMetadataObject>;
     availableDrillTargets: IAvailableDrillTargets;
+    inaccessibleDashboardsMap: ObjRefMap<IInaccessibleDashboard>;
 }
 
 export function validateInsightDrillDefinition(
@@ -161,7 +163,9 @@ function validateDrillToDashboardDefinition(
     const { target } = drillDefinition;
     if (target) {
         let result: IDrillToDashboard | undefined = undefined;
-        const targetDashboard = validationContext.dashboardsMap.get(target);
+        const targetDashboard =
+            validationContext.dashboardsMap.get(target) ||
+            validationContext.inaccessibleDashboardsMap.get(target);
 
         if (targetDashboard) {
             // normalize ref take the value from state ...

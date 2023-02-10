@@ -1079,7 +1079,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
         const validDashboards = await Promise.all(
             dashboardRefs.map(async (ref) => {
                 try {
-                    const { title, identifier, isUnderStrictControl } = await this.getDashboard(ref);
+                    const { title, identifier, isUnderStrictControl, uri } = await this.getDashboard(ref);
                     // Dashboard is not shared with current user (but does not have strict mode enabled).
 
                     // For admin, backend returns object without 403 even if it is under strict control, therefore we
@@ -1088,14 +1088,16 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
                     return {
                         ref,
                         title: isUnderStrictControl ? undefined : title,
-                        id: identifier,
+                        identifier,
+                        uri,
                     };
                 } catch (error) {
                     if (error.httpStatus === 403) {
                         // forbidden
                         return {
                             ref,
-                            id: objRefToString(ref), // target ref contains required dashboard ID,
+                            identifier: objRefToString(ref), // target ref contains required dashboard ID,
+                            uri: "", // not needed for forbidden dashboard
                         };
                     } else {
                         // non-existent

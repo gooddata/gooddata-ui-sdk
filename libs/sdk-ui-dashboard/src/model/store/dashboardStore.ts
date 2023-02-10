@@ -31,6 +31,7 @@ import merge from "lodash/merge";
 import keyBy from "lodash/keyBy";
 import { listedDashboardsSliceReducer } from "./listedDashboards";
 import { accessibleDashboardsSliceReducer } from "./accessibleDashboards";
+import { inaccessibleDashboardsSliceReducer } from "./inaccessibleDashboards";
 import { backendCapabilitiesSliceReducer } from "./backendCapabilities";
 import { drillTargetsReducer } from "./drillTargets";
 import { DashboardEventType } from "../events";
@@ -299,6 +300,7 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
         drill: drillSliceReducer,
         listedDashboards: listedDashboardsSliceReducer,
         accessibleDashboards: accessibleDashboardsSliceReducer,
+        inaccessibleDashboards: inaccessibleDashboardsSliceReducer,
         legacyDashboards: legacyDashboardsSliceReducer,
         executionResults: executionResultsSliceReducer,
         renderMode: renderModeSliceReducer,
