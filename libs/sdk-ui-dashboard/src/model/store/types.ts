@@ -20,6 +20,7 @@ import { UiState } from "./ui/uiState";
 import { LegacyDashboardsState } from "./legacyDashboards/legacyDashboardsState";
 import { RenderModeState } from "./renderMode/renderModeState";
 import { DashboardPermissionsState } from "./dashboardPermissions/dashboardPermissionsState";
+import { IInaccessibleDashboard } from "../types/inaccessibleDashboardTypes";
 
 /*
  * This explicit typing is unfortunate but cannot find better way. Normally the typings get inferred from store,
@@ -71,6 +72,8 @@ export interface DashboardState {
     listedDashboards: EntityState<IListedDashboard>;
     /** @beta */
     accessibleDashboards: EntityState<IListedDashboard>;
+    /** @alpha */
+    inaccessibleDashboards: EntityState<IInaccessibleDashboard>;
     dashboardPermissions: DashboardPermissionsState;
 
     /**

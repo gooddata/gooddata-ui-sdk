@@ -242,6 +242,7 @@
     "visualizationsList.savedVisualizations": "Gespeicherte Betrachtungen",
     "configurationPanel.drillConfig.selectDashboard": "Dashboard auswählen…",
     "configurationPanel.drillConfig.drillIntoDashboard.searchPlaceholder": "Alle Dashboards durchsuchen…",
+    "configurationPanel.drillConfig.forbiddenDashboard": "(Nicht mit Ihnen geteilt)",
     "configurationPanel.drillConfig.forbiddenDashboard.tooltip": "Dieses Dashboard wird nicht mit Ihnen geteilt, aber andere Benutzer haben Zugriff auf dieses Dashboard.",
     "configurationPanel.drillConfig.notSharedDashboard.tooltip": "Dieses Dashboard wird nicht mit Ihnen geteilt, aber alle Benutzer können darauf zugreifen, wenn sie danach suchen.",
     "configurationPanel.remove.form.dashboard": "Vom Dashboard entfernen",

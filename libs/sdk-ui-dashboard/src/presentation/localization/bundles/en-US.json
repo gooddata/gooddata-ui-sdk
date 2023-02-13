@@ -1346,6 +1346,11 @@
         "comment": "Use '…' as one character, not 3 dots ('...').",
         "limit": 0
     },
+    "configurationPanel.drillConfig.forbiddenDashboard": {
+        "value": "(Not shared with you)",
+        "comment": "Placeholder used instead of the name of a dashboard in a list if dashboard name cannot be shown because dashboard was not shared with the user..",
+        "limit": 0
+    },
     "configurationPanel.drillConfig.forbiddenDashboard.tooltip": {
         "value": "Dashboard is not shared with you, but other users have access to this dashboard.",
         "comment": "Tooltip explaining the accessibility of the dashboard.",

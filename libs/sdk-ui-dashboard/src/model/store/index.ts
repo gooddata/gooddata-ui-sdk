@@ -222,6 +222,10 @@ export {
     selectAccessibleDashboards,
     selectAccessibleDashboardsMap,
 } from "./accessibleDashboards/accessibleDashboardsSelectors";
+export {
+    selectInaccessibleDashboards,
+    selectInaccessibleDashboardsMap,
+} from "./inaccessibleDashboards/inaccessibleDashboardsSelectors";
 export { selectDrillTargetsByWidgetRef, selectDrillTargets } from "./drillTargets/drillTargetsSelectors";
 export { IDrillTargets } from "./drillTargets/drillTargetsTypes";
 export {

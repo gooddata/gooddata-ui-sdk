@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 
 import { SagaIterator } from "redux-saga";
 import { call, SagaReturnType, select } from "redux-saga/effects";
@@ -22,6 +22,8 @@ import {
 } from "../../../../model/utils/displayFormResolver";
 import { selectDrillTargetsByWidgetRef } from "../../../store/drillTargets/drillTargetsSelectors";
 import { selectAccessibleDashboardsMap } from "../../../store/accessibleDashboards/accessibleDashboardsSelectors";
+import { selectInaccessibleDashboardsMap } from "../../../store/inaccessibleDashboards/inaccessibleDashboardsSelectors";
+import { IInaccessibleDashboard } from "../../../types/inaccessibleDashboardTypes";
 
 export function validateDrillDefinition(
     drillDefinition: InsightDrillDefinition,
@@ -54,6 +56,7 @@ export function validateDrillDefinition(
         insightsMap: validationData.resolvedInsights.resolved,
         displayFormsMap: validationData.resolvedDisplayForms.resolved,
         availableDrillTargets: validationData.drillTargets.availableDrillTargets!,
+        inaccessibleDashboardsMap: validationData.inaccessibleDashboardsMap,
     };
 
     try {
@@ -71,6 +74,7 @@ export interface DrillDefinitionValidationData {
     resolvedInsights: InsightResolutionResult;
     resolvedDisplayForms: DisplayFormResolutionResult;
     accessibleDashboardMap: ObjRefMap<IListedDashboard>;
+    inaccessibleDashboardsMap: ObjRefMap<IInaccessibleDashboard>;
 }
 
 export function* getValidationData(
@@ -85,6 +89,9 @@ export function* getValidationData(
 
     const accessibleDashboardMap: ReturnType<typeof selectAccessibleDashboardsMap> = yield select(
         selectAccessibleDashboardsMap,
+    );
+    const inaccessibleDashboardsMap: ReturnType<typeof selectInaccessibleDashboardsMap> = yield select(
+        selectInaccessibleDashboardsMap,
     );
 
     const insightRefs = extractInsightRefs(drillsToModify);
@@ -106,5 +113,6 @@ export function* getValidationData(
         accessibleDashboardMap,
         resolvedInsights,
         resolvedDisplayForms,
+        inaccessibleDashboardsMap,
     };
 }

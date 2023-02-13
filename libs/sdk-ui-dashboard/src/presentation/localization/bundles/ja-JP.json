@@ -242,6 +242,7 @@
     "visualizationsList.savedVisualizations": "保存済みインサイト",
     "configurationPanel.drillConfig.selectDashboard": "ダッシュボードを選択…",
     "configurationPanel.drillConfig.drillIntoDashboard.searchPlaceholder": "全てのダッシュボードを検索…",
+    "configurationPanel.drillConfig.forbiddenDashboard": "（共有されていません）",
     "configurationPanel.drillConfig.forbiddenDashboard.tooltip": "ダッシュボードは共有されていませんが、他のユーザーはこのダッシュボードにアクセスできます。",
     "configurationPanel.drillConfig.notSharedDashboard.tooltip": "ダッシュボードは共有されていませんが、このダッシュボードにドリルするとアクセスできるようになります。",
     "configurationPanel.remove.form.dashboard": "ダッシュボードから削除",

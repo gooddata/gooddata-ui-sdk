@@ -8,10 +8,12 @@ import {
     IDrillToInsight,
     IKpiWidget,
     IListedDashboard,
+    idRef,
 } from "@gooddata/sdk-model";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import { ComplexDashboardIdentifier } from "./ComplexDashboard.fixtures";
+import { IInaccessibleDashboard } from "../../types/inaccessibleDashboardTypes";
 
 export const SimpleDashboardIdentifier = "aaRaEZRWdRpQ";
 export const SimpleDashboardWithReferences = ReferenceRecordings.Recordings.metadata.dashboards
@@ -313,6 +315,13 @@ export const DrillToAttributeUrlFromMeasureDefinition: IDrillToAttributeUrl = {
             uri: "/gdc/md/referenceworkspace/obj/1069",
         },
     },
+};
+
+export const InaccessibleDashboard: IInaccessibleDashboard = {
+    title: "Inaccessible Dashboard",
+    ref: idRef("inaccessibleDashboardId"),
+    uri: "inaccessibleDashboardUri",
+    identifier: "inaccessibleDashboardId",
 };
 
 export const SimpleDashboardListed: IListedDashboard = {

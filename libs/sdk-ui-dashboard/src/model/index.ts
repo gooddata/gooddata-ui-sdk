@@ -82,6 +82,7 @@ export {
 } from "./types/attributeFilterTypes";
 
 export { DRILL_TO_URL_PLACEHOLDER } from "./types/drillTypes";
+export { DashboardAccessibilityLimitation, IInaccessibleDashboard } from "./types/inaccessibleDashboardTypes";
 
 export * from "./react";
 export * from "./commands";

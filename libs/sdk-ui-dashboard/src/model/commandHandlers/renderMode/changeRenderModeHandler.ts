@@ -12,6 +12,7 @@ import { validateDrills } from "../common/validateDrills";
 import { selectAllAnalyticalWidgets } from "../../store/layout/layoutSelectors";
 import { validateDrillToCustomUrlParams } from "../common/validateDrillToCustomUrlParams";
 import { isInsightWidget } from "@gooddata/sdk-model";
+import { loadInaccessibleDashboards } from "../dashboard/initializeDashboardHandler/loadInaccessibleDashboards";
 
 export function* changeRenderModeHandler(
     ctx: DashboardContext,
@@ -38,6 +39,7 @@ export function* changeRenderModeHandler(
             const widgets: ReturnType<typeof selectAllAnalyticalWidgets> = yield select(
                 selectAllAnalyticalWidgets,
             );
+            yield call(loadInaccessibleDashboards, ctx, widgets);
             yield call(validateDrills, ctx, cmd, widgets);
             yield call(validateDrillToCustomUrlParams, widgets.filter(isInsightWidget));
         }

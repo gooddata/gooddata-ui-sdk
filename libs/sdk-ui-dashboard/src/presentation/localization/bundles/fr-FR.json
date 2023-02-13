@@ -242,6 +242,7 @@
     "visualizationsList.savedVisualizations": "Perceptions enregistrées",
     "configurationPanel.drillConfig.selectDashboard": "Choisir un tableau de bord…",
     "configurationPanel.drillConfig.drillIntoDashboard.searchPlaceholder": "Rechercher dans tous les tableaux de bord…",
+    "configurationPanel.drillConfig.forbiddenDashboard": "(Non partagé avec vous)",
     "configurationPanel.drillConfig.forbiddenDashboard.tooltip": "Le tableau de bord n'est pas partagé avec vous, mais d'autres utilisateurs y ont accès.",
     "configurationPanel.drillConfig.notSharedDashboard.tooltip": "Le tableau de bord n'est pas partagé avec vous, mais tous les utilisateurs peuvent y accéder s'ils l'explorent.",
     "configurationPanel.remove.form.dashboard": "Retirer du tableau de bord",

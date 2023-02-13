@@ -552,7 +552,8 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
         return validDashboardRefs.map((ref) => ({
             ref,
-            id: objRefToString(ref),
+            identifier: objRefToString(ref),
+            uri: "", // uri is not available in entities graph
         }));
     };
 

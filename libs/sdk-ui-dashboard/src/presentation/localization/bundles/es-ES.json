@@ -242,6 +242,7 @@
     "visualizationsList.savedVisualizations": "Perspectivas guardadas",
     "configurationPanel.drillConfig.selectDashboard": "Elija un panel…",
     "configurationPanel.drillConfig.drillIntoDashboard.searchPlaceholder": "Buscar todos los paneles…",
+    "configurationPanel.drillConfig.forbiddenDashboard": "(No compartido con usted)",
     "configurationPanel.drillConfig.forbiddenDashboard.tooltip": "El panel no se ha compartido con usted, pero otros usuarios tienen acceso a él.",
     "configurationPanel.drillConfig.notSharedDashboard.tooltip": "El panel no se ha compartido con usted, pero todos los usuarios pueden acceder a él si exploran hacia el panel.",
     "configurationPanel.remove.form.dashboard": "Quitar del panel",

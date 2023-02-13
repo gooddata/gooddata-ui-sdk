@@ -359,15 +359,7 @@ export type IDashboardPermissions = {
  *
  * @alpha
  */
-export interface IExistingDashboard {
-    /**
-     * Dashboard ref
-     */
-    ref: ObjRef;
-    /**
-     * Dashboard id
-     */
-    id: string;
+export interface IExistingDashboard extends IDashboardObjectIdentity {
     /**
      * Dashboard title
      */

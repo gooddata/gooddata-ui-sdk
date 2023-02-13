@@ -907,6 +907,9 @@ export type CustomWidgetDraggableItem = BaseDraggableMovingItem & {
 // @internal (undocumented)
 export const Dashboard: React_2.FC<IDashboardProps>;
 
+// @alpha
+export type DashboardAccessibilityLimitation = "forbidden" | "notShared";
+
 // @beta
 export interface DashboardAlertCreated extends IDashboardEvent {
     // (undocumented)
@@ -2174,6 +2177,8 @@ export interface DashboardState {
     executionResults: EntityState<IExecutionResultEnvelope>;
     // (undocumented)
     filterContext: FilterContextState;
+    // @alpha (undocumented)
+    inaccessibleDashboards: EntityState<IInaccessibleDashboard>;
     // @beta (undocumented)
     insights: EntityState<IInsight>;
     // @alpha (undocumented)
@@ -3685,6 +3690,12 @@ export interface IImplicitDrillWithPredicates {
     drillDefinition: DashboardDrillDefinition;
     // (undocumented)
     predicates: IHeaderPredicate[];
+}
+
+// @alpha
+export interface IInaccessibleDashboard extends IDashboardObjectIdentity {
+    accessibilityLimitation?: DashboardAccessibilityLimitation;
+    title: string;
 }
 
 // @alpha
@@ -6007,6 +6018,12 @@ export const selectImplicitDrillsDownByWidgetRef: (ref: ObjRef) => OutputSelecto
 
 // @internal (undocumented)
 export const selectImplicitDrillsToUrlByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res1: IDrillTargets | undefined, res2: ICatalogAttribute[], res3: boolean) => IImplicitDrillWithPredicates[]>;
+
+// @alpha
+export const selectInaccessibleDashboards: (state: DashboardState) => IInaccessibleDashboard[];
+
+// @alpha
+export const selectInaccessibleDashboardsMap: OutputSelector<DashboardState, ObjRefMap<IInaccessibleDashboard>, (res: IInaccessibleDashboard[]) => ObjRefMap<IInaccessibleDashboard>>;
 
 // @internal
 export const selectInsightAttributesMeta: (query: QueryInsightAttributesMeta) => Selector<DashboardState, QueryCacheEntryResult<InsightAttributesMeta> | undefined>;
