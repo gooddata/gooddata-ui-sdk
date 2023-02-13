@@ -53,7 +53,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableMultipleDates: true,
     enableKPIDashboardDeleteFilterButton: false,
     // disable edit mode in gdc-dashboards during development
-    dashboardEditModeDevRollout: false,
+    dashboardEditModeDevRollout: true,
     enableMetricSqlAndDataExplain: false,
     enableLongitudeAndLatitudeLabels: false,
     enableDescriptions: false,

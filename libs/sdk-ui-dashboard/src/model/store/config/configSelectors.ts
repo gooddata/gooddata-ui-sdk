@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2023 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import { DashboardState } from "../types";
 import invariant from "ts-invariant";
@@ -310,7 +310,7 @@ export const selectEnableInsightExportScheduling = createSelector(selectConfig, 
  * @internal
  */
 export const selectDashboardEditModeDevRollout = createSelector(selectConfig, (state) => {
-    return !!state.settings?.dashboardEditModeDevRollout ?? false;
+    return !!state.settings?.dashboardEditModeDevRollout ?? true;
 });
 
 /**
