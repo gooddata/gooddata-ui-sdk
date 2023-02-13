@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 import React, { CSSProperties, useCallback, useMemo, useState } from "react";
 import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { createSelector } from "@reduxjs/toolkit";
@@ -130,7 +130,7 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
         result: filtersForInsight,
         status: filtersStatus,
         error: filtersError,
-    } = useWidgetFilters(widget);
+    } = useWidgetFilters(widget, insight);
 
     const insightWithAddedFilters = useMemo(
         () => insightSetFilters(insight, filtersForInsight),
