@@ -11,7 +11,6 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../../model";
-import { getInsightVisualizationMeta } from "@gooddata/sdk-ui-ext";
 
 type UseEditableInsightMenuConfig = {
     insight: IInsight;
@@ -32,7 +31,6 @@ export const useEditableInsightMenu = (
         enableKPIDashboardDrillToURL,
         enableKPIDashboardDrillToDashboard,
         enableKPIDashboardDrillToInsight,
-        enableKDZooming,
     } = settings;
 
     const configItems = useDashboardSelector(selectDrillTargetsByWidgetRef(widget.ref));
@@ -44,10 +42,7 @@ export const useEditableInsightMenu = (
     const someAvailableDrillTargetsExist =
         !!availableDrillTargets?.attributes?.length || !!availableDrillTargets?.measures?.length;
 
-    const visualizationMeta = getInsightVisualizationMeta(insight);
-    const isZoomable = enableKDZooming && visualizationMeta.supportsZooming;
-
-    const includeInteractions = (someDrillingEnabled && someAvailableDrillTargetsExist) || isZoomable;
+    const includeInteractions = someDrillingEnabled && someAvailableDrillTargetsExist;
 
     const { insightMenuItemsProvider } = useDashboardCustomizationsContext();
     const defaultMenuItems = useMemo<IInsightMenuItem[]>(() => {
