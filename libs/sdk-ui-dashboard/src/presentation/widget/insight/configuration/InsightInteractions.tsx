@@ -1,11 +1,15 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2023 GoodData Corporation
 import React from "react";
 import { IInsightWidget, isInsightWidget, objRefToString } from "@gooddata/sdk-model";
-import { ScrollablePanel } from "@gooddata/sdk-ui-kit";
+import { ScrollablePanel, OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 import cx from "classnames";
 
+import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants";
+
 import { InsightDrillConfigPanel } from "./InsightDrillConfigPanel/InsightDrillConfigPanel";
+
+const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
 
 interface IInsightConfigurationProps {
     widget: IInsightWidget;
@@ -20,7 +24,10 @@ export const InsightInteractions: React.FC<IInsightConfigurationProps> = ({ widg
 
     return (
         <ScrollablePanel className={classes}>
-            <InsightDrillConfigPanel widgetRef={widget.ref} />
+            {/* Header z-index start at  6000 so we need force all overlays z-indexes start at 6000 to be under header */}
+            <OverlayControllerProvider overlayController={overlayController}>
+                <InsightDrillConfigPanel widgetRef={widget.ref} />
+            </OverlayControllerProvider>
         </ScrollablePanel>
     );
 };
