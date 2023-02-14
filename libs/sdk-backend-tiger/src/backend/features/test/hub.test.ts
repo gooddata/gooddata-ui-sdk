@@ -141,7 +141,7 @@ describe("live features", () => {
             createFeature("dashboardEditModeDevRollout", "STRING", "ENABLED"),
             createFeature("enableKPIDashboardDeleteFilterButton", "STRING", "ENABLED"),
             createFeature("enableMultipleDates", "STRING", "ENABLED"),
-            createFeature("enableSortingByTotalGroup", "STRING", "ENABLED"),
+            createFeature("enableSortingByTotalGroup", "STRING", "TRUE"),
         ]);
 
         const results = await getFeatureHubFeatures(createFeatures());

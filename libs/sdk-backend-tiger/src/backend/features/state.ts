@@ -1,6 +1,6 @@
-// (C) 2020-2022 GoodData Corporation
-export const FeatureEnabled = "ENABLED";
-export const FeatureDisabled = "DISABLED";
+// (C) 2020-2023 GoodData Corporation
+export const FeatureEnabled = ["ENABLED", "TRUE"];
+export const FeatureDisabled = ["DISABLED", "FALSE"];
 
 export function convertState(
     type: "STRING" | "BOOLEAN",
@@ -17,20 +17,23 @@ export function convertState(
     }
 }
 
+const enabledValues = FeatureEnabled.map((s) => s.toLowerCase());
+const disabledValues = FeatureDisabled.map((s) => s.toLowerCase());
+
 function convertBooleanState(possibleValues: any[], state?: string | boolean): boolean | undefined {
     const validState = (state ?? "").toString().toLowerCase();
 
     if (possibleValues.includes(true)) {
-        possibleValues.push(FeatureEnabled.toLowerCase());
+        possibleValues.push(...enabledValues);
     }
     if (possibleValues.includes(false)) {
-        possibleValues.push(FeatureDisabled.toLowerCase());
+        possibleValues.push(...disabledValues);
     }
 
-    if (possibleValues.includes(validState) && validState === FeatureEnabled.toLowerCase()) {
+    if (possibleValues.includes(validState) && enabledValues.includes(validState)) {
         return true;
     }
-    if (possibleValues.includes(validState) && validState === FeatureDisabled.toLowerCase()) {
+    if (possibleValues.includes(validState) && disabledValues.includes(validState)) {
         return false;
     }
     if (possibleValues.includes(state) && (state === true || state === false)) {

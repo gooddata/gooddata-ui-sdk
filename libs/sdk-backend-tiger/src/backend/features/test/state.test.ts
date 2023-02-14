@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2023 GoodData Corporation
 
 import { convertState } from "../state";
 
@@ -8,6 +8,8 @@ describe("state convert", () => {
         expect(convertState("BOOLEAN", [true, false], "ENABLED")).toEqual(true);
         expect(convertState("BOOLEAN", [true, false], "enabled")).toEqual(true);
         expect(convertState("BOOLEAN", [true, false], "EnABlED")).toEqual(true);
+        expect(convertState("BOOLEAN", [true, false], "TRUE")).toEqual(true);
+        expect(convertState("BOOLEAN", [true, false], "true")).toEqual(true);
     });
 
     it("BOOLEAN to false", () => {
@@ -15,6 +17,8 @@ describe("state convert", () => {
         expect(convertState("BOOLEAN", [true, false], "DISABLED")).toEqual(false);
         expect(convertState("BOOLEAN", [true, false], "disabled")).toEqual(false);
         expect(convertState("BOOLEAN", [true, false], "DiSaBLeD")).toEqual(false);
+        expect(convertState("BOOLEAN", [true, false], "FALSE")).toEqual(false);
+        expect(convertState("BOOLEAN", [true, false], "false")).toEqual(false);
     });
 
     it("BOOLEAN to undefined", () => {
@@ -25,6 +29,7 @@ describe("state convert", () => {
 
     it("BOOLEAN to true only", () => {
         expect(convertState("BOOLEAN", [true], "ENABLED")).toEqual(true);
+        expect(convertState("BOOLEAN", [true], "TRUE")).toEqual(true);
         expect(convertState("BOOLEAN", [true], true)).toEqual(true);
         expect(convertState("BOOLEAN", [true], "DISABLED")).toEqual(undefined);
         expect(convertState("BOOLEAN", [true], false)).toEqual(undefined);
