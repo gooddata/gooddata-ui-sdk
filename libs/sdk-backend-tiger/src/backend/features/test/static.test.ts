@@ -23,7 +23,7 @@ describe("static features", () => {
                 [TigerFeaturesNames.EnableKPIDashboardDeleteFilterButton]: "ENABLED",
                 [TigerFeaturesNames.DashboardEditModeDevRollout]: "ENABLED",
                 [TigerFeaturesNames.EnableMetricSqlAndDataExplain]: "ENABLED",
-                [TigerFeaturesNames.EnableLongitudeAndLatitudeLabels]: "ENABLED",
+                [TigerFeaturesNames.EnableLongitudeAndLatitudeLabels]: "TRUE",
             }),
         );
         expect(results).toEqual({
@@ -47,7 +47,7 @@ describe("static features", () => {
                     [TigerFeaturesNames.EnableKPIDashboardDeleteFilterButton]: "ENABLED",
                     [TigerFeaturesNames.DashboardEditModeDevRollout]: "ENABLED",
                     [TigerFeaturesNames.EnableMetricSqlAndDataExplain]: "ENABLED",
-                    [TigerFeaturesNames.EnableLongitudeAndLatitudeLabels]: "ENABLED",
+                    [TigerFeaturesNames.EnableLongitudeAndLatitudeLabels]: "TRUE",
                 },
                 "beta",
             ),
