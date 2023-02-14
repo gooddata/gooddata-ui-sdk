@@ -56,7 +56,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     dashboardEditModeDevRollout: true,
     enableMetricSqlAndDataExplain: false,
     enableLongitudeAndLatitudeLabels: false,
-    enableDescriptions: false,
+    enableDescriptions: true,
     enableAnalyticalDashboardPermissions: false,
     enablePushpinGeoChart: false,
     enableKPIAttributeFilterRenaming: false,
